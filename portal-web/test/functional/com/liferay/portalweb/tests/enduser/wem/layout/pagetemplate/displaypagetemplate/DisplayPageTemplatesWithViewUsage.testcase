@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-122082. The assets are ordered by modified date in view usages of display page template."
+	@description = "This is a test for LPS-123480. The assets are ordered by modified date in view usages of display page template."
 	@priority = "5"
 	test ViewAssetsOrderInViewUsagesOfDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -105,7 +105,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-122082. The user can view the usage of display page template."
+	@description = "This is a test for LPS-123480. The user can view the usage of display page template."
 	@priority = "5"
 	test ViewUsageOfDisplayPageTemplate {
 		property portal.acceptance = "true";

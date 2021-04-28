@@ -43,12 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"mvc.command.name=/click_to_chat/save_configuration"
+		"mvc.command.name=/click_to_chat/edit_company"
 	},
 	service = MVCActionCommand.class
 )
-public class SaveConfigurationMVCActionCommand
-	extends BaseFormMVCActionCommand {
+public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -70,7 +69,7 @@ public class SaveConfigurationMVCActionCommand
 		}
 
 		_saveClickToChatConfiguration(
-			actionRequest, _configurationProvider, themeDisplay.getCompanyId());
+			actionRequest, themeDisplay.getCompanyId());
 	}
 
 	@Override
@@ -80,8 +79,7 @@ public class SaveConfigurationMVCActionCommand
 	}
 
 	private void _saveClickToChatConfiguration(
-			ActionRequest actionRequest,
-			ConfigurationProvider configurationProvider, long companyId)
+			ActionRequest actionRequest, long companyId)
 		throws Exception {
 
 		Dictionary<String, Object> properties = new Hashtable<>();
@@ -107,7 +105,7 @@ public class SaveConfigurationMVCActionCommand
 			ParamUtil.getString(
 				actionRequest, "settings--clickToChatSiteSettingsStrategy--"));
 
-		configurationProvider.saveCompanyConfiguration(
+		_configurationProvider.saveCompanyConfiguration(
 			ClickToChatConfiguration.class, companyId, properties);
 	}
 

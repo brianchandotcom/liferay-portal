@@ -48,13 +48,13 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 		</aui:select>
 
-		<label class="control-label">
+		<label class="text-secondary">
 			<liferay-ui:message key="site-settings-strategy-description" />
 		</label>
 	</div>
 </div>
 
-<div class="row" id="<%= liferayPortletResponse.getNamespace() + "clickToChatDivProviderFields" %>">
+<div class="form-group row" id="<%= liferayPortletResponse.getNamespace() + "clickToChatDivProviderFields" %>">
 	<div class="col-md-6">
 
 		<%
@@ -106,7 +106,11 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 
 <script>
 	function <portlet:namespace />hideUnselectedClickToChatProviderLearnMessages() {
-		var clickToChatProviderIdOptions = clickToChatChatProviderId.querySelectorAll(
+		var clickToChatChatProviderIdElement = document.getElementById(
+			'<portlet:namespace />clickToChatChatProviderId'
+		);
+
+		var clickToChatProviderIdOptions = clickToChatChatProviderIdElement.querySelectorAll(
 			'option'
 		);
 
@@ -128,11 +132,19 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 	}
 
 	function <portlet:namespace />onChangeClickToChatSiteSettingsStrategy(event) {
-		if (clickToChatSiteSettingsStrategy.value === 'always-override') {
-			divProviderFields.classList.add('hide');
+		var clickToChatSiteSettingsStrategyElement = document.getElementById(
+			'<portlet:namespace />clickToChatSiteSettingsStrategy'
+		);
+
+		var clickToChatDivProviderFieldsElement = document.getElementById(
+			'<portlet:namespace />clickToChatDivProviderFields'
+		);
+
+		if (clickToChatSiteSettingsStrategyElement.value === 'always-override') {
+			clickToChatDivProviderFieldsElement.classList.add('hide');
 		}
 		else {
-			divProviderFields.classList.remove('hide');
+			clickToChatDivProviderFieldsElement.classList.remove('hide');
 		}
 	}
 
@@ -153,30 +165,6 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 			clickToChatProviderLearnMessage.classList.add('hide');
 		}
 	}
-
-	var clickToChatChatProviderAccountId = document.getElementById(
-		'<portlet:namespace />clickToChatChatProviderAccountId'
-	);
-
-	var clickToChatChatProviderId = document.getElementById(
-		'<portlet:namespace />clickToChatChatProviderId'
-	);
-
-	var clickToChatEnabled = document.getElementById(
-		'<portlet:namespace />clickToChatEnabled'
-	);
-
-	var clickToChatGuestUsersAllowed = document.getElementById(
-		'<portlet:namespace />clickToChatGuestUsersAllowed'
-	);
-
-	var clickToChatSiteSettingsStrategy = document.getElementById(
-		'<portlet:namespace />clickToChatSiteSettingsStrategy'
-	);
-
-	var divProviderFields = document.getElementById(
-		'<portlet:namespace />clickToChatDivProviderFields'
-	);
 
 	<portlet:namespace />onChangeClickToChatSiteSettingsStrategy();
 

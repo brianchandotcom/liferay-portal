@@ -1,12 +1,12 @@
 dependencies {
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-frontend-jaxws", version: "3.4.2"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-frontend-simple", version: "3.4.2"
-	compileInclude group: "org.apache.cxf", name: "cxf-rt-ws-policy", version: "3.4.2"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.apache.cxf", name: "cxf-core", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-jaxws", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-frontend-simple", version: "3.4.2"
+	compileOnly group: "org.apache.cxf", name: "cxf-rt-ws-policy", version: "3.4.2"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "4.6.0"
+	compileOnly group: "org.apache.neethi", name: "neethi", version: "3.1.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
@@ -16,4 +16,14 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-string")
+}
+
+deployDependencies {
+	from configurations.compileOnly
+
+	include "cxf-rt-frontend-jaxws-*.jar"
+	include "cxf-rt-frontend-simple-*.jar"
+	include "cxf-rt-ws-policy-*.jar"
+	include "neethi-*.jar"
+
 }

@@ -3,7 +3,7 @@ dependencies {
 
 	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.2.3"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "com.sun.xml.bind", name: "jaxb-osgi", version: "2.3.3"
+	compileOnly group: "com.sun.xml.bind", name: "jaxb-osgi", version: "2.3.4"
 	compileOnly group: "javax.json", name: "javax.json-api", version: "1.0"
 	compileOnly group: "org.apache.aries.component-dsl", name: "org.apache.aries.component-dsl.component-dsl", version: "1.2.2"
 	compileOnly group: "org.apache.aries.jax.rs", name: "org.apache.aries.jax.rs.whiteboard", version: "2.0.0-20210223.055537-1"

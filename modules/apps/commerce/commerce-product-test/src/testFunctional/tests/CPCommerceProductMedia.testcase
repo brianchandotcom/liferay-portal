@@ -120,7 +120,6 @@ definition {
 		Button.clickPublish();
 
 		Alert.viewSuccessMessage();
-		
 	}
 
 	@description = "This is a test for COMMERCE-6025. AddAnImage"

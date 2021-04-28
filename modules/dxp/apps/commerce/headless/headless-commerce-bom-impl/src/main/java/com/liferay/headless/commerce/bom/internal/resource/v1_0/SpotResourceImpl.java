@@ -14,14 +14,15 @@
 
 package com.liferay.headless.commerce.bom.internal.resource.v1_0;
 
-import com.liferay.commerce.bom.model.CommerceBOMEntry;
-import com.liferay.commerce.bom.service.CommerceBOMEntryService;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CProductLocalService;
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
 import com.liferay.headless.commerce.bom.dto.v1_0.Position;
 import com.liferay.headless.commerce.bom.dto.v1_0.Spot;
 import com.liferay.headless.commerce.bom.internal.dto.v1_0.converter.SpotDTOConverter;
 import com.liferay.headless.commerce.bom.resource.v1_0.SpotResource;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
@@ -41,8 +42,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SpotResourceImpl extends BaseSpotResourceImpl {
 
 	@Override
-	public Response deleteAreaIdSpot(Long id, Long spotId) throws Exception {
-		_commerceBOMEntryService.deleteCommerceBOMEntry(spotId);
+	public Response deleteDiagramIdSpot(Long id, Long spotId) throws Exception {
+		_cpDefinitionDiagramEntryService.deleteCPDefinitionDiagramEntry(spotId);
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -50,43 +51,49 @@ public class SpotResourceImpl extends BaseSpotResourceImpl {
 	}
 
 	@Override
-	public Spot postAreaIdSpot(Long id, Spot spot) throws Exception {
+	public Spot postDiagramIdSpot(Long id, Spot spot) throws Exception {
 		CProduct cProduct = _cProductLocalService.getCProductByCPInstanceUuid(
 			spot.getProductId());
 
 		Position position = spot.getPosition();
 
-		CommerceBOMEntry commerceBOMEntry =
-			_commerceBOMEntryService.addCommerceBOMEntry(
-				contextUser.getUserId(), spot.getNumber(), spot.getProductId(),
-				cProduct.getCProductId(), id, position.getX(), position.getY(),
-				0D);
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
+			_cpDefinitionDiagramEntryService.addCPDefinitionDiagramEntry(
+				contextUser.getUserId(), id, spot.getProductId(),
+				cProduct.getCProductId(), spot.getNumber(), spot.getQuantity(),
+				position.getX(), position.getY(), 0D, new ServiceContext());
 
 		return _spotDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				commerceBOMEntry.getCommerceBOMEntryId(),
+				cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId(),
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	@Override
-	public Response putAreaIdSpot(Long id, Long spotId, Spot spot)
+	public Response putDiagramIdSpot(Long id, Long spotId, Spot spot)
 		throws Exception {
 
-		CommerceBOMEntry commerceBOMEntry =
-			_commerceBOMEntryService.getCommerceBOMEntry(spotId);
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
+			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntry(
+				spotId);
 
 		CProduct cProduct = _cProductLocalService.getCProductByCPInstanceUuid(
 			spot.getProductId());
 
 		Position position = spot.getPosition();
 
-		_commerceBOMEntryService.updateCommerceBOMEntry(
-			commerceBOMEntry.getCommerceBOMEntryId(),
-			GetterUtil.get(spot.getNumber(), commerceBOMEntry.getNumber()),
+		_cpDefinitionDiagramEntryService.updateCPDefinitionDiagramEntry(
+			cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId(),
 			spot.getProductId(), cProduct.getCProductId(),
-			GetterUtil.get(position.getX(), commerceBOMEntry.getPositionX()),
-			GetterUtil.get(position.getY(), commerceBOMEntry.getPositionY()),
-			0D);
+			GetterUtil.get(
+				spot.getNumber(), cpDefinitionDiagramEntry.getNumber()),
+			GetterUtil.get(
+				spot.getQuantity(), cpDefinitionDiagramEntry.getQuantity()),
+			GetterUtil.get(
+				position.getX(), cpDefinitionDiagramEntry.getPositionX()),
+			GetterUtil.get(
+				position.getY(), cpDefinitionDiagramEntry.getPositionY()),
+			0D, new ServiceContext());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -94,7 +101,7 @@ public class SpotResourceImpl extends BaseSpotResourceImpl {
 	}
 
 	@Reference
-	private CommerceBOMEntryService _commerceBOMEntryService;
+	private CPDefinitionDiagramEntryService _cpDefinitionDiagramEntryService;
 
 	@Reference
 	private CProductLocalService _cProductLocalService;

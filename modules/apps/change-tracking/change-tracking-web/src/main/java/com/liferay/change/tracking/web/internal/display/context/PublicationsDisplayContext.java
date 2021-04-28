@@ -27,10 +27,8 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,19 +36,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -112,23 +102,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	public Map<String, Object> getCollaboratorsReactData(
 			CTCollection ctCollection, PermissionChecker permissionChecker)
 		throws PortalException {
-
-		_addPublicationRole(
-			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
-			PublicationRoleConstants.NAME_EDIT);
-		_addPublicationRole(
-			new String[] {
-				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
-			},
-			PublicationRoleConstants.NAME_PERMISSIONS);
-		_addPublicationRole(
-			new String[] {
-				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
-				CTActionKeys.PUBLISH
-			},
-			PublicationRoleConstants.NAME_PUBLISH);
-		_addPublicationRole(
-			new String[] {ActionKeys.VIEW}, PublicationRoleConstants.NAME_VIEW);
 
 		return HashMapBuilder.<String, Object>put(
 			"autocompleteUserURL",
@@ -397,36 +370,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	@Override
 	protected String getPortalPreferencesPrefix() {
 		return "ongoing";
-	}
-
-	private void _addPublicationRole(String[] actionIds, String name)
-		throws PortalException {
-
-		Role role = RoleLocalServiceUtil.fetchRole(
-			_themeDisplay.getCompanyId(), name);
-
-		if (role == null) {
-			try (SafeClosable safeClosable =
-					CTCollectionThreadLocal.setCTCollectionId(0)) {
-
-				role = RoleLocalServiceUtil.addRole(
-					_themeDisplay.getDefaultUserId(), null, 0, name,
-					HashMapBuilder.put(
-						LocaleUtil.getDefault(), name
-					).build(),
-					null, RoleConstants.TYPE_PUBLICATION, StringPool.BLANK,
-					ServiceContextFactory.getInstance(_httpServletRequest));
-
-				for (String actionId : actionIds) {
-					ResourcePermissionLocalServiceUtil.addResourcePermission(
-						_themeDisplay.getCompanyId(),
-						CTCollection.class.getName(),
-						ResourceConstants.SCOPE_GROUP_TEMPLATE,
-						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-						role.getRoleId(), actionId);
-				}
-			}
-		}
 	}
 
 	private JSONArray _getDropdownItemsJSONArray(

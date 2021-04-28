@@ -38,7 +38,7 @@ public abstract class BaseUpgradeAssetDisplayPageEntry extends UpgradeProcess {
 
 		StringBundler sb1 = new StringBundler(10);
 
-		sb1.append("select groupId, companyId, ");
+		sb1.append("select distinct groupId, companyId, ");
 		sb1.append(pkColumnName);
 		sb1.append(" from ");
 		sb1.append(tableName);

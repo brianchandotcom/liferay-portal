@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React, {useState} from 'react';
 
 import {InstanceListContext} from '../../../src/main/resources/META-INF/resources/js/components/instance-list-page/InstanceListPageProvider.es';
@@ -149,10 +149,13 @@ describe('The instance list item should', () => {
 	test('Be rendered with due date success when the slaStatus is "OnTime" and slaResult status is "Running"', () => {
 		const slaResult = {
 			dateOverdue: '2021-04-16T12:44:25Z',
+			name: 'SLA Test',
+			onTime: true,
+			remainingTime: 99999000,
 			status: 'Running',
 		};
 
-		const {container, getByText} = render(
+		const {baseElement, container, getByText} = render(
 			<Table.Item
 				{...instance}
 				slaResults={[slaResult]}
@@ -162,6 +165,10 @@ describe('The instance list item should', () => {
 				wrapper: ContainerMock,
 			}
 		);
+
+		act(() => {
+			jest.runAllTimers();
+		});
 
 		const dueDateCol = container.querySelector('.due-date.text-success');
 
@@ -174,15 +181,47 @@ describe('The instance list item should', () => {
 		const dateText = getByText('Apr 16');
 
 		expect(dateText).toBeTruthy();
+
+		fireEvent.mouseOver(dateText);
+
+		act(() => {
+			jest.advanceTimersByTime(1001);
+		});
+
+		let popoverElement = baseElement.querySelector('.popover');
+
+		expect(popoverElement).toBeTruthy();
+
+		fireEvent.mouseEnter(popoverElement);
+
+		const slaNamePopoverText = getByText('SLA Test:');
+
+		expect(slaNamePopoverText).toBeTruthy();
+
+		const slaDateTimeRemaingTime = getByText(
+			'Apr 16, 12:44 PM (1d 03h 46min left)'
+		);
+
+		expect(slaDateTimeRemaingTime).toBeTruthy();
+
+		fireEvent.mouseLeave(popoverElement);
+		fireEvent.mouseOut(dateText);
+
+		popoverElement = baseElement.querySelector('.popover');
+
+		expect(popoverElement).toBeNull();
 	});
 
 	test('Be rendered with due date danger when the slaStatus is "Overdue" and slaResult status is "Running"', () => {
 		const slaResult = {
 			dateOverdue: '2021-04-16T12:44:25Z',
+			name: 'SLA Test',
+			onTime: false,
+			remainingTime: -99999000,
 			status: 'Running',
 		};
 
-		const {container, getByText} = render(
+		const {baseElement, container, getByText} = render(
 			<Table.Item
 				{...instance}
 				slaResults={[slaResult]}
@@ -204,6 +243,32 @@ describe('The instance list item should', () => {
 		const dateText = getByText('Apr 16');
 
 		expect(dateText).toBeTruthy();
+
+		fireEvent.mouseOver(dateText);
+
+		act(() => {
+			jest.advanceTimersByTime(1001);
+		});
+
+		let popoverElement = baseElement.querySelector('.popover');
+
+		expect(popoverElement).toBeTruthy();
+
+		const slaNamePopoverText = getByText('SLA Test:');
+
+		expect(slaNamePopoverText).toBeTruthy();
+
+		const slaDateTimeRemaingTime = getByText(
+			'Apr 16, 12:44 PM (1d 03h 46min overdue)'
+		);
+
+		expect(slaDateTimeRemaingTime).toBeTruthy();
+
+		fireEvent.mouseOut(dateText);
+
+		popoverElement = baseElement.querySelector('.popover');
+
+		expect(popoverElement).toBeNull();
 	});
 
 	test('Be rendered with due date when the year is not the current year', () => {
@@ -216,7 +281,7 @@ describe('The instance list item should', () => {
 			<Table.Item
 				{...instance}
 				slaResults={[slaResult]}
-				slaStatus="OnTime"
+				slaStatus="Overdue"
 			/>,
 			{
 				wrapper: ContainerMock,
@@ -228,41 +293,9 @@ describe('The instance list item should', () => {
 		expect(dateText).toBeTruthy();
 	});
 
-	test('Be rendered with due date when the status is "Stopped"', () => {
-		const slaResult = {
-			dateOverdue: '2021-04-16T12:44:25Z',
-			status: 'Stopped',
-		};
-
+	test('Be rendered with due date when the slaResults is empty', () => {
 		const {container} = render(
-			<Table.Item
-				{...instance}
-				slaResults={[slaResult]}
-				slaStatus="OnTime"
-			/>,
-			{
-				wrapper: ContainerMock,
-			}
-		);
-
-		const dueDateCol = container.querySelector('.due-date.text-info');
-
-		expect(dueDateCol).toBeTruthy();
-		expect(dueDateCol.innerHTML).toEqual('-');
-	});
-
-	test('Be rendered with due date when the status is "Paused"', () => {
-		const slaResult = {
-			dateOverdue: '2021-04-16T12:44:25Z',
-			status: 'Paused',
-		};
-
-		const {container} = render(
-			<Table.Item
-				{...instance}
-				slaResults={[slaResult]}
-				slaStatus="OnTime"
-			/>,
+			<Table.Item {...instance} slaResults={[]} slaStatus="OnTime" />,
 			{
 				wrapper: ContainerMock,
 			}

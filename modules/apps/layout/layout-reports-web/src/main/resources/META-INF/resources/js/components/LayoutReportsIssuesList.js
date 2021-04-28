@@ -15,7 +15,6 @@
 import ClayBadge from '@clayui/badge';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
-import PropTypes from 'prop-types';
 import React, {useContext, useMemo} from 'react';
 
 import {StoreStateContext} from '../context/StoreContext';
@@ -114,13 +113,3 @@ export default function LayoutReportsIssuesList() {
 		</div>
 	);
 }
-
-LayoutReportsIssuesList.propTypes = {
-	layoutReportsIssues: PropTypes.arrayOf(
-		PropTypes.shape({
-			key: PropTypes.string.isRequired,
-			title: PropTypes.string.isRequired,
-			total: PropTypes.string.isRequired,
-		})
-	),
-};

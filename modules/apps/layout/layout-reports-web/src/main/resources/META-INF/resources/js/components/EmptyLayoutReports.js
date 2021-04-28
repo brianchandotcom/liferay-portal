@@ -13,7 +13,6 @@
  */
 
 import ClayLink from '@clayui/link';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import {StoreStateContext} from '../context/StoreContext';
@@ -71,8 +70,3 @@ export default function EmptyLayoutReports() {
 		</div>
 	);
 }
-
-EmptyLayoutReports.propTypes = {
-	assetsPath: PropTypes.string.isRequired,
-	configurePageSpeedURL: PropTypes.string,
-};

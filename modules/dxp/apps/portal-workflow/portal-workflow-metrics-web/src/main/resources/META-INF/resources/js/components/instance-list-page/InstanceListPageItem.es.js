@@ -12,10 +12,13 @@
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayPopover from '@clayui/popover';
 import ClayTable from '@clayui/table';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 
+import useDebounceCallback from '../../hooks/useDebounceCallback.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
+import {remainingTimeFormat} from '../../shared/util/duration.es';
 import moment from '../../shared/util/moment.es';
 import {capitalize} from '../../shared/util/util.es';
 import {AppContext} from '../AppContext.es';
@@ -44,19 +47,6 @@ const getSLAStatusIconInfo = (slaStatus) => {
 	return items[slaStatus] || items.Untracked;
 };
 
-const getDueDateFormatted = (dateOverdue) => {
-	if (!dateOverdue) {
-		return '';
-	}
-
-	const sameYear = dateOverdue.split('-')[0] == new Date().getFullYear();
-
-	const format = sameYear
-		? Liferay.Language.get('mmm-dd')
-		: Liferay.Language.get('mmm-dd-yyyy');
-
-	return moment.utc(dateOverdue).format(format);
-};
 function Item({totalCount, ...instance}) {
 	const {userId} = useContext(AppContext);
 	const {
@@ -105,11 +95,6 @@ function Item({totalCount, ...instance}) {
 		setSelectedItems(updatedItems);
 	};
 
-	const [slaResult] = slaResults;
-
-	const dateOverdue = getDueDateFormatted(slaResult?.dateOverdue);
-	const slaRunning = slaResult?.status === 'Running';
-
 	const slaStatusIconInfo = getSLAStatusIconInfo(slaStatus);
 
 	return (
@@ -150,20 +135,10 @@ function Item({totalCount, ...instance}) {
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				<div
-					className={`due-date ${
-						slaRunning ? slaStatusIconInfo.textColor : 'text-info'
-					}`}
-				>
-					{!slaResult || !slaRunning ? (
-						'-'
-					) : (
-						<>
-							<span className="due-date-badge"></span>
-							{dateOverdue}
-						</>
-					)}
-				</div>
+				<DueDateSLAResults
+					slaResults={slaResults}
+					slaStatusIconInfo={slaStatusIconInfo}
+				/>
 			</ClayTable.Cell>
 
 			<ClayTable.Cell>{`${assetType}: ${assetTitle}`}</ClayTable.Cell>
@@ -261,6 +236,111 @@ function QuickActionMenu({disabled, instance}) {
 		<ClayLayout.ContentCol>
 			<QuickActionKebab disabled={disabled} items={kebabItems} />
 		</ClayLayout.ContentCol>
+	);
+}
+
+function DueDateSLAResults({slaResults, slaStatusIconInfo}) {
+	const [popover, setPopover] = useState(false);
+
+	const [showPopover, cancelShowPopover] = useDebounceCallback(
+		() => setPopover(true),
+		1000
+	);
+
+	const getDueDateFormatted = (dateOverdue, fullDatetime = false) => {
+		if (!dateOverdue) {
+			return '';
+		}
+
+		let format = '';
+
+		const sameYear = dateOverdue.split('-')[0] == new Date().getFullYear();
+
+		if (sameYear) {
+			format = fullDatetime
+				? Liferay.Language.get('mmm-dd-hh-mm-a')
+				: Liferay.Language.get('mmm-dd');
+		}
+		else {
+			format = fullDatetime
+				? Liferay.Language.get('mmm-dd-yyyy-hh-mm-a')
+				: Liferay.Language.get('mmm-dd-yyyy');
+		}
+
+		return moment.utc(dateOverdue).format(format);
+	};
+
+	const instanceSlaResults = slaResults.slice(0, 2).map((slaResult) => {
+		const datetimeOverdueFormatted = getDueDateFormatted(
+			slaResult.dateOverdue,
+			true
+		);
+
+		const [durationText, onTimeText] = remainingTimeFormat(
+			slaResult.onTime,
+			slaResult.remainingTime,
+			true
+		);
+
+		const textClass = slaResult.onTime ? 'text-success' : 'text-danger';
+
+		return {
+			...slaResult,
+			datetimeOverdueFormatted,
+			durationText,
+			onTimeText,
+			textClass,
+		};
+	});
+
+	const slaResultDateOverdue = instanceSlaResults?.length
+		? getDueDateFormatted(instanceSlaResults[0].dateOverdue)
+		: '';
+
+	return (
+		<div
+			className={`due-date ${
+				instanceSlaResults?.length
+					? slaStatusIconInfo.textColor
+					: 'text-info'
+			}`}
+		>
+			{!instanceSlaResults?.length ? (
+				'-'
+			) : (
+				<ClayPopover
+					alignPosition="bottom-left"
+					className="due-date-popover"
+					header={Liferay.Language.get('due-date')}
+					onMouseEnter={() => setPopover(true)}
+					onMouseLeave={() => setPopover(false)}
+					show={popover}
+					trigger={
+						<div
+							onMouseOut={() => {
+								cancelShowPopover();
+
+								setPopover(false);
+							}}
+							onMouseOver={() => showPopover()}
+						>
+							<span className="due-date-badge"></span>
+							{slaResultDateOverdue}
+						</div>
+					}
+				>
+					{instanceSlaResults.map((slaResult) => (
+						<div key={`critical-sla-${slaResult.id}`}>
+							<div>{slaResult.name}:</div>
+							<div className={slaResult.textClass}>
+								{slaResult.datetimeOverdueFormatted} (
+								{slaResult.durationText} {slaResult.onTimeText})
+							</div>
+						</div>
+					))}
+				</ClayPopover>
+			)}
+		</div>
 	);
 }
 

@@ -160,6 +160,13 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
+		else if (isSet(dateValue)) {
+			Type.sendKeys(
+				key_criterion = "date",
+				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
+				value1 = "${dateValue}");
+		}
+
 		else if (isSet(optionsValue)) {
 			Select(
 				key_criterion = "options",

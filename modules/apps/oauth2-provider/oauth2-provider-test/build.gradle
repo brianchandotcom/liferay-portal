@@ -12,7 +12,7 @@ dependencies {
 	compileOnly project(":apps:portal-security:portal-security-service-access-policy-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-rs-client", version: "3.2.14"
+	testIntegrationCompile group: "org.apache.cxf", name: "cxf-rt-rs-client", version: "3.4.2"
 	testIntegrationCompile project(":apps:document-library:document-library-api")
 	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

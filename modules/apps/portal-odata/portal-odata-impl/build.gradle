@@ -21,6 +21,6 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.2.14"
+	testCompile group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.4.2"
 	testCompile group: "org.assertj", name: "assertj-core", version: "3.10.0"
 }

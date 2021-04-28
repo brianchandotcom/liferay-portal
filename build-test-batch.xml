@@ -408,6 +408,17 @@ mariadb.executable=${mariadb.executable}]]></echo>
 								</then>
 							</if>
 
+							<get-browser-property property.name="browser.docker.image" />
+
+							<if>
+								<isset property="browser.docker.image" />
+								<then>
+									<stop-docker-browser />
+
+									<start-docker-browser />
+								</then>
+							</if>
+
 							<antcall inheritall="false" target="copy-optional-jars">
 								<param name="database.type" value="@{database.type}" />
 								<param name="todir" value="lib/development" />
@@ -434,6 +445,15 @@ mariadb.executable=${mariadb.executable}]]></echo>
 									<antcall target="stop-app-server" />
 
 									<delete failonerror="false" file=".testable.portal.started" />
+								</then>
+							</if>
+
+							<get-browser-property property.name="browser.docker.image" />
+
+							<if>
+								<isset property="browser.docker.image" />
+								<then>
+									<stop-docker-browser />
 								</then>
 							</if>
 

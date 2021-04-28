@@ -1385,6 +1385,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 	<macrodef name="get-test-url">
 		<sequential>
+			<get-browser-property property.name="browser.docker.image" />
 			<get-operating-system-property property.name="operating.system.docker.image" />
 			<get-testcase-property property.name="analytics.cloud.enabled" />
 			<get-testcase-property property.name="testcase.url" />
@@ -1423,7 +1424,10 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					</then>
 				</elseif>
 				<elseif>
-					<contains string="${test.class}" substring="," />
+					<or>
+						<contains string="${test.class}" substring="," />
+						<isset property="browser.docker.image" />
+					</or>
 					<then>
 						<if>
 							<os family="unix" />
@@ -9666,17 +9670,26 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-sharepoint-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
+		<get-browser-property property.name="browser.docker.image" />
 		<get-operating-system-property property.name="operating.system.docker.image" />
 
 		<if>
-			<isset property="operating.system.docker.image" />
+			<isset property="browser.docker.image" />
 			<then>
-				<get-operating-system-property property.name="operating.system.host.alias" />
-
 				<echo append="true" file="${test.ext.properties.file}">
-					default.portal.url=${operating.system.host.alias}:8080
+					default.portal.url=${test.url}
 				</echo>
 			</then>
+			<elseif>
+				<isset property="operating.system.docker.image" />
+				<then>
+					<get-operating-system-property property.name="operating.system.host.alias" />
+
+					<echo append="true" file="${test.ext.properties.file}">
+						default.portal.url=${operating.system.host.alias}:8080
+					</echo>
+				</then>
+			</elseif>
 			<else>
 				<echo append="true" file="${test.ext.properties.file}">
 					default.portal.url=http://localhost:8080
@@ -9950,14 +9963,26 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<get-browser-property property.name="browser.docker.image" />
+
 		<if>
-			<isset property="selenium.remote.driver.url" />
+			<isset property="browser.docker.image" />
 			<then>
+				<get-browser-property property.name="browser.host" />
+
 				<echo append="true" file="${test.ext.properties.file}">
-					selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
-					selenium.remote.driver.url=${selenium.remote.driver.url}
+					selenium.remote.driver.url=http://${browser.host}:4444
 				</echo>
 			</then>
+			<elseif>
+				<isset property="selenium.remote.driver.url" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
+						selenium.remote.driver.url=${selenium.remote.driver.url}
+					</echo>
+				</then>
+			</elseif>
 		</if>
 	</target>
 

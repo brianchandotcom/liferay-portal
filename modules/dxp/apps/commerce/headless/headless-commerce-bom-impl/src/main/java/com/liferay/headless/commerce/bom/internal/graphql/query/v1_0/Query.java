@@ -14,10 +14,10 @@
 
 package com.liferay.headless.commerce.bom.internal.graphql.query.v1_0;
 
-import com.liferay.headless.commerce.bom.dto.v1_0.Area;
+import com.liferay.headless.commerce.bom.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.bom.dto.v1_0.Folder;
 import com.liferay.headless.commerce.bom.dto.v1_0.Product;
-import com.liferay.headless.commerce.bom.resource.v1_0.AreaResource;
+import com.liferay.headless.commerce.bom.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.bom.resource.v1_0.FolderResource;
 import com.liferay.headless.commerce.bom.resource.v1_0.ProductResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -50,12 +50,12 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
-	public static void setAreaResourceComponentServiceObjects(
-		ComponentServiceObjects<AreaResource>
-			areaResourceComponentServiceObjects) {
+	public static void setDiagramResourceComponentServiceObjects(
+		ComponentServiceObjects<DiagramResource>
+			diagramResourceComponentServiceObjects) {
 
-		_areaResourceComponentServiceObjects =
-			areaResourceComponentServiceObjects;
+		_diagramResourceComponentServiceObjects =
+			diagramResourceComponentServiceObjects;
 	}
 
 	public static void setFolderResourceComponentServiceObjects(
@@ -77,14 +77,16 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {area(id: ___){breadcrumbs, data}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {productIdDiagram(id: ___){breadcrumbs, data}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public Area area(@GraphQLName("id") Long id) throws Exception {
+	public Diagram productIdDiagram(@GraphQLName("id") Long id)
+		throws Exception {
+
 		return _applyComponentServiceObjects(
-			_areaResourceComponentServiceObjects,
+			_diagramResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			areaResource -> areaResource.getArea(id));
+			diagramResource -> diagramResource.getProductIdDiagram(id));
 	}
 
 	/**
@@ -114,24 +116,24 @@ public class Query {
 				productResource.getProductsPage(q)));
 	}
 
-	@GraphQLName("AreaPage")
-	public class AreaPage {
+	@GraphQLName("DiagramPage")
+	public class DiagramPage {
 
-		public AreaPage(Page areaPage) {
-			actions = areaPage.getActions();
+		public DiagramPage(Page diagramPage) {
+			actions = diagramPage.getActions();
 
-			items = areaPage.getItems();
-			lastPage = areaPage.getLastPage();
-			page = areaPage.getPage();
-			pageSize = areaPage.getPageSize();
-			totalCount = areaPage.getTotalCount();
+			items = diagramPage.getItems();
+			lastPage = diagramPage.getLastPage();
+			page = diagramPage.getPage();
+			pageSize = diagramPage.getPageSize();
+			totalCount = diagramPage.getTotalCount();
 		}
 
 		@GraphQLField
 		protected Map<String, Map> actions;
 
 		@GraphQLField
-		protected java.util.Collection<Area> items;
+		protected java.util.Collection<Diagram> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -232,17 +234,17 @@ public class Query {
 		}
 	}
 
-	private void _populateResourceContext(AreaResource areaResource)
+	private void _populateResourceContext(DiagramResource diagramResource)
 		throws Exception {
 
-		areaResource.setContextAcceptLanguage(_acceptLanguage);
-		areaResource.setContextCompany(_company);
-		areaResource.setContextHttpServletRequest(_httpServletRequest);
-		areaResource.setContextHttpServletResponse(_httpServletResponse);
-		areaResource.setContextUriInfo(_uriInfo);
-		areaResource.setContextUser(_user);
-		areaResource.setGroupLocalService(_groupLocalService);
-		areaResource.setRoleLocalService(_roleLocalService);
+		diagramResource.setContextAcceptLanguage(_acceptLanguage);
+		diagramResource.setContextCompany(_company);
+		diagramResource.setContextHttpServletRequest(_httpServletRequest);
+		diagramResource.setContextHttpServletResponse(_httpServletResponse);
+		diagramResource.setContextUriInfo(_uriInfo);
+		diagramResource.setContextUser(_user);
+		diagramResource.setGroupLocalService(_groupLocalService);
+		diagramResource.setRoleLocalService(_roleLocalService);
 	}
 
 	private void _populateResourceContext(FolderResource folderResource)
@@ -271,8 +273,8 @@ public class Query {
 		productResource.setRoleLocalService(_roleLocalService);
 	}
 
-	private static ComponentServiceObjects<AreaResource>
-		_areaResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DiagramResource>
+		_diagramResourceComponentServiceObjects;
 	private static ComponentServiceObjects<FolderResource>
 		_folderResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ProductResource>

@@ -14,8 +14,8 @@
 
 package com.liferay.headless.commerce.bom.internal.resource.v1_0;
 
-import com.liferay.headless.commerce.bom.dto.v1_0.Area;
-import com.liferay.headless.commerce.bom.resource.v1_0.AreaResource;
+import com.liferay.headless.commerce.bom.dto.v1_0.Diagram;
+import com.liferay.headless.commerce.bom.resource.v1_0.DiagramResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
@@ -55,7 +55,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.validation.constraints.NotNull;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -69,39 +71,59 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/1.0")
-public abstract class BaseAreaResourceImpl
-	implements AreaResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<Area> {
+public abstract class BaseDiagramResourceImpl
+	implements DiagramResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<Diagram> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/commerce-bom/1.0/areas/{id}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/commerce-bom/1.0/products/{id}/diagram'  -u 'test@liferay.com:test'
 	 */
 	@GET
 	@Override
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
-	@Path("/areas/{id}")
+	@Path("/products/{id}/diagram")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Area")})
-	public Area getArea(
+	@Tags(value = {@Tag(name = "Diagram")})
+	public Diagram getProductIdDiagram(
 			@NotNull @Parameter(hidden = true) @PathParam("id") Long id)
 		throws Exception {
 
-		return new Area();
+		return new Diagram();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/commerce-bom/1.0/products/{id}/diagram' -d $'{"breadcrumbs": ___, "data": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "id")})
+	@Path("/products/{id}/diagram")
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "Diagram")})
+	public Diagram putProductIdDiagram(
+			@NotNull @Parameter(hidden = true) @PathParam("id") Long id,
+			Diagram diagram)
+		throws Exception {
+
+		return new Diagram();
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			java.util.Collection<Area> areas,
+			java.util.Collection<Diagram> diagrams,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
 
 	@Override
 	public void delete(
-			java.util.Collection<Area> areas,
+			java.util.Collection<Diagram> diagrams,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}
@@ -122,7 +144,7 @@ public abstract class BaseAreaResourceImpl
 	}
 
 	@Override
-	public Page<Area> read(
+	public Page<Diagram> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
@@ -154,7 +176,7 @@ public abstract class BaseAreaResourceImpl
 
 	@Override
 	public void update(
-			java.util.Collection<Area> areas,
+			java.util.Collection<Diagram> diagrams,
 			Map<String, Serializable> parameters)
 		throws Exception {
 	}

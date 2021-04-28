@@ -44,13 +44,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("Area")
+@GraphQLName("Diagram")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Area")
-public class Area implements Serializable {
+@XmlRootElement(name = "Diagram")
+public class Diagram implements Serializable {
 
-	public static Area toDTO(String json) {
-		return ObjectMapperUtil.readValue(Area.class, json);
+	public static Diagram toDTO(String json) {
+		return ObjectMapperUtil.readValue(Diagram.class, json);
 	}
 
 	@Schema
@@ -84,17 +84,17 @@ public class Area implements Serializable {
 
 	@Schema
 	@Valid
-	public AreaData getData() {
+	public DiagramData getData() {
 		return data;
 	}
 
-	public void setData(AreaData data) {
+	public void setData(DiagramData data) {
 		this.data = data;
 	}
 
 	@JsonIgnore
 	public void setData(
-		UnsafeSupplier<AreaData, Exception> dataUnsafeSupplier) {
+		UnsafeSupplier<DiagramData, Exception> dataUnsafeSupplier) {
 
 		try {
 			data = dataUnsafeSupplier.get();
@@ -109,7 +109,7 @@ public class Area implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected AreaData data;
+	protected DiagramData data;
 
 	@Override
 	public boolean equals(Object object) {
@@ -117,13 +117,13 @@ public class Area implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Area)) {
+		if (!(object instanceof Diagram)) {
 			return false;
 		}
 
-		Area area = (Area)object;
+		Diagram diagram = (Diagram)object;
 
-		return Objects.equals(toString(), area.toString());
+		return Objects.equals(toString(), diagram.toString());
 	}
 
 	@Override
@@ -175,7 +175,7 @@ public class Area implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Area",
+		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.Diagram",
 		name = "x-class-name"
 	)
 	public String xClassName;

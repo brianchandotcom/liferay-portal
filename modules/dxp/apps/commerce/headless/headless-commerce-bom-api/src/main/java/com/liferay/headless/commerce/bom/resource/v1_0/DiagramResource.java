@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.bom.resource.v1_0;
 
-import com.liferay.headless.commerce.bom.dto.v1_0.Area;
+import com.liferay.headless.commerce.bom.dto.v1_0.Diagram;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -40,13 +40,16 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface AreaResource {
+public interface DiagramResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Area getArea(Long id) throws Exception;
+	public Diagram getProductIdDiagram(Long id) throws Exception;
+
+	public Diagram putProductIdDiagram(Long id, Diagram diagram)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -82,7 +85,7 @@ public interface AreaResource {
 	@ProviderType
 	public interface Builder {
 
-		public AreaResource build();
+		public DiagramResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

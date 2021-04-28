@@ -54,6 +54,35 @@ public class Spot implements Serializable {
 		return ObjectMapperUtil.readValue(Spot.class, json);
 	}
 
+	@Schema
+	@Valid
+	public Map<String, ?> getExpando() {
+		return expando;
+	}
+
+	public void setExpando(Map<String, ?> expando) {
+		this.expando = expando;
+	}
+
+	@JsonIgnore
+	public void setExpando(
+		UnsafeSupplier<Map<String, ?>, Exception> expandoUnsafeSupplier) {
+
+		try {
+			expando = expandoUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Map<String, ?> expando;
+
 	@DecimalMin("0")
 	@Schema
 	public Long getId() {
@@ -167,6 +196,35 @@ public class Spot implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productId;
 
+	@DecimalMin("0")
+	@Schema
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	@JsonIgnore
+	public void setQuantity(
+		UnsafeSupplier<Integer, Exception> quantityUnsafeSupplier) {
+
+		try {
+			quantity = quantityUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer quantity;
+
 	@Schema
 	public String getSku() {
 		return sku;
@@ -220,6 +278,16 @@ public class Spot implements Serializable {
 
 		sb.append("{");
 
+		if (expando != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"expando\": ");
+
+			sb.append(_toJSON(expando));
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -262,6 +330,16 @@ public class Spot implements Serializable {
 			sb.append(_escape(productId));
 
 			sb.append("\"");
+		}
+
+		if (quantity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"quantity\": ");
+
+			sb.append(quantity);
 		}
 
 		if (sku != null) {

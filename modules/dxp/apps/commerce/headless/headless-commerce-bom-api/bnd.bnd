@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Headless Commerce BOM API
 Bundle-SymbolicName: com.liferay.headless.commerce.bom.api
-Bundle-Version: 5.0.1
+Bundle-Version: 6.0.0
 Export-Package:\
 	com.liferay.headless.commerce.bom.dto.v1_0,\
 	com.liferay.headless.commerce.bom.resource.v1_0

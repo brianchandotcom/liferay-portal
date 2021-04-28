@@ -47,15 +47,11 @@ public interface SpotResource {
 		return FactoryHolder.factory.create();
 	}
 
-	public Spot postAreaIdSpot(Long id, Spot spot) throws Exception;
+	public Spot postDiagramIdSpot(Long id, Spot spot) throws Exception;
 
-	public Response postAreaIdSpotBatch(
-			Long id, String callbackURL, Object object)
-		throws Exception;
+	public Response deleteDiagramIdSpot(Long id, Long spotId) throws Exception;
 
-	public Response deleteAreaIdSpot(Long id, Long spotId) throws Exception;
-
-	public Response putAreaIdSpot(Long id, Long spotId, Spot spot)
+	public Response putDiagramIdSpot(Long id, Long spotId, Spot spot)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

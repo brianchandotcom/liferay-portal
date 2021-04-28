@@ -16,7 +16,7 @@ package com.liferay.headless.commerce.bom.internal.graphql.servlet.v1_0;
 
 import com.liferay.headless.commerce.bom.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.headless.commerce.bom.internal.graphql.query.v1_0.Query;
-import com.liferay.headless.commerce.bom.resource.v1_0.AreaResource;
+import com.liferay.headless.commerce.bom.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.bom.resource.v1_0.FolderResource;
 import com.liferay.headless.commerce.bom.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.bom.resource.v1_0.SpotResource;
@@ -41,11 +41,13 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setDiagramResourceComponentServiceObjects(
+			_diagramResourceComponentServiceObjects);
 		Mutation.setSpotResourceComponentServiceObjects(
 			_spotResourceComponentServiceObjects);
 
-		Query.setAreaResourceComponentServiceObjects(
-			_areaResourceComponentServiceObjects);
+		Query.setDiagramResourceComponentServiceObjects(
+			_diagramResourceComponentServiceObjects);
 		Query.setFolderResourceComponentServiceObjects(
 			_folderResourceComponentServiceObjects);
 		Query.setProductResourceComponentServiceObjects(
@@ -68,12 +70,12 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<SpotResource>
-		_spotResourceComponentServiceObjects;
+	private ComponentServiceObjects<DiagramResource>
+		_diagramResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AreaResource>
-		_areaResourceComponentServiceObjects;
+	private ComponentServiceObjects<SpotResource>
+		_spotResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<FolderResource>

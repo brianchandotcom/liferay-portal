@@ -14,7 +14,7 @@
 
 package com.liferay.headless.commerce.bom.internal.resource.v1_0.factory;
 
-import com.liferay.headless.commerce.bom.resource.v1_0.AreaResource;
+import com.liferay.headless.commerce.bom.resource.v1_0.DiagramResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -50,30 +50,30 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Alessio Antonio Rendina
  * @generated
  */
-@Component(immediate = true, service = AreaResource.Factory.class)
+@Component(immediate = true, service = DiagramResource.Factory.class)
 @Generated("")
-public class AreaResourceFactoryImpl implements AreaResource.Factory {
+public class DiagramResourceFactoryImpl implements DiagramResource.Factory {
 
 	@Override
-	public AreaResource.Builder create() {
-		return new AreaResource.Builder() {
+	public DiagramResource.Builder create() {
+		return new DiagramResource.Builder() {
 
 			@Override
-			public AreaResource build() {
+			public DiagramResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (AreaResource)ProxyUtil.newProxyInstance(
-					AreaResource.class.getClassLoader(),
-					new Class<?>[] {AreaResource.class},
+				return (DiagramResource)ProxyUtil.newProxyInstance(
+					DiagramResource.class.getClassLoader(),
+					new Class<?>[] {DiagramResource.class},
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _preferredLocale, _user));
 			}
 
 			@Override
-			public AreaResource.Builder checkPermissions(
+			public DiagramResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -82,7 +82,7 @@ public class AreaResourceFactoryImpl implements AreaResource.Factory {
 			}
 
 			@Override
-			public AreaResource.Builder httpServletRequest(
+			public DiagramResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -91,7 +91,7 @@ public class AreaResourceFactoryImpl implements AreaResource.Factory {
 			}
 
 			@Override
-			public AreaResource.Builder preferredLocale(
+			public DiagramResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -100,7 +100,7 @@ public class AreaResourceFactoryImpl implements AreaResource.Factory {
 			}
 
 			@Override
-			public AreaResource.Builder user(User user) {
+			public DiagramResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -116,12 +116,12 @@ public class AreaResourceFactoryImpl implements AreaResource.Factory {
 
 	@Activate
 	protected void activate() {
-		AreaResource.FactoryHolder.factory = this;
+		DiagramResource.FactoryHolder.factory = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		AreaResource.FactoryHolder.factory = null;
+		DiagramResource.FactoryHolder.factory = null;
 	}
 
 	private Object _invoke(
@@ -146,26 +146,26 @@ public class AreaResourceFactoryImpl implements AreaResource.Factory {
 				_liberalPermissionCheckerFactory.create(user));
 		}
 
-		AreaResource areaResource = _componentServiceObjects.getService();
+		DiagramResource diagramResource = _componentServiceObjects.getService();
 
-		areaResource.setContextAcceptLanguage(
+		diagramResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		areaResource.setContextCompany(company);
+		diagramResource.setContextCompany(company);
 
-		areaResource.setContextHttpServletRequest(httpServletRequest);
-		areaResource.setContextUser(user);
+		diagramResource.setContextHttpServletRequest(httpServletRequest);
+		diagramResource.setContextUser(user);
 
 		try {
-			return method.invoke(areaResource, arguments);
+			return method.invoke(diagramResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(areaResource);
+			_componentServiceObjects.ungetService(diagramResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -177,7 +177,7 @@ public class AreaResourceFactoryImpl implements AreaResource.Factory {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AreaResource> _componentServiceObjects;
+	private ComponentServiceObjects<DiagramResource> _componentServiceObjects;
 
 	@Reference
 	private PermissionCheckerFactory _defaultPermissionCheckerFactory;

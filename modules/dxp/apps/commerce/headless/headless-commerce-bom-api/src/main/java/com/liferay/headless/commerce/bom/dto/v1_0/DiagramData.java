@@ -36,6 +36,7 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -44,26 +45,56 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AreaData")
+@GraphQLName("DiagramData")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AreaData")
-public class AreaData implements Serializable {
+@XmlRootElement(name = "DiagramData")
+public class DiagramData implements Serializable {
 
-	public static AreaData toDTO(String json) {
-		return ObjectMapperUtil.readValue(AreaData.class, json);
+	public static DiagramData toDTO(String json) {
+		return ObjectMapperUtil.readValue(DiagramData.class, json);
 	}
 
+	@DecimalMin("0")
 	@Schema
-	public String getId() {
+	public Long getFolderId() {
+		return folderId;
+	}
+
+	public void setFolderId(Long folderId) {
+		this.folderId = folderId;
+	}
+
+	@JsonIgnore
+	public void setFolderId(
+		UnsafeSupplier<Long, Exception> folderIdUnsafeSupplier) {
+
+		try {
+			folderId = folderIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long folderId;
+
+	@DecimalMin("0")
+	@Schema
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
 		try {
 			id = idUnsafeSupplier.get();
 		}
@@ -77,7 +108,7 @@ public class AreaData implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String id;
+	protected Long id;
 
 	@Schema
 	public String getImageUrl() {
@@ -197,13 +228,13 @@ public class AreaData implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AreaData)) {
+		if (!(object instanceof DiagramData)) {
 			return false;
 		}
 
-		AreaData areaData = (AreaData)object;
+		DiagramData diagramData = (DiagramData)object;
 
-		return Objects.equals(toString(), areaData.toString());
+		return Objects.equals(toString(), diagramData.toString());
 	}
 
 	@Override
@@ -218,6 +249,16 @@ public class AreaData implements Serializable {
 
 		sb.append("{");
 
+		if (folderId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"folderId\": ");
+
+			sb.append(folderId);
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -225,11 +266,7 @@ public class AreaData implements Serializable {
 
 			sb.append("\"id\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(id));
-
-			sb.append("\"");
+			sb.append(id);
 		}
 
 		if (imageUrl != null) {
@@ -307,7 +344,7 @@ public class AreaData implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.AreaData",
+		defaultValue = "com.liferay.headless.commerce.bom.dto.v1_0.DiagramData",
 		name = "x-class-name"
 	)
 	public String xClassName;

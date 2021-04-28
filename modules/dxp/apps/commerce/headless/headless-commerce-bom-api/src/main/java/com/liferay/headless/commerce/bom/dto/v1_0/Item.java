@@ -347,7 +347,7 @@ public class Item implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		AREA("area"), FOLDER("folder");
+		DIAGRAM("diagram"), FOLDER("folder");
 
 		@JsonCreator
 		public static Type create(String value) {

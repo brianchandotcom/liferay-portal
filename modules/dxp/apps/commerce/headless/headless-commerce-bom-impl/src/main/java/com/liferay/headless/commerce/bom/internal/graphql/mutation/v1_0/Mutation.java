@@ -14,7 +14,9 @@
 
 package com.liferay.headless.commerce.bom.internal.graphql.mutation.v1_0;
 
+import com.liferay.headless.commerce.bom.dto.v1_0.Diagram;
 import com.liferay.headless.commerce.bom.dto.v1_0.Spot;
+import com.liferay.headless.commerce.bom.resource.v1_0.DiagramResource;
 import com.liferay.headless.commerce.bom.resource.v1_0.SpotResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -44,6 +46,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setDiagramResourceComponentServiceObjects(
+		ComponentServiceObjects<DiagramResource>
+			diagramResourceComponentServiceObjects) {
+
+		_diagramResourceComponentServiceObjects =
+			diagramResourceComponentServiceObjects;
+	}
+
 	public static void setSpotResourceComponentServiceObjects(
 		ComponentServiceObjects<SpotResource>
 			spotResourceComponentServiceObjects) {
@@ -53,43 +63,41 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Spot createAreaIdSpot(
+	public Diagram updateProductIdDiagram(
+			@GraphQLName("id") Long id, @GraphQLName("diagram") Diagram diagram)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_diagramResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			diagramResource -> diagramResource.putProductIdDiagram(
+				id, diagram));
+	}
+
+	@GraphQLField
+	public Spot createDiagramIdSpot(
 			@GraphQLName("id") Long id, @GraphQLName("spot") Spot spot)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_spotResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			spotResource -> spotResource.postAreaIdSpot(id, spot));
+			spotResource -> spotResource.postDiagramIdSpot(id, spot));
 	}
 
 	@GraphQLField
-	public Response createAreaIdSpotBatch(
-			@GraphQLName("id") Long id,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_spotResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			spotResource -> spotResource.postAreaIdSpotBatch(
-				id, callbackURL, object));
-	}
-
-	@GraphQLField
-	public Response deleteAreaIdSpot(
+	public Response deleteDiagramIdSpot(
 			@GraphQLName("id") Long id, @GraphQLName("spotId") Long spotId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_spotResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			spotResource -> spotResource.deleteAreaIdSpot(id, spotId));
+			spotResource -> spotResource.deleteDiagramIdSpot(id, spotId));
 	}
 
 	@GraphQLField
-	public Response updateAreaIdSpot(
+	public Response updateDiagramIdSpot(
 			@GraphQLName("id") Long id, @GraphQLName("spotId") Long spotId,
 			@GraphQLName("spot") Spot spot)
 		throws Exception {
@@ -97,7 +105,7 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_spotResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			spotResource -> spotResource.putAreaIdSpot(id, spotId, spot));
+			spotResource -> spotResource.putDiagramIdSpot(id, spotId, spot));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -138,6 +146,19 @@ public class Mutation {
 		}
 	}
 
+	private void _populateResourceContext(DiagramResource diagramResource)
+		throws Exception {
+
+		diagramResource.setContextAcceptLanguage(_acceptLanguage);
+		diagramResource.setContextCompany(_company);
+		diagramResource.setContextHttpServletRequest(_httpServletRequest);
+		diagramResource.setContextHttpServletResponse(_httpServletResponse);
+		diagramResource.setContextUriInfo(_uriInfo);
+		diagramResource.setContextUser(_user);
+		diagramResource.setGroupLocalService(_groupLocalService);
+		diagramResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(SpotResource spotResource)
 		throws Exception {
 
@@ -151,6 +172,8 @@ public class Mutation {
 		spotResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<DiagramResource>
+		_diagramResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SpotResource>
 		_spotResourceComponentServiceObjects;
 

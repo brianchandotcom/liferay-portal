@@ -14,10 +14,11 @@
 
 package com.liferay.headless.commerce.bom.internal.dto.v1_0.converter;
 
-import com.liferay.commerce.bom.model.CommerceBOMEntry;
-import com.liferay.commerce.bom.service.CommerceBOMEntryService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry;
+import com.liferay.commerce.shop.by.diagram.service.CPDefinitionDiagramEntryService;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.bom.dto.v1_0.Spot;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -31,10 +32,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=com.liferay.commerce.bom.model.CommerceBOMEntry",
+	property = "model.class.name=com.liferay.commerce.shop.by.diagram.model.CPDefinitionDiagramEntry",
 	service = {DTOConverter.class, SpotDTOConverter.class}
 )
-public class SpotDTOConverter implements DTOConverter<CommerceBOMEntry, Spot> {
+public class SpotDTOConverter
+	implements DTOConverter<CPDefinitionDiagramEntry, Spot> {
 
 	@Override
 	public String getContentType() {
@@ -45,20 +47,25 @@ public class SpotDTOConverter implements DTOConverter<CommerceBOMEntry, Spot> {
 	public Spot toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		CommerceBOMEntry commerceBOMEntry =
-			_commerceBOMEntryService.getCommerceBOMEntry(
+		CPDefinitionDiagramEntry cpDefinitionDiagramEntry =
+			_cpDefinitionDiagramEntryService.getCPDefinitionDiagramEntry(
 				(Long)dtoConverterContext.getId());
 
+		ExpandoBridge expandoBridge =
+			cpDefinitionDiagramEntry.getExpandoBridge();
+
 		CPInstance cpInstance = _cpInstanceService.fetchCProductInstance(
-			commerceBOMEntry.getCProductId(),
-			commerceBOMEntry.getCPInstanceUuid());
+			cpDefinitionDiagramEntry.getCProductId(),
+			cpDefinitionDiagramEntry.getCPInstanceUuid());
 
 		return new Spot() {
 			{
-				id = commerceBOMEntry.getCommerceBOMEntryId();
-				number = commerceBOMEntry.getNumber();
+				expando = expandoBridge.getAttributes();
+				id = cpDefinitionDiagramEntry.getCPDefinitionDiagramEntryId();
+				number = cpDefinitionDiagramEntry.getNumber();
 				position = _positionDTOConverter.toDTO(dtoConverterContext);
-				productId = commerceBOMEntry.getCPInstanceUuid();
+				productId = cpDefinitionDiagramEntry.getCPInstanceUuid();
+				quantity = cpDefinitionDiagramEntry.getQuantity();
 
 				if (cpInstance == null) {
 					sku = StringPool.BLANK;
@@ -71,7 +78,7 @@ public class SpotDTOConverter implements DTOConverter<CommerceBOMEntry, Spot> {
 	}
 
 	@Reference
-	private CommerceBOMEntryService _commerceBOMEntryService;
+	private CPDefinitionDiagramEntryService _cpDefinitionDiagramEntryService;
 
 	@Reference
 	private CPInstanceService _cpInstanceService;

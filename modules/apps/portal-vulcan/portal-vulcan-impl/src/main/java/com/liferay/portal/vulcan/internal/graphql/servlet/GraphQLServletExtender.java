@@ -578,22 +578,30 @@ public class GraphQLServletExtender {
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, GraphQLObjectDefinition.class,
 				"model.class.name",
-				new ServiceTrackerMapListener<String, GraphQLObjectDefinition, GraphQLObjectDefinition>() {
+				new ServiceTrackerMapListener
+					<String, GraphQLObjectDefinition,
+					 GraphQLObjectDefinition>() {
+
 					@Override
 					public void keyEmitted(
-						ServiceTrackerMap<String, GraphQLObjectDefinition> serviceTrackerMap,
+						ServiceTrackerMap<String, GraphQLObjectDefinition>
+							serviceTrackerMap,
 						String key, GraphQLObjectDefinition service,
 						GraphQLObjectDefinition content) {
+
 						_servlet = null;
 					}
 
 					@Override
 					public void keyRemoved(
-						ServiceTrackerMap<String, GraphQLObjectDefinition> serviceTrackerMap,
+						ServiceTrackerMap<String, GraphQLObjectDefinition>
+							serviceTrackerMap,
 						String key, GraphQLObjectDefinition service,
 						GraphQLObjectDefinition content) {
+
 						_servlet = null;
 					}
+
 				});
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
@@ -852,7 +860,7 @@ public class GraphQLServletExtender {
 				FieldCoordinates.coordinates("mutation", name),
 				(DataFetcher<Object>)environment -> {
 					_objectEntryLocalService.deleteObjectEntry(
-						environment.getArgument(idName));
+						environment.<Long>getArgument(idName));
 
 					return true;
 				}

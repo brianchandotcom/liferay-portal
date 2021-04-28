@@ -16,6 +16,8 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.CalendarFactory;
@@ -87,6 +89,7 @@ public class InitializeKernelUtilTestRule
 
 		_setUpCalendarFactoryUtil();
 		_setUpFileUtil();
+		_setUpJSONFactoryUtil();
 		_setUpHtmlUtil();
 		_setUpHttpUtil();
 
@@ -188,6 +191,21 @@ public class InitializeKernelUtilTestRule
 		Constructor<?> constructor = clazz.getDeclaredConstructor();
 
 		httpUtil.setHttp((Http)constructor.newInstance());
+	}
+
+	private void _setUpJSONFactoryUtil() throws ReflectiveOperationException {
+		Thread thread = Thread.currentThread();
+
+		ClassLoader classLoader = thread.getContextClassLoader();
+
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		Class<?> clazz = classLoader.loadClass(
+			"com.liferay.portal.json.JSONFactoryImpl");
+
+		Constructor<?> constructor = clazz.getDeclaredConstructor();
+
+		jsonFactoryUtil.setJSONFactory((JSONFactory)constructor.newInstance());
 	}
 
 	private Properties _setUpPropsUtil(Map<String, String> map)

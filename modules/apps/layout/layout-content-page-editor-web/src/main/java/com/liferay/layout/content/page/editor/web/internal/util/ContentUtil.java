@@ -17,6 +17,9 @@ package com.liferay.layout.content.page.editor.web.internal.util;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.kernel.model.ClassType;
+import com.liferay.asset.kernel.model.ClassTypeReader;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.info.item.InfoItemReference;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -271,6 +275,19 @@ public class ContentUtil {
 			).buildString());
 	}
 
+	private static AssetRendererFactory<?> _getAssetRendererFactory(
+		String className) {
+
+		// LPS-111037
+
+		if (Objects.equals(className, FileEntry.class.getName())) {
+			className = DLFileEntry.class.getName();
+		}
+
+		return AssetRendererFactoryRegistryUtil.
+			getAssetRendererFactoryByClassName(className);
+	}
+
 	private static Set<LayoutDisplayPageObjectProvider<?>>
 		_getFragmentEntryLinkMappedLayoutDisplayPageObjectProviders(
 			FragmentEntryLink fragmentEntryLink, Set<Long> mappedClassPKs) {
@@ -393,6 +410,26 @@ public class ContentUtil {
 		}
 
 		return layoutDisplayPageObjectProviders;
+	}
+
+	private static String _getIcon(String className, long classPK)
+		throws Exception {
+
+		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
+			className);
+
+		if (assetRendererFactory == null) {
+			return "web-content";
+		}
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		if (assetRenderer == null) {
+			return "web-content";
+		}
+
+		return assetRenderer.getIconCssClass();
 	}
 
 	private static LayoutDisplayPageObjectProvider<?>
@@ -559,6 +596,11 @@ public class ContentUtil {
 			"classNameId", layoutClassedModelUsage.getClassNameId()
 		).put(
 			"classPK", layoutClassedModelUsage.getClassPK()
+		).put(
+			"icon",
+			_getIcon(
+				layoutClassedModelUsage.getClassName(),
+				layoutClassedModelUsage.getClassPK())
 		);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
@@ -572,15 +614,21 @@ public class ContentUtil {
 					layoutClassedModelUsage.getClassPK()));
 
 		return mappedContentJSONObject.put(
-			"name",
-			ResourceActionsUtil.getModelResource(
-				themeDisplay.getLocale(),
-				layoutClassedModelUsage.getClassName())
-		).put(
 			"status", _getStatusJSONObject(layoutClassedModelUsage)
+		).put(
+			"subtype",
+			_getSubtype(
+				layoutClassedModelUsage.getClassName(),
+				layoutDisplayPageObjectProvider.getClassTypeId(),
+				themeDisplay.getLocale())
 		).put(
 			"title",
 			layoutDisplayPageObjectProvider.getTitle(themeDisplay.getLocale())
+		).put(
+			"type",
+			ResourceActionsUtil.getModelResource(
+				themeDisplay.getLocale(),
+				layoutClassedModelUsage.getClassName())
 		).put(
 			"usagesCount",
 			LayoutClassedModelUsageLocalServiceUtil.
@@ -644,6 +692,30 @@ public class ContentUtil {
 			"style",
 			WorkflowConstants.getStatusStyle(latestAssetRenderer.getStatus())
 		);
+	}
+
+	private static String _getSubtype(
+		String className, long classTypeId, Locale locale) {
+
+		AssetRendererFactory<?> assetRendererFactory = _getAssetRendererFactory(
+			className);
+
+		if (assetRendererFactory == null) {
+			return StringPool.BLANK;
+		}
+
+		ClassTypeReader classTypeReader =
+			assetRendererFactory.getClassTypeReader();
+
+		try {
+			ClassType classType = classTypeReader.getClassType(
+				classTypeId, locale);
+
+			return classType.getName();
+		}
+		catch (Exception exception) {
+			return StringPool.BLANK;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ContentUtil.class);

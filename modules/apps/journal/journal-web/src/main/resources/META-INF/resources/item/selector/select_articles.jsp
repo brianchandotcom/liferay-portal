@@ -60,7 +60,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 				<c:when test="<%= curArticle != null %>">
 
 					<%
-					row.setCssClass("articles " + row.getCssClass());
+					row.setCssClass("articles selector-button" + row.getCssClass());
 
 					JSONObject articleJSONObject = JSONUtil.put(
 						"className", JournalArticle.class.getName()
@@ -86,6 +86,8 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 
 					row.setData(
 						HashMapBuilder.<String, Object>put(
+							"returnType", InfoItemItemSelectorReturnType.class.getName()
+						).put(
 							"value", articleJSONObject.toString()
 						).build());
 					%>
@@ -374,65 +376,3 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule" sandbox="<%= true %>">
-	var delegate = delegateModule.default;
-
-	var selectArticleHandler = delegate(
-		document.querySelector('#<portlet:namespace />articlesContainer'),
-		'click',
-		'.articles',
-		(event) => {
-			<c:choose>
-				<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") %>'>
-					var activeFormCheckCards = document.querySelectorAll(
-						'.form-check-card.active'
-					);
-
-					var formCheckCard = event.delegateTarget.closest('.form-check-card');
-
-					if (activeFormCheckCards.length) {
-						activeFormCheckCards.forEach((card) => {
-							card.classList.remove('active');
-						});
-					}
-
-					if (formCheckCard) {
-						formCheckCard.classList.add('active');
-					}
-				</c:when>
-				<c:otherwise>
-					var activeArticles = document.querySelectorAll('.articles.active');
-					var articles = event.delegateTarget.closest('.articles');
-
-					if (activeArticles.length) {
-						activeArticles.forEach((article) => {
-							article.classList.remove('active');
-						});
-					}
-
-					if (articles) {
-						articles.classList.add('active');
-					}
-				</c:otherwise>
-			</c:choose>
-
-			Liferay.Util.getOpener().Liferay.fire(
-				'<%= journalArticleItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
-				{
-					data: {
-						returnType:
-							'<%= InfoItemItemSelectorReturnType.class.getName() %>',
-						value: event.delegateTarget.dataset.value,
-					},
-				}
-			);
-		}
-	);
-
-	Liferay.on('destroyPortlet', function removeListener() {
-		selectArticleHandler.dispose();
-
-		Liferay.detach('destroyPortlet', removeListener);
-	});
-</aui:script>

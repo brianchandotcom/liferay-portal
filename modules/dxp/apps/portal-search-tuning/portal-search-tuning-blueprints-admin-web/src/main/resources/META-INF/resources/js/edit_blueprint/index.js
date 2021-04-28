@@ -357,7 +357,24 @@ function EditBlueprintForm({
 				})
 			);
 		}
-		catch {
+		catch (error) {
+			setPreviewInfo({
+				loading: false,
+				results: {
+					errors: [
+						{
+							msg: Liferay.Language.get(
+								'the-configuration-has-missing-or-invalid-values'
+							),
+						},
+					],
+				},
+			});
+
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+
 			return;
 		}
 

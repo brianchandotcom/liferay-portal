@@ -103,7 +103,7 @@ public class DLFileEntryFileNameSearchTest {
 
 		addFileEntriesWithTitleSameAsFileName("One.jpg", "Two.JPG");
 
-		assertSearch("jp", Arrays.asList("One.jpg"));
+		assertSearch("jp", Arrays.asList("One.jpg", "Two.JPG"));
 	}
 
 	@Test

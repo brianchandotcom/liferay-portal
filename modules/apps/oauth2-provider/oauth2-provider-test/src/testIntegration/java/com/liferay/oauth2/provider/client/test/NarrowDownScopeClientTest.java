@@ -17,6 +17,7 @@ package com.liferay.oauth2.provider.client.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.internal.test.TestApplication;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -76,12 +77,14 @@ public class NarrowDownScopeClientTest extends BaseClientTestCase {
 				"test@liferay.com", "test", "GET"),
 			Function.identity());
 
-		Assert.assertEquals("GET", parseScopeString(response));
+		JSONObject jsonObject = parseJSONObject(response);
+
+		Assert.assertEquals("GET", jsonObject.getString("scope"));
 
 		WebTarget webTarget = getWebTarget("methods");
 
 		Invocation.Builder builder = authorize(
-			webTarget.request(), parseTokenString(response));
+			webTarget.request(), jsonObject.getString("access_token"));
 
 		Response postResponse = builder.post(
 			Entity.entity("", MediaType.TEXT_PLAIN_TYPE));

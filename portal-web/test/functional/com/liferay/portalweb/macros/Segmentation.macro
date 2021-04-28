@@ -32,7 +32,7 @@ definition {
 
 		IFrame.selectTopFrame();
 
-		Button.clickSelect();
+		Click(locator1 = "Modal#SELECT_BUTTON");
 	}
 
 	macro changeCriterionInputDate {

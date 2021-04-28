@@ -352,8 +352,6 @@ definition {
 
 		Button.clickSave();
 
-		Button.clickSave();
-
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
 
 		ContentPages.clickPencil();

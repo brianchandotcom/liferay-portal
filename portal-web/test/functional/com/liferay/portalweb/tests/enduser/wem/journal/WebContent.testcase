@@ -829,6 +829,63 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a use case for LPS-98669. Ignoring until LPS-127335 is fixed"
+	@ignore = "true"
+	@priority = "4"
+	test SelectLinkToPagePage {
+		for (var pageName : list "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "${pageName}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Test Structure Description",
+			structureName = "Test Structure");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Link to Page",
+			fieldName = "Link to Page");
+
+		WebContentStructures.saveCP(structureName = "Test Structure");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		NavItem.gotoTemplates();
+
+		WebContentTemplates.addCP(
+			structureName = "Test Structure",
+			templateDescription = "Test Template Description",
+			templateFieldNames = "Link to Page",
+			templateName = "Test Template");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
+
+		WebContent.addWithStructureCP(
+			structureName = "Test Structure",
+			templateName = "Test Template",
+			webContentLinkToPage = "P11",
+			webContentTitle = "WC Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentLinkToPage = "P11",
+			webContentTitle = "WC Title");
+	}
+
 	@priority = "4"
 	test UserEditWebContent {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

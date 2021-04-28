@@ -143,12 +143,10 @@ public class DLFileEntryFileNameSearchWhenTitleDifferentThanFileNameTest {
 	public void testExtensionAloneSubstringMatchesExtensionAndPathFields()
 		throws Exception {
 
-		_createFileEntryFileNameTitle(
-			_group, "document.jpg", RandomTestUtil.randomString());
-		_createFileEntryFileNameTitle(
-			_group, "image.JPG", RandomTestUtil.randomString());
+		_createFileEntryFileNameTitle(_group, "document.jpg", "Title One");
+		_createFileEntryFileNameTitle(_group, "image.JPG", "Title Two");
 
-		assertSearch("jp", Collections.emptyList());
+		assertSearch("jp", Arrays.asList("Title One", "Title Two"));
 	}
 
 	@Test

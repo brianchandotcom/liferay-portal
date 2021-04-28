@@ -370,6 +370,38 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-browser-property">
+		<attribute name="property.name" />
+
+		<sequential>
+			<check-config />
+
+			<var name="property.name" unset="true" />
+			<var name="@{property.name}" unset="true" />
+
+			<property name="property.name" value="@{property.name}" />
+
+			<beanshell>
+				<![CDATA[
+					String propertyName = project.getProperty("property.name");
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("browser.");
+					sb.append(project.getProperty("browser.type"));
+					sb.append(".");
+					sb.append(propertyName.substring(8));
+
+					propertyValue = project.getProperty(sb.toString());
+
+					if (propertyValue != null) {
+						project.setProperty(propertyName, propertyValue);
+					}
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-commerce-license-product-name">
 		<sequential>
 			<get-testcase-property property.name="commerce.license.file" />

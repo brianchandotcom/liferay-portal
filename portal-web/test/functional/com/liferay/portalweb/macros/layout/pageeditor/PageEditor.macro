@@ -803,11 +803,11 @@ definition {
 
 	macro clickManagementBar {
 		var elementHeight = selenium.getElementHeight("PageEditor#MANAGEMENT_BAR");
-		var offSetY = MathUtil.product("50","${elementHeight}");
+		var offSetY = MathUtil.product("10","${elementHeight}");
 		var offSetY = MathUtil.quotient("${offSetY}","100");
 
 		var elementWidth = selenium.getElementWidth("PageEditor#MANAGEMENT_BAR");
-		var offSetX = MathUtil.product("25","${elementWidth}");
+		var offSetX = MathUtil.product("50","${elementWidth}");
 		var offSetX = MathUtil.quotient("${offSetX}","100");
 
 		Click.clickAt(

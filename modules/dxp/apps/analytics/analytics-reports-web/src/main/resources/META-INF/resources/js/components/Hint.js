@@ -18,14 +18,7 @@ import Popover from './Popover';
 
 export default function Hint({align, message, position, secondary, title}) {
 	const iconRef = useRef();
-	const [showTooltip, setShowTooltip] = useState(false);
-
-	const handleMouseEnter = () => {
-		setShowTooltip(true);
-	};
-	const handleMouseLeave = () => {
-		setShowTooltip(false);
-	};
+	const [showPopover, setShowPopover] = useState(false);
 
 	const hintClasses = className('p-1', 'small', {
 		'text-secondary': secondary,
@@ -35,8 +28,8 @@ export default function Hint({align, message, position, secondary, title}) {
 		<>
 			<span
 				className={hintClasses}
-				onMouseEnter={handleMouseEnter}
-				onMouseLeave={handleMouseLeave}
+				onMouseEnter={() => setShowPopover(true)}
+				onMouseLeave={() => setShowPopover(false)}
 				ref={iconRef}
 			>
 				<ClayIcon
@@ -45,7 +38,7 @@ export default function Hint({align, message, position, secondary, title}) {
 				/>
 			</span>
 
-			{showTooltip && (
+			{showPopover && (
 				<Popover
 					align={align}
 					anchor={iconRef.current}

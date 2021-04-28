@@ -16,12 +16,40 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import React from 'react';
 
 const noop = () => {};
 
+const TranslateAutoTranslateRow = ({
+	autoTranslateEnabled,
+	children,
+	handleAutoTranslateClick = noop,
+	label,
+}) =>
+	autoTranslateEnabled ? (
+		<ClayLayout.Row>
+			<ClayLayout.ContentCol expand>{children}</ClayLayout.ContentCol>
+			<ClayLayout.ContentCol className="align-self-top col-autotranslate-field">
+				<ClayButton
+					displayType="secondary"
+					monospaced
+					onClick={handleAutoTranslateClick}
+				>
+					<ClayIcon symbol="automatic-translate" />
+					<span className="sr-only">
+						Auto translate {label} field
+					</span>
+				</ClayButton>
+			</ClayLayout.ContentCol>
+		</ClayLayout.Row>
+	) : (
+		children
+	);
+
 const TranslateFieldEditor = ({
+	autoTranslateEnabled,
 	editorConfiguration,
 	id,
 	label,
@@ -30,41 +58,53 @@ const TranslateFieldEditor = ({
 	targetContent,
 	targetContentDir,
 	onChange = noop,
+	handleAutoTranslateClick,
 }) => (
-	<ClayLayout.Row>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label">{label}</label>
-				<div
-					className="translation-editor-preview"
-					dangerouslySetInnerHTML={{__html: sourceContent}}
-					dir={sourceContentDir}
-				/>
-			</ClayForm.Group>
-		</ClayLayout.Col>
-		<ClayLayout.Col md={6}>
-			<ClayForm.Group>
-				<label className="control-label">{label}</label>
-				<ClassicEditor
-					data={targetContent}
-					editorConfig={{
-						...editorConfiguration.editorConfig,
-						contentsLangDirection: targetContentDir,
-					}}
-					name={id}
-					onChange={(data) => {
-						if (targetContent !== data.trim()) {
-							onChange(data);
-						}
-					}}
-				/>
-				<input defaultValue={targetContent} name={id} type="hidden" />
-			</ClayForm.Group>
-		</ClayLayout.Col>
-	</ClayLayout.Row>
+	<TranslateAutoTranslateRow
+		autoTranslateEnabled={autoTranslateEnabled}
+		handleAutoTranslateClick={handleAutoTranslateClick}
+		label={label}
+	>
+		<ClayLayout.Row>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label">{label}</label>
+					<div
+						className="translation-editor-preview"
+						dangerouslySetInnerHTML={{__html: sourceContent}}
+						dir={sourceContentDir}
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label">{label}</label>
+					<ClassicEditor
+						data={targetContent}
+						editorConfig={{
+							...editorConfiguration.editorConfig,
+							contentsLangDirection: targetContentDir,
+						}}
+						name={id}
+						onChange={(data) => {
+							if (targetContent !== data.trim()) {
+								onChange(data);
+							}
+						}}
+					/>
+					<input
+						defaultValue={targetContent}
+						name={id}
+						type="hidden"
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+		</ClayLayout.Row>
+	</TranslateAutoTranslateRow>
 );
 
 const TranslateFieldInput = ({
+	autoTranslateEnabled,
 	id,
 	label,
 	multiline,
@@ -73,58 +113,51 @@ const TranslateFieldInput = ({
 	targetContent,
 	targetContentDir,
 	onChange = noop,
-	handleAutoTranslateClick = noop,
+	handleAutoTranslateClick,
 }) => (
-	<ClayLayout.Row>
-		<ClayLayout.ContentCol expand>
-			<ClayLayout.Row>
-				<ClayLayout.Col md={6}>
-					<ClayForm.Group>
-						<label className="control-label">{label}</label>
-						<ClayInput
-							component={multiline ? 'textarea' : undefined}
-							defaultValue={sourceContent}
-							dir={sourceContentDir}
-							readOnly
-							type="text"
-						/>
-					</ClayForm.Group>
-				</ClayLayout.Col>
-				<ClayLayout.Col md={6}>
-					<ClayForm.Group>
-						<label className="control-label" htmlFor={id}>
-							{label}
-						</label>
-						<ClayInput
-							component={multiline ? 'textarea' : undefined}
-							dir={targetContentDir}
-							id={id}
-							name={id}
-							onChange={(event) => {
-								const data = event.target.value;
-								onChange(data);
-							}}
-							type="text"
-							value={targetContent}
-						/>
-					</ClayForm.Group>
-				</ClayLayout.Col>
-			</ClayLayout.Row>
-		</ClayLayout.ContentCol>
-		<ClayLayout.ContentCol className="align-self-top col-autotranslate-field">
-			<ClayButton
-				displayType="secondary"
-				monospaced
-				onClick={handleAutoTranslateClick}
-			>
-				<ClayIcon symbol="automatic-translate" />
-				<span className="sr-only">Auto translate {label} field</span>
-			</ClayButton>
-		</ClayLayout.ContentCol>
-	</ClayLayout.Row>
+	<TranslateAutoTranslateRow
+		autoTranslateEnabled={autoTranslateEnabled}
+		handleAutoTranslateClick={handleAutoTranslateClick}
+		label={label}
+	>
+		<ClayLayout.Row>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label">{label}</label>
+					<ClayInput
+						component={multiline ? 'textarea' : undefined}
+						defaultValue={sourceContent}
+						dir={sourceContentDir}
+						readOnly
+						type="text"
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+			<ClayLayout.Col md={6}>
+				<ClayForm.Group>
+					<label className="control-label" htmlFor={id}>
+						{label}
+					</label>
+					<ClayInput
+						component={multiline ? 'textarea' : undefined}
+						dir={targetContentDir}
+						id={id}
+						name={id}
+						onChange={(event) => {
+							const data = event.target.value;
+							onChange(data);
+						}}
+						type="text"
+						value={targetContent}
+					/>
+				</ClayForm.Group>
+			</ClayLayout.Col>
+		</ClayLayout.Row>
+	</TranslateAutoTranslateRow>
 );
 
 const TranslateFieldSetEntries = ({
+	autoTranslateEnabled,
 	fetchAutoTranslateField,
 	infoFieldSetEntries,
 	onChange,
@@ -133,7 +166,11 @@ const TranslateFieldSetEntries = ({
 }) =>
 	infoFieldSetEntries.map(({fields, legend}) => (
 		<React.Fragment key={legend}>
-			<ClayLayout.Row className="row-autotranslate-title">
+			<ClayLayout.Row
+				className={classNames({
+					'row-autotranslate-title': autoTranslateEnabled,
+				})}
+			>
 				<ClayLayout.Col md={6}>
 					<div className="fieldset-title">{legend}</div>
 				</ClayLayout.Col>
@@ -144,6 +181,7 @@ const TranslateFieldSetEntries = ({
 			{fields.map((field) => {
 				const fieldProps = {
 					...field,
+					autoTranslateEnabled,
 					handleAutoTranslateClick: () =>
 						fetchAutoTranslateField(field.id),
 					id: `${portletNamespace}${field.id}`,

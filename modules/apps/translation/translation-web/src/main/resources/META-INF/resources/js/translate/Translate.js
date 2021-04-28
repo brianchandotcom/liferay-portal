@@ -261,6 +261,7 @@ const Translate = ({
 							/>
 
 							<TranslateFieldSetEntries
+								autoTranslateEnabled={autoTranslateEnabled}
 								fetchAutoTranslateField={
 									fetchAutoTranslateField
 								}

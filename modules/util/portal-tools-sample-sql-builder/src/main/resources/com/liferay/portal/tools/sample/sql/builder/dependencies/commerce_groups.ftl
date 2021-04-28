@@ -1,4 +1,4 @@
-<#if dataFactory.maxCPDefinitionAttachmentTypePDFCount != 0>
+<#if dataFactory.maxCommerceGroupCount != 0>
 	<#assign
 		commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels()
 
@@ -150,7 +150,9 @@
 
 				${csvFileWriter.write("cpDefinition", cpDefinitionModel.CPDefinitionId + "\n")}
 
-				<#include "commerce_product_attachment_file_entries.ftl">
+				<#if dataFactory.maxCPDefinitionAttachmentTypePDFCount != 0>
+					<#include "commerce_product_attachment_file_entries.ftl">
+				</#if>
 			</#list>
 
 			${dataFactory.toInsertSQL(friendlyURLEntryModel)}

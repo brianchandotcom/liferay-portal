@@ -603,6 +603,10 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_BLOGS_ENTRY_COMMENT_COUNT;
 	}
 
+	public int getMaxCommerceGroupCount() {
+		return BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT;
+	}
+
 	public int getMaxContentLayoutCount() {
 		return BenchmarksPropsValues.MAX_CONTENT_LAYOUT_COUNT;
 	}

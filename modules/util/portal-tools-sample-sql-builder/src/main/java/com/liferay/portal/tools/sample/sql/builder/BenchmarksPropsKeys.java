@@ -57,6 +57,9 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_COMMERCE_INVENTORY_WAREHOUSE_COUNT =
 		"sample.sql.max.commerce.inventory.warehouse.count";
 
+	public static final String MAX_COMMERCE_INVENTORY_WAREHOUSE_ITEM_QUANTITY =
+		"sample.sql.max.commerce.inventory.warehouse.item.quantity";
+
 	public static final String MAX_COMMERCE_ORDER_STATUS_CANCELLED_COUNT =
 		"sample.sql.max.commerce.order.status.cancelled.count";
 

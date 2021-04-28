@@ -20,7 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -124,14 +124,14 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 					"defaultLanguageId from JournalArticle");
 			ResultSet rs = ps.executeQuery()) {
 
-			List<UpdateJournalArticleLocalizedFieldsCallable>
+			List<UpdateJournalArticleLocalizedFieldsUpgradeCallable>
 				updateJournalArticleLocalizedFieldsCallables =
 					new ArrayList<>();
 
 			while (rs.next()) {
-				UpdateJournalArticleLocalizedFieldsCallable
+				UpdateJournalArticleLocalizedFieldsUpgradeCallable
 					updateJournalArticleLocalizedFieldsCallable =
-						new UpdateJournalArticleLocalizedFieldsCallable(
+						new UpdateJournalArticleLocalizedFieldsUpgradeCallable(
 							rs.getLong(1), rs.getLong(2), rs.getString(3),
 							rs.getString(4), rs.getString(5), sb.toString());
 
@@ -219,8 +219,8 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 					"defaultLanguageId = ''"));
 			ResultSet rs = ps.executeQuery()) {
 
-			List<UpdateDefaultLanguageCallable> updateDefaultLanguageCallables =
-				new ArrayList<>();
+			List<UpdateDefaultLanguageUpgradeCallable>
+				updateDefaultLanguageCallables = new ArrayList<>();
 
 			while (rs.next()) {
 				String columnValue = rs.getString(3);
@@ -237,9 +237,9 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 						_defaultSiteLocales.put(groupId, defaultSiteLocale);
 					}
 
-					UpdateDefaultLanguageCallable
+					UpdateDefaultLanguageUpgradeCallable
 						updateDefaultLanguageCallable =
-							new UpdateDefaultLanguageCallable(
+							new UpdateDefaultLanguageUpgradeCallable(
 								rs.getLong(1), columnValue, defaultSiteLocale);
 
 					updateDefaultLanguageCallables.add(
@@ -276,10 +276,10 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 	private final CounterLocalService _counterLocalService;
 	private final Map<Long, Locale> _defaultSiteLocales = new HashMap<>();
 
-	private class UpdateDefaultLanguageCallable
-		extends UpgradeCallable<Boolean> {
+	private class UpdateDefaultLanguageUpgradeCallable
+		extends BaseUpgradeCallable<Boolean> {
 
-		public UpdateDefaultLanguageCallable(
+		public UpdateDefaultLanguageUpgradeCallable(
 			long id, String xml, Locale defaultSiteLocale) {
 
 			_id = id;
@@ -319,10 +319,10 @@ public class JournalArticleLocalizedValuesUpgradeProcess
 
 	}
 
-	private class UpdateJournalArticleLocalizedFieldsCallable
-		extends UpgradeCallable<Boolean> {
+	private class UpdateJournalArticleLocalizedFieldsUpgradeCallable
+		extends BaseUpgradeCallable<Boolean> {
 
-		public UpdateJournalArticleLocalizedFieldsCallable(
+		public UpdateJournalArticleLocalizedFieldsUpgradeCallable(
 				long id, long companyId, String title, String description,
 				String defaultLanguageId, String sql)
 			throws Exception {

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 import com.liferay.portal.util.PortalInstances;
@@ -59,15 +59,17 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			Role role = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.OWNER);
 
-			List<VerifyResourcedModelCallable> verifyResourcedModelCallables =
-				new ArrayList<>(verifiableResourcedModels.length);
+			List<VerifyResourcedModelUpgradeCallable>
+				verifyResourcedModelCallables = new ArrayList<>(
+					verifiableResourcedModels.length);
 
 			for (VerifiableResourcedModel verifiableResourcedModel :
 					verifiableResourcedModels) {
 
-				VerifyResourcedModelCallable verifyResourcedModelCallable =
-					new VerifyResourcedModelCallable(
-						role, verifiableResourcedModel);
+				VerifyResourcedModelUpgradeCallable
+					verifyResourcedModelCallable =
+						new VerifyResourcedModelUpgradeCallable(
+							role, verifiableResourcedModel);
 
 				verifyResourcedModelCallables.add(verifyResourcedModelCallable);
 			}
@@ -177,7 +179,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 					futures.add(
 						executorService.submit(
-							new AddResourcesCallable(
+							new AddResourcesUpgradeCallable(
 								role.getCompanyId(),
 								verifiableResourcedModel.getModelName(),
 								primKey, role.getRoleId(), userId, i, total)));
@@ -196,7 +198,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
 
-	private class AddResourcesCallable extends UpgradeCallable<Void> {
+	private class AddResourcesUpgradeCallable
+		extends BaseUpgradeCallable<Void> {
 
 		@Override
 		public Void doCall() throws Exception {
@@ -233,7 +236,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			return null;
 		}
 
-		private AddResourcesCallable(
+		private AddResourcesUpgradeCallable(
 			long companyId, String modelName, long primKey, long roleId,
 			long ownerId, int cur, int total) {
 
@@ -256,7 +259,8 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	}
 
-	private class VerifyResourcedModelCallable extends UpgradeCallable<Void> {
+	private class VerifyResourcedModelUpgradeCallable
+		extends BaseUpgradeCallable<Void> {
 
 		@Override
 		public Void doCall() throws Exception {
@@ -265,7 +269,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			return null;
 		}
 
-		private VerifyResourcedModelCallable(
+		private VerifyResourcedModelUpgradeCallable(
 			Role role, VerifiableResourcedModel verifiableResourcedModel) {
 
 			_role = role;

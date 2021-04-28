@@ -17,7 +17,7 @@ package com.liferay.portal.upgrade.util;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DBProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
@@ -44,7 +44,8 @@ public class ParallelUpgradeSchemaUtil {
 			for (String sqlFileName : sqlFileNames) {
 				futures.add(
 					executorService.submit(
-						new CallableSQLExecutor(dbProcess, sqlFileName)));
+						new UpgradeCallableSQLExecutor(
+							dbProcess, sqlFileName)));
 			}
 
 			for (Future<Void> future : futures) {
@@ -73,7 +74,8 @@ public class ParallelUpgradeSchemaUtil {
 			PortalExecutorManager.class, ParallelUpgradeSchemaUtil.class,
 			"_portalExecutorManager", true);
 
-	private static class CallableSQLExecutor extends UpgradeCallable<Void> {
+	private static class UpgradeCallableSQLExecutor
+		extends BaseUpgradeCallable<Void> {
 
 		@Override
 		public Void doCall() throws Exception {
@@ -84,7 +86,9 @@ public class ParallelUpgradeSchemaUtil {
 			return null;
 		}
 
-		private CallableSQLExecutor(DBProcess dbProcess, String sqlFileName) {
+		private UpgradeCallableSQLExecutor(
+			DBProcess dbProcess, String sqlFileName) {
+
 			_dbProcess = dbProcess;
 			_sqlFileName = sqlFileName;
 		}

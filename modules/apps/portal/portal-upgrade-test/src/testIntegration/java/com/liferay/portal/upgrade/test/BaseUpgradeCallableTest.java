@@ -18,7 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  * @author Alberto Chaparro
  */
 @RunWith(Arquillian.class)
-public class UpgradeCallableTest {
+public class BaseUpgradeCallableTest {
 
 	@ClassRule
 	@Rule
@@ -58,7 +58,7 @@ public class UpgradeCallableTest {
 						Executors.newFixedThreadPool(1);
 
 					Future<Long> future = executorService.submit(
-						new UpgradeCallableTestClass());
+						new UpgradeCallable());
 
 					executorService.shutdown();
 
@@ -72,7 +72,7 @@ public class UpgradeCallableTest {
 		upgradeProcess.upgrade();
 	}
 
-	private class UpgradeCallableTestClass extends UpgradeCallable<Long> {
+	private class UpgradeCallable extends BaseUpgradeCallable<Long> {
 
 		@Override
 		public Long doCall() throws Exception {

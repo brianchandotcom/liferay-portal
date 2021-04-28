@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.verify.model.VerifiableGroupedModel;
 
@@ -51,8 +51,9 @@ public class VerifyGroupedModel extends VerifyProcess {
 			unverifiedTableNames.add(verifiableGroupedModel.getTableName());
 		}
 
-		List<VerifiableGroupedModelCallable> verifiableGroupedModelCallables =
-			new ArrayList<>(unverifiedTableNames.size());
+		List<VerifiableGroupedModelUpgradeCallable>
+			verifiableGroupedModelCallables = new ArrayList<>(
+				unverifiedTableNames.size());
 
 		while (!unverifiedTableNames.isEmpty()) {
 			int count = unverifiedTableNames.size();
@@ -68,8 +69,10 @@ public class VerifyGroupedModel extends VerifyProcess {
 					continue;
 				}
 
-				VerifiableGroupedModelCallable verifiableGroupedModelCallable =
-					new VerifiableGroupedModelCallable(verifiableGroupedModel);
+				VerifiableGroupedModelUpgradeCallable
+					verifiableGroupedModelCallable =
+						new VerifiableGroupedModelUpgradeCallable(
+							verifiableGroupedModel);
 
 				verifiableGroupedModelCallables.add(
 					verifiableGroupedModelCallable);
@@ -200,7 +203,8 @@ public class VerifyGroupedModel extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyGroupedModel.class);
 
-	private class VerifiableGroupedModelCallable extends UpgradeCallable<Void> {
+	private class VerifiableGroupedModelUpgradeCallable
+		extends BaseUpgradeCallable<Void> {
 
 		@Override
 		public Void doCall() throws Exception {
@@ -209,7 +213,7 @@ public class VerifyGroupedModel extends VerifyProcess {
 			return null;
 		}
 
-		private VerifiableGroupedModelCallable(
+		private VerifiableGroupedModelUpgradeCallable(
 			VerifiableGroupedModel verifiableGroupedModel) {
 
 			_verifiableGroupedModel = verifiableGroupedModel;

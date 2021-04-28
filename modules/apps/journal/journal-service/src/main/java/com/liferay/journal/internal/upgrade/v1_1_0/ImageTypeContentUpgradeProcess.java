@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -71,7 +71,7 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 		sb.append("JournalArticle.articleId = JournalArticleImage.articleId ");
 		sb.append("and JournalArticle.version = JournalArticleImage.version)");
 
-		List<SaveImageFileEntryCallable> saveImageFileEntryCallables =
+		List<SaveImageFileEntryUpgradeCallable> saveImageFileEntryCallables =
 			new ArrayList<>();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -90,8 +90,8 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 				long folderId = _journalArticleImageUpgradeHelper.getFolderId(
 					userId, groupId, resourcePrimKey);
 
-				SaveImageFileEntryCallable saveImageFileEntryCallable =
-					new SaveImageFileEntryCallable(
+				SaveImageFileEntryUpgradeCallable saveImageFileEntryCallable =
+					new SaveImageFileEntryUpgradeCallable(
 						articleImageId, folderId, groupId, resourcePrimKey,
 						userId);
 
@@ -139,9 +139,10 @@ public class ImageTypeContentUpgradeProcess extends UpgradeProcess {
 		_journalArticleImageUpgradeHelper;
 	private final PortletFileRepository _portletFileRepository;
 
-	private class SaveImageFileEntryCallable extends UpgradeCallable<Boolean> {
+	private class SaveImageFileEntryUpgradeCallable
+		extends BaseUpgradeCallable<Boolean> {
 
-		public SaveImageFileEntryCallable(
+		public SaveImageFileEntryUpgradeCallable(
 			long articleImageId, long folderId, long groupId,
 			long resourcePrimaryKey, long userId) {
 

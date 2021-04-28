@@ -21,9 +21,9 @@ import java.util.concurrent.Callable;
 /**
  * @author Alberto Chaparro
  */
-public abstract class UpgradeCallable<T> implements Callable<T> {
+public abstract class BaseUpgradeCallable<T> implements Callable<T> {
 
-	public UpgradeCallable() {
+	public BaseUpgradeCallable() {
 		_companyId = CompanyThreadLocal.getCompanyId();
 	}
 

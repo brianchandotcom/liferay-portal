@@ -349,13 +349,12 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	private void _deleteCompanyAndDefaultUser() throws Exception {
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+		try (Statement statement = _connection.createStatement()) {
+			statement.execute(
 				"delete from Company where companyId = " + _COMPANY_ID);
-			PreparedStatement preparedStatement2 = _connection.prepareStatement(
-				"delete from User_ where companyId = " + _COMPANY_ID)) {
 
-			preparedStatement.executeUpdate();
-			preparedStatement2.executeUpdate();
+			statement.execute(
+				"delete from User_ where companyId = " + _COMPANY_ID);
 		}
 	}
 
@@ -417,17 +416,18 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	private void _insertCompanyAndDefaultUser() throws Exception {
-		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"insert into Company (companyId, webId) values (?, ?)");
+		try (PreparedStatement preparedStatement1 =
+				_connection.prepareStatement(
+					"insert into Company (companyId, webId) values (?, ?)");
 			PreparedStatement preparedStatement2 = _connection.prepareStatement(
 				"insert into User_ (userId, companyId, defaultUser, " +
 					"screenName, emailAddress, languageId, timeZoneId) " +
 						"values (?, ?, ?, ?, ?, ?, ?)")) {
 
-			preparedStatement.setLong(1, _COMPANY_ID);
-			preparedStatement.setString(2, "Test");
+			preparedStatement1.setLong(1, _COMPANY_ID);
+			preparedStatement1.setString(2, "Test");
 
-			preparedStatement.executeUpdate();
+			preparedStatement1.executeUpdate();
 
 			preparedStatement2.setLong(1, 1);
 			preparedStatement2.setLong(2, _COMPANY_ID);

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
@@ -61,12 +61,12 @@ public class VerifyUUID extends VerifyProcess {
 	protected void doVerify(VerifiableUUIDModel... verifiableUUIDModels)
 		throws Exception {
 
-		List<VerifyUUIDCallable> verifyUUIDCallables = new ArrayList<>(
+		List<VerifyUUIDUpgradeCallable> verifyUUIDCallables = new ArrayList<>(
 			verifiableUUIDModels.length);
 
 		for (VerifiableUUIDModel verifiableUUIDModel : verifiableUUIDModels) {
-			VerifyUUIDCallable verifyUUIDCallable = new VerifyUUIDCallable(
-				verifiableUUIDModel);
+			VerifyUUIDUpgradeCallable verifyUUIDCallable =
+				new VerifyUUIDUpgradeCallable(verifiableUUIDModel);
 
 			verifyUUIDCallables.add(verifyUUIDCallable);
 		}
@@ -129,7 +129,7 @@ public class VerifyUUID extends VerifyProcess {
 		}
 	}
 
-	private class VerifyUUIDCallable extends UpgradeCallable<Void> {
+	private class VerifyUUIDUpgradeCallable extends BaseUpgradeCallable<Void> {
 
 		@Override
 		public Void doCall() throws Exception {
@@ -138,7 +138,9 @@ public class VerifyUUID extends VerifyProcess {
 			return null;
 		}
 
-		private VerifyUUIDCallable(VerifiableUUIDModel verifiableUUIDModel) {
+		private VerifyUUIDUpgradeCallable(
+			VerifiableUUIDModel verifiableUUIDModel) {
+
 			_verifiableUUIDModel = verifiableUUIDModel;
 		}
 

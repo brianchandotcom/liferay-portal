@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -101,7 +101,7 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 			ps1.setLong(2, company.getCompanyId());
 			ps1.setLong(3, journalArticleClassNameId);
 
-			List<SaveAssetDisplayPageEntryCallable>
+			List<SaveAssetDisplayPageEntryUpgradeCallable>
 				saveAssetDisplayPageEntryCallables = new ArrayList<>();
 
 			try (ResultSet rs = ps1.executeQuery()) {
@@ -110,9 +110,9 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 					long resourcePrimKey = rs.getLong("resourcePrimKey");
 					String journalArticleUuid = rs.getString("classUuid");
 
-					SaveAssetDisplayPageEntryCallable
+					SaveAssetDisplayPageEntryUpgradeCallable
 						saveAssetDisplayPageEntryCallable =
-							new SaveAssetDisplayPageEntryCallable(
+							new SaveAssetDisplayPageEntryUpgradeCallable(
 								groupId, user.getUserId(),
 								journalArticleClassNameId, resourcePrimKey,
 								_generateLocalStagingAwareUUID(
@@ -213,10 +213,10 @@ public class AssetDisplayPageEntryUpgradeProcess extends UpgradeProcess {
 	private final Set<Long> _stagedGroupIds = new HashSet<>();
 	private final Map<Long, Map<String, String>> _uuidsMaps = new HashMap<>();
 
-	private class SaveAssetDisplayPageEntryCallable
-		extends UpgradeCallable<Boolean> {
+	private class SaveAssetDisplayPageEntryUpgradeCallable
+		extends BaseUpgradeCallable<Boolean> {
 
-		public SaveAssetDisplayPageEntryCallable(
+		public SaveAssetDisplayPageEntryUpgradeCallable(
 			long groupId, long userId, long classNameId, long classPK,
 			String uuid) {
 

@@ -18,7 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.upgrade.UpgradeCallable;
+import com.liferay.portal.kernel.upgrade.BaseUpgradeCallable;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -44,16 +44,16 @@ public class AssetEntryAssetCategoryRelUpgradeProcess extends UpgradeProcess {
 				"select entryId, categoryId from AssetEntries_AssetCategories");
 			ResultSet rs = ps.executeQuery()) {
 
-			List<InsertAssetEntryAssetCategoryRelCallable>
+			List<InsertAssetEntryAssetCategoryRelUpgradeCallable>
 				insertAssetEntryAssetCategoryRelCallables = new ArrayList<>();
 
 			while (rs.next()) {
 				long assetEntryId = rs.getLong("entryId");
 				long assetCategoryId = rs.getLong("categoryId");
 
-				InsertAssetEntryAssetCategoryRelCallable
+				InsertAssetEntryAssetCategoryRelUpgradeCallable
 					insertAssetEntryAssetCategoryRelCallable =
-						new InsertAssetEntryAssetCategoryRelCallable(
+						new InsertAssetEntryAssetCategoryRelUpgradeCallable(
 							assetEntryId, assetCategoryId);
 
 				insertAssetEntryAssetCategoryRelCallables.add(
@@ -97,10 +97,10 @@ public class AssetEntryAssetCategoryRelUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntryAssetCategoryRelUpgradeProcess.class);
 
-	private class InsertAssetEntryAssetCategoryRelCallable
-		extends UpgradeCallable<Boolean> {
+	private class InsertAssetEntryAssetCategoryRelUpgradeCallable
+		extends BaseUpgradeCallable<Boolean> {
 
-		public InsertAssetEntryAssetCategoryRelCallable(
+		public InsertAssetEntryAssetCategoryRelUpgradeCallable(
 			long assetEntryId, long assetCategoryId) {
 
 			_assetEntryId = assetEntryId;

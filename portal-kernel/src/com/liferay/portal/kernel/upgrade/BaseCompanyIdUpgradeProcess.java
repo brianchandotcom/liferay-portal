@@ -68,7 +68,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 
 	protected abstract TableUpdater[] getTableUpdaters();
 
-	protected class TableUpdater extends UpgradeCallable<Void> {
+	protected class TableUpdater extends BaseUpgradeCallable<Void> {
 
 		public TableUpdater(
 			String tableName, String foreignTableName, String columnName) {

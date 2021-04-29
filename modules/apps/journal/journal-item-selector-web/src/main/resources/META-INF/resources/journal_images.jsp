@@ -39,6 +39,7 @@ if (journalArticle != null) {
 %>
 
 <liferay-item-selector:repository-entry-browser
+	editImageURL="<%= journalItemSelectorViewDisplayContext.getEditImageURL(liferayPortletResponse) %>"
 	emptyResultsMessage='<%= LanguageUtil.get(resourceBundle, "there-are-no-journal-images") %>'
 	itemSelectedEventName="<%= journalItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	itemSelectorReturnTypeResolver="<%= journalItemSelectorViewDisplayContext.getItemSelectorReturnTypeResolver() %>"

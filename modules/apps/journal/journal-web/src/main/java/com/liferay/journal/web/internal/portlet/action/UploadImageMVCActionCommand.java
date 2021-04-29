@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL,
+		"mvc.command.name=/journal/image_editor",
 		"mvc.command.name=/journal/upload_image"
 	},
 	service = MVCActionCommand.class

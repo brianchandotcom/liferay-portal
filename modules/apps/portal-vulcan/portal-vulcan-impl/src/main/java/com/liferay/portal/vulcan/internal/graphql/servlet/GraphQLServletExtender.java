@@ -28,6 +28,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1473,9 +1474,18 @@ public class GraphQLServletExtender {
 
 		builder.name("Input" + objectDefinition.getName());
 
+		GraphQLInputObjectField.Builder inputBuilder =
+			GraphQLInputObjectField.newInputObjectField();
+
+		builder.field(
+			inputBuilder.name(
+				objectDefinition.getPrimaryKeyColumnName()
+			).type(
+				Scalars.GraphQLLong
+			).build());
+
 		for (com.liferay.object.model.ObjectField objectField : objectFields) {
-			GraphQLInputObjectField.Builder inputBuilder =
-				GraphQLInputObjectField.newInputObjectField();
+			inputBuilder = GraphQLInputObjectField.newInputObjectField();
 
 			builder.field(
 				inputBuilder.name(
@@ -1573,6 +1583,18 @@ public class GraphQLServletExtender {
 
 			return null;
 		}
+	}
+
+	private User _getUser(DataFetchingEnvironment dataFetchingEnvironment)
+		throws PortalException {
+
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getLocalContext();
+
+		Optional<HttpServletRequest> httpServletRequestOptional =
+			graphQLContext.getHttpServletRequest();
+
+		return _portal.getUser(httpServletRequestOptional.orElse(null));
 	}
 
 	private Integer _getVersion(Method method) {
@@ -1784,12 +1806,13 @@ public class GraphQLServletExtender {
 
 		String createName = "create" + objectDefinition.getName();
 
+		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
+			objectDefinition, objectFields);
+
 		mutationBuilder.field(
 			_addField(
 				graphQLObjectType, createName,
-				_addArgument(
-					_getGraphQLInputObjectType(objectDefinition, objectFields),
-					objectDefinition.getName()),
+				_addArgument(graphQLInputType, objectDefinition.getName()),
 				_addArgument(Scalars.GraphQLLong, "siteId")));
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
@@ -1799,14 +1822,7 @@ public class GraphQLServletExtender {
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("mutation", createName),
 				(DataFetcher<Object>)dataFetchingEnvironment -> {
-					GraphQLContext graphQLContext =
-						dataFetchingEnvironment.getLocalContext();
-
-					Optional<HttpServletRequest> httpServletRequestOptional =
-						graphQLContext.getHttpServletRequest();
-
-					User user = _portal.getUser(
-						httpServletRequestOptional.orElse(null));
+					User user = _getUser(dataFetchingEnvironment);
 
 					Map<String, Serializable> values =
 						dataFetchingEnvironment.getArgument(
@@ -1944,6 +1960,35 @@ public class GraphQLServletExtender {
 					).put(
 						"totalCount", page.getTotalCount()
 					).build();
+				}
+			).build());
+
+		// Update
+
+		String updateName = "update" + objectDefinition.getName();
+
+		mutationBuilder.field(
+			_addField(
+				graphQLObjectType, updateName,
+				_addArgument(graphQLInputType, objectDefinition.getName())));
+
+		schemaBuilder.codeRegistry(
+			graphQLCodeRegistryBuilder.dataFetcher(
+				FieldCoordinates.coordinates("mutation", updateName),
+				(DataFetcher<Object>)dataFetchingEnvironment -> {
+					User user = _getUser(dataFetchingEnvironment);
+
+					Map<String, Serializable> values =
+						dataFetchingEnvironment.getArgument(
+							objectDefinition.getName());
+
+					return _getObjectEntryValues(
+						objectDefinition,
+						_objectEntryLocalService.updateObjectEntry(
+							user.getUserId(),
+							(Long)values.get(
+								objectDefinition.getPrimaryKeyColumnName()),
+							values, new ServiceContext()));
 				}
 			).build());
 	}

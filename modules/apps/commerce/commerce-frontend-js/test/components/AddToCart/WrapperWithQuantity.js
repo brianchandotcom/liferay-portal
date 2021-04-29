@@ -33,9 +33,7 @@ describe('WrapperWithQuantity', () => {
 			skuId: 54321,
 		},
 		settings: {
-			withQuantity: {
-				forceDropdown: true,
-			},
+			withQuantity: {},
 		},
 	};
 
@@ -50,25 +48,17 @@ describe('WrapperWithQuantity', () => {
 		});
 
 		it('on quantity change via QuantitySelector component, renders the button with the correctly updated quantity', async () => {
-			const settings = {
-				withQuantity: {
-					forceDropdown: true,
-				},
-			};
-
 			const {container} = render(
-				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
+				<WrapperWithQuantity {...INITIAL_PROPS} />
 			);
 
-			const QuantitySelectorSelectElement = container.querySelector(
-				'select'
-			);
+			const QuantitySelectorElement = container.querySelector('input');
 			const AddToCartButtonElement = container.querySelector('button');
 
 			const updatedValue = 4;
 
 			await act(async () => {
-				fireEvent.change(QuantitySelectorSelectElement, {
+				fireEvent.change(QuantitySelectorElement, {
 					target: {value: updatedValue},
 				});
 			});
@@ -80,7 +70,7 @@ describe('WrapperWithQuantity', () => {
 			await wait(() => {
 				expect(
 					AddToCartButtonElement.getAttribute('data-test-quantity')
-				).toEqual('4');
+				).toEqual(updatedValue.toString());
 			});
 		});
 	});
@@ -106,13 +96,11 @@ describe('WrapperWithQuantity', () => {
 			);
 
 			const DivContainerElement = container.querySelector('div');
-			const QuantitySelectorSelectElement = container.querySelector(
-				'select'
-			);
+			const QuantitySelectorElement = container.querySelector('input');
 			const AddToCartButtonElement = container.querySelector('button');
 
 			expect(DivContainerElement).toBeInTheDocument();
-			expect(QuantitySelectorSelectElement).toBeInTheDocument();
+			expect(QuantitySelectorElement).toBeInTheDocument();
 			expect(AddToCartButtonElement).toBeInTheDocument();
 
 			DEFAULT_CLASSES.forEach((className) => {
@@ -122,7 +110,7 @@ describe('WrapperWithQuantity', () => {
 			});
 		});
 
-		it('renders a select element and a button element in column, if button is block-styled', () => {
+		it('renders an input element and a button element in column, if button is block-styled', () => {
 			const DEFAULT_CLASSES = [
 				'add-to-cart-wrapper',
 				'align-items-center',
@@ -133,9 +121,6 @@ describe('WrapperWithQuantity', () => {
 
 			const settings = {
 				block: true,
-				withQuantity: {
-					forceDropdown: true,
-				},
 			};
 
 			const {container} = render(
@@ -143,13 +128,11 @@ describe('WrapperWithQuantity', () => {
 			);
 
 			const DivContainerElement = container.querySelector('div');
-			const QuantitySelectorSelectElement = container.querySelector(
-				'select'
-			);
+			const QuantitySelectorElement = container.querySelector('input');
 			const AddToCartButtonElement = container.querySelector('button');
 
 			expect(DivContainerElement).toBeInTheDocument();
-			expect(QuantitySelectorSelectElement).toBeInTheDocument();
+			expect(QuantitySelectorElement).toBeInTheDocument();
 			expect(AddToCartButtonElement).toBeInTheDocument();
 
 			[...DEFAULT_CLASSES, FLEX_COLUMN_CLASS].forEach((className) => {
@@ -159,37 +142,27 @@ describe('WrapperWithQuantity', () => {
 			});
 
 			expect(
-				QuantitySelectorSelectElement.classList.contains(
-					'quantity-selector'
-				)
+				QuantitySelectorElement.classList.contains('quantity-selector')
 			).toBe(true);
 		});
 
 		it('renders a disabled select element, if required via prop', () => {
 			const settings = {
 				disabled: true,
-				withQuantity: {
-					forceDropdown: true,
-				},
 			};
 
 			const {container} = render(
 				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const QuantitySelectorSelectElement = container.querySelector(
-				'select'
-			);
+			const QuantitySelectorElement = container.querySelector('input');
 
-			expect(QuantitySelectorSelectElement).toBeDisabled();
+			expect(QuantitySelectorElement).toBeDisabled();
 		});
 
-		it('renders a large select element, if required via prop', () => {
+		it('renders a large input element, if required via prop', () => {
 			const settings = {
 				block: false,
-				withQuantity: {
-					forceDropdown: true,
-				},
 			};
 
 			const LARGE_CLASS_NAME = 'form-control-lg';
@@ -198,14 +171,10 @@ describe('WrapperWithQuantity', () => {
 				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
 			);
 
-			const QuantitySelectorSelectElement = container.querySelector(
-				'select'
-			);
+			const QuantitySelectorElement = container.querySelector('input');
 
 			expect(
-				QuantitySelectorSelectElement.classList.contains(
-					LARGE_CLASS_NAME
-				)
+				QuantitySelectorElement.classList.contains(LARGE_CLASS_NAME)
 			).toBe(true);
 		});
 	});
@@ -220,21 +189,13 @@ describe('WrapperWithQuantity', () => {
 		});
 
 		it("renders a disabled select element, if no 'accountId' is provided", () => {
-			const settings = {
-				withQuantity: {
-					forceDropdown: true,
-				},
-			};
-
 			const {container} = render(
-				<WrapperWithQuantity {...{...INITIAL_PROPS, settings}} />
+				<WrapperWithQuantity {...INITIAL_PROPS} />
 			);
 
-			const QuantitySelectorSelectElement = container.querySelector(
-				'select'
-			);
+			const QuantitySelectorElement = container.querySelector('input');
 
-			expect(QuantitySelectorSelectElement).toBeDisabled();
+			expect(QuantitySelectorElement).toBeDisabled();
 		});
 	});
 });

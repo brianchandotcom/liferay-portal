@@ -34,9 +34,8 @@ for (let i = 1; i <= 15; i++) {
 			block: false,
 			disabled: false,
 			iconOnly: false,
-			withQuantity: /* false, */ {
+			withQuantity: {
 				allowedQuantities: [],
-				forceDropdown: true,
 				maxQuantity: 99,
 				minQuantity: 1,
 				multipleQuantity: 1,

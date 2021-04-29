@@ -39,7 +39,6 @@ AddToCart.propTypes = {
 			PropTypes.shape({
 				allowedQuantities: PropTypes.arrayOf(PropTypes.number),
 				disabled: PropTypes.bool,
-				forceDropdown: PropTypes.bool,
 				large: PropTypes.bool,
 				maxQuantity: PropTypes.number,
 				minQuantity: PropTypes.number,

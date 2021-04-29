@@ -193,48 +193,34 @@ public class JournalTransformer {
 
 			Template template = getTemplate(templateId, script, langType);
 
+			PortletRequest originalPortletRequest = null;
+			PortletResponse originalPortletResponse = null;
+
+			HttpServletRequest httpServletRequest = null;
+
 			if ((themeDisplay != null) && (themeDisplay.getRequest() != null)) {
-				PortletRequest originalPortletRequest = null;
-				PortletResponse originalPortletResponse = null;
+				httpServletRequest = themeDisplay.getRequest();
 
-				HttpServletRequest httpServletRequest =
-					themeDisplay.getRequest();
+				if (portletRequestModel != null) {
+					originalPortletRequest =
+						(PortletRequest)httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_REQUEST);
+					originalPortletResponse =
+						(PortletResponse)httpServletRequest.getAttribute(
+							JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-				try {
-					if (portletRequestModel != null) {
-						originalPortletRequest =
-							(PortletRequest)httpServletRequest.getAttribute(
-								JavaConstants.JAVAX_PORTLET_REQUEST);
-						originalPortletResponse =
-							(PortletResponse)httpServletRequest.getAttribute(
-								JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-						httpServletRequest.setAttribute(
-							JavaConstants.JAVAX_PORTLET_REQUEST,
-							portletRequestModel.getPortletRequest());
-						httpServletRequest.setAttribute(
-							JavaConstants.JAVAX_PORTLET_RESPONSE,
-							portletRequestModel.getPortletResponse());
-						httpServletRequest.setAttribute(
-							PortletRequest.LIFECYCLE_PHASE,
-							portletRequestModel.getLifecycle());
-					}
-
-					template.prepare(httpServletRequest);
+					httpServletRequest.setAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST,
+						portletRequestModel.getPortletRequest());
+					httpServletRequest.setAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE,
+						portletRequestModel.getPortletResponse());
+					httpServletRequest.setAttribute(
+						PortletRequest.LIFECYCLE_PHASE,
+						portletRequestModel.getLifecycle());
 				}
-				finally {
-					if ((originalPortletRequest != null) &&
-						(originalPortletResponse != null) &&
-						(portletRequestModel != null)) {
 
-						httpServletRequest.setAttribute(
-							JavaConstants.JAVAX_PORTLET_REQUEST,
-							originalPortletRequest);
-						httpServletRequest.setAttribute(
-							JavaConstants.JAVAX_PORTLET_RESPONSE,
-							originalPortletResponse);
-					}
-				}
+				template.prepare(httpServletRequest);
 			}
 
 			if (contextObjects != null) {
@@ -339,6 +325,18 @@ public class JournalTransformer {
 				else {
 					throw new TransformException(
 						"Unhandled exception", exception);
+				}
+			}
+			finally {
+				if ((portletRequestModel != null) &&
+					(httpServletRequest != null)) {
+
+					httpServletRequest.setAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST,
+						originalPortletRequest);
+					httpServletRequest.setAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE,
+						originalPortletResponse);
 				}
 			}
 

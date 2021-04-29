@@ -68,6 +68,16 @@ public class DatasetViewActiveEntryLocalServiceWrapper
 			datasetViewActiveEntryId);
 	}
 
+	@Override
+	public com.liferay.dataset.view.model.DatasetViewActiveEntry
+		createDatasetViewActiveEntry(
+			String datasetDisplayId, long datasetViewStateEntryId, long plid,
+			String portletId, long userId) {
+
+		return _datasetViewActiveEntryLocalService.createDatasetViewActiveEntry(
+			datasetDisplayId, datasetViewStateEntryId, plid, portletId, userId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -235,6 +245,15 @@ public class DatasetViewActiveEntryLocalServiceWrapper
 
 		return _datasetViewActiveEntryLocalService.fetchDatasetViewActiveEntry(
 			datasetViewActiveEntryId);
+	}
+
+	@Override
+	public com.liferay.dataset.view.model.DatasetViewActiveEntry
+		fetchDatasetViewActiveEntry(
+			String datasetDisplayId, long plid, String portletId, long userId) {
+
+		return _datasetViewActiveEntryLocalService.fetchDatasetViewActiveEntry(
+			datasetDisplayId, plid, portletId, userId);
 	}
 
 	/**

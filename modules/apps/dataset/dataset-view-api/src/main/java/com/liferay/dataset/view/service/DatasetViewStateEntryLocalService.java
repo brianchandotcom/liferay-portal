@@ -88,6 +88,8 @@ public interface DatasetViewStateEntryLocalService
 	public DatasetViewStateEntry createDatasetViewStateEntry(
 		long datasetViewStateEntryId);
 
+	public DatasetViewStateEntry createDatasetViewStateEntry(String json);
+
 	/**
 	 * @throws PortalException
 	 */

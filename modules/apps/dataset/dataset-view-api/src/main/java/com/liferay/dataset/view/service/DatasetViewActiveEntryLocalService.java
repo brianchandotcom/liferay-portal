@@ -88,6 +88,10 @@ public interface DatasetViewActiveEntryLocalService
 	public DatasetViewActiveEntry createDatasetViewActiveEntry(
 		long datasetViewActiveEntryId);
 
+	public DatasetViewActiveEntry createDatasetViewActiveEntry(
+		String datasetDisplayId, long datasetViewStateEntryId, long plid,
+		String portletId, long userId);
+
 	/**
 	 * @throws PortalException
 	 */
@@ -203,6 +207,10 @@ public interface DatasetViewActiveEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DatasetViewActiveEntry fetchDatasetViewActiveEntry(
 		long datasetViewActiveEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DatasetViewActiveEntry fetchDatasetViewActiveEntry(
+		String datasetDisplayId, long plid, String portletId, long userId);
 
 	/**
 	 * Returns the dataset view active entry with the matching UUID and company.

@@ -67,6 +67,14 @@ public class DatasetViewStateEntryLocalServiceWrapper
 			datasetViewStateEntryId);
 	}
 
+	@Override
+	public com.liferay.dataset.view.model.DatasetViewStateEntry
+		createDatasetViewStateEntry(String json) {
+
+		return _datasetViewStateEntryLocalService.createDatasetViewStateEntry(
+			json);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

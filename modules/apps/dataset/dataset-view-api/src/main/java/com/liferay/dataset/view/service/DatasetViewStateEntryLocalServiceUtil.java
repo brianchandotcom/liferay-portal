@@ -74,6 +74,12 @@ public class DatasetViewStateEntryLocalServiceUtil {
 			datasetViewStateEntryId);
 	}
 
+	public static DatasetViewStateEntry createDatasetViewStateEntry(
+		String json) {
+
+		return getService().createDatasetViewStateEntry(json);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

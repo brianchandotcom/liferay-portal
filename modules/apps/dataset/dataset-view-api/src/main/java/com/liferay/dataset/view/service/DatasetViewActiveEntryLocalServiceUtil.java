@@ -74,6 +74,14 @@ public class DatasetViewActiveEntryLocalServiceUtil {
 			datasetViewActiveEntryId);
 	}
 
+	public static DatasetViewActiveEntry createDatasetViewActiveEntry(
+		String datasetDisplayId, long datasetViewStateEntryId, long plid,
+		String portletId, long userId) {
+
+		return getService().createDatasetViewActiveEntry(
+			datasetDisplayId, datasetViewStateEntryId, plid, portletId, userId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -216,6 +224,13 @@ public class DatasetViewActiveEntryLocalServiceUtil {
 
 		return getService().fetchDatasetViewActiveEntry(
 			datasetViewActiveEntryId);
+	}
+
+	public static DatasetViewActiveEntry fetchDatasetViewActiveEntry(
+		String datasetDisplayId, long plid, String portletId, long userId) {
+
+		return getService().fetchDatasetViewActiveEntry(
+			datasetDisplayId, plid, portletId, userId);
 	}
 
 	/**

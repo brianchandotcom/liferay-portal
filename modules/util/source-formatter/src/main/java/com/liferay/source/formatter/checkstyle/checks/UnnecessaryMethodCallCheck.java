@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.Validator;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -36,17 +34,12 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		Map<String, String> returnVariableNamesMap = _getReturnVariableNamesMap(detailAST);
+		Map<String, String> returnVariableNamesMap = _getReturnVariableNamesMap(
+			detailAST);
 
 		if (returnVariableNamesMap.isEmpty()) {
 			return;
 		}
-
-		_checkUnnecessaryMethodCalls(detailAST, returnVariableNamesMap);
-	}
-
-	private void _checkUnnecessaryMethodCalls(
-		DetailAST detailAST, Map<String, String> returnVariableNamesMap) {
 
 		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
@@ -71,24 +64,25 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 
 			String methodName = _getMethodName(methodCallDetailAST);
 
-			if (returnVariableNamesMap.containsKey(methodName)) {
-				DetailAST parentDetailAST = methodCallDetailAST.getParent();
+			if (!returnVariableNamesMap.containsKey(methodName)) {
+				continue;
+			}
 
-				while (parentDetailAST.getType() != TokenTypes.CLASS_DEF) {
-					parentDetailAST = parentDetailAST.getParent();
-				}
+			DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
-				if (parentDetailAST.equals(detailAST)) {
-					String replacement = _getReplacement(
-						methodCallDetailAST, returnVariableNamesMap.get(methodName));
+			while (parentDetailAST.getType() != TokenTypes.CLASS_DEF) {
+				parentDetailAST = parentDetailAST.getParent();
+			}
 
-					if (Validator.isNull(replacement)) {
-						continue;
-					}
+			if (parentDetailAST.equals(detailAST)) {
+				String replacementValue = _getReplacementValue(
+					methodCallDetailAST,
+					returnVariableNamesMap.get(methodName));
 
+				if (replacementValue != null) {
 					log(
 						methodCallDetailAST, _MSG_UNNECESSARY_METHOD_CALL,
-						replacement, methodName);
+						replacementValue, methodName);
 				}
 			}
 		}
@@ -100,7 +94,59 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 		return nameDetailAST.getText();
 	}
 
-	private Map<String, String> _getReturnVariableNamesMap(DetailAST detailAST) {
+	private String _getReplacementValue(
+		DetailAST methodCallDetailAST, String variableName) {
+
+		DetailAST previousDetailAST = methodCallDetailAST.getParent();
+
+		while ((previousDetailAST.getType() != TokenTypes.METHOD_DEF) &&
+			   (previousDetailAST.getType() != TokenTypes.CTOR_DEF)) {
+
+			if ((previousDetailAST.getType() == TokenTypes.VARIABLE_DEF) &&
+				(previousDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
+				 previousDetailAST.branchContains(
+					 TokenTypes.LITERAL_PROTECTED) ||
+				 previousDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC))) {
+
+				break;
+			}
+
+			previousDetailAST = previousDetailAST.getParent();
+		}
+
+		List<DetailAST> variableDefDetailASTList = getAllChildTokens(
+			previousDetailAST, true, TokenTypes.VARIABLE_DEF);
+
+		for (DetailAST variableDefDetailAST : variableDefDetailASTList) {
+			DetailAST nameDetailAST = variableDefDetailAST.findFirstToken(
+				TokenTypes.IDENT);
+
+			if (Objects.equals(nameDetailAST.getText(), variableName)) {
+				DetailAST modifiersDetailAST = previousDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS);
+
+				if (modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_STATIC)) {
+
+					return null;
+				}
+
+				if (variableDefDetailAST.getLineNo() <=
+						methodCallDetailAST.getLineNo()) {
+
+					return "this." + variableName;
+				}
+
+				return variableName;
+			}
+		}
+
+		return variableName;
+	}
+
+	private Map<String, String> _getReturnVariableNamesMap(
+		DetailAST detailAST) {
+
 		Map<String, String> returnVariableNamesMap = new HashMap<>();
 
 		DetailAST objBlockDetailAST = detailAST.findFirstToken(
@@ -173,56 +219,6 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 		}
 
 		return returnVariableNamesMap;
-	}
-
-	private String _getReplacement(
-		DetailAST methodCallDetailAST, String variableName) {
-
-		DetailAST previousDetailAST = methodCallDetailAST.getParent();
-
-		while ((previousDetailAST.getType() != TokenTypes.METHOD_DEF) &&
-			   (previousDetailAST.getType() != TokenTypes.CTOR_DEF)) {
-
-			if ((previousDetailAST.getType() == TokenTypes.VARIABLE_DEF) &&
-				(previousDetailAST.branchContains(TokenTypes.LITERAL_PRIVATE) ||
-				 previousDetailAST.branchContains(
-					 TokenTypes.LITERAL_PROTECTED) ||
-				 previousDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC))) {
-
-				break;
-			}
-
-			previousDetailAST = previousDetailAST.getParent();
-		}
-
-		List<DetailAST> variableDefDetailASTList = getAllChildTokens(
-			previousDetailAST, true, TokenTypes.VARIABLE_DEF);
-
-		for (DetailAST variableDefDetailAST : variableDefDetailASTList) {
-			DetailAST nameDetailAST = variableDefDetailAST.findFirstToken(
-				TokenTypes.IDENT);
-
-			if (Objects.equals(nameDetailAST.getText(), variableName)) {
-				DetailAST modifiersDetailAST = previousDetailAST.findFirstToken(
-					TokenTypes.MODIFIERS);
-
-				if (modifiersDetailAST.branchContains(
-						TokenTypes.LITERAL_STATIC)) {
-
-					return "";
-				}
-
-				if (variableDefDetailAST.getLineNo() <=
-						methodCallDetailAST.getLineNo()) {
-
-					return "this." + variableName;
-				}
-
-				return variableName;
-			}
-		}
-
-		return variableName;
 	}
 
 	private static final String _MSG_UNNECESSARY_METHOD_CALL =

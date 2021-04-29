@@ -639,22 +639,30 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		).flatMap(
 			List::stream
 		).map(
-			document -> {
-				WorkflowMetricsSLAInstanceResult
-					workflowMetricsSLAInstanceResult =
-						_workflowMetricsSLAProcessor.process(
-							_getCompletionLocalDateTime(document),
-							LocalDateTime.parse(
-								document.getDate("createDate"),
-								_dateTimeFormatter),
-							taskDocuments.get(document.getLong("instanceId")),
-							document.getLong("instanceId"), nowLocalDateTime,
-							startNodeId, workflowMetricsSLADefinitionVersion,
-							workflowMetricsSLAInstanceResults.get(
-								document.getLong("instanceId")));
+			document -> _workflowMetricsSLAProcessor.process(
+				_getCompletionLocalDateTime(document),
+				LocalDateTime.parse(
+					document.getDate("createDate"), _dateTimeFormatter),
+				taskDocuments.get(document.getLong("instanceId")),
+				document.getLong("instanceId"), nowLocalDateTime, startNodeId,
+				workflowMetricsSLADefinitionVersion,
+				workflowMetricsSLAInstanceResults.get(
+					document.getLong("instanceId")))
+		).filter(
+			Objects::nonNull
+		).forEach(
+			workflowMetricsSLAInstanceResult -> {
+				slaInstanceResultDocuments.add(
+					_slaInstanceResultWorkflowMetricsIndexer.createDocument(
+						workflowMetricsSLAInstanceResult));
 
-				if (workflowMetricsSLAInstanceResult == null) {
-					return null;
+				for (WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult :
+						workflowMetricsSLAInstanceResult.
+							getWorkflowMetricsSLATaskResults()) {
+
+					slaTaskResultDocuments.add(
+						_slaTaskResultWorkflowMetricsIndexer.createDocument(
+							workflowMetricsSLATaskResult));
 				}
 
 				if (workflowMetricsSLAInstanceResult.getElapsedTime() != 0) {
@@ -679,25 +687,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 									getInstanceId()),
 							_workflowMetricsInstanceSLAStatusScriptMap.get(
 								workflowMetricsInstanceSLAStatus)));
-				}
-
-				return workflowMetricsSLAInstanceResult;
-			}
-		).filter(
-			Objects::nonNull
-		).forEach(
-			workflowMetricsSLAInstanceResult -> {
-				slaInstanceResultDocuments.add(
-					_slaInstanceResultWorkflowMetricsIndexer.createDocument(
-						workflowMetricsSLAInstanceResult));
-
-				for (WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult :
-						workflowMetricsSLAInstanceResult.
-							getWorkflowMetricsSLATaskResults()) {
-
-					slaTaskResultDocuments.add(
-						_slaTaskResultWorkflowMetricsIndexer.createDocument(
-							workflowMetricsSLATaskResult));
 				}
 			}
 		);

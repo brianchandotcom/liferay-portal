@@ -894,12 +894,8 @@ definition {
 	}
 
 	macro manageMembershipOptions {
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
 		Click(
-			key_url = "site-configuration",
+			key_url = "site-configuration-details",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Pause(locator1 = "5000");

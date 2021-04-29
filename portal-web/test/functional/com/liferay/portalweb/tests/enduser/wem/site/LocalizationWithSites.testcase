@@ -691,12 +691,6 @@ definition {
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
 			defaultSiteLanguage = "English (United States)");
 
-		Navigator.gotoBack();
-
-		Click(
-			key_url = "site-configuration-details",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
 		User.logoutPG();
 
 		Navigator.openSpecificURL(url = "${portalURL}/fr/web/site-name/language-page");

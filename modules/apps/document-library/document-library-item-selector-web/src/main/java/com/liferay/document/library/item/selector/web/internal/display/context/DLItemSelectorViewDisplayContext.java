@@ -125,6 +125,18 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			getAllowedCreationMenuUIItemKeys(_itemSelectorCriterion);
 	}
 
+	public PortletURL getEditImageURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse, PortletKeys.DOCUMENT_LIBRARY
+		).setActionName(
+			"/document_library/image_editor"
+		).setParameter(
+			"folderId", _getFolderId()
+		).build();
+	}
+
 	public String[] getExtensions() {
 		return _dlItemSelectorView.getExtensions();
 	}

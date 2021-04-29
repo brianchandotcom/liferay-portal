@@ -803,12 +803,69 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6196. RemoveProductDisplayPage"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveProductDisplayPage {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6196 RemoveProductDisplayPage
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select Product");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Button.click(button = "Choose");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Choose");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_card = "Login",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrame.selectFrameTop();
+
+		Button.clickDone();
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		ClickNoError(
+			key_value = "ABS Sensor",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		ClickNoError(
+			filterOption = "Delete",
+			locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
 	@description = "This is a test for COMMERCE-6114. RemoveShippingOptionFlatRate"

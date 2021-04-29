@@ -13,7 +13,7 @@ definition {
 "staged--staged-portlet_com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet--" : "true",
 "staged--staged-portlet_com_liferay_calendar_web_portlet_CalendarAdminPortlet--" : "true",
 "staged--staged-portlet_com_liferay_document_library_web_portlet_DLAdminPortlet--" : "true",
-"staged--staged-portlet_com_liferay_dynamic_data_lists_web_portlet_DDLPortle--" : "true",
+"staged--staged-portlet_com_liferay_dynamic_data_lists_web_portlet_DDLPortlet--" : "true",
 "staged--staged-portlet_com_liferay_dynamic_data_mapping_data_provider_web_portlet_DDMDataProviderPortlet--" : "true",
 "staged--staged-portlet_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet--" : "true",
 "staged--staged-portlet_com_liferay_dynamic_data_mapping_web_portlet_PortletDisplayTemplatePortlet--" : "true",

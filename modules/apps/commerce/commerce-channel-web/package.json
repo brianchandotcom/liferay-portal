@@ -6,8 +6,7 @@
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"format": "liferay-npm-scripts fix"
 	},
 	"version": "4.0.2"
 }

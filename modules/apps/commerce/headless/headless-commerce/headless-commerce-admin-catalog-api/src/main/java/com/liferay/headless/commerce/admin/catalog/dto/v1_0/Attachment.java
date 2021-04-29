@@ -87,6 +87,60 @@ public class Attachment implements Serializable {
 	protected String attachment;
 
 	@Schema
+	public Boolean getCdn() {
+		return cdn;
+	}
+
+	public void setCdn(Boolean cdn) {
+		this.cdn = cdn;
+	}
+
+	@JsonIgnore
+	public void setCdn(UnsafeSupplier<Boolean, Exception> cdnUnsafeSupplier) {
+		try {
+			cdn = cdnUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean cdn;
+
+	@Schema
+	public String getCdnUrl() {
+		return cdnUrl;
+	}
+
+	public void setCdnUrl(String cdnUrl) {
+		this.cdnUrl = cdnUrl;
+	}
+
+	@JsonIgnore
+	public void setCdnUrl(
+		UnsafeSupplier<String, Exception> cdnUrlUnsafeSupplier) {
+
+		try {
+			cdnUrl = cdnUrlUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String cdnUrl;
+
+	@Schema
 	@Valid
 	public CustomField[] getCustomFields() {
 		return customFields;
@@ -432,6 +486,30 @@ public class Attachment implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(attachment));
+
+			sb.append("\"");
+		}
+
+		if (cdn != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cdn\": ");
+
+			sb.append(cdn);
+		}
+
+		if (cdnUrl != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"cdnUrl\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(cdnUrl));
 
 			sb.append("\"");
 		}

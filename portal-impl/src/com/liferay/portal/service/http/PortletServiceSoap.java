@@ -77,6 +77,22 @@ public class PortletServiceSoap {
 		}
 	}
 
+	public static boolean hasPortlet(long companyId, String portletId)
+		throws RemoteException {
+
+		try {
+			boolean returnValue = PortletServiceUtil.hasPortlet(
+				companyId, portletId);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.PortletSoap updatePortlet(
 			long companyId, String portletId, String roles, boolean active)
 		throws RemoteException {

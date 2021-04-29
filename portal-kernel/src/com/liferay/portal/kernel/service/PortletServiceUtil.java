@@ -50,6 +50,10 @@ public class PortletServiceUtil {
 		return getService().getWARPortlets();
 	}
 
+	public static boolean hasPortlet(long companyId, String portletId) {
+		return getService().hasPortlet(companyId, portletId);
+	}
+
 	public static Portlet updatePortlet(
 			long companyId, String portletId, String roles, boolean active)
 		throws PortalException {

@@ -82,6 +82,38 @@ public class PortletServiceHttp {
 		}
 	}
 
+	public static boolean hasPortlet(
+		HttpPrincipal httpPrincipal, long companyId, String portletId) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				PortletServiceUtil.class, "hasPortlet",
+				_hasPortletParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, companyId, portletId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Boolean)returnObj).booleanValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Portlet updatePortlet(
 			HttpPrincipal httpPrincipal, long companyId, String portletId,
 			String roles, boolean active)
@@ -90,7 +122,7 @@ public class PortletServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				PortletServiceUtil.class, "updatePortlet",
-				_updatePortletParameterTypes1);
+				_updatePortletParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, portletId, roles, active);
@@ -127,7 +159,10 @@ public class PortletServiceHttp {
 
 	private static final Class<?>[] _getWARPortletsParameterTypes0 =
 		new Class[] {};
-	private static final Class<?>[] _updatePortletParameterTypes1 =
+	private static final Class<?>[] _hasPortletParameterTypes1 = new Class[] {
+		long.class, String.class
+	};
+	private static final Class<?>[] _updatePortletParameterTypes2 =
 		new Class[] {long.class, String.class, String.class, boolean.class};
 
 }

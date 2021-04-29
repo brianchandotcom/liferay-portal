@@ -44,6 +44,11 @@ public class PortletServiceWrapper
 	}
 
 	@Override
+	public boolean hasPortlet(long companyId, java.lang.String portletId) {
+		return _portletService.hasPortlet(companyId, portletId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Portlet updatePortlet(
 			long companyId, java.lang.String portletId, java.lang.String roles,
 			boolean active)

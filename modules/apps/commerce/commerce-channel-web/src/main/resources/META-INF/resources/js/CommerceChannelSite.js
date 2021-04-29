@@ -89,11 +89,11 @@ export default function ({
 				'click',
 				'.modify-link',
 				(event) => {
-					var link = event.delegateTarget;
+					const link = event.delegateTarget;
 
-					const tr = link.closest('tr');
+					const row = link.closest('tr');
 
-					searchContainer.deleteRow(tr, link.dataset.rowid);
+					searchContainer.deleteRow(row, link.dataset.rowid);
 
 					const siteGroupInput = document.getElementById(
 						`${portletNamespace}siteGroupId`

@@ -160,6 +160,19 @@ definition {
 			SelectFrame(value1 = "relative=top");
 		}
 
+		else if (isSet(tagName)) {
+			Click(locator1 = "Button#SELECT");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertClick(
+				key_rowEntry = "${tagName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
+				value1 = "${tagName}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
 		else if (isSet(dateValue)) {
 			Type.sendKeys(
 				key_criterion = "date",

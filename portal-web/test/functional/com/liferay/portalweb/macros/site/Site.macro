@@ -138,7 +138,7 @@ definition {
 		Modal.save();
 
 		Click(
-			key_url = "site-configuration",
+			key_url = "site-configuration-details",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertTextEquals(

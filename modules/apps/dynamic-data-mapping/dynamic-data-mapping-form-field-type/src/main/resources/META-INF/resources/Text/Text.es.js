@@ -170,6 +170,7 @@ const Autocomplete = ({
 }) => {
 	const [value, setValue] = useSyncValue(initialValue, syncDelay);
 	const [visible, setVisible] = useState(false);
+	const [selectedOption, setSelectedOption] = useState(false);
 	const inputRef = useRef(null);
 	const itemListRef = useRef(null);
 
@@ -181,7 +182,10 @@ const Autocomplete = ({
 	);
 
 	useEffect(() => {
-		if (filteredItems.length === 1 && filteredItems.includes(value)) {
+		if (
+			selectedOption ||
+			(filteredItems.length === 1 && filteredItems.includes(value))
+		) {
 			setVisible(false);
 		}
 		else {
@@ -199,7 +203,7 @@ const Autocomplete = ({
 				setVisible(!!value);
 			}
 		}
-	}, [filteredItems, value]);
+	}, [filteredItems, value, selectedOption]);
 
 	const handleFocus = (event, direction) => {
 		const target = event.target;
@@ -242,6 +246,7 @@ const Autocomplete = ({
 				onBlur={onBlur}
 				onChange={(event) => {
 					setValue(event.target.value);
+					setSelectedOption(false);
 					onChange(event);
 				}}
 				onFocus={onFocus}
@@ -294,12 +299,13 @@ const Autocomplete = ({
 							{Liferay.Language.get('no-results-were-found')}
 						</ClayDropDown.Item>
 					)}
-					{filteredItems.map((label) => (
+					{filteredItems.map((label, index) => (
 						<ClayAutocomplete.Item
-							key={label}
+							key={index}
 							match={value}
 							onClick={() => {
 								setValue(label);
+								setSelectedOption(true);
 								onChange({target: {value: label}});
 							}}
 							value={label}

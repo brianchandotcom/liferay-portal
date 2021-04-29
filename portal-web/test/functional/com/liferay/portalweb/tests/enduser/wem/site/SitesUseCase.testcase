@@ -116,6 +116,8 @@ definition {
 			siteName = "Moon Rocks 101",
 			siteType = "Blank");
 
+		Navigator.gotoBack();
+
 		Site.selectPageType(
 			selectPrivatePages = "true",
 			siteTemplate = "Digital Class Room");
@@ -127,6 +129,8 @@ definition {
 			parentSiteName = "College of Agricultural Science",
 			siteName = "Moon Rocks 202",
 			siteType = "Blank");
+
+		Navigator.gotoBack();
 
 		Site.selectPageType(
 			checkPrivatePagesPropagation = "true",

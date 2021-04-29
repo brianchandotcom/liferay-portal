@@ -348,22 +348,9 @@ public class AccountRoleLocalServiceImpl
 
 		User defaultUser = company.getDefaultUser();
 
-		AccountRole accountRole = createAccountRole(
-			counterLocalService.increment());
-
-		role = roleLocalService.addRole(
-			defaultUser.getUserId(), AccountRole.class.getName(),
-			accountRole.getAccountRoleId(), roleName, null,
-			_roleDescriptionsMaps.get(roleName), RoleConstants.TYPE_ACCOUNT,
-			null, null);
-
-		accountRole.setCompanyId(role.getCompanyId());
-
-		accountRole.setAccountEntryId(
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
-		accountRole.setRoleId(role.getRoleId());
-
-		addAccountRole(accountRole);
+		addAccountRole(
+			defaultUser.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			roleName, null, _roleDescriptionsMaps.get(roleName));
 	}
 
 	private DynamicQuery _getRoleDynamicQuery(

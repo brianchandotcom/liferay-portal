@@ -251,6 +251,39 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			initialBaseModelsSearchCount + 1, "Enterprise", searchContext);
 	}
 
+	@Test
+	public void testSearchTreePath() throws Exception {
+		DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
+			"Document", StringUtil.randomString(), StringUtil.randomString(),
+			new byte[0],
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		Folder folder = DLAppLocalServiceUtil.addFolder(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			folder.getFolderId(), StringUtil.randomString(),
+			ContentTypes.APPLICATION_OCTET_STREAM, "Document",
+			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
+			group.getGroupId());
+
+		assertBaseModelsCount(2, "Document", searchContext);
+
+		searchContext.setFolderIds(new long[] {folder.getFolderId()});
+
+		assertBaseModelsCount(1, "Document", searchContext);
+	}
+
 	protected BaseModel<?> addBaseModel(
 			String keywords, DDMStructure ddmStructure,
 			ServiceContext serviceContext)

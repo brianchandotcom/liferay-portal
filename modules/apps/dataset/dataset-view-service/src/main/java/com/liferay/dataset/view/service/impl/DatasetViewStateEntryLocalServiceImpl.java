@@ -14,6 +14,7 @@
 
 package com.liferay.dataset.view.service.impl;
 
+import com.liferay.dataset.view.model.DatasetViewStateEntry;
 import com.liferay.dataset.view.service.base.DatasetViewStateEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -39,10 +40,14 @@ import org.osgi.service.component.annotations.Component;
 public class DatasetViewStateEntryLocalServiceImpl
 	extends DatasetViewStateEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.dataset.view.service.DatasetViewStateEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dataset.view.service.DatasetViewStateEntryLocalServiceUtil</code>.
-	 */
+	public DatasetViewStateEntry createDatasetViewStateEntry(String json) {
+		DatasetViewStateEntry datasetViewStateEntry =
+			datasetViewStateEntryLocalService.createDatasetViewStateEntry(
+				counterLocalService.increment());
+
+		datasetViewStateEntry.setJson(json);
+
+		return datasetViewStateEntry;
+	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.dataset.view.service.impl;
 
+import com.liferay.dataset.view.model.DatasetViewActiveEntry;
 import com.liferay.dataset.view.service.base.DatasetViewActiveEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -39,10 +40,29 @@ import org.osgi.service.component.annotations.Component;
 public class DatasetViewActiveEntryLocalServiceImpl
 	extends DatasetViewActiveEntryLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.dataset.view.service.DatasetViewActiveEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.dataset.view.service.DatasetViewActiveEntryLocalServiceUtil</code>.
-	 */
+	public DatasetViewActiveEntry createDatasetViewActiveEntry(
+		String datasetDisplayId, long datasetViewStateEntryId, long plid,
+		String portletId, long userId) {
+
+		DatasetViewActiveEntry datasetViewActiveEntry =
+			datasetViewActiveEntryLocalService.createDatasetViewActiveEntry(
+				counterLocalService.increment());
+
+		datasetViewActiveEntry.setUserId(userId);
+		datasetViewActiveEntry.setDatasetDisplayId(datasetDisplayId);
+		datasetViewActiveEntry.setDatasetViewStateEntryId(
+			datasetViewStateEntryId);
+		datasetViewActiveEntry.setPlid(plid);
+		datasetViewActiveEntry.setPortletId(portletId);
+
+		return datasetViewActiveEntry;
+	}
+
+	public DatasetViewActiveEntry fetchDatasetViewActiveEntry(
+		String datasetDisplayId, long plid, String portletId, long userId) {
+
+		return datasetViewActiveEntryPersistence.fetchByU_D_P_P(
+			userId, datasetDisplayId, plid, portletId);
+	}
 
 }

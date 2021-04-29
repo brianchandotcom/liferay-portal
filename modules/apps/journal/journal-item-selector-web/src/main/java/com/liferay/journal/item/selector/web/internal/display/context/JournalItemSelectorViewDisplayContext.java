@@ -69,6 +69,21 @@ public class JournalItemSelectorViewDisplayContext {
 		return null;
 	}
 
+	public PortletURL getEditImageURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse, JournalPortletKeys.JOURNAL
+		).setActionName(
+			"/journal/image_editor"
+		).setParameter(
+			"folderId", _journalItemSelectorCriterion.getFolderId()
+		).setParameter(
+			"resourcePrimKey",
+			_journalItemSelectorCriterion.getResourcePrimKey()
+		).build();
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}

@@ -207,12 +207,12 @@ export default function FieldSetList({searchTerm}) {
 					/>
 				</div>
 			)}
-
-			<FieldSetModal
-				fieldSet={modalState.fieldSet}
-				isVisible={modalState.isVisible}
-				onClose={toggleFieldSet}
-			/>
+			{modalState.isVisible && (
+				<FieldSetModal
+					fieldSet={modalState.fieldSet}
+					onClose={toggleFieldSet}
+				/>
+			)}
 		</>
 	);
 }

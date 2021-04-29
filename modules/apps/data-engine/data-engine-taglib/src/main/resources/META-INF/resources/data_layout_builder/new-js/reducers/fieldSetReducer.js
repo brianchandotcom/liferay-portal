@@ -136,68 +136,42 @@ export default (state, action, config) => {
 			const {fieldTypes} = config;
 			const {editingLanguageId, pages} = state;
 
-			const newPages = pages.map((page) => {
-				const rows = page.rows.map((row) => {
-					const columns = row.columns.map((column) => {
-						const fields = column.fields.reduce((fields, field) => {
-							if (field.ddmStructureId === fieldSet.id) {
-								const nestedFields = fieldSet.dataDefinitionFields.map(
-									({name}) => {
-										const field = getDDMFormField({
-											dataDefinition: fieldSet,
-											editingLanguageId,
-											fieldName: name,
-											fieldTypes,
-										});
+			const visitor = new PagesVisitor(pages);
 
-										return {
-											...field,
-											label:
-												field.label[
-													editingLanguageId
-												] ??
-												field.label[
-													fieldSet.defaultLanguageId
-												],
-										};
-									}
-								);
+			const newPages = visitor.mapFields((field) => {
+				if (field.ddmStructureId !== fieldSet.id) {
+					return field;
+				}
 
-								const rows = normalizeDataLayoutRows(
-									fieldSet.defaultDataLayout.dataLayoutPages
-								);
-
-								const updatedFieldSetDefinition = {
-									...field,
-									nestedFields,
-									rows,
-								};
-
-								fields.push(updatedFieldSetDefinition);
-							}
-							else {
-								fields.push(field);
-							}
-
-							return fields;
-						}, []);
+				const nestedFields = fieldSet.dataDefinitionFields.map(
+					({name}) => {
+						const field = getDDMFormField({
+							dataDefinition: fieldSet,
+							editingLanguageId,
+							fieldName: name,
+							fieldTypes,
+						});
 
 						return {
-							...column,
-							fields,
+							...field,
+							label:
+								field.label[editingLanguageId] ??
+								field.label[fieldSet.defaultLanguageId],
 						};
-					});
+					}
+				);
 
-					return {
-						...row,
-						columns,
-					};
-				});
+				const rows = normalizeDataLayoutRows(
+					fieldSet.defaultDataLayout.dataLayoutPages
+				);
 
-				return {
-					...page,
+				const updatedFieldSetDefinition = {
+					...field,
+					nestedFields,
 					rows,
 				};
+
+				return updatedFieldSetDefinition;
 			});
 
 			return {

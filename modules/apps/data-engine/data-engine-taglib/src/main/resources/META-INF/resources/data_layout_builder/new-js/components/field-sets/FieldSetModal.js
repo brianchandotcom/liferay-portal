@@ -14,12 +14,11 @@
 
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
+import ClayModal, {useModal} from '@clayui/modal';
 import {
 	ConfigProvider,
 	EVENT_TYPES as EVENT_TYPES_CORE,
 	FormProvider,
-	INITIAL_STATE,
 	PagesVisitor,
 	useConfig,
 	useForm,
@@ -32,10 +31,7 @@ import {
 	pagesStructureReducer,
 } from 'dynamic-data-mapping-form-renderer/js/core/reducers/index.es';
 import {pageReducer} from 'dynamic-data-mapping-form-renderer/js/custom/form/reducers/index.es';
-import {fetch} from 'frontend-js-web';
-import {default as React, useCallback, useEffect, useState} from 'react';
-import {DndProvider} from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
+import {default as React, useCallback, useState} from 'react';
 
 import getFieldsWithoutOptions from '../../../js/components/field-sets/actions/getFieldsWithoutOptions.es';
 import {usePropagateFieldSet} from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
@@ -43,22 +39,11 @@ import TranslationManager from '../../../js/components/translation-manager/Trans
 import {addItem, updateItem} from '../../../js/utils/client.es';
 import {getFieldSetDDMForm} from '../../../js/utils/dataConverter.es';
 import {isDataLayoutEmpty} from '../../../js/utils/dataLayoutVisitor.es';
-import {normalizeDataLayout} from '../../../js/utils/normalizers.es';
 import {errorToast, successToast} from '../../../js/utils/toast.es';
 import {FormBuilder} from '../../FormBuilder';
+import {INITIAL_STATE} from '../../config/initialState';
 import {EVENT_TYPES} from '../../eventTypes';
 import sidebarReducer from '../../reducers/sidebarReducer';
-
-const DEFAULT_DATA_DEFINITION = {
-	dataDefinitionFields: [],
-};
-
-const DEFAULT_DATA_LAYOUT = {
-	dataLayoutFields: {},
-	dataLayoutPages: [],
-	dataRules: [],
-	paginationMode: 'single-page',
-};
 
 const ModalContent = ({
 	fieldSet: fieldSetProp,
@@ -116,36 +101,23 @@ const ModalContent = ({
 				);
 			}
 
+			const fieldSet = {
+				availableLanguageIds,
+				dataDefinitionFields,
+				defaultDataLayout: {
+					dataLayoutPages,
+					name,
+				},
+				name,
+			};
+
 			if (dataDefinitionId) {
 
 				// update fieldSet
 
 				const updatedFieldSet = {
 					...fieldSetProp,
-					availableLanguageIds,
-					dataDefinitionFields,
-					defaultDataLayout: normalizeDataLayout(
-						{
-							...fieldSetProp.defaultDataLayout,
-
-							dataLayoutPages: dataLayoutPages.map((page) => {
-								return {
-									...page,
-									description: {
-										[defaultLanguageId]: '',
-									},
-
-									title: {
-										[defaultLanguageId]: '',
-									},
-								};
-							}),
-
-							name,
-						},
-						defaultLanguageId
-					),
-					name,
+					...fieldSet,
 				};
 
 				const onPropagate = async () => {
@@ -164,16 +136,6 @@ const ModalContent = ({
 			else {
 
 				// create new fieldSet from scratch
-
-				const fieldSet = {
-					availableLanguageIds,
-					dataDefinitionFields,
-					defaultDataLayout: {
-						dataLayoutPages,
-						name,
-					},
-					name,
-				};
 
 				const updatedFieldSet = await addItem(
 					`/o/data-engine/v2.0/data-definitions/by-content-type/${contentType}`,
@@ -241,11 +203,7 @@ const ModalContent = ({
 			</ClayModal.Header>
 			<ClayModal.Body>
 				<div className="pl-4 pr-4">
-					<ClayModalProvider>
-						<DndProvider backend={HTML5Backend}>
-							<FormBuilder />
-						</DndProvider>
-					</ClayModalProvider>
+					<FormBuilder />
 				</div>
 			</ClayModal.Body>
 			<ClayModal.Footer
@@ -270,12 +228,11 @@ const ModalContent = ({
 	);
 };
 
-const FieldSetModal = ({fieldSet, isVisible, onClose: onCloseProp}) => {
+const FieldSetModal = ({fieldSet, onClose: onCloseProp}) => {
 	const {observer, onClose} = useModal({onClose: onCloseProp});
 	const config = useConfig();
 	const {
 		allowInvalidAvailableLocalesForProperty,
-		defaultLanguageId,
 		fieldSets,
 		sidebarPanels,
 	} = useFormState();
@@ -298,11 +255,6 @@ const FieldSetModal = ({fieldSet, isVisible, onClose: onCloseProp}) => {
 		},
 		[dispatch, fieldSets]
 	);
-
-	const [data, setData] = useState({
-		dataDefinition: DEFAULT_DATA_DEFINITION,
-		dataLayout: DEFAULT_DATA_LAYOUT,
-	});
 
 	const propagateFieldSet = usePropagateFieldSet();
 
@@ -336,136 +288,81 @@ const FieldSetModal = ({fieldSet, isVisible, onClose: onCloseProp}) => {
 		[fieldSet, propagateFieldSet]
 	);
 
-	useEffect(() => {
-		if (fieldSet) {
-			const omit = (obj, props) => {
-				const result = {...obj};
+	let data = {};
+	if (fieldSet) {
+		const ddmForm = getFieldSetDDMForm({
+			allowInvalidAvailableLocalesForProperty,
+			editingLanguageId: fieldSet.defaultLanguageId,
+			fieldSet,
+			fieldTypes: config.fieldTypes,
+		});
 
-				props.forEach((prop) => {
-					delete result[prop];
-				});
+		// TODO: check for issue on getFieldSetDDMForm converting label property
 
-				return result;
-			};
+		new PagesVisitor(ddmForm.pages).mapFields((field) => {
+			field.label = field.label[fieldSet.defaultLanguageId];
+		});
 
-			const parseDataLayout = (dataLayout) => {
-				const {paginationMode, ...dataLayouts} = omit(dataLayout, [
-					'dataRules',
-					'dataLayoutPages',
-					'description',
-					'name',
-				]);
+		const {
+			defaultDataLayout,
+			defaultLanguageId,
+			name,
+			...dataDefinition
+		} = fieldSet;
+		const {paginationMode, ...dataLayout} = defaultDataLayout;
 
-				return {
-					dataLayout: dataLayouts,
-					paginationMode,
-				};
-			};
+		delete dataLayout.dataLayoutPages;
+		delete dataLayout.dataRules;
 
-			const parseDataDefinition = (dataDefinition) => {
-				const {
-					availableLanguageIds,
-					description,
-					name,
-					...dataDefinitions
-				} = omit(dataDefinition, [
-					'defaultLanguageId',
-					'defaultDataLayout',
-				]);
-
-				return {
-					availableLanguageIds,
-					dataDefinition: dataDefinitions,
-					description,
-					name,
-				};
-			};
-
-			const responseToJson = async (response) => {
-				if (response.ok) {
-					return await response.json();
-				}
-
-				throw response;
-			};
-
-			Promise.all([
-				fetch(
-					`${window.location.origin}/o/data-engine/v2.0/data-definitions/${fieldSet.id}`
-				).then(responseToJson),
-				fetch(
-					`${window.location.origin}/o/data-engine/v2.0/data-layouts/${fieldSet.defaultDataLayout.id}`
-				).then(responseToJson),
-			]).then(([dataDefinition, dataLayout]) => {
-				const ddmForm = getFieldSetDDMForm({
-					allowInvalidAvailableLocalesForProperty,
-					availableLanguageIds: fieldSet.availableLanguageIds,
-					editingLanguageId: fieldSet.defaultLanguageId,
-					fieldSet,
-					fieldTypes: config.fieldTypes,
-				});
-
-				new PagesVisitor(ddmForm.pages).mapFields((field) => {
-					field.label = field.label[fieldSet.defaultLanguageId];
-				});
-
-				setData({
-					...parseDataDefinition(dataDefinition),
-					...parseDataLayout(dataLayout),
-					dataDefinitionId: dataDefinition.id,
-					dataLayoutId: dataLayout.id,
-					name: dataDefinition.name,
-					pages: ddmForm.pages,
-				});
-			});
-		}
-	}, [allowInvalidAvailableLocalesForProperty, config.fieldTypes, fieldSet]);
+		data = {
+			dataDefinition,
+			dataDefinitionId: dataDefinition.id,
+			dataLayout,
+			dataLayoutId: dataLayout.id,
+			editingLanguageId: defaultLanguageId,
+			name,
+			pages: ddmForm.pages,
+			paginationMode,
+		};
+	}
 
 	return (
-		isVisible && (
-			<ClayModal
-				className="data-layout-builder-editor-modal fieldset-modal"
-				observer={observer}
-				size="full-screen"
+		<ClayModal
+			className="data-layout-builder-editor-modal fieldset-modal"
+			observer={observer}
+			size="full-screen"
+		>
+			<ConfigProvider
+				config={{
+					...config,
+					allowFieldSets: false,
+					dataDefinitionId: null,
+				}}
 			>
-				<ConfigProvider
-					config={{
-						...config,
-						allowFieldSets: false,
-						dataDefinitionId: null,
+				<FormProvider
+					initialState={INITIAL_STATE}
+					reducers={[
+						dragAndDropReducer,
+						fieldEditableReducer,
+						languageReducer,
+						pageReducer,
+						pagesStructureReducer,
+						sidebarReducer,
+					]}
+					value={{
+						...data,
+						sidebarPanels,
 					}}
 				>
-					<FormProvider
-						initialState={INITIAL_STATE}
-						reducers={[
-							dragAndDropReducer,
-							fieldEditableReducer,
-							languageReducer,
-							pageReducer,
-							pagesStructureReducer,
-							sidebarReducer,
-						]}
-						value={{
-							availableLanguageIds: fieldSet?.availableLanguageIds ?? [
-								defaultLanguageId,
-							],
-							...data,
-							editingLanguageId:
-								fieldSet?.defaultLanguageId ??
-								defaultLanguageId,
-							sidebarPanels,
-						}}
-					>
-						<ModalContent
-							fieldSet={fieldSet}
-							onClose={onClose}
-							onUpdate={showPropagationModal}
-							updateFieldSetList={updateFieldSetList}
-						/>
-					</FormProvider>
-				</ConfigProvider>
-			</ClayModal>
-		)
+					<ModalContent
+						fieldSet={fieldSet}
+						onClose={onClose}
+						onUpdate={showPropagationModal}
+						updateFieldSetList={updateFieldSetList}
+					/>
+				</FormProvider>
+			</ConfigProvider>
+		</ClayModal>
 	);
 };
 

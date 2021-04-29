@@ -1066,7 +1066,9 @@ definition {
 	}
 
 	macro selectPageType {
-		Panel.expandPanel(panel = "Pages");
+		Click(
+			key_url = "site-configuration-pages",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		if ("${selectPublicPages}" == "true") {
 			Select(

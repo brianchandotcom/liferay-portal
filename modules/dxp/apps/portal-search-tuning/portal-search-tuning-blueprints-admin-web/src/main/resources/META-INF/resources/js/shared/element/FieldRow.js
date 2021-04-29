@@ -19,7 +19,10 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import fuzzy from 'fuzzy';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
+import {isDefined} from '../../utils/utils';
 import ThemeContext from '../ThemeContext';
+
+const USER_LANGUAGE_VARIABLE = '${context.language_id}';
 
 function AutocompleteItem({indexField, match = '', onClick}) {
 	const fuzzyMatch = fuzzy.match(match, indexField.name, {
@@ -96,7 +99,9 @@ function FieldRow({
 	const _handleFieldChange = (event) => {
 		const indexField = _getIndexField(event.target.value) || {};
 
-		let languageIdPosition = indexField.language_id_position || -1;
+		let languageIdPosition = isDefined(indexField.language_id_position)
+			? indexField.language_id_position
+			: -1;
 
 		if (indexField.locale && languageIdPosition === -1) {
 			languageIdPosition = event.target.value.length;
@@ -110,10 +115,28 @@ function FieldRow({
 	};
 
 	const _handleAutocompleteItemClick = (indexField) => () => {
-		onChange({
-			field: indexField.name,
-			languageIdPosition: indexField.language_id_position,
-		});
+		// Special case if the same field name has both a localized and
+		// non-localized option.
+		//
+		// For example 'title':
+		// {name: 'title', type: 'text', language_id_position: 5}
+		// {name: 'title', type: 'text', language_id_position: -1}
+		//
+		// Reset the locale to "no localization" if the non-localized field
+		// is autocompleted to.
+
+		if (indexField.language_id_position === -1) {
+			onChange({
+				field: indexField.name,
+				languageIdPosition: indexField.language_id_position,
+				locale: '',
+			});
+		} else {
+			onChange({
+				field: indexField.name,
+				languageIdPosition: indexField.language_id_position,
+			});
+		}
 
 		inputRef.current.focus();
 
@@ -200,7 +223,7 @@ function FieldRow({
 							<ClaySelect.Option
 								key={`users-language-${index}`}
 								label={Liferay.Language.get('users-language')}
-								value="${context.language_id}"
+								value={USER_LANGUAGE_VARIABLE}
 							/>
 
 							{Object.keys(availableLanguages).map((locale) => (

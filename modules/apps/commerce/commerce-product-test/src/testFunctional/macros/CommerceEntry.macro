@@ -372,6 +372,87 @@ definition {
 		CommerceEntry.addFullDescriptionViaAlloyEditor(entryFullDescription = "${productFullDescription}");
 	}
 
+	macro AddShippingOptionSettingsVariableRate {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Select(
+			key_fieldLabel = "Shipping Option",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${key_shippingOption}");
+
+		Select(
+			key_fieldLabel = "Warehouse",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${key_Warehouse}");
+
+		Select(
+			key_fieldLabel = "Country",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${key_country}");
+
+		Select(
+			key_fieldLabel = "Region",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${key_region}");
+
+		Type(
+			key_fieldLabel = "Zip",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_zip}");
+
+		Type(
+			key_fieldLabel = "Weight From",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_weightFrom}");
+
+		Type(
+			key_fieldLabel = "Weight To",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_weightTo}");
+
+		Type(
+			key_fieldLabel = "Fixed Price",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_fixedPrice}");
+
+		Type(
+			key_fieldLabel = "Price per Unit of Weight",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_priceUnitWeight}");
+
+		Type(
+			key_fieldLabel = "Subtotal Percentage Price",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_subtotal}");
+
+		Button.clickSave();
+	}
+
+	macro AddShippingOptionVariableRate {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_name}");
+
+		Type(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_description}");
+
+		Type(
+			key_fieldLabel = "Priority",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${key_priority}");
+
+		Button.clickSave();
+	}
+
 	macro addSKUsEntry {
 		Type(
 			locator1 = "CommerceEntry#SKU_FIELD",

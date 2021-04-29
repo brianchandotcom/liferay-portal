@@ -17,11 +17,7 @@ import {act, cleanup, fireEvent, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import QuantitySelector from '../../../src/main/resources/META-INF/resources/components/quantity_selector/QuantitySelector';
-import * as Utils from '../../../src/main/resources/META-INF/resources/components/quantity_selector/utils';
-
-jest.mock(
-	'../../../src/main/resources/META-INF/resources/components/quantity_selector/utils/index'
-);
+import {UPDATE_AFTER} from '../../../src/main/resources/META-INF/resources/components/quantity_selector/utils';
 
 describe('QuantitySelector', () => {
 	describe('by default', () => {
@@ -39,7 +35,7 @@ describe('QuantitySelector', () => {
 			cleanup();
 
 			Component = null;
-			onUpdateSpy = null;
+			onUpdateSpy.mockReset();
 		});
 
 		it('renders as an Input element with default attributes', () => {
@@ -55,12 +51,12 @@ describe('QuantitySelector', () => {
 			expect(element).toBeInTheDocument();
 
 			expect(element.max).toEqual(defaultProps.maxQuantity.toString());
-			expect(element.min).toEqual('');
+			expect(element.min).toEqual(defaultProps.minQuantity.toString());
 			expect(element.step).toEqual(
 				defaultProps.multipleQuantity.toString()
 			);
 			expect(element.type).toEqual('number');
-			expect(element.value).toEqual('');
+			expect(element.value).toEqual(defaultProps.quantity.toString());
 		});
 
 		it('accepts only number-typed input values', async () => {
@@ -73,7 +69,7 @@ describe('QuantitySelector', () => {
 
 			await wait(() => {
 				expect(element.value).not.toEqual(updatedValue);
-				expect(element.value).toEqual('');
+				expect(element.value).toEqual('1');
 			});
 		});
 
@@ -99,7 +95,7 @@ describe('QuantitySelector', () => {
 			});
 
 			await wait(() => {
-				expect(element.value).toEqual('');
+				expect(element.value).toEqual('1');
 			});
 		});
 
@@ -117,7 +113,7 @@ describe('QuantitySelector', () => {
 
 			await wait(
 				() => {
-					jest.advanceTimersByTime(Utils.UPDATE_AFTER);
+					jest.advanceTimersByTime(UPDATE_AFTER);
 
 					expect(onUpdateSpy).toHaveBeenCalledTimes(1);
 					expect(onUpdateSpy).toHaveBeenCalledWith(updatedValue);
@@ -125,7 +121,7 @@ describe('QuantitySelector', () => {
 					jest.clearAllTimers();
 				},
 				{
-					timeout: Utils.UPDATE_AFTER,
+					timeout: UPDATE_AFTER,
 				}
 			);
 		});
@@ -136,7 +132,7 @@ describe('QuantitySelector', () => {
 			const TIMES = 4;
 			const TYPING_THRESHOLD = 25;
 
-			const TIMEOUT_AT_MS = TIMES * TYPING_THRESHOLD + Utils.UPDATE_AFTER;
+			const TIMEOUT_AT_MS = TIMES * TYPING_THRESHOLD + UPDATE_AFTER;
 
 			const element = Component.container.querySelector('input');
 
@@ -182,56 +178,6 @@ describe('QuantitySelector', () => {
 			cleanup();
 		});
 
-		it('renders as Select element with default number of Option elements if forceDropdown prop is true', () => {
-			const optionSettingsProps = {
-				allowedQuantities: [],
-				maxQuantity: 99,
-				minQuantity: 1,
-				multipleQuantity: 1,
-			};
-
-			const defaultProps = {
-				quantity: 1,
-				...optionSettingsProps,
-			};
-
-			const Component = render(
-				<QuantitySelector forceDropdown={true} {...defaultProps} />
-			);
-
-			const selectElement = Component.container.querySelector('select');
-
-			expect(selectElement).toBeInTheDocument();
-			expect(Utils.generateQuantityOptions).toHaveBeenCalledTimes(1);
-			expect(Utils.generateQuantityOptions).toHaveBeenCalledWith(
-				optionSettingsProps
-			);
-		});
-
-		it('renders as Select element with default number of Option elements if allowedQuantities prop is non-empty', () => {
-			const optionSettingsProps = {
-				allowedQuantities: [2, 3, 4, 5],
-				maxQuantity: 99,
-				minQuantity: 1,
-				multipleQuantity: 1,
-			};
-
-			const defaultProps = {
-				quantity: 1,
-				...optionSettingsProps,
-			};
-
-			const Component = render(<QuantitySelector {...defaultProps} />);
-
-			const selectElement = Component.container.querySelector('select');
-
-			expect(selectElement).toBeInTheDocument();
-			expect(Utils.generateQuantityOptions).toHaveBeenCalledTimes(1);
-			expect(Utils.generateQuantityOptions).toHaveBeenCalledWith(
-				optionSettingsProps
-			);
-		});
-
 		it('floors the input value to the closest lower multiple if multipleQuantity > 1', async () => {
 			jest.useFakeTimers();
 
@@ -261,7 +207,7 @@ describe('QuantitySelector', () => {
 
 			await wait(
 				() => {
-					jest.advanceTimersByTime(Utils.UPDATE_AFTER);
+					jest.advanceTimersByTime(UPDATE_AFTER);
 
 					expect(onUpdateSpy).toHaveBeenCalledTimes(1);
 					expect(onUpdateSpy).toHaveBeenCalledWith(52);
@@ -269,7 +215,7 @@ describe('QuantitySelector', () => {
 					jest.clearAllTimers();
 				},
 				{
-					timeout: Utils.UPDATE_AFTER,
+					timeout: UPDATE_AFTER,
 				}
 			);
 		});
@@ -307,7 +253,10 @@ describe('QuantitySelector', () => {
 
 		it('disables the select element if required via prop', () => {
 			const Component = render(
-				<QuantitySelector disabled={true} forceDropdown={true} />
+				<QuantitySelector
+					allowedQuantities={[1, 2, 3]}
+					disabled={true}
+				/>
 			);
 
 			const element = Component.container.querySelector('select');

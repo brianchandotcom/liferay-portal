@@ -405,7 +405,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
@@ -559,7 +559,7 @@ definition {
 			var suborgName = StringUtil.replace("${suborgName}", " ", "-");
 			var suborgName = StringUtil.lowerCase("${suborgName}");
 
-			Site.openSiteConfigurationAdmin(siteURLKey = "${suborgName}");
+			Site.openSiteSettingsAdmin(siteURLKey = "${suborgName}");
 
 			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 		}
@@ -1036,7 +1036,7 @@ definition {
 
 		Organization.addSiteCP(orgName = "Organization Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 

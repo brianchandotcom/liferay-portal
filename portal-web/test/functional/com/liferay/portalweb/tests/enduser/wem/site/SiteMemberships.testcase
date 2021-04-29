@@ -318,7 +318,7 @@ definition {
 			userName = "Test Test",
 			userScreenName = "test");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name-1");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
@@ -737,6 +737,8 @@ definition {
 	test ViewNoManualMembershipManagement {
 		property testray.component.names = "Site Administration";
 
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
 		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Navigator.openURL();
@@ -748,6 +750,8 @@ definition {
 		AssertVisible(
 			key_portlet = "Memberships",
 			locator1 = "ProductMenu#PORTLET");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.manageMembershipOptions(allowManualMembershipManagement = "false");
 

@@ -182,7 +182,7 @@ definition {
 			orgName = "Organization Name 1",
 			siteTemplateName = "Site Template Name 1");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name-1");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
 		Site.manageMembershipOptions(
 			allowManualMembershipManagement = "true",
@@ -205,7 +205,7 @@ definition {
 			orgName = "Organization Name 2",
 			siteTemplateName = "Site Template Name 2");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "organization-name-2");
+		Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
 
 		Site.manageMembershipOptions(
 			allowManualMembershipManagement = "true",

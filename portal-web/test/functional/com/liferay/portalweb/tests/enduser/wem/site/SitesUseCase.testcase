@@ -1063,7 +1063,7 @@ definition {
 			teamDescription = '''<script>alert(123);</script>''',
 			teamName = '''<script>alert(123);</script>''');
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.assignDefaultSiteTeam(teamName = '''<script>alert(123);</script>''');
 

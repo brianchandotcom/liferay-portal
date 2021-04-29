@@ -14,8 +14,9 @@
 
 package com.liferay.account.constants;
 
+import com.liferay.account.model.AccountRole;
+import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Objects;
@@ -75,7 +76,14 @@ public class AccountRoleConstants {
 	}
 
 	public static boolean isSharedRole(Role role) {
-		if (role.getType() == RoleConstants.TYPE_ACCOUNT) {
+		AccountRole accountRole =
+			AccountRoleLocalServiceUtil.fetchAccountRoleByRoleId(
+				role.getRoleId());
+
+		if (Objects.equals(
+				accountRole.getAccountEntryId(),
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
+
 			return true;
 		}
 

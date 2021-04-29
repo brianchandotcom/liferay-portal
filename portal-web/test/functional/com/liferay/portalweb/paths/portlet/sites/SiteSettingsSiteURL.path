@@ -11,7 +11,7 @@
 <!--SITE_URL-->
 <tr>
 	<td>SITE_URL_FRIENDLY_URL_LABEL</td>
-	<td>//div[contains(@id,'siteUrlContent')]//label[contains(.,'Friendly URL')]</td>
+	<td>//div[contains(@class,'form-group')]//label[contains(@for,'groupFriendlyURL')]</td>
 	<td></td>
 </tr>
 <tr>

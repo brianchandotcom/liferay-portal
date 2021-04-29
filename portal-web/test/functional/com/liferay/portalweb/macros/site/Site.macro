@@ -476,16 +476,9 @@ definition {
 	}
 
 	macro configureCurrentLanguagesCP {
-		if (isSet(localizedLanguageTab)) {
-			if (IsElementNotPresent(key_tab = "${localizedLanguageTab}", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-				Navigator.gotoNavTab(navTab = "${localizedLanguageTab}");
-			}
-		}
-		else {
-			if (IsElementNotPresent(key_tab = "Languages", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
-				Navigator.gotoNavTab(navTab = "Languages");
-			}
-		}
+		Click(
+			key_url = "site-configuration-languages",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Check.checkNotVisible(
 			index = "2",

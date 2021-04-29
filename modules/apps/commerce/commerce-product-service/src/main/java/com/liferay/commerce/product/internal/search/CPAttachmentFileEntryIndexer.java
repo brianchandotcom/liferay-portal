@@ -201,6 +201,9 @@ public class CPAttachmentFileEntryIndexer
 
 		document.addNumber(Field.PRIORITY, cpAttachmentFileEntry.getPriority());
 
+		document.addKeyword(CPField.CDN, cpAttachmentFileEntry.isCdn());
+		document.addText(CPField.CDN_URL, cpAttachmentFileEntry.getCdnUrl());
+
 		document.addNumber(Field.TYPE, cpAttachmentFileEntry.getType());
 		document.addDateSortable(
 			CPField.DISPLAY_DATE, cpAttachmentFileEntry.getDisplayDate());

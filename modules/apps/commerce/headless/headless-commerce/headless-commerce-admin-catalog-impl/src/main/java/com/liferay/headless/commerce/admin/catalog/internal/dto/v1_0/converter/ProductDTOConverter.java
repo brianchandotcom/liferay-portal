@@ -14,8 +14,12 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CProduct;
@@ -24,6 +28,7 @@ import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Status;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
@@ -34,6 +39,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -92,6 +98,12 @@ public class ProductDTOConverter
 				actions = dtoConverterContext.getActions();
 				active = !cpDefinition.isInactive();
 				catalogId = _getCommerceCatalogId(cpDefinition);
+				categories = TransformUtil.transformToArray(
+					_assetCategoryLocalService.getCategories(
+						cpDefinition.getModelClassName(),
+						cpDefinition.getCPDefinitionId()),
+					assetCategory -> _toCategory(assetCategory),
+					Category.class);
 				createDate = cpDefinition.getCreateDate();
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),
@@ -211,8 +223,39 @@ public class ProductDTOConverter
 		};
 	}
 
+	private Category _toCategory(AssetCategory assetCategory) {
+		String vocabularyName = StringPool.BLANK;
+
+		AssetVocabulary vocabulary =
+			_assetVocabularyLocalService.fetchAssetVocabulary(
+				assetCategory.getVocabularyId());
+
+		if (vocabulary != null) {
+			vocabularyName = vocabulary.getName();
+		}
+
+		Category category = new Category() {
+			{
+				externalReferenceCode =
+					assetCategory.getExternalReferenceCode();
+				id = assetCategory.getCategoryId();
+				name = assetCategory.getName();
+			}
+		};
+
+		category.setVocabulary(vocabularyName);
+
+		return category;
+	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
 	@Reference
 	private AssetTagService _assetTagService;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private CPDefinitionService _cpDefinitionService;

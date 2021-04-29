@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -99,6 +100,7 @@ import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -393,10 +395,26 @@ public class ProductResourceImpl
 					product.getExternalReferenceCode(),
 					contextCompany.getCompanyId());
 
-		if ((product.getCategories() == null) && (cpDefinition != null)) {
+		// Categories
+
+		Category[] categories = product.getCategories();
+
+		if (categories != null) {
+			List<Long> categoryIds = new ArrayList<>();
+
+			for (Category category : categories) {
+				if (category.getId() != null) {
+					categoryIds.add(category.getId());
+				}
+			}
+
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(categoryIds));
+		}
+		else if (cpDefinition != null) {
 			long[] categoryIds = _assetCategoryLocalService.getCategoryIds(
-				cpDefinition.getModelClassName(),
-				cpDefinition.getCPDefinitionId());
+					cpDefinition.getModelClassName(),
+					cpDefinition.getCPDefinitionId());
 
 			serviceContext.setAssetCategoryIds(categoryIds);
 		}
@@ -753,16 +771,6 @@ public class ProductResourceImpl
 			}
 		}
 
-		// Categories
-
-		Category[] categories = product.getCategories();
-
-		if (categories != null) {
-
-			// TODO addOrUpdate categories
-
-		}
-
 		// Images
 
 		Attachment[] images = product.getImages();
@@ -971,12 +979,28 @@ public class ProductResourceImpl
 
 		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
 
-		if (product.getCategories() == null) {
+		// Categories
+
+		Category[] categories = product.getCategories();
+
+		if (categories == null) {
 			long[] categoryIds = _assetCategoryLocalService.getCategoryIds(
 				cpDefinition.getModelClassName(),
 				cpDefinition.getCPDefinitionId());
 
 			serviceContext.setAssetCategoryIds(categoryIds);
+		}
+		else {
+			List<Long> categoryIds = new ArrayList<>();
+
+			for (Category category : categories) {
+				if (category.getId() != null) {
+					categoryIds.add(category.getId());
+				}
+			}
+
+			serviceContext.setAssetCategoryIds(
+				ArrayUtil.toLongArray(categoryIds));
 		}
 
 		Map<String, String> nameMap = product.getName();

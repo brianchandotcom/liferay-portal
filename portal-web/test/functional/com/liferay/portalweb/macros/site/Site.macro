@@ -264,7 +264,9 @@ definition {
 	}
 
 	macro assignDefaultSiteTeam {
-		Click(locator1 = "SitesEditSite#MENU_ADVANCED_TAB");
+		Click(
+			key_url = "site-configuration-default-user-associations",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertClick(
 			locator1 = "SiteSettingsDefaultUserAssociations#TEAMS_SELECT",
@@ -283,8 +285,6 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		PortletEntry.save();
-
-		Click(locator1 = "SitesEditSite#MENU_ADVANCED_TAB");
 
 		var key_teamName = "${teamName}";
 

@@ -145,12 +145,6 @@ public abstract class BaseDB implements DB {
 		throws IOException {
 	}
 
-	public void doProcess(UnsafeConsumer<Long, Exception> unsafeConsumer)
-		throws Exception {
-
-		DBPartitionUtil.forEachCompanyId(unsafeConsumer);
-	}
-
 	@Override
 	public DBType getDBType() {
 		return _dbType;
@@ -304,6 +298,12 @@ public abstract class BaseDB implements DB {
 	@Override
 	public boolean isSupportsUpdateWithInnerJoin() {
 		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
+	}
+
+	public void process(UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception {
+
+		DBPartitionUtil.forEachCompanyId(unsafeConsumer);
 	}
 
 	@Override

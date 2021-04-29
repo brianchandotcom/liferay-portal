@@ -98,7 +98,7 @@ public abstract class UpgradeProcess
 				return;
 			}
 
-			doProcess(
+			process(
 				companyId -> {
 					if (_log.isInfoEnabled()) {
 						String info =

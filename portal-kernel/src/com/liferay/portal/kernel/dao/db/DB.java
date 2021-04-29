@@ -73,9 +73,6 @@ public interface DB {
 	@Deprecated
 	public void buildSQLFile(String sqlDir, String fileName) throws IOException;
 
-	public void doProcess(UnsafeConsumer<Long, Exception> unsafeConsumer)
-		throws Exception;
-
 	public DBType getDBType();
 
 	public List<Index> getIndexes(Connection con) throws SQLException;
@@ -140,6 +137,9 @@ public interface DB {
 	public boolean isSupportsStringCaseSensitiveQuery();
 
 	public boolean isSupportsUpdateWithInnerJoin();
+
+	public void process(UnsafeConsumer<Long, Exception> unsafeConsumer)
+		throws Exception;
 
 	public default void runSQL(Connection con, DBTypeToSQLMap dbTypeToSQLMap)
 		throws IOException, SQLException {

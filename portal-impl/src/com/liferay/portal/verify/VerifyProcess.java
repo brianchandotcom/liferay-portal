@@ -65,7 +65,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		try (Connection con = DataAccess.getConnection()) {
 			connection = con;
 
-			doProcess(
+			process(
 				companyId -> {
 					if (_log.isInfoEnabled()) {
 						String info =

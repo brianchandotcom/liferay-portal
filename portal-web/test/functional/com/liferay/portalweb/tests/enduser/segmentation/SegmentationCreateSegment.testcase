@@ -45,12 +45,56 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130275."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationDateModified {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130275 AddSegmentByOrganizationDateModified pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Date Modified");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Greater Than");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationDateModified Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByOrganizationDateModified Test");
+
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayDateMonth = DateUtil.getCurrentMonth();
+
+		if (("${displayDateMonth}" != "10") && ("${displayDateMonth}" != "11") && ("${displayDateMonth}" != "12")) {
+			var displayDateMonth= "0${displayDateMonth}";
+		}
+
+		var displayDateYear = DateUtil.getCurrentYear();
+		var displayDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay}";
+
+		Segmentation.viewSegment(date = "${displayDate}");
 	}
 
 	@description = "This is a test for LPS-130276."

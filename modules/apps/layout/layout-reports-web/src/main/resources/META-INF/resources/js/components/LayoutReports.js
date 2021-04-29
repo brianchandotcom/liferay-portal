@@ -51,9 +51,9 @@ export default function LayoutReports({
 
 	useEffect(() => {
 		if (loading && !error) {
-			const x = Date.now();
+			const initial = Date.now();
 			const interval = setInterval(() => {
-				const time = (Date.now() - x) / 1000;
+				const time = (Date.now() - initial) / 1000;
 				const progress =
 					-200 * (1 / (1 + Math.pow(Math.E, time / 4)) - 0.5);
 

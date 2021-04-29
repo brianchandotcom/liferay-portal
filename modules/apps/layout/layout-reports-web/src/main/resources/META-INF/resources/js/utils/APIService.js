@@ -16,8 +16,8 @@ import {fetch} from 'frontend-js-web';
 
 export default {
 	getLayoutReportsIssues(layoutReportsIssuesURL, namespace) {
-		return _fetchWithError(layoutReportsIssuesURL, {
-			body: _getFormDataRequest({}, namespace),
+		return fetchWithError(layoutReportsIssuesURL, {
+			body: getFormDataRequest({}, namespace),
 			method: 'POST',
 		});
 	},
@@ -26,13 +26,12 @@ export default {
 /**
  *
  *
- * @export
  * @param {Object} body
  * @param {string} prefix
  * @param {FormData} [formData=new FormData()]
  * @returns {FormData}
  */
-export function _getFormDataRequest(body, prefix, formData = new FormData()) {
+function getFormDataRequest(body, prefix, formData = new FormData()) {
 	Object.entries(body).forEach(([key, value]) => {
 		formData.append(`${prefix}${key}`, value);
 	});
@@ -43,7 +42,7 @@ export function _getFormDataRequest(body, prefix, formData = new FormData()) {
 /**
  * Wrapper to `fetch` function throwing an error when `error` is present in the response
  */
-function _fetchWithError(url, options = {}) {
+function fetchWithError(url, options = {}) {
 	return fetch(url, options)
 		.then((response) => response.json())
 		.then((objectResponse) => {

@@ -15,11 +15,10 @@
 package com.liferay.object.dto;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -70,94 +70,25 @@ public class ObjectEntry {
 		this.creator = creator;
 	}
 
-	@JsonIgnore
-	public void setCreator(
-		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
-
-		try {
-			creator = creatorUnsafeSupplier.get();
-		}
-		catch (RuntimeException runtimeException) {
-			throw runtimeException;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
-	}
-
-	@JsonIgnore
-	public void setDateCreated(
-		UnsafeSupplier<Date, Exception> dateCreatedUnsafeSupplier) {
-
-		try {
-			dateCreated = dateCreatedUnsafeSupplier.get();
-		}
-		catch (RuntimeException runtimeException) {
-			throw runtimeException;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
 	}
 
 	public void setDateModified(Date dateModified) {
 		this.dateModified = dateModified;
 	}
 
-	@JsonIgnore
-	public void setDateModified(
-		UnsafeSupplier<Date, Exception> dateModifiedUnsafeSupplier) {
-
-		try {
-			dateCreated = dateModifiedUnsafeSupplier.get();
-		}
-		catch (RuntimeException runtimeException) {
-			throw runtimeException;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<Long, Exception> idUnsafeSupplier) {
-		try {
-			id = idUnsafeSupplier.get();
-		}
-		catch (RuntimeException runtimeException) {
-			throw runtimeException;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
 	}
 
 	public void setProperties(Map<String, Serializable> properties) {
 		this.properties = properties;
 	}
 
-	@JsonIgnore
-	public void setProperties(
-		UnsafeSupplier<Map<String, Serializable>, Exception>
-			propertiesUnsafeSupplier) {
-
-		try {
-			properties = propertiesUnsafeSupplier.get();
-		}
-		catch (RuntimeException runtimeException) {
-			throw runtimeException;
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+	@JsonAnySetter
+	public void setProperties(String key, Serializable value) {
+		properties.put(key, value);
 	}
 
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -173,6 +104,6 @@ public class ObjectEntry {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected long id;
 
-	protected Map<String, Serializable> properties;
+	protected Map<String, Serializable> properties = new HashMap<>();
 
 }

@@ -135,7 +135,8 @@ public interface NumericDDMFormFieldTypeSettings
 	@DDMFormField(
 		dataType = "string", label = "%format",
 		properties = {
-			"placeholder=%input-mask-format-placeholder", "regex=^[^1-8]+$"
+			"placeholder=%input-mask-format-placeholder",
+			"regex=^(?=.*[09])([^1-8]+)$"
 		},
 		required = true,
 		tip = "%to-create-a-custom-input-mask-you-will-need-to-use-a-specific-set-of-characters",

@@ -93,7 +93,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 <script>
 	function <portlet:namespace />hideUnselectedClickToChatProviderLearnMessages() {
 		var clickToChatChatProviderIdElement = document.getElementById(
-			'<portlet:namespace />clickToChatChatProviderId'
+			'<portlet:namespace />chatProviderId'
 		);
 
 		var clickToChatProviderIdOptions = clickToChatChatProviderIdElement.querySelectorAll(
@@ -122,7 +122,7 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 		);
 
 		var clickToChatSiteSettingsStrategyElement = document.getElementById(
-			'<portlet:namespace />clickToChatSiteSettingsStrategy'
+			'<portlet:namespace />siteSettingsStrategy'
 		);
 
 		if (clickToChatSiteSettingsStrategyElement.value === 'always-override') {

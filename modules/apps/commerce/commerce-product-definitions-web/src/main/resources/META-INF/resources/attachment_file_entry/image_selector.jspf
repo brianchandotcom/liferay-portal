@@ -57,74 +57,96 @@ long fileEntryId = BeanParamUtil.getLong(cpAttachmentFileEntry, request, "fileEn
 	</c:when>
 </c:choose>
 
-<aui:script use="liferay-item-selector-dialog">
-	var selectFileButton = window.document.querySelector(
-		'#<portlet:namespace />selectFile'
+<aui:script sandbox="<%= true %>">
+	const selectFileButton = document.getElementById(
+		'<portlet:namespace />selectFile'
 	);
 
 	if (selectFileButton) {
+		const openerWindow = Liferay.Util.getOpener();
+
 		selectFileButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: 'addCPAttachmentFileEntry',
-				on: {
-					selectedItemChange: function (event) {
-						var selectedItem = event.newVal;
+			openerWindow.Liferay.Util.openSelectionModal({
+				onSelect: (selectedItem) => {
+					if (!selectedItem || !selectedItem.value) {
+						return;
+					}
 
-						if (selectedItem) {
-							var value = JSON.parse(selectedItem.value);
+					const value = JSON.parse(selectedItem.value);
 
-							window.document.querySelector(
-								'#<portlet:namespace />fileEntryId'
-							).value = value.fileEntryId;
+					const fileEntryIdInput = document.getElementById(
+						'<portlet:namespace />fileEntryId'
+					);
 
-							window.document.querySelector(
-								'#<portlet:namespace />fileEntryTitle'
-							).innerHTML = value.title;
+					if (fileEntryIdInput) {
+						fileEntryIdInput.value = value.fileEntryId;
+					}
 
-							window.document
-								.querySelector(
-									'#<portlet:namespace />fileEntryContainer'
-								)
-								.classList.remove('hidden');
+					const fileEntryTitle = document.getElementById(
+						'<portlet:namespace />fileEntryTitle'
+					);
 
-							window.document
-								.querySelector('#<portlet:namespace />deleteFile')
-								.classList.remove('hidden');
-						}
-					},
+					if (fileEntryTitle) {
+						fileEntryTitle.innerHTML = value.title;
+					}
+
+					const fileEntryContainer = document.getElementById(
+						'<portlet:namespace />fileEntryContainer'
+					);
+
+					if (fileEntryContainer) {
+						fileEntryContainer.classList.remove('hidden');
+					}
+
+					const deleteFileButton = document.getElementById(
+						'<portlet:namespace />deleteFile'
+					);
+
+					if (deleteFileButton) {
+						deleteFileButton.classList.remove('hidden');
+					}
 				},
+				selectEventName: 'addCPAttachmentFileEntry',
 				title: '<liferay-ui:message key="select-file" />',
 				url:
 					'<%= cpAttachmentFileEntriesDisplayContext.getAttachmentItemSelectorUrl() %>',
 			});
-
-			itemSelectorDialog.open();
 		});
 	}
-</aui:script>
 
-<aui:script>
-	var deleteFileButton = window.document.querySelector(
-		'#<portlet:namespace />deleteFile'
+	const deleteFileButton = document.getElementById(
+		'<portlet:namespace />deleteFile'
 	);
 
 	if (deleteFileButton) {
 		deleteFileButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			window.document.querySelector(
-				'#<portlet:namespace />fileEntryId'
-			).value = 0;
+			const fileEntryIdInput = document.getElementById(
+				'<portlet:namespace />fileEntryId'
+			);
 
-			window.document.querySelector(
-				'#<portlet:namespace />fileEntryTitle'
-			).innerHTML = '';
+			if (fileEntryIdInput) {
+				fileEntryIdInput.value = 0;
+			}
 
-			window.document
-				.querySelector('#<portlet:namespace />fileEntryContainer')
-				.classList.add('hidden');
+			const fileEntryTitle = document.getElementById(
+				'<portlet:namespace />fileEntryTitle'
+			);
+
+			if (fileEntryTitle) {
+				fileEntryTitle.innerHTML = '';
+			}
+
+			const fileEntryContainer = document.getElementById(
+				'<portlet:namespace />fileEntryContainer'
+			);
+
+			if (fileEntryContainer) {
+				fileEntryContainer.classList.add('hidden');
+			}
 
 			deleteFileButton.classList.add('hidden');
 		});

@@ -41,6 +41,8 @@ if (cpDisplayLayout != null) {
 		layoutBreadcrumb = cpDefinitionDisplayLayoutDisplayContext.getLayoutBreadcrumb(selLayout);
 	}
 }
+
+String searchContainerId = "CPDefinitionsSearchContainer";
 %>
 
 <liferay-util:buffer
@@ -75,7 +77,7 @@ if (cpDisplayLayout != null) {
 				<liferay-ui:search-container
 					curParam="cpDefinitionCur"
 					headerNames="null,null"
-					id="CPDefinitionsSearchContainer"
+					id="<%= searchContainerId %>"
 					iteratorURL="<%= currentURLObj %>"
 					total="<%= cpDefinitionAsList.size() %>"
 				>
@@ -135,130 +137,19 @@ if (cpDisplayLayout != null) {
 	</aui:form>
 </commerce-ui:side-panel-content>
 
-<aui:script use="aui-base,liferay-item-selector-dialog">
-	window.document
-		.querySelector('#<portlet:namespace />selectProduct')
-		.addEventListener('click', (event) => {
-			event.preventDefault();
-
-			Liferay.Util.selectEntity({
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				eventName: 'productDefinitionsSelectItem',
-				title: '<liferay-ui:message arguments="product" key="select-x" />',
-				uri:
-					'<%= cpDefinitionDisplayLayoutDisplayContext.getProductItemSelectorUrl() %>',
-			});
-		});
-</aui:script>
-
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get(
-		'<portlet:namespace />CPDefinitionsSearchContainer'
-	);
-
-	var searchContainerContentBox = searchContainer.get('contentBox');
-
-	searchContainerContentBox.delegate(
-		'click',
-		(event) => {
-			var link = event.currentTarget;
-
-			var rowId = link.attr('data-rowId');
-
-			var tr = link.ancestor('tr');
-
-			searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-
-			A.one('#<portlet:namespace />classPK').val(0);
-		},
-		'.modify-link'
-	);
-
-	Liferay.on('productDefinitionsSelectItem', (event) => {
-		var item = event.data;
-
-		if (item) {
-			var searchContainer = Liferay.SearchContainer.get(
-				'<portlet:namespace />CPDefinitionsSearchContainer'
-			);
-
-			var link = A.one('[data-rowid=' + searchContainer.getData() + ']');
-
-			if (link !== null) {
-				var tr = link.ancestor('tr');
-
-				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-			}
-
-			if (!searchContainer.getData().includes(item.id)) {
-				var rowColumns = [];
-
-				rowColumns.push(item.name);
-				rowColumns.push(
-					'<a class="float-right modify-link" data-rowId="' +
-						item.id +
-						'" href="javascript:;"><%= UnicodeFormatter.toString(removeCPDefinitionIcon) %></a>'
-				);
-
-				A.one('#<portlet:namespace />classPK').val(item.id);
-
-				searchContainer.addRow(rowColumns, item.id);
-
-				searchContainer.updateDataStore();
-			}
-		}
-	});
-</aui:script>
-
-<aui:script use="liferay-item-selector-dialog">
-	var displayPageItemContainer = window.document.querySelector(
-		'#<portlet:namespace />displayPageItemContainer'
-	);
-	var displayPageItemRemove = window.document.querySelector(
-		'#<portlet:namespace />displayPageItemRemove'
-	);
-	var displayPageNameInput = window.document.querySelector(
-		'#<portlet:namespace />displayPageNameInput'
-	);
-	var pagesContainerInput = window.document.querySelector(
-		'#<portlet:namespace />pagesContainerInput'
-	);
-
-	window.document
-		.querySelector('#<portlet:namespace />chooseDisplayPage')
-		.addEventListener('click', (event) => {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: 'selectDisplayPage',
-				on: {
-					selectedItemChange: function (event) {
-						var selectedItem = event.newVal;
-
-						if (selectedItem) {
-							pagesContainerInput.value = selectedItem.id;
-
-							displayPageNameInput.innerHTML = selectedItem.name;
-
-							displayPageItemRemove.classList.remove('hide');
-						}
-					},
-				},
-				'strings.add': '<liferay-ui:message key="done" />',
-				title: '<liferay-ui:message key="select-product-display-page" />',
-				url:
-					'<%= cpDefinitionDisplayLayoutDisplayContext.getDisplayPageItemSelectorUrl() %>',
-			});
-
-			itemSelectorDialog.open();
-		});
-
-	displayPageItemRemove.addEventListener('click', (event) => {
-		displayPageNameInput.innerHTML = '<liferay-ui:message key="none" />';
-
-		pagesContainerInput.value = '';
-
-		displayPageItemRemove.classList.add('hide');
-	});
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"displayPageItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getDisplayPageItemSelectorUrl()
+		).put(
+			"portletNamespace", liferayPortletResponse.getNamespace()
+		).put(
+			"productItemSelectorUrl", cpDefinitionDisplayLayoutDisplayContext.getProductItemSelectorUrl()
+		).put(
+			"removeIcon", removeCPDefinitionIcon
+		).put(
+			"searchContainerId", searchContainerId
+		).build()
+	%>'
+	module="js/EditDisplayLayout"
+/>

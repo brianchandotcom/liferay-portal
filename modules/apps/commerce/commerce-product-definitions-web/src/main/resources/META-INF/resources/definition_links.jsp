@@ -59,51 +59,68 @@ PortletURL portletURL = cpDefinitionLinkDisplayContext.getPortletURL();
 		</aui:form>
 	</div>
 
-	<aui:script use="liferay-item-selector-dialog">
+	<aui:script sandbox="<%= true %>">
+		const eventHandlers = [];
+		let eventHandler;
 
 		<%
 		for (String type : cpDefinitionLinkDisplayContext.getCPDefinitionLinkTypes()) {
 		%>
 
-			Liferay.on(
+			eventHandler = Liferay.on(
 				'<portlet:namespace />addCommerceProductDefinitionLink<%= type %>',
 				() => {
-					var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-						eventName: 'productDefinitionsSelectItem',
-						on: {
-							selectedItemChange: function (event) {
-								var selectedItems = event.newVal;
+					Liferay.Util.openSelectionModal({
+						multiple: true,
+						onSelect: (selectedItems) => {
+							if (!selectedItems || !selectedItems.length) {
+								return;
+							}
 
-								if (selectedItems) {
-									window.document.querySelector(
-										'#<portlet:namespace />cpDefinitionIds'
-									).value = selectedItems;
+							const cpDefinitionIdsInput = document.getElementById(
+								'<portlet:namespace />cpDefinitionIds'
+							);
 
-									window.document.querySelector(
-										'#<portlet:namespace />type'
-									).value = '<%= type %>';
+							if (cpDefinitionIdsInput) {
+								const values = selectedItems.map((item) => item.value);
 
-									var addCPDefinitionLinkFm = window.document.querySelector(
-										'#<portlet:namespace />addCPDefinitionLinkFm'
-									);
+								cpDefinitionIdsInput.value = values.join(',');
+							}
 
-									submitForm(addCPDefinitionLinkFm);
-								}
-							},
+							const typeInput = document.getElementById(
+								'<portlet:namespace />type'
+							);
+
+							if (typeInput) {
+								typeInput.value = '<%= type %>';
+							}
+
+							const form = document.getElementById(
+								'<portlet:namespace />addCPDefinitionLinkFm'
+							);
+
+							if (form) {
+								submitForm(form);
+							}
 						},
 						title:
 							'<liferay-ui:message arguments="<%= cpDefinition.getName(languageId) %>" key="add-new-product-to-x" />',
 						url:
 							'<%= cpDefinitionLinkDisplayContext.getItemSelectorUrl(type) %>',
 					});
-
-					itemSelectorDialog.open();
 				}
 			);
+
+			eventHandlers.push(eventHandler);
 
 		<%
 		}
 		%>
 
+		Liferay.on('destroyPortlet', () => {
+			eventHandlers.forEach((eventHandler) => {
+				eventHandler.detach();
+			});
+		});
 	</aui:script>
 </c:if>

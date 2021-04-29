@@ -83,7 +83,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Language Test Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
@@ -295,11 +295,11 @@ definition {
 			groupName = "Site2 Name",
 			layoutName = "Site Page Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "English (United States)");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site2-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
 
@@ -388,7 +388,7 @@ definition {
 			layoutName = "Site Page 1",
 			widgetName = "Web Content Display");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Spanish (Spain),German (Germany)",
@@ -522,7 +522,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
@@ -589,7 +589,7 @@ definition {
 			siteType = "Site Template",
 			uncheckPropagation = "true");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-from-template");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name-from-template");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
@@ -628,7 +628,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States)",
@@ -677,7 +677,7 @@ definition {
 
 		SitePages.addPublicPage(pageName = "Language Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
@@ -749,7 +749,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Portuguese (Brazil),Spanish (Spain)",

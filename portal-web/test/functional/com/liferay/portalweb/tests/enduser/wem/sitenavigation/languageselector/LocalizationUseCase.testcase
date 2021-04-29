@@ -165,7 +165,7 @@ definition {
 			layoutName = "Test Page Name",
 			widgetName = "Language Selector");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",

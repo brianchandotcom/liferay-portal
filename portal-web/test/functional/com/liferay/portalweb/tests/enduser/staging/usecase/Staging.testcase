@@ -92,7 +92,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Private Staging Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States)",

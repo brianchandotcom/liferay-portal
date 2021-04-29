@@ -2062,7 +2062,7 @@ definition {
 			saveButton = "Guardar",
 			successMessage = "Your request completed successfully.");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			defaultSiteLanguage = "Spanish (Spain)",

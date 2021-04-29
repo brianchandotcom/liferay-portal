@@ -135,7 +135,7 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "IFrame");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain)",
@@ -485,9 +485,11 @@ definition {
 	test ViewDefaultEnabledLocales {
 		User.firstLoginPG();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
-		Navigator.gotoNavTab(navTab = "Languages");
+		Click(
+			key_url = "site-configuration-languages",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		task ("Assert the default language options radio box is checked") {
 			AssertChecked.assertCheckedNotVisible(
@@ -554,7 +556,7 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Spanish (Spain)",
@@ -583,7 +585,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
 
@@ -656,7 +658,7 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "Asset Publisher");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Chinese (China),English (United States),Spanish (Spain)",

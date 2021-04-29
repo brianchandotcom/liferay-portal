@@ -939,7 +939,7 @@ definition {
 				roleTitle = "Regrole Name");
 		}
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain),Arabic (Saudi Arabia),Catalan (Spain),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Swedish (Sweden)",
@@ -1330,7 +1330,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "Spanish (Spain)",
@@ -1342,7 +1342,7 @@ definition {
 			noOptions = "true",
 			webContentTitle = "Web Content Title");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain),Arabic (Saudi Arabia),Catalan (Spain),Chinese (China),Dutch (Netherlands),Finnish (Finland),French (France),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Swedish (Sweden)",
@@ -1362,7 +1362,7 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Title");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States)",
@@ -1374,7 +1374,7 @@ definition {
 			noOptions = "true",
 			webContentTitle = "Web Content Title");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Spanish (Spain)",

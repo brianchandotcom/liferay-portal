@@ -35,7 +35,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "test-site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Japanese (Japan)",

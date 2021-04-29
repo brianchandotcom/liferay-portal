@@ -25,7 +25,7 @@ definition {
 		}
 	}
 
-	@description = "When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
+	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
 	@priority = "5"
 	test PageAuditBackButton {
 		property portal.acceptance = "true";
@@ -68,7 +68,7 @@ definition {
 		}
 	}
 
-	@description = "When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
+	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
 	@priority = "5"
 	test PageAuditCancelButton {
 		property portal.acceptance = "true";
@@ -111,7 +111,7 @@ definition {
 		}
 	}
 
-	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditContentPage {
 		property portal.acceptance = "true";
@@ -146,7 +146,7 @@ definition {
 		}
 	}
 
-	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
 	@priority = "5"
 	test PageAuditContentPageDisabled {
 		property portal.acceptance = "true";
@@ -169,7 +169,7 @@ definition {
 		}
 	}
 
-	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditDisplayPage {
 		property portal.acceptance = "true";
@@ -229,7 +229,7 @@ definition {
 		}
 	}
 
-	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
 	@priority = "5"
 	test PageAuditDisplayPageDisabled {
 		property portal.acceptance = "true";
@@ -277,7 +277,7 @@ definition {
 		}
 	}
 
-	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditWidgetPage {
 		property portal.acceptance = "true";
@@ -311,7 +311,7 @@ definition {
 		}
 	}
 
-	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
+	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
 	@priority = "5"
 	test PageAuditWidgetPageDisabled {
 		property portal.acceptance = "true";

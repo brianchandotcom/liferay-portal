@@ -103,8 +103,13 @@ const Text = ({
 				}
 			}}
 			onChange={(event) => {
+				const {value} = event.target;
+
 				if (fieldName === 'fieldReference' || fieldName === 'name') {
-					event.target.value = normalizeFieldName(event.target.value);
+					event.target.value = normalizeFieldName(value);
+				}
+				else if (fieldName === 'inputMaskFormat') {
+					event.target.value = value.replace(/[1-8]/g, '');
 				}
 
 				setValue(event.target.value);

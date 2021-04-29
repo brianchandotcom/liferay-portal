@@ -153,7 +153,8 @@ function EditBlueprintForm({
 					),
 				})
 			);
-		} catch (error) {
+		}
+		catch (error) {
 			openErrorToast({
 				message: Liferay.Language.get(
 					'the-configuration-has-missing-or-invalid-values'
@@ -185,7 +186,8 @@ function EditBlueprintForm({
 					responseContent.errors.forEach((message) =>
 						openErrorToast({message})
 					);
-				} else {
+				}
+				else {
 					navigate(redirectURL);
 				}
 			})
@@ -240,7 +242,8 @@ function EditBlueprintForm({
 							}
 						});
 					});
-				} else if (!uiConfigurationJSON) {
+				}
+				else if (!uiConfigurationJSON) {
 					const configValue =
 						uiConfigurationValues.elementTemplateJSON;
 
@@ -392,7 +395,8 @@ function EditBlueprintForm({
 				`${namespace}configuration`,
 				_getConfigurationString(formik.values)
 			);
-		} catch (error) {
+		}
+		catch (error) {
 			setPreviewInfo({
 				loading: false,
 				results: {

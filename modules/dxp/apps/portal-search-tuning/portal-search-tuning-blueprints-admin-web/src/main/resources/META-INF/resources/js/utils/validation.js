@@ -37,7 +37,8 @@ export const validateJSON = (configValue, type) => {
 
 	try {
 		JSON.parse(configValue);
-	} catch {
+	}
+	catch {
 		return ERROR_MESSAGES.INVALID_JSON;
 	}
 };

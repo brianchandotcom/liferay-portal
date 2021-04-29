@@ -41,7 +41,7 @@ export default function Hint({message, position = 'top', secondary, title}) {
 	);
 }
 
-Hint.proptypes = {
+Hint.propTypes = {
 	message: PropTypes.string.isRequired,
 	position: PropTypes.string,
 	secondary: PropTypes.bool,

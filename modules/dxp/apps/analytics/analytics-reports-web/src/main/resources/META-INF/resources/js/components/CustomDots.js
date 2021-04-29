@@ -53,7 +53,7 @@ export function ActiveDot(props) {
 	}
 }
 
-ActiveDot.proptypes = {
+ActiveDot.propTypes = {
 	cx: PropTypes.number.required,
 	cy: PropTypes.number.required,
 	fill: PropTypes.string.required,
@@ -89,7 +89,7 @@ export function Dot(props) {
 	}
 }
 
-Dot.proptypes = {
+Dot.propTypes = {
 	cx: PropTypes.number.required,
 	cy: PropTypes.number.required,
 	fill: PropTypes.string.required,

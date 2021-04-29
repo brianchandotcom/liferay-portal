@@ -89,7 +89,7 @@ export default function Main({
 	);
 }
 
-Main.proptypes = {
+Main.propTypes = {
 	author: PropTypes.object.isRequired,
 	canonicalURL: PropTypes.string.isRequired,
 	chartDataProviders: PropTypes.arrayOf(PropTypes.func.isRequired).isRequired,

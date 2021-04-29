@@ -197,7 +197,7 @@ export default function Navigation({
 	);
 }
 
-Navigation.proptypes = {
+Navigation.propTypes = {
 	author: PropTypes.object.isRequired,
 	canonicalURL: PropTypes.string.isRequired,
 	onSelectedLanguageClick: PropTypes.func.isRequired,

@@ -226,6 +226,6 @@ export default function Keywords({currentPage}) {
 	);
 }
 
-Keywords.proptypes = {
+Keywords.propTypes = {
 	currentPage: PropTypes.object.isRequired,
 };

@@ -42,7 +42,7 @@ export default function EmptyPieChart({
 	);
 }
 
-EmptyPieChart.proptypes = {
+EmptyPieChart.propTypes = {
 	height: PropTypes.number.isRequired,
 	innerRadius: PropTypes.number.isRequired,
 	outerRadius: PropTypes.number.isRequired,

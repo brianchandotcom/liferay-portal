@@ -82,7 +82,7 @@ export default function TimeSpanSelector({
 	);
 }
 
-TimeSpanSelector.proptypes = {
+TimeSpanSelector.propTypes = {
 	disabledNextTimeSpan: PropTypes.bool.isRequired,
 	disabledPreviousPeriodButton: PropTypes.bool.isRequired,
 	onNextTimeSpanClick: PropTypes.func.isRequired,

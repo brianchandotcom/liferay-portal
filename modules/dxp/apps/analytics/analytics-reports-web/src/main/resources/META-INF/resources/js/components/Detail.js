@@ -84,7 +84,7 @@ export default function Detail({
 	);
 }
 
-Detail.proptypes = {
+Detail.propTypes = {
 	currentPage: PropTypes.object.isRequired,
 	onCurrentPageChange: PropTypes.func.isRequired,
 	onTrafficSourceNameChange: PropTypes.func.isRequired,

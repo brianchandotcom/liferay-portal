@@ -49,7 +49,7 @@ export default function KeywordsDetail({
 	);
 }
 
-KeywordsDetail.proptypes = {
+KeywordsDetail.propTypes = {
 	currentPage: PropTypes.object.isRequired,
 	trafficShareDataProvider: PropTypes.func.isRequired,
 	trafficVolumeDataProvider: PropTypes.func.isRequired,

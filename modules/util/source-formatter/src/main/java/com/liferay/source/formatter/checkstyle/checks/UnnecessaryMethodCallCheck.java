@@ -36,17 +36,17 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		Map<String, String> methodReturnMap = _getMethodReturnsMap(detailAST);
+		Map<String, String> returnVariableNamesMap = _getReturnVariableNamesMap(detailAST);
 
-		if (methodReturnMap.isEmpty()) {
+		if (returnVariableNamesMap.isEmpty()) {
 			return;
 		}
 
-		_checkUnnecessaryMethodCalls(detailAST, methodReturnMap);
+		_checkUnnecessaryMethodCalls(detailAST, returnVariableNamesMap);
 	}
 
 	private void _checkUnnecessaryMethodCalls(
-		DetailAST detailAST, Map<String, String> methodReturnMap) {
+		DetailAST detailAST, Map<String, String> returnVariableNamesMap) {
 
 		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_CALL);
@@ -71,7 +71,7 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 
 			String methodName = _getMethodName(methodCallDetailAST);
 
-			if (methodReturnMap.containsKey(methodName)) {
+			if (returnVariableNamesMap.containsKey(methodName)) {
 				DetailAST parentDetailAST = methodCallDetailAST.getParent();
 
 				while (parentDetailAST.getType() != TokenTypes.CLASS_DEF) {
@@ -80,7 +80,7 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 
 				if (parentDetailAST.equals(detailAST)) {
 					String replacement = _getReplacement(
-						methodCallDetailAST, methodReturnMap.get(methodName));
+						methodCallDetailAST, returnVariableNamesMap.get(methodName));
 
 					if (Validator.isNull(replacement)) {
 						continue;
@@ -100,14 +100,14 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 		return nameDetailAST.getText();
 	}
 
-	private Map<String, String> _getMethodReturnsMap(DetailAST detailAST) {
-		Map<String, String> methodReturnsMap = new HashMap<>();
+	private Map<String, String> _getReturnVariableNamesMap(DetailAST detailAST) {
+		Map<String, String> returnVariableNamesMap = new HashMap<>();
 
 		DetailAST objBlockDetailAST = detailAST.findFirstToken(
 			TokenTypes.OBJBLOCK);
 
 		if (objBlockDetailAST == null) {
-			return methodReturnsMap;
+			return returnVariableNamesMap;
 		}
 
 		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
@@ -167,16 +167,16 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 				continue;
 			}
 
-			methodReturnsMap.put(
+			returnVariableNamesMap.put(
 				_getMethodName(methodDefinitionDetailAST),
 				firstChildDetailAST.getText());
 		}
 
-		return methodReturnsMap;
+		return returnVariableNamesMap;
 	}
 
 	private String _getReplacement(
-		DetailAST methodCallDetailAST, String methodReturn) {
+		DetailAST methodCallDetailAST, String variableName) {
 
 		DetailAST previousDetailAST = methodCallDetailAST.getParent();
 
@@ -202,7 +202,7 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 			DetailAST nameDetailAST = variableDefDetailAST.findFirstToken(
 				TokenTypes.IDENT);
 
-			if (Objects.equals(nameDetailAST.getText(), methodReturn)) {
+			if (Objects.equals(nameDetailAST.getText(), variableName)) {
 				DetailAST modifiersDetailAST = previousDetailAST.findFirstToken(
 					TokenTypes.MODIFIERS);
 
@@ -215,14 +215,14 @@ public class UnnecessaryMethodCallCheck extends BaseCheck {
 				if (variableDefDetailAST.getLineNo() <=
 						methodCallDetailAST.getLineNo()) {
 
-					return "this." + methodReturn;
+					return "this." + variableName;
 				}
 
-				return methodReturn;
+				return variableName;
 			}
 		}
 
-		return methodReturn;
+		return variableName;
 	}
 
 	private static final String _MSG_UNNECESSARY_METHOD_CALL =

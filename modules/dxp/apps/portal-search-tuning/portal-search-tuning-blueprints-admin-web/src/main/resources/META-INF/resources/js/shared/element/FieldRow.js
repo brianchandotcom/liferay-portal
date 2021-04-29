@@ -120,6 +120,14 @@ function FieldRow({
 		setShowDropDown(false);
 	};
 
+	const _handleFieldKeyDown = (event) => {
+		if (event.key === 'Tab' || (event.shiftKey && event.key === 'Tab')) {
+			return;
+		}
+
+		setShowDropDown(true);
+	};
+
 	const _handleBoostChange = (event) => onChange({boost: event.target.value});
 
 	const _handleLocaleChange = (event) =>
@@ -141,7 +149,7 @@ function FieldRow({
 								onBlur={onBlur}
 								onChange={_handleFieldChange}
 								onFocus={() => setShowDropDown(true)}
-								onKeyDown={() => setShowDropDown(true)}
+								onKeyDown={_handleFieldKeyDown}
 								ref={inputRef}
 								sizing="sm"
 								value={field}

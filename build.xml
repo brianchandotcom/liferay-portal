@@ -620,6 +620,7 @@ message.
 			outputProperty="output"
 		>
 			<arg value="config.files=${config.files}" />
+			<arg value="output.file=${project.dir}/modules/config-env.txt" />
 			<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 		</java>
 	</target>

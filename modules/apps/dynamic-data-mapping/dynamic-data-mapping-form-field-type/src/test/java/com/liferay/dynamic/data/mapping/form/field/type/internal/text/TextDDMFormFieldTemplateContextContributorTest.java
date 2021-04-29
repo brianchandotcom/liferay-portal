@@ -73,7 +73,6 @@ public class TextDDMFormFieldTemplateContextContributorTest
 		Assert.assertTrue(parameters.containsKey("autocompleteEnabled"));
 		Assert.assertTrue(parameters.containsKey("displayStyle"));
 		Assert.assertTrue(parameters.containsKey("placeholder"));
-		Assert.assertTrue(parameters.containsKey("regex"));
 		Assert.assertTrue(parameters.containsKey("tooltip"));
 	}
 

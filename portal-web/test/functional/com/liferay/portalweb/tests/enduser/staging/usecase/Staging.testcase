@@ -2050,17 +2050,9 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content Title");
 
-		Staging.openStagingAdmin(siteURLKey = "site-name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Staging.activateStagingCP(siteName = "Site Name");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoStagingSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
@@ -2106,9 +2098,7 @@ definition {
 
 		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
@@ -2116,9 +2106,7 @@ definition {
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoStagingSite(site = "Site Name");
+		Navigator.openStagingSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

@@ -20,8 +20,14 @@ import com.liferay.dataset.view.model.DatasetViewActiveEntry;
 import com.liferay.dataset.view.model.DatasetViewStateEntry;
 import com.liferay.dataset.view.service.DatasetViewActiveEntryLocalService;
 import com.liferay.dataset.view.service.DatasetViewStateEntryLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,29 +59,20 @@ public class DatasetViewActiveSettingsFactoryImpl
 
 		DatasetViewStateEntry datasetViewStateEntry;
 
-		if (datasetViewActiveEntry == null) {
-			datasetViewStateEntry =
-				_datasetViewStateEntryLocalService.createDatasetViewStateEntry(
-					"{}");
-
-			_datasetViewStateEntryLocalService.updateDatasetViewStateEntry(
-				datasetViewStateEntry);
-
-			datasetViewActiveEntry =
-				_datasetViewActiveEntryLocalService.
-					createDatasetViewActiveEntry(
-						datasetDisplayId,
-						datasetViewStateEntry.getDatasetViewStateEntryId(),
-						themeDisplay.getPlid(), portletDisplay.getId(),
-						themeDisplay.getUserId());
-
-			_datasetViewActiveEntryLocalService.updateDatasetViewActiveEntry(
-				datasetViewActiveEntry);
-		}
-		else {
+		if (datasetViewActiveEntry != null) {
 			datasetViewStateEntry =
 				_datasetViewStateEntryLocalService.fetchDatasetViewStateEntry(
 					datasetViewActiveEntry.getDatasetViewStateEntryId());
+		}
+		else {
+			datasetViewStateEntry = _upgradeDatasetViewStateEntry(
+				httpServletRequest, datasetDisplayId);
+
+			if (datasetViewStateEntry == null) {
+				datasetViewStateEntry = _createDatasetViewStateEntry(
+					datasetDisplayId, themeDisplay.getPlid(),
+					portletDisplay.getId(), themeDisplay.getUserId(), "{}");
+			}
 		}
 
 		return new DatasetViewActiveSettingsImpl(datasetViewStateEntry);
@@ -92,6 +89,84 @@ public class DatasetViewActiveSettingsFactoryImpl
 			datasetViewActiveSettingsImpl.getDatasetViewStateEntry());
 	}
 
+	private DatasetViewStateEntry _createDatasetViewStateEntry(
+		String datasetDisplayId, long plid, String portletId, long userId,
+		String json) {
+
+		DatasetViewStateEntry datasetViewStateEntry =
+			_datasetViewStateEntryLocalService.createDatasetViewStateEntry(
+				json);
+
+		_datasetViewStateEntryLocalService.updateDatasetViewStateEntry(
+			datasetViewStateEntry);
+
+		DatasetViewActiveEntry datasetViewActiveEntry =
+			_datasetViewActiveEntryLocalService.createDatasetViewActiveEntry(
+				datasetDisplayId,
+				datasetViewStateEntry.getDatasetViewStateEntryId(), plid,
+				portletId, userId);
+
+		_datasetViewActiveEntryLocalService.updateDatasetViewActiveEntry(
+			datasetViewActiveEntry);
+
+		return datasetViewStateEntry;
+	}
+
+	private String _getClayDataSetDisplaySettingsNamespace(
+		String datasetDisplayId, long plid, String portletId) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("com.liferay.frontend.taglib.clay.servlet.taglib.");
+		sb.append("DataSetDisplayTag");
+		sb.append(StringPool.POUND);
+		sb.append(_portal.getPortletNamespace(portletId));
+		sb.append(StringPool.POUND);
+		sb.append(plid);
+		sb.append(StringPool.POUND);
+		sb.append(datasetDisplayId);
+
+		return sb.toString();
+	}
+
+	private DatasetViewStateEntry _upgradeDatasetViewStateEntry(
+		HttpServletRequest httpServletRequest, String datasetDisplayId) {
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				httpServletRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String clayDataSetDisplaySettingsNamespace =
+			_getClayDataSetDisplaySettingsNamespace(
+				datasetDisplayId, themeDisplay.getPlid(),
+				portletDisplay.getId());
+
+		String activeViewSettingsJSON = portalPreferences.getValue(
+			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
+
+		if (Validator.isNotNull(activeViewSettingsJSON)) {
+			DatasetViewStateEntry datasetViewStateEntry =
+				_createDatasetViewStateEntry(
+					datasetDisplayId, themeDisplay.getPlid(),
+					portletDisplay.getId(), themeDisplay.getUserId(),
+					activeViewSettingsJSON);
+
+			portalPreferences.setValue(
+				clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON",
+				null);
+
+			return datasetViewStateEntry;
+		}
+
+		return null;
+	}
+
 	@Reference
 	private DatasetViewActiveEntryLocalService
 		_datasetViewActiveEntryLocalService;
@@ -99,5 +174,8 @@ public class DatasetViewActiveSettingsFactoryImpl
 	@Reference
 	private DatasetViewStateEntryLocalService
 		_datasetViewStateEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

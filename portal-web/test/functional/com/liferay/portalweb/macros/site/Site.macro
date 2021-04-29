@@ -701,11 +701,9 @@ definition {
 	}
 
 	macro editGoogleAnalyticsIDCP {
-		AssertClick(
-			locator1 = "SitesEditSite#MENU_ADVANCED_TAB",
-			value1 = "Advanced");
-
-		Panel.expandPanel(panel = "Analytics");
+		Click(
+			key_url = "site-configuration-analytics",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Type(
 			locator1 = "TextInput#GOOGLE_ANALYTICS_ID",
@@ -715,11 +713,9 @@ definition {
 	}
 
 	macro editPiwikCP {
-		AssertClick(
-			locator1 = "SitesEditSite#MENU_ADVANCED_TAB",
-			value1 = "Advanced");
-
-		Panel.expandPanel(panel = "Analytics");
+		Click(
+			key_url = "site-configuration-analytics",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Type(
 			locator1 = "TextInput#PIWIK",

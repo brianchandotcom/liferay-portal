@@ -147,8 +147,16 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		overdueFilterAggregation.addChildAggregation(
 			_resourceHelper.createOverdueScriptedMetricAggregation());
 
-		TermsAggregation slaDefinitionIdTermsAggregation = _aggregations.terms(
-			"slaDefinitionId", "slaDefinitionId");
+		BooleanQuery slaInstanceResultBooleanQuery = _queries.booleanQuery();
+
+		FilterAggregation slaInstanceResultFilterAggregation =
+			_aggregations.filter(
+				"slaInstanceResult",
+				slaInstanceResultBooleanQuery.addMustQueryClauses(
+					_queries.term(
+						"_index",
+						_slaInstanceResultWorkflowMetricsIndexNameBuilder.
+							getIndexName(contextCompany.getCompanyId()))));
 
 		TopHitsAggregation topHitsAggregation = _aggregations.topHits(
 			"topHits");
@@ -156,9 +164,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		topHitsAggregation.addSortFields(
 			_sorts.field("remainingTime", SortOrder.ASC));
 
-		slaDefinitionIdTermsAggregation.addChildAggregation(topHitsAggregation);
-
-		slaDefinitionIdTermsAggregation.setSize(10000);
+		slaInstanceResultFilterAggregation.addChildAggregation(
+			topHitsAggregation);
 
 		TermsAggregation taskNameTermsAggregation = _aggregations.terms(
 			"name", "name");
@@ -167,7 +174,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		termsAggregation.addChildrenAggregations(
 			indexFilterAggregation, onTimeFilterAggregation,
-			overdueFilterAggregation, slaDefinitionIdTermsAggregation,
+			overdueFilterAggregation, slaInstanceResultFilterAggregation,
 			taskNameTermsAggregation);
 
 		searchSearchRequest.addAggregation(termsAggregation);
@@ -973,30 +980,23 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private void _setSLAResults(Bucket bucket, Instance instance) {
 		instance.setSlaResults(
 			Stream.of(
-				(TermsAggregationResult)bucket.getChildAggregationResult(
-					"slaDefinitionId")
+				(FilterAggregationResult)bucket.getChildAggregationResult(
+					"slaInstanceResult")
 			).map(
-				TermsAggregationResult::getBuckets
-			).flatMap(
-				Collection::stream
-			).map(
-				childBucket -> Stream.of(
+				filterAggregationResult ->
 					(TopHitsAggregationResult)
-						childBucket.getChildAggregationResult("topHits")
-				).map(
-					TopHitsAggregationResult::getSearchHits
-				).map(
-					SearchHits::getSearchHits
-				).flatMap(
-					List::stream
-				).findFirst(
-				).map(
-					SearchHit::getSourcesMap
-				).map(
-					this::_createSLAResult
-				).orElseGet(
-					SLAResult::new
-				)
+						filterAggregationResult.getChildAggregationResult(
+							"topHits")
+			).map(
+				TopHitsAggregationResult::getSearchHits
+			).map(
+				SearchHits::getSearchHits
+			).flatMap(
+				List::stream
+			).map(
+				SearchHit::getSourcesMap
+			).map(
+				this::_createSLAResult
 			).toArray(
 				SLAResult[]::new
 			));

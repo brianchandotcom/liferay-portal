@@ -59,9 +59,6 @@ else {
 			block: <%= block %>,
 			disabled: <%= disabled %>,
 			namespace: '<%= namespace %>',
-			withQuantity: {
-				forceDropdown: true,
-			},
 		},
 		spritemap: '<%= spritemap %>',
 	};
@@ -73,7 +70,6 @@ else {
 		%>
 
 		initialProps.settings.withQuantity = <%= jsonSerializer.serializeDeep(productSettingsModel) %>;
-		initialProps.settings.withQuantity.forceDropdown = true;
 	</c:if>
 
 	AddToCart.default('<%= addToCartId %>', '<%= addToCartId %>', initialProps);

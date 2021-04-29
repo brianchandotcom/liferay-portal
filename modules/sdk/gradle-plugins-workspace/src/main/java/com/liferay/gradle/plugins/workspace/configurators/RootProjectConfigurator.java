@@ -331,19 +331,19 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		dockerBuildImage.dependsOn(dockerfile);
 
+		DirectoryProperty inputDirectoryProperty =
+			dockerBuildImage.getInputDir();
+
+		inputDirectoryProperty.set(workspaceExtension.getDockerDir());
+
+		Property<Boolean> pullProperty = dockerBuildImage.getPull();
+
+		pullProperty.set(true);
+
 		dockerBuildImage.setDescription(
 			"Builds a child docker image from Liferay base image with all " +
 				"configs deployed.");
 		dockerBuildImage.setGroup(DOCKER_GROUP);
-
-		DirectoryProperty inputDirectoryProperty =
-			dockerBuildImage.getInputDir();
-
-		Property<Boolean> pull = dockerBuildImage.getPull();
-
-		pull.set(true);
-
-		inputDirectoryProperty.set(workspaceExtension.getDockerDir());
 
 		DockerRemoveImage dockerRemoveImage = GradleUtil.addTask(
 			project, CLEAN_DOCKER_IMAGE_TASK_NAME, DockerRemoveImage.class);

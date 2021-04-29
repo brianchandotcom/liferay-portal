@@ -2,8 +2,10 @@ Bundle-Name: Liferay Object API
 Bundle-SymbolicName: com.liferay.object.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.object.dto,\
 	com.liferay.object.exception,\
 	com.liferay.object.graphql,\
 	com.liferay.object.model,\
+	com.liferay.object.resource,\
 	com.liferay.object.service,\
 	com.liferay.object.service.persistence

@@ -57,6 +57,12 @@ public class PortletServiceImpl extends PortletServiceBaseImpl {
 		return jsonArray;
 	}
 
+	@JSONWebService(mode = JSONWebServiceMode.AUTO)
+	@Override
+	public boolean hasPortlet(long companyId, String portletId) {
+		return portletLocalService.hasPortlet(companyId, portletId);
+	}
+
 	@Override
 	public Portlet updatePortlet(
 			long companyId, String portletId, String roles, boolean active)

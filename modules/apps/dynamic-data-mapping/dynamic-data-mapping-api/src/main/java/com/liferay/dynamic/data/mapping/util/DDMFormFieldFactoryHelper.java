@@ -312,10 +312,9 @@ public class DDMFormFieldFactoryHelper {
 		Map<String, Object> propertiesMap = new HashMap<>();
 
 		for (String property : _ddmFormField.properties()) {
-			String key = StringUtil.extractFirst(property, StringPool.EQUAL);
-			String value = StringUtil.extractLast(property, StringPool.EQUAL);
+			String[] propertyParts = property.split(StringPool.EQUAL, 2);
 
-			propertiesMap.put(key, value);
+			propertiesMap.put(propertyParts[0], propertyParts[1]);
 		}
 
 		return propertiesMap;

@@ -73,6 +73,16 @@ public class BlogsItemSelectorViewDisplayContext {
 		return _blogsEntryLocalService.fetchAttachmentsFolder(userId, groupId);
 	}
 
+	public PortletURL getEditImageURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse, PortletKeys.BLOGS
+		).setActionName(
+			"/blogs/image_editor"
+		).build();
+	}
+
 	public String[] getImageExtensions() throws ConfigurationException {
 		return _getBlogsFileUploadsConfiguration().imageExtensions();
 	}

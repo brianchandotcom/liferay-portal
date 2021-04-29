@@ -890,6 +890,10 @@ definition {
 	}
 
 	macro limitMembership {
+		Click(
+			key_url = "site-configuration-details",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
 		if ("${siteLimitMembership}" == "Yes") {
 			Check.checkToggleSwitch(locator1 = "SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX");
 		}

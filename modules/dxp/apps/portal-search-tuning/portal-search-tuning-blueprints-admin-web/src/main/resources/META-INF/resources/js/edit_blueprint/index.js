@@ -86,26 +86,49 @@ function EditBlueprintForm({
 		initialSelectedElements['query_configuration'].length
 	);
 
+	/**
+	 * Formats the form values for the "configuration" parameter to send to
+	 * the server. Sets defaults so the JSON.parse calls don't break.
+	 * @param {Object} values Form values
+	 * @return {String}
+	 */
+	const _getConfigurationString = ({
+		advancedConfig,
+		aggregationConfig,
+		facetConfig,
+		frameworkConfig,
+		highlightConfig,
+		parameterConfig,
+		selectedQueryElements,
+		sortConfig,
+	}) => {
+		return JSON.stringify({
+			advanced_configuration: advancedConfig
+				? JSON.parse(advancedConfig)
+				: {},
+			aggregation_configuration: aggregationConfig
+				? JSON.parse(aggregationConfig)
+				: [],
+			facet_configuration: facetConfig ? JSON.parse(facetConfig) : [],
+			framework_configuration: frameworkConfig,
+			highlight_configuration: highlightConfig
+				? JSON.parse(highlightConfig)
+				: {},
+			parameter_configuration: parameterConfig
+				? JSON.parse(parameterConfig)
+				: {},
+			query_configuration: selectedQueryElements.map(getElementOutput),
+			sort_configuration: sortConfig ? JSON.parse(sortConfig) : {},
+		});
+	};
+
 	const _handleFormikSubmit = (values) => {
 		const formData = new FormData(form.current);
 
 		try {
 			formData.append(
 				`${namespace}configuration`,
-				JSON.stringify({
-					advanced_configuration: JSON.parse(values.advancedConfig),
-					aggregation_configuration: JSON.parse(
-						values.aggregationConfig
-					),
-					facet_configuration: JSON.parse(values.facetConfig),
-					framework_configuration: values.frameworkConfig,
-					highlight_configuration: JSON.parse(values.highlightConfig),
-					parameter_configuration: JSON.parse(values.parameterConfig),
-					query_configuration: values.selectedQueryElements.map(
-						getElementOutput
-					),
-					sort_configuration: JSON.parse(values.sortConfig),
-				})
+				_getConfigurationString(values)
 			);
 
 			formData.append(
@@ -130,7 +153,17 @@ function EditBlueprintForm({
 					),
 				})
 			);
-		} catch {
+		} catch (error) {
+			openErrorToast({
+				message: Liferay.Language.get(
+					'the-configuration-has-missing-or-invalid-values'
+				),
+			});
+
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
+			}
+
 			return;
 		}
 
@@ -242,9 +275,10 @@ function EditBlueprintForm({
 			'parameterConfig',
 			'sortConfig',
 		].map((configName) => {
-			const configError =
-				validateRequired(values[configName], INPUT_TYPES.JSON) ||
-				validateJSON(values[configName], INPUT_TYPES.JSON);
+			const configError = validateJSON(
+				values[configName],
+				INPUT_TYPES.JSON
+			);
 
 			if (configError) {
 				errors[configName] = configError;
@@ -356,26 +390,7 @@ function EditBlueprintForm({
 		try {
 			formData.append(
 				`${namespace}configuration`,
-				JSON.stringify({
-					advanced_configuration: JSON.parse(
-						formik.values.advancedConfig
-					),
-					aggregation_configuration: JSON.parse(
-						formik.values.aggregationConfig
-					),
-					facet_configuration: JSON.parse(formik.values.facetConfig),
-					framework_configuration: formik.values.frameworkConfig,
-					highlight_configuration: JSON.parse(
-						formik.values.highlightConfig
-					),
-					parameter_configuration: JSON.parse(
-						formik.values.parameterConfig
-					),
-					query_configuration: formik.values.selectedQueryElements.map(
-						getElementOutput
-					),
-					sort_configuration: JSON.parse(formik.values.sortConfig),
-				})
+				_getConfigurationString(formik.values)
 			);
 		} catch (error) {
 			setPreviewInfo({

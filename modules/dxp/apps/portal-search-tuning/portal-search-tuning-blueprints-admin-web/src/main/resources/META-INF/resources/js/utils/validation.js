@@ -27,14 +27,17 @@ export const validateBoost = (configValue, type) => {
 };
 
 export const validateJSON = (configValue, type) => {
-	if (type !== INPUT_TYPES.JSON) {
+	if (
+		!isDefined(configValue) ||
+		configValue == '' ||
+		type !== INPUT_TYPES.JSON
+	) {
 		return;
 	}
 
 	try {
 		JSON.parse(configValue);
-	}
-	catch {
+	} catch {
 		return ERROR_MESSAGES.INVALID_JSON;
 	}
 };

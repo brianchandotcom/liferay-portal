@@ -11,6 +11,8 @@ create table CPAttachmentFileEntry (
 	classNameId LONG,
 	classPK LONG,
 	fileEntryId LONG,
+	cdnUrl VARCHAR(255) null,
+	cdn BOOLEAN,
 	displayDate DATE null,
 	expirationDate DATE null,
 	title STRING null,

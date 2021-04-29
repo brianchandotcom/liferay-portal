@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {ItemSelectorDialog} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -54,13 +53,12 @@ const ImagePicker = ({
 			return mergedValues;
 		});
 
-	const handleFieldChanged = (event) => {
-		const selectedItem = event.selectedItem;
+	const handleFieldChanged = (selectedItem) => {
+		if (selectedItem?.value) {
+			const selectedImage = new Image();
+			const selectedItemValue = JSON.parse(selectedItem.value);
 
-		if (selectedItem && selectedItem.value) {
-			const img = new Image();
-			const item = JSON.parse(selectedItem.value);
-			img.addEventListener('load', (event) => {
+			selectedImage.addEventListener('load', (event) => {
 				const {
 					target: {height, width},
 				} = event;
@@ -74,29 +72,25 @@ const ImagePicker = ({
 						url: '',
 						width,
 					},
-					...item,
+					...selectedItemValue,
 				};
 
 				dispatchValue({value: imageData}, (mergedValues) =>
 					onFieldChanged(mergedValues)
 				);
 			});
-			img.src = item.url;
+			selectedImage.src = selectedItemValue.url;
 		}
 	};
 
 	const handleItemSelectorTriggerClick = (event) => {
 		event.preventDefault();
 
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: `${portletNamespace}selectDocumentLibrary`,
-			singleSelect: true,
+		Liferay.Util.openSelectionModal({
+			onSelect: handleFieldChanged,
+			selectEventName: `${portletNamespace}selectDocumentLibrary`,
 			url: itemSelectorURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
-
-		itemSelectorDialog.open();
 	};
 
 	const placeholder = readOnly

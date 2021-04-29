@@ -24,7 +24,6 @@ import {
 	useConfig,
 	useFormState,
 } from 'dynamic-data-mapping-form-renderer';
-import {ItemSelectorDialog} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
@@ -254,6 +253,8 @@ const GuestUploadFile = ({
 };
 
 const Main = ({
+	_onBlur,
+	_onFocus,
 	allowGuestUsers,
 	displayErrors: initialDisplayErrors,
 	editingLanguageId,
@@ -268,9 +269,7 @@ const Main = ({
 	maximumSubmissionLimitReached,
 	message,
 	name,
-	onBlur,
 	onChange,
-	onFocus,
 	placeholder,
 	readOnly,
 	valid: initialValid,
@@ -336,38 +335,20 @@ const Main = ({
 		return repetitionsCounter === maximumRepetitions;
 	};
 
-	const handleVisibleChange = (event) => {
-		if (event.selectedItem) {
-			onFocus({}, event);
-		}
-		else {
-			onBlur({}, event);
-		}
-	};
+	const handleFieldChanged = (selectedItem) => {
+		if (selectedItem?.value) {
+			setCurrentValue(selectedItem.value);
 
-	const handleFieldChanged = (event) => {
-		const selectedItem = event.selectedItem;
-
-		if (selectedItem) {
-			const {value} = selectedItem;
-
-			setCurrentValue(value);
-
-			onChange(event, value);
+			onChange(selectedItem, selectedItem.value);
 		}
 	};
 
 	const handleSelectButtonClicked = ({portletNamespace}) => {
-		const itemSelectorDialog = new ItemSelectorDialog({
-			eventName: `${portletNamespace}selectDocumentLibrary`,
-			singleSelect: true,
+		Liferay.Util.openSelectionModal({
+			onSelect: handleFieldChanged,
+			selectEventName: `${portletNamespace}selectDocumentLibrary`,
 			url: itemSelectorURL,
 		});
-
-		itemSelectorDialog.on('selectedItemChange', handleFieldChanged);
-		itemSelectorDialog.on('visibleChange', handleVisibleChange);
-
-		itemSelectorDialog.open();
 	};
 
 	const configureErrorMessage = (message) => {

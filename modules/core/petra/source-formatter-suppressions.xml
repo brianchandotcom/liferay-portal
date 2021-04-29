@@ -18,6 +18,7 @@
 		<suppress checks="StringBundlerNamingCheck" files="petra-io/src/main/java/com/liferay/petra/io/unsync/UnsyncStringWriter\.java" />
 		<suppress checks="StringBundlerNamingCheck" files="petra-io/src/test/java/com/liferay/petra/io/unsync/UnsyncStringWriterTest\.java" />
 		<suppress checks="TryWithResourcesCheck" files="petra-io/src/main/java/com/liferay/petra/io/ByteArrayFileInputStream\.java" />
+		<suppress checks="VariableNameCheck" files="petra-reflect/src/main/java/com/liferay/petra/reflect/GenericUtil\.java" />
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaAnnotationDefaultAttributeCheck" files="petra-reflect/src/test/java/com/liferay/petra/reflect/AnnotationLocatorTest\.java" />

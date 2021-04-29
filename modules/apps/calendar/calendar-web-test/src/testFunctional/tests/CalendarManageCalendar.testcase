@@ -656,7 +656,7 @@ definition {
 			calendarName = "Site Name",
 			siteName = "Site Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.editCP(
 			siteName = "Site Name",

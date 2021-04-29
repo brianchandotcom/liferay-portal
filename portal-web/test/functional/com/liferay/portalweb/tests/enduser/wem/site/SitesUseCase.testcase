@@ -694,7 +694,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site2 Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site2-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site2-name");
 
 		Site.editCP(
 			siteName = "Site2 Name",

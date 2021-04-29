@@ -725,7 +725,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration",
+			key_url = "site-configuration-details",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertElementPresent(locator1 = "SitesEditSite#SITE_ID");

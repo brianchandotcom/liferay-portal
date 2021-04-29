@@ -686,7 +686,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site1 Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site1-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
 
 		Site.selectPageType(
 			selectPublicPages = "true",

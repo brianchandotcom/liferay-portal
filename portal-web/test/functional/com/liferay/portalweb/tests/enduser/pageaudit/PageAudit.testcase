@@ -6,10 +6,6 @@ definition {
 	property testray.main.component.name = "Page Audit";
 
 	setUp {
-        property osgi.module.configuration.file.names = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration-default.config"; 
-        property osgi.module.configurations = "enabled=B&quot;true&quot;";
-		property portal.acceptance = "true";
-
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -22,6 +18,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -32,30 +30,38 @@ definition {
 	test PageAuditBackButton {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page",
-			type = "content");
+		task("Add Content Page"){
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
 
-		PageAudit.openPageAuditPanel();
+		task("Open Page Audit panel"){
+			PageAudit.openPageAuditPanel();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
-			value1 = "Check issues that impact on your page's accessibility and SEO.");
+			AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
 
-		PageAudit.connectToGooglePageAudit();
+		task("Go to Google PageSpeed throught the button in panel"){
+			PageAudit.connectToGooglePageAudit();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-			value1 = "Google PageSpeed");
+			AssertTextPresent(
+				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+				value1 = "Google PageSpeed");
+		}
 
-        PageAudit.backToPageBackButton();
+		task("Go back to the panel throught the back button"){
+        	PageAudit.backToPageBackButton();
 
-        AssertTextPresent(
-			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
-			value1 = "Check issues that impact on your page's accessibility and SEO.");
+        	AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
 	}
 
     @description = "When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
@@ -63,30 +69,38 @@ definition {
 	test PageAuditCancelButton {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page",
-			type = "content");
+		task("Add Content Page"){
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
 
-		PageAudit.openPageAuditPanel();
+		task("Open Page Audit panel"){
+			PageAudit.openPageAuditPanel();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
-			value1 = "Check issues that impact on your page's accessibility and SEO.");
+			AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
 
-		PageAudit.connectToGooglePageAudit();
+		task("Go to Google PageSpeed throught the button in panel"){
+			PageAudit.connectToGooglePageAudit();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-			value1 = "Google PageSpeed");
+			AssertTextPresent(
+				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+				value1 = "Google PageSpeed");
+		}
 
-        PageAudit.backToPageCancelButton();
+		task("Go back to the panel throught the cancel button"){
+        	PageAudit.backToPageCancelButton();
 
-        AssertTextPresent(
-			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
-			value1 = "Check issues that impact on your page's accessibility and SEO.");
+        	AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
@@ -94,45 +108,55 @@ definition {
 	test PageAuditContentPage {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page",
-			type = "content");
+		task("Add Content Page"){
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
 
-		PageAudit.openPageAuditPanel();
+		task("Open Page Audit panel"){
+			PageAudit.openPageAuditPanel();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
-			value1 = "Check issues that impact on your page's accessibility and SEO.");
+			AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
 
-		PageAudit.connectToGooglePageAudit();
+		task("Go to Google PageSpeed throught the button in panel"){
+			PageAudit.connectToGooglePageAudit();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-			value1 = "Google PageSpeed");
+			AssertTextPresent(
+				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+				value1 = "Google PageSpeed");
+		}
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
 	@priority = "5"
 	test PageAuditContentPageDisabled {
-        property osgi.module.configuration.file.names = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration-default.config"; 
-        property osgi.module.configurations = "enabled=B&quot;false&quot;";
 		property portal.acceptance = "true";
 
-		PageAudit.disableGooglePageSpeed();
+		task("Disable Google PageSpeed")
+			PageAudit.disableGooglePageSpeed();
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page",
-			type = "content");
+		task("Add Content Page"){
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
+		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		task("Go to the Content Page and assert the Page Audit panel is not shown")
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-		AssertElementNotPresent(
-            key_text = "info-circle",
-			locator1 = "Icon#ANY");
+			AssertElementNotPresent(
+            	key_text = "info-circle",
+				locator1 = "Icon#ANY");
+		}
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
@@ -140,89 +164,105 @@ definition {
 	test PageAuditDisplayPage {
 		property portal.acceptance = "true";
 
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-			contentType = "Web Content Article",
-			displayPageTemplateEntryName = "Display Page Name",
-			groupName = "Test Site Name",
-			subType = "Basic Web Content");
+		task("Add Display Page and mark it as default"){
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-		Button.clickPublish();
+			Button.clickPublish();
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+		task("Add Web Content and check it in its display page")
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
 
-		LexiconTable.clickTableEntryColumnLink(
-			columnName = "title",
-			tableEntry = "");
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "title",
+				tableEntry = "");
+		}
 
-		PageAudit.openPageAuditPanel();
+		task("Open Page Audit panel"){
+			PageAudit.openPageAuditPanel();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
-			value1 = "Check issues that impact on your page's accessibility and SEO.");
+			AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
 
-		PageAudit.connectToGooglePageAudit();
+		task("Go to Google PageSpeed throught the button in panel"){
+			PageAudit.connectToGooglePageAudit();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-			value1 = "Google PageSpeed");
+			AssertTextPresent(
+				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+				value1 = "Google PageSpeed");
+		}
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
 	@priority = "5"
 	test PageAuditDisplayPageDisabled {
-        property osgi.module.configuration.file.names = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration-default.config"; 
-        property osgi.module.configurations = "enabled=B&quot;false&quot;";
 		property portal.acceptance = "true";
 
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-			contentType = "Web Content Article",
-			displayPageTemplateEntryName = "Display Page Name",
-			groupName = "Test Site Name",
-			subType = "Basic Web Content");
+		task("Disable Google PageSpeed")
+			PageAudit.disableGooglePageSpeed();
+		}
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		task("Add Display Page and mark it as default"){
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		Button.clickPublish();
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+			Button.clickPublish();
 
-		DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
+		task("Add Web Content and check it in its display page")
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
 
-		LexiconTable.clickTableEntryColumnLink(
-			columnName = "title",
-			tableEntry = "");
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
 
-		AssertElementNotPresent(
-            key_text = "info-circle",
-			locator1 = "Icon#ANY");
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "title",
+				tableEntry = "");
+		}
+
+		task("Assert the Page Audit panel is not shown")
+			AssertElementNotPresent(
+            	key_text = "info-circle",
+				locator1 = "Icon#ANY");
+		}
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
@@ -230,41 +270,53 @@ definition {
 	test PageAuditWidgetPage {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Widget Page");
+		task("Add Widget Page"){
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+		}
 
-		PageAudit.openPageAuditPanel();
+		task("Open Page Audit panel"){
+			PageAudit.openPageAuditPanel();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#CHECK_ISSUES_TEXT",
-			value1 = "Check issues that impact on your page's accessibility and SEO.");
+			AssertTextPresent(
+				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
+				value1 = "Check issues that impact on your page's accessibility and SEO.");
+		}
 
-		PageAudit.connectToGooglePageAudit();
+		task("Go to Google PageSpeed throught the button in panel"){
+			PageAudit.connectToGooglePageAudit();
 
-		AssertTextPresent(
-			locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
-			value1 = "Google PageSpeed");
+			AssertTextPresent(
+				locator1 = "PageAudit#GOOGLE_PAGESPEED_TITLE",
+				value1 = "Google PageSpeed");
+		}
 	}
 
 	@description = "When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
 	@priority = "5"
 	test PageAuditWidgetPageDisabled {
-        property osgi.module.configuration.file.names = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration-default.config"; 
-        property osgi.module.configurations = "enabled=B&quot;false&quot;";
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Widget Page");
+		task("Disable Google PageSpeed")
+			PageAudit.disableGooglePageSpeed();
+		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+		task("Add Widget Page"){
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Widget Page");
 
-		AssertElementNotPresent(
-            key_text = "info-circle",
-			locator1 = "Icon#ANY");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
+		}
+
+		task("Assert the Page Audit panel is not shown")
+			AssertElementNotPresent(
+        		key_text = "info-circle",
+				locator1 = "Icon#ANY");
+		}
 	}
 
 }

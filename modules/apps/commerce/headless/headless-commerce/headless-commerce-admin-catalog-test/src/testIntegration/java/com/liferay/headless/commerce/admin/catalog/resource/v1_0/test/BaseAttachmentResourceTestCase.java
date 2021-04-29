@@ -182,6 +182,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Attachment attachment = randomAttachment();
 
 		attachment.setAttachment(regex);
+		attachment.setCdnUrl(regex);
 		attachment.setExternalReferenceCode(regex);
 		attachment.setSrc(regex);
 
@@ -192,6 +193,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		attachment = AttachmentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, attachment.getAttachment());
+		Assert.assertEquals(regex, attachment.getCdnUrl());
 		Assert.assertEquals(regex, attachment.getExternalReferenceCode());
 		Assert.assertEquals(regex, attachment.getSrc());
 	}
@@ -969,6 +971,22 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("cdn", additionalAssertFieldName)) {
+				if (attachment.getCdn() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("cdnUrl", additionalAssertFieldName)) {
+				if (attachment.getCdnUrl() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("customFields", additionalAssertFieldName)) {
 				if (attachment.getCustomFields() == null) {
 					valid = false;
@@ -1145,6 +1163,26 @@ public abstract class BaseAttachmentResourceTestCase {
 				if (!Objects.deepEquals(
 						attachment1.getAttachment(),
 						attachment2.getAttachment())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("cdn", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getCdn(), attachment2.getCdn())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("cdnUrl", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getCdnUrl(), attachment2.getCdnUrl())) {
 
 					return false;
 				}
@@ -1374,6 +1412,19 @@ public abstract class BaseAttachmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("cdn")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("cdnUrl")) {
+			sb.append("'");
+			sb.append(String.valueOf(attachment.getCdnUrl()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("customFields")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1535,6 +1586,8 @@ public abstract class BaseAttachmentResourceTestCase {
 			{
 				attachment = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				cdn = RandomTestUtil.randomBoolean();
+				cdnUrl = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(

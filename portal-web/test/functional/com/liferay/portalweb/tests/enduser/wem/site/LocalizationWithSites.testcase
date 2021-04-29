@@ -30,7 +30,11 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-details",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		PortletEntry.inputLocalizedName(
 			language = "es_ES",
@@ -362,7 +366,11 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-details",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		PortletEntry.inputLocalizedName(
 			language = "es_ES",
@@ -596,7 +604,7 @@ definition {
 			defaultSiteLanguage = "Spanish (Spain)",
 			displaySettings = "Display Settings");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-from-template");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name-from-template");
 
 		Site.viewSiteClonedFromSiteTemplateCP(
 			clonedFromTemplate = "true",
@@ -665,7 +673,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.configureCurrentLanguagesCP(
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",

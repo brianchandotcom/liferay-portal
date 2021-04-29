@@ -198,7 +198,7 @@ definition {
 			groupName = "Child SiteName",
 			parentGroupName = "Site Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "child-sitename");
+		Site.openSiteSettingsAdmin(siteURLKey = "child-sitename");
 
 		Site.limitMembership(siteLimitMembership = "Yes");
 

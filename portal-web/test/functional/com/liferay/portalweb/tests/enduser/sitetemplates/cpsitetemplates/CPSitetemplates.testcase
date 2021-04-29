@@ -636,7 +636,7 @@ definition {
 			siteType = "Site Template",
 			uncheckPropagation = "true");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		AssertAlertNotPresent();
 

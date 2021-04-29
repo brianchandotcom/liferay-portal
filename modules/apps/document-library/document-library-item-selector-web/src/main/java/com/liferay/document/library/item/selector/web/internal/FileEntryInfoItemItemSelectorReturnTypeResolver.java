@@ -62,6 +62,9 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 
 	@Override
 	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
+		ClassType classType = _getClassType(
+			fileEntry, themeDisplay.getLocale());
+
 		JSONObject fileEntryJSONObject = JSONUtil.put(
 			"className", FileEntry.class.getName()
 		).put(
@@ -70,9 +73,10 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 		).put(
 			"classPK", String.valueOf(fileEntry.getFileEntryId())
 		).put(
-			"classTypeId", _getClassTypeId(fileEntry)
+			"classTypeId", (classType != null) ? classType.getClassTypeId() : 0
 		).put(
-			"subtype", _getSubtype(fileEntry, themeDisplay.getLocale())
+			"subtype",
+			(classType != null) ? classType.getName() : StringPool.BLANK
 		).put(
 			"title", fileEntry.getTitle()
 		).put(
@@ -84,40 +88,14 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 		return fileEntryJSONObject.toString();
 	}
 
-	private long _getClassTypeId(FileEntry fileEntry) {
+	private ClassType _getClassType(FileEntry fileEntry, Locale locale) {
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
 				getAssetRendererFactoryByClassNameId(
 					_portal.getClassNameId(DLFileEntry.class));
 
 		if (assetRendererFactory == null) {
-			return 0;
-		}
-
-		try {
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(
-					fileEntry.getFileEntryId());
-
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				DLFileEntryConstants.getClassName(),
-				assetRenderer.getClassPK());
-
-			return assetEntry.getClassTypeId();
-		}
-		catch (Exception exception) {
-			return 0;
-		}
-	}
-
-	private String _getSubtype(FileEntry fileEntry, Locale locale) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					_portal.getClassNameId(DLFileEntry.class));
-
-		if (assetRendererFactory == null) {
-			return StringPool.BLANK;
+			return null;
 		}
 
 		try {
@@ -132,13 +110,11 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 			ClassTypeReader classTypeReader =
 				assetRendererFactory.getClassTypeReader();
 
-			ClassType classType = classTypeReader.getClassType(
+			return classTypeReader.getClassType(
 				assetEntry.getClassTypeId(), locale);
-
-			return classType.getName();
 		}
 		catch (Exception exception) {
-			return StringPool.BLANK;
+			return null;
 		}
 	}
 

@@ -44,7 +44,10 @@ const reducer = (state, action) => {
 				...state,
 				fields: {
 					...state.fields,
-					...action.payload,
+					[action.payload.id]: {
+						...state.fields[action.payload.id],
+						...action.payload.field,
+					},
 				},
 				formHasChanges: true,
 			};
@@ -68,7 +71,11 @@ const getInfoFields = (infoFieldSetEntries = []) => {
 	infoFieldSetEntries.forEach(({fields}) => {
 		fields.forEach(({id, sourceContent, targetContent}) => {
 			sourceFields.push({[id]: sourceContent});
-			targetFields[id] = targetContent;
+			targetFields[id] = {
+				content: targetContent,
+				message: '',
+				status: '',
+			};
 		});
 	});
 
@@ -124,7 +131,7 @@ const Translate = ({
 
 	const handleOnChangeField = ({content, id}) => {
 		dispatch({
-			payload: {[id]: content},
+			payload: {field: {content}, id},
 			type: ACTION_TYPES.UPDATE_FIELD,
 		});
 	};
@@ -190,22 +197,61 @@ const Translate = ({
 	};
 
 	const fetchAutoTranslateField = (fieldId) => {
+		dispatch({
+			payload: {field: {status: FETCH_STATUS.LOADING}, id: fieldId},
+			type: ACTION_TYPES.UPDATE_FIELD,
+		});
+
 		fetchAutoTranslate({
 			fields: sourceFields.filter((field) => {
 				return Object.keys(field)[0] === fieldId;
 			}),
-		}).then(({error, fields}) => {
-			if (error) {
-				throw error;
-			}
+		})
+			.then(({error, fields}) => {
+				if (error) {
+					throw error;
+				}
 
-			if (isMounted()) {
-				dispatch({
-					payload: normalizeFields(fields),
-					type: ACTION_TYPES.UPDATE_FIELD,
-				});
-			}
-		});
+				if (isMounted()) {
+					const [id, content] = Object.entries(
+						normalizeFields(fields)
+					)[0];
+
+					dispatch({
+						payload: {
+							field: {
+								content,
+								message: Liferay.Language.get(
+									'field-translated'
+								),
+								status: FETCH_STATUS.SUCCESS,
+							},
+							id,
+						},
+						type: ACTION_TYPES.UPDATE_FIELD,
+					});
+				}
+			})
+			.catch(
+				({
+					message = Liferay.Language.get(
+						'an-unexpected-error-occurred'
+					),
+				}) => {
+					if (isMounted()) {
+						dispatch({
+							payload: {
+								field: {
+									message,
+									status: FETCH_STATUS.ERROR,
+								},
+								id: fieldId,
+							},
+							type: ACTION_TYPES.UPDATE_FIELD,
+						});
+					}
+				}
+			);
 	};
 
 	return (

@@ -16,9 +16,12 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {ClassicEditor} from 'frontend-editor-ckeditor-web';
 import React from 'react';
+
+import {FETCH_STATUS} from '../constants';
 
 const noop = () => {};
 
@@ -27,30 +30,70 @@ const TranslateAutoTranslateRow = ({
 	children,
 	handleAutoTranslateClick = noop,
 	label,
-}) =>
-	autoTranslateEnabled ? (
+	fieldStatus,
+}) => {
+	if (!autoTranslateEnabled) {
+		return children;
+	}
+
+	const isLoading = fieldStatus.status === FETCH_STATUS.LOADING;
+	const text = Liferay.Util.sub(
+		Liferay.Language.get('auto-translate-x-field'),
+		label
+	);
+
+	return (
 		<ClayLayout.Row>
 			<ClayLayout.ContentCol expand>{children}</ClayLayout.ContentCol>
 			<ClayLayout.ContentCol className="align-self-top col-autotranslate-field">
 				<ClayButton
+					className="lfr-portal-tooltip"
+					disabled={isLoading}
 					displayType="secondary"
 					monospaced
 					onClick={handleAutoTranslateClick}
+					title={text}
 				>
-					<ClayIcon symbol="automatic-translate" />
-					<span className="sr-only">
-						Auto translate {label} field
-					</span>
+					{isLoading ? (
+						<ClayLoadingIndicator className="my-0" small />
+					) : (
+						<ClayIcon symbol="automatic-translate" />
+					)}
+					<span className="sr-only">{text}</span>
 				</ClayButton>
 			</ClayLayout.ContentCol>
 		</ClayLayout.Row>
-	) : (
-		children
 	);
+};
+
+const TranslateFieldFeedback = ({message = '', status = ''}) => {
+	return status === FETCH_STATUS.ERROR || status === FETCH_STATUS.SUCCESS ? (
+		<div
+			className={classNames({
+				'has-error': status === FETCH_STATUS.ERROR,
+				'has-success': status === FETCH_STATUS.SUCCESS,
+			})}
+		>
+			<div className="form-feedback-item">
+				<span className="form-feedback-indicator mr-1">
+					<ClayIcon
+						symbol={
+							status === FETCH_STATUS.SUCCESS
+								? 'check-circle-full'
+								: 'exclamation-full'
+						}
+					/>
+				</span>
+				{message}
+			</div>
+		</div>
+	) : null;
+};
 
 const TranslateFieldEditor = ({
 	autoTranslateEnabled,
 	editorConfiguration,
+	fieldStatus,
 	id,
 	label,
 	sourceContent,
@@ -62,6 +105,7 @@ const TranslateFieldEditor = ({
 }) => (
 	<TranslateAutoTranslateRow
 		autoTranslateEnabled={autoTranslateEnabled}
+		fieldStatus={fieldStatus}
 		handleAutoTranslateClick={handleAutoTranslateClick}
 		label={label}
 	>
@@ -97,6 +141,10 @@ const TranslateFieldEditor = ({
 						name={id}
 						type="hidden"
 					/>
+					<TranslateFieldFeedback
+						message={fieldStatus.message}
+						status={fieldStatus.status}
+					/>
 				</ClayForm.Group>
 			</ClayLayout.Col>
 		</ClayLayout.Row>
@@ -105,18 +153,20 @@ const TranslateFieldEditor = ({
 
 const TranslateFieldInput = ({
 	autoTranslateEnabled,
+	fieldStatus,
+	handleAutoTranslateClick,
 	id,
 	label,
 	multiline,
+	onChange = noop,
 	sourceContent,
 	sourceContentDir,
 	targetContent,
 	targetContentDir,
-	onChange = noop,
-	handleAutoTranslateClick,
 }) => (
 	<TranslateAutoTranslateRow
 		autoTranslateEnabled={autoTranslateEnabled}
+		fieldStatus={fieldStatus}
 		handleAutoTranslateClick={handleAutoTranslateClick}
 		label={label}
 	>
@@ -135,9 +185,13 @@ const TranslateFieldInput = ({
 			</ClayLayout.Col>
 			<ClayLayout.Col md={6}>
 				<ClayForm.Group>
-					<label className="control-label" htmlFor={id}>
-						{label}
-					</label>
+					<ClayLayout.Row>
+						<ClayLayout.ContentCol expand>
+							<label className="control-label" htmlFor={id}>
+								{label}
+							</label>
+						</ClayLayout.ContentCol>
+					</ClayLayout.Row>
 					<ClayInput
 						component={multiline ? 'textarea' : undefined}
 						dir={targetContentDir}
@@ -149,6 +203,10 @@ const TranslateFieldInput = ({
 						}}
 						type="text"
 						value={targetContent}
+					/>
+					<TranslateFieldFeedback
+						message={fieldStatus.message}
+						status={fieldStatus.status}
 					/>
 				</ClayForm.Group>
 			</ClayLayout.Col>
@@ -182,13 +240,17 @@ const TranslateFieldSetEntries = ({
 				const fieldProps = {
 					...field,
 					autoTranslateEnabled,
+					fieldStatus: {
+						message: targetFieldsContent[field.id].message,
+						status: targetFieldsContent[field.id].status,
+					},
 					handleAutoTranslateClick: () =>
 						fetchAutoTranslateField(field.id),
 					id: `${portletNamespace}${field.id}`,
 					onChange: (content) => {
 						onChange({content, id: field.id});
 					},
-					targetContent: targetFieldsContent[field.id],
+					targetContent: targetFieldsContent[field.id].content,
 				};
 
 				return field.html ? (

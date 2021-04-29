@@ -16,6 +16,7 @@ import './FieldBase.scss';
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
 import {
 	Layout,
@@ -25,7 +26,7 @@ import {
 } from 'dynamic-data-mapping-form-renderer';
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'dynamic-data-mapping-form-renderer/js/core/actions/eventTypes.es';
 import moment from 'moment/min/moment-with-locales';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
 const convertInputValue = (fieldType, locale, value) => {
 	if (fieldType === 'date') {
@@ -69,7 +70,43 @@ const getDefaultRows = (nestedFields) => {
 	});
 };
 
-const FieldProperties = ({required, tooltip}) => {
+const Popover = ({tooltip}) => {
+	const [isPopoverVisible, setPopoverVisible] = useState(false);
+
+	const POPOVER_IMAGE_HEIGHT = 170;
+	const POPOVER_IMAGE_WIDTH = 232;
+	const POPOVER_MAX_WIDTH = 256;
+
+	return (
+		<ClayPopover
+			alignPosition="right-bottom"
+			disableScroll
+			header={Liferay.Language.get('input-mask-format')}
+			show={isPopoverVisible}
+			style={{maxWidth: POPOVER_MAX_WIDTH}}
+			trigger={
+				<span
+					className="ddm-tooltip"
+					onMouseOut={() => setPopoverVisible(false)}
+					onMouseOver={() => setPopoverVisible(true)}
+				>
+					<ClayIcon symbol="question-circle-full" />
+				</span>
+			}
+		>
+			<p>{tooltip}</p>
+
+			<img
+				alt={Liferay.Language.get('input-mask-format')}
+				height={POPOVER_IMAGE_HEIGHT}
+				src={`${themeDisplay.getPathThemeImages()}/forms/input_mask_format.png`}
+				width={POPOVER_IMAGE_WIDTH}
+			/>
+		</ClayPopover>
+	);
+};
+
+const FieldProperties = ({required, showPopover, tooltip}) => {
 	return (
 		<>
 			{required && (
@@ -79,9 +116,18 @@ const FieldProperties = ({required, tooltip}) => {
 			)}
 
 			{tooltip && (
-				<span className="ddm-tooltip">
-					<ClayIcon symbol="question-circle-full" title={tooltip} />
-				</span>
+				<>
+					{showPopover ? (
+						<Popover tooltip={tooltip} />
+					) : (
+						<span className="ddm-tooltip">
+							<ClayIcon
+								symbol="question-circle-full"
+								title={tooltip}
+							/>
+						</span>
+					)}
+				</>
 			)}
 		</>
 	);
@@ -91,6 +137,7 @@ function FieldBase({
 	children,
 	displayErrors,
 	errorMessage,
+	fieldName,
 	label,
 	localizedValue = {},
 	name,
@@ -165,6 +212,8 @@ function FieldBase({
 		fieldDetails += Liferay.Language.get('required');
 	}
 
+	const showPopover = fieldName === 'inputMaskFormat';
+
 	return (
 		<div
 			aria-labelledby={!renderLabel ? fieldDetailsId : null}
@@ -233,6 +282,7 @@ function FieldBase({
 
 								<FieldProperties
 									required={required}
+									showPopover={showPopover}
 									tooltip={tooltip}
 								/>
 							</legend>
@@ -252,6 +302,7 @@ function FieldBase({
 
 								<FieldProperties
 									required={required}
+									showPopover={showPopover}
 									tooltip={tooltip}
 								/>
 							</label>

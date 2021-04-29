@@ -4,6 +4,7 @@
 		"@clayui/form": "3.14.4",
 		"@clayui/layout": "3.3.0",
 		"@clayui/modal": "3.8.5",
+		"@clayui/popover": "3.5.5",
 		"@clayui/table": "3.1.0",
 		"axios": "0.21.1",
 		"classnames": "2.2.6",

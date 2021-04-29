@@ -355,6 +355,7 @@ const Main = ({
 	return (
 		<FieldBase
 			{...otherProps}
+			fieldName={fieldName}
 			id={id}
 			localizedValue={localizedValue}
 			name={name}

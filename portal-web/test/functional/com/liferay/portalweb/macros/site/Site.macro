@@ -153,7 +153,11 @@ definition {
 	}
 
 	macro addVirtualHostsURLCP {
-		Panel.expandPanel(panel = "Site URL");
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Site URL");
 
 		if (isSet(publicVirtualHosts)) {
 			AssertTextEquals(
@@ -665,7 +669,11 @@ definition {
 	}
 
 	macro editFriendlyURLCP {
-		Panel.expandPanel(panel = "Site URL");
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Site URL");
 
 		AssertTextEquals(
 			locator1 = "SiteSettingsSiteURL#SITE_URL_FRIENDLY_URL_LABEL",

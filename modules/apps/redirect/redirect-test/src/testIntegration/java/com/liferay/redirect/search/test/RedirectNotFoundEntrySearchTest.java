@@ -167,26 +167,6 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
-	public void testSearchByURLSubstring() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		RedirectNotFoundEntry redirectNotFoundEntry =
-			_redirectNotFoundEntryLocalService.addOrUpdateRedirectNotFoundEntry(
-				serviceContext.getScopeGroup(), "/path/page");
-
-		List<SearchResult> searchResults = _getSearchResults("age");
-
-		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
-
-		SearchResult searchResult = searchResults.get(0);
-
-		Assert.assertEquals(
-			redirectNotFoundEntry.getRedirectNotFoundEntryId(),
-			searchResult.getClassPK());
-	}
-
-	@Test
 	public void testSearchByURLSuffix() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -224,6 +204,11 @@ public class RedirectNotFoundEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	@Test
 	public void testSearchExpireLatestVersion() {
+	}
+
+	@Override
+	@Test
+	public void testSearchMixedPhraseKeywords() {
 	}
 
 	@Override

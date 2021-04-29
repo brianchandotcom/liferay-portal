@@ -648,7 +648,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -686,7 +690,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration",
+			key_url = "site-configuration-other",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
@@ -716,7 +720,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -747,7 +755,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration",
+			key_url = "site-configuration-other",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
@@ -1862,7 +1870,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1900,7 +1912,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration",
+			key_url = "site-configuration-other",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
@@ -1914,7 +1926,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1953,7 +1969,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration",
+			key_url = "site-configuration-other",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");

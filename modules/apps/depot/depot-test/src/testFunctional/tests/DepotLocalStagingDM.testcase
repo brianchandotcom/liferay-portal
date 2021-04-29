@@ -532,7 +532,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-staging");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -555,7 +559,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -579,7 +587,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-staging");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -595,7 +607,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1503,7 +1519,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-staging");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1526,7 +1546,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1534,7 +1558,11 @@ definition {
 			key_imageName = "Document_1.jpg",
 			locator1 = "SitePagesEditPage#PREVIEW_IMAGE");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name-staging");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 
@@ -1558,7 +1586,11 @@ definition {
 
 		Staging.publishToLive();
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
+
+		Click(
+			key_url = "site-configuration-other",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Panel.expandPanel(panel = "Open Graph");
 

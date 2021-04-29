@@ -77,8 +77,6 @@ public class TextDDMFormFieldTemplateContextContributor
 				DDMFormFieldTypeUtil.getPropertyValue(
 					ddmFormField, locale, "placeholder")
 			).put(
-				"regex", GetterUtil.getString(ddmFormField.getProperty("regex"))
-			).put(
 				"requireConfirmation",
 				GetterUtil.getBoolean(
 					ddmFormField.getProperty("requireConfirmation"))

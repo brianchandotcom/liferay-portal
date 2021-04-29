@@ -45,7 +45,7 @@ Role role = accountRoleDisplay.getRole();
 		url="<%= editAccountRoleURL %>"
 	/>
 
-	<c:if test="<%= role.getType() != RoleConstants.TYPE_ACCOUNT %>">
+	<c:if test="<%= !AccountRoleConstants.isSharedRole(role) %>">
 		<portlet:actionURL name="/account_admin/delete_account_roles" var="deleteAccountRolesURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="accountRoleIds" value="<%= String.valueOf(accountRoleDisplay.getAccountRoleId()) %>" />

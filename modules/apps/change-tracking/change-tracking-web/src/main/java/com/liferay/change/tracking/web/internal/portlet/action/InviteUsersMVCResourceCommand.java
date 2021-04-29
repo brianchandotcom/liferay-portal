@@ -22,6 +22,7 @@ import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -35,17 +36,15 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -56,13 +55,26 @@ import org.osgi.service.component.annotations.Reference;
  * @author Samuel Trong Tran
  */
 @Component(
+	immediate = true,
 	property = {
 		"javax.portlet.name=" + CTPortletKeys.PUBLICATIONS,
 		"mvc.command.name=/change_tracking/invite_users"
 	},
-	service = MVCResourceCommand.class
+	service = AopService.class
 )
-public class InviteUsersMVCActionCommand extends BaseMVCResourceCommand {
+public class InviteUsersMVCResourceCommand
+	extends BaseMVCResourceCommand implements AopService, MVCResourceCommand {
+
+	@Override
+	@Transactional(
+		propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class
+	)
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortletException {
+
+		return super.serveResource(resourceRequest, resourceResponse);
+	}
 
 	@Override
 	protected void doServeResource(
@@ -106,26 +118,12 @@ public class InviteUsersMVCActionCommand extends BaseMVCResourceCommand {
 
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
 
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(0)) {
+		_userGroupRoleLocalService.deleteUserGroupRoles(
+			userIds, ctCollection.getGroupId());
 
-			TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				() -> {
-					_userGroupRoleLocalService.deleteUserGroupRoles(
-						userIds, ctCollection.getGroupId());
-
-					for (long userId : userIds) {
-						_userGroupRoleLocalService.addUserGroupRole(
-							userId, ctCollection.getGroupId(),
-							role.getRoleId());
-					}
-
-					return null;
-				});
-		}
-		catch (Throwable throwable) {
-			throw new PortalException(throwable);
+		for (long userId : userIds) {
+			_userGroupRoleLocalService.addUserGroupRole(
+				userId, ctCollection.getGroupId(), role.getRoleId());
 		}
 	}
 
@@ -161,15 +159,8 @@ public class InviteUsersMVCActionCommand extends BaseMVCResourceCommand {
 		}
 	}
 
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
-
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
@@ -179,8 +170,5 @@ public class InviteUsersMVCActionCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -98,12 +98,46 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130276."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationHierarchyPath {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130276 AddSegmentByOrganizationHierarchyPath pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Hierarchy Path");
+
+		Segmentation.fillProperty(propertyField = "organization Name");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationHierarchyPath Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByOrganizationHierarchyPath Test");
+
+		Segmentation.viewSegment(propertyField = "organization Name");
 	}
 
 	@description = "This is a test for LPS-130277."

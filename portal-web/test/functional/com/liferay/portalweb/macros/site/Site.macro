@@ -59,19 +59,23 @@ definition {
 			PortletEntry.inputName(name = "${siteName}");
 
 			Modal.save();
-
-			Click(
-				key_url = "site-configuration",
-				locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 		}
 
 		if ("${siteType}" == "Site Template") {
 			if ("${uncheckPropagation}" == "true") {
-				Panel.expandPanel(panel = "Pages");
+				Click(
+					key_url = "site-configuration-pages",
+					locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 				Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_PROPAGATION");
+
+				Navigator.gotoBack();
 			}
 		}
+
+		Click(
+			key_url = "site-configuration-details",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		if ("${membershipType}" == "Private") {
 			Select(
@@ -1089,8 +1093,6 @@ definition {
 				value1 = "${siteTemplate}");
 
 			if ("${checkPropagation}" == "true") {
-				Panel.expandPanel(panel = "Pages");
-
 				Check.checkToggleSwitch(locator1 = "Checkbox#PRIVATE_PAGES_ENABLE_PROPAGATION");
 			}
 		}

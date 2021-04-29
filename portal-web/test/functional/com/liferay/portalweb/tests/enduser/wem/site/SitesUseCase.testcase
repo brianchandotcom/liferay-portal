@@ -768,13 +768,13 @@ definition {
 			siteDetails = "true",
 			siteName = "World Cup - Russia 2018");
 
-		for (var tagName : list "World Cup,Russia,2018") {
-			Tag.addViaSiteCP(tagName = "${tagName}");
-		}
-
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
+
+		for (var tagName : list "World Cup,Russia,2018") {
+			Tag.addViaSiteCP(tagName = "${tagName}");
+		}
 
 		Site.addVirtualHostsURLCP(
 			privatePageVirtualHostURL = "www.baker.com",
@@ -782,9 +782,7 @@ definition {
 			publicPageVirtualHostURL = "www.able.com",
 			publicVirtualHosts = "true");
 
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
+		Navigator.gotoBack();
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/russia2018");
 

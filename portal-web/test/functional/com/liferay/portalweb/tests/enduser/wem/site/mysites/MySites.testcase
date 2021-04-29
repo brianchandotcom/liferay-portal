@@ -592,7 +592,7 @@ definition {
 		task ("Create a new site with tags") {
 			JSONGroup.addGroup(groupName = "Site Name");
 
-			Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			for (var tagName : list "apple,banana,mango") {
 				Tag.addViaSiteCP(tagName = "${tagName}");

@@ -84,7 +84,7 @@ public class TextMatchOverMultipleFieldsTest extends BaseQueryElementsTestCase {
 				getTextMatchOverMultipleFieldJSONObject(
 					1, 1, null, 2, "or", "cross_fields")));
 
-		assertSearch(
+		assertSearchIgnoreRelevance(
 			blueprint, null, "[alpha beta, alpha edison, beta charlie]",
 			"alpha golf", "");
 
@@ -96,7 +96,7 @@ public class TextMatchOverMultipleFieldsTest extends BaseQueryElementsTestCase {
 			getTextMatchOverMultipleFieldJSONObject(
 				1, 1, null, 2, "and", "cross_fields"));
 
-		assertSearch(
+		assertSearchIgnoreRelevance(
 			blueprint, configurationString, "[alpha beta, alpha edison]",
 			"alpha golf", selectedElementString);
 	}
@@ -204,9 +204,9 @@ public class TextMatchOverMultipleFieldsTest extends BaseQueryElementsTestCase {
 			getTextMatchOverMultipleFieldJSONObject(
 				1, 1, null, 2, "or", "phrase_prefix"));
 
-		assertSearch(
+		assertSearchIgnoreRelevance(
 			blueprint, configurationString,
-			"[drink carbonated pepsi, drink carbonated coca]",
+			"[drink carbonated coca, drink carbonated pepsi]",
 			"drink carbonated", selectedElementString);
 
 		configurationString = getConfigurationString(
@@ -217,9 +217,9 @@ public class TextMatchOverMultipleFieldsTest extends BaseQueryElementsTestCase {
 			getTextMatchOverMultipleFieldJSONObject(
 				1, 1, null, 2, "and", "phrase_prefix"));
 
-		assertSearch(
+		assertSearchIgnoreRelevance(
 			blueprint, configurationString,
-			"[drink carbonated pepsi, drink carbonated coca]", "drink",
+			"[drink carbonated coca, drink carbonated pepsi]", "drink",
 			selectedElementString);
 	}
 

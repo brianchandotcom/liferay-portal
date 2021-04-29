@@ -106,7 +106,7 @@ definition {
 
 	@priority = "3"
 	test ViewGoogleAnalyticsID {
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.editGoogleAnalyticsIDCP(googleAnalyticsID = '''']);alert(/googleAnalyticsId/);//''');
 
@@ -244,7 +244,7 @@ definition {
 	test ViewPiwik {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.editPiwikCP(piwik = '''<script>alert(123);</script>''');
 

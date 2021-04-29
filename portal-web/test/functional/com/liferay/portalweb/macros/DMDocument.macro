@@ -118,6 +118,30 @@ definition {
 				value1 = "${documentsAndMediaField}");
 		}
 
+		if (isSet(linkedPageName)) {
+			if (!(isSet(linkToPageFieldLabel))) {
+				var linkToPageFieldLabel = "Link to Page";
+			}
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			AssertClick(
+				key_fieldFieldLabel = "${linkToPageFieldLabel}",
+				locator1 = "WCEditWebContent#SELECT_BUTTON",
+				value1 = "Select");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Portlet.expandTree();
+
+			AssertClick.assertPartialTextClickAt(
+				key_nodeName = "${linkedPageName}",
+				locator1 = "Treeview#NODE_UNSELECTED",
+				value1 = "${linkedPageName}");
+
+			SelectFrameTop();
+		}
+
 		if (isSet(imageField)) {
 			if (isSet(fieldFieldLabel)) {
 				var key_fieldFieldLabel = "${fieldFieldLabel}";

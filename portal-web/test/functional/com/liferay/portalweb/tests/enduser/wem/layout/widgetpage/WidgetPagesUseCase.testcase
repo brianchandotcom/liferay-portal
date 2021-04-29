@@ -334,6 +334,8 @@ definition {
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
 			roleTitle = "Roles Regrole Name");
 
+		User.logoutPG();
+
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
@@ -351,6 +353,8 @@ definition {
 				value1 = "Not Found");
 		}
 
+		User.logoutPG();
+
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
@@ -364,6 +368,8 @@ definition {
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
 			roleTitle = "Roles Regrole Name");
+
+		User.logoutPG();
 
 		User.firstLoginPG(
 			password = "test",

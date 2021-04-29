@@ -489,11 +489,11 @@ definition {
 
 			AssertLocation(value1 = "${portalURL}/web/test-site-name");
 
-			Open(locator1 = "${portalURL}/group/test-site-name");
-
-			SignIn._signIn(
+			User.firstLoginPG(
 				userEmailAddress = "test@liferay.com",
 				userPassword = "test");
+
+			Open(locator1 = "${portalURL}/group/test-site-name");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Dashboard");
 		}

@@ -623,6 +623,8 @@ definition {
 			languageName = "中文 (中国)",
 			userScreenName = "usersn");
 
+		User.logoutPG();
+
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea@liferay.com");

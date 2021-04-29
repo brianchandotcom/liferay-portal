@@ -74,7 +74,7 @@ export class DataDefinitionSchema extends Schema {
 		return this[SYMBOL_RAW].name;
 	}
 
-	build() {
+	serialize() {
 		return {
 			availableLanguageIds: this.availableLanguageIds,
 			contentType: this.contentType,

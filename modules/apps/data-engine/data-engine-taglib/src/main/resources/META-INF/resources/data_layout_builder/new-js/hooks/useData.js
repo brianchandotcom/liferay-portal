@@ -45,17 +45,20 @@ const parseDataLayout = (dataLayout) => {
 	};
 };
 
-const parseDataDefinition = (dataDefinition) => {
+const parseDataDefinition = (originalDataDefinition) => {
 	const {
 		availableLanguageIds,
 		description,
 		name,
-		...dataDefinitions
-	} = omit(dataDefinition, ['defaultLanguageId', 'defaultDataLayout']);
+		...dataDefinition
+	} = omit(originalDataDefinition, [
+		'defaultLanguageId',
+		'defaultDataLayout',
+	]);
 
 	return {
 		availableLanguageIds,
-		dataDefinition: dataDefinitions,
+		dataDefinition,
 		description,
 		name,
 	};

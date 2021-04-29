@@ -101,7 +101,6 @@ export default function FieldSets({keywords}) {
 
 			const ddmForm = getFieldSetDDMForm({
 				allowInvalidAvailableLocalesForProperty,
-				availableLanguageIds: dataDefinition.availableLanguageIds,
 				editingLanguageId,
 				fieldSet,
 				fieldTypes,

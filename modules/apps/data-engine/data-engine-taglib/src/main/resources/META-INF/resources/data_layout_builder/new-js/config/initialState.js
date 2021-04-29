@@ -14,14 +14,22 @@
 
 import {INITIAL_STATE as CORE_INITIAL_STATE} from 'dynamic-data-mapping-form-renderer/js/core/config/index.es';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
 	...CORE_INITIAL_STATE,
 	availableLanguageIds: [themeDisplay.getDefaultLanguageId()],
+	dataDefinition: {
+		dataDefinitionFields: [],
+	},
 	dataDefinitionId: 0,
+	dataLayout: {
+		dataLayoutFields: {},
+	},
 	dataLayoutId: 0,
 	editingDataDefinitionId: 0,
+	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	fieldSets: [],
 	name: {},
+	paginationMode: 'single-page',
 };
 
 export default INITIAL_STATE;

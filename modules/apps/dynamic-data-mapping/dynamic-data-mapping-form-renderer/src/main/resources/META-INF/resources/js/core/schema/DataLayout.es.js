@@ -26,7 +26,7 @@ export class DataLayoutRowSchema extends Schema {
 		}));
 	}
 
-	build() {
+	serialize() {
 		return {
 			dataLayoutColumns: this.dataLayoutColumns,
 		};
@@ -43,16 +43,22 @@ export class DataLayoutPageSchema extends Schema {
 	}
 
 	get description() {
-		return this[SYMBOL_RAW].localizedDescription;
+		const defaultLanguageId = this[SYMBOL_RAW].defaultLanguageId;
+
+		return (
+			this[SYMBOL_RAW].localizedDescription ?? {[defaultLanguageId]: ''}
+		);
 	}
 
 	get title() {
-		return this[SYMBOL_RAW].localizedTitle;
+		const defaultLanguageId = this[SYMBOL_RAW].defaultLanguageId;
+
+		return this[SYMBOL_RAW].localizedTitle ?? {[defaultLanguageId]: ''};
 	}
 
-	build() {
+	serialize() {
 		return {
-			dataLayoutRows: this.dataLayoutRows.map((row) => row.build()),
+			dataLayoutRows: this.dataLayoutRows.map((row) => row.serialize()),
 			description: this.description,
 			title: this.title,
 		};
@@ -89,10 +95,12 @@ export class DataLayoutSchema extends Schema {
 		return this[SYMBOL_RAW].name;
 	}
 
-	build() {
+	serialize() {
 		return {
 			dataLayoutFields: this.dataLayoutFields,
-			dataLayoutPages: this.dataLayoutPages.map((page) => page.build()),
+			dataLayoutPages: this.dataLayoutPages.map((page) =>
+				page.serialize()
+			),
 			dataRules: this.dataRules,
 			name: this.name,
 		};

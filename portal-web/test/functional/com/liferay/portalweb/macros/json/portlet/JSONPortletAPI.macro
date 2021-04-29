@@ -1,0 +1,24 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add a group"
+	macro _hasPortlet {
+		Variables.assertDefined(parameterList = "${portletId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			${portalURL}/api/jsonws/portlet/has-portlet \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d portletId=${portletId}
+		''';
+
+		var result = JSONCurlUtil.post("${curl}");
+		var result = StringUtil.extractFirst("${result}","Finished");
+
+		return "${result}";
+	}
+
+}

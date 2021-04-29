@@ -1,0 +1,12 @@
+definition {
+
+	@summary = "Check if company has the given portlet."
+	macro hasPortlet {
+		Variables.assertDefined(parameterList = "${portletId}");
+
+		var result = JSONPortletAPI._hasPortlet(portletId = "${portletId}");
+
+		return "${result}";
+	}
+
+}

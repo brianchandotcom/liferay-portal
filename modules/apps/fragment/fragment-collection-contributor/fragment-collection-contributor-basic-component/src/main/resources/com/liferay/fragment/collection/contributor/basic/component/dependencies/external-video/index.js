@@ -1,15 +1,52 @@
 let content = null;
-let videoContainer = null;
 let errorMessage = null;
 let loadingIndicator = null;
+let videoContainer = null;
 let videoMask = null;
 
 const height = configuration.videoHeight
 	? configuration.videoHeight.replace('px', '')
 	: configuration.videoHeight;
+
 const width = configuration.videoWidth
 	? configuration.videoWidth.replace('px', '')
 	: configuration.videoWidth;
+
+function main() {
+	content = fragmentElement.querySelector('.video');
+
+	if (!content) {
+		return requestAnimationFrame(main);
+	}
+
+	errorMessage = content.querySelector('.error-message');
+	loadingIndicator = content.querySelector('.loading-animation');
+	videoContainer = content.querySelector('.video-container');
+	videoMask = content.querySelector('.video-mask');
+
+	window.removeEventListener('resize', resize);
+
+	try {
+		if (configuration.video) {
+			const videoConfiguration = JSON.parse(configuration.video);
+
+			if (videoConfiguration.html) {
+				videoContainer.innerHTML = videoConfiguration.html;
+
+				requestAnimationFrame(showVideo);
+			}
+			else {
+				showError();
+			}
+		}
+		else {
+			showError();
+		}
+	}
+	catch (error) {
+		showError();
+	}
+}
 
 function resize() {
 	content.style.height = '';
@@ -32,10 +69,21 @@ function resize() {
 	});
 }
 
+function showError() {
+	if (document.body.classList.contains('has-edit-mode-menu')) {
+		errorMessage.removeAttribute('hidden');
+		loadingIndicator.parentElement.removeChild(loadingIndicator);
+		videoContainer.parentElement.removeChild(videoContainer);
+	}
+	else {
+		fragmentElement.parentElement.removeChild(fragmentElement);
+	}
+}
+
 function showVideo() {
-	videoContainer.removeAttribute('aria-hidden');
 	errorMessage.parentElement.removeChild(errorMessage);
 	loadingIndicator.parentElement.removeChild(loadingIndicator);
+	videoContainer.removeAttribute('aria-hidden');
 
 	if (!document.body.classList.contains('has-edit-mode-menu')) {
 		videoMask.parentElement.removeChild(videoMask);
@@ -44,52 +92,6 @@ function showVideo() {
 	window.addEventListener('resize', resize);
 
 	resize();
-}
-
-function showError() {
-	if (document.body.classList.contains('has-edit-mode-menu')) {
-		errorMessage.removeAttribute('hidden');
-		videoContainer.parentElement.removeChild(videoContainer);
-		loadingIndicator.parentElement.removeChild(loadingIndicator);
-	}
-	else {
-		fragmentElement.parentElement.removeChild(fragmentElement);
-	}
-}
-
-function main() {
-	content = fragmentElement.querySelector('.video');
-
-	if (!content) {
-		return requestAnimationFrame(main);
-	}
-
-	videoContainer = content.querySelector('.video-container');
-	errorMessage = content.querySelector('.error-message');
-	loadingIndicator = content.querySelector('.loading-animation');
-	videoMask = content.querySelector('.video-mask');
-
-	window.removeEventListener('resize', resize);
-
-	try {
-		if (configuration.video) {
-			const videoConfiguration = JSON.parse(configuration.video);
-
-			if (videoConfiguration.html) {
-				videoContainer.innerHTML = videoConfiguration.html;
-				requestAnimationFrame(showVideo);
-			}
-			else {
-				showError();
-			}
-		}
-		else {
-			showError();
-		}
-	}
-	catch (error) {
-		showError();
-	}
 }
 
 main();

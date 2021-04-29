@@ -52,9 +52,9 @@ definition {
 	}
 
 	macro disableRecycleBinViaSiteSettings {
-		Navigator.gotoNavTab(navTab = "Advanced");
-
-		Panel.expandPanel(panel = "Recycle Bin");
+		Click(
+			key_url = "site-configuration-recycle-bin",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Uncheck.uncheckToggleSwitchNoErrorNoAssert(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
 

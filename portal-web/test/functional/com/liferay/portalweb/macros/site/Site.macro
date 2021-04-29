@@ -632,11 +632,9 @@ definition {
 	}
 
 	macro disableRecycleBinCP {
-		AssertClick(
-			locator1 = "SitesEditSite#MENU_ADVANCED_TAB",
-			value1 = "Advanced");
-
-		Panel.expandPanel(panel = "Recycle Bin");
+		Click(
+			key_url = "site-configuration-recycle-bin",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Uncheck.uncheckToggleSwitchNoErrorNoAssert(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
 

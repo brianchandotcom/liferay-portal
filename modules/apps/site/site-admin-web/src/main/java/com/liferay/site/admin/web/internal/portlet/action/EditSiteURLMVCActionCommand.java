@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -36,8 +37,6 @@ import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -127,21 +126,14 @@ public class EditSiteURLMVCActionCommand
 			return;
 		}
 
-		PortletURL siteAdministrationURL = _getSiteAdministrationURL(
-			actionRequest, liveGroup);
-
-		siteAdministrationURL.setParameter(
-			"redirect", siteAdministrationURL.toString());
-		siteAdministrationURL.setParameter(
-			"historyKey",
-			ActionUtil.getHistoryKey(actionRequest, actionResponse));
-
 		actionRequest.setAttribute(
-			WebKeys.REDIRECT, siteAdministrationURL.toString());
+			WebKeys.REDIRECT,
+			_getSiteAdministrationURL(actionRequest, liveGroup));
 	}
 
-	private PortletURL _getSiteAdministrationURL(
-		ActionRequest actionRequest, Group group) {
+	private String _getSiteAdministrationURL(
+			ActionRequest actionRequest, Group group)
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -152,9 +144,21 @@ public class EditSiteURLMVCActionCommand
 			group = group.getStagingGroup();
 		}
 
-		return _portal.getControlPanelPortletURL(
-			actionRequest, group, ConfigurationAdminPortletKeys.SITE_SETTINGS,
-			0, 0, PortletRequest.RENDER_PHASE);
+		String siteAdministrationURL = _portal.getControlPanelFullURL(
+			group.getGroupId(), ConfigurationAdminPortletKeys.SITE_SETTINGS,
+			null);
+
+		String namespace = _portal.getPortletNamespace(
+			ConfigurationAdminPortletKeys.SITE_SETTINGS);
+
+		siteAdministrationURL = _http.addParameter(
+			siteAdministrationURL, namespace + "mvcRenderCommandName",
+			"/configuration_admin/view_configuration_screen");
+		siteAdministrationURL = _http.addParameter(
+			siteAdministrationURL, namespace + "configurationScreenKey",
+			"site-configuration-site-url");
+
+		return siteAdministrationURL;
 	}
 
 	@Reference
@@ -162,6 +166,9 @@ public class EditSiteURLMVCActionCommand
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private LayoutSetService _layoutSetService;

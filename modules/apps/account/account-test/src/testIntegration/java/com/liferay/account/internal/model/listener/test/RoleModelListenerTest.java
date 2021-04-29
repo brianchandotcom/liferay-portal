@@ -18,10 +18,13 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.model.AccountRoleTable;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.model.Company;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -75,6 +79,42 @@ public class RoleModelListenerTest {
 
 		Assert.assertNotNull(accountRole);
 		Assert.assertEquals(role.getRoleId(), accountRole.getRoleId());
+	}
+
+	@Test
+	public void testDefaultAccountRoles() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		String[] defaultAccountRoleNames = {
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER
+		};
+
+		for (String roleName : defaultAccountRoleNames) {
+			Role role = _roleLocalService.getRole(
+				company.getCompanyId(), roleName);
+
+			DSLQuery dslQuery = DSLQueryFactoryUtil.countDistinct(
+				AccountRoleTable.INSTANCE.accountRoleId
+			).from(
+				AccountRoleTable.INSTANCE
+			).where(
+				AccountRoleTable.INSTANCE.companyId.eq(
+					company.getCompanyId()
+				).and(
+					AccountRoleTable.INSTANCE.accountEntryId.eq(
+						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
+					).and(
+						AccountRoleTable.INSTANCE.roleId.eq(role.getRoleId())
+					)
+				)
+			);
+
+			Assert.assertEquals(
+				1,
+				GetterUtil.getInteger(
+					(long)_accountRoleLocalService.dslQuery(dslQuery)));
+		}
 	}
 
 	@Test

@@ -1,5 +1,11 @@
 # Poshi Runner Change Log
 
+## 1.0.301
+
+### Logger
+
+* [POSHI-161](https://issues.liferay.com/browse/POSHI-161) - Update Poshi log's alloyui cdn url
+
 ## 1.0.299
 
 ### Other

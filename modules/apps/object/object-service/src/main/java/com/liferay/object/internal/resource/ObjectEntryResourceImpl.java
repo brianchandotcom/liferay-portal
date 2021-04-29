@@ -280,8 +280,7 @@ public class ObjectEntryResourceImpl
 	}
 
 	private ObjectEntry _toObjectEntry(
-			com.liferay.object.model.ObjectEntry objectEntry)
-		throws Exception {
+		com.liferay.object.model.ObjectEntry objectEntry) {
 
 		return _objectEntryDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

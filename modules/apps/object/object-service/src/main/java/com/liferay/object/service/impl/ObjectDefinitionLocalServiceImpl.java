@@ -26,6 +26,7 @@ import com.liferay.object.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.internal.portlet.ObjectDefinitionPortlet;
 import com.liferay.object.internal.resource.ObjectEntryResourceImpl;
+import com.liferay.object.internal.resource.OpenAPIResourceImpl;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -287,7 +288,8 @@ public class ObjectDefinitionLocalServiceImpl
 			new ObjectEntryApplication(
 				new ObjectEntryResourceImpl(
 					objectDefinition, _objectEntryDTOConverter,
-					_objectEntryLocalService, _objectFieldLocalService)),
+					_objectEntryLocalService, _objectFieldLocalService),
+				_openAPIResourceImpl),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"liferay.jackson", false
 			).put(
@@ -351,6 +353,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
+
+	@Reference
+	private OpenAPIResourceImpl _openAPIResourceImpl;
 
 	private final Map<Long, ServiceRegistration<?>[]> _serviceRegistrationsMap =
 		new HashMap<>();

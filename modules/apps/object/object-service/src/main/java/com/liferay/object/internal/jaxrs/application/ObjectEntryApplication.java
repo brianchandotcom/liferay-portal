@@ -14,9 +14,10 @@
 
 package com.liferay.object.internal.jaxrs.application;
 
+import com.liferay.object.internal.resource.OpenAPIResourceImpl;
 import com.liferay.object.resource.ObjectEntryResource;
 
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.ws.rs.core.Application;
@@ -26,15 +27,25 @@ import javax.ws.rs.core.Application;
  */
 public class ObjectEntryApplication extends Application {
 
-	public ObjectEntryApplication(ObjectEntryResource objectEntryResource) {
+	public ObjectEntryApplication(
+		ObjectEntryResource objectEntryResource,
+		OpenAPIResourceImpl openAPIResourceImpl) {
+
 		_objectEntryResource = objectEntryResource;
+		_openAPIResourceImpl = openAPIResourceImpl;
 	}
 
 	@Override
 	public Set<Object> getSingletons() {
-		return Collections.singleton(_objectEntryResource);
+		HashSet<Object> objects = new HashSet<>();
+
+		objects.add(_objectEntryResource);
+		objects.add(_openAPIResourceImpl);
+
+		return objects;
 	}
 
 	private final ObjectEntryResource _objectEntryResource;
+	private final OpenAPIResourceImpl _openAPIResourceImpl;
 
 }

@@ -25,7 +25,10 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 public class CPAttachmentFileEntryImpl extends CPAttachmentFileEntryBaseImpl {
 
 	@Override
-	public FileEntry getFileEntry() throws PortalException {
+	public FileEntry fetchFileEntry() throws PortalException {
+		if(isCdn()){
+			return null;
+		}
 		return DLAppLocalServiceUtil.getFileEntry(getFileEntryId());
 	}
 

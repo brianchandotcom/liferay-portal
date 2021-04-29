@@ -320,7 +320,7 @@ definition {
 
 	@priority = "4"
 	test DeletePublishTemplate {
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.disableRecycleBinCP();
 

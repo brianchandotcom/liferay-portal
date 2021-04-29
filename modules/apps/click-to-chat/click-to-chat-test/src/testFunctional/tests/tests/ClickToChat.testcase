@@ -25,6 +25,7 @@ definition {
 	@priority = "5"
 	test EnableAndDisableJivoChat {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ClickToChat#EnableAndDisableJivoChat";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -70,6 +71,7 @@ definition {
 	@priority = "5"
 	test EnableAndDisableLivePerson {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ClickToChat#EnableAndDisableLivePerson";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -114,6 +116,8 @@ definition {
 
 	@priority = "4"
 	test HideChatProvider {
+		property test.name.skip.portal.instance = "ClickToChat#HideChatProvider";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

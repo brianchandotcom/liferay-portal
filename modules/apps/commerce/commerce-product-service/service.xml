@@ -153,6 +153,8 @@
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="fileEntryId" type="long" />
+		<column name="cdnUrl" type="String" />
+		<column name="cdn" type="boolean" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
 		<column localized="true" name="title" type="String" />
@@ -181,10 +183,15 @@
 			<finder-column comparator="&lt;" name="displayDate" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_C_F" return-type="CPAttachmentFileEntry" unique="true">
+		<finder name="C_C_F" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="fileEntryId" />
+		</finder>
+		<finder name="C_C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="cdnUrl" />
 		</finder>
 		<finder name="C_C_LtD_S" return-type="Collection">
 			<finder-column name="classNameId" />
@@ -1086,6 +1093,7 @@
 	<exceptions>
 		<exception>CommerceCatalogProducts</exception>
 		<exception>CommerceCatalogSystem</exception>
+		<exception>CPAttachmentFileEntryCdnUrl</exception>
 		<exception>CPAttachmentFileEntryDisplayDate</exception>
 		<exception>CPAttachmentFileEntryExpirationDate</exception>
 		<exception>CPAttachmentFileEntryName</exception>

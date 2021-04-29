@@ -86,8 +86,6 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		List<UserGroupRole> userGroupRoles =
 			_userGroupRoleLocalService.getUserGroupRolesByGroup(
 				ctCollection.getGroupId());
@@ -107,9 +105,15 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			_basePersistenceRegistry.fetchBaseModelMap(
 				_portal.getClassNameId(User.class.getName()), userIds);
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			Role role = roleMap.get(userGroupRole.getRole());
+			Role role = roleMap.get(userGroupRole.getRoleId());
 			User user = userMap.get(userGroupRole.getUserId());
+
+			if ((role == null) || (user == null)) {
+				continue;
+			}
 
 			JSONObject jsonObject = JSONUtil.put(
 				"emailAddress", user.getEmailAddress()

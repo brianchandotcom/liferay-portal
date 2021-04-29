@@ -31,7 +31,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -100,8 +99,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	}
 
 	public Map<String, Object> getCollaboratorsReactData(
-			CTCollection ctCollection, PermissionChecker permissionChecker)
-		throws PortalException {
+		CTCollection ctCollection, PermissionChecker permissionChecker) {
 
 		return HashMapBuilder.<String, Object>put(
 			"autocompleteUserURL",

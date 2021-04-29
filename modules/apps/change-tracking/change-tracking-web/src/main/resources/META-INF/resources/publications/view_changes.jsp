@@ -47,16 +47,16 @@ portletDisplay.setShowBackIcon(true);
 						<div class="publication-description"><%= HtmlUtil.escape(ctCollection.getDescription()) %></div>
 					</li>
 
-					<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) %>">
-						<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, ActionKeys.PERMISSIONS) %>">
-							<li class="tbar-item">
-								<react:component
-									module="publications/js/ManageCollaborators"
-									props="<%= publicationsDisplayContext.getCollaboratorsReactData(ctCollection, permissionChecker) %>"
-								/>
-							</li>
-						</c:if>
+					<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, ActionKeys.PERMISSIONS) %>">
+						<li class="tbar-item">
+							<react:component
+								module="publications/js/ManageCollaborators"
+								props="<%= publicationsDisplayContext.getCollaboratorsReactData(ctCollection, permissionChecker) %>"
+							/>
+						</li>
+					</c:if>
 
+					<c:if test="<%= CTCollectionPermission.contains(permissionChecker, ctCollection, CTActionKeys.PUBLISH) %>">
 						<c:if test="<%= PropsValues.SCHEDULER_ENABLED %>">
 							<li class="tbar-item">
 								<liferay-portlet:renderURL var="scheduleURL">
@@ -97,20 +97,26 @@ portletDisplay.setShowBackIcon(true);
 						</li>
 					</c:if>
 
-					<li class="tbar-item">
-						<div class="dropdown">
-							<button class="btn btn-monospaced btn-sm btn-unstyled dropdown-toggle hidden" type="button">
-								<svg class="lexicon-icon lexicon-icon-ellipsis-v publications-hidden" role="presentation">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#ellipsis-v" />
-								</svg>
-							</button>
-						</div>
+					<%
+					Map<String, Object> dropdownReactData = viewChangesDisplayContext.getDropdownReactData(permissionChecker);
+					%>
 
-						<react:component
-							module="publications/js/DropdownMenu"
-							props="<%= viewChangesDisplayContext.getDropdownReactData(permissionChecker) %>"
-						/>
-					</li>
+					<c:if test="<%= dropdownReactData != null %>">
+						<li class="tbar-item">
+							<div class="dropdown">
+								<button class="btn btn-monospaced btn-sm btn-unstyled dropdown-toggle hidden" type="button">
+									<svg class="lexicon-icon lexicon-icon-ellipsis-v publications-hidden" role="presentation">
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#ellipsis-v" />
+									</svg>
+								</button>
+							</div>
+
+							<react:component
+								module="publications/js/DropdownMenu"
+								props="<%= dropdownReactData %>"
+							/>
+						</li>
+					</c:if>
 				</c:when>
 				<c:when test="<%= ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED %>">
 					<li class="tbar-item tbar-item-expand text-left">
@@ -147,20 +153,27 @@ portletDisplay.setShowBackIcon(true);
 							<liferay-ui:message key="publish" />
 						</a>
 					</li>
-					<li class="tbar-item">
-						<div class="dropdown">
-							<button class="btn btn-monospaced btn-sm btn-unstyled dropdown-toggle hidden" type="button">
-								<svg class="lexicon-icon lexicon-icon-ellipsis-v publications-hidden" role="presentation">
-									<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#ellipsis-v" />
-								</svg>
-							</button>
-						</div>
 
-						<react:component
-							module="publications/js/DropdownMenu"
-							props="<%= viewChangesDisplayContext.getDropdownReactData(permissionChecker) %>"
-						/>
-					</li>
+					<%
+					Map<String, Object> dropdownReactData = viewChangesDisplayContext.getDropdownReactData(permissionChecker);
+					%>
+
+					<c:if test="<%= dropdownReactData != null %>">
+						<li class="tbar-item">
+							<div class="dropdown">
+								<button class="btn btn-monospaced btn-sm btn-unstyled dropdown-toggle hidden" type="button">
+									<svg class="lexicon-icon lexicon-icon-ellipsis-v publications-hidden" role="presentation">
+										<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#ellipsis-v" />
+									</svg>
+								</button>
+							</div>
+
+							<react:component
+								module="publications/js/DropdownMenu"
+								props="<%= dropdownReactData %>"
+							/>
+						</li>
+					</c:if>
 				</c:when>
 				<c:when test="<%= ctCollection.getStatus() == WorkflowConstants.STATUS_SCHEDULED %>">
 					<li class="tbar-item tbar-item-expand text-left">

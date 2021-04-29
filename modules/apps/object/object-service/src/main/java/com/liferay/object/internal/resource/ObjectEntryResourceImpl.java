@@ -31,17 +31,25 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.io.Serializable;
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,6 +65,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
@@ -66,9 +75,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Javier de Arcos
  */
-@Component(scope = ServiceScope.PROTOTYPE, service = ObjectEntryResource.class)
+@Component(
+	properties = "batch.engine.task.item.delegate=true",
+	scope = ServiceScope.PROTOTYPE, service = ObjectEntryResource.class
+)
 public class ObjectEntryResourceImpl
-	implements EntityModelResource, ObjectEntryResource {
+	implements EntityModelResource, ObjectEntryResource,
+			   VulcanBatchEngineTaskItemDelegate<ObjectEntry> {
 
 	public ObjectEntryResourceImpl(
 		ObjectDefinition objectDefinition,
@@ -82,6 +95,28 @@ public class ObjectEntryResourceImpl
 		_objectFieldLocalService = objectFieldLocalService;
 	}
 
+	@Override
+	public void create(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			postObjectEntry((Long)parameters.get("siteId"), objectEntry);
+		}
+	}
+
+	@Override
+	public void delete(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			deleteObjectEntry(objectEntry.getId());
+		}
+	}
+
 	@DELETE
 	@Override
 	@Path("/{objectEntryId}")
@@ -91,6 +126,14 @@ public class ObjectEntryResourceImpl
 		throws Exception {
 
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId);
+	}
+
+	@Override
+	public EntityModel getEntityModel(
+		Map<String, List<String>> multivaluedMap) {
+
+		return getEntityModel(
+			new MultivaluedHashMap<String, Object>(multivaluedMap));
 	}
 
 	@Override
@@ -183,6 +226,57 @@ public class ObjectEntryResourceImpl
 			_objectEntryLocalService.updateObjectEntry(
 				_contextUser.getUserId(), objectEntryId,
 				objectEntry.getProperties(), new ServiceContext()));
+	}
+
+	@Override
+	public Page<ObjectEntry> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
+		throws Exception {
+
+		return getObjectEntriesPage(null, filter, pagination, sorts, search);
+	}
+
+	@Override
+	public void setContextCompany(Company contextCompany) {
+		_contextCompany = contextCompany;
+	}
+
+	public void setContextUser(User contextUser) {
+		_contextUser = contextUser;
+	}
+
+	@Override
+	public void setLanguageId(String languageId) {
+		_contextAcceptLanguage = new AcceptLanguage() {
+
+			@Override
+			public List<Locale> getLocales() {
+				return null;
+			}
+
+			@Override
+			public String getPreferredLanguageId() {
+				return languageId;
+			}
+
+			@Override
+			public Locale getPreferredLocale() {
+				return LocaleUtil.fromLanguageId(languageId);
+			}
+
+		};
+	}
+
+	@Override
+	public void update(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (ObjectEntry objectEntry : objectEntries) {
+			putObjectEntry(objectEntry.getId(), objectEntry);
+		}
 	}
 
 	private ObjectEntry _toObjectEntry(

@@ -11,10 +11,20 @@ definition {
 	}
 
 	macro connectToGooglePageAudit {
-		Click(locator1 = "CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		ClickNoError(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
 	}
 
 	macro disableGooglePageSpeed {
+		ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+		
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed",
+			configurationScope = "Virtual Instance Scope");
+
 		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled")) {
 			Click.javaScriptClick(
 				checkboxName = "Enabled",
@@ -35,6 +45,16 @@ definition {
 	}
 
 	macro enableGooglePageSpeed {
+		ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+		
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Pages",
+			configurationName = "Google PageSpeed",
+			configurationScope = "Virtual Instance Scope");
+
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enabled")) {
 			Click.javaScriptClick(
 				checkboxName = "Enabled",
@@ -55,9 +75,9 @@ definition {
 	}
 
 	macro openPageAuditPanel {
-		Click(
-            key_text = "info-circle",
-			locator1 = "Icon#ANY");
+		while (IsElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON")) {
+			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
+		}
 	}
 
 }

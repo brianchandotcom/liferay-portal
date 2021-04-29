@@ -23,6 +23,11 @@
 	<td>//h2[contains(text(), 'Google PageSpeed')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAGE_AUDIT_BUTTON</td>
+	<td>//*[contains(@class, 'lexicon-icon-info-circle')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

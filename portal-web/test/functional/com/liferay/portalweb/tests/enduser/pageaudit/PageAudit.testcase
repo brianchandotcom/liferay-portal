@@ -30,6 +30,10 @@ definition {
 	test PageAuditBackButton {
 		property portal.acceptance = "true";
 
+		task("Enable Google PageSpeed"){
+			PageAudit.enableGooglePageSpeed();
+		}
+
 		task("Add Content Page"){
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -68,6 +72,10 @@ definition {
 	@priority = "5"
 	test PageAuditCancelButton {
 		property portal.acceptance = "true";
+
+		task("Enable Google PageSpeed"){
+			PageAudit.enableGooglePageSpeed();
+		}
 
 		task("Add Content Page"){
 			JSONLayout.addPublicLayout(
@@ -108,6 +116,10 @@ definition {
 	test PageAuditContentPage {
 		property portal.acceptance = "true";
 
+		task("Enable Google PageSpeed"){
+			PageAudit.enableGooglePageSpeed();
+		}
+
 		task("Add Content Page"){
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -139,7 +151,7 @@ definition {
 	test PageAuditContentPageDisabled {
 		property portal.acceptance = "true";
 
-		task("Disable Google PageSpeed")
+		task("Disable Google PageSpeed"){
 			PageAudit.disableGooglePageSpeed();
 		}
 
@@ -150,12 +162,10 @@ definition {
 				type = "content");
 		}
 
-		task("Go to the Content Page and assert the Page Audit panel is not shown")
+		task("Go to the Content Page and assert the Page Audit panel is not shown"){
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
-			AssertElementNotPresent(
-            	key_text = "info-circle",
-				locator1 = "Icon#ANY");
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}
 
@@ -163,6 +173,10 @@ definition {
 	@priority = "5"
 	test PageAuditDisplayPage {
 		property portal.acceptance = "true";
+
+		task("Enable Google PageSpeed"){
+			PageAudit.enableGooglePageSpeed();
+		}
 
 		task("Add Display Page and mark it as default"){
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -182,7 +196,7 @@ definition {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
-		task("Add Web Content and check it in its display page")
+		task("Add Web Content and check it in its display page"){
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
 				groupName = "Test Site Name",
@@ -220,7 +234,7 @@ definition {
 	test PageAuditDisplayPageDisabled {
 		property portal.acceptance = "true";
 
-		task("Disable Google PageSpeed")
+		task("Disable Google PageSpeed"){
 			PageAudit.disableGooglePageSpeed();
 		}
 
@@ -242,7 +256,7 @@ definition {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
-		task("Add Web Content and check it in its display page")
+		task("Add Web Content and check it in its display page"){
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
 				groupName = "Test Site Name",
@@ -258,10 +272,8 @@ definition {
 				tableEntry = "");
 		}
 
-		task("Assert the Page Audit panel is not shown")
-			AssertElementNotPresent(
-            	key_text = "info-circle",
-				locator1 = "Icon#ANY");
+		task("Assert the Page Audit panel is not shown"){
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}
 
@@ -269,6 +281,10 @@ definition {
 	@priority = "5"
 	test PageAuditWidgetPage {
 		property portal.acceptance = "true";
+
+		task("Enable Google PageSpeed"){
+			PageAudit.enableGooglePageSpeed();
+		}
 
 		task("Add Widget Page"){
 			JSONLayout.addPublicLayout(
@@ -300,7 +316,7 @@ definition {
 	test PageAuditWidgetPageDisabled {
 		property portal.acceptance = "true";
 
-		task("Disable Google PageSpeed")
+		task("Disable Google PageSpeed"){
 			PageAudit.disableGooglePageSpeed();
 		}
 
@@ -312,10 +328,8 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
 		}
 
-		task("Assert the Page Audit panel is not shown")
-			AssertElementNotPresent(
-        		key_text = "info-circle",
-				locator1 = "Icon#ANY");
+		task("Assert the Page Audit panel is not shown"){
+			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}
 

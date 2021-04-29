@@ -1,10 +1,10 @@
 definition {
 
-    macro backToPageBackButton {
+	macro backToPageBackButton {
 		Click(locator1 = "Icon#BACK");
 	}
 
-    macro backToPageCancelButton {
+	macro backToPageCancelButton {
 		AssertClick(
 			locator1 = "Button#CANCEL",
 			value1 = "Cancel");
@@ -16,10 +16,10 @@ definition {
 
 	macro disableGooglePageSpeed {
 		ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-		
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Pages",
 			configurationName = "Google PageSpeed",
@@ -46,10 +46,10 @@ definition {
 
 	macro enableGooglePageSpeed {
 		ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
-		
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Pages",
 			configurationName = "Google PageSpeed",

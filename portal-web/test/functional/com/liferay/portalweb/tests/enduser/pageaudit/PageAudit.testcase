@@ -25,16 +25,16 @@ definition {
 		}
 	}
 
-    @description = "When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
+	@description = "When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
 	@priority = "5"
 	test PageAuditBackButton {
 		property portal.acceptance = "true";
 
-		task("Enable Google PageSpeed"){
+		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task("Add Content Page"){
+		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Content Page",
@@ -43,7 +43,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
 
-		task("Open Page Audit panel"){
+		task ("Open Page Audit panel") {
 			PageAudit.openPageAuditPanel();
 
 			AssertTextPresent(
@@ -51,7 +51,7 @@ definition {
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
 		}
 
-		task("Go to Google PageSpeed throught the button in panel"){
+		task ("Go to Google PageSpeed throught the button in panel") {
 			PageAudit.connectToGooglePageAudit();
 
 			AssertTextPresent(
@@ -59,25 +59,25 @@ definition {
 				value1 = "Google PageSpeed");
 		}
 
-		task("Go back to the panel throught the back button"){
-        	PageAudit.backToPageBackButton();
+		task ("Go back to the panel throught the back button") {
+			PageAudit.backToPageBackButton();
 
-        	AssertTextPresent(
+			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
 		}
 	}
 
-    @description = "When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
+	@description = "When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
 	@priority = "5"
 	test PageAuditCancelButton {
 		property portal.acceptance = "true";
 
-		task("Enable Google PageSpeed"){
+		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task("Add Content Page"){
+		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Content Page",
@@ -86,7 +86,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
 
-		task("Open Page Audit panel"){
+		task ("Open Page Audit panel") {
 			PageAudit.openPageAuditPanel();
 
 			AssertTextPresent(
@@ -94,7 +94,7 @@ definition {
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
 		}
 
-		task("Go to Google PageSpeed throught the button in panel"){
+		task ("Go to Google PageSpeed throught the button in panel") {
 			PageAudit.connectToGooglePageAudit();
 
 			AssertTextPresent(
@@ -102,10 +102,10 @@ definition {
 				value1 = "Google PageSpeed");
 		}
 
-		task("Go back to the panel throught the cancel button"){
-        	PageAudit.backToPageCancelButton();
+		task ("Go back to the panel throught the cancel button") {
+			PageAudit.backToPageCancelButton();
 
-        	AssertTextPresent(
+			AssertTextPresent(
 				locator1 = "PageAudit#CHECK_ISSUES_TEXT",
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
 		}
@@ -116,11 +116,11 @@ definition {
 	test PageAuditContentPage {
 		property portal.acceptance = "true";
 
-		task("Enable Google PageSpeed"){
+		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task("Add Content Page"){
+		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Content Page",
@@ -129,7 +129,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 		}
 
-		task("Open Page Audit panel"){
+		task ("Open Page Audit panel") {
 			PageAudit.openPageAuditPanel();
 
 			AssertTextPresent(
@@ -137,7 +137,7 @@ definition {
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
 		}
 
-		task("Go to Google PageSpeed throught the button in panel"){
+		task ("Go to Google PageSpeed throught the button in panel") {
 			PageAudit.connectToGooglePageAudit();
 
 			AssertTextPresent(
@@ -151,18 +151,18 @@ definition {
 	test PageAuditContentPageDisabled {
 		property portal.acceptance = "true";
 
-		task("Disable Google PageSpeed"){
+		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeed();
 		}
 
-		task("Add Content Page"){
+		task ("Add Content Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Content Page",
 				type = "content");
 		}
 
-		task("Go to the Content Page and assert the Page Audit panel is not shown"){
+		task ("Go to the Content Page and assert the Page Audit panel is not shown") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
 
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
@@ -174,11 +174,11 @@ definition {
 	test PageAuditDisplayPage {
 		property portal.acceptance = "true";
 
-		task("Enable Google PageSpeed"){
+		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task("Add Display Page and mark it as default"){
+		task ("Add Display Page and mark it as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -196,7 +196,7 @@ definition {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
-		task("Add Web Content and check it in its display page"){
+		task ("Add Web Content and check it in its display page") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
 				groupName = "Test Site Name",
@@ -212,7 +212,7 @@ definition {
 				tableEntry = "");
 		}
 
-		task("Open Page Audit panel"){
+		task ("Open Page Audit panel") {
 			PageAudit.openPageAuditPanel();
 
 			AssertTextPresent(
@@ -220,7 +220,7 @@ definition {
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
 		}
 
-		task("Go to Google PageSpeed throught the button in panel"){
+		task ("Go to Google PageSpeed throught the button in panel") {
 			PageAudit.connectToGooglePageAudit();
 
 			AssertTextPresent(
@@ -234,11 +234,11 @@ definition {
 	test PageAuditDisplayPageDisabled {
 		property portal.acceptance = "true";
 
-		task("Disable Google PageSpeed"){
+		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeed();
 		}
 
-		task("Add Display Page and mark it as default"){
+		task ("Add Display Page and mark it as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -256,7 +256,7 @@ definition {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
-		task("Add Web Content and check it in its display page"){
+		task ("Add Web Content and check it in its display page") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
 				groupName = "Test Site Name",
@@ -272,7 +272,7 @@ definition {
 				tableEntry = "");
 		}
 
-		task("Assert the Page Audit panel is not shown"){
+		task ("Assert the Page Audit panel is not shown") {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}
@@ -282,11 +282,11 @@ definition {
 	test PageAuditWidgetPage {
 		property portal.acceptance = "true";
 
-		task("Enable Google PageSpeed"){
+		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
 		}
 
-		task("Add Widget Page"){
+		task ("Add Widget Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Widget Page");
@@ -294,7 +294,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
 		}
 
-		task("Open Page Audit panel"){
+		task ("Open Page Audit panel") {
 			PageAudit.openPageAuditPanel();
 
 			AssertTextPresent(
@@ -302,7 +302,7 @@ definition {
 				value1 = "Check issues that impact on your page's accessibility and SEO.");
 		}
 
-		task("Go to Google PageSpeed throught the button in panel"){
+		task ("Go to Google PageSpeed throught the button in panel") {
 			PageAudit.connectToGooglePageAudit();
 
 			AssertTextPresent(
@@ -316,11 +316,11 @@ definition {
 	test PageAuditWidgetPageDisabled {
 		property portal.acceptance = "true";
 
-		task("Disable Google PageSpeed"){
+		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeed();
 		}
 
-		task("Add Widget Page"){
+		task ("Add Widget Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Widget Page");
@@ -328,7 +328,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/widget-page");
 		}
 
-		task("Assert the Page Audit panel is not shown"){
+		task ("Assert the Page Audit panel is not shown") {
 			AssertElementNotPresent(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
 	}

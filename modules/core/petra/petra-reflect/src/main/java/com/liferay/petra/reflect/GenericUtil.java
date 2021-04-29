@@ -34,13 +34,14 @@ public class GenericUtil {
 				ParameterizedType parameterizedType =
 					(ParameterizedType)genericInterfaceType;
 
-				Type[] types = parameterizedType.getActualTypeArguments();
+				Type[] actualArgumentTypes =
+					parameterizedType.getActualTypeArguments();
 
-				if (index >= types.length) {
+				if (index >= actualArgumentTypes.length) {
 					return Object.class;
 				}
 
-				return (Class<?>)types[index];
+				return (Class<?>)actualArgumentTypes[index];
 			}
 		}
 

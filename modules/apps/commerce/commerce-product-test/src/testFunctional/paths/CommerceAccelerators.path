@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_SELECTOR_DROPDOWN_SHOW</td>
+	<td>//div[contains(@class,'account-selector-dropdown-menu show')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_SELECTOR_NO_ACCOUNTS_WERE_FOUND</td>
 	<td>//div[contains(@class,'account-selector-dropdown-menu')]//div[text()='No accounts were found.']</td>
 	<td></td>

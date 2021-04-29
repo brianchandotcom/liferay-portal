@@ -101,27 +101,30 @@ public class CompanyThreadLocal {
 			}
 		}
 
-		if (defaultUser == null) {
-			try (Connection con = DataAccess.getConnection()) {
-				try (PreparedStatement ps = con.prepareStatement(
-						"select userId, languageId, timeZoneId from User_ " +
-							"where companyId = ? and defaultUser = ?")) {
+		if (defaultUser != null) {
+			return defaultUser;
+		}
 
-					ps.setLong(1, companyId);
-					ps.setBoolean(2, true);
+		try (Connection connection = DataAccess.getConnection()) {
+			try (PreparedStatement preparedStatement = connection.prepareStatement(
+					"select userId, languageId, timeZoneId from User_ " +
+						"where companyId = ? and defaultUser = ?")) {
 
-					try (ResultSet rs = ps.executeQuery()) {
-						if (rs.next()) {
-							defaultUser = UserLocalServiceUtil.createUser(
-								rs.getLong("userId"));
+				preparedStatement.setLong(1, companyId);
+				preparedStatement.setBoolean(2, true);
 
-							defaultUser.setLanguageId(
-								rs.getString("languageId"));
-
-							defaultUser.setTimeZoneId(
-								rs.getString("timeZoneId"));
-						}
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					if (!resultSet.next()) {
+						return null;
 					}
+
+					defaultUser = UserLocalServiceUtil.createUser(
+						resultSet.getLong("userId"));
+
+					defaultUser.setLanguageId(
+						resultSet.getString("languageId"));
+					defaultUser.setTimeZoneId(
+						resultSet.getString("timeZoneId"));
 				}
 			}
 		}

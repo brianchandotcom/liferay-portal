@@ -264,9 +264,7 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextPresent(
-			locator1 = "Segmentation#MEMBER_NAME_LISTED",
-			value1 = "${memberName}");
+		AssertElementPresent(locator1 = "Segmentation#MEMBER_NAME_LISTED");
 
 		SelectFrame(value1 = "relative=top");
 

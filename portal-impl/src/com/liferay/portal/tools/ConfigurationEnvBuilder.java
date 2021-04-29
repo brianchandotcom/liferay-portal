@@ -74,9 +74,7 @@ public class ConfigurationEnvBuilder {
 						fullyQualifiedName, StringPool.UNDERLINE,
 						matcher.group(1));
 
-					String override = decoded;
-
-					configOverrides.put(decoded, _encode(override));
+					configOverrides.put(decoded, _encode(decoded));
 				}
 			}
 		}

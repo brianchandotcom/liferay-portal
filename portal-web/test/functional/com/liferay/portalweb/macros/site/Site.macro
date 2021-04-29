@@ -1465,10 +1465,10 @@ definition {
 
 	macro viewSiteClonedFromSiteTemplateCP {
 		Click(
-			key_itemName = "General",
-			locator1 = "Panel#PANEL_NAV_ITEM_LINK");
+			key_url = "site-configuration-details",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
-		Panel.expandPanel(panel = "Site Template");
+		Navigator.gotoNavTab(navTab = "Site Template");
 
 		if ("${clonedFromTemplate}" == "true") {
 			AssertTextEquals.assertPartialText(

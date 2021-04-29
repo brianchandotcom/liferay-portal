@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
+		"mvc.command.name=/blogs/image_editor",
 		"mvc.command.name=/blogs/upload_image"
 	},
 	service = MVCActionCommand.class

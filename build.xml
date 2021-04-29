@@ -615,7 +615,7 @@ message.
 			classname="com.liferay.portal.tools.ConfigurationEnvBuilder"
 			classpathref="project.classpath"
 			dir="${project.dir}/modules"
-			fork="true"
+			fork="${fork.mode}"
 			newenvironment="true"
 			outputProperty="output"
 		>

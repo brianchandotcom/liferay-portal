@@ -99,7 +99,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.able.com",
@@ -158,7 +158,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Private Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "");
 
@@ -218,7 +218,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "alpha");
 
@@ -250,7 +250,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.editFriendlyURLCP(
 			friendlyURLInvalid = "true",

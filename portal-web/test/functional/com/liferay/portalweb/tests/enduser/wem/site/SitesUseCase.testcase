@@ -406,7 +406,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.addVirtualHostsURLCP(
 			privatePageVirtualHostURL = "www.able.com",
@@ -485,7 +485,7 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.baker.com",
@@ -652,7 +652,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Site Page Name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "guest");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/liferay");
 
@@ -660,7 +660,7 @@ definition {
 
 		AssertLocation(value1 = "${portalURL}/web/liferay/site-page-name");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "liferay");
+		Site.openSiteSettingsAdmin(siteURLKey = "liferay");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/guest");
 	}
@@ -772,11 +772,19 @@ definition {
 			Tag.addViaSiteCP(tagName = "${tagName}");
 		}
 
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
 		Site.addVirtualHostsURLCP(
 			privatePageVirtualHostURL = "www.baker.com",
 			privateVirtualHosts = "true",
 			publicPageVirtualHostURL = "www.able.com",
 			publicVirtualHosts = "true");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
 
 		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/russia2018");
 

@@ -713,7 +713,7 @@ definition {
 
 		AssertLocation(value1 = "${portalURL}/web/guest");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.addVirtualHostsURLCP(
 			publicPageVirtualHostURL = "www.able.com",

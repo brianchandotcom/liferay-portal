@@ -1122,6 +1122,49 @@ definition {
 		DMDocument.viewCardTitle(dmDocumentTitle = "DM Document Title");
 	}
 
+	@description = "This is a use case for LPS-98669. Ignoring until LPS-127335 is fixed"
+	@ignore = "true"
+	@priority = "4"
+	test SelectLinkToPagePage {
+		for (var pageName : list "P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "${pageName}");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMNavigator.gotoDocumentType();
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "DM Document Type Description",
+			dmDocumentTypeFieldNames = "Link to Page",
+			dmDocumentTypeName = "DM Document Type Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "DM Document Type Name",
+			linkedPageName = "P11");
+
+		Click(
+			key_dmDocumentTitle = "DM Document Title",
+			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		AssertTextEquals(
+			key_fieldName = "LinktoPage",
+			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "P11");
+	}
+
 	@description = "This test covers LPS-91597. It ensures that a user can delete multiple documents simultaneously."
 	@priority = "4"
 	@refactorneeded

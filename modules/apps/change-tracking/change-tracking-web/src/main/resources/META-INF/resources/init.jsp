@@ -68,6 +68,7 @@ page import="com.liferay.portal.util.PropsValues" %>
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Date" %><%@
+page import="java.util.Map" %><%@
 page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />

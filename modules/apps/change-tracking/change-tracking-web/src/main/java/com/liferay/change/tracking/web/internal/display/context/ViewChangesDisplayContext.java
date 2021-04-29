@@ -163,8 +163,13 @@ public class ViewChangesDisplayContext {
 			PermissionChecker permissionChecker)
 		throws Exception {
 
-		return Collections.singletonMap(
-			"dropdownItems", _getDropdownItemsJSONArray(permissionChecker));
+		JSONArray jsonArray = _getDropdownItemsJSONArray(permissionChecker);
+
+		if (jsonArray.length() == 0) {
+			return null;
+		}
+
+		return Collections.singletonMap("dropdownItems", jsonArray);
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {

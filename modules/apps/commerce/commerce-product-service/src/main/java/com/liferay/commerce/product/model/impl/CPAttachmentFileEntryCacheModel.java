@@ -64,7 +64,7 @@ public class CPAttachmentFileEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,10 @@ public class CPAttachmentFileEntryCacheModel
 		sb.append(classPK);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
+		sb.append(", cdnUrl=");
+		sb.append(cdnUrl);
+		sb.append(", cdn=");
+		sb.append(cdn);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -167,6 +171,15 @@ public class CPAttachmentFileEntryCacheModel
 		cpAttachmentFileEntryImpl.setClassNameId(classNameId);
 		cpAttachmentFileEntryImpl.setClassPK(classPK);
 		cpAttachmentFileEntryImpl.setFileEntryId(fileEntryId);
+
+		if (cdnUrl == null) {
+			cpAttachmentFileEntryImpl.setCdnUrl("");
+		}
+		else {
+			cpAttachmentFileEntryImpl.setCdnUrl(cdnUrl);
+		}
+
+		cpAttachmentFileEntryImpl.setCdn(cdn);
 
 		if (displayDate == Long.MIN_VALUE) {
 			cpAttachmentFileEntryImpl.setDisplayDate(null);
@@ -253,6 +266,9 @@ public class CPAttachmentFileEntryCacheModel
 		classPK = objectInput.readLong();
 
 		fileEntryId = objectInput.readLong();
+		cdnUrl = objectInput.readUTF();
+
+		cdn = objectInput.readBoolean();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		title = objectInput.readUTF();
@@ -309,6 +325,15 @@ public class CPAttachmentFileEntryCacheModel
 		objectOutput.writeLong(classPK);
 
 		objectOutput.writeLong(fileEntryId);
+
+		if (cdnUrl == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(cdnUrl);
+		}
+
+		objectOutput.writeBoolean(cdn);
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 
@@ -357,6 +382,8 @@ public class CPAttachmentFileEntryCacheModel
 	public long classNameId;
 	public long classPK;
 	public long fileEntryId;
+	public String cdnUrl;
+	public boolean cdn;
 	public long displayDate;
 	public long expirationDate;
 	public String title;

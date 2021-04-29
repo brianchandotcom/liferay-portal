@@ -18,8 +18,6 @@ import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -65,6 +63,11 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.product.service.impl.CPAttachmentFileEntryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the cp attachment file entry remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CPAttachmentFileEntryServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPAttachmentFileEntry addCPAttachmentFileEntry(
 			long userId, long groupId, long classNameId, long classPK,
 			long fileEntryId, int displayDateMonth, int displayDateDay,
@@ -76,11 +79,11 @@ public interface CPAttachmentFileEntryService extends BaseService {
 			int type, ServiceContext serviceContext)
 		throws PortalException;
 
-	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
-			String externalReferenceCode, long groupId, long classNameId,
-			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+	public CPAttachmentFileEntry addCPAttachmentFileEntry(
+			long userId, long groupId, long classNameId, long classPK,
+			long fileEntryId, String cdnUrl, boolean cdn, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
@@ -129,11 +132,25 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	@Indexable(type = IndexableType.REINDEX)
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
 			long cpAttachmentFileEntryId, long fileEntryId,
 			int displayDateMonth, int displayDateDay, int displayDateYear,
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<Locale, String> titleMap, String json,
+			double priority, int type, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CPAttachmentFileEntry updateCPAttachmentFileEntry(
+			long userId, long cpAttachmentFileEntryId, long fileEntryId,
+			String cdnUrl, boolean cdn, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
 			boolean neverExpire, Map<Locale, String> titleMap, String json,
@@ -163,7 +180,7 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	 * @param serviceContext
 	 * @throws PortalException
 	 * @deprecated As of Athanasius (7.3.x), use {@link
-	 #addOrUpdateCPAttachmentFileEntry(long, long, long, long, int,
+	 #upsertCPAttachmentFileEntry(long, long, long, long, int,
 	 int, int, int, int, int, int, int, int, int, boolean, Map,
 	 String, double, int, String, ServiceContext)}
 	 */
@@ -171,6 +188,33 @@ public interface CPAttachmentFileEntryService extends BaseService {
 	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
 			String externalReferenceCode, long groupId, long classNameId,
 			long classPK, long fileEntryId, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<Locale, String> titleMap, String json,
+			double priority, int type, ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
+	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, Map<Locale, String> titleMap, String json,
+			double priority, int type, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CPAttachmentFileEntry upsertCPAttachmentFileEntry(
+			String externalReferenceCode, long groupId, long classNameId,
+			long classPK, long cpAttachmentFileEntryId, long fileEntryId,
+			String cdnUrl, boolean cdn, int displayDateMonth,
 			int displayDateDay, int displayDateYear, int displayDateHour,
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,

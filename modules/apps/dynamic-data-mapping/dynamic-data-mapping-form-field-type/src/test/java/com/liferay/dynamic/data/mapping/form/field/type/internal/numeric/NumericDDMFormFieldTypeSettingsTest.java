@@ -118,7 +118,8 @@ public class NumericDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"string", inputMaskFormatDDMFormField.getDataType());
 		Assert.assertEquals(
-			"^[^1-8]+$", inputMaskFormatDDMFormField.getProperty("regex"));
+			"^(?=.*[09])([^1-8]+)$",
+			inputMaskFormatDDMFormField.getProperty("regex"));
 		Assert.assertEquals("text", inputMaskFormatDDMFormField.getType());
 		Assert.assertEquals(true, inputMaskFormatDDMFormField.isRequired());
 		Assert.assertNotNull(inputMaskFormatDDMFormField.getLabel());

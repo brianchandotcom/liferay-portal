@@ -186,7 +186,7 @@ definition {
 
 		Select(
 			locator1 = "Select#COUNTRY",
-			value1 = "United States");
+			value1 = "China");
 
 		PortletEntry.save();
 
@@ -200,9 +200,9 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Org with Country");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Equals");
+		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
 
-		Segmentation.fillProperty(optionsValue = "United States");
+		Segmentation.fillProperty(optionsValue = "China");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",

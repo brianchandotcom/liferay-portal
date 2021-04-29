@@ -58,6 +58,10 @@ public interface CTCollection extends CTCollectionModel, PersistedModel {
 
 		};
 
+	public com.liferay.portal.kernel.model.Group getGroup();
+
+	public long getGroupId();
+
 	public String getUserName();
 
 	public boolean isProduction();

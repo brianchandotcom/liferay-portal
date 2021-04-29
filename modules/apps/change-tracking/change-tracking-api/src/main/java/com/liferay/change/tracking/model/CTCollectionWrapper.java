@@ -173,6 +173,16 @@ public class CTCollectionWrapper
 		return model.getDescription();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Group getGroup() {
+		return model.getGroup();
+	}
+
+	@Override
+	public long getGroupId() {
+		return model.getGroupId();
+	}
+
 	/**
 	 * Returns the modified date of this ct collection.
 	 *

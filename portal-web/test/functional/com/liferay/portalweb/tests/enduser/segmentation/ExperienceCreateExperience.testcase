@@ -200,7 +200,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Org with Country");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(optionsValue = "China");
 
@@ -264,7 +264,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Org with Date Modified");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Not Equals");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",
@@ -346,7 +346,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Users In A Specific Org");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.assignOrganization(orgName = "organization Name");
 
@@ -432,7 +432,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Org with Region");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(optionsValue = "United States - Utah");
 
@@ -509,7 +509,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Org with Tag");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(tagName = "tagname");
 
@@ -965,7 +965,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Not Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Not Equals");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",
@@ -1028,7 +1028,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Less Than");
+		Segmentation.changeCriterionInput(criterionInputOption = "Less Than");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",
@@ -1091,7 +1091,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(propertyField = "userea1@liferay.com");
 
@@ -1156,7 +1156,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(propertyField = "userfn1");
 
@@ -1221,7 +1221,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(propertyField = "Test Engineer1");
 
@@ -1286,7 +1286,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(propertyField = "userln1");
 
@@ -1351,7 +1351,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(propertyField = "userfn1 userln1");
 
@@ -1416,7 +1416,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(selectRole = "Administrator");
 
@@ -1481,7 +1481,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "Segment Title");
 
-		Segmentation.changeCriterionInputEmailAddress(criterionInputOption = "Equals");
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
 		Segmentation.fillProperty(propertyField = "usersn1");
 

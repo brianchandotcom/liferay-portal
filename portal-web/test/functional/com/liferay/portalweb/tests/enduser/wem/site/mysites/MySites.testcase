@@ -417,7 +417,7 @@ definition {
 		}
 
 		task ("Deactivate the new site") {
-			Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 			Site.inactivateCP(siteName = "Site Name");
 		}

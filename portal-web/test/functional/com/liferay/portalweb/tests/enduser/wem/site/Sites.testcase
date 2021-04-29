@@ -44,7 +44,7 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Site Page");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Site.inactivateCP(siteName = "Site Name");
 

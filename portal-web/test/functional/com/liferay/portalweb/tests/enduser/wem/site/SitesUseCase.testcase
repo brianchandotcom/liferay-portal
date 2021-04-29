@@ -732,7 +732,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Site.openSiteConfigurationAdmin(siteURLKey = "site1-name");
+		Site.openSiteSettingsAdmin(siteURLKey = "site1-name");
 
 		Site.inactivateCP(siteName = "Site1 Name");
 

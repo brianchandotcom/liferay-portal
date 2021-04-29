@@ -7,7 +7,7 @@ $add-to-cart-selectors: (
 
 #{map-get($add-to-cart-selectors, wrapper)} {
 	.quantity-selector {
-		margin: 0.5rem;
+		margin: 0.5rem 0;
 		max-width: 6.125rem;
 	}
 }

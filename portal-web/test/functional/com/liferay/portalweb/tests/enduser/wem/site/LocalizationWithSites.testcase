@@ -691,9 +691,11 @@ definition {
 			currentSiteLanguages = "English (United States),Hungarian (Hungary)",
 			defaultSiteLanguage = "English (United States)");
 
+		Navigator.gotoBack();
+
 		Click(
-			key_itemName = "General",
-			locator1 = "Panel#PANEL_NAV_ITEM_LINK");
+			key_url = "site-configuration-details",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		User.logoutPG();
 

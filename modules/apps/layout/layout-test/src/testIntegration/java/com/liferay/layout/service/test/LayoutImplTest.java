@@ -133,6 +133,8 @@ public class LayoutImplTest {
 					LayoutTypeController.class, layoutTypeController,
 					HashMapBuilder.<String, Object>put(
 						"layout.type", type
+					).put(
+						"service.ranking", Integer.MAX_VALUE
 					).build());
 
 			try {
@@ -183,6 +185,8 @@ public class LayoutImplTest {
 					LayoutTypeController.class, layoutTypeController,
 					HashMapBuilder.<String, Object>put(
 						"layout.type", layoutTypeValue
+					).put(
+						"service.ranking", Integer.MAX_VALUE
 					).build());
 
 			try {
@@ -250,6 +254,8 @@ public class LayoutImplTest {
 					LayoutTypeController.class, layoutTypeController,
 					HashMapBuilder.<String, Object>put(
 						"layout.type", type
+					).put(
+						"service.ranking", Integer.MAX_VALUE
 					).build());
 
 			try {

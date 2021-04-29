@@ -12,38 +12,38 @@
  * details.
  */
 
-package com.liferay.object.internal.jaxrs.resource;
+package com.liferay.object.internal.resource;
 
+import com.liferay.object.dto.ObjectEntry;
+import com.liferay.object.internal.dto.converter.ObjectEntryDTOConverter;
+import com.liferay.object.internal.odata.entity.ObjectEntryEntityModel;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
+import com.liferay.object.resource.ObjectEntryResource;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.search.filter.Filter;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.io.Serializable;
-
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
 
 import javax.validation.constraints.NotNull;
 
@@ -56,27 +56,34 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier de Arcos
  */
-public class ObjectEntryApplication
-	extends Application implements EntityModelResource {
+@Component(scope = ServiceScope.PROTOTYPE, service = ObjectEntryResource.class)
+public class ObjectEntryResourceImpl
+	implements EntityModelResource, ObjectEntryResource {
 
-	public ObjectEntryApplication(
+	public ObjectEntryResourceImpl(
 		ObjectDefinition objectDefinition,
+		ObjectEntryDTOConverter objectEntryDTOConverter,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		_objectDefinition = objectDefinition;
+		_objectEntryDTOConverter = objectEntryDTOConverter;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 	}
 
 	@DELETE
+	@Override
 	@Path("/{objectEntryId}")
 	@Produces({"application/json", "application/xml"})
 	public void deleteObjectEntry(
@@ -86,6 +93,7 @@ public class ObjectEntryApplication
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId);
 	}
 
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap<?, ?> multivaluedMap) {
 		if (_entityModel == null) {
 			_entityModel = new ObjectEntryEntityModel(
@@ -97,29 +105,14 @@ public class ObjectEntryApplication
 	}
 
 	@GET
+	@Override
 	@Path("/")
 	@Produces({"application/json", "application/xml"})
-	public Page<Map<String, Serializable>> getObjectEntriesPage(
+	public Page<ObjectEntry> getObjectEntriesPage(
 			@Context Aggregation aggregation, @Context Filter filter,
 			@Context Pagination pagination, @Context Sort[] sorts,
 			@QueryParam("search") String search)
 		throws Exception {
-
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId());
-
-		Stream<ObjectField> stream = objectFields.stream();
-
-		List<String> fieldNames = stream.map(
-			ObjectField::getName
-		).collect(
-			Collectors.toList()
-		);
-
-		fieldNames.add(
-			StringUtil.removeSubstring(
-				_objectDefinition.getDBPrimaryKeyColumnName(), "_"));
 
 		return SearchUtil.search(
 			new HashMap<>(),
@@ -134,74 +127,96 @@ public class ObjectEntryApplication
 							_objectDefinition.getObjectDefinitionId())),
 					BooleanClauseOccur.MUST);
 			},
-			filter, ObjectEntry.class, search, pagination,
+			filter, com.liferay.object.model.ObjectEntry.class, search,
+			pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
-				fieldNames.toArray(new String[0])),
+				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.addVulcanAggregation(aggregation);
 				searchContext.setCompanyId(_contextCompany.getCompanyId());
 			},
-			sorts, document -> (Map)document.getFields());
+			sorts,
+			document -> _toObjectEntry(
+				_objectEntryLocalService.getObjectEntry(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@GET
+	@Override
 	@Path("/{objectEntryId}")
 	@Produces({"application/json", "application/xml"})
-	public Map<String, Serializable> getObjectEntry(
+	public ObjectEntry getObjectEntry(
 			@NotNull @PathParam("objectEntryId") long objectEntryId)
 		throws Exception {
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntryId);
-
-		return objectEntry.getValues();
-	}
-
-	@Override
-	public Set<Object> getSingletons() {
-		return Collections.singleton(this);
+		return _toObjectEntry(
+			_objectEntryLocalService.getObjectEntry(objectEntryId));
 	}
 
 	@Consumes({"application/json", "application/xml"})
+	@Override
 	@Path("/sites/{siteId}")
 	@POST
 	@Produces({"application/json", "application/xml"})
-	public Map<String, Serializable> postObjectEntry(
-			@PathParam("siteId") Long siteId, Map<String, Serializable> values)
+	public ObjectEntry postObjectEntry(
+			@PathParam("siteId") Long siteId, ObjectEntry objectEntry)
 		throws Exception {
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			_contextUser.getUserId(), siteId,
-			_objectDefinition.getObjectDefinitionId(), values,
-			new ServiceContext());
-
-		return objectEntry.getValues();
+		return _toObjectEntry(
+			_objectEntryLocalService.addObjectEntry(
+				_contextUser.getUserId(), siteId,
+				_objectDefinition.getObjectDefinitionId(),
+				objectEntry.getProperties(), new ServiceContext()));
 	}
 
 	@Consumes({"application/json", "application/xml"})
+	@Override
 	@Path("/{objectEntryId}")
 	@Produces({"application/json", "application/xml"})
 	@PUT
-	public Map<String, Serializable> putObjectEntry(
+	public ObjectEntry putObjectEntry(
 			@NotNull @PathParam("objectEntryId") long objectEntryId,
-			Map<String, Serializable> values)
+			ObjectEntry objectEntry)
 		throws Exception {
 
-		ObjectEntry objectEntry = _objectEntryLocalService.updateObjectEntry(
-			_contextUser.getUserId(), objectEntryId, values,
-			new ServiceContext());
+		return _toObjectEntry(
+			_objectEntryLocalService.updateObjectEntry(
+				_contextUser.getUserId(), objectEntryId,
+				objectEntry.getProperties(), new ServiceContext()));
+	}
 
-		return objectEntry.getValues();
+	private ObjectEntry _toObjectEntry(
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		return _objectEntryDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				_contextAcceptLanguage.isAcceptAllLanguages(),
+				Collections.emptyMap(), null, _contextHttpServletRequest,
+				objectEntry.getObjectEntryId(),
+				_contextAcceptLanguage.getPreferredLocale(), _contextUriInfo,
+				_contextUser),
+			objectEntry);
 	}
 
 	@Context
+	private AcceptLanguage _contextAcceptLanguage;
+
+	@Context
 	private Company _contextCompany;
+
+	@Context
+	private HttpServletRequest _contextHttpServletRequest;
+
+	@Context
+	private UriInfo _contextUriInfo;
 
 	@Context
 	private User _contextUser;
 
 	private ObjectEntryEntityModel _entityModel;
 	private final ObjectDefinition _objectDefinition;
+	private final ObjectEntryDTOConverter _objectEntryDTOConverter;
 
 	// Should be the remote service to check permissions
 

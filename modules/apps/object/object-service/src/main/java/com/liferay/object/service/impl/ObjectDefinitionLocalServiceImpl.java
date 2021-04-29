@@ -21,9 +21,11 @@ import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.graphql.ObjectDefinitionGraphQL;
 import com.liferay.object.internal.application.list.ObjectDefinitionPanelApp;
 import com.liferay.object.internal.graphql.ObjectDefinitionGraphQLImpl;
-import com.liferay.object.internal.jaxrs.resource.ObjectEntryApplication;
+import com.liferay.object.internal.dto.converter.ObjectEntryDTOConverter;
+import com.liferay.object.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.internal.portlet.ObjectDefinitionPortlet;
+import com.liferay.object.internal.resource.ObjectEntryResourceImpl;
 import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -283,8 +285,9 @@ public class ObjectDefinitionLocalServiceImpl
 		return _bundleContext.registerService(
 			Application.class,
 			new ObjectEntryApplication(
-				objectDefinition, _objectEntryLocalService,
-				_objectFieldLocalService),
+				new ObjectEntryResourceImpl(
+					objectDefinition, _objectEntryDTOConverter,
+					_objectEntryLocalService, _objectFieldLocalService)),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"liferay.jackson", false
 			).put(
@@ -333,6 +336,9 @@ public class ObjectDefinitionLocalServiceImpl
 		ObjectDefinitionLocalServiceImpl.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private ObjectEntryDTOConverter _objectEntryDTOConverter;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal.jaxrs.resource;
+package com.liferay.object.internal.odata.entity;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.portal.odata.entity.BooleanEntityField;

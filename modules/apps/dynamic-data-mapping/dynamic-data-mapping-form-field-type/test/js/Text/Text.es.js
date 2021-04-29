@@ -290,6 +290,33 @@ describe('Field Text', () => {
 		expect(input.value).toEqual('FieldReference');
 	});
 
+	it('normalizes the value of the Format field if it contains invalid characters', () => {
+		const onChange = jest.fn();
+
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				fieldName="inputMaskFormat"
+				key="input"
+				onChange={onChange}
+			/>
+		);
+
+		const input = container.querySelector('input');
+
+		fireEvent.change(input, {
+			target: {
+				value: '+9 (129) 993-9999',
+			},
+		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(input.value).toEqual('+9 (9) 99-9999');
+	});
+
 	describe('Confirmation Field', () => {
 		it('does not show the confirmation field', () => {
 			render(<TextWithProvider {...defaultTextConfig} />);

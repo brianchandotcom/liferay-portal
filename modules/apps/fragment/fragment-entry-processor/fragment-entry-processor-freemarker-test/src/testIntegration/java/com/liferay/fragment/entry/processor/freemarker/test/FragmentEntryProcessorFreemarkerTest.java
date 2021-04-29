@@ -389,9 +389,9 @@ public class FragmentEntryProcessorFreemarkerTest {
 					"classPK",
 					String.valueOf(journalArticle.getResourcePrimKey())
 				).put(
-					"contentES", "c1-es"
+					"contentES", journalArticle.getContentByLocale("es_ES")
 				).put(
-					"contentUS", "c1"
+					"contentUS", journalArticle.getContentByLocale("en_US")
 				).put(
 					"titleES", "t1-es"
 				).put(

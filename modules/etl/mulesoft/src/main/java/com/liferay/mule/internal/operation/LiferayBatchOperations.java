@@ -128,6 +128,9 @@ public class LiferayBatchOperations {
 				LiferayError.EXECUTION, interruptedException);
 		}
 
+		logger.info(
+			"Batch export with ID {} finished successfully", exportTaskId);
+
 		return getExportTaskResult(
 			getExportTaskContentZipInputStream(
 				connection, exportTaskId, connectionTimeoutMillis));
@@ -158,10 +161,13 @@ public class LiferayBatchOperations {
 			connection, inputStream, className, fieldNameMappings,
 			connectionTimeoutMillis);
 
-		logger.debug("Started batch create task with ID {}", importTaskId);
+		logger.info("Started batch create task with ID {}", importTaskId);
 
 		checkImportTaskExecutionResult(
 			connection, importTaskId, connectionTimeoutMillis);
+
+		logger.info(
+			"Batch create task with ID {} finished successfully", importTaskId);
 	}
 
 	@DisplayName("Batch - Import Records - Delete")
@@ -187,10 +193,13 @@ public class LiferayBatchOperations {
 		String importTaskId = submitImportDeleteTask(
 			connection, inputStream, className, connectionTimeoutMillis);
 
-		logger.debug("Started batch delete task with ID {}", importTaskId);
+		logger.info("Started batch delete task with ID {}", importTaskId);
 
 		checkImportTaskExecutionResult(
 			connection, importTaskId, connectionTimeoutMillis);
+
+		logger.info(
+			"Batch delete task with ID {} finished successfully", importTaskId);
 	}
 
 	@DisplayName("Batch - Import Records - Update")
@@ -216,10 +225,13 @@ public class LiferayBatchOperations {
 		String importTaskId = submitImportUpdateTask(
 			connection, inputStream, className, connectionTimeoutMillis);
 
-		logger.debug("Started batch update task with ID {}", importTaskId);
+		logger.info("Started batch update task with ID {}", importTaskId);
 
 		checkImportTaskExecutionResult(
 			connection, importTaskId, connectionTimeoutMillis);
+
+		logger.info(
+			"Batch update task with ID {} finished successfully", importTaskId);
 	}
 
 	private void checkImportTaskExecutionResult(
@@ -536,7 +548,7 @@ public class LiferayBatchOperations {
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(
-		LiferayCRUDOperations.class);
+		LiferayBatchOperations.class);
 
 	private final JsonNodeReader jsonNodeReader = new JsonNodeReader();
 	private final LiferayResponseValidator liferayResponseValidator =

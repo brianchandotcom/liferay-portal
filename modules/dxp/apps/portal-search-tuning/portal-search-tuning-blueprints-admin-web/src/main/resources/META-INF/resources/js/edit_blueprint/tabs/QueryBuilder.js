@@ -151,7 +151,7 @@ function QueryBuilder({
 
 	return (
 		<ClayLayout.ContainerFluid className="builder" size="xl">
-			<div className="builder-shift">
+			<div className="content-shift">
 				<ClayLayout.Row
 					className="configuration-header"
 					justify="between"

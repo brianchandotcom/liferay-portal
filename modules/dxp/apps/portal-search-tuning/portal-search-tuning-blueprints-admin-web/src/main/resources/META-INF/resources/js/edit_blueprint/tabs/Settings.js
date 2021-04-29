@@ -52,8 +52,8 @@ function Settings({
 	);
 
 	return (
-		<ClayLayout.ContainerFluid className="builder" size="md">
-			<div className="sheet">
+		<ClayLayout.ContainerFluid className="builder" size="xl">
+			<div className="content-shift sheet">
 				<h2 className="sheet-title">
 					{Liferay.Language.get('settings')}
 				</h2>

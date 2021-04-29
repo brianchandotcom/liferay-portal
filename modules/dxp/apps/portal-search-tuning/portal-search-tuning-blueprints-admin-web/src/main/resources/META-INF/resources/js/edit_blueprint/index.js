@@ -504,15 +504,6 @@ function EditBlueprintForm({
 			default:
 				return (
 					<>
-						<PreviewSidebar
-							loading={previewInfo.loading}
-							onClose={() => setShowPreview(false)}
-							onFetchResults={_handleFetchPreviewSearch}
-							onFocusElement={_handleFocusElement}
-							results={previewInfo.results}
-							visible={showPreview}
-						/>
-
 						<AddElementSidebar
 							elements={sidebarQueryElements.current}
 							emptyMessage={Liferay.Language.get(
@@ -616,7 +607,22 @@ function EditBlueprintForm({
 				</ClayToolbar.Item>
 			</PageToolbar>
 
-			{_renderTabContent()}
+			<PreviewSidebar
+				loading={previewInfo.loading}
+				onClose={() => setShowPreview(false)}
+				onFetchResults={_handleFetchPreviewSearch}
+				onFocusElement={_handleFocusElement}
+				results={previewInfo.results}
+				visible={showPreview}
+			/>
+
+			<div
+				className={getCN({
+					'open-preview': showPreview,
+				})}
+			>
+				{_renderTabContent()}
+			</div>
 		</form>
 	);
 }

@@ -2,13 +2,6 @@
 	padding-bottom: 40px;
 	padding-top: $pageToolbarHeight + 40px;
 
-	.builder-shift {
-		margin-left: auto;
-		margin-right: calc(50% - #{$builderMaxWidth} / 2);
-		max-width: $builderMaxWidth;
-		transition: margin-right ease 0.2s;
-	}
-
 	.configuration-header {
 		font-weight: bold;
 		margin-bottom: 1.25rem;
@@ -90,27 +83,5 @@
 				background-color: $errorL2;
 			}
 		}
-	}
-}
-
-@media (min-width: calc(#{$builderMinWidth} + #{$sidebarWidth})) {
-	.open-sidebar .builder-shift {
-		margin-right: calc(
-			max(
-				50% - (#{$builderMaxWidth} / 2),
-				#{$sidebarWidth} - (50vw - 50%) + 24px
-			)
-		);
-	}
-}
-
-@media (min-width: calc(#{$builderMinWidth} + #{$previewWidth})) {
-	.open-preview .builder-shift {
-		margin-right: calc(
-			max(
-				50% - (#{$builderMaxWidth} / 2),
-				#{$previewWidth} - (50vw - 50%) + 24px
-			)
-		);
 	}
 }

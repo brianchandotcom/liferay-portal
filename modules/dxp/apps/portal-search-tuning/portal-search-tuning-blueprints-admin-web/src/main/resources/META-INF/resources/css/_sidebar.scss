@@ -62,3 +62,32 @@
 		transition: transform ease 0.2s;
 	}
 }
+
+.content-shift {
+	margin-left: auto;
+	margin-right: calc(50% - #{$contentMaxWidth} / 2);
+	max-width: $contentMaxWidth;
+	transition: margin-right ease 0.2s;
+}
+
+@media (min-width: calc(#{$contentMinWidth} + #{$sidebarWidth})) {
+	.open-sidebar .content-shift {
+		margin-right: calc(
+			max(
+				50% - (#{$contentMaxWidth} / 2),
+				#{$sidebarWidth} - (50vw - 50%) + 24px
+			)
+		);
+	}
+}
+
+@media (min-width: calc(#{$contentMinWidth} + #{$previewSidebarWidth})) {
+	.open-preview .content-shift {
+		margin-right: calc(
+			max(
+				50% - (#{$contentMaxWidth} / 2),
+				#{$previewSidebarWidth} - (50vw - 50%) + 24px
+			)
+		);
+	}
+}

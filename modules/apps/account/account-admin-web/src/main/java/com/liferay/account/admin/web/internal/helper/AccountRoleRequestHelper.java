@@ -50,29 +50,21 @@ public class AccountRoleRequestHelper {
 		httpServletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
 		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_HELPER,
+			new PanelCategoryHelper(_panelAppRegistry, _panelCategoryRegistry));
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
+			_panelCategoryRegistry);
+		httpServletRequest.setAttribute(
+			ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER,
+			new PersonalMenuEntryHelper(_personalMenuEntries));
+		httpServletRequest.setAttribute(
 			RolesAdminWebKeys.CURRENT_ROLE_TYPE, _accountRoleTypeContributor);
 		httpServletRequest.setAttribute(
 			RolesAdminWebKeys.PANEL_CATEGORY_KEYS,
 			ArrayUtil.toStringArray(_panelCategoryKeys));
 		httpServletRequest.setAttribute(
 			RolesAdminWebKeys.SHOW_NAV_TABS, Boolean.FALSE);
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		httpServletRequest.setAttribute(
-			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
-
-		httpServletRequest.setAttribute(
-			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
-			_panelCategoryRegistry);
-
-		PersonalMenuEntryHelper personalMenuEntryHelper =
-			new PersonalMenuEntryHelper(_personalMenuEntries);
-
-		httpServletRequest.setAttribute(
-			ApplicationListWebKeys.PERSONAL_MENU_ENTRY_HELPER,
-			personalMenuEntryHelper);
 	}
 
 	public void setRequestAttributes(PortletRequest portletRequest) {

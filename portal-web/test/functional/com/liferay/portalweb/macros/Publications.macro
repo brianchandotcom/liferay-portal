@@ -150,9 +150,9 @@ definition {
 		var key_changeCategory = "${changeCategory}";
 		var key_changeTitle = "${changeTitle}";
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE",
-			value1 = "${changeTitle}");
+		while (IsElementNotPresent(locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE")) {
+			Click(locator1 = "Pagination#NEXT_LINK");
+		}
 
 		Click(
 			key_text = "Discard",

@@ -31,13 +31,39 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6269. AddAnOptionAndVerifyIfIsPresent"
-	@ignore = "true"
 	@priority = "3"
 	test AddAnOptionAndVerifyIfIsPresent {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6269 AddAnOptionAndVerifyIfIsPresent
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
 
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+		Type(
+			key_title = "Add Options",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "Color");
+
+		Button.click(button = "Create New");
+
+		AssertElementPresent(
+			key_entryName = "Color",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Options");
+
+		AssertElementPresent(
+			key_entryName = "Color",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
 	@description = "This is a test for COMMERCE-6021. AddASKU"
@@ -47,6 +73,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6021 AddASKU
+
 	}
 
 	@description = "This is a test for COMMERCE-6287. AddASpecificationAndVerifyIfIsPresent"

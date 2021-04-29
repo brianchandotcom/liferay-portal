@@ -762,6 +762,10 @@ definition {
 	}
 
 	macro inactivateCP {
+		Click(
+			key_url = "site-configuration-details",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = "${siteName}");

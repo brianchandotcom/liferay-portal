@@ -76,12 +76,15 @@ import org.osgi.service.component.annotations.ServiceScope;
  * @author Javier de Arcos
  */
 @Component(
-	properties = "batch.engine.task.item.delegate=true",
+	property = "batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE, service = ObjectEntryResource.class
 )
 public class ObjectEntryResourceImpl
 	implements EntityModelResource, ObjectEntryResource,
 			   VulcanBatchEngineTaskItemDelegate<ObjectEntry> {
+
+	public ObjectEntryResourceImpl() {
+	}
 
 	public ObjectEntryResourceImpl(
 		ObjectDefinition objectDefinition,
@@ -308,12 +311,12 @@ public class ObjectEntryResourceImpl
 	private User _contextUser;
 
 	private ObjectEntryEntityModel _entityModel;
-	private final ObjectDefinition _objectDefinition;
-	private final ObjectEntryDTOConverter _objectEntryDTOConverter;
+	private ObjectDefinition _objectDefinition;
+	private ObjectEntryDTOConverter _objectEntryDTOConverter;
 
 	// Should be the remote service to check permissions
 
-	private final ObjectEntryLocalService _objectEntryLocalService;
-	private final ObjectFieldLocalService _objectFieldLocalService;
+	private ObjectEntryLocalService _objectEntryLocalService;
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

@@ -1827,12 +1827,13 @@ public class ContentPageEditorDisplayContext {
 				continue;
 			}
 
-			JSONArray jsonArray = MappingContentUtil.getMappingFieldsJSONArray(
-				String.valueOf(classTypeId), themeDisplay.getScopeGroupId(),
-				infoItemServiceTracker, PortalUtil.getClassName(classNameId),
-				themeDisplay.getLocale());
-
-			mappingFieldsJSONObject.put(uniqueMappingFieldKey, jsonArray);
+			mappingFieldsJSONObject.put(
+				uniqueMappingFieldKey,
+				MappingContentUtil.getMappingFieldsJSONArray(
+					String.valueOf(classTypeId), themeDisplay.getScopeGroupId(),
+					infoItemServiceTracker,
+					PortalUtil.getClassName(classNameId),
+					themeDisplay.getLocale()));
 		}
 
 		return mappingFieldsJSONObject;

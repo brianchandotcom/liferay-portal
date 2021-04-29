@@ -63,8 +63,6 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 					row.setCssClass("articles selector-button" + row.getCssClass());
 
 					row.setData(journalArticleItemSelectorViewDisplayContext.getJournalArticleContext(curArticle));
-
-					String title = curArticle.getTitle(locale, true);
 					%>
 
 					<c:choose>
@@ -95,7 +93,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 								</span>
 
 								<p class="font-weight-bold h5">
-									<%= HtmlUtil.escape(title) %>
+									<%= HtmlUtil.escape(curArticle.getTitle(locale, true)) %>
 								</p>
 
 								<c:if test="<%= journalArticleItemSelectorViewDisplayContext.isSearchEverywhere() %>">
@@ -140,7 +138,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand table-cell-minw-200 table-title"
 								name="title"
-								value="<%= title %>"
+								value="<%= curArticle.getTitle(locale, true) %>"
 							/>
 
 							<liferay-ui:search-container-column-text

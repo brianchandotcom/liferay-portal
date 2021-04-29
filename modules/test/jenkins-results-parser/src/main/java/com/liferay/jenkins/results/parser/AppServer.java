@@ -36,16 +36,9 @@ public class AppServer {
 	}
 
 	public void startService() {
-		if (JenkinsResultsParserUtil.isWindows()) {
-			JenkinsResultsParserUtil.executeBatchCommandService(
-				_getStartCommand(), _getBinDir(), _getEnvironments(),
-				_getMaxLogSize());
-		}
-		else {
-			JenkinsResultsParserUtil.executeBashCommandService(
-				_getStartCommand(), _getBinDir(), _getEnvironments(),
-				_getMaxLogSize());
-		}
+		JenkinsResultsParserUtil.executeBashCommandService(
+			_getStartCommand(), _getBinDir(), _getEnvironments(),
+			_getMaxLogSize());
 
 		String type = getType();
 
@@ -57,14 +50,6 @@ public class AppServer {
 	}
 
 	public void stopService() {
-		if (JenkinsResultsParserUtil.isWindows()) {
-			JenkinsResultsParserUtil.executeBatchCommandService(
-				_getStopCommand(), _getBinDir(), _getEnvironments(),
-				_getMaxLogSize());
-
-			return;
-		}
-
 		JenkinsResultsParserUtil.executeBashCommandService(
 			_getStopCommand(), _getBinDir(), _getEnvironments(),
 			_getMaxLogSize());
@@ -171,7 +156,7 @@ public class AppServer {
 		if (JenkinsResultsParserUtil.isWindows()) {
 			return path.replaceAll(
 				"[^;]+\\\\jdk[^\\\\]*\\\\[^;]*bin",
-				javaHome.replaceAll("\\\\", "\\\\") + "\\\\bin");
+				javaHome.replaceAll("\\\\", "\\\\\\\\") + "\\\\bin");
 		}
 
 		return path.replaceAll("[^:]+/jdk[^/]*/[^:]*bin", javaHome + "/bin");
@@ -216,7 +201,7 @@ public class AppServer {
 					"app.server.", getType(), ".start.executable"));
 		}
 
-		return startExecutable;
+		return startExecutable.replace(".bat", ".sh");
 	}
 
 	private String _getStartExecutableArgLine() {
@@ -249,7 +234,7 @@ public class AppServer {
 					"app.server.", getType(), ".stop.executable"));
 		}
 
-		return stopExecutable;
+		return stopExecutable.replace(".bat", ".sh");
 	}
 
 	private String _getStopExecutableArgLine() {

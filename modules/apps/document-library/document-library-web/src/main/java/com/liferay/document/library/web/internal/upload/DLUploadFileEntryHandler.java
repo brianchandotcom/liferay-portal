@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadFileEntryHandler;
@@ -67,25 +68,65 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 			_folderModelResourcePermission, themeDisplay.getPermissionChecker(),
 			themeDisplay.getScopeGroupId(), folderId, ActionKeys.ADD_DOCUMENT);
 
-		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
-		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
+		String fileName = uploadPortletRequest.getFileName(
+			_IMAGE_SELECTOR_PARAMETER_NAME);
+
+		if (Validator.isNotNull(fileName)) {
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					_IMAGE_SELECTOR_PARAMETER_NAME)) {
+
+				return _addFileEntry(
+					fileName, folderId, inputStream,
+					_IMAGE_SELECTOR_PARAMETER_NAME, uploadPortletRequest,
+					themeDisplay);
+			}
+		}
+
+		return _editImageFileEntry(
+			uploadPortletRequest, themeDisplay, folderId);
+	}
+
+	private FileEntry _addFileEntry(
+			String fileName, long folderId, InputStream inputStream,
+			String parameterName, UploadPortletRequest uploadPortletRequest,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		long size = uploadPortletRequest.getSize(parameterName);
 
 		_dlValidator.validateFileSize(fileName, size);
 
+		String uniqueFileName = _uniqueFileNameProvider.provide(
+			fileName,
+			curFileName -> _exists(
+				themeDisplay.getScopeGroupId(), folderId, curFileName));
+
+		return _dlAppService.addFileEntry(
+			null, themeDisplay.getScopeGroupId(), folderId, uniqueFileName,
+			uploadPortletRequest.getContentType(parameterName), uniqueFileName,
+			_getDescription(uploadPortletRequest), StringPool.BLANK,
+			inputStream, uploadPortletRequest.getSize(parameterName),
+			null, null, _getServiceContext(uploadPortletRequest));
+	}
+
+	private FileEntry _editImageFileEntry(
+			UploadPortletRequest uploadPortletRequest,
+			ThemeDisplay themeDisplay, long folderId)
+		throws IOException, PortalException {
+
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				_PARAMETER_NAME)) {
+				_IMAGE_EDITOR_PARAMETER_NAME)) {
 
-			String uniqueFileName = _uniqueFileNameProvider.provide(
-				fileName,
-				curFileName -> _exists(
-					themeDisplay.getScopeGroupId(), folderId, curFileName));
+			long fileEntryId = ParamUtil.getLong(
+				uploadPortletRequest, "fileEntryId");
 
-			return _dlAppService.addFileEntry(
-				null, themeDisplay.getScopeGroupId(), folderId, uniqueFileName,
-				uploadPortletRequest.getContentType(_PARAMETER_NAME),
-				uniqueFileName, _getDescription(uploadPortletRequest),
-				StringPool.BLANK, inputStream, size, null, null,
-				_getServiceContext(uploadPortletRequest));
+			FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+			String fileName = fileEntry.getFileName();
+
+			return _addFileEntry(
+				fileName, folderId, inputStream, _IMAGE_EDITOR_PARAMETER_NAME,
+				uploadPortletRequest, themeDisplay);
 		}
 	}
 
@@ -166,7 +207,10 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 		return serviceContext;
 	}
 
-	private static final String _PARAMETER_NAME = "imageSelectorFileName";
+	private static final String _IMAGE_EDITOR_PARAMETER_NAME = "imageBlob";
+
+	private static final String _IMAGE_SELECTOR_PARAMETER_NAME =
+		"imageSelectorFileName";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLUploadFileEntryHandler.class);

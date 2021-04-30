@@ -19,7 +19,9 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Hits;
@@ -69,11 +71,11 @@ public class JournalArticleLocalServiceTreeTest {
 	public void testJournalArticleTreePathWhenMovingSubfolderWithArticle()
 		throws Exception {
 
-		JournalFolder folderA = JournalTestUtil.addFolder(
+		JournalFolder folderA = _journalFolderFixture.addFolder(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A");
 
-		JournalFolder folderAA = JournalTestUtil.addFolder(
+		JournalFolder folderAA = _journalFolderFixture.addFolder(
 			_group.getGroupId(), folderA.getFolderId(), "Folder AA");
 
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -117,7 +119,7 @@ public class JournalArticleLocalServiceTreeTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		JournalFolder folderA = JournalTestUtil.addFolder(
+		JournalFolder folderA = _journalFolderFixture.addFolder(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A");
 
@@ -148,7 +150,7 @@ public class JournalArticleLocalServiceTreeTest {
 
 		articles.add(articleA);
 
-		JournalFolder folder = JournalTestUtil.addFolder(
+		JournalFolder folder = _journalFolderFixture.addFolder(
 			_group.getGroupId(), "Folder A");
 
 		JournalArticle articleAA = JournalTestUtil.addArticle(
@@ -163,7 +165,13 @@ public class JournalArticleLocalServiceTreeTest {
 	@Inject
 	private static IndexerRegistry _indexerRegistry;
 
+	@Inject
+	private static JournalFolderLocalService _journalFolderLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private final JournalFolderFixture _journalFolderFixture =
+		new JournalFolderFixture(_journalFolderLocalService);
 
 }

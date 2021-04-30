@@ -17,8 +17,9 @@ package com.liferay.journal.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.test.util.JournalFolderFixture;
 import com.liferay.portal.kernel.model.TreeModel;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
@@ -63,18 +64,18 @@ public class JournalFolderLocalServiceTreeTest
 
 		List<JournalFolder> folders = new ArrayList<>();
 
-		JournalFolder folderA = JournalTestUtil.addFolder(
+		JournalFolder folderA = _journalFolderFixture.addFolder(
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Folder A");
 
 		folders.add(folderA);
 
-		JournalFolder folderAA = JournalTestUtil.addFolder(
+		JournalFolder folderAA = _journalFolderFixture.addFolder(
 			group.getGroupId(), folderA.getFolderId(), "Folder AA");
 
 		folders.add(folderAA);
 
-		JournalFolder folderAAA = JournalTestUtil.addFolder(
+		JournalFolder folderAAA = _journalFolderFixture.addFolder(
 			group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
 
 		folders.add(folderAAA);
@@ -104,18 +105,18 @@ public class JournalFolderLocalServiceTreeTest
 
 		int initialFoldersCount = hits.getLength();
 
-		JournalFolder folderA = JournalTestUtil.addFolder(
+		JournalFolder folderA = _journalFolderFixture.addFolder(
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Folder A");
 
-		JournalFolder folderB = JournalTestUtil.addFolder(
+		JournalFolder folderB = _journalFolderFixture.addFolder(
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Folder B");
 
-		JournalTestUtil.addFolder(
+		_journalFolderFixture.addFolder(
 			group.getGroupId(), folderA.getFolderId(), "Folder AA");
 
-		JournalTestUtil.addFolder(
+		_journalFolderFixture.addFolder(
 			group.getGroupId(), folderB.getFolderId(), "Folder BA");
 
 		hits = indexer.search(searchContext);
@@ -142,7 +143,7 @@ public class JournalFolderLocalServiceTreeTest
 			parentFolderId = folder.getFolderId();
 		}
 
-		JournalFolder folder = JournalTestUtil.addFolder(
+		JournalFolder folder = _journalFolderFixture.addFolder(
 			group.getGroupId(), parentFolderId, RandomTestUtil.randomString());
 
 		folder.setTreePath("/0/");
@@ -170,5 +171,11 @@ public class JournalFolderLocalServiceTreeTest
 
 	@Inject
 	private static IndexerRegistry _indexerRegistry;
+
+	@Inject
+	private static JournalFolderLocalService _journalFolderLocalService;
+
+	private final JournalFolderFixture _journalFolderFixture =
+		new JournalFolderFixture(_journalFolderLocalService);
 
 }

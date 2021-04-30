@@ -259,6 +259,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SECONDARY_BY_TITLE</td>
+	<td>//button[contains(@class,'btn-secondary') and contains (@title,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEPOT_LANGUAGES_MANAGEMENT_PANEL_SAVE</td>
 	<td>//div[contains(@class,'modal-content')]//button[contains(.,'Save')]</td>
 	<td></td>

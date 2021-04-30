@@ -45,6 +45,32 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test AppManagerFilterAndOrder {
+		property test.name.skip.portal.instance = "AppManagement#AppManagerFilterAndOrder";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		ManagementBar.setFilterAndOrder(orderBy = "Title");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Users Admin");
+
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Communication");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Blogs");
+
+		ManagementBar.setFilterAndOrder(filterBy = "Utility");
+
+		LexiconEntry.viewEntryName(rowEntry = "Liferay Account");
+	}
+
 	@description = "This is a test for LPS-102506."
 	@ignore = "true"
 	@priority = "3"

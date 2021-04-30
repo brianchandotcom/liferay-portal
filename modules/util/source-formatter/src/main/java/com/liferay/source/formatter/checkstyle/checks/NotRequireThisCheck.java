@@ -52,7 +52,7 @@ public class NotRequireThisCheck extends BaseCheck {
 			String name = nameDetailAST.getText();
 
 			List<DetailAST> definitionDetailASTList = getAllChildTokens(
-				detailAST, true, TokenTypes.PARAMETER_DEF,
+				detailAST, true, TokenTypes.PARAMETER_DEF, TokenTypes.RESOURCE,
 				TokenTypes.VARIABLE_DEF);
 
 			for (DetailAST definitionDetailAST : definitionDetailASTList) {

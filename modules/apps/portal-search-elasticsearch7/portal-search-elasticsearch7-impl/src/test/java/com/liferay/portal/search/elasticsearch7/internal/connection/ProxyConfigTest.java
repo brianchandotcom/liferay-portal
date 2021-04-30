@@ -17,6 +17,9 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Properties;
+
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -40,6 +43,13 @@ public class ProxyConfigTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
+
+		_systemProperties = new Properties(System.getProperties());
+	}
+
+	@After
+	public void tearDown() {
+		System.setProperties(_systemProperties);
 	}
 
 	@Test
@@ -73,6 +83,18 @@ public class ProxyConfigTest {
 	}
 
 	@Test
+	public void testShouldApplyConfigWithHostAndPortInSystemProperties() {
+		System.setProperty("http.proxyHost", "http://proxy");
+		System.setProperty("http.proxyPort", "32000");
+
+		ProxyConfig.Builder builder = ProxyConfig.builder(_http);
+
+		ProxyConfig proxyConfig = builder.build();
+
+		Assert.assertTrue(proxyConfig.shouldApplyConfig());
+	}
+
+	@Test
 	public void testShouldNotApplyConfigWithoutHost() {
 		ProxyConfig.Builder builder = ProxyConfig.builder(_http);
 
@@ -96,5 +118,7 @@ public class ProxyConfigTest {
 
 	@Mock
 	private Http _http;
+
+	private Properties _systemProperties;
 
 }

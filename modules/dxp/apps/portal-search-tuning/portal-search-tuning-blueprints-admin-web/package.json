@@ -38,7 +38,7 @@
 		]
 	},
 	"main": "js/index.es.js",
-	"name": "@liferay/portal-search-tuning-blueprints-admin-web",
+	"name": "portal-search-tuning-blueprints-admin-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

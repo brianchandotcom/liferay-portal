@@ -40,6 +40,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 
 import java.nio.charset.StandardCharsets;
@@ -557,7 +558,7 @@ public class JenkinsResultsParserUtil {
 			try (OutputStream outputStream =
 					httpURLConnection.getOutputStream()) {
 
-				script = "script=" + script;
+				script = "script=" + URLEncoder.encode(script, "UTF-8");
 
 				outputStream.write(script.getBytes("UTF-8"));
 

@@ -22,6 +22,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Marta Medio
  */
@@ -34,8 +37,9 @@ public class OAuth2ApplicationFeatureUpgradeProcess extends UpgradeProcess {
 				_getApplicationFeatures()) {
 
 			while (applicationFeaturesResultSet.next()) {
-				String features = applicationFeaturesResultSet.getString(
-					"features");
+				List<String> features = Arrays.asList(
+					StringUtil.split(
+						applicationFeaturesResultSet.getString("features")));
 
 				if (features.contains("token_introspection")) {
 					long oAuth2ApplicationId =
@@ -60,7 +64,7 @@ public class OAuth2ApplicationFeatureUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _updateTokenIntrospectionFeature(
-			long oAuth2ApplicationId, String features)
+			long oAuth2ApplicationId, List<String> features)
 		throws SQLException {
 
 		String sql =
@@ -70,10 +74,16 @@ public class OAuth2ApplicationFeatureUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 
-			preparedStatement.setString(
-				1,
-				StringUtil.replace(
-					features, "token_introspection", "token.introspection"));
+			features.replaceAll(
+				feature -> {
+					if (feature.equals("token_introspection")) {
+						return "token.introspection";
+					}
+
+					return feature;
+				});
+
+			preparedStatement.setString(1, StringUtil.merge(features));
 
 			preparedStatement.setLong(2, oAuth2ApplicationId);
 

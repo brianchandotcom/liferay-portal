@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  */
 public class LayoutReportsIssue {
 
-	public LayoutReportsIssue(String key, long total) {
+	public LayoutReportsIssue(Key key, long total) {
 		if (key == null) {
 			throw new IllegalArgumentException("Key should not be null");
 		}
@@ -49,7 +49,7 @@ public class LayoutReportsIssue {
 		return false;
 	}
 
-	public String getKey() {
+	public Key getKey() {
 		return _key;
 	}
 
@@ -66,9 +66,10 @@ public class LayoutReportsIssue {
 
 	public JSONObject toJSONObject(ResourceBundle resourceBundle) {
 		return JSONUtil.put(
-			"key", _key
+			"key", _key.toString()
 		).put(
-			"title", ResourceBundleUtil.getString(resourceBundle, _key)
+			"title",
+			ResourceBundleUtil.getString(resourceBundle, _key.toString())
 		).put(
 			"total", _total
 		);
@@ -77,13 +78,34 @@ public class LayoutReportsIssue {
 	@Override
 	public String toString() {
 		return JSONUtil.put(
-			"key", _key
+			"key", _key.toString()
 		).put(
 			"total", _total
 		).toString();
 	}
 
-	private final String _key;
+	public enum Key {
+
+		ACCESSIBILITY {
+
+			@Override
+			public String toString() {
+				return "accessibility";
+			}
+
+		},
+		SEO {
+
+			@Override
+			public String toString() {
+				return "seo";
+			}
+
+		},
+
+	}
+
+	private final Key _key;
 	private final long _total;
 
 }

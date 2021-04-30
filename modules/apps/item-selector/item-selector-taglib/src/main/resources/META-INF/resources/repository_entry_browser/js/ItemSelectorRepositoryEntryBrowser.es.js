@@ -158,7 +158,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 
 					Liferay.componentReady('ItemSelectorPreview').then(() => {
 						Liferay.fire('updateCurrentItem', {
-							url: itemFileUrl,
+							...itemFile,
 							value: itemFileValue,
 						});
 					});

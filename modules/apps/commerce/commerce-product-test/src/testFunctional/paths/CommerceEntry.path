@@ -684,6 +684,22 @@
 	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-td')][3]</td>
 	<td></td>
 </tr>
+<!--WAREHOUSES-->
+<tr>
+	<td>WAREHOUSE_INVENTORY_ITEM_QUANTITY</td>
+	<td>//input[contains(@id,'_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_commerceInventoryWarehouseItemQuantity${key_value1}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVENTORY_BY_WAREHOUSE_NAME</td>
+	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-td')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WAREHOUSE_INVENTORY_SAVE_BUTTON</td>
+	<td>//td[contains(@class, 'text-center')]//button[contains(@id,'_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_saveButton${key_value1}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -153,14 +153,86 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6205. Get warehouse names given a SKU"
-	@ignore = "true"
 	@priority = "3"
 	test GetWarehouseNameGivenChannel {
 		property portal.acceptance = "false";
 
-		// TODO Review
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
 
-		// TODO COMMERCE-6205 GetWarehouseNameGivenChannel Pending Implementation
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "TestWH");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Master");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		Refresh();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Product Test",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_fieldLabel = "SKU",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "MIN00000");
+
+		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		Type(
+			key_value1 = "0",
+			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+			value1 = "45");
+
+		Click(
+			key_value1 = "0",
+			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+
+		Refresh();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Inventory");
+
+		Click(
+			key_entryName = "MIN00000",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#INVENTORY_BY_WAREHOUSE_NAME",
+			value1 = "TestWH");
 	}
 
 	@description = "This is a test for COMMERCE-6202. It should be possible to limit the warehouse stock quantity by channel"

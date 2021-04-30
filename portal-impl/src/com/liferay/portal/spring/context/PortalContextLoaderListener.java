@@ -276,7 +276,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
 
 		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
-		ClassLoaderPool.register("GlobalClassLoader", portalClassLoader);
 		ServletContextClassLoaderPool.register(
 			_portalServletContextName, portalClassLoader);
 

@@ -16,7 +16,7 @@ const clickOutside = (target, ...elements) => (
 	!elements.some((element) => !!target.closest(element))
 )
 
-export default function ({defaultLanguageId, namespace}) {
+export default function DataEngineLayoutBuilderHandler({defaultLanguageId, namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	// Clean the input if the language is not considered translated when
@@ -135,6 +135,23 @@ export default function ({defaultLanguageId, namespace}) {
 	};
 
 	window.addEventListener('click', detectClickOutside, true);
+
+	// Update editing language id in the data engine side
+
+	const updateEditingLanguageId = async (event) => {
+		const editingLanguageId = event.item.getAttribute('data-value');
+		const dataLayoutBuilder = await getDataLayoutBuilder();
+
+		dataLayoutBuilder.current.dispatch({
+			payload: {
+				defaultLanguageId, 
+				editingLanguageId
+			},
+			type: 'language_change'
+		});
+	}
+
+	Liferay.after('inputLocalized:localeChanged', updateEditingLanguageId);
 
 	return {
 		dispose() {

@@ -331,15 +331,15 @@
 			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="Name" return-type="Collection">
-			<finder-column arrayable-operator="OR" name="name" />
+			<finder-column arrayable-operator="OR" case-sensitive="false" name="name" />
 		</finder>
 		<finder name="G_N" return-type="AssetTag" unique="true">
 			<finder-column name="groupId" />
-			<finder-column name="name" />
+			<finder-column case-sensitive="false" name="name" />
 		</finder>
 		<finder name="G_LikeN" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
-			<finder-column comparator="LIKE" name="name" />
+			<finder-column case-sensitive="false" comparator="LIKE" name="name" />
 		</finder>
 
 		<!-- References -->

@@ -251,7 +251,7 @@
 
 			${dataFactory.toInsertSQL(pendingCommerceOrderItemModel)}
 
-			${csvFileWriter.write("commerceOrder", pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderItemModel.commerceOrderItemId + ", " + pendingCommerceOrderItemModel.quantity + ", " + dataFactory.getCPInstanceId(randomCProductModel.publishedCPDefinitionId) + ", " + commerceAddressModel.commerceAddressId + ", " + pendingCommerceOrderModel.uuid + ", " + commerceInventoryWarehouseModels[0].commerceInventoryWarehouseId + "\n")}
+			${csvFileWriter.write("commerceOrder", pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderItemModel.commerceOrderItemId + ", " + pendingCommerceOrderItemModel.quantity + ", " + dataFactory.getCPInstanceId(randomCProductModel.publishedCPDefinitionId) + ", " + commerceAddressModel.countryId + ", " + pendingCommerceOrderModel.uuid + ", " + commerceInventoryWarehouseModels[0].commerceInventoryWarehouseId + "\n")}
 		</#list>
 
 		<@insertGroup _groupModel=commerceChannelGroupModel />

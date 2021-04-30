@@ -14,17 +14,15 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
-import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -32,6 +30,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -84,26 +83,6 @@ public class InviteUsersMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_addPublicationRole(
-			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
-			PublicationRoleConstants.NAME_EDIT, resourceRequest, themeDisplay);
-		_addPublicationRole(
-			new String[] {
-				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
-			},
-			PublicationRoleConstants.NAME_PERMISSIONS, resourceRequest,
-			themeDisplay);
-		_addPublicationRole(
-			new String[] {
-				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
-				CTActionKeys.PUBLISH
-			},
-			PublicationRoleConstants.NAME_PUBLISH, resourceRequest,
-			themeDisplay);
-		_addPublicationRole(
-			new String[] {ActionKeys.VIEW}, PublicationRoleConstants.NAME_VIEW,
-			resourceRequest, themeDisplay);
-
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
 
@@ -111,56 +90,74 @@ public class InviteUsersMVCResourceCommand
 			themeDisplay.getPermissionChecker(), ctCollection,
 			ActionKeys.PERMISSIONS);
 
-		Role role = _roleLocalService.getRole(
-			themeDisplay.getCompanyId(),
-			PublicationRoleConstants.getRoleName(
-				ParamUtil.getInteger(resourceRequest, "roleId")));
+		Group group = ctCollection.getGroup();
+
+		if (group == null) {
+			group = _groupLocalService.addGroup(
+				ctCollection.getUserId(),
+				GroupConstants.DEFAULT_PARENT_GROUP_ID,
+				CTCollection.class.getName(), ctCollection.getCtCollectionId(),
+				GroupConstants.DEFAULT_LIVE_GROUP_ID,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), ctCollection.getName()
+				).build(),
+				null, GroupConstants.TYPE_SITE_PRIVATE, false,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
+				true, null);
+		}
 
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
 
 		_userGroupRoleLocalService.deleteUserGroupRoles(
-			userIds, ctCollection.getGroupId());
+			userIds, group.getGroupId());
+
+		Role role = _getRole(resourceRequest, themeDisplay);
 
 		for (long userId : userIds) {
 			_userGroupRoleLocalService.addUserGroupRole(
-				userId, ctCollection.getGroupId(), role.getRoleId());
+				userId, group.getGroupId(), role.getRoleId());
 		}
 	}
 
-	private void _addPublicationRole(
-			String[] actionIds, String name, ResourceRequest resourceRequest,
-			ThemeDisplay themeDisplay)
+	private Role _getRole(
+			ResourceRequest resourceRequest, ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		int roleId = ParamUtil.getInteger(resourceRequest, "roleId");
+
+		String name = PublicationRoleConstants.getRoleName(roleId);
 
 		Role role = _roleLocalService.fetchRole(
 			themeDisplay.getCompanyId(), name);
 
 		if (role == null) {
-			try (SafeClosable safeClosable =
-					CTCollectionThreadLocal.setCTCollectionId(0)) {
+			role = _roleLocalService.addRole(
+				themeDisplay.getDefaultUserId(), null, 0, name,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), name
+				).build(),
+				null, RoleConstants.TYPE_PUBLICATION, StringPool.BLANK,
+				ServiceContextFactory.getInstance(resourceRequest));
 
-				role = _roleLocalService.addRole(
-					themeDisplay.getDefaultUserId(), null, 0, name,
-					HashMapBuilder.put(
-						LocaleUtil.getDefault(), name
-					).build(),
-					null, RoleConstants.TYPE_PUBLICATION, StringPool.BLANK,
-					ServiceContextFactory.getInstance(resourceRequest));
+			for (String actionId :
+					PublicationRoleConstants.getModelResourceActions(roleId)) {
 
-				for (String actionId : actionIds) {
-					_resourcePermissionLocalService.addResourcePermission(
-						themeDisplay.getCompanyId(),
-						CTCollection.class.getName(),
-						ResourceConstants.SCOPE_GROUP_TEMPLATE,
-						String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-						role.getRoleId(), actionId);
-				}
+				_resourcePermissionLocalService.addResourcePermission(
+					themeDisplay.getCompanyId(), CTCollection.class.getName(),
+					ResourceConstants.SCOPE_GROUP_TEMPLATE,
+					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+					role.getRoleId(), actionId);
 			}
 		}
+
+		return role;
 	}
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

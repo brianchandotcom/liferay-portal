@@ -14,6 +14,9 @@
 
 package com.liferay.change.tracking.web.internal.constants;
 
+import com.liferay.change.tracking.constants.CTActionKeys;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+
 /**
  * @author Samuel Trong Tran
  */
@@ -48,18 +51,23 @@ public class PublicationRoleConstants {
 
 	public static final int ROLE_VIEW = 0;
 
-	public static int getLabelRole(String label) {
-		if (label.equals(LABEL_EDIT)) {
-			return ROLE_EDIT;
+	public static String[] getModelResourceActions(int role) {
+		if (role == ROLE_EDIT) {
+			return new String[] {ActionKeys.UPDATE, ActionKeys.VIEW};
 		}
-		else if (label.equals(LABEL_PERMISSIONS)) {
-			return ROLE_PERMISSIONS;
+		else if (role == ROLE_PERMISSIONS) {
+			return new String[] {
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
+			};
 		}
-		else if (label.equals(LABEL_PUBLISH)) {
-			return ROLE_PUBLISH;
+		else if (role == ROLE_PUBLISH) {
+			return new String[] {
+				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
+				CTActionKeys.PUBLISH
+			};
 		}
 
-		return ROLE_VIEW;
+		return new String[] {ActionKeys.VIEW};
 	}
 
 	public static String getNameLabel(String name) {
@@ -88,20 +96,6 @@ public class PublicationRoleConstants {
 		}
 
 		return ROLE_VIEW;
-	}
-
-	public static String getRoleLabel(int role) {
-		if (role == ROLE_EDIT) {
-			return LABEL_EDIT;
-		}
-		else if (role == ROLE_PERMISSIONS) {
-			return LABEL_PERMISSIONS;
-		}
-		else if (role == ROLE_PUBLISH) {
-			return LABEL_PUBLISH;
-		}
-
-		return LABEL_VIEW;
 	}
 
 	public static String getRoleName(int role) {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,7 +53,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,19 +75,22 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
 
+		Group group = ctCollection.getGroup();
+
+		if (group == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONFactoryUtil.createJSONArray());
+
+			return;
+		}
+
 		List<UserGroupRole> userGroupRoles =
 			_userGroupRoleLocalService.getUserGroupRolesByGroup(
-				ctCollection.getGroupId());
+				group.getGroupId());
 
 		Set<Long> roleIds = new HashSet<>();
 		Set<Long> userIds = new HashSet<>();
@@ -106,6 +108,12 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				_portal.getClassNameId(User.class.getName()), userIds);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
 			Role role = roleMap.get(userGroupRole.getRoleId());
@@ -141,11 +149,6 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 					"userId", Long.valueOf(user.getUserId())
 				));
 		}
-
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
-
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);

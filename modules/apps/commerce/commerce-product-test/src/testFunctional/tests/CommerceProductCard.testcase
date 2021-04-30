@@ -423,12 +423,45 @@ definition {
 	}
 
 	@description = "COMMERCE-6158. As a buyer, I want to see the barred list price and a discount price of a product, if set"
-	@ignore = "true"
 	@priority = "3"
 	test ViewProductCardPriceWithDiscount {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6158 ViewProductCardPriceWithDiscount pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDiscountsEntry(
+			channelsEligibility = "Minium Portal",
+			discountAmount = "20",
+			discountName = "Test Discount",
+			discountTarget = "Products",
+			discountType = "Percentage");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "ABS Sensor",
+			title = "Add Products");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		AssertElementPresent(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_INACTIVE");
+
+		AssertElementPresent(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_FINAL");
+
 	}
 
 	@description = "COMMERCE-6159. As a buyer, I want to see the barred list price and the sale price of a product, if a price modifier is set"

@@ -33,6 +33,16 @@
 	<td>//div[@class='product-gallery']//img[contains(@src, '${key_FSProductImage}')]</td>
 	<td></td>
 </tr>
+<tr>	
+	<td>PRODUCT_DETAILS_PRICE_VALUE_INACTIVE</td>
+	<td>//p[@title='${key_productName}']/following-sibling::p//span[contains(@class, 'price-value price-value-inactive')]</td>
+	<td></td>
+</tr>
+<tr>	
+	<td>PRODUCT_DETAILS_PRICE_VALUE_FINAL</td>
+	<td>//p[@title='${key_productName}']/following-sibling::p//span[contains(@class, 'price-value price-value-final')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -54,63 +54,45 @@ export default function ({defaultLanguageId, namespace}) {
 		return localizedValues;
 	};
 
-	const saveDataEngineStructure = () => {
-		getDataLayoutBuilder().then((dataLayoutBuilder) => {
-			const nameInput = document.getElementById(`${namespace}name`);
+	const saveDataEngineStructure = async () => {
+		const dataLayoutBuilder = await getDataLayoutBuilder();
+		const nameInput = document.getElementById(`${namespace}name`);
+		const name = getInputLocalizedValues('name');
+		const description = getInputLocalizedValues('description');
 
-			const name = getInputLocalizedValues('name');
-
-			if (!nameInput.value || !name[defaultLanguageId]) {
-				Liferay.Util.openToast({
-					message: Liferay.Util.sub(
-						Liferay.Language.get(
-							'please-enter-a-valid-title-for-the-default-language-x'
-						),
-						defaultLanguageId.replace('_', '-')
+		if (!nameInput.value || !name[defaultLanguageId]) {
+			Liferay.Util.openToast({
+				message: Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-valid-title-for-the-default-language-x'
 					),
-					title: Liferay.Language.get('error'),
-					type: 'danger',
-				});
-
-				nameInput.focus();
-
-				return;
-			}
-
-			const {availableLanguageIds} = dataLayoutBuilder.props;
-			const {
-				availableLanguageIds: availableLanguageIdsState,
-			} = dataLayoutBuilder.state;
-
-			const layoutProvider =
-				dataLayoutBuilder.formBuilderWithLayoutProvider.refs
-					.layoutProvider;
-
-			const formData = DataConverter.getFormData({
-				availableLanguageIds,
-				availableLanguageIdsState,
-				defaultLanguageId,
-				layoutProvider,
+					defaultLanguageId.replace('_', '-')
+				),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
 			});
 
-			const dataDefinition = formData.definition;
+			nameInput.focus();
 
-			const description = getInputLocalizedValues('description');
+			return;
+		}
 
-			dataDefinition.description = description;
-			dataDefinition.name = name;
+		const {dataDefinition, dataLayout} = dataLayoutBuilder.current.state;
 
-			const dataLayout = formData.layout;
-
-			dataLayout.description = description;
-			dataLayout.name = name;
-
-			Liferay.Util.postForm(form, {
-				data: {
-					dataDefinition: JSON.stringify(dataDefinition),
-					dataLayout: JSON.stringify(dataLayout),
-				},
-			});
+		Liferay.Util.postForm(form, {
+			data: {
+				dataDefinition: JSON.stringify({
+					...dataDefinition.serialize(),
+					defaultLanguageId,
+					description,
+					name
+				}),
+				dataLayout: JSON.stringify({
+					...dataLayout.serialize(),
+					description,
+					name
+				}),
+			},
 		});
 	};
 

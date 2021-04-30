@@ -69,69 +69,51 @@ export default function ({defaultLanguageId, namespace}) {
 		return localizedValues;
 	};
 
-	const saveDDMStructure = () => {
-		getDataLayoutBuilder().then((dataLayoutBuilder) => {
-			const nameInput = document.getElementById(`${namespace}name`);
+	const saveDataEngineStructure = async () => {
+		const dataLayoutBuilder = await getDataLayoutBuilder();
+		const nameInput = document.getElementById(`${namespace}name`);
+		const name = getInputLocalizedValues('name');
+		const description = getInputLocalizedValues('description');
 
-			const name = getInputLocalizedValues('name');
-
-			if (!nameInput.value && !name[defaultLanguageId]) {
-				Liferay.Util.openToast({
-					message: Liferay.Util.sub(
-						Liferay.Language.get(
-							'please-enter-a-valid-title-for-the-default-language-x'
-						),
-						defaultLanguageId.replace('_', '-')
+		if (!nameInput.value && !name[defaultLanguageId]) {
+			Liferay.Util.openToast({
+				message: Liferay.Util.sub(
+					Liferay.Language.get(
+						'please-enter-a-valid-title-for-the-default-language-x'
 					),
-					title: Liferay.Language.get('error'),
-					type: 'danger',
-				});
-
-				nameInput.focus();
-
-				return;
-			}
-
-			const description = getInputLocalizedValues('description');
-
-			const {availableLanguageIds} = dataLayoutBuilder.props;
-			const {
-				availableLanguageIds: availableLanguageIdsState,
-			} = dataLayoutBuilder.state;
-
-			const layoutProvider =
-				dataLayoutBuilder.formBuilderWithLayoutProvider.refs
-					.layoutProvider;
-
-			const formData = DataConverter.getFormData({
-				availableLanguageIds,
-				availableLanguageIdsState,
-				defaultLanguageId,
-				layoutProvider,
+					defaultLanguageId.replace('_', '-')
+				),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
 			});
 
-			const dataDefinition = formData.definition;
+			nameInput.focus();
 
-			dataDefinition.description = description;
-			dataDefinition.name = name;
+			return;
+		}
 
-			const dataLayout = formData.layout;
+		const {dataDefinition, dataLayout} = dataLayoutBuilder.current.state;
 
-			dataLayout.description = description;
-			dataLayout.name = name;
+		clearNameInputIfNeeded();
 
-			clearNameInputIfNeeded();
-
-			Liferay.Util.postForm(form, {
-				data: {
-					dataDefinition: JSON.stringify(dataDefinition),
-					dataLayout: JSON.stringify(dataLayout),
-				},
-			});
+		Liferay.Util.postForm(form, {
+			data: {
+				dataDefinition: JSON.stringify({
+					...dataDefinition.serialize(),
+					defaultLanguageId,
+					description,
+					name
+				}),
+				dataLayout: JSON.stringify({
+					...dataLayout.serialize(),
+					description,
+					name
+				}),
+			},
 		});
 	};
 
-	form.addEventListener('submit', saveDDMStructure);
+	form.addEventListener('submit', saveDataEngineStructure);
 
 	// Deselect field when clicking outside the form builder
 
@@ -151,7 +133,7 @@ export default function ({defaultLanguageId, namespace}) {
 
 	return {
 		dispose() {
-			form.removeEventListener('submit', saveDDMStructure);
+			form.removeEventListener('submit', saveDataEngineStructure);
 			window.removeEventListener('click', detectClickOutside, true);
 		},
 	};

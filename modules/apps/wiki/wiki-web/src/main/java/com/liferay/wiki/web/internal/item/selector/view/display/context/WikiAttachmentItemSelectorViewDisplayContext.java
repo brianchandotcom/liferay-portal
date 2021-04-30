@@ -69,6 +69,21 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			_httpServletRequest);
 	}
 
+	public PortletURL getEditImageURL(
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse, WikiPortletKeys.WIKI
+		).setActionName(
+			"/wiki/image_editor"
+		).setParameter(
+			"mimeTypes", _wikiAttachmentItemSelectorCriterion.getMimeTypes()
+		).setParameter(
+			"resourcePrimKey",
+			_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId()
+		).build();
+	}
+
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}

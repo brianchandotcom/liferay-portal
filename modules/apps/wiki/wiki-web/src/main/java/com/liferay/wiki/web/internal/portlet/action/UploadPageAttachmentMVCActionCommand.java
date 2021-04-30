@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"mvc.command.name=/wiki/image_editor",
 		"mvc.command.name=/wiki/upload_page_attachment"
 	},
 	service = MVCActionCommand.class

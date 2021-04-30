@@ -34,11 +34,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Alert.viewErrorMessage(errorMessage = "Grace period ended");
+		Alert.viewErrorMessage(errorMessage = "Grace period which already ended");
 
 		Navigator.openSpecificURL(url = "http://localhost:10080");
 
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes in cluster");
+		Alert.viewErrorMessage(errorMessage = "exceeded the maximum number of cluster nodes");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_2",
@@ -73,8 +73,8 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-			Alert.viewErrorMessage(errorMessage = "Grace period");
+			Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
+			Alert.viewErrorMessage(errorMessage = "grace period");
 		}
 
 		Navigator.openSpecificURL(url = "http://localhost:12080");
@@ -131,7 +131,7 @@ definition {
 		Pause(locator1 = "300000");
 
 		Clustering.viewTextPresentOnSpecificNode(
-			expectedText = "You have exceeded the maximum number of cluster nodes in cluster, overloaded nodes will be deactivated in 2 hours",
+			expectedText = "licensed for this cluster has been exceeded",
 			nodePort = "10080");
 
 		User.loginPG(
@@ -186,7 +186,7 @@ definition {
 
 		for (var nodeNumber : list "8,9,10") {
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "You have exceeded the maximum number of cluster nodes",
+				expectedText = "licensed for this cluster has been exceeded",
 				nodePort = "${nodeNumber}080");
 
 			User.loginPG(
@@ -194,9 +194,16 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-			Alert.viewErrorMessage(errorMessage = "Grace period");
+			Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
+			Alert.viewErrorMessage(errorMessage = "grace period");
 		}
+
+		User.loginPG(
+				nodePort = "9080",
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+
+		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated and shut down");
 
 		Clustering.waitForNodeShutdown(nodePort = "9080");
 
@@ -283,8 +290,9 @@ definition {
 
 		CommerceLicense.viewCommerceAvailable();
 
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
+		Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
+		Alert.viewErrorMessage(errorMessage = "grace period");
+		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated and shut down");
 
 		Clustering.waitForNodeShutdown(nodePort = "9080");
 
@@ -348,8 +356,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
+		Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
+		Alert.viewErrorMessage(errorMessage = "grace period");
+		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated");
 
 		Clustering.waitForNodeShutdown(nodePort = "9080");
 
@@ -370,7 +379,7 @@ definition {
 
 		for (var nodeNumber : list "8,9,10") {
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "You have exceeded the maximum number of cluster nodes",
+				expectedText = "licensed for this cluster has been exceeded",
 				nodePort = "${nodeNumber}080");
 		}
 
@@ -391,8 +400,8 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "8080");
 
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
+		Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
+		Alert.viewErrorMessage(errorMessage = "grace period");
 
 		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/logout");
 
@@ -410,9 +419,11 @@ definition {
 
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
 
-			Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-			Alert.viewErrorMessage(errorMessage = "Grace period");
+			Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
+			Alert.viewErrorMessage(errorMessage = "grace period");
 		}
+
+		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated and shut down");
 
 		Navigator.openSpecificURL(url = "http://localhost:10080/c/portal/logout");
 
@@ -487,8 +498,9 @@ definition {
 
 		Page.assertNodePortPG(nodePort = "10080");
 
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-		Alert.viewErrorMessage(errorMessage = "Grace period");
+		Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
+		Alert.viewErrorMessage(errorMessage = "grace period");
+		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated and shut down");
 
 		Clustering.waitForNodeShutdown(nodePort = "10080");
 
@@ -512,7 +524,7 @@ definition {
 
 		for (var nodeNumber : list "8,9,10") {
 			Clustering.viewTextPresentOnSpecificNode(
-				expectedText = "You have exceeded the maximum number of cluster nodes",
+				expectedText = "licensed for this cluster has been exceeded",
 				nodePort = "${nodeNumber}080");
 
 			User.loginPG(
@@ -522,9 +534,11 @@ definition {
 
 			Page.assertNodePortPG(nodePort = "${nodeNumber}080");
 
-			Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes");
-			Alert.viewErrorMessage(errorMessage = "Grace period");
+			Alert.viewErrorMessage(errorMessage = "licensed for this cluster has been exceeded");
+			Alert.viewErrorMessage(errorMessage = "grace period");
 		}
+
+		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated");
 
 		Pause(locator1 = "360000");
 
@@ -534,12 +548,12 @@ definition {
 				password = "test",
 				userEmailAddress = "test@liferay.com");
 
-			Alert.viewErrorMessage(errorMessage = "Grace period ended");
+			Alert.viewErrorMessage(errorMessage = "Grace period which already ended");
 		}
 
 		Navigator.openSpecificURL(url = "http://localhost:10080");
 
-		Alert.viewErrorMessage(errorMessage = "You have exceeded the maximum number of cluster nodes in cluster");
+		Alert.viewErrorMessage(errorMessage = "exceeded the maximum number of cluster nodes");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_2",

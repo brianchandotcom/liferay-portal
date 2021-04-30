@@ -31,78 +31,44 @@ class DataEngineCompatibilityLayer {
 	}
 
 	get state() {
-		const {
-			dataDefinition,
-			dataLayout,
-			editingLanguageId,
-			focusedField,
-		} = this[SYMBOL_INTERNAL];
+		const {dataDefinition, dataLayout} = this[SYMBOL_INTERNAL];
 
 		return {
 			dataDefinition,
 			dataLayout,
-			editingLanguageId,
-			focusedField,
 		};
-	}
-
-	get config() {
-		return this[SYMBOL_INTERNAL].config;
 	}
 }
 
 /**
- * AppBuilderCompatibilityLayer exposes the `configs`, `state` and `dispatch` of the
+ * DataEngineTaglibCompatibilityLayer exposes the `state` and `dispatch` of the
  * application to be accessible via Liferay.componentReady, this implementation
- * is only for the use case of the App Builder that is frozen.
+ * is only for the use case of modules that use the data engine via taglib
  */
-export const AppBuilderCompatibilityLayer = () => {
-	const {dataLayoutBuilderId, ...config} = useConfig();
+export const DataEngineTaglibCompatibilityLayer = () => {
+	const {dataLayoutBuilderId} = useConfig();
 	const dispatch = useForm();
 
 	const {dataDefinition, dataLayout} = useFormState({
 		schema: ['dataDefinition', 'dataLayout'],
 	});
 
-	const {editingLanguageId, focusedField} = useFormState();
-
 	const dataEngineCompatibilityLayerRef = useRef(null);
-	const onReferenceRef = useRef(null);
 
 	useEffect(() => {
 		dataEngineCompatibilityLayerRef.current = new DataEngineCompatibilityLayer(
 			{
-				config,
 				dataDefinition,
 				dataLayout,
 				dispatch,
-				editingLanguageId,
-				focusedCustomObjectField: focusedField,
-				focusedField,
 			}
 		);
-
-		if (onReferenceRef.current) {
-			onReferenceRef.current();
-		}
-	}, [
-		editingLanguageId,
-		config,
-		dataDefinition,
-		dataLayout,
-		dispatch,
-		focusedField,
-	]);
+	}, [dataDefinition, dataLayout, dispatch]);
 
 	useEffect(() => {
 		Liferay.component(
 			dataLayoutBuilderId,
-			{
-				...dataEngineCompatibilityLayerRef,
-				onReference: (callback) => {
-					onReferenceRef.current = callback;
-				},
-			},
+			dataEngineCompatibilityLayerRef,
 			{
 				destroyOnNavigate: true,
 			}
@@ -111,7 +77,7 @@ export const AppBuilderCompatibilityLayer = () => {
 		return () => {
 			Liferay.destroyComponent(dataLayoutBuilderId);
 		};
-	}, [dataEngineCompatibilityLayerRef, onReferenceRef, dataLayoutBuilderId]);
+	}, [dataEngineCompatibilityLayerRef, dataLayoutBuilderId]);
 
 	return null;
 };

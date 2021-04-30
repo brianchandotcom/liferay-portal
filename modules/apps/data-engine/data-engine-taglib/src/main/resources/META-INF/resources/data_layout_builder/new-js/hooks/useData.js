@@ -77,7 +77,9 @@ const customFetch = (parse, defaultData) => (url, init) =>
 	});
 
 const DEFAULT_DATA_DEFINITION = {
-	dataDefinitionFields: [],
+	dataDefinition: {
+		dataDefinitionFields: [],
+	},
 };
 
 const DEFAULT_DATA_LAYOUT = {

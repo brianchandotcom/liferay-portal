@@ -31,7 +31,7 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {AppBuilderCompatibilityLayer} from './AppBuilderCompatibilityLayer';
+import {DataEngineTaglibCompatibilityLayer} from './DataEngineTaglibCompatibilityLayer';
 import {FormBuilder} from './FormBuilder';
 import INITIAL_CONFIG from './config/initialConfig';
 import INITIAL_STATE from './config/initialState';
@@ -74,9 +74,9 @@ const App = (props) => {
 							rulesReducer,
 							sidebarReducer,
 						]}
-						value={{...state, dataDefinition, dataLayout}}
+						value={{...state, ...dataDefinition, dataLayout}}
 					>
-						<AppBuilderCompatibilityLayer />
+						<DataEngineTaglibCompatibilityLayer />
 						<FormBuilder />
 					</FormProvider>
 				</ConfigProvider>

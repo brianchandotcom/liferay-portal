@@ -39,7 +39,7 @@ export class DataDefinitionSchema extends Schema {
 	}
 
 	get dataDefinitionFields() {
-		const {dataDefinition, pages} = this[SYMBOL_RAW];
+		const {pages} = this[SYMBOL_RAW];
 
 		// This operation will happen only once and the next calls are from the cache,
 		// the value will be revalidated by Schema that makes a comparison by reference
@@ -50,22 +50,14 @@ export class DataDefinitionSchema extends Schema {
 			return this[SYMBOL_CACHE].dataDefinitionFields;
 		}
 		else {
-			const fields = [...dataDefinition.dataDefinitionFields];
+			const fields = [];
 			const visitor = new PagesVisitor(pages);
 
 			visitor.mapFields((field) => {
-				const index = fields.findIndex(
-					({name}) => name === field.fieldName
+				const dataDefinitionField = DataConverter.getDataDefinitionField(
+					field
 				);
-
-				const newField = DataConverter.getDataDefinitionField(field);
-
-				if (index === -1) {
-					fields.push(newField);
-				}
-				else {
-					fields[index] = newField;
-				}
+				fields.push(dataDefinitionField);
 			});
 
 			this[SYMBOL_CACHE].dataDefinitionFields = fields;
@@ -80,5 +72,15 @@ export class DataDefinitionSchema extends Schema {
 
 	get name() {
 		return this[SYMBOL_RAW].name;
+	}
+
+	serialize() {
+		return {
+			availableLanguageIds: this.availableLanguageIds,
+			contentType: this.contentType,
+			dataDefinitionFields: this.dataDefinitionFields,
+			defaultLanguageId: this.defaultLanguageId,
+			name: this.name,
+		};
 	}
 }

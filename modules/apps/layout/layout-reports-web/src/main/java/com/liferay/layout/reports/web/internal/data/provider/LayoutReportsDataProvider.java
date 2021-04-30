@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 /**
  * @author Cristina González
@@ -132,29 +131,66 @@ public class LayoutReportsDataProvider {
 
 		return Arrays.asList(
 			new LayoutReportsIssue(
-				null, LayoutReportsIssue.Key.ACCESSIBILITY,
-				IntStream.of(
-					_getCount(lighthouseAuditResultV5s.get("color-contrast")),
-					_getCount(lighthouseAuditResultV5s.get("image-alt")),
-					_getCount(lighthouseAuditResultV5s.get("input-image-alt")),
-					_getCount(lighthouseAuditResultV5s.get("video-caption"))
-				).sum()),
+				Arrays.asList(
+					new LayoutReportsIssue.Detail(
+						"color-contrast",
+						_getCount(
+							lighthouseAuditResultV5s.get("color-contrast"))),
+					new LayoutReportsIssue.Detail(
+						"image-alt",
+						_getCount(lighthouseAuditResultV5s.get("image-alt"))),
+					new LayoutReportsIssue.Detail(
+						"input-image-alt",
+						_getCount(
+							lighthouseAuditResultV5s.get("input-image-alt"))),
+					new LayoutReportsIssue.Detail(
+						"video-caption",
+						_getCount(
+							lighthouseAuditResultV5s.get("video-caption")))),
+				LayoutReportsIssue.Key.ACCESSIBILITY),
 			new LayoutReportsIssue(
-				null, LayoutReportsIssue.Key.SEO,
-				IntStream.of(
-					_getCount(lighthouseAuditResultV5s.get("canonical")),
-					_getCount(
-						lighthouseAuditResultV5s.get("crawlable-anchors")),
-					_getCount(lighthouseAuditResultV5s.get("document-title")),
-					_getCount(lighthouseAuditResultV5s.get("font-size")),
-					_getCount(lighthouseAuditResultV5s.get("hreflang")),
-					_getCount(
-						lighthouseAuditResultV5s.get("image-aspect-ratio")),
-					_getCount(lighthouseAuditResultV5s.get("is-crawlable")),
-					_getCount(lighthouseAuditResultV5s.get("link-text")),
-					_getCount(lighthouseAuditResultV5s.get("meta-description")),
-					_getCount(lighthouseAuditResultV5s.get("tap-targets"))
-				).sum()));
+				Arrays.asList(
+					new LayoutReportsIssue.Detail(
+						"canonical",
+						_getCount(lighthouseAuditResultV5s.get("canonical"))),
+					new LayoutReportsIssue.Detail(
+						"crawlable-anchors",
+						_getCount(
+							lighthouseAuditResultV5s.get("crawlable-anchors"))),
+					new LayoutReportsIssue.Detail(
+						"document-title",
+						_getCount(
+							lighthouseAuditResultV5s.get("document-title"))),
+					new LayoutReportsIssue.Detail(
+						"font-size",
+						_getCount(lighthouseAuditResultV5s.get("font-size"))),
+					new LayoutReportsIssue.Detail(
+						"hreflang",
+						_getCount(lighthouseAuditResultV5s.get("hreflang"))),
+					new LayoutReportsIssue.Detail(
+						"image-aspect-ratio",
+						_getCount(
+							lighthouseAuditResultV5s.get(
+								"image-aspect-ratio"))),
+					new LayoutReportsIssue.Detail(
+						"hreflang",
+						_getCount(lighthouseAuditResultV5s.get("hreflang"))),
+					new LayoutReportsIssue.Detail(
+						"is-crawlable",
+						_getCount(
+							lighthouseAuditResultV5s.get("is-crawlable"))),
+					new LayoutReportsIssue.Detail(
+						"link-text",
+						_getCount(lighthouseAuditResultV5s.get("link-text"))),
+					new LayoutReportsIssue.Detail(
+						"meta-descriptiont",
+						_getCount(
+							lighthouseAuditResultV5s.get("meta-description"))),
+					new LayoutReportsIssue.Detail(
+						"tap-targetst",
+						_getCount(
+							lighthouseAuditResultV5s.get("tap-targets")))),
+				LayoutReportsIssue.Key.SEO));
 	}
 
 	private static final int _CONNECT_TIMEOUT = 30000;

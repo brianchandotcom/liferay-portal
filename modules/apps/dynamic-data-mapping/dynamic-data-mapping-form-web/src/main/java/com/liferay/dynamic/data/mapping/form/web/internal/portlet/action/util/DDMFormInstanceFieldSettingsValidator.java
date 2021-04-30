@@ -174,6 +174,8 @@ public class DDMFormInstanceFieldSettingsValidator {
 
 		builder.withCompanyId(
 			_portal.getCompanyId(portletRequest)
+		).withDDMFormInstanceId(
+			ParamUtil.getLong(portletRequest, "formInstanceId")
 		).withGroupId(
 			ParamUtil.getLong(portletRequest, "groupId")
 		).withUserId(

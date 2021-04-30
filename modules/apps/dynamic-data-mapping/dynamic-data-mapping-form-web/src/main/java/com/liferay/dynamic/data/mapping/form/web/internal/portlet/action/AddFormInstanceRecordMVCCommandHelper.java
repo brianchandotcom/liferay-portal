@@ -103,6 +103,8 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		return _ddmFormEvaluator.evaluate(
 			builder.withCompanyId(
 				_portal.getCompanyId(actionRequest)
+			).withDDMFormInstanceId(
+				ParamUtil.getLong(actionRequest, "formInstanceId")
 			).withGroupId(
 				ParamUtil.getLong(actionRequest, "groupId")
 			).withUserId(

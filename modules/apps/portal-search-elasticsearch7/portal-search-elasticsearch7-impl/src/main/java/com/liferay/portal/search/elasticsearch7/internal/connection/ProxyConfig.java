@@ -72,7 +72,9 @@ public class ProxyConfig {
 		}
 
 		public Builder host(String host) {
-			_host = host;
+			if (!Validator.isBlank(host)) {
+				_host = host;
+			}
 
 			return this;
 		}
@@ -90,7 +92,9 @@ public class ProxyConfig {
 		}
 
 		public Builder port(int port) {
-			_port = port;
+			if (port > 0) {
+				_port = port;
+			}
 
 			return this;
 		}
@@ -102,20 +106,11 @@ public class ProxyConfig {
 		}
 
 		protected String getHost() {
-			if (!Validator.isBlank(_host)) {
-				return _host;
-			}
-
-			return SystemProperties.get("http.proxyHost");
+			return _host;
 		}
 
 		protected int getPort() {
-			if (hasHostAndPort()) {
-				return _port;
-			}
-
-			return GetterUtil.getInteger(
-				SystemProperties.get("http.proxyPort"));
+			return _port;
 		}
 
 		protected boolean hasHostAndPort() {
@@ -162,11 +157,12 @@ public class ProxyConfig {
 			return true;
 		}
 
-		private String _host;
+		private String _host = SystemProperties.get("http.proxyHost");
 		private final Http _http;
 		private String[] _networkHostAddresses = {};
 		private String _password;
-		private int _port;
+		private int _port = GetterUtil.getInteger(
+			SystemProperties.get("http.proxyPort"));
 		private String _userName;
 
 	}

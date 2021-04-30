@@ -12,21 +12,9 @@
  * details.
  */
 
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
-
-import {DataConverter} from 'data-engine-taglib';
+const clickOutside = (target, ...elements) => (
+	!elements.some((element) => !!target.closest(element))
+)
 
 export default function ({defaultLanguageId, namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
@@ -98,16 +86,20 @@ export default function ({defaultLanguageId, namespace}) {
 
 	form.addEventListener('submit', saveDataEngineStructure);
 
-	const detectClickOutside = async (event) => {
-		if (
-			!event.target.closest(
-				'.ddm-form-builder-wrapper, .multi-panel-sidebar, .dropdown-menu'
-			)
-		) {
+	// Deselect field when clicking outside the form builder
+
+	const detectClickOutside = async ({target}) => {
+		if (clickOutside(target, [
+			'.ddm-form-builder-wrapper',
+			'.multi-panel-sidebar',
+			'.lfr-icon-menu-open',
+			'.input-localized-content'
+		])) {
 			const dataLayoutBuilder = await getDataLayoutBuilder();
-			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider?.dispatch?.(
-				'sidebarFieldBlurred'
-			);
+
+			dataLayoutBuilder.current.dispatch({
+				type: 'sidebar_field_blur'
+			});
 		}
 	};
 

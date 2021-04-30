@@ -163,9 +163,9 @@ public class TalendProcess {
 				sb.append(File.pathSeparatorChar);
 			}
 
-			String classPath = sb.toString();
+			sb.append(_talendArchive.getJobDirectory());
 
-			return classPath.substring(0, classPath.length() - 1);
+			return sb.toString();
 		}
 
 		private boolean _isRequired(Path path) {

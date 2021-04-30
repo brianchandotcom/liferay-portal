@@ -94,7 +94,9 @@ definition {
 		var displayDateYear = DateUtil.getCurrentYear();
 		var displayDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay}";
 
-		Segmentation.viewSegment(date = "${displayDate}");
+		Segmentation.viewSegment(
+			criterion = "date",
+			value = "${displayDate}");
 	}
 
 	@description = "This is a test for LPS-130276."
@@ -189,7 +191,48 @@ definition {
 	test AddSegmentByOrganizationOrganization {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130278 AddSegmentByOrganizationOrganization pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Organization");
+
+		Segmentation.assignOrganization(orgName = "organization Name");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationOrganization Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByOrganizationOrganization Test");
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = "organization Name"
+		);
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "${organizationId}");
 	}
 
 	@description = "This is a test for LPS-130279."
@@ -376,7 +419,9 @@ definition {
 
 		Segmentation.editSegment(entry = "AddSegmentBySessionDeviceScreenResolutionHeight Test");
 
-		Segmentation.viewSegment(resolutionValue = "480.00");
+		Segmentation.viewSegment(
+			criterion = "decimal-number",
+			value = "480.00");
 	}
 
 	@description = "This is a test for LPS-130318."
@@ -400,7 +445,9 @@ definition {
 
 		Segmentation.editSegment(entry = "AddSegmentBySessionDeviceScreenResolutionWidth Test");
 
-		Segmentation.viewSegment(resolutionValue = "320.00");
+		Segmentation.viewSegment(
+			criterion = "decimal-number",
+			value = "320.00");
 	}
 
 	@description = "This is a test for LPS-130319."
@@ -452,8 +499,8 @@ definition {
 		Segmentation.editSegment(entry = "AddSegmentBySessionLanguage Test");
 
 		Segmentation.viewSegment(
-			key_criterion = "options",
-			propertyField = "es_ES");
+			criterion = "options",
+			value = "es_ES");
 	}
 
 	@description = "This is a test for LPS-130320."
@@ -477,7 +524,9 @@ definition {
 
 		Segmentation.editSegment(entry = "AddSegmentBySessionLastSignInDate Test");
 
-		Segmentation.viewSegment(date = "2021-03-31");
+		Segmentation.viewSegment(
+			criterion = "date",
+			value = "2021-03-31");
 	}
 
 	@description = "This is a test for LPS-130321."
@@ -501,7 +550,9 @@ definition {
 
 		Segmentation.editSegment(entry = "AddSegmentBySessionLocalDate Test");
 
-		Segmentation.viewSegment(date = "2021-03-31");
+		Segmentation.viewSegment(
+			criterion = "date",
+			value = "2021-03-31");
 	}
 
 	@description = "This is a test for LPS-130322."
@@ -581,8 +632,8 @@ definition {
 		Segmentation.editSegment(entry = "Signed In Test");
 
 		Segmentation.viewSegment(
-			key_criterion = "options",
-			propertyField = "false");
+			criterion = "options",
+			value = "false");
 	}
 
 	@description = "This is a test for LPS-130325."

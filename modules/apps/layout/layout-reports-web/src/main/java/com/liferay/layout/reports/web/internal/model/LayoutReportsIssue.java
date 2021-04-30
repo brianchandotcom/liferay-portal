@@ -19,17 +19,27 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 /**
  * @author Cristina González
  */
 public class LayoutReportsIssue {
 
-	public LayoutReportsIssue(Key key, long total) {
+	public LayoutReportsIssue(List<Detail> details, Key key, long total) {
 		if (key == null) {
 			throw new IllegalArgumentException("Key should not be null");
+		}
+
+		if (details == null) {
+			_details = Collections.emptyList();
+		}
+		else {
+			_details = Collections.unmodifiableList(details);
 		}
 
 		_key = key;
@@ -40,13 +50,18 @@ public class LayoutReportsIssue {
 	public boolean equals(Object object) {
 		LayoutReportsIssue layoutReportsIssue = (LayoutReportsIssue)object;
 
-		if (Objects.equals(layoutReportsIssue._key, _key) &&
+		if (Objects.equals(layoutReportsIssue._details, _details) &&
+			Objects.equals(layoutReportsIssue._key, _key) &&
 			(layoutReportsIssue._total == _total)) {
 
 			return true;
 		}
 
 		return false;
+	}
+
+	public List<Detail> getDetails() {
+		return _details;
 	}
 
 	public Key getKey() {
@@ -65,7 +80,17 @@ public class LayoutReportsIssue {
 	}
 
 	public JSONObject toJSONObject(ResourceBundle resourceBundle) {
+		Stream<Detail> stream = _details.stream();
+
 		return JSONUtil.put(
+			"details",
+			JSONUtil.putAll(
+				stream.filter(
+					detail -> detail.getTotal() > 0
+				).map(
+					detail -> detail.toJSONObject(resourceBundle)
+				).toArray())
+		).put(
 			"key", _key.toString()
 		).put(
 			"title",
@@ -77,10 +102,70 @@ public class LayoutReportsIssue {
 
 	@Override
 	public String toString() {
-		JSONObject jsonObject =
-			toJSONObject(ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+		JSONObject jsonObject = toJSONObject(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
 
 		return jsonObject.toString();
+	}
+
+	public static class Detail {
+
+		public Detail(String key, long total) {
+			if (key == null) {
+				throw new IllegalArgumentException("Key should not be null");
+			}
+
+			_key = key;
+			_total = total;
+		}
+
+		@Override
+		public boolean equals(Object object) {
+			Detail detail = (Detail)object;
+
+			if ((detail._key == _key) && (detail._total == _total)) {
+				return true;
+			}
+
+			return false;
+		}
+
+		public String getKey() {
+			return _key;
+		}
+
+		public long getTotal() {
+			return _total;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _key);
+
+			return HashUtil.hash(hashCode, _total);
+		}
+
+		public JSONObject toJSONObject(ResourceBundle resourceBundle) {
+			return JSONUtil.put(
+				"key", _key
+			).put(
+				"title", ResourceBundleUtil.getString(resourceBundle, _key)
+			).put(
+				"total", _total
+			);
+		}
+
+		@Override
+		public String toString() {
+			JSONObject jsonObject = toJSONObject(
+				ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+
+			return jsonObject.toString();
+		}
+
+		private final String _key;
+		private final long _total;
+
 	}
 
 	public enum Key {
@@ -104,6 +189,7 @@ public class LayoutReportsIssue {
 
 	}
 
+	private final List<Detail> _details;
 	private final Key _key;
 	private final long _total;
 

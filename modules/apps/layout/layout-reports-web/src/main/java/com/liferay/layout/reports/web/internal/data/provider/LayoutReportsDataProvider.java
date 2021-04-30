@@ -132,7 +132,7 @@ public class LayoutReportsDataProvider {
 
 		return Arrays.asList(
 			new LayoutReportsIssue(
-				LayoutReportsIssue.Key.ACCESSIBILITY,
+				null, LayoutReportsIssue.Key.ACCESSIBILITY,
 				IntStream.of(
 					_getCount(lighthouseAuditResultV5s.get("color-contrast")),
 					_getCount(lighthouseAuditResultV5s.get("image-alt")),
@@ -140,7 +140,7 @@ public class LayoutReportsDataProvider {
 					_getCount(lighthouseAuditResultV5s.get("video-caption"))
 				).sum()),
 			new LayoutReportsIssue(
-				LayoutReportsIssue.Key.SEO,
+				null, LayoutReportsIssue.Key.SEO,
 				IntStream.of(
 					_getCount(lighthouseAuditResultV5s.get("canonical")),
 					_getCount(

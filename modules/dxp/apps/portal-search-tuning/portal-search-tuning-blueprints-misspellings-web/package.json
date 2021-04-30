@@ -16,7 +16,7 @@
 		]
 	},
 	"main": "js/misspelling-sets.es.js",
-	"name": "portal-search-tuning-blueprints-misspellings-web",
+	"name": "@liferay/portal-search-tuning-blueprints-misspellings-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

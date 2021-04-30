@@ -36,7 +36,7 @@ function Body({
 	const SLAs = {open: [], resolved: []};
 
 	slaResults.forEach((result) => {
-		SLAs[result.status === 'Stopped' ? 'resolved' : 'open'].push(result);
+		SLAs[result.status === 'STOPPED' ? 'resolved' : 'open'].push(result);
 	});
 
 	const statesProps = {
@@ -210,10 +210,10 @@ function SLAResultItem({dateOverdue, name, onTime, remainingTime, status}) {
 
 	const getStatusText = (status) => {
 		switch (status) {
-			case 'Paused': {
+			case 'PAUSED': {
 				return `(${Liferay.Language.get('sla-paused')})`;
 			}
-			case 'Running': {
+			case 'RUNNING': {
 				const [durationText, onTimeText] = remainingTimeFormat(
 					onTime,
 					remainingTime
@@ -226,7 +226,7 @@ function SLAResultItem({dateOverdue, name, onTime, remainingTime, status}) {
 					)} (${durationText} ${onTimeText})`;
 			}
 			default: {
-				if (status === 'Stopped' && onTime) {
+				if (status === 'STOPPED' && onTime) {
 					return `(${Liferay.Language.get('resolved-on-time')})`;
 				}
 

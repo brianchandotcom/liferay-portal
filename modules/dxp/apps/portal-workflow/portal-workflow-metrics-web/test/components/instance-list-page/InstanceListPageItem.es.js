@@ -146,13 +146,13 @@ describe('The instance list item should', () => {
 		expect(instanceStatus.innerHTML).toEqual('-');
 	});
 
-	test('Be rendered with due date success when the slaStatus is "OnTime" and slaResult status is "Running"', () => {
+	test('Be rendered with due date success when the slaStatus is "OnTime" and slaResult status is "RUNNING"', () => {
 		const slaResult = {
 			dateOverdue: '2021-04-16T12:44:25Z',
 			name: 'SLA Test',
 			onTime: true,
 			remainingTime: 99999000,
-			status: 'Running',
+			status: 'RUNNING',
 		};
 
 		const {baseElement, container, getByText} = render(
@@ -212,13 +212,13 @@ describe('The instance list item should', () => {
 		expect(popoverElement).toBeNull();
 	});
 
-	test('Be rendered with due date danger when the slaStatus is "Overdue" and slaResult status is "Running"', () => {
+	test('Be rendered with due date danger when the slaStatus is "Overdue" and slaResult status is "RUNNING"', () => {
 		const slaResult = {
 			dateOverdue: '2021-04-16T12:44:25Z',
 			name: 'SLA Test',
 			onTime: false,
 			remainingTime: -99999000,
-			status: 'Running',
+			status: 'RUNNING',
 		};
 
 		const {baseElement, container, getByText} = render(
@@ -274,7 +274,7 @@ describe('The instance list item should', () => {
 	test('Be rendered with due date when the year is not the current year', () => {
 		const slaResult = {
 			dateOverdue: '2020-04-16T12:44:25Z',
-			status: 'Running',
+			status: 'RUNNING',
 		};
 
 		const {getByText} = render(

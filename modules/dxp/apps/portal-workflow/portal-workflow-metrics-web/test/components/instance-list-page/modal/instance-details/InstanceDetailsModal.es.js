@@ -58,7 +58,7 @@ const data = {
 			name: 'Review',
 			onTime: true,
 			remainingTime: 13427723,
-			status: 'Stopped',
+			status: 'STOPPED',
 		},
 		{
 			dateOverdue: '2020-01-24T10:08:30Z',
@@ -66,7 +66,7 @@ const data = {
 			name: 'Update',
 			onTime: false,
 			remainingTime: -13427723,
-			status: 'Running',
+			status: 'RUNNING',
 		},
 	],
 	slaStatus: 'Overdue',

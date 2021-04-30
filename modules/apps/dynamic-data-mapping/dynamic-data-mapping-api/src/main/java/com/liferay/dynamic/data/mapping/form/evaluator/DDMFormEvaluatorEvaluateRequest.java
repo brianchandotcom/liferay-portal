@@ -33,6 +33,10 @@ public final class DDMFormEvaluatorEvaluateRequest {
 		return _ddmForm;
 	}
 
+	public long getDDMFormInstanceId() {
+		return _ddmFormInstanceId;
+	}
+
 	public DDMFormLayout getDDMFormLayout() {
 		return _ddmFormLayout;
 	}
@@ -75,6 +79,13 @@ public final class DDMFormEvaluatorEvaluateRequest {
 
 		public Builder withCompanyId(long companyId) {
 			_ddmFormEvaluatorEvaluateRequest._companyId = companyId;
+
+			return this;
+		}
+
+		public Builder withDDMFormInstanceId(long ddmFormInstanceId) {
+			_ddmFormEvaluatorEvaluateRequest._ddmFormInstanceId =
+				ddmFormInstanceId;
 
 			return this;
 		}
@@ -129,6 +140,7 @@ public final class DDMFormEvaluatorEvaluateRequest {
 
 	private long _companyId;
 	private DDMForm _ddmForm;
+	private long _ddmFormInstanceId;
 	private DDMFormLayout _ddmFormLayout;
 	private DDMFormValues _ddmFormValues;
 	private boolean _editingFieldValue;

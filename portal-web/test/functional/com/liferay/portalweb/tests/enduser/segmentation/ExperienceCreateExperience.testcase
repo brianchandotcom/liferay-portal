@@ -314,12 +314,69 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130303."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationHierarchyPathSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130303 AddNewExperienceOrganizationHierarchyPathSegment pending implementation
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Hierarchy Path");
+
+		Segmentation.fillTitle(titleField = "Org with Hierarchy Path");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
+
+		Segmentation.fillProperty(propertyField = "organization Name");
+
+		AssertTextEquals(
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "1 Member");
+
+		Segmentation.viewMembers(memberName = "userfn2 userln2");
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "Experience For Org with Hierarchy Path",
+			segmentName = "Org with Hierarchy Path");
+
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperience(newExperience = "Experience For Org with Hierarchy Path");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Org users will see this heading");
+
+		PageEditor.prioritizeExperience(experienceName = "Experience For Org with Hierarchy Path");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			freeLogin = "true",
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Org users will see this heading");
 	}
 
 	@description = "This is a test for LPS-130304."

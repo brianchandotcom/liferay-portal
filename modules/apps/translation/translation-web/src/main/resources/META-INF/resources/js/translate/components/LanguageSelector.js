@@ -37,7 +37,7 @@ function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
 			active={isDropdownOpen}
 			onActiveChange={setIsDropdownOpen}
 			trigger={
-				<ClayButton displayType="secondary" monospaced>
+				<ClayButton displayType="secondary" monospaced small>
 					<span className="inline-item">
 						<ClayIcon symbol={selectedLanguage.icon} />
 					</span>

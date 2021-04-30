@@ -49,7 +49,10 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 			return annotation;
 		}
 
-		_checkDelimeters(fileName, javaClass.getContent(), annotation);
+		String content = javaClass.getContent();
+
+		_checkDelimeters(fileName, content, annotation);
+		_checkNameValue(fileName, content, annotation);
 
 		annotation = _fixOCDId(
 			fileName, annotation, javaClass.getPackageName());
@@ -85,6 +88,27 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 		addMessage(
 			fileName, sb.toString(),
 			getLineNumber(content, content.indexOf(matcher.group())));
+	}
+
+	private void _checkNameValue(
+		String fileName, String content, String annotation) {
+
+		if (!annotation.contains("@Meta.OCD")) {
+			return;
+		}
+
+		Matcher matcher = _annotationNameValueKeyPattern.matcher(annotation);
+
+		if (matcher.find()) {
+			String nameValue = matcher.group(1);
+
+			if (!nameValue.endsWith("-configuration-name")) {
+				addMessage(
+					fileName,
+					"Value for 'name' should end with '-configuration-name'",
+					getLineNumber(content, content.indexOf(matcher.group())));
+			}
+		}
 	}
 
 	private void _checkDelimeters(
@@ -134,5 +158,7 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 		"[\\s\\(](name|description) = \"%");
 	private static final Pattern _annotationMetaValueKeyPattern =
 		Pattern.compile("\\s(\\w+) = \"([\\w\\.\\-]+?)\"");
+	private static final Pattern _annotationNameValueKeyPattern =
+		Pattern.compile("\\sname = \"([\\w\\.\\-]+?)\"");
 
 }

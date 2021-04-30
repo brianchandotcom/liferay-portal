@@ -58,7 +58,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_productName = "Break Fluid",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD");
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
 
 		AssertElementNotPresent(
 			key_productName = "Break Fluid",

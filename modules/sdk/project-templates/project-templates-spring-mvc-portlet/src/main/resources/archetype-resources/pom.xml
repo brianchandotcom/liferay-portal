@@ -102,7 +102,7 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version>
-#if (!${liferayVersion.startsWith("7.0")} && !${liferayVersion.startsWith("7.1")})
+#if (!${liferayVersion.startsWith("7.0")} || !${liferayVersion.startsWith("7.1")})
 			<scope>provided</scope>
 #end
 		</dependency>
@@ -123,7 +123,7 @@
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.0.14.Final</version>
-#if (!${liferayVersion.startsWith("7.0")} && !${liferayVersion.startsWith("7.1")})
+#if (!${liferayVersion.startsWith("7.0")} || !${liferayVersion.startsWith("7.1")})
 			<exclusions>
 				<exclusion>
 					<groupId>javax.validation</groupId>

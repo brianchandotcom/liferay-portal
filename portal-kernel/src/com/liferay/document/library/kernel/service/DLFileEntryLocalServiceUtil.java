@@ -988,6 +988,26 @@ public class DLFileEntryLocalServiceUtil {
 			Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
 				ddmFormValuesMap,
 			java.io.File file, InputStream inputStream, long size,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
+			ddmFormValuesMap, file, inputStream, size, expirationDate,
+			reviewDate, serviceContext);
+	}
+
+	public static DLFileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			com.liferay.document.library.kernel.model.DLVersionNumberIncrease
+				dlVersionNumberIncrease,
+			long fileEntryTypeId,
+			Map<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+				ddmFormValuesMap,
+			java.io.File file, InputStream inputStream, long size,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 

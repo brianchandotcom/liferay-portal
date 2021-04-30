@@ -34,13 +34,13 @@ public class DatasetViewActiveSettingsImpl
 	}
 
 	@Override
-	public String getJSONString() {
-		return _datasetViewStateEntry.getJson();
+	public String getViewState() {
+		return _datasetViewStateEntry.getViewState();
 	}
 
 	@Override
-	public void setJSONString(String jsonString) {
-		_datasetViewStateEntry.setJson(jsonString);
+	public void setViewState(String viewState) {
+		_datasetViewStateEntry.setViewState(viewState);
 	}
 
 	private final DatasetViewStateEntry _datasetViewStateEntry;

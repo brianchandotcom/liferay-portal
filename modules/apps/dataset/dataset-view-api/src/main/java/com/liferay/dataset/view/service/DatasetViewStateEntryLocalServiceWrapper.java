@@ -69,10 +69,10 @@ public class DatasetViewStateEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.dataset.view.model.DatasetViewStateEntry
-		createDatasetViewStateEntry(String json) {
+		createDatasetViewStateEntry(String viewState) {
 
 		return _datasetViewStateEntryLocalService.createDatasetViewStateEntry(
-			json);
+			viewState);
 	}
 
 	/**

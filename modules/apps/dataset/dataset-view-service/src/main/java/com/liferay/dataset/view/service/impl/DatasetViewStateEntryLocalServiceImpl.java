@@ -40,12 +40,12 @@ import org.osgi.service.component.annotations.Component;
 public class DatasetViewStateEntryLocalServiceImpl
 	extends DatasetViewStateEntryLocalServiceBaseImpl {
 
-	public DatasetViewStateEntry createDatasetViewStateEntry(String json) {
+	public DatasetViewStateEntry createDatasetViewStateEntry(String viewState) {
 		DatasetViewStateEntry datasetViewStateEntry =
 			datasetViewStateEntryLocalService.createDatasetViewStateEntry(
 				counterLocalService.increment());
 
-		datasetViewStateEntry.setJson(json);
+		datasetViewStateEntry.setViewState(viewState);
 
 		return datasetViewStateEntry;
 	}

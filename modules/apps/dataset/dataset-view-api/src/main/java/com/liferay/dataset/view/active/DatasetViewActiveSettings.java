@@ -19,8 +19,8 @@ package com.liferay.dataset.view.active;
  */
 public interface DatasetViewActiveSettings {
 
-	public String getJSONString();
+	public String getViewState();
 
-	public void setJSONString(String jsonString);
+	public void setViewState(String viewState);
 
 }

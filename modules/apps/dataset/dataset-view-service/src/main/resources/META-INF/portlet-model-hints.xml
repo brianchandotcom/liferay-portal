@@ -24,6 +24,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="json" type="String" />
+		<field name="viewState" type="String" />
 	</model>
 </model-hints>

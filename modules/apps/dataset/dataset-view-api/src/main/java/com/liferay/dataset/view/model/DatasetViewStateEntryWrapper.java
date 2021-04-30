@@ -53,7 +53,7 @@ public class DatasetViewStateEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("json", getJson());
+		attributes.put("viewState", getViewState());
 
 		return attributes;
 	}
@@ -109,10 +109,10 @@ public class DatasetViewStateEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String json = (String)attributes.get("json");
+		String viewState = (String)attributes.get("viewState");
 
-		if (json != null) {
-			setJson(json);
+		if (viewState != null) {
+			setViewState(viewState);
 		}
 	}
 
@@ -164,16 +164,6 @@ public class DatasetViewStateEntryWrapper
 	@Override
 	public long getDatasetViewStateEntryId() {
 		return model.getDatasetViewStateEntryId();
-	}
-
-	/**
-	 * Returns the json of this dataset view state entry.
-	 *
-	 * @return the json of this dataset view state entry
-	 */
-	@Override
-	public String getJson() {
-		return model.getJson();
 	}
 
 	/**
@@ -256,6 +246,16 @@ public class DatasetViewStateEntryWrapper
 		return model.getUuid();
 	}
 
+	/**
+	 * Returns the view state of this dataset view state entry.
+	 *
+	 * @return the view state of this dataset view state entry
+	 */
+	@Override
+	public String getViewState() {
+		return model.getViewState();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -299,16 +299,6 @@ public class DatasetViewStateEntryWrapper
 	@Override
 	public void setDatasetViewStateEntryId(long datasetViewStateEntryId) {
 		model.setDatasetViewStateEntryId(datasetViewStateEntryId);
-	}
-
-	/**
-	 * Sets the json of this dataset view state entry.
-	 *
-	 * @param json the json of this dataset view state entry
-	 */
-	@Override
-	public void setJson(String json) {
-		model.setJson(json);
 	}
 
 	/**
@@ -389,6 +379,16 @@ public class DatasetViewStateEntryWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets the view state of this dataset view state entry.
+	 *
+	 * @param viewState the view state of this dataset view state entry
+	 */
+	@Override
+	public void setViewState(String viewState) {
+		model.setViewState(viewState);
 	}
 
 	@Override

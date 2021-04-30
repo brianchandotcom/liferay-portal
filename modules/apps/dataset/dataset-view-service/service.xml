@@ -54,7 +54,7 @@
 
 		<!-- Other fields -->
 
-		<column name="json" type="String" />
+		<column name="viewState" type="String" />
 
 		<!-- Order -->
 

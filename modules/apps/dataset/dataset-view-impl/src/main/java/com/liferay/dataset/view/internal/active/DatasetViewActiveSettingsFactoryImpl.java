@@ -91,11 +91,11 @@ public class DatasetViewActiveSettingsFactoryImpl
 
 	private DatasetViewStateEntry _createDatasetViewStateEntry(
 		String datasetDisplayId, long plid, String portletId, long userId,
-		String json) {
+		String viewState) {
 
 		DatasetViewStateEntry datasetViewStateEntry =
 			_datasetViewStateEntryLocalService.createDatasetViewStateEntry(
-				json);
+				viewState);
 
 		_datasetViewStateEntryLocalService.updateDatasetViewStateEntry(
 			datasetViewStateEntry);

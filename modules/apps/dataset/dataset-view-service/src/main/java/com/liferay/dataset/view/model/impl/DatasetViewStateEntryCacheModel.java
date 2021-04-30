@@ -96,8 +96,8 @@ public class DatasetViewStateEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", json=");
-		sb.append(json);
+		sb.append(", viewState=");
+		sb.append(viewState);
 		sb.append("}");
 
 		return sb.toString();
@@ -143,11 +143,11 @@ public class DatasetViewStateEntryCacheModel
 			datasetViewStateEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (json == null) {
-			datasetViewStateEntryImpl.setJson("");
+		if (viewState == null) {
+			datasetViewStateEntryImpl.setViewState("");
 		}
 		else {
-			datasetViewStateEntryImpl.setJson(json);
+			datasetViewStateEntryImpl.setViewState(viewState);
 		}
 
 		datasetViewStateEntryImpl.resetOriginalValues();
@@ -168,7 +168,7 @@ public class DatasetViewStateEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		json = objectInput.readUTF();
+		viewState = objectInput.readUTF();
 	}
 
 	@Override
@@ -198,11 +198,11 @@ public class DatasetViewStateEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (json == null) {
+		if (viewState == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(json);
+			objectOutput.writeUTF(viewState);
 		}
 	}
 
@@ -214,6 +214,6 @@ public class DatasetViewStateEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String json;
+	public String viewState;
 
 }

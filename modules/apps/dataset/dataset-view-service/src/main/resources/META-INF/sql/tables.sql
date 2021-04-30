@@ -22,5 +22,5 @@ create table DatasetViewStateEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	json VARCHAR(75) null
+	viewState VARCHAR(75) null
 );

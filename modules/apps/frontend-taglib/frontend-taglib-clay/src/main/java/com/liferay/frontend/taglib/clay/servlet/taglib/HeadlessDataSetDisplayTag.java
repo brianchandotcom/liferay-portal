@@ -399,7 +399,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 			datasetViewActiveSettingsFactory.getDatasetViewActiveSettings(
 				request, _id);
 
-		_activeViewSettingsJSON = datasetViewActiveSettings.getJSONString();
+		_activeViewSettingsJSON = datasetViewActiveSettings.getViewState();
 	}
 
 	private void _setClayDataSetDisplayViewsContext() {

@@ -206,19 +206,19 @@ public interface DatasetViewStateEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the json of this dataset view state entry.
+	 * Returns the view state of this dataset view state entry.
 	 *
-	 * @return the json of this dataset view state entry
+	 * @return the view state of this dataset view state entry
 	 */
 	@AutoEscape
-	public String getJson();
+	public String getViewState();
 
 	/**
-	 * Sets the json of this dataset view state entry.
+	 * Sets the view state of this dataset view state entry.
 	 *
-	 * @param json the json of this dataset view state entry
+	 * @param viewState the view state of this dataset view state entry
 	 */
-	public void setJson(String json);
+	public void setViewState(String viewState);
 
 	/**
 	 * Returns the container model ID of this dataset view state entry.

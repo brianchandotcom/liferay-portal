@@ -57,8 +57,9 @@ public class DatasetViewStateEntryTable
 	public final Column<DatasetViewStateEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<DatasetViewStateEntryTable, String> json = createColumn(
-		"json", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<DatasetViewStateEntryTable, String> viewState =
+		createColumn(
+			"viewState", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private DatasetViewStateEntryTable() {
 		super("DatasetViewStateEntry", DatasetViewStateEntryTable::new);

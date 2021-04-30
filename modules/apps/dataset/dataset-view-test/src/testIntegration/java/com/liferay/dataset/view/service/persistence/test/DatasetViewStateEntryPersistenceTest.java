@@ -140,7 +140,7 @@ public class DatasetViewStateEntryPersistenceTest {
 
 		newDatasetViewStateEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		newDatasetViewStateEntry.setJson(RandomTestUtil.randomString());
+		newDatasetViewStateEntry.setViewState(RandomTestUtil.randomString());
 
 		_datasetViewStateEntries.add(
 			_persistence.update(newDatasetViewStateEntry));
@@ -176,8 +176,8 @@ public class DatasetViewStateEntryPersistenceTest {
 				existingDatasetViewStateEntry.getModifiedDate()),
 			Time.getShortTimestamp(newDatasetViewStateEntry.getModifiedDate()));
 		Assert.assertEquals(
-			existingDatasetViewStateEntry.getJson(),
-			newDatasetViewStateEntry.getJson());
+			existingDatasetViewStateEntry.getViewState(),
+			newDatasetViewStateEntry.getViewState());
 	}
 
 	@Test
@@ -228,8 +228,8 @@ public class DatasetViewStateEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"DatasetViewStateEntry", "mvccVersion", true, "uuid", true,
 			"datasetViewStateEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "json",
-			true);
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"viewState", true);
 	}
 
 	@Test
@@ -489,7 +489,7 @@ public class DatasetViewStateEntryPersistenceTest {
 
 		datasetViewStateEntry.setModifiedDate(RandomTestUtil.nextDate());
 
-		datasetViewStateEntry.setJson(RandomTestUtil.randomString());
+		datasetViewStateEntry.setViewState(RandomTestUtil.randomString());
 
 		_datasetViewStateEntries.add(
 			_persistence.update(datasetViewStateEntry));

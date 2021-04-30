@@ -44,7 +44,7 @@ public class DatasetViewStateEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setJson(model.getJson());
+		soapModel.setViewState(model.getViewState());
 
 		return soapModel;
 	}
@@ -171,12 +171,12 @@ public class DatasetViewStateEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getJson() {
-		return _json;
+	public String getViewState() {
+		return _viewState;
 	}
 
-	public void setJson(String json) {
-		_json = json;
+	public void setViewState(String viewState) {
+		_viewState = viewState;
 	}
 
 	private long _mvccVersion;
@@ -187,6 +187,6 @@ public class DatasetViewStateEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _json;
+	private String _viewState;
 
 }

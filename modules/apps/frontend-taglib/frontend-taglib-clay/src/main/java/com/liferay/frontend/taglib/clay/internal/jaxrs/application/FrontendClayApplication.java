@@ -148,7 +148,7 @@ public class FrontendClayApplication extends Application {
 
 			JSONObject currentActiveViewSettingsJSONObject =
 				_jsonFactory.createJSONObject(
-					datasetViewActiveSettings.getJSONString());
+					datasetViewActiveSettings.getViewState());
 
 			JSONObject activeViewSettingsJSONObject =
 				_jsonFactory.createJSONObject(activeViewSettingsJSON);
@@ -158,7 +158,7 @@ public class FrontendClayApplication extends Application {
 					key, activeViewSettingsJSONObject.get(key));
 			}
 
-			datasetViewActiveSettings.setJSONString(
+			datasetViewActiveSettings.setViewState(
 				currentActiveViewSettingsJSONObject.toJSONString());
 
 			_datasetViewActiveSettingsFactory.storeDatasetViewActiveSettings(

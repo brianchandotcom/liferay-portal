@@ -75,9 +75,9 @@ public class DatasetViewStateEntryLocalServiceUtil {
 	}
 
 	public static DatasetViewStateEntry createDatasetViewStateEntry(
-		String json) {
+		String viewState) {
 
-		return getService().createDatasetViewStateEntry(json);
+		return getService().createDatasetViewStateEntry(viewState);
 	}
 
 	/**

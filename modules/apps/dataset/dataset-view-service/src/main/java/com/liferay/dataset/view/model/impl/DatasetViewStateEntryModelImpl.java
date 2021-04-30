@@ -75,7 +75,7 @@ public class DatasetViewStateEntryModelImpl
 		{"datasetViewStateEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"json", Types.VARCHAR}
+		{"viewState", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -90,11 +90,11 @@ public class DatasetViewStateEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("json", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("viewState", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DatasetViewStateEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,datasetViewStateEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,json VARCHAR(75) null)";
+		"create table DatasetViewStateEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,datasetViewStateEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,viewState VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DatasetViewStateEntry";
@@ -321,11 +321,12 @@ public class DatasetViewStateEntryModelImpl
 			"modifiedDate",
 			(BiConsumer<DatasetViewStateEntry, Date>)
 				DatasetViewStateEntry::setModifiedDate);
-		attributeGetterFunctions.put("json", DatasetViewStateEntry::getJson);
+		attributeGetterFunctions.put(
+			"viewState", DatasetViewStateEntry::getViewState);
 		attributeSetterBiConsumers.put(
-			"json",
+			"viewState",
 			(BiConsumer<DatasetViewStateEntry, String>)
-				DatasetViewStateEntry::setJson);
+				DatasetViewStateEntry::setViewState);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -497,22 +498,22 @@ public class DatasetViewStateEntryModelImpl
 	}
 
 	@Override
-	public String getJson() {
-		if (_json == null) {
+	public String getViewState() {
+		if (_viewState == null) {
 			return "";
 		}
 		else {
-			return _json;
+			return _viewState;
 		}
 	}
 
 	@Override
-	public void setJson(String json) {
+	public void setViewState(String viewState) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_json = json;
+		_viewState = viewState;
 	}
 
 	@Override
@@ -612,7 +613,7 @@ public class DatasetViewStateEntryModelImpl
 		datasetViewStateEntryImpl.setUserName(getUserName());
 		datasetViewStateEntryImpl.setCreateDate(getCreateDate());
 		datasetViewStateEntryImpl.setModifiedDate(getModifiedDate());
-		datasetViewStateEntryImpl.setJson(getJson());
+		datasetViewStateEntryImpl.setViewState(getViewState());
 
 		datasetViewStateEntryImpl.resetOriginalValues();
 
@@ -738,12 +739,12 @@ public class DatasetViewStateEntryModelImpl
 			datasetViewStateEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		datasetViewStateEntryCacheModel.json = getJson();
+		datasetViewStateEntryCacheModel.viewState = getViewState();
 
-		String json = datasetViewStateEntryCacheModel.json;
+		String viewState = datasetViewStateEntryCacheModel.viewState;
 
-		if ((json != null) && (json.length() == 0)) {
-			datasetViewStateEntryCacheModel.json = null;
+		if ((viewState != null) && (viewState.length() == 0)) {
+			datasetViewStateEntryCacheModel.viewState = null;
 		}
 
 		return datasetViewStateEntryCacheModel;
@@ -830,7 +831,7 @@ public class DatasetViewStateEntryModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _json;
+	private String _viewState;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -870,7 +871,7 @@ public class DatasetViewStateEntryModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("json", _json);
+		_columnOriginalValues.put("viewState", _viewState);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -910,7 +911,7 @@ public class DatasetViewStateEntryModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("json", 256L);
+		columnBitmasks.put("viewState", 256L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

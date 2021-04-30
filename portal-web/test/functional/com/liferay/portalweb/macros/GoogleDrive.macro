@@ -67,8 +67,6 @@ definition {
 			locator1 = "GoogleDrive#SELECT_BUTTON",
 			value1 = "Select");
 
-		AssertConfirm.waitForConfirmation(value1 = "You are about to send 1 item to localhost. Would you like to continue?");
-
 		SelectFrameTop();
 
 		var key_dmDocumentTitle = "${googleDocTitle}";

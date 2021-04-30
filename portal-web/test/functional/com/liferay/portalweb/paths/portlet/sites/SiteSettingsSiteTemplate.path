@@ -9,13 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE</td>
-	<td>//div[contains(@id,'siteTemplate')]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_CLONED_FROM_TEMPLATE_MESSAGE</td>
-	<td>//div[contains(@id,'siteTemplateContent')]//div//div</td>
+	<td>CONTENT_CONTAINER</td>
+	<td>//div[contains(@class,'content-container')]</td>
 	<td></td>
 </tr>
 </tbody>

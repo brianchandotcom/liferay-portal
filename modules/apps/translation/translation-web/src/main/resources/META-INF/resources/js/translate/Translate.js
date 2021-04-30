@@ -24,18 +24,43 @@ import TranslateFieldSetEntries from './components/TranslateFieldSetEntries';
 import TranslateHeader from './components/TranslateHeader';
 import {FETCH_STATUS} from './constants';
 
-const normalizeFields = (fields) =>
-	fields.reduce((acc, field) => {
-		const [id, content] = Object.entries(field)[0];
-
-		return {...acc, [id]: content};
-	}, {});
-
 const ACTION_TYPES = {
 	UPDATE_FETCH_STATUS: 'UPDATE_FETCH_STATUS',
 	UPDATE_FIELD: 'UPDATE_FIELD',
 	UPDATE_FIELDS_BULK: 'UPDATE_FIELDS_BULK',
 };
+
+const getInfoFields = (infoFieldSetEntries = []) => {
+	const sourceFields = {};
+	const targetFields = {};
+
+	infoFieldSetEntries.forEach(({fields}) => {
+		fields.forEach(({id, sourceContent, targetContent}) => {
+			sourceFields[id] = sourceContent;
+
+			targetFields[id] = {
+				content: targetContent,
+				message: '',
+				status: '',
+			};
+		});
+	});
+
+	return {
+		sourceFields,
+		targetFields,
+	};
+};
+
+const normalizeFields = (fields = []) =>
+	fields.reduce((acc, field) => {
+		const [id, content] = Object.entries(field)[0];
+
+		return {...acc, [id]: {content}};
+	}, {});
+
+const denormalizeFields = (fields = {}) =>
+	Object.entries(fields).map(([key, value]) => ({[key]: value}));
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -62,27 +87,6 @@ const reducer = (state, action) => {
 		default:
 			return state;
 	}
-};
-
-const getInfoFields = (infoFieldSetEntries = []) => {
-	const sourceFields = [];
-	const targetFields = {};
-
-	infoFieldSetEntries.forEach(({fields}) => {
-		fields.forEach(({id, sourceContent, targetContent}) => {
-			sourceFields.push({[id]: sourceContent});
-			targetFields[id] = {
-				content: targetContent,
-				message: '',
-				status: '',
-			};
-		});
-	});
-
-	return {
-		sourceFields,
-		targetFields,
-	};
 };
 
 const Translate = ({
@@ -154,7 +158,7 @@ const Translate = ({
 			type: ACTION_TYPES.UPDATE_FETCH_STATUS,
 		});
 
-		fetchAutoTranslate({fields: sourceFields})
+		fetchAutoTranslate({fields: denormalizeFields(sourceFields)})
 			.then(({error, fields}) => {
 				if (error) {
 					throw error;
@@ -203,9 +207,7 @@ const Translate = ({
 		});
 
 		fetchAutoTranslate({
-			fields: sourceFields.filter((field) => {
-				return Object.keys(field)[0] === fieldId;
-			}),
+			fields: denormalizeFields({[fieldId]: sourceFields[fieldId]}),
 		})
 			.then(({error, fields}) => {
 				if (error) {
@@ -213,7 +215,7 @@ const Translate = ({
 				}
 
 				if (isMounted()) {
-					const [id, content] = Object.entries(
+					const [id, {content}] = Object.entries(
 						normalizeFields(fields)
 					)[0];
 

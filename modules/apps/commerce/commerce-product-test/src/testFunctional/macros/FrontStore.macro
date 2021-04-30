@@ -1,9 +1,9 @@
 definition {
 
 	macro addInitializerProductToCart {
-		Select(
+		Type(
 			key_productName = "${productName}",
-			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
 			value1 = "${productQuantity}");
 
 		Click(

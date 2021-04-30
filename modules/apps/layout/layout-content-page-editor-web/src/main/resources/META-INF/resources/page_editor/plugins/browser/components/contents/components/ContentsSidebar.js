@@ -22,6 +22,18 @@ import SidebarPanelContent from '../../../../../common/components/SidebarPanelCo
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
 
+const getEditableTitle = (editable, languageId) => {
+	if (editable.type === EDITABLE_TYPES.text) {
+		return editable[languageId];
+	}
+
+	const div = document.createElement('div');
+
+	div.innerHTML = editable[languageId];
+
+	return div.textContent;
+};
+
 const getEditableValues = (fragmentEntryLinks, languageId) =>
 	Object.values(fragmentEntryLinks)
 		.filter(
@@ -57,13 +69,13 @@ const getEditableValues = (fragmentEntryLinks, languageId) =>
 			],
 			[]
 		)
-		.filter((fragmentEntryLink) => fragmentEntryLink[languageId]);
+		.filter((editable) => editable[languageId]);
 
 const normalizeEditableValues = (editable, languageId) => {
 	return {
 		...editable,
 		icon: 'align-left',
-		title: editable[languageId] || editable.title || editable.defaultValue,
+		title: getEditableTitle(editable, languageId),
 	};
 };
 

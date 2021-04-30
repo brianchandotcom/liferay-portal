@@ -1,0 +1,59 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add an attachment to wiki page"
+	macro addAttachmentToWikiPage {
+		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName},${fileName},${mimeType}");
+
+		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}");
+
+		JSONWikiAPI._addAttachmentToWikiPage(
+			fileName = "${fileName}",
+			mimeType = "${mimeType}",
+			nodeId = "${nodeId}",
+			title = "${wikiPageName}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a wiki child page"
+	macro addWikiChildPage {
+		Variables.assertDefined(parameterList = "${wikiParentPageName},${wikiChildPageName},${wikiNodeName}");
+
+		var pageId = JSONWikiSetter.setPageId(groupName = "${groupName}", title = "${wikiParentPageName}", name = "${wikiNodeName}");
+
+		JSONWikiAPI._addWikiChildPage(
+			content = "${wikiChildPageContent}",
+			encodingFormat = "${encodingFormat}",
+			headline = "${wikiChildPageName}",
+			pageId = "${pageId}",
+			tagName = "${tagName}",
+			viewableBy = "${viewableBy}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a wiki node"
+	macro addWikiNode {
+		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName}");
+
+		var groupId = JSONWikiSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+
+		JSONWikiAPI._addWikiNode(
+			description = "${wikiNodeDescription}",
+			groupId = "${groupId}",
+			name = "${wikiNodeName}",
+			viewableBy = "${viewableBy}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a wiki page"
+	macro addWikiPage {
+		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
+
+		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}");
+
+		JSONWikiAPI._addWikiPage(
+			content = "${wikiPageContent}",
+			encodingFormat = "${encodingFormat}",
+			headline = "${wikiPageName}",
+			nodeId = "${nodeId}",
+			tagName = "${tagName}",
+			viewableBy = "${viewableBy}");
+	}
+
+}

@@ -95,11 +95,12 @@ public class LayoutReportsDataProvider {
 	}
 
 	private LayoutReportsIssue.Detail _getDetail(
-		String key,
-		Map<String, LighthouseAuditResultV5> lighthouseAuditResultV5s) {
+		LayoutReportsIssue.Detail.Key key,
+		Map<String, LighthouseAuditResultV5> lighthouseAuditResultV5s,
+		String pageSpeedKey) {
 
 		return new LayoutReportsIssue.Detail(
-			key, _getCount(lighthouseAuditResultV5s.get(key)));
+			key, _getCount(lighthouseAuditResultV5s.get(pageSpeedKey)));
 	}
 
 	private List<LayoutReportsIssue> _getLayoutReportsIssues(String url)
@@ -140,23 +141,56 @@ public class LayoutReportsDataProvider {
 		return Arrays.asList(
 			new LayoutReportsIssue(
 				Arrays.asList(
-					_getDetail("color-contrast", lighthouseAuditResultV5s),
-					_getDetail("image-alt", lighthouseAuditResultV5s),
-					_getDetail("input-image-alt", lighthouseAuditResultV5s),
-					_getDetail("video-caption", lighthouseAuditResultV5s)),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.LOW_CONTRAST_RATIO,
+						lighthouseAuditResultV5s, "color-contrast"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.
+							MISSING_IMG_ALT_ATTRIBUTES,
+						lighthouseAuditResultV5s, "image-alt"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.
+							MISSING_INPUT_ALT_ATTRIBUTES,
+						lighthouseAuditResultV5s, "input-image-alt"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.MISSING_VIDEO_CAPTION,
+						lighthouseAuditResultV5s, "video-caption")),
 				LayoutReportsIssue.Key.ACCESSIBILITY),
 			new LayoutReportsIssue(
 				Arrays.asList(
-					_getDetail("canonical", lighthouseAuditResultV5s),
-					_getDetail("crawlable-anchors", lighthouseAuditResultV5s),
-					_getDetail("document-title", lighthouseAuditResultV5s),
-					_getDetail("font-size", lighthouseAuditResultV5s),
-					_getDetail("hreflang", lighthouseAuditResultV5s),
-					_getDetail("image-aspect-ratio", lighthouseAuditResultV5s),
-					_getDetail("is-crawlable", lighthouseAuditResultV5s),
-					_getDetail("link-text", lighthouseAuditResultV5s),
-					_getDetail("meta-description", lighthouseAuditResultV5s),
-					_getDetail("tap-targets", lighthouseAuditResultV5s)),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.CANONICAL_LINK,
+						lighthouseAuditResultV5s, "canonical"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.CRAWLABLE_ANCHORS,
+						lighthouseAuditResultV5s, "crawlable-anchors"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.INDEXING,
+						lighthouseAuditResultV5s, "is-crawlable"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.FONT_SIZES,
+						lighthouseAuditResultV5s, "font-size"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.HREFLANG,
+						lighthouseAuditResultV5s, "hreflang"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.
+							INCORRECT_IMAGE_ASPECT_RATIOS,
+						lighthouseAuditResultV5s, "image-aspect-ratio"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.
+							LINKS_DO_NOT_HAVE_DESCRIPTIVE_TEXT,
+						lighthouseAuditResultV5s, "link-text"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.
+							META_DESCRIPTION_IS_MISSING,
+						lighthouseAuditResultV5s, "meta-description"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.SMALL_TAP_TARGETS,
+						lighthouseAuditResultV5s, "tap-targets"),
+					_getDetail(
+						LayoutReportsIssue.Detail.Key.TITLE,
+						lighthouseAuditResultV5s, "document-title")),
 				LayoutReportsIssue.Key.SEO));
 	}
 

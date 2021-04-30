@@ -115,7 +115,7 @@ public class LayoutReportsIssue {
 
 	public static class Detail {
 
-		public Detail(String key, long total) {
+		public Detail(Detail.Key key, long total) {
 			if (key == null) {
 				throw new IllegalArgumentException("Key should not be null");
 			}
@@ -135,7 +135,7 @@ public class LayoutReportsIssue {
 			return false;
 		}
 
-		public String getKey() {
+		public Key getKey() {
 			return _key;
 		}
 
@@ -152,9 +152,10 @@ public class LayoutReportsIssue {
 
 		public JSONObject toJSONObject(ResourceBundle resourceBundle) {
 			return JSONUtil.put(
-				"key", _key
+				"key", _key.toString()
 			).put(
-				"title", ResourceBundleUtil.getString(resourceBundle, _key)
+				"title",
+				ResourceBundleUtil.getString(resourceBundle, _key.toString())
 			).put(
 				"total", _total
 			);
@@ -168,7 +169,124 @@ public class LayoutReportsIssue {
 			return jsonObject.toString();
 		}
 
-		private final String _key;
+		public enum Key {
+
+			CANONICAL_LINK {
+
+				@Override
+				public String toString() {
+					return "canonical-link";
+				}
+
+			},
+			CRAWLABLE_ANCHORS {
+
+				@Override
+				public String toString() {
+					return "crawlable-anchors";
+				}
+
+			},
+			FONT_SIZES {
+
+				@Override
+				public String toString() {
+					return "font-sizes";
+				}
+
+			},
+			HREFLANG {
+
+				@Override
+				public String toString() {
+					return "hreflang";
+				}
+
+			},
+			INCORRECT_IMAGE_ASPECT_RATIOS {
+
+				@Override
+				public String toString() {
+					return "incorrect-image-aspect-ratios";
+				}
+
+			},
+			INDEXING {
+
+				@Override
+				public String toString() {
+					return "indexing";
+				}
+
+			},
+			LINKS_DO_NOT_HAVE_DESCRIPTIVE_TEXT {
+
+				@Override
+				public String toString() {
+					return "links-do-not-have-descriptive-text";
+				}
+
+			},
+			LOW_CONTRAST_RATIO {
+
+				@Override
+				public String toString() {
+					return "low-contrast-ratio";
+				}
+
+			},
+			META_DESCRIPTION_IS_MISSING {
+
+				@Override
+				public String toString() {
+					return "meta-description-is-missing";
+				}
+
+			},
+			MISSING_IMG_ALT_ATTRIBUTES {
+
+				@Override
+				public String toString() {
+					return "missing-img-alt-attributes";
+				}
+
+			},
+			MISSING_INPUT_ALT_ATTRIBUTES {
+
+				@Override
+				public String toString() {
+					return "missing-input-alt-attributes";
+				}
+
+			},
+			MISSING_VIDEO_CAPTION {
+
+				@Override
+				public String toString() {
+					return "missing-video-caption";
+				}
+
+			},
+			SMALL_TAP_TARGETS {
+
+				@Override
+				public String toString() {
+					return "small-tap-targets";
+				}
+
+			},
+			TITLE {
+
+				@Override
+				public String toString() {
+					return "title";
+				}
+
+			}
+
+		}
+
+		private final Detail.Key _key;
 		private final long _total;
 
 	}

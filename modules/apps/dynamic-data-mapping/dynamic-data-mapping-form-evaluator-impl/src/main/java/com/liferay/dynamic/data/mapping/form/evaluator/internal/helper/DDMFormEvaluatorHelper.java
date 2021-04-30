@@ -212,8 +212,10 @@ public class DDMFormEvaluatorHelper {
 
 		if (_ddmFormLayout.getNextPage() != _ddmFormLayout.getPreviousPage()) {
 			DDMFormPageChange ddmFormPageChange =
-				_ddmFormPageChangeTracker.getDDMFormPageChangeById(
-					_ddmFormEvaluatorEvaluateRequest.getDDMFormInstanceId());
+				_ddmFormPageChangeTracker.getDDMFormPageChangeByDDMFormInstanceId(
+					String.valueOf(
+						_ddmFormEvaluatorEvaluateRequest.
+							getDDMFormInstanceId()));
 
 			if (ddmFormPageChange == null) {
 				return;

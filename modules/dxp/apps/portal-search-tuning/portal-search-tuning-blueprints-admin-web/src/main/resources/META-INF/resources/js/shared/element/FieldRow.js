@@ -19,10 +19,35 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import fuzzy from 'fuzzy';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
+import {alphabeticalSort, stringLengthSort} from '../../utils/sort';
 import {isDefined} from '../../utils/utils';
 import ThemeContext from '../ThemeContext';
 
 const USER_LANGUAGE_VARIABLE = '${context.language_id}';
+
+/**
+ * Used for displaying autocomplete results. Filters a list of index field
+ * objects and sorts them by string length or alphabetically if lengths are the
+ * same.
+ * @param {Array} indexFields List of index field objects.
+ * @param {String} field Field name to filter the field objects.
+ * @returns
+ */
+function filterAndSortIndexFields(indexFields, field) {
+	return indexFields
+		.filter((indexField) =>
+			indexField.name.toLowerCase().includes(field.toLowerCase())
+		)
+		.sort((a, b) => {
+			const sort = stringLengthSort(a.name, b.name);
+
+			if (sort === 0 || field === '') {
+				return alphabeticalSort(a.name, b.name);
+			}
+
+			return sort;
+		});
+}
 
 function AutocompleteItem({indexField, match = '', onClick}) {
 	const fuzzyMatch = fuzzy.match(match, indexField.name, {
@@ -80,16 +105,12 @@ function FieldRow({
 	const inputRef = useRef();
 
 	const [filteredIndexFields, setFilteredIndexFields] = useState(
-		indexFields.filter((indexField) => indexField.name.includes(field))
+		filterAndSortIndexFields(indexFields, field)
 	);
 	const [showDropDown, setShowDropDown] = useState(false);
 
 	useEffect(() => {
-		setFilteredIndexFields(
-			indexFields.filter((indexField) =>
-				indexField.name.toLowerCase().includes(field.toLowerCase())
-			)
-		);
+		setFilteredIndexFields(filterAndSortIndexFields(indexFields, field));
 	}, [indexFields, field]);
 
 	const _getIndexField = (fieldName) => {
@@ -115,6 +136,7 @@ function FieldRow({
 	};
 
 	const _handleAutocompleteItemClick = (indexField) => () => {
+
 		// Special case if the same field name has both a localized and
 		// non-localized option.
 		//
@@ -131,7 +153,8 @@ function FieldRow({
 				languageIdPosition: indexField.language_id_position,
 				locale: '',
 			});
-		} else {
+		}
+		else {
 			onChange({
 				field: indexField.name,
 				languageIdPosition: indexField.language_id_position,

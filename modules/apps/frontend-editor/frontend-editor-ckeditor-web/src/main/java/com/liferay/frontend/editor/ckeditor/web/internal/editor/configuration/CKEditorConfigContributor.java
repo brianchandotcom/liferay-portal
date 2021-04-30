@@ -210,6 +210,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 		JSONArray jsonArray = JSONUtil.putAll(
 			toJSONArray("['Undo', 'Redo']"),
 			toJSONArray("['Styles', 'Bold', 'Italic', 'Underline']"),
+			toJSONArray("['RemoveFormat']"),
 			toJSONArray("['NumberedList', 'BulletedList']"),
 			toJSONArray("['Link', Unlink]"),
 			toJSONArray("['Table', 'ImageSelector', 'VideoSelector']"));

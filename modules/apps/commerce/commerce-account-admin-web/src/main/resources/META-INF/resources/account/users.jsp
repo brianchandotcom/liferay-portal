@@ -168,7 +168,7 @@ PortletURL portletURL = commerceAccountUserRelAdminDisplayContext.getPortletURL(
 				Liferay.Util.openSelectionModal({
 					multiple: true,
 					onSelect: (selectedItems) => {
-						if (selectedItems?.length) {
+						if (selectedItems && selectedItems.length) {
 							const <portlet:namespace />addUserIds = [];
 
 							selectedItems.forEach((item) => {

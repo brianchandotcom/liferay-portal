@@ -332,6 +332,11 @@ public class TalendArchiveParserUtil {
 
 		talendArchiveBuilder.jobDirectory(jobDirectory.getAbsolutePath());
 
+		Path jobJarParentDirectoryPath = jobJarPath.getParent();
+
+		talendArchiveBuilder.jobJarParentDirectory(
+			jobJarParentDirectoryPath.toString());
+
 		talendArchiveBuilder.jobJarPath(jobJarPath.toString());
 		talendArchiveBuilder.jobMainClassFQN(
 			_getJobMainClassFQN(jobName, jobJarPath.toString()));

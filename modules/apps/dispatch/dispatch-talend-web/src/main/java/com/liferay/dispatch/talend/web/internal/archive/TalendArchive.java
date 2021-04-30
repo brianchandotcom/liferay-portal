@@ -45,6 +45,10 @@ public class TalendArchive {
 		return _jobDirectory;
 	}
 
+	public String getJobJarParentDirectory() {
+		return _jobJarParentDirectory;
+	}
+
 	public String getJobJarPath() {
 		return _jobJarPath;
 	}
@@ -98,6 +102,12 @@ public class TalendArchive {
 
 		public Builder jobDirectory(String jobDirectory) {
 			_jobDirectory = jobDirectory;
+
+			return this;
+		}
+
+		public Builder jobJarParentDirectory(String jobJarParentDirectory) {
+			_jobJarParentDirectory = jobJarParentDirectory;
 
 			return this;
 		}
@@ -165,6 +175,7 @@ public class TalendArchive {
 		private String _contextName;
 		private Properties _contextProperties;
 		private String _jobDirectory;
+		private String _jobJarParentDirectory;
 		private String _jobJarPath;
 		private String _jobMainClassFQN;
 		private List<String> _jvmOptionsList;
@@ -176,6 +187,7 @@ public class TalendArchive {
 		_contextName = builder._contextName;
 		_contextProperties = builder._contextProperties;
 		_jobDirectory = builder._jobDirectory;
+		_jobJarParentDirectory = builder._jobJarParentDirectory;
 		_jobJarPath = builder._jobJarPath;
 		_jobMainClassFQN = builder._jobMainClassFQN;
 		_jvmOptions = builder._buildJVMOptions();
@@ -185,6 +197,7 @@ public class TalendArchive {
 	private final String _contextName;
 	private final Properties _contextProperties;
 	private final String _jobDirectory;
+	private final String _jobJarParentDirectory;
 	private final String _jobJarPath;
 	private final String _jobMainClassFQN;
 	private final String _jvmOptions;

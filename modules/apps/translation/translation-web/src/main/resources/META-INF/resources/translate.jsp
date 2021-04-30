@@ -198,8 +198,10 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 		</clay:container-fluid>
 	</aui:form>
 
-	<react:component
-		module="js/translate/Translate"
-		props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
-	/>
+	<c:if test="<%= translateDisplayContext.hasTranslationPermission() %>">
+		<react:component
+			module="js/translate/Translate"
+			props="<%= translateDisplayContext.getInfoFieldSetEntriesData() %>"
+		/>
+	</c:if>
 </div>

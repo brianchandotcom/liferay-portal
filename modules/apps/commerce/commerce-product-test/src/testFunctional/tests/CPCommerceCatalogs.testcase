@@ -29,13 +29,47 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6278. AddAnImageToCatalogAndRemove"
-	@ignore = "true"
 	@priority = "3"
 	test AddAnImageToCatalogAndRemove {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceCatalogs#CreateNewCatalog";
 
-		// TODO COMMERCE-6278 AddAnImageToCatalogAndRemove
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
 
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Test Catalog");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		AssertClick(
+			locator1 = "CommerceEntry#PRODUCT_IMAGE_SELECT_FILE",
+			value1 = "Select File");
+
+		SelectFrameTop();
+
+		CommerceItemSelector.uploadSingleFile(uploadFileName = "Commerce_Black.jpg");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(
+			key_value = "Test Catalog",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		Click(
+			key_value = "Remove Image",
+			locator1 = "Button#SECONDARY_BY_TITLE");
 	}
 
 	test CreateNewCatalog {
@@ -78,6 +112,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6273 EditACatalog
+
 	}
 
 	@description = "This is a test for COMMERCE-6279. EditAPermissionOnACatalog"

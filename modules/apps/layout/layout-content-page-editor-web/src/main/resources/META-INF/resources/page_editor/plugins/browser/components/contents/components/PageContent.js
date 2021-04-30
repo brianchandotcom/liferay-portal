@@ -131,30 +131,25 @@ export default function PageContent({
 		>
 			<div
 				className={classNames('d-flex', {
-					'align-items-baseline': subtype,
 					'align-items-center': !subtype,
 				})}
 			>
 				<ClayIcon
-					className="mr-3"
+					className={classNames('mr-3', {
+						'mt-1': subtype,
+					})}
 					focusable="false"
 					monospaced="true"
 					role="presentation"
 					symbol={icon || 'document-text'}
 				/>
 				<ClayLayout.ContentCol expand>
-					<span
-						className={classNames('text-truncate', {
-							title: type,
-						})}
-					>
+					<span className="font-weight-semi-bold text-truncate">
 						{title}
 					</span>
 
 					{subtype && (
-						<span className="text-secondary text-truncate">
-							{subtype}
-						</span>
+						<span className="text-secondary">{subtype}</span>
 					)}
 				</ClayLayout.ContentCol>
 

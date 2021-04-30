@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.change.tracking.constants;
+package com.liferay.change.tracking.web.internal.constants;
 
 /**
- * @author Samuel Tran
+ * @author Samuel Trong Tran
  */
 public class PublicationRoleConstants {
 

@@ -555,7 +555,7 @@ definition {
 
 		SelectWindow(locator1 = "title=Digital Experience Software Tailored to Your Needs | Liferay");
 
-		AssertElementPresent.assertElementPresent(locator1 = "AP#ASSET_ABSTRACT_BOOKMARK_LIFERAY_LOGO");
+		AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 
 		Close(locator1 = "title=Digital Experience Software Tailored to Your Needs | Liferay");
 	}

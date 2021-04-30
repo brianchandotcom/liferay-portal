@@ -1,0 +1,253 @@
+@component-name = "portal-wcm"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenLocation=&quot;REQUEST&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Asset Publisher";
+
+	setUp {
+		TestCase.setUpPortalInstance(freeLogin = "true");
+
+		User.firstLoginPG(freeLogin = "true");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONStaging.enableLocalStaging(
+			branchingPrivate = "false",
+			branchingPublic = "false",
+			groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name-staging",
+			layoutName = "Test Page Name",
+			site = "false");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name-staging",
+			layoutName = "Test Page Name",
+			site = "false",
+			widgetName = "Asset Publisher");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-82674. Publish the deleted WC Folder with WC to Live."
+	@priority = "4"
+	test PublishDeletedWCFolderWithWCToLive {
+		task ("Add a web content folder") {
+			JSONWebcontent.addFolder(
+				folderDescription = "WC Folder Description",
+				folderName = "WC Folder Name",
+				groupName = "Site Name (Staging)",
+				site = "false");
+		}
+
+		task ("Add a web content to new folder") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				folderName = "WC Folder Name",
+				groupName = "Site Name (Staging)",
+				site = "false",
+				title = "Webcontent Title");
+		}
+
+		task ("Publish to Live") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("Move the WC Folder to Recycle Bin in staging site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			WebContentFolder.moveToRecycleBinCP(
+				assetType = "Web Content Folder",
+				folderName = "WC Folder Name");
+		}
+
+		task ("View the WC Folder and WC not shown in staging site page") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
+
+		task ("View the WC Folder and WC shown in live site page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "WC Folder Description",
+				assetTitle = "WC Folder Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Webcontent Content",
+				assetTitle = "Webcontent Title");
+		}
+
+		task ("Publish to Live") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("View the WC Folder and WC not shown in live site page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+		}
+	}
+
+	@description = "This is a use case for LPS-81196. Publish the filter defined in Asset Publisher to Live."
+	@priority = "3"
+	test PublishFilterDefinedInAssetPublisherToLive {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Site Name (Staging)",
+				site = "false",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add two categories") {
+			var firstCategoryId = JSONCategory.addCategory(
+				groupName = "Site Name (Staging)",
+				site = "false",
+				title = "Category Name 1",
+				vocabularyName = "Vocabulary Name");
+
+			var secondCategoryId = JSONCategory.addCategory(
+				groupName = "Site Name (Staging)",
+				site = "false",
+				title = "Category Name 2",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add the first web content with the first category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${firstCategoryId}",
+				content = "Web Content With One Category",
+				groupName = "Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title 1");
+		}
+
+		task ("Add the second web content with both categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${firstCategoryId},${secondCategoryId}",
+				content = "Web Content With Two Categories",
+				groupName = "Site Name (Staging)",
+				site = "false",
+				title = "Web Content Title 2");
+		}
+
+		task ("Define the filter in Asset Publisher") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.configureCategoriesFilterPG(categoryName = "Category Name 1");
+		}
+
+		task ("View displayed web contents in staging site page") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content With One Category",
+				assetTitle = "Web Content Title 1");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content With Two Categories",
+				assetTitle = "Web Content Title 2");
+		}
+
+		task ("Publish to Live") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("View displayed web contents in live site page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content With One Category",
+				assetTitle = "Web Content Title 1");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content With Two Categories",
+				assetTitle = "Web Content Title 2");
+		}
+
+		task ("Change the filter in staging site") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.editConfigureCategoriesFilterPG(
+				categoryNames = "Category Name 1,Category Name 2",
+				queryContains = "Does not Contain");
+		}
+
+		task ("View displayed web content in staging site page") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content With One Category",
+				assetTitle = "Web Content Title 1");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Web Content With Two Categories",
+				assetTitle = "Web Content Title 2");
+		}
+
+		task ("Publish to Live") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("View displayed web content in live site page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content With One Category",
+				assetTitle = "Web Content Title 1");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Web Content With Two Categories",
+				assetTitle = "Web Content Title 2");
+		}
+	}
+
+}

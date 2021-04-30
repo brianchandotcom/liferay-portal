@@ -83,6 +83,9 @@ definition {
 	@priority = "3"
 	test AddPriceListQualifier {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#AddPriceListQualifier";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(
 			siteName = "Site1",

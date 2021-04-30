@@ -43,6 +43,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductSKUs#AddASKU";
 
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -146,6 +148,8 @@ definition {
 	test EditASKU {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductSKUs#EditASKU";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

@@ -89,6 +89,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProducts#AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic";
 
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Options");
@@ -259,7 +261,9 @@ definition {
 
 	test CreateProductBundleWithPriceTypeDynamic {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceProducts#CreateProductBundle";
+		property test.name.skip.portal.instance = "CPCommerceProducts#CreateProductBundleWithPriceTypeDynamic";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -347,6 +351,8 @@ definition {
 	test CreateProductBundleWithPriceTypeStatic {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProducts#CreateProductBundleWithPriceTypeStatic";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -514,6 +520,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProducts#EditAProduct";
 
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -549,6 +557,8 @@ definition {
 	test EditSkuAndDelete {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProducts#EditSkuAndDelete";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -728,6 +738,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProducts#UseSkuSearchBarAndPagination";
 
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -752,6 +764,8 @@ definition {
 	test UseSortingByNameAndDate {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProducts#UseSortingByNameAndDate";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

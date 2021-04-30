@@ -62,6 +62,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#AddShippingOptionFlatRate";
 
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -137,6 +139,8 @@ definition {
 	test AddShippingOptionVariableRate {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#AddShippingOptionVariableRate";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -293,6 +297,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#EditAuthorizePaymentMethod";
 
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -374,6 +380,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#EditMercanetPaymentMethod";
 
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -422,6 +430,8 @@ definition {
 	test EditMoneyOrderPaymentMethod {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#EditMoneyOrderPaymentMethod";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -574,6 +584,8 @@ definition {
 	test UseSearchBar {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#UseSearchBar";
+
+		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

@@ -92,85 +92,10 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the scope can be changed through dynamic selection in a depot."
-	@priority = "5"
-	@refactorneeded
-	test ChangeScope {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Depot Name",
-			site = "false",
-			title = "WC Depot Title");
-
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC Site Title");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.configureScope(
-			assetListTitle = "Depot Dynamic Asset List",
-			otherSite = "Test Site Name",
-			selectedAsset = "All Types");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.removeScope(
-			assetListTitle = "Depot Dynamic Asset List",
-			scopeName = "Current Asset Library");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewContent(
-			assetListTitle = "Depot Dynamic Asset List",
-			assetTitle = "WC Site Title",
-			assetType = "Web Content Article");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewNoContent(
-			assetListTitle = "Depot Dynamic Asset List",
-			assetTitle = "WC Depot Title",
-			assetType = "Web Content Article");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.configureScope(
-			assetListTitle = "Depot Dynamic Asset List",
-			defaultSite = "Current Asset Library (Test Depot Name)");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.removeScope(
-			assetListTitle = "Depot Dynamic Asset List",
-			scopeName = "Test Site Name");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewContent(
-			assetListTitle = "Depot Dynamic Asset List",
-			assetTitle = "WC Depot Title",
-			assetType = "Web Content Article");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewNoContent(
-			assetListTitle = "Depot Dynamic Asset List",
-			assetTitle = "WC Site Title",
-			assetType = "Web Content Article");
-	}
-
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for local staging."
 	@priority = "5"
 	@refactorneeded
-	test CollectionInDepotCanBePublishedLocalStaging {
+	test CanBePublishedViaLocalStaging {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -263,7 +188,7 @@ definition {
 	@description = "This ensures that a manual collection in a depot can be published in the site through the Asset Publisher for remote staging."
 	@priority = "5"
 	@refactorneeded
-	test CollectionInDepotCanBePublishedRemoteStaging {
+	test CanBePublishedViaRemoteStaging {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
@@ -359,6 +284,81 @@ definition {
 			key_assetTitle = "Document Title",
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
 			value1 = "Document Title");
+	}
+
+	@description = "This ensures that the scope can be changed through dynamic selection in a depot."
+	@priority = "5"
+	@refactorneeded
+	test ChangeScope {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC Depot Title");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC Site Title");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.configureScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			otherSite = "Test Site Name",
+			selectedAsset = "All Types");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.removeScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			scopeName = "Current Asset Library");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC Site Title",
+			assetType = "Web Content Article");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewNoContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC Depot Title",
+			assetType = "Web Content Article");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.configureScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			defaultSite = "Current Asset Library (Test Depot Name)");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.removeScope(
+			assetListTitle = "Depot Dynamic Asset List",
+			scopeName = "Test Site Name");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC Depot Title",
+			assetType = "Web Content Article");
+
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
+		AssetListsAdmin.viewNoContent(
+			assetListTitle = "Depot Dynamic Asset List",
+			assetTitle = "WC Site Title",
+			assetType = "Web Content Article");
 	}
 
 	@description = "This ensures that collections from a site can select the basic web content stored in a depot."

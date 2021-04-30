@@ -1,0 +1,45 @@
+definition {
+
+	macro setGroupId {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		return "${groupId}";
+	}
+
+	macro setNodeId {
+		Variables.assertDefined(parameterList = "${name},${groupName}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var nodeId = JSONWikiAPI._getNodeIdByName(groupId = "${groupId}", name = "${name}");
+
+		return "${nodeId}";
+	}
+
+	macro setPageId {
+		Variables.assertDefined(parameterList = "${title},${groupName},${name}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var nodeId = JSONWikiAPI._getNodeIdByName(groupId = "${groupId}", name = "${name}");
+
+		var pageId = JSONWikiAPI._getPageIdByName(nodeId = "${nodeId}", title = "${title}");
+
+		return "${pageId}";
+	}
+
+}

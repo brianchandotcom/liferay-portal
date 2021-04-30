@@ -175,8 +175,6 @@
 		/>
 
 		${dataFactory.toInsertSQL(openCommerceOrderItemModel)}
-
-		${csvFileWriter.write("commerceOrder", openCommerceOrderModel.commerceOrderId + ", " + openCommerceOrderItemModel.commerceOrderItemId + ", " + openCommerceOrderItemModel.quantity + ", " + dataFactory.getCPInstanceId(randomCProductModel.publishedCPDefinitionId) + ", " + commerceAddressModel.commerceAddressId + ", " + openCommerceOrderModel.uuid + ", " + commerceInventoryWarehouseModels[0].commerceInventoryWarehouseId + "\n")}
 	</#list>
 
 	<#list commerceGroupModels as commerceGroupModel>
@@ -246,10 +244,14 @@
 			${dataFactory.toInsertSQL(pendingCommerceOrderModel)}
 
 			<#assign
-				pendingCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(pendingCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[0].CProductId, cProductModels[0].publishedCPDefinitionId)
+				randomCProductModel = cProductModels[dataFactory.getRandomCProductModelIndex()]
+
+				pendingCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(pendingCommerceOrderModel, commercePriceListModel.commercePriceListId, randomCProductModel.CProductId, randomCProductModel.publishedCPDefinitionId)
 			/>
 
 			${dataFactory.toInsertSQL(pendingCommerceOrderItemModel)}
+
+			${csvFileWriter.write("commerceOrder", pendingCommerceOrderModel.commerceOrderId + ", " + pendingCommerceOrderItemModel.commerceOrderItemId + ", " + pendingCommerceOrderItemModel.quantity + ", " + dataFactory.getCPInstanceId(randomCProductModel.publishedCPDefinitionId) + ", " + commerceAddressModel.commerceAddressId + ", " + pendingCommerceOrderModel.uuid + ", " + commerceInventoryWarehouseModels[0].commerceInventoryWarehouseId + "\n")}
 		</#list>
 
 		<@insertGroup _groupModel=commerceChannelGroupModel />

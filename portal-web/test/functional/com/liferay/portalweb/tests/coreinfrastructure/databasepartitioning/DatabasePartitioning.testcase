@@ -98,6 +98,8 @@ definition {
 			virtualHost = "www.able.com",
 			webId = "www.able.com");
 
+		SignOut.signOut();
+
 		User.firstLoginUI(
 			password = "test",
 			userEmailAddress = "test@www.able.com",

@@ -18,28 +18,29 @@ export default function getFieldsWithoutOptions(
 	dataDefinitionFields,
 	defaultLanguageId
 ) {
-	const fieldTypesWithOptions = [
-		FIELD_TYPES.grid,
-		FIELD_TYPES.radio,
-		FIELD_TYPES.checkboxMultiple,
-		FIELD_TYPES.select,
-	];
+	const hasValidOption = (options) =>
+		options.some(({label, value}) => label && value);
 
-	const fieldHasOptions = (options) =>
-		options[defaultLanguageId][0].edited &&
-		options[defaultLanguageId][0].label;
-
-	return dataDefinitionFields.filter((field) => {
-		const {customProperties, fieldType} = field;
-
-		return (
-			fieldTypesWithOptions.includes(fieldType) &&
-			(customProperties.options
-				? !fieldHasOptions(customProperties.options)
-				: !(
-						fieldHasOptions(customProperties.columns) &&
-						fieldHasOptions(customProperties.rows)
-				  ))
-		);
+	return dataDefinitionFields.filter(({customProperties, fieldType}) => {
+		switch (fieldType) {
+			case FIELD_TYPES.radio:
+			case FIELD_TYPES.checkboxMultiple:
+			case FIELD_TYPES.select: {
+				return !hasValidOption(
+					customProperties.options[defaultLanguageId]
+				);
+			}
+			case FIELD_TYPES.grid: {
+				return !(
+					hasValidOption(
+						customProperties.columns[defaultLanguageId]
+					) &&
+					hasValidOption(customProperties.rows[defaultLanguageId])
+				);
+			}
+			default: {
+				return false;
+			}
+		}
 	});
 }

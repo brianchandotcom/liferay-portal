@@ -71,6 +71,29 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Liferay Account");
 	}
 
+	@priority = "3"
+	test AppManagerLocalization {
+		property test.name.skip.portal.instance = "AppManagement#AppManagerLocalization";
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(
+			currentPortalLanguages = "Spanish (Spain)",
+			defaultPortalLanguage = "Spanish (Spain)");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Sistema",
+			panel = "Panel de control",
+			portlet = "Gestor de aplicaciones");
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Gestor de aplicaciones");
+	}
+
 	@description = "This is a test for LPS-102506."
 	@ignore = "true"
 	@priority = "3"

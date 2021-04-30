@@ -19,6 +19,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.form.evaluator,\
 	com.liferay.dynamic.data.mapping.form.field.type,\
 	com.liferay.dynamic.data.mapping.form.field.type.image,\
+	com.liferay.dynamic.data.mapping.form.page.change,\
 	com.liferay.dynamic.data.mapping.form.renderer,\
 	com.liferay.dynamic.data.mapping.form.renderer.constants,\
 	com.liferay.dynamic.data.mapping.form.values.factory,\

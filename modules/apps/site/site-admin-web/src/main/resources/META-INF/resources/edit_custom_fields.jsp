@@ -30,7 +30,8 @@ else {
 %>
 
 <portlet:actionURL name="/site_admin/edit_custom_fields" var="editCustomFieldsURL">
-	<portlet:param name="mvcPath" value="/edit_custom_fields.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-custom-fields" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

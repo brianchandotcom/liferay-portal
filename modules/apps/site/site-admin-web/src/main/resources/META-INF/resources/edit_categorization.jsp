@@ -30,7 +30,8 @@ else {
 %>
 
 <portlet:actionURL name="/site_admin/edit_categorization" var="editCategorizationURL">
-	<portlet:param name="mvcPath" value="/edit_categorization.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-categorization" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

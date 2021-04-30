@@ -48,7 +48,8 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <portlet:actionURL name="/site_admin/edit_details" var="editDetailsURL">
-	<portlet:param name="mvcPath" value="/edit_details.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-details" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

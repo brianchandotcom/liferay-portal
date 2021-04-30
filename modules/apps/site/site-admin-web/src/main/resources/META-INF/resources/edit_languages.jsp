@@ -21,7 +21,8 @@ DisplaySettingsDisplayContext displaySettingsDisplayContext = new DisplaySetting
 %>
 
 <portlet:actionURL name="/site_admin/edit_languages" var="editLanguagesURL">
-	<portlet:param name="mvcPath" value="/edit_languages.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-languages" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

@@ -32,7 +32,8 @@ UnicodeProperties groupTypeSettings = liveGroup.getTypeSettingsProperties();
 %>
 
 <portlet:actionURL name="/site_admin/edit_analytics" var="editAnalyticsURL">
-	<portlet:param name="mvcPath" value="/edit_analytics.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-analytics" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

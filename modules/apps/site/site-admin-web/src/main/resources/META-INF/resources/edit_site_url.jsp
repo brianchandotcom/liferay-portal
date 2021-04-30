@@ -73,7 +73,8 @@ if (privateVirtualHostnames.isEmpty()) {
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
 <portlet:actionURL name="/site_admin/edit_site_url" var="editSiteURLURL">
-	<portlet:param name="mvcPath" value="/edit_site_url.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-site-url" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

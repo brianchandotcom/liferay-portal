@@ -36,7 +36,8 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, reque
 %>
 
 <portlet:actionURL name="/site_admin/edit_recycle_bin" var="editRecycleBinURL">
-	<portlet:param name="mvcPath" value="/edit_recycle_bin.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-recycle-bin" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

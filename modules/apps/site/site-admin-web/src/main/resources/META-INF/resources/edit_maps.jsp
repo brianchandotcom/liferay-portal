@@ -30,7 +30,8 @@ else {
 %>
 
 <portlet:actionURL name="/site_admin/edit_maps" var="editMapsURL">
-	<portlet:param name="mvcPath" value="/edit_maps.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-maps" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

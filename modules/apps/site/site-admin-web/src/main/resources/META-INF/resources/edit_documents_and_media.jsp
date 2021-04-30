@@ -30,7 +30,8 @@ else {
 %>
 
 <portlet:actionURL name="/site_admin/edit_documents_and_media" var="editDocumentsAndMediaURL">
-	<portlet:param name="mvcPath" value="/edit_documents_and_media.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-documents-and-media" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

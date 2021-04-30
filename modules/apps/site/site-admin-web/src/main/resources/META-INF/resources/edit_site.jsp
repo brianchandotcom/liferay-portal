@@ -71,7 +71,7 @@ if (group != null) {
 
 <portlet:actionURL name="/site_admin/edit_group" var="editGroupURL">
 	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
-	<portlet:param name="configurationScreenKey" value="site-configuration-general" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-other" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

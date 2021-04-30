@@ -34,7 +34,8 @@ int companyContentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(company
 %>
 
 <portlet:actionURL name="/site_admin/edit_content_sharing" var="editContentSharingURL">
-	<portlet:param name="mvcPath" value="/edit_content_sharing.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-content-sharing" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

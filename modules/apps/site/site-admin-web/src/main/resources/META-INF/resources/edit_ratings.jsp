@@ -38,7 +38,8 @@ CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDis
 %>
 
 <portlet:actionURL name="/site_admin/edit_ratings" var="editRatingsURL">
-	<portlet:param name="mvcPath" value="/edit_ratings.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-ratings" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

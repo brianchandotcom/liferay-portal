@@ -78,7 +78,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 %>
 
 <portlet:actionURL name="/site_admin/edit_pages" var="editPagesURL">
-	<portlet:param name="mvcPath" value="/edit_pages.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-pages" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

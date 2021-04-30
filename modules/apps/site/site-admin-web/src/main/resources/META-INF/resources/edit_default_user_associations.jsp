@@ -69,7 +69,8 @@ for (long defaultTeamId : defaultTeamIds) {
 </liferay-util:buffer>
 
 <portlet:actionURL name="/site_admin/edit_default_user_associations" var="editDefaultUserAssociationsURL">
-	<portlet:param name="mvcPath" value="/edit_default_user_associations.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
+	<portlet:param name="configurationScreenKey" value="site-configuration-default-user-associations" />
 </portlet:actionURL>
 
 <liferay-frontend:edit-form

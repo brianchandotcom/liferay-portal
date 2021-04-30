@@ -30,7 +30,7 @@ import java.util.stream.Stream;
  */
 public class LayoutReportsIssue {
 
-	public LayoutReportsIssue(List<Detail> details, Key key, long total) {
+	public LayoutReportsIssue(List<Detail> details, Key key) {
 		if (key == null) {
 			throw new IllegalArgumentException("Key should not be null");
 		}
@@ -43,7 +43,12 @@ public class LayoutReportsIssue {
 		}
 
 		_key = key;
-		_total = total;
+
+		Stream<Detail> stream = _details.stream();
+
+		_total = stream.mapToLong(
+			Detail::getTotal
+		).sum();
 	}
 
 	@Override

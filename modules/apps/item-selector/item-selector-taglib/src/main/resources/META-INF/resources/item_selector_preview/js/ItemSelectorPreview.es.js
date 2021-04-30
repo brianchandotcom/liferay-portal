@@ -136,18 +136,15 @@ const ItemSelectorPreview = ({
 		setReloadOnHide(true);
 	};
 
-	const updateCurrentItem = useCallback(
-		({url, value}) => {
-			if (isMounted()) {
-				const newItemList = [...itemList];
+	const updateCurrentItem = (itemData) => {
+		if (isMounted()) {
+			const newItemList = [...itemList];
 
-				newItemList[currentItemIndex] = {...currentItem, url, value};
+			newItemList[currentItemIndex] = {...currentItem, ...itemData};
 
-				updateItemList(newItemList);
-			}
-		},
-		[currentItem, currentItemIndex, isMounted, itemList]
-	);
+			updateItemList(newItemList);
+		}
+	};
 
 	useEffect(() => {
 		document.documentElement.addEventListener('keydown', handleOnKeyDown);
@@ -198,7 +195,7 @@ const ItemSelectorPreview = ({
 			/>
 			{isEditing ? (
 				<ImageEditor
-					imageId={currentItem.fileentryid}
+					imageId={currentItem.fileEntryId || currentItem.fileentryid}
 					imageSrc={currentItem.url}
 					onCancel={handleCancelEditing}
 					onSave={handleSaveEditedImage}

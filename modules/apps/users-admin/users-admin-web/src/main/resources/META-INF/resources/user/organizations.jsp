@@ -201,9 +201,9 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					onSelect: (selectedItem) => {
 						if (selectedItem) {
 							const entityId = selectedItem.entityid;
-	
+
 							const rowColumns = [];
-	
+
 							rowColumns.push(selectedItem.entityname);
 							rowColumns.push(selectedItem.type);
 							rowColumns.push('');
@@ -212,15 +212,15 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 									entityId +
 									'" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>'
 							);
-	
+
 							searchContainer.addRow(rowColumns, entityId);
-	
+
 							searchContainer.updateDataStore();
-	
+
 							AArray.removeItem(deleteOrganizationIds, entityId);
-	
+
 							addOrganizationIds.push(entityId);
-	
+
 							document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = addOrganizationIds.join(
 								','
 							);

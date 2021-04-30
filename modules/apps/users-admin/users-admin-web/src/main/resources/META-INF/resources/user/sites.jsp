@@ -159,9 +159,9 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					onSelect: (selectedItem) => {
 						if (selectedItem) {
 							const entityId = selectedItem.entityid;
-	
+
 							const rowColumns = [];
-	
+
 							rowColumns.push(selectedItem.entityname);
 							rowColumns.push('');
 							rowColumns.push(
@@ -169,15 +169,15 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 									entityId +
 									'" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>'
 							);
-	
+
 							searchContainer.addRow(rowColumns, entityId);
-	
+
 							searchContainer.updateDataStore();
-	
+
 							addGroupIds.push(entityId);
-	
+
 							AArray.removeItem(deleteGroupIds, entityId);
-	
+
 							document.<portlet:namespace />fm.<portlet:namespace />addGroupIds.value = addGroupIds.join(
 								','
 							);

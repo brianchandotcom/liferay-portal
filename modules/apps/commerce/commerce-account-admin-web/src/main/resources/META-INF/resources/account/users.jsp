@@ -177,10 +177,12 @@ PortletURL portletURL = commerceAccountUserRelAdminDisplayContext.getPortletURL(
 
 							const userIdsInput = window.document.getElementById(
 								'<portlet:namespace />userIds'
-							)
+							);
 
 							if (userIdsInput) {
-								userIdsInput.value = <portlet:namespace />addUserIds.join(',');
+								userIdsInput.value = <portlet:namespace />addUserIds.join(
+									','
+								);
 							}
 
 							const addCommerceAccountUserRelFm = window.document.getElementById(

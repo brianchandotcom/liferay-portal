@@ -52,13 +52,37 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 		String content = javaClass.getContent();
 
 		_checkDelimeters(fileName, content, annotation);
-		_checkNameValue(fileName, content, annotation);
+
+		if (isAttributeValue(_CHECK_CONFIGURATION_NAME_KEY, absolutePath)) {
+			_checkConfigurationNameValue(fileName, content, annotation);
+		}
 
 		annotation = _fixOCDId(
 			fileName, annotation, javaClass.getPackageName());
 		annotation = _fixTypeProperties(annotation);
 
 		return annotation;
+	}
+
+	private void _checkConfigurationNameValue(
+		String fileName, String content, String annotation) {
+
+		if (!annotation.contains("@Meta.OCD")) {
+			return;
+		}
+
+		Matcher matcher = _annotationNameValueKeyPattern.matcher(annotation);
+
+		if (matcher.find()) {
+			String nameValue = matcher.group(1);
+
+			if (!nameValue.endsWith("-configuration-name")) {
+				addMessage(
+					fileName,
+					"Value for 'name' should end with '-configuration-name'",
+					getLineNumber(content, content.indexOf(matcher.group())));
+			}
+		}
 	}
 
 	private void _checkDelimeter(
@@ -88,27 +112,6 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 		addMessage(
 			fileName, sb.toString(),
 			getLineNumber(content, content.indexOf(matcher.group())));
-	}
-
-	private void _checkNameValue(
-		String fileName, String content, String annotation) {
-
-		if (!annotation.contains("@Meta.OCD")) {
-			return;
-		}
-
-		Matcher matcher = _annotationNameValueKeyPattern.matcher(annotation);
-
-		if (matcher.find()) {
-			String nameValue = matcher.group(1);
-
-			if (!nameValue.endsWith("-configuration-name")) {
-				addMessage(
-					fileName,
-					"Value for 'name' should end with '-configuration-name'",
-					getLineNumber(content, content.indexOf(matcher.group())));
-			}
-		}
 	}
 
 	private void _checkDelimeters(
@@ -153,6 +156,9 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 		return StringUtil.replaceFirst(
 			annotation, StringPool.PERCENT, StringPool.BLANK, matcher.start());
 	}
+
+	private static final String _CHECK_CONFIGURATION_NAME_KEY =
+		"checkConfigurationName";
 
 	private static final Pattern _annotationMetaTypePattern = Pattern.compile(
 		"[\\s\\(](name|description) = \"%");

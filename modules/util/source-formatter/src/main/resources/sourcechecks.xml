@@ -480,6 +480,7 @@
 		<check name="JavaMetaAnnotationsCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for correct use of attributes `description` and `name` in annotation `@aQute.bnd.annotation.metatype.Meta`." />
+			<property name="checkConfigurationName" value="false" />
 		</check>
 		<check name="JavaModifiedServiceMethodCheck">
 			<category name="Bug Prevention" />

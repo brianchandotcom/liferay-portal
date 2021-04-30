@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
+import com.liferay.portal.search.geolocation.GeoBuilders;
+import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -96,6 +99,40 @@ public class JournalArticleExpandoGeolocationSearchTest {
 		_groups = groupSearchFixture.getGroups();
 
 		UserTestUtil.setUser(TestPropsValues.getUser());
+	}
+
+	@Test
+	public void testGeoDistanceFilter() throws Exception {
+		addJournalArticleWithTwoExpandoColumns(
+			"Software Engineer", _EXPANDO_COLUMN, ExpandoColumnConstants.STRING,
+			_GEOLOCATION_VALUE, _EXPANDO_COLUMN_GEOLOCATION,
+			ExpandoColumnConstants.GEOLOCATION);
+
+		assertSearch(
+			searchRequestBuilder -> searchRequestBuilder.addComplexQueryPart(
+				complexQueryPartBuilderFactory.builder(
+				).occur(
+					"filter"
+				).query(
+					queries.geoDistance(
+						_EXPANDO_COLUMN_GEOLOCATION_FULL_NAME,
+						geoBuilders.geoLocationPoint(34.01, -117.42),
+						geoBuilders.geoDistance(1000))
+				).build()),
+			"[Software Engineer]");
+
+		assertSearch(
+			searchRequestBuilder -> searchRequestBuilder.addComplexQueryPart(
+				complexQueryPartBuilderFactory.builder(
+				).occur(
+					"filter"
+				).query(
+					queries.geoDistance(
+						_EXPANDO_COLUMN_GEOLOCATION_FULL_NAME,
+						geoBuilders.geoLocationPoint(34.01, -117.42),
+						geoBuilders.geoDistance(100))
+				).build()),
+			"[]");
 	}
 
 	@Test
@@ -264,13 +301,22 @@ public class JournalArticleExpandoGeolocationSearchTest {
 	protected ClassNameLocalService classNameLocalService;
 
 	@Inject
+	protected ComplexQueryPartBuilderFactory complexQueryPartBuilderFactory;
+
+	@Inject
 	protected ExpandoColumnLocalService expandoColumnLocalService;
 
 	@Inject
 	protected ExpandoTableLocalService expandoTableLocalService;
 
 	@Inject
+	protected GeoBuilders geoBuilders;
+
+	@Inject
 	protected JournalArticleLocalService journalArticleLocalService;
+
+	@Inject
+	protected Queries queries;
 
 	@Inject
 	protected Searcher searcher;

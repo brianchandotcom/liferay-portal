@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldCont
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.helper.DDMFormEvaluatorHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeTracker;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 
 		DDMFormEvaluatorHelper formEvaluatorHelper = new DDMFormEvaluatorHelper(
 			ddmFormEvaluatorEvaluateRequest, ddmExpressionFactory,
-			ddmFormFieldTypeServicesTracker);
+			ddmFormFieldTypeServicesTracker, ddmFormPageChangeTracker);
 
 		return formEvaluatorHelper.evaluate();
 	}
@@ -88,5 +89,8 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 
 	@Reference
 	protected DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker;
+
+	@Reference
+	protected DDMFormPageChangeTracker ddmFormPageChangeTracker;
 
 }

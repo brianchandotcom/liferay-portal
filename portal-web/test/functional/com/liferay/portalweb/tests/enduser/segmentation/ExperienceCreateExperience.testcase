@@ -392,12 +392,87 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130307."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationParentOrganizationSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130307 AddNewExperienceOrganizationParentOrganizationSegment pending implementation
+		JSONOrganization.addOrganization(organizationName = "Suborganization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Suborganization Name",
+			userEmailAddress = "userea2@liferay.com");
+
+		User.openUsersAdmin();
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		Organization.searchCP(
+			orgName = "Suborganization Name",
+			searchTerm = "Suborganization Name");
+
+		Organization.selectParentOrganizationCP(
+			orgName = "Suborganization Name",
+			parentOrgName = "organization Name");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Parent Organization");
+
+		Segmentation.fillTitle(titleField = "Org with Parent");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
+
+		Segmentation.assignOrganization(orgName = "organization Name");
+
+		AssertTextEquals(
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "1 Member");
+
+		Segmentation.viewMembers(memberName = "userfn2 userln2");
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "Experience For Parent Organization",
+			segmentName = "Org with Parent");
+
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperience(newExperience = "Experience For Parent Organization");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Org users will see this heading");
+
+		PageEditor.prioritizeExperience(experienceName = "Experience For Parent Organization");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			freeLogin = "true",
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Org users will see this heading");
 	}
 
 	@description = "This is a test for LPS-130310."

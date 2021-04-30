@@ -350,7 +350,7 @@ public class SLAResult implements Serializable {
 	@GraphQLName("Status")
 	public static enum Status {
 
-		PAUSED("Paused"), RUNNING("Running"), STOPPED("Stopped");
+		PAUSED("PAUSED"), RUNNING("RUNNING"), STOPPED("STOPPED");
 
 		@JsonCreator
 		public static Status create(String value) {

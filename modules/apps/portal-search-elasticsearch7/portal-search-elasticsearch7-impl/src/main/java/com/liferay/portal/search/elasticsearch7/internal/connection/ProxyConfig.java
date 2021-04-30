@@ -114,7 +114,8 @@ public class ProxyConfig {
 				return _port;
 			}
 
-			return GetterUtil.getInteger(SystemProperties.get("http.port"));
+			return GetterUtil.getInteger(
+				SystemProperties.get("http.proxyPort"));
 		}
 
 		protected boolean hasHostAndPort() {

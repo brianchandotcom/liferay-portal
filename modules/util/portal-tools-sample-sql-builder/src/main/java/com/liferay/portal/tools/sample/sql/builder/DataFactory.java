@@ -3402,7 +3402,7 @@ public class DataFactory {
 		ddmFieldModel2.setFieldId(_counter.get());
 		ddmFieldModel2.setCompanyId(_companyId);
 		ddmFieldModel2.setParentFieldId(0);
-		ddmFieldModel2.setStorageId(journalArticleModel.getClassPK());
+		ddmFieldModel2.setStorageId(journalArticleModel.getId());
 		ddmFieldModel2.setStructureVersionId(
 			_defaultJournalDDMStructureVersionId);
 		ddmFieldModel2.setFieldName("content");

@@ -94,6 +94,14 @@ public class LayoutReportsDataProvider {
 		return 0;
 	}
 
+	private LayoutReportsIssue.Detail _getDetail(
+		String key,
+		Map<String, LighthouseAuditResultV5> lighthouseAuditResultV5s) {
+
+		return new LayoutReportsIssue.Detail(
+			key, _getCount(lighthouseAuditResultV5s.get(key)));
+	}
+
 	private List<LayoutReportsIssue> _getLayoutReportsIssues(String url)
 		throws Exception {
 
@@ -132,64 +140,23 @@ public class LayoutReportsDataProvider {
 		return Arrays.asList(
 			new LayoutReportsIssue(
 				Arrays.asList(
-					new LayoutReportsIssue.Detail(
-						"color-contrast",
-						_getCount(
-							lighthouseAuditResultV5s.get("color-contrast"))),
-					new LayoutReportsIssue.Detail(
-						"image-alt",
-						_getCount(lighthouseAuditResultV5s.get("image-alt"))),
-					new LayoutReportsIssue.Detail(
-						"input-image-alt",
-						_getCount(
-							lighthouseAuditResultV5s.get("input-image-alt"))),
-					new LayoutReportsIssue.Detail(
-						"video-caption",
-						_getCount(
-							lighthouseAuditResultV5s.get("video-caption")))),
+					_getDetail("color-contrast", lighthouseAuditResultV5s),
+					_getDetail("image-alt", lighthouseAuditResultV5s),
+					_getDetail("input-image-alt", lighthouseAuditResultV5s),
+					_getDetail("video-caption", lighthouseAuditResultV5s)),
 				LayoutReportsIssue.Key.ACCESSIBILITY),
 			new LayoutReportsIssue(
 				Arrays.asList(
-					new LayoutReportsIssue.Detail(
-						"canonical",
-						_getCount(lighthouseAuditResultV5s.get("canonical"))),
-					new LayoutReportsIssue.Detail(
-						"crawlable-anchors",
-						_getCount(
-							lighthouseAuditResultV5s.get("crawlable-anchors"))),
-					new LayoutReportsIssue.Detail(
-						"document-title",
-						_getCount(
-							lighthouseAuditResultV5s.get("document-title"))),
-					new LayoutReportsIssue.Detail(
-						"font-size",
-						_getCount(lighthouseAuditResultV5s.get("font-size"))),
-					new LayoutReportsIssue.Detail(
-						"hreflang",
-						_getCount(lighthouseAuditResultV5s.get("hreflang"))),
-					new LayoutReportsIssue.Detail(
-						"image-aspect-ratio",
-						_getCount(
-							lighthouseAuditResultV5s.get(
-								"image-aspect-ratio"))),
-					new LayoutReportsIssue.Detail(
-						"hreflang",
-						_getCount(lighthouseAuditResultV5s.get("hreflang"))),
-					new LayoutReportsIssue.Detail(
-						"is-crawlable",
-						_getCount(
-							lighthouseAuditResultV5s.get("is-crawlable"))),
-					new LayoutReportsIssue.Detail(
-						"link-text",
-						_getCount(lighthouseAuditResultV5s.get("link-text"))),
-					new LayoutReportsIssue.Detail(
-						"meta-descriptiont",
-						_getCount(
-							lighthouseAuditResultV5s.get("meta-description"))),
-					new LayoutReportsIssue.Detail(
-						"tap-targetst",
-						_getCount(
-							lighthouseAuditResultV5s.get("tap-targets")))),
+					_getDetail("canonical", lighthouseAuditResultV5s),
+					_getDetail("crawlable-anchors", lighthouseAuditResultV5s),
+					_getDetail("document-title", lighthouseAuditResultV5s),
+					_getDetail("font-size", lighthouseAuditResultV5s),
+					_getDetail("hreflang", lighthouseAuditResultV5s),
+					_getDetail("image-aspect-ratio", lighthouseAuditResultV5s),
+					_getDetail("is-crawlable", lighthouseAuditResultV5s),
+					_getDetail("link-text", lighthouseAuditResultV5s),
+					_getDetail("meta-description", lighthouseAuditResultV5s),
+					_getDetail("tap-targets", lighthouseAuditResultV5s)),
 				LayoutReportsIssue.Key.SEO));
 	}
 

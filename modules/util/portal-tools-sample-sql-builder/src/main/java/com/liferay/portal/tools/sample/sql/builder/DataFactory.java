@@ -3374,49 +3374,15 @@ public class DataFactory {
 		DLFileEntryModel dlFileEntryModel,
 		DDMStorageLinkModel ddmStorageLinkModel) {
 
-		DDMFieldModel ddmFieldModel1 = new DDMFieldModelImpl();
-
-		// PK fields
-
-		ddmFieldModel1.setFieldId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldModel1.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldModel1.setParentFieldId(0);
-		ddmFieldModel1.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldModel1.setStructureVersionId(_defaultDLDDMStructureVersionId);
-		ddmFieldModel1.setFieldName(StringPool.BLANK);
-		ddmFieldModel1.setFieldType(StringPool.BLANK);
-		ddmFieldModel1.setInstanceId(StringPool.BLANK);
-		ddmFieldModel1.setLocalizable(false);
-		ddmFieldModel1.setPriority(0);
-
-		DDMFieldModel ddmFieldModel2 = new DDMFieldModelImpl();
-
-		// PK fields
-
-		ddmFieldModel2.setFieldId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldModel2.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldModel2.setParentFieldId(0);
-		ddmFieldModel2.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldModel2.setStructureVersionId(_defaultDLDDMStructureVersionId);
-		ddmFieldModel2.setFieldName("CONTENT_TYPE");
-		ddmFieldModel2.setFieldType("string");
-		ddmFieldModel2.setInstanceId(StringUtil.randomId());
-		ddmFieldModel2.setLocalizable(true);
-		ddmFieldModel2.setPriority(1);
-
-		return Arrays.asList(ddmFieldModel1, ddmFieldModel2);
+		return Arrays.asList(
+			newDDMFieldModel(
+				ddmStorageLinkModel.getClassPK(),
+				_defaultDLDDMStructureVersionId, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, false, 0),
+			newDDMFieldModel(
+				ddmStorageLinkModel.getClassPK(),
+				_defaultDLDDMStructureVersionId, "CONTENT_TYPE", "string",
+				StringUtil.randomId(), true, 1));
 	}
 
 	public List<DDMFieldModel> newDDMFieldModels(
@@ -3426,59 +3392,21 @@ public class DataFactory {
 		List<DDMFieldModel> ddmFieldModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT + 1);
 
-		DDMFieldModel ddmFieldModel = new DDMFieldModelImpl();
-
-		// PK fields
-
-		ddmFieldModel.setFieldId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldModel.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldModel.setParentFieldId(0);
-		ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
-
-		long structureVersionId = ddmStorageLinkModel.getStructureVersionId();
-
-		ddmFieldModel.setStructureVersionId(structureVersionId);
-
-		ddmFieldModel.setFieldName(StringPool.BLANK);
-		ddmFieldModel.setFieldType(StringPool.BLANK);
-		ddmFieldModel.setInstanceId(StringPool.BLANK);
-		ddmFieldModel.setLocalizable(false);
-		ddmFieldModel.setPriority(0);
-
-		ddmFieldModels.add(ddmFieldModel);
+		ddmFieldModels.add(
+			newDDMFieldModel(
+				ddmStorageLinkModel.getClassPK(),
+				ddmStorageLinkModel.getStructureVersionId(), StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, false, 0));
 
 		for (int i = 1; i <= BenchmarksPropsValues.MAX_DDL_CUSTOM_FIELD_COUNT;
 			 i++) {
 
-			ddmFieldModel = new DDMFieldModelImpl();
-
-			// PK fields
-
-			ddmFieldModel.setFieldId(_counter.get());
-
-			// Audit fields
-
-			ddmFieldModel.setCompanyId(_companyId);
-
-			// Other fields
-
-			ddmFieldModel.setParentFieldId(0);
-			ddmFieldModel.setStorageId(ddmStorageLinkModel.getClassPK());
-			ddmFieldModel.setStructureVersionId(structureVersionId);
-			ddmFieldModel.setFieldName(
-				nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i - 1));
-			ddmFieldModel.setFieldType("string");
-			ddmFieldModel.setInstanceId(StringUtil.randomString());
-			ddmFieldModel.setLocalizable(true);
-			ddmFieldModel.setPriority(i);
-
-			ddmFieldModels.add(ddmFieldModel);
+			ddmFieldModels.add(
+				newDDMFieldModel(
+					ddmStorageLinkModel.getClassPK(),
+					ddmStorageLinkModel.getStructureVersionId(),
+					nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i - 1),
+					"string", StringUtil.randomString(), true, i));
 		}
 
 		return ddmFieldModels;
@@ -3487,51 +3415,15 @@ public class DataFactory {
 	public List<DDMFieldModel> newDDMFieldModels(
 		JournalArticleModel journalArticleModel) {
 
-		DDMFieldModel ddmFieldModel1 = new DDMFieldModelImpl();
-
-		// PK fields
-
-		ddmFieldModel1.setFieldId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldModel1.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldModel1.setParentFieldId(0);
-		ddmFieldModel1.setStorageId(journalArticleModel.getId());
-		ddmFieldModel1.setStructureVersionId(
-			_defaultJournalDDMStructureVersionId);
-		ddmFieldModel1.setFieldName(StringPool.BLANK);
-		ddmFieldModel1.setFieldType(StringPool.BLANK);
-		ddmFieldModel1.setInstanceId(StringPool.BLANK);
-		ddmFieldModel1.setLocalizable(false);
-		ddmFieldModel1.setPriority(0);
-
-		DDMFieldModel ddmFieldModel2 = new DDMFieldModelImpl();
-
-		// PK fields
-
-		ddmFieldModel2.setFieldId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldModel2.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldModel2.setParentFieldId(0);
-		ddmFieldModel2.setStorageId(journalArticleModel.getId());
-		ddmFieldModel2.setStructureVersionId(
-			_defaultJournalDDMStructureVersionId);
-		ddmFieldModel2.setFieldName("content");
-		ddmFieldModel2.setFieldType("rich_text");
-		ddmFieldModel2.setInstanceId(StringUtil.randomId());
-		ddmFieldModel2.setLocalizable(true);
-		ddmFieldModel2.setPriority(1);
-
-		return Arrays.asList(ddmFieldModel1, ddmFieldModel2);
+		return Arrays.asList(
+			newDDMFieldModel(
+				journalArticleModel.getId(),
+				_defaultJournalDDMStructureVersionId, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, false, 0),
+			newDDMFieldModel(
+				journalArticleModel.getId(),
+				_defaultJournalDDMStructureVersionId, "content", "rich_text",
+				StringUtil.randomId(), true, 1));
 	}
 
 	public DDMStorageLinkModel newDDMStorageLinkModel(
@@ -6177,6 +6069,35 @@ public class DataFactory {
 		}
 
 		return portletPreferenceValueModels;
+	}
+
+	protected DDMFieldModel newDDMFieldModel(
+		long storageId, long structureVersionId, String fieldName,
+		String fieldType, String instanceId, boolean localizable,
+		int priority) {
+
+		DDMFieldModel ddmFieldModel = new DDMFieldModelImpl();
+
+		// PK fields
+
+		ddmFieldModel.setFieldId(_counter.get());
+
+		// Audit fields
+
+		ddmFieldModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		ddmFieldModel.setParentFieldId(0);
+		ddmFieldModel.setStorageId(storageId);
+		ddmFieldModel.setStructureVersionId(structureVersionId);
+		ddmFieldModel.setFieldName(fieldName);
+		ddmFieldModel.setFieldType(fieldType);
+		ddmFieldModel.setInstanceId(instanceId);
+		ddmFieldModel.setLocalizable(localizable);
+		ddmFieldModel.setPriority(priority);
+
+		return ddmFieldModel;
 	}
 
 	protected DDMStorageLinkModel newDDMStorageLinkModel(

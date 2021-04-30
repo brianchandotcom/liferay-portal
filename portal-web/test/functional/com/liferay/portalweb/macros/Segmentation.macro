@@ -266,24 +266,11 @@ definition {
 				value1 = "${criterionInputOption}");
 		}
 
-		else if (isSet(resolutionValue)) {
+		else if (isSet(criterion)) {
 			AssertValue(
-				key_criterion = "decimal-number",
+				key_criterion = "${criterion}",
 				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${resolutionValue}");
-		}
-
-		else if (isSet(date)) {
-			AssertValue(
-				key_criterion = "date",
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${date}");
-		}
-
-		else if ("${key_criterion}" == "options") {
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-				value1 = "${propertyField}");
+				value1 = "${value}");
 		}
 
 		else {

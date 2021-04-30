@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.batch.planner.model.BatchPlannerLog">
+		<field name="mvccVersion" type="long" />
+		<field name="batchPlannerLogId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="batchPlannerPlanId" type="long" />
+		<field name="batchExternalReferenceCode" type="String" />
+		<field name="dispatchExternalReferenceCode" type="String" />
+		<field name="size" type="Integer" />
+		<field name="total" type="Integer" />
+		<field name="status" type="String" />
+	</model>
+	<model name="com.liferay.batch.planner.model.BatchPlannerMapping">
+		<field name="mvccVersion" type="long" />
+		<field name="batchPlannerMappingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="batchPlannerPlanId" type="long" />
+		<field name="externalName" type="String" />
+		<field name="externalType" type="String" />
+		<field name="internalName" type="String" />
+		<field name="internalType" type="String" />
+		<field name="transformationExpression" type="String" />
+	</model>
+	<model name="com.liferay.batch.planner.model.BatchPlannerPlan">
+		<field name="mvccVersion" type="long" />
+		<field name="batchPlannerPlanId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="active" type="boolean" />
+		<field name="externalContentType" type="String" />
+		<field name="internalClassName" type="String" />
+		<field name="name" type="String" />
+		<field name="channel" type="String" />
+		<field name="export" type="boolean" />
+	</model>
+	<model name="com.liferay.batch.planner.model.BatchPlannerPolicy">
+		<field name="mvccVersion" type="long" />
+		<field name="batchPlannerPolicyId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="batchPlannerPlanId" type="long" />
+		<field name="name" type="String" />
+		<field name="value" type="String" />
+	</model>
+</model-hints>

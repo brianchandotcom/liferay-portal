@@ -3142,70 +3142,16 @@ public class DataFactory {
 		DLFileEntryModel dlFileEntryModel, List<DDMFieldModel> ddmFieldModels,
 		DDMStorageLinkModel ddmStorageLinkModel) {
 
-		DDMFieldModel ddmFieldModel = ddmFieldModels.get(0);
-
-		DDMFieldAttributeModel ddmFieldAttributeModel1 =
-			new DDMFieldAttributeModelImpl();
-
-		//  PK fields
-
-		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldAttributeModel1.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel1.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
-		ddmFieldAttributeModel1.setLanguageId(StringPool.BLANK);
-		ddmFieldAttributeModel1.setSmallAttributeValue("en_US");
-
-		DDMFieldAttributeModel ddmFieldAttributeModel2 =
-			new DDMFieldAttributeModelImpl();
-
-		//  PK fields
-
-		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldAttributeModel2.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel2.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
-		ddmFieldAttributeModel2.setLanguageId(StringPool.BLANK);
-		ddmFieldAttributeModel2.setSmallAttributeValue("en_US");
-
-		ddmFieldModel = ddmFieldModels.get(1);
-
-		DDMFieldAttributeModel ddmFieldAttributeModel3 =
-			new DDMFieldAttributeModelImpl();
-
-		//  PK fields
-
-		ddmFieldAttributeModel3.setFieldAttributeId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldAttributeModel3.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldAttributeModel3.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel3.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel3.setAttributeName(StringPool.BLANK);
-		ddmFieldAttributeModel3.setLanguageId("en_US");
-		ddmFieldAttributeModel3.setSmallAttributeValue("text/plain");
-
 		return Arrays.asList(
-			ddmFieldAttributeModel1, ddmFieldAttributeModel2,
-			ddmFieldAttributeModel3);
+			newDDMFieldAttributeModel(
+				ddmFieldModels.get(0), ddmStorageLinkModel.getClassPK(),
+				"availableLanguageIds", StringPool.BLANK, "en_US"),
+			newDDMFieldAttributeModel(
+				ddmFieldModels.get(0), ddmStorageLinkModel.getClassPK(),
+				"defaultLanguageId", StringPool.BLANK, "en_US"),
+			newDDMFieldAttributeModel(
+				ddmFieldModels.get(1), ddmStorageLinkModel.getClassPK(),
+				StringPool.BLANK, "en_US", "text/plain"));
 	}
 
 	public List<DDMFieldAttributeModel> newDDMFieldAttributeModels(
@@ -3216,75 +3162,23 @@ public class DataFactory {
 		List<DDMFieldAttributeModel> ddmFieldAttributeModels =
 			new ArrayList<>();
 
-		DDMFieldModel ddmFieldModel = ddmFieldModels.get(0);
+		ddmFieldAttributeModels.add(
+			newDDMFieldAttributeModel(
+				ddmFieldModels.get(0), ddmStorageLinkModel.getClassPK(),
+				"availableLanguageIds", StringPool.BLANK, "en_US"));
 
-		DDMFieldAttributeModel ddmFieldAttributeModel1 =
-			new DDMFieldAttributeModelImpl();
-
-		//  PK fields
-
-		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldAttributeModel1.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel1.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
-		ddmFieldAttributeModel1.setLanguageId(StringPool.BLANK);
-		ddmFieldAttributeModel1.setSmallAttributeValue("en_US");
-
-		ddmFieldAttributeModels.add(ddmFieldAttributeModel1);
-
-		DDMFieldAttributeModel ddmFieldAttributeModel2 =
-			new DDMFieldAttributeModelImpl();
-
-		//  PK fields
-
-		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldAttributeModel2.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel2.setStorageId(ddmStorageLinkModel.getClassPK());
-		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
-		ddmFieldAttributeModel2.setLanguageId(StringPool.BLANK);
-		ddmFieldAttributeModel2.setSmallAttributeValue("en_US");
-
-		ddmFieldAttributeModels.add(ddmFieldAttributeModel2);
+		ddmFieldAttributeModels.add(
+			newDDMFieldAttributeModel(
+				ddmFieldModels.get(0), ddmStorageLinkModel.getClassPK(),
+				"defaultLanguageId", StringPool.BLANK, "en_US"));
 
 		for (int i = 1; i < ddmFieldModels.size(); i++) {
-			ddmFieldModel = ddmFieldModels.get(i);
+			DDMFieldModel ddmFieldModel = ddmFieldModels.get(i);
 
-			DDMFieldAttributeModel ddmFieldAttributeModel =
-				new DDMFieldAttributeModelImpl();
-
-			//  PK fields
-
-			ddmFieldAttributeModel.setFieldAttributeId(_counter.get());
-
-			// Audit fields
-
-			ddmFieldAttributeModel.setCompanyId(_companyId);
-
-			// Other fields
-
-			ddmFieldAttributeModel.setFieldId(ddmFieldModel.getFieldId());
-			ddmFieldAttributeModel.setStorageId(
-				ddmStorageLinkModel.getClassPK());
-			ddmFieldAttributeModel.setAttributeName(StringPool.BLANK);
-			ddmFieldAttributeModel.setLanguageId("en_US");
-			ddmFieldAttributeModel.setSmallAttributeValue(
-				"Test Record " + currentIndex);
-
-			ddmFieldAttributeModels.add(ddmFieldAttributeModel);
+			ddmFieldAttributeModels.add(
+				newDDMFieldAttributeModel(
+					ddmFieldModel, ddmStorageLinkModel.getClassPK(),
+					StringPool.BLANK, "en_US", "Test Record " + currentIndex));
 		}
 
 		return ddmFieldAttributeModels;
@@ -3294,80 +3188,35 @@ public class DataFactory {
 		JournalArticleModel journalArticleModel,
 		List<DDMFieldModel> ddmFieldModels) {
 
-		DDMFieldModel ddmFieldModel = ddmFieldModels.get(0);
+		List<DDMFieldAttributeModel> ddmFieldAttributeModels =
+			new ArrayList<>();
 
-		DDMFieldAttributeModel ddmFieldAttributeModel1 =
-			new DDMFieldAttributeModelImpl();
+		ddmFieldAttributeModels.add(
+			newDDMFieldAttributeModel(
+				ddmFieldModels.get(0), journalArticleModel.getId(),
+				"availableLanguageIds", StringPool.BLANK, "en_US"));
 
-		//  PK fields
-
-		ddmFieldAttributeModel1.setFieldAttributeId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldAttributeModel1.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldAttributeModel1.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel1.setStorageId(journalArticleModel.getId());
-		ddmFieldAttributeModel1.setAttributeName("availableLanguageIds");
-		ddmFieldAttributeModel1.setLanguageId(StringPool.BLANK);
-		ddmFieldAttributeModel1.setSmallAttributeValue("en_US");
-
-		DDMFieldAttributeModel ddmFieldAttributeModel2 =
-			new DDMFieldAttributeModelImpl();
-
-		//  PK fields
-
-		ddmFieldAttributeModel2.setFieldAttributeId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldAttributeModel2.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldAttributeModel2.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel2.setStorageId(journalArticleModel.getId());
-		ddmFieldAttributeModel2.setAttributeName("defaultLanguageId");
-		ddmFieldAttributeModel2.setLanguageId(StringPool.BLANK);
-		ddmFieldAttributeModel2.setSmallAttributeValue("en_US");
-
-		ddmFieldModel = ddmFieldModels.get(1);
-
-		DDMFieldAttributeModel ddmFieldAttributeModel3 =
-			new DDMFieldAttributeModelImpl();
-
-		//  PK fields
-
-		ddmFieldAttributeModel3.setFieldAttributeId(_counter.get());
-
-		// Audit fields
-
-		ddmFieldAttributeModel3.setCompanyId(_companyId);
-
-		// Other fields
-
-		ddmFieldAttributeModel3.setFieldId(ddmFieldModel.getFieldId());
-		ddmFieldAttributeModel3.setStorageId(journalArticleModel.getId());
-		ddmFieldAttributeModel3.setAttributeName(StringPool.BLANK);
-		ddmFieldAttributeModel3.setLanguageId("en_US");
+		ddmFieldAttributeModels.add(
+			newDDMFieldAttributeModel(
+				ddmFieldModels.get(0), journalArticleModel.getId(),
+				"defaultLanguageId", StringPool.BLANK, "en_US"));
 
 		if (_journalArticleContent.length() >
 				DDMFieldAttributeImpl.SMALL_ATTRIBUTE_VALUE_MAX_LENGTH) {
 
-			ddmFieldAttributeModel3.setLargeAttributeValue(
-				_journalArticleContent);
+			ddmFieldAttributeModels.add(
+				newDDMFieldAttributeModel(
+					ddmFieldModels.get(1), journalArticleModel.getId(),
+					StringPool.BLANK, "en_US", "", _journalArticleContent));
 		}
 		else {
-			ddmFieldAttributeModel3.setSmallAttributeValue(
-				_journalArticleContent);
+			ddmFieldAttributeModels.add(
+				newDDMFieldAttributeModel(
+					ddmFieldModels.get(1), journalArticleModel.getId(),
+					StringPool.BLANK, "en_US", _journalArticleContent));
 		}
 
-		return Arrays.asList(
-			ddmFieldAttributeModel1, ddmFieldAttributeModel2,
-			ddmFieldAttributeModel3);
+		return ddmFieldAttributeModels;
 	}
 
 	public List<DDMFieldModel> newDDMFieldModels(
@@ -6069,6 +5918,43 @@ public class DataFactory {
 		}
 
 		return portletPreferenceValueModels;
+	}
+
+	protected DDMFieldAttributeModel newDDMFieldAttributeModel(
+		DDMFieldModel ddmFieldModel, long storageId, String attributeName,
+		String languageId, String smallAttributeValue) {
+
+		return newDDMFieldAttributeModel(
+			ddmFieldModel, storageId, attributeName, languageId,
+			smallAttributeValue, "");
+	}
+
+	protected DDMFieldAttributeModel newDDMFieldAttributeModel(
+		DDMFieldModel ddmFieldModel, long storageId, String attributeName,
+		String languageId, String smallAttributeValue,
+		String largeAttributeValue) {
+
+		DDMFieldAttributeModel ddmFieldAttributeModel =
+			new DDMFieldAttributeModelImpl();
+
+		//  PK fields
+
+		ddmFieldAttributeModel.setFieldAttributeId(_counter.get());
+
+		// Audit fields
+
+		ddmFieldAttributeModel.setCompanyId(_companyId);
+
+		// Other fields
+
+		ddmFieldAttributeModel.setFieldId(ddmFieldModel.getFieldId());
+		ddmFieldAttributeModel.setStorageId(storageId);
+		ddmFieldAttributeModel.setAttributeName(attributeName);
+		ddmFieldAttributeModel.setLanguageId(languageId);
+		ddmFieldAttributeModel.setLargeAttributeValue(largeAttributeValue);
+		ddmFieldAttributeModel.setSmallAttributeValue(smallAttributeValue);
+
+		return ddmFieldAttributeModel;
 	}
 
 	protected DDMFieldModel newDDMFieldModel(

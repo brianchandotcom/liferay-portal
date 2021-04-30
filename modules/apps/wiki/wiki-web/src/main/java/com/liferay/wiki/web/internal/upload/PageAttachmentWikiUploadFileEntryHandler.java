@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.internal.upload;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
@@ -63,40 +65,23 @@ public class PageAttachmentWikiUploadFileEntryHandler
 	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
 		throws IOException, PortalException {
 
-		dlValidator.validateFileSize(
-			uploadPortletRequest.getFileName(_PARAMETER_NAME),
-			uploadPortletRequest.getSize(_PARAMETER_NAME));
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long resourcePrimKey = ParamUtil.getLong(
-			uploadPortletRequest, "resourcePrimKey");
+		if (Validator.isNotNull(
+				uploadPortletRequest.getFileName(
+					_IMAGE_SELECTOR_PARAMETER_NAME))) {
 
-		WikiPage page = _wikiPageService.getPage(resourcePrimKey);
+			String fileName = uploadPortletRequest.getFileName(
+				_IMAGE_SELECTOR_PARAMETER_NAME);
 
-		_wikiNodeModelResourcePermission.check(
-			themeDisplay.getPermissionChecker(), page.getNodeId(),
-			ActionKeys.ADD_ATTACHMENT);
-
-		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
-		String contentType = uploadPortletRequest.getContentType(
-			_PARAMETER_NAME);
-		String[] mimeTypes = ParamUtil.getParameterValues(
-			uploadPortletRequest, "mimeTypes");
-
-		_validateFile(
-			fileName, contentType, mimeTypes,
-			uploadPortletRequest.getSize(_PARAMETER_NAME));
-
-		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				_PARAMETER_NAME)) {
-
-			return _wikiPageService.addPageAttachment(
-				page.getNodeId(), page.getTitle(), fileName, inputStream,
-				contentType);
+			return _addPageAttachment(
+				uploadPortletRequest, themeDisplay, fileName,
+				_IMAGE_SELECTOR_PARAMETER_NAME);
 		}
+
+		return _editImageFileEntry(uploadPortletRequest, themeDisplay);
 	}
 
 	@Activate
@@ -108,6 +93,56 @@ public class PageAttachmentWikiUploadFileEntryHandler
 
 	@Reference
 	protected DLValidator dlValidator;
+
+	private FileEntry _addPageAttachment(
+			UploadPortletRequest uploadPortletRequest,
+			ThemeDisplay themeDisplay, String fileName, String parameterName)
+		throws IOException, PortalException {
+
+		dlValidator.validateFileSize(
+			fileName, uploadPortletRequest.getSize(parameterName));
+
+		long resourcePrimKey = ParamUtil.getLong(
+			uploadPortletRequest, "resourcePrimKey");
+
+		WikiPage page = _wikiPageService.getPage(resourcePrimKey);
+
+		_wikiNodeModelResourcePermission.check(
+			themeDisplay.getPermissionChecker(), page.getNodeId(),
+			ActionKeys.ADD_ATTACHMENT);
+
+		String contentType = uploadPortletRequest.getContentType(parameterName);
+
+		String[] mimeTypes = ParamUtil.getParameterValues(
+			uploadPortletRequest, "mimeTypes");
+
+		_validateFile(
+			fileName, contentType, mimeTypes,
+			uploadPortletRequest.getSize(parameterName));
+
+		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				parameterName)) {
+
+			return _wikiPageService.addPageAttachment(
+				page.getNodeId(), page.getTitle(), fileName, inputStream,
+				contentType);
+		}
+	}
+
+	private FileEntry _editImageFileEntry(
+			UploadPortletRequest uploadPortletRequest,
+			ThemeDisplay themeDisplay)
+		throws IOException, PortalException {
+
+		long fileEntryId = ParamUtil.getLong(
+			uploadPortletRequest, "fileEntryId");
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		return _addPageAttachment(
+			uploadPortletRequest, themeDisplay, fileEntry.getFileName(),
+			_IMAGE_EDITOR_PARAMETER_NAME);
+	}
 
 	private String[] _getValidMimeTypes(
 		String[] mimeTypes, List<String> wikiAttachmentMimeTypes) {
@@ -161,7 +196,13 @@ public class PageAttachmentWikiUploadFileEntryHandler
 				fileName));
 	}
 
-	private static final String _PARAMETER_NAME = "imageSelectorFileName";
+	private static final String _IMAGE_EDITOR_PARAMETER_NAME = "imageBlob";
+
+	private static final String _IMAGE_SELECTOR_PARAMETER_NAME =
+		"imageSelectorFileName";
+
+	@Reference
+	private DLAppService _dlAppService;
 
 	private volatile WikiFileUploadConfiguration _wikiFileUploadConfiguration;
 

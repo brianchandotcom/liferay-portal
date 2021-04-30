@@ -346,10 +346,6 @@ definition {
 
 		PortletEntry.inputName(name = "Child SiteName2");
 
-		Click(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
 		PortletEntry.save();
 
 		Navigator.openURL();

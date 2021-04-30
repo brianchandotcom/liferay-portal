@@ -69,6 +69,8 @@ definition {
 
 				Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_PROPAGATION");
 
+				PortletEntry.save();
+
 				Navigator.gotoBack();
 			}
 		}
@@ -1468,12 +1470,12 @@ definition {
 
 		if ("${clonedFromTemplate}" == "true") {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SiteSettingsSiteTemplate#SITE_CLONED_FROM_TEMPLATE_MESSAGE",
+				locator1 = "SiteSettingsSiteTemplate#CONTENT_CONTAINER",
 				value1 = "These pages are linked to site template ${siteTemplateName} without propagation of changes.");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SiteSettingsSiteTemplate#SITE_NOT_CLONED_FROM_TEMPLATE_MESSAGE",
+				locator1 = "SiteSettingsSiteTemplate#CONTENT_CONTAINER",
 				value1 = "This site is not related to a site template.");
 		}
 	}

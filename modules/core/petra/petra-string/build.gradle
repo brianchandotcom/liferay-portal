@@ -1,7 +1,3 @@
 dependencies {
 	compileOnly project(":core:petra:petra-lang")
 }
-
-liferay {
-	deployDir = appServerLibGlobalDir
-}

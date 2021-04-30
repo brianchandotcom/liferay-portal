@@ -3,7 +3,3 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 }
-
-liferay {
-	deployDir = appServerLibGlobalDir
-}

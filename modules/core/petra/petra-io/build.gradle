@@ -5,7 +5,3 @@ dependencies {
 
 	testCompile project(":core:petra:petra-reflect")
 }
-
-liferay {
-	deployDir = appServerLibGlobalDir
-}

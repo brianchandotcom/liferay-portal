@@ -636,12 +636,102 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130308."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceOrganizationTypeSegment {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceOrganizationTypeSegment";
 
-		// TODO LPS-130308 AddNewExperienceOrganizationTypeSegment pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Users",
+			configurationName = "Organization Type",
+			configurationScope = "System Scope");
+
+		Button.clickAdd();
+
+		for (var settingName : list "Name,Children Types") {
+			SystemSettings.editTextAreaSetting(
+				settingName = "${settingName}",
+				settingValue = "Location");
+		}
+
+		for (var fieldName : list "countryEnabled,rootable") {
+			FormFields.enableCheckbox(fieldName = "${fieldName}");
+		}
+
+		SystemSettings.saveConfiguration();
+
+		JSONOrganization.addOrganization(
+			organizationName = "United States",
+			organizationType = "Location");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "United States",
+			userEmailAddress = "userea2@liferay.com");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Type");
+
+		Segmentation.fillTitle(titleField = "Org with Type");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(propertyField = "t");
+
+		AssertTextEquals(
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "1 Member");
+
+		Segmentation.viewMembers(memberName = "userfn2 userln2");
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPages.clickPencil();
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "Experience For Org with Type",
+			segmentName = "Org with Type");
+
+		Button.clickPublish();
+
+		ContentPages.clickPencil();
+
+		PageEditor.changeExperience(newExperience = "Experience For Org with Type");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "Org users will see this heading");
+
+		PageEditor.prioritizeExperience(experienceName = "Experience For Org with Type");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			freeLogin = "true",
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "Org users will see this heading");
 	}
 
 	@description = "This is a test for LPS-130327."

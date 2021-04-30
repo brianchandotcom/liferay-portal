@@ -12,11 +12,13 @@
  * details.
  */
 
-const clickOutside = (target, ...elements) => (
-	!elements.some((element) => !!target.closest(element))
-)
+const clickOutside = (target, ...elements) =>
+	!elements.some((element) => !!target.closest(element));
 
-export default function DataEngineLayoutBuilderHandler({defaultLanguageId, namespace}) {
+export default function DataEngineLayoutBuilderHandler({
+	defaultLanguageId,
+	namespace,
+}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	const getDataLayoutBuilder = () => {
@@ -73,12 +75,12 @@ export default function DataEngineLayoutBuilderHandler({defaultLanguageId, names
 					...dataDefinition.serialize(),
 					defaultLanguageId,
 					description,
-					name
+					name,
 				}),
 				dataLayout: JSON.stringify({
 					...dataLayout.serialize(),
 					description,
-					name
+					name,
 				}),
 			},
 		});
@@ -89,22 +91,24 @@ export default function DataEngineLayoutBuilderHandler({defaultLanguageId, names
 	// Deselect field when clicking outside the form builder
 
 	const detectClickOutside = async ({target}) => {
-		if (clickOutside(target, [
-			'.ddm-form-builder-wrapper',
-			'.multi-panel-sidebar',
-			'.lfr-icon-menu-open',
-			'.input-localized-content'
-		])) {
+		if (
+			clickOutside(target, [
+				'.ddm-form-builder-wrapper',
+				'.multi-panel-sidebar',
+				'.lfr-icon-menu-open',
+				'.input-localized-content',
+			])
+		) {
 			const dataLayoutBuilder = await getDataLayoutBuilder();
 
 			dataLayoutBuilder.current.dispatch({
-				type: 'sidebar_field_blur'
+				type: 'sidebar_field_blur',
 			});
 		}
 	};
 
 	window.addEventListener('click', detectClickOutside, true);
-	
+
 	// Update editing language id in the data engine side
 
 	const updateEditingLanguageId = async (event) => {
@@ -113,12 +117,12 @@ export default function DataEngineLayoutBuilderHandler({defaultLanguageId, names
 
 		dataLayoutBuilder.current.dispatch({
 			payload: {
-				defaultLanguageId, 
-				editingLanguageId
+				defaultLanguageId,
+				editingLanguageId,
 			},
-			type: 'language_change'
+			type: 'language_change',
 		});
-	}
+	};
 
 	Liferay.after('inputLocalized:localeChanged', updateEditingLanguageId);
 

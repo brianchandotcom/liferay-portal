@@ -461,7 +461,6 @@ definition {
 		AssertElementPresent(
 			key_productName = "ABS Sensor",
 			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_FINAL");
-
 	}
 
 	@description = "COMMERCE-6159. As a buyer, I want to see the barred list price and the sale price of a product, if a price modifier is set"

@@ -199,9 +199,9 @@ definition {
 		}
 
 		User.loginPG(
-				nodePort = "9080",
-				password = "test",
-				userEmailAddress = "test@liferay.com");
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Alert.viewErrorMessage(errorMessage = "will be automatically deactivated and shut down");
 

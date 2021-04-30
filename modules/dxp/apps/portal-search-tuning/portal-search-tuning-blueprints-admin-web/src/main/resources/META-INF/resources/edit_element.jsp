@@ -23,8 +23,10 @@ renderResponse.setTitle(entryDisplayContext.getPageTitle());
 %>
 
 <div>
+	<span aria-hidden="true" class="loading-animation"></span>
+
 	<react:component
-		data="<%= entryDisplayContext.getData() %>"
 		module="js/edit_element/index"
+		props="<%= entryDisplayContext.getData() %>"
 	/>
 </div>

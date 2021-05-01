@@ -24,7 +24,7 @@ definition {
 	macro assignOrganization {
 		Click(locator1 = "Button#SELECT");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Check(
 			key_checkboxName = "${orgName}",

@@ -1693,7 +1693,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						Class<?> clazz = object.getClass();
 
-						for (Field field : ReflectionUtil.getDeclaredFields(clazz.getSuperclass())) {
+						for (Field field : getDeclaredFields(clazz.getSuperclass())) {
 							arraySB.append(field.getName());
 							arraySB.append(": ");
 
@@ -1730,7 +1730,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				StringBuilder sb = new StringBuilder("{");
 
-				for (Field field : ReflectionUtil.getDeclaredFields(${schemaName}.class)) {
+				for (Field field : getDeclaredFields(${schemaName}.class)) {
 					if (!ArrayUtil.contains(getAdditionalAssertFieldNames(), field.getName())) {
 						continue;
 					}
@@ -1993,7 +1993,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		</#if>
 
 		<#if freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)??>
-			for (Field field : ReflectionUtil.getDeclaredFields(${freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)}.class)) {
+			for (Field field : getDeclaredFields(${freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)}.class)) {
 				if (!ArrayUtil.contains(getAdditionalAssertFieldNames(), field.getName())){
 					continue;
 				}
@@ -2018,7 +2018,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					clazz = clazz.getComponentType();
 				}
 
-				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(ReflectionUtil.getDeclaredFields(clazz));
+				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(getDeclaredFields(clazz));
 
 				graphQLFields.add(new GraphQLField(field.getName(), childrenGraphQLFields));
 			}
@@ -2141,6 +2141,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 		Map<String, EntityField> entityFieldsMap = entityModel.getEntityFieldsMap();
 
 		return entityFieldsMap.values();
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(Field[]::new);
 	}
 
 	protected List<EntityField> getEntityFields(EntityField.Type type) throws Exception {

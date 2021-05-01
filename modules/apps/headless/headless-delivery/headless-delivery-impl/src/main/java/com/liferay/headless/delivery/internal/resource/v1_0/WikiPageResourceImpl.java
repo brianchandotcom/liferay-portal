@@ -350,24 +350,6 @@ public class WikiPageResourceImpl
 		return com.liferay.wiki.model.WikiPage.class.getName();
 	}
 
-	private String _getEncodingFormat(
-		com.liferay.wiki.model.WikiPage wikiPage) {
-
-		String format = wikiPage.getFormat();
-
-		if (format.equals("creole")) {
-			return "text/x-wiki";
-		}
-		else if (format.equals("html")) {
-			return "text/html";
-		}
-		else if (format.equals("plain_text")) {
-			return "text/plain";
-		}
-
-		return format;
-	}
-
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		WikiPage wikiPage) {
 

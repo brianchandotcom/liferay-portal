@@ -149,7 +149,7 @@ function PreviewSidebar({
 							<div className="json-modal">
 								<CodeMirrorEditor
 									readOnly
-									value={JSON.stringify(results, null, '\t')}
+									value={JSON.stringify(results, null, 2)}
 								/>
 							</div>
 						}
@@ -157,9 +157,11 @@ function PreviewSidebar({
 						title={Liferay.Language.get('raw-response')}
 					>
 						<ClayButton
+							borderless
 							className="raw-response"
 							disabled={loading}
-							displayType="unstyled"
+							displayType="secondary"
+							small
 						>
 							{Liferay.Language.get('view-raw-response')}
 						</ClayButton>

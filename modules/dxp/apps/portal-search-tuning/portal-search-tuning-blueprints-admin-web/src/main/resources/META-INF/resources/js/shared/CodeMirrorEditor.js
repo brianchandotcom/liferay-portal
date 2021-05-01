@@ -93,6 +93,7 @@ const CodeMirrorEditor = React.forwardRef(
 					indentWithTabs: true,
 					inputStyle: 'contenteditable',
 					lineNumbers: true,
+					lineWrapping: true,
 					matchBrackets: true,
 					mode: {globalVars: true, name: MODES[mode].type},
 					readOnly,

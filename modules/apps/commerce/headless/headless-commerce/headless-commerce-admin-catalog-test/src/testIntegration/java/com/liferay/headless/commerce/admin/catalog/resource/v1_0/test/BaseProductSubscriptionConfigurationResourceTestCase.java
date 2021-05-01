@@ -421,7 +421,7 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.headless.commerce.admin.catalog.dto.v1_0.
 						ProductSubscriptionConfiguration.class)) {
 
@@ -456,7 +456,7 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -600,6 +600,17 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 			entityModel.getEntityFieldsMap();
 
 		return entityFieldsMap.values();
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected List<EntityField> getEntityFields(EntityField.Type type)

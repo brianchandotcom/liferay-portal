@@ -407,7 +407,7 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
 		for (Field field :
-				ReflectionUtil.getDeclaredFields(
+				getDeclaredFields(
 					com.liferay.data.engine.rest.dto.v2_0.
 						DataDefinitionFieldLink.class)) {
 
@@ -442,7 +442,7 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 				}
 
 				List<GraphQLField> childrenGraphQLFields = getGraphQLFields(
-					ReflectionUtil.getDeclaredFields(clazz));
+					getDeclaredFields(clazz));
 
 				graphQLFields.add(
 					new GraphQLField(field.getName(), childrenGraphQLFields));
@@ -554,6 +554,17 @@ public abstract class BaseDataDefinitionFieldLinkResourceTestCase {
 			entityModel.getEntityFieldsMap();
 
 		return entityFieldsMap.values();
+	}
+
+	protected Field[] getDeclaredFields(Class clazz) throws Exception {
+		Stream<Field> stream = Stream.of(
+			ReflectionUtil.getDeclaredFields(clazz));
+
+		return stream.filter(
+			field -> !field.isSynthetic()
+		).toArray(
+			Field[]::new
+		);
 	}
 
 	protected List<EntityField> getEntityFields(EntityField.Type type)

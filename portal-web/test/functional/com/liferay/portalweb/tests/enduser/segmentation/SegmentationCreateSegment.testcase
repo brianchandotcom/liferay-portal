@@ -236,12 +236,57 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130279."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationParentOrganization {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130279 AddSegmentByOrganizationParentOrganization pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "Parent Organization Name");
+
+		JSONOrganization.addOrganization(
+			organizationName = "Organization Name",
+			parentOrganizationName = "Parent Organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "Organization Name",
+			parentOrganizationName = "Parent Organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Parent Organization");
+
+		Segmentation.assignOrganization(orgName = "Parent Organization Name");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationParentOrganization Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByOrganizationParentOrganization Test");
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = "Parent Organization Name"
+		);
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "${organizationId}");
 	}
 
 	@description = "This is a test for LPS-130282."

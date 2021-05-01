@@ -147,6 +147,7 @@ public class ResourceTestCaseOpenAPIParser {
 				returnType.indexOf("<") + 1, returnType.indexOf(">"));
 
 			if (itemType.contains(".") && !itemType.startsWith("java.lang") &&
+				!itemType.startsWith("java.util") &&
 				!itemType.startsWith("com.liferay.portal.vulcan") &&
 				!itemType.startsWith(apiPackage)) {
 
@@ -160,6 +161,7 @@ public class ResourceTestCaseOpenAPIParser {
 				 !returnType.equals("com.liferay.portal.vulcan") &&
 				 !returnType.equals("javax.ws.rs.core.Response") &&
 				 !returnType.startsWith("java.lang") &&
+				 !returnType.startsWith("java.util") &&
 				 !returnType.startsWith(apiPackage)) {
 
 			return StringBundler.concat(

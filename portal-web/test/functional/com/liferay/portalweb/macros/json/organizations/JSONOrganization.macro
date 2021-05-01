@@ -49,8 +49,15 @@ definition {
 	macro assignUserToOrganization {
 		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
 
+		if (isSet(parentOrganizationName)) {
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(
+				organizationName = "${parentOrganizationName}"
+			);
+		}
+
 		var organizationId = JSONOrganization.getOrganizationIdByName(
-			organizationName = "${organizationName}"
+			organizationName = "${organizationName}",
+			parentOrganizationId = "${parentOrganizationId}"
 		);
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
@@ -77,8 +84,12 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(parentOrganizationId))) {
+			var parentOrganizationId = "0";
+		}
+
 		var curl = '''
-			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/0 \
+			${portalURL}/api/jsonws/organization/get-organizations/company-id/${companyId}/parent-organization-id/${parentOrganizationId} \
 				-u test@liferay.com:test
 		''';
 

@@ -16,7 +16,7 @@ package com.liferay.wiki.internal.upgrade.v2_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.wiki.model.WikiPageTable;
+import com.liferay.wiki.internal.upgrade.v2_2_0.util.WikiPageTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,7 +29,7 @@ public class WikiPageExternalReferenceCodeUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("WikiPage", "externalReferenceCode")) {
+		if (!hasColumn(WikiPageTable.TABLE_NAME, "externalReferenceCode")) {
 			alter(
 				WikiPageTable.class,
 				new AlterTableAddColumn(

@@ -41,120 +41,118 @@ public abstract class BaseURLPatternMapperTestCase {
 		new HashMap<String, Integer[]>() {
 			{
 				put(null, new Integer[0]);
-				put("/", new Integer[] {23, 20});
-				put("/*", new Integer[] {21, 20});
-				put("/*/", new Integer[] {22, 21, 20});
+				put("/", new Integer[] {23});
+				put("/*", new Integer[] {21});
+				put("/*/", new Integer[] {22, 21});
 				put(
 					"/c/portal/j_login/make/this/the/longest/exact/url/pattern",
-					new Integer[] {1, 20});
-				put("/do/test.mp3", new Integer[] {25, 20, 17});
-				put("/do/test.mp3/", new Integer[] {25, 20});
-				put("/do/test.mp3/do/test", new Integer[] {25, 20});
-				put("/random/one/two/three", new Integer[] {20});
-				put("/url/random/one/two/three", new Integer[] {36, 20});
-				put("/url/some/random/pattern/do/", new Integer[] {37, 36, 20});
+					new Integer[] {1});
+				put("/do/test.mp3", new Integer[] {25, 17});
+				put("/do/test.mp3/", new Integer[] {25});
+				put("/do/test.mp3/do/test", new Integer[] {25});
+				put("/random/one/two/three", new Integer[0]);
+				put("/url/random/one/two/three", new Integer[] {36});
+				put("/url/some/random/pattern/do/", new Integer[] {37, 36});
 				put(
 					"/url/some/random/pattern/do/test.mp3",
-					new Integer[] {38, 37, 36, 20, 17});
+					new Integer[] {38, 37, 36, 17});
 				put(
 					"/url/some/random/pattern/do/test.mp3/",
-					new Integer[] {2, 38, 37, 36, 20});
+					new Integer[] {2, 38, 37, 36});
 				put(
 					"/url/some/random/pattern/five/five/five/",
-					new Integer[] {37, 36, 20});
+					new Integer[] {37, 36});
 				put(
 					"/url/some/random/pattern/one",
-					new Integer[] {3, 39, 37, 36, 20});
-				put(
-					"/url/some/random/pattern/one*",
-					new Integer[] {4, 37, 36, 20});
+					new Integer[] {3, 39, 37, 36});
+				put("/url/some/random/pattern/one*", new Integer[] {4, 37, 36});
 				put(
 					"/url/some/random/pattern/one/",
-					new Integer[] {5, 39, 37, 36, 20});
+					new Integer[] {5, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/*/",
-					new Integer[] {6, 39, 37, 36, 20});
+					new Integer[] {6, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/*/do/test",
-					new Integer[] {7, 39, 37, 36, 20});
+					new Integer[] {7, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/*/do/test/",
-					new Integer[] {39, 37, 36, 20});
+					new Integer[] {39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/*/do/test/t",
-					new Integer[] {39, 37, 36, 20});
+					new Integer[] {39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/do/test",
-					new Integer[] {39, 37, 36, 20});
+					new Integer[] {39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/one",
-					new Integer[] {40, 39, 37, 36, 20});
+					new Integer[] {40, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/one/",
-					new Integer[] {40, 39, 37, 36, 20});
+					new Integer[] {40, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/one/do/test",
-					new Integer[] {40, 39, 37, 36, 20});
+					new Integer[] {40, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/one/one",
-					new Integer[] {41, 40, 39, 37, 36, 20});
+					new Integer[] {41, 40, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/one/one/",
-					new Integer[] {41, 40, 39, 37, 36, 20});
+					new Integer[] {41, 40, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/one/one/./some/very/long/do",
-					new Integer[] {41, 40, 39, 37, 36, 20});
+					new Integer[] {41, 40, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/one/one/./some/very/long/do/",
-					new Integer[] {41, 40, 39, 37, 36, 20});
+					new Integer[] {41, 40, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/one/one/one/do/test",
-					new Integer[] {41, 40, 39, 37, 36, 20});
+					new Integer[] {41, 40, 39, 37, 36});
 				put(
 					"/url/some/random/pattern/two/*/do/test/",
-					new Integer[] {42, 37, 36, 20});
+					new Integer[] {42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/*/do/test/t",
-					new Integer[] {42, 37, 36, 20});
+					new Integer[] {42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/do/test",
-					new Integer[] {42, 37, 36, 20});
+					new Integer[] {42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two",
-					new Integer[] {43, 42, 37, 36, 20});
+					new Integer[] {43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/",
-					new Integer[] {43, 42, 37, 36, 20});
+					new Integer[] {43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/do/test",
-					new Integer[] {43, 42, 37, 36, 20});
+					new Integer[] {43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two/",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two/./some/very/long/do",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two/./some/very/long/do/",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two/do/test",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two/two",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two/two/",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two/two/*/long",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put(
 					"/url/some/random/pattern/two/two/two/two/*/long/",
-					new Integer[] {44, 43, 42, 37, 36, 20});
+					new Integer[] {44, 43, 42, 37, 36});
 				put("iff", new Integer[0]);
 				put(
 					"some/random/pattern/one/two/three/test.j/sp",
@@ -203,10 +201,10 @@ public abstract class BaseURLPatternMapperTestCase {
 		"*.mp3",
 		"*.mp4",
 		"*.tiff",
+		"*.zip",
 
 		// Wildcard
 
-		"/*",
 		"/*/*",
 		"/*//*",
 		"//*",

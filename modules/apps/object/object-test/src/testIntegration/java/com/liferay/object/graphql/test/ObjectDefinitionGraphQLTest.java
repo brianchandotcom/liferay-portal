@@ -185,6 +185,62 @@ public class ObjectDefinitionGraphQLTest {
 				"Object/" + _objectFieldName));
 	}
 
+	@Test
+	public void testUpdateObjectEntry() throws Exception {
+		String value = RandomTestUtil.randomString();
+
+		JSONObject jsonObject = _invoke(
+			new GraphQLField(
+				"mutation",
+				new GraphQLField(
+					"create" + _objectDefinitionName,
+					HashMapBuilder.<String, Object>put(
+						_objectDefinitionName,
+						StringBundler.concat(
+							"{", _objectFieldName, ": \"", value, "\"}")
+					).put(
+						"siteId", TestPropsValues.getGroupId()
+					).build(),
+					new GraphQLField(_objectFieldName),
+					new GraphQLField(
+						_objectDefinition.getPrimaryKeyColumnName()))));
+
+		Assert.assertEquals(
+			value,
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data",
+				"JSONObject/create" + _objectDefinitionName,
+				"Object/" + _objectFieldName));
+
+		value = RandomTestUtil.randomString();
+
+		Long id = JSONUtil.getValueAsLong(
+			jsonObject, "JSONObject/data",
+			"JSONObject/create" + _objectDefinitionName,
+			"Object/" + _objectDefinition.getPrimaryKeyColumnName());
+
+		jsonObject = _invoke(
+			new GraphQLField(
+				"mutation",
+				new GraphQLField(
+					"update" + _objectDefinitionName,
+					HashMapBuilder.<String, Object>put(
+						_objectDefinitionName,
+						StringBundler.concat(
+							"{", _objectDefinition.getPrimaryKeyColumnName(),
+							": ", String.valueOf(id), ", ", _objectFieldName,
+							": \"", value, "\"}")
+					).build(),
+					new GraphQLField(_objectFieldName))));
+
+		Assert.assertEquals(
+			value,
+			JSONUtil.getValueAsString(
+				jsonObject, "JSONObject/data",
+				"JSONObject/update" + _objectDefinitionName,
+				"Object/" + _objectFieldName));
+	}
+
 	private ObjectField _createObjectField(String name, String type) {
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);

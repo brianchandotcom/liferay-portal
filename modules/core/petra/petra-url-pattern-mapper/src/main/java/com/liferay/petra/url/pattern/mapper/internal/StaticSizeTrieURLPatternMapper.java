@@ -176,6 +176,10 @@ public class StaticSizeTrieURLPatternMapper<T>
 			return _wildcardValues.get(_getFirstSetBitIndex(extraBitmask));
 		}
 
+		if (bestMatchBitmask == 0) {
+			return null;
+		}
+
 		return _wildcardValues.get(_getFirstSetBitIndex(bestMatchBitmask));
 	}
 

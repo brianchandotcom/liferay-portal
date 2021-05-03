@@ -771,7 +771,7 @@ public class MessageBoardThread implements Serializable {
 	@GraphQLField(
 		description = "A flag that indicates whether the user making the requests is subscribed to this thread."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean subscribed;
 
 	@Schema(description = "The categories associated with this thread.")

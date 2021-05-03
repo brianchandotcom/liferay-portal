@@ -92,8 +92,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.validation.constraints.NotNull;
-
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -265,7 +263,7 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public StructuredContent postSiteStructuredContentDraft(
-			@NotNull Long siteId, StructuredContent structuredContent)
+			Long siteId, StructuredContent structuredContent)
 		throws Exception {
 
 		DDMStructure ddmStructure = _ddmStructureService.getStructure(

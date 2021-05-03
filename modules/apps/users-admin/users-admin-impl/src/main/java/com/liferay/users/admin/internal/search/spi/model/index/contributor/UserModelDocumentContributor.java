@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.internal.search.spi.model.index.contributor;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,7 +81,10 @@ public class UserModelDocumentContributor
 				getAncestorOrganizationIds(user.getOrganizationIds()));
 			document.addDate("birthDate", user.getBirthday());
 			document.addKeyword("defaultUser", user.isDefaultUser());
-			document.addText("emailAddress", user.getEmailAddress());
+			document.addKeyword("emailAddress", user.getEmailAddress());
+			document.addKeyword(
+				"emailAddressDomain",
+				_getEmailAddressDomain(user.getEmailAddress()));
 			document.addText("firstName", user.getFirstName());
 			document.addText("fullName", user.getFullName());
 			document.addKeyword("groupIds", user.getGroupIds());
@@ -253,6 +257,10 @@ public class UserModelDocumentContributor
 
 	@Reference
 	protected UserGroupRoleLocalService userGroupRoleLocalService;
+
+	private String _getEmailAddressDomain(String emailAddress) {
+		return emailAddress.substring(emailAddress.indexOf(StringPool.AT) + 1);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserModelDocumentContributor.class);

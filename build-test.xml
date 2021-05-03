@@ -2150,11 +2150,13 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 										<replace
 											file="${app.server.lib.global.dir}/module.xml"
 										>
-											<replacetoken><![CDATA[<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />]]></replacetoken>
+											<replacetoken><![CDATA[<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">]]></replacetoken>
 											<replacevalue>
 												<![CDATA[
-													<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />
-													<resource-root path="mysql.jar" />
+													<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">
+														<resources>
+															<resource-root path="mysql.jar" />
+														</resources>
 												]]>
 											</replacevalue>
 										</replace>
@@ -2189,11 +2191,13 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 											<replace
 												file="${app.server.lib.global.dir}/module.xml"
 											>
-												<replacetoken><![CDATA[<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />]]></replacetoken>
+												<replacetoken><![CDATA[<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">]]></replacetoken>
 												<replacevalue>
 													<![CDATA[
-														<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />
-														<resource-root path="mariadb.jar" />
+														<module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">
+															<resources>
+																<resource-root path="mysql.jar" />
+															</resources>
 													]]>
 												</replacevalue>
 											</replace>

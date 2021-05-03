@@ -2745,7 +2745,6 @@ components:
                     # @review
                     description:
                         A flag that indicates whether the user making the requests is subscribed to this thread.
-                    readOnly: true
                     type: boolean
                 taxonomyCategoryBriefs:
                     # @review

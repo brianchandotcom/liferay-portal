@@ -1,3 +1,4 @@
+
 <html>
 <head>
 <title>Form</title>
@@ -150,6 +151,16 @@
 </tr>
 <!--ADD_FIELD-->
 <tr>
+    <td>ADD_FIELD_TARGET</td>
+    <td>//div[contains(@class,'col-empty')]/div[contains(@class,'target')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ADD_FIELD_NEW</td>
+    <td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}']</td>
+    <td></td>
+</tr>
+<tr>
     <td>ADD_FIELD</td>
     <td>//button[contains(@class,'add-button-large')]/span | //div[contains(@class,'portlet-forms')]//button[contains(@class,'ddm-add-field')]</td>
     <td></td>
@@ -160,8 +171,13 @@
     <td></td>
 </tr>
 <tr>
+    <td>ADD_FIELD_NAME</td>
+    <td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldType}']</td>
+    <td></td>
+</tr>
+<tr>
     <td>ADD_FIELD_POSITION</td>
-    <td>xpath=(//div[contains(@class,'yui3-dd-drop') and contains(@class,'col-empty')] | //div[contains(@class,'col-empty')])[${key_fieldLocation}]</td>
+    <td>xpath=(//div[contains(@class,'col-empty')]/div[contains(@class,'target')])[${key_fieldLocation}] | //div[contains(@class,'yui3-dd-drop') and contains(@class,'col-empty')] | //div[contains(@class,'col-empty')])[${key_fieldLocation}]</td>
     <td></td>
 </tr>
 <tr>
@@ -287,6 +303,11 @@
 </tr>
 <!--SIDEBAR -->
 <tr>
+	<td>ACTIVE_TAB</td>
+	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}'][contains(@aria-pressed,'true')]</td>
+	<td></td>
+</tr>
+<tr>
     <td>SIDEBAR_AUTOCOMPLETE_TAB</td>
     <td>//a[contains(@class,'tab') and .='Autocomplete'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Autocomplete')]</td>
     <td></td>
@@ -313,12 +334,12 @@
 </tr>
 <tr>
     <td>SIDEBAR_BASIC_TAB</td>
-    <td>//a[contains(@class,'tab') and .='Basic'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Basic')]</td>
+    <td>//a[contains(@class,'tab') and .='Basic'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Basic')] | //*[contains(@class,'nav-link') and contains(@class,'active') and normalize-space()='Basic'][not(contains(@id,'ProductMenu'))]</td>
     <td></td>
 </tr>
 <tr>
     <td>SIDEBAR_BASIC_TAB_LOCALE</td>
-    <td>//a[contains(@class,'tab') and .='${key_localeBasic}'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'${key_localeBasic}')]</td>
+    <td>//a[contains(@class,'tab') and .='${key_localeBasic}'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'${key_localeBasic}')] </td>
     <td></td>
 </tr>
 <tr>

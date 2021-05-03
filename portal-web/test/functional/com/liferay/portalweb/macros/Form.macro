@@ -5,12 +5,19 @@ definition {
 	var rowNumber = "1";
 
 	macro _addField {
-		if (IsElementNotPresent(locator1 = "Form#SIDEBAR_CLOSE")) {
-			MouseOver.mouseOverNotVisible(locator1 = "Form#ADD_FIELD");
+		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Form#ACTIVE_TAB")) {
+			MouseOver.mouseOverNotVisible(
+				key_tabName = "Builder",
+				locator1 = "Form#ADD_FIELD_NEW");
 
 			ScrollBy(value1 = "0, 230");
 
-			Click(locator1 = "Form#ADD_FIELD");
+			Click(
+				key_tabName = "Builder",
+
+
+				
+				locator1 = "Form#ADD_FIELD_NEW");
 		}
 	}
 
@@ -65,13 +72,7 @@ definition {
 	}
 
 	macro closeSidebar {
-		Pause(locator1 = "1000");
-
-		Click(locator1 = "Form#SIDEBAR_CLOSE");
-
-		ScrollBy(value1 = "0, 230");
-
-		Pause(locator1 = "1000");
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro configureEmailNotifications {
@@ -258,7 +259,9 @@ definition {
 
 		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
 
-		AssertVisible(locator1 = "Form#ADD_FIELD");
+		AssertVisible(
+			key_tabName = "Builder",
+			locator1 = "Form#ADD_FIELD_NEW");
 
 		AssertVisible(locator1 = "Form#NAME_FIELD");
 
@@ -272,7 +275,9 @@ definition {
 	macro editNameLocalized {
 		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
 
-		AssertVisible(locator1 = "Form#ADD_FIELD");
+		AssertVisible(
+			key_tabName = "Builder",
+			locator1 = "Form#ADD_FIELD_NEW");
 
 		AssertVisible(locator1 = "Form#NAME_FIELD");
 
@@ -355,13 +360,6 @@ definition {
 	macro gotoAddField {
 		Form._addField();
 
-		if (isSet(localeElements)) {
-			Form.gotoElementsTab(key_localeElements = "${localeElements}");
-		}
-		else {
-			Form.gotoElementsTab();
-		}
-
 		var key_fieldType = "${fieldType}";
 
 		if ("${key_fieldType}" == "Text") {
@@ -372,24 +370,24 @@ definition {
 		}
 
 		if (isSet(local)) {
-			DragAndDrop.dragAndDropPortletToObject(
-				locator1 = "Form#ADD_FIELD_TYPE",
-				locator2 = "Form#ADD_FIELD_POSITION_1",
-				value1 = "${fieldType}");
-		}
-		else {
-			DragAndDrop.dragAndDropPortletToObject(
-				locator1 = "Form#ADD_FIELD_TYPE",
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fieldLocation = "${local}",
+				locator1 = "Form#ADD_FIELD_NAME",
 				locator2 = "Form#ADD_FIELD_POSITION",
 				value1 = "${fieldType}");
 		}
-
-		if (isSet(localeBasic)) {
-			var key_localeBasic = "${localeBasic}";
-			AssertElementPresent(locator1 = "Form#SIDEBAR_BASIC_TAB_LOCALE");
-		}
 		else {
-			AssertElementPresent(locator1 = "Form#SIDEBAR_BASIC_TAB");
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_fieldLocation = "${local}",
+				locator1 = "Form#ADD_FIELD_NAME",
+				locator2 = "Form#ADD_FIELD_TARGET",
+				value1 = "${fieldType}");
+		}
+
+		Pause(locator1 = "3000");
+
+		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Basic");
 		}
 	}
 

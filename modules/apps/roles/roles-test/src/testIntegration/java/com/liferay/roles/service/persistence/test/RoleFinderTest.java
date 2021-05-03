@@ -23,13 +23,11 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,8 +51,7 @@ public class RoleFinderTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -113,12 +110,13 @@ public class RoleFinderTest {
 
 		Assert.assertEquals(
 			actionIdsLists,
-			_roleFinder.findByC_N_S_P(companyId, name, scope, primKey));
+			_roleLocalService.getResourceRoles(
+				companyId, name, scope, primKey));
 	}
 
 	@Test
 	public void testFindByC_N_S_P_A() {
-		List<Role> roles = _roleFinder.findByC_N_S_P_A(
+		List<Role> roles = _roleLocalService.getResourceRoles(
 			_resourcePermission.getCompanyId(), _resourcePermission.getName(),
 			_resourcePermission.getScope(), _resourcePermission.getPrimKey(),
 			_arbitraryResourceAction.getActionId());
@@ -141,7 +139,7 @@ public class RoleFinderTest {
 			groupIds[i] = RandomTestUtil.nextLong();
 		}
 
-		_roleFinder.findByU_G(userId, groupIds);
+		_roleLocalService.getUserRelatedRoles(userId, groupIds);
 	}
 
 	private static ResourceAction _arbitraryResourceAction;
@@ -158,8 +156,5 @@ public class RoleFinderTest {
 
 	@Inject
 	private static RoleLocalService _roleLocalService;
-
-	@Inject
-	private RoleFinder _roleFinder;
 
 }

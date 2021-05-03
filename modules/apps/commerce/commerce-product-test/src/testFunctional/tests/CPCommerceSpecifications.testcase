@@ -41,12 +41,40 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6284. EditSpecificationLabel"
-	@ignore = "true"
 	@priority = "3"
 	test EditSpecificationLabel {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceSpecifications#EditSpecificationLabel";
 
-		// TODO COMMERCE-6284 EditSpecificationLabel
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Specifications");
+
+		Click(
+			locator1 = "Icon#SVG_ELLIPSIS",
+			value1 = "Dimension");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		Type(
+			key_fieldLabel = "Label",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		Type(
+			key_fieldLabel = "Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "test");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_rowEntry = "Test",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 	}
 
 	@description = "This is a test for COMMERCE-6282. RemoveSpecificationGroup"

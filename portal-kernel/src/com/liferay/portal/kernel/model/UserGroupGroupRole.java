@@ -57,6 +57,9 @@ public interface UserGroupGroupRole
 
 			};
 
+	@Override
+	public boolean equals(Object object);
+
 	public Group getGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -65,5 +68,7 @@ public interface UserGroupGroupRole
 
 	public UserGroup getUserGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public int hashCode();
 
 }

@@ -24,7 +24,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "users")
 @Meta.OCD(
 	id = "com.liferay.password.policies.admin.web.internal.configuration.PasswordPoliciesConfiguration",
-	localization = "content/Language", name = "password-policies"
+	localization = "content/Language",
+	name = "password-policies-configuration-name"
 )
 public interface PasswordPoliciesConfiguration {
 

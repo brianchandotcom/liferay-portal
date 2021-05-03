@@ -102,6 +102,11 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public Date getExpirationDate() {
+		return _fileEntry.getExpirationDate();
+	}
+
+	@Override
 	public String getExtension() {
 		return _fileEntry.getExtension();
 	}
@@ -247,6 +252,11 @@ public class FileEntryProxyBean
 	@Override
 	public long getRepositoryId() {
 		return _fileEntry.getRepositoryId();
+	}
+
+	@Override
+	public Date getReviewDate() {
+		return _fileEntry.getReviewDate();
 	}
 
 	@Override

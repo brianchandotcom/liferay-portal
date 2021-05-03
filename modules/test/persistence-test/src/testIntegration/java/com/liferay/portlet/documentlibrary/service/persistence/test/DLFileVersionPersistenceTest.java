@@ -171,6 +171,10 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setChecksum(RandomTestUtil.randomString());
 
+		newDLFileVersion.setExpirationDate(RandomTestUtil.nextDate());
+
+		newDLFileVersion.setReviewDate(RandomTestUtil.nextDate());
+
 		newDLFileVersion.setLastPublishDate(RandomTestUtil.nextDate());
 
 		newDLFileVersion.setStatus(RandomTestUtil.nextInt());
@@ -255,6 +259,12 @@ public class DLFileVersionPersistenceTest {
 		Assert.assertEquals(
 			existingDLFileVersion.getChecksum(),
 			newDLFileVersion.getChecksum());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDLFileVersion.getExpirationDate()),
+			Time.getShortTimestamp(newDLFileVersion.getExpirationDate()));
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingDLFileVersion.getReviewDate()),
+			Time.getShortTimestamp(newDLFileVersion.getReviewDate()));
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingDLFileVersion.getLastPublishDate()),
 			Time.getShortTimestamp(newDLFileVersion.getLastPublishDate()));
@@ -397,9 +407,10 @@ public class DLFileVersionPersistenceTest {
 			"fileEntryId", true, "treePath", true, "fileName", true,
 			"extension", true, "mimeType", true, "title", true, "description",
 			true, "changeLog", true, "fileEntryTypeId", true, "version", true,
-			"size", true, "checksum", true, "lastPublishDate", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"size", true, "checksum", true, "expirationDate", true,
+			"reviewDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -741,6 +752,10 @@ public class DLFileVersionPersistenceTest {
 		dlFileVersion.setSize(RandomTestUtil.nextLong());
 
 		dlFileVersion.setChecksum(RandomTestUtil.randomString());
+
+		dlFileVersion.setExpirationDate(RandomTestUtil.nextDate());
+
+		dlFileVersion.setReviewDate(RandomTestUtil.nextDate());
 
 		dlFileVersion.setLastPublishDate(RandomTestUtil.nextDate());
 

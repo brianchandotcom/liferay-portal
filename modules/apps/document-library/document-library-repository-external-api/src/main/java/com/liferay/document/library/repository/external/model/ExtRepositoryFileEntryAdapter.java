@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.InputStream;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -85,6 +86,11 @@ public class ExtRepositoryFileEntryAdapter
 
 		return extRepositoryAdapter.getContentStream(
 			(ExtRepositoryFileVersionAdapter)fileVersion);
+	}
+
+	@Override
+	public Date getExpirationDate() {
+		return null;
 	}
 
 	@Override
@@ -301,6 +307,11 @@ public class ExtRepositoryFileEntryAdapter
 		Repository repository = getRepository();
 
 		return repository.getCapability(capabilityClass);
+	}
+
+	@Override
+	public Date getReviewDate() {
+		return null;
 	}
 
 	@Override

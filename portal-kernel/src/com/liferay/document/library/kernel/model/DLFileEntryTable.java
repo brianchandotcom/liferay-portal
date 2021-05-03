@@ -95,6 +95,10 @@ public class DLFileEntryTable extends BaseTable<DLFileEntryTable> {
 		createColumn(
 			"manualCheckInRequired", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<DLFileEntryTable, Date> expirationDate = createColumn(
+		"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<DLFileEntryTable, Date> reviewDate = createColumn(
+		"reviewDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DLFileEntryTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 

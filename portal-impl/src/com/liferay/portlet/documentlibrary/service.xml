@@ -71,6 +71,8 @@
 		<column name="custom1ImageId" type="long" />
 		<column name="custom2ImageId" type="long" />
 		<column name="manualCheckInRequired" type="boolean" />
+		<column name="expirationDate" type="Date" />
+		<column name="reviewDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->
@@ -374,6 +376,8 @@
 		<column name="version" type="String" />
 		<column name="size" type="long" />
 		<column name="checksum" type="String" />
+		<column name="expirationDate" type="Date" />
+		<column name="reviewDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

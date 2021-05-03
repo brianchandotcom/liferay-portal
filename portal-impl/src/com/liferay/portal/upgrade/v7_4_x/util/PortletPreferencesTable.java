@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author	  Preston Crary
+ * @author	  Brian Wing Shun Chan
  * @generated
  */
 public class PortletPreferencesTable {

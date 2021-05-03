@@ -461,6 +461,34 @@ public interface DLFileVersionModel
 	public void setChecksum(String checksum);
 
 	/**
+	 * Returns the expiration date of this document library file version.
+	 *
+	 * @return the expiration date of this document library file version
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this document library file version.
+	 *
+	 * @param expirationDate the expiration date of this document library file version
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the review date of this document library file version.
+	 *
+	 * @return the review date of this document library file version
+	 */
+	public Date getReviewDate();
+
+	/**
+	 * Sets the review date of this document library file version.
+	 *
+	 * @param reviewDate the review date of this document library file version
+	 */
+	public void setReviewDate(Date reviewDate);
+
+	/**
 	 * Returns the last publish date of this document library file version.
 	 *
 	 * @return the last publish date of this document library file version

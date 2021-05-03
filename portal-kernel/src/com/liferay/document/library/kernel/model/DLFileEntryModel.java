@@ -553,6 +553,34 @@ public interface DLFileEntryModel
 	public void setManualCheckInRequired(boolean manualCheckInRequired);
 
 	/**
+	 * Returns the expiration date of this document library file entry.
+	 *
+	 * @return the expiration date of this document library file entry
+	 */
+	public Date getExpirationDate();
+
+	/**
+	 * Sets the expiration date of this document library file entry.
+	 *
+	 * @param expirationDate the expiration date of this document library file entry
+	 */
+	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the review date of this document library file entry.
+	 *
+	 * @return the review date of this document library file entry
+	 */
+	public Date getReviewDate();
+
+	/**
+	 * Sets the review date of this document library file entry.
+	 *
+	 * @param reviewDate the review date of this document library file entry
+	 */
+	public void setReviewDate(Date reviewDate);
+
+	/**
 	 * Returns the last publish date of this document library file entry.
 	 *
 	 * @return the last publish date of this document library file entry

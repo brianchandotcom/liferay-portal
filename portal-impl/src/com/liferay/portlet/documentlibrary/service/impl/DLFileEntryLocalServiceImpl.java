@@ -162,7 +162,8 @@ public class DLFileEntryLocalServiceImpl
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream inputStream, long size, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
@@ -249,6 +250,8 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
 		dlFileEntry.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
 		dlFileEntry.setSize(size);
+		dlFileEntry.setExpirationDate(expirationDate);
+		dlFileEntry.setReviewDate(reviewDate);
 
 		dlFileEntry = dlFileEntryPersistence.update(dlFileEntry);
 
@@ -262,7 +265,8 @@ public class DLFileEntryLocalServiceImpl
 			user, dlFileEntry, fileName, extension, mimeType, title,
 			description, changeLog, StringPool.BLANK, fileEntryTypeId,
 			ddmFormValuesMap, DLFileEntryConstants.VERSION_DEFAULT, size,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			expirationDate, reviewDate, WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
 
 		// Folder
 
@@ -285,6 +289,25 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		return dlFileEntry;
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addFileEntry(long, long, long, long, String, String, String, String, String, long, Map, File, InputStream, long, Date, Date, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public DLFileEntry addFileEntry(
+			long userId, long groupId, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, long fileEntryTypeId,
+			Map<String, DDMFormValues> ddmFormValuesMap, File file,
+			InputStream inputStream, long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			userId, groupId, repositoryId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
+			file, inputStream, size, null, null, serviceContext);
 	}
 
 	@Override
@@ -534,7 +557,8 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
 			dlFileEntry.getDescription(), null,
 			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
-			dlFileEntry.getSize(), serviceContext);
+			dlFileEntry.getSize(), dlFileEntry.getExpirationDate(),
+			dlFileEntry.getReviewDate(), serviceContext);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
@@ -2002,7 +2026,8 @@ public class DLFileEntryLocalServiceImpl
 			String extension, String mimeType, String title, String description,
 			String changeLog, String extraSettings, long fileEntryTypeId,
 			Map<String, DDMFormValues> ddmFormValuesMap, String version,
-			long size, int status, ServiceContext serviceContext)
+			long size, Date expirationDate, Date reviewDate, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileVersionId = counterLocalService.increment();
@@ -2033,6 +2058,8 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
 		dlFileVersion.setVersion(version);
 		dlFileVersion.setSize(size);
+		dlFileVersion.setExpirationDate(expirationDate);
+		dlFileVersion.setReviewDate(reviewDate);
 		dlFileVersion.setStatus(status);
 		dlFileVersion.setStatusByUserId(user.getUserId());
 		dlFileVersion.setStatusByUserName(user.getFullName());
@@ -2695,8 +2722,10 @@ public class DLFileEntryLocalServiceImpl
 					oldDLFileVersion.getExtraSettings(),
 					oldDLFileVersion.getFileEntryTypeId(), null,
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-					oldDLFileVersion.getSize(), WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					oldDLFileVersion.getSize(),
+					oldDLFileVersion.getExpirationDate(),
+					oldDLFileVersion.getReviewDate(),
+					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 				copyExpandoRowModifiedDate(
 					dlFileEntry.getCompanyId(), oldDLFileVersionId,

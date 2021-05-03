@@ -62,7 +62,7 @@ public class DLFolderSearchFixture {
 			dlFolder.getFolderId(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString(), keywords, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, new ByteArrayInputStream(content.getBytes()), 0,
+			null, new ByteArrayInputStream(content.getBytes()), 0, null, null,
 			serviceContext);
 
 		_dlFolders.add(dlFolder);

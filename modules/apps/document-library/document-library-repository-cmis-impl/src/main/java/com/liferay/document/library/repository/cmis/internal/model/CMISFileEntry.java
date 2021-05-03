@@ -204,6 +204,11 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
+	public Date getExpirationDate() {
+		return null;
+	}
+
+	@Override
 	public String getExtension() {
 		return FileUtil.getExtension(getTitle());
 	}
@@ -490,6 +495,11 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	@Override
 	public long getRepositoryId() {
 		return _cmisRepository.getRepositoryId();
+	}
+
+	@Override
+	public Date getReviewDate() {
+		return null;
 	}
 
 	@Override

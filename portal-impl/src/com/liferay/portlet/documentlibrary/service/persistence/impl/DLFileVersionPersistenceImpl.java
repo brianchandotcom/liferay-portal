@@ -6527,6 +6527,8 @@ public class DLFileVersionPersistenceImpl
 		ctStrictColumnNames.add("version");
 		ctStrictColumnNames.add("size_");
 		ctStrictColumnNames.add("checksum");
+		ctStrictColumnNames.add("expirationDate");
+		ctStrictColumnNames.add("reviewDate");
 		ctStrictColumnNames.add("lastPublishDate");
 		ctStrictColumnNames.add("status");
 		ctStrictColumnNames.add("statusByUserId");

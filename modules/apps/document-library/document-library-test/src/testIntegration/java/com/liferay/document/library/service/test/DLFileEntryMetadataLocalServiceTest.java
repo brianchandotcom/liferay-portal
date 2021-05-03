@@ -135,8 +135,8 @@ public class DLFileEntryMetadataLocalServiceTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			null, null, _dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap,
-			null, byteArrayInputStream, byteArrayInputStream.available(),
-			serviceContext);
+			null, byteArrayInputStream, byteArrayInputStream.available(), null,
+			null, serviceContext);
 	}
 
 	@Test

@@ -87,6 +87,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,6 +119,29 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddsFileEntryWithExpirationDateReviewDate()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date expirationDate = new Date();
+		Date reviewDate = new Date();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			expirationDate, reviewDate, serviceContext);
+
+		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
+	}
+
+	@Test
 	public void testAddsFileEntryWithNoFileEntryType() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -129,7 +153,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
 			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
-			serviceContext);
+			null, null, serviceContext);
 
 		long defaultFileEntryTypeId =
 			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
@@ -137,6 +161,46 @@ public class DLFileEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			defaultFileEntryTypeId, dlFileEntry.getFileEntryTypeId());
+	}
+
+	@Test
+	public void testAddsFileEntryWithoutExpirationDate() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date reviewDate = new Date();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			null, reviewDate, serviceContext);
+
+		Assert.assertNull(dlFileEntry.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
+	}
+
+	@Test
+	public void testAddsFileEntryWithoutReviewDate() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date expirationDate = new Date();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			expirationDate, null, serviceContext);
+
+		Assert.assertNull(dlFileEntry.getReviewDate());
+		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
 	}
 
 	@Test
@@ -154,7 +218,8 @@ public class DLFileEntryLocalServiceTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
 			StringPool.BLANK, -1, new HashMap<>(), null,
-			new ByteArrayInputStream(content.getBytes()), 0, serviceContext);
+			new ByteArrayInputStream(content.getBytes()), 0, null, null,
+			serviceContext);
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			dlFileEntry.getFileEntryId(), "file.pdf", null, "file.txt",
@@ -321,7 +386,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
-			serviceContext);
+			null, null, serviceContext);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
@@ -372,7 +437,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+			ddmFormValuesMap, null, inputStream, 0, null, null, serviceContext);
 
 		DLFileEntryLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), dlFolder.getGroupId(),
@@ -380,7 +445,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+			ddmFormValuesMap, null, inputStream, 0, null, null, serviceContext);
 	}
 
 	@Test
@@ -472,7 +537,8 @@ public class DLFileEntryLocalServiceTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
 			StringPool.BLANK, -1, new HashMap<>(), null,
-			new ByteArrayInputStream(content.getBytes()), 0, serviceContext);
+			new ByteArrayInputStream(content.getBytes()), 0, null, null,
+			serviceContext);
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			dlFileEntry.getFileEntryId(), "file.txt", null, "file.pdf",
@@ -500,7 +566,8 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new HashMap<String, DDMFormValues>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+			new ByteArrayInputStream(new byte[0]), 0, null, null,
+			serviceContext);
 
 		DLFolder destinationDLFolder = DLTestUtil.addDLFolder(
 			_group.getGroupId());
@@ -513,7 +580,8 @@ public class DLFileEntryLocalServiceTest {
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new HashMap<String, DDMFormValues>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+			new ByteArrayInputStream(new byte[0]), 0, null, null,
+			serviceContext);
 
 		DLFileEntryLocalServiceUtil.moveFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
@@ -544,7 +612,8 @@ public class DLFileEntryLocalServiceTest {
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new HashMap<String, DDMFormValues>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+			new ByteArrayInputStream(new byte[0]), 0, null, null,
+			serviceContext);
 
 		DLFolder destinationDLFolder = DLTestUtil.addDLFolder(
 			_group.getGroupId());
@@ -556,7 +625,8 @@ public class DLFileEntryLocalServiceTest {
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new HashMap<String, DDMFormValues>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+			new ByteArrayInputStream(new byte[0]), 0, null, null,
+			serviceContext);
 
 		DLFileEntryLocalServiceUtil.moveFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
@@ -577,7 +647,8 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new HashMap<String, DDMFormValues>(), null,
-			new ByteArrayInputStream(new byte[0]), 0, serviceContext);
+			new ByteArrayInputStream(new byte[0]), 0, null, null,
+			serviceContext);
 
 		Group destinationGroup = GroupTestUtil.addGroup();
 
@@ -622,7 +693,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
 			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
-			serviceContext);
+			null, null, serviceContext);
 
 		DLFileEntryLocalServiceUtil.checkOutFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
@@ -650,7 +721,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
 			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
-			serviceContext);
+			null, null, serviceContext);
 
 		DLFileEntryLocalServiceUtil.verifyFileEntryCheckOut(
 			dlFileEntry.getFileEntryId(), RandomTestUtil.randomString());
@@ -668,7 +739,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
 			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
-			serviceContext);
+			null, null, serviceContext);
 
 		DLFileEntryLocalServiceUtil.checkOutFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry1.getFileEntryId(),
@@ -680,7 +751,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
 			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
-			serviceContext);
+			null, null, serviceContext);
 
 		DLFileEntryLocalServiceUtil.checkOutFileEntry(
 			TestPropsValues.getUserId(), dlFileEntry2.getFileEntryId(),
@@ -705,7 +776,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+			ddmFormValuesMap, null, inputStream, 0, null, null, serviceContext);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 

@@ -80,7 +80,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return dlFileEntryLocalService.addFileEntry(
 			getUserId(), groupId, repositoryId, folderId, sourceFileName,
 			mimeType, title, description, changeLog, fileEntryTypeId,
-			ddmFormValuesMap, file, inputStream, size, serviceContext);
+			ddmFormValuesMap, file, inputStream, size, null, null,
+			serviceContext);
 	}
 
 	@Override

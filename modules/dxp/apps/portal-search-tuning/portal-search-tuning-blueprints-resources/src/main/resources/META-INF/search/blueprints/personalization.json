@@ -1,0 +1,468 @@
+{
+	"blueprint-payload": {
+		"configuration": {
+			"advanced_configuration": {
+				"query_processing": {
+					"exclude_query_contributors": "",
+					"exclude_query_post_processors": ""
+				},
+				"source": {
+					"fetch_source": true,
+					"source_excludes": "",
+					"source_includes": ""
+				}
+			},
+			"aggregation_configuration": [
+			],
+			"facet_configuration": [
+			],
+			"framework_configuration": {
+				"apply_indexer_clauses": true
+			},
+			"parameter_configuration": {
+			},
+			"query_configuration": [
+				{
+					"category": "boost",
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"query": {
+									"function_score": {
+										"boost": 2,
+										"gauss": {
+											"expando__keyword__custom_fields__location_geolocation": {
+												"decay": 0.3,
+												"offset": 0,
+												"origin": {
+													"lat": "${ipstack.latitude}",
+													"lon": "${ipstack.longitude}"
+												},
+												"scale": "100km"
+											}
+										}
+									}
+								}
+							},
+							"type": "wrapper"
+						}
+					],
+					"conditions": [
+					],
+					"description": {
+						"en_US": "Boost contents tagged close to my location with a Gaussian function"
+					},
+					"enabled": true,
+					"icon": "thumbs-up",
+					"title": {
+						"en_US": "Boost Proximity"
+					}
+				},
+				{
+					"category": "boost",
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"query": {
+									"bool": {
+										"must": [
+											{
+												"terms": {
+													"entryClasslabel": [
+														"com.liferay.portal.kernel.model.Layout",
+														"com.liferay.journal.model.JournalArticle"
+													]
+												}
+											},
+											{
+												"term": {
+													"defaultLanguageId": {
+														"boost": 20,
+														"value": "${context.language_id}"
+													}
+												}
+											}
+										]
+									}
+								}
+							},
+							"type": "wrapper"
+						}
+					],
+					"conditions": [
+					],
+					"description": {
+						"en_US": "Boost contents having the current session language as the default language"
+					},
+					"enabled": true,
+					"icon": "thumbs-up",
+					"title": {
+						"en_US": "Boost Contents for the Current Language"
+					}
+				},
+				{
+					"category": "boost",
+					"clauses": [
+						{
+							"context": "query",
+							"occur": "should",
+							"query": {
+								"query": {
+									"terms": {
+										"boost": 10,
+										"groupId": "${user.user_group_ids}"
+									}
+								}
+							},
+							"type": "wrapper"
+						}
+					],
+					"conditions": [
+					],
+					"description": {
+						"en_US": "Boost contents on sites I'm a member of"
+					},
+					"enabled": true,
+					"icon": "thumbs-up",
+					"title": {
+						"en_US": "Boost Contents on My Sites"
+					}
+				}
+			],
+			"sort_configuration": {
+			}
+		},
+		"description": {
+			"en_US": "A sample Blueprint for personalizing Liferay search. Builds on top of default Liferay search clauses and boosts contents matching user's properties like language, location, groups and segments. Geolocation field has to be configured and data provider be enabled in Blueprints configuration to take advantage of location features."
+		},
+		"selectedElements": {
+			"query_configuration": [
+				{
+					"elementOutput": {
+						"category": "boost",
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"query": {
+										"function_score": {
+											"boost": 2,
+											"gauss": {
+												"expando__keyword__custom_fields__location_geolocation": {
+													"decay": 0.3,
+													"offset": 0,
+													"origin": {
+														"lat": "${ipstack.latitude}",
+														"lon": "${ipstack.longitude}"
+													},
+													"scale": "100km"
+												}
+											}
+										}
+									}
+								},
+								"type": "wrapper"
+							}
+						],
+						"conditions": [
+						],
+						"description": {
+							"en_US": "Boost contents tagged close to my location with a Gaussian function"
+						},
+						"enabled": true,
+						"icon": "thumbs-up",
+						"title": {
+							"en_US": "Boost Proximity"
+						}
+					},
+					"elementTemplateJSON": {
+						"category": "boost",
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"query": {
+										"function_score": {
+											"boost": "${configuration.boost}",
+											"gauss": {
+												"${configuration.field}": {
+													"decay": "${configuration.decay}",
+													"offset": 0,
+													"origin": {
+														"lat": "${ipstack.latitude}",
+														"lon": "${ipstack.longitude}"
+													},
+													"scale": "${configuration.scale}"
+												}
+											}
+										}
+									}
+								},
+								"type": "wrapper"
+							}
+						],
+						"conditions": [
+						],
+						"description": {
+							"en_US": "Boost contents tagged close to my location with a Gaussian function"
+						},
+						"enabled": true,
+						"icon": "thumbs-up",
+						"title": {
+							"en_US": "Boost Proximity"
+						}
+					},
+					"uiConfigurationJSON": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": "expando__keyword__custom_fields__location_geolocation",
+										"helpText": "A geopoint field",
+										"label": "Field",
+										"name": "field",
+										"type": "text"
+									},
+									{
+										"defaultValue": 0.3,
+										"label": "Decay",
+										"name": "decay",
+										"type": "slider",
+										"typeOptions": {
+											"max": 0.99,
+											"min": 0.01,
+											"step": 0.01
+										}
+									},
+									{
+										"defaultValue": 100,
+										"label": "Scale",
+										"name": "scale",
+										"type": "number",
+										"typeOptions": {
+											"min": 0,
+											"unit": "km",
+											"unitSuffix": "km"
+										}
+									},
+									{
+										"defaultValue": 2,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									}
+								]
+							}
+						]
+					},
+					"uiConfigurationValues": {
+						"boost": 2,
+						"decay": 0.3,
+						"field": "expando__keyword__custom_fields__location_geolocation",
+						"scale": 100
+					}
+				},
+				{
+					"elementOutput": {
+						"category": "boost",
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"query": {
+										"bool": {
+											"must": [
+												{
+													"terms": {
+														"entryClasslabel": [
+															"com.liferay.portal.kernel.model.Layout",
+															"com.liferay.journal.model.JournalArticle"
+														]
+													}
+												},
+												{
+													"term": {
+														"defaultLanguageId": {
+															"boost": 20,
+															"value": "${context.language_id}"
+														}
+													}
+												}
+											]
+										}
+									}
+								},
+								"type": "wrapper"
+							}
+						],
+						"conditions": [
+						],
+						"description": {
+							"en_US": "Boost contents having the current session language as the default language"
+						},
+						"enabled": true,
+						"icon": "thumbs-up",
+						"title": {
+							"en_US": "Boost Contents for the Current Language"
+						}
+					},
+					"elementTemplateJSON": {
+						"category": "boost",
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"query": {
+										"bool": {
+											"must": [
+												{
+													"terms": {
+														"entryClasslabel": [
+															"com.liferay.portal.kernel.model.Layout",
+															"com.liferay.journal.model.JournalArticle"
+														]
+													}
+												},
+												{
+													"term": {
+														"defaultLanguageId": {
+															"boost": "${configuration.boost}",
+															"value": "${context.language_id}"
+														}
+													}
+												}
+											]
+										}
+									}
+								},
+								"type": "wrapper"
+							}
+						],
+						"conditions": [
+						],
+						"description": {
+							"en_US": "Boost contents having the current session language as the default language"
+						},
+						"enabled": true,
+						"icon": "thumbs-up",
+						"title": {
+							"en_US": "Boost Contents for the Current Language"
+						}
+					},
+					"uiConfigurationJSON": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": 20,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									}
+								]
+							}
+						]
+					},
+					"uiConfigurationValues": {
+						"boost": 20
+					}
+				},
+				{
+					"elementOutput": {
+						"category": "boost",
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"query": {
+										"terms": {
+											"boost": 10,
+											"groupId": "${user.user_group_ids}"
+										}
+									}
+								},
+								"type": "wrapper"
+							}
+						],
+						"conditions": [
+						],
+						"description": {
+							"en_US": "Boost contents on sites I'm a member of"
+						},
+						"enabled": true,
+						"icon": "thumbs-up",
+						"title": {
+							"en_US": "Boost Contents on My Sites"
+						}
+					},
+					"elementTemplateJSON": {
+						"category": "boost",
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "should",
+								"query": {
+									"query": {
+										"terms": {
+											"boost": "${configuration.boost}",
+											"groupId": "${user.user_group_ids}"
+										}
+									}
+								},
+								"type": "wrapper"
+							}
+						],
+						"conditions": [
+						],
+						"description": {
+							"en_US": "Boost contents on sites I'm a member of"
+						},
+						"enabled": true,
+						"icon": "thumbs-up",
+						"title": {
+							"en_US": "Boost Contents on My Sites"
+						}
+					},
+					"uiConfigurationJSON": {
+						"fieldSets": [
+							{
+								"fields": [
+									{
+										"defaultValue": 10,
+										"label": "Boost",
+										"name": "boost",
+										"type": "number",
+										"typeOptions": {
+											"min": 0
+										}
+									}
+								]
+							}
+						]
+					},
+					"uiConfigurationValues": {
+						"boost": 10
+					}
+				}
+			]
+		},
+		"title": {
+			"en_US": "Personalization (Sample Contributor Blueprint)"
+		}
+	}
+}

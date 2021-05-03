@@ -1,0 +1,463 @@
+@component-name = "portal-search"
+definition {
+
+	property portal.release = "true";
+	property portal.suite.search.engine = "elasticsearch7";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Search Blueprints";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			WebContent.tearDownCP();
+
+			SearchBlueprints.tearDownCP();
+
+			Page.tearDownCP();
+		}
+	}
+
+	test AssertAddCopyAndDeleteSearchBlueprint {
+		for (var title : list "Blueprint 1,Blueprint 2") {
+			SearchBlueprints.addBlueprint(name = "${title}");
+		}
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Copy",
+			rowEntry = "Blueprint 2");
+
+		AssertElementPresent(
+			key_searchAssetTitle = "Blueprint 2 (Copy)",
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
+
+		SearchBlueprints.deleteBlueprint(name = "Blueprint 1");
+
+		AssertElementNotPresent(
+			key_searchAssetTitle = "Blueprint 1",
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
+	}
+
+	test AssertNonAdminsCannotSeeSearchExperience {
+		JSONWebcontent.addWebContent(
+			content = "Los Angeles",
+			groupName = "Guest",
+			title = "Java Cafe");
+
+		for (var userNumber : list "1,2") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNumber}@liferay.com",
+				userFirstName = "userfn${userNumber}",
+				userLastName = "userln${userNumber}",
+				userScreenName = "usersn${userNumber}");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea${userNumber}@liferay.com");
+		}
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea1@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "User",
+			userEmailAddress = "userea2@liferay.com");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea1@liferay.com");
+
+		SearchBlueprints.addBlueprint(name = "Los Angeles Boost");
+
+		var blueprintsID = SearchBlueprints.findBlueprintID(name = "Los Angeles Boost");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Reactive Widget");
+
+		PageEditor.addWidget(portletName = "Blueprints Search");
+
+		SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "${blueprintsID}");
+
+		PageEditor.clickPublish();
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "cafe");
+
+		SearchBlueprints.viewBlueprintsSearchResults(
+			searchAssetTitle = "Cafe",
+			searchAssetType = "Web Content Article");
+
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea2@liferay.com");
+
+		AssertElementNotPresent(locator1 = "ControlMenu#APPLICATIONS_MENU_ICON");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_portal_search_tuning_blueprints_web_internal_portlet_BlueprintsAdminPortlet");
+
+		Portlet.viewNoPermissionPG();
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "cafe");
+
+		SearchBlueprints.viewBlueprintsSearchResults(
+			searchAssetTitle = "Cafe",
+			searchAssetType = "Web Content Article");
+	}
+
+	test AssertSearchResultsScore {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "Apple");
+
+		SearchBlueprints.addBlueprint(name = "Score Explanation Blueprint");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Score Explanation Blueprint");
+
+		Click(locator1 = "Button#PREVIEW");
+
+		SearchBlueprints.searchBlueprintsPreview(searchTerm = "Apple");
+
+		Click(locator1 = "//button[contains(@class,'score')]");
+
+		AssertTextEquals(
+			locator1 = "Modal#HEADER",
+			value1 = "Score Explanation");
+
+		AssertVisible(
+			key_searchExplanation = "PerFieldSimilarity",
+			locator1 = "SearchTuning#BLUEPRINTS_PREVIEW_SCORE_EXPLANATION");
+	}
+
+	test CreateBoostAssetType {
+		SearchBlueprints.addBlueprint(name = "My Blueprint");
+
+		var blueprintsID = SearchBlueprints.findBlueprintID(name = "My Blueprint");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Reactive Widget");
+
+		PageEditor.addWidget(portletName = "Blueprints Search");
+
+		SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "${blueprintsID}");
+
+		PageEditor.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "Liferay",
+			groupName = "Guest",
+			title = "Liferay Web Content");
+
+		JSONBlog.addEntry(
+			entryContent = "Liferay Liferay",
+			entryTitle = "Liferay Blogs Entry");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "liferay");
+
+		SearchBlueprints.viewBlueprintsSearchResultsSpecificOrder(resultsList = "Liferay Blogs Entry,Liferay Web Content");
+
+		SearchBlueprints.editBlueprint(name = "My Blueprint");
+
+		SearchBlueprints.addQueryElements(
+			assetType = "Web Content Article",
+			fragment = "Boost Asset Type",
+			numberBoost = "1000");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "liferay");
+
+		SearchBlueprints.viewBlueprintsSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
+	}
+
+	@priority = "4"
+	test HideWebContentWithCustomElement {
+		SearchBlueprints.addBlueprint(name = "Hide Test and Experimental Content");
+
+		var blueprintsID = SearchBlueprints.findBlueprintID(name = "Hide Test and Experimental Content");
+
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		ContentPages.addPage(pageName = "Reactive Widget");
+
+		PageEditor.addWidget(portletName = "Blueprints Search");
+
+		SearchBlueprints.configureSearchBlueprintsWidget(searchBlueprintID = "${blueprintsID}");
+
+		PageEditor.clickPublish();
+
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "Content");
+
+		JSONWebcontent.addWebContent(
+			assetTagNames = "test",
+			content = "",
+			groupName = "Guest",
+			title = "Test Content");
+
+		JSONWebcontent.addWebContent(
+			assetTagNames = "experimental",
+			content = "",
+			groupName = "Guest",
+			title = "Experimental Content");
+
+		JSONBlog.addEntry(
+			entryContent = "Liferay Liferay",
+			entryTitle = "Liferay Blogs Entry");
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "Content");
+
+		for (var searchAssetTitle : list "Content,Test Content,Experimental Content") {
+			SearchBlueprints.viewBlueprintsSearchResults(
+				searchAssetTitle = "${searchAssetTitle}",
+				searchAssetType = "Web Content Article");
+		}
+
+		var elementTemplateJSON = '''
+{
+	"category": "hide",
+	"clauses": [
+		{
+			"context": "query",
+			"occur": "filter",
+			"query": {
+				"query": {
+					"bool": {
+						"must_not": [
+							{
+								"term": {
+									"assetTagNames.raw": {
+										"value": "${configuration.tag1}"
+									}
+								}
+							},
+							{
+								"term": {
+									"assetTagNames.raw": {
+										"value": "${configuration.tag2}"
+									}
+								}
+							}
+						]
+					}
+				}
+			},
+			"type": "wrapper"
+		}
+	],
+	"conditions": [],
+	"description": {
+		"en_US": "Hide contents tagged with"
+	},
+	"enabled": true,
+	"icon": "hidden",
+	"title": {
+		"en_US": "Hide Multiple Tagged Contents"
+	}
+}
+			''';
+
+		var uiConfigurationJSON = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": "",
+					"name": "tag1",
+					"label": "Tag 1",
+					"type": "text"
+				},
+				{
+					"defaultValue": "",
+					"name": "tag2",
+					"label": "Tag 2",
+					"type": "text"
+				}
+			]
+		}
+	]
+}
+			''';
+
+		SearchBlueprints.addElements(
+			elementTemplateJSON = "${elementTemplateJSON}",
+			name = "Hide Multiple Tagged Contents",
+			uiConfigurationJSON = "${uiConfigurationJSON}");
+
+		SearchBlueprints.editBlueprint(name = "Hide Test and Experimental Content");
+
+		SearchBlueprints.addQueryElements(
+			fragment = "Hide Multiple Tagged Contents",
+			tag1 = "test",
+			tag2 = "experimental");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest/reactive-widget");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "Content");
+
+		SearchBlueprints.viewBlueprintsSearchResults(
+			searchAssetTitle = "Content",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Test Content",
+			searchAssetType = "Web Content Article");
+
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "Experimental Content",
+			searchAssetType = "Web Content Article");
+	}
+
+	test SearchBlueprintsByTitleOrDescription {
+		SearchBlueprints.addBlueprint(
+			description = "Blueprint Test Description",
+			name = "Test Blueprint - Adminicle");
+
+		SearchBlueprints.addBlueprint(
+			description = "Serendipitous Blueprint Test Description",
+			name = "Test Blueprint - Aid");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "Adminicle");
+
+		AssertElementPresent(
+			key_searchAssetTitle = "Test Blueprint - Adminicle",
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
+
+		SearchBlueprints.searchReactiveSearchWidget(searchTerm = "Serendipitous");
+
+		AssertElementPresent(
+			key_searchAssetTitle = "Test Blueprint - Aid",
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE");
+	}
+
+	test SortAndViewSearchBlueprints {
+		SearchBlueprints.tearDownCP();
+
+		for (var blueprintNumber : list "1,3,2") {
+			Click(locator1 = "Button#PLUS");
+
+			PortletEntry.inputTitle(title = "Blueprint ${blueprintNumber}");
+
+			Button.click(button = "Create");
+
+			PortletEntry.save();
+		}
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Title");
+
+		SearchBlueprints.viewBlueprintsSpecificOrder(blueprintsList = "Blueprint 1,Blueprint 2,Blueprint 3");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Created");
+
+		SearchBlueprints.viewBlueprintsSpecificOrder(blueprintsList = "Blueprint 1,Blueprint 3,Blueprint 2");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Blueprint 1");
+
+		SearchBlueprints.addQueryElements(fragment = "Boost Asset Type");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Modified");
+
+		SearchBlueprints.viewBlueprintsSpecificOrder(blueprintsList = "Blueprint 3,Blueprint 2,Blueprint 1");
+	}
+
+	test ViewBlueprintsAssetDetails {
+		JSONBlog.addEntry(
+			entryContent = "banana, red apple, blueberry!",
+			entryTitle = "Liferay Blogs Entry Apple");
+
+		JSONWebcontent.addWebContent(
+			content = "red apple, citrus-orange",
+			groupName = "Guest",
+			title = "Web Content Article Apple");
+
+		SearchBlueprints.addBlueprint(name = "My Blueprint");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "My Blueprint");
+
+		Click(locator1 = "Button#PREVIEW");
+
+		SearchBlueprints.searchBlueprintsPreview(searchTerm = "Apple");
+
+		Click(
+			key_searchAssetTitle = "Liferay Blogs Entry Apple",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SelectWindow(locator1 = "title=View Result - ${siteName}");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H4_COMPONENT_TITLE",
+			value1 = "Liferay Blogs Entry Apple");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+			value1 = "banana, red apple, blueberry!");
+
+		Close.closeAndSelectWindow(locator1 = "title=Edit Blueprint - ${siteName}");
+
+		Click(
+			key_searchAssetTitle = "Web Content Article Apple",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+
+		SelectWindow(locator1 = "title=View Result - ${siteName}");
+
+		AssertTextEquals(
+			locator1 = "Portlet#H4_COMPONENT_TITLE",
+			value1 = "Web Content Article Apple");
+
+		AssertTextEquals(
+			locator1 = "WCD#WEB_CONTENT_CONTENT",
+			value1 = "red apple, citrus-orange");
+	}
+
+}

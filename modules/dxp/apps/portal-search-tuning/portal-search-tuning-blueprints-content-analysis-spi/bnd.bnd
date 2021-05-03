@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Content Analysis SPI
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.content.analysis.spi
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.search.tuning.blueprints.content.analysis.spi.analyzer

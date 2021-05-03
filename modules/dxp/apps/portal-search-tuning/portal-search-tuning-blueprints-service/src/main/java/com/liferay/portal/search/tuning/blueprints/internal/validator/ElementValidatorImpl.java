@@ -1,0 +1,57 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+
+package com.liferay.portal.search.tuning.blueprints.internal.validator;
+
+import com.liferay.portal.search.tuning.blueprints.exception.ElementValidationException;
+import com.liferay.portal.search.tuning.blueprints.validation.ElementValidator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Petteri Karttunen
+ */
+@Component(immediate = true, service = ElementValidator.class)
+public class ElementValidatorImpl
+	extends BaseValidator implements ElementValidator {
+
+	@Override
+	public void validate(Map<Locale, String> titleMap, String configuration)
+		throws ElementValidationException {
+
+		List<String> errors = new ArrayList<>();
+
+		if (!_isValid(titleMap, configuration, errors)) {
+			throw new ElementValidationException(errors);
+		}
+	}
+
+	private boolean _isValid(
+		Map<Locale, String> titleMap, String configuration,
+		List<String> errors) {
+
+		boolean result = true;
+
+		result &= isConfigurationValid(configuration, errors);
+		result &= isTitleValid(titleMap, errors);
+
+		return result;
+	}
+
+}

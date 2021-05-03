@@ -1,0 +1,275 @@
+definition {
+
+	macro addBlueprint {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Search Experiences");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "${name}");
+
+		if (isSet(description)) {
+			PortletEntry.inputDescription(description = "${description}");
+		}
+
+		if (isSet(clauseOption)) {
+			LexiconCard.clickCard(card = "Custom Clauses");
+		}
+		else {
+			LexiconCard.clickCard(card = "Liferay Default Clauses");
+		}
+
+		Button.click(button = "Create");
+
+		PortletEntry.save();
+	}
+
+	macro addElements {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Search Experiences");
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "${name}");
+
+		Button.click(button = "Create");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "SearchTuning#BLUEPRINTS_ELEMENT_TEMPLATE_JSON",
+			value1 = "${elementTemplateJSON}");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "SearchTuning#BLUEPRINTS_ELEMENT_UI_CONFIGURATION_JSON",
+			value1 = "${uiConfigurationJSON}");
+
+		PortletEntry.save();
+	}
+
+	macro addQueryElements {
+		AssertElementPresent(locator1 = "//div[contains(@class,'sidebar-header')]//span[contains(.,'Add Query Elements')]");
+
+		Type.sendKeysApplicationSearch(
+			locator1 = "SearchTuning#BLUEPRINTS_FRAGMENT_QUERY_SEARCH_BAR",
+			value1 = "${fragment}");
+
+		MouseOver(
+			key_fragmentName = "${fragment}",
+			locator1 = "SearchTuning#BLUEPRINTS_QUERY_FRAGMENT_NAME");
+
+		Click.clickNoMouseOverNoWaitForVisible(
+			key_fragmentName = "${fragment}",
+			locator1 = "SearchTuning#BLUEPRINTS_ADD_QUERY_FRAGMENT");
+
+		if (isSet(assetType)) {
+			Click(locator1 = "SearchTuning#BLUEPRINTS_QUERY_BUILDER_ASSET_TYPE_DROPDOWN");
+
+			Click(
+				locator1 = "SearchTuning#BLUEPRINTS_QUERY_BUILDER_ASSET_TYPE_OPTION",
+				sortOption = "${assetType}");
+		}
+
+		if (isSet(numberBoost)) {
+			Type(
+				key_fieldLabel = "Boost",
+				locator1 = "SearchTuning#BLUEPRINTS_QUERY_BUILDER_NUMBER_FIELD",
+				value1 = "${numberBoost}");
+		}
+
+		if (isSet(tag1)) {
+			Type(
+				key_fieldLabel = "Tag 1",
+				locator1 = "SearchTuning#BLUEPRINTS_QUERY_TEXT_FIELD",
+				value1 = "${tag1}");
+		}
+
+		if (isSet(tag2)) {
+			Type(
+				key_fieldLabel = "Tag 2",
+				locator1 = "SearchTuning#BLUEPRINTS_QUERY_TEXT_FIELD",
+				value1 = "${tag2}");
+		}
+
+		PortletEntry.save();
+	}
+
+	macro configureSearchBlueprintsWidget {
+		Portlet.gotoPortletOptions(
+			portletName = "Blueprints Search",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(searchBlueprintID)) {
+			Type(
+				key_fieldLabel = "Search Blueprint ID",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${searchBlueprintID}");
+		}
+
+		PortletEntry.save();
+
+		IFrame.closeFrame();
+	}
+
+	macro deleteBlueprint {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Search Experiences");
+
+		LexiconEntry.delete(rowEntry = "${name}");
+	}
+
+	macro editBlueprint {
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Search Experiences");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${name}");
+	}
+
+	macro findBlueprintID {
+		var blueprintsID = selenium.getAttribute("//h4[contains(.,'${name}')]/following-sibling::h5[2]/span[contains(@class,'id-text')]@textContent");
+
+		var blueprintsID = StringUtil.extractDigits("${blueprintsID}");
+
+		return "${blueprintsID}";
+	}
+
+	macro searchBlueprintsPreview {
+		Type(
+			locator1 = "SearchTuning#BLUEPRINTS_PREVIEW_SEARCH_BAR",
+			value1 = "${searchTerm}");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "Icon#BASIC_SEARCH");
+		}
+		else {
+			KeyPress(
+				locator1 = "SearchTuning#BLUEPRINTS_PREVIEW_SEARCH_BAR",
+				value1 = "\RETURN");
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
+	macro searchReactiveSearchWidget {
+		AssertElementPresent(locator1 = "SearchTuning#BLUEPRINTS_SEARCH_BAR");
+
+		Type(
+			locator1 = "SearchTuning#BLUEPRINTS_SEARCH_BAR",
+			value1 = "${searchTerm}");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "Icon#BASIC_SEARCH");
+		}
+		else {
+			KeyPress(
+				locator1 = "SearchTuning#BLUEPRINTS_SEARCH_BAR",
+				value1 = "\RETURN");
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
+	macro tearDownCP {
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Search Experiences");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
+			PortletEntry.selectAll();
+
+			Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete selected Blueprints?");
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
+		}
+	}
+
+	macro viewBlueprintsSearchResultNotPresent {
+		AssertElementNotPresent(
+			key_searchAssetTitle = "${searchAssetTitle}",
+			key_searchAssetType = "${searchAssetType}",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC");
+	}
+
+	macro viewBlueprintsSearchResults {
+		var key_searchAssetTitle = "${searchAssetTitle}";
+		var key_searchAssetType = "${searchAssetType}";
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE_SPECIFIC",
+			value1 = "${searchAssetTitle}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TYPE_SPECIFIC",
+			value1 = "${searchAssetType}");
+
+		if (isSet(entryDate)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TYPE_SPECIFIC_DATE",
+				value1 = "${entryDate}");
+		}
+
+		if (isSet(searchAssetSummary)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC",
+				value1 = "${searchAssetSummary}");
+		}
+
+		if (isSet(searchTerm)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_RESULTS_PORTLET_SEARCH_QUERY",
+				value1 = "${searchTerm}");
+		}
+	}
+
+	macro viewBlueprintsSearchResultsSpecificOrder {
+		var resultOrder = "0";
+
+		for (var searchAssetTitle : list "${resultsList}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}",
+				value1 = "${searchAssetTitle}");
+		}
+	}
+
+	macro viewBlueprintsSpecificOrder {
+		var resultOrder = "0";
+
+		for (var blueprintsTitle : list "${blueprintsList}") {
+			var resultOrder = ${resultOrder} + 1;
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "SearchTuning#BLUEPRINTS_ASSET_ENTRY_LIST_TITLE_SPECIFIC_ORDER",
+				resultOrder = "${resultOrder}",
+				value1 = "${blueprintsTitle}");
+		}
+	}
+
+}

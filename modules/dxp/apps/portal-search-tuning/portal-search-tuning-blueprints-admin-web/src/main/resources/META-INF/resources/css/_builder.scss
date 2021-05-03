@@ -1,0 +1,87 @@
+.builder {
+	padding-bottom: 40px;
+	padding-top: $pageToolbarHeight + 40px;
+
+	.configuration-header {
+		font-weight: bold;
+		margin-bottom: 1.25rem;
+
+		&.configuration-header-settings {
+			margin-top: 30px;
+		}
+
+		.builder-actions {
+			float: right;
+
+			.collapse-button {
+				color: $mainLighten28;
+				font-size: 0.875rem;
+				margin: 0.125rem 1rem 0 0;
+			}
+		}
+	}
+
+	.selected-elements-empty-text {
+		color: $secondaryL1;
+		margin: 0.5rem auto 1.5rem;
+		padding: 16px 0;
+		text-align: center;
+		width: 360px;
+	}
+
+	.settings-content-container {
+		.framework-icon {
+			.sticker-overlay {
+				background-color: $lightBackground;
+			}
+
+			.sticker-img {
+				width: 60%;
+			}
+		}
+
+		.framework-text {
+			justify-content: center;
+		}
+
+		.panel-collapse.show:not(.collapsing):not(.collapse) {
+			height: 100% !important; // Fixes panel body height when adding or removing asset types
+		}
+
+		.panel-body {
+			.sheet-text {
+				font-size: 14px;
+			}
+
+			.select-asset-types {
+				margin-bottom: 24px;
+			}
+		}
+
+		.panel-title {
+			text-transform: uppercase;
+		}
+
+		.panel-unstyled .panel-header.panel-header-link:focus {
+			box-shadow: 0 0 0 0.25rem $white, 0 0 0 0.375rem $primaryL2; // Fixes gray border to white
+		}
+	}
+
+	.sheet + .sheet {
+		margin-top: 0;
+	}
+
+	.has-error {
+		.codemirror-editor-wrapper {
+			border: 1px solid $errorL1;
+
+			.CodeMirror {
+				background-color: $errorL2;
+			}
+
+			.CodeMirror-gutters {
+				background-color: $errorL2;
+			}
+		}
+	}
+}

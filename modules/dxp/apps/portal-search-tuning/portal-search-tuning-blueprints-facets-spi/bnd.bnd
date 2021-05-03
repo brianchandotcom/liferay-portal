@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Search Tuning Blueprints Facets SPI
+Bundle-SymbolicName: com.liferay.portal.search.tuning.blueprints.facets.spi
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.search.tuning.blueprints.facets.spi.request,\
+	com.liferay.portal.search.tuning.blueprints.facets.spi.response

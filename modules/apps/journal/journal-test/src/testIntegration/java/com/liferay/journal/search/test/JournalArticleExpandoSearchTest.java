@@ -111,12 +111,6 @@ public class JournalArticleExpandoSearchTest {
 
 		addJournalArticle("Software Engineer");
 
-		String expected = "[Software Engineer]";
-
-		if (!_LPS_123611_FIXED) {
-			expected = "[]";
-		}
-
 		assertSearch(
 			searchRequestBuilder -> searchRequestBuilder.queryString(
 				"Nonexistent"
@@ -124,7 +118,7 @@ public class JournalArticleExpandoSearchTest {
 				searchContext -> putParamsExpandoAttributes(
 					"Engineer", searchContext)
 			),
-			expected);
+			"[Software Engineer]");
 	}
 
 	@Rule
@@ -216,8 +210,6 @@ public class JournalArticleExpandoSearchTest {
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	private static final String _EXPANDO_COLUMN = "expandoColumn";
-
-	private static final boolean _LPS_123611_FIXED = false;
 
 	@DeleteAfterTestRun
 	private List<ExpandoColumn> _expandoColumns;

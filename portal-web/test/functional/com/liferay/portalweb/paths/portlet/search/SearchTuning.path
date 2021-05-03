@@ -8,6 +8,112 @@
 <tr><td rowspan="1" colspan="3">SearchTuning</td></tr>
 </thead>
 <tbody>
+<!--BLUEPRINTS-->
+<tr>
+	<td>BLUEPRINTS_ADD_QUERY_FRAGMENT</td>
+	<td>//div[contains(@class,'query-element-list')]//*[normalize-space(text())='${key_fragmentName}']/../../..//button[contains(@class,'btn-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_ENTRY_LIST_TITLE_SPECIFIC_ORDER</td>
+	<td>//div[contains(@class,'search-container-list')]//li[${resultOrder}]/div//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//p[contains(.,'${key_searchAssetSummary}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE_SPECIFIC</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')][.//p[@class='result-subtext list-group-subtext' and contains(.,'${key_searchAssetType}')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER</td>
+	<td>//div[contains(@class,'search-results')]//li[${resultOrder}]/div//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_ENTRY_TABLE_TYPE_SPECIFIC</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//p[contains(.,'${key_searchAssetType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ASSET_ENTRY_TABLE_TYPE_SPECIFIC_DATE</td>
+	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//p[contains(.,'${key_searchAssetType}')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_FRAGMENT_QUERY_SEARCH_BAR</td>
+	<td>//div[contains(@class,'open')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SCORE_EXPLANATION</td>
+	<td>xpath=(//span[contains(@class,'cm-variable') and text()='${key_searchExplanation}'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_PREVIEW_SEARCH_BAR</td>
+	<td>//div[contains(@class,'preview')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ELEMENT_TEMPLATE_JSON</td>
+	<td>//div[contains(@class,'element-header') and contains(.,'Element Template (JSON')]/following-sibling::div//div[contains(@class,'CodeMirror cm-s-default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_ELEMENT_UI_CONFIGURATION_JSON</td>
+	<td>//div[contains(@class,'element-header') and contains(.,'UI Configuration (JSON')]/following-sibling::div//div[contains(@class,'CodeMirror cm-s-default')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_RESULTS_PORTLET_SEARCH_QUERY</td>
+	<td>//div[contains(@class,'search-total-label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_SEARCH_BAR</td>
+	<td>//div[contains(@class,'Blueprints')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_SEARCH_SIDE_BAR</td>
+	<td>//div[contains(@class,'Blueprints')]//div[contains(@class,'sidebar')][2]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_QUERY_BUILDER_ASSET_TYPE_DROPDOWN</td>
+	<td>//div/select[contains(@aria-label, "Asset Type")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_QUERY_BUILDER_ASSET_TYPE_OPTION</td>
+	<td>//div/select[contains(@aria-label, "Asset Type")]/option[contains(., "${sortOption}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_QUERY_BUILDER_NUMBER_FIELD</td>
+	<td>//div[contains(.,'${key_fieldLabel}')]//input[@type='number']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_QUERY_FRAGMENT_NAME</td>
+	<td>//p[contains(.,'${key_fragmentName}') and contains(@class, 'list-group-title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BLUEPRINTS_QUERY_TEXT_FIELD</td>
+	<td>//input[contains(@aria-label, "${key_fieldLabel}") and @type='text']</td>
+	<td></td>
+</tr>
 <!--RESULT_RANKINGS-->
 <tr>
 	<td>RESULT_RANKINGS_ACTIVE_TOGGLE_SWITCH</td>

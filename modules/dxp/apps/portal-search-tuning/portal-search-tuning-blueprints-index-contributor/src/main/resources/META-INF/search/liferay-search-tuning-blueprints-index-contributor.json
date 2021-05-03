@@ -1,0 +1,20 @@
+{
+	"dynamic_templates": [
+		{
+			"template_blueprints_length": {
+				"mapping": {
+					"store": true,
+					"type": "integer"
+				},
+				"match": "_length",
+				"match_mapping_type": "integer"
+			}
+		}
+	],
+	"properties": {
+		"versionCount": {
+			"store": true,
+			"type": "double"
+		}
+	}
+}

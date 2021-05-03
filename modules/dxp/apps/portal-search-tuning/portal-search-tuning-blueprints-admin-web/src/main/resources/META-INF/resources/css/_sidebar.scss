@@ -1,0 +1,93 @@
+.sidebar {
+	.empty-list-message {
+		padding: 16px;
+		text-align: center;
+	}
+
+	.sidebar-header,
+	.sidebar-search {
+		flex-shrink: 0; // Fix for certain versions of Safari when nesting flex elements
+	}
+
+	.sidebar-header {
+		display: flex;
+		justify-content: space-between;
+
+		button {
+			color: $mainLighten28;
+		}
+
+		.component-title {
+			font-size: 1rem;
+		}
+	}
+
+	.sidebar-dt {
+		margin: 0;
+
+		&.btn:focus {
+			box-shadow: 0 0;
+		}
+
+		.sidebar-arrow {
+			position: absolute;
+			right: 12px;
+		}
+	}
+
+	.sidebar-search {
+		height: auto;
+		padding-bottom: 16px;
+	}
+}
+
+// Edit Blueprint Sidebars
+
+.add-element-sidebar,
+.preview-sidebar {
+	background-color: $white;
+	display: flex;
+	flex-direction: column;
+	height: calc(100% - #{$controlMenuToolbarHeight} - #{$navigationBarHeight});
+	margin-top: $navigationBarHeight;
+	position: fixed;
+	right: 0;
+	transform: translateX(100%);
+	transition: transform ease 0.2s;
+	width: $sidebarWidth;
+	z-index: 972;
+
+	&.open {
+		transform: translateX(0);
+		transition: transform ease 0.2s;
+	}
+}
+
+.content-shift {
+	margin-left: auto;
+	margin-right: calc(50% - #{$contentMaxWidth} / 2);
+	max-width: $contentMaxWidth;
+	transition: margin-right ease 0.2s;
+}
+
+@media (min-width: calc(#{$contentMinWidth} + #{$sidebarWidth})) {
+	.open-sidebar .content-shift {
+		margin-right: calc(
+			max(
+				50% - (#{$contentMaxWidth} / 2),
+				#{$sidebarWidth} - (50vw - 50%) + 24px
+			)
+		);
+	}
+}
+
+@media (min-width: calc(#{$contentMinWidth} + #{$previewSidebarWidth})) {
+	.open-preview .content-shift {
+		margin-right: calc(
+			max(
+				50% - (#{$contentMaxWidth} / 2),
+				#{$previewSidebarWidth} - (50vw - 50%) + 24px
+			)
+		);
+	}
+}

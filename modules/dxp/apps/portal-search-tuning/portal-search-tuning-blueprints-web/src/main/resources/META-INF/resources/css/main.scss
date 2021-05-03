@@ -1,0 +1,70 @@
+.portlet-search-tuning-blueprints-web {
+	.searchbar-wrapper {
+		padding-bottom: 24px;
+
+		.clear {
+			float: right;
+		}
+	}
+
+	.searchbar {
+		padding-bottom: 6px;
+	}
+
+	.search-results {
+		.meta-data {
+			padding-bottom: 24px;
+			text-align: center;
+		}
+
+		.result-pagination {
+			justify-content: center;
+		}
+
+		.result-subtext span {
+			padding-right: 4px;
+		}
+
+		.search-facets {
+			display: flex;
+			flex-wrap: wrap;
+
+			.form-group {
+				padding: 0 8px;
+				width: 33%;
+
+				.form-control {
+					padding-right: 8px;
+
+					.component-action {
+						margin: auto;
+					}
+				}
+			}
+		}
+		.misspellings {
+			padding: 0 0 20px;
+
+			.showing-results-for {
+				font-size: 120%;
+
+				.keyword {
+					font-weight: bold;
+					margin-left: 5px;
+				}
+			}
+
+			.instead-of {
+				font-size: initial;
+
+				.link {
+					margin-left: 5px;
+				}
+			}
+		}
+	}
+	.did-you-mean {
+		align-items: center;
+		flex-direction: column;
+	}
+}

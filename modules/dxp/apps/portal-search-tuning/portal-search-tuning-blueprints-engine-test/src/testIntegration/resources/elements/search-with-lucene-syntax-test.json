@@ -1,0 +1,91 @@
+{
+	"elementTemplateJSON": {
+		"category": "match",
+		"clauses": [
+			{
+				"context": "query",
+				"occur": "must",
+				"query": {
+					"query": {
+						"simple_query_string": {
+							"boost": "${config.boost}",
+							"default_operator": "${config.operator}",
+							"fields": "${config.fields}",
+							"query": "${keywords}"
+						}
+					}
+				},
+				"type": "wrapper"
+			}
+		],
+		"conditions": [
+		],
+		"description": {
+			"en_US": "Enable searching using the Lucene syntax"
+		},
+		"enabled": true,
+		"icon": "picture",
+		"title": {
+			"en_US": "Search with the Lucene Syntax"
+		}
+	},
+	"uiConfigurationJSON": [
+		{
+			"boost": true,
+			"defaultValue": [
+				{
+					"boost": "2",
+					"field": "localized_title",
+					"locale": "${context.language_id}"
+				},
+				{
+					"boost": "2",
+					"field": "content",
+					"locale": "${context.language_id}"
+				}
+			],
+			"key": "fields",
+			"label": "Fields",
+			"type": "field-list",
+			"typeOptions": [
+				{
+					"label": "Title",
+					"value": "localized_title"
+				},
+				{
+					"label": "Description",
+					"value": "description"
+				},
+				{
+					"label": "Content",
+					"value": "content"
+				},
+				{
+					"label": "Name",
+					"value": "name"
+				}
+			]
+		},
+		{
+			"key": "operator",
+			"label": "Operator",
+			"type": "select",
+			"typeOptions": [
+				{
+					"label": "OR",
+					"value": "or"
+				},
+				{
+					"label": "AND",
+					"value": "and"
+				}
+			]
+		},
+		{
+			"defaultValue": 1,
+			"key": "boost",
+			"label": "Boost",
+			"type": "slider"
+		}
+	]
+}

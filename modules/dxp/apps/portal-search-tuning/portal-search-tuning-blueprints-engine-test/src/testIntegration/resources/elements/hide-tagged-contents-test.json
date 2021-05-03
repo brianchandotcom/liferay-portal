@@ -1,0 +1,51 @@
+{
+	"elementTemplateJSON": {
+		"category": "hide",
+		"clauses": [
+			{
+				"context": "query",
+				"occur": "filter",
+				"query": {
+					"query": {
+						"bool": {
+							"must_not": [
+								{
+									"term": {
+										"assetTagNames.raw": {
+											"value": "${configuration.asset_tag}"
+										}
+									}
+								}
+							]
+						}
+					}
+				},
+				"type": "wrapper"
+			}
+		],
+		"conditions": [
+		],
+		"description": {
+			"en_US": "Hide contents tagged with"
+		},
+		"enabled": true,
+		"icon": "hidden",
+		"title": {
+			"en_US": "Hide Tagged Contents"
+		}
+	},
+	"uiConfigurationJSON": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"helpText": "Add asset tag value",
+						"label": "Asset Tag",
+						"name": "asset_tag",
+						"type": "text"
+					}
+				]
+			}
+		]
+	}
+}

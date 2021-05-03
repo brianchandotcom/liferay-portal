@@ -1,0 +1,108 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<portlet:renderURL var="editEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="<%= MisspellingsMVCCommandNames.EDIT_MISSPELLING_SET %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="<%= MisspellingsWebKeys.MISSPELLING_SET_ID %>" value="<%= entry.getMisspellingSetId() %>" />
+</portlet:renderURL>
+
+<c:choose>
+	<c:when test='<%= viewMisspellingSetsDisplayContext.getDisplayStyle().equals("descriptive") %>'>
+		<liferay-ui:search-container-column-user
+			showDetails="<%= false %>"
+			userId="<%= entry.getUserId() %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<h4>
+				<aui:a href="<%= editEntryURL %>">
+					<%= entry.getPhrase() %>
+				</aui:a>
+			</h4>
+
+			<h5 class="text-default text-truncate">
+				<liferay-ui:message key="misspellings" />:
+				<%= StringUtil.merge(entry.getMisspellings(), ",") %>
+			</h5>
+
+			<%
+			Date modified = entry.getModified();
+			%>
+
+			<h5 class="text-default text-truncate">
+				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modified.getTime(), true) %>" key="modified-x-ago" />
+			</h5>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/entry_actions.jsp"
+		/>
+	</c:when>
+
+	<%-- Table view --%>
+
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand table-cell-minw-150 table-title"
+			href="<%= editEntryURL %>"
+			name="phrase"
+			value="<%= entry.getPhrase() %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand table-cell-minw-150 table-title"
+			name="Misspellings"
+			value='<%= StringUtil.merge(entry.getMisspellings(), ",") %>'
+		/>
+
+		<liferay-ui:search-container-column-user
+			name="author"
+			showDetails="<%= false %>"
+			userId="<%= entry.getUserId() %>"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="table-cell-minw-150"
+			name="created"
+			property="created"
+		/>
+
+		<liferay-ui:search-container-column-date
+			cssClass="table-cell-minw-150"
+			name="modified"
+			property="modified"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-minw-100"
+			name="site"
+			value="<%= MisspellingsUtil.getSiteName(entry.getGroupId(), locale) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="language"
+			property="languageId"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			name="actions"
+			path="/entry_actions.jsp"
+		/>
+	</c:otherwise>
+</c:choose>

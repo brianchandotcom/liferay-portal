@@ -9,7 +9,3 @@ Export-Package:\
 	com.liferay.portal.search.engine.adapter.index,\
 	com.liferay.portal.search.engine.adapter.search,\
 	com.liferay.portal.search.engine.adapter.snapshot
-Import-Package:\
-	com.liferay.portal.kernel.search;version="[8.1.0,9.6.0)",\
-	\
-	*

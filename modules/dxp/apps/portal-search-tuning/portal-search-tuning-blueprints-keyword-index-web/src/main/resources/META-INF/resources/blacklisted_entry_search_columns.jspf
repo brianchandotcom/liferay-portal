@@ -1,0 +1,100 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * The contents of this file are subject to the terms of the Liferay Enterprise
+ * Subscription License ("License"). You may not use this file except in
+ * compliance with the License. You can obtain a copy of the License by
+ * contacting Liferay, Inc. See the License for the specific language governing
+ * permissions and limitations under the License, including but not limited to
+ * distribution rights of the Software.
+ *
+ *
+ *
+ */
+--%>
+
+<%
+String lastReporter = KeywordIndexUtil.getLastReporter(entry);
+%>
+
+<portlet:renderURL var="viewEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="<%= KeywordIndexMVCCommandNames.VIEW_KEYWORD_ENTRY %>" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="<%= KeywordIndexWebKeys.KEYWORD_ENTRY_ID %>" value="<%= entry.getKeywordEntryId() %>" />
+</portlet:renderURL>
+
+<c:choose>
+	<c:when test='<%= viewKeywordEntriesDisplayContext.getDisplayStyle().equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text
+			colspan="<%= 2 %>"
+		>
+			<h4>
+				<aui:a href="<%= viewEntryURL %>">
+					<%= entry.getContent() %>
+				</aui:a>
+			</h4>
+
+			<c:if test='<%= !lastReporter.equals("") %>'>
+				<h5 class="text-default text-truncate">
+					<span class="id-text">
+						<liferay-ui:message key="reporter" /> <%= lastReporter %>
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getCreated().getTime(), true) %>" key="x-ago" />
+					</span>
+				</h5>
+			</c:if>
+
+			<h5 class="text-default text-truncate">
+				<span class="id-text">
+					<liferay-ui:message key="site" />:
+					<%= KeywordIndexUtil.getSiteName(entry.getGroupId(), locale) %>,
+				</span>
+			</h5>
+
+			<h5 class="text-default text-truncate">
+				<liferay-ui:message key="hitcount" />:
+				<%= (entry.getHitCount() != null) ? String.valueOf(entry.getHitCount()) : "0" %>
+			</h5>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/blacklisted_entry_actions.jsp"
+		/>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand table-cell-minw-150 table-title"
+			href="<%= viewEntryURL %>"
+			name="content"
+		>
+			<%= entry.getContent() %>
+			<c:if test='<%= !lastReporter.equals("") %>'>
+				<span class="reporter">
+					<liferay-ui:message key="reporter" /> <%= lastReporter %>
+					<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getCreated().getTime(), true) %>" key="x-ago" />
+				</span>
+			</c:if>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-date
+			cssClass="table-cell-minw-150"
+			name="created"
+			property="created"
+		/>
+
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-minw-100"
+			name="site"
+			value="<%= KeywordIndexUtil.getSiteName(entry.getGroupId(), locale) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			name="hitcount"
+			value='<%= (entry.getHitCount() != null) ? String.valueOf(entry.getHitCount()) : "0" %>'
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			path="/blacklisted_entry_actions.jsp"
+		/>
+	</c:otherwise>
+</c:choose>

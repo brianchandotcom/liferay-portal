@@ -1,0 +1,73 @@
+{
+	"elementTemplateJSON": {
+		"category": "conditional",
+		"clauses": [
+			{
+				"context": "query",
+				"occur": "should",
+				"query": {
+					"query": {
+						"term": {
+							"assetCategoryIds": {
+								"boost": "${configuration.boost}",
+								"value": "${configuration.asset_category_id}"
+							}
+						}
+					}
+				},
+				"type": "wrapper"
+			}
+		],
+		"conditions": [
+			{
+				"configuration": {
+					"date_format": "yyyyMMdd",
+					"evaluation_type": "in_range",
+					"parameter_name": "${user.user_create_date}",
+					"value": [
+						"${time.current_date|modifier=-${configuration.time_range},dateFormat=yyyyMMdd}",
+						"${time.current_date|modifier=+1d,dateFormat=yyyyMMdd}"
+					]
+				}
+			}
+		],
+		"description": {
+			"en_US": "Boost contents in a category for user accounts created withing the given time"
+		},
+		"enabled": true,
+		"icon": "thumbs-up",
+		"title": {
+			"en_US": "Boost Contents in a Category for New User Accounts"
+		}
+	},
+	"uiConfigurationJSON": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"helpText": "Add asset category ID",
+						"label": "Asset Category",
+						"name": "asset_category_id",
+						"type": "number"
+					},
+					{
+						"defaultValue": 30,
+						"label": "Time range",
+						"name": "time_range",
+						"type": "number",
+						"typeOptions": {
+							"unit": "days",
+							"unitSuffix": "d"
+						}
+					},
+					{
+						"defaultValue": 20,
+						"label": "Boost",
+						"name": "boost",
+						"type": "slider"
+					}
+				]
+			}
+		]
+	}
+}

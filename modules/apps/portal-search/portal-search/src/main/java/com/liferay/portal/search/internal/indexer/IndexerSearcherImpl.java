@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilter;
 import com.liferay.portal.kernel.search.SearchResultPermissionFilterFactory;
+import com.liferay.portal.kernel.search.SearchResultPermissionFilterSearcher;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -97,12 +98,7 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 
 		Hits hits = _search(searchContext);
 
-		try {
-			_hitsProcessorRegistry.process(searchContext, hits);
-		}
-		catch (SearchException searchException) {
-			throw new RuntimeException(searchException);
-		}
+		processHits(searchContext, hits);
 
 		return hits;
 	}
@@ -149,27 +145,58 @@ public class IndexerSearcherImpl<T extends BaseModel<?>>
 		return _indexSearcherHelper.search(searchContext, fullQuery);
 	}
 
-	private Hits _search(SearchContext searchContext) {
+	protected boolean isUseSearchResultPermissionFilter() {
+		if (_indexerPermissionPostFilter.isPermissionAware() &&
+			!_modelSearchSettings.isSearchResultPermissionFilterSuppressed()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void processHits(SearchContext searchContext, Hits hits) {
+		try {
+			_hitsProcessorRegistry.process(searchContext, hits);
+		}
+		catch (SearchException searchException) {
+			throw new RuntimeException(searchException);
+		}
+	}
+
+	private SearchResultPermissionFilter _getSearchResultPermissionFilter(
+		SearchContext searchContext,
+		SearchResultPermissionFilterSearcher
+			searchResultPermissionFilterSearcher) {
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if ((permissionChecker == null) ||
-			!_indexerPermissionPostFilter.isPermissionAware() ||
-			_modelSearchSettings.isSearchResultPermissionFilterSuppressed()) {
-
-			return doSearch(searchContext);
+		if (permissionChecker == null) {
+			return null;
 		}
 
 		if (searchContext.getUserId() == 0) {
 			searchContext.setUserId(permissionChecker.getUserId());
 		}
 
-		SearchResultPermissionFilter searchResultPermissionFilter =
-			_searchResultPermissionFilterFactory.create(
-				this::doSearch, permissionChecker);
+		return _searchResultPermissionFilterFactory.create(
+			searchResultPermissionFilterSearcher, permissionChecker);
+	}
 
+	private Hits _search(SearchContext searchContext) {
 		try {
-			return searchResultPermissionFilter.search(searchContext);
+			if (isUseSearchResultPermissionFilter()) {
+				SearchResultPermissionFilter searchResultPermissionFilter =
+					_getSearchResultPermissionFilter(
+						searchContext, this::doSearch);
+
+				if (searchResultPermissionFilter != null) {
+					return searchResultPermissionFilter.search(searchContext);
+				}
+			}
+
+			return doSearch(searchContext);
 		}
 		catch (SearchException searchException) {
 			throw new RuntimeException(searchException);

@@ -45,6 +45,7 @@ import com.liferay.portal.search.indexer.IndexerQueryBuilder;
 import com.liferay.portal.search.indexer.IndexerSearcher;
 import com.liferay.portal.search.indexer.IndexerSummaryBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
+import com.liferay.portal.search.internal.expando.ExpandoQueryContributorHelper;
 import com.liferay.portal.search.internal.searcher.IndexSearcherHelper;
 import com.liferay.portal.search.permission.SearchPermissionDocumentContributor;
 import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
@@ -226,14 +227,14 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 
 		IndexerQueryBuilderImpl indexerQueryBuilderImpl =
 			new IndexerQueryBuilderImpl<>(
-				indexerRegistry,
+				addSearchKeywordsQueryContributorHelper,
+				expandoQueryContributorHelper, indexerRegistry,
 				modelSearchConfigurator.getModelSearchSettings(),
 				new ModelKeywordQueryContributorsHolderImpl(
 					modelSearchConfigurator.getKeywordQueryContributors()),
 				modelSearchConfigurator.getSearchContextContributors(),
-				keywordQueryContributorsHolder, preFilterContributorHelper,
-				_searchContextContributors, indexerPostProcessorsHolder,
-				relatedEntryIndexerRegistry);
+				preFilterContributorHelper, _searchContextContributors,
+				indexerPostProcessorsHolder, relatedEntryIndexerRegistry);
 
 		ServiceRegistration<IndexerQueryBuilder>
 			indexerQueryBuilderServiceRegistration =
@@ -328,10 +329,17 @@ public class ModelSearchConfiguratorServiceTrackerCustomizer
 	}
 
 	@Reference
+	protected AddSearchKeywordsQueryContributorHelper
+		addSearchKeywordsQueryContributorHelper;
+
+	@Reference
 	protected BaseModelDocumentFactory baseModelDocumentFactory;
 
 	@Reference
 	protected BaseModelRetriever baseModelRetriever;
+
+	@Reference
+	protected ExpandoQueryContributorHelper expandoQueryContributorHelper;
 
 	@Reference
 	protected HitsProcessorRegistry hitsProcessorRegistry;

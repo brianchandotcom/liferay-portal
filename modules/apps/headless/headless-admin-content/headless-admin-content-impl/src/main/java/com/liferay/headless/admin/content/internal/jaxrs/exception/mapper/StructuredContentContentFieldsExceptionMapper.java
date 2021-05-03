@@ -24,8 +24,6 @@ import javax.ws.rs.ext.ExceptionMapper;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Converts any {@code DDMFormValuesValidationException} to a {@code 400} error.
- *
  * @author Luis Miguel Barcos
  */
 @Component(
@@ -45,8 +43,7 @@ public class StructuredContentContentFieldsExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"Validation error: " +
-				ddmFormValuesValidationException.getMessage());
+			ddmFormValuesValidationException.getMessage());
 	}
 
 }

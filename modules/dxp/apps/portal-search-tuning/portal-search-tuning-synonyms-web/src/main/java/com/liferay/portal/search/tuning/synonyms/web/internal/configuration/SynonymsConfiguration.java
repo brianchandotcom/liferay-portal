@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "search")
 @Meta.OCD(
 	id = "com.liferay.portal.search.tuning.synonyms.web.internal.configuration.SynonymsConfiguration",
-	localization = "content/Language", name = "synonyms"
+	localization = "content/Language", name = "synonyms-configuration-name"
 )
 public interface SynonymsConfiguration {
 

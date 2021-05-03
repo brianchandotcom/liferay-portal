@@ -15,7 +15,7 @@
 import {DataConverter} from 'data-engine-taglib';
 import {FieldSupport} from 'dynamic-data-mapping-form-builder';
 
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from '../../utils/visitors.es';
 import {EVENT_TYPES} from '../actions/eventTypes.es';
 
 export default (state, action, config) => {

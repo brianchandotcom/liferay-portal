@@ -2150,10 +2150,10 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 										<replace
 											file="${app.server.lib.global.dir}/module.xml"
 										>
-											<replacetoken><![CDATA[<resource-root path="com.liferay.registry.api.jar" />]]></replacetoken>
+											<replacetoken><![CDATA[<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />]]></replacetoken>
 											<replacevalue>
 												<![CDATA[
-													<resource-root path="com.liferay.registry.api.jar" />
+													<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />
 													<resource-root path="mysql.jar" />
 												]]>
 											</replacevalue>
@@ -2189,10 +2189,10 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 											<replace
 												file="${app.server.lib.global.dir}/module.xml"
 											>
-												<replacetoken><![CDATA[<<resource-root path="com.liferay.registry.api.jar" />]]></replacetoken>
+												<replacetoken><![CDATA[<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />]]></replacetoken>
 												<replacevalue>
 													<![CDATA[
-														<resource-root path="com.liferay.registry.api.jar" />
+														<resource-root path="com.liferay.petra.url.pattern.mapper.jar" />
 														<resource-root path="mariadb.jar" />
 													]]>
 												</replacevalue>

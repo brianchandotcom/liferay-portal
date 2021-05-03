@@ -20,8 +20,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.journal.content.web.internal.constants.JournalContentWebKeys" %><%@
-page import="com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext" %><%@
+<%@ page import="com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext" %><%@
 page import="com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -33,5 +32,5 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <liferay-theme:defineObjects />
 
 <%
-JournalContentDisplayContext journalContentDisplayContext = (JournalContentDisplayContext)request.getAttribute(JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT + StringPool.POUND + portletDisplay.getId());
+JournalContentDisplayContext journalContentDisplayContext = (JournalContentDisplayContext)request.getAttribute(JournalContentDisplayContext.getCacheKey(portletDisplay.getId()));
 %>

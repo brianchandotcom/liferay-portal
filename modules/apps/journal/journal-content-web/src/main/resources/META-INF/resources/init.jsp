@@ -36,7 +36,6 @@ page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
 page import="com.liferay.journal.constants.JournalContentPortletKeys" %><%@
 page import="com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry" %><%@
 page import="com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry" %><%@
-page import="com.liferay.journal.content.web.internal.constants.JournalContentWebKeys" %><%@
 page import="com.liferay.journal.content.web.internal.display.context.JournalContentDisplayContext" %><%@
 page import="com.liferay.journal.content.web.internal.servlet.taglib.clay.JournalArticleVerticalCard" %><%@
 page import="com.liferay.journal.content.web.internal.servlet.taglib.clay.JournalDDMTemplateVerticalCard" %><%@
@@ -74,7 +73,7 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-JournalContentDisplayContext journalContentDisplayContext = (JournalContentDisplayContext)request.getAttribute(JournalContentWebKeys.JOURNAL_CONTENT_DISPLAY_CONTEXT + StringPool.POUND + portletDisplay.getId());
+JournalContentDisplayContext journalContentDisplayContext = (JournalContentDisplayContext)request.getAttribute(JournalContentDisplayContext.getCacheKey(portletDisplay.getId()));
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

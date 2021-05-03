@@ -12,8 +12,6 @@
 	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountPersistence" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupLocalService" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupService" />
-	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupPersistence" />
-	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupFinderImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupFinder" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelLocalServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelLocalService" />
 	<bean class="com.liferay.commerce.account.service.impl.CommerceAccountGroupCommerceAccountRelServiceImpl" id="com.liferay.commerce.account.service.CommerceAccountGroupCommerceAccountRelService" />
 	<bean class="com.liferay.commerce.account.service.persistence.impl.CommerceAccountGroupCommerceAccountRelPersistenceImpl" id="com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence" />

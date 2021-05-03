@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.account.model;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -153,6 +154,11 @@ public class CommerceAccountGroupWrapper
 		return model.getCreateDate();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return model.getExpandoBridge();
+	}
+
 	/**
 	 * Returns the external reference code of this commerce account group.
 	 *
@@ -251,11 +257,6 @@ public class CommerceAccountGroupWrapper
 	@Override
 	public boolean isSystem() {
 		return model.isSystem();
-	}
-
-	@Override
-	public void persist() {
-		model.persist();
 	}
 
 	/**

@@ -15,7 +15,6 @@
 package com.liferay.commerce.account.model.impl;
 
 import com.liferay.commerce.account.model.CommerceAccountGroup;
-import com.liferay.commerce.account.service.CommerceAccountGroupLocalServiceUtil;
 
 /**
  * The extended model base implementation for the CommerceAccountGroup service. Represents a row in the &quot;CommerceAccountGroup&quot; database table, with each column mapped to a property of this class.
@@ -37,15 +36,5 @@ public abstract class CommerceAccountGroupBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce account group model instance should use the <code>CommerceAccountGroup</code> interface instead.
 	 */
-	@Override
-	public void persist() {
-		if (this.isNew()) {
-			CommerceAccountGroupLocalServiceUtil.addCommerceAccountGroup(this);
-		}
-		else {
-			CommerceAccountGroupLocalServiceUtil.updateCommerceAccountGroup(
-				this);
-		}
-	}
 
 }

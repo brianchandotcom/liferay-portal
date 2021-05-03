@@ -16,6 +16,7 @@ import {
 	generateInstanceId,
 	generateName,
 	generateNestedFieldName,
+	parseName,
 	parseNestedFieldName,
 } from '../../util/repeatable.es';
 import {PagesVisitor} from '../../util/visitors.es';
@@ -109,19 +110,66 @@ export default (state, action) => {
 		case EVENT_TYPES.FIELD.REMOVED: {
 			const pageVisitor = new PagesVisitor(state.pages);
 
+			const getParsedName = (name, parentFieldName) => {
+				if (parentFieldName) {
+					return parseNestedFieldName(name);
+				}
+
+				return parseName(name);
+			};
+
 			return {
 				pages: pageVisitor.mapColumns((column) => {
-					const filter = (fields) =>
-						fields
-							.filter((field) => field.name !== action.payload)
-							.map((field) => {
+					const filter = (fields, parentFieldName) => {
+						const filteredFields = fields.filter(
+							({name}) => name !== action.payload
+						);
+
+						const parsedName = getParsedName(
+							action.payload,
+							parentFieldName
+						);
+
+						const repeatedFields = filteredFields
+							.filter(
+								({fieldName}) =>
+									fieldName === parsedName.fieldName
+							)
+							.map((field, index) => {
+								const newName = generateName(field.name, {
+									repeatedIndex: index,
+								});
+
 								return {
 									...field,
-									nestedFields: field.nestedFields
-										? filter(field.nestedFields)
-										: [],
+									nestedFields: updateNestedFieldNames(
+										newName,
+										field.nestedFields
+									),
+									newName,
 								};
 							});
+
+						return filteredFields.map((field) => {
+							const repeatedField = repeatedFields.find(
+								({name}) => name === field.name
+							);
+
+							if (repeatedField) {
+								field = {
+									...repeatedField,
+									name: repeatedField.newName,
+								};
+							}
+
+							return {
+								...field,
+								nestedFields: field.nestedFields
+									? filter(field.nestedFields, field.name)
+									: [],
+							};
+						});
+					};
 
 					return {
 						...column,

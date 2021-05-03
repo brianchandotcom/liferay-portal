@@ -61,17 +61,14 @@ public class DBInitUtil {
 	}
 
 	public static void init() throws Exception {
-		_readDataSource = _initDataSource(
-			PropsUtil.getProperties("jdbc.read.", true));
+		_readDataSource = _initDataSource("jdbc.read.");
 
-		_writeDataSource = _initDataSource(
-			PropsUtil.getProperties("jdbc.write.", true));
+		_writeDataSource = _initDataSource("jdbc.write.");
 
 		_dataSource = _writeDataSource;
 
 		if ((_readDataSource == null) && (_writeDataSource == null)) {
-			_dataSource = _initDataSource(
-				PropsUtil.getProperties("jdbc.default.", true));
+			_dataSource = _initDataSource("jdbc.default.");
 		}
 
 		try (Connection connection = _dataSource.getConnection()) {
@@ -222,8 +219,8 @@ public class DBInitUtil {
 		}
 	}
 
-	private static DataSource _initDataSource(Properties properties)
-		throws Exception {
+	private static DataSource _initDataSource(String prefix) throws Exception {
+		Properties properties = PropsUtil.getProperties(prefix, true);
 
 		if ((properties == null) || properties.isEmpty()) {
 			return null;

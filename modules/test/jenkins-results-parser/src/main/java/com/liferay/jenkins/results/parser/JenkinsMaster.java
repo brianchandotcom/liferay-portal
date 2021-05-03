@@ -153,7 +153,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public List<String> getBuildURLs() {
-		return _buildURLs;
+		synchronized (_buildURLs) {
+			return new ArrayList<>(_buildURLs);
+		}
 	}
 
 	public int getIdleJenkinsSlavesCount() {
@@ -247,7 +249,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public Map<String, JSONObject> getQueuedBuildURLs() {
-		return _queuedBuildURLs;
+		synchronized (_queuedBuildURLs) {
+			return new HashMap<>(_queuedBuildURLs);
+		}
 	}
 
 	public Integer getSlaveRAM() {
@@ -317,6 +321,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 		_available = true;
 
+		List<String> buildURLs = new ArrayList<>();
+
 		JSONArray computerJSONArray = computerAPIJSONObject.getJSONArray(
 			"computer");
 
@@ -360,7 +366,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 								"currentExecutable");
 
 						if (currentExecutableJSONObject.has("url")) {
-							_buildURLs.add(
+							buildURLs.add(
 								currentExecutableJSONObject.getString("url"));
 						}
 					}
@@ -368,11 +374,19 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			}
 		}
 
+		synchronized (_buildURLs) {
+			_buildURLs.clear();
+
+			_buildURLs.addAll(buildURLs);
+		}
+
 		_queueCount = 0;
 
 		if (!queueAPIJSONObject.has("items")) {
 			return;
 		}
+
+		Map<String, JSONObject> queuedBuildURLs = new HashMap<>();
 
 		JSONArray itemsJSONArray = queueAPIJSONObject.getJSONArray("items");
 
@@ -404,13 +418,19 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				}
 
 				if (itemJSONObject.has("url")) {
-					_queuedBuildURLs.put(
+					queuedBuildURLs.put(
 						getURL() + "/" + itemJSONObject.getString("url"),
 						itemJSONObject);
 				}
 			}
 
 			_queueCount++;
+		}
+
+		synchronized (_queuedBuildURLs) {
+			_queuedBuildURLs.clear();
+
+			_queuedBuildURLs.putAll(queuedBuildURLs);
 		}
 	}
 

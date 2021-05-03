@@ -32,6 +32,7 @@ import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
 import com.liferay.petra.sql.dsl.spi.expression.TableStar;
 import com.liferay.petra.sql.dsl.spi.query.Select;
+import com.liferay.petra.sql.dsl.spi.query.SetOperation;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -193,7 +194,14 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 			BaseASTNode baseASTNode = (BaseASTNode)astNode;
 
-			astNode = baseASTNode.getChild();
+			if (baseASTNode instanceof SetOperation) {
+				SetOperation setOperation = (SetOperation)astNode;
+
+				astNode = setOperation.getLeftDSLQuery();
+			}
+			else {
+				astNode = baseASTNode.getChild();
+			}
 		}
 
 		if (select == null) {

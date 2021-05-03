@@ -196,7 +196,7 @@ public class StructuredContentResourceImpl
 	}
 
 	@Override
-	public Page<StructuredContent> getStructuredContentsStructuredContentPage(
+	public Page<StructuredContent> getStructuredContentsVersionsPage(
 			Long structuredContentId)
 		throws Exception {
 

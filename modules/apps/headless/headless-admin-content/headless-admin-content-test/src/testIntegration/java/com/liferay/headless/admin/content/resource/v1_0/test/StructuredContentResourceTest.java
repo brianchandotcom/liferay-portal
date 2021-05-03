@@ -82,9 +82,8 @@ public class StructuredContentResourceTest
 			testGroup.getGroupId(), randomStructuredContent());
 
 		Page<StructuredContent> structuredContentsVersionsPage =
-			structuredContentResource.
-				getStructuredContentsStructuredContentPage(
-					structuredContent.getId());
+			structuredContentResource.getStructuredContentsVersionsPage(
+				structuredContent.getId());
 
 		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
 
@@ -112,17 +111,14 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
-	public void testGetStructuredContentsStructuredContentPage()
-		throws Exception {
-
+	public void testGetStructuredContentsVersionsPage() throws Exception {
 		StructuredContent structuredContent = _postSiteStructuredContent(
 			testGroup.getGroupId(), randomStructuredContent());
 
 		Long id = structuredContent.getId();
 
 		Page<StructuredContent> structuredContentsVersionsPage =
-			structuredContentResource.
-				getStructuredContentsStructuredContentPage(id);
+			structuredContentResource.getStructuredContentsVersionsPage(id);
 
 		Assert.assertEquals(1L, structuredContentsVersionsPage.getTotalCount());
 
@@ -130,8 +126,7 @@ public class StructuredContentResourceTest
 			id, _toStructuredContent(structuredContent));
 
 		structuredContentsVersionsPage =
-			structuredContentResource.
-				getStructuredContentsStructuredContentPage(id);
+			structuredContentResource.getStructuredContentsVersionsPage(id);
 
 		Assert.assertEquals(2L, structuredContentsVersionsPage.getTotalCount());
 	}

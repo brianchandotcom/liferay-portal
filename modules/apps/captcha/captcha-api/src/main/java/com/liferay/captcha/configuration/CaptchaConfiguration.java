@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(category = "security-tools")
 @Meta.OCD(
 	id = "com.liferay.captcha.configuration.CaptchaConfiguration",
-	localization = "content/Language", name = "captcha"
+	localization = "content/Language", name = "captcha-configuration-name"
 )
 public interface CaptchaConfiguration {
 

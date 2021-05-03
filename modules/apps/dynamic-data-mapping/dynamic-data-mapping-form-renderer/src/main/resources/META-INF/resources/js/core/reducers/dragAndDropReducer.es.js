@@ -165,18 +165,18 @@ export default (state, action, config) => {
 				);
 			}
 
-			const visitor = new PagesVisitor(
-				FieldSupport.addField({
-					defaultLanguageId,
-					editingLanguageId,
-					fieldNameGenerator,
-					generateFieldNameUsingFieldLabel,
-					indexes: targetIndexes,
-					newField: sourceField,
-					pages: newPages,
-					parentFieldName: targetParentFieldName,
-				})
-			);
+			const {pages: updatedPages} = FieldSupport.addField({
+				defaultLanguageId,
+				editingLanguageId,
+				fieldNameGenerator,
+				generateFieldNameUsingFieldLabel,
+				indexes: targetIndexes,
+				newField: sourceField,
+				pages: newPages,
+				parentFieldName: targetParentFieldName,
+			});
+
+			const visitor = new PagesVisitor(updatedPages);
 
 			newPages = visitor.mapFields((field) => {
 				if (field.type != 'grid' && field.rows) {

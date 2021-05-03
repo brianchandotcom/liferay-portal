@@ -3405,7 +3405,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (wikiPage != null) {
 			throw new DuplicatePageExternalReferenceCodeException(
 				StringBundler.concat(
-					"Duplicate WikiPage external reference code ",
+					"Duplicate page external reference code ",
 					externalReferenceCode, "in group ", groupId));
 		}
 	}

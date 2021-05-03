@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>ENABLE_SPECIFIC_TOGGLE_SWITCH</td>
+    <td>//h4[contains(.,"${key_name}")]//span[contains(@id,'toggle-switch')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>USE_CUSTOM_TITLE</td>
 	<td>//label[contains(.,'Use Custom Title')]//input[@type='checkbox']</td>
 	<td></td>

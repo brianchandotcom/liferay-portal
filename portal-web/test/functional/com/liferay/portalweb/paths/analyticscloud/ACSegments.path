@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>ACSegments</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACSegments</td></tr>
+</thead>
+<tbody>
+<!-- Segments  -->
+<tr>
+    <td>CANCEL_SEGMENT</td>
+    <td>//a[contains(@href,'segment') and contains(@class,'secondary')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>CONFIRM_DELETION</td>
+    <td>//button[contains(@class,'warning')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>CREATE_SEGMENT_BUTTON</td>
+    <td>//button[contains(@class,'btn-primary')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>CRITERION_TYPE_DROPDOWN</td>
+    <td>//div[@class='dropdown dropdown-root']/button</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DELETE_SEGMENT</td>
+    <td>//div[contains(@class,'dropdown')]/button[contains(@class,'item')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>EDIT_SEGMENT</td>
+    <td>//div[contains(@class,'dropdown')]/a[contains(@href,'edit')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>EDIT_NAME_BUTTON</td>
+    <td>//div[contains(@class,'editor')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>TABLE_CHECKBOX</td>
+    <td>//div[text()='${key_TableMember}']/ancestor::tr</td>
+    <td></td>
+</tr>
+<tr>
+    <td>NAME_FIELD</td>
+    <td>//input[@name='name']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>OPTION_SELECT</td>
+    <td>//option[text()='${key_atLeastMostOption}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SAVE_SEGMENT</td>
+    <td>//button[@type='submit']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEARCH_SEGMENT</td>
+    <td>//input[@type='text' and @placeholder = 'Search' and not(@disabled)]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_LABEL</td>
+    <td>//h1/following-sibling::div/span</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_ELLIPSES</td>
+    <td>//div[contains(@class,'dropdown')]/button[contains(@class,'component')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SELECT_CRITERION_TYPE</td>
+    <td>//div[@class='dropdown-menu show']/button[text()='${key_Criterion}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SELECT_SEGMENT_TYPE</td>
+    <td>//a[contains(@href, '${key_SegmentType}')]</td>
+    <td></td>
+</tr>
+<!-- Dynamic Segments  -->
+<tr>
+    <td>ANONYMOUS_SWITCH</td>
+    <td>//input[contains(@id,'includeAnonymous')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DUPLICATE_SEGMENT_CRITERION</td>
+    <td>//button[@aria-label='Duplicate']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DELETE_SEGMENT_CRITERION</td>
+    <td>//button[@aria-label='Delete']</td>
+    <td></td>
+</tr>
+<!-- Static Segments  -->
+<tr>
+    <td>ADD_BUTTON</td>
+    <td>//div[@class='modal-footer']/button[contains(@class,'btn-primary')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ADD_MEMBERS_BUTTON</td>
+    <td>//ul/li/button[contains(@class,'btn-primary')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

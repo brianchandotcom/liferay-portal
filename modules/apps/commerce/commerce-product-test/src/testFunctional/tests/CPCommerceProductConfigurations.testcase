@@ -41,7 +41,6 @@ definition {
 	@priority = "3"
 	test UseConfiguration {
 		property portal.acceptance = "false";
-		
 		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#UseConfiguration";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");

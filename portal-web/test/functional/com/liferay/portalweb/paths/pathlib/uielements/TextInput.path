@@ -553,6 +553,7 @@
 	<td>//div[contains(@class,'has-error')]</td>
 	<td></td>
 </tr>
+
 <tr>
 	<td>SPECIFIC_LABEL_TEXT_INPUT</td>
 	<td>//label[contains(text(),'${key_labelName}')]//following::input[contains(@type,'text')]</td>

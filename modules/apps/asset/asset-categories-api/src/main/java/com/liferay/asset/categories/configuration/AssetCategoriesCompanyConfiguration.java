@@ -26,7 +26,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration",
-	localization = "content/Language", name = "categorization"
+	localization = "content/Language",
+	name = "categorization-configuration-name"
 )
 public interface AssetCategoriesCompanyConfiguration {
 

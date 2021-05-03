@@ -53,15 +53,6 @@ public interface StructuredContentResource {
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public Page<StructuredContent> getStructuredContentsStructuredContentPage(
-			Long structuredContentId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getStructuredContentsStructuredContentPageHttpResponse(
-				Long structuredContentId)
-		throws Exception;
-
 	public void deleteStructuredContentByVersion(
 			Long structuredContentId, Double version)
 		throws Exception;
@@ -77,6 +68,15 @@ public interface StructuredContentResource {
 
 	public HttpInvoker.HttpResponse getStructuredContentByVersionHttpResponse(
 			Long structuredContentId, Double version)
+		throws Exception;
+
+	public Page<StructuredContent> getStructuredContentsVersionsPage(
+			Long structuredContentId)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			getStructuredContentsVersionsPageHttpResponse(
+				Long structuredContentId)
 		throws Exception;
 
 	public static class Builder {
@@ -263,91 +263,6 @@ public interface StructuredContentResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<StructuredContent>
-				getStructuredContentsStructuredContentPage(
-					Long structuredContentId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getStructuredContentsStructuredContentPageHttpResponse(
-					structuredContentId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, StructuredContentSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getStructuredContentsStructuredContentPageHttpResponse(
-					Long structuredContentId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port +
-						"/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}");
-
-			httpInvoker.path("structuredContentId", structuredContentId);
-
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
-
-			return httpInvoker.invoke();
-		}
-
 		public void deleteStructuredContentByVersion(
 				Long structuredContentId, Double version)
 			throws Exception {
@@ -511,6 +426,90 @@ public interface StructuredContentResource {
 
 			httpInvoker.path("structuredContentId", structuredContentId);
 			httpInvoker.path("version", version);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public Page<StructuredContent> getStructuredContentsVersionsPage(
+				Long structuredContentId)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				getStructuredContentsVersionsPageHttpResponse(
+					structuredContentId);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return Page.of(content, StructuredContentSerDes::toDTO);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				getStructuredContentsVersionsPageHttpResponse(
+					Long structuredContentId)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/versions");
+
+			httpInvoker.path("structuredContentId", structuredContentId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

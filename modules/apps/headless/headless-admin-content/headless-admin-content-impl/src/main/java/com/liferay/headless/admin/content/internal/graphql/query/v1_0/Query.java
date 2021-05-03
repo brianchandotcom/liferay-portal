@@ -151,27 +151,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentsStructuredContent(structuredContentId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField(
-		description = "Retrieves all versions of a structured content via its ID."
-	)
-	public StructuredContentPage structuredContentsStructuredContent(
-			@GraphQLName("structuredContentId") Long structuredContentId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_structuredContentResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			structuredContentResource -> new StructuredContentPage(
-				structuredContentResource.
-					getStructuredContentsStructuredContentPage(
-						structuredContentId)));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentByVersion(structuredContentId: ___, version: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves a version of a structured content")
@@ -187,6 +166,26 @@ public class Query {
 			structuredContentResource ->
 				structuredContentResource.getStructuredContentByVersion(
 					structuredContentId, version));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentsVersions(structuredContentId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves all versions of a structured content via its ID."
+	)
+	public StructuredContentPage structuredContentsVersions(
+			@GraphQLName("structuredContentId") Long structuredContentId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_structuredContentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			structuredContentResource -> new StructuredContentPage(
+				structuredContentResource.getStructuredContentsVersionsPage(
+					structuredContentId)));
 	}
 
 	@GraphQLName("DisplayPageTemplatePage")

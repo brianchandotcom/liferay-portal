@@ -109,34 +109,6 @@ public abstract class BaseStructuredContentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}'  -u 'test@liferay.com:test'
-	 */
-	@GET
-	@Operation(
-		description = "Retrieves all versions of a structured content via its ID."
-	)
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
-		}
-	)
-	@Path("/structured-contents/{structuredContentId}")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "StructuredContent")})
-	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
-			getStructuredContentsStructuredContentPage(
-				@NotNull @Parameter(hidden = true)
-				@PathParam("structuredContentId")
-				Long structuredContentId)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/by-version/{version}'  -u 'test@liferay.com:test'
 	 */
 	@DELETE
@@ -188,6 +160,34 @@ public abstract class BaseStructuredContentResourceImpl
 		throws Exception {
 
 		return new com.liferay.headless.delivery.dto.v1_0.StructuredContent();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-content/v1.0/structured-contents/{structuredContentId}/versions'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Operation(
+		description = "Retrieves all versions of a structured content via its ID."
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "structuredContentId")
+		}
+	)
+	@Path("/structured-contents/{structuredContentId}/versions")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "StructuredContent")})
+	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
+			getStructuredContentsVersionsPage(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("structuredContentId")
+				Long structuredContentId)
+		throws Exception {
+
+		return Page.of(Collections.emptyList());
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

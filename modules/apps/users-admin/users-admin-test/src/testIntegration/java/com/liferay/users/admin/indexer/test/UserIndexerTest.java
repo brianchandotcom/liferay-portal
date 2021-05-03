@@ -207,10 +207,9 @@ public class UserIndexerTest {
 
 	@Test
 	public void testLuceneQueryParserUnfriendlyCharacters() {
-		User user = addUser();
+		addUser();
 
-		assertUserId(user.getUserId(), byQueryString(StringPool.AT));
-
+		assertNoHits(byQueryString(StringPool.AT));
 		assertNoHits(
 			byQueryString(StringPool.AT + RandomTestUtil.randomString()));
 		assertNoHits(byQueryString(StringPool.EXCLAMATION));

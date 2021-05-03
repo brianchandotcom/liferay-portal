@@ -86,13 +86,63 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6287. AddASpecificationAndVerifyIfIsPresent"
-	@ignore = "true"
 	@priority = "3"
 	test AddASpecificationAndVerifyIfIsPresent {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProducts#AddASpecificationAndVerifyIfIsPresent";
 
-		// TODO COMMERCE-6287 AddASpecificationAndVerifyIfIsPresent
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		Click(locator1 = "AppBuilder#SEARCH_BAR_INPUT");
+
+		Type(
+			key_text = "Find or create a specification",
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+			value1 = "Quantity");
+
+		Click(
+			key_text = "Select",
+			locator1 = "Button#ANY_LAST");
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_entryName = "Quantity",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		Click(locator1 = "AppBuilder#SEARCH_BAR_INPUT");
+
+		Type(
+			key_text = "Find or create a specification",
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+			value1 = "Test Specification");
+
+		Click(
+			key_text = "Create New",
+			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_entryName = "Test Specification",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Specifications");
+
+		AssertElementPresent(
+			key_entryName = "Test Specification",
+			locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_BY_NAME");
 	}
 
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"

@@ -31,13 +31,42 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6283. EditSpecificationGroup"
-	@ignore = "true"
 	@priority = "3"
 	test EditSpecificationGroup {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceSpecifications#EditSpecificationGroup";
 
-		// TODO COMMERCE-6283 EditSpecificationGroup
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Specifications");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Specification Groups");
+
+		Click(
+			locator1 = "Icon#SVG_ELLIPSIS",
+			value1 = "Quantity");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		Type(
+			key_fieldLabel = "Title",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test");
+
+		Type(
+			key_fieldLabel = "Key",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "test");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		AssertElementPresent(
+			key_rowEntry = "Test",
+			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 	}
 
 	@description = "This is a test for COMMERCE-6284. EditSpecificationLabel"

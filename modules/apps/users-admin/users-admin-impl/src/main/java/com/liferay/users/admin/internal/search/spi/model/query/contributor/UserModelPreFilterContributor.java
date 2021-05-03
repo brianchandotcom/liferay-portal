@@ -14,13 +14,17 @@
 
 package com.liferay.users.admin.internal.search.spi.model.query.contributor;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
@@ -50,6 +54,8 @@ public class UserModelPreFilterContributor
 		contextBooleanFilter.addTerm(
 			"defaultUser", Boolean.TRUE.toString(),
 			BooleanClauseOccur.MUST_NOT);
+
+		_filterByEmailAddress(contextBooleanFilter, searchContext);
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute(Field.STATUS),
@@ -177,6 +183,31 @@ public class UserModelPreFilterContributor
 		termsFilter.addValues(values);
 
 		return termsFilter;
+	}
+
+	private void _filterByEmailAddress(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		String emailAddress = (String)searchContext.getAttribute(
+			"emailAddress");
+
+		if (Validator.isNull(emailAddress)) {
+			return;
+		}
+
+		BooleanFilter emailAddressBooleanFilter = new BooleanFilter();
+
+		emailAddressBooleanFilter.add(
+			new QueryFilter(
+				new WildcardQueryImpl(
+					"emailAddress", emailAddress + StringPool.STAR)));
+
+		emailAddressBooleanFilter.add(
+			new QueryFilter(
+				new WildcardQueryImpl(
+					"emailAddressDomain", emailAddress + StringPool.STAR)));
+
+		booleanFilter.add(emailAddressBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
 }

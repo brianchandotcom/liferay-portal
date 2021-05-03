@@ -14,9 +14,16 @@
 
 package com.liferay.users.admin.internal.search.spi.model.query.contributor;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
@@ -48,8 +55,6 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "country", false);
 		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "emailAddress", false);
-		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "firstName", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "fullName", false);
@@ -64,6 +69,24 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 			booleanQuery, searchContext, "screenName", false);
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "street", false);
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "zip", false);
+
+		if (Validator.isNotNull(keywords)) {
+			try {
+				keywords = StringUtil.toLowerCase(keywords);
+
+				booleanQuery.add(
+					new WildcardQueryImpl(
+						"emailAddress", keywords + StringPool.STAR),
+					BooleanClauseOccur.SHOULD);
+				booleanQuery.add(
+					new WildcardQueryImpl(
+						"emailAddressDomain", keywords + StringPool.STAR),
+					BooleanClauseOccur.SHOULD);
+			}
+			catch (ParseException parseException) {
+				throw new SystemException(parseException);
+			}
+		}
 	}
 
 	protected void addHighlightFieldNames(SearchContext searchContext) {

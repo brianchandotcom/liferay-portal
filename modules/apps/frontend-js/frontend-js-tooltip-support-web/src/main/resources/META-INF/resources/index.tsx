@@ -14,6 +14,10 @@
 
 import ClayTooltip from '@clayui/tooltip';
 import {render, useTimeout} from '@liferay/frontend-js-react-web';
+
+// Hack to get around frontend-js-web not being in TS
+// @ts-ignore
+
 import {ALIGN_POSITIONS as POSITIONS, align, delegate} from 'frontend-js-web';
 import React, {
 	useEffect,
@@ -34,7 +38,7 @@ const ALIGN_POSITIONS = [
 	'bottom-left',
 	'left',
 	'right',
-];
+] as const;
 
 const SELECTOR_TOOLTIP = '.tooltip[role="tooltip"]';
 const SELECTOR_TRIGGER = `
@@ -108,7 +112,7 @@ const TooltipProvider = () => {
 		return dispose;
 	}, [delay, state]);
 
-	const saveTitle = (element) => {
+	const saveTitle = (element: HTMLElement) => {
 		if (element) {
 			const title = element.getAttribute('title');
 
@@ -131,7 +135,7 @@ const TooltipProvider = () => {
 		}
 	};
 
-	const restoreTitle = (element) => {
+	const restoreTitle = (element?: HTMLElement) => {
 		if (element) {
 			const title = element.getAttribute('data-restore-title');
 
@@ -158,7 +162,7 @@ const TooltipProvider = () => {
 				document.body,
 				eventName,
 				SELECTOR_TRIGGER,
-				(event) => {
+				(event: MouseEvent & {delegateTarget: HTMLElement}) => {
 					saveTitle(event.delegateTarget);
 
 					dispatch({target: event.delegateTarget, type: 'show'});
@@ -217,7 +221,8 @@ const TooltipProvider = () => {
 					__html:
 						state.target.title ||
 						state.target.dataset.restoreTitle ||
-						state.target.dataset.title,
+						state.target.dataset.title ||
+						'',
 				}}
 			/>
 		</ClayTooltip>

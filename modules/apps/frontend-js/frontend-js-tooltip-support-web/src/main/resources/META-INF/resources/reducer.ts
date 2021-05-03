@@ -22,7 +22,20 @@ const STATES = {
 
 export {STATES};
 
-export default function reducer(state, action) {
+interface State {
+	current: {show: boolean};
+	nextTarget?: HTMLElement;
+	target?: HTMLElement;
+	timestamp?: number;
+}
+
+type Action =
+	| {type: 'hide'}
+	| {type: 'hideDelayCompleted'}
+	| {type: 'showDelayCompleted'}
+	| {type: 'show'; target?: HTMLElement};
+
+export default function reducer(state: State, action: Action): State {
 	switch (action.type) {
 		case 'show':
 			if (state.current === STATES.IDLE) {

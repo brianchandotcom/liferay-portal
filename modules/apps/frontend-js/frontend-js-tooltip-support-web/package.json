@@ -2,8 +2,10 @@
 	"dependencies": {
 		"@clayui/tooltip": "3.4.5",
 		"@liferay/frontend-js-react-web": "*",
+		"frontend-js-web": "*",
 		"react": "16.12.0"
 	},
+	"main": "index.js",
 	"name": "frontend-js-tooltip-support-web",
 	"private": true,
 	"scripts": {

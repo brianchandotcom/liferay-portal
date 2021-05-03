@@ -32,7 +32,7 @@ public enum SimpleQueryStringConfigurationKeys {
 	FUZZY_TRANSPOSITIONS("fuzzy_transpositions"), LENIENT("lenient"),
 	QUERY("query"), QUOTE_FIELD_SUFFIX("quote_field_suffix");
 
-	public static final SimpleQueryStringConfigurationKeys findByJsonKey(
+	public static SimpleQueryStringConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<SimpleQueryStringConfigurationKeys>

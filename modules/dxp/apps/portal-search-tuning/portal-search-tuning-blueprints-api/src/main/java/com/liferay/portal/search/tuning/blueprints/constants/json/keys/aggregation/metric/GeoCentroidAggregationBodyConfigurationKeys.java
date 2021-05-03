@@ -24,8 +24,8 @@ public enum GeoCentroidAggregationBodyConfigurationKeys {
 
 	FIELD("field");
 
-	public static final GeoCentroidAggregationBodyConfigurationKeys
-		findByJsonKey(String jsonKey) {
+	public static GeoCentroidAggregationBodyConfigurationKeys findByJsonKey(
+		String jsonKey) {
 
 		Stream<GeoCentroidAggregationBodyConfigurationKeys> stream =
 			Arrays.stream(GeoCentroidAggregationBodyConfigurationKeys.values());

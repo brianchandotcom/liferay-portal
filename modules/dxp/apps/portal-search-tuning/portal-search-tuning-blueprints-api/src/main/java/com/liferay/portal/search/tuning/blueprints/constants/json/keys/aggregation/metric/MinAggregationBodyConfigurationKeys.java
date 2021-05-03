@@ -24,7 +24,7 @@ public enum MinAggregationBodyConfigurationKeys {
 
 	FIELD("field"), MISSING("missing"), SCRIPT("script");
 
-	public static final MinAggregationBodyConfigurationKeys findByJsonKey(
+	public static MinAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<MinAggregationBodyConfigurationKeys> stream = Arrays.stream(

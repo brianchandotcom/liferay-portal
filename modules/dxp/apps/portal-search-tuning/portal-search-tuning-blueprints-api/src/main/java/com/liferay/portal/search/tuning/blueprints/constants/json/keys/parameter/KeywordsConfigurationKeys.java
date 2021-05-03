@@ -24,9 +24,7 @@ public enum KeywordsConfigurationKeys {
 
 	PARAMETER_NAME("parameter_name");
 
-	public static final KeywordsConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static KeywordsConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<KeywordsConfigurationKeys> keywordsConfigurationKeysStream =
 			Arrays.stream(KeywordsConfigurationKeys.values());
 

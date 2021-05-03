@@ -24,7 +24,7 @@ public enum GeoBoundsAggregationBodyConfigurationKeys {
 
 	FIELD("field"), WRAP_LONGITUDE("wrap_longitude");
 
-	public static final GeoBoundsAggregationBodyConfigurationKeys findByJsonKey(
+	public static GeoBoundsAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<GeoBoundsAggregationBodyConfigurationKeys> stream =

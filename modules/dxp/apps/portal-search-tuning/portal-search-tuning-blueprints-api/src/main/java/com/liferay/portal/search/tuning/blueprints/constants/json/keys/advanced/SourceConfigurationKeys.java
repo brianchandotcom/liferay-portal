@@ -25,7 +25,7 @@ public enum SourceConfigurationKeys {
 	FETCH_SOURCE("fetch_source"), SOURCE_EXCLUDES("source_excludes"),
 	SOURCE_INCLUDES("source_includes");
 
-	public static final SourceConfigurationKeys findByJsonKey(String jsonKey) {
+	public static SourceConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<SourceConfigurationKeys> sourceConfigurationKeysStream =
 			Arrays.stream(SourceConfigurationKeys.values());
 

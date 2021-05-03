@@ -24,7 +24,7 @@ public enum ClauseContext {
 
 	POST_FILTER("post_filter"), QUERY("query"), RESCORE("rescore");
 
-	public static final ClauseContext findBy_jsonValue(String jsonValue) {
+	public static ClauseContext findBy_jsonValue(String jsonValue) {
 		Stream<ClauseContext> clauseContextStream = Arrays.stream(
 			ClauseContext.values());
 

@@ -31,7 +31,7 @@ public enum FacetConfigurationKeys {
 	MULTI_VALUE_OPERATOR("multi_value_operator"), NAME("name"),
 	PARAMETER_NAME("parameter_name"), SHARD_SIZE("shard_size"), SIZE("size");
 
-	public static final FacetConfigurationKeys findByJsonKey(String jsonKey) {
+	public static FacetConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<FacetConfigurationKeys> facetConfigurationKeysStream =
 			Arrays.stream(FacetConfigurationKeys.values());
 

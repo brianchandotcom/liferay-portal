@@ -28,9 +28,7 @@ public enum HighlightingConfigurationKeys {
 	PRE_TAGS("pre_tags"), REQUIRE_FIELD_MATCH("require_field_match"),
 	TYPE("type");
 
-	public static final HighlightingConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static HighlightingConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<HighlightingConfigurationKeys>
 			highlightingConfigurationKeysStream = Arrays.stream(
 				HighlightingConfigurationKeys.values());

@@ -24,7 +24,7 @@ public enum SumAggregationBodyConfigurationKeys {
 
 	FIELD("field"), MISSING("missing"), SCRIPT("script");
 
-	public static final SumAggregationBodyConfigurationKeys findByJsonKey(
+	public static SumAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<SumAggregationBodyConfigurationKeys> stream = Arrays.stream(

@@ -25,8 +25,8 @@ public enum PercentileRanksAggregationBodyConfigurationKeys {
 	FIELD("field"), HDR("hdr"), KEYED("keyed"), MISSING("missing"),
 	SCRIPT("script"), TDIGEST("tdigest"), VALUES("values");
 
-	public static final PercentileRanksAggregationBodyConfigurationKeys
-		findByJsonKey(String jsonKey) {
+	public static PercentileRanksAggregationBodyConfigurationKeys findByJsonKey(
+		String jsonKey) {
 
 		Stream<PercentileRanksAggregationBodyConfigurationKeys> stream =
 			Arrays.stream(

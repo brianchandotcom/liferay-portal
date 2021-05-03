@@ -24,9 +24,7 @@ public enum ParameterConfigurationKeys {
 
 	CUSTOM("custom"), KEYWORDS("keywords"), PAGE("page"), SIZE("size");
 
-	public static final ParameterConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static ParameterConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<ParameterConfigurationKeys>
 			requestParameterConfigurationKeysStream = Arrays.stream(
 				ParameterConfigurationKeys.values());

@@ -24,7 +24,7 @@ public enum SuggesterType {
 
 	COMPLETION("completion"), PHRASE("phrase"), TERM("term");
 
-	public static final SuggesterType findBy_jsonValue(String jsonValue) {
+	public static SuggesterType findBy_jsonValue(String jsonValue) {
 		Stream<SuggesterType> suggesterTypeStream = Arrays.stream(
 			SuggesterType.values());
 

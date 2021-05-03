@@ -25,9 +25,7 @@ public enum SuggesterConfigurationKeys {
 	CONFIGURATION("configuration"), DESCRIPTION("description"),
 	ENABLED("enabled"), NAME("name"), TYPE("type");
 
-	public static final SuggesterConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static SuggesterConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<SuggesterConfigurationKeys> suggesterConfigurationKeysStream =
 			Arrays.stream(SuggesterConfigurationKeys.values());
 

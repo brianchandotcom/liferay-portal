@@ -24,7 +24,7 @@ public enum AvgAggregationBodyConfigurationKeys {
 
 	FIELD("field"), MISSING("missing"), SCRIPT("script");
 
-	public static final AvgAggregationBodyConfigurationKeys findByJsonKey(
+	public static AvgAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<AvgAggregationBodyConfigurationKeys> stream = Arrays.stream(

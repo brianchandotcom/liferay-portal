@@ -25,7 +25,7 @@ public enum ClauseConfigurationKeys {
 	CONTEXT("context"), OCCUR("occur"), QUERY("query"), TYPE("type"),
 	WINDOW_SIZE("window_size");
 
-	public static final ClauseConfigurationKeys findByJsonKey(String jsonKey) {
+	public static ClauseConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<ClauseConfigurationKeys> clausesConfigurationKeysStream =
 			Arrays.stream(ClauseConfigurationKeys.values());
 

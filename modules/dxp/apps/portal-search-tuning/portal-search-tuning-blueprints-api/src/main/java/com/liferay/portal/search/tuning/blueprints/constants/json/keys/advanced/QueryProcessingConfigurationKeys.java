@@ -25,7 +25,7 @@ public enum QueryProcessingConfigurationKeys {
 	EXCLUDE_QUERY_CONTRIBUTORS("exclude_query_contributors"),
 	EXCLUDE_QUERY_POST_PROCESSORS("exclude_query_post_processors");
 
-	public static final QueryProcessingConfigurationKeys findByJsonKey(
+	public static QueryProcessingConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<QueryProcessingConfigurationKeys>

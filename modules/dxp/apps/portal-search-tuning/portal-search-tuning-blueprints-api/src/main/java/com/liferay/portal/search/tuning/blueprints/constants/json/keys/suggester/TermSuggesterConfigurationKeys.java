@@ -29,9 +29,7 @@ public enum TermSuggesterConfigurationKeys {
 	STRING_DISTANCE("string_distance"), SUGGEST_MODE("suggest_mode"),
 	TEXT("text");
 
-	public static final TermSuggesterConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static TermSuggesterConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<TermSuggesterConfigurationKeys>
 			termSuggesterConfigurationKeysStream = Arrays.stream(
 				TermSuggesterConfigurationKeys.values());

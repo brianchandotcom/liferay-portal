@@ -24,8 +24,8 @@ public enum ValueCountAggregationBodyConfigurationKeys {
 
 	FIELD("field"), SCRIPT("script");
 
-	public static final ValueCountAggregationBodyConfigurationKeys
-		findByJsonKey(String jsonKey) {
+	public static ValueCountAggregationBodyConfigurationKeys findByJsonKey(
+		String jsonKey) {
 
 		Stream<ValueCountAggregationBodyConfigurationKeys> stream =
 			Arrays.stream(ValueCountAggregationBodyConfigurationKeys.values());

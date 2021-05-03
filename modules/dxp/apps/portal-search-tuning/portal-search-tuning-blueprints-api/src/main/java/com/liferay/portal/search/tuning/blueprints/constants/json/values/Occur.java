@@ -24,7 +24,7 @@ public enum Occur {
 
 	FILTER("filter"), MUST("must"), MUST_NOT("must_not"), SHOULD("should");
 
-	public static final Occur findByjsonValue(String jsonValue) {
+	public static Occur findByjsonValue(String jsonValue) {
 		Stream<Occur> occurStream = Arrays.stream(Occur.values());
 
 		return occurStream.filter(

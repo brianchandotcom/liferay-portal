@@ -25,9 +25,7 @@ public enum FrameworkConfigurationKeys {
 	APPLY_INDEXER_CLAUSES("apply_indexer_clauses"),
 	SEARCHABLE_ASSET_TYPES("searchable_asset_types");
 
-	public static final FrameworkConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static FrameworkConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<FrameworkConfigurationKeys> frameworkConfigurationKeysStream =
 			Arrays.stream(FrameworkConfigurationKeys.values());
 

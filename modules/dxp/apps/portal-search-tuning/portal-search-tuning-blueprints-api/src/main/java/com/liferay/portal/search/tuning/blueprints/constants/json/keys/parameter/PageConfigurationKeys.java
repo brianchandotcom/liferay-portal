@@ -24,7 +24,7 @@ public enum PageConfigurationKeys {
 
 	PARAMETER_NAME("parameter_name");
 
-	public static final PageConfigurationKeys findByJsonKey(String jsonKey) {
+	public static PageConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<PageConfigurationKeys> pagingConfigurationKeysStream =
 			Arrays.stream(PageConfigurationKeys.values());
 

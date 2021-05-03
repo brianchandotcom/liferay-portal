@@ -24,7 +24,7 @@ public enum FilterMode {
 
 	POST("post"), PRE("pre"), RESCORE("rescore");
 
-	public static final FilterMode findByjsonValue(String jsonValue) {
+	public static FilterMode findByjsonValue(String jsonValue) {
 		Stream<FilterMode> filterModeStream = Arrays.stream(
 			FilterMode.values());
 

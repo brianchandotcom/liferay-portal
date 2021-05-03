@@ -31,7 +31,7 @@ public enum BlueprintKeys {
 	SORT_CONFIGURATION("sort_configuration"),
 	SUGGEST_CONFIGURATION("suggest_configuration");
 
-	public static final BlueprintKeys findByJsonKey(String jsonKey) {
+	public static BlueprintKeys findByJsonKey(String jsonKey) {
 		Stream<BlueprintKeys> blueprintKeysStream = Arrays.stream(
 			BlueprintKeys.values());
 

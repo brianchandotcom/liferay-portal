@@ -26,9 +26,7 @@ public enum ConditionConfigurationKeys {
 	EVALUATION_TYPE("evaluation_type"), HANDLER("handler"),
 	OPERATOR("operator"), PARAMETER_NAME("parameter_name"), VALUE("value");
 
-	public static final ConditionConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static ConditionConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<ConditionConfigurationKeys>
 			clauseConditionConfigurationKeysStream = Arrays.stream(
 				ConditionConfigurationKeys.values());

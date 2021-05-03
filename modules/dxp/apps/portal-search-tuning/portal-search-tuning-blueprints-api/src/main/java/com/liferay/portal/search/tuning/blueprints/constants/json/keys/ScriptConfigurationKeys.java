@@ -25,7 +25,7 @@ public enum ScriptConfigurationKeys {
 	ID("id"), LANG("lang"), OPTIONS("options"), PARAMS("params"),
 	SOURCE("source");
 
-	public static final ScriptConfigurationKeys findByJsonKey(String jsonKey) {
+	public static ScriptConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<ScriptConfigurationKeys> stream = Arrays.stream(
 			ScriptConfigurationKeys.values());
 

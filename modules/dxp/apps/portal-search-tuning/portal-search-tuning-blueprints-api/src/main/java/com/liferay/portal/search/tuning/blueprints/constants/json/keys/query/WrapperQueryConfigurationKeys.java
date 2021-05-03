@@ -24,9 +24,7 @@ public enum WrapperQueryConfigurationKeys {
 
 	QUERY("query");
 
-	public static final WrapperQueryConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static WrapperQueryConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<WrapperQueryConfigurationKeys>
 			wrapperQueryConfigurationKeysStream = Arrays.stream(
 				WrapperQueryConfigurationKeys.values());

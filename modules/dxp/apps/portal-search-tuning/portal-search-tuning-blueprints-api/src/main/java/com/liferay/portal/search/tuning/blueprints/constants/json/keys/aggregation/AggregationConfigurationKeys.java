@@ -25,9 +25,7 @@ public enum AggregationConfigurationKeys {
 	BODY("body"), DESCRIPTION("description"), ENABLED("enabled"), NAME("name"),
 	TYPE("type");
 
-	public static final AggregationConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static AggregationConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<AggregationConfigurationKeys>
 			aggregationConfigurationKeysStream = Arrays.stream(
 				AggregationConfigurationKeys.values());

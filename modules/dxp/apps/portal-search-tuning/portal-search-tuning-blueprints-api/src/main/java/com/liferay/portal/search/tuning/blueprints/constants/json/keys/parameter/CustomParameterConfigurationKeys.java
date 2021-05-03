@@ -25,7 +25,7 @@ public enum CustomParameterConfigurationKeys {
 	DATE_FORMAT("date_format"), DEFAULT("default"), MAX_VALUE("max_value"),
 	MIN_VALUE("min_value"), PARAMETER_NAME("parameter_name"), TYPE("type");
 
-	public static final CustomParameterConfigurationKeys findByJsonKey(
+	public static CustomParameterConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<CustomParameterConfigurationKeys>

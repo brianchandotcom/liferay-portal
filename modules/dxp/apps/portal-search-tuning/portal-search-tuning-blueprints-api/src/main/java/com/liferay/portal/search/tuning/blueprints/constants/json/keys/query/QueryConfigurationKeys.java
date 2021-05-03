@@ -25,7 +25,7 @@ public enum QueryConfigurationKeys {
 	CLAUSES("clauses"), CONDITIONS("conditions"), DESCRIPTION("description"),
 	ENABLED("enabled"), TITLE("title");
 
-	public static final QueryConfigurationKeys findByJsonKey(String jsonKey) {
+	public static QueryConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<QueryConfigurationKeys> clauseConfigurationKeysStream =
 			Arrays.stream(QueryConfigurationKeys.values());
 

@@ -24,8 +24,8 @@ public enum WeightedAvgAggregationBodyConfigurationKeys {
 
 	FORMAT("format"), VALUE("value"), WEIGHT("weight");
 
-	public static final WeightedAvgAggregationBodyConfigurationKeys
-		findByJsonKey(String jsonKey) {
+	public static WeightedAvgAggregationBodyConfigurationKeys findByJsonKey(
+		String jsonKey) {
 
 		Stream<WeightedAvgAggregationBodyConfigurationKeys> stream =
 			Arrays.stream(WeightedAvgAggregationBodyConfigurationKeys.values());

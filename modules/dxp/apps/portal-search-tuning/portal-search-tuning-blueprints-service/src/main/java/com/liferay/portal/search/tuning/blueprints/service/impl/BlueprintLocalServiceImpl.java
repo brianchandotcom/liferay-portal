@@ -236,17 +236,15 @@ public class BlueprintLocalServiceImpl extends BlueprintLocalServiceBaseImpl {
 			userURL = user.getDisplayURL(serviceContext.getThemeDisplay());
 		}
 
-		Map<String, Serializable> workflowContext =
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			blueprint.getCompanyId(), blueprint.getGroupId(), userId,
+			Blueprint.class.getName(), blueprint.getBlueprintId(), blueprint,
+			serviceContext,
 			HashMapBuilder.<String, Serializable>put(
 				WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL
 			).put(
 				WorkflowConstants.CONTEXT_USER_URL, userURL
-			).build();
-
-		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			blueprint.getCompanyId(), blueprint.getGroupId(), userId,
-			Blueprint.class.getName(), blueprint.getBlueprintId(), blueprint,
-			serviceContext, workflowContext);
+			).build());
 	}
 
 	@Reference

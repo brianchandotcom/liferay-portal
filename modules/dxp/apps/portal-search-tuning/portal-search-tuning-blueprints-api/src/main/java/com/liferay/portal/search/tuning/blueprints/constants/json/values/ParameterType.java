@@ -26,7 +26,7 @@ public enum ParameterType {
 	INTEGER_ARRAY("integer_array"), LONG("long"), LONG_ARRAY("long_array"),
 	STRING("string"), STRING_ARRAY("string_array"), TIME_RANGE("time_range");
 
-	public static final ParameterType findBy_jsonValue(String jsonValue) {
+	public static ParameterType findBy_jsonValue(String jsonValue) {
 		Stream<ParameterType> requestParameterTypeStream = Arrays.stream(
 			ParameterType.values());
 

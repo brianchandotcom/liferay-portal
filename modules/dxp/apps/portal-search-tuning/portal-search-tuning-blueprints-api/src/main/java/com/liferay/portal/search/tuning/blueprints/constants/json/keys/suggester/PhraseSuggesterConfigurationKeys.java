@@ -31,7 +31,7 @@ public enum PhraseSuggesterConfigurationKeys {
 	SEPARATOR("separator"), SHARD_SIZE("shard_size"), SIZE("size"),
 	TEXT("text");
 
-	public static final PhraseSuggesterConfigurationKeys findByJsonKey(
+	public static PhraseSuggesterConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<PhraseSuggesterConfigurationKeys>

@@ -24,7 +24,7 @@ public enum MaxAggregationBodyConfigurationKeys {
 
 	FIELD("field"), MISSING("missing"), SCRIPT("script");
 
-	public static final MaxAggregationBodyConfigurationKeys findByJsonKey(
+	public static MaxAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<MaxAggregationBodyConfigurationKeys> stream = Arrays.stream(

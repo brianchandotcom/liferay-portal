@@ -29,7 +29,7 @@ public enum TermsAggregationBodyConfigurationKeys {
 	SHARD_SIZE("shard_size"),
 	SHOW_TERM_DOC_COUNT_ERROR("show_term_doc_count_error"), SIZE("size");
 
-	public static final TermsAggregationBodyConfigurationKeys findByJsonKey(
+	public static TermsAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<TermsAggregationBodyConfigurationKeys> stream = Arrays.stream(

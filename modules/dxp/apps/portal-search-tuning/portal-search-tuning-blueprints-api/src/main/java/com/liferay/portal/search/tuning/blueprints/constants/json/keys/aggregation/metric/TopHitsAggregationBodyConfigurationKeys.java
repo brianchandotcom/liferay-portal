@@ -26,7 +26,7 @@ public enum TopHitsAggregationBodyConfigurationKeys {
 	HIGHLIGHT("highlight"), SCRIPT_FIELDS("script_fields"), SIZE("size"),
 	SOURCE("_source"), TRACK_SCORES("track_scores"), VERSION("version");
 
-	public static final TopHitsAggregationBodyConfigurationKeys findByJsonKey(
+	public static TopHitsAggregationBodyConfigurationKeys findByJsonKey(
 		String jsonKey) {
 
 		Stream<TopHitsAggregationBodyConfigurationKeys> stream = Arrays.stream(

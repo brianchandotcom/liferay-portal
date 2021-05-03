@@ -25,7 +25,7 @@ public enum SizeConfigurationKeys {
 	DEFAULT("default"), MAX_VALUE("max_value"), MIN_VALUE("min_value"),
 	PARAMETER_NAME("parameter_name");
 
-	public static final SizeConfigurationKeys findByJsonKey(String jsonKey) {
+	public static SizeConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<SizeConfigurationKeys> sizeConfigurationKeysStream =
 			Arrays.stream(SizeConfigurationKeys.values());
 

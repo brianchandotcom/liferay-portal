@@ -25,8 +25,8 @@ public enum CardinalityAggregationBodyConfigurationKeys {
 	FIELD("field"), MISSING("missing"),
 	PRECISION_THRESHOLD("precision_threshold"), SCRIPT("script");
 
-	public static final CardinalityAggregationBodyConfigurationKeys
-		findByJsonKey(String jsonKey) {
+	public static CardinalityAggregationBodyConfigurationKeys findByJsonKey(
+		String jsonKey) {
 
 		Stream<CardinalityAggregationBodyConfigurationKeys> stream =
 			Arrays.stream(CardinalityAggregationBodyConfigurationKeys.values());

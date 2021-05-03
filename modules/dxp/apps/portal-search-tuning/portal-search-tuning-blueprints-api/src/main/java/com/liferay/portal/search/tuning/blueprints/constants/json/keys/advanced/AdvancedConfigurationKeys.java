@@ -24,9 +24,7 @@ public enum AdvancedConfigurationKeys {
 
 	QUERY_PROCESSING("query_processing"), SOURCE("source");
 
-	public static final AdvancedConfigurationKeys findByJsonKey(
-		String jsonKey) {
-
+	public static AdvancedConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<AdvancedConfigurationKeys> advancedConfigurationKeysStream =
 			Arrays.stream(AdvancedConfigurationKeys.values());
 

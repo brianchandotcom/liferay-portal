@@ -88,7 +88,7 @@ public class KeywordIndexUtil {
 		return null;
 	}
 
-	public static final Date getLastReported(KeywordEntry keywordEntry) {
+	public static Date getLastReported(KeywordEntry keywordEntry) {
 		String report = _getLastReport(keywordEntry);
 
 		if (report == null) {
@@ -100,7 +100,7 @@ public class KeywordIndexUtil {
 		return fromIndexDateString(arr[0]);
 	}
 
-	public static final String getLastReporter(KeywordEntry keywordEntry) {
+	public static String getLastReporter(KeywordEntry keywordEntry) {
 		String report = _getLastReport(keywordEntry);
 
 		if (report == null) {

@@ -24,8 +24,8 @@ public enum ExtendedStatsAggregationBodyConfigurationKeys {
 
 	FIELD("field"), MISSING("missing"), SCRIPT("script"), SIGMA("sigma");
 
-	public static final ExtendedStatsAggregationBodyConfigurationKeys
-		findByJsonKey(String jsonKey) {
+	public static ExtendedStatsAggregationBodyConfigurationKeys findByJsonKey(
+		String jsonKey) {
 
 		Stream<ExtendedStatsAggregationBodyConfigurationKeys> stream =
 			Arrays.stream(

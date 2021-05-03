@@ -28,7 +28,7 @@ public enum EvaluationType {
 	NOT_CONTAINS("not_contains"), NOT_EXISTS("not_exists"), NOT_IN("not_in"),
 	NOT_IN_RANGE("not_in_range");
 
-	public static final EvaluationType findByjsonValue(String jsonValue) {
+	public static EvaluationType findByjsonValue(String jsonValue) {
 		Stream<EvaluationType> evaluationTypeStream = Arrays.stream(
 			EvaluationType.values());
 

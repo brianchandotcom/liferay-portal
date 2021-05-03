@@ -26,7 +26,7 @@ public enum SortConfigurationKeys {
 	LABEL("label"), ORDER("order"), PARAMETER_NAME("parameter_name"),
 	PARAMETERS("parameters"), TYPE("type");
 
-	public static final SortConfigurationKeys findByJsonKey(String jsonKey) {
+	public static SortConfigurationKeys findByJsonKey(String jsonKey) {
 		Stream<SortConfigurationKeys> sortConfigurationKeysStream =
 			Arrays.stream(SortConfigurationKeys.values());
 

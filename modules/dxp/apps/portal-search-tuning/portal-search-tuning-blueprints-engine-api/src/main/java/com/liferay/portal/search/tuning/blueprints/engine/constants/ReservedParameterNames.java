@@ -50,7 +50,7 @@ public enum ReservedParameterNames {
 	USER_SEGMENT_ENTRY_IDS("user_segment_entry_ids"),
 	USER_SEGMENT_ENTRY_LOCALE_NAMES("user_segment_locale_names");
 
-	public static final ReservedParameterNames findByJsonKey(String jsonKey) {
+	public static ReservedParameterNames findByJsonKey(String jsonKey) {
 		Stream<ReservedParameterNames>
 			reservedParameterConfigurationKeysStream = Arrays.stream(
 				ReservedParameterNames.values());

@@ -25,8 +25,8 @@ public enum ScriptedMetricAggregationBodyConfigurationKeys {
 	COMBINE_SCRIPT("combine_script"), INIT_SCRIPT("init_script"),
 	MAP_SCRIPT("map_script"), PARAMS("params"), REDUCE_SCRIPT("reduce_script");
 
-	public static final ScriptedMetricAggregationBodyConfigurationKeys
-		findByJsonKey(String jsonKey) {
+	public static ScriptedMetricAggregationBodyConfigurationKeys findByJsonKey(
+		String jsonKey) {
 
 		Stream<ScriptedMetricAggregationBodyConfigurationKeys> stream =
 			Arrays.stream(

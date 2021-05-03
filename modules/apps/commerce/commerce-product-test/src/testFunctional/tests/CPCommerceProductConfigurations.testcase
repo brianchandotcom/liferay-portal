@@ -38,13 +38,169 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6094. UseConfiguration"
-	@ignore = "true"
 	@priority = "3"
 	test UseConfiguration {
 		property portal.acceptance = "false";
+		
+		property test.name.skip.portal.instance = "CPCommerceProductConfigurations#UseConfiguration";
 
-		// TODO COMMERCE-6094 UseConfiguration
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Select(
+			key_title = "Tax Category",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Normal Product");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Tax Exempt",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Select(
+			key_title = "Availability Estimate",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "3-5 days");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Display Availability",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Display Stock Quantity",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertElementPresent(
+			key_labelName = "Minimum Order Quantity",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Minimum Order Quantity",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "2");
+
+		AssertElementPresent(
+			key_labelName = "Allowed Order Quantities",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Allowed Order Quantities",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "1");
+
+		Select(
+			key_title = "Low Stock Action",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Set as Unpublished");
+
+		AssertElementPresent(
+			key_labelName = "Low Stock Threshold",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Low Stock Threshold",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "1");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Allow Back Order",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertElementPresent(
+			key_labelName = "Maximum Order Quantity",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Maximum Order Quantity",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "20000");
+
+		AssertElementPresent(
+			key_labelName = "Multiple Order Quantity",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Multiple Order Quantity",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "2");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Free Shipping",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Ship Separately",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertElementPresent(
+			key_labelName = "Shipping Extra Price",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Shipping Extra Price",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "1");
+
+		AssertElementPresent(
+			key_labelName = "Width",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Width",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "1");
+
+		AssertElementPresent(
+			key_labelName = "Height",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Height",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "1");
+
+		AssertElementPresent(
+			key_labelName = "Depth",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Depth",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "1");
+
+		AssertElementPresent(
+			key_labelName = "Weight",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT");
+
+		Type(
+			key_labelName = "Weight",
+			locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+			value1 = "1");
+
+		Button.clickPublish();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Shippable",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickPublish();
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_toggleSwitchLabel = "Shippable",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 }

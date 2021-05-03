@@ -554,6 +554,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_LABEL_TEXT_INPUT</td>
+	<td>//label[contains(text(),'${key_labelName}')]//following::input[contains(@type,'text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCREEN_NAME</td>
 	<td>//div[label[contains(.,'Screen Name')]]/input[@type='text']</td>
 	<td></td>

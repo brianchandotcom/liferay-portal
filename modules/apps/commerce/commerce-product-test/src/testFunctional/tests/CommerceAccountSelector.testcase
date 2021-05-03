@@ -121,12 +121,51 @@ definition {
 	}
 
 	@description = "COMMERCE-5956. As a buyer, I want to search for an account in the accounts list, and select it as active account"
-	@ignore = "true"
 	@priority = "3"
 	test SearchForAnAccountAndSelectItAsActive {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5956 SearchForAnAccountAndSelectItAsActive pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "First Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(locator1 = "Link#BACK");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Second Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
+
+		Type(
+			locator1 = "AppBuilder#INPUT_OBJECT_RENAME",
+			value1 = "Second");
+
+		AssertElementPresent(
+			key_accountName = "Second Account",
+			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+
+		AssertElementNotPresent(
+			key_accountName = "First Account",
+			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+
+		Click(
+			key_accountName = "Second Account",
+			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+			value1 = "Second Account");
 	}
 
 	@description = "COMMERCE-5957. As a buyer, I want to search for an order in the orders list, and select it as active order"

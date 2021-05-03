@@ -15,6 +15,7 @@
 package com.liferay.users.admin.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
@@ -261,6 +262,10 @@ public class UserIndexerIndexedFieldsTest {
 
 	protected UserSearchFixture userSearchFixture;
 
+	private String _getEmailAddressDomain(String emailAddress) {
+		return emailAddress.substring(emailAddress.indexOf(StringPool.AT) + 1);
+	}
+
 	private Map<String, String> _getExpectedFieldValues(User user)
 		throws Exception {
 
@@ -286,6 +291,8 @@ public class UserIndexerIndexedFieldsTest {
 			"defaultUser", String.valueOf(user.isDefaultUser())
 		).put(
 			"emailAddress", user.getEmailAddress()
+		).put(
+			"emailAddressDomain", _getEmailAddressDomain(user.getEmailAddress())
 		).put(
 			"firstName", user.getFirstName()
 		).put(

@@ -12,11 +12,7 @@
  * details.
  */
 
-import {
-	useConfig,
-	useForm,
-	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+import {useConfig, useForm, useFormState} from 'data-engine-js-components-web';
 import {useEffect, useRef} from 'react';
 
 const SYMBOL_INTERNAL = Symbol('data.engine.internal');

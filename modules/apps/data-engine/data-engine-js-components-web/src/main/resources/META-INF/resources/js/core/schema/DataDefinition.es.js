@@ -12,8 +12,8 @@
  * details.
  */
 
+import {PagesVisitor} from 'data-engine-js-components-web';
 import {DataConverter} from 'data-engine-taglib';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {SYMBOL_CACHE, SYMBOL_RAW, Schema} from './Schema.es';
 

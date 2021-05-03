@@ -35,6 +35,7 @@ export {default as setDataRecord} from './utils/setDataRecord.es';
 export {default as Pages} from './core/components/Pages.es';
 export {Field} from './core/components/Field/Field.es';
 export {FieldStateless} from './core/components/Field/FieldStateless.es';
+export * from './core/config/index.es';
 export {EVENT_TYPES, MAPPED_EVENT_TYPES} from './core/actions/eventTypes.es';
 export {PageProvider, usePage} from './core/hooks/usePage.es';
 export {useFieldTypesResource} from './core/hooks/useResource.es';

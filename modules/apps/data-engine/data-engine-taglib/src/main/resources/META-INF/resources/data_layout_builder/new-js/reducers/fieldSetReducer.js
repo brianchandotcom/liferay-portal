@@ -12,12 +12,12 @@
  * details.
  */
 
+import {PagesVisitor} from 'data-engine-js-components-web';
 import {
 	FieldSetUtil,
 	FieldSupport,
 	SettingsContext,
 } from 'dynamic-data-mapping-form-builder';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
 import {getDDMFormField} from '../../js/utils/dataConverter.es';
 import {normalizeDataLayoutRows} from '../../js/utils/normalizers.es';

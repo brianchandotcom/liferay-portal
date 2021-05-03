@@ -15,11 +15,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {
-	useConfig,
-	useForm,
-	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+import {useConfig, useForm, useFormState} from 'data-engine-js-components-web';
 import React from 'react';
 
 import {EVENT_TYPES} from '../../../eventTypes';

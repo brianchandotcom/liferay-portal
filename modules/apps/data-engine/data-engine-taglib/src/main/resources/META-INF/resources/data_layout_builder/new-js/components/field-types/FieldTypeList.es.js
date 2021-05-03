@@ -18,7 +18,7 @@ import {
 	useConfig,
 	useForm,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import React from 'react';
 
 import {dropLayoutBuilderField} from '../../../js/actions.es';

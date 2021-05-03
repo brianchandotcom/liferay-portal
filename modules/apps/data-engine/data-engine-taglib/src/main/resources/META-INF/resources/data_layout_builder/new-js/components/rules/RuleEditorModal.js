@@ -20,7 +20,7 @@ import {
 	PagesVisitor,
 	useConfig,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 

@@ -14,7 +14,7 @@
 
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
-import {useFormState} from 'dynamic-data-mapping-form-renderer';
+import {useFormState} from 'data-engine-js-components-web';
 import React, {useState} from 'react';
 
 import Sidebar from '../../../../js/components/sidebar/Sidebar.es';

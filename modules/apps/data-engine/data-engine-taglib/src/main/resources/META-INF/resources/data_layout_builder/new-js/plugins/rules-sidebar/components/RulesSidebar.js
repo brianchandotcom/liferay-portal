@@ -15,7 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {useForm, useFormState} from 'dynamic-data-mapping-form-renderer';
+import {useForm, useFormState} from 'data-engine-js-components-web';
 import React, {useState} from 'react';
 
 import Sidebar from '../../../../js/components/sidebar/Sidebar.es';

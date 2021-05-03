@@ -19,7 +19,7 @@ import {
 	useConfig,
 	useForm,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import EmptyState from '../../../js/components/empty-state/EmptyState.es';

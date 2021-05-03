@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useConfig} from 'dynamic-data-mapping-form-renderer';
+import {useConfig} from 'data-engine-js-components-web';
 import React from 'react';
 
 import Sidebar from '../../../../js/components/sidebar/Sidebar.es';

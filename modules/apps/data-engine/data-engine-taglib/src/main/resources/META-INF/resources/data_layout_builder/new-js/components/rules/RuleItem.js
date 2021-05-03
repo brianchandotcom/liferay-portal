@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
-import {useFormState} from 'dynamic-data-mapping-form-renderer';
+import {useFormState} from 'data-engine-js-components-web';
 import React from 'react';
 
 import DropDown from '../../../js/components/drop-down/DropDown.es';

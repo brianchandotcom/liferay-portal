@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -153,9 +154,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public List<String> getBuildURLs() {
-		synchronized (_buildURLs) {
-			return new ArrayList<>(_buildURLs);
-		}
+		return new ArrayList<>(_buildURLs);
 	}
 
 	public int getIdleJenkinsSlavesCount() {
@@ -249,9 +248,7 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public Map<String, JSONObject> getQueuedBuildURLs() {
-		synchronized (_queuedBuildURLs) {
-			return new HashMap<>(_queuedBuildURLs);
-		}
+		return new HashMap<>(_queuedBuildURLs);
 	}
 
 	public Integer getSlaveRAM() {
@@ -374,11 +371,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			}
 		}
 
-		synchronized (_buildURLs) {
-			_buildURLs.clear();
+		_buildURLs.clear();
 
-			_buildURLs.addAll(buildURLs);
-		}
+		_buildURLs.addAll(buildURLs);
 
 		_queueCount = 0;
 
@@ -427,11 +422,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			_queueCount++;
 		}
 
-		synchronized (_queuedBuildURLs) {
-			_queuedBuildURLs.clear();
+		_queuedBuildURLs.clear();
 
-			_queuedBuildURLs.putAll(queuedBuildURLs);
-		}
+		_queuedBuildURLs.putAll(queuedBuildURLs);
 	}
 
 	protected static long maxRecentBatchAge = 120 * 1000;
@@ -516,13 +509,14 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	private boolean _available;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
-	private final List<String> _buildURLs = new ArrayList<>();
+	private final List<String> _buildURLs = new CopyOnWriteArrayList<>();
 	private final Map<String, JenkinsSlave> _jenkinsSlavesMap =
 		Collections.synchronizedMap(new HashMap<String, JenkinsSlave>());
 	private final String _masterName;
 	private final String _masterURL;
 	private int _queueCount;
-	private final Map<String, JSONObject> _queuedBuildURLs = new HashMap<>();
+	private final Map<String, JSONObject> _queuedBuildURLs =
+		Collections.synchronizedMap(new HashMap<>());
 	private int _reportedAvailableSlavesCount;
 	private final Integer _slaveRAM;
 	private final Integer _slavesPerHost;

@@ -45,13 +45,26 @@ definition {
 	}
 
 	@description = "COMMERCE-5911. As a buyer, I want to select items in Search Results page for compare and see those items in MiniCompare widget at the bottom pf the page"
-	@ignore = "true"
 	@priority = "3"
 	test AssertComparisonItemsAreVisibleOnMiniCompare {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5911 AssertComparisonItemsAreVisibleOnMiniCompare pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		for (var productName : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters") {
+			Check.checkToggleSwitch(
+				key_productName = "${productName}",
+				locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+		}
+
+		for (var value : list "1,2,3") {
+			AssertElementPresent(
+				key_value = "${value}",
+				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_ACTIVE_N");
+		}
+		
 	}
 
 	@description = "COMMERCE-5915. As a buyer, I want to see max number of compare items allowed in Compare page"

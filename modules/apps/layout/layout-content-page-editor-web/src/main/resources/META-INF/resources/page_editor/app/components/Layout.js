@@ -26,9 +26,9 @@ import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
+import {useSetCollectionActiveItemContext} from '../contexts/CollectionActiveItemContext';
 import {useSelector} from '../store/index';
 import {deepEqual} from '../utils/checkDeepEqual';
-import {useSetCollectionActiveItemContext} from './CollectionActiveItemContext';
 import {useActivationOrigin, useIsActive, useSelectItem} from './Controls';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {

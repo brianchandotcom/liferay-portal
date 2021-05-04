@@ -20,13 +20,13 @@ import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/
 import {INIT} from '../actions/types';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
+import {CollectionActiveItemContextProvider} from '../contexts/CollectionActiveItemContext';
 import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
 import {GlobalContextProvider} from '../contexts/GlobalContext';
 import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
 import {StoreContextProvider, useSelector} from '../store/index';
 import {DragAndDropContextProvider} from '../utils/drag-and-drop/useDragAndDrop';
-import {CollectionActiveItemContextProvider} from './CollectionActiveItemContext';
 import {ControlsProvider} from './Controls';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';

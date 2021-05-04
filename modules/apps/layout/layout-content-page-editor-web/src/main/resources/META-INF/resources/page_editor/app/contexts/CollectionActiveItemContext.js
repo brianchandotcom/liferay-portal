@@ -14,11 +14,18 @@
 
 import React, {useContext, useState} from 'react';
 
+import {
+	CollectionItemContext,
+	INITIAL_STATE,
+} from '../components/CollectionItemContext';
+import {
+	useActiveItemId,
+	useActiveItemType,
+	useIsActive,
+} from '../components/Controls';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {useSelectorCallback} from '../store/index';
-import {CollectionItemContext, INITIAL_STATE} from './CollectionItemContext';
-import {useActiveItemId, useActiveItemType, useIsActive} from './Controls';
+import {useSelectorCallback} from '../store';
 
 const CollectionActiveItemDispatchContext = React.createContext(() => {});
 const CollectionActiveItemStateContext = React.createContext(INITIAL_STATE);

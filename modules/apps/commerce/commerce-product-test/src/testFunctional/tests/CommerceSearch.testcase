@@ -60,7 +60,6 @@ definition {
 			locator1 = "Search#GLOBAL_SEARCH_BAR",
 			value1 = "U-Joint");
 
-
 		Click(
 			key_entryName = "Search ",
 			locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");

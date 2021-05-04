@@ -48,6 +48,22 @@ public abstract class PortalGitRepositoryJob
 
 		super(jobName, buildProfile);
 
+		init();
+	}
+
+	protected GitWorkingDirectory getNewGitWorkingDirectory() {
+		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
+			getBranchName());
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		return getSetFromString(
+			JenkinsResultsParserUtil.getProperty(
+				getJobProperties(), "test.batch.names"));
+	}
+
+	protected void init() {
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
 
@@ -68,18 +84,6 @@ public abstract class PortalGitRepositoryJob
 		jobPropertiesFiles.add(new File(gitRepositoryDir, "test.properties"));
 
 		readJobProperties();
-	}
-
-	protected GitWorkingDirectory getNewGitWorkingDirectory() {
-		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-			getBranchName());
-	}
-
-	@Override
-	protected Set<String> getRawBatchNames() {
-		return getSetFromString(
-			JenkinsResultsParserUtil.getProperty(
-				getJobProperties(), "test.batch.names"));
 	}
 
 }

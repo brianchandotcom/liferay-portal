@@ -24,8 +24,7 @@ public class MercanetCommercePaymentMethodConstants {
 
 	public static final String[] ENVIRONMENTS = {
 		StringUtil.toLowerCase(Environment.PROD.name()),
-		StringUtil.toLowerCase(Environment.TEST.name()),
-		StringUtil.toLowerCase(Environment.SIMU.name())
+		StringUtil.toLowerCase(Environment.TEST.name())
 	};
 
 	public static final String SERVICE_NAME =

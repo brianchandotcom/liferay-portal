@@ -22,9 +22,6 @@ public enum Environment {
 	PROD(
 		"https://payment-webinit.mercanet.bnpparibas.net/rs-services/v2" +
 			"/paymentInit"),
-	SIMU(
-		"https://payment-webinit.simu.mercanet.bnpparibas.net/rs-services/v2" +
-			"/paymentInit"),
 	TEST(
 		"https://payment-webinit-mercanet.test.sips-atos.com/rs-services/v2" +
 			"/paymentInit");

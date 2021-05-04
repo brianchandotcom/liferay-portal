@@ -110,12 +110,12 @@ public class MapsSiteSettingsConfigurationScreen
 					liveGroup.getGroupId()));
 
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_maps.jsp");
+				_servletContext.getRequestDispatcher("/site_settings/maps.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new IOException("Unable to render edit_maps.jsp", exception);
+			throw new IOException("Unable to render maps.jsp", exception);
 		}
 	}
 

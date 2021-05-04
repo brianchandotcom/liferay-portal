@@ -95,14 +95,13 @@ public class ContentSharingSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/edit_content_sharing.jsp");
+				_servletContext.getRequestDispatcher("/content_sharing.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render edit_content_sharing.jsp", exception);
+				"Unable to render content_sharing.jsp", exception);
 		}
 	}
 

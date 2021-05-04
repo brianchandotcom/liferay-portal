@@ -86,13 +86,13 @@ public class DocumentsAndMediaSiteSettingsConfigurationScreen
 		try {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
-					"/edit_documents_and_media.jsp");
+					"/site_settings/documents_and_media.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render edit_documents_and_media.jsp", exception);
+				"Unable to render documents_and_media.jsp", exception);
 		}
 	}
 

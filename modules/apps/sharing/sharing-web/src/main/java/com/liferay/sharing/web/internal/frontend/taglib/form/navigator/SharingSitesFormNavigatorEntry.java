@@ -103,7 +103,7 @@ public class SharingSitesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/sites_admin/sharing.jsp";
+		return "/site_settings/sharing.jsp";
 	}
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.sharing.web)")

@@ -106,13 +106,14 @@ public class CustomFieldsSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_custom_fields.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/custom_fields.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render edit_custom_fields.jsp", exception);
+				"Unable to render custom_fields.jsp", exception);
 		}
 	}
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/sites_admin/init.jsp" %>
+<%@ include file="/site_settings/init.jsp" %>
 
 <%
 SharingConfiguration groupSharingConfiguration = (SharingConfiguration)request.getAttribute(SharingWebKeys.GROUP_SHARING_CONFIGURATION);

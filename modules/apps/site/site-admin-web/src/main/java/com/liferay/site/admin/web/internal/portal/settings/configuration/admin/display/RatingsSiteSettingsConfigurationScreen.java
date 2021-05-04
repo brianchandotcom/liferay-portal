@@ -93,13 +93,13 @@ public class RatingsSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_ratings.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/ratings.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new IOException(
-				"Unable to render edit_ratings.jsp", exception);
+			throw new IOException("Unable to render ratings.jsp", exception);
 		}
 	}
 

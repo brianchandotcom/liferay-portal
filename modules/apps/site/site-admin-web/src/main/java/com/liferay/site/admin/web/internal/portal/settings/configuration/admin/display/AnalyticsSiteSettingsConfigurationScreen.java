@@ -96,13 +96,13 @@ public class AnalyticsSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_analytics.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/analytics.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new IOException(
-				"Unable to render edit_analytics.jsp", exception);
+			throw new IOException("Unable to render analytics.jsp", exception);
 		}
 	}
 

@@ -85,13 +85,13 @@ public class SiteURLSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_site_url.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/site_url.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new IOException(
-				"Unable to render edit_site_url.jsp", exception);
+			throw new IOException("Unable to render site_url.jsp", exception);
 		}
 	}
 

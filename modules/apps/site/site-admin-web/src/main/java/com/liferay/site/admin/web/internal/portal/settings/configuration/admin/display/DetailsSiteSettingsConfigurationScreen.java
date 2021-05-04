@@ -65,13 +65,13 @@ public class DetailsSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_details.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/details.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new IOException(
-				"Unable to render edit_details.jsp", exception);
+			throw new IOException("Unable to render details.jsp", exception);
 		}
 	}
 

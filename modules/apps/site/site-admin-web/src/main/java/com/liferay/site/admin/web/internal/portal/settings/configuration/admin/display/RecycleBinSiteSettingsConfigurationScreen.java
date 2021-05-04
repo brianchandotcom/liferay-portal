@@ -94,13 +94,14 @@ public class RecycleBinSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_recycle_bin.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/recycle_bin.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render edit_recycle_bin.jsp", exception);
+				"Unable to render recycle_bin.jsp", exception);
 		}
 	}
 

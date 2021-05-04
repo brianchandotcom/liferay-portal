@@ -85,13 +85,13 @@ public class LanguagesSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_languages.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/languages.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new IOException(
-				"Unable to render edit_languages.jsp", exception);
+			throw new IOException("Unable to render languages.jsp", exception);
 		}
 	}
 

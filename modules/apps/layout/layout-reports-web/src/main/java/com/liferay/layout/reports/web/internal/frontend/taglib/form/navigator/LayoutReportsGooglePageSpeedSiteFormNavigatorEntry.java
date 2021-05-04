@@ -168,7 +168,7 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/site/google_pagespeed_settings.jsp";
+		return "/site_settings/google_pagespeed.jsp";
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

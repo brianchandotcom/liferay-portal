@@ -107,12 +107,13 @@ public class PagesSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_pages.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/pages.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new IOException("Unable to render edit_pages.jsp", exception);
+			throw new IOException("Unable to render pages.jsp", exception);
 		}
 	}
 

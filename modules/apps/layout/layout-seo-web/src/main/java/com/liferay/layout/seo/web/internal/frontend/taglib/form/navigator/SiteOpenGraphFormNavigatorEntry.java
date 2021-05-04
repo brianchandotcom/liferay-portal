@@ -134,7 +134,7 @@ public class SiteOpenGraphFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/site/open_graph_settings.jsp";
+		return "/site_settings/open_graph.jsp";
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

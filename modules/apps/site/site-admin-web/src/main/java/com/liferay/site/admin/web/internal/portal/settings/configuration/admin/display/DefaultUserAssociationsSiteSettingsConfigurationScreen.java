@@ -86,14 +86,13 @@ public class DefaultUserAssociationsSiteSettingsConfigurationScreen
 		try {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
-					"/edit_default_user_associations.jsp");
+					"/site_settings/default_user_associations.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render edit_default_user_associations.jsp",
-				exception);
+				"Unable to render default_user_associations.jsp", exception);
 		}
 	}
 

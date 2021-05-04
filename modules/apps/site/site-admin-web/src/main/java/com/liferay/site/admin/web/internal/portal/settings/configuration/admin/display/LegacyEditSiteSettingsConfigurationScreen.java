@@ -65,12 +65,12 @@ public class LegacyEditSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_site.jsp");
+				_servletContext.getRequestDispatcher("/site_settings/site.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new IOException("Unable to render edit_site.jsp", exception);
+			throw new IOException("Unable to render site.jsp", exception);
 		}
 	}
 

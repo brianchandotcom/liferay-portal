@@ -104,7 +104,7 @@ public class AssetAutoTaggerSitesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/sites_admin/asset_auto_tagger.jsp";
+		return "/site_settings/asset_auto_tagger.jsp";
 	}
 
 	@Reference

@@ -181,7 +181,7 @@ public class ClickToChatFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/sites_admin/click_to_chat.jsp";
+		return "/site_settings/click_to_chat.jsp";
 	}
 
 	private UnicodeProperties _getTypeSettingsUnicodeProperties(

@@ -86,13 +86,13 @@ public class CategorizationSiteSettingsConfigurationScreen
 		try {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
-					"/edit_categorization.jsp");
+					"/site_settings/categorization.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render edit_categorization.jsp", exception);
+				"Unable to render categorization.jsp", exception);
 		}
 	}
 

@@ -143,13 +143,14 @@ public class SiteTemplateSiteSettingsConfigurationScreen
 
 		try {
 			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/edit_site_template.jsp");
+				_servletContext.getRequestDispatcher(
+					"/site_settings/site_template.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render edit_site_template.jsp", exception);
+				"Unable to render site_template.jsp", exception);
 		}
 	}
 

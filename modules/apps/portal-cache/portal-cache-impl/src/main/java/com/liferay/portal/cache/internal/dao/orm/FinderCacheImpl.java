@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.threadlocal.ThreadLocalFilterThreadLocal;
 
 import java.io.Serializable;
@@ -361,24 +360,32 @@ public class FinderCacheImpl
 		}
 
 		if (!finderPaths.containsKey(cacheKeyPrefix)) {
-			FinderPath originalFinderPath = finderPaths.putIfAbsent(
-				cacheKeyPrefix, finderPath);
+			if (cacheKeyPrefix.startsWith("dslQuery")) {
+				String[] tableNames = FinderPath.decodeDSLQueryCacheName(
+					cacheName);
 
-			if ((originalFinderPath == null) &&
-				cacheKeyPrefix.startsWith("dslQuery")) {
+				String[] modelImplClassNames = new String[tableNames.length];
 
-				for (String tableName :
-						FinderPath.decodeDSLQueryCacheName(cacheName)) {
+				for (int i = 0; i < tableNames.length; i++) {
+					String tableName = tableNames[i];
 
 					String modelImplClassName = _modelImplClassNames.get(
 						tableName);
 
-					if (Validator.isNull(modelImplClassName)) {
-						throw new IllegalArgumentException(
-							"Unable to find corresponding model impl class " +
-								"for table " + tableName);
+					if (modelImplClassName == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to find corresponding model impl " +
+									"class for table " + tableName);
+						}
+
+						return;
 					}
 
+					modelImplClassNames[i] = modelImplClassName;
+				}
+
+				for (String modelImplClassName : modelImplClassNames) {
 					Set<String> dslQueryCacheNames =
 						_dslQueryCacheNamesMap.computeIfAbsent(
 							modelImplClassName,
@@ -388,6 +395,8 @@ public class FinderCacheImpl
 					dslQueryCacheNames.add(cacheName);
 				}
 			}
+
+			finderPaths.putIfAbsent(cacheKeyPrefix, finderPath);
 		}
 
 		Serializable cacheKey = _encodeCacheKey(finderPath, args);

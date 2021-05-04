@@ -528,8 +528,6 @@ public class RoleLocalServiceUtil {
 	 * @param scope the permission scope
 	 * @param primKey the primary key of the resource's class
 	 * @return the role names and action IDs
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByC_N_S_P(
-	 long, String, int, String)
 	 */
 	public static Map<String, List<String>> getResourceRoles(
 		long companyId, String name, int scope, String primKey) {
@@ -547,8 +545,6 @@ public class RoleLocalServiceUtil {
 	 * @param primKey the primary key of the resource's class
 	 * @param actionId the name of the resource action
 	 * @return the roles
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByC_N_S_P_A(
-	 long, String, int, String, String)
 	 */
 	public static List<Role> getResourceRoles(
 		long companyId, String name, int scope, String primKey,
@@ -795,8 +791,6 @@ public class RoleLocalServiceUtil {
 	 * @param userId the primary key of the user
 	 * @param groupId the primary key of the group
 	 * @return the user's roles within the user group
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByUserGroupGroupRole(
-	 long, long)
 	 */
 	public static List<Role> getUserGroupGroupRoles(long userId, long groupId) {
 		return getService().getUserGroupGroupRoles(userId, groupId);
@@ -818,8 +812,6 @@ public class RoleLocalServiceUtil {
 	 * @param userId the primary key of the user
 	 * @param groupId the primary key of the group
 	 * @return the user's roles within the user group
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByUserGroupRole(
-	 long, long)
 	 */
 	public static List<Role> getUserGroupRoles(long userId, long groupId) {
 		return getService().getUserGroupRoles(userId, groupId);
@@ -841,8 +833,6 @@ public class RoleLocalServiceUtil {
 	 * @param userId the primary key of the user
 	 * @param groups the groups (optionally <code>null</code>)
 	 * @return the union of all the user's roles within the groups
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
-	 long, List)
 	 */
 	public static List<Role> getUserRelatedRoles(
 		long userId, List<com.liferay.portal.kernel.model.Group> groups) {
@@ -856,8 +846,6 @@ public class RoleLocalServiceUtil {
 	 * @param userId the primary key of the user
 	 * @param groupId the primary key of the group
 	 * @return the user's roles within the group
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
-	 long, long)
 	 */
 	public static List<Role> getUserRelatedRoles(long userId, long groupId) {
 		return getService().getUserRelatedRoles(userId, groupId);
@@ -869,8 +857,6 @@ public class RoleLocalServiceUtil {
 	 * @param userId the primary key of the user
 	 * @param groupIds the primary keys of the groups
 	 * @return the union of all the user's roles within the groups
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
-	 long, long[])
 	 */
 	public static List<Role> getUserRelatedRoles(long userId, long[] groupIds) {
 		return getService().getUserRelatedRoles(userId, groupIds);
@@ -994,7 +980,7 @@ public class RoleLocalServiceUtil {
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -1029,7 +1015,7 @@ public class RoleLocalServiceUtil {
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -1068,7 +1054,7 @@ public class RoleLocalServiceUtil {
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -1103,7 +1089,7 @@ public class RoleLocalServiceUtil {
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *

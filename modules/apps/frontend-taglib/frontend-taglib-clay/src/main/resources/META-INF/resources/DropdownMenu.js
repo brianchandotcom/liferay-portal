@@ -52,6 +52,25 @@ function addSeparators(items) {
 	});
 }
 
+function filterEmptyGroups(items) {
+
+	// We might expect getting empty groups if, for example, some of the
+	// DropdownItems being available depends on permission checking
+	// (`JournalArticleActionDropdownItemsProvider.getActionDropdownItems()`).
+
+	return items
+		.filter(
+			(item) =>
+				item.type !== 'group' ||
+				(Array.isArray(item.items) && item.items.length)
+		)
+		.map((item) =>
+			item.type === 'group'
+				? {...item, items: filterEmptyGroups(item.items)}
+				: item
+		);
+}
+
 function spreadDataAttributes(item) {
 	const {data, ...rest} = item;
 
@@ -93,7 +112,9 @@ export default function DropdownMenu({
 				className={classNames({
 					'dropdown-action': actionsDropdown,
 				})}
-				items={addSeparators(items.map(spreadDataAttributes))}
+				items={addSeparators(
+					filterEmptyGroups(items).map(spreadDataAttributes)
+				)}
 				trigger={
 					<ClayButton
 						className={classNames(cssClass, {

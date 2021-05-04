@@ -49,7 +49,7 @@ const App = (props) => {
 						/>
 
 						<Route
-							path="/instance/:processId/:pageSize/:page"
+							path="/instance/:processId/:pageSize/:page/:sort"
 							render={withParams(InstanceListPage)}
 						/>
 

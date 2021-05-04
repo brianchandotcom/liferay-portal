@@ -33,7 +33,7 @@ function Item({
 			[filterConstants.slaStatus.key]: [slaStatusFilter],
 		};
 	};
-	const instancesListPath = `/instance/${processId}/${defaultDelta}/1`;
+	const instancesListPath = `/instance/${processId}/${defaultDelta}/1/dueDate:asc`;
 
 	return (
 		<tr>

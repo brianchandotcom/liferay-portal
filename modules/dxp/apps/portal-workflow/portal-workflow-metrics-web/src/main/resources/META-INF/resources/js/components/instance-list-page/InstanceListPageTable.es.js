@@ -12,6 +12,7 @@
 import ClayTable from '@clayui/table';
 import React from 'react';
 
+import ListHeadItem from '../../shared/components/list/ListHeadItem.es';
 import Item from './InstanceListPageItem.es';
 
 const Table = ({items, totalCount}) => {
@@ -25,7 +26,10 @@ const Table = ({items, totalCount}) => {
 					</ClayTable.Cell>
 
 					<ClayTable.Cell headingCell style={{width: '14%'}}>
-						{Liferay.Language.get('due-date')}
+						<ListHeadItem
+							name="dueDate"
+							title={Liferay.Language.get('due-date')}
+						/>
 					</ClayTable.Cell>
 
 					<ClayTable.Cell headingCell style={{width: '14%'}}>

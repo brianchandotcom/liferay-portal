@@ -314,12 +314,12 @@
 </tr>
 <tr>
     <td>SIDEBAR_ADVANCED_TAB</td>
-    <td>//a[contains(@class,'tab') and .='Advanced'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Advanced')]</td>
+    <td>//*[contains(@class,'nav-link') and normalize-space()='Advanced'][not(contains(@id,'ProductMenu'))]</td>
     <td></td>
 </tr>
 <tr>
     <td>SIDEBAR_ADVANCED_TAB_LOCALE</td>
-    <td>//a[contains(@class,'tab') and .='${key_localeAdvanced}'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'${key_localeAdvanced}')]</td>
+    <td>//*[contains(@class,'nav-link') and normalize-space()='${key_localeAdvanced}'][not(contains(@id,'ProductMenu'))] | //a[contains(@class,'tab') and .='${key_localeAdvanced}'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'${key_localeAdvanced}')]</td>
     <td></td>
 </tr>
 <tr>
@@ -334,12 +334,12 @@
 </tr>
 <tr>
     <td>SIDEBAR_BASIC_TAB</td>
-    <td>//a[contains(@class,'tab') and .='Basic'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Basic')] | //*[contains(@class,'nav-link') and contains(@class,'active') and normalize-space()='Basic'][not(contains(@id,'ProductMenu'))]</td>
+    <td>//*[contains(@class,'nav-link') and normalize-space()='Basic'][not(contains(@id,'ProductMenu'))]</td>
     <td></td>
 </tr>
 <tr>
     <td>SIDEBAR_BASIC_TAB_LOCALE</td>
-    <td>//a[contains(@class,'tab') and .='${key_localeBasic}'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'${key_localeBasic}')] </td>
+    <td>//*[contains(@class,'nav-link') and normalize-space()='${key_localeBasic}'][not(contains(@id,'ProductMenu'))] </td>
     <td></td>
 </tr>
 <tr>

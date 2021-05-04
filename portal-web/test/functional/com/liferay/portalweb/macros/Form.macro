@@ -14,9 +14,6 @@ definition {
 
 			Click(
 				key_tabName = "Builder",
-
-
-				
 				locator1 = "Form#ADD_FIELD_NEW");
 		}
 	}
@@ -393,16 +390,15 @@ definition {
 
 	macro gotoAdvancedTab {
 		if (isSet(key_localeAdvanced)) {
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "Form#SIDEBAR_ADVANCED_TAB_LOCALE",
 				value1 = "${key_localeAdvanced}");
 		}
 		else {
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "Form#SIDEBAR_ADVANCED_TAB",
 				value1 = "Advanced");
 		}
-		Pause(locator1 = "1000");
 	}
 
 	macro gotoAutocompleteTab {
@@ -415,17 +411,15 @@ definition {
 
 	macro gotoBasicTab {
 		if (isSet(key_localeBasic)) {
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "Form#SIDEBAR_BASIC_TAB_LOCALE",
 				value1 = "${key_localeBasic}");
 		}
 		else {
-			AssertClick(
+			AssertClick.assertPartialTextClickAt(
 				locator1 = "Form#SIDEBAR_BASIC_TAB",
 				value1 = "Basic");
 		}
-
-		Pause(locator1 = "1000");
 	}
 
 	macro gotoElementSetsTab {

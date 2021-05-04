@@ -97,6 +97,19 @@ const CollaboratorRow = ({
 		symbolLeft: activeRole.id === -1 ? 'check' : '',
 	});
 
+	let title = null;
+
+	if (user.isOwner) {
+		title = Liferay.Language.get(
+			'you-cannot-update-permissions-for-an-owner'
+		);
+	}
+	else if (user.isCurrentUser) {
+		title = Liferay.Language.get(
+			'you-cannot-update-permissions-for-yourself'
+		);
+	}
+
 	return (
 		<ClayTable.Row className={className} key={user.userId}>
 			<ClayTable.Cell>
@@ -121,7 +134,9 @@ const CollaboratorRow = ({
 				</ClaySticker>
 			</ClayTable.Cell>
 			<ClayTable.Cell className="table-cell-expand">
-				{user.fullName}
+				{user.isCurrentUser
+					? user.fullName + ' (' + Liferay.Language.get('you') + ')'
+					: user.fullName}
 			</ClayTable.Cell>
 			<ClayTable.Cell className="table-cell-expand">
 				{user.emailAddress}
@@ -132,8 +147,17 @@ const CollaboratorRow = ({
 					items={dropdownItems}
 					spritemap={spritemap}
 					trigger={
-						<ClayButton borderless displayType="secondary" small>
-							{activeRole.label}
+						<ClayButton
+							borderless
+							data-tooltip-align="top"
+							disabled={user.isCurrentUser || user.isOwner}
+							displayType="secondary"
+							small
+							title={title}
+						>
+							{user.isOwner
+								? Liferay.Language.get('owner')
+								: activeRole.label}
 
 							<span className="inline-item inline-item-after">
 								<ClayIcon
@@ -433,7 +457,7 @@ export default ({
 						method: 'POST',
 					})
 						.then((response) => response.json())
-						.then(({errorMessage, userExists}) => {
+						.then(({errorMessage, user, userExists}) => {
 							if (errorMessage) {
 								return {
 									error: errorMessage,
@@ -441,15 +465,25 @@ export default ({
 								};
 							}
 
+							if (userExists) {
+								return {
+									item: {
+										emailAddress: user.emailAddress,
+										fullName: user.fullName,
+										id: user.userId,
+										label: item.label,
+										value: item.value,
+									},
+								};
+							}
+
 							return {
-								error: !userExists
-									? Liferay.Util.sub(
-											Liferay.Language.get(
-												'user-x-does-not-exist'
-											),
-											item.value
-									  )
-									: undefined,
+								error: Liferay.Util.sub(
+									Liferay.Language.get(
+										'user-x-does-not-exist'
+									),
+									item.value
+								),
 								item,
 							};
 						});
@@ -534,7 +568,13 @@ export default ({
 					<ClayTable.Body>
 						{collaborators
 							.sort((a, b) => {
-								if (a.emailAddress < b.emailAddress) {
+								if (a.isOwner && !b.isOwner) {
+									return -1;
+								}
+								else if (!a.isOwner && b.isOwner) {
+									return 1;
+								}
+								else if (a.emailAddress < b.emailAddress) {
 									return -1;
 								}
 

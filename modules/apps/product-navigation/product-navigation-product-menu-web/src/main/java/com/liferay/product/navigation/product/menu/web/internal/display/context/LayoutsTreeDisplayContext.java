@@ -300,8 +300,15 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	public long getSelPlid() {
-		return ParamUtil.get(
-			_liferayPortletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
+		Layout layout = _themeDisplay.getLayout();
+
+		if (layout.isTypeControlPanel()) {
+			return ParamUtil.get(
+				_liferayPortletRequest, "selPlid",
+				LayoutConstants.DEFAULT_PLID);
+		}
+
+		return layout.getPlid();
 	}
 
 	public String getViewCollectionItemsURL()

@@ -37,79 +37,57 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDisplayContext = new CompanyPortletRatingsDefinitionDisplayContext(companyPortletPreferences, request);
 %>
 
-<portlet:actionURL name="/site_admin/edit_ratings" var="editRatingsURL">
-	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
-	<portlet:param name="configurationScreenKey" value="site-configuration-ratings" />
-</portlet:actionURL>
+<p class="text-muted"><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
 
-<liferay-frontend:edit-form
-	action="<%= editRatingsURL %>"
-	method="post"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroup.getGroupId() %>" />
+<aui:fieldset id='<%= liferayPortletResponse.getNamespace() + "ratingsSettingsContainer" %>'>
 
-	<liferay-frontend:edit-form-body>
-		<p class="text-muted"><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
+	<%
+	Map<String, Map<String, RatingsType>> groupRatingsTypeMaps = groupPortletRatingsDefinitionDisplayContext.getGroupRatingsTypeMaps();
 
-		<aui:fieldset id='<%= liferayPortletResponse.getNamespace() + "ratingsSettingsContainer" %>'>
+	for (Map.Entry<String, Map<String, RatingsType>> entry : groupRatingsTypeMaps.entrySet()) {
+		String portletId = entry.getKey();
 
-			<%
-			Map<String, Map<String, RatingsType>> groupRatingsTypeMaps = groupPortletRatingsDefinitionDisplayContext.getGroupRatingsTypeMaps();
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+	%>
 
-			for (Map.Entry<String, Map<String, RatingsType>> entry : groupRatingsTypeMaps.entrySet()) {
-				String portletId = entry.getKey();
+		<h4 class="text-default">
+			<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+		</h4>
 
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-			%>
+		<%
+		Map<String, RatingsType> ratingsTypeMap = entry.getValue();
 
-				<h4 class="text-default">
-					<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
-				</h4>
+		Set<Map.Entry<String, RatingsType>> ratingsTypeMapEntries = ratingsTypeMap.entrySet();
+
+		for (Map.Entry<String, RatingsType> ratingsTypeMapEntry : ratingsTypeMapEntries) {
+			String className = ratingsTypeMapEntry.getKey();
+
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
+
+			RatingsType ratingsType = ratingsTypeMapEntry.getValue();
+		%>
+
+			<aui:select label="<%= (ratingsTypeMapEntries.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "RatingsType--" + propertyKey + "--" %>'>
+				<aui:option label='<%= LanguageUtil.format(request, "default-value-x", companyPortletRatingsDefinitionDisplayContext.getRatingsType(portletId, className)) %>' selected="<%= ratingsType == null %>" value="<%= StringPool.BLANK %>" />
 
 				<%
-				Map<String, RatingsType> ratingsTypeMap = entry.getValue();
-
-				Set<Map.Entry<String, RatingsType>> ratingsTypeMapEntries = ratingsTypeMap.entrySet();
-
-				for (Map.Entry<String, RatingsType> ratingsTypeMapEntry : ratingsTypeMapEntries) {
-					String className = ratingsTypeMapEntry.getKey();
-
-					String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
-
-					RatingsType ratingsType = ratingsTypeMapEntry.getValue();
+				for (RatingsType curRatingsType : RatingsType.values()) {
 				%>
 
-					<aui:select label="<%= (ratingsTypeMapEntries.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "RatingsType--" + propertyKey + "--" %>'>
-						<aui:option label='<%= LanguageUtil.format(request, "default-value-x", companyPortletRatingsDefinitionDisplayContext.getRatingsType(portletId, className)) %>' selected="<%= ratingsType == null %>" value="<%= StringPool.BLANK %>" />
+					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Objects.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
-						<%
-						for (RatingsType curRatingsType : RatingsType.values()) {
-						%>
-
-							<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Objects.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
-
-						<%
-						}
-						%>
-
-					</aui:select>
-
-			<%
+				<%
 				}
-			}
-			%>
+				%>
 
-		</aui:fieldset>
-	</liferay-frontend:edit-form-body>
+			</aui:select>
 
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
+	<%
+		}
+	}
+	%>
 
-		<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+</aui:fieldset>
 
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "ratings" %>'

@@ -29,41 +29,19 @@ else {
 }
 %>
 
-<portlet:actionURL name="/site_admin/edit_categorization" var="editCategorizationURL">
-	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
-	<portlet:param name="configurationScreenKey" value="site-configuration-categorization" />
-</portlet:actionURL>
+<aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
 
-<liferay-frontend:edit-form
-	action="<%= editCategorizationURL %>"
-	method="post"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroup.getGroupId() %>" />
+<liferay-asset:asset-categories-error />
 
-	<liferay-frontend:edit-form-body>
-		<aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />
+<liferay-asset:asset-tags-error />
 
-		<liferay-asset:asset-categories-error />
+<liferay-asset:asset-categories-selector
+	className="<%= Group.class.getName() %>"
+	classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
+	visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
+/>
 
-		<liferay-asset:asset-tags-error />
-
-		<liferay-asset:asset-categories-selector
-			className="<%= Group.class.getName() %>"
-			classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
-			visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
-		/>
-
-		<liferay-asset:asset-tags-selector
-			className="<%= Group.class.getName() %>"
-			classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
-		/>
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+<liferay-asset:asset-tags-selector
+	className="<%= Group.class.getName() %>"
+	classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
+/>

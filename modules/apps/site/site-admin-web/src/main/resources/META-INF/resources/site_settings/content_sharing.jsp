@@ -33,30 +33,8 @@ UnicodeProperties groupTypeSettings = liveGroup.getTypeSettingsProperties();
 int companyContentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
 %>
 
-<portlet:actionURL name="/site_admin/edit_content_sharing" var="editContentSharingURL">
-	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
-	<portlet:param name="configurationScreenKey" value="site-configuration-content-sharing" />
-</portlet:actionURL>
-
-<liferay-frontend:edit-form
-	action="<%= editContentSharingURL %>"
-	method="post"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroup.getGroupId() %>" />
-
-	<liferay-frontend:edit-form-body>
-		<aui:select label="allow-subsites-to-display-content-from-this-site" name="contentSharingWithChildrenEnabled" value='<%= PropertiesParamUtil.getInteger(groupTypeSettings, request, "contentSharingWithChildrenEnabled", Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE) %>'>
-			<aui:option label='<%= (companyContentSharingWithChildrenEnabled == Sites.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT) ? "default-value-enabled" : "default-value-disabled" %>' value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE %>" />
-			<aui:option label="enabled" value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_ENABLED %>" />
-			<aui:option label="disabled" value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED %>" />
-		</aui:select>
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+<aui:select label="allow-subsites-to-display-content-from-this-site" name="contentSharingWithChildrenEnabled" value='<%= PropertiesParamUtil.getInteger(groupTypeSettings, request, "contentSharingWithChildrenEnabled", Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE) %>'>
+	<aui:option label='<%= (companyContentSharingWithChildrenEnabled == Sites.CONTENT_SHARING_WITH_CHILDREN_ENABLED_BY_DEFAULT) ? "default-value-enabled" : "default-value-disabled" %>' value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_DEFAULT_VALUE %>" />
+	<aui:option label="enabled" value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_ENABLED %>" />
+	<aui:option label="disabled" value="<%= Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED %>" />
+</aui:select>

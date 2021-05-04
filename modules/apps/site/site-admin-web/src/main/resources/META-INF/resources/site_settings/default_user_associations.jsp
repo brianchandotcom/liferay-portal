@@ -68,109 +68,87 @@ for (long defaultTeamId : defaultTeamIds) {
 	/>
 </liferay-util:buffer>
 
-<portlet:actionURL name="/site_admin/edit_default_user_associations" var="editDefaultUserAssociationsURL">
-	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
-	<portlet:param name="configurationScreenKey" value="site-configuration-default-user-associations" />
-</portlet:actionURL>
+<p class="text-muted">
+	<liferay-ui:message key="select-the-default-roles-and-teams-for-new-members" />
+</p>
 
-<liferay-frontend:edit-form
-	action="<%= editDefaultUserAssociationsURL %>"
-	method="post"
-	name="fm"
+<h4 class="text-default"><liferay-ui:message key="site-roles" /> <liferay-ui:icon-help message="default-site-roles-assignment-help" /></h4>
+
+<liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
+	emptyResultsMessage="none"
+	headerNames="title,null"
+	id="siteRolesSearchContainer"
+	total="<%= defaultSiteRoles.size() %>"
 >
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroup.getGroupId() %>" />
+	<liferay-ui:search-container-results
+		results="<%= defaultSiteRoles %>"
+	/>
 
-	<liferay-frontend:edit-form-body>
-		<p class="text-muted">
-			<liferay-ui:message key="select-the-default-roles-and-teams-for-new-members" />
-		</p>
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.model.Role"
+		keyProperty="roleId"
+		modelVar="role"
+	>
+		<liferay-ui:search-container-column-text
+			name="title"
+			truncate="<%= true %>"
+			value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
+		/>
 
-		<h4 class="text-default"><liferay-ui:message key="site-roles" /> <liferay-ui:icon-help message="default-site-roles-assignment-help" /></h4>
+		<liferay-ui:search-container-column-text>
+			<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
 
-		<liferay-ui:search-container
-			compactEmptyResultsMessage="<%= true %>"
-			emptyResultsMessage="none"
-			headerNames="title,null"
-			id="siteRolesSearchContainer"
-			total="<%= defaultSiteRoles.size() %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= defaultSiteRoles %>"
-			/>
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+		paginate="<%= false %>"
+	/>
+</liferay-ui:search-container>
 
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.model.Role"
-				keyProperty="roleId"
-				modelVar="role"
-			>
-				<liferay-ui:search-container-column-text
-					name="title"
-					truncate="<%= true %>"
-					value="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
-				/>
+<div class="button-holder form-group">
+	<aui:button cssClass="modify-link" id="selectSiteRoleLink" value="select" />
+</div>
 
-				<liferay-ui:search-container-column-text>
-					<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-row>
+<h4 class="text-default"><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h4>
 
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				paginate="<%= false %>"
-			/>
-		</liferay-ui:search-container>
+<liferay-ui:search-container
+	compactEmptyResultsMessage="<%= true %>"
+	emptyResultsMessage="none"
+	headerNames="title,null"
+	id="teamsSearchContainer"
+	total="<%= defaultTeams.size() %>"
+>
+	<liferay-ui:search-container-results
+		results="<%= defaultTeams %>"
+	/>
 
-		<div class="button-holder form-group">
-			<aui:button cssClass="modify-link" id="selectSiteRoleLink" value="select" />
-		</div>
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.model.Team"
+		keyProperty="teamId"
+		modelVar="team"
+	>
+		<liferay-ui:search-container-column-text
+			name="title"
+			truncate="<%= true %>"
+			value="<%= HtmlUtil.escape(team.getName()) %>"
+		/>
 
-		<h4 class="text-default"><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h4>
+		<liferay-ui:search-container-column-text>
+			<a class="modify-link" data-rowId="<%= team.getTeamId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+		</liferay-ui:search-container-column-text>
+	</liferay-ui:search-container-row>
 
-		<liferay-ui:search-container
-			compactEmptyResultsMessage="<%= true %>"
-			emptyResultsMessage="none"
-			headerNames="title,null"
-			id="teamsSearchContainer"
-			total="<%= defaultTeams.size() %>"
-		>
-			<liferay-ui:search-container-results
-				results="<%= defaultTeams %>"
-			/>
+	<liferay-ui:search-iterator
+		markupView="lexicon"
+		paginate="<%= false %>"
+	/>
+</liferay-ui:search-container>
 
-			<liferay-ui:search-container-row
-				className="com.liferay.portal.kernel.model.Team"
-				keyProperty="teamId"
-				modelVar="team"
-			>
-				<liferay-ui:search-container-column-text
-					name="title"
-					truncate="<%= true %>"
-					value="<%= HtmlUtil.escape(team.getName()) %>"
-				/>
-
-				<liferay-ui:search-container-column-text>
-					<a class="modify-link" data-rowId="<%= team.getTeamId() %>" href="javascript:;"><%= removeRoleIcon %></a>
-				</liferay-ui:search-container-column-text>
-			</liferay-ui:search-container-row>
-
-			<liferay-ui:search-iterator
-				markupView="lexicon"
-				paginate="<%= false %>"
-			/>
-		</liferay-ui:search-container>
-
-		<div class="button-holder">
-			<aui:button cssClass="modify-link" id="selectTeamLink" value="select" />
-		</div>
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+<div class="button-holder">
+	<aui:button cssClass="modify-link" id="selectTeamLink" value="select" />
+</div>
 
 <aui:script use="escape,liferay-search-container">
 	var bindModifyLink = function (config) {

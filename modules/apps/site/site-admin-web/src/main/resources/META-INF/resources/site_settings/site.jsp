@@ -69,42 +69,23 @@ if (group != null) {
 
 <liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
 
-<portlet:actionURL name="/site_admin/edit_group" var="editGroupURL">
-	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
-	<portlet:param name="configurationScreenKey" value="site-configuration-other" />
-</portlet:actionURL>
+<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
+<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 
-<liferay-frontend:edit-form
-	action="<%= editGroupURL %>"
-	method="post"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
+<%
+request.setAttribute("site.group", group);
+request.setAttribute("site.liveGroup", liveGroup);
+request.setAttribute("site.liveGroupId", Long.valueOf(liveGroupId));
+request.setAttribute("site.stagingGroup", stagingGroup);
+request.setAttribute("site.stagingGroupId", Long.valueOf(stagingGroupId));
+%>
 
-	<%
-	request.setAttribute("site.group", group);
-	request.setAttribute("site.liveGroup", liveGroup);
-	request.setAttribute("site.liveGroupId", Long.valueOf(liveGroupId));
-	request.setAttribute("site.stagingGroup", stagingGroup);
-	request.setAttribute("site.stagingGroupId", Long.valueOf(stagingGroupId));
-	%>
-
-	<liferay-frontend:edit-form-body>
-		<liferay-frontend:form-navigator
-			backURL="<%= backURL %>"
-			formModelBean="<%= group %>"
-			id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
-			showButtons="<%= false %>"
-		/>
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href="<%= backURL %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+<liferay-frontend:form-navigator
+	backURL="<%= backURL %>"
+	formModelBean="<%= group %>"
+	id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES %>"
+	showButtons="<%= false %>"
+/>

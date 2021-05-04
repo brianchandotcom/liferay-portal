@@ -29,29 +29,7 @@ else {
 }
 %>
 
-<portlet:actionURL name="/site_admin/edit_maps" var="editMapsURL">
-	<portlet:param name="mvcRenderCommandName" value="/configuration_admin/view_configuration_screen" />
-	<portlet:param name="configurationScreenKey" value="site-configuration-maps" />
-</portlet:actionURL>
-
-<liferay-frontend:edit-form
-	action="<%= editMapsURL %>"
-	method="post"
-	name="fm"
->
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroup.getGroupId() %>" />
-
-	<liferay-frontend:edit-form-body>
-		<liferay-map:map-provider-selector
-			mapProviderKey="<%= (String)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_KEY) %>"
-			name='<%= "TypeSettingsProperties--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>'
-		/>
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
-
-		<aui:button href='<%= ParamUtil.getString(request, "redirect") %>' type="cancel" />
-	</liferay-frontend:edit-form-footer>
-</liferay-frontend:edit-form>
+<liferay-map:map-provider-selector
+	mapProviderKey="<%= (String)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_KEY) %>"
+	name='<%= "TypeSettingsProperties--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>'
+/>

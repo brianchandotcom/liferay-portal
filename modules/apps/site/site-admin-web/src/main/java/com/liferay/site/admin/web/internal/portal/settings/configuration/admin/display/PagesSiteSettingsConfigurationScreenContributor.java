@@ -14,8 +14,6 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -24,15 +22,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-
-import java.io.IOException;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,13 +35,18 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ConfigurationScreen.class)
-public class PagesSiteSettingsConfigurationScreen
-	implements ConfigurationScreen {
+@Component(service = SiteSettingsConfigurationScreenContributor.class)
+public class PagesSiteSettingsConfigurationScreenContributor
+	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
 		return "pages";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/site_settings/pages.jsp";
 	}
 
 	@Override
@@ -60,8 +60,13 @@ public class PagesSiteSettingsConfigurationScreen
 	}
 
 	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	public String getSaveMVCActionCommandName() {
+		return "/site_admin/edit_pages";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -97,24 +102,6 @@ public class PagesSiteSettingsConfigurationScreen
 		}
 
 		return false;
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/site_settings/pages.jsp");
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new IOException("Unable to render pages.jsp", exception);
-		}
 	}
 
 	@Reference

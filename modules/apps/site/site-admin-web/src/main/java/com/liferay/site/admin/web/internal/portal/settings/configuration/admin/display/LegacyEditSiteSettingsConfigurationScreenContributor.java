@@ -14,18 +14,12 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
-
-import java.io.IOException;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,13 +27,18 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ConfigurationScreen.class)
-public class LegacyEditSiteSettingsConfigurationScreen
-	implements ConfigurationScreen {
+@Component(service = SiteSettingsConfigurationScreenContributor.class)
+public class LegacyEditSiteSettingsConfigurationScreenContributor
+	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
 		return "other";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/site_settings/site.jsp";
 	}
 
 	@Override
@@ -53,25 +52,8 @@ public class LegacyEditSiteSettingsConfigurationScreen
 	}
 
 	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/site_settings/site.jsp");
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new IOException("Unable to render site.jsp", exception);
-		}
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")

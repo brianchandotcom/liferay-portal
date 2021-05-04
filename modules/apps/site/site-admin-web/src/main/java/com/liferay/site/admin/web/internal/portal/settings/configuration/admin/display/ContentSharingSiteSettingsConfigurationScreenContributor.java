@@ -14,25 +14,18 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
-import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionValues;
-
-import java.io.IOException;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
-import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,28 +33,38 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ConfigurationScreen.class)
-public class RatingsSiteSettingsConfigurationScreen
-	implements ConfigurationScreen {
+@Component(service = SiteSettingsConfigurationScreenContributor.class)
+public class ContentSharingSiteSettingsConfigurationScreenContributor
+	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "community-tools";
+		return "sharing";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/content_sharing.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "site-configuration-ratings";
+		return "site-configuration-content-sharing";
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "ratings");
+		return LanguageUtil.get(locale, "content-sharing");
 	}
 
 	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	public String getSaveMVCActionCommandName() {
+		return "/site_admin/edit_content_sharing";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -73,34 +76,19 @@ public class RatingsSiteSettingsConfigurationScreen
 
 		Group siteGroup = themeDisplay.getSiteGroup();
 
-		if ((siteGroup == null) || siteGroup.isCompany()) {
+		if (siteGroup == null) {
 			return false;
 		}
 
-		Map<String, PortletRatingsDefinitionValues>
-			portletRatingsDefinitionValuesMap =
-				PortletRatingsDefinitionUtil.
-					getPortletRatingsDefinitionValuesMap();
+		int contentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(
+			siteGroup.getCompanyId(),
+			PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
 
-		return !portletRatingsDefinitionValuesMap.isEmpty();
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/site_settings/ratings.jsp");
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		if (contentSharingWithChildrenEnabled == 0) {
+			return false;
 		}
-		catch (Exception exception) {
-			throw new IOException("Unable to render ratings.jsp", exception);
-		}
+
+		return true;
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")

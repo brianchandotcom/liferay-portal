@@ -14,24 +14,19 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-
-import java.io.IOException;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
+import com.liferay.taglib.util.CustomAttributesUtil;
 
 import java.util.Locale;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,28 +34,38 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ConfigurationScreen.class)
-public class ContentSharingSiteSettingsConfigurationScreen
-	implements ConfigurationScreen {
+@Component(service = SiteSettingsConfigurationScreenContributor.class)
+public class CustomFieldsSiteSettingsConfigurationScreenContributor
+	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "sharing";
+		return "other";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/site_settings/custom_fields.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "site-configuration-content-sharing";
+		return "site-configuration-custom-fields";
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "content-sharing");
+		return LanguageUtil.get(locale, "custom-fields");
 	}
 
 	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	public String getSaveMVCActionCommandName() {
+		return "/site_admin/edit_custom_fields";
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -72,38 +77,33 @@ public class ContentSharingSiteSettingsConfigurationScreen
 
 		Group siteGroup = themeDisplay.getSiteGroup();
 
-		if (siteGroup == null) {
+		if ((siteGroup == null) || siteGroup.isCompany()) {
 			return false;
 		}
 
-		int contentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(
-			siteGroup.getCompanyId(),
-			PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
+		boolean hasCustomAttributesAvailable = false;
 
-		if (contentSharingWithChildrenEnabled == 0) {
+		try {
+			hasCustomAttributesAvailable =
+				CustomAttributesUtil.hasCustomAttributes(
+					themeDisplay.getCompanyId(), Group.class.getName(),
+					siteGroup.getGroupId(), null);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		if (!hasCustomAttributesAvailable) {
 			return false;
 		}
 
 		return true;
 	}
 
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/content_sharing.jsp");
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new IOException(
-				"Unable to render content_sharing.jsp", exception);
-		}
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		CustomFieldsSiteSettingsConfigurationScreenContributor.class);
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
 	private ServletContext _servletContext;

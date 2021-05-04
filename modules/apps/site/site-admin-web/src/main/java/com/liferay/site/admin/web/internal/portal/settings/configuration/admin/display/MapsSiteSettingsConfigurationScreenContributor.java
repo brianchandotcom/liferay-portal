@@ -14,19 +14,19 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.map.constants.MapProviderWebKeys;
+import com.liferay.map.util.MapProviderHelperUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-
-import java.io.IOException;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,28 +37,33 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ConfigurationScreen.class)
-public class CategorizationSiteSettingsConfigurationScreen
-	implements ConfigurationScreen {
+@Component(service = SiteSettingsConfigurationScreenContributor.class)
+public class MapsSiteSettingsConfigurationScreenContributor
+	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "assets";
+		return "third-party-applications";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/site_settings/maps.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "site-configuration-categorization";
+		return "site-configuration-maps";
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "categorization");
+		return LanguageUtil.get(locale, "maps");
 	}
 
 	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -70,7 +75,7 @@ public class CategorizationSiteSettingsConfigurationScreen
 
 		Group siteGroup = themeDisplay.getSiteGroup();
 
-		if ((siteGroup != null) && siteGroup.isCompany()) {
+		if (siteGroup == null) {
 			return false;
 		}
 
@@ -78,23 +83,34 @@ public class CategorizationSiteSettingsConfigurationScreen
 	}
 
 	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+	public void setAttributes(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/site_settings/categorization.jsp");
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		Group liveGroup = null;
+
+		if (siteGroup.isStagingGroup()) {
+			liveGroup = siteGroup.getLiveGroup();
 		}
-		catch (Exception exception) {
-			throw new IOException(
-				"Unable to render categorization.jsp", exception);
+		else {
+			liveGroup = siteGroup;
 		}
+
+		httpServletRequest.setAttribute(
+			MapProviderWebKeys.MAP_PROVIDER_KEY,
+			MapProviderHelperUtil.getMapProviderKey(
+				_groupLocalService, themeDisplay.getCompanyId(),
+				liveGroup.getGroupId()));
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
 	private ServletContext _servletContext;

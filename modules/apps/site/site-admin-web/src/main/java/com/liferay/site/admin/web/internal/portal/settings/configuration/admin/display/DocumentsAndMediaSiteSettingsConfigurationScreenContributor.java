@@ -14,25 +14,16 @@
 
 package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.configuration.admin.display.ConfigurationScreen;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-
-import java.io.IOException;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,28 +31,33 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(service = ConfigurationScreen.class)
-public class AnalyticsSiteSettingsConfigurationScreen
-	implements ConfigurationScreen {
+@Component(service = SiteSettingsConfigurationScreenContributor.class)
+public class DocumentsAndMediaSiteSettingsConfigurationScreenContributor
+	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return "analytics";
+		return "documents-and-media";
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/site_settings/documents_and_media.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "site-configuration-analytics";
+		return "site-configuration-documents-and-media";
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "analytics");
+		return LanguageUtil.get(locale, "documents-and-media");
 	}
 
 	@Override
-	public String getScope() {
-		return ExtendedObjectClassDefinition.Scope.GROUP.getValue();
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -77,33 +73,7 @@ public class AnalyticsSiteSettingsConfigurationScreen
 			return false;
 		}
 
-		String[] analyticsTypes = PrefsPropsUtil.getStringArray(
-			siteGroup.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES,
-			StringPool.NEW_LINE);
-
-		if (analyticsTypes.length == 0) {
-			return false;
-		}
-
 		return true;
-	}
-
-	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/site_settings/analytics.jsp");
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (Exception exception) {
-			throw new IOException("Unable to render analytics.jsp", exception);
-		}
 	}
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")

@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
-import com.liferay.headless.delivery.dynamic.data.mapping.DDMFormValuesUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;

@@ -228,8 +228,7 @@ public class DatasetViewStateEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"DatasetViewStateEntry", "mvccVersion", true, "uuid", true,
 			"datasetViewStateEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"viewState", true);
+			"userName", true, "createDate", true, "modifiedDate", true);
 	}
 
 	@Test

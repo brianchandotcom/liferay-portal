@@ -99,7 +99,7 @@ public class DatasetViewActiveEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DatasetViewActiveEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,datasetViewActiveEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,datasetDisplayId VARCHAR(75) null,datasetViewStateEntryId LONG,plid LONG,portletId VARCHAR(75) null)";
+		"create table DatasetViewActiveEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,datasetViewActiveEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,datasetDisplayId VARCHAR(75) null,datasetViewStateEntryId LONG,plid LONG,portletId VARCHAR(200) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table DatasetViewActiveEntry";

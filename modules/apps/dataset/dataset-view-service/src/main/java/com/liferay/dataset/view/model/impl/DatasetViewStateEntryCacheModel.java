@@ -156,7 +156,9 @@ public class DatasetViewStateEntryCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -168,7 +170,7 @@ public class DatasetViewStateEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		viewState = objectInput.readUTF();
+		viewState = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -199,10 +201,10 @@ public class DatasetViewStateEntryCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		if (viewState == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(viewState);
+			objectOutput.writeObject(viewState);
 		}
 	}
 

@@ -32,6 +32,7 @@ import {
 	useIsHovered,
 	useSelectItem,
 } from '../../contexts/ControlsContext';
+import {useSetEditableProcessorUniqueId} from '../../contexts/EditableProcessorContext';
 import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -39,7 +40,6 @@ import {useSelector, useSelectorCallback} from '../../store/index';
 import canActivateEditable from '../../utils/canActivateEditable';
 import {deepEqual} from '../../utils/checkDeepEqual';
 import isMapped from '../../utils/editable-value/isMapped';
-import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import {getEditableElement} from './getEditableElement';
 
 const EDITABLE_CLASS_NAMES = {

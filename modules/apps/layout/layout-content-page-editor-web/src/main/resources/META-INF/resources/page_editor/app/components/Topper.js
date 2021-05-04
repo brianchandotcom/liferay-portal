@@ -29,6 +29,7 @@ import {
 	useIsHovered,
 	useSelectItem,
 } from '../contexts/ControlsContext';
+import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
 import selectCanUpdateItemConfiguration from '../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
@@ -41,7 +42,6 @@ import {
 } from '../utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
 import ItemActions from './ItemActions';
-import {useEditableProcessorUniqueId} from './fragment-content/EditableProcessorContext';
 
 const TOPPER_BAR_HEIGHT = 24;
 

@@ -27,6 +27,7 @@ import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
+import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
 import {useDispatch, useSelector} from '../store/index';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
@@ -38,7 +39,6 @@ import PreviewModal from './PreviewModal';
 import Translation from './Translation';
 import UnsafeHTML from './UnsafeHTML';
 import ViewportSizeSelector from './ViewportSizeSelector';
-import {useEditableProcessorUniqueId} from './fragment-content/EditableProcessorContext';
 import Undo from './undo/Undo';
 
 const {Suspense, useCallback, useRef} = React;

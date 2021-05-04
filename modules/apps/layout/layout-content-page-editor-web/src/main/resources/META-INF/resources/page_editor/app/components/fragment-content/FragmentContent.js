@@ -23,6 +23,7 @@ import {
 	useGetFieldValue,
 	useToControlsId,
 } from '../../contexts/CollectionItemContext';
+import {useIsProcessorEnabled} from '../../contexts/EditableProcessorContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -35,7 +36,6 @@ import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
 import UnsafeHTML from '../UnsafeHTML';
-import {useIsProcessorEnabled} from './EditableProcessorContext';
 import getAllEditables from './getAllEditables';
 
 const FragmentContent = ({

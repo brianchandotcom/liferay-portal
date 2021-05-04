@@ -16,15 +16,15 @@ import PropTypes from 'prop-types';
 import {useEffect} from 'react';
 
 import {useToControlsId} from '../../contexts/CollectionItemContext';
-import selectLanguageId from '../../selectors/selectLanguageId';
-import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
-import updateEditableValues from '../../thunks/updateEditableValues';
 import {
 	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
 	useSetEditableProcessorUniqueId,
-} from './EditableProcessorContext';
+} from '../../contexts/EditableProcessorContext';
+import selectLanguageId from '../../selectors/selectLanguageId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
+import {useDispatch, useSelector, useSelectorCallback} from '../../store/index';
+import updateEditableValues from '../../thunks/updateEditableValues';
 
 export default function FragmentContentProcessor({
 	fragmentEntryLinkId,

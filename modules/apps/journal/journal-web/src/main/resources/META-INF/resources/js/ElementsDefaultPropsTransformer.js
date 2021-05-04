@@ -161,25 +161,32 @@ export default function propsTransformer({
 	portletNamespace,
 	...props
 }) {
+	const bindAction = (item) => {
+		const action = ACTIONS[item.data?.action];
+
+		const transformedItem = {...item};
+
+		if (typeof action === 'function') {
+			transformedItem.onClick = (event) => {
+				event.preventDefault();
+
+				action({
+					itemData: item.data,
+					portletNamespace,
+					trashEnabled,
+				});
+			};
+		}
+
+		if (Array.isArray(item.items)) {
+			transformedItem.items = item.items.map(bindAction);
+		}
+
+		return transformedItem;
+	};
+
 	return {
 		...props,
-		items: items.map((item) => {
-			return {
-				...item,
-				onClick(event) {
-					const action = item.data?.action;
-
-					if (action) {
-						event.preventDefault();
-
-						ACTIONS[action]({
-							itemData: item.data,
-							portletNamespace,
-							trashEnabled,
-						});
-					}
-				},
-			};
-		}),
+		items: items.map(bindAction),
 	};
 }

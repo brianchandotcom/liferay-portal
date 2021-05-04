@@ -20,9 +20,12 @@ import ClayForm, {
 import React, {useEffect, useState} from 'react';
 
 import {config} from '../../../../../../app/config/index';
+import {
+	useDispatch,
+	useSelector,
+} from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import InfoItemService from '../../../../../../app/services/InfoItemService';
-import {useDispatch, useSelector} from '../../../../../../app/store/index';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {useId} from '../../../../../../app/utils/useId';
 import CollectionSelector from '../../../../../../common/components/CollectionSelector';

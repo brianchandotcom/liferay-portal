@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import {useSelector} from '../../../app/store/index';
+import {useSelector} from '../../../app/contexts/StoreContext';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import NoPageContents from '../../browser/components/contents/components/NoPageContents';

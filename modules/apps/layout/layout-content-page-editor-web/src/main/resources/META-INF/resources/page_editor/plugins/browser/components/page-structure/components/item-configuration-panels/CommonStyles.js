@@ -17,8 +17,11 @@ import React from 'react';
 
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../app/config/index';
+import {
+	useDispatch,
+	useSelector,
+} from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../../../../../../app/store/index';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import {FieldSet} from './FieldSet';
 

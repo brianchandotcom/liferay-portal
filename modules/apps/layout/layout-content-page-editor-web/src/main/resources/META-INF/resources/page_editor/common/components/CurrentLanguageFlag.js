@@ -16,8 +16,8 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 import {config} from '../../app/config/index';
+import {useSelector} from '../../app/contexts/StoreContext';
 import selectLanguageId from '../../app/selectors/selectLanguageId';
-import {useSelector} from '../../app/store/index';
 import getLanguages from '../../app/utils/getLanguages';
 
 export default function CurrentLanguageFlag() {

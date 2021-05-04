@@ -23,7 +23,7 @@ import {
 	useActiveItemId,
 	useActiveItemType,
 } from '../../../../../app/contexts/ControlsContext';
-import {useSelectorCallback} from '../../../../../app/store/index';
+import {useSelectorCallback} from '../../../../../app/contexts/StoreContext';
 import {deepEqual} from '../../../../../app/utils/checkDeepEqual';
 import {useId} from '../../../../../app/utils/useId';
 import {PANELS, selectPanels} from '../selectors/selectPanels';

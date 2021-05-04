@@ -16,7 +16,7 @@ import {ClayCheckbox} from '@clayui/form';
 import React, {useEffect} from 'react';
 
 import toggleShowResolvedComments from '../../../app/actions/toggleShowResolvedComments';
-import {useDispatch, useSelector} from '../../../app/store/index';
+import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 
 export default function ResolvedCommentsToggle() {
 	const dispatch = useDispatch();

@@ -22,7 +22,7 @@ import {
 	useHoveredItemId,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
-import {useSelector} from '../../store/index';
+import {useSelector} from '../../contexts/StoreContext';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Topper from '../Topper';

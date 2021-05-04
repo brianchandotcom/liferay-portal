@@ -32,7 +32,7 @@ import {
 	useIsActive,
 	useSelectItem,
 } from '../contexts/ControlsContext';
-import {useSelector} from '../store/index';
+import {useSelector} from '../contexts/StoreContext';
 import {deepEqual} from '../utils/checkDeepEqual';
 import FragmentWithControls from './layout-data-items/FragmentWithControls';
 import {

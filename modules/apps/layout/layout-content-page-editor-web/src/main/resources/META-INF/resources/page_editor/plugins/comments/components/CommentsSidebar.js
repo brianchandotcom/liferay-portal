@@ -20,7 +20,7 @@ import {
 	useActiveItemId,
 	useSelectItem,
 } from '../../../app/contexts/ControlsContext';
-import {useSelector} from '../../../app/store/index';
+import {useSelector} from '../../../app/contexts/StoreContext';
 import FragmentComments from './FragmentComments';
 import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
 

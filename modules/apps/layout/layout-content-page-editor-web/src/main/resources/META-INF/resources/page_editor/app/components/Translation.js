@@ -23,7 +23,7 @@ import {updateLanguageId} from '../actions/index';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import {TRANSLATION_STATUS_TYPE} from '../config/constants/translationStatusType';
-import {useSelector} from '../store/index';
+import {useSelector} from '../contexts/StoreContext';
 import getLanguages from '../utils/getLanguages';
 
 const getEditableValues = (fragmentEntryLinks) =>

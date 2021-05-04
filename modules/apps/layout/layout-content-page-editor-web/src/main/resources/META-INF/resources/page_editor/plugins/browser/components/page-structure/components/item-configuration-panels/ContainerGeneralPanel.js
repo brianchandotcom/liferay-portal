@@ -17,8 +17,11 @@ import React, {useEffect, useState} from 'react';
 
 import LinkField from '../../../../../../app/components/fragment-configuration-fields/LinkField';
 import {config} from '../../../../../../app/config/index';
+import {
+	useDispatch,
+	useSelector,
+} from '../../../../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../../../../../../app/store/index';
 import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';

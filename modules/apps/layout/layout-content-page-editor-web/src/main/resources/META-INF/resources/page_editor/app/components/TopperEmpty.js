@@ -16,8 +16,8 @@ import classNames from 'classnames';
 import React, {useRef} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../prop-types/index';
+import {useSelector} from '../contexts/StoreContext';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
-import {useSelector} from '../store/index';
 import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
 import {useDropTarget} from '../utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';

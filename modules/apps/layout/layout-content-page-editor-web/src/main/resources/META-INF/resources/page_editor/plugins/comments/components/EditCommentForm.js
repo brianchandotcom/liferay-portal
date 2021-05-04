@@ -16,7 +16,7 @@ import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {useDispatch} from '../../../app/store/index';
+import {useDispatch} from '../../../app/contexts/StoreContext';
 import editFragmentComment from '../../../app/thunks/editFragmentComment';
 import CommentForm from './CommentForm';
 

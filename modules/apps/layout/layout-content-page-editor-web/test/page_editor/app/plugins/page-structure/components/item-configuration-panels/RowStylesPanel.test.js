@@ -18,7 +18,7 @@ import React from 'react';
 
 import {config} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {ResizeContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ResizeContext';
-import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import updateItemConfig from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
 import updateRowColumns from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateRowColumns';
 import {RowStylesPanel} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/RowStylesPanel';

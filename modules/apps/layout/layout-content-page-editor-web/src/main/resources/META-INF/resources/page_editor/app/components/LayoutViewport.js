@@ -20,7 +20,7 @@ import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {GlobalContextFrame} from '../contexts/GlobalContext';
-import {useSelector} from '../store/index';
+import {useSelector} from '../contexts/StoreContext';
 import DisabledArea from './DisabledArea';
 import Layout from './Layout';
 import MasterLayout from './MasterLayout';

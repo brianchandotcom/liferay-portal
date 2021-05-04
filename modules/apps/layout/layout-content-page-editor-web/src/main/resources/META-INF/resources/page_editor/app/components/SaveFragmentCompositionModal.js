@@ -28,8 +28,8 @@ import InvisibleFieldset from '../../common/components/InvisibleFieldset';
 import {openImageSelector} from '../../core/openImageSelector';
 import {config} from '../config/index';
 import {useActiveItemId} from '../contexts/ControlsContext';
+import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../store/index';
 import addFragmentComposition from '../thunks/addFragmentComposition';
 
 const SaveFragmentCompositionModal = ({onCloseModal}) => {

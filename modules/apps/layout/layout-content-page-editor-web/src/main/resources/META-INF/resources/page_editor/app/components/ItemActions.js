@@ -20,7 +20,7 @@ import React, {useMemo, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../prop-types/index';
 import {useSelectItem} from '../contexts/ControlsContext';
-import {useDispatch, useSelector} from '../store/index';
+import {useDispatch, useSelector} from '../contexts/StoreContext';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
 import canBeDuplicated from '../utils/canBeDuplicated';

@@ -21,7 +21,7 @@ import {CONTAINER_WIDTH_TYPES} from '../../../../../../app/config/constants/cont
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../app/config/index';
-import {useSelector} from '../../../../../../app/store/index';
+import {useSelector} from '../../../../../../app/contexts/StoreContext';
 import CurrentLanguageFlag from '../../../../../../common/components/CurrentLanguageFlag';
 import {ConfigurationFieldPropTypes} from '../../../../../../prop-types/index';
 

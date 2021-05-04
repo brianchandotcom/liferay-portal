@@ -15,7 +15,7 @@
 import React, {useMemo, useState} from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {useSelector} from '../../../app/store/index';
+import {useSelector} from '../../../app/contexts/StoreContext';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';

@@ -31,10 +31,13 @@ import {
 	useHoveredItemId,
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
+import {
+	useDispatch,
+	useSelector,
+} from '../../../../../app/contexts/StoreContext';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../app/services/CollectionService';
-import {useDispatch, useSelector} from '../../../../../app/store/index';
 import deleteItem from '../../../../../app/thunks/deleteItem';
 import moveItem from '../../../../../app/thunks/moveItem';
 import {deepEqual} from '../../../../../app/utils/checkDeepEqual';

@@ -17,7 +17,7 @@ import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {useSelector} from '../store/index';
+import {useSelector} from '../contexts/StoreContext';
 import AllowedFragmentTreeNode from './AllowedFragmentTreeNode';
 
 const toFragmentEntryKeysArray = (collections) => {

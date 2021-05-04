@@ -29,7 +29,7 @@ import {
 	useHoveredItemId,
 	useSelectItem,
 } from '../../../../../app/contexts/ControlsContext';
-import {useSelector} from '../../../../../app/store/index';
+import {useSelector} from '../../../../../app/contexts/StoreContext';
 
 export default function PageContent({
 	actions,

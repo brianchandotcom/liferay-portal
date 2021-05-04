@@ -19,9 +19,9 @@ import React, {useEffect, useState} from 'react';
 
 import {useGetFieldValue} from '../../app/contexts/CollectionItemContext';
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
+import {useSelector} from '../../app/contexts/StoreContext';
 import selectLanguageId from '../../app/selectors/selectLanguageId';
 import ImageService from '../../app/services/ImageService';
-import {useSelector} from '../../app/store/index';
 import isMapped from '../../app/utils/editable-value/isMapped';
 import resolveEditableValue from '../../app/utils/editable-value/resolveEditableValue';
 import {useId} from '../../app/utils/useId';

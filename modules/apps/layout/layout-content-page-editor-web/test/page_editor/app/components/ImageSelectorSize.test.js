@@ -17,8 +17,8 @@ import {act, cleanup, render} from '@testing-library/react';
 import React from 'react';
 
 import {useGlobalContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/GlobalContext';
+import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import ImageService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/ImageService';
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
 import {ImageSelectorSize} from '../../../../src/main/resources/META-INF/resources/page_editor/common/components/ImageSelectorSize';
 
 jest.mock(

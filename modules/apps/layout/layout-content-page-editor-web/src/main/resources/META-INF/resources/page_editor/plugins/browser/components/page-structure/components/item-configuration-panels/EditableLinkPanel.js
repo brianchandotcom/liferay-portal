@@ -18,14 +18,14 @@ import LinkField from '../../../../../../app/components/fragment-configuration-f
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
 import {config} from '../../../../../../app/config/index';
-import selectEditableValue from '../../../../../../app/selectors/selectEditableValue';
-import selectEditableValues from '../../../../../../app/selectors/selectEditableValues';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
-} from '../../../../../../app/store/index';
+} from '../../../../../../app/contexts/StoreContext';
+import selectEditableValue from '../../../../../../app/selectors/selectEditableValue';
+import selectEditableValues from '../../../../../../app/selectors/selectEditableValues';
+import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';
 import {deepEqual} from '../../../../../../app/utils/checkDeepEqual';
 import isMapped from '../../../../../../app/utils/editable-value/isMapped';

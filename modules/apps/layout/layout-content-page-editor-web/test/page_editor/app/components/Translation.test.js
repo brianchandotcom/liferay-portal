@@ -21,7 +21,7 @@ import updateLanguageId from '../../../../src/main/resources/META-INF/resources/
 import Translation from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/Translation';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store';
+import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',

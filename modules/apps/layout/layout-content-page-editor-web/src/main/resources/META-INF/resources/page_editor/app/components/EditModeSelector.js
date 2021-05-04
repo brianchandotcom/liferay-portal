@@ -17,8 +17,8 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
 import togglePermission from '../actions/togglePermission';
+import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanSwitchEditMode from '../selectors/selectCanSwitchEditMode';
-import {useDispatch, useSelector} from '../store/index';
 
 const EDIT_MODES = {
 	contentEditing: Liferay.Language.get('content-editing'),

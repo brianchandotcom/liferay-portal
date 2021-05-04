@@ -16,7 +16,7 @@ import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {useDispatch} from '../../../app/store/index';
+import {useDispatch} from '../../../app/contexts/StoreContext';
 import selectExperience from '../thunks/selectExperience';
 import {ExperienceType} from '../types';
 import ExperienceItem from './ExperienceItem';

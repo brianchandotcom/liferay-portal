@@ -22,7 +22,7 @@ import {
 } from '../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../contexts/ControlsContext';
-import {useSelector} from '../store/index';
+import {useSelector} from '../contexts/StoreContext';
 import Layout from './Layout';
 import FragmentContent from './fragment-content/FragmentContent';
 import {Collection, Column, Container, Row} from './layout-data-items/index';

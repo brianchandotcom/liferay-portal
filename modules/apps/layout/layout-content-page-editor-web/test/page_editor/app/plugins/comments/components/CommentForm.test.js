@@ -18,7 +18,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import CommentForm from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/comments/components/CommentForm';
 
 jest.mock(

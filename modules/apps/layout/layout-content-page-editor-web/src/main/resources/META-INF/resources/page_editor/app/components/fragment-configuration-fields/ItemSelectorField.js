@@ -20,8 +20,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {CollectionItemContext} from '../../contexts/CollectionItemContext';
+import {useDispatch} from '../../contexts/StoreContext';
 import InfoItemService from '../../services/InfoItemService';
-import {useDispatch} from '../../store/index';
 import itemSelectorValueToInfoItem from '../../utils/item-selector-value/itemSelectorValueToInfoItem';
 import {useId} from '../../utils/useId';
 

@@ -30,10 +30,10 @@ import {
 	useSelectItem,
 } from '../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
+import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../store/index';
 import moveItem from '../thunks/moveItem';
 import {TARGET_POSITIONS} from '../utils/drag-and-drop/constants/targetPositions';
 import {

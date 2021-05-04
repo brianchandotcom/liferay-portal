@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store';
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import ItemConfiguration from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/ItemConfiguration';
 
 const renderComponent = () =>

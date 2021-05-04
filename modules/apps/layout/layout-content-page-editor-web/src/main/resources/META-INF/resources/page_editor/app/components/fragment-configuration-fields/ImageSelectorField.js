@@ -22,7 +22,7 @@ import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
-import {useSelector} from '../../store/index';
+import {useSelector} from '../../contexts/StoreContext';
 import isMapped from '../../utils/editable-value/isMapped';
 import isMappedToCollection from '../../utils/editable-value/isMappedToCollection';
 import isMappedToInfoItem from '../../utils/editable-value/isMappedToInfoItem';

@@ -21,7 +21,7 @@ import {
 	useHoverItem,
 	useSelectItem,
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
-import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import FragmentEntryLinksWithComments from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/comments/components/FragmentEntryLinksWithComments';
 
 jest.mock(

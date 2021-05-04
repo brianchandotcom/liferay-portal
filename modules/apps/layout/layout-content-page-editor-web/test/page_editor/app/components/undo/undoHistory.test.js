@@ -19,7 +19,7 @@ import React from 'react';
 
 import UndoHistory from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/undo/UndoHistory';
 import {UNDO_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/undoTypes';
-import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import multipleUndo from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/multipleUndo';
 
 const mockDispatch = jest.fn((a) => {

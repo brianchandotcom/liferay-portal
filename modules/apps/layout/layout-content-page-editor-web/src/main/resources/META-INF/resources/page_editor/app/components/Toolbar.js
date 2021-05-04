@@ -28,7 +28,7 @@ import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkSt
 import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../contexts/EditableProcessorContext';
-import {useDispatch, useSelector} from '../store/index';
+import {useDispatch, useSelector} from '../contexts/StoreContext';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';

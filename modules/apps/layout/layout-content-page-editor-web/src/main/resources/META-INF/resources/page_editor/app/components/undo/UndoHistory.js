@@ -22,7 +22,7 @@ import ReactDOM from 'react-dom';
 import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
 import {UNDO_TYPES} from '../../config/constants/undoTypes';
 import {config} from '../../config/index';
-import {useDispatch, useSelector} from '../../store/index';
+import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import multipleUndo from '../../thunks/multipleUndo';
 import getSegmentsExperienceName from '../../utils/getSegmentsExperienceName';
 import getActionLabel from './getActionLabel';

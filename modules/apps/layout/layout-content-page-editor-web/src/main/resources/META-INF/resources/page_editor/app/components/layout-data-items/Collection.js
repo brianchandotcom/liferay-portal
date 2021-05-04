@@ -17,9 +17,9 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
 import {CollectionItemContextProvider} from '../../contexts/CollectionItemContext';
+import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import CollectionService from '../../services/CollectionService';
-import {useDispatch, useSelector} from '../../store/index';
 import UnsafeHTML from '../UnsafeHTML';
 
 const COLLECTION_ID_DIVIDER = '$';

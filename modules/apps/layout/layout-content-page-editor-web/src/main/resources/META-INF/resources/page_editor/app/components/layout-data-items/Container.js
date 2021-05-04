@@ -21,8 +21,8 @@ import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplay
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
 import {config} from '../../config/index';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
+import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
-import {useSelector} from '../../store/index';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';

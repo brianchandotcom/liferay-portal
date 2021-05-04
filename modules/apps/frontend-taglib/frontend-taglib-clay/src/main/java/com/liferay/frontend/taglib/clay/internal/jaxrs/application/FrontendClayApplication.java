@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.internal.jaxrs.application;
 
+import com.liferay.dataset.view.active.DatasetViewActiveSettings;
+import com.liferay.dataset.view.active.DatasetViewActiveSettingsFactory;
 import com.liferay.frontend.taglib.clay.data.FilterFactory;
 import com.liferay.frontend.taglib.clay.data.FilterFactoryRegistry;
 import com.liferay.frontend.taglib.clay.data.Pagination;
@@ -23,13 +25,10 @@ import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetProviderReg
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.ThemeDisplayContextProvider;
-import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -143,17 +142,13 @@ public class FrontendClayApplication extends Application {
 		String activeViewSettingsJSON) {
 
 		try {
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					httpServletRequest);
-
-			String currentActiveViewSettingsJSON = portalPreferences.getValue(
-				ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
-					httpServletRequest, id),
-				"activeViewSettingsJSON", "{}");
+			DatasetViewActiveSettings datasetViewActiveSettings =
+				_datasetViewActiveSettingsFactory.getDatasetViewActiveSettings(
+					httpServletRequest, id);
 
 			JSONObject currentActiveViewSettingsJSONObject =
-				_jsonFactory.createJSONObject(currentActiveViewSettingsJSON);
+				_jsonFactory.createJSONObject(
+					datasetViewActiveSettings.getViewState());
 
 			JSONObject activeViewSettingsJSONObject =
 				_jsonFactory.createJSONObject(activeViewSettingsJSON);
@@ -163,11 +158,11 @@ public class FrontendClayApplication extends Application {
 					key, activeViewSettingsJSONObject.get(key));
 			}
 
-			portalPreferences.setValue(
-				ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
-					httpServletRequest, id),
-				"activeViewSettingsJSON",
+			datasetViewActiveSettings.setViewState(
 				currentActiveViewSettingsJSONObject.toJSONString());
+
+			_datasetViewActiveSettingsFactory.storeDatasetViewActiveSettings(
+				datasetViewActiveSettings);
 
 			return Response.ok(
 			).build();
@@ -189,6 +184,9 @@ public class FrontendClayApplication extends Application {
 
 	@Reference
 	private ClayDataSetDataJSONFactory _clayDataSetDataJSONFactory;
+
+	@Reference
+	private DatasetViewActiveSettingsFactory _datasetViewActiveSettingsFactory;
 
 	@Reference
 	private FilterFactoryRegistry _filterFactoryRegistry;

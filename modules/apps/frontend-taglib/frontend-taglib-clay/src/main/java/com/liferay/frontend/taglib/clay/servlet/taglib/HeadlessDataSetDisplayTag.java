@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
+import com.liferay.dataset.view.active.DatasetViewActiveSettings;
+import com.liferay.dataset.view.active.DatasetViewActiveSettingsFactory;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerializer;
 import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilterSerializer;
@@ -21,6 +23,7 @@ import com.liferay.frontend.taglib.clay.data.set.model.ClayPaginationEntry;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.clay.internal.util.ServicesProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItem;
@@ -28,8 +31,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -220,10 +221,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		_clayDataSetDisplayViewSerializer =
-			ServletContextUtil.getClayDataSetDisplayViewSerializer();
+			ServicesProvider.getClayDataSetDisplayViewSerializer();
 
 		_clayDataSetFilterSerializer =
-			ServletContextUtil.getClayDataSetFilterSerializer();
+			ServicesProvider.getClayDataSetFilterSerializer();
 
 		super.setPageContext(pageContext);
 
@@ -391,15 +392,14 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	}
 
 	private void _setActiveViewSettingsJSON() {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+		DatasetViewActiveSettingsFactory datasetViewActiveSettingsFactory =
+			ServicesProvider.getDatasetViewActiveSettingsFactory();
 
-		String clayDataSetDisplaySettingsNamespace =
-			ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
+		DatasetViewActiveSettings datasetViewActiveSettings =
+			datasetViewActiveSettingsFactory.getDatasetViewActiveSettings(
 				request, _id);
 
-		_activeViewSettingsJSON = portalPreferences.getValue(
-			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
+		_activeViewSettingsJSON = datasetViewActiveSettings.getViewState();
 	}
 
 	private void _setClayDataSetDisplayViewsContext() {

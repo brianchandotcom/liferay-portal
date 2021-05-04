@@ -91,7 +91,6 @@ const TranslateFieldFeedback = ({message = '', status = ''}) => {
 };
 
 const TranslateFieldEditor = ({
-	autoTranslateEnabled,
 	editorConfiguration,
 	fieldStatus,
 	id,
@@ -101,60 +100,46 @@ const TranslateFieldEditor = ({
 	targetContent,
 	targetContentDir,
 	onChange = noop,
-	handleAutoTranslateClick,
 }) => (
-	<TranslateAutoTranslateRow
-		autoTranslateEnabled={autoTranslateEnabled}
-		fieldStatus={fieldStatus}
-		handleAutoTranslateClick={handleAutoTranslateClick}
-		label={label}
-	>
-		<ClayLayout.Row>
-			<ClayLayout.Col md={6}>
-				<ClayForm.Group>
-					<label className="control-label">{label}</label>
-					<div
-						className="translation-editor-preview"
-						dangerouslySetInnerHTML={{__html: sourceContent}}
-						dir={sourceContentDir}
-					/>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-			<ClayLayout.Col md={6}>
-				<ClayForm.Group>
-					<label className="control-label">{label}</label>
-					<ClassicEditor
-						data={targetContent}
-						editorConfig={{
-							...editorConfiguration.editorConfig,
-							contentsLangDirection: targetContentDir,
-						}}
-						name={id}
-						onChange={(data) => {
-							if (targetContent !== data.trim()) {
-								onChange(data);
-							}
-						}}
-					/>
-					<input
-						defaultValue={targetContent}
-						name={id}
-						type="hidden"
-					/>
-					<TranslateFieldFeedback
-						message={fieldStatus.message}
-						status={fieldStatus.status}
-					/>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-	</TranslateAutoTranslateRow>
+	<ClayLayout.Row>
+		<ClayLayout.Col md={6}>
+			<ClayForm.Group>
+				<label className="control-label">{label}</label>
+				<div
+					className="translation-editor-preview"
+					dangerouslySetInnerHTML={{__html: sourceContent}}
+					dir={sourceContentDir}
+				/>
+			</ClayForm.Group>
+		</ClayLayout.Col>
+		<ClayLayout.Col md={6}>
+			<ClayForm.Group>
+				<label className="control-label">{label}</label>
+				<ClassicEditor
+					data={targetContent}
+					editorConfig={{
+						...editorConfiguration.editorConfig,
+						contentsLangDirection: targetContentDir,
+					}}
+					name={id}
+					onChange={(data) => {
+						if (targetContent !== data.trim()) {
+							onChange(data);
+						}
+					}}
+				/>
+				<input defaultValue={targetContent} name={id} type="hidden" />
+				<TranslateFieldFeedback
+					message={fieldStatus.message}
+					status={fieldStatus.status}
+				/>
+			</ClayForm.Group>
+		</ClayLayout.Col>
+	</ClayLayout.Row>
 );
 
 const TranslateFieldInput = ({
-	autoTranslateEnabled,
 	fieldStatus,
-	handleAutoTranslateClick,
 	id,
 	label,
 	multiline,
@@ -164,54 +149,47 @@ const TranslateFieldInput = ({
 	targetContent,
 	targetContentDir,
 }) => (
-	<TranslateAutoTranslateRow
-		autoTranslateEnabled={autoTranslateEnabled}
-		fieldStatus={fieldStatus}
-		handleAutoTranslateClick={handleAutoTranslateClick}
-		label={label}
-	>
-		<ClayLayout.Row>
-			<ClayLayout.Col md={6}>
-				<ClayForm.Group>
-					<label className="control-label">{label}</label>
-					<ClayInput
-						component={multiline ? 'textarea' : undefined}
-						defaultValue={sourceContent}
-						dir={sourceContentDir}
-						readOnly
-						type="text"
-					/>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-			<ClayLayout.Col md={6}>
-				<ClayForm.Group>
-					<ClayLayout.Row>
-						<ClayLayout.ContentCol expand>
-							<label className="control-label" htmlFor={id}>
-								{label}
-							</label>
-						</ClayLayout.ContentCol>
-					</ClayLayout.Row>
-					<ClayInput
-						component={multiline ? 'textarea' : undefined}
-						dir={targetContentDir}
-						id={id}
-						name={id}
-						onChange={(event) => {
-							const data = event.target.value;
-							onChange(data);
-						}}
-						type="text"
-						value={targetContent}
-					/>
-					<TranslateFieldFeedback
-						message={fieldStatus.message}
-						status={fieldStatus.status}
-					/>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-	</TranslateAutoTranslateRow>
+	<ClayLayout.Row>
+		<ClayLayout.Col md={6}>
+			<ClayForm.Group>
+				<label className="control-label">{label}</label>
+				<ClayInput
+					component={multiline ? 'textarea' : undefined}
+					defaultValue={sourceContent}
+					dir={sourceContentDir}
+					readOnly
+					type="text"
+				/>
+			</ClayForm.Group>
+		</ClayLayout.Col>
+		<ClayLayout.Col md={6}>
+			<ClayForm.Group>
+				<ClayLayout.Row>
+					<ClayLayout.ContentCol expand>
+						<label className="control-label" htmlFor={id}>
+							{label}
+						</label>
+					</ClayLayout.ContentCol>
+				</ClayLayout.Row>
+				<ClayInput
+					component={multiline ? 'textarea' : undefined}
+					dir={targetContentDir}
+					id={id}
+					name={id}
+					onChange={(event) => {
+						const data = event.target.value;
+						onChange(data);
+					}}
+					type="text"
+					value={targetContent}
+				/>
+				<TranslateFieldFeedback
+					message={fieldStatus.message}
+					status={fieldStatus.status}
+				/>
+			</ClayForm.Group>
+		</ClayLayout.Col>
+	</ClayLayout.Row>
 );
 
 const TranslateFieldSetEntries = ({
@@ -239,13 +217,10 @@ const TranslateFieldSetEntries = ({
 			{fields.map((field) => {
 				const fieldProps = {
 					...field,
-					autoTranslateEnabled,
 					fieldStatus: {
 						message: targetFieldsContent[field.id].message,
 						status: targetFieldsContent[field.id].status,
 					},
-					handleAutoTranslateClick: () =>
-						fetchAutoTranslateField(field.id),
 					id: `${portletNamespace}${field.id}`,
 					onChange: (content) => {
 						onChange({content, id: field.id});
@@ -253,10 +228,22 @@ const TranslateFieldSetEntries = ({
 					targetContent: targetFieldsContent[field.id].content,
 				};
 
-				return field.html ? (
-					<TranslateFieldEditor key={field.id} {...fieldProps} />
-				) : (
-					<TranslateFieldInput key={field.id} {...fieldProps} />
+				return (
+					<TranslateAutoTranslateRow
+						autoTranslateEnabled={autoTranslateEnabled}
+						fieldStatus={fieldProps.fieldStatus}
+						handleAutoTranslateClick={() =>
+							fetchAutoTranslateField(field.id)
+						}
+						key={field.id}
+						label={fieldProps.label}
+					>
+						{field.html ? (
+							<TranslateFieldEditor {...fieldProps} />
+						) : (
+							<TranslateFieldInput {...fieldProps} />
+						)}
+					</TranslateAutoTranslateRow>
 				);
 			})}
 		</React.Fragment>

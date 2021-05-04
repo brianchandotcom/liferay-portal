@@ -16,8 +16,8 @@ import {useCallback, useEffect} from 'react';
 
 import switchSidebarPanel from '../actions/switchSidebarPanel';
 import {HIGHLIGHTED_COMMENT_ID_KEY} from '../config/constants/highlightedCommentIdKey';
+import {useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../store/index';
-import {useSelectItem} from './Controls';
 
 export default function URLParser() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);

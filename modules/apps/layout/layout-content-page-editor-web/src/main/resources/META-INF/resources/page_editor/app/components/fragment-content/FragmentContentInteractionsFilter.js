@@ -21,13 +21,6 @@ import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
 import {useToControlsId} from '../../contexts/CollectionItemContext';
-import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
-import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
-import selectLanguageId from '../../selectors/selectLanguageId';
-import {useSelector, useSelectorCallback} from '../../store/index';
-import canActivateEditable from '../../utils/canActivateEditable';
-import {deepEqual} from '../../utils/checkDeepEqual';
-import isMapped from '../../utils/editable-value/isMapped';
 import {
 	useActivationOrigin,
 	useActiveItemType,
@@ -38,7 +31,14 @@ import {
 	useIsActive,
 	useIsHovered,
 	useSelectItem,
-} from '../Controls';
+} from '../../contexts/ControlsContext';
+import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
+import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
+import selectLanguageId from '../../selectors/selectLanguageId';
+import {useSelector, useSelectorCallback} from '../../store/index';
+import canActivateEditable from '../../utils/canActivateEditable';
+import {deepEqual} from '../../utils/checkDeepEqual';
+import isMapped from '../../utils/editable-value/isMapped';
 import {useSetEditableProcessorUniqueId} from './EditableProcessorContext';
 import {getEditableElement} from './getEditableElement';
 

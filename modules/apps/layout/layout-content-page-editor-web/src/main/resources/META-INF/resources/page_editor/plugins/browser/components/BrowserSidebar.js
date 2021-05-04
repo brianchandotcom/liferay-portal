@@ -16,11 +16,11 @@ import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 
+import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {
 	useActiveItemId,
 	useActiveItemType,
-} from '../../../app/components/Controls';
-import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
+} from '../../../app/contexts/ControlsContext';
 import {useId} from '../../../app/utils/useId';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import ContentsSidebar from './contents/components/ContentsSidebar';

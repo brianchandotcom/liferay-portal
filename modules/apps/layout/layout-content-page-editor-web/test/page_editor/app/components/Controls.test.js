@@ -14,7 +14,7 @@
 
 import {cleanup} from '@testing-library/react';
 
-import {reducer} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
+import {reducer} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
 
 import '@testing-library/jest-dom/extend-expect';
 

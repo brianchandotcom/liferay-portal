@@ -18,11 +18,8 @@ import switchSidebarPanel from '../actions/switchSidebarPanel';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {config} from '../config/index';
-import {
-	useFromControlsId,
-	useToControlsId,
-} from '../contexts/CollectionItemContext';
 import {useDispatch, useSelector} from '../store/index';
+import {useFromControlsId, useToControlsId} from './CollectionItemContext';
 
 const ACTIVE_INITIAL_STATE = {
 	activationOrigin: null,

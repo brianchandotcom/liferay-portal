@@ -18,10 +18,13 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
+import {
+	useHoveredItemId,
+	useHoveredItemType,
+} from '../../contexts/ControlsContext';
 import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import {useHoveredItemId, useHoveredItemType} from '../Controls';
 import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
 import FragmentContentInteractionsFilter from '../fragment-content/FragmentContentInteractionsFilter';

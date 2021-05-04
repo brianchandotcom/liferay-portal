@@ -27,10 +27,10 @@ import Button from '../../common/components/Button';
 import InvisibleFieldset from '../../common/components/InvisibleFieldset';
 import {openImageSelector} from '../../core/openImageSelector';
 import {config} from '../config/index';
+import {useActiveItemId} from '../contexts/ControlsContext';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../store/index';
 import addFragmentComposition from '../thunks/addFragmentComposition';
-import {useActiveItemId} from './Controls';
 
 const SaveFragmentCompositionModal = ({onCloseModal}) => {
 	const dispatch = useDispatch();

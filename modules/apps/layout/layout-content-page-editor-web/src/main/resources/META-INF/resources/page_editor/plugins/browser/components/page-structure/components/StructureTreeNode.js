@@ -19,18 +19,18 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useRef} from 'react';
 
 import {addMappingFields} from '../../../../../app/actions/index';
+import {fromControlsId} from '../../../../../app/components/layout-data-items/Collection';
+import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
+import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
+import {useToControlsId} from '../../../../../app/contexts/CollectionItemContext';
 import {
 	useActivationOrigin,
 	useActiveItemId,
 	useHoverItem,
 	useHoveredItemId,
 	useSelectItem,
-} from '../../../../../app/components/Controls';
-import {fromControlsId} from '../../../../../app/components/layout-data-items/Collection';
-import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
-import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
-import {useToControlsId} from '../../../../../app/contexts/CollectionItemContext';
+} from '../../../../../app/contexts/ControlsContext';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../../../../app/selectors/selectSegmentsExperienceId';
 import CollectionService from '../../../../../app/services/CollectionService';

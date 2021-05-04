@@ -23,6 +23,12 @@ import {getLayoutDataItemPropTypes} from '../../prop-types/index';
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
+import {
+	useHoverItem,
+	useIsActive,
+	useIsHovered,
+	useSelectItem,
+} from '../contexts/ControlsContext';
 import selectCanUpdateItemConfiguration from '../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
@@ -34,12 +40,6 @@ import {
 	useDropTarget,
 } from '../utils/drag-and-drop/useDragAndDrop';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
-import {
-	useHoverItem,
-	useIsActive,
-	useIsHovered,
-	useSelectItem,
-} from './Controls';
 import ItemActions from './ItemActions';
 import {useEditableProcessorUniqueId} from './fragment-content/EditableProcessorContext';
 

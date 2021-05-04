@@ -16,7 +16,6 @@ import ClayAlert from '@clayui/alert';
 import {Treeview} from 'frontend-js-components-web';
 import React, {useCallback, useMemo, useState} from 'react';
 
-import {useActiveItemId} from '../../../../../app/components/Controls';
 import getAllEditables from '../../../../../app/components/fragment-content/getAllEditables';
 import getAllPortals from '../../../../../app/components/layout-data-items/getAllPortals';
 import hasDropZoneChild from '../../../../../app/components/layout-data-items/hasDropZoneChild';
@@ -26,6 +25,7 @@ import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../app/config/index';
+import {useActiveItemId} from '../../../../../app/contexts/ControlsContext';
 import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpdateEditables';
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../../../../app/store/index';

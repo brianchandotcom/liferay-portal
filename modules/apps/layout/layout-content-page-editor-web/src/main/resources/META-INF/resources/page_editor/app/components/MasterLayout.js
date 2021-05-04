@@ -21,8 +21,8 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
+import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector} from '../store/index';
-import {useSelectItem} from './Controls';
 import Layout from './Layout';
 import FragmentContent from './fragment-content/FragmentContent';
 import {Collection, Column, Container, Row} from './layout-data-items/index';

@@ -18,7 +18,10 @@ import React, {useEffect, useState} from 'react';
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
-import {useHoveredItemId, useHoveredItemType} from '../Controls';
+import {
+	useHoveredItemId,
+	useHoveredItemType,
+} from '../../contexts/ControlsContext';
 import Topper from '../Topper';
 import Collection from './Collection';
 import isHovered from './isHovered';

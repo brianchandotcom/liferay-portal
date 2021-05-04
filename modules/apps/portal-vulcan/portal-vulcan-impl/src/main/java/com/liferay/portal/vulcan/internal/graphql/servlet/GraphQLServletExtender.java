@@ -1466,44 +1466,52 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
-		ObjectDefinition objectDefinition,
-		List<com.liferay.object.model.ObjectField> objectFields) {
+		GraphQLDTOContributor graphQLDTOContributor) {
 
 		GraphQLInputObjectType.Builder builder =
 			new GraphQLInputObjectType.Builder();
 
-		builder.name("Input" + objectDefinition.getName());
+		builder.name("Input" + graphQLDTOContributor.getName());
 
-		for (com.liferay.object.model.ObjectField objectField : objectFields) {
+		for (GraphQLDTOProperty property : graphQLDTOContributor.getProperties()) {
 			GraphQLInputObjectField.Builder graphQLInputObjectFieldBuilder =
 				GraphQLInputObjectField.newInputObjectField();
 
 			builder.field(
 				graphQLInputObjectFieldBuilder.name(
-					objectField.getName()
+					property.getName()
 				).type(
-					Scalars.GraphQLString
+					_toScalar(property.getType())
 				).build());
 		}
 
 		return builder.build();
 	}
 
-	private GraphQLObjectType _getObjectDefinitionGraphQLObjectType(
-		ObjectDefinition objectDefinition,
-		List<com.liferay.object.model.ObjectField> objectFields) {
+	private GraphQLScalarType _toScalar(Class<?> type) {
+		if (String.class.equals(type)) {
+			return Scalars.GraphQLString;
+		} else if (Long.class.equals(type)) {
+			return Scalars.GraphQLLong;
+		} else if (Boolean.class.equals(type)) {
+			return Scalars.GraphQLBoolean;
+		} else if (Integer.class.equals(type)) {
+			return Scalars.GraphQLInt;
+		}
+
+		return Scalars.GraphQLString;
+	}
+
+	private GraphQLObjectType _getGraphQLObjectType(
+		GraphQLDTOContributor graphQLDTOContributor) {
 
 		GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
 
-		builder.field(
-			_addField(
-				Scalars.GraphQLLong,
-				objectDefinition.getPrimaryKeyColumnName()));
-		builder.name(objectDefinition.getName());
+		builder.name(graphQLDTOContributor.getName());
 
-		for (com.liferay.object.model.ObjectField objectField : objectFields) {
+		for (GraphQLDTOProperty property : graphQLDTOContributor.getProperties()) {
 			builder.field(
-				_addField(Scalars.GraphQLString, objectField.getName()));
+				_addField(_toScalar(property.getType()), property.getName()));
 		}
 
 		return builder.build();
@@ -1791,19 +1799,21 @@ public class GraphQLServletExtender {
 		List<com.liferay.object.model.ObjectField> objectFields =
 			objectDefinitionGraphQL.getObjectFields();
 
-		GraphQLObjectType graphQLObjectType =
-			_getObjectDefinitionGraphQLObjectType(
-				objectDefinition, objectFields);
+		GraphQLDTOContributor graphQLDTOContributor =
+			ObjectDefinitionGraphQLDTOContributor.of(objectDefinition, objectFields);
 
-		String createName = "create" + objectDefinition.getName();
+		GraphQLObjectType graphQLObjectType =
+			_getGraphQLObjectType(graphQLDTOContributor);
+
+		String createName = "create" + graphQLDTOContributor.getName();
 
 		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
-			objectDefinition, objectFields);
+			graphQLDTOContributor);
 
 		mutationBuilder.field(
 			_addField(
 				graphQLObjectType, createName,
-				_addArgument(graphQLInputType, objectDefinition.getName()),
+				_addArgument(graphQLInputType, graphQLDTOContributor.getName()),
 				_addArgument(Scalars.GraphQLLong, "siteId")));
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
@@ -1817,7 +1827,7 @@ public class GraphQLServletExtender {
 
 					Map<String, Serializable> values =
 						dataFetchingEnvironment.getArgument(
-							objectDefinition.getName());
+							graphQLDTOContributor.getName());
 
 					return _getObjectEntryValues(
 						objectDefinition,
@@ -1831,7 +1841,7 @@ public class GraphQLServletExtender {
 
 		// Delete
 
-		String deleteName = "delete" + objectDefinition.getName();
+		String deleteName = "delete" + graphQLDTOContributor.getName();
 
 		mutationBuilder.field(
 			_addField(
@@ -1854,7 +1864,7 @@ public class GraphQLServletExtender {
 		// Get
 
 		String getName = StringUtil.lowerCaseFirstLetter(
-			objectDefinition.getName());
+			graphQLDTOContributor.getName());
 
 		queryBuilder.field(
 			_addField(
@@ -1878,13 +1888,13 @@ public class GraphQLServletExtender {
 		Map<String, GraphQLType> graphQLTypes =
 			processingElementsContainer.getTypeRegistry();
 		String listName = StringUtil.lowerCaseFirstLetter(
-			TextFormatter.formatPlural(objectDefinition.getName()));
+			TextFormatter.formatPlural(graphQLDTOContributor.getName()));
 
 		queryBuilder.field(
 			_addField(
 				_getPageGraphQLObjectType(
 					graphQLTypes.get("Facet"), graphQLObjectType,
-					objectDefinition.getName()),
+					graphQLDTOContributor.getName()),
 				listName,
 				_addArgument(
 					GraphQLList.list(Scalars.GraphQLString), "aggregation"),
@@ -1956,12 +1966,12 @@ public class GraphQLServletExtender {
 
 		// Update
 
-		String updateName = "update" + objectDefinition.getName();
+		String updateName = "update" + graphQLDTOContributor.getName();
 
 		mutationBuilder.field(
 			_addField(
 				graphQLObjectType, updateName,
-				_addArgument(graphQLInputType, objectDefinition.getName()),
+				_addArgument(graphQLInputType, graphQLDTOContributor.getName()),
 				_addArgument(
 					Scalars.GraphQLLong,
 					objectDefinition.getPrimaryKeyColumnName())));
@@ -1974,7 +1984,7 @@ public class GraphQLServletExtender {
 
 					Map<String, Serializable> values =
 						dataFetchingEnvironment.getArgument(
-							objectDefinition.getName());
+							graphQLDTOContributor.getName());
 
 					return _getObjectEntryValues(
 						objectDefinition,

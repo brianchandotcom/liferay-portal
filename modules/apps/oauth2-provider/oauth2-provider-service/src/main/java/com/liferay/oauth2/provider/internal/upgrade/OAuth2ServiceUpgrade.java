@@ -82,7 +82,7 @@ public class OAuth2ServiceUpgrade implements UpgradeStepRegistrator {
 				"rememberDeviceContent VARCHAR(75) null"));
 
 		registry.register(
-			"3.1.0", "3.2.0", new OAuth2ApplicationFeatureUpgradeProcess());
+			"3.1.0", "4.0.0", new OAuth2ApplicationFeatureUpgradeProcess());
 	}
 
 	@Reference

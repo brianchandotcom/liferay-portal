@@ -12,43 +12,51 @@
  * details.
  */
 
-const clickOutside = (target, ...elements) =>
-	!elements.some((element) => !!target.closest(element));
+import {
+	getDataEngineStructure,
+	getInputLocalizedValues,
+} from '../saveDDMStructure.es';
 
-export default function DataEngineLayoutBuilderHandler({
-	defaultLanguageId,
-	namespace,
-}) {
+const isElementInnerSelector = (element, ...selectors) =>
+	!selectors.some((selector) => element.closest(selector));
+
+export default function DataEngineLayoutBuilderHandler({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	const getDataLayoutBuilder = () => {
 		return Liferay.componentReady(`${namespace}dataLayoutBuilder`);
 	};
 
-	const getInputLocalizedValues = (fieldName) => {
-		const inputLocalized = Liferay.component(`${namespace}${fieldName}`);
-		const localizedValues = {};
+	// Deselect field when clicking outside the form builder
 
-		if (inputLocalized) {
-			const translatedLanguages = inputLocalized
-				.get('translatedLanguages')
-				.values();
+	const detectClickOutside = async ({target}) => {
+		if (
+			isElementInnerSelector(
+				target,
+				'.ddm-form-builder-wrapper',
+				'.multi-panel-sidebar',
+				'.lfr-icon-menu-open',
+				'.input-localized-content'
+			)
+		) {
+			const dataLayoutBuilder = await getDataLayoutBuilder();
 
-			translatedLanguages.forEach((languageId) => {
-				localizedValues[languageId] = inputLocalized.getValue(
-					languageId
-				);
+			dataLayoutBuilder.current.dispatch({
+				type: 'sidebar_field_blur',
 			});
 		}
-
-		return localizedValues;
 	};
+
+	window.addEventListener('click', detectClickOutside, true);
 
 	const saveDataEngineStructure = async () => {
 		const dataLayoutBuilder = await getDataLayoutBuilder();
 		const nameInput = document.getElementById(`${namespace}name`);
-		const name = getInputLocalizedValues('name');
-		const description = getInputLocalizedValues('description');
+		const name = getInputLocalizedValues(namespace, 'name');
+
+		const {
+			defaultLanguageId,
+		} = dataLayoutBuilder.current.state.dataDefinition;
 
 		if (!nameInput.value || !name[defaultLanguageId]) {
 			Liferay.Util.openToast({
@@ -67,47 +75,12 @@ export default function DataEngineLayoutBuilderHandler({
 			return;
 		}
 
-		const {dataDefinition, dataLayout} = dataLayoutBuilder.current.state;
-
 		Liferay.Util.postForm(form, {
-			data: {
-				dataDefinition: JSON.stringify({
-					...dataDefinition.serialize(),
-					defaultLanguageId,
-					description,
-					name,
-				}),
-				dataLayout: JSON.stringify({
-					...dataLayout.serialize(),
-					description,
-					name,
-				}),
-			},
+			data: getDataEngineStructure({dataLayoutBuilder, namespace}),
 		});
 	};
 
 	form.addEventListener('submit', saveDataEngineStructure);
-
-	// Deselect field when clicking outside the form builder
-
-	const detectClickOutside = async ({target}) => {
-		if (
-			clickOutside(target, [
-				'.ddm-form-builder-wrapper',
-				'.multi-panel-sidebar',
-				'.lfr-icon-menu-open',
-				'.input-localized-content',
-			])
-		) {
-			const dataLayoutBuilder = await getDataLayoutBuilder();
-
-			dataLayoutBuilder.current.dispatch({
-				type: 'sidebar_field_blur',
-			});
-		}
-	};
-
-	window.addEventListener('click', detectClickOutside, true);
 
 	// Update editing language id in the data engine side
 
@@ -116,10 +89,7 @@ export default function DataEngineLayoutBuilderHandler({
 		const dataLayoutBuilder = await getDataLayoutBuilder();
 
 		dataLayoutBuilder.current.dispatch({
-			payload: {
-				defaultLanguageId,
-				editingLanguageId,
-			},
+			payload: {editingLanguageId},
 			type: 'language_change',
 		});
 	};

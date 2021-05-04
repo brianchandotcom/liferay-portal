@@ -136,6 +136,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_PERMISSIONS_DELETE_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_DELETE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX</td>
 	<td>//input[@id='${key_roleTitle}_ACTION_SUBSCRIBE']</td>
 	<td></td>

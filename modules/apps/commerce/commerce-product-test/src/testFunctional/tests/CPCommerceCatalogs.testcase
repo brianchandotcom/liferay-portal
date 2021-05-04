@@ -116,12 +116,85 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6279. EditAPermissionOnACatalog"
-	@ignore = "true"
 	@priority = "3"
 	test EditAPermissionOnACatalog {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceCatalogs#EditAPermissionOnACatalog";
 
-		// TODO COMMERCE-6279 EditAPermissionOnACatalog
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Catalogs");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewCatalogsEntry(
+			catalogCurrency = "US Dollar",
+			catalogLanguage = "English (United States)",
+			catalogName = "Test Catalog");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		Click(locator1 = "Icon#BACK");
+
+		Click(
+			key_value = "Test Catalog",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Permissions");
+
+		IFrame.selectPermissionsFrame();
+
+		Check.checkToggleSwitch(
+			key_roleTitle = "user",
+			locator1 = "Permissions#INLINE_PERMISSIONS_VIEW_CHECKBOX");
+
+		Check.checkToggleSwitch(
+			key_roleTitle = "user",
+			locator1 = "Permissions#INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX");
+
+		Check.checkToggleSwitch(
+			key_roleTitle = "user",
+			locator1 = "Permissions#INLINE_PERMISSIONS_DELETE_CHECKBOX");
+
+		Check.checkToggleSwitch(
+			key_roleTitle = "user",
+			locator1 = "Permissions#INLINE_PERMISSIONS_UPDATE_CHECKBOX");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		SelectFrameTop();
+
+		ClickNoError(
+			key_modalTitle = "Permissions",
+			locator1 = "Button#CLOSE_MODAL");
+
+		Click(
+			key_value = "Test Catalog",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Permissions");
+
+		IFrame.selectPermissionsFrame();
+
+		AssertChecked(
+			key_roleTitle = "user",
+			locator1 = "Permissions#INLINE_PERMISSIONS_UPDATE_CHECKBOX");
+
+		AssertChecked(
+			key_roleTitle = "user",
+			locator1 = "Permissions#INLINE_PERMISSIONS_DELETE_CHECKBOX");
+
+		AssertChecked(
+			key_roleTitle = "user",
+			locator1 = "Permissions#INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX");
+
+		AssertChecked(
+			key_roleTitle = "user",
+			locator1 = "Permissions#INLINE_PERMISSIONS_VIEW_CHECKBOX");
 	}
 
 	@description = "This is a test for COMMERCE-6272. RemoveACatalog"

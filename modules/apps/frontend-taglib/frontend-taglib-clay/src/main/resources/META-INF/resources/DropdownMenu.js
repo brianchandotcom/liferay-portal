@@ -19,6 +19,39 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
+function addSeparators(items) {
+
+	// We need at least two non-empty items to consider adding separators
+	// between them.
+
+	if (items.length < 2) {
+		return items;
+	}
+
+	const separatedItems = [items[0]];
+
+	for (let i = 1; i < items.length; i++) {
+		const item = items[i];
+
+		if (item.type === 'group' && item.separator) {
+			separatedItems.push({type: 'divider'});
+		}
+
+		separatedItems.push(item);
+	}
+
+	return separatedItems.map((item) => {
+		if (item.type === 'group') {
+			return {
+				...item,
+				items: addSeparators(item.items),
+			};
+		}
+
+		return item;
+	});
+}
+
 function spreadDataAttributes(item) {
 	const {data, ...rest} = item;
 
@@ -60,7 +93,7 @@ export default function DropdownMenu({
 				className={classNames({
 					'dropdown-action': actionsDropdown,
 				})}
-				items={items.map(spreadDataAttributes)}
+				items={addSeparators(items.map(spreadDataAttributes))}
 				trigger={
 					<ClayButton
 						className={classNames(cssClass, {

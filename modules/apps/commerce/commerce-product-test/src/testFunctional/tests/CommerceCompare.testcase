@@ -64,7 +64,6 @@ definition {
 				key_value = "${value}",
 				locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_ACTIVE_N");
 		}
-		
 	}
 
 	@description = "COMMERCE-5915. As a buyer, I want to see max number of compare items allowed in Compare page"
@@ -74,6 +73,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5915 EditMaxNumberOfComparisonItemsInComparePage pending implementation
+
 	}
 
 	@description = "COMMERCE-5916. As a buyer, I want to see max number of compare items allowed in MiniCompare widget"

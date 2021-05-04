@@ -609,7 +609,8 @@ public class DLFileEntryTypeLocalServiceImpl
 			serviceContext.getUserId(), dlFileEntry.getFileEntryId(), null,
 			null, null, null, null,
 			DLVersionNumberIncrease.fromMajorVersion(false),
-			defaultFileEntryTypeId, null, null, null, 0, serviceContext);
+			defaultFileEntryTypeId, null, null, null, 0, null, null,
+			serviceContext);
 	}
 
 	/**

@@ -88,7 +88,7 @@ public class DLFileVersionTableReferenceDefinitionTest
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			Collections.emptyMap(), null, inputStream, 0,
+			Collections.emptyMap(), null, inputStream, 0, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		return _dlFileEntry.getFileVersion();

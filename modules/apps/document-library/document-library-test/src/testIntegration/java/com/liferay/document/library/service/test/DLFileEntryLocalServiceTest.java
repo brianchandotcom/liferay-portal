@@ -1059,7 +1059,7 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+			ddmFormValuesMap, null, inputStream, 0, null, null, serviceContext);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 

@@ -727,7 +727,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return dlFileEntryLocalService.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
-			ddmFormValuesMap, file, inputStream, size, serviceContext);
+			ddmFormValuesMap, file, inputStream, size, null, null,
+			serviceContext);
 	}
 
 	@Override

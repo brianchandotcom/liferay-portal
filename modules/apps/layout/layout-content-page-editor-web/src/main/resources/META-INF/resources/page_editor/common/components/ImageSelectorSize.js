@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {useGetFieldValue} from '../../app/components/CollectionItemContext';
-import {useGlobalContext} from '../../app/components/GlobalContext';
+import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import selectLanguageId from '../../app/selectors/selectLanguageId';
 import ImageService from '../../app/services/ImageService';
 import {useSelector} from '../../app/store/index';

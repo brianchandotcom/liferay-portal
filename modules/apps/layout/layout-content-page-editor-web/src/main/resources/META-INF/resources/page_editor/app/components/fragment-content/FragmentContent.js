@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import setFragmentEditables from '../../actions/setFragmentEditables';
+import {useGlobalContext} from '../../contexts/GlobalContext';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
@@ -33,7 +34,6 @@ import {
 	useGetFieldValue,
 	useToControlsId,
 } from '../CollectionItemContext';
-import {useGlobalContext} from '../GlobalContext';
 import UnsafeHTML from '../UnsafeHTML';
 import {useIsProcessorEnabled} from './EditableProcessorContext';
 import getAllEditables from './getAllEditables';

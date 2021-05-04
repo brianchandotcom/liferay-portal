@@ -18,6 +18,7 @@ import React, {useMemo, useRef, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
+import {useGlobalContext} from '../../contexts/GlobalContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
@@ -27,7 +28,6 @@ import {NotDraggableArea} from '../../utils/drag-and-drop/useDragAndDrop';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {useIsActive} from '../Controls';
-import {useGlobalContext} from '../GlobalContext';
 import {
 	useResizeContext,
 	useSetResizeContext,

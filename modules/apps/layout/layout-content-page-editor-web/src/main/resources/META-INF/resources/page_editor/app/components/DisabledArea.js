@@ -24,9 +24,9 @@ import React, {
 } from 'react';
 import {createPortal} from 'react-dom';
 
+import {useGlobalContext} from '../contexts/GlobalContext';
 import {useSelector} from '../store/index';
 import {useSelectItem} from './Controls';
-import {useGlobalContext} from './GlobalContext';
 
 const DEFAULT_DISABLED_AREA_CLASS = 'page-editor__disabled-area';
 const DEFAULT_DISABLED_AREA_PADDED_CLASS = `${DEFAULT_DISABLED_AREA_CLASS}--padded`;

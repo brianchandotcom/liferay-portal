@@ -21,6 +21,7 @@ import {INIT} from '../actions/types';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 import {DisplayPagePreviewItemContextProvider} from '../contexts/DisplayPagePreviewItemContext';
+import {GlobalContextProvider} from '../contexts/GlobalContext';
 import {reducer} from '../reducers/index';
 import selectLanguageId from '../selectors/selectLanguageId';
 import {StoreContextProvider, useSelector} from '../store/index';
@@ -29,7 +30,6 @@ import {CollectionActiveItemContextProvider} from './CollectionActiveItemContext
 import {ControlsProvider} from './Controls';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreview from './DragPreview';
-import {GlobalContextProvider} from './GlobalContext';
 import LayoutViewport from './LayoutViewport';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';

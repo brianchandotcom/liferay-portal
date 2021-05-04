@@ -294,7 +294,7 @@ definition {
 
 		User.firstLoginUI();
 
-		//Standard and safe UI action to assert Portal is accessible after login
+		// Standard and safe UI action to assert Portal is accessible after login
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

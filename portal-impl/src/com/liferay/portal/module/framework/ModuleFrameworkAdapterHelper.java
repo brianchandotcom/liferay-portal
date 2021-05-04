@@ -120,7 +120,7 @@ public class ModuleFrameworkAdapterHelper {
 				getClassLoader(), className);
 		}
 		catch (Exception exception) {
-			_log.error("Unable to load the module framework");
+			_log.error("Unable to load the module framework", exception);
 
 			throw new RuntimeException(exception);
 		}

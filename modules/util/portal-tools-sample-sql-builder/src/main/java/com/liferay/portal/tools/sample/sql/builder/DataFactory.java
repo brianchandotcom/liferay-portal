@@ -385,7 +385,9 @@ public class DataFactory {
 		_simpleDateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss", TimeZone.getDefault());
 
-		_counter = new SimpleCounter(BenchmarksPropsValues.MAX_GROUP_COUNT + 1);
+		_counter = new SimpleCounter(
+			BenchmarksPropsValues.MAX_GROUP_COUNT +
+				BenchmarksPropsValues.MAX_COMMERCE_GROUP_COUNT + 1);
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_layoutPlidCounter = new SimpleCounter();

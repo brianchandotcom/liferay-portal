@@ -140,36 +140,44 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 	}
 </aui:script>
 
-<aui:script use="liferay-item-selector-dialog">
-	window.document
-		.querySelector('#<portlet:namespace />addCommerceProductDefinition')
-		.addEventListener('click', (event) => {
+<aui:script sandbox="<%= true %>">
+	const addCommerceProductDefinitionButton = document.getElementById(
+		'<portlet:namespace />addCommerceProductDefinition'
+	);
+
+	if (addCommerceProductDefinitionButton) {
+		addCommerceProductDefinitionButton.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: 'productDefinitionsSelectItem',
-				on: {
-					selectedItemChange: function (event) {
-						var <portlet:namespace />addCPDefinitionIds = [];
+			const openerWindow = Liferay.Util.getOpener();
 
-						var selectedItems = event.newVal;
+			openerWindow.Liferay.Util.openSelectionModal({
+				multiple: true,
+				onSelect: (selectedItems) => {
+					if (!selectedItems || !selectedItems.length) {
+						return;
+					}
 
-						if (selectedItems) {
-							document.<portlet:namespace />fm.<portlet:namespace />cpDefinitionIds.value = selectedItems;
-							document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value =
-								'add-selection';
-							document.<portlet:namespace />fm.<portlet:namespace />redirect.value =
-								'<%= HtmlUtil.escapeJS(currentURL) %>';
+					const form = document.getElementById('<portlet:namespace />fm');
 
-							submitForm(document.<portlet:namespace />fm);
-						}
-					},
+					if (!form) {
+						return;
+					}
+
+					const values = selectedItems.map((item) => item.value);
+
+					form.<portlet:namespace />cpDefinitionIds.value = values;
+
+					form.<portlet:namespace /><%= Constants.CMD %>.value =
+						'add-selection';
+					form.<portlet:namespace />redirect.value = '<%= currentURL %>';
+
+					submitForm(form);
 				},
 				title: 'add-new-product-to-x',
 				url:
 					'<%= cpPublisherConfigurationDisplayContext.getItemSelectorUrl() %>',
 			});
-
-			itemSelectorDialog.open();
 		});
+	}
 </aui:script>

@@ -22,11 +22,16 @@ import com.liferay.change.tracking.web.internal.security.permission.resource.CTC
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -41,11 +46,16 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,45 +88,95 @@ public class InviteUsersMVCResourceCommand
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortalException {
+		throws IOException, PortalException {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
+
+		if (ctCollection == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"this-publication-no-longer-exists")));
+
+			return;
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
-			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
+		if (!CTCollectionPermission.contains(
+				themeDisplay.getPermissionChecker(), ctCollection,
+				ActionKeys.PERMISSIONS)) {
 
-		CTCollectionPermission.contains(
-			themeDisplay.getPermissionChecker(), ctCollection,
-			ActionKeys.PERMISSIONS);
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"you-do-not-have-permission-to-invite-users-to-this-" +
+							"publication")));
 
-		Group group = ctCollection.getGroup();
-
-		if (group == null) {
-			group = _groupLocalService.addGroup(
-				ctCollection.getUserId(),
-				GroupConstants.DEFAULT_PARENT_GROUP_ID,
-				CTCollection.class.getName(), ctCollection.getCtCollectionId(),
-				GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), ctCollection.getName()
-				).build(),
-				null, GroupConstants.TYPE_SITE_PRIVATE, false,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
-				true, null);
+			return;
 		}
 
-		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
+		try {
+			Group group = ctCollection.getGroup();
 
-		_userGroupRoleLocalService.deleteUserGroupRoles(
-			userIds, group.getGroupId());
+			if (group == null) {
+				group = _groupLocalService.addGroup(
+					ctCollection.getUserId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					CTCollection.class.getName(),
+					ctCollection.getCtCollectionId(),
+					GroupConstants.DEFAULT_LIVE_GROUP_ID,
+					HashMapBuilder.put(
+						LocaleUtil.getDefault(), ctCollection.getName()
+					).build(),
+					null, GroupConstants.TYPE_SITE_PRIVATE, false,
+					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
+					true, null);
+			}
 
-		Role role = _getRole(resourceRequest, themeDisplay);
+			long[] userIds = ParamUtil.getLongValues(
+				resourceRequest, "userIds");
 
-		for (long userId : userIds) {
-			_userGroupRoleLocalService.addUserGroupRole(
-				userId, group.getGroupId(), role.getRoleId());
+			_userGroupRoleLocalService.deleteUserGroupRoles(
+				userIds, group.getGroupId());
+
+			Role role = _getRole(resourceRequest, themeDisplay);
+
+			for (long userId : userIds) {
+				_userGroupRoleLocalService.addUserGroupRole(
+					userId, group.getGroupId(), role.getRoleId());
+			}
 		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest, "an-unexpected-error-occurred")));
+
+			return;
+		}
+
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"successMessage",
+				_language.get(
+					httpServletRequest, "users-were-invited-successfully")));
 	}
 
 	private Role _getRole(
@@ -153,11 +213,20 @@ public class InviteUsersMVCResourceCommand
 		return role;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		InviteUsersMVCResourceCommand.class);
+
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

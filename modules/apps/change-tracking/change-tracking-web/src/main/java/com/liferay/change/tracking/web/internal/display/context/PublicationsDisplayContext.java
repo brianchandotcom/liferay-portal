@@ -181,17 +181,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 						PublicationRoleConstants.LABEL_VIEW)
 				))
 		).put(
-			"sharingVerifyEmailAddressURL",
-			() -> {
-				ResourceURL sharingVerifyEmailAddressURL =
-					_renderResponse.createResourceURL();
-
-				sharingVerifyEmailAddressURL.setResourceID(
-					"/change_tracking/verify_email_address");
-
-				return sharingVerifyEmailAddressURL.toString();
-			}
-		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(
 			"updateRolesURL",
@@ -206,6 +195,21 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 					String.valueOf(ctCollection.getCtCollectionId()));
 
 				return updateRolesURL.toString();
+			}
+		).put(
+			"verifyEmailAddressURL",
+			() -> {
+				ResourceURL sharingVerifyEmailAddressURL =
+					_renderResponse.createResourceURL();
+
+				sharingVerifyEmailAddressURL.setResourceID(
+					"/change_tracking/verify_email_address");
+
+				sharingVerifyEmailAddressURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId()));
+
+				return sharingVerifyEmailAddressURL.toString();
 			}
 		).build();
 	}

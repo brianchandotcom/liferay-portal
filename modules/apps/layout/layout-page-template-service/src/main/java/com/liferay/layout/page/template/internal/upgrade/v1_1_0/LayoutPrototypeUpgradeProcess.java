@@ -62,6 +62,8 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 	}
 
 	protected void upgradeLayoutPrototype() throws Exception {
+		Date date = new Date(System.currentTimeMillis());
+
 		StringBundler sb = new StringBundler(6);
 
 		sb.append("insert into LayoutPageTemplateEntry (uuid_, ");
@@ -103,6 +105,22 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 
 					layoutPrototype.setNameMap(nameMap);
 
+					layoutPrototype =
+						_layoutPrototypeLocalService.updateLayoutPrototype(
+							layoutPrototype);
+				}
+
+				if ((layoutPrototype.getCreateDate() == null) ||
+					(layoutPrototype.getModifiedDate() == null)) {
+
+					if (layoutPrototype.getCreateDate() == null) {
+						layoutPrototype.setCreateDate(date);
+					}
+
+					if (layoutPrototype.getModifiedDate() == null) {
+						layoutPrototype.setModifiedDate(date);
+					}
+
 					_layoutPrototypeLocalService.updateLayoutPrototype(
 						layoutPrototype);
 				}
@@ -115,9 +133,6 @@ public class LayoutPrototypeUpgradeProcess extends UpgradeProcess {
 				ps.setLong(4, layoutPrototype.getCompanyId());
 				ps.setLong(5, layoutPrototype.getUserId());
 				ps.setString(6, layoutPrototype.getUserName());
-
-				Date date = new Date(System.currentTimeMillis());
-
 				ps.setDate(7, date);
 				ps.setDate(8, date);
 

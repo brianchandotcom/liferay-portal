@@ -19,6 +19,28 @@ import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import React from 'react';
 
+function spreadDataAttributes(item) {
+	const {data, ...rest} = item;
+
+	const dataAttributes = data
+		? Object.entries(data).reduce((acc, [key, value]) => {
+				acc[`data-${key}`] = value;
+
+				return acc;
+		  }, {})
+		: {};
+
+	const items = Array.isArray(item.items)
+		? item.items.map(spreadDataAttributes)
+		: item.items;
+
+	return {
+		...dataAttributes,
+		...rest,
+		items,
+	};
+}
+
 export default function DropdownMenu({
 	actionsDropdown = false,
 	additionalProps: _additionalProps,
@@ -38,20 +60,7 @@ export default function DropdownMenu({
 				className={classNames({
 					'dropdown-action': actionsDropdown,
 				})}
-				items={items.map(({data, ...rest}) => {
-					const dataAttributes = data
-						? Object.entries(data).reduce((acc, [key, value]) => {
-								acc[`data-${key}`] = value;
-
-								return acc;
-						  }, {})
-						: {};
-
-					return {
-						...dataAttributes,
-						...rest,
-					};
-				})}
+				items={items.map(spreadDataAttributes)}
 				trigger={
 					<ClayButton
 						className={classNames(cssClass, {

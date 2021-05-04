@@ -67,13 +67,13 @@ describe('The WorkloadByStepCard component should', () => {
 		expect(tableItems[3]).toHaveTextContent(1);
 
 		expect(tableItems[1].innerHTML).toContain(
-			'/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending&amp;filters.slaStatuses%5B0%5D=Overdue'
+			'/instance/12345/20/1/dueDate:asc?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending&amp;filters.slaStatuses%5B0%5D=Overdue'
 		);
 		expect(tableItems[2].innerHTML).toContain(
-			'/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending&amp;filters.slaStatuses%5B0%5D=OnTime'
+			'/instance/12345/20/1/dueDate:asc?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending&amp;filters.slaStatuses%5B0%5D=OnTime'
 		);
 		expect(tableItems[3].innerHTML).toContain(
-			'/instance/12345/20/1?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending'
+			'/instance/12345/20/1/dueDate:asc?backPath=%2F1%2F20%2Ftitle%253Aasc%3FbackPath%3D%252F&amp;filters.statuses%5B0%5D=Pending'
 		);
 	});
 });

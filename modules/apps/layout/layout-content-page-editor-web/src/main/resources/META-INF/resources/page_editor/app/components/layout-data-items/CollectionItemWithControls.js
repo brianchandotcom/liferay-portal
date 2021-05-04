@@ -15,7 +15,7 @@
 import classNames from 'classnames';
 import React, {useContext} from 'react';
 
-import {CollectionItemContext} from '../CollectionItemContext';
+import {CollectionItemContext} from '../../contexts/CollectionItemContext';
 import TopperEmpty from '../TopperEmpty';
 
 const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {

@@ -18,6 +18,11 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import setFragmentEditables from '../../actions/setFragmentEditables';
+import {
+	useGetContent,
+	useGetFieldValue,
+	useToControlsId,
+} from '../../contexts/CollectionItemContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -29,11 +34,6 @@ import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
-import {
-	useGetContent,
-	useGetFieldValue,
-	useToControlsId,
-} from '../CollectionItemContext';
 import UnsafeHTML from '../UnsafeHTML';
 import {useIsProcessorEnabled} from './EditableProcessorContext';
 import getAllEditables from './getAllEditables';

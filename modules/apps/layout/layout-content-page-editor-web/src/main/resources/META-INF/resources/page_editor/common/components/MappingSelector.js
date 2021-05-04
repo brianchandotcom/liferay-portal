@@ -18,10 +18,10 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {addMappedInfoItem, addMappingFields} from '../../app/actions/index';
-import {useCollectionConfig} from '../../app/components/CollectionItemContext';
 import {EDITABLE_TYPES} from '../../app/config/constants/editableTypes';
 import {LAYOUT_TYPES} from '../../app/config/constants/layoutTypes';
 import {config} from '../../app/config/index';
+import {useCollectionConfig} from '../../app/contexts/CollectionItemContext';
 import CollectionService from '../../app/services/CollectionService';
 import InfoItemService from '../../app/services/InfoItemService';
 import {useDispatch, useSelector} from '../../app/store/index';

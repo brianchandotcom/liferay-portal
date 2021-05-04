@@ -15,7 +15,6 @@
 import React, {useCallback, useContext, useEffect} from 'react';
 
 import {updateFragmentEntryLinkContent} from '../actions/index';
-import {useDisplayPagePreviewItem} from '../contexts/DisplayPagePreviewItemContext';
 import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
@@ -23,6 +22,7 @@ import {useDispatch} from '../store/index';
 import isMappedToInfoItem from '../utils/editable-value/isMappedToInfoItem';
 import isMappedToLayout from '../utils/editable-value/isMappedToLayout';
 import isMappedToStructure from '../utils/editable-value/isMappedToStructure';
+import {useDisplayPagePreviewItem} from './DisplayPagePreviewItemContext';
 
 const defaultFromControlsId = (itemId) => itemId;
 const defaultToControlsId = (controlId) => controlId;

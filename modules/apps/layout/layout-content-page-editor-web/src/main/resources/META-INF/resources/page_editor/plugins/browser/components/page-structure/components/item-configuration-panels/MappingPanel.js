@@ -14,10 +14,10 @@
 
 import React from 'react';
 
-import {useCollectionConfig} from '../../../../../../app/components/CollectionItemContext';
 import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
+import {useCollectionConfig} from '../../../../../../app/contexts/CollectionItemContext';
 import selectEditableValue from '../../../../../../app/selectors/selectEditableValue';
 import {useDispatch, useSelector} from '../../../../../../app/store/index';
 import updateEditableValues from '../../../../../../app/thunks/updateEditableValues';

@@ -20,6 +20,7 @@ import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
 import {config} from '../../config/index';
+import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import {useSelector} from '../../store/index';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
@@ -27,7 +28,6 @@ import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
-import {useGetFieldValue} from '../CollectionItemContext';
 
 const Container = React.forwardRef(
 	({children, className, data, item, withinTopper = false}, ref) => {

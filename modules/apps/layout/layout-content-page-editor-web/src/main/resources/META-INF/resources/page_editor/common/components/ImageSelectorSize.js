@@ -17,7 +17,7 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {useGetFieldValue} from '../../app/components/CollectionItemContext';
+import {useGetFieldValue} from '../../app/contexts/CollectionItemContext';
 import {useGlobalContext} from '../../app/contexts/GlobalContext';
 import selectLanguageId from '../../app/selectors/selectLanguageId';
 import ImageService from '../../app/services/ImageService';

@@ -19,11 +19,11 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import ItemSelector from '../../../common/components/ItemSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {CollectionItemContext} from '../../contexts/CollectionItemContext';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch} from '../../store/index';
 import itemSelectorValueToInfoItem from '../../utils/item-selector-value/itemSelectorValueToInfoItem';
 import {useId} from '../../utils/useId';
-import {CollectionItemContext} from '../CollectionItemContext';
 
 export const ItemSelectorField = ({field, onValueSelect, value}) => {
 	const collectionItemContext = useContext(CollectionItemContext);

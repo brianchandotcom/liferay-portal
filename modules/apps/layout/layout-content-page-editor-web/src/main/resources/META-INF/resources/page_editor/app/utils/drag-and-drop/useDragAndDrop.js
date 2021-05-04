@@ -24,9 +24,9 @@ import React, {
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {useCollectionItemIndex} from '../../components/CollectionItemContext';
 import {useSelectItem} from '../../components/Controls';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {useCollectionItemIndex} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../store/index';
 import {DRAG_DROP_TARGET_TYPE} from './constants/dragDropTargetType';
 import {TARGET_POSITIONS} from './constants/targetPositions';

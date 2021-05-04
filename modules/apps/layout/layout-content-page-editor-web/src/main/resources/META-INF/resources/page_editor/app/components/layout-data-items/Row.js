@@ -19,12 +19,12 @@ import React, {useMemo} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../store/index';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
-import {useGetFieldValue} from '../CollectionItemContext';
 
 const Row = React.forwardRef(
 	({children, className, item, withinTopper = false}, ref) => {

@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.internal.cache.DummyPortalCache;
+import com.liferay.portal.kernel.internal.dao.orm.TableMapperArgumentResolver;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
@@ -35,10 +38,14 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -55,6 +62,7 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		Class<R> rightModelClass, BasePersistence<L> leftBasePersistence,
 		BasePersistence<R> rightBasePersistence, boolean cacheless) {
 
+		_tableName = tableName;
 		this.leftColumnName = leftColumnName;
 		this.rightColumnName = rightColumnName;
 		this.leftModelClass = leftModelClass;
@@ -83,6 +91,12 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 				PortalCacheManagerNames.MULTI_VM, rightToLeftPortalCacheName);
 		}
 
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			ArgumentsResolver.class, new TableMapperArgumentResolver(tableName),
+			new HashMap<>());
+
 		init(tableName, companyColumnName, leftColumnName, rightColumnName);
 	}
 
@@ -96,6 +110,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		leftToRightPortalCache.remove(leftPrimaryKey);
 		rightToLeftPortalCache.remove(rightPrimaryKey);
+
+		FinderCacheUtil.clearDSLQueryCache(_tableName);
 
 		_addTableMapping(companyId, leftPrimaryKey, rightPrimaryKey);
 
@@ -125,6 +141,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		if (!addedRightPrimaryKeys.isEmpty()) {
 			leftToRightPortalCache.remove(leftPrimaryKey);
+
+			FinderCacheUtil.clearDSLQueryCache(_tableName);
 		}
 
 		return ArrayUtil.toLongArray(addedRightPrimaryKeys);
@@ -153,6 +171,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		if (!addedLeftPrimaryKeys.isEmpty()) {
 			rightToLeftPortalCache.remove(rightPrimaryKey);
+
+			FinderCacheUtil.clearDSLQueryCache(_tableName);
 		}
 
 		return ArrayUtil.toLongArray(addedLeftPrimaryKeys);
@@ -167,18 +187,30 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 	@Override
 	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey) {
-		return deleteTableMappings(
+		int count = deleteTableMappings(
 			leftModelClass, rightModelClass, leftToRightPortalCache,
 			rightToLeftPortalCache, getRightPrimaryKeysSqlQuery,
 			deleteLeftPrimaryKeyTableMappingsSqlUpdate, leftPrimaryKey);
+
+		if (count > 0) {
+			FinderCacheUtil.clearDSLQueryCache(_tableName);
+		}
+
+		return count;
 	}
 
 	@Override
 	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey) {
-		return deleteTableMappings(
+		int count = deleteTableMappings(
 			rightModelClass, leftModelClass, rightToLeftPortalCache,
 			leftToRightPortalCache, getLeftPrimaryKeysSqlQuery,
 			deleteRightPrimaryKeyTableMappingsSqlUpdate, rightPrimaryKey);
+
+		if (count > 0) {
+			FinderCacheUtil.clearDSLQueryCache(_tableName);
+		}
+
+		return count;
 	}
 
 	@Override
@@ -191,6 +223,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		leftToRightPortalCache.remove(leftPrimaryKey);
 		rightToLeftPortalCache.remove(rightPrimaryKey);
+
+		FinderCacheUtil.clearDSLQueryCache(_tableName);
 
 		return _deleteTableMapping(leftPrimaryKey, rightPrimaryKey);
 	}
@@ -221,6 +255,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		if (clearCache) {
 			leftToRightPortalCache.remove(leftPrimaryKey);
+
+			FinderCacheUtil.clearDSLQueryCache(_tableName);
 		}
 
 		return ArrayUtil.toLongArray(deletedRightPrimaryKeys);
@@ -252,6 +288,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		if (clearCache) {
 			rightToLeftPortalCache.remove(rightPrimaryKey);
+
+			FinderCacheUtil.clearDSLQueryCache(_tableName);
 		}
 
 		return ArrayUtil.toLongArray(deletedLeftPrimaryKeys);
@@ -265,6 +303,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		PortalCacheHelperUtil.removePortalCache(
 			PortalCacheManagerNames.MULTI_VM,
 			rightToLeftPortalCache.getPortalCacheName());
+
+		_serviceRegistration.unregister();
 	}
 
 	@Override
@@ -661,5 +701,8 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 
 		return false;
 	}
+
+	private final ServiceRegistration<?> _serviceRegistration;
+	private final String _tableName;
 
 }

@@ -29,13 +29,21 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -115,6 +123,34 @@ public class FinderCacheImpl
 		PortalCache<?, ?> portalCache = _getPortalCache(className);
 
 		portalCache.removeAll();
+	}
+
+	@Override
+	public void clearDSLQueryCache(String tableName) {
+		String modelImplClassName = _modelImplClassNames.get(tableName);
+
+		if (modelImplClassName != null) {
+			_clearDSLQueryCache(modelImplClassName);
+		}
+
+		if (_clusterExecutor.isEnabled() &&
+			ClusterInvokeThreadLocal.isEnabled()) {
+
+			try {
+				ClusterRequest clusterRequest =
+					ClusterRequest.createMulticastRequest(
+						new MethodHandler(
+							_clearDSLQueryCacheMethodKey, tableName),
+						true);
+
+				clusterRequest.setFireAndForget(true);
+
+				_clusterExecutor.execute(clusterRequest);
+			}
+			catch (Throwable throwable) {
+				_log.error(throwable, throwable);
+			}
+		}
 	}
 
 	@Override
@@ -680,6 +716,12 @@ public class FinderCacheImpl
 	private static final String _GROUP_KEY_PREFIX =
 		FinderCache.class.getName() + StringPool.PERIOD;
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FinderCacheImpl.class);
+
+	private static final MethodKey _clearDSLQueryCacheMethodKey = new MethodKey(
+		FinderCacheUtil.class, "clearDSLQueryCache", String.class);
+
 	private final Map<String, ArgumentsResolver> _argumentsResolvers =
 		new ConcurrentHashMap<>();
 	private ServiceTracker<ArgumentsResolver, ArgumentsResolver>
@@ -689,6 +731,10 @@ public class FinderCacheImpl
 		_basePersistenceServiceTrackerMap;
 	private BundleContext _bundleContext;
 	private volatile CacheKeyGenerator _cacheKeyGenerator;
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
+
 	private final Map<String, Set<String>> _dslQueryCacheNamesMap =
 		new ConcurrentHashMap<>();
 	private final Map<String, Map<String, FinderPath>> _finderPathsMap =

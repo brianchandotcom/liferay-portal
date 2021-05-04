@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/site_settings/init.jsp" %>
 
 <%
 Group siteGroup = themeDisplay.getSiteGroup();

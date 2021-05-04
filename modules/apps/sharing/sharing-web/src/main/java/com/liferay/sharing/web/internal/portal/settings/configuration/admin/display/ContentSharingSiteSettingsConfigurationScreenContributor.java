@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.display;
+package com.liferay.sharing.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -44,7 +44,7 @@ public class ContentSharingSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getJspPath() {
-		return "/content_sharing.jsp";
+		return "/site_settings/content_sharing.jsp";
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class ContentSharingSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getSaveMVCActionCommandName() {
-		return "/site_admin/edit_content_sharing";
+		return "/sharing/edit_content_sharing";
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class ContentSharingSiteSettingsConfigurationScreenContributor
 		return true;
 	}
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.site.admin.web)")
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.sharing.web)")
 	private ServletContext _servletContext;
 
 }

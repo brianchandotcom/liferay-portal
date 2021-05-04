@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.admin.web.internal.portlet.action;
+package com.liferay.sharing.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.portal.kernel.model.Group;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.SITE_SETTINGS,
-		"mvc.command.name=/site_admin/edit_content_sharing"
+		"mvc.command.name=/sharing/edit_content_sharing"
 	},
 	service = MVCActionCommand.class
 )

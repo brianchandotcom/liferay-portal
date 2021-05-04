@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.mentions.web.internal.frontend.taglib.form.navigator;
+package com.liferay.mentions.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.mentions.constants.MentionsWebKeys;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -26,8 +24,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
-import java.io.IOException;
+import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 
@@ -39,55 +39,39 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, property = "form.navigator.entry.order:Integer=90",
-	service = FormNavigatorEntry.class
-)
-public class MentionsSitesFormNavigatorEntry
-	extends BaseMentionsFormNavigatorEntry {
+@Component(service = SiteSettingsConfigurationScreenContributor.class)
+public class MentionsSiteSettingsConfigurationScreenContributor
+	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_SOCIAL;
+		return "community-tools";
 	}
 
 	@Override
-	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
+	public String getJspPath() {
+		return "/site_settings/mentions.jsp";
 	}
 
 	@Override
-	public void include(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		Group liveGroup = (Group)httpServletRequest.getAttribute(
-			"site.liveGroup");
-
-		UnicodeProperties typeSettingsUnicodeProperties = null;
-
-		if (liveGroup != null) {
-			typeSettingsUnicodeProperties =
-				liveGroup.getTypeSettingsProperties();
-		}
-		else {
-			typeSettingsUnicodeProperties = new UnicodeProperties();
-		}
-
-		boolean groupMentionsEnabled = GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.getProperty("mentionsEnabled"), true);
-
-		httpServletRequest.setAttribute(
-			MentionsWebKeys.GROUP_MENTIONS_ENABLED, groupMentionsEnabled);
-
-		super.include(httpServletRequest, httpServletResponse);
+	public String getKey() {
+		return "site-configuration-mentions";
 	}
 
 	@Override
-	public boolean isVisible(User user, Object formModelBean) {
+	public String getName(Locale locale) {
+		return LanguageUtil.get(locale, "mentions");
+	}
+
+	@Override
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
+	public boolean isVisible() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -104,17 +88,27 @@ public class MentionsSitesFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.mentions.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public void setAttributes(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			siteGroup.getTypeSettingsProperties();
+
+		boolean groupMentionsEnabled = GetterUtil.getBoolean(
+			typeSettingsUnicodeProperties.getProperty("mentionsEnabled"), true);
+
+		httpServletRequest.setAttribute(
+			MentionsWebKeys.GROUP_MENTIONS_ENABLED, groupMentionsEnabled);
 	}
 
-	@Override
-	protected String getJspPath() {
-		return "/site_settings/mentions.jsp";
-	}
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.mentions.web)")
+	private ServletContext _servletContext;
 
 }

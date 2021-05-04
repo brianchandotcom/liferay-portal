@@ -1785,55 +1785,11 @@ public class DLFileEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = dlFileEntryPersistence.findByPrimaryKey(
-			fileEntryId);
-
-		String extension = FileUtil.getExtension(sourceFileName);
-
-		if ((file == null) && (inputStream == null)) {
-			if (Validator.isNull(extension)) {
-				extension = dlFileEntry.getExtension();
-			}
-
-			mimeType = dlFileEntry.getMimeType();
-		}
-
-		String extraSettings = StringPool.BLANK;
-
-		if (fileEntryTypeId == -1) {
-			fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
-		}
-
-		validateFileEntryTypeId(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				dlFileEntry.getGroupId()),
-			dlFileEntry.getFolderId(), fileEntryTypeId);
-
-		if ((fileEntryTypeId != dlFileEntry.getFileEntryTypeId()) &&
-			(dlFileEntry.getFileEntryTypeId() !=
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)) {
-
-			DLFileEntryMetadata dlFileEntryMetadata =
-				dlFileEntryMetadataPersistence.fetchByFileEntryId_Last(
-					fileEntryId, null);
-
-			DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
-				dlFileEntryMetadata.getDDMStructureId());
-
-			if (ddmStructure != null) {
-				DDMStructureLinkManagerUtil.deleteStructureLink(
-					classNameLocalService.getClassNameId(
-						DLFileEntryMetadata.class),
-					dlFileEntryMetadata.getFileEntryMetadataId(),
-					ddmStructure.getStructureId());
-			}
-		}
-
 		return updateFileEntry(
-			userId, fileEntryId, sourceFileName, extension, mimeType, title,
-			description, changeLog, dlVersionNumberIncrease, extraSettings,
-			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, null,
-			null, serviceContext);
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
+			ddmFormValuesMap, file, inputStream, size, null, null,
+			serviceContext);
 	}
 
 	@Override

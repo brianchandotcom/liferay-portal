@@ -134,9 +134,11 @@ public abstract class Base${schemaName}ResourceImpl
 			<#assign putBatchJavaMethodSignature = javaMethodSignature />
 		</#if>
 
-		/**
-		* ${freeMarkerTool.getRESTMethodJavadoc(configYAML, javaMethodSignature, openAPIYAML)}
-		*/
+		<#if configYAML.application??>
+			/**
+			* ${freeMarkerTool.getRESTMethodJavadoc(configYAML, javaMethodSignature, openAPIYAML)}
+			*/
+		</#if>
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, true)}) throws Exception {

@@ -219,7 +219,10 @@ public class OpenAPIParserUtil {
 			externalReferencesMap.putAll(
 				OpenAPIUtil.getAllSchemas(openAPIYAML));
 
-			queue.addAll(getExternalReferences(openAPIYAML));
+			for (String reference : getExternalReferences(openAPIYAML)) {
+				queue.add(
+					path.substring(0, path.lastIndexOf("/") + 1) + reference);
+			}
 		}
 
 		return externalReferencesMap;
@@ -319,6 +322,12 @@ public class OpenAPIParserUtil {
 
 				OpenAPIYAML externalOpenAPIYAML = YAMLUtil.loadOpenAPIYAML(
 					FileUtil.read(new File(path)));
+
+				if ((externalConfigYAML == null) ||
+					(externalOpenAPIYAML == null)) {
+
+					continue;
+				}
 
 				Map<String, String> externalJavaDataTypeMap =
 					getJavaDataTypeMap(externalConfigYAML, externalOpenAPIYAML);

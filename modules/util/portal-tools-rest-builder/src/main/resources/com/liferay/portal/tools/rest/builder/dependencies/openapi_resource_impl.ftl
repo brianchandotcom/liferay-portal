@@ -34,8 +34,9 @@ import org.osgi.service.component.annotations.Reference;
 @Generated("")
 @OpenAPIDefinition(
 	info = @Info(
-		description = "${openAPIYAML.info.description}",
-
+		<#if openAPIYAML.info?? && openAPIYAML.info.description??>
+			description = "${openAPIYAML.info.description}",
+		</#if>
 		<#if configYAML.licenseName?? && configYAML.licenseURL??>
 			license = @License(name = "${configYAML.licenseName}", url = "${configYAML.licenseURL}"),
 		</#if>

@@ -31,10 +31,12 @@ import javax.ws.rs.core.UriInfo;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
+<#if configYAML.application??>
  * To access this resource, run:
  *
  *     curl -u your@email.com:yourpassword -D - http://localhost:8080/o${configYAML.application.baseURI}/${openAPIYAML.info.version}
  *
+</#if>
  * @author ${configYAML.author}
  * @generated
  */

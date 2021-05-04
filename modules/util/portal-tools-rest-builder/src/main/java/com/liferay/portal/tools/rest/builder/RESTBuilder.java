@@ -174,7 +174,9 @@ public class RESTBuilder {
 			"validator", Validator_IW.getInstance()
 		).build();
 
-		if (_configYAML.isGenerateREST()) {
+		if (_configYAML.isGenerateREST() &&
+			(_configYAML.getApplication() != null)) {
+
 			_createApplicationFile(context);
 		}
 
@@ -239,7 +241,9 @@ public class RESTBuilder {
 				OpenAPIParserUtil.getJavaDataTypeMap(_configYAML, openAPIYAML));
 			context.put("openAPIYAML", openAPIYAML);
 
-			if (_configYAML.isGenerateGraphQL()) {
+			if (_configYAML.isGenerateGraphQL() &&
+				(_configYAML.getApplication() != null)) {
+
 				_createGraphQLMutationFile(context, escapedVersion);
 				_createGraphQLQueryFile(context, escapedVersion);
 				_createGraphQLServletDataFile(context, escapedVersion);

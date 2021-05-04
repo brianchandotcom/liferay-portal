@@ -21,7 +21,10 @@ import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstan
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -35,9 +38,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.IOException;
+
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,17 +77,44 @@ public class UpdateRolesMVCResourceCommand
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortalException {
+		throws IOException, PortalException {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			resourceRequest);
+
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
+
+		if (ctCollection == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"this-publication-no-longer-exists")));
+
+			return;
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
-			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
+		if (!CTCollectionPermission.contains(
+				themeDisplay.getPermissionChecker(), ctCollection,
+				ActionKeys.PERMISSIONS)) {
 
-		CTCollectionPermission.contains(
-			themeDisplay.getPermissionChecker(), ctCollection,
-			ActionKeys.PERMISSIONS);
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"you-do-not-have-permission-to-update-permissions-" +
+							"for-this-publication")));
+
+			return;
+		}
 
 		int[] roles = ParamUtil.getIntegerValues(resourceRequest, "roles");
 
@@ -101,10 +135,21 @@ public class UpdateRolesMVCResourceCommand
 			_userGroupRoleLocalService.addUserGroupRole(
 				userIds[i], ctCollection.getGroupId(), role.getRoleId());
 		}
+
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			JSONUtil.put(
+				"successMessage",
+				_language.get(
+					httpServletRequest,
+					"permissions-were-updated-successfully")));
 	}
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

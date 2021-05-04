@@ -23,7 +23,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -75,8 +74,16 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
 
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
+
+		if (ctCollection == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONFactoryUtil.createJSONArray());
+
+			return;
+		}
 
 		Group group = ctCollection.getGroup();
 
@@ -111,7 +118,6 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -123,19 +129,6 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				continue;
 			}
 
-			JSONObject jsonObject = JSONUtil.put(
-				"emailAddress", user.getEmailAddress()
-			).put(
-				"fullName", user.getFullName()
-			).put(
-				"roleId", PublicationRoleConstants.getNameRole(role.getName())
-			).put(
-				"roleLabel",
-				_language.get(
-					httpServletRequest,
-					PublicationRoleConstants.getNameLabel(role.getName()))
-			);
-
 			String portraitURL = StringPool.BLANK;
 
 			if (user.getPortraitId() > 0) {
@@ -143,8 +136,20 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 
 			jsonArray.put(
-				jsonObject.put(
+				JSONUtil.put(
+					"emailAddress", user.getEmailAddress()
+				).put(
+					"fullName", user.getFullName()
+				).put(
 					"portraitURL", portraitURL
+				).put(
+					"roleId",
+					PublicationRoleConstants.getNameRole(role.getName())
+				).put(
+					"roleLabel",
+					_language.get(
+						httpServletRequest,
+						PublicationRoleConstants.getNameLabel(role.getName()))
 				).put(
 					"userId", Long.valueOf(user.getUserId())
 				));

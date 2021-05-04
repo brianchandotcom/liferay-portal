@@ -163,7 +163,7 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 				.map((item) => {
 					let title = '';
 
-					if (!item.hasPermission) {
+					if (!item.hasPublicationsAccess) {
 						title = Liferay.Language.get(
 							'user-does-not-have-permissions-to-access-publications'
 						);
@@ -228,9 +228,9 @@ export default ({
 	inviteUsersURL,
 	namespace,
 	roles,
-	sharingVerifyEmailAddressURL,
 	spritemap,
 	updateRolesURL,
+	verifyEmailAddressURL,
 }) => {
 	const [emailAddressErrorMessages, setEmailAddressErrorMessages] = useState(
 		[]
@@ -276,17 +276,20 @@ export default ({
 
 	const emailValidationInProgress = useRef(false);
 
+	const resetForm = () => {
+		setEmailAddressErrorMessages([]);
+		setMultiSelectValue('');
+		setNavigation(null);
+		setSelectedItems([]);
+		setSelectedRole(defaultRole);
+		setUpdatedRoles({});
+
+		emailValidationInProgress.current = false;
+	};
+
 	const {observer, onClose} = useModal({
 		onClose: () => {
-			setEmailAddressErrorMessages([]);
-			setMultiSelectValue('');
-			setNavigation(null);
-			setSelectedItems([]);
-			setSelectedRole(defaultRole);
 			setShowModal(false);
-			setUpdatedRoles({});
-
-			emailValidationInProgress.current = false;
 		},
 	});
 
@@ -304,6 +307,22 @@ export default ({
 		const emailRegex = /.+@.+\..+/i;
 
 		return emailRegex.test(email);
+	};
+
+	const showNotification = (message, error) => {
+		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
+
+		const openToastParams = {message};
+
+		if (error) {
+			openToastParams.title = Liferay.Language.get('error');
+			openToastParams.type = 'danger';
+		}
+
+		onClose();
+		resetForm();
+
+		parentOpenToast(openToastParams);
 	};
 
 	const handleSubmit = (event) => {
@@ -331,11 +350,18 @@ export default ({
 				body: formData,
 				method: 'POST',
 			})
-				.then(() => {
-					onClose();
+				.then((response) => response.json())
+				.then(({errorMessage, successMessage}) => {
+					if (errorMessage) {
+						showNotification(errorMessage, true);
+
+						return;
+					}
+
+					showNotification(successMessage);
 				})
-				.catch(() => {
-					onClose();
+				.catch((error) => {
+					showNotification(error.message, true);
 				});
 
 			return;
@@ -352,11 +378,18 @@ export default ({
 			body: formData,
 			method: 'POST',
 		})
-			.then(() => {
-				onClose();
+			.then((response) => response.json())
+			.then(({errorMessage, successMessage}) => {
+				if (errorMessage) {
+					showNotification(errorMessage, true);
+
+					return;
+				}
+
+				showNotification(successMessage);
 			})
-			.catch(() => {
-				onClose();
+			.catch((error) => {
+				showNotification(error.message, true);
 			});
 	};
 
@@ -393,24 +426,33 @@ export default ({
 						});
 					}
 
-					return fetch(sharingVerifyEmailAddressURL, {
+					return fetch(verifyEmailAddressURL, {
 						body: objectToFormData({
 							[`${namespace}emailAddress`]: item.value,
 						}),
 						method: 'POST',
 					})
 						.then((response) => response.json())
-						.then(({userExists}) => ({
-							error: !userExists
-								? Liferay.Util.sub(
-										Liferay.Language.get(
-											'user-x-does-not-exist'
-										),
-										item.value
-								  )
-								: undefined,
-							item,
-						}));
+						.then(({errorMessage, userExists}) => {
+							if (errorMessage) {
+								return {
+									error: errorMessage,
+									item,
+								};
+							}
+
+							return {
+								error: !userExists
+									? Liferay.Util.sub(
+											Liferay.Language.get(
+												'user-x-does-not-exist'
+											),
+											item.value
+									  )
+									: undefined,
+								item,
+							};
+						});
 				})
 			).then((results) => {
 				emailValidationInProgress.current = false;
@@ -438,7 +480,7 @@ export default ({
 				);
 			});
 		},
-		[namespace, selectedItems, sharingVerifyEmailAddressURL]
+		[namespace, selectedItems, verifyEmailAddressURL]
 	);
 
 	const multiSelectFilter = useCallback(() => true, []);
@@ -454,7 +496,7 @@ export default ({
 		},
 		link: autocompleteUserURL,
 		variables: {
-			[`${namespace}query`]: multiSelectValue,
+			[`${namespace}keywords`]: multiSelectValue,
 		},
 	});
 
@@ -584,8 +626,8 @@ export default ({
 														emailAddress:
 															user.emailAddress,
 														fullName: user.fullName,
-														hasPermission:
-															user.hasPermission,
+														hasPublicationsAccess:
+															user.hasPublicationsAccess,
 														id: user.userId,
 														isInvited,
 														label: user.fullName,
@@ -689,14 +731,22 @@ export default ({
 										borderless
 										displayType="secondary"
 										onClick={() => {
-											setEmailAddressErrorMessages([]);
-											setMultiSelectValue('');
-											setNavigation(null);
-											setSelectedItems([]);
-											setSelectedRole(defaultRole);
-											setUpdatedRoles({});
+											const keys = Object.keys(
+												updatedRoles
+											);
 
-											emailValidationInProgress.current = false;
+											if (
+												(keys.length === 0 &&
+													selectedItems.length ===
+														0) ||
+												confirm(
+													Liferay.Language.get(
+														'discard-unsaved-changes'
+													)
+												)
+											) {
+												resetForm();
+											}
 										}}
 										small
 										symbol="angle-left"
@@ -727,7 +777,22 @@ export default ({
 							<ClayButton.Group spaced>
 								<ClayButton
 									displayType="secondary"
-									onClick={onClose}
+									onClick={() => {
+										const keys = Object.keys(updatedRoles);
+
+										if (
+											(keys.length === 0 &&
+												selectedItems.length === 0) ||
+											confirm(
+												Liferay.Language.get(
+													'discard-unsaved-changes'
+												)
+											)
+										) {
+											onClose();
+											resetForm();
+										}
+									}}
 								>
 									{Liferay.Language.get('cancel')}
 								</ClayButton>

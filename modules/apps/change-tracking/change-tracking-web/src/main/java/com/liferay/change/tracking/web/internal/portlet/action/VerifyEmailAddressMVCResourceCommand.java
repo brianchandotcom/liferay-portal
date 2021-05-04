@@ -14,26 +14,34 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,34 +68,91 @@ public class VerifyEmailAddressMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
 
-		if (!themeDisplay.isSignedIn()) {
-			throw new PrincipalException.MustBeAuthenticated(
-				themeDisplay.getUserId());
+		if (ctCollection == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"this-publication-no-longer-exists")));
+
+			return;
 		}
 
-		String emailAddress = ParamUtil.getString(
-			httpServletRequest, "emailAddress");
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		User user = _userLocalService.fetchUserByEmailAddress(
-			themeDisplay.getCompanyId(), emailAddress);
+			themeDisplay.getCompanyId(),
+			ParamUtil.getString(resourceRequest, "emailAddress"));
 
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(resourceResponse);
+		if (user != null) {
+			PermissionChecker permissionChecker =
+				PermissionCheckerFactoryUtil.create(user);
 
-		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+			Group group = ctCollection.getGroup();
 
-		JSONObject jsonObject = JSONUtil.put("userExists", user != null);
+			if (group != null) {
+				List<UserGroupRole> userGroupRoles =
+					_userGroupRoleLocalService.getUserGroupRoles(
+						user.getUserId(), group.getGroupId());
+
+				if (!userGroupRoles.isEmpty()) {
+					JSONPortletResponseUtil.writeJSON(
+						resourceRequest, resourceResponse,
+						JSONUtil.put(
+							"errorMessage",
+							_language.get(
+								httpServletRequest,
+								"user-is-already-invited")));
+
+					return;
+				}
+			}
+
+			if (!_portletPermission.contains(
+					permissionChecker, CTPortletKeys.PUBLICATIONS,
+					ActionKeys.ACCESS_IN_CONTROL_PANEL) ||
+				!_portletPermission.contains(
+					permissionChecker, CTPortletKeys.PUBLICATIONS,
+					ActionKeys.VIEW)) {
+
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					JSONUtil.put(
+						"errorMessage",
+						_language.get(
+							httpServletRequest,
+							"user-does-not-have-permissions-to-access-" +
+								"publications")));
+
+				return;
+			}
+		}
 
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+			resourceRequest, resourceResponse,
+			JSONUtil.put("userExists", user != null));
 	}
 
 	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Reference
+	private Language _language;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletPermission _portletPermission;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

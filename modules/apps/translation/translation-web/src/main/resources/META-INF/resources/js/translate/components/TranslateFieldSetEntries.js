@@ -31,6 +31,7 @@ const TranslateAutoTranslateRow = ({
 	handleAutoTranslateClick = noop,
 	label,
 	fieldStatus,
+	sourceContent,
 }) => {
 	if (!autoTranslateEnabled) {
 		return children;
@@ -48,7 +49,7 @@ const TranslateAutoTranslateRow = ({
 			<ClayLayout.ContentCol className="align-self-top col-autotranslate-field">
 				<ClayButton
 					className="lfr-portal-tooltip"
-					disabled={isLoading}
+					disabled={isLoading || !sourceContent}
 					displayType="secondary"
 					monospaced
 					onClick={handleAutoTranslateClick}
@@ -237,6 +238,7 @@ const TranslateFieldSetEntries = ({
 						}
 						key={field.id}
 						label={fieldProps.label}
+						sourceContent={fieldProps.sourceContent}
 					>
 						{field.html ? (
 							<TranslateFieldEditor {...fieldProps} />

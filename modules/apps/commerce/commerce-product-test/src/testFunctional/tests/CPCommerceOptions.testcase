@@ -58,7 +58,6 @@ definition {
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
-
 			portlet = "Options");
 
 		CPCommerceCatalog.newOptionsEntry(
@@ -69,7 +68,6 @@ definition {
 		Button.clickSave();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
-		
 
 		CPCommerceCatalog.addOptionValues(optionValuesList = "Black:0");
 

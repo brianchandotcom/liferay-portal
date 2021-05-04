@@ -90,17 +90,16 @@ public class GroupPagesRenderParametersPortletFilter implements RenderFilter {
 						_portal.getHttpServletRequest(renderRequest),
 						renderRequest);
 
+					HttpServletResponse httpServletResponse =
+						_portal.getHttpServletResponse(renderResponse);
+
 					PortletURL portletURL = PortletURLBuilder.create(
 						_portal.getControlPanelPortletURL(
 							renderRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 							PortletRequest.RENDER_PHASE)
+					).setParameter(
+						"p_v_l_s_g_id", String.valueOf(selGroup.getGroupId())
 					).build();
-
-					portletURL.setParameter(
-						"p_v_l_s_g_id", String.valueOf(selGroup.getGroupId()));
-
-					HttpServletResponse httpServletResponse =
-						_portal.getHttpServletResponse(renderResponse);
 
 					httpServletResponse.sendRedirect(portletURL.toString());
 

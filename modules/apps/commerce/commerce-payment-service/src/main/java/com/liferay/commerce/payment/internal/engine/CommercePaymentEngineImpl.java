@@ -336,9 +336,6 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 		if ((commercePaymentMethod == null) ||
 			!commercePaymentMethod.isProcessPaymentEnabled()) {
 
-			_completeOrderWithoutPaymentMethod(
-				commerceOrderId, httpServletRequest);
-
 			return _commercePaymentUtils.emptyResult(commerceOrderId);
 		}
 
@@ -407,10 +404,11 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 		CommerceOrder commerceOrder =
 			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 
+		long userId = commerceOrder.getUserId();
+
 		commerceOrder =
 			_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
-				commerceOrder.getUserId(), commerceOrderId, paymentStatus,
-				transactionId);
+				userId, commerceOrderId, paymentStatus, transactionId);
 
 		_commerceOrderPaymentLocalService.addCommerceOrderPayment(
 			commerceOrderId, paymentStatus, result);
@@ -419,9 +417,13 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 			PermissionChecker permissionChecker =
 				PermissionThreadLocal.getPermissionChecker();
 
+			if (permissionChecker == null) {
+				userId = permissionChecker.getUserId();
+			}
+
 			commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 				commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING,
-				permissionChecker.getUserId());
+				userId);
 		}
 
 		return commerceOrder;
@@ -459,19 +461,13 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 			long commerceOrderId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		long userId = _portal.getUserId(httpServletRequest);
-
-		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
-				userId, commerceOrderId,
-				CommerceOrderConstants.PAYMENT_STATUS_PAID, StringPool.BLANK);
+		_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
+			_portal.getUserId(httpServletRequest), commerceOrderId,
+			CommerceOrderConstants.PAYMENT_STATUS_PAID, StringPool.BLANK);
 
 		_commerceOrderPaymentLocalService.addCommerceOrderPayment(
 			commerceOrderId, CommerceOrderConstants.PAYMENT_STATUS_PAID,
 			StringPool.BLANK);
-
-		_commerceOrderEngine.transitionCommerceOrder(
-			commerceOrder, CommerceOrderConstants.ORDER_STATUS_PENDING, userId);
 	}
 
 	private List<CommercePaymentMethod> _getCommercePaymentMethodsList(

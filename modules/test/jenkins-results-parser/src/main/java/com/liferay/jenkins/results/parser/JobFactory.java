@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -131,6 +132,24 @@ public class JobFactory {
 							newGitWorkingDirectory(
 								getBranchName(),
 								System.getProperty("user.dir"));
+					}
+
+					@Override
+					protected void init() {
+						try {
+							setJobProperties(
+								JenkinsResultsParserUtil.getBuildProperties());
+						}
+						catch (IOException ioException) {
+							throw new RuntimeException(ioException);
+						}
+
+						gitWorkingDirectory = getNewGitWorkingDirectory();
+
+						setGitRepositoryDir(
+							gitWorkingDirectory.getWorkingDirectory());
+
+						checkGitRepositoryDir();
 					}
 
 				};

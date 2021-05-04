@@ -508,6 +508,12 @@ public abstract class BaseJob implements Job {
 		return set;
 	}
 
+	protected void setJobProperties(Properties properties) {
+		_jobProperties.clear();
+
+		_jobProperties.putAll(properties);
+	}
+
 	protected final List<File> jobPropertiesFiles = new ArrayList<>();
 
 	private static final Integer _THREAD_COUNT = 20;

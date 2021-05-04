@@ -112,12 +112,11 @@ public class CPPriceRangeFacetsPortlet
 					facet.getFieldName());
 
 			SerializableMultiValueFacet serializableMultiValueFacet =
-				new SerializableMultiValueFacet(searchContext);
-
-			serializableMultiValueFacet.setFieldName(facet.getFieldName());
+				new SerializableMultiValueFacet(
+					facet.getFieldName(), searchContext);
 
 			if (parameterValuesOptional.isPresent()) {
-				serializableMultiValueFacet.setValues(
+				serializableMultiValueFacet.select(
 					parameterValuesOptional.get());
 
 				searchContext.setAttribute(

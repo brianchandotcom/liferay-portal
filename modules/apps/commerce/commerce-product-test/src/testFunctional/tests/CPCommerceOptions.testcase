@@ -51,13 +51,41 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6280. RemoveAnOption"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveAnOption {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceOptions#RemoveAnOption";
 
-		// TODO COMMERCE-6280 RemoveAnOption
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
 
+			portlet = "Options");
+
+		CPCommerceCatalog.newOptionsEntry(
+			optionDescription = "",
+			optionFieldType = "Select from List",
+			optionName = "Color");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+		
+
+		CPCommerceCatalog.addOptionValues(optionValuesList = "Black:0");
+
+		Button.clickSave();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Click(locator1 = "Icon#BACK");
+
+		ClickNoError(
+			key_value = "Color",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 }

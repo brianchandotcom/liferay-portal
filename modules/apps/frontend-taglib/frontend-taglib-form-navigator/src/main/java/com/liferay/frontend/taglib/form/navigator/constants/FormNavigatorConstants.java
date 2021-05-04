@@ -90,6 +90,10 @@ public class FormNavigatorConstants {
 	public static final String FORM_NAVIGATOR_ID_ORGANIZATIONS =
 		"organizations.form";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String FORM_NAVIGATOR_ID_SITES = "sites.form";
 
 	public static final String FORM_NAVIGATOR_ID_USERS = "users.form";

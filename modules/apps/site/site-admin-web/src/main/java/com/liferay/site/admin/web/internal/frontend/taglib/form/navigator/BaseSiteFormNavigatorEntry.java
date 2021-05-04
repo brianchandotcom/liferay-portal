@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.model.Group;
 
 /**
  * @author Sergio González
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public abstract class BaseSiteFormNavigatorEntry
 	extends BaseJSPFormNavigatorEntry<Group> {
 

@@ -684,7 +684,7 @@ public class DDMFormAdminDisplayContext {
 		DDMFormInstance formInstance = getDDMFormInstance();
 
 		if (formInstance == null) {
-			jsonObject.put(getDefaultLanguageId(), "");
+			jsonObject.put(getDefaultLanguageId(), getFormDescription());
 		}
 		else {
 			Map<Locale, String> descriptionMap =
@@ -707,7 +707,7 @@ public class DDMFormAdminDisplayContext {
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
 		if (formInstance == null) {
-			jsonObject.put(getDefaultLanguageId(), "");
+			jsonObject.put(getDefaultLanguageId(), getFormName());
 		}
 		else {
 			Map<Locale, String> nameMap = formInstance.getNameMap();

@@ -22,6 +22,7 @@ import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResourc
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -107,8 +108,8 @@ public class StructuredContentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					"VIEW", "getSiteStructuredContentsPage",
-					"com.liferay.journal", siteId)
+					ActionKeys.VIEW, "getSiteStructuredContentsPage",
+					JournalConstants.RESOURCE_NAME, siteId)
 			).build(),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {

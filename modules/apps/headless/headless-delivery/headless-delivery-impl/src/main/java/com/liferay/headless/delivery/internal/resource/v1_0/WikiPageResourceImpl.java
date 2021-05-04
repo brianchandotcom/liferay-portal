@@ -68,6 +68,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPageConstants;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeService;
@@ -126,9 +127,10 @@ public class WikiPageResourceImpl
 		return SearchUtil.search(
 			HashMapBuilder.put(
 				"add-page",
-				addAction("ADD_PAGE", wikiNode, "postWikiNodeWikiPage")
+				addAction(ActionKeys.ADD_PAGE, wikiNode, "postWikiNodeWikiPage")
 			).put(
-				"get", addAction("VIEW", wikiNode, "getWikiNodeWikiPagesPage")
+				"get",
+				addAction(ActionKeys.VIEW, wikiNode, "getWikiNodeWikiPagesPage")
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -190,15 +192,15 @@ public class WikiPageResourceImpl
 			HashMapBuilder.put(
 				"add-page",
 				addAction(
-					"UPDATE", wikiPage.getResourcePrimKey(),
+					ActionKeys.UPDATE, wikiPage.getResourcePrimKey(),
 					"postWikiPageWikiPage", wikiPage.getUserId(),
-					"com.liferay.wiki.model.WikiPage", wikiPage.getGroupId())
+					WikiPage.class.getName(), wikiPage.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", wikiPage.getResourcePrimKey(),
+					ActionKeys.VIEW, wikiPage.getResourcePrimKey(),
 					"getWikiPageWikiPagesPage", wikiPage.getUserId(),
-					"com.liferay.wiki.model.WikiPage", wikiPage.getGroupId())
+					WikiPage.class.getName(), wikiPage.getGroupId())
 			).build(),
 			transform(
 				_wikiPageService.getChildren(
@@ -315,7 +317,7 @@ public class WikiPageResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.wiki";
+		return WikiConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -366,43 +368,39 @@ public class WikiPageResourceImpl
 				actions = HashMapBuilder.put(
 					"add-page",
 					addAction(
-						"UPDATE", wikiPage.getResourcePrimKey(),
+						ActionKeys.UPDATE, wikiPage.getResourcePrimKey(),
 						"postWikiPageWikiPage", wikiPage.getUserId(),
-						"com.liferay.wiki.model.WikiPage",
-						wikiPage.getGroupId())
+						WikiPage.class.getName(), wikiPage.getGroupId())
 				).put(
 					"delete",
 					addAction(
-						"DELETE", wikiPage.getResourcePrimKey(),
+						ActionKeys.DELETE, wikiPage.getResourcePrimKey(),
 						"deleteWikiPage", wikiPage.getUserId(),
-						"com.liferay.wiki.model.WikiPage",
-						wikiPage.getGroupId())
+						WikiPage.class.getName(), wikiPage.getGroupId())
 				).put(
 					"get",
 					addAction(
-						"VIEW", wikiPage.getResourcePrimKey(), "getWikiPage",
-						wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
-						wikiPage.getGroupId())
+						ActionKeys.VIEW, wikiPage.getResourcePrimKey(),
+						"getWikiPage", wikiPage.getUserId(),
+						WikiPage.class.getName(), wikiPage.getGroupId())
 				).put(
 					"replace",
 					addAction(
-						"UPDATE", wikiPage.getResourcePrimKey(), "putWikiPage",
-						wikiPage.getUserId(), "com.liferay.wiki.model.WikiPage",
-						wikiPage.getGroupId())
+						ActionKeys.UPDATE, wikiPage.getResourcePrimKey(),
+						"putWikiPage", wikiPage.getUserId(),
+						WikiPage.class.getName(), wikiPage.getGroupId())
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", wikiPage.getResourcePrimKey(),
+						ActionKeys.SUBSCRIBE, wikiPage.getResourcePrimKey(),
 						"putWikiPageSubscribe", wikiPage.getUserId(),
-						"com.liferay.wiki.model.WikiPage",
-						wikiPage.getGroupId())
+						WikiPage.class.getName(), wikiPage.getGroupId())
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", wikiPage.getResourcePrimKey(),
+						ActionKeys.SUBSCRIBE, wikiPage.getResourcePrimKey(),
 						"putWikiPageUnsubscribe", wikiPage.getUserId(),
-						"com.liferay.wiki.model.WikiPage",
-						wikiPage.getGroupId())
+						WikiPage.class.getName(), wikiPage.getGroupId())
 				).build();
 				aggregateRating = AggregateRatingUtil.toAggregateRating(
 					_ratingsStatsLocalService.fetchStats(

@@ -55,6 +55,7 @@ import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.filter.FilterUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -172,13 +173,13 @@ public class StructuredContentResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_ARTICLE", "postAssetLibraryStructuredContent",
-					"com.liferay.journal", assetLibraryId)
+					ActionKeys.ADD_ARTICLE, "postAssetLibraryStructuredContent",
+					JournalConstants.RESOURCE_NAME, assetLibraryId)
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getAssetLibraryStructuredContentsPage",
-					"com.liferay.journal", assetLibraryId)
+					ActionKeys.VIEW, "getAssetLibraryStructuredContentsPage",
+					JournalConstants.RESOURCE_NAME, assetLibraryId)
 			).build(),
 			_createStructuredContentsPageBooleanQueryUnsafeConsumer(flatten),
 			assetLibraryId, search, aggregation, filter, pagination, sorts);
@@ -197,9 +198,9 @@ public class StructuredContentResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					"VIEW", ddmStructure.getStructureId(),
+					ActionKeys.VIEW, ddmStructure.getStructureId(),
 					"getContentStructureStructuredContentsPage",
-					ddmStructure.getUserId(), "com.liferay.journal",
+					ddmStructure.getUserId(), JournalConstants.RESOURCE_NAME,
 					ddmStructure.getGroupId())
 			).build(),
 			booleanQuery -> {
@@ -278,13 +279,13 @@ public class StructuredContentResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_ARTICLE", "postSiteStructuredContent",
-					"com.liferay.journal", siteId)
+					ActionKeys.ADD_ARTICLE, "postSiteStructuredContent",
+					JournalConstants.RESOURCE_NAME, siteId)
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getSiteStructuredContentsPage",
-					"com.liferay.journal", siteId)
+					ActionKeys.VIEW, "getSiteStructuredContentsPage",
+					JournalConstants.RESOURCE_NAME, siteId)
 			).build(),
 			_createStructuredContentsPageBooleanQueryUnsafeConsumer(flatten),
 			siteId, search, aggregation, filter, pagination, sorts);
@@ -315,16 +316,16 @@ public class StructuredContentResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_ARTICLE", journalFolder.getFolderId(),
+					ActionKeys.ADD_ARTICLE, journalFolder.getFolderId(),
 					"postStructuredContentFolderStructuredContent",
-					journalFolder.getUserId(), "com.liferay.journal",
+					journalFolder.getUserId(), JournalConstants.RESOURCE_NAME,
 					journalFolder.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", journalFolder.getFolderId(),
+					ActionKeys.VIEW, journalFolder.getFolderId(),
 					"getStructuredContentFolderStructuredContentsPage",
-					journalFolder.getUserId(), "com.liferay.journal",
+					journalFolder.getUserId(), JournalConstants.RESOURCE_NAME,
 					journalFolder.getGroupId())
 			).build(),
 			booleanQuery -> {
@@ -334,7 +335,7 @@ public class StructuredContentResourceImpl
 				String field = com.liferay.portal.kernel.search.Field.FOLDER_ID;
 
 				if (GetterUtil.getBoolean(flatten)) {
-					field = "treePath";
+					field = com.liferay.portal.kernel.search.Field.TREE_PATH;
 				}
 
 				booleanFilter.add(
@@ -611,7 +612,7 @@ public class StructuredContentResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.journal";
+		return JournalConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -854,7 +855,8 @@ public class StructuredContentResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"VIEW", journalArticle.getResourcePrimKey(),
+							ActionKeys.VIEW,
+							journalArticle.getResourcePrimKey(),
 							"postStructuredContentMyRating",
 							journalArticle.getUserId(),
 							JournalArticle.class.getName(),
@@ -862,7 +864,8 @@ public class StructuredContentResourceImpl
 					).put(
 						"delete",
 						addAction(
-							"VIEW", journalArticle.getResourcePrimKey(),
+							ActionKeys.VIEW,
+							journalArticle.getResourcePrimKey(),
 							"deleteStructuredContentMyRating",
 							journalArticle.getUserId(),
 							JournalArticle.class.getName(),
@@ -870,7 +873,8 @@ public class StructuredContentResourceImpl
 					).put(
 						"get",
 						addAction(
-							"VIEW", journalArticle.getResourcePrimKey(),
+							ActionKeys.VIEW,
+							journalArticle.getResourcePrimKey(),
 							"getStructuredContentMyRating",
 							journalArticle.getUserId(),
 							JournalArticle.class.getName(),
@@ -878,7 +882,8 @@ public class StructuredContentResourceImpl
 					).put(
 						"replace",
 						addAction(
-							"VIEW", journalArticle.getResourcePrimKey(),
+							ActionKeys.VIEW,
+							journalArticle.getResourcePrimKey(),
 							"putStructuredContentMyRating",
 							journalArticle.getUserId(),
 							JournalArticle.class.getName(),
@@ -1042,21 +1047,21 @@ public class StructuredContentResourceImpl
 				HashMapBuilder.put(
 					"delete",
 					addAction(
-						"DELETE", journalArticle.getResourcePrimKey(),
+						ActionKeys.DELETE, journalArticle.getResourcePrimKey(),
 						"deleteStructuredContent", journalArticle.getUserId(),
 						JournalArticle.class.getName(),
 						journalArticle.getGroupId())
 				).put(
 					"get",
 					addAction(
-						"VIEW", journalArticle.getResourcePrimKey(),
+						ActionKeys.VIEW, journalArticle.getResourcePrimKey(),
 						"getStructuredContent", journalArticle.getUserId(),
 						JournalArticle.class.getName(),
 						journalArticle.getGroupId())
 				).put(
 					"get-rendered-content",
 					addAction(
-						"VIEW", journalArticle.getResourcePrimKey(),
+						ActionKeys.VIEW, journalArticle.getResourcePrimKey(),
 						"getStructuredContentRenderedContentTemplate",
 						journalArticle.getUserId(),
 						JournalArticle.class.getName(),
@@ -1064,7 +1069,7 @@ public class StructuredContentResourceImpl
 				).put(
 					"get-rendered-content-by-display-page",
 					addAction(
-						"VIEW", journalArticle.getResourcePrimKey(),
+						ActionKeys.VIEW, journalArticle.getResourcePrimKey(),
 						"getStructuredContentRenderedContentByDisplayPage" +
 							"DisplayPageKey",
 						journalArticle.getUserId(),
@@ -1073,14 +1078,15 @@ public class StructuredContentResourceImpl
 				).put(
 					"replace",
 					addAction(
-						"UPDATE", journalArticle.getResourcePrimKey(),
+						ActionKeys.UPDATE, journalArticle.getResourcePrimKey(),
 						"putStructuredContent", journalArticle.getUserId(),
 						JournalArticle.class.getName(),
 						journalArticle.getGroupId())
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", journalArticle.getResourcePrimKey(),
+						ActionKeys.SUBSCRIBE,
+						journalArticle.getResourcePrimKey(),
 						"putStructuredContentSubscribe",
 						journalArticle.getUserId(),
 						JournalArticle.class.getName(),
@@ -1088,7 +1094,8 @@ public class StructuredContentResourceImpl
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", journalArticle.getResourcePrimKey(),
+						ActionKeys.SUBSCRIBE,
+						journalArticle.getResourcePrimKey(),
 						"putStructuredContentUnsubscribe",
 						journalArticle.getUserId(),
 						JournalArticle.class.getName(),
@@ -1096,7 +1103,7 @@ public class StructuredContentResourceImpl
 				).put(
 					"update",
 					addAction(
-						"UPDATE", journalArticle.getResourcePrimKey(),
+						ActionKeys.UPDATE, journalArticle.getResourcePrimKey(),
 						"patchStructuredContent", journalArticle.getUserId(),
 						JournalArticle.class.getName(),
 						journalArticle.getGroupId())

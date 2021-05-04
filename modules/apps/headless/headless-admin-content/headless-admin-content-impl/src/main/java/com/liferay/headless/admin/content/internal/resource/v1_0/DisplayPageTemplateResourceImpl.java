@@ -25,7 +25,9 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -99,8 +101,8 @@ public class DisplayPageTemplateResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					"VIEW", "getSiteDisplayPageTemplatesPage",
-					"com.liferay.portal.kernel.model.Group", siteId)
+					ActionKeys.VIEW, "getSiteDisplayPageTemplatesPage",
+					Group.class.getName(), siteId)
 			).build(),
 			TransformUtil.transform(
 				_layoutPageTemplateEntryLocalService.dynamicQuery(

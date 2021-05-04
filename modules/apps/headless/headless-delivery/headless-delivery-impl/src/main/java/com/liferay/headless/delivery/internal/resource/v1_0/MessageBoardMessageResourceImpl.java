@@ -30,6 +30,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.filter.FilterUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.exception.NoSuchMessageException;
 import com.liferay.message.boards.model.MBMessage;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -148,16 +150,16 @@ public class MessageBoardMessageResourceImpl
 			HashMapBuilder.put(
 				"get-child-messages",
 				addAction(
-					"VIEW", mbMessage.getMessageId(),
+					ActionKeys.VIEW, mbMessage.getMessageId(),
 					"getMessageBoardMessageMessageBoardMessagesPage",
-					mbMessage.getUserId(), "com.liferay.message.boards",
+					mbMessage.getUserId(), MBConstants.RESOURCE_NAME,
 					mbMessage.getGroupId())
 			).put(
 				"reply-to-message",
 				addAction(
-					"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
+					ActionKeys.REPLY_TO_MESSAGE, mbMessage.getMessageId(),
 					"postMessageBoardMessageMessageBoardMessage",
-					mbMessage.getUserId(), "com.liferay.message.boards",
+					mbMessage.getUserId(), MBConstants.RESOURCE_NAME,
 					mbMessage.getGroupId())
 			).build(),
 			parentMessageBoardMessageId, null, flatten, search, aggregation,
@@ -188,16 +190,16 @@ public class MessageBoardMessageResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_MESSAGE", mbThread.getThreadId(),
+					ActionKeys.ADD_MESSAGE, mbThread.getThreadId(),
 					"postMessageBoardThreadMessageBoardMessage",
-					mbThread.getUserId(), "com.liferay.message.boards",
+					mbThread.getUserId(), MBConstants.RESOURCE_NAME,
 					mbThread.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", mbThread.getThreadId(),
+					ActionKeys.VIEW, mbThread.getThreadId(),
 					"getMessageBoardThreadMessageBoardMessagesPage",
-					mbThread.getUserId(), "com.liferay.message.boards",
+					mbThread.getUserId(), MBConstants.RESOURCE_NAME,
 					mbThread.getGroupId())
 			).build(),
 			mbThread.getRootMessageId(), null, false, search, aggregation,
@@ -244,8 +246,8 @@ public class MessageBoardMessageResourceImpl
 			HashMapBuilder.put(
 				"get",
 				addAction(
-					"VIEW", "getSiteMessageBoardMessagesPage",
-					"com.liferay.message.boards", siteId)
+					ActionKeys.VIEW, "getSiteMessageBoardMessagesPage",
+					MBConstants.RESOURCE_NAME, siteId)
 			).build(),
 			null, siteId, flatten, search, aggregation, filter, pagination,
 			sorts);
@@ -354,7 +356,7 @@ public class MessageBoardMessageResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.message.boards";
+		return MBConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -439,7 +441,7 @@ public class MessageBoardMessageResourceImpl
 					String field = "parentMessageId";
 
 					if (GetterUtil.getBoolean(flatten)) {
-						field = "treePath";
+						field = Field.TREE_PATH;
 					}
 
 					booleanFilter.add(
@@ -450,7 +452,7 @@ public class MessageBoardMessageResourceImpl
 				else {
 					if (!GetterUtil.getBoolean(flatten)) {
 						booleanFilter.add(
-							new TermFilter("categoryId", "0"),
+							new TermFilter(Field.CATEGORY_ID, "0"),
 							BooleanClauseOccur.MUST);
 					}
 
@@ -530,21 +532,23 @@ public class MessageBoardMessageResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"VIEW", mbMessage,
+							ActionKeys.VIEW, mbMessage,
 							"postMessageBoardMessageMyRating")
 					).put(
 						"delete",
 						addAction(
-							"VIEW", mbMessage,
+							ActionKeys.VIEW, mbMessage,
 							"deleteMessageBoardMessageMyRating")
 					).put(
 						"get",
 						addAction(
-							"VIEW", mbMessage, "getMessageBoardMessageMyRating")
+							ActionKeys.VIEW, mbMessage,
+							"getMessageBoardMessageMyRating")
 					).put(
 						"replace",
 						addAction(
-							"VIEW", mbMessage, "putMessageBoardMessageMyRating")
+							ActionKeys.VIEW, mbMessage,
+							"putMessageBoardMessageMyRating")
 					).build(),
 					_portal, ratingsEntry, _userLocalService);
 			},
@@ -559,33 +563,39 @@ public class MessageBoardMessageResourceImpl
 				false,
 				HashMapBuilder.put(
 					"delete",
-					addAction("DELETE", mbMessage, "deleteMessageBoardMessage")
+					addAction(
+						ActionKeys.DELETE, mbMessage,
+						"deleteMessageBoardMessage")
 				).put(
 					"get",
-					addAction("VIEW", mbMessage, "getMessageBoardMessage")
+					addAction(
+						ActionKeys.VIEW, mbMessage, "getMessageBoardMessage")
 				).put(
 					"replace",
-					addAction("UPDATE", mbMessage, "putMessageBoardMessage")
+					addAction(
+						ActionKeys.UPDATE, mbMessage, "putMessageBoardMessage")
 				).put(
 					"reply-to-message",
 					addAction(
-						"REPLY_TO_MESSAGE", mbMessage.getMessageId(),
+						ActionKeys.REPLY_TO_MESSAGE, mbMessage.getMessageId(),
 						"postMessageBoardMessageMessageBoardMessage",
-						mbMessage.getUserId(), "com.liferay.message.boards",
+						mbMessage.getUserId(), MBConstants.RESOURCE_NAME,
 						mbMessage.getGroupId())
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", mbMessage,
+						ActionKeys.SUBSCRIBE, mbMessage,
 						"putMessageBoardMessageSubscribe")
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", mbMessage,
+						ActionKeys.SUBSCRIBE, mbMessage,
 						"putMessageBoardMessageSubscribe")
 				).put(
 					"update",
-					addAction("UPDATE", mbMessage, "patchMessageBoardMessage")
+					addAction(
+						ActionKeys.UPDATE, mbMessage,
+						"patchMessageBoardMessage")
 				).build(),
 				_dtoConverterRegistry, mbMessage.getPrimaryKey(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

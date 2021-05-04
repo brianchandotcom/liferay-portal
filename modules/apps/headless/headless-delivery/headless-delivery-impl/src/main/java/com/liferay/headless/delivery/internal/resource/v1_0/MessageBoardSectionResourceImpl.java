@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.filter.FilterUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -117,14 +119,15 @@ public class MessageBoardSectionResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_CATEGORY",
+					ActionKeys.ADD_CATEGORY,
 					"postMessageBoardSectionMessageBoardSection",
-					"com.liferay.message.boards", mbCategory.getGroupId())
+					MBConstants.RESOURCE_NAME, mbCategory.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getMessageBoardSectionMessageBoardSectionsPage",
-					"com.liferay.message.boards", mbCategory.getGroupId())
+					ActionKeys.VIEW,
+					"getMessageBoardSectionMessageBoardSectionsPage",
+					MBConstants.RESOURCE_NAME, mbCategory.getGroupId())
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -151,13 +154,13 @@ public class MessageBoardSectionResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_CATEGORY", "postSiteMessageBoardSection",
-					"com.liferay.message.boards", siteId)
+					ActionKeys.ADD_CATEGORY, "postSiteMessageBoardSection",
+					MBConstants.RESOURCE_NAME, siteId)
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getSiteMessageBoardSectionsPage",
-					"com.liferay.message.boards", siteId)
+					ActionKeys.VIEW, "getSiteMessageBoardSectionsPage",
+					MBConstants.RESOURCE_NAME, siteId)
 			).build(),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {
@@ -245,7 +248,7 @@ public class MessageBoardSectionResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.message.boards";
+		return MBConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -322,12 +325,13 @@ public class MessageBoardSectionResourceImpl
 				HashMapBuilder.put(
 					"add-subcategory",
 					addAction(
-						"ADD_SUBCATEGORY", mbCategory,
+						ActionKeys.ADD_SUBCATEGORY, mbCategory,
 						"postMessageBoardSectionMessageBoardSection")
 				).put(
 					"add-thread",
 					ActionUtil.addAction(
-						"ADD_MESSAGE", MessageBoardThreadResourceImpl.class,
+						ActionKeys.ADD_MESSAGE,
+						MessageBoardThreadResourceImpl.class,
 						mbCategory.getCategoryId(),
 						"postMessageBoardSectionMessageBoardThread",
 						contextScopeChecker, mbCategory.getUserId(),
@@ -335,22 +339,26 @@ public class MessageBoardSectionResourceImpl
 						contextUriInfo)
 				).put(
 					"delete",
-					addAction("DELETE", mbCategory, "deleteMessageBoardSection")
+					addAction(
+						ActionKeys.DELETE, mbCategory,
+						"deleteMessageBoardSection")
 				).put(
 					"get",
-					addAction("VIEW", mbCategory, "getMessageBoardSection")
+					addAction(
+						ActionKeys.VIEW, mbCategory, "getMessageBoardSection")
 				).put(
 					"replace",
-					addAction("UPDATE", mbCategory, "putMessageBoardSection")
+					addAction(
+						ActionKeys.UPDATE, mbCategory, "putMessageBoardSection")
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", mbCategory,
+						ActionKeys.SUBSCRIBE, mbCategory,
 						"putMessageBoardSectionSubscribe")
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", mbCategory,
+						ActionKeys.SUBSCRIBE, mbCategory,
 						"putMessageBoardSectionUnsubscribe")
 				).build(),
 				_dtoConverterRegistry, mbCategory.getCategoryId(),

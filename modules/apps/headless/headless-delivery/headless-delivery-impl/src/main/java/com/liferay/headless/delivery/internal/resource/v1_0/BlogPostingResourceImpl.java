@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -140,18 +142,18 @@ public class BlogPostingResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_ENTRY", "postSiteBlogPosting", "com.liferay.blogs",
-					siteId)
+					ActionKeys.ADD_ENTRY, "postSiteBlogPosting",
+					BlogsConstants.RESOURCE_NAME, siteId)
 			).put(
 				"subscribe",
 				addAction(
-					"SUBSCRIBE", "putSiteBlogPostingSubscribe",
-					"com.liferay.blogs", siteId)
+					ActionKeys.SUBSCRIBE, "putSiteBlogPostingSubscribe",
+					BlogsConstants.RESOURCE_NAME, siteId)
 			).put(
 				"unsubscribe",
 				addAction(
-					"SUBSCRIBE", "putSiteBlogPostingUnsubscribe",
-					"com.liferay.blogs", siteId)
+					ActionKeys.SUBSCRIBE, "putSiteBlogPostingUnsubscribe",
+					BlogsConstants.RESOURCE_NAME, siteId)
 			).build(),
 			booleanQuery -> {
 			},
@@ -263,7 +265,7 @@ public class BlogPostingResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.blogs";
+		return BlogsConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -346,17 +348,24 @@ public class BlogPostingResourceImpl
 				return RatingUtil.toRating(
 					HashMapBuilder.put(
 						"create",
-						addAction("VIEW", blogsEntry, "postBlogPostingMyRating")
+						addAction(
+							ActionKeys.VIEW, blogsEntry,
+							"postBlogPostingMyRating")
 					).put(
 						"delete",
 						addAction(
-							"VIEW", blogsEntry, "deleteBlogPostingMyRating")
+							ActionKeys.VIEW, blogsEntry,
+							"deleteBlogPostingMyRating")
 					).put(
 						"get",
-						addAction("VIEW", blogsEntry, "getBlogPostingMyRating")
+						addAction(
+							ActionKeys.VIEW, blogsEntry,
+							"getBlogPostingMyRating")
 					).put(
 						"replace",
-						addAction("VIEW", blogsEntry, "putBlogPostingMyRating")
+						addAction(
+							ActionKeys.VIEW, blogsEntry,
+							"putBlogPostingMyRating")
 					).build(),
 					_portal, ratingsEntry, _userLocalService);
 			},
@@ -369,20 +378,23 @@ public class BlogPostingResourceImpl
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
 					"delete",
-					addAction("DELETE", blogsEntry, "deleteBlogPosting")
+					addAction(
+						ActionKeys.DELETE, blogsEntry, "deleteBlogPosting")
 				).put(
-					"get", addAction("VIEW", blogsEntry, "getBlogPosting")
+					"get",
+					addAction(ActionKeys.VIEW, blogsEntry, "getBlogPosting")
 				).put(
 					"get-rendered-content-by-display-page",
 					addAction(
-						"VIEW", blogsEntry,
+						ActionKeys.VIEW, blogsEntry,
 						"getBlogPostingRenderedContentByDisplayPageDisplay" +
 							"PageKey")
 				).put(
-					"replace", addAction("UPDATE", blogsEntry, "putBlogPosting")
+					"replace",
+					addAction(ActionKeys.UPDATE, blogsEntry, "putBlogPosting")
 				).put(
 					"update",
-					addAction("UPDATE", blogsEntry, "patchBlogPosting")
+					addAction(ActionKeys.UPDATE, blogsEntry, "patchBlogPosting")
 				).build(),
 				_dtoConverterRegistry, blogsEntry.getEntryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

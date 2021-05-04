@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -210,7 +211,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"get",
 			addAction(
-				"VIEW", layout.getPlid(), "getSiteSitePage", null,
+				ActionKeys.VIEW, layout.getPlid(), "getSiteSitePage", null,
 				Layout.class.getName(), layout.getGroupId())
 		).put(
 			"get-experiences",
@@ -220,14 +221,16 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 				}
 
 				return addAction(
-					"VIEW", "getSiteSitePageFriendlyUrlPathExperiencesPage",
+					ActionKeys.VIEW,
+					"getSiteSitePageFriendlyUrlPathExperiencesPage",
 					Group.class.getName(), layout.getGroupId());
 			}
 		).put(
 			"get-rendered-page",
 			addAction(
-				"VIEW", layout.getPlid(), "getSiteSitePageRenderedPage", null,
-				Layout.class.getName(), layout.getGroupId())
+				ActionKeys.VIEW, layout.getPlid(),
+				"getSiteSitePageRenderedPage", null, Layout.class.getName(),
+				layout.getGroupId())
 		).build();
 	}
 
@@ -252,12 +255,13 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"get",
 			addAction(
-				"VIEW", "getSiteSitePageExperienceExperienceKey",
+				ActionKeys.VIEW, "getSiteSitePageExperienceExperienceKey",
 				Group.class.getName(), layout.getGroupId())
 		).put(
 			"get-rendered-page",
 			addAction(
-				"VIEW", "getSiteSitePageExperienceExperienceKeyRenderedPage",
+				ActionKeys.VIEW,
+				"getSiteSitePageExperienceExperienceKeyRenderedPage",
 				Group.class.getName(), layout.getGroupId())
 		).build();
 	}

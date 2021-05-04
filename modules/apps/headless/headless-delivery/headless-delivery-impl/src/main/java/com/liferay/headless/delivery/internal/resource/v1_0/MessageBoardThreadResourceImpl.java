@@ -26,6 +26,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RatingUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardMessageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
+import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.NoSuchMessageException;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -152,16 +154,16 @@ public class MessageBoardThreadResourceImpl
 			HashMapBuilder.<String, Map<String, String>>put(
 				"create",
 				addAction(
-					"ADD_MESSAGE", mbCategory.getCategoryId(),
+					ActionKeys.ADD_MESSAGE, mbCategory.getCategoryId(),
 					"postMessageBoardSectionMessageBoardThread",
-					mbCategory.getUserId(), "com.liferay.message.boards",
+					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
 					mbCategory.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", mbCategory.getCategoryId(),
+					ActionKeys.VIEW, mbCategory.getCategoryId(),
 					"getMessageBoardSectionMessageBoardThreadsPage",
-					mbCategory.getUserId(), "com.liferay.message.boards",
+					mbCategory.getUserId(), MBConstants.RESOURCE_NAME,
 					mbCategory.getGroupId())
 			).build();
 
@@ -189,7 +191,7 @@ public class MessageBoardThreadResourceImpl
 
 				booleanFilter.add(
 					new TermFilter(
-						"categoryId",
+						Field.CATEGORY_ID,
 						String.valueOf(mbCategory.getCategoryId())),
 					BooleanClauseOccur.MUST);
 				booleanFilter.add(
@@ -310,13 +312,13 @@ public class MessageBoardThreadResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_MESSAGE", "postSiteMessageBoardThread",
-					"com.liferay.message.boards", siteId)
+					ActionKeys.ADD_MESSAGE, "postSiteMessageBoardThread",
+					MBConstants.RESOURCE_NAME, siteId)
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getSiteMessageBoardThreadsPage",
-					"com.liferay.message.boards", siteId)
+					ActionKeys.VIEW, "getSiteMessageBoardThreadsPage",
+					MBConstants.RESOURCE_NAME, siteId)
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -443,7 +445,7 @@ public class MessageBoardThreadResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.message.boards";
+		return MBConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -606,20 +608,23 @@ public class MessageBoardThreadResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"VIEW", mbMessage, "postMessageBoardThreadMyRating")
+							ActionKeys.VIEW, mbMessage,
+							"postMessageBoardThreadMyRating")
 					).put(
 						"delete",
 						addAction(
-							"VIEW", mbMessage,
+							ActionKeys.VIEW, mbMessage,
 							"deleteMessageBoardThreadMyRating")
 					).put(
 						"get",
 						addAction(
-							"VIEW", mbMessage, "getMessageBoardThreadMyRating")
+							ActionKeys.VIEW, mbMessage,
+							"getMessageBoardThreadMyRating")
 					).put(
 						"replace",
 						addAction(
-							"VIEW", mbMessage, "putMessageBoardThreadMyRating")
+							ActionKeys.VIEW, mbMessage,
+							"putMessageBoardThreadMyRating")
 					).build(),
 					_portal, ratingsEntry, _userLocalService);
 			},
@@ -648,39 +653,39 @@ public class MessageBoardThreadResourceImpl
 				HashMapBuilder.put(
 					"delete",
 					addAction(
-						"DELETE", mbMessage.getThreadId(),
+						ActionKeys.DELETE, mbMessage.getThreadId(),
 						"deleteMessageBoardThread", modelResourcePermission)
 				).put(
 					"get",
 					addAction(
-						"VIEW", mbMessage.getThreadId(),
+						ActionKeys.VIEW, mbMessage.getThreadId(),
 						"getMessageBoardThread", modelResourcePermission)
 				).put(
 					"replace",
 					addAction(
-						"UPDATE", mbMessage.getThreadId(),
+						ActionKeys.UPDATE, mbMessage.getThreadId(),
 						"putMessageBoardThread", modelResourcePermission)
 				).put(
 					"reply-to-thread",
 					ActionUtil.addAction(
-						"REPLY_TO_MESSAGE",
+						ActionKeys.REPLY_TO_MESSAGE,
 						MessageBoardMessageResourceImpl.class,
 						mbMessage.getThreadId(),
 						"postMessageBoardThreadMessageBoardMessage",
 						contextScopeChecker,
 						new MessageBoardThreadModelResourcePermission(
-							mbMessage, "com.liferay.message.boards"),
+							mbMessage, MBConstants.RESOURCE_NAME),
 						contextUriInfo)
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", mbMessage.getThreadId(),
+						ActionKeys.SUBSCRIBE, mbMessage.getThreadId(),
 						"putMessageBoardThreadSubscribe",
 						modelResourcePermission)
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", mbMessage.getThreadId(),
+						ActionKeys.SUBSCRIBE, mbMessage.getThreadId(),
 						"putMessageBoardThreadUnsubscribe",
 						modelResourcePermission)
 				).build(),

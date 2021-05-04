@@ -20,9 +20,12 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseFolderUtil;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -77,14 +80,15 @@ public class KnowledgeBaseFolderResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_KB_FOLDER",
+					KBActionKeys.ADD_KB_FOLDER,
 					"postKnowledgeBaseFolderKnowledgeBaseFolder",
-					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
+					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getKnowledgeBaseFolderKnowledgeBaseFoldersPage",
-					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
+					ActionKeys.VIEW,
+					"getKnowledgeBaseFolderKnowledgeBaseFoldersPage",
+					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
 			).build(),
 			transform(
 				_kbFolderService.getKBFolders(
@@ -105,13 +109,13 @@ public class KnowledgeBaseFolderResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_KB_FOLDER", "postSiteKnowledgeBaseFolder",
-					"com.liferay.knowledge.base.admin", siteId)
+					KBActionKeys.ADD_KB_FOLDER, "postSiteKnowledgeBaseFolder",
+					KBConstants.RESOURCE_NAME_ADMIN, siteId)
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getSiteKnowledgeBaseFoldersPage",
-					"com.liferay.knowledge.base.admin", siteId)
+					ActionKeys.VIEW, "getSiteKnowledgeBaseFoldersPage",
+					KBConstants.RESOURCE_NAME_ADMIN, siteId)
 			).build(),
 			transform(
 				_kbFolderService.getKBFolders(
@@ -187,7 +191,7 @@ public class KnowledgeBaseFolderResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.knowledge.base.admin";
+		return KBConstants.RESOURCE_NAME_ADMIN;
 	}
 
 	@Override
@@ -219,12 +223,17 @@ public class KnowledgeBaseFolderResourceImpl
 			{
 				actions = HashMapBuilder.put(
 					"delete",
-					addAction("DELETE", kbFolder, "deleteKnowledgeBaseFolder")
+					addAction(
+						ActionKeys.DELETE, kbFolder,
+						"deleteKnowledgeBaseFolder")
 				).put(
-					"get", addAction("VIEW", kbFolder, "getKnowledgeBaseFolder")
+					"get",
+					addAction(
+						ActionKeys.VIEW, kbFolder, "getKnowledgeBaseFolder")
 				).put(
 					"replace",
-					addAction("UPDATE", kbFolder, "putKnowledgeBaseFolder")
+					addAction(
+						ActionKeys.UPDATE, kbFolder, "putKnowledgeBaseFolder")
 				).build();
 				creator = CreatorUtil.toCreator(
 					_portal, Optional.of(contextUriInfo),

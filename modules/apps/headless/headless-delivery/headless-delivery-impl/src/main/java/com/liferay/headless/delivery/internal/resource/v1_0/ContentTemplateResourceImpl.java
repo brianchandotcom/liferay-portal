@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -95,7 +96,7 @@ public class ContentTemplateResourceImpl
 			Collections.singletonMap(
 				"get",
 				addAction(
-					"MANAGE_LAYOUTS", "getSiteContentTemplatesPage",
+					ActionKeys.MANAGE_LAYOUTS, "getSiteContentTemplatesPage",
 					Group.class.getName(), siteId)),
 			booleanQuery -> {
 			},
@@ -132,8 +133,8 @@ public class ContentTemplateResourceImpl
 			Collections.singletonMap(
 				"get",
 				addAction(
-					"VIEW", ddmTemplate.getTemplateId(), "getContentTemplate",
-					ddmTemplate.getUserId(),
+					ActionKeys.VIEW, ddmTemplate.getTemplateId(),
+					"getContentTemplate", ddmTemplate.getUserId(),
 					DDMTemplate.class.getName() + "-" +
 						JournalArticle.class.getName(),
 					ddmTemplate.getGroupId())),

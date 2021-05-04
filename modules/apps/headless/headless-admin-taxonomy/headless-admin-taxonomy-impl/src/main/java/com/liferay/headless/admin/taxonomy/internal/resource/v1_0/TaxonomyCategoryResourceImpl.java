@@ -56,6 +56,7 @@ import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.model.impl.AssetCategoryImpl;
+import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.sql.Timestamp;
@@ -156,14 +157,14 @@ public class TaxonomyCategoryResourceImpl
 			actions = HashMapBuilder.<String, Map<String, String>>put(
 				"add-category",
 				addAction(
-					"ADD_CATEGORY", assetCategory.getCategoryId(),
+					ActionKeys.ADD_CATEGORY, assetCategory.getCategoryId(),
 					"postTaxonomyCategoryTaxonomyCategory",
 					assetCategory.getUserId(), AssetCategory.class.getName(),
 					assetCategory.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", assetCategory.getCategoryId(),
+					ActionKeys.VIEW, assetCategory.getCategoryId(),
 					"getTaxonomyCategoryTaxonomyCategoriesPage",
 					assetCategory.getUserId(), AssetCategory.class.getName(),
 					assetCategory.getGroupId())
@@ -199,12 +200,12 @@ public class TaxonomyCategoryResourceImpl
 			HashMapBuilder.put(
 				"add-category",
 				addAction(
-					"ADD_CATEGORY", assetVocabulary,
+					ActionKeys.ADD_CATEGORY, assetVocabulary,
 					"postTaxonomyVocabularyTaxonomyCategory")
 			).put(
 				"get",
 				addAction(
-					"VIEW", assetVocabulary,
+					ActionKeys.VIEW, assetVocabulary,
 					"getTaxonomyVocabularyTaxonomyCategoriesPage")
 			).build(),
 			booleanQuery -> {
@@ -342,7 +343,7 @@ public class TaxonomyCategoryResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.asset.categories";
+		return AssetCategoriesPermission.RESOURCE_NAME;
 	}
 
 	@Override
@@ -506,20 +507,26 @@ public class TaxonomyCategoryResourceImpl
 				HashMapBuilder.put(
 					"add-category",
 					addAction(
-						"ADD_CATEGORY", assetCategory,
+						ActionKeys.ADD_CATEGORY, assetCategory,
 						"postTaxonomyCategoryTaxonomyCategory")
 				).put(
 					"delete",
-					addAction("DELETE", assetCategory, "deleteTaxonomyCategory")
+					addAction(
+						ActionKeys.DELETE, assetCategory,
+						"deleteTaxonomyCategory")
 				).put(
 					"get",
-					addAction("VIEW", assetCategory, "getTaxonomyCategory")
+					addAction(
+						ActionKeys.VIEW, assetCategory, "getTaxonomyCategory")
 				).put(
 					"replace",
-					addAction("UPDATE", assetCategory, "putTaxonomyCategory")
+					addAction(
+						ActionKeys.UPDATE, assetCategory, "putTaxonomyCategory")
 				).put(
 					"update",
-					addAction("UPDATE", assetCategory, "patchTaxonomyCategory")
+					addAction(
+						ActionKeys.UPDATE, assetCategory,
+						"patchTaxonomyCategory")
 				).build(),
 				_dtoConverterRegistry, assetCategory.getCategoryId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

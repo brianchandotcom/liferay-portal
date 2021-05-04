@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -36,6 +37,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
+import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageService;
 
@@ -77,7 +79,8 @@ public class WikiNodeResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_NODE", "postSiteWikiNode", "com.liferay.wiki", siteId)
+					ActionKeys.ADD_NODE, "postSiteWikiNode",
+					WikiConstants.RESOURCE_NAME, siteId)
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -152,7 +155,7 @@ public class WikiNodeResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.wiki";
+		return WikiConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -166,17 +169,22 @@ public class WikiNodeResourceImpl
 		return new WikiNode() {
 			{
 				actions = HashMapBuilder.put(
-					"delete", addAction("DELETE", wikiNode, "deleteWikiNode")
+					"delete",
+					addAction(ActionKeys.DELETE, wikiNode, "deleteWikiNode")
 				).put(
-					"get", addAction("VIEW", wikiNode, "getWikiNode")
+					"get", addAction(ActionKeys.VIEW, wikiNode, "getWikiNode")
 				).put(
-					"replace", addAction("UPDATE", wikiNode, "putWikiNode")
+					"replace",
+					addAction(ActionKeys.UPDATE, wikiNode, "putWikiNode")
 				).put(
 					"subscribe",
-					addAction("SUBSCRIBE", wikiNode, "putWikiNodeSubscribe")
+					addAction(
+						ActionKeys.SUBSCRIBE, wikiNode, "putWikiNodeSubscribe")
 				).put(
 					"unsubscribe",
-					addAction("SUBSCRIBE", wikiNode, "putWikiNodeUnsubscribe")
+					addAction(
+						ActionKeys.SUBSCRIBE, wikiNode,
+						"putWikiNodeUnsubscribe")
 				).build();
 				creator = CreatorUtil.toCreator(
 					_portal, Optional.of(contextUriInfo),

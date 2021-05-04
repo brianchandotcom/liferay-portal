@@ -30,6 +30,8 @@ import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.filter.FilterUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
+import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -135,14 +138,15 @@ public class KnowledgeBaseArticleResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_KB_ARTICLE",
+					KBActionKeys.ADD_KB_ARTICLE,
 					"postKnowledgeBaseArticleKnowledgeBaseArticle",
-					"com.liferay.knowledge.base.admin", kbArticle.getGroupId())
+					KBConstants.RESOURCE_NAME_ADMIN, kbArticle.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getKnowledgeBaseArticleKnowledgeBaseArticlesPage",
-					"com.liferay.knowledge.base.admin", kbArticle.getGroupId())
+					ActionKeys.VIEW,
+					"getKnowledgeBaseArticleKnowledgeBaseArticlesPage",
+					KBConstants.RESOURCE_NAME_ADMIN, kbArticle.getGroupId())
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -181,14 +185,15 @@ public class KnowledgeBaseArticleResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_KB_ARTICLE",
+					KBActionKeys.ADD_KB_ARTICLE,
 					"postKnowledgeBaseFolderKnowledgeBaseArticle",
-					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
+					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getKnowledgeBaseFolderKnowledgeBaseArticlesPage",
-					"com.liferay.knowledge.base.admin", kbFolder.getGroupId())
+					ActionKeys.VIEW,
+					"getKnowledgeBaseFolderKnowledgeBaseArticlesPage",
+					KBConstants.RESOURCE_NAME_ADMIN, kbFolder.getGroupId())
 			).build(),
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
@@ -229,23 +234,25 @@ public class KnowledgeBaseArticleResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_KB_ARTICLE", "postSiteKnowledgeBaseArticle",
-					"com.liferay.knowledge.base.admin", siteId)
+					KBActionKeys.ADD_KB_ARTICLE, "postSiteKnowledgeBaseArticle",
+					KBConstants.RESOURCE_NAME_ADMIN, siteId)
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getSiteKnowledgeBaseArticlesPage",
-					"com.liferay.knowledge.base.admin", siteId)
+					ActionKeys.VIEW, "getSiteKnowledgeBaseArticlesPage",
+					KBConstants.RESOURCE_NAME_ADMIN, siteId)
 			).put(
 				"subscribe",
 				addAction(
-					"SUBSCRIBE", "putSiteKnowledgeBaseArticleSubscribe",
-					"com.liferay.knowledge.base.admin", siteId)
+					ActionKeys.SUBSCRIBE,
+					"putSiteKnowledgeBaseArticleSubscribe",
+					KBConstants.RESOURCE_NAME_ADMIN, siteId)
 			).put(
 				"unsubscribe",
 				addAction(
-					"SUBSCRIBE", "putSiteKnowledgeBaseArticleUnsubscribe",
-					"com.liferay.knowledge.base.admin", siteId)
+					ActionKeys.SUBSCRIBE,
+					"putSiteKnowledgeBaseArticleUnsubscribe",
+					KBConstants.RESOURCE_NAME_ADMIN, siteId)
 			).build(),
 			booleanQuery -> {
 				if (!GetterUtil.getBoolean(flatten)) {
@@ -395,7 +402,7 @@ public class KnowledgeBaseArticleResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.knowledge.base.admin";
+		return KBConstants.RESOURCE_NAME_ADMIN;
 	}
 
 	@Override
@@ -487,34 +494,30 @@ public class KnowledgeBaseArticleResourceImpl
 					HashMapBuilder.put(
 						"create",
 						addAction(
-							"VIEW", kbArticle.getResourcePrimKey(),
+							ActionKeys.VIEW, kbArticle.getResourcePrimKey(),
 							"postKnowledgeBaseArticleMyRating",
-							kbArticle.getUserId(),
-							"com.liferay.knowledge.base.model.KBArticle",
+							kbArticle.getUserId(), KBArticle.class.getName(),
 							kbArticle.getGroupId())
 					).put(
 						"delete",
 						addAction(
-							"VIEW", kbArticle.getResourcePrimKey(),
+							ActionKeys.VIEW, kbArticle.getResourcePrimKey(),
 							"deleteKnowledgeBaseArticleMyRating",
-							kbArticle.getUserId(),
-							"com.liferay.knowledge.base.model.KBArticle",
+							kbArticle.getUserId(), KBArticle.class.getName(),
 							kbArticle.getGroupId())
 					).put(
 						"get",
 						addAction(
-							"VIEW", kbArticle.getResourcePrimKey(),
+							ActionKeys.VIEW, kbArticle.getResourcePrimKey(),
 							"getKnowledgeBaseArticleMyRating",
-							kbArticle.getUserId(),
-							"com.liferay.knowledge.base.model.KBArticle",
+							kbArticle.getUserId(), KBArticle.class.getName(),
 							kbArticle.getGroupId())
 					).put(
 						"replace",
 						addAction(
-							"VIEW", kbArticle.getResourcePrimKey(),
+							ActionKeys.VIEW, kbArticle.getResourcePrimKey(),
 							"putKnowledgeBaseArticleMyRating",
-							kbArticle.getUserId(),
-							"com.liferay.knowledge.base.model.KBArticle",
+							kbArticle.getUserId(), KBArticle.class.getName(),
 							kbArticle.getGroupId())
 					).build(),
 					_portal, ratingsEntry, _userLocalService);
@@ -535,39 +538,34 @@ public class KnowledgeBaseArticleResourceImpl
 				HashMapBuilder.put(
 					"delete",
 					addAction(
-						"DELETE", kbArticle.getResourcePrimKey(),
+						ActionKeys.DELETE, kbArticle.getResourcePrimKey(),
 						"deleteKnowledgeBaseArticle", kbArticle.getUserId(),
-						"com.liferay.knowledge.base.model.KBArticle",
-						kbArticle.getGroupId())
+						KBArticle.class.getName(), kbArticle.getGroupId())
 				).put(
 					"get",
 					addAction(
-						"VIEW", kbArticle.getResourcePrimKey(),
+						ActionKeys.VIEW, kbArticle.getResourcePrimKey(),
 						"getKnowledgeBaseArticle", kbArticle.getUserId(),
-						"com.liferay.knowledge.base.model.KBArticle",
-						kbArticle.getGroupId())
+						KBArticle.class.getName(), kbArticle.getGroupId())
 				).put(
 					"replace",
 					addAction(
-						"UPDATE", kbArticle.getResourcePrimKey(),
+						ActionKeys.UPDATE, kbArticle.getResourcePrimKey(),
 						"putKnowledgeBaseArticle", kbArticle.getUserId(),
-						"com.liferay.knowledge.base.model.KBArticle",
-						kbArticle.getGroupId())
+						KBArticle.class.getName(), kbArticle.getGroupId())
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", kbArticle.getResourcePrimKey(),
+						ActionKeys.SUBSCRIBE, kbArticle.getResourcePrimKey(),
 						"putKnowledgeBaseArticleSubscribe",
-						kbArticle.getUserId(),
-						"com.liferay.knowledge.base.model.KBArticle",
+						kbArticle.getUserId(), KBArticle.class.getName(),
 						kbArticle.getGroupId())
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", kbArticle.getResourcePrimKey(),
+						ActionKeys.SUBSCRIBE, kbArticle.getResourcePrimKey(),
 						"putKnowledgeBaseArticleUnsubscribe",
-						kbArticle.getUserId(),
-						"com.liferay.knowledge.base.model.KBArticle",
+						kbArticle.getUserId(), KBArticle.class.getName(),
 						kbArticle.getGroupId())
 				).build(),
 				_dtoConverterRegistry, kbArticle.getResourcePrimKey(),

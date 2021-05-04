@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
@@ -112,7 +113,7 @@ public class ContentStructureResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.dynamic.data.mapping";
+		return DDMConstants.RESOURCE_NAME;
 	}
 
 	@Override

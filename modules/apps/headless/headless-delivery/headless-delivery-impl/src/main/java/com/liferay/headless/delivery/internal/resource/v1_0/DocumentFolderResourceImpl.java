@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,6 +55,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import java.util.Map;
 import java.util.Optional;
@@ -111,15 +113,15 @@ public class DocumentFolderResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_SUBFOLDER", folder.getFolderId(),
+					ActionKeys.ADD_SUBFOLDER, folder.getFolderId(),
 					"postDocumentFolderDocumentFolder", folder.getUserId(),
-					"com.liferay.document.library", folder.getGroupId())
+					DLConstants.RESOURCE_NAME, folder.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", folder.getFolderId(),
+					ActionKeys.VIEW, folder.getFolderId(),
 					"getDocumentFolderDocumentFoldersPage", folder.getUserId(),
-					"com.liferay.document.library", folder.getGroupId())
+					DLConstants.RESOURCE_NAME, folder.getGroupId())
 			).build(),
 			folder.getFolderId(), folder.getGroupId(), flatten, search,
 			aggregation, filter, pagination, sorts);
@@ -151,13 +153,13 @@ public class DocumentFolderResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"ADD_FOLDER", "postSiteDocumentFolder",
-					"com.liferay.document.library", siteId)
+					ActionKeys.ADD_FOLDER, "postSiteDocumentFolder",
+					DLConstants.RESOURCE_NAME, siteId)
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getSiteDocumentFoldersPage",
-					"com.liferay.document.library", siteId)
+					ActionKeys.VIEW, "getSiteDocumentFoldersPage",
+					DLConstants.RESOURCE_NAME, siteId)
 			).build(),
 			documentFolderId, siteId, flatten, search, aggregation, filter,
 			pagination, sorts);
@@ -250,7 +252,7 @@ public class DocumentFolderResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.document.library";
+		return DLConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -297,7 +299,7 @@ public class DocumentFolderResourceImpl
 							new TermFilter(
 								field, String.valueOf(parentDocumentFolderId)),
 							BooleanClauseOccur.MUST_NOT);
-						field = "treePath";
+						field = Field.TREE_PATH;
 					}
 
 					booleanFilter.add(
@@ -339,45 +341,39 @@ public class DocumentFolderResourceImpl
 				HashMapBuilder.put(
 					"delete",
 					addAction(
-						"DELETE", folder.getFolderId(), "deleteDocumentFolder",
-						folder.getUserId(),
-						"com.liferay.document.library.kernel.model.DLFolder",
-						folder.getGroupId())
+						ActionKeys.DELETE, folder.getFolderId(),
+						"deleteDocumentFolder", folder.getUserId(),
+						DLFolder.class.getName(), folder.getGroupId())
 				).put(
 					"get",
 					addAction(
-						"ACCESS", folder.getFolderId(), "getDocumentFolder",
-						folder.getUserId(),
-						"com.liferay.document.library.kernel.model.DLFolder",
-						folder.getGroupId())
+						ActionKeys.ACCESS, folder.getFolderId(),
+						"getDocumentFolder", folder.getUserId(),
+						DLFolder.class.getName(), folder.getGroupId())
 				).put(
 					"replace",
 					addAction(
-						"UPDATE", folder.getFolderId(), "putDocumentFolder",
-						folder.getUserId(),
-						"com.liferay.document.library.kernel.model.DLFolder",
-						folder.getGroupId())
+						ActionKeys.UPDATE, folder.getFolderId(),
+						"putDocumentFolder", folder.getUserId(),
+						DLFolder.class.getName(), folder.getGroupId())
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", folder.getFolderId(),
+						ActionKeys.SUBSCRIBE, folder.getFolderId(),
 						"putDocumentFolderSubscribe", folder.getUserId(),
-						"com.liferay.document.library.kernel.model.DLFolder",
-						folder.getGroupId())
+						DLFolder.class.getName(), folder.getGroupId())
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", folder.getFolderId(),
+						ActionKeys.SUBSCRIBE, folder.getFolderId(),
 						"putDocumentFolderUnsubscribe", folder.getUserId(),
-						"com.liferay.document.library.kernel.model.DLFolder",
-						folder.getGroupId())
+						DLFolder.class.getName(), folder.getGroupId())
 				).put(
 					"update",
 					addAction(
-						"UPDATE", folder.getFolderId(), "patchDocumentFolder",
-						folder.getUserId(),
-						"com.liferay.document.library.kernel.model.DLFolder",
-						folder.getGroupId())
+						ActionKeys.UPDATE, folder.getFolderId(),
+						"patchDocumentFolder", folder.getUserId(),
+						DLFolder.class.getName(), folder.getGroupId())
 				).build(),
 				_dtoConverterRegistry, folder.getFolderId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,

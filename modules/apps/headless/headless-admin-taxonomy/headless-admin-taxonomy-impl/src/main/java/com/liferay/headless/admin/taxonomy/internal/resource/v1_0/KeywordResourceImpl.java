@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,6 +50,7 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
+import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
 
 import java.sql.Timestamp;
 
@@ -139,13 +141,13 @@ public class KeywordResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"MANAGE_TAG", "postSiteKeyword", "com.liferay.asset.tags",
-					siteId)
+					ActionKeys.MANAGE_TAG, "postSiteKeyword",
+					AssetTagsPermission.RESOURCE_NAME, siteId)
 			).put(
 				"get",
 				addAction(
-					"MANAGE_TAG", "getSiteKeywordsPage",
-					"com.liferay.asset.tags", siteId)
+					ActionKeys.MANAGE_TAG, "getSiteKeywordsPage",
+					AssetTagsPermission.RESOURCE_NAME, siteId)
 			).build(),
 			booleanQuery -> {
 			},
@@ -196,12 +198,12 @@ public class KeywordResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.asset.tags";
+		return AssetTagsPermission.RESOURCE_NAME;
 	}
 
 	@Override
 	protected String getPermissionCheckerResourceName(Object id) {
-		return "com.liferay.asset.tags";
+		return AssetTagsPermission.RESOURCE_NAME;
 	}
 
 	private ProjectionList _getProjectionList() {
@@ -276,20 +278,23 @@ public class KeywordResourceImpl
 				actions = HashMapBuilder.put(
 					"delete",
 					addAction(
-						"MANAGE_TAG", assetTag.getTagId(), "deleteKeyword",
-						assetTag.getUserId(), "com.liferay.asset.tags",
+						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
+						"deleteKeyword", assetTag.getUserId(),
+						AssetTagsPermission.RESOURCE_NAME,
 						assetTag.getGroupId())
 				).put(
 					"get",
 					addAction(
-						"MANAGE_TAG", assetTag.getTagId(), "getKeyword",
-						assetTag.getUserId(), "com.liferay.asset.tags",
+						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
+						"getKeyword", assetTag.getUserId(),
+						AssetTagsPermission.RESOURCE_NAME,
 						assetTag.getGroupId())
 				).put(
 					"replace",
 					addAction(
-						"MANAGE_TAG", assetTag.getTagId(), "putKeyword",
-						assetTag.getUserId(), "com.liferay.asset.tags",
+						ActionKeys.MANAGE_TAG, assetTag.getTagId(),
+						"putKeyword", assetTag.getUserId(),
+						AssetTagsPermission.RESOURCE_NAME,
 						assetTag.getGroupId())
 				).build();
 				assetLibraryKey = GroupUtil.getAssetLibraryKey(group);

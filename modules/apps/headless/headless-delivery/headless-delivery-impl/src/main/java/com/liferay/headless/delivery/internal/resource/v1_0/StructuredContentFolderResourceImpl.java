@@ -27,6 +27,7 @@ import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResour
 import com.liferay.headless.delivery.search.aggregation.AggregationUtil;
 import com.liferay.headless.delivery.search.filter.FilterUtil;
 import com.liferay.headless.delivery.search.sort.SortUtil;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderService;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -122,13 +124,13 @@ public class StructuredContentFolderResourceImpl
 			HashMapBuilder.put(
 				"create",
 				addAction(
-					"UPDATE", "postSiteStructuredContentFolder",
-					"com.liferay.journal", siteId)
+					ActionKeys.UPDATE, "postSiteStructuredContentFolder",
+					JournalConstants.RESOURCE_NAME, siteId)
 			).put(
 				"get",
 				addAction(
-					"VIEW", "getSiteStructuredContentFoldersPage",
-					"com.liferay.journal", siteId)
+					ActionKeys.VIEW, "getSiteStructuredContentFoldersPage",
+					JournalConstants.RESOURCE_NAME, siteId)
 			).build(),
 			parentStructuredContentFolderId, siteId, search, aggregation,
 			filter, pagination, sorts);
@@ -158,22 +160,22 @@ public class StructuredContentFolderResourceImpl
 			HashMapBuilder.put(
 				"add-subfolder",
 				addAction(
-					"UPDATE", journalFolder,
+					ActionKeys.UPDATE, journalFolder,
 					"postStructuredContentFolderStructuredContentFolder")
 			).put(
 				"get",
 				addAction(
-					"VIEW", journalFolder,
+					ActionKeys.VIEW, journalFolder,
 					"getStructuredContentFolderStructuredContentFoldersPage")
 			).put(
 				"subscribe",
 				addAction(
-					"SUBSCRIBE", journalFolder,
+					ActionKeys.SUBSCRIBE, journalFolder,
 					"putStructuredContentFolderSubscribe")
 			).put(
 				"unsubscribe",
 				addAction(
-					"SUBSCRIBE", journalFolder,
+					ActionKeys.SUBSCRIBE, journalFolder,
 					"putStructuredContentFolderUnsubscribe")
 			).build(),
 			parentStructuredContentFolderId, journalFolder.getGroupId(), search,
@@ -269,7 +271,7 @@ public class StructuredContentFolderResourceImpl
 
 	@Override
 	protected String getPermissionCheckerPortletName(Object id) {
-		return "com.liferay.journal";
+		return JournalConstants.RESOURCE_NAME;
 	}
 
 	@Override
@@ -358,30 +360,32 @@ public class StructuredContentFolderResourceImpl
 				HashMapBuilder.put(
 					"add-subfolder",
 					addAction(
-						"UPDATE", journalFolder,
+						ActionKeys.UPDATE, journalFolder,
 						"postStructuredContentFolderStructuredContentFolder")
 				).put(
 					"delete",
 					addAction(
-						"DELETE", journalFolder,
+						ActionKeys.DELETE, journalFolder,
 						"deleteStructuredContentFolder")
 				).put(
 					"get",
 					addAction(
-						"VIEW", journalFolder, "getStructuredContentFolder")
+						ActionKeys.VIEW, journalFolder,
+						"getStructuredContentFolder")
 				).put(
 					"replace",
 					addAction(
-						"UPDATE", journalFolder, "putStructuredContentFolder")
+						ActionKeys.UPDATE, journalFolder,
+						"putStructuredContentFolder")
 				).put(
 					"subscribe",
 					addAction(
-						"SUBSCRIBE", journalFolder,
+						ActionKeys.SUBSCRIBE, journalFolder,
 						"putStructuredContentFolderSubscribe")
 				).put(
 					"unsubscribe",
 					addAction(
-						"SUBSCRIBE", journalFolder,
+						ActionKeys.SUBSCRIBE, journalFolder,
 						"putStructuredContentFolderUnsubscribe")
 				).build(),
 				_dtoConverterRegistry, journalFolder.getFolderId(),

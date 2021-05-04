@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -107,15 +108,15 @@ public class CommentResourceImpl
 			HashMapBuilder.put(
 				"add-discussion",
 				addAction(
-					"ADD_DISCUSSION", blogPostingId, "postBlogPostingComment",
-					blogsEntry.getUserId(), BlogsEntry.class.getName(),
-					blogsEntry.getGroupId())
+					ActionKeys.ADD_DISCUSSION, blogPostingId,
+					"postBlogPostingComment", blogsEntry.getUserId(),
+					BlogsEntry.class.getName(), blogsEntry.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", blogPostingId, "getBlogPostingCommentsPage",
-					blogsEntry.getUserId(), BlogsEntry.class.getName(),
-					blogsEntry.getGroupId())
+					ActionKeys.VIEW, blogPostingId,
+					"getBlogPostingCommentsPage", blogsEntry.getUserId(),
+					BlogsEntry.class.getName(), blogsEntry.getGroupId())
 			).build(),
 			rootDiscussionComment.getCommentId(), search, aggregation, filter,
 			pagination, sorts);
@@ -171,13 +172,13 @@ public class CommentResourceImpl
 			HashMapBuilder.put(
 				"add-discussion",
 				addAction(
-					"ADD_DISCUSSION", documentId, "postDocumentComment",
-					dlFileEntry.getUserId(), DLFileEntry.class.getName(),
-					dlFileEntry.getGroupId())
+					ActionKeys.ADD_DISCUSSION, documentId,
+					"postDocumentComment", dlFileEntry.getUserId(),
+					DLFileEntry.class.getName(), dlFileEntry.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", documentId, "getDocumentCommentsPage",
+					ActionKeys.VIEW, documentId, "getDocumentCommentsPage",
 					dlFileEntry.getUserId(), DLFileEntry.class.getName(),
 					dlFileEntry.getGroupId())
 			).build(),
@@ -211,13 +212,13 @@ public class CommentResourceImpl
 			HashMapBuilder.put(
 				"add-discussion",
 				addAction(
-					"ADD_DISCUSSION", structuredContentId,
+					ActionKeys.ADD_DISCUSSION, structuredContentId,
 					"postStructuredContentComment", journalArticle.getUserId(),
 					JournalArticle.class.getName(), journalArticle.getGroupId())
 			).put(
 				"get",
 				addAction(
-					"VIEW", structuredContentId,
+					ActionKeys.VIEW, structuredContentId,
 					"getStructuredContentCommentsPage",
 					journalArticle.getUserId(), JournalArticle.class.getName(),
 					journalArticle.getGroupId())

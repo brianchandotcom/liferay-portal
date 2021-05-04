@@ -47,6 +47,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -227,6 +230,17 @@ public class PortalImplLocalizedFriendlyURLTest {
 			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE =
 				originalLocalePrependFriendlyURLStyle;
 		}
+	}
+
+	@Test
+	public void testLocalizedSiteLayoutFriendlyURLWithVirtualHost()
+		throws Exception {
+
+		_assertLocalizedSiteLayoutFriendlyURLWithVirtualHost(
+			_group.getGroupId(),
+			LayoutTestUtil.addLayout(
+				_group.getGroupId(), false, _nameMap, _friendlyURLMap),
+			"/home", LocaleUtil.SPAIN, LocaleUtil.US, "/inicio", true);
 	}
 
 	@Test
@@ -603,6 +617,57 @@ public class PortalImplLocalizedFriendlyURLTest {
 				mockHttpServletRequest, layout, locale, originalLocale));
 	}
 
+	private void _assertLocalizedSiteLayoutFriendlyURLWithVirtualHost(
+			long groupId, Layout layout, String layoutFriendlyURL,
+			Locale locale, Locale originalLocale,
+			String expectedLayoutFriendlyURL, boolean includeI18nPath)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setServerName(_VIRTUAL_HOSTNAME);
+
+		mockHttpServletRequest.setPathInfo(layoutFriendlyURL);
+
+		MockHttpServletRequestWrapper mockHttpServletRequestWrapper =
+			new MockHttpServletRequestWrapper(mockHttpServletRequest);
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		mockHttpServletRequestWrapper.setPathInfo(
+			group.getFriendlyURL() + layoutFriendlyURL);
+
+		String groupServletMapping = _PUBLIC_GROUP_SERVLET_MAPPING;
+
+		if (layout.isPrivateLayout()) {
+			groupServletMapping = _PRIVATE_GROUP_SERVLET_MAPPING;
+		}
+
+		String i18nPathLanguageId = _portal.getI18nPathLanguageId(
+			locale, StringPool.BLANK);
+
+		String i18nPath = StringPool.SLASH + i18nPathLanguageId;
+
+		mockHttpServletRequest.setRequestURI(i18nPath + layoutFriendlyURL);
+
+		mockHttpServletRequestWrapper.setRequestURI(
+			groupServletMapping + group.getFriendlyURL() + layoutFriendlyURL);
+
+		StringBundler sb = new StringBundler(includeI18nPath ? 5 : 3);
+
+		if (includeI18nPath) {
+			sb.append(i18nPath);
+		}
+
+		sb.append(expectedLayoutFriendlyURL);
+
+		Assert.assertEquals(
+			sb.toString(),
+			_portal.getLocalizedFriendlyURL(
+				mockHttpServletRequestWrapper, layout, locale, originalLocale));
+	}
+
 	private void _assertLocalizedVirtualLayoutFriendlyURL(
 			long userGroupGroupId, Layout layout, String layoutFriendlyURL,
 			Locale locale, Locale originalLocale,
@@ -826,6 +891,8 @@ public class PortalImplLocalizedFriendlyURLTest {
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
 
+	private static final String _VIRTUAL_HOSTNAME = "test.com";
+
 	private static Set<Locale> _availableLocales;
 	private static Locale _defaultLocale;
 	private static Map<Locale, String> _friendlyURLMap;
@@ -846,5 +913,40 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;
+
+	private class MockHttpServletRequestWrapper
+		extends HttpServletRequestWrapper {
+
+		public MockHttpServletRequestWrapper(
+			HttpServletRequest httpServletRequest) {
+
+			super(httpServletRequest);
+
+			_pathInfo = httpServletRequest.getPathInfo();
+			_requestURI = httpServletRequest.getRequestURI();
+		}
+
+		@Override
+		public String getPathInfo() {
+			return _pathInfo;
+		}
+
+		@Override
+		public String getRequestURI() {
+			return _requestURI;
+		}
+
+		public void setPathInfo(String pathInfo) {
+			_pathInfo = pathInfo;
+		}
+
+		public void setRequestURI(String requestURI) {
+			_requestURI = requestURI;
+		}
+
+		private String _pathInfo;
+		private String _requestURI;
+
+	}
 
 }

@@ -43,7 +43,7 @@ public class SiteURLSiteSettingsConfigurationScreen
 
 	@Override
 	public String getCategoryKey() {
-		return "other";
+		return "general";
 	}
 
 	@Override

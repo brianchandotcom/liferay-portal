@@ -36,6 +36,8 @@ public interface FinderCache {
 	@Deprecated
 	public void clearCache(String className);
 
+	public void clearDSLQueryCache(String tableName);
+
 	public void clearLocalCache();
 
 	public Object getResult(FinderPath finderPath, Object[] args);

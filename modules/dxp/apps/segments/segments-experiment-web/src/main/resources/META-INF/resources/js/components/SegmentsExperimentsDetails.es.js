@@ -31,14 +31,16 @@ function SegmentsExperimentsDetails({segmentsExperiment}) {
 			</h4>
 
 			<dl>
-				<div className="c-my-2">
-					<dt className="d-inline-block">
-						{Liferay.Language.get('description') + ':'}{' '}
-					</dt>
-					<dd className="d-inline inline-item-after text-secondary">
-						{description}
-					</dd>
-				</div>
+				{description && (
+					<div className="c-my-2">
+						<dt className="d-inline-block">
+							{Liferay.Language.get('description') + ':'}{' '}
+						</dt>
+						<dd className="d-inline inline-item-after text-secondary">
+							{description}
+						</dd>
+					</div>
+				)}
 
 				<div className="c-my-2">
 					<dt className="d-inline-block">

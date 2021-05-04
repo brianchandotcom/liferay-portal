@@ -12,77 +12,57 @@
  * details.
  */
 
-import {DataConverter} from 'data-engine-taglib';
+export const getInputLocalizedValues = (namespace, fieldName) => {
+	const inputLocalized = Liferay.component(`${namespace}${fieldName}`);
+	const localizedValues = {};
 
-export default function ({namespace}) {
-	const formElement = document[`${namespace}fm`];
+	if (inputLocalized) {
+		const translatedLanguages = inputLocalized
+			.get('translatedLanguages')
+			.values();
 
-	const getInputLocalizedValues = (field) => {
-		const inputLocalized = Liferay.component(`${namespace}${field}`);
-		const localizedValues = {};
+		translatedLanguages.forEach((languageId) => {
+			localizedValues[languageId] = inputLocalized.getValue(languageId);
+		});
+	}
 
-		if (inputLocalized) {
-			const translatedLanguages = inputLocalized
-				.get('translatedLanguages')
-				.values();
+	return localizedValues;
+};
 
-			translatedLanguages.forEach((languageId) => {
-				localizedValues[languageId] = inputLocalized.getValue(
-					languageId
-				);
-			});
-		}
+export const getDataEngineStructure = ({dataLayoutBuilder, namespace}) => {
+	const {dataDefinition, dataLayout} = dataLayoutBuilder.current.state;
 
-		return localizedValues;
+	const name = getInputLocalizedValues(namespace, 'name');
+	const description = getInputLocalizedValues(namespace, 'description');
+
+	return {
+		dataDefinition: JSON.stringify({
+			...dataDefinition.serialize(),
+			description,
+			name,
+		}),
+		dataLayout: JSON.stringify({
+			...dataLayout.serialize(),
+			description,
+			name,
+		}),
 	};
+};
 
-	const onSubmit = async (event) => {
+export default function saveDDMStructure({namespace}) {
+	const form = document[`${namespace}fm`];
+
+	const saveDataEngineStructure = async (event) => {
 		event.preventDefault();
-
-		//deprecated
 
 		const dataLayoutBuilder = await Liferay.componentReady(
 			`${namespace}dataLayoutBuilder`
 		);
-		const name = getInputLocalizedValues('name');
 
-		const {
-			availableLanguageIds,
-			defaultLanguageId,
-		} = dataLayoutBuilder.props;
-		const {
-			availableLanguageIds: availableLanguageIdsState,
-		} = dataLayoutBuilder.state;
-
-		const layoutProvider =
-			dataLayoutBuilder.formBuilderWithLayoutProvider.refs.layoutProvider;
-
-		const description = getInputLocalizedValues('description');
-
-		const formData = DataConverter.getFormData({
-			availableLanguageIds,
-			availableLanguageIdsState,
-			defaultLanguageId,
-			layoutProvider,
-		});
-
-		const dataDefinition = formData.definition;
-
-		dataDefinition.description = description;
-		dataDefinition.name = name;
-
-		const dataLayout = formData.layout;
-
-		dataLayout.description = description;
-		dataLayout.name = name;
-
-		Liferay.Util.postForm(formElement, {
-			data: {
-				dataDefinition: JSON.stringify(dataDefinition),
-				dataLayout: JSON.stringify(dataLayout),
-			},
+		Liferay.Util.postForm(form, {
+			data: getDataEngineStructure({dataLayoutBuilder, namespace}),
 		});
 	};
 
-	formElement.addEventListener('submit', onSubmit, true);
+	form.addEventListener('submit', saveDataEngineStructure, true);
 }

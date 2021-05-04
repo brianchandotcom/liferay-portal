@@ -34,12 +34,6 @@ public interface RoleFinder {
 		long companyId, String keywords, Integer[] types,
 		java.util.LinkedHashMap<String, Object> params);
 
-	public int countByUserGroupGroupRole(long userId, long groupId);
-
-	public int countByR_U(long roleId, long userId);
-
-	public int countByU_G_R(long userId, long groupId, long roleId);
-
 	public int countByC_N_D_T(
 		long companyId, String name, String description, Integer[] types,
 		java.util.LinkedHashMap<String, Object> params, boolean andOperator);
@@ -110,35 +104,6 @@ public interface RoleFinder {
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.Role> orderByComparator);
 
-	public java.util.List<com.liferay.portal.kernel.model.Role> findBySystem(
-		long companyId);
-
-	public java.util.List<com.liferay.portal.kernel.model.Role> findByTeamsUser(
-		long userId, long groupId);
-
-	public java.util.List<com.liferay.portal.kernel.model.Role>
-		findByUserGroupGroupRole(long userId, long groupId);
-
-	public java.util.List<com.liferay.portal.kernel.model.Role>
-		findByUserGroupGroupRole(long userId, long groupId, int start, int end);
-
-	public java.util.List<com.liferay.portal.kernel.model.Role>
-		findByUserGroupRole(long userId, long groupId);
-
-	public com.liferay.portal.kernel.model.Role findByC_N(
-			long companyId, String name)
-		throws com.liferay.portal.kernel.exception.NoSuchRoleException;
-
-	public java.util.List<com.liferay.portal.kernel.model.Role> findByU_G(
-		long userId,
-		java.util.List<com.liferay.portal.kernel.model.Group> groups);
-
-	public java.util.List<com.liferay.portal.kernel.model.Role> findByU_G(
-		long userId, long groupId);
-
-	public java.util.List<com.liferay.portal.kernel.model.Role> findByU_G(
-		long userId, long[] groupIds);
-
 	public java.util.List<com.liferay.portal.kernel.model.Role> findByC_N_D_T(
 		long companyId, String name, String description, Integer[] types,
 		java.util.LinkedHashMap<String, Object> params, boolean andOperator,
@@ -152,12 +117,5 @@ public interface RoleFinder {
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.portal.kernel.model.Role> orderByComparator);
-
-	public java.util.Map<String, java.util.List<String>> findByC_N_S_P(
-		long companyId, String name, int scope, String primKey);
-
-	public java.util.List<com.liferay.portal.kernel.model.Role> findByC_N_S_P_A(
-		long companyId, String name, int scope, String primKey,
-		String actionId);
 
 }

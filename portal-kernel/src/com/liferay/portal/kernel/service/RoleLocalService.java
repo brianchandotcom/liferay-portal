@@ -440,8 +440,6 @@ public interface RoleLocalService
 	 * @param scope the permission scope
 	 * @param primKey the primary key of the resource's class
 	 * @return the role names and action IDs
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByC_N_S_P(
-	 long, String, int, String)
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<String, List<String>> getResourceRoles(
@@ -457,8 +455,6 @@ public interface RoleLocalService
 	 * @param primKey the primary key of the resource's class
 	 * @param actionId the name of the resource action
 	 * @return the roles
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByC_N_S_P_A(
-	 long, String, int, String, String)
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getResourceRoles(
@@ -671,8 +667,6 @@ public interface RoleLocalService
 	 * @param userId the primary key of the user
 	 * @param groupId the primary key of the group
 	 * @return the user's roles within the user group
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByUserGroupGroupRole(
-	 long, long)
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserGroupGroupRoles(long userId, long groupId);
@@ -690,8 +684,6 @@ public interface RoleLocalService
 	 * @param userId the primary key of the user
 	 * @param groupId the primary key of the group
 	 * @return the user's roles within the user group
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByUserGroupRole(
-	 long, long)
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserGroupRoles(long userId, long groupId);
@@ -711,8 +703,6 @@ public interface RoleLocalService
 	 * @param userId the primary key of the user
 	 * @param groups the groups (optionally <code>null</code>)
 	 * @return the union of all the user's roles within the groups
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
-	 long, List)
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserRelatedRoles(long userId, List<Group> groups);
@@ -723,8 +713,6 @@ public interface RoleLocalService
 	 * @param userId the primary key of the user
 	 * @param groupId the primary key of the group
 	 * @return the user's roles within the group
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
-	 long, long)
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserRelatedRoles(long userId, long groupId);
@@ -735,8 +723,6 @@ public interface RoleLocalService
 	 * @param userId the primary key of the user
 	 * @param groupIds the primary keys of the groups
 	 * @return the union of all the user's roles within the groups
-	 * @see com.liferay.portal.kernel.service.persistence.RoleFinder#findByU_G(
-	 long, long[])
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getUserRelatedRoles(long userId, long[] groupIds);
@@ -842,7 +828,7 @@ public interface RoleLocalService
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -874,7 +860,7 @@ public interface RoleLocalService
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -910,7 +896,7 @@ public interface RoleLocalService
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *
@@ -942,7 +928,7 @@ public interface RoleLocalService
 	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
 	 * refers to the first result in the set. Setting both <code>start</code>
 	 * and <code>end</code> to {@link
-	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * QueryUtil#ALL_POS} will return the full
 	 * result set.
 	 * </p>
 	 *

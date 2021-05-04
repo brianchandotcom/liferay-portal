@@ -12,19 +12,16 @@
  * details.
  */
 
-const clickOutside = (target, ...elements) =>
-	!elements.some((element) => !!target.closest(element));
+const isElementInnerSelector = (element, ...selectors) =>
+	!selectors.some((selector) => element.closest(selector));
 
-export default function DataEngineLayoutBuilderHandler({
-	defaultLanguageId,
-	namespace,
-}) {
+export default function DataEngineLayoutBuilderHandler({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	// Clean the input if the language is not considered translated when
 	// submitting the form
 
-	const clearNameInputIfNeeded = () => {
+	const clearNameInputIfNeeded = (defaultLanguageId) => {
 		const inputComponent = Liferay.component(`${namespace}name`);
 
 		if (inputComponent) {
@@ -59,7 +56,7 @@ export default function DataEngineLayoutBuilderHandler({
 		const localizedValues = {};
 
 		if (inputLocalized) {
-			var translatedLanguages = inputLocalized
+			const translatedLanguages = inputLocalized
 				.get('translatedLanguages')
 				.values();
 
@@ -75,6 +72,9 @@ export default function DataEngineLayoutBuilderHandler({
 
 	const saveDataEngineStructure = async () => {
 		const dataLayoutBuilder = await getDataLayoutBuilder();
+		const {dataDefinition, dataLayout} = dataLayoutBuilder.current.state;
+		const {defaultLanguageId} = dataDefinition;
+
 		const nameInput = document.getElementById(`${namespace}name`);
 		const name = getInputLocalizedValues('name');
 		const description = getInputLocalizedValues('description');
@@ -96,15 +96,12 @@ export default function DataEngineLayoutBuilderHandler({
 			return;
 		}
 
-		const {dataDefinition, dataLayout} = dataLayoutBuilder.current.state;
-
-		clearNameInputIfNeeded();
+		clearNameInputIfNeeded(defaultLanguageId);
 
 		Liferay.Util.postForm(form, {
 			data: {
 				dataDefinition: JSON.stringify({
 					...dataDefinition.serialize(),
-					defaultLanguageId,
 					description,
 					name,
 				}),
@@ -123,12 +120,13 @@ export default function DataEngineLayoutBuilderHandler({
 
 	const detectClickOutside = async ({target}) => {
 		if (
-			clickOutside(target, [
+			isElementInnerSelector(
+				target,
 				'.ddm-form-builder-wrapper',
 				'.multi-panel-sidebar',
 				'.lfr-icon-menu-open',
-				'.input-localized-content',
-			])
+				'.input-localized-content'
+			)
 		) {
 			const dataLayoutBuilder = await getDataLayoutBuilder();
 
@@ -147,10 +145,7 @@ export default function DataEngineLayoutBuilderHandler({
 		const dataLayoutBuilder = await getDataLayoutBuilder();
 
 		dataLayoutBuilder.current.dispatch({
-			payload: {
-				defaultLanguageId,
-				editingLanguageId,
-			},
+			payload: {editingLanguageId},
 			type: 'language_change',
 		});
 	};

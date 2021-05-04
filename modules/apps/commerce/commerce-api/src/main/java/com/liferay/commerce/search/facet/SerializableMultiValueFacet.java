@@ -15,59 +15,73 @@
 package com.liferay.commerce.search.facet;
 
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.MultiValueFacet;
-import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
+import com.liferay.portal.kernel.search.facet.BaseFacet;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.facet.Facet;
 
 /**
  * @author Alec Sloan
+ * @author Marco Leo
+ * @author Riccardo Alberti
  */
-public class SerializableMultiValueFacet extends MultiValueFacet {
+public class SerializableMultiValueFacet extends BaseFacet implements Facet {
 
-	public SerializableMultiValueFacet(SearchContext searchContext) {
+	public SerializableMultiValueFacet(
+		String fieldName, SearchContext searchContext) {
+
 		super(searchContext);
+
+		setFieldName(fieldName);
+	}
+
+	@Override
+	public String getAggregationName() {
+		if (_aggregationName != null) {
+			return _aggregationName;
+		}
+
+		return getFieldName();
+	}
+
+	@Override
+	public String[] getSelections() {
+		return _selections;
+	}
+
+	@Override
+	public void select(String... selections) {
+		if (selections != null) {
+			_selections = selections;
+		}
+		else {
+			_selections = new String[0];
+		}
+	}
+
+	@Override
+	public void setAggregationName(String aggregationName) {
+		_aggregationName = aggregationName;
 	}
 
 	@Override
 	protected BooleanClause<Filter> doGetFacetFilterBooleanClause() {
-		SearchContext searchContext = getSearchContext();
-
-		String[] values = GetterUtil.getStringValues(
-			searchContext.getAttribute(getFieldName()));
-
-		if (ArrayUtil.isEmpty(values)) {
-			values = StringUtil.split(
-				GetterUtil.getString(
-					searchContext.getAttribute(getFieldName())));
-		}
-
-		TermsFilter facetTermsFilter = new TermsFilter(getFieldName());
-
-		for (String value : values) {
-			FacetValueValidator facetValueValidator = getFacetValueValidator();
-
-			if ((searchContext.getUserId() > 0) &&
-				!facetValueValidator.check(searchContext, value)) {
-
-				continue;
-			}
-
-			facetTermsFilter.addValue(value);
-		}
-
-		if (facetTermsFilter.isEmpty()) {
+		if (ArrayUtil.isEmpty(_selections)) {
 			return null;
 		}
 
-		return BooleanClauseFactoryUtil.createFilter(
-			searchContext, facetTermsFilter, BooleanClauseOccur.MUST);
+		TermsFilter termsFilter = new TermsFilter(getFieldName());
+
+		termsFilter.addValues(_selections);
+
+		return new BooleanClauseImpl<>(termsFilter, BooleanClauseOccur.MUST);
 	}
+
+	private String _aggregationName;
+	private String[] _selections = {};
 
 }

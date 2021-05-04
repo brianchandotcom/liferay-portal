@@ -119,6 +119,7 @@ page import="com.liferay.site.admin.web.internal.display.context.SiteAdminDispla
 page import="com.liferay.site.admin.web.internal.display.context.SiteAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.site.admin.web.internal.servlet.taglib.clay.SelectSiteInitializerVerticalCard" %><%@
 page import="com.liferay.site.admin.web.internal.servlet.taglib.clay.SiteVerticalCard" %><%@
+page import="com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 

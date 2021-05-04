@@ -46,12 +46,36 @@ definition {
 	}
 
 	@description = "COMMERCE-6322. As a buyer, I want to be able to search an entry in Catalog using Global Search and I want the results to be visible in Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test GlobalSearchSearchEntryInCatalog {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6322 GlobalSearchSearchEntryInCatalog pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+		Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "U-Joint");
+
+
+		Click(
+			key_entryName = "Search ",
+			locator1 = "Search#GLOBAL_SEARCH_SUGGESTION");
+
+		AssertElementPresent(
+			key_entryName = "U-Joint",
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT");
+
+		AssertElementPresent(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementPresent(
+			key_productName = "Ball Joints",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
 	@description = "COMMERCE-6325. As a buyer, I want to be able to search an entry in Orders using Global Search and I want the results to be visible in Orders page"

@@ -14,6 +14,12 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GLOBAL_SEARCH_SUGGESTION</td>
+	<td>//div[contains(@class,'commerce-suggestions__item ') and contains(.,'${key_entryName}')]
+</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_FACET_CLOUD_LAYOUT</td>
 	<td>//ul[contains(@class,'tag-cloud')]//button[contains(.,'${categoryName}')]</td>
 	<td></td>
@@ -51,6 +57,11 @@
 <tr>
 	<td>FIELD_MAPPINGS_EDITOR</td>
 	<td>//div[contains(@class,'ace_editor')]//span[contains(.,'${indexName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GLOBAL_SEARCH_BAR</td>
+	<td>//input[@ref='searchInput']</td>
 	<td></td>
 </tr>
 <tr>

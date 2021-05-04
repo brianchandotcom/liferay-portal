@@ -30,7 +30,7 @@ export default function SearchContents() {
 				{Liferay.Language.get('content-filtering-help')}
 			</p>
 
-			<SearchForm className="mb-2" />
+			<SearchForm className="mb-2" onChange={() => {}} />
 
 			<ClayDropDown
 				active={active}

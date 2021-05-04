@@ -207,6 +207,60 @@ definition {
 		Portlet.viewCannotAddPG(portletName = "Search Insights");
 	}
 
+	@description = "This is a use case for LPS-130227."
+	@priority = "4"
+	test AssertPaginationURLforHTTPS {
+		property custom.properties = "web.server.host=localhost${line.separator}redirect.url.security.mode=domain${line.separator}redirect.url.domains.allowed=${line.separator}web.server.https.port=8443${line.separator}web.server.protocol=https";
+		property portal.ssl.enabled = "true";
+		property test.name.skip.portal.instance = "Search#AssertPaginationURLforHTTPS";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			type = "content");
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name?p_l_mode=edit");
+
+		PageEditor.addWidget(portletName = "Search Options");
+
+		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
+
+		SearchResultPortlet.addToContentPage(
+			portletName = "Search Results",
+			targetFragmentName = "Search Options");
+
+		PageEditor.clickPublish();
+
+		for (var count : list "1,2,3,4,5") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content ${count}",
+				groupName = "Test Site Name",
+				title = "WC Title ${count}");
+		}
+
+		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
+
+		Pagination.changePagination(itemsPerPage = "4");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		AssertElementPresent(locator1 = "Pagination#CURRENT_PAGE_SELECT");
+
+		var currentURL = selenium.getCurrentUrl();
+
+		echo("Current URL: ${currentURL} ");
+
+		if ((!(contains("${currentURL}", "https://"))) || (!(contains("${currentURL}", "start=2")))) {
+			fail("URL of second search results page should contain HTTPS.");
+		}
+
+		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+	}
+
 	@description = "This is a use case for LPS-89561."
 	@priority = "4"
 	test AssertSearchURLWhenModifyingPagination {

@@ -20,6 +20,12 @@ import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useIsActive} from '../../contexts/ControlsContext';
 import {useGlobalContext} from '../../contexts/GlobalContext';
+import {
+	useResizeContext,
+	useSetResizeContext,
+	useSetUpdatedLayoutDataContext,
+	useUpdatedLayoutDataContext,
+} from '../../contexts/ResizeContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
@@ -28,12 +34,6 @@ import resizeColumns from '../../thunks/resizeColumns';
 import {NotDraggableArea} from '../../utils/drag-and-drop/useDragAndDrop';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import {
-	useResizeContext,
-	useSetResizeContext,
-	useSetUpdatedLayoutDataContext,
-	useUpdatedLayoutDataContext,
-} from '../ResizeContext';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
 

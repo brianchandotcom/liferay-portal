@@ -18,11 +18,11 @@ import React, {useState} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {ResizeContextProvider} from '../../contexts/ResizeContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../store/index';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
 import Row from './Row';
 

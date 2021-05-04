@@ -18,11 +18,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {useUpdatedLayoutDataContext} from '../../contexts/ResizeContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../../store/index';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
-import {useUpdatedLayoutDataContext} from '../ResizeContext';
 
 const Column = React.forwardRef(({children, className, item}, ref) => {
 	const canUpdateItemConfiguration = useSelector(

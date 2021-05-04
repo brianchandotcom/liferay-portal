@@ -128,79 +128,125 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		boolean singleLanguageSite = _isSingleLanguageSite();
 
-		return DropdownItemListBuilder.add(
-			() -> hasUpdatePermission, _getEditArticleActionUnsafeConsumer()
-		).add(
-			() -> hasUpdatePermission, _getMoveArticleActionUnsafeConsumer()
-		).add(
-			() -> JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), _article,
-				ActionKeys.PERMISSIONS),
-			_getPermissionsArticleActionUnsafeConsumer()
-		).add(
-			() ->
-				hasViewPermission &&
-				JournalArticlePermission.contains(
-					_themeDisplay.getPermissionChecker(), _article,
-					ActionKeys.SUBSCRIBE),
-			_getSubscribeArticleActionUnsafeConsumer()
-		).add(
-			() -> hasViewPermission && (viewContentArticleAction != null),
-			viewContentArticleAction
-		).add(
-			() -> hasViewPermission && (previewContentArticleAction != null),
-			previewContentArticleAction
-		).add(
-			() ->
-				hasTranslatePermission && hasViewPermission &&
-				!singleLanguageSite,
-			_getTranslateActionUnsafeConsumer()
-		).add(
-			() ->
-				hasTranslatePermission && hasViewPermission &&
-				!singleLanguageSite,
-			_getExportForTranslationActionUnsafeConsumer()
-		).add(
-			() -> hasUpdatePermission && !singleLanguageSite,
-			_getImportTranslationActionUnsafeConsumer()
-		).add(
-			() -> hasUpdatePermission && (availableLanguageIds.length > 1),
-			_getDeleteArticleTranslationsActionUnsafeConsumer()
-		).add(
-			() -> hasViewPermission && hasUpdatePermission,
-			_getViewHistoryArticleActionUnsafeConsumer()
-		).add(
-			_getViewUsagesArticleActionUnsafeConsumer()
-		).add(
-			() -> JournalFolderPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), _article.getFolderId(),
-				ActionKeys.ADD_ARTICLE),
-			_getCopyArticleActionUnsafeConsumer()
-		).add(
-			() ->
-				JournalArticlePermission.contains(
-					_themeDisplay.getPermissionChecker(), _article,
-					ActionKeys.EXPIRE) &&
-				(_article.hasApprovedVersion() || _article.isScheduled()),
-			_getExpireArticleActionConsumer(_article.getArticleId())
-		).add(
-			() -> hasDeletePermission && trashEnabled,
-			_getMoveToTrashArticleActionUnsafeConsumer()
-		).add(
-			() -> hasDeletePermission && !trashEnabled,
-			_getDeleteArticleAction(_article.getArticleId())
-		).add(
-			() -> {
-				Group group = _themeDisplay.getScopeGroup();
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasUpdatePermission,
+						_getEditArticleActionUnsafeConsumer()
+					).add(
+						() -> {
+							Group group = _themeDisplay.getScopeGroup();
 
-				if (_isShowPublishArticleAction() && !group.isLayout()) {
-					return true;
-				}
+							if (_isShowPublishArticleAction() &&
+								!group.isLayout()) {
 
-				return false;
-			},
-			_getPublishToLiveArticleActionUnsafeConsumer()
+								return true;
+							}
+
+							return false;
+						},
+						_getPublishToLiveArticleActionUnsafeConsumer()
+					).add(
+						() ->
+							hasTranslatePermission && hasViewPermission &&
+							!singleLanguageSite,
+						_getTranslateActionUnsafeConsumer()
+					).add(
+						() ->
+							hasViewPermission &&
+							(previewContentArticleAction != null),
+						previewContentArticleAction
+					).add(
+						() ->
+							hasViewPermission &&
+							(viewContentArticleAction != null),
+						viewContentArticleAction
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							JournalArticlePermission.contains(
+								_themeDisplay.getPermissionChecker(), _article,
+								ActionKeys.EXPIRE) &&
+							(_article.hasApprovedVersion() ||
+							 _article.isScheduled()),
+						_getExpireArticleActionConsumer(_article.getArticleId())
+					).add(
+						() ->
+							hasViewPermission &&
+							JournalArticlePermission.contains(
+								_themeDisplay.getPermissionChecker(), _article,
+								ActionKeys.SUBSCRIBE),
+						_getSubscribeArticleActionUnsafeConsumer()
+					).add(
+						() -> hasViewPermission && hasUpdatePermission,
+						_getViewHistoryArticleActionUnsafeConsumer()
+					).add(
+						_getViewUsagesArticleActionUnsafeConsumer()
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> JournalFolderPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_themeDisplay.getScopeGroupId(),
+							_article.getFolderId(), ActionKeys.ADD_ARTICLE),
+						_getCopyArticleActionUnsafeConsumer()
+					).add(
+						() -> hasUpdatePermission,
+						_getMoveArticleActionUnsafeConsumer()
+					).add(
+						() ->
+							hasTranslatePermission && hasViewPermission &&
+							!singleLanguageSite,
+						_getExportForTranslationActionUnsafeConsumer()
+					).add(
+						() -> hasUpdatePermission && !singleLanguageSite,
+						_getImportTranslationActionUnsafeConsumer()
+					).add(
+						() ->
+							hasUpdatePermission &&
+							(availableLanguageIds.length > 1),
+						_getDeleteArticleTranslationsActionUnsafeConsumer()
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> JournalArticlePermission.contains(
+							_themeDisplay.getPermissionChecker(), _article,
+							ActionKeys.PERMISSIONS),
+						_getPermissionsArticleActionUnsafeConsumer()
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> hasDeletePermission && trashEnabled,
+						_getMoveToTrashArticleActionUnsafeConsumer()
+					).add(
+						() -> hasDeletePermission && !trashEnabled,
+						_getDeleteArticleAction(_article.getArticleId())
+					).build());
+
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

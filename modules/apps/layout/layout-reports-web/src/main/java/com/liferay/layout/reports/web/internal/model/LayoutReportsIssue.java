@@ -77,11 +77,10 @@ public class LayoutReportsIssue {
 
 	@Override
 	public String toString() {
-		return JSONUtil.put(
-			"key", _key.toString()
-		).put(
-			"total", _total
-		).toString();
+		JSONObject jsonObject =
+			toJSONObject(ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+
+		return jsonObject.toString();
 	}
 
 	public enum Key {

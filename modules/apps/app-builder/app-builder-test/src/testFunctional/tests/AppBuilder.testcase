@@ -1,4 +1,5 @@
 @component-name = "app-builder"
+@ignore = "true"
 definition {
 
 	property custom.properties = "default.layout.template.id=1_column";

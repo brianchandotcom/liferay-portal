@@ -16,12 +16,15 @@ package com.liferay.roles.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.User;
@@ -31,6 +34,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TeamLocalService;
@@ -42,6 +47,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
@@ -56,6 +62,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -81,15 +88,32 @@ public class RoleLocalServiceTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		_indexer = _indexerRegistry.getIndexer(Organization.class.getName());
 
 		_indexerRegistry.unregister(Organization.class.getName());
+
+		List<Role> roles = _roleLocalService.getRoles(
+			RoleConstants.TYPE_REGULAR, StringPool.BLANK);
+
+		_arbitraryRole = roles.get(0);
+
+		List<ResourceAction> resourceActions =
+			_resourceActionLocalService.getResourceActions(0, 1);
+
+		_arbitraryResourceAction = resourceActions.get(0);
+
+		_resourcePermission = ResourcePermissionTestUtil.addResourcePermission(
+			_arbitraryResourceAction.getBitwiseValue(),
+			_arbitraryResourceAction.getName(), _arbitraryRole.getRoleId());
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		_indexerRegistry.register(_indexer);
+
+		_resourcePermissionLocalService.deleteResourcePermission(
+			_resourcePermission);
 	}
 
 	@Test(expected = RoleNameException.class)
@@ -338,6 +362,57 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
+	public void testGetResourceActionRoles() {
+		List<Role> roles = _roleLocalService.getResourceRoles(
+			_resourcePermission.getCompanyId(), _resourcePermission.getName(),
+			_resourcePermission.getScope(), _resourcePermission.getPrimKey(),
+			_arbitraryResourceAction.getActionId());
+
+		Assert.assertTrue(
+			"The method findByC_N_S_P_A should have returned the role " +
+				_arbitraryRole.getRoleId(),
+			roles.contains(_arbitraryRole));
+	}
+
+	@Test
+	public void testGetResourceRoles() throws Exception {
+		long companyId = _resourcePermission.getCompanyId();
+		String name = _resourcePermission.getName();
+		int scope = _resourcePermission.getScope();
+		String primKey = _resourcePermission.getPrimKey();
+
+		Map<String, List<String>> actionIdsLists = new HashMap<>();
+
+		List<ResourceAction> resourceActions =
+			_resourceActionLocalService.getResourceActions(name);
+
+		for (ResourcePermission resourcePermission :
+				_resourcePermissionLocalService.getResourcePermissions(
+					companyId, name, scope, primKey)) {
+
+			Role role = _roleLocalService.getRole(
+				resourcePermission.getRoleId());
+
+			long actionIds = resourcePermission.getActionIds();
+
+			List<String> actionIdsList = new ArrayList<>();
+
+			for (ResourceAction resourceAction : resourceActions) {
+				if ((resourceAction.getBitwiseValue() & actionIds) != 0) {
+					actionIdsList.add(resourceAction.getActionId());
+				}
+			}
+
+			actionIdsLists.put(role.getName(), actionIdsList);
+		}
+
+		Assert.assertEquals(
+			actionIdsLists,
+			_roleLocalService.getResourceRoles(
+				companyId, name, scope, primKey));
+	}
+
+	@Test
 	public void testGetTeamRoleMapWithExclusion() throws Exception {
 		createOrganizationAndTeam();
 
@@ -407,6 +482,21 @@ public class RoleLocalServiceTest {
 
 		assertGetTeamRoleMap(
 			_roleLocalService.getTeamRoleMap(group.getGroupId()), _team, true);
+	}
+
+	@Test
+	public void testGetUserRelatedRoles() {
+		long userId = RandomTestUtil.nextLong();
+
+		// See LPS-113146 for the magic number 2100
+
+		long[] groupIds = new long[2100];
+
+		for (int i = 0; i < groupIds.length; i++) {
+			groupIds[i] = RandomTestUtil.nextLong();
+		}
+
+		_roleLocalService.getUserRelatedRoles(userId, groupIds);
 	}
 
 	@Test
@@ -491,47 +581,60 @@ public class RoleLocalServiceTest {
 			RandomTestUtil.randomString(), null, new ServiceContext());
 	}
 
+	private static ResourceAction _arbitraryResourceAction;
+	private static Role _arbitraryRole;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
+
 	private static Indexer<Organization> _indexer;
 
 	@Inject
 	private static IndexerRegistry _indexerRegistry;
 
-	@DeleteAfterTestRun
-	private Group _group;
+	@Inject
+	private static OrganizationLocalService _organizationLocalService;
 
 	@Inject
-	private GroupLocalService _groupLocalService;
+	private static ResourceActionLocalService _resourceActionLocalService;
+
+	private static ResourcePermission _resourcePermission;
+
+	@Inject
+	private static ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+
+	@Inject
+	private static RoleLocalService _roleLocalService;
+
+	@Inject
+	private static TeamLocalService _teamLocalService;
+
+	@Inject
+	private static UserGroupGroupRoleLocalService
+		_userGroupGroupRoleLocalService;
+
+	@Inject
+	private static UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private static UserLocalService _userLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@DeleteAfterTestRun
 	private Organization _organization;
 
-	@Inject
-	private OrganizationLocalService _organizationLocalService;
-
 	@DeleteAfterTestRun
 	private Role _role;
 
-	@Inject
-	private RoleLocalService _roleLocalService;
-
 	private Team _team;
-
-	@Inject
-	private TeamLocalService _teamLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;
 
 	@DeleteAfterTestRun
 	private UserGroup _userGroup;
-
-	@Inject
-	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
-
-	@Inject
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

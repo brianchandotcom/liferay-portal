@@ -22,6 +22,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import APIService from '../utils/APIService';
+import getPageSpeedProgress from '../utils/getPageSpeedProgress';
 import BasicInformation from './BasicInformation';
 import EmptyLayoutReports from './EmptyLayoutReports';
 import LayoutReportsIssuesList from './LayoutReportsIssuesList';
@@ -53,9 +54,8 @@ export default function LayoutReports({
 		if (loading && !error) {
 			const initial = Date.now();
 			const interval = setInterval(() => {
-				const time = (Date.now() - initial) / 1000;
-				const progress =
-					-200 * (1 / (1 + Math.pow(Math.E, time / 4)) - 0.5);
+				const elapsedTimeInSeconds = (Date.now() - initial) / 1000;
+				const progress = getPageSpeedProgress(elapsedTimeInSeconds);
 
 				setPercentage(progress.toFixed(0));
 			}, 500);

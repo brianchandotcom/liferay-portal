@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -80,8 +82,43 @@ public class SearchCTTest {
 	}
 
 	@Test
+	public void testCollectionCTModelPreFilter() throws Exception {
+		UserGroup productionUserGroup = UserGroupTestUtil.addUserGroup(
+			_group.getGroupId());
+		UserGroup publicationUserGroup;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			publicationUserGroup = UserGroupTestUtil.addUserGroup(
+				_group.getGroupId());
+		}
+
+		assertAllHits(
+			_USER_GROUP_CLASSES,
+			getUIDs(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, productionUserGroup),
+			getUIDs(_ctCollection.getCtCollectionId(), publicationUserGroup));
+
+		assertCollectionHits(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, _USER_GROUP_CLASSES,
+			productionUserGroup);
+
+		assertHits(
+			_ctCollection.getCtCollectionId(), _USER_GROUP_CLASSES,
+			ArrayUtil.append(
+				getUIDs(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION,
+					productionUserGroup),
+				getUIDs(
+					_ctCollection.getCtCollectionId(), publicationUserGroup)),
+			false);
+	}
+
+	@Test
 	public void testCollectionVersusProduction() throws Exception {
-		JournalArticle addedJournalArticle = null;
+		JournalArticle addedJournalArticle;
 
 		JournalArticle deletedJournalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -91,9 +128,9 @@ public class SearchCTTest {
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		JournalArticle modifiedJournalArticle2 = null;
+		JournalArticle modifiedJournalArticle2;
 
-		Layout addedLayout = null;
+		Layout addedLayout;
 
 		Layout deletedLayout = LayoutTestUtil.addLayout(_group);
 		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
@@ -149,7 +186,7 @@ public class SearchCTTest {
 
 	@Test
 	public void testPublishAndUndoArticle() throws Exception {
-		JournalArticle addedJournalArticle = null;
+		JournalArticle addedJournalArticle;
 
 		JournalArticle deletedJournalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -159,7 +196,7 @@ public class SearchCTTest {
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
 
-		JournalArticle modifiedJournalArticle2 = null;
+		JournalArticle modifiedJournalArticle2;
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -198,7 +235,7 @@ public class SearchCTTest {
 
 	@Test
 	public void testPublishAndUndoLayout() throws Exception {
-		Layout addedLayout = null;
+		Layout addedLayout;
 
 		Layout deletedLayout = LayoutTestUtil.addLayout(_group);
 		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
@@ -291,8 +328,6 @@ public class SearchCTTest {
 				true
 			).entryClassNames(
 				classNames
-			).groupIds(
-				_group.getGroupId()
 			).modelIndexerClasses(
 				classes
 			).withSearchContext(
@@ -303,14 +338,24 @@ public class SearchCTTest {
 							"ALL");
 					}
 
-					searchContext.setAttribute(
-						Field.GROUP_ID, _group.getGroupId());
-					searchContext.setAttribute(
-						Field.TYPE,
-						new String[] {LayoutConstants.TYPE_PORTLET});
 					searchContext.setUserId(_group.getCreatorUserId());
 				}
 			);
+
+		if (!ArrayUtil.contains(classes, UserGroup.class)) {
+			searchRequestBuilder.groupIds(
+				_group.getGroupId()
+			).withSearchContext(
+				searchContext -> {
+					searchContext.setAttribute(
+						Field.GROUP_ID, _group.getGroupId());
+
+					searchContext.setAttribute(
+						Field.TYPE,
+						new String[] {LayoutConstants.TYPE_PORTLET});
+				}
+			);
+		}
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -347,6 +392,8 @@ public class SearchCTTest {
 	};
 
 	private static final Class<?>[] _NEW_INDEXER_CLASSES = {Layout.class};
+
+	private static final Class<?>[] _USER_GROUP_CLASSES = {UserGroup.class};
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

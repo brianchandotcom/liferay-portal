@@ -91,6 +91,17 @@ public class VerifyEmailAddressMVCResourceCommand
 			ParamUtil.getString(resourceRequest, "emailAddress"));
 
 		if (user != null) {
+			if (user.getUserId() == ctCollection.getUserId()) {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					JSONUtil.put(
+						"errorMessage",
+						_language.get(
+							httpServletRequest, "user-is-already-invited")));
+
+				return;
+			}
+
 			PermissionChecker permissionChecker =
 				PermissionCheckerFactoryUtil.create(user);
 
@@ -136,7 +147,18 @@ public class VerifyEmailAddressMVCResourceCommand
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			JSONUtil.put("userExists", user != null));
+			JSONUtil.put(
+				"user",
+				JSONUtil.put(
+					"emailAddress", user.getEmailAddress()
+				).put(
+					"fullName", user.getFullName()
+				).put(
+					"userId", Long.valueOf(user.getUserId())
+				)
+			).put(
+				"userExists", user != null
+			));
 	}
 
 	@Reference

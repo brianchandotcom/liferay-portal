@@ -125,7 +125,9 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			Role role = roleMap.get(userGroupRole.getRoleId());
 			User user = userMap.get(userGroupRole.getUserId());
 
-			if ((role == null) || (user == null)) {
+			if ((role == null) || (user == null) ||
+				(user.getUserId() == ctCollection.getUserId())) {
+
 				continue;
 			}
 
@@ -141,6 +143,11 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"fullName", user.getFullName()
 				).put(
+					"isCurrentUser",
+					user.getUserId() == themeDisplay.getUserId()
+				).put(
+					"isOwner", false
+				).put(
 					"portraitURL", portraitURL
 				).put(
 					"roleId",
@@ -152,6 +159,32 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 						PublicationRoleConstants.getNameLabel(role.getName()))
 				).put(
 					"userId", Long.valueOf(user.getUserId())
+				));
+		}
+
+		User owner = _userLocalService.fetchUser(ctCollection.getUserId());
+
+		if (owner != null) {
+			String portraitURL = StringPool.BLANK;
+
+			if (owner.getPortraitId() > 0) {
+				portraitURL = owner.getPortraitURL(themeDisplay);
+			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"emailAddress", owner.getEmailAddress()
+				).put(
+					"fullName", owner.getFullName()
+				).put(
+					"isCurrentUser",
+					owner.getUserId() == themeDisplay.getUserId()
+				).put(
+					"isOwner", true
+				).put(
+					"portraitURL", portraitURL
+				).put(
+					"userId", Long.valueOf(owner.getUserId())
 				));
 		}
 

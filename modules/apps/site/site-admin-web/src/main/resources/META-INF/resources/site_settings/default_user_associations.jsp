@@ -17,29 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group siteGroup = themeDisplay.getSiteGroup();
+long liveGroupId = (long)request.getAttribute("site.liveGroupId");
 
-Group liveGroup = null;
-
-if (siteGroup.isStagingGroup()) {
-	liveGroup = siteGroup.getLiveGroup();
-}
-else {
-	liveGroup = siteGroup;
-}
-
-long groupId = scopeGroupId;
-
-UnicodeProperties groupTypeSettings = null;
-
-if (liveGroup != null) {
-	groupId = liveGroup.getGroupId();
-
-	groupTypeSettings = liveGroup.getTypeSettingsProperties();
-}
-else {
-	groupTypeSettings = new UnicodeProperties();
-}
+UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
 
 List<Role> defaultSiteRoles = new ArrayList<>();
 
@@ -217,7 +197,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	).setParameter(
 		"eventName", liferayPortletResponse.getNamespace() + "selectSiteRole"
 	).setParameter(
-		"groupId", groupId
+		"groupId", liveGroupId
 	).setParameter(
 		"roleType", RoleConstants.TYPE_SITE
 	).setParameter(
@@ -253,7 +233,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	).setParameter(
 		"eventName", liferayPortletResponse.getNamespace() + "selectTeam"
 	).setParameter(
-		"groupId", groupId
+		"groupId", liveGroupId
 	).setWindowState(
 		LiferayWindowState.POP_UP
 	).build();

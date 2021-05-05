@@ -17,16 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group siteGroup = themeDisplay.getSiteGroup();
+Group siteGroup = (Group)request.getAttribute("site.group");
 
-Group liveGroup = null;
-
-if (siteGroup.isStagingGroup()) {
-	liveGroup = siteGroup.getLiveGroup();
-}
-else {
-	liveGroup = siteGroup;
-}
+UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
 %>
 
-<aui:input helpMessage='<%= LanguageUtil.format(request, "directory-indexing-help", new Object[] {HtmlUtil.escape(siteGroup.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + siteGroup.getFriendlyURL()}, false) %>' inlineLabel="right" label="enable-directory-indexing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value='<%= PropertiesParamUtil.getBoolean(liveGroup.getTypeSettingsProperties(), request, "directoryIndexingEnabled") %>' />
+<aui:input helpMessage='<%= LanguageUtil.format(request, "directory-indexing-help", new Object[] {HtmlUtil.escape(siteGroup.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + siteGroup.getFriendlyURL()}, false) %>' inlineLabel="right" label="enable-directory-indexing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value='<%= PropertiesParamUtil.getBoolean(groupTypeSettings, request, "directoryIndexingEnabled") %>' />

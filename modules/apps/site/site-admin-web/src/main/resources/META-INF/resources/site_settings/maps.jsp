@@ -16,19 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Group siteGroup = themeDisplay.getSiteGroup();
-
-Group liveGroup = null;
-
-if (siteGroup.isStagingGroup()) {
-	liveGroup = siteGroup.getLiveGroup();
-}
-else {
-	liveGroup = siteGroup;
-}
-%>
-
 <liferay-map:map-provider-selector
 	mapProviderKey="<%= (String)request.getAttribute(MapProviderWebKeys.MAP_PROVIDER_KEY) %>"
 	name='<%= "TypeSettingsProperties--" + MapProviderWebKeys.MAP_PROVIDER_KEY + "--" %>'

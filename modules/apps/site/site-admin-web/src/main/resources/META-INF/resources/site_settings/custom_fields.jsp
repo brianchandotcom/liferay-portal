@@ -16,22 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-Group siteGroup = themeDisplay.getSiteGroup();
-
-Group liveGroup = null;
-
-if (siteGroup.isStagingGroup()) {
-	liveGroup = siteGroup.getLiveGroup();
-}
-else {
-	liveGroup = siteGroup;
-}
-%>
-
 <liferay-expando:custom-attribute-list
 	className="<%= Group.class.getName() %>"
-	classPK="<%= liveGroup.getGroupId() %>"
+	classPK='<%= (long)request.getAttribute("site.liveGroupId") %>'
 	editable="<%= true %>"
 	label="<%= true %>"
 />

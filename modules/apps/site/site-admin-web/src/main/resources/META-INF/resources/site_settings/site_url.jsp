@@ -17,36 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group siteGoup = themeDisplay.getSiteGroup();
-
-Group liveGroup = null;
-
-long liveGroupId = 0;
-
-Group stagingGroup = null;
-
-long stagingGroupId = 0;
-
-if (siteGoup != null) {
-	if (siteGoup.isStagingGroup()) {
-		liveGroup = siteGoup.getLiveGroup();
-
-		stagingGroup = siteGoup;
-	}
-	else {
-		liveGroup = siteGoup;
-
-		if (siteGoup.hasStagingGroup()) {
-			stagingGroup = siteGoup.getStagingGroup();
-		}
-	}
-
-	liveGroupId = liveGroup.getGroupId();
-
-	if (stagingGroup != null) {
-		stagingGroupId = stagingGroup.getGroupId();
-	}
-}
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+long liveGroupId = (long)request.getAttribute("site.liveGroupId");
+Group stagingGroup = (Group)request.getAttribute("site.stagingGroup");
+long stagingGroupId = (long)request.getAttribute("site.stagingGroupId");
 
 LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, false);
 LayoutSet privateLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(liveGroupId, true);

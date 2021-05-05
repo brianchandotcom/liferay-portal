@@ -17,18 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group siteGroup = themeDisplay.getSiteGroup();
-
-Group liveGroup = null;
-
-if (siteGroup.isStagingGroup()) {
-	liveGroup = siteGroup.getLiveGroup();
-}
-else {
-	liveGroup = siteGroup;
-}
-
-UnicodeProperties groupTypeSettings = liveGroup.getTypeSettingsProperties();
+UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
 
 boolean groupTrashEnabled = PropertiesParamUtil.getBoolean(groupTypeSettings, request, "trashEnabled", true);
 

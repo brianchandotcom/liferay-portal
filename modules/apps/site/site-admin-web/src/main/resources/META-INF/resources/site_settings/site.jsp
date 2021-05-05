@@ -29,59 +29,16 @@ if (Validator.isNull(redirect)) {
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
-
-Group group = null;
-
-if (groupId > 0) {
-	group = GroupLocalServiceUtil.getGroup(groupId);
-}
-
-Group liveGroup = null;
-
-long liveGroupId = 0;
-
-Group stagingGroup = null;
-
-long stagingGroupId = 0;
-
-if (group != null) {
-	if (group.isStagingGroup()) {
-		liveGroup = group.getLiveGroup();
-
-		stagingGroup = group;
-	}
-	else {
-		liveGroup = group;
-
-		if (group.hasStagingGroup()) {
-			stagingGroup = group.getStagingGroup();
-		}
-	}
-
-	liveGroupId = liveGroup.getGroupId();
-
-	if (stagingGroup != null) {
-		stagingGroupId = stagingGroup.getGroupId();
-	}
-}
+Group group = (Group)request.getAttribute("site.group");
 %>
 
 <liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
 
 <aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 <aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
-<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-
-<%
-request.setAttribute("site.group", group);
-request.setAttribute("site.liveGroup", liveGroup);
-request.setAttribute("site.liveGroupId", Long.valueOf(liveGroupId));
-request.setAttribute("site.stagingGroup", stagingGroup);
-request.setAttribute("site.stagingGroupId", Long.valueOf(stagingGroupId));
-%>
+<aui:input name="groupId" type="hidden" value="<%= group.getGroupId() %>" />
+<aui:input name="liveGroupId" type="hidden" value='<%= (long)request.getAttribute("site.liveGroupId") %>' />
+<aui:input name="stagingGroupId" type="hidden" value='<%= (long)request.getAttribute("site.stagingGroupId") %>' />
 
 <liferay-frontend:form-navigator
 	backURL="<%= backURL %>"

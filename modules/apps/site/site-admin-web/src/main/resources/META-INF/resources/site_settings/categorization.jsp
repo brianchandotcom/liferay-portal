@@ -17,16 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group siteGroup = themeDisplay.getSiteGroup();
-
-Group liveGroup = null;
-
-if (siteGroup.isStagingGroup()) {
-	liveGroup = siteGroup.getLiveGroup();
-}
-else {
-	liveGroup = siteGroup;
-}
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 %>
 
 <aui:model-context bean="<%= liveGroup %>" model="<%= Group.class %>" />

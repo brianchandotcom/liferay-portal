@@ -17,18 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Group siteGoup = themeDisplay.getSiteGroup();
+Group siteGoup = (Group)request.getAttribute("site.group");
 
-Group liveGroup = null;
-
-if (siteGoup != null) {
-	if (siteGoup.isStagingGroup()) {
-		liveGroup = siteGoup.getLiveGroup();
-	}
-	else {
-		liveGroup = siteGoup;
-	}
-}
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 

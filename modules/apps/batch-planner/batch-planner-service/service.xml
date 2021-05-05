@@ -68,6 +68,7 @@
 		<column name="contentFieldType" type="String" />
 		<column name="openAPIFieldName" type="String" />
 		<column name="openAPIFieldType" type="String" />
+		<column name="transformationJavaCode" type="String" />
 
 		<!-- Order -->
 

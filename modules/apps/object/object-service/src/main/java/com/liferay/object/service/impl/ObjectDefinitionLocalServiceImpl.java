@@ -26,6 +26,8 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,14 +43,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marco Leo
@@ -154,7 +155,7 @@ public class ObjectDefinitionLocalServiceImpl
 		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
 		for (ObjectDefinitionDeployer objectDefinitionDeployer :
-				_objectDefinitionDeployers) {
+				_serviceTrackerList) {
 
 			serviceRegistrations.addAll(
 				objectDefinitionDeployer.deploy(objectDefinition));
@@ -208,21 +209,15 @@ public class ObjectDefinitionLocalServiceImpl
 		_serviceRegistrationsMap.clear();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setObjectDefinitionDeployer(
-		ObjectDefinitionDeployer objectDefinitionDeployer) {
-
-		_objectDefinitionDeployers.add(objectDefinitionDeployer);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, ObjectDefinitionDeployer.class);
 	}
 
-	protected void unsetObjectDefinitionDeployer(
-		ObjectDefinitionDeployer objectDefinitionDeployer) {
-
-		_objectDefinitionDeployers.remove(objectDefinitionDeployer);
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
 	}
 
 	private void _createTable(
@@ -279,9 +274,6 @@ public class ObjectDefinitionLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionLocalServiceImpl.class);
 
-	private final List<ObjectDefinitionDeployer> _objectDefinitionDeployers =
-		new CopyOnWriteArrayList<>();
-
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
@@ -296,6 +288,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	private final Map<Long, List<ServiceRegistration<?>>>
 		_serviceRegistrationsMap = new HashMap<>();
+	private ServiceTrackerList
+		<ObjectDefinitionDeployer, ObjectDefinitionDeployer>
+			_serviceTrackerList;
 
 	@Reference
 	private UserLocalService _userLocalService;

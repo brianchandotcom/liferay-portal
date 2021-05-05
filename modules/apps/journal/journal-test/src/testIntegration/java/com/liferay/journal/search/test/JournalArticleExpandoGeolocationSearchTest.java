@@ -46,18 +46,20 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
+
+import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * @author André de Oliveira
@@ -98,7 +100,7 @@ public class JournalArticleExpandoGeolocationSearchTest {
 
 	@Test
 	public void testGeolocationComboQueryString() throws Exception {
-		addJournalArticleCombo(
+		addJournalArticleWithTwoExpandoColumns(
 			"Software Engineer", _EXPANDO_COLUMN, ExpandoColumnConstants.STRING,
 			_GEOLOCATION_VALUE, _EXPANDO_COLUMN_GEOLOCATION,
 			ExpandoColumnConstants.GEOLOCATION);
@@ -116,7 +118,7 @@ public class JournalArticleExpandoGeolocationSearchTest {
 
 	@Test
 	public void testGeolocationQueryString() throws Exception {
-		addJournalArticle(
+		addJournalArticleWithSingleExpandoColumn(
 			_GEOLOCATION_VALUE, _EXPANDO_COLUMN_GEOLOCATION,
 			ExpandoColumnConstants.GEOLOCATION);
 
@@ -127,35 +129,7 @@ public class JournalArticleExpandoGeolocationSearchTest {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	protected void addJournalArticle(
-			String expandoValue, String expandoColumn, int expandoColumnType)
-		throws Exception {
-
-		addJournalExpandoColumn(expandoColumn, expandoColumnType);
-
-		addJournalArticleWithExpando(
-			Collections.singletonMap(expandoColumn, expandoValue));
-	}
-
-	protected void addJournalArticleCombo(
-			String expandoValue1, String expandoColumn1, int expandoColumnType1,
-			String expandoValue2, String expandoColumn2, int expandoColumnType2)
-		throws Exception {
-
-		addJournalExpandoColumn(expandoColumn1, expandoColumnType1);
-		addJournalExpandoColumn(expandoColumn2, expandoColumnType2);
-
-		Map<String, Serializable> expandoMap =
-			HashMapBuilder.<String, Serializable>put(
-				expandoColumn1, expandoValue1
-			).put(
-				expandoColumn2, expandoValue2
-			).build();
-
-		addJournalArticleWithExpando(expandoMap);
-	}
-
-	protected void addJournalArticleWithExpando(
+	protected void addJournalArticleWithExpandoMap(
 		Map<String, Serializable> expandoMap) {
 
 		_journalArticleSearchFixture.addArticle(
@@ -179,6 +153,32 @@ public class JournalArticleExpandoGeolocationSearchTest {
 						put(LocaleUtil.US, "gamma");
 					}
 				}
+			).build());
+	}
+
+	protected void addJournalArticleWithSingleExpandoColumn(
+			String expandoValue, String expandoColumn, int expandoColumnType)
+		throws Exception {
+
+		addJournalExpandoColumn(expandoColumn, expandoColumnType);
+
+		addJournalArticleWithExpandoMap(
+			Collections.singletonMap(expandoColumn, expandoValue));
+	}
+
+	protected void addJournalArticleWithTwoExpandoColumns(
+			String expandoValue1, String expandoColumn1, int expandoColumnType1,
+			String expandoValue2, String expandoColumn2, int expandoColumnType2)
+		throws Exception {
+
+		addJournalExpandoColumn(expandoColumn1, expandoColumnType1);
+		addJournalExpandoColumn(expandoColumn2, expandoColumnType2);
+
+		addJournalArticleWithExpandoMap(
+			HashMapBuilder.<String, Serializable>put(
+				expandoColumn1, expandoValue1
+			).put(
+				expandoColumn2, expandoValue2
 			).build());
 	}
 

@@ -113,7 +113,7 @@ definition {
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
 			accountName = "Commerce Account",
 			adminEmailAddress = "test@liferay.com");
-		
+
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
 		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
@@ -143,9 +143,6 @@ definition {
 		AssertTextPresent(
 			locator1 = "CommerceEntry#ORDER_ID_FIRST_RESULT",
 			value1 = "${firstOrderId}");
-			
-
-
 	}
 
 	@description = "COMMERCE-5926. As a buyer, I want to be able to see all of the accounts I am a member of in the account selector dropdown"

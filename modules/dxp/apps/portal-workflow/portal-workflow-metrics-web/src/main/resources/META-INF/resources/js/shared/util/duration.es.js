@@ -103,6 +103,12 @@ export function remainingTimeFormat(
 			durationText += `${minutes}min`;
 		}
 
+		if (!durationText) {
+			const seconds = remainingTimeUTC.format('ss');
+
+			durationText += `${seconds}sec`;
+		}
+
 		durationText = String(durationText).trimEnd();
 	}
 	else {

@@ -393,7 +393,7 @@ public class AssetCategoryDisplayPageFriendlyURLResolver
 			String[] validLayoutTypes = {
 				LayoutConstants.TYPE_PORTLET,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-				LayoutConstants.TYPE_PANEL
+				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_CONTENT
 			};
 
 			for (String layoutType : validLayoutTypes) {

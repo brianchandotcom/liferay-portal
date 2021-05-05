@@ -31,7 +31,7 @@ public class ExpandoFieldQueryBuilderFactory
 	@Override
 	public FieldQueryBuilder getQueryBuilder(String field) {
 		if (field.startsWith("expando__keyword__") &&
-			!field.endsWith("geolocation")) {
+			!field.endsWith("_geolocation")) {
 
 			return substringQueryBuilder;
 		}

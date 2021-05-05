@@ -110,7 +110,7 @@ public class ExpandoQueryContributorHelper {
 
 		String fieldName = getExpandoFieldName(attributeName, expandoBridge);
 
-		if (fieldName.endsWith("geolocation")) {
+		if (fieldName.endsWith("_geolocation")) {
 			return;
 		}
 

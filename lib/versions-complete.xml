@@ -5459,7 +5459,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/com.liferay.jenkins.results.parser.jar</file-name>
-				<version>1.0.715</version>
+				<version>1.0.835</version>
 				<project-name>Liferay Jenkins Results Parser</project-name>
 				<licenses>
 					<license>
@@ -5470,7 +5470,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/com.liferay.poshi.core.jar</file-name>
-				<version>1.0.12</version>
+				<version>1.0.19</version>
 				<project-name>Liferay Poshi Core</project-name>
 				<licenses>
 					<license>

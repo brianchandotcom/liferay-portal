@@ -106,6 +106,8 @@ public class OpenAPIResourceImpl {
 
 			add(SLAResourceImpl.class);
 
+			add(SLAResultResourceImpl.class);
+
 			add(TaskResourceImpl.class);
 
 			add(TimeRangeResourceImpl.class);

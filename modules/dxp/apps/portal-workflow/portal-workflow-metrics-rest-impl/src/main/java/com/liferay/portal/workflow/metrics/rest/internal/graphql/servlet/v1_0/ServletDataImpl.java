@@ -30,6 +30,7 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ReindexStatusResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.RoleResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
+import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResultResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TimeRangeResource;
 
@@ -91,6 +92,8 @@ public class ServletDataImpl implements ServletData {
 			_roleResourceComponentServiceObjects);
 		Query.setSLAResourceComponentServiceObjects(
 			_slaResourceComponentServiceObjects);
+		Query.setSLAResultResourceComponentServiceObjects(
+			_slaResultResourceComponentServiceObjects);
 		Query.setTaskResourceComponentServiceObjects(
 			_taskResourceComponentServiceObjects);
 		Query.setTimeRangeResourceComponentServiceObjects(
@@ -167,6 +170,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<RoleResource>
 		_roleResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<SLAResultResource>
+		_slaResultResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TimeRangeResource>

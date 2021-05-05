@@ -21,6 +21,7 @@ import com.liferay.adaptive.media.image.counter.AMImageCounter;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
+import com.liferay.adaptive.media.image.size.AMImageSizeProvider;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -110,6 +111,11 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 				dynamicQuery.add(
 					mimeTypeProperty.in(
 						_amImageMimeTypeProvider.getSupportedMimeTypes()));
+
+				Property sizeProperty = PropertyFactoryUtil.forName("size");
+
+				dynamicQuery.add(
+					sizeProperty.le(_amImageSizeProvider.getImageMaxSize()));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) -> {
@@ -173,6 +179,9 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 
 	@Reference
 	private AMImageProcessor _amImageProcessor;
+
+	@Reference
+	private AMImageSizeProvider _amImageSizeProvider;
 
 	@Reference
 	private BackgroundTaskStatusMessageSender

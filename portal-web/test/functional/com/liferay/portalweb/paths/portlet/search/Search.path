@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GLOBAL_SEARCH_BAR</td>
+	<td>//input[@ref='searchInput']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GLOBAL_SEARCH_CLEAN_BUTTON</td>
+	<td>//button[contains(@class, 'commerce-search__button')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLASSIC_SEARCH_BAR</td>
 	<td>//input[contains(@id,'SearchPortlet') and @type='text']</td>
 	<td></td>

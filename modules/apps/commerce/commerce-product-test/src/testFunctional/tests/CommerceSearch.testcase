@@ -64,12 +64,64 @@ definition {
 	}
 
 	@description = "COMMERCE-6329. As a buyer, I want to search for products in Catalog by typing different Categories in Global Search and I want to see the products with that categories in the suggestions(single category, multiple categories)"
-	@ignore = "true"
 	@priority = "3"
 	test GlobalSearchSearchProductsByCategories {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6329 GlobalSearchSearchProductsByCategories pending implementation
+	
+	
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");	
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(locator1= "AppBuilder#SEARCH_BUTTON");
+
+		 Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "Exhaust System");
+
+		AssertElementPresent(		
+				key_errorMessage = "Lift Support",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		
+		AssertElementPresent(		
+				key_errorMessage = "Muffler/Resonators",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		
+		AssertElementPresent(		
+				key_errorMessage = "Exhaust Clamps",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		AssertElementPresent(		
+				key_errorMessage = "Catalytic Converters",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+		Click(locator1= "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
+
+		
+			Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "Exhaust System, Engine");		
+		 
+		AssertElementPresent(		
+				key_errorMessage = "Lift Support",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		
+		AssertElementPresent(		
+				key_errorMessage = "Muffler/Resonators",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+		
+		AssertElementPresent(		
+				key_errorMessage = "Exhaust Clamps",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+			AssertElementPresent(		
+				key_errorMessage = "Catalytic Converters",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+			AssertElementPresent(		
+				key_errorMessage = "Valve Cover Grommets",
+					locator1="WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
+
+
 	}
 
 	@description = "COMMERCE-6327. As a buyer, I want to search for different products by typing their SKUs in the Global Search and I want to see the products with that SKUs in the suggestions(single SKU, multiple SKUs)"

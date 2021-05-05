@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -54,6 +55,8 @@ public class FileEntryDownloadFileEntryItemSelectorReturnTypeResolver
 		throws Exception {
 
 		JSONObject fileEntryJSONObject = JSONUtil.put(
+			"classNameId", _portal.getClassNameId(FileEntry.class)
+		).put(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
 		).put(
 			"groupId", String.valueOf(fileEntry.getGroupId())
@@ -77,5 +80,8 @@ public class FileEntryDownloadFileEntryItemSelectorReturnTypeResolver
 
 	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private Portal _portal;
 
 }

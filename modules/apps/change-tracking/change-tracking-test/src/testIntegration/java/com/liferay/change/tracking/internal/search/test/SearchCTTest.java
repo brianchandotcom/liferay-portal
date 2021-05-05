@@ -96,24 +96,17 @@ public class SearchCTTest {
 		}
 
 		assertAllHits(
-			_USER_GROUP_CLASSES,
+			_USER_GROUP_CLASS,
 			getUIDs(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, productionUserGroup),
 			getUIDs(_ctCollection.getCtCollectionId(), publicationUserGroup));
 
-		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _USER_GROUP_CLASSES,
-			productionUserGroup);
+		assertProductionHits(_USER_GROUP_CLASS, productionUserGroup);
 
-		assertHits(
-			_ctCollection.getCtCollectionId(), _USER_GROUP_CLASSES,
-			ArrayUtil.append(
-				getUIDs(
-					CTConstants.CT_COLLECTION_ID_PRODUCTION,
-					productionUserGroup),
-				getUIDs(
-					_ctCollection.getCtCollectionId(), publicationUserGroup)),
-			false);
+		assertCollectionHits(
+			_ctCollection.getCtCollectionId(), _USER_GROUP_CLASS,
+			new UserGroup[] {publicationUserGroup},
+			new UserGroup[] {productionUserGroup});
 	}
 
 	@Test
@@ -158,21 +151,20 @@ public class SearchCTTest {
 			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
 		}
 
-		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
-			deletedJournalArticle, modifiedJournalArticle1);
+		assertProductionHits(
+			_JOURNAL_ARTICLE_CLASS, deletedJournalArticle,
+			modifiedJournalArticle1);
 
 		assertCollectionHits(
-			_ctCollection.getCtCollectionId(), _LEGACY_INDEXER_CLASSES,
-			addedJournalArticle, modifiedJournalArticle2);
+			_ctCollection.getCtCollectionId(), _JOURNAL_ARTICLE_CLASS,
+			new JournalArticle[] {addedJournalArticle, modifiedJournalArticle2},
+			new JournalArticle[] {modifiedJournalArticle1});
+
+		assertProductionHits(_LAYOUT_CLASS, deletedLayout, modifiedLayout);
 
 		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
-			deletedLayout, modifiedLayout);
-
-		assertCollectionHits(
-			_ctCollection.getCtCollectionId(), _NEW_INDEXER_CLASSES,
-			addedLayout, modifiedLayout);
+			_ctCollection.getCtCollectionId(), _LAYOUT_CLASS,
+			new Layout[] {addedLayout, modifiedLayout}, new Layout[0]);
 
 		assertAllHits(
 			_ALL_INDEXER_CLASSES,
@@ -213,24 +205,24 @@ public class SearchCTTest {
 				modifiedJournalArticle1, "testModifyJournalArticle");
 		}
 
-		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
-			deletedJournalArticle, modifiedJournalArticle1);
+		assertProductionHits(
+			_JOURNAL_ARTICLE_CLASS, deletedJournalArticle,
+			modifiedJournalArticle1);
 
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
-		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
-			addedJournalArticle, modifiedJournalArticle2);
+		assertProductionHits(
+			_JOURNAL_ARTICLE_CLASS, addedJournalArticle,
+			modifiedJournalArticle2);
 
 		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
 			_ctCollection.getCtCollectionId(), _ctCollection.getUserId(),
 			"(undo) " + _ctCollection.getName(), StringPool.BLANK);
 
-		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _LEGACY_INDEXER_CLASSES,
-			addedJournalArticle, modifiedJournalArticle2);
+		assertProductionHits(
+			_JOURNAL_ARTICLE_CLASS, addedJournalArticle,
+			modifiedJournalArticle2);
 	}
 
 	@Test
@@ -251,19 +243,15 @@ public class SearchCTTest {
 			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
 		}
 
-		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
-			deletedLayout, modifiedLayout);
+		assertProductionHits(_LAYOUT_CLASS, deletedLayout, modifiedLayout);
 
 		_ctProcessLocalService.addCTProcess(
 			_ctCollection.getUserId(), _ctCollection.getCtCollectionId());
 
-		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
-			addedLayout, modifiedLayout);
+		assertProductionHits(_LAYOUT_CLASS, addedLayout, modifiedLayout);
 
 		assertAllHits(
-			_NEW_INDEXER_CLASSES,
+			_LAYOUT_CLASS,
 			getUIDs(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, addedLayout,
 				modifiedLayout),
@@ -275,16 +263,14 @@ public class SearchCTTest {
 			_ctCollection.getCtCollectionId(), _ctCollection.getUserId(),
 			"(undo) " + _ctCollection.getName(), StringPool.BLANK);
 
-		assertCollectionHits(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION, _NEW_INDEXER_CLASSES,
-			addedLayout, modifiedLayout);
+		assertProductionHits(_LAYOUT_CLASS, addedLayout, modifiedLayout);
 
 		assertCollectionHits(
-			_undoCTCollection.getCtCollectionId(), _NEW_INDEXER_CLASSES,
-			deletedLayout, modifiedLayout);
+			_undoCTCollection.getCtCollectionId(), _LAYOUT_CLASS,
+			new Layout[] {deletedLayout, modifiedLayout}, new Layout[0]);
 
 		assertAllHits(
-			_NEW_INDEXER_CLASSES,
+			_LAYOUT_CLASS,
 			getUIDs(
 				CTConstants.CT_COLLECTION_ID_PRODUCTION, addedLayout,
 				modifiedLayout),
@@ -305,10 +291,17 @@ public class SearchCTTest {
 	}
 
 	protected void assertCollectionHits(
-		long ctCollectionId, Class<?>[] classes, CTModel<?>... ctModels) {
+		long ctCollectionId, Class<?>[] classes,
+		CTModel<?>[] collectionCtModels, CTModel<?>[] productionCtModels) {
 
 		assertHits(
-			ctCollectionId, classes, getUIDs(ctCollectionId, ctModels), false);
+			ctCollectionId, classes,
+			ArrayUtil.append(
+				getUIDs(_ctCollection.getCtCollectionId(), collectionCtModels),
+				getUIDs(
+					CTConstants.CT_COLLECTION_ID_PRODUCTION,
+					productionCtModels)),
+			false);
 	}
 
 	protected void assertHits(
@@ -371,6 +364,14 @@ public class SearchCTTest {
 		}
 	}
 
+	protected void assertProductionHits(
+		Class<?>[] classes, CTModel<?>... ctModels) {
+
+		assertHits(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, classes,
+			getUIDs(CTConstants.CT_COLLECTION_ID_PRODUCTION, ctModels), false);
+	}
+
 	protected String[] getUIDs(long ctCollectionId, CTModel<?>... ctModels) {
 		String[] uids = new String[ctModels.length];
 
@@ -387,13 +388,13 @@ public class SearchCTTest {
 		JournalArticle.class, Layout.class
 	};
 
-	private static final Class<?>[] _LEGACY_INDEXER_CLASSES = {
+	private static final Class<?>[] _JOURNAL_ARTICLE_CLASS = {
 		JournalArticle.class
 	};
 
-	private static final Class<?>[] _NEW_INDEXER_CLASSES = {Layout.class};
+	private static final Class<?>[] _LAYOUT_CLASS = {Layout.class};
 
-	private static final Class<?>[] _USER_GROUP_CLASSES = {UserGroup.class};
+	private static final Class<?>[] _USER_GROUP_CLASS = {UserGroup.class};
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

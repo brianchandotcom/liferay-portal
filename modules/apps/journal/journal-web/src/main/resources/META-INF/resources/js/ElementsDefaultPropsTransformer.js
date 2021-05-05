@@ -170,7 +170,7 @@ export default function propsTransformer({
 			transformedItem.onClick = (event) => {
 				event.preventDefault();
 
-				action({
+				action.call(ACTIONS, {
 					itemData: item.data,
 					portletNamespace,
 					trashEnabled,

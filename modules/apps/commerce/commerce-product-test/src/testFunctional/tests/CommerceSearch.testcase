@@ -90,8 +90,8 @@ definition {
 			value1 = "MIN93015");
 
 		AssertElementPresent(
-				locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
-				key_entryName = "ABS Sensor");
+			key_entryName = "ABS Sensor",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
 
 		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
 
@@ -102,13 +102,12 @@ definition {
 			value1 = "MIN93015 MIN55861");
 
 		AssertElementPresent(
-				locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
-				key_entryName = "ABS Sensor");
+			key_entryName = "ABS Sensor",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
 
 		AssertElementPresent(
-				locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
-				key_entryName = "U-Joint");
-
+			key_entryName = "U-Joint",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
 	}
 
 	@description = "COMMERCE-6328. As a buyer, I want to search for products by typing different Specification Values in Global Search and I want to see the products with that specification values in the suggestions(single specification, multiple specifications)"

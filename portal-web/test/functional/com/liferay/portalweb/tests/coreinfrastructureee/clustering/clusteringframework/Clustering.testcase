@@ -288,7 +288,7 @@ definition {
 
 	@priority = "4"
 	test TCPControlChannelProperties {
-		property custom.properties = "cluster.link.channel.properties.control=tcp.xml${line.separator}cluster.link.autodetect.address=localhost";
+		property custom.properties = "cluster.link.channel.properties.control=tcp.xml";
 		property test.name.skip.portal.instance = "Clustering#TCPControlChannelProperties";
 
 		for (var serverPort : list "8080,9080") {

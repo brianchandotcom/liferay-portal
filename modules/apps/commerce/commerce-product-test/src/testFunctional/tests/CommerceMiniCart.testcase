@@ -114,11 +114,10 @@ definition {
 			key_summaryTableItem = "Order Discount",
 			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
 			value1 = "$ 0.00");
-		
+
 		AssertTextEquals(
 			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_TOTAL",
 			value1 = "$ 72.00");
-
 	}
 
 	@description = "COMMERCE-6330. As a buyer, I want to be able to empty my open cart after clicking on 'Remove All Items'(Yes/No)"

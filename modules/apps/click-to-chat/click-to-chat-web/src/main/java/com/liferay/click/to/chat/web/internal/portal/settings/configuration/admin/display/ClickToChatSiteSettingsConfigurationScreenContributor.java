@@ -12,13 +12,10 @@
  * details.
  */
 
-package com.liferay.click.to.chat.web.internal.frontend.taglib.form.navigator;
+package com.liferay.click.to.chat.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
 import com.liferay.click.to.chat.web.internal.constants.ClickToChatWebKeys;
-import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -28,8 +25,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-
-import java.io.IOException;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -47,41 +43,43 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration",
-	immediate = true, property = "form.navigator.entry.order:Integer=30",
-	service = FormNavigatorEntry.class
+	service = SiteSettingsConfigurationScreenContributor.class
 )
-public class ClickToChatFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<Object>
-	implements FormNavigatorEntry<Object> {
+public class ClickToChatSiteSettingsConfigurationScreenContributor
+	implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_ADVANCED;
+		return "other";
 	}
 
 	@Override
-	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
+	public String getJspPath() {
+		return "/site_settings/click_to_chat.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "click-to-chat";
+		return "site-configuration-click-to-chat";
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
+	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, getKey());
+		return LanguageUtil.get(resourceBundle, "click-to-chat");
 	}
 
 	@Override
-	public void include(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
+	@Override
+	public void setAttributes(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		String chatProviderAccountId = null;
 		String chatProviderId = null;
@@ -166,22 +164,6 @@ public class ClickToChatFormNavigatorEntry
 		httpServletRequest.setAttribute(
 			ClickToChatWebKeys.CLICK_TO_CHAT_GUEST_USERS_ALLOWED,
 			guestUsersAllowed);
-
-		super.include(httpServletRequest, httpServletResponse);
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.click.to.chat.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/site_settings/click_to_chat.jsp";
 	}
 
 	private UnicodeProperties _getTypeSettingsUnicodeProperties(
@@ -205,5 +187,11 @@ public class ClickToChatFormNavigatorEntry
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.click.to.chat.web)",
+		unbind = "-"
+	)
+	private ServletContext _servletContext;
 
 }

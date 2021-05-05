@@ -12,6 +12,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-form-navigator")
 	compileOnly project(":apps:learn-taglib:learn-taglib")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
+	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-reflect")

@@ -18,7 +18,7 @@ import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.headless.delivery.dto.v1_0.ContentStructure;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentStructureUtil;
+import com.liferay.headless.delivery.dto.v1_0.util.ContentStructureUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentStructureEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
 import com.liferay.journal.model.JournalArticle;

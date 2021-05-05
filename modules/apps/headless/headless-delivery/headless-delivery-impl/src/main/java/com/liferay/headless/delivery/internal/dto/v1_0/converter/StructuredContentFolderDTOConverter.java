@@ -16,8 +16,8 @@ package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.journal.service.JournalFolderService;

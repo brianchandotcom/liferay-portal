@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button/lib/Button';
 import {Context as ClayModalContext} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
-import {useFormState} from 'dynamic-data-mapping-form-renderer';
+import {useFormState} from 'data-engine-js-components-web';
 import React, {useContext} from 'react';
 
 import AppContext from '../../../AppContext.es';

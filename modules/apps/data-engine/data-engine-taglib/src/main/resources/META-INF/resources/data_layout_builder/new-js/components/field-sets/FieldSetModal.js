@@ -23,14 +23,14 @@ import {
 	useConfig,
 	useForm,
 	useFormState,
-} from 'dynamic-data-mapping-form-renderer';
+} from 'data-engine-js-components-web';
 import {
 	dragAndDropReducer,
 	fieldEditableReducer,
 	languageReducer,
 	pagesStructureReducer,
-} from 'dynamic-data-mapping-form-renderer/js/core/reducers/index.es';
-import {pageReducer} from 'dynamic-data-mapping-form-renderer/js/custom/form/reducers/index.es';
+} from 'data-engine-js-components-web/js/core/reducers/index.es';
+import {pageReducer} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
 import {default as React, useCallback, useState} from 'react';
 
 import getFieldsWithoutOptions from '../../../js/components/field-sets/actions/getFieldsWithoutOptions.es';

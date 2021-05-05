@@ -38,7 +38,13 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 				new AlterTableAddColumn("urlSubject", "VARCHAR(255) null"));
 		}
 
+		runSQL(
+			"create index IX_TEMP on MBMessage (subject[$COLUMN_LENGTH:75$]," +
+				"messageId)");
+
 		_populateUrlSubject();
+
+		runSQL("drop index IX_TEMP on MBMessage");
 	}
 
 	private String _getUrlSubject(long id, String subject) {

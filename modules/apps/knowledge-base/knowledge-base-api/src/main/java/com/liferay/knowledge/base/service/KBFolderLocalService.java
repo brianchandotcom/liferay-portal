@@ -78,10 +78,21 @@ public interface KBFolderLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KBFolder addKBFolder(KBFolder kbFolder);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBFolder(String, long, long, long, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	public KBFolder addKBFolder(
 			long userId, long groupId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String name, String description,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public KBFolder addKBFolder(
+			String externalReferenceCode, long userId, long groupId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -223,6 +234,25 @@ public interface KBFolderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder fetchKBFolder(String uuid, long groupId);
 
+	/**
+	 * Returns the kb folder with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb folder's external reference code
+	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchKBFolderByExternalReferenceCode(
+		long groupId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchKBFolderByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchKBFolderByReferenceCode(
+		long groupId, String externalReferenceCode);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder fetchKBFolderByUrlTitle(
 			long groupId, long parentKbFolderId, String urlTitle)
@@ -257,6 +287,19 @@ public interface KBFolderLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolder(long kbFolderId) throws PortalException;
+
+	/**
+	 * Returns the kb folder with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb folder's external reference code
+	 * @return the matching kb folder
+	 * @throws PortalException if a matching kb folder could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder getKBFolderByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder getKBFolderByUrlTitle(

@@ -27,6 +27,44 @@ import BasicInformation from './BasicInformation';
 import EmptyLayoutReports from './EmptyLayoutReports';
 import LayoutReportsIssuesList from './LayoutReportsIssuesList';
 
+function loadIssues({data, dispatch, languageId, portletNamespace}) {
+	const url = data.canonicalURLs.find(
+		(canonicalURL) =>
+			canonicalURL.languageId === languageId || data.defaultLanguageId
+	);
+
+	if (url) {
+		APIService.getLayoutReportsIssues(
+			url.layoutReportsIssuesURL,
+			portletNamespace
+		)
+			.then(({layoutReportsIssues}) => {
+				dispatch({
+					data: {
+						...data,
+						layoutReportsIssues,
+					},
+					type: 'SET_DATA',
+				});
+			})
+			.catch(() => {
+				dispatch({
+					error: {
+						buttonTitle: Liferay.Language.get('relaunch'),
+						message: Liferay.Language.get('connection-failed'),
+					},
+					type: 'SET_ERROR',
+				});
+			});
+	}
+	else {
+		dispatch({
+			error: Liferay.Language.get('an-unexpected-error-occurred'),
+			type: 'SET_ERROR',
+		});
+	}
+}
+
 export default function LayoutReports({
 	eventTriggered,
 	isPanelStateOpen,
@@ -80,48 +118,11 @@ export default function LayoutReports({
 						});
 
 						if (data.validConnection) {
-							const url = data.canonicalURLs.find(
-								({languageId}) =>
-									languageId === data.defaultLanguageId
-							);
-
-							if (url) {
-								APIService.getLayoutReportsIssues(
-									url.layoutReportsIssuesURL,
-									portletNamespace
-								)
-									.then(({layoutReportsIssues}) => {
-										safeDispatch({
-											data: {
-												...data,
-												layoutReportsIssues,
-											},
-											type: 'SET_DATA',
-										});
-										setPercentage(100);
-									})
-									.catch(() => {
-										safeDispatch({
-											error: {
-												buttonTitle: Liferay.Language.get(
-													'relaunch'
-												),
-												message: Liferay.Language.get(
-													'connection-failed'
-												),
-											},
-											type: 'SET_ERROR',
-										});
-									});
-							}
-							else {
-								safeDispatch({
-									error: Liferay.Language.get(
-										'an-unexpected-error-occurred'
-									),
-									type: 'SET_ERROR',
-								});
-							}
+							loadIssues({
+								data,
+								dispatch: safeDispatch,
+								portletNamespace,
+							});
 						}
 					})
 				)

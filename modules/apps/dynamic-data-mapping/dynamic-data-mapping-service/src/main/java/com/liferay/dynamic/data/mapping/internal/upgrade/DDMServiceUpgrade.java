@@ -428,6 +428,13 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			"4.3.1", "4.3.2",
 			new com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_2.
 				DDMTemplateUpgradeProcess());
+
+		registry.register(
+			"4.3.2", "4.3.3",
+			new com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_3.
+				DDMStructureLayoutUpgradeProcess(
+					_ddmFormLayoutDeserializer, ddmFormLayoutSerializer,
+					_jsonFactory));
 	}
 
 	@Activate

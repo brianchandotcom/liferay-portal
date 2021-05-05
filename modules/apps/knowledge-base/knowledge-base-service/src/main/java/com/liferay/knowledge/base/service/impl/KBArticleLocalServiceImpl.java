@@ -144,6 +144,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			false);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addKBArticle(String, long, long, long, String, String, String, String,
+	 * String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public KBArticle addKBArticle(
 			long userId, long parentResourceClassNameId,

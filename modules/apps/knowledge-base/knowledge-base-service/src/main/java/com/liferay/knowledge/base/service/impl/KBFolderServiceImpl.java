@@ -42,6 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addKBFolder(String, long, long, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public KBFolder addKBFolder(
 			long groupId, long parentResourceClassNameId,

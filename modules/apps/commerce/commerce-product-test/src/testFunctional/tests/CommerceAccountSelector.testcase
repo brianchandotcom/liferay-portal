@@ -100,12 +100,52 @@ definition {
 	}
 
 	@description = "COMMERCE-5957. As a buyer, I want to search for an order in the orders list, and select it as active order"
-	@ignore = "true"
 	@priority = "3"
 	test SearchForAnOrderAndSelectItAsActive {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5957 SearchForAnOrderAndSelectItAsActive pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+		
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+
+		SelectFrameTop();
+
+		var firstOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+
+		var secondOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		Type(
+			locator1 = "CommerceEntry#SEARCH_ORDER_ID",
+			value1 = "${firstOrderId}");
+
+		Click(
+			key_entryName = "${firstOrderId}",
+			locator1 = "CommerceEntry#SEARCH_ORDER_ID_RESULT");
+
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		AssertTextPresent(
+			locator1 = "CommerceEntry#ORDER_ID_FIRST_RESULT",
+			value1 = "${firstOrderId}");
+			
+
+
 	}
 
 	@description = "COMMERCE-5926. As a buyer, I want to be able to see all of the accounts I am a member of in the account selector dropdown"

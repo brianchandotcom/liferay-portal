@@ -525,6 +525,27 @@
 	<td>//h4[contains(.,'Attachments')]//..//button[contains(@class,'btn-primary')]</td>
 	<td></td>
 </tr>
+<!--ORDER-->
+<tr>
+	<td>ACTIVE_ORDER_ID</td>
+	<td>//span[@class='order-id']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ORDER_ID</td>
+	<td>//input[@type='text'][contains(@class,'form-control')][contains(@placeholder,'Search Order')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_ORDER_ID_RESULT</td>
+	<td>//p[@class='table-list-title' and contains(.,'${key_entryName}')]/a</td>
+	<td></td>    
+</tr>
+<tr>
+	<td>ORDER_ID_FIRST_RESULT</td>
+	<td>(//*[contains(@class, 'table-list-title')])[1]/a</td>
+	<td></td>    
+</tr>
 <!--PRODUCT-->
 <tr>
 	<td>ANY_AUTOCOMPLETE_TEXT_FIELD</td>

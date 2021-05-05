@@ -24,7 +24,7 @@ import com.liferay.commerce.product.content.search.web.internal.display.context.
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.search.facet.SerializableMultiValueFacet;
+import com.liferay.commerce.search.facet.SerializableFacet;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -111,14 +111,11 @@ public class CPPriceRangeFacetsPortlet
 				portletSharedSearchSettings.getParameterValues71(
 					facet.getFieldName());
 
-			SerializableMultiValueFacet serializableMultiValueFacet =
-				new SerializableMultiValueFacet(searchContext);
-
-			serializableMultiValueFacet.setFieldName(facet.getFieldName());
+			SerializableFacet serializableFacet = new SerializableFacet(
+				facet.getFieldName(), searchContext);
 
 			if (parameterValuesOptional.isPresent()) {
-				serializableMultiValueFacet.setValues(
-					parameterValuesOptional.get());
+				serializableFacet.select(parameterValuesOptional.get());
 
 				searchContext.setAttribute(
 					facet.getFieldName(), parameterValuesOptional.get());

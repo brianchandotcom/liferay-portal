@@ -26,7 +26,7 @@ import com.liferay.commerce.product.model.CPOption;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
-import com.liferay.commerce.search.facet.SerializableMultiValueFacet;
+import com.liferay.commerce.search.facet.SerializableFacet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -115,21 +115,17 @@ public class CPOptionFacetsPortlet
 					portletSharedSearchSettings.getParameterValues71(
 						cpOptionKey);
 
-				SerializableMultiValueFacet serializableMultiValueFacet =
-					new SerializableMultiValueFacet(searchContext);
-
-				serializableMultiValueFacet.setFieldName(facet.getFieldName());
+				SerializableFacet serializableFacet = new SerializableFacet(
+					facet.getFieldName(), searchContext);
 
 				if (parameterValuesOptional.isPresent()) {
-					serializableMultiValueFacet.setValues(
-						parameterValuesOptional.get());
+					serializableFacet.select(parameterValuesOptional.get());
 
 					searchContext.setAttribute(
 						facet.getFieldName(), parameterValuesOptional.get());
 				}
 
-				portletSharedSearchSettings.addFacet(
-					serializableMultiValueFacet);
+				portletSharedSearchSettings.addFacet(serializableFacet);
 			}
 
 			ThemeDisplay themeDisplay =

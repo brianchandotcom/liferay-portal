@@ -369,6 +369,8 @@
 		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
 	</entity>
 	<exceptions>
+		<exception>DuplicateKBArticleExternalReferenceCode</exception>
+		<exception>DuplicateKBFolderExternalReferenceCode</exception>
 		<exception>DuplicateKBFolderName</exception>
 		<exception>InvalidKBFolderName</exception>
 		<exception>KBArticleContent</exception>

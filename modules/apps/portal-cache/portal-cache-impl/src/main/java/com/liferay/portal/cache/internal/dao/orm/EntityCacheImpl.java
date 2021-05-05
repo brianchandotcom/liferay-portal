@@ -427,14 +427,6 @@ public class EntityCacheImpl
 		_finderCacheImpl = finderCacheImpl;
 	}
 
-	private boolean _isLocalCacheEnabled() {
-		if (_localCache == null) {
-			return false;
-		}
-
-		return ThreadLocalFilterThreadLocal.isFilterInvoked();
-	}
-
 	private static void _notify(
 		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
 
@@ -466,6 +458,14 @@ public class EntityCacheImpl
 				finderCacheImpl.clearByEntityCache(className);
 			}
 		}
+	}
+
+	private boolean _isLocalCacheEnabled() {
+		if (_localCache == null) {
+			return false;
+		}
+
+		return ThreadLocalFilterThreadLocal.isFilterInvoked();
 	}
 
 	private void _notifyFinderCache(

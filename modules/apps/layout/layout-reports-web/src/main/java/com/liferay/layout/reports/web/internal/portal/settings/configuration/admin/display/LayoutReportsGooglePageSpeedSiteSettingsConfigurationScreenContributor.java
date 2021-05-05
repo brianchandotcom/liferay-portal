@@ -12,11 +12,8 @@
  * details.
  */
 
-package com.liferay.layout.reports.web.internal.frontend.taglib.form.navigator;
+package com.liferay.layout.reports.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.frontend.taglib.form.navigator.BaseJSPFormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
-import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
 import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.display.context.LayoutReportsGooglePageSpeedDisplayContext;
@@ -26,15 +23,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.io.IOException;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
 import java.util.Map;
@@ -56,69 +54,46 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
-	property = "form.navigator.entry.order:Integer=20",
-	service = FormNavigatorEntry.class
+	service = SiteSettingsConfigurationScreenContributor.class
 )
-public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<Group> {
+public class
+	LayoutReportsGooglePageSpeedSiteSettingsConfigurationScreenContributor
+		implements SiteSettingsConfigurationScreenContributor {
 
 	@Override
 	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_SITES_GENERAL;
+		return "other";
 	}
 
 	@Override
-	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
+	public String getJspPath() {
+		return "/site_settings/google_pagespeed.jsp";
 	}
 
 	@Override
 	public String getKey() {
-		return "google-pagespeed";
+		return "site-configuration-google-pagespeed";
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
+	public String getName(Locale locale) {
 		return LanguageUtil.get(_getResourceBundle(locale), "google-pagespeed");
 	}
 
 	@Override
-	public void include(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		PortletRequest portletRequest =
-			(PortletRequest)httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		long companyId = _portal.getCompanyId(portletRequest);
-
-		Company company = _companyLocalService.fetchCompany(companyId);
-
-		if (company == null) {
-			throw new IOException("Invalid company id" + companyId);
-		}
-
-		try {
-			httpServletRequest.setAttribute(
-				LayoutReportsGooglePageSpeedDisplayContext.class.getName(),
-				new LayoutReportsGooglePageSpeedDisplayContext(
-					_layoutReportsGooglePageSpeedConfigurationProvider.
-						getApiKey(company),
-					_layoutReportsGooglePageSpeedConfigurationProvider.
-						isEnabled(company),
-					portletRequest));
-		}
-		catch (ConfigurationException configurationException) {
-			throw new IOException(configurationException);
-		}
-
-		super.include(httpServletRequest, httpServletResponse);
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
-	public boolean isVisible(User user, Group group) {
+	public boolean isVisible() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		Group group = themeDisplay.getScopeGroup();
+
 		if ((group == null) || group.isCompany()) {
 			return false;
 		}
@@ -147,12 +122,34 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 	}
 
 	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.reports.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+	public void setAttributes(
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		Company company = _companyLocalService.fetchCompany(
+			_portal.getCompanyId(portletRequest));
+
+		if (company == null) {
+			return;
+		}
+
+		try {
+			httpServletRequest.setAttribute(
+				LayoutReportsGooglePageSpeedDisplayContext.class.getName(),
+				new LayoutReportsGooglePageSpeedDisplayContext(
+					_layoutReportsGooglePageSpeedConfigurationProvider.
+						getApiKey(company),
+					_layoutReportsGooglePageSpeedConfigurationProvider.
+						isEnabled(company),
+					portletRequest));
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException, configurationException);
+		}
 	}
 
 	@Activate
@@ -166,18 +163,14 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 					properties));
 	}
 
-	@Override
-	protected String getJspPath() {
-		return "/site_settings/google_pagespeed.jsp";
-	}
-
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutReportsGooglePageSpeedSiteFormNavigatorEntry.class);
+		LayoutReportsGooglePageSpeedSiteSettingsConfigurationScreenContributor.
+			class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
@@ -190,5 +183,11 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntry
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.reports.web)",
+		unbind = "-"
+	)
+	private ServletContext _servletContext;
 
 }

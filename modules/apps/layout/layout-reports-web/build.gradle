@@ -55,6 +55,7 @@ dependencies {
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
 	compileOnly project(":apps:portal-template:portal-template-react-renderer-api")
 	compileOnly project(":apps:product-navigation:product-navigation-control-menu-api")
+	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

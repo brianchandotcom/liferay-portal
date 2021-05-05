@@ -27,7 +27,13 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Adolfo Pérez
  */
-@Component(service = DLItemSelectorCriterionCreationMenuRestriction.class)
+@Component(
+	property = {
+		"model.class.name=com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion",
+		"model.class.name=com.liferay.item.selector.criteria.video.criterion.VideoItemSelectorCriterion"
+	},
+	service = DLItemSelectorCriterionCreationMenuRestriction.class
+)
 public class DLVideoItemSelectorCriterionCreationMenuRestriction
 	implements DLItemSelectorCriterionCreationMenuRestriction
 		<VideoItemSelectorCriterion> {

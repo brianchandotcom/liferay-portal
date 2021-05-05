@@ -91,21 +91,29 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
-			_adminPortletResourcePermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				KBActionKeys.ADD_KB_ARTICLE);
-		}
-		else if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
-			_displayPortletResourcePermission.check(
-				getPermissionChecker(), serviceContext.getScopeGroupId(),
-				KBActionKeys.ADD_KB_ARTICLE);
-		}
+		_checkKBArticlePermissions(portletId, serviceContext);
 
 		return kbArticleLocalService.addKBArticle(
 			getUserId(), parentResourceClassNameId, parentResourcePrimKey,
 			title, urlTitle, content, description, sourceURL, sections,
 			selectedFileNames, serviceContext);
+	}
+
+	@Override
+	public KBArticle addKBArticle(
+			String externalReferenceCode, String portletId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_checkKBArticlePermissions(portletId, serviceContext);
+
+		return kbArticleLocalService.addKBArticle(
+			externalReferenceCode, getUserId(), parentResourceClassNameId,
+			parentResourcePrimKey, title, urlTitle, content, description,
+			sourceURL, sections, selectedFileNames, serviceContext);
 	}
 
 	@Override
@@ -953,6 +961,22 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		else {
 			_kbArticleModelResourcePermission.check(
 				getPermissionChecker(), resourcePrimKey, KBActionKeys.UPDATE);
+		}
+	}
+
+	private void _checkKBArticlePermissions(
+			String portletId, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
+			_adminPortletResourcePermission.check(
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				KBActionKeys.ADD_KB_ARTICLE);
+		}
+		else if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
+			_displayPortletResourcePermission.check(
+				getPermissionChecker(), serviceContext.getScopeGroupId(),
+				KBActionKeys.ADD_KB_ARTICLE);
 		}
 	}
 

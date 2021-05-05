@@ -54,7 +54,7 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 				javascriptExecutor.executeScript(
 					"confirm = function(){return true;};");
 
-				webElement.click();
+				javaScriptClick(locator);
 			}
 			catch (ElementNotVisibleException elementNotVisibleException) {
 				if (isVisible(locator)) {

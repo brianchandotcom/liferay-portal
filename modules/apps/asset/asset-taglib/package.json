@@ -1,10 +1,10 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.6.0",
-		"@clayui/data-provider": "3.3.10",
-		"@clayui/form": "3.14.4",
+		"@clayui/data-provider": "3.27.0",
+		"@clayui/form": "3.27.0",
 		"@clayui/icon": "3.1.0",
-		"@clayui/multi-select": "3.25.3",
+		"@clayui/multi-select": "3.27.0",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.2.6",
 		"prop-types": "15.7.2",

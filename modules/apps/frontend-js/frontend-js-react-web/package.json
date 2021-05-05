@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/icon": "3.1.0",
-		"@clayui/tooltip": "3.4.5",
+		"@clayui/tooltip": "3.27.0",
 		"@liferay/frontend-js-state-web": "*",
 		"classnames": "2.2.6",
 		"formik": "2.1.4",

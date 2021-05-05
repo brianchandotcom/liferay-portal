@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/tooltip": "3.4.5",
+		"@clayui/tooltip": "3.27.0",
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0"

@@ -76,7 +76,7 @@ public class KBArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,6 +100,8 @@ public class KBArticleCacheModel
 		sb.append(modifiedDate);
 		sb.append(", rootResourcePrimKey=");
 		sb.append(rootResourcePrimKey);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", parentResourceClassNameId=");
 		sb.append(parentResourceClassNameId);
 		sb.append(", parentResourcePrimKey=");
@@ -182,6 +184,14 @@ public class KBArticleCacheModel
 		}
 
 		kbArticleImpl.setRootResourcePrimKey(rootResourcePrimKey);
+
+		if (externalReferenceCode == null) {
+			kbArticleImpl.setExternalReferenceCode("");
+		}
+		else {
+			kbArticleImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		kbArticleImpl.setParentResourceClassNameId(parentResourceClassNameId);
 		kbArticleImpl.setParentResourcePrimKey(parentResourcePrimKey);
 		kbArticleImpl.setKbFolderId(kbFolderId);
@@ -284,6 +294,7 @@ public class KBArticleCacheModel
 		modifiedDate = objectInput.readLong();
 
 		rootResourcePrimKey = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		parentResourceClassNameId = objectInput.readLong();
 
@@ -345,6 +356,13 @@ public class KBArticleCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(rootResourcePrimKey);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(parentResourceClassNameId);
 
@@ -429,6 +447,7 @@ public class KBArticleCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long rootResourcePrimKey;
+	public String externalReferenceCode;
 	public long parentResourceClassNameId;
 	public long parentResourcePrimKey;
 	public long kbFolderId;

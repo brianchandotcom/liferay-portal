@@ -1,6 +1,7 @@
 create index IX_571C019E on KBArticle (companyId, latest);
 create index IX_5A381890 on KBArticle (companyId, main);
 create index IX_FBC2D349 on KBArticle (companyId, status);
+create index IX_A358F410 on KBArticle (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], version);
 create index IX_2B11F674 on KBArticle (groupId, kbFolderId, latest);
 create index IX_CFB8C81F on KBArticle (groupId, kbFolderId, status);
 create index IX_379FD6BC on KBArticle (groupId, kbFolderId, urlTitle[$COLUMN_LENGTH:75$], status);
@@ -31,6 +32,7 @@ create index IX_6CB72942 on KBComment (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_791D1844 on KBComment (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_F32A081D on KBFolder (companyId);
+create index IX_1638507E on KBFolder (groupId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_3FA4415C on KBFolder (groupId, parentKBFolderId, name[$COLUMN_LENGTH:75$]);
 create index IX_729A89FA on KBFolder (groupId, parentKBFolderId, urlTitle[$COLUMN_LENGTH:75$]);
 create index IX_32D1105F on KBFolder (uuid_[$COLUMN_LENGTH:75$], companyId);

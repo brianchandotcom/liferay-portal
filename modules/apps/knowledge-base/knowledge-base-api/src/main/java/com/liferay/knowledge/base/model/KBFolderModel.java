@@ -93,6 +93,21 @@ public interface KBFolderModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this kb folder.
+	 *
+	 * @return the external reference code of this kb folder
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this kb folder.
+	 *
+	 * @param externalReferenceCode the external reference code of this kb folder
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the kb folder ID of this kb folder.
 	 *
 	 * @return the kb folder ID of this kb folder

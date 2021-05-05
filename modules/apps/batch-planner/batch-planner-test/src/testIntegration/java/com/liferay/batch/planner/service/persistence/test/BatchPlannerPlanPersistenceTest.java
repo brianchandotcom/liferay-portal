@@ -138,6 +138,13 @@ public class BatchPlannerPlanPersistenceTest {
 
 		newBatchPlannerPlan.setActive(RandomTestUtil.randomBoolean());
 
+		newBatchPlannerPlan.setContentType(RandomTestUtil.randomString());
+
+		newBatchPlannerPlan.setContentUrl(RandomTestUtil.randomString());
+
+		newBatchPlannerPlan.setOpenAPISchemaClassName(
+			RandomTestUtil.randomString());
+
 		newBatchPlannerPlan.setName(RandomTestUtil.randomString());
 
 		newBatchPlannerPlan.setExport(RandomTestUtil.randomBoolean());
@@ -171,6 +178,15 @@ public class BatchPlannerPlanPersistenceTest {
 		Assert.assertEquals(
 			existingBatchPlannerPlan.isActive(),
 			newBatchPlannerPlan.isActive());
+		Assert.assertEquals(
+			existingBatchPlannerPlan.getContentType(),
+			newBatchPlannerPlan.getContentType());
+		Assert.assertEquals(
+			existingBatchPlannerPlan.getContentUrl(),
+			newBatchPlannerPlan.getContentUrl());
+		Assert.assertEquals(
+			existingBatchPlannerPlan.getOpenAPISchemaClassName(),
+			newBatchPlannerPlan.getOpenAPISchemaClassName());
 		Assert.assertEquals(
 			existingBatchPlannerPlan.getName(), newBatchPlannerPlan.getName());
 		Assert.assertEquals(
@@ -229,8 +245,9 @@ public class BatchPlannerPlanPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"BatchPlannerPlan", "mvccVersion", true, "batchPlannerPlanId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "active", true, "name", true, "export",
-			true);
+			true, "modifiedDate", true, "active", true, "contentType", true,
+			"contentUrl", true, "openAPISchemaClassName", true, "name", true,
+			"export", true);
 	}
 
 	@Test
@@ -532,6 +549,13 @@ public class BatchPlannerPlanPersistenceTest {
 		batchPlannerPlan.setModifiedDate(RandomTestUtil.nextDate());
 
 		batchPlannerPlan.setActive(RandomTestUtil.randomBoolean());
+
+		batchPlannerPlan.setContentType(RandomTestUtil.randomString());
+
+		batchPlannerPlan.setContentUrl(RandomTestUtil.randomString());
+
+		batchPlannerPlan.setOpenAPISchemaClassName(
+			RandomTestUtil.randomString());
 
 		batchPlannerPlan.setName(RandomTestUtil.randomString());
 

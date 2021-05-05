@@ -7,6 +7,8 @@ create table BatchPlannerLog (
 	createDate DATE null,
 	modifiedDate DATE null,
 	batchPlannerPlanId LONG,
+	batchEngineTaskERC VARCHAR(75) null,
+	dispatchTriggerERC VARCHAR(75) null,
 	size_ INTEGER,
 	total INTEGER,
 	status INTEGER
@@ -20,7 +22,12 @@ create table BatchPlannerMapping (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	batchPlannerPlanId LONG
+	batchPlannerPlanId LONG,
+	contentFieldName VARCHAR(75) null,
+	contentFieldType VARCHAR(75) null,
+	openAPIFieldName VARCHAR(75) null,
+	openAPIFieldType VARCHAR(75) null,
+	transformationJavaCode TEXT null
 );
 
 create table BatchPlannerPlan (
@@ -32,6 +39,9 @@ create table BatchPlannerPlan (
 	createDate DATE null,
 	modifiedDate DATE null,
 	active_ BOOLEAN,
+	contentType VARCHAR(75) null,
+	contentUrl VARCHAR(75) null,
+	openAPISchemaClassName VARCHAR(75) null,
 	name VARCHAR(75) null,
 	export BOOLEAN
 );

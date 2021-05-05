@@ -50,6 +50,8 @@ public class BatchPlannerLogWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("batchPlannerPlanId", getBatchPlannerPlanId());
+		attributes.put("batchEngineTaskERC", getBatchEngineTaskERC());
+		attributes.put("dispatchTriggerERC", getDispatchTriggerERC());
 		attributes.put("size", getSize());
 		attributes.put("total", getTotal());
 		attributes.put("status", getStatus());
@@ -107,6 +109,20 @@ public class BatchPlannerLogWrapper
 			setBatchPlannerPlanId(batchPlannerPlanId);
 		}
 
+		String batchEngineTaskERC = (String)attributes.get(
+			"batchEngineTaskERC");
+
+		if (batchEngineTaskERC != null) {
+			setBatchEngineTaskERC(batchEngineTaskERC);
+		}
+
+		String dispatchTriggerERC = (String)attributes.get(
+			"dispatchTriggerERC");
+
+		if (dispatchTriggerERC != null) {
+			setDispatchTriggerERC(dispatchTriggerERC);
+		}
+
 		Integer size = (Integer)attributes.get("size");
 
 		if (size != null) {
@@ -124,6 +140,16 @@ public class BatchPlannerLogWrapper
 		if (status != null) {
 			setStatus(status);
 		}
+	}
+
+	/**
+	 * Returns the batch engine task erc of this batch planner log.
+	 *
+	 * @return the batch engine task erc of this batch planner log
+	 */
+	@Override
+	public String getBatchEngineTaskERC() {
+		return model.getBatchEngineTaskERC();
 	}
 
 	/**
@@ -164,6 +190,16 @@ public class BatchPlannerLogWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the dispatch trigger erc of this batch planner log.
+	 *
+	 * @return the dispatch trigger erc of this batch planner log
+	 */
+	@Override
+	public String getDispatchTriggerERC() {
+		return model.getDispatchTriggerERC();
 	}
 
 	/**
@@ -262,6 +298,16 @@ public class BatchPlannerLogWrapper
 	}
 
 	/**
+	 * Sets the batch engine task erc of this batch planner log.
+	 *
+	 * @param batchEngineTaskERC the batch engine task erc of this batch planner log
+	 */
+	@Override
+	public void setBatchEngineTaskERC(String batchEngineTaskERC) {
+		model.setBatchEngineTaskERC(batchEngineTaskERC);
+	}
+
+	/**
 	 * Sets the batch planner log ID of this batch planner log.
 	 *
 	 * @param batchPlannerLogId the batch planner log ID of this batch planner log
@@ -299,6 +345,16 @@ public class BatchPlannerLogWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the dispatch trigger erc of this batch planner log.
+	 *
+	 * @param dispatchTriggerERC the dispatch trigger erc of this batch planner log
+	 */
+	@Override
+	public void setDispatchTriggerERC(String dispatchTriggerERC) {
+		model.setDispatchTriggerERC(dispatchTriggerERC);
 	}
 
 	/**

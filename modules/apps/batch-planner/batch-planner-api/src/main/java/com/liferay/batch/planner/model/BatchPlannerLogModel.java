@@ -201,6 +201,36 @@ public interface BatchPlannerLogModel
 	public void setBatchPlannerPlanId(long batchPlannerPlanId);
 
 	/**
+	 * Returns the batch engine task erc of this batch planner log.
+	 *
+	 * @return the batch engine task erc of this batch planner log
+	 */
+	@AutoEscape
+	public String getBatchEngineTaskERC();
+
+	/**
+	 * Sets the batch engine task erc of this batch planner log.
+	 *
+	 * @param batchEngineTaskERC the batch engine task erc of this batch planner log
+	 */
+	public void setBatchEngineTaskERC(String batchEngineTaskERC);
+
+	/**
+	 * Returns the dispatch trigger erc of this batch planner log.
+	 *
+	 * @return the dispatch trigger erc of this batch planner log
+	 */
+	@AutoEscape
+	public String getDispatchTriggerERC();
+
+	/**
+	 * Sets the dispatch trigger erc of this batch planner log.
+	 *
+	 * @param dispatchTriggerERC the dispatch trigger erc of this batch planner log
+	 */
+	public void setDispatchTriggerERC(String dispatchTriggerERC);
+
+	/**
 	 * Returns the size of this batch planner log.
 	 *
 	 * @return the size of this batch planner log

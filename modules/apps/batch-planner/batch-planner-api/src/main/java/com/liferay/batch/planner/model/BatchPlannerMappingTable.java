@@ -17,6 +17,7 @@ package com.liferay.batch.planner.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -58,6 +59,26 @@ public class BatchPlannerMappingTable
 	public final Column<BatchPlannerMappingTable, Long> batchPlannerPlanId =
 		createColumn(
 			"batchPlannerPlanId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
+	public final Column<BatchPlannerMappingTable, String> contentFieldName =
+		createColumn(
+			"contentFieldName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<BatchPlannerMappingTable, String> contentFieldType =
+		createColumn(
+			"contentFieldType", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<BatchPlannerMappingTable, String> openAPIFieldName =
+		createColumn(
+			"openAPIFieldName", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<BatchPlannerMappingTable, String> openAPIFieldType =
+		createColumn(
+			"openAPIFieldType", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<BatchPlannerMappingTable, Clob> transformationJavaCode =
+		createColumn(
+			"transformationJavaCode", Clob.class, Types.CLOB,
 			Column.FLAG_DEFAULT);
 
 	private BatchPlannerMappingTable() {

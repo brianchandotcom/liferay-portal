@@ -78,7 +78,7 @@ public class BatchPlannerMappingCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,16 @@ public class BatchPlannerMappingCacheModel
 		sb.append(modifiedDate);
 		sb.append(", batchPlannerPlanId=");
 		sb.append(batchPlannerPlanId);
+		sb.append(", contentFieldName=");
+		sb.append(contentFieldName);
+		sb.append(", contentFieldType=");
+		sb.append(contentFieldType);
+		sb.append(", openAPIFieldName=");
+		sb.append(openAPIFieldName);
+		sb.append(", openAPIFieldType=");
+		sb.append(openAPIFieldType);
+		sb.append(", transformationJavaCode=");
+		sb.append(transformationJavaCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -134,13 +144,46 @@ public class BatchPlannerMappingCacheModel
 
 		batchPlannerMappingImpl.setBatchPlannerPlanId(batchPlannerPlanId);
 
+		if (contentFieldName == null) {
+			batchPlannerMappingImpl.setContentFieldName("");
+		}
+		else {
+			batchPlannerMappingImpl.setContentFieldName(contentFieldName);
+		}
+
+		if (contentFieldType == null) {
+			batchPlannerMappingImpl.setContentFieldType("");
+		}
+		else {
+			batchPlannerMappingImpl.setContentFieldType(contentFieldType);
+		}
+
+		if (openAPIFieldName == null) {
+			batchPlannerMappingImpl.setOpenAPIFieldName("");
+		}
+		else {
+			batchPlannerMappingImpl.setOpenAPIFieldName(openAPIFieldName);
+		}
+
+		if (openAPIFieldType == null) {
+			batchPlannerMappingImpl.setOpenAPIFieldType("");
+		}
+		else {
+			batchPlannerMappingImpl.setOpenAPIFieldType(openAPIFieldType);
+		}
+
+		batchPlannerMappingImpl.setTransformationJavaCode(
+			transformationJavaCode);
+
 		batchPlannerMappingImpl.resetOriginalValues();
 
 		return batchPlannerMappingImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		batchPlannerMappingId = objectInput.readLong();
@@ -153,6 +196,11 @@ public class BatchPlannerMappingCacheModel
 		modifiedDate = objectInput.readLong();
 
 		batchPlannerPlanId = objectInput.readLong();
+		contentFieldName = objectInput.readUTF();
+		contentFieldType = objectInput.readUTF();
+		openAPIFieldName = objectInput.readUTF();
+		openAPIFieldType = objectInput.readUTF();
+		transformationJavaCode = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -176,6 +224,41 @@ public class BatchPlannerMappingCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(batchPlannerPlanId);
+
+		if (contentFieldName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(contentFieldName);
+		}
+
+		if (contentFieldType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(contentFieldType);
+		}
+
+		if (openAPIFieldName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openAPIFieldName);
+		}
+
+		if (openAPIFieldType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openAPIFieldType);
+		}
+
+		if (transformationJavaCode == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(transformationJavaCode);
+		}
 	}
 
 	public long mvccVersion;
@@ -186,5 +269,10 @@ public class BatchPlannerMappingCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long batchPlannerPlanId;
+	public String contentFieldName;
+	public String contentFieldType;
+	public String openAPIFieldName;
+	public String openAPIFieldType;
+	public String transformationJavaCode;
 
 }

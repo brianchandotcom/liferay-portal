@@ -78,7 +78,9 @@ public class BatchPlannerPlanModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"active_", Types.BOOLEAN},
-		{"name", Types.VARCHAR}, {"export", Types.BOOLEAN}
+		{"contentType", Types.VARCHAR}, {"contentUrl", Types.VARCHAR},
+		{"openAPISchemaClassName", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"export", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -93,12 +95,15 @@ public class BatchPlannerPlanModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("contentType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("contentUrl", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("openAPISchemaClassName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("export", Types.BOOLEAN);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,name VARCHAR(75) null,export BOOLEAN)";
+		"create table BatchPlannerPlan (mvccVersion LONG default 0 not null,batchPlannerPlanId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,contentType VARCHAR(75) null,contentUrl VARCHAR(75) null,openAPISchemaClassName VARCHAR(75) null,name VARCHAR(75) null,export BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table BatchPlannerPlan";
 
@@ -176,6 +181,9 @@ public class BatchPlannerPlanModelImpl
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setActive(soapModel.isActive());
+		model.setContentType(soapModel.getContentType());
+		model.setContentUrl(soapModel.getContentUrl());
+		model.setOpenAPISchemaClassName(soapModel.getOpenAPISchemaClassName());
 		model.setName(soapModel.getName());
 		model.setExport(soapModel.isExport());
 
@@ -375,6 +383,25 @@ public class BatchPlannerPlanModelImpl
 		attributeSetterBiConsumers.put(
 			"active",
 			(BiConsumer<BatchPlannerPlan, Boolean>)BatchPlannerPlan::setActive);
+		attributeGetterFunctions.put(
+			"contentType", BatchPlannerPlan::getContentType);
+		attributeSetterBiConsumers.put(
+			"contentType",
+			(BiConsumer<BatchPlannerPlan, String>)
+				BatchPlannerPlan::setContentType);
+		attributeGetterFunctions.put(
+			"contentUrl", BatchPlannerPlan::getContentUrl);
+		attributeSetterBiConsumers.put(
+			"contentUrl",
+			(BiConsumer<BatchPlannerPlan, String>)
+				BatchPlannerPlan::setContentUrl);
+		attributeGetterFunctions.put(
+			"openAPISchemaClassName",
+			BatchPlannerPlan::getOpenAPISchemaClassName);
+		attributeSetterBiConsumers.put(
+			"openAPISchemaClassName",
+			(BiConsumer<BatchPlannerPlan, String>)
+				BatchPlannerPlan::setOpenAPISchemaClassName);
 		attributeGetterFunctions.put("name", BatchPlannerPlan::getName);
 		attributeSetterBiConsumers.put(
 			"name",
@@ -564,6 +591,66 @@ public class BatchPlannerPlanModelImpl
 
 	@JSON
 	@Override
+	public String getContentType() {
+		if (_contentType == null) {
+			return "";
+		}
+		else {
+			return _contentType;
+		}
+	}
+
+	@Override
+	public void setContentType(String contentType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_contentType = contentType;
+	}
+
+	@JSON
+	@Override
+	public String getContentUrl() {
+		if (_contentUrl == null) {
+			return "";
+		}
+		else {
+			return _contentUrl;
+		}
+	}
+
+	@Override
+	public void setContentUrl(String contentUrl) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_contentUrl = contentUrl;
+	}
+
+	@JSON
+	@Override
+	public String getOpenAPISchemaClassName() {
+		if (_openAPISchemaClassName == null) {
+			return "";
+		}
+		else {
+			return _openAPISchemaClassName;
+		}
+	}
+
+	@Override
+	public void setOpenAPISchemaClassName(String openAPISchemaClassName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_openAPISchemaClassName = openAPISchemaClassName;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -676,6 +763,10 @@ public class BatchPlannerPlanModelImpl
 		batchPlannerPlanImpl.setCreateDate(getCreateDate());
 		batchPlannerPlanImpl.setModifiedDate(getModifiedDate());
 		batchPlannerPlanImpl.setActive(isActive());
+		batchPlannerPlanImpl.setContentType(getContentType());
+		batchPlannerPlanImpl.setContentUrl(getContentUrl());
+		batchPlannerPlanImpl.setOpenAPISchemaClassName(
+			getOpenAPISchemaClassName());
 		batchPlannerPlanImpl.setName(getName());
 		batchPlannerPlanImpl.setExport(isExport());
 
@@ -795,6 +886,34 @@ public class BatchPlannerPlanModelImpl
 
 		batchPlannerPlanCacheModel.active = isActive();
 
+		batchPlannerPlanCacheModel.contentType = getContentType();
+
+		String contentType = batchPlannerPlanCacheModel.contentType;
+
+		if ((contentType != null) && (contentType.length() == 0)) {
+			batchPlannerPlanCacheModel.contentType = null;
+		}
+
+		batchPlannerPlanCacheModel.contentUrl = getContentUrl();
+
+		String contentUrl = batchPlannerPlanCacheModel.contentUrl;
+
+		if ((contentUrl != null) && (contentUrl.length() == 0)) {
+			batchPlannerPlanCacheModel.contentUrl = null;
+		}
+
+		batchPlannerPlanCacheModel.openAPISchemaClassName =
+			getOpenAPISchemaClassName();
+
+		String openAPISchemaClassName =
+			batchPlannerPlanCacheModel.openAPISchemaClassName;
+
+		if ((openAPISchemaClassName != null) &&
+			(openAPISchemaClassName.length() == 0)) {
+
+			batchPlannerPlanCacheModel.openAPISchemaClassName = null;
+		}
+
 		batchPlannerPlanCacheModel.name = getName();
 
 		String name = batchPlannerPlanCacheModel.name;
@@ -887,6 +1006,9 @@ public class BatchPlannerPlanModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private boolean _active;
+	private String _contentType;
+	private String _contentUrl;
+	private String _openAPISchemaClassName;
 	private String _name;
 	private boolean _export;
 
@@ -927,6 +1049,10 @@ public class BatchPlannerPlanModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("contentType", _contentType);
+		_columnOriginalValues.put("contentUrl", _contentUrl);
+		_columnOriginalValues.put(
+			"openAPISchemaClassName", _openAPISchemaClassName);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("export", _export);
 	}
@@ -968,9 +1094,15 @@ public class BatchPlannerPlanModelImpl
 
 		columnBitmasks.put("active_", 128L);
 
-		columnBitmasks.put("name", 256L);
+		columnBitmasks.put("contentType", 256L);
 
-		columnBitmasks.put("export", 512L);
+		columnBitmasks.put("contentUrl", 512L);
+
+		columnBitmasks.put("openAPISchemaClassName", 1024L);
+
+		columnBitmasks.put("name", 2048L);
+
+		columnBitmasks.put("export", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

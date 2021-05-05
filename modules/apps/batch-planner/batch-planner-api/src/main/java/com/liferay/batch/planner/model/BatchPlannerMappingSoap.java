@@ -43,6 +43,11 @@ public class BatchPlannerMappingSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setBatchPlannerPlanId(model.getBatchPlannerPlanId());
+		soapModel.setContentFieldName(model.getContentFieldName());
+		soapModel.setContentFieldType(model.getContentFieldType());
+		soapModel.setOpenAPIFieldName(model.getOpenAPIFieldName());
+		soapModel.setOpenAPIFieldType(model.getOpenAPIFieldType());
+		soapModel.setTransformationJavaCode(model.getTransformationJavaCode());
 
 		return soapModel;
 	}
@@ -169,6 +174,46 @@ public class BatchPlannerMappingSoap implements Serializable {
 		_batchPlannerPlanId = batchPlannerPlanId;
 	}
 
+	public String getContentFieldName() {
+		return _contentFieldName;
+	}
+
+	public void setContentFieldName(String contentFieldName) {
+		_contentFieldName = contentFieldName;
+	}
+
+	public String getContentFieldType() {
+		return _contentFieldType;
+	}
+
+	public void setContentFieldType(String contentFieldType) {
+		_contentFieldType = contentFieldType;
+	}
+
+	public String getOpenAPIFieldName() {
+		return _openAPIFieldName;
+	}
+
+	public void setOpenAPIFieldName(String openAPIFieldName) {
+		_openAPIFieldName = openAPIFieldName;
+	}
+
+	public String getOpenAPIFieldType() {
+		return _openAPIFieldType;
+	}
+
+	public void setOpenAPIFieldType(String openAPIFieldType) {
+		_openAPIFieldType = openAPIFieldType;
+	}
+
+	public String getTransformationJavaCode() {
+		return _transformationJavaCode;
+	}
+
+	public void setTransformationJavaCode(String transformationJavaCode) {
+		_transformationJavaCode = transformationJavaCode;
+	}
+
 	private long _mvccVersion;
 	private long _batchPlannerMappingId;
 	private long _companyId;
@@ -177,5 +222,10 @@ public class BatchPlannerMappingSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _batchPlannerPlanId;
+	private String _contentFieldName;
+	private String _contentFieldType;
+	private String _openAPIFieldName;
+	private String _openAPIFieldType;
+	private String _transformationJavaCode;
 
 }

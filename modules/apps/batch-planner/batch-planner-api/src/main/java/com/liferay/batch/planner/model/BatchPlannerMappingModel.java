@@ -201,4 +201,79 @@ public interface BatchPlannerMappingModel
 	 */
 	public void setBatchPlannerPlanId(long batchPlannerPlanId);
 
+	/**
+	 * Returns the content field name of this batch planner mapping.
+	 *
+	 * @return the content field name of this batch planner mapping
+	 */
+	@AutoEscape
+	public String getContentFieldName();
+
+	/**
+	 * Sets the content field name of this batch planner mapping.
+	 *
+	 * @param contentFieldName the content field name of this batch planner mapping
+	 */
+	public void setContentFieldName(String contentFieldName);
+
+	/**
+	 * Returns the content field type of this batch planner mapping.
+	 *
+	 * @return the content field type of this batch planner mapping
+	 */
+	@AutoEscape
+	public String getContentFieldType();
+
+	/**
+	 * Sets the content field type of this batch planner mapping.
+	 *
+	 * @param contentFieldType the content field type of this batch planner mapping
+	 */
+	public void setContentFieldType(String contentFieldType);
+
+	/**
+	 * Returns the open api field name of this batch planner mapping.
+	 *
+	 * @return the open api field name of this batch planner mapping
+	 */
+	@AutoEscape
+	public String getOpenAPIFieldName();
+
+	/**
+	 * Sets the open api field name of this batch planner mapping.
+	 *
+	 * @param openAPIFieldName the open api field name of this batch planner mapping
+	 */
+	public void setOpenAPIFieldName(String openAPIFieldName);
+
+	/**
+	 * Returns the open api field type of this batch planner mapping.
+	 *
+	 * @return the open api field type of this batch planner mapping
+	 */
+	@AutoEscape
+	public String getOpenAPIFieldType();
+
+	/**
+	 * Sets the open api field type of this batch planner mapping.
+	 *
+	 * @param openAPIFieldType the open api field type of this batch planner mapping
+	 */
+	public void setOpenAPIFieldType(String openAPIFieldType);
+
+	/**
+	 * Returns the transformation java code of this batch planner mapping.
+	 *
+	 * @return the transformation java code of this batch planner mapping
+	 */
+	@AutoEscape
+	public String getTransformationJavaCode();
+
+	/**
+	 * Sets the transformation java code of this batch planner mapping.
+	 *
+	 * @param transformationJavaCode the transformation java code of this batch planner mapping
+	 */
+	public void setTransformationJavaCode(String transformationJavaCode);
+
 }

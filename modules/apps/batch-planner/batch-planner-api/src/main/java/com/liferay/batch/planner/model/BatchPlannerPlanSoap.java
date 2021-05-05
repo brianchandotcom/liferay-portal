@@ -41,6 +41,9 @@ public class BatchPlannerPlanSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setActive(model.isActive());
+		soapModel.setContentType(model.getContentType());
+		soapModel.setContentUrl(model.getContentUrl());
+		soapModel.setOpenAPISchemaClassName(model.getOpenAPISchemaClassName());
 		soapModel.setName(model.getName());
 		soapModel.setExport(model.isExport());
 
@@ -172,6 +175,30 @@ public class BatchPlannerPlanSoap implements Serializable {
 		_active = active;
 	}
 
+	public String getContentType() {
+		return _contentType;
+	}
+
+	public void setContentType(String contentType) {
+		_contentType = contentType;
+	}
+
+	public String getContentUrl() {
+		return _contentUrl;
+	}
+
+	public void setContentUrl(String contentUrl) {
+		_contentUrl = contentUrl;
+	}
+
+	public String getOpenAPISchemaClassName() {
+		return _openAPISchemaClassName;
+	}
+
+	public void setOpenAPISchemaClassName(String openAPISchemaClassName) {
+		_openAPISchemaClassName = openAPISchemaClassName;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -200,6 +227,9 @@ public class BatchPlannerPlanSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _active;
+	private String _contentType;
+	private String _contentUrl;
+	private String _openAPISchemaClassName;
 	private String _name;
 	private boolean _export;
 

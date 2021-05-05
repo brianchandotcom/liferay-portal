@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -138,6 +140,21 @@ public class BatchPlannerMappingPersistenceTest {
 
 		newBatchPlannerMapping.setBatchPlannerPlanId(RandomTestUtil.nextLong());
 
+		newBatchPlannerMapping.setContentFieldName(
+			RandomTestUtil.randomString());
+
+		newBatchPlannerMapping.setContentFieldType(
+			RandomTestUtil.randomString());
+
+		newBatchPlannerMapping.setOpenAPIFieldName(
+			RandomTestUtil.randomString());
+
+		newBatchPlannerMapping.setOpenAPIFieldType(
+			RandomTestUtil.randomString());
+
+		newBatchPlannerMapping.setTransformationJavaCode(
+			RandomTestUtil.randomString());
+
 		_batchPlannerMappings.add(_persistence.update(newBatchPlannerMapping));
 
 		BatchPlannerMapping existingBatchPlannerMapping =
@@ -169,6 +186,21 @@ public class BatchPlannerMappingPersistenceTest {
 		Assert.assertEquals(
 			existingBatchPlannerMapping.getBatchPlannerPlanId(),
 			newBatchPlannerMapping.getBatchPlannerPlanId());
+		Assert.assertEquals(
+			existingBatchPlannerMapping.getContentFieldName(),
+			newBatchPlannerMapping.getContentFieldName());
+		Assert.assertEquals(
+			existingBatchPlannerMapping.getContentFieldType(),
+			newBatchPlannerMapping.getContentFieldType());
+		Assert.assertEquals(
+			existingBatchPlannerMapping.getOpenAPIFieldName(),
+			newBatchPlannerMapping.getOpenAPIFieldName());
+		Assert.assertEquals(
+			existingBatchPlannerMapping.getOpenAPIFieldType(),
+			newBatchPlannerMapping.getOpenAPIFieldType());
+		Assert.assertEquals(
+			existingBatchPlannerMapping.getTransformationJavaCode(),
+			newBatchPlannerMapping.getTransformationJavaCode());
 	}
 
 	@Test
@@ -176,6 +208,15 @@ public class BatchPlannerMappingPersistenceTest {
 		_persistence.countByBatchPlannerPlanId(RandomTestUtil.nextLong());
 
 		_persistence.countByBatchPlannerPlanId(0L);
+	}
+
+	@Test
+	public void testCountByBPPI_CFN_OAPIFN() throws Exception {
+		_persistence.countByBPPI_CFN_OAPIFN(RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByBPPI_CFN_OAPIFN(0L, "null", "null");
+
+		_persistence.countByBPPI_CFN_OAPIFN(0L, (String)null, (String)null);
 	}
 
 	@Test
@@ -208,7 +249,8 @@ public class BatchPlannerMappingPersistenceTest {
 			"BatchPlannerMapping", "mvccVersion", true, "batchPlannerMappingId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "batchPlannerPlanId",
-			true);
+			true, "contentFieldName", true, "contentFieldType", true,
+			"openAPIFieldName", true, "openAPIFieldType", true);
 	}
 
 	@Test
@@ -436,6 +478,78 @@ public class BatchPlannerMappingPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		BatchPlannerMapping newBatchPlannerMapping = addBatchPlannerMapping();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newBatchPlannerMapping.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		BatchPlannerMapping newBatchPlannerMapping = addBatchPlannerMapping();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			BatchPlannerMapping.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"batchPlannerMappingId",
+				newBatchPlannerMapping.getBatchPlannerMappingId()));
+
+		List<BatchPlannerMapping> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		BatchPlannerMapping batchPlannerMapping) {
+
+		Assert.assertEquals(
+			Long.valueOf(batchPlannerMapping.getBatchPlannerPlanId()),
+			ReflectionTestUtil.<Long>invoke(
+				batchPlannerMapping, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "batchPlannerPlanId"));
+		Assert.assertEquals(
+			batchPlannerMapping.getContentFieldName(),
+			ReflectionTestUtil.invoke(
+				batchPlannerMapping, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "contentFieldName"));
+		Assert.assertEquals(
+			batchPlannerMapping.getOpenAPIFieldName(),
+			ReflectionTestUtil.invoke(
+				batchPlannerMapping, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "openAPIFieldName"));
+	}
+
 	protected BatchPlannerMapping addBatchPlannerMapping() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
@@ -454,6 +568,17 @@ public class BatchPlannerMappingPersistenceTest {
 		batchPlannerMapping.setModifiedDate(RandomTestUtil.nextDate());
 
 		batchPlannerMapping.setBatchPlannerPlanId(RandomTestUtil.nextLong());
+
+		batchPlannerMapping.setContentFieldName(RandomTestUtil.randomString());
+
+		batchPlannerMapping.setContentFieldType(RandomTestUtil.randomString());
+
+		batchPlannerMapping.setOpenAPIFieldName(RandomTestUtil.randomString());
+
+		batchPlannerMapping.setOpenAPIFieldType(RandomTestUtil.randomString());
+
+		batchPlannerMapping.setTransformationJavaCode(
+			RandomTestUtil.randomString());
 
 		_batchPlannerMappings.add(_persistence.update(batchPlannerMapping));
 

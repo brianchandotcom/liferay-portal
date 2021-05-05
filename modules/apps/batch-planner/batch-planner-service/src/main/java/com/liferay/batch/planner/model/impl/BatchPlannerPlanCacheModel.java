@@ -78,7 +78,7 @@ public class BatchPlannerPlanCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,12 @@ public class BatchPlannerPlanCacheModel
 		sb.append(modifiedDate);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", contentType=");
+		sb.append(contentType);
+		sb.append(", contentUrl=");
+		sb.append(contentUrl);
+		sb.append(", openAPISchemaClassName=");
+		sb.append(openAPISchemaClassName);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", export=");
@@ -137,6 +143,28 @@ public class BatchPlannerPlanCacheModel
 
 		batchPlannerPlanImpl.setActive(active);
 
+		if (contentType == null) {
+			batchPlannerPlanImpl.setContentType("");
+		}
+		else {
+			batchPlannerPlanImpl.setContentType(contentType);
+		}
+
+		if (contentUrl == null) {
+			batchPlannerPlanImpl.setContentUrl("");
+		}
+		else {
+			batchPlannerPlanImpl.setContentUrl(contentUrl);
+		}
+
+		if (openAPISchemaClassName == null) {
+			batchPlannerPlanImpl.setOpenAPISchemaClassName("");
+		}
+		else {
+			batchPlannerPlanImpl.setOpenAPISchemaClassName(
+				openAPISchemaClassName);
+		}
+
 		if (name == null) {
 			batchPlannerPlanImpl.setName("");
 		}
@@ -165,6 +193,9 @@ public class BatchPlannerPlanCacheModel
 		modifiedDate = objectInput.readLong();
 
 		active = objectInput.readBoolean();
+		contentType = objectInput.readUTF();
+		contentUrl = objectInput.readUTF();
+		openAPISchemaClassName = objectInput.readUTF();
 		name = objectInput.readUTF();
 
 		export = objectInput.readBoolean();
@@ -192,6 +223,27 @@ public class BatchPlannerPlanCacheModel
 
 		objectOutput.writeBoolean(active);
 
+		if (contentType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(contentType);
+		}
+
+		if (contentUrl == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(contentUrl);
+		}
+
+		if (openAPISchemaClassName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(openAPISchemaClassName);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -210,6 +262,9 @@ public class BatchPlannerPlanCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public boolean active;
+	public String contentType;
+	public String contentUrl;
+	public String openAPISchemaClassName;
 	public String name;
 	public boolean export;
 

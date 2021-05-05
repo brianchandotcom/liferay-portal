@@ -208,6 +208,51 @@ public interface BatchPlannerPlanModel
 	public void setActive(boolean active);
 
 	/**
+	 * Returns the content type of this batch planner plan.
+	 *
+	 * @return the content type of this batch planner plan
+	 */
+	@AutoEscape
+	public String getContentType();
+
+	/**
+	 * Sets the content type of this batch planner plan.
+	 *
+	 * @param contentType the content type of this batch planner plan
+	 */
+	public void setContentType(String contentType);
+
+	/**
+	 * Returns the content url of this batch planner plan.
+	 *
+	 * @return the content url of this batch planner plan
+	 */
+	@AutoEscape
+	public String getContentUrl();
+
+	/**
+	 * Sets the content url of this batch planner plan.
+	 *
+	 * @param contentUrl the content url of this batch planner plan
+	 */
+	public void setContentUrl(String contentUrl);
+
+	/**
+	 * Returns the open api schema class name of this batch planner plan.
+	 *
+	 * @return the open api schema class name of this batch planner plan
+	 */
+	@AutoEscape
+	public String getOpenAPISchemaClassName();
+
+	/**
+	 * Sets the open api schema class name of this batch planner plan.
+	 *
+	 * @param openAPISchemaClassName the open api schema class name of this batch planner plan
+	 */
+	public void setOpenAPISchemaClassName(String openAPISchemaClassName);
+
+	/**
 	 * Returns the name of this batch planner plan.
 	 *
 	 * @return the name of this batch planner plan

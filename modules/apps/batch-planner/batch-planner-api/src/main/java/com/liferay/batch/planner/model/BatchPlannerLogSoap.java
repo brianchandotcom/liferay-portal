@@ -41,6 +41,8 @@ public class BatchPlannerLogSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setBatchPlannerPlanId(model.getBatchPlannerPlanId());
+		soapModel.setBatchEngineTaskERC(model.getBatchEngineTaskERC());
+		soapModel.setDispatchTriggerERC(model.getDispatchTriggerERC());
 		soapModel.setSize(model.getSize());
 		soapModel.setTotal(model.getTotal());
 		soapModel.setStatus(model.getStatus());
@@ -167,6 +169,22 @@ public class BatchPlannerLogSoap implements Serializable {
 		_batchPlannerPlanId = batchPlannerPlanId;
 	}
 
+	public String getBatchEngineTaskERC() {
+		return _batchEngineTaskERC;
+	}
+
+	public void setBatchEngineTaskERC(String batchEngineTaskERC) {
+		_batchEngineTaskERC = batchEngineTaskERC;
+	}
+
+	public String getDispatchTriggerERC() {
+		return _dispatchTriggerERC;
+	}
+
+	public void setDispatchTriggerERC(String dispatchTriggerERC) {
+		_dispatchTriggerERC = dispatchTriggerERC;
+	}
+
 	public int getSize() {
 		return _size;
 	}
@@ -199,6 +217,8 @@ public class BatchPlannerLogSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _batchPlannerPlanId;
+	private String _batchEngineTaskERC;
+	private String _dispatchTriggerERC;
 	private int _size;
 	private int _total;
 	private int _status;

@@ -78,7 +78,12 @@ public class BatchPlannerMappingModelImpl
 		{"mvccVersion", Types.BIGINT}, {"batchPlannerMappingId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"batchPlannerPlanId", Types.BIGINT}
+		{"modifiedDate", Types.TIMESTAMP}, {"batchPlannerPlanId", Types.BIGINT},
+		{"contentFieldName", Types.VARCHAR},
+		{"contentFieldType", Types.VARCHAR},
+		{"openAPIFieldName", Types.VARCHAR},
+		{"openAPIFieldType", Types.VARCHAR},
+		{"transformationJavaCode", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -93,10 +98,15 @@ public class BatchPlannerMappingModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("batchPlannerPlanId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("contentFieldName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("contentFieldType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("openAPIFieldName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("openAPIFieldType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("transformationJavaCode", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerMapping (mvccVersion LONG default 0 not null,batchPlannerMappingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,batchPlannerPlanId LONG)";
+		"create table BatchPlannerMapping (mvccVersion LONG default 0 not null,batchPlannerMappingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,batchPlannerPlanId LONG,contentFieldName VARCHAR(75) null,contentFieldType VARCHAR(75) null,openAPIFieldName VARCHAR(75) null,openAPIFieldType VARCHAR(75) null,transformationJavaCode TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchPlannerMapping";
@@ -120,11 +130,23 @@ public class BatchPlannerMappingModelImpl
 	public static final long BATCHPLANNERPLANID_COLUMN_BITMASK = 1L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long CONTENTFIELDNAME_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long OPENAPIFIELDNAME_COLUMN_BITMASK = 4L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 2L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -165,6 +187,11 @@ public class BatchPlannerMappingModelImpl
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setBatchPlannerPlanId(soapModel.getBatchPlannerPlanId());
+		model.setContentFieldName(soapModel.getContentFieldName());
+		model.setContentFieldType(soapModel.getContentFieldType());
+		model.setOpenAPIFieldName(soapModel.getOpenAPIFieldName());
+		model.setOpenAPIFieldType(soapModel.getOpenAPIFieldType());
+		model.setTransformationJavaCode(soapModel.getTransformationJavaCode());
 
 		return model;
 	}
@@ -369,6 +396,37 @@ public class BatchPlannerMappingModelImpl
 			"batchPlannerPlanId",
 			(BiConsumer<BatchPlannerMapping, Long>)
 				BatchPlannerMapping::setBatchPlannerPlanId);
+		attributeGetterFunctions.put(
+			"contentFieldName", BatchPlannerMapping::getContentFieldName);
+		attributeSetterBiConsumers.put(
+			"contentFieldName",
+			(BiConsumer<BatchPlannerMapping, String>)
+				BatchPlannerMapping::setContentFieldName);
+		attributeGetterFunctions.put(
+			"contentFieldType", BatchPlannerMapping::getContentFieldType);
+		attributeSetterBiConsumers.put(
+			"contentFieldType",
+			(BiConsumer<BatchPlannerMapping, String>)
+				BatchPlannerMapping::setContentFieldType);
+		attributeGetterFunctions.put(
+			"openAPIFieldName", BatchPlannerMapping::getOpenAPIFieldName);
+		attributeSetterBiConsumers.put(
+			"openAPIFieldName",
+			(BiConsumer<BatchPlannerMapping, String>)
+				BatchPlannerMapping::setOpenAPIFieldName);
+		attributeGetterFunctions.put(
+			"openAPIFieldType", BatchPlannerMapping::getOpenAPIFieldType);
+		attributeSetterBiConsumers.put(
+			"openAPIFieldType",
+			(BiConsumer<BatchPlannerMapping, String>)
+				BatchPlannerMapping::setOpenAPIFieldType);
+		attributeGetterFunctions.put(
+			"transformationJavaCode",
+			BatchPlannerMapping::getTransformationJavaCode);
+		attributeSetterBiConsumers.put(
+			"transformationJavaCode",
+			(BiConsumer<BatchPlannerMapping, String>)
+				BatchPlannerMapping::setTransformationJavaCode);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -533,6 +591,119 @@ public class BatchPlannerMappingModelImpl
 			this.<Long>getColumnOriginalValue("batchPlannerPlanId"));
 	}
 
+	@JSON
+	@Override
+	public String getContentFieldName() {
+		if (_contentFieldName == null) {
+			return "";
+		}
+		else {
+			return _contentFieldName;
+		}
+	}
+
+	@Override
+	public void setContentFieldName(String contentFieldName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_contentFieldName = contentFieldName;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalContentFieldName() {
+		return getColumnOriginalValue("contentFieldName");
+	}
+
+	@JSON
+	@Override
+	public String getContentFieldType() {
+		if (_contentFieldType == null) {
+			return "";
+		}
+		else {
+			return _contentFieldType;
+		}
+	}
+
+	@Override
+	public void setContentFieldType(String contentFieldType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_contentFieldType = contentFieldType;
+	}
+
+	@JSON
+	@Override
+	public String getOpenAPIFieldName() {
+		if (_openAPIFieldName == null) {
+			return "";
+		}
+		else {
+			return _openAPIFieldName;
+		}
+	}
+
+	@Override
+	public void setOpenAPIFieldName(String openAPIFieldName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_openAPIFieldName = openAPIFieldName;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalOpenAPIFieldName() {
+		return getColumnOriginalValue("openAPIFieldName");
+	}
+
+	@JSON
+	@Override
+	public String getOpenAPIFieldType() {
+		if (_openAPIFieldType == null) {
+			return "";
+		}
+		else {
+			return _openAPIFieldType;
+		}
+	}
+
+	@Override
+	public void setOpenAPIFieldType(String openAPIFieldType) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_openAPIFieldType = openAPIFieldType;
+	}
+
+	@JSON
+	@Override
+	public String getTransformationJavaCode() {
+		return _transformationJavaCode;
+	}
+
+	@Override
+	public void setTransformationJavaCode(String transformationJavaCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_transformationJavaCode = transformationJavaCode;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -600,6 +771,12 @@ public class BatchPlannerMappingModelImpl
 		batchPlannerMappingImpl.setCreateDate(getCreateDate());
 		batchPlannerMappingImpl.setModifiedDate(getModifiedDate());
 		batchPlannerMappingImpl.setBatchPlannerPlanId(getBatchPlannerPlanId());
+		batchPlannerMappingImpl.setContentFieldName(getContentFieldName());
+		batchPlannerMappingImpl.setContentFieldType(getContentFieldType());
+		batchPlannerMappingImpl.setOpenAPIFieldName(getOpenAPIFieldName());
+		batchPlannerMappingImpl.setOpenAPIFieldType(getOpenAPIFieldType());
+		batchPlannerMappingImpl.setTransformationJavaCode(
+			getTransformationJavaCode());
 
 		batchPlannerMappingImpl.resetOriginalValues();
 
@@ -719,6 +896,54 @@ public class BatchPlannerMappingModelImpl
 		batchPlannerMappingCacheModel.batchPlannerPlanId =
 			getBatchPlannerPlanId();
 
+		batchPlannerMappingCacheModel.contentFieldName = getContentFieldName();
+
+		String contentFieldName =
+			batchPlannerMappingCacheModel.contentFieldName;
+
+		if ((contentFieldName != null) && (contentFieldName.length() == 0)) {
+			batchPlannerMappingCacheModel.contentFieldName = null;
+		}
+
+		batchPlannerMappingCacheModel.contentFieldType = getContentFieldType();
+
+		String contentFieldType =
+			batchPlannerMappingCacheModel.contentFieldType;
+
+		if ((contentFieldType != null) && (contentFieldType.length() == 0)) {
+			batchPlannerMappingCacheModel.contentFieldType = null;
+		}
+
+		batchPlannerMappingCacheModel.openAPIFieldName = getOpenAPIFieldName();
+
+		String openAPIFieldName =
+			batchPlannerMappingCacheModel.openAPIFieldName;
+
+		if ((openAPIFieldName != null) && (openAPIFieldName.length() == 0)) {
+			batchPlannerMappingCacheModel.openAPIFieldName = null;
+		}
+
+		batchPlannerMappingCacheModel.openAPIFieldType = getOpenAPIFieldType();
+
+		String openAPIFieldType =
+			batchPlannerMappingCacheModel.openAPIFieldType;
+
+		if ((openAPIFieldType != null) && (openAPIFieldType.length() == 0)) {
+			batchPlannerMappingCacheModel.openAPIFieldType = null;
+		}
+
+		batchPlannerMappingCacheModel.transformationJavaCode =
+			getTransformationJavaCode();
+
+		String transformationJavaCode =
+			batchPlannerMappingCacheModel.transformationJavaCode;
+
+		if ((transformationJavaCode != null) &&
+			(transformationJavaCode.length() == 0)) {
+
+			batchPlannerMappingCacheModel.transformationJavaCode = null;
+		}
+
 		return batchPlannerMappingCacheModel;
 	}
 
@@ -801,6 +1026,11 @@ public class BatchPlannerMappingModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _batchPlannerPlanId;
+	private String _contentFieldName;
+	private String _contentFieldType;
+	private String _openAPIFieldName;
+	private String _openAPIFieldType;
+	private String _transformationJavaCode;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<BatchPlannerMapping, Object> function =
@@ -838,6 +1068,12 @@ public class BatchPlannerMappingModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("batchPlannerPlanId", _batchPlannerPlanId);
+		_columnOriginalValues.put("contentFieldName", _contentFieldName);
+		_columnOriginalValues.put("contentFieldType", _contentFieldType);
+		_columnOriginalValues.put("openAPIFieldName", _openAPIFieldName);
+		_columnOriginalValues.put("openAPIFieldType", _openAPIFieldType);
+		_columnOriginalValues.put(
+			"transformationJavaCode", _transformationJavaCode);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -866,6 +1102,16 @@ public class BatchPlannerMappingModelImpl
 		columnBitmasks.put("modifiedDate", 64L);
 
 		columnBitmasks.put("batchPlannerPlanId", 128L);
+
+		columnBitmasks.put("contentFieldName", 256L);
+
+		columnBitmasks.put("contentFieldType", 512L);
+
+		columnBitmasks.put("openAPIFieldName", 1024L);
+
+		columnBitmasks.put("openAPIFieldType", 2048L);
+
+		columnBitmasks.put("transformationJavaCode", 4096L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

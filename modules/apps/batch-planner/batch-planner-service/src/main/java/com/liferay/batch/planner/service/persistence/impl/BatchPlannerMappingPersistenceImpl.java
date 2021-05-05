@@ -51,6 +51,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -613,6 +614,331 @@ public class BatchPlannerMappingPersistenceImpl
 		_FINDER_COLUMN_BATCHPLANNERPLANID_BATCHPLANNERPLANID_2 =
 			"batchPlannerMapping.batchPlannerPlanId = ?";
 
+	private FinderPath _finderPathFetchByBPPI_CFN_OAPIFN;
+	private FinderPath _finderPathCountByBPPI_CFN_OAPIFN;
+
+	/**
+	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63; or throws a <code>NoSuchMappingException</code> if it could not be found.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @return the matching batch planner mapping
+	 * @throws NoSuchMappingException if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public BatchPlannerMapping findByBPPI_CFN_OAPIFN(
+			long batchPlannerPlanId, String contentFieldName,
+			String openAPIFieldName)
+		throws NoSuchMappingException {
+
+		BatchPlannerMapping batchPlannerMapping = fetchByBPPI_CFN_OAPIFN(
+			batchPlannerPlanId, contentFieldName, openAPIFieldName);
+
+		if (batchPlannerMapping == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("batchPlannerPlanId=");
+			sb.append(batchPlannerPlanId);
+
+			sb.append(", contentFieldName=");
+			sb.append(contentFieldName);
+
+			sb.append(", openAPIFieldName=");
+			sb.append(openAPIFieldName);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchMappingException(sb.toString());
+		}
+
+		return batchPlannerMapping;
+	}
+
+	/**
+	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public BatchPlannerMapping fetchByBPPI_CFN_OAPIFN(
+		long batchPlannerPlanId, String contentFieldName,
+		String openAPIFieldName) {
+
+		return fetchByBPPI_CFN_OAPIFN(
+			batchPlannerPlanId, contentFieldName, openAPIFieldName, true);
+	}
+
+	/**
+	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	@Override
+	public BatchPlannerMapping fetchByBPPI_CFN_OAPIFN(
+		long batchPlannerPlanId, String contentFieldName,
+		String openAPIFieldName, boolean useFinderCache) {
+
+		contentFieldName = Objects.toString(contentFieldName, "");
+		openAPIFieldName = Objects.toString(openAPIFieldName, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				batchPlannerPlanId, contentFieldName, openAPIFieldName
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByBPPI_CFN_OAPIFN, finderArgs);
+		}
+
+		if (result instanceof BatchPlannerMapping) {
+			BatchPlannerMapping batchPlannerMapping =
+				(BatchPlannerMapping)result;
+
+			if ((batchPlannerPlanId !=
+					batchPlannerMapping.getBatchPlannerPlanId()) ||
+				!Objects.equals(
+					contentFieldName,
+					batchPlannerMapping.getContentFieldName()) ||
+				!Objects.equals(
+					openAPIFieldName,
+					batchPlannerMapping.getOpenAPIFieldName())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_SELECT_BATCHPLANNERMAPPING_WHERE);
+
+			sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_BATCHPLANNERPLANID_2);
+
+			boolean bindContentFieldName = false;
+
+			if (contentFieldName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_CONTENTFIELDNAME_3);
+			}
+			else {
+				bindContentFieldName = true;
+
+				sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_CONTENTFIELDNAME_2);
+			}
+
+			boolean bindOpenAPIFieldName = false;
+
+			if (openAPIFieldName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_OPENAPIFIELDNAME_3);
+			}
+			else {
+				bindOpenAPIFieldName = true;
+
+				sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_OPENAPIFIELDNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(batchPlannerPlanId);
+
+				if (bindContentFieldName) {
+					queryPos.add(contentFieldName);
+				}
+
+				if (bindOpenAPIFieldName) {
+					queryPos.add(openAPIFieldName);
+				}
+
+				List<BatchPlannerMapping> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByBPPI_CFN_OAPIFN, finderArgs,
+							list);
+					}
+				}
+				else {
+					BatchPlannerMapping batchPlannerMapping = list.get(0);
+
+					result = batchPlannerMapping;
+
+					cacheResult(batchPlannerMapping);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (BatchPlannerMapping)result;
+		}
+	}
+
+	/**
+	 * Removes the batch planner mapping where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63; from the database.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @return the batch planner mapping that was removed
+	 */
+	@Override
+	public BatchPlannerMapping removeByBPPI_CFN_OAPIFN(
+			long batchPlannerPlanId, String contentFieldName,
+			String openAPIFieldName)
+		throws NoSuchMappingException {
+
+		BatchPlannerMapping batchPlannerMapping = findByBPPI_CFN_OAPIFN(
+			batchPlannerPlanId, contentFieldName, openAPIFieldName);
+
+		return remove(batchPlannerMapping);
+	}
+
+	/**
+	 * Returns the number of batch planner mappings where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63;.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @return the number of matching batch planner mappings
+	 */
+	@Override
+	public int countByBPPI_CFN_OAPIFN(
+		long batchPlannerPlanId, String contentFieldName,
+		String openAPIFieldName) {
+
+		contentFieldName = Objects.toString(contentFieldName, "");
+		openAPIFieldName = Objects.toString(openAPIFieldName, "");
+
+		FinderPath finderPath = _finderPathCountByBPPI_CFN_OAPIFN;
+
+		Object[] finderArgs = new Object[] {
+			batchPlannerPlanId, contentFieldName, openAPIFieldName
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_BATCHPLANNERMAPPING_WHERE);
+
+			sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_BATCHPLANNERPLANID_2);
+
+			boolean bindContentFieldName = false;
+
+			if (contentFieldName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_CONTENTFIELDNAME_3);
+			}
+			else {
+				bindContentFieldName = true;
+
+				sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_CONTENTFIELDNAME_2);
+			}
+
+			boolean bindOpenAPIFieldName = false;
+
+			if (openAPIFieldName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_OPENAPIFIELDNAME_3);
+			}
+			else {
+				bindOpenAPIFieldName = true;
+
+				sb.append(_FINDER_COLUMN_BPPI_CFN_OAPIFN_OPENAPIFIELDNAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(batchPlannerPlanId);
+
+				if (bindContentFieldName) {
+					queryPos.add(contentFieldName);
+				}
+
+				if (bindOpenAPIFieldName) {
+					queryPos.add(openAPIFieldName);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_BPPI_CFN_OAPIFN_BATCHPLANNERPLANID_2 =
+			"batchPlannerMapping.batchPlannerPlanId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_BPPI_CFN_OAPIFN_CONTENTFIELDNAME_2 =
+			"batchPlannerMapping.contentFieldName = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_BPPI_CFN_OAPIFN_CONTENTFIELDNAME_3 =
+			"(batchPlannerMapping.contentFieldName IS NULL OR batchPlannerMapping.contentFieldName = '') AND ";
+
+	private static final String
+		_FINDER_COLUMN_BPPI_CFN_OAPIFN_OPENAPIFIELDNAME_2 =
+			"batchPlannerMapping.openAPIFieldName = ?";
+
+	private static final String
+		_FINDER_COLUMN_BPPI_CFN_OAPIFN_OPENAPIFIELDNAME_3 =
+			"(batchPlannerMapping.openAPIFieldName IS NULL OR batchPlannerMapping.openAPIFieldName = '')";
+
 	public BatchPlannerMappingPersistenceImpl() {
 		setModelClass(BatchPlannerMapping.class);
 
@@ -631,6 +957,15 @@ public class BatchPlannerMappingPersistenceImpl
 	public void cacheResult(BatchPlannerMapping batchPlannerMapping) {
 		entityCache.putResult(
 			BatchPlannerMappingImpl.class, batchPlannerMapping.getPrimaryKey(),
+			batchPlannerMapping);
+
+		finderCache.putResult(
+			_finderPathFetchByBPPI_CFN_OAPIFN,
+			new Object[] {
+				batchPlannerMapping.getBatchPlannerPlanId(),
+				batchPlannerMapping.getContentFieldName(),
+				batchPlannerMapping.getOpenAPIFieldName()
+			},
 			batchPlannerMapping);
 	}
 
@@ -693,6 +1028,22 @@ public class BatchPlannerMappingPersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(BatchPlannerMappingImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		BatchPlannerMappingModelImpl batchPlannerMappingModelImpl) {
+
+		Object[] args = new Object[] {
+			batchPlannerMappingModelImpl.getBatchPlannerPlanId(),
+			batchPlannerMappingModelImpl.getContentFieldName(),
+			batchPlannerMappingModelImpl.getOpenAPIFieldName()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByBPPI_CFN_OAPIFN, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByBPPI_CFN_OAPIFN, args,
+			batchPlannerMappingModelImpl);
 	}
 
 	/**
@@ -876,6 +1227,8 @@ public class BatchPlannerMappingPersistenceImpl
 		entityCache.putResult(
 			BatchPlannerMappingImpl.class, batchPlannerMappingModelImpl, false,
 			true);
+
+		cacheUniqueFindersCache(batchPlannerMappingModelImpl);
 
 		if (isNew) {
 			batchPlannerMapping.setNew(false);
@@ -1179,6 +1532,28 @@ public class BatchPlannerMappingPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByBatchPlannerPlanId", new String[] {Long.class.getName()},
 			new String[] {"batchPlannerPlanId"}, false);
+
+		_finderPathFetchByBPPI_CFN_OAPIFN = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_CFN_OAPIFN",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			new String[] {
+				"batchPlannerPlanId", "contentFieldName", "openAPIFieldName"
+			},
+			true);
+
+		_finderPathCountByBPPI_CFN_OAPIFN = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBPPI_CFN_OAPIFN",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			new String[] {
+				"batchPlannerPlanId", "contentFieldName", "openAPIFieldName"
+			},
+			false);
 	}
 
 	@Deactivate

@@ -186,6 +186,70 @@ public interface BatchPlannerMappingPersistence
 	public int countByBatchPlannerPlanId(long batchPlannerPlanId);
 
 	/**
+	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63; or throws a <code>NoSuchMappingException</code> if it could not be found.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @return the matching batch planner mapping
+	 * @throws NoSuchMappingException if a matching batch planner mapping could not be found
+	 */
+	public BatchPlannerMapping findByBPPI_CFN_OAPIFN(
+			long batchPlannerPlanId, String contentFieldName,
+			String openAPIFieldName)
+		throws NoSuchMappingException;
+
+	/**
+	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	public BatchPlannerMapping fetchByBPPI_CFN_OAPIFN(
+		long batchPlannerPlanId, String contentFieldName,
+		String openAPIFieldName);
+
+	/**
+	 * Returns the batch planner mapping where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching batch planner mapping, or <code>null</code> if a matching batch planner mapping could not be found
+	 */
+	public BatchPlannerMapping fetchByBPPI_CFN_OAPIFN(
+		long batchPlannerPlanId, String contentFieldName,
+		String openAPIFieldName, boolean useFinderCache);
+
+	/**
+	 * Removes the batch planner mapping where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63; from the database.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @return the batch planner mapping that was removed
+	 */
+	public BatchPlannerMapping removeByBPPI_CFN_OAPIFN(
+			long batchPlannerPlanId, String contentFieldName,
+			String openAPIFieldName)
+		throws NoSuchMappingException;
+
+	/**
+	 * Returns the number of batch planner mappings where batchPlannerPlanId = &#63; and contentFieldName = &#63; and openAPIFieldName = &#63;.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param contentFieldName the content field name
+	 * @param openAPIFieldName the open api field name
+	 * @return the number of matching batch planner mappings
+	 */
+	public int countByBPPI_CFN_OAPIFN(
+		long batchPlannerPlanId, String contentFieldName,
+		String openAPIFieldName);
+
+	/**
 	 * Caches the batch planner mapping in the entity cache if it is enabled.
 	 *
 	 * @param batchPlannerMapping the batch planner mapping

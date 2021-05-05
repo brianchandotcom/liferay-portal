@@ -78,7 +78,7 @@ public class BatchPlannerLogCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,10 @@ public class BatchPlannerLogCacheModel
 		sb.append(modifiedDate);
 		sb.append(", batchPlannerPlanId=");
 		sb.append(batchPlannerPlanId);
+		sb.append(", batchEngineTaskERC=");
+		sb.append(batchEngineTaskERC);
+		sb.append(", dispatchTriggerERC=");
+		sb.append(dispatchTriggerERC);
 		sb.append(", size=");
 		sb.append(size);
 		sb.append(", total=");
@@ -138,6 +142,8 @@ public class BatchPlannerLogCacheModel
 		}
 
 		batchPlannerLogImpl.setBatchPlannerPlanId(batchPlannerPlanId);
+		batchPlannerLogImpl.setBatchEngineTaskERC(batchEngineTaskERC);
+		batchPlannerLogImpl.setDispatchTriggerERC(dispatchTriggerERC);
 		batchPlannerLogImpl.setSize(size);
 		batchPlannerLogImpl.setTotal(total);
 		batchPlannerLogImpl.setStatus(status);
@@ -161,6 +167,8 @@ public class BatchPlannerLogCacheModel
 		modifiedDate = objectInput.readLong();
 
 		batchPlannerPlanId = objectInput.readLong();
+		batchEngineTaskERC = objectInput.readUTF();
+		dispatchTriggerERC = objectInput.readUTF();
 
 		size = objectInput.readInt();
 
@@ -191,6 +199,20 @@ public class BatchPlannerLogCacheModel
 
 		objectOutput.writeLong(batchPlannerPlanId);
 
+		if (batchEngineTaskERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(batchEngineTaskERC);
+		}
+
+		if (dispatchTriggerERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(dispatchTriggerERC);
+		}
+
 		objectOutput.writeInt(size);
 
 		objectOutput.writeInt(total);
@@ -206,6 +228,8 @@ public class BatchPlannerLogCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long batchPlannerPlanId;
+	public String batchEngineTaskERC;
+	public String dispatchTriggerERC;
 	public int size;
 	public int total;
 	public int status;

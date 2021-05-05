@@ -57,6 +57,10 @@ public class KBArticleTable extends BaseTable<KBArticleTable> {
 		createColumn(
 			"rootResourcePrimKey", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<KBArticleTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, Long> parentResourceClassNameId =
 		createColumn(
 			"parentResourceClassNameId", Long.class, Types.BIGINT,

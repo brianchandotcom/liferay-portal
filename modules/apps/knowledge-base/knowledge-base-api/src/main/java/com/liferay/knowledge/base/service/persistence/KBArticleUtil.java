@@ -1882,6 +1882,282 @@ public class KBArticleUtil {
 	}
 
 	/**
+	 * Returns all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching kb articles
+	 */
+	public static List<KBArticle> findByG_E(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().findByG_E(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns a range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of kb articles
+	 * @param end the upper bound of the range of kb articles (not inclusive)
+	 * @return the range of matching kb articles
+	 */
+	public static List<KBArticle> findByG_E(
+		long groupId, String externalReferenceCode, int start, int end) {
+
+		return getPersistence().findByG_E(
+			groupId, externalReferenceCode, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of kb articles
+	 * @param end the upper bound of the range of kb articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kb articles
+	 */
+	public static List<KBArticle> findByG_E(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+
+		return getPersistence().findByG_E(
+			groupId, externalReferenceCode, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of kb articles
+	 * @param end the upper bound of the range of kb articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kb articles
+	 */
+	public static List<KBArticle> findByG_E(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByG_E(
+			groupId, externalReferenceCode, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kb article
+	 * @throws NoSuchArticleException if a matching kb article could not be found
+	 */
+	public static KBArticle findByG_E_First(
+			long groupId, String externalReferenceCode,
+			OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+
+		return getPersistence().findByG_E_First(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the first kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
+	 */
+	public static KBArticle fetchByG_E_First(
+		long groupId, String externalReferenceCode,
+		OrderByComparator<KBArticle> orderByComparator) {
+
+		return getPersistence().fetchByG_E_First(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the last kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kb article
+	 * @throws NoSuchArticleException if a matching kb article could not be found
+	 */
+	public static KBArticle findByG_E_Last(
+			long groupId, String externalReferenceCode,
+			OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+
+		return getPersistence().findByG_E_Last(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the last kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
+	 */
+	public static KBArticle fetchByG_E_Last(
+		long groupId, String externalReferenceCode,
+		OrderByComparator<KBArticle> orderByComparator) {
+
+		return getPersistence().fetchByG_E_Last(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the kb articles before and after the current kb article in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current kb article
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kb article
+	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
+	 */
+	public static KBArticle[] findByG_E_PrevAndNext(
+			long kbArticleId, long groupId, String externalReferenceCode,
+			OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+
+		return getPersistence().findByG_E_PrevAndNext(
+			kbArticleId, groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching kb articles that the user has permission to view
+	 */
+	public static List<KBArticle> filterFindByG_E(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().filterFindByG_E(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of kb articles
+	 * @param end the upper bound of the range of kb articles (not inclusive)
+	 * @return the range of matching kb articles that the user has permission to view
+	 */
+	public static List<KBArticle> filterFindByG_E(
+		long groupId, String externalReferenceCode, int start, int end) {
+
+		return getPersistence().filterFindByG_E(
+			groupId, externalReferenceCode, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of kb articles
+	 * @param end the upper bound of the range of kb articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kb articles that the user has permission to view
+	 */
+	public static List<KBArticle> filterFindByG_E(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<KBArticle> orderByComparator) {
+
+		return getPersistence().filterFindByG_E(
+			groupId, externalReferenceCode, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the kb articles before and after the current kb article in the ordered set of kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param kbArticleId the primary key of the current kb article
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kb article
+	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
+	 */
+	public static KBArticle[] filterFindByG_E_PrevAndNext(
+			long kbArticleId, long groupId, String externalReferenceCode,
+			OrderByComparator<KBArticle> orderByComparator)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+
+		return getPersistence().filterFindByG_E_PrevAndNext(
+			kbArticleId, groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Removes all the kb articles where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 */
+	public static void removeByG_E(long groupId, String externalReferenceCode) {
+		getPersistence().removeByG_E(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of kb articles where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching kb articles
+	 */
+	public static int countByG_E(long groupId, String externalReferenceCode) {
+		return getPersistence().countByG_E(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching kb articles that the user has permission to view
+	 */
+	public static int filterCountByG_E(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().filterCountByG_E(
+			groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns all the kb articles where groupId = &#63; and latest = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -5584,6 +5860,86 @@ public class KBArticleUtil {
 
 		return getPersistence().filterCountByR_G_S(
 			resourcePrimKeys, groupId, status);
+	}
+
+	/**
+	 * Returns the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the matching kb article
+	 * @throws NoSuchArticleException if a matching kb article could not be found
+	 */
+	public static KBArticle findByG_E_V(
+			long groupId, String externalReferenceCode, int version)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+
+		return getPersistence().findByG_E_V(
+			groupId, externalReferenceCode, version);
+	}
+
+	/**
+	 * Returns the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
+	 */
+	public static KBArticle fetchByG_E_V(
+		long groupId, String externalReferenceCode, int version) {
+
+		return getPersistence().fetchByG_E_V(
+			groupId, externalReferenceCode, version);
+	}
+
+	/**
+	 * Returns the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
+	 */
+	public static KBArticle fetchByG_E_V(
+		long groupId, String externalReferenceCode, int version,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByG_E_V(
+			groupId, externalReferenceCode, version, useFinderCache);
+	}
+
+	/**
+	 * Removes the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the kb article that was removed
+	 */
+	public static KBArticle removeByG_E_V(
+			long groupId, String externalReferenceCode, int version)
+		throws com.liferay.knowledge.base.exception.NoSuchArticleException {
+
+		return getPersistence().removeByG_E_V(
+			groupId, externalReferenceCode, version);
+	}
+
+	/**
+	 * Returns the number of kb articles where groupId = &#63; and externalReferenceCode = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the number of matching kb articles
+	 */
+	public static int countByG_E_V(
+		long groupId, String externalReferenceCode, int version) {
+
+		return getPersistence().countByG_E_V(
+			groupId, externalReferenceCode, version);
 	}
 
 	/**

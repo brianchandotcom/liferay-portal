@@ -45,6 +45,7 @@ public class KBArticleWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("kbArticleId", getKbArticleId());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
@@ -89,6 +90,13 @@ public class KBArticleWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long kbArticleId = (Long)attributes.get("kbArticleId");
@@ -336,6 +344,16 @@ public class KBArticleWrapper
 	@Override
 	public String getDescription() {
 		return model.getDescription();
+	}
+
+	/**
+	 * Returns the external reference code of this kb article.
+	 *
+	 * @return the external reference code of this kb article
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -795,6 +813,16 @@ public class KBArticleWrapper
 	@Override
 	public void setDescription(String description) {
 		model.setDescription(description);
+	}
+
+	/**
+	 * Sets the external reference code of this kb article.
+	 *
+	 * @param externalReferenceCode the external reference code of this kb article
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

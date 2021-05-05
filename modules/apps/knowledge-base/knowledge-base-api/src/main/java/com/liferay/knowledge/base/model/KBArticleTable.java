@@ -37,6 +37,10 @@ public class KBArticleTable extends BaseTable<KBArticleTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<KBArticleTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<KBArticleTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, Long> kbArticleId = createColumn(
 		"kbArticleId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KBArticleTable, Long> resourcePrimKey = createColumn(

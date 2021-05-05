@@ -272,6 +272,49 @@ public abstract class KBArticleLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the kb article with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article's external reference code
+	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
+	 */
+	@Override
+	public KBArticle fetchKBArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return kbArticlePersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchKBArticleByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public KBArticle fetchKBArticleByReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return fetchKBArticleByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the kb article with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article's external reference code
+	 * @return the matching kb article
+	 * @throws PortalException if a matching kb article could not be found
+	 */
+	@Override
+	public KBArticle getKBArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return kbArticlePersistence.findByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the kb article with the primary key.
 	 *
 	 * @param kbArticleId the primary key of the kb article

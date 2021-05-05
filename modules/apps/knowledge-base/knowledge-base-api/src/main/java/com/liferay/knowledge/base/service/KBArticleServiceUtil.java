@@ -42,6 +42,13 @@ public class KBArticleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBArticleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBArticle(String, String, long, long, String, String, String, String,
+	 String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	public static KBArticle addKBArticle(
 			String portletId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String title, String urlTitle,
@@ -54,6 +61,20 @@ public class KBArticleServiceUtil {
 			portletId, parentResourceClassNameId, parentResourcePrimKey, title,
 			urlTitle, content, description, sourceURL, sections,
 			selectedFileNames, serviceContext);
+	}
+
+	public static KBArticle addKBArticle(
+			String externalReferenceCode, String portletId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addKBArticle(
+			externalReferenceCode, portletId, parentResourceClassNameId,
+			parentResourcePrimKey, title, urlTitle, content, description,
+			sourceURL, sections, selectedFileNames, serviceContext);
 	}
 
 	public static int addKBArticlesMarkdown(

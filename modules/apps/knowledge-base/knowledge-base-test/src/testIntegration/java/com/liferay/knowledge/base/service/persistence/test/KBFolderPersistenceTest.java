@@ -128,6 +128,8 @@ public class KBFolderPersistenceTest {
 
 		newKBFolder.setUuid(RandomTestUtil.randomString());
 
+		newKBFolder.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newKBFolder.setGroupId(RandomTestUtil.nextLong());
 
 		newKBFolder.setCompanyId(RandomTestUtil.nextLong());
@@ -158,6 +160,9 @@ public class KBFolderPersistenceTest {
 		Assert.assertEquals(
 			existingKBFolder.getMvccVersion(), newKBFolder.getMvccVersion());
 		Assert.assertEquals(existingKBFolder.getUuid(), newKBFolder.getUuid());
+		Assert.assertEquals(
+			existingKBFolder.getExternalReferenceCode(),
+			newKBFolder.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingKBFolder.getKbFolderId(), newKBFolder.getKbFolderId());
 		Assert.assertEquals(
@@ -250,6 +255,15 @@ public class KBFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_ERC(0L, "null");
+
+		_persistence.countByG_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KBFolder newKBFolder = addKBFolder();
 
@@ -274,11 +288,11 @@ public class KBFolderPersistenceTest {
 
 	protected OrderByComparator<KBFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KBFolder", "mvccVersion", true, "uuid", true, "kbFolderId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "parentKBFolderId",
-			true, "name", true, "urlTitle", true, "description", true,
-			"lastPublishDate", true);
+			"KBFolder", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "kbFolderId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "parentKBFolderId", true, "name", true,
+			"urlTitle", true, "description", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -580,6 +594,17 @@ public class KBFolderPersistenceTest {
 			ReflectionTestUtil.invoke(
 				kbFolder, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "urlTitle"));
+
+		Assert.assertEquals(
+			Long.valueOf(kbFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				kbFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			kbFolder.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				kbFolder, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected KBFolder addKBFolder() throws Exception {
@@ -590,6 +615,8 @@ public class KBFolderPersistenceTest {
 		kbFolder.setMvccVersion(RandomTestUtil.nextLong());
 
 		kbFolder.setUuid(RandomTestUtil.randomString());
+
+		kbFolder.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		kbFolder.setGroupId(RandomTestUtil.nextLong());
 

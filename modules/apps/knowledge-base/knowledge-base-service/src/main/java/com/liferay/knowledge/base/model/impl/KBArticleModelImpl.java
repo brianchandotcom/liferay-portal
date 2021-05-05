@@ -78,10 +78,11 @@ public class KBArticleModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"kbArticleId", Types.BIGINT}, {"resourcePrimKey", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"externalReferenceCode", Types.VARCHAR}, {"kbArticleId", Types.BIGINT},
+		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP},
 		{"rootResourcePrimKey", Types.BIGINT},
 		{"parentResourceClassNameId", Types.BIGINT},
 		{"parentResourcePrimKey", Types.BIGINT}, {"kbFolderId", Types.BIGINT},
@@ -101,6 +102,7 @@ public class KBArticleModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("kbArticleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -131,7 +133,7 @@ public class KBArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 
@@ -157,74 +159,80 @@ public class KBArticleModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KBFOLDERID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long LATEST_COLUMN_BITMASK = 8L;
+	public static final long KBFOLDERID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MAIN_COLUMN_BITMASK = 16L;
+	public static final long LATEST_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PARENTRESOURCEPRIMKEY_COLUMN_BITMASK = 32L;
+	public static final long MAIN_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 64L;
+	public static final long PARENTRESOURCEPRIMKEY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SECTIONS_COLUMN_BITMASK = 128L;
+	public static final long RESOURCEPRIMKEY_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 256L;
+	public static final long SECTIONS_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long URLTITLE_COLUMN_BITMASK = 512L;
+	public static final long STATUS_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 1024L;
+	public static final long URLTITLE_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long VERSION_COLUMN_BITMASK = 2048L;
+	public static final long UUID_COLUMN_BITMASK = 2048L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long VERSION_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIEDDATE_COLUMN_BITMASK = 4096L;
+	public static final long MODIFIEDDATE_COLUMN_BITMASK = 8192L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -257,6 +265,7 @@ public class KBArticleModelImpl
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setKbArticleId(soapModel.getKbArticleId());
 		model.setResourcePrimKey(soapModel.getResourcePrimKey());
 		model.setGroupId(soapModel.getGroupId());
@@ -441,6 +450,11 @@ public class KBArticleModelImpl
 		attributeGetterFunctions.put("uuid", KBArticle::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<KBArticle, String>)KBArticle::setUuid);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", KBArticle::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<KBArticle, String>)KBArticle::setExternalReferenceCode);
 		attributeGetterFunctions.put("kbArticleId", KBArticle::getKbArticleId);
 		attributeSetterBiConsumers.put(
 			"kbArticleId",
@@ -595,6 +609,35 @@ public class KBArticleModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1348,6 +1391,7 @@ public class KBArticleModelImpl
 
 		kbArticleImpl.setMvccVersion(getMvccVersion());
 		kbArticleImpl.setUuid(getUuid());
+		kbArticleImpl.setExternalReferenceCode(getExternalReferenceCode());
 		kbArticleImpl.setKbArticleId(getKbArticleId());
 		kbArticleImpl.setResourcePrimKey(getResourcePrimKey());
 		kbArticleImpl.setGroupId(getGroupId());
@@ -1464,6 +1508,17 @@ public class KBArticleModelImpl
 
 		if ((uuid != null) && (uuid.length() == 0)) {
 			kbArticleCacheModel.uuid = null;
+		}
+
+		kbArticleCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode =
+			kbArticleCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			kbArticleCacheModel.externalReferenceCode = null;
 		}
 
 		kbArticleCacheModel.kbArticleId = getKbArticleId();
@@ -1672,6 +1727,7 @@ public class KBArticleModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
+	private String _externalReferenceCode;
 	private long _kbArticleId;
 	private long _resourcePrimKey;
 	private long _groupId;
@@ -1732,6 +1788,8 @@ public class KBArticleModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("kbArticleId", _kbArticleId);
 		_columnOriginalValues.put("resourcePrimKey", _resourcePrimKey);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1788,59 +1846,61 @@ public class KBArticleModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("kbArticleId", 4L);
+		columnBitmasks.put("externalReferenceCode", 4L);
 
-		columnBitmasks.put("resourcePrimKey", 8L);
+		columnBitmasks.put("kbArticleId", 8L);
 
-		columnBitmasks.put("groupId", 16L);
+		columnBitmasks.put("resourcePrimKey", 16L);
 
-		columnBitmasks.put("companyId", 32L);
+		columnBitmasks.put("groupId", 32L);
 
-		columnBitmasks.put("userId", 64L);
+		columnBitmasks.put("companyId", 64L);
 
-		columnBitmasks.put("userName", 128L);
+		columnBitmasks.put("userId", 128L);
 
-		columnBitmasks.put("createDate", 256L);
+		columnBitmasks.put("userName", 256L);
 
-		columnBitmasks.put("modifiedDate", 512L);
+		columnBitmasks.put("createDate", 512L);
 
-		columnBitmasks.put("rootResourcePrimKey", 1024L);
+		columnBitmasks.put("modifiedDate", 1024L);
 
-		columnBitmasks.put("parentResourceClassNameId", 2048L);
+		columnBitmasks.put("rootResourcePrimKey", 2048L);
 
-		columnBitmasks.put("parentResourcePrimKey", 4096L);
+		columnBitmasks.put("parentResourceClassNameId", 4096L);
 
-		columnBitmasks.put("kbFolderId", 8192L);
+		columnBitmasks.put("parentResourcePrimKey", 8192L);
 
-		columnBitmasks.put("version", 16384L);
+		columnBitmasks.put("kbFolderId", 16384L);
 
-		columnBitmasks.put("title", 32768L);
+		columnBitmasks.put("version", 32768L);
 
-		columnBitmasks.put("urlTitle", 65536L);
+		columnBitmasks.put("title", 65536L);
 
-		columnBitmasks.put("content", 131072L);
+		columnBitmasks.put("urlTitle", 131072L);
 
-		columnBitmasks.put("description", 262144L);
+		columnBitmasks.put("content", 262144L);
 
-		columnBitmasks.put("priority", 524288L);
+		columnBitmasks.put("description", 524288L);
 
-		columnBitmasks.put("sections", 1048576L);
+		columnBitmasks.put("priority", 1048576L);
 
-		columnBitmasks.put("latest", 2097152L);
+		columnBitmasks.put("sections", 2097152L);
 
-		columnBitmasks.put("main", 4194304L);
+		columnBitmasks.put("latest", 4194304L);
 
-		columnBitmasks.put("sourceURL", 8388608L);
+		columnBitmasks.put("main", 8388608L);
 
-		columnBitmasks.put("lastPublishDate", 16777216L);
+		columnBitmasks.put("sourceURL", 16777216L);
 
-		columnBitmasks.put("status", 33554432L);
+		columnBitmasks.put("lastPublishDate", 33554432L);
 
-		columnBitmasks.put("statusByUserId", 67108864L);
+		columnBitmasks.put("status", 67108864L);
 
-		columnBitmasks.put("statusByUserName", 134217728L);
+		columnBitmasks.put("statusByUserId", 134217728L);
 
-		columnBitmasks.put("statusDate", 268435456L);
+		columnBitmasks.put("statusByUserName", 268435456L);
+
+		columnBitmasks.put("statusDate", 536870912L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

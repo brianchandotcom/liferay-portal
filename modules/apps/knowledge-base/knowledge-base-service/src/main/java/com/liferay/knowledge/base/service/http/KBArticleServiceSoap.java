@@ -63,6 +63,12 @@ import java.rmi.RemoteException;
 @Deprecated
 public class KBArticleServiceSoap {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBArticle(String, String, long, long, String, String, String, String,
+	 String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.knowledge.base.model.KBArticleSoap addKBArticle(
 			String portletId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String title, String urlTitle,
@@ -77,6 +83,32 @@ public class KBArticleServiceSoap {
 					portletId, parentResourceClassNameId, parentResourcePrimKey,
 					title, urlTitle, content, description, sourceURL, sections,
 					selectedFileNames, serviceContext);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBArticleSoap addKBArticle(
+			String externalReferenceCode, String portletId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.knowledge.base.model.KBArticle returnValue =
+				KBArticleServiceUtil.addKBArticle(
+					externalReferenceCode, portletId, parentResourceClassNameId,
+					parentResourcePrimKey, title, urlTitle, content,
+					description, sourceURL, sections, selectedFileNames,
+					serviceContext);
 
 			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(
 				returnValue);

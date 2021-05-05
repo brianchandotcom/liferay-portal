@@ -1,6 +1,7 @@
 create table KBArticle (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	kbArticleId LONG not null primary key,
 	resourcePrimKey LONG,
 	groupId LONG,
@@ -51,6 +52,7 @@ create table KBComment (
 create table KBFolder (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	kbFolderId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

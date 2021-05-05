@@ -91,11 +91,25 @@ public interface KBArticleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KBArticle addKBArticle(KBArticle kbArticle);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBArticle(String, long, long, long, String, String, String, String,
+	 String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	public KBArticle addKBArticle(
 			long userId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String title, String urlTitle,
 			String content, String description, String sourceURL,
 			String[] sections, String[] selectedFileNames,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public KBArticle addKBArticle(
+			String externalReferenceCode, long userId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -271,6 +285,25 @@ public interface KBArticleLocalService
 	public KBArticle fetchKBArticle(
 		long resourcePrimKey, long groupId, int version);
 
+	/**
+	 * Returns the kb article with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article's external reference code
+	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle fetchKBArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchKBArticleByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle fetchKBArticleByReferenceCode(
+		long groupId, String externalReferenceCode);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchKBArticleByUrlTitle(
 		long groupId, long kbFolderId, String urlTitle);
@@ -348,6 +381,19 @@ public interface KBArticleLocalService
 	public List<KBArticle> getKBArticleAndAllDescendantKBArticles(
 		long resourcePrimKey, int status,
 		OrderByComparator<KBArticle> orderByComparator);
+
+	/**
+	 * Returns the kb article with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article's external reference code
+	 * @return the matching kb article
+	 * @throws PortalException if a matching kb article could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle getKBArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getKBArticleByUrlTitle(

@@ -96,6 +96,21 @@ public interface KBArticleModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this kb article.
+	 *
+	 * @return the external reference code of this kb article
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this kb article.
+	 *
+	 * @param externalReferenceCode the external reference code of this kb article
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the kb article ID of this kb article.
 	 *
 	 * @return the kb article ID of this kb article

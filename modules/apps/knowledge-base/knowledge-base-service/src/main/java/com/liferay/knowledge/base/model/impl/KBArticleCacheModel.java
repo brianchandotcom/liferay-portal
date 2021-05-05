@@ -76,12 +76,14 @@ public class KBArticleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", kbArticleId=");
 		sb.append(kbArticleId);
 		sb.append(", resourcePrimKey=");
@@ -152,6 +154,13 @@ public class KBArticleCacheModel
 		}
 		else {
 			kbArticleImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			kbArticleImpl.setExternalReferenceCode("");
+		}
+		else {
+			kbArticleImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		kbArticleImpl.setKbArticleId(kbArticleId);
@@ -269,6 +278,7 @@ public class KBArticleCacheModel
 
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		kbArticleId = objectInput.readLong();
 
@@ -322,6 +332,13 @@ public class KBArticleCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		objectOutput.writeLong(kbArticleId);
@@ -420,6 +437,7 @@ public class KBArticleCacheModel
 
 	public long mvccVersion;
 	public String uuid;
+	public String externalReferenceCode;
 	public long kbArticleId;
 	public long resourcePrimKey;
 	public long groupId;

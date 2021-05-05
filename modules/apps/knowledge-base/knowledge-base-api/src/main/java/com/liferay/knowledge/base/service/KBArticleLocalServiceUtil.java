@@ -70,6 +70,12 @@ public class KBArticleLocalServiceUtil {
 		return getService().addKBArticle(kbArticle);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBArticle(String, long, long, long, String, String, String, String,
+	 String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	public static KBArticle addKBArticle(
 			long userId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String title, String urlTitle,
@@ -82,6 +88,20 @@ public class KBArticleLocalServiceUtil {
 			userId, parentResourceClassNameId, parentResourcePrimKey, title,
 			urlTitle, content, description, sourceURL, sections,
 			selectedFileNames, serviceContext);
+	}
+
+	public static KBArticle addKBArticle(
+			String externalReferenceCode, long userId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addKBArticle(
+			externalReferenceCode, userId, parentResourceClassNameId,
+			parentResourcePrimKey, title, urlTitle, content, description,
+			sourceURL, sections, selectedFileNames, serviceContext);
 	}
 
 	public static void addKBArticleResources(
@@ -320,6 +340,31 @@ public class KBArticleLocalServiceUtil {
 		return getService().fetchKBArticle(resourcePrimKey, groupId, version);
 	}
 
+	/**
+	 * Returns the kb article with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article's external reference code
+	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
+	 */
+	public static KBArticle fetchKBArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchKBArticleByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchKBArticleByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static KBArticle fetchKBArticleByReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchKBArticleByReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	public static KBArticle fetchKBArticleByUrlTitle(
 		long groupId, long kbFolderId, String urlTitle) {
 
@@ -444,6 +489,22 @@ public class KBArticleLocalServiceUtil {
 
 		return getService().getKBArticleAndAllDescendantKBArticles(
 			resourcePrimKey, status, orderByComparator);
+	}
+
+	/**
+	 * Returns the kb article with the matching external reference code and group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article's external reference code
+	 * @return the matching kb article
+	 * @throws PortalException if a matching kb article could not be found
+	 */
+	public static KBArticle getKBArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getKBArticleByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	public static KBArticle getKBArticleByUrlTitle(

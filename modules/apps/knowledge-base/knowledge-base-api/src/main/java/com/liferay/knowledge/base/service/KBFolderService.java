@@ -53,10 +53,22 @@ public interface KBFolderService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.knowledge.base.service.impl.KBFolderServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the kb folder remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link KBFolderServiceUtil} if injection and service tracking are not available.
 	 */
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBFolder(String, long, long, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	public KBFolder addKBFolder(
 			long groupId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String name, String description,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public KBFolder addKBFolder(
+			String externalReferenceCode, long groupId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException;
 
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException;

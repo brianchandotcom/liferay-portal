@@ -129,6 +129,8 @@ public class KBArticlePersistenceTest {
 
 		newKBArticle.setUuid(RandomTestUtil.randomString());
 
+		newKBArticle.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newKBArticle.setResourcePrimKey(RandomTestUtil.nextLong());
 
 		newKBArticle.setGroupId(RandomTestUtil.nextLong());
@@ -190,6 +192,9 @@ public class KBArticlePersistenceTest {
 			existingKBArticle.getMvccVersion(), newKBArticle.getMvccVersion());
 		Assert.assertEquals(
 			existingKBArticle.getUuid(), newKBArticle.getUuid());
+		Assert.assertEquals(
+			existingKBArticle.getExternalReferenceCode(),
+			newKBArticle.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingKBArticle.getKbArticleId(), newKBArticle.getKbArticleId());
 		Assert.assertEquals(
@@ -678,6 +683,15 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_ERC(0L, "null");
+
+		_persistence.countByG_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KBArticle newKBArticle = addKBArticle();
 
@@ -702,7 +716,8 @@ public class KBArticlePersistenceTest {
 
 	protected OrderByComparator<KBArticle> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"KBArticle", "mvccVersion", true, "uuid", true, "kbArticleId", true,
+			"KBArticle", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "kbArticleId", true,
 			"resourcePrimKey", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "rootResourcePrimKey", true,
@@ -1011,6 +1026,17 @@ public class KBArticlePersistenceTest {
 			ReflectionTestUtil.<Integer>invoke(
 				kbArticle, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "version"));
+
+		Assert.assertEquals(
+			Long.valueOf(kbArticle.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			kbArticle.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected KBArticle addKBArticle() throws Exception {
@@ -1021,6 +1047,8 @@ public class KBArticlePersistenceTest {
 		kbArticle.setMvccVersion(RandomTestUtil.nextLong());
 
 		kbArticle.setUuid(RandomTestUtil.randomString());
+
+		kbArticle.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		kbArticle.setResourcePrimKey(RandomTestUtil.nextLong());
 

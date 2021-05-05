@@ -37,11 +37,11 @@ else {
 
 <liferay-asset:asset-categories-selector
 	className="<%= Group.class.getName() %>"
-	classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
+	classPK="<%= liveGroup.getGroupId() %>"
 	visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
 />
 
 <liferay-asset:asset-tags-selector
 	className="<%= Group.class.getName() %>"
-	classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
+	classPK="<%= liveGroup.getGroupId() %>"
 />

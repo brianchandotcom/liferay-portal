@@ -63,6 +63,12 @@ import java.rmi.RemoteException;
 @Deprecated
 public class KBArticleServiceSoap {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBArticle(String, String, long, long, String, String, String, String,
+	 String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.knowledge.base.model.KBArticleSoap addKBArticle(
 			String portletId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String title, String urlTitle,
@@ -77,6 +83,32 @@ public class KBArticleServiceSoap {
 					portletId, parentResourceClassNameId, parentResourcePrimKey,
 					title, urlTitle, content, description, sourceURL, sections,
 					selectedFileNames, serviceContext);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBArticleSoap addKBArticle(
+			String externalReferenceCode, String portletId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.knowledge.base.model.KBArticle returnValue =
+				KBArticleServiceUtil.addKBArticle(
+					externalReferenceCode, portletId, parentResourceClassNameId,
+					parentResourcePrimKey, title, urlTitle, content,
+					description, sourceURL, sections, selectedFileNames,
+					serviceContext);
 
 			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(
 				returnValue);
@@ -202,6 +234,37 @@ public class KBArticleServiceSoap {
 			com.liferay.knowledge.base.model.KBArticle returnValue =
 				KBArticleServiceUtil.fetchLatestKBArticle(
 					resourcePrimKey, status);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * Returns the latest kb article matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article external reference code
+	 * @return the latest matching kb article, or <code>null</code> if no
+	 matching kb article could be found
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static com.liferay.knowledge.base.model.KBArticleSoap
+			fetchLatestKBArticleByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.knowledge.base.model.KBArticle returnValue =
+				KBArticleServiceUtil.
+					fetchLatestKBArticleByExternalReferenceCode(
+						groupId, externalReferenceCode);
 
 			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(
 				returnValue);
@@ -519,6 +582,35 @@ public class KBArticleServiceSoap {
 			com.liferay.knowledge.base.model.KBArticle returnValue =
 				KBArticleServiceUtil.getLatestKBArticle(
 					resourcePrimKey, status);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	/**
+	 * Returns the latest kb article matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article external reference code
+	 * @return the latest matching kb article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static com.liferay.knowledge.base.model.KBArticleSoap
+			getLatestKBArticleByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws RemoteException {
+
+		try {
+			com.liferay.knowledge.base.model.KBArticle returnValue =
+				KBArticleServiceUtil.getLatestKBArticleByExternalReferenceCode(
+					groupId, externalReferenceCode);
 
 			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModel(
 				returnValue);

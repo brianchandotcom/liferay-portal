@@ -91,11 +91,25 @@ public interface KBArticleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KBArticle addKBArticle(KBArticle kbArticle);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBArticle(String, long, long, long, String, String, String, String,
+	 String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	public KBArticle addKBArticle(
 			long userId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String title, String urlTitle,
 			String content, String description, String sourceURL,
 			String[] sections, String[] selectedFileNames,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public KBArticle addKBArticle(
+			String externalReferenceCode, long userId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
 			ServiceContext serviceContext)
 		throws PortalException;
 
@@ -298,6 +312,19 @@ public interface KBArticleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchLatestKBArticle(long resourcePrimKey, long groupId);
 
+	/**
+	 * Returns the latest kb article matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article external reference code
+	 * @return the latest matching kb article, or <code>null</code> if no
+	 matching kb article could be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchLatestKBArticleByUrlTitle(
 		long groupId, long kbFolderId, String urlTitle, int status);
@@ -453,6 +480,20 @@ public interface KBArticleLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle getLatestKBArticle(long resourcePrimKey, int status)
+		throws PortalException;
+
+	/**
+	 * Returns the latest kb article matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article external reference code
+	 * @return the latest matching kb article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle getLatestKBArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

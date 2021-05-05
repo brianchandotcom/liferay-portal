@@ -145,6 +145,8 @@ public class KBArticlePersistenceTest {
 
 		newKBArticle.setRootResourcePrimKey(RandomTestUtil.nextLong());
 
+		newKBArticle.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newKBArticle.setParentResourceClassNameId(RandomTestUtil.nextLong());
 
 		newKBArticle.setParentResourcePrimKey(RandomTestUtil.nextLong());
@@ -212,6 +214,9 @@ public class KBArticlePersistenceTest {
 		Assert.assertEquals(
 			existingKBArticle.getRootResourcePrimKey(),
 			newKBArticle.getRootResourcePrimKey());
+		Assert.assertEquals(
+			existingKBArticle.getExternalReferenceCode(),
+			newKBArticle.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingKBArticle.getParentResourceClassNameId(),
 			newKBArticle.getParentResourceClassNameId());
@@ -348,6 +353,15 @@ public class KBArticlePersistenceTest {
 		_persistence.countByR_S(
 			new long[] {RandomTestUtil.nextLong(), 0L},
 			RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByG_E() throws Exception {
+		_persistence.countByG_E(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_E(0L, "null");
+
+		_persistence.countByG_E(0L, (String)null);
 	}
 
 	@Test
@@ -498,6 +512,16 @@ public class KBArticlePersistenceTest {
 		_persistence.countByR_G_S(
 			new long[] {RandomTestUtil.nextLong(), 0L},
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+	}
+
+	@Test
+	public void testCountByG_E_V() throws Exception {
+		_persistence.countByG_E_V(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByG_E_V(0L, "null", 0);
+
+		_persistence.countByG_E_V(0L, (String)null, 0);
 	}
 
 	@Test
@@ -706,12 +730,12 @@ public class KBArticlePersistenceTest {
 			"resourcePrimKey", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "rootResourcePrimKey", true,
-			"parentResourceClassNameId", true, "parentResourcePrimKey", true,
-			"kbFolderId", true, "version", true, "title", true, "urlTitle",
-			true, "description", true, "priority", true, "sections", true,
-			"latest", true, "main", true, "sourceURL", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"externalReferenceCode", true, "parentResourceClassNameId", true,
+			"parentResourcePrimKey", true, "kbFolderId", true, "version", true,
+			"title", true, "urlTitle", true, "description", true, "priority",
+			true, "sections", true, "latest", true, "main", true, "sourceURL",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -1011,6 +1035,22 @@ public class KBArticlePersistenceTest {
 			ReflectionTestUtil.<Integer>invoke(
 				kbArticle, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "version"));
+
+		Assert.assertEquals(
+			Long.valueOf(kbArticle.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			kbArticle.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Integer.valueOf(kbArticle.getVersion()),
+			ReflectionTestUtil.<Integer>invoke(
+				kbArticle, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
 	}
 
 	protected KBArticle addKBArticle() throws Exception {
@@ -1037,6 +1077,8 @@ public class KBArticlePersistenceTest {
 		kbArticle.setModifiedDate(RandomTestUtil.nextDate());
 
 		kbArticle.setRootResourcePrimKey(RandomTestUtil.nextLong());
+
+		kbArticle.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		kbArticle.setParentResourceClassNameId(RandomTestUtil.nextLong());
 

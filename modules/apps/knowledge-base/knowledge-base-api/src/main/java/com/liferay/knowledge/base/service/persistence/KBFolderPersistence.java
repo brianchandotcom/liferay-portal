@@ -874,6 +874,56 @@ public interface KBFolderPersistence extends BasePersistence<KBFolder> {
 		long groupId, long parentKBFolderId, String urlTitle);
 
 	/**
+	 * Returns the kb folder where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchFolderException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching kb folder
+	 * @throws NoSuchFolderException if a matching kb folder could not be found
+	 */
+	public KBFolder findByG_ERC(long groupId, String externalReferenceCode)
+		throws NoSuchFolderException;
+
+	/**
+	 * Returns the kb folder where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	 */
+	public KBFolder fetchByG_ERC(long groupId, String externalReferenceCode);
+
+	/**
+	 * Returns the kb folder where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	 */
+	public KBFolder fetchByG_ERC(
+		long groupId, String externalReferenceCode, boolean useFinderCache);
+
+	/**
+	 * Removes the kb folder where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the kb folder that was removed
+	 */
+	public KBFolder removeByG_ERC(long groupId, String externalReferenceCode)
+		throws NoSuchFolderException;
+
+	/**
+	 * Returns the number of kb folders where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching kb folders
+	 */
+	public int countByG_ERC(long groupId, String externalReferenceCode);
+
+	/**
 	 * Caches the kb folder in the entity cache if it is enabled.
 	 *
 	 * @param kbFolder the kb folder

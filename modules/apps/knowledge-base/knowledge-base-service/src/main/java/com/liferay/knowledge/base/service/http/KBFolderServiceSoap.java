@@ -63,6 +63,11 @@ import java.rmi.RemoteException;
 @Deprecated
 public class KBFolderServiceSoap {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBFolder(String, long, long, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.knowledge.base.model.KBFolderSoap addKBFolder(
 			long groupId, long parentResourceClassNameId,
 			long parentResourcePrimKey, String name, String description,
@@ -74,6 +79,29 @@ public class KBFolderServiceSoap {
 				KBFolderServiceUtil.addKBFolder(
 					groupId, parentResourceClassNameId, parentResourcePrimKey,
 					name, description, serviceContext);
+
+			return com.liferay.knowledge.base.model.KBFolderSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBFolderSoap addKBFolder(
+			String externalReferenceCode, long groupId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String name, String description,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.knowledge.base.model.KBFolder returnValue =
+				KBFolderServiceUtil.addKBFolder(
+					externalReferenceCode, groupId, parentResourceClassNameId,
+					parentResourcePrimKey, name, description, serviceContext);
 
 			return com.liferay.knowledge.base.model.KBFolderSoap.toSoapModel(
 				returnValue);

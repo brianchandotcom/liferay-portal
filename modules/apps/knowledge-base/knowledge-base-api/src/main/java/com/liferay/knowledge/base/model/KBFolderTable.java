@@ -36,6 +36,10 @@ public class KBFolderTable extends BaseTable<KBFolderTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<KBFolderTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<KBFolderTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<KBFolderTable, Long> kbFolderId = createColumn(
 		"kbFolderId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<KBFolderTable, Long> groupId = createColumn(

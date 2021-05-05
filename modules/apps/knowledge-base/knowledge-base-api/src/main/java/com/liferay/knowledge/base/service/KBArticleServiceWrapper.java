@@ -30,6 +30,12 @@ public class KBArticleServiceWrapper
 		_kbArticleService = kbArticleService;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addKBArticle(String, String, long, long, String, String, String, String,
+	 String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.knowledge.base.model.KBArticle addKBArticle(
 			String portletId, long parentResourceClassNameId,
@@ -43,6 +49,21 @@ public class KBArticleServiceWrapper
 			portletId, parentResourceClassNameId, parentResourcePrimKey, title,
 			urlTitle, content, description, sourceURL, sections,
 			selectedFileNames, serviceContext);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle addKBArticle(
+			String externalReferenceCode, String portletId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleService.addKBArticle(
+			externalReferenceCode, portletId, parentResourceClassNameId,
+			parentResourcePrimKey, title, urlTitle, content, description,
+			sourceURL, sections, selectedFileNames, serviceContext);
 	}
 
 	@Override
@@ -126,6 +147,26 @@ public class KBArticleServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbArticleService.fetchLatestKBArticle(resourcePrimKey, status);
+	}
+
+	/**
+	 * Returns the latest kb article matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article external reference code
+	 * @return the latest matching kb article, or <code>null</code> if no
+	 matching kb article could be found
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle
+			fetchLatestKBArticleByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleService.fetchLatestKBArticleByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	@Override
@@ -308,6 +349,25 @@ public class KBArticleServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kbArticleService.getLatestKBArticle(resourcePrimKey, status);
+	}
+
+	/**
+	 * Returns the latest kb article matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article external reference code
+	 * @return the latest matching kb article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle
+			getLatestKBArticleByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kbArticleService.getLatestKBArticleByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	/**

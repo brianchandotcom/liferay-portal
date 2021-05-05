@@ -44,12 +44,9 @@ export default function LayoutReportsIssuesList() {
 					/>
 
 					<div className="font-weight-semi-bold">
-						<span>{Liferay.Language.get('congratulations')}</span>
-					</div>
-					<div className="c-mb-5 c-mt-2 text-secondary">
-						{Liferay.Language.get(
-							'your-page-does-not-have-any-issues-to-fix'
-						)}
+						<span>
+							{Liferay.Language.get('your-page-has-no-issues')}
+						</span>
 					</div>
 				</div>
 			)}

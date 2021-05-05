@@ -218,8 +218,6 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			Field.ENTRY_CLASS_PK, String.valueOf(fileEntry.getFileEntryId()));
 		map.put(Field.FOLDER_ID, String.valueOf(fileEntry.getFolderId()));
 		map.put(Field.GROUP_ID, String.valueOf(fileEntry.getGroupId()));
-		map.put(
-			Field.PROPERTIES, FileUtil.stripExtension(fileEntry.getTitle()));
 		map.put(Field.SCOPE_GROUP_ID, String.valueOf(fileEntry.getGroupId()));
 		map.put(Field.STAGING_GROUP, "false");
 		map.put(Field.STATUS, "0");

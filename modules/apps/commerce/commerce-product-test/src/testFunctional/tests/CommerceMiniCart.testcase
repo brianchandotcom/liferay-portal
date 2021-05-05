@@ -73,12 +73,52 @@ definition {
 	}
 
 	@description = "COMMERCE-6333. As a buyer, I want to edit the quantity of an item in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary"
-	@ignore = "true"
 	@priority = "3"
 	test EditCartItemQuantityFromMiniCart {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6333 EditCartItemQuantityFromMiniCart pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Type(
+			key_cartItemSKU = "MIN55861",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+			value1 = "3");
+
+		AssertTextEquals(
+			key_summaryTableItem = "Quantity",
+			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+			value1 = "3");
+
+		AssertTextEquals(
+			key_summaryTableItem = "Subtotal",
+			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+			value1 = "$ 72.00");
+
+		AssertTextEquals(
+			key_summaryTableItem = "Order Discount",
+			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+			value1 = "$ 0.00");
+		
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_TOTAL",
+			value1 = "$ 72.00");
+
 	}
 
 	@description = "COMMERCE-6330. As a buyer, I want to be able to empty my open cart after clicking on 'Remove All Items'(Yes/No)"

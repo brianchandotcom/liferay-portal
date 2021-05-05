@@ -329,6 +329,63 @@ definition {
 			webContentText = "Este é um campo de texto");
 	}
 
+	@description = "This is a test for LRQA-66429. This test check a field with Localizable property set as True in a simple field, a Field Group, a Fieldset and a Field Group into a Fieldset."
+	@priority = "5"
+	test ValidateDefaulLocalizableValue {
+		var checkboxName = "Localizable";
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.assertLocalizableFieldIsSetTrue(fieldFieldLabel = "Text");
+
+		DataEngine.addFieldNested(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric",
+			targetFieldLabel = "Text");
+
+		DataEngine.assertLocalizableFieldIsSetTrue(fieldFieldLabel = "Numeric");
+
+		DataEngine.gotoCreateNewFieldset();
+
+		FormViewBuilder.editFieldSetName(fieldSetName = "New Fieldset Test");
+
+		DataEngine.addFields(fieldNameList = "Text");
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL",
+			value1 = "Text");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fieldFieldLabel = "Text",
+			key_fieldName = "Numeric",
+			locator1 = "Sidebar#ADD_FIELD_NAME",
+			locator2 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_IN_FIELDSET_MODAL",
+			value1 = "Numeric");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
+
+		Modal.save();
+
+		DoubleClick(
+			key_fieldName = "New Fieldset Test",
+			locator1 = "Sidebar#ADD_FIELD_NAME");
+
+		WebContentStructures.saveCP();
+	}
+
 	@description = "This is a test for LRQA-66427. This test check it's not possible to translate a field with Localizable property set as Off in a simple field and a Field Group into a Fieldset"
 	@priority = "5"
 	test ValidateNotTranslatableOnFieldset {

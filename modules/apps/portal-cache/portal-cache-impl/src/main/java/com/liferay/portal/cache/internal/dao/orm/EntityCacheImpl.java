@@ -435,7 +435,7 @@ public class EntityCacheImpl
 		return ThreadLocalFilterThreadLocal.isFilterInvoked();
 	}
 
-	private void _notify(
+	private static void _notify(
 		String className, BaseModel<?> baseModel, Boolean removePortalCache) {
 
 		FinderCacheImpl finderCacheImpl = _finderCacheImpl;

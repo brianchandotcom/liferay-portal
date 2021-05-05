@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidationExpression;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
@@ -117,9 +119,17 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		Assert.assertEquals(
 			"string", inputMaskFormatDDMFormField.getDataType());
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			inputMaskFormatDDMFormField.getDDMFormFieldValidation();
+
+		DDMFormFieldValidationExpression ddmFormFieldValidationExpression =
+			ddmFormFieldValidation.getDDMFormFieldValidationExpression();
+
 		Assert.assertEquals(
-			"^(?=.*[09])([^1-8]+)$",
-			inputMaskFormatDDMFormField.getProperty("regex"));
+			"match(inputMaskFormat, '^$|^(?=.*[09])([^1-8]+)$')",
+			ddmFormFieldValidationExpression.getValue());
+
 		Assert.assertEquals("text", inputMaskFormatDDMFormField.getType());
 		Assert.assertEquals(true, inputMaskFormatDDMFormField.isRequired());
 		Assert.assertNotNull(inputMaskFormatDDMFormField.getLabel());

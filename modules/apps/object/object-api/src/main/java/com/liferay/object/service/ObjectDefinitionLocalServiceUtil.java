@@ -347,10 +347,6 @@ public class ObjectDefinitionLocalServiceUtil {
 		getService().undeployObjectDefinition(objectDefinitionId);
 	}
 
-	public static void undeployObjectDefinitions() {
-		getService().undeployObjectDefinitions();
-	}
-
 	/**
 	 * Updates the object definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

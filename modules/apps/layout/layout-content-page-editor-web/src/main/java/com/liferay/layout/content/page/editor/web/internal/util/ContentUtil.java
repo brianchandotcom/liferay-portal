@@ -261,6 +261,10 @@ public class ContentUtil {
 					continue;
 				}
 
+				layoutDisplayPageObjectProviders.addAll(
+					_getLocalizedLayoutDisplayPageObjectProviders(
+						editableJSONObject, mappedClassPKs));
+
 				JSONObject configJSONObject = editableJSONObject.getJSONObject(
 					"config");
 

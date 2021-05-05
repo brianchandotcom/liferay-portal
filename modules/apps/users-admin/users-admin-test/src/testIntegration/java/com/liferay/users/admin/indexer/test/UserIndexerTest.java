@@ -290,14 +290,16 @@ public class UserIndexerTest {
 	}
 
 	@Test
-	public void testScreenNameSubstring() throws Exception {
+	public void testScreenNamePrefix() throws Exception {
 		String screenName = "Open4Life" + RandomTestUtil.randomString();
 
 		addUserWithScreenName(screenName);
 
-		assertScreenNameFieldValue(screenName, byQueryString("open lite"));
+		assertScreenNameFieldValue(screenName, byQueryString("open"));
+		assertScreenNameFieldValue(screenName, byQueryString("open4life"));
 		assertScreenNameFieldValue(screenName, byQueryString("OPE"));
-		assertScreenNameFieldValue(screenName, byQueryString("4lif"));
+
+		assertNoHits(byQueryString("4lif"));
 	}
 
 	@Test

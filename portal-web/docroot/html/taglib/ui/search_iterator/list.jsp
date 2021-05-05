@@ -314,7 +314,7 @@ if (iteratorURL != null) {
 		%>
 
 		<c:if test="<%= headerNames != null %>">
-			<tr class="lfr-template">
+			<tr class="lfr-template <%= searchContainerRowCssClass %>">
 
 				<%
 				for (int i = 0; i < headerNames.size(); i++) {

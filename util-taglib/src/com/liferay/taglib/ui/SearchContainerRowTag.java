@@ -137,6 +137,9 @@ public class SearchContainerRowTag<R>
 
 		_results = _searchContainer.getResults();
 
+		request.setAttribute(
+		    "liferay-ui:search-container-row:cssClass", _cssClass);
+
 		if ((_results != null) && !_results.isEmpty()) {
 			processRow();
 

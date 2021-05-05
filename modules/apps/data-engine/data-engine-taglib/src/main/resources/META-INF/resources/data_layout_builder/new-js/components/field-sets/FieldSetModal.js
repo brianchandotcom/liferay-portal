@@ -17,7 +17,7 @@ import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import {
 	ConfigProvider,
-	EVENT_TYPES as EVENT_TYPES_CORE,
+	EVENT_TYPES as CORE_EVENT_TYPES,
 	FormProvider,
 	PagesVisitor,
 	useConfig,
@@ -63,11 +63,17 @@ const ModalContent = ({
 	});
 
 	const [name, setName] = useState(dataDefinition.name ?? {});
-	const changeEditingLanguageId = (editingLanguageId) =>
+	const changeEditingLanguageId = (editingLanguageId) => {
 		dispatch({
 			payload: {editingLanguageId},
-			type: EVENT_TYPES_CORE.LANGUAGE.CHANGE,
+			type: CORE_EVENT_TYPES.LANGUAGE.CHANGE,
 		});
+
+		dispatch({
+			payload: {languageId: editingLanguageId},
+			type: CORE_EVENT_TYPES.LANGUAGE.ADD,
+		});
+	};
 
 	const onSave = async () => {
 		const {

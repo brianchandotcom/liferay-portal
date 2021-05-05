@@ -82,6 +82,12 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 * #addKBArticle(String, String, long, long, String, String, String, String,
+	 * String, String[], String[], ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public KBArticle addKBArticle(
 			String portletId, long parentResourceClassNameId,

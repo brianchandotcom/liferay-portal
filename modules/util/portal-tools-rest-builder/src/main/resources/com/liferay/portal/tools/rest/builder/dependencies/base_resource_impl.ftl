@@ -217,6 +217,8 @@ public abstract class Base${schemaName}ResourceImpl
 					PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId, getPermissionCheckerGroupId(${schemaVarName}Id));
 
 					resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), 0, resourceName, String.valueOf(resourceId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, resourceId, resourceName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
+
+					return toPermissionPage(resourceId, resourceName, null);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -228,6 +230,8 @@ public abstract class Base${schemaName}ResourceImpl
 				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, assetLibraryId, assetLibraryId);
 
 				resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), assetLibraryId, portletName, String.valueOf(assetLibraryId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, assetLibraryId, portletName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
+
+				return toPermissionPage(assetLibraryId, portletName, null);
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "Permission")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
@@ -236,6 +240,8 @@ public abstract class Base${schemaName}ResourceImpl
 				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId, siteId);
 
 				resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), siteId, portletName, String.valueOf(siteId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, siteId, portletName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
+
+				return toPermissionPage(siteId, portletName, null);
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||

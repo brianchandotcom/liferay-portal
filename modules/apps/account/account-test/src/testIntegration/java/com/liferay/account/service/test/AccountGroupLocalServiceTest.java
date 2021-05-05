@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -139,12 +140,16 @@ public class AccountGroupLocalServiceTest {
 		List<AccountGroup> expectedAccountGroups = Arrays.asList(
 			_addAccountGroup(), _addAccountGroup());
 
+		OrderByComparator<AccountGroup> orderByComparator =
+			OrderByComparatorFactoryUtil.create(
+				"AccountGroup", "createDate", true);
+
+		expectedAccountGroups.sort(orderByComparator);
+
 		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
 			_accountGroupLocalService.searchAccountGroups(
 				TestPropsValues.getCompanyId(), null, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS,
-				OrderByComparatorFactoryUtil.create(
-					"AccountGroup", "createDate", true));
+				QueryUtil.ALL_POS, orderByComparator);
 
 		Assert.assertEquals(
 			expectedAccountGroups.size(), baseModelSearchResult.getLength());

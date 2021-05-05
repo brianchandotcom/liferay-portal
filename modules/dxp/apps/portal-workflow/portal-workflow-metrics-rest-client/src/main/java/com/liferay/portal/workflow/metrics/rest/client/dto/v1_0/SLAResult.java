@@ -75,6 +75,27 @@ public class SLAResult implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Date getLastCheckDate() {
+		return lastCheckDate;
+	}
+
+	public void setLastCheckDate(Date lastCheckDate) {
+		this.lastCheckDate = lastCheckDate;
+	}
+
+	public void setLastCheckDate(
+		UnsafeSupplier<Date, Exception> lastCheckDateUnsafeSupplier) {
+
+		try {
+			lastCheckDate = lastCheckDateUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date lastCheckDate;
+
 	public String getName() {
 		return name;
 	}

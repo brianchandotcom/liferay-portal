@@ -114,6 +114,34 @@ public class SLAResult implements Serializable {
 	protected Long id;
 
 	@Schema
+	public Date getLastCheckDate() {
+		return lastCheckDate;
+	}
+
+	public void setLastCheckDate(Date lastCheckDate) {
+		this.lastCheckDate = lastCheckDate;
+	}
+
+	@JsonIgnore
+	public void setLastCheckDate(
+		UnsafeSupplier<Date, Exception> lastCheckDateUnsafeSupplier) {
+
+		try {
+			lastCheckDate = lastCheckDateUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date lastCheckDate;
+
+	@Schema
 	public String getName() {
 		return name;
 	}
@@ -285,6 +313,20 @@ public class SLAResult implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		if (lastCheckDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastCheckDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(lastCheckDate));
+
+			sb.append("\"");
 		}
 
 		if (name != null) {

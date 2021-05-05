@@ -84,6 +84,21 @@ public class SLAResultSerDes {
 			sb.append(slaResult.getId());
 		}
 
+		if (slaResult.getLastCheckDate() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"lastCheckDate\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(slaResult.getLastCheckDate()));
+
+			sb.append("\"");
+		}
+
 		if (slaResult.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -169,6 +184,15 @@ public class SLAResultSerDes {
 			map.put("id", String.valueOf(slaResult.getId()));
 		}
 
+		if (slaResult.getLastCheckDate() == null) {
+			map.put("lastCheckDate", null);
+		}
+		else {
+			map.put(
+				"lastCheckDate",
+				liferayToJSONDateFormat.format(slaResult.getLastCheckDate()));
+		}
+
 		if (slaResult.getName() == null) {
 			map.put("name", null);
 		}
@@ -227,6 +251,12 @@ public class SLAResultSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					slaResult.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "lastCheckDate")) {
+				if (jsonParserFieldValue != null) {
+					slaResult.setLastCheckDate(
+						toDate((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

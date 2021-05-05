@@ -126,6 +126,9 @@ public class
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		SiteSettingsConfigurationScreenContributor.super.setAttributes(
+			httpServletRequest, httpServletResponse);
+
 		PortletRequest portletRequest =
 			(PortletRequest)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_REQUEST);

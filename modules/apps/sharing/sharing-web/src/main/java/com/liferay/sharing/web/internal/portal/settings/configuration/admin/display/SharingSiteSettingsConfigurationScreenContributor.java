@@ -84,6 +84,9 @@ public class SharingSiteSettingsConfigurationScreenContributor
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		SiteSettingsConfigurationScreenContributor.super.setAttributes(
+			httpServletRequest, httpServletResponse);
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

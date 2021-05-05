@@ -257,8 +257,6 @@ definition {
 		if ((!(contains("${currentURL}", "https://"))) || (!(contains("${currentURL}", "start=2")))) {
 			fail("URL of second search results page should contain HTTPS.");
 		}
-
-		JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 	}
 
 	@description = "This is a use case for LPS-89561."

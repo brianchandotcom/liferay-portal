@@ -64,6 +64,10 @@
 		<!-- Other fields -->
 
 		<column name="batchPlannerPlanId" type="long" />
+		<column name="contentFieldName" type="String" />
+		<column name="contentFieldType" type="String" />
+		<column name="openAPIFieldName" type="String" />
+		<column name="openAPIFieldType" type="String" />
 
 		<!-- Order -->
 
@@ -75,6 +79,11 @@
 
 		<finder name="BatchPlannerPlanId" return-type="Collection">
 			<finder-column name="batchPlannerPlanId" />
+		</finder>
+		<finder name="BPPI_CFN_OAPIFN" return-type="BatchPlannerMapping" unique="true">
+			<finder-column name="batchPlannerPlanId" />
+			<finder-column name="contentFieldName" />
+			<finder-column name="openAPIFieldName" />
 		</finder>
 	</entity>
 	<entity local-service="true" name="BatchPlannerPlan" remote-service="true">

@@ -374,16 +374,6 @@ definition {
 		Navigator.gotoNavTab(navTab = "Advanced");
 
 		AssertElementPresent(locator1 = "Checkbox#ANY_CHECKBOX");
-
-		Click(locator1 = "Sidebar#BACK");
-
-		Modal.save();
-
-		DoubleClick(
-			key_fieldName = "New Fieldset Test",
-			locator1 = "Sidebar#ADD_FIELD_NAME");
-
-		WebContentStructures.saveCP();
 	}
 
 	@description = "This is a test for LRQA-66427. This test check it's not possible to translate a field with Localizable property set as Off in a simple field and a Field Group into a Fieldset"

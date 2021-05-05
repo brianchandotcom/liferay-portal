@@ -703,6 +703,22 @@ definition {
 		}
 	}
 
+	macro assertLocalizableFieldIsSetTrue {
+		var checkboxName = "Localizable";
+
+		AssertClick.assertPartialTextClickAt(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER",
+			value1 = "${fieldFieldLabel}");
+		
+		Navigator.gotoNavTab(navTab = "Advanced");
+
+		AssertElementPresent(
+			locator1 = "Checkbox#ANY_CHECKBOX");
+			
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro assertNonLocalizableField {
 		AssertElementPresent(
 			key_fieldName = "${fieldFieldName}",

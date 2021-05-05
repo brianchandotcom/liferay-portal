@@ -24,7 +24,6 @@ definition {
 
 			CommerceConfiguration.commerceInitializersTearDown();
 		}
-
 	}
 
 	@description = "COMMERCE-5912. As a buyer, I want to select an item in Product Details for compare in Product Widget"
@@ -74,6 +73,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5915 EditMaxNumberOfComparisonItemsInComparePage pending implementation
+
 	}
 
 	@description = "COMMERCE-5916. As a buyer, I want to see max number of compare items allowed in MiniCompare widget"
@@ -141,9 +141,6 @@ definition {
 		AssertElementNotPresent(
 			key_productName = "u-joint",
 			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
-
-
-			
 	}
 
 	@description = "COMMERCE-5919. As a buyer, when comparing items in Compare page, I want to view product options and specifications, if set"

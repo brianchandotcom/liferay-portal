@@ -125,7 +125,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 				new GraphQLField(
 					"dataLayoutByContentTypeByDataLayoutKey",
 					HashMapBuilder.<String, Object>put(
-						"contentType", "\"app-builder\""
+						"contentType", "\"document-library\""
 					).put(
 						"dataLayoutKey",
 						StringBundler.concat(
@@ -217,7 +217,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 
 		DataDefinition dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				testGroup.getGroupId(), "app-builder",
+				testGroup.getGroupId(), "document-library",
 				new DataDefinition() {
 					{
 						availableLanguageIds = new String[] {"en_US", "pt_BR"};
@@ -446,7 +446,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 		DataLayout dataLayout = dataLayoutResource.postDataDefinitionDataLayout(
 			_dataDefinition.getId(), randomDataLayout());
 
-		dataLayout.setContentType("app-builder");
+		dataLayout.setContentType("document-library");
 
 		return dataLayout;
 	}

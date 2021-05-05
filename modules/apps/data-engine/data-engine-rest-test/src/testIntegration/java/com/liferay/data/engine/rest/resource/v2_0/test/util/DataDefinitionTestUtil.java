@@ -51,7 +51,7 @@ public class DataDefinitionTestUtil {
 		).build();
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			groupId, "app-builder", dataDefinition);
+			groupId, "document-library", dataDefinition);
 	}
 
 	public static DataDefinition addDataDefinition(long groupId)
@@ -78,7 +78,7 @@ public class DataDefinitionTestUtil {
 		).build();
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			groupId, "app-builder", dataDefinition);
+			groupId, "document-library", dataDefinition);
 	}
 
 	public static DataDefinition addDataDefinitionWithFieldset(long groupId)
@@ -98,7 +98,7 @@ public class DataDefinitionTestUtil {
 
 		DataDefinition fieldsetDataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				groupId, "app-builder-fieldset",
+				groupId, "document-library",
 				DataDefinition.toDTO(
 					read("data-definition-fieldset-structure.json")));
 
@@ -113,7 +113,7 @@ public class DataDefinitionTestUtil {
 		}
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			groupId, "app-builder", dataDefinition);
+			groupId, "document-library", dataDefinition);
 	}
 
 	public static DDMStructure addDDMStructure(Group group) throws Exception {

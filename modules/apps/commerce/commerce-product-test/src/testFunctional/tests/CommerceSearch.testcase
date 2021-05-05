@@ -73,12 +73,42 @@ definition {
 	}
 
 	@description = "COMMERCE-6327. As a buyer, I want to search for different products by typing their SKUs in the Global Search and I want to see the products with that SKUs in the suggestions(single SKU, multiple SKUs)"
-	@ignore = "true"
 	@priority = "3"
 	test GlobalSearchSearchProductsBySKUs {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6327 GlobalSearchSearchProductsBySKUs pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+		SelectFrameTop();
+
+		Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "MIN93015");
+
+		AssertElementPresent(
+				locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
+				key_entryName = "ABS Sensor");
+
+		Click(locator1 = "Search#GLOBAL_SEARCH_CLEAN_BUTTON");
+
+		SelectFrameTop();
+
+		Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "MIN93015 MIN55861");
+
+		AssertElementPresent(
+				locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
+				key_entryName = "ABS Sensor");
+
+		AssertElementPresent(
+				locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
+				key_entryName = "U-Joint");
+
 	}
 
 	@description = "COMMERCE-6328. As a buyer, I want to search for products by typing different Specification Values in Global Search and I want to see the products with that specification values in the suggestions(single specification, multiple specifications)"

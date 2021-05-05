@@ -121,7 +121,7 @@ MBBreadcrumbUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
 						editor.focus();
 					});
 
-					if (addQuickReplyContainer && AUI().UA.mobile) {
+					if (addQuickReplyContainer) {
 						addQuickReplyContainer.scrollIntoView(true);
 					}
 

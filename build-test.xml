@@ -10591,13 +10591,8 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 	</target>
 
 	<target name="prepare-selenium-login-config">
-		<copy
-			file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/core/com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config"
-			force="true"
-			overwrite="true"
-			tofile="${liferay.home}/osgi/configs/com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config"
-			verbose="true"
-		/>
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config" force="true">enabled="true"
+tokenLocation="REQUEST"</echo>
 	</target>
 
 	<target name="prepare-selenium-onedrive-properties">

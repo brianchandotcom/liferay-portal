@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
+import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;

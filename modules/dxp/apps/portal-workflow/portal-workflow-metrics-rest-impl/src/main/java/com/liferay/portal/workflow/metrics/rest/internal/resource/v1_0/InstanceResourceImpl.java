@@ -54,13 +54,13 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Transition;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.AssigneeUtil;
+import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.SLAResultUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.NoSuchInstanceException;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
@@ -495,25 +495,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			_queries.term("processId", processId));
 	}
 
-	private SLAResult _createSLAResult(Map<String, Object> sourcesMap) {
-		return new SLAResult() {
-			{
-				dateOverdue = _parseDate(
-					GetterUtil.getString(sourcesMap.get("overdueDate")));
-
-				id = GetterUtil.getLong(sourcesMap.get("slaDefinitionId"));
-
-				name = _getSLAName(id);
-
-				onTime = GetterUtil.getBoolean(sourcesMap.get("onTime"));
-				remainingTime = GetterUtil.getLong(
-					sourcesMap.get("remainingTime"));
-				status = _getSLAResultStatus(
-					GetterUtil.getString(sourcesMap.get("status")));
-			}
-		};
-	}
-
 	private BooleanQuery _createTasksBooleanQuery(
 		long processId, long instanceId) {
 
@@ -833,38 +814,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		);
 	}
 
-	private String _getSLAName(long slaDefinitionId) {
-		try {
-			WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
-				_workflowMetricsSLADefinitionLocalService.
-					getWorkflowMetricsSLADefinition(slaDefinitionId);
-
-			return workflowMetricsSLADefinition.getName();
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
-			}
-
-			return null;
-		}
-	}
-
-	private SLAResult.Status _getSLAResultStatus(String status) {
-		if (Objects.equals(status, WorkflowMetricsSLAStatus.COMPLETED.name()) ||
-			Objects.equals(status, WorkflowMetricsSLAStatus.STOPPED.name())) {
-
-			return SLAResult.Status.STOPPED;
-		}
-		else if (Objects.equals(
-					status, WorkflowMetricsSLAStatus.PAUSED.name())) {
-
-			return SLAResult.Status.PAUSED;
-		}
-
-		return SLAResult.Status.RUNNING;
-	}
-
 	private List<String> _getTaskNames(Bucket bucket) {
 		TermsAggregationResult termsAggregationResult =
 			(TermsAggregationResult)bucket.getChildAggregationResult("name");
@@ -996,7 +945,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			).map(
 				SearchHit::getSourcesMap
 			).map(
-				this::_createSLAResult
+				sourcesMap -> SLAResultUtil.toSLAResult(
+					sourcesMap,
+					_workflowMetricsSLADefinitionLocalService::
+						fetchWorkflowMetricsSLADefinition)
 			).toArray(
 				SLAResult[]::new
 			));
@@ -1084,7 +1036,10 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					).map(
 						SearchHit::getSourcesMap
 					).map(
-						this::_createSLAResult
+						sourcesMap -> SLAResultUtil.toSLAResult(
+							sourcesMap,
+							_workflowMetricsSLADefinitionLocalService::
+								fetchWorkflowMetricsSLADefinition)
 					).toArray(
 						SLAResult[]::new
 					));

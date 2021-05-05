@@ -77,54 +77,58 @@
 		'<portlet:namespace />termsOfUseSettings'
 	);
 
-	var journalArticleRemove = window.document.querySelector(
-		'#<portlet:namespace />journalArticleRemove'
-	);
-	var journalArticleNameInput = window.document.querySelector(
-		'#<portlet:namespace />journalArticleNameInput'
+	const journalArticleNameInput = document.getElementById(
+		'<portlet:namespace />journalArticleNameInput'
 	);
 
-	window.document
-		.querySelector('#<portlet:namespace />selectArticle')
-		.addEventListener('click', (event) => {
+	const journalArticleRemove = document.getElementById(
+		'<portlet:namespace />journalArticleRemove'
+	);
+
+	const selectArticle = document.getElementById(
+		'<portlet:namespace />selectArticle'
+	);
+
+	if (journalArticleNameInput && journalArticleRemove && selectArticle) {
+		selectArticle.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					eventName: 'selectJournalArticle',
-					id: '',
-					title: '<liferay-ui:message key="select-web-content" />',
-					uri:
-						'<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>',
-				},
-				(event) => {
-					window.document.querySelector(
-						'#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
-					).value = event.assetclasspk;
+			Liferay.Util.openSelectionModal({
+				onSelect: (selectedItem) => {
+					const termsOfUseJournalArticleResourcePrimKey = document.getElementById(
+						'<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
+					);
+
+					if (termsOfUseJournalArticleResourcePrimKey) {
+						termsOfUseJournalArticleResourcePrimKey.value =
+							selectedItem.assetclasspk;
+					}
 
 					journalArticleRemove.classList.remove('hide');
 
-					journalArticleNameInput.innerText = event.assettitle;
-				}
-			);
+					journalArticleNameInput.innerText = selectedItem.assettitle;
+				},
+				selectEventName: 'selectJournalArticle',
+				title: '<liferay-ui:message key="select-web-content" />',
+				url:
+					'<%= cpDefinitionVirtualSettingDisplayContext.getTermsOfUseJournalArticleBrowserURL() %>',
+			});
 		});
 
-	window.document
-		.querySelector('#<portlet:namespace />journalArticleRemove')
-		.addEventListener('click', (event) => {
+		journalArticleRemove.addEventListener('click', (event) => {
 			event.preventDefault();
 
-			window.document.querySelector(
-				'#<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
-			).value = 0;
+			const termsOfUseJournalArticleResourcePrimKey = document.getElementById(
+				'<portlet:namespace />termsOfUseJournalArticleResourcePrimKey'
+			);
+
+			if (termsOfUseJournalArticleResourcePrimKey) {
+				termsOfUseJournalArticleResourcePrimKey.value = 0;
+			}
 
 			journalArticleNameInput.innerText = '<liferay-ui:message key="none" />';
 
 			journalArticleRemove.classList.add('hide');
 		});
+	}
 </aui:script>

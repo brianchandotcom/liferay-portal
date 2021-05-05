@@ -21,6 +21,8 @@
 		<!-- Other fields -->
 
 		<column name="batchPlannerPlanId" type="long" />
+        <column name="batchEngineExternalReferenceCode" type="String" />
+        <column name="dispatchTriggerExternalReferenceCode" type="String" />
 		<column name="size" type="int" />
 		<column name="total" type="int" />
 		<column name="status" type="int" />

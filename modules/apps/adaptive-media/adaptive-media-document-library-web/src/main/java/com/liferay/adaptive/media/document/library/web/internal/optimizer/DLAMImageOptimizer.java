@@ -22,6 +22,7 @@ import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
 import com.liferay.adaptive.media.image.processor.AMImageProcessor;
 import com.liferay.adaptive.media.image.size.AMImageSizeProvider;
+import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
@@ -227,6 +228,9 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 
 	@Reference
 	private AMImageSizeProvider _amImageSizeProvider;
+
+	@Reference
+	private AMImageValidator _amImageValidator;
 
 	@Reference
 	private BackgroundTaskStatusMessageSender

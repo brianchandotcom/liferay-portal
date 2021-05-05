@@ -300,6 +300,11 @@ definition {
 				expectedText = "properties: TCP",
 				nodePort = "${serverPort}");
 		}
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"
@@ -316,6 +321,11 @@ definition {
 				expectedText = "properties: UDP",
 				nodePort = "${serverPort}");
 		}
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"

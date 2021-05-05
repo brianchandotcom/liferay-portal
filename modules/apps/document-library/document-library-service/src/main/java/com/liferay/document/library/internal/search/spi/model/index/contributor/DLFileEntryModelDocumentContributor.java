@@ -133,8 +133,6 @@ public class DLFileEntryModelDocumentContributor
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
 			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
-			document.addText(
-				Field.PROPERTIES, dlFileEntry.getLuceneProperties());
 			document.addKeyword(Field.STATUS, dlFileVersion.getStatus());
 
 			String title = dlFileEntry.getTitle();

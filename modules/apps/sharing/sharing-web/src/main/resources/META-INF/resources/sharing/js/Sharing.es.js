@@ -247,8 +247,6 @@ const Sharing = ({
 		}
 	}, []);
 
-	const multiSelectFilter = useCallback(() => true, []);
-
 	const {resource} = useResource({
 		fetchOptions: {
 			credentials: 'include',
@@ -281,7 +279,6 @@ const Sharing = ({
 							</label>
 
 							<ClayMultiSelect
-								filter={multiSelectFilter}
 								inputName={`${portletNamespace}userEmailAddress`}
 								inputValue={multiSelectValue}
 								items={selectedItems}

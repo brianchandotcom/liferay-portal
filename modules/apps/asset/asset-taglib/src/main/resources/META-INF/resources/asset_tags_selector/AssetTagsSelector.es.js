@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
-import ClayMultiSelect from '@clayui/multi-select';
+import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {openSelectionModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -188,12 +188,15 @@ function AssetTagsSelector({
 							onItemsChange={handleItemsChange}
 							sourceItems={
 								resource
-									? resource.map((tag) => {
-											return {
-												label: tag.text,
-												value: tag.value,
-											};
-									  })
+									? itemLabelFilter(
+											resource.map((tag) => {
+												return {
+													label: tag.text,
+													value: tag.value,
+												};
+											}),
+											inputValue
+									  )
 									: []
 							}
 						/>

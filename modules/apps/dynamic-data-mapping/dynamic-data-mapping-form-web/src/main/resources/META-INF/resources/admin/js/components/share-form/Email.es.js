@@ -14,7 +14,7 @@
 
 import {useResource} from '@clayui/data-provider';
 import ClayForm, {ClayInput} from '@clayui/form';
-import ClayMultiSelect from '@clayui/multi-select';
+import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
 import React, {useState} from 'react';
 
 function formatAutocompleteValue(data) {
@@ -27,14 +27,17 @@ function isEmailAddressValid(email) {
 	return emailRegex.test(email);
 }
 
-function formatAutocompleteUsersFromRequest(resource) {
+function formatAutocompleteUsersFromRequest(resource, inputValue) {
 	if (resource.length) {
-		return resource.map((data) => {
-			return {
-				label: data.emailAddress,
-				value: formatAutocompleteValue(data),
-			};
-		});
+		return itemLabelFilter(
+			resource.map((data) => {
+				return {
+					label: data.emailAddress,
+					value: formatAutocompleteValue(data),
+				};
+			}),
+			inputValue
+		);
 	}
 
 	return resource;

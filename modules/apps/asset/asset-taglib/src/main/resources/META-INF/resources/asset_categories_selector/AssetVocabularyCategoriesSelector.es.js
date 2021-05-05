@@ -144,7 +144,7 @@ function AssetVocabulariesCategoriesSelector({
 			buttonAddLabel: Liferay.Language.get('done'),
 			multiple: true,
 			onSelect: (selectedItems) => {
-				if (selectedItems?.length) {
+				if (selectedItems) {
 					const newValues = Object.keys(selectedItems).reduce(
 						(acc, itemKey) => {
 							const item = selectedItems[itemKey];

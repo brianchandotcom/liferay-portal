@@ -104,6 +104,9 @@
 		<!-- Other fields -->
 
 		<column name="active" type="boolean" />
+		<column name="contentType" type="String" />
+		<column name="contentUrl" type="String" />
+		<column name="openAPISchemaClassName" type="String" />
 		<column name="name" type="String" />
 		<column name="export" type="boolean" />
 

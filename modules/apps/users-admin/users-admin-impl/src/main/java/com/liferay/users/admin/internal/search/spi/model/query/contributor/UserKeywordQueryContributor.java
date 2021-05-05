@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -75,12 +76,13 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 				keywords = StringUtil.toLowerCase(keywords);
 
 				booleanQuery.add(
-					new WildcardQueryImpl(
-						"emailAddress", keywords + StringPool.STAR),
+					_getTrailingWildcardQuery("emailAddress", keywords),
 					BooleanClauseOccur.SHOULD);
 				booleanQuery.add(
-					new WildcardQueryImpl(
-						"emailAddressDomain", keywords + StringPool.STAR),
+					_getTrailingWildcardQuery("emailAddressDomain", keywords),
+					BooleanClauseOccur.SHOULD);
+				booleanQuery.add(
+					_getTrailingWildcardQuery("screenName", keywords),
 					BooleanClauseOccur.SHOULD);
 			}
 			catch (ParseException parseException) {
@@ -101,5 +103,11 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 
 	@Reference
 	protected QueryHelper queryHelper;
+
+	private WildcardQuery _getTrailingWildcardQuery(
+		String field, String value) {
+
+		return new WildcardQueryImpl(field, value + StringPool.STAR);
+	}
 
 }

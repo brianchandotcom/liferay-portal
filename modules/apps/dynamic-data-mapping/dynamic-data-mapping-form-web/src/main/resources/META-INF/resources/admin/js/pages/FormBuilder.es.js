@@ -60,9 +60,6 @@ export const FormBuilder = () => {
 
 	const {
 		activePage,
-		defaultLanguageId,
-		editingLanguageId,
-		fieldSets,
 		focusedField,
 		localizedName,
 		pages,
@@ -304,8 +301,7 @@ export const FormBuilder = () => {
 							className={classNames(
 								'container ddm-form-builder',
 								{
-									'ddm-form-builder--sidebar-open':
-										sidebarOpen,
+									'ddm-form-builder--sidebar-open': sidebarOpen,
 								}
 							)}
 						>
@@ -349,11 +345,7 @@ export const FormBuilder = () => {
 				</div>
 
 				<MultiPanelSidebar
-					createPlugin={({
-						panel,
-						sidebarOpen,
-						sidebarPanelId,
-					}) => ({
+					createPlugin={({panel, sidebarOpen, sidebarPanelId}) => ({
 						panel,
 						sidebarOpen,
 						sidebarPanelId,

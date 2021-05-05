@@ -122,7 +122,8 @@ public class KBFolderStagedModelDataHandler
 				serviceContext.setUuid(kbFolder.getUuid());
 
 				importedKBFolder = _kbFolderLocalService.addKBFolder(
-					userId, portletDataContext.getScopeGroupId(),
+					kbFolder.getExternalReferenceCode(), userId,
+					portletDataContext.getScopeGroupId(),
 					kbFolder.getClassNameId(), parentFolderId,
 					kbFolder.getName(), kbFolder.getDescription(),
 					serviceContext);
@@ -136,9 +137,10 @@ public class KBFolderStagedModelDataHandler
 		}
 		else {
 			importedKBFolder = _kbFolderLocalService.addKBFolder(
-				userId, portletDataContext.getScopeGroupId(),
-				kbFolder.getClassNameId(), parentFolderId, kbFolder.getName(),
-				kbFolder.getDescription(), serviceContext);
+				kbFolder.getExternalReferenceCode(), userId,
+				portletDataContext.getScopeGroupId(), kbFolder.getClassNameId(),
+				parentFolderId, kbFolder.getName(), kbFolder.getDescription(),
+				serviceContext);
 		}
 
 		portletDataContext.importClassedModel(kbFolder, importedKBFolder);

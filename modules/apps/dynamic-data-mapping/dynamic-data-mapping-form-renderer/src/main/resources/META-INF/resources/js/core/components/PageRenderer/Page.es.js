@@ -29,7 +29,7 @@ import * as Tabbed from './TabbedVariant.es';
 import {VariantsProvider} from './VariantsContext.es';
 
 const LAYOUT_TYPES = {
-	MULTI_PAGES: 'multi_pages',
+	MULTI_PAGES: 'multi-pages',
 	PAGINATED: 'paginated',
 	SINGLE_PAGE: 'single-page',
 	SUCCESS: 'success',
@@ -118,7 +118,7 @@ const getVariant = ({page, pages, paginationMode}) => {
  * you can use the renderer to render fields from different layouts.
  *
  * Renderer supports some rendering modes by default
- * - multi_pages
+ * - multi-pages
  * - paginated
  * - single-page
  * - success

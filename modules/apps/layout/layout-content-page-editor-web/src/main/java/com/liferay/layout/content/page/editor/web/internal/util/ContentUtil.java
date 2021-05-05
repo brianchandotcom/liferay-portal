@@ -465,8 +465,6 @@ public class ContentUtil {
 			return null;
 		}
 
-		mappedClassPKs.add(classPK);
-
 		long classNameId = jsonObject.getLong("classNameId");
 
 		if (classNameId <= 0) {
@@ -482,6 +480,8 @@ public class ContentUtil {
 		if (layoutDisplayPageProvider == null) {
 			return null;
 		}
+
+		mappedClassPKs.add(classPK);
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 			new InfoItemReference(className, classPK));

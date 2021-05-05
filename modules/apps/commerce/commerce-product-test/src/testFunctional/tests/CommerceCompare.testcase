@@ -24,6 +24,7 @@ definition {
 
 			CommerceConfiguration.commerceInitializersTearDown();
 		}
+
 	}
 
 	@description = "COMMERCE-5912. As a buyer, I want to select an item in Product Details for compare in Product Widget"
@@ -73,7 +74,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5915 EditMaxNumberOfComparisonItemsInComparePage pending implementation
-
 	}
 
 	@description = "COMMERCE-5916. As a buyer, I want to see max number of compare items allowed in MiniCompare widget"
@@ -104,12 +104,46 @@ definition {
 	}
 
 	@description = "COMMERCE-5914. As a buyer, I want to deselect a item in Product Details for compare in Product Widget"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5914 RemoveComparisonItemFromProductDetailsPage pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click.clickAtNotVisible(
+			key_productName = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+		Click.clickAtNotVisible(
+			key_productName = "Transmission Fluid",
+			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+
+		AssertElementPresent(
+			key_productName = "u-joint",
+			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
+
+		AssertElementPresent(
+			key_productName = "transmission-fluid",
+			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
+
+		AssertChecked.assertCheckedNotVisible(
+			checkboxName = "Compare",
+			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+
+		Click.clickAtNotVisible(
+			checkboxName = "Compare",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		AssertElementNotPresent(
+			key_productName = "u-joint",
+			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_CUSTOM_IMAGE");
+
+
+			
 	}
 
 	@description = "COMMERCE-5919. As a buyer, when comparing items in Compare page, I want to view product options and specifications, if set"

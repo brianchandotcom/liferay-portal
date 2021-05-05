@@ -30,6 +30,8 @@ import java.util.Set;
  */
 public class DDMFormLayout implements Serializable {
 
+	public static final String MULTI_PAGES = "multi-pages";
+
 	public static final String SETTINGS_MODE = "settings";
 
 	public static final String SINGLE_PAGE_MODE = "single-page";

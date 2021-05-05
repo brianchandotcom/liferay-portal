@@ -628,6 +628,8 @@ public class AssetPublisherDisplayContext {
 				String[] tagNames = StringUtil.split(
 					queryValues, StringPool.COMMA);
 
+				tagNames = _normalizeAssetTagNames(tagNames);
+
 				tagNames = ParamUtil.getStringValues(
 					_httpServletRequest, "queryTagNames" + queryLogicIndex,
 					tagNames);
@@ -2182,6 +2184,19 @@ public class AssetPublisherDisplayContext {
 			_httpServletRequest, "showRelatedAssets");
 
 		return _showRelatedAssets;
+	}
+
+	private String[] _normalizeAssetTagNames(String[] assetTagNames) {
+		if (ArrayUtil.isEmpty(assetTagNames)) {
+			return assetTagNames;
+		}
+
+		for (int i = 0; i < assetTagNames.length; i++) {
+			assetTagNames[i] = StringUtil.toLowerCase(
+				StringUtil.trim(assetTagNames[i]));
+		}
+
+		return assetTagNames;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

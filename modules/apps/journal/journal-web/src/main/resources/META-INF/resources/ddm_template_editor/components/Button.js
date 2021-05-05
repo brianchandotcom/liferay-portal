@@ -13,7 +13,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,24 +20,18 @@ const noop = () => {};
 
 export const Button = ({label, onClick = noop, tooltip}) => {
 	return (
-		<ClayTooltipProvider
-			contentRenderer={({title}) => (
-				<div dangerouslySetInnerHTML={{__html: title}} />
-			)}
-			delay={0}
+		<ClayButton
+			borderless
+			className="font-weight-normal text-left text-truncate w-100"
+			data-tooltip-align="right"
+			data-tooltip-delay="0"
+			displayType="unstyled"
+			key={label}
+			onClick={onClick}
+			title={tooltip}
 		>
-			<ClayButton
-				borderless
-				className="font-weight-normal text-left text-truncate w-100"
-				data-tooltip-align="right"
-				displayType="unstyled"
-				key={label}
-				onClick={onClick}
-				title={tooltip}
-			>
-				{label}
-			</ClayButton>
-		</ClayTooltipProvider>
+			{label}
+		</ClayButton>
 	);
 };
 

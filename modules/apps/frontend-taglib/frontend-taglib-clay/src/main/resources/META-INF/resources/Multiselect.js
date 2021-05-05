@@ -14,7 +14,6 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayMultiSelect, {itemLabelFilter} from '@clayui/multi-select';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
 export default function Multiselect({
@@ -43,44 +42,40 @@ export default function Multiselect({
 	const [selectedItems, setSelectedItems] = useState(_selectedItems);
 
 	return (
-		<ClayTooltipProvider>
-			<ClayForm.Group className={!isValid ? 'has-error' : ''}>
-				{label && <label htmlFor={id}>{label}</label>}
+		<ClayForm.Group className={!isValid ? 'has-error' : ''}>
+			{label && <label htmlFor={id}>{label}</label>}
 
-				<ClayInput.Group>
-					<ClayInput.GroupItem>
-						<ClayMultiSelect
-							className={cssClass}
-							clearAllTitle={clearAllTitle}
-							closeButtonAriaLabel={Liferay.Language.get(
-								'remove-x'
-							)}
-							disabled={disabled}
-							disabledClearAll={disabledClearAll}
-							id={id}
-							inputName={inputName}
-							inputValue={inputValue}
-							isValid={isValid}
-							items={selectedItems}
-							locator={multiselectLocator}
-							onChange={setInputValue}
-							onItemsChange={setSelectedItems}
-							sourceItems={itemLabelFilter(
-								sourceItems,
-								inputValue,
-								multiselectLocator?.label ?? 'label'
-							)}
-							{...otherProps}
-						/>
-
-						{helpText && (
-							<ClayForm.FeedbackGroup>
-								<ClayForm.Text>{helpText}</ClayForm.Text>
-							</ClayForm.FeedbackGroup>
+			<ClayInput.Group>
+				<ClayInput.GroupItem>
+					<ClayMultiSelect
+						className={cssClass}
+						clearAllTitle={clearAllTitle}
+						closeButtonAriaLabel={Liferay.Language.get('remove-x')}
+						disabled={disabled}
+						disabledClearAll={disabledClearAll}
+						id={id}
+						inputName={inputName}
+						inputValue={inputValue}
+						isValid={isValid}
+						items={selectedItems}
+						locator={multiselectLocator}
+						onChange={setInputValue}
+						onItemsChange={setSelectedItems}
+						sourceItems={itemLabelFilter(
+							sourceItems,
+							inputValue,
+							multiselectLocator?.label ?? 'label'
 						)}
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
-			</ClayForm.Group>
-		</ClayTooltipProvider>
+						{...otherProps}
+					/>
+
+					{helpText && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.Text>{helpText}</ClayForm.Text>
+						</ClayForm.FeedbackGroup>
+					)}
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+		</ClayForm.Group>
 	);
 }

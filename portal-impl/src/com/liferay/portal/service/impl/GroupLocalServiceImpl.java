@@ -272,6 +272,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		String friendlyName = StringPool.BLANK;
 
 		if (nameMap != null) {
+			for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+				String value = entry.getValue();
+
+				if (Validator.isNotNull(value)) {
+					nameMap.replace(entry.getKey(), StringUtil.trim(value));
+				}
+			}
+
 			groupKey = nameMap.get(LocaleUtil.getDefault());
 			friendlyName = nameMap.get(LocaleUtil.getDefault());
 

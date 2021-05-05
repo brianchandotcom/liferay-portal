@@ -362,7 +362,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		if (!ArrayUtil.isEmpty(allTagNames)) {
 			assetEntries = _filterAssetTagNamesAssetEntries(
-				assetEntries, allTagNames);
+				assetEntries, _normalizeAssetTagNames(allTagNames));
 		}
 
 		return assetEntries;
@@ -517,7 +517,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			if (Objects.equals(queryName, "assetTags") && queryContains &&
 				(queryAndOperator || (queryValues.length == 1))) {
 
-				queryValues = _normalizeQueryValues(queryValues);
+				queryValues = _normalizeAssetTagNames(queryValues);
 
 				Collections.addAll(allAssetTagNames, queryValues);
 			}
@@ -1181,15 +1181,17 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 		return false;
 	}
 
-	private String[] _normalizeQueryValues(String[] queryValues) {
-		List<String> normalizedQueryValues = new ArrayList<>();
-
-		for (String queryValue : queryValues) {
-			normalizedQueryValues.add(
-				StringUtil.toLowerCase(StringUtil.trim(queryValue)));
+	private String[] _normalizeAssetTagNames(String[] assetTagNames) {
+		if (ArrayUtil.isEmpty(assetTagNames)) {
+			return assetTagNames;
 		}
 
-		return normalizedQueryValues.toArray(new String[0]);
+		for (int i = 0; i < assetTagNames.length; i++) {
+			assetTagNames[i] = StringUtil.toLowerCase(
+				StringUtil.trim(assetTagNames[i]));
+		}
+
+		return assetTagNames;
 	}
 
 	private void _removeAndStoreSelection(
@@ -1296,16 +1298,16 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			}
 			else {
 				if (queryContains && queryAndOperator) {
-					allAssetTagNames = _normalizeQueryValues(queryValues);
+					allAssetTagNames = _normalizeAssetTagNames(queryValues);
 				}
 				else if (queryContains && !queryAndOperator) {
-					anyAssetTagNames = _normalizeQueryValues(queryValues);
+					anyAssetTagNames = _normalizeAssetTagNames(queryValues);
 				}
 				else if (!queryContains && queryAndOperator) {
-					notAllAssetTagNames = _normalizeQueryValues(queryValues);
+					notAllAssetTagNames = _normalizeAssetTagNames(queryValues);
 				}
 				else {
-					notAnyAssetTagNames = _normalizeQueryValues(queryValues);
+					notAnyAssetTagNames = _normalizeAssetTagNames(queryValues);
 				}
 			}
 		}

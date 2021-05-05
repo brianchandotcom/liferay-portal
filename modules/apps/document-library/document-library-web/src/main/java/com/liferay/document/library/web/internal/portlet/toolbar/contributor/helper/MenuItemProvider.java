@@ -98,6 +98,7 @@ public class MenuItemProvider {
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setIcon("upload");
+		urlMenuItem.setKey(DLUIItemKeys.UPLOAD);
 		urlMenuItem.setLabel(
 			LanguageUtil.get(
 				PortalUtil.getHttpServletRequest(portletRequest),

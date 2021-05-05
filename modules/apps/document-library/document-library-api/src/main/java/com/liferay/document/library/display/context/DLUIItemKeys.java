@@ -65,6 +65,9 @@ public class DLUIItemKeys {
 	public static final String REVERT =
 		DLUIItemKeys.class.getName() + "#revert";
 
+	public static final String UPLOAD =
+		DLUIItemKeys.class.getName() + "#upload";
+
 	public static final String VIEW_ORIGINAL_FILE =
 		DLUIItemKeys.class.getName() + "#view-original-file";
 

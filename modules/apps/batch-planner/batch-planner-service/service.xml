@@ -21,8 +21,8 @@
 		<!-- Other fields -->
 
 		<column name="batchPlannerPlanId" type="long" />
-		<column name="batchEngineTaskERC" type="String" />
-		<column name="dispatchTriggerERC" type="String" />
+		<column convert-null="false" name="batchEngineTaskERC" type="String" />
+		<column convert-null="false" name="dispatchTriggerERC" type="String" />
 		<column name="size" type="int" />
 		<column name="total" type="int" />
 		<column name="status" type="int" />
@@ -68,7 +68,7 @@
 		<column name="contentFieldType" type="String" />
 		<column name="openAPIFieldName" type="String" />
 		<column name="openAPIFieldType" type="String" />
-		<column name="transformationJavaCode" type="String" />
+		<column convert-null="false" name="transformationJavaCode" type="String" />
 
 		<!-- Order -->
 

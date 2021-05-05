@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Alec Sloan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link SerializableFacet}
  */
+@Deprecated
 public class SerializableMultiValueFacet extends MultiValueFacet {
 
 	public SerializableMultiValueFacet(SearchContext searchContext) {

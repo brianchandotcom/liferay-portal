@@ -9,13 +9,58 @@
 </thead>
 <tbody>
 <tr>
+	<td>CHAT_CHATWOOT</td>
+	<td>//div[contains(@class,'woot--bubble-holder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_CRISP</td>
+	<td>//div[contains(@id,'crisp-chatbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_HUBSPOT</td>
+	<td>//div[contains(@id,'hubspot-messages-iframe-container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHAT_JIVOCHAT</td>
 	<td>//div[contains(@id,'jivo-iframe-container')]</td>
 	<td></td>
 </tr>
 <tr>
+	<td>CHAT_LIVECHAT</td>
+	<td>//div[contains(@id,'chat-widget-container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHAT_LIVEPERSON</td>
 	<td>//div[contains(@id,'LPMcontainer')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_SMARTSUPP</td>
+	<td>//iframe[contains(@title,'Smartsupp')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_TAWKTO</td>
+	<td>//iframe[contains(@title, 'chat widget')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_TIDIO</td>
+	<td>//body[contains(@class,'awesome-iframe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_TOLVNOW</td>
+	<td>//span[contains(@id,'tolvnow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_ZENDESK</td>
+	<td>//iframe[contains(@id, 'launcher')]</td>
 	<td></td>
 </tr>
 </tbody>

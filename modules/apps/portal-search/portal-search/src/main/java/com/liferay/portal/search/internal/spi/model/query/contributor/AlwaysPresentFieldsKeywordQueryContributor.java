@@ -61,8 +61,8 @@ public class AlwaysPresentFieldsKeywordQueryContributor
 	protected FieldQueryFactory fieldQueryFactory;
 
 	private static final String[] _ALWAYS_PRESENT_FIELDS = {
-		Field.COMMENTS, Field.CONTENT, Field.DESCRIPTION, Field.PROPERTIES,
-		Field.TITLE, Field.URL, Field.USER_NAME
+		Field.COMMENTS, Field.CONTENT, Field.DESCRIPTION, Field.TITLE,
+		Field.URL, Field.USER_NAME
 	};
 
 }

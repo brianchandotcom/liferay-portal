@@ -821,7 +821,17 @@ public class WorkflowMetricsRESTTestHelper {
 			"instanceCompleted", Objects.nonNull(instance.getDateCompletion())
 		).setValue(
 			"instanceId", instance.getId()
-		).setValue(
+		);
+
+		if (slaResult.getLastCheckDate() != null) {
+			documentBuilder.setValue(
+				"lastCheckDate",
+				DateUtil.getDate(
+					slaResult.getLastCheckDate(), "yyyyMMddHHmmss",
+					LocaleUtil.getDefault()));
+		}
+
+		documentBuilder.setValue(
 			"onTime", slaResult.getOnTime()
 		).setValue(
 			"processId", instance.getProcessId()

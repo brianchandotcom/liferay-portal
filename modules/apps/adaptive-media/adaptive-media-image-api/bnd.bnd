@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Adaptive Media Image API
 Bundle-SymbolicName: com.liferay.adaptive.media.image.api
-Bundle-Version: 5.0.1
+Bundle-Version: 5.1.0
 Export-Package:\
 	com.liferay.adaptive.media.image.configuration,\
 	com.liferay.adaptive.media.image.constants,\
@@ -17,6 +17,7 @@ Export-Package:\
 	com.liferay.adaptive.media.image.scaler,\
 	com.liferay.adaptive.media.image.service,\
 	com.liferay.adaptive.media.image.service.persistence,\
+	com.liferay.adaptive.media.image.size,\
 	com.liferay.adaptive.media.image.url,\
 	com.liferay.adaptive.media.image.util,\
 	com.liferay.adaptive.media.image.validator

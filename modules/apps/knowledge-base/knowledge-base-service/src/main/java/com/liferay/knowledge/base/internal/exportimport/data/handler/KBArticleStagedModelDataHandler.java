@@ -395,7 +395,8 @@ public class KBArticleStagedModelDataHandler
 		throws Exception {
 
 		KBArticle importedKBArticle = _kbArticleLocalService.addKBArticle(
-			userId, parentResourceClassNameId, parentResourcePrimKey,
+			kbArticle.getExternalReferenceCode(), userId,
+			parentResourceClassNameId, parentResourcePrimKey,
 			kbArticle.getTitle(), kbArticle.getUrlTitle(),
 			kbArticle.getContent(), kbArticle.getDescription(),
 			kbArticle.getSourceURL(), sections, null, serviceContext);

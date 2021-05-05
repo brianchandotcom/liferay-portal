@@ -3217,7 +3217,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String lastName = null;
 		String fullName = null;
 		String screenName = null;
-		String emailAddress = null;
 		String street = null;
 		String city = null;
 		String zip = null;
@@ -3231,7 +3230,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			lastName = keywords;
 			fullName = keywords;
 			screenName = keywords;
-			emailAddress = keywords;
 			street = keywords;
 			city = keywords;
 			zip = keywords;
@@ -3252,8 +3250,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, firstName, middleName, lastName, fullName,
-				screenName, emailAddress, street, city, zip, region, country,
-				status, params, andOperator, start, end, sorts);
+				screenName, null, street, city, zip, region, country, status,
+				params, andOperator, start, end, sorts);
 
 			return indexer.search(searchContext);
 		}
@@ -3433,7 +3431,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String lastName = null;
 			String fullName = null;
 			String screenName = null;
-			String emailAddress = null;
 			String street = null;
 			String city = null;
 			String zip = null;
@@ -3447,7 +3444,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				lastName = keywords;
 				fullName = keywords;
 				screenName = keywords;
-				emailAddress = keywords;
 				street = keywords;
 				city = keywords;
 				zip = keywords;
@@ -3464,9 +3460,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			SearchContext searchContext = buildSearchContext(
 				companyId, firstName, middleName, lastName, fullName,
-				screenName, emailAddress, street, city, zip, region, country,
-				status, params, andOperator, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				screenName, null, street, city, zip, region, country, status,
+				params, andOperator, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
 			return (int)indexer.searchCount(searchContext);
 		}
@@ -3668,7 +3664,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String lastName = null;
 		String fullName = null;
 		String screenName = null;
-		String emailAddress = null;
 		String street = null;
 		String city = null;
 		String zip = null;
@@ -3682,7 +3677,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			lastName = keywords;
 			fullName = keywords;
 			screenName = keywords;
-			emailAddress = keywords;
 			street = keywords;
 			city = keywords;
 			zip = keywords;
@@ -3699,7 +3693,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		SearchContext searchContext = buildSearchContext(
 			companyId, firstName, middleName, lastName, fullName, screenName,
-			emailAddress, street, city, zip, region, country, status, params,
+			null, street, city, zip, region, country, status, params,
 			andOperator, start, end, sorts);
 
 		return searchUsers(searchContext);

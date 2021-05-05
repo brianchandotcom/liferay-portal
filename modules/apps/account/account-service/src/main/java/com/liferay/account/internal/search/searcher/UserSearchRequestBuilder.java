@@ -145,8 +145,6 @@ public class UserSearchRequestBuilder {
 			).put(
 				"country", _keywords
 			).put(
-				"emailAddress", _keywords
-			).put(
 				"firstName", _keywords
 			).put(
 				"fullName", _keywords

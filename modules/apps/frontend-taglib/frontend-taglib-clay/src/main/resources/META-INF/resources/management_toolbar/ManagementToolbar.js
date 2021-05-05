@@ -62,6 +62,7 @@ function ManagementToolbar({
 	showInfoButton,
 	showResultsBar,
 	showSearch,
+	sortingOrder,
 	sortingURL,
 	supportsBulkActions,
 	viewTypeItems,
@@ -112,6 +113,7 @@ function ManagementToolbar({
 							onFilterDropdownItemClick={
 								onFilterDropdownItemClick
 							}
+							sortingOrder={sortingOrder}
 							sortingURL={sortingURL}
 						/>
 					)}

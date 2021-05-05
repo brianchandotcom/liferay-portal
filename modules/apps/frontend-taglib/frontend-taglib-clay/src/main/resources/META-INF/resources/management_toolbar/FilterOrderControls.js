@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import classnames from 'classnames';
 import React from 'react';
 
 import LinkOrButton from './LinkOrButton';
@@ -24,6 +25,7 @@ const FilterOrderControls = ({
 	disabled,
 	filterDropdownItems,
 	onFilterDropdownItemClick,
+	sortingOrder,
 	sortingURL,
 }) => {
 	return (
@@ -81,7 +83,10 @@ const FilterOrderControls = ({
 						disabled={disabled}
 						displayType="unstyled"
 						href={sortingURL}
-						symbol="order-arrow"
+						symbol={classnames({
+							'order-list-down': sortingOrder === 'desc',
+							'order-list-up': sortingOrder === 'asc',
+						})}
 						title={Liferay.Language.get('reverse-sort-direction')}
 					/>
 				</ClayManagementToolbar.Item>

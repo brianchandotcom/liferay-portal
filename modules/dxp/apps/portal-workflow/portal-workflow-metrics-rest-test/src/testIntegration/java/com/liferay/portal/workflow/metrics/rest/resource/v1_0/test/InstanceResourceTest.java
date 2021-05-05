@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -290,7 +291,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 			{
 				dateOverdue = null;
 				id = RandomTestUtil.randomLong();
-				name = null;
+				name = StringPool.BLANK;
 				onTime = !overdue;
 				remainingTime = overdue ? -1L : 1L;
 				status = slaResultStatus;

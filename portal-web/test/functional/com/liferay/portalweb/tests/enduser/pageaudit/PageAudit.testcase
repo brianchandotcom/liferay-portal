@@ -26,8 +26,8 @@ definition {
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Back button, s/he is led to the page view again"
 	@priority = "5"
 	test PageAuditBackButton {
-		property test.name.skip.portal.instance = "PageAudit#PageAuditBackButton";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditBackButton";
 
 		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
@@ -70,8 +70,8 @@ definition {
 	@description = "LPS-119068: When the user, after s/he has clicked on the Connect with Page Speed (button) and being led to Site Settings > Pages > Google PageSpeed, clicks on Cancel button, s/he is led to the page view again"
 	@priority = "5"
 	test PageAuditCancelButton {
-		property test.name.skip.portal.instance = "PageAudit#PageAuditCancelButton";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditCancelButton";
 
 		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
@@ -114,8 +114,8 @@ definition {
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a content page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditContentPage {
-		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPage";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPage";
 
 		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
@@ -150,8 +150,8 @@ definition {
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the content pages doesn't show"
 	@priority = "5"
 	test PageAuditContentPageDisabled {
-		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPageDisabled";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditContentPageDisabled";
 
 		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeed();
@@ -174,8 +174,8 @@ definition {
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a display page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditDisplayPage {
-		property test.name.skip.portal.instance = "PageAudit#PageAuditDisplayPage";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditDisplayPage";
 
 		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
@@ -235,8 +235,8 @@ definition {
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the display pages doesn't show"
 	@priority = "5"
 	test PageAuditDisplayPageDisabled {
-		property test.name.skip.portal.instance = "PageAudit#PageAuditDisplayPageDisabled";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditDisplayPageDisabled";
 
 		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeed();
@@ -284,8 +284,8 @@ definition {
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is on and a user with permissions to view page visits the view mode of a widget page, the issue icon for displaying the page audit panel shows"
 	@priority = "5"
 	test PageAuditWidgetPage {
-		property test.name.skip.portal.instance = "PageAudit#PageAuditWidgetPage";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditWidgetPage";
 
 		task ("Enable Google PageSpeed") {
 			PageAudit.enableGooglePageSpeed();
@@ -319,8 +319,8 @@ definition {
 	@description = "LPS-119068: When the Enable Page Audit check in System Settings is off, the issue icon to display the page audit panel in the widget pages doesn't show"
 	@priority = "5"
 	test PageAuditWidgetPageDisabled {
-		property test.name.skip.portal.instance = "PageAudit#PageAuditWidgetPageDisabled";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PageAudit#PageAuditWidgetPageDisabled";
 
 		task ("Disable Google PageSpeed") {
 			PageAudit.disableGooglePageSpeed();

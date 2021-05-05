@@ -703,7 +703,7 @@ definition {
 		}
 	}
 
-	macro assertLocalizableFieldIsSetTrue {
+	macro assertLocalizableField {
 		var checkboxName = "Localizable";
 
 		AssertClick.assertPartialTextClickAt(

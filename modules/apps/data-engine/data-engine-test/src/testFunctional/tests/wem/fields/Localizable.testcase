@@ -338,14 +338,14 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		DataEngine.assertLocalizableFieldIsSetTrue(fieldFieldLabel = "Text");
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Text");
 
 		DataEngine.addFieldNested(
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DataEngine.assertLocalizableFieldIsSetTrue(fieldFieldLabel = "Numeric");
+		DataEngine.assertLocalizableField(fieldFieldLabel = "Numeric");
 
 		DataEngine.gotoCreateNewFieldset();
 

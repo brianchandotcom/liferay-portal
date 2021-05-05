@@ -59,6 +59,23 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 	}
 
 	@Override
+	public KBFolder addKBFolder(
+			String externalReferenceCode, long groupId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_kbFolderModelResourcePermission, getPermissionChecker(), groupId,
+			parentResourcePrimKey, KBActionKeys.ADD_KB_FOLDER);
+
+		return kbFolderLocalService.addKBFolder(
+			externalReferenceCode, getUserId(), groupId,
+			parentResourceClassNameId, parentResourcePrimKey, name, description,
+			serviceContext);
+	}
+
+	@Override
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException {
 		_kbFolderModelResourcePermission.check(
 			getPermissionChecker(), kbFolderId, KBActionKeys.DELETE);

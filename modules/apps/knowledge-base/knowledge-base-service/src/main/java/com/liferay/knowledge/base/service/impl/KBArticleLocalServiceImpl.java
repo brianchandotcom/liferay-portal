@@ -24,6 +24,7 @@ import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticlePriorityException;
@@ -152,6 +153,21 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return addKBArticle(
+			null, userId, parentResourceClassNameId, parentResourcePrimKey,
+			title, urlTitle, content, description, sourceURL, sections,
+			selectedFileNames, serviceContext);
+	}
+
+	@Override
+	public KBArticle addKBArticle(
+			String externalReferenceCode, long userId,
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			String title, String urlTitle, String content, String description,
+			String sourceURL, String[] sections, String[] selectedFileNames,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// KB article
 
 		User user = userLocalService.getUser(userId);
@@ -177,9 +193,16 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		long rootResourcePrimKey = getRootResourcePrimKey(
 			resourcePrimKey, parentResourceClassNameId, parentResourcePrimKey);
 
+		if (externalReferenceCode == null) {
+			externalReferenceCode = String.valueOf(kbArticleId);
+		}
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		KBArticle kbArticle = kbArticlePersistence.create(kbArticleId);
 
 		kbArticle.setUuid(serviceContext.getUuid());
+		kbArticle.setExternalReferenceCode(externalReferenceCode);
 		kbArticle.setResourcePrimKey(resourcePrimKey);
 		kbArticle.setGroupId(groupId);
 		kbArticle.setCompanyId(user.getCompanyId());
@@ -2016,6 +2039,21 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		if (!kbArticles.isEmpty()) {
 			throw new KBArticleUrlTitleException.MustNotBeDuplicate(urlTitle);
+		}
+	}
+
+	private void _validateExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		KBArticle kbArticle = kbArticlePersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+
+		if (kbArticle != null) {
+			throw new DuplicateKBArticleExternalReferenceCodeException(
+				StringBundler.concat(
+					"Duplicate KBArticle external reference code ",
+					externalReferenceCode, "in group ", groupId));
 		}
 	}
 

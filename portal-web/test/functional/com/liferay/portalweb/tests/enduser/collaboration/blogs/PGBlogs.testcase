@@ -1018,6 +1018,43 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This test covers LPS-130735. It ensures that the caption of cover image can be viewed in blogs when the small image is removed."
+	@priority = "3"
+	@refactorneeded
+	test CanViewCaptionFieldAfterRemovingSmallImage {
+		Blogs.addEntryWithUploadedCoverImage(
+			captionField = "true",
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addSmallImage(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.removeSmallImage(
+			images = "true",
+			uploadFileName = "Document_2.jpg");
+
+		AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
+
+		PortletEntry.publish();
+	}
+
 	@description = "This checks that an administrator will receive a notification when a blog entry is flagged."
 	@priority = "4"
 	@refactordone

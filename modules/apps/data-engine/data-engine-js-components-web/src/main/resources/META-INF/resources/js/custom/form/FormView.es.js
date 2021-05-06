@@ -284,7 +284,7 @@ Form.displayName = 'Form';
  * in the form view.
  */
 const PAGINATION_MODE_MAPPED = {
-	multi_pages: 'wizard',
+	'multi-pages': 'wizard',
 };
 
 /**

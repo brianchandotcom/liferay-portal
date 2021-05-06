@@ -42,7 +42,7 @@ export const BUILDER_INITIAL_STATE = {
 			),
 		},
 	},
-	paginationMode: 'multi_pages',
+	paginationMode: 'multi-pages',
 	rules: [],
 };
 

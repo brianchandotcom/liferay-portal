@@ -98,10 +98,11 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
+		String fileName = RandomTestUtil.randomString();
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			externalReferenceCode, group.getGroupId(),
-			parentFolder.getFolderId(), RandomTestUtil.randomString());
+			parentFolder.getFolderId(), fileName, fileName, null);
 
 		Assert.assertEquals(
 			externalReferenceCode, fileEntry.getExternalReferenceCode());
@@ -117,9 +118,11 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	public void testAssetEntryShouldStoreFileEntryIdAsExternalReferenceCodeIfExternalReferenceCodeIsNotPresent()
 		throws Exception {
 
+		String fileName = RandomTestUtil.randomString();
+
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString());
+			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
+			fileName, null);
 
 		String externalReferenceCode = String.valueOf(
 			fileEntry.getFileEntryId());
@@ -141,8 +144,8 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		String[] assetTagNames = {"hello", "world"};
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName, fileName,
-			assetTagNames);
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), fileName, fileName, assetTagNames);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
@@ -188,13 +191,13 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			DLAppServiceTestUtil.FILE_NAME,
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
 			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
 		DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			DLAppServiceTestUtil.FILE_NAME, DLAppServiceTestUtil.FILE_NAME,
-			null);
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.FILE_NAME, null);
 	}
 
 	@Test(expected = DuplicateFileEntryException.class)
@@ -202,12 +205,12 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		throws Exception {
 
 		DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			DLAppServiceTestUtil.FILE_NAME, DLAppServiceTestUtil.FILE_NAME,
-			null);
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
+			DLAppServiceTestUtil.FILE_NAME, null);
 		DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(),
-			DLAppServiceTestUtil.FILE_NAME,
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), DLAppServiceTestUtil.FILE_NAME,
 			DLAppServiceTestUtil.STRIPPED_FILE_NAME, null);
 	}
 

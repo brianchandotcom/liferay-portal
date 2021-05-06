@@ -51,7 +51,8 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 		String fileName = RandomTestUtil.randomString();
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName, fileName,
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), fileName, fileName,
 			new String[] {"hello", "world"});
 
 		DLAppServiceTestUtil.search(fileEntry, "hello", true);
@@ -71,8 +72,8 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 		String[] assetTagNames = {"hello", "world"};
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName, fileName,
-			assetTagNames);
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), fileName, fileName, assetTagNames);
 
 		assetTagNames = new String[] {"hello", "world", "liferay"};
 

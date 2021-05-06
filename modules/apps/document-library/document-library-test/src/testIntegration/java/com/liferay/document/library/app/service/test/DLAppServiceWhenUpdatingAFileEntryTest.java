@@ -70,8 +70,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		String[] assetTagNames = {"hello"};
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName, fileName,
-			assetTagNames);
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), fileName, fileName, assetTagNames);
 
 		assetTagNames = new String[] {"hello", "world"};
 
@@ -116,8 +116,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 		String[] assetTagNames = {"hello"};
 
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName, fileName,
-			assetTagNames);
+			RandomTestUtil.randomString(), group.getGroupId(),
+			parentFolder.getFolderId(), fileName, fileName, assetTagNames);
 
 		assetTagNames = new String[] {"hello", "world"};
 

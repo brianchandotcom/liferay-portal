@@ -45,9 +45,6 @@ module.exports = {
 					'@liferay/frontend-taglib': {
 						'/': '*',
 					},
-					'app-builder-web': {
-						'/': '*',
-					},
 					'asset-taglib': {
 						'/': '*',
 					},

@@ -32,6 +32,7 @@ export default function nextPage({
 			activePage,
 			defaultLanguageId,
 			editingLanguageId,
+			formId,
 			groupId,
 			nextPage: activePage + 1,
 			pages,

@@ -31,6 +31,7 @@ export default function previousPage({
 			activePage,
 			defaultLanguageId,
 			editingLanguageId,
+			formId,
 			groupId,
 			nextPage: activePage - 1,
 			pages,

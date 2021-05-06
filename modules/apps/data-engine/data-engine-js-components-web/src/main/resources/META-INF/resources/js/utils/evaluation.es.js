@@ -122,6 +122,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 	const {
 		defaultLanguageId,
 		editingLanguageId,
+		formId,
 		groupId,
 		nextPage,
 		pages,
@@ -145,6 +146,7 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 			portletNamespace,
 			serializedFormContext: JSON.stringify({
 				...evaluatorContext,
+				formId,
 				groupId: groupId ? groupId : themeDisplay.getScopeGroupId(),
 				nextPage: nextPage ? nextPage : null,
 				portletNamespace,

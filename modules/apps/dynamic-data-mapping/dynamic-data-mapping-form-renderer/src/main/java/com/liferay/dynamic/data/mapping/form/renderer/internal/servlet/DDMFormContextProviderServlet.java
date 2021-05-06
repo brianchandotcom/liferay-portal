@@ -109,9 +109,10 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 			DDMFormTemplateContextProcessor ddmFormTemplateContextProcessor =
 				createDDMFormTemplateContextProcessor(httpServletRequest);
 
+			ddmFormRenderingContext.setDDMFormInstanceId(
+				ddmFormTemplateContextProcessor.getDDMFormInstanceId());
 			ddmFormRenderingContext.setDDMFormValues(
 				ddmFormTemplateContextProcessor.getDDMFormValues());
-
 			ddmFormRenderingContext.setGroupId(
 				ddmFormTemplateContextProcessor.getGroupId());
 

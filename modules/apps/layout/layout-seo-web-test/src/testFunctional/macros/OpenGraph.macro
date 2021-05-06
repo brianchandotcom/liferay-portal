@@ -103,14 +103,10 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
-		Navigator.gotoNavTab(navTab = "Other");
-
-		Navigator.gotoNavTab(navTab = "General");
-
-		Panel.expandPanel(panel = "Open Graph");
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		if (IsChecked(locator1 = "Checkbox#ANY_CHECKBOX", checkboxName = "Enable Open Graph")) {
 			Click(

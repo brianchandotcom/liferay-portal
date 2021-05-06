@@ -94,8 +94,8 @@ public class AssetCategoryInfoItemItemSelectorView
 		SelectAssetCategoryTreeNodeDisplayContext
 			selectAssetCategoryLevelDisplayContext =
 				new SelectAssetCategoryTreeNodeDisplayContext(
-					(HttpServletRequest)servletRequest, itemSelectedEventName,
-					portletURL);
+					false, (HttpServletRequest)servletRequest,
+					itemSelectedEventName, portletURL, false);
 
 		servletRequest.setAttribute(
 			AssetCategoryTreeNodeItemSelectorWebKeys.
@@ -105,7 +105,8 @@ public class AssetCategoryInfoItemItemSelectorView
 		SelectAssetVocabularyDisplayContext
 			selectAssetVocabularyDisplayContext =
 				new SelectAssetVocabularyDisplayContext(
-					(HttpServletRequest)servletRequest, portletURL);
+					false, (HttpServletRequest)servletRequest, portletURL,
+					false);
 
 		servletRequest.setAttribute(
 			AssetCategoryTreeNodeItemSelectorWebKeys.

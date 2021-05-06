@@ -26,6 +26,10 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		var attributes = JSONStagingSetter.setAttributes();
+
+		var serviceContext = JSONServiceContextUtil.setServiceContext(attributes = "${attributes}");
+
 		var curl = '''
 			${portalURL}/api/jsonws/staging/enable-remote-staging \
 				-u test@liferay.com:test \
@@ -36,7 +40,8 @@ definition {
 				-d remotePort=${remotePort} \
 				-d remotePathContext= \
 				-d secureConnection=false \
-				-d remoteGroupId=${remoteGroupId}
+				-d remoteGroupId=${remoteGroupId} \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

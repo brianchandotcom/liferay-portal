@@ -60,7 +60,7 @@ definition {
 
 		task ("Add a content page based on Blank") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");

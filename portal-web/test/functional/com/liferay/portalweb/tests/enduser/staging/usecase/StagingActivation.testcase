@@ -33,7 +33,7 @@ definition {
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name-staging",
+			groupName = "Site Name (Staging)",
 			layoutName = "Staging Test Page",
 			site = "false",
 			widgetName = "Documents and Media");

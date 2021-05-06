@@ -30,7 +30,7 @@ definition {
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Content Page Name",
 				site = "false",
 				type = "content");
@@ -116,7 +116,7 @@ definition {
 
 		task ("Add a content page based on Blank") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
@@ -163,14 +163,14 @@ definition {
 	test MapPageToTextFragment {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Widget Page Name",
 				site = "false");
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
@@ -296,7 +296,7 @@ definition {
 
 		task ("Add a content page based on Blank") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
@@ -550,7 +550,7 @@ definition {
 	@priority = "3"
 	test RestoreSavedInteractionsViaUndoHistoryInStagingSite {
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name-staging",
+			groupName = "Test Site Name (Staging)",
 			layoutName = "Test Content Page Name 2",
 			site = "false",
 			type = "content");

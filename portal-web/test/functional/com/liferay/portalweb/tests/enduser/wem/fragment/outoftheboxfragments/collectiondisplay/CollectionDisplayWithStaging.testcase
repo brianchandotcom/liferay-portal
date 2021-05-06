@@ -38,7 +38,7 @@ definition {
 	@priority = "4"
 	test AddAllThreeContentFragmentsInCollectionDisplayOneCellWithLocalLiveStaging {
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name-staging",
+			groupName = "Test Site Name (Staging)",
 			layoutName = "Test Content Page Name 2",
 			site = "false",
 			type = "content");
@@ -382,7 +382,7 @@ definition {
 	@priority = "4"
 	test ViewWebContentInContentDisplay {
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name-staging",
+			groupName = "Test Site Name (Staging)",
 			layoutName = "Test Content Page Name 2",
 			site = "false",
 			type = "content");

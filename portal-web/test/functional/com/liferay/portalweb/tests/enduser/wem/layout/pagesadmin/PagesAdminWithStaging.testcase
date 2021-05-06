@@ -34,13 +34,13 @@ definition {
 		task ("Add 2 widget page and 1 content page in the same level") {
 			for (var n : list "1,2") {
 				JSONLayout.addPublicLayout(
-					groupName = "Test Site Name-staging",
+					groupName = "Test Site Name (Staging)",
 					layoutName = "Test Page Name ${n}",
 					site = "false");
 			}
 
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name 3",
 				site = "false",
 				type = "content");

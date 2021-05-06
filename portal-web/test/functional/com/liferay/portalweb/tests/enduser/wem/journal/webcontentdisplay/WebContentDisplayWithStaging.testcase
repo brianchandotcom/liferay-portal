@@ -164,7 +164,7 @@ definition {
 		PortletEntry.publish();
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name-staging",
+			groupName = "Test Site Name (Staging)",
 			layoutName = "Staging Test Page",
 			site = "false",
 			widgetName = "Web Content Display");

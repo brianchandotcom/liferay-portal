@@ -20,12 +20,12 @@ definition {
 			groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name-staging",
+			groupName = "Site Name (Staging)",
 			layoutName = "Test Page Name",
 			site = "false");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name-staging",
+			groupName = "Site Name (Staging)",
 			layoutName = "Test Page Name",
 			site = "false",
 			widgetName = "Asset Publisher");

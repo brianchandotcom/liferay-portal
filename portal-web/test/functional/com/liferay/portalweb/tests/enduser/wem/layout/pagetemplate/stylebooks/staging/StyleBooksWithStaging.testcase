@@ -72,7 +72,7 @@ definition {
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
@@ -261,7 +261,7 @@ definition {
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
@@ -427,14 +427,14 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false");
 		}
 
 		task ("Add a Blogs portlet to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				widgetName = "Blogs");
@@ -571,7 +571,7 @@ definition {
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");
@@ -662,7 +662,7 @@ definition {
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				type = "content");

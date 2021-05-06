@@ -63,7 +63,7 @@ definition {
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "ADT Test Page",
 				site = "false");
 		}
@@ -97,7 +97,7 @@ definition {
 
 		task ("Add a Categories Navigation to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "ADT Test Page",
 				site = "false",
 				widgetName = "Categories Navigation");

@@ -33,7 +33,7 @@ definition {
 	test ViewContentPageInLiveAfterConvertingWidgetPageWithPublish {
 		task ("Add a widget page in staging site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false");
 		}
@@ -48,7 +48,7 @@ definition {
 
 		task ("Add an Asset Publisher to widget page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				widgetName = "Asset Publisher");
@@ -135,7 +135,7 @@ definition {
 	test ViewWidgetPageInLiveAfterConvertingWidgetPageWithoutPublish {
 		task ("Add a widget page in staging site") {
 			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false");
 		}
@@ -150,7 +150,7 @@ definition {
 
 		task ("Add an Asset Publisher to widget page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name-staging",
+				groupName = "Test Site Name (Staging)",
 				layoutName = "Test Page Name",
 				site = "false",
 				widgetName = "Asset Publisher");

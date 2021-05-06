@@ -550,7 +550,7 @@ definition {
 			uncheckContent = "Web Content");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name-staging",
+			groupName = "Site Name (Staging)",
 			layoutName = "Test Page",
 			site = "false",
 			widgetName = "Blogs");

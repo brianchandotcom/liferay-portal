@@ -722,15 +722,6 @@ definition {
 		// TODO LPS-130501 CanBeEdited pending implementation
 	}
 
-	@description = "Verify that a Form can be saved"
-	@ignore = "true"
-	@priority = "5"
-	test CanBeSaved {
-		property portal.acceptance = "false";
-
-		// TODO LPS-130997 CanBeSaved pending implementation
-	}
-
 	@description = "Verify that a Form can be unpublished"
 	@ignore = "true"
 	@priority = "5"
@@ -2158,6 +2149,15 @@ definition {
 
 			Form.closeSidebar();
 		}
+	}
+
+	@description = "Verify that multiple Forms can be deleted"
+	@ignore = "true"
+	@priority = "5"
+	test MultipleFormsCanBeDeleted {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131744 MultipleFormsCanBeDeleted pending implementation
 	}
 
 	@description = "This is a use case for LPS-59331"

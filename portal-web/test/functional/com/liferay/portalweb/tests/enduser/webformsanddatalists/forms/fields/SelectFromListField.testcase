@@ -104,15 +104,6 @@ definition {
 		// TODO LPS-131376 CanCreateListUsingAutofill pending implementation
 	}
 
-	@description = "Verify that a list can be created using a DataProvider"
-	@ignore = "true"
-	@priority = "5"
-	test CanCreateListUsingDataProvider {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131377 CanCreateListUsingDataProvider pending implementation
-	}
-
 	@description = "Verify that changes to a Field can be canceled"
 	@ignore = "true"
 	@priority = "4"

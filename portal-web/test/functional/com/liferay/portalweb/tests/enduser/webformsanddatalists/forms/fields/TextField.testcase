@@ -31,16 +31,6 @@ definition {
 		}
 	}
 
-	@description = "Verify that a Text Field can be Autocompleted from a Data Provider"
-	@ignore = "true"
-	@priority = "4"
-	test CanBeAutocompletedUsingADataProvider {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131350 CanBeAutocompletedUsingADataProvider pending implementation
-
-	}
-
 	@description = "Verify that a Text Field can be Autocompleted from a list of options"
 	@ignore = "true"
 	@priority = "4"
@@ -48,6 +38,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131349 CanBeAutocompletedUsingAList pending implementation
+
 	}
 
 	@description = "Verify that a Text Field can be created"
@@ -77,33 +68,6 @@ definition {
 		// TODO LPS-131333 CanBeDuplicated pending implementation
 	}
 
-	@description = "Verify that a Text Field can be edited"
-	@ignore = "true"
-	@priority = "5"
-	test CanBeEdited {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131331 CanBeEdited pending implementation
-	}
-
-	@description = "Verify that a Form can be submitted with the Text Field"
-	@ignore = "true"
-	@priority = "5"
-	test CanBeSubmitted {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131340 CanBeSubmitted pending implementation
-	}
-
-	@description = "Verify that a regular expression can be used to validate a Text Field"
-	@ignore = "true"
-	@priority = "4"
-	test CanBeValidatedUsingARegularExpression {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131343 CanBeValidatedUsingARegularExpression pending implementation
-	}
-
 	@description = "Verify that the "Contains" option can be used to validate a Text Field"
 	@ignore = "true"
 	@priority = "4"
@@ -111,15 +75,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131344 CanBeValidatedUsingTheContainsOption pending implementation
-	}
-
-	@description = "Verify that the "Does Not Contain" option can be used to validate a Text Field"
-	@ignore = "true"
-	@priority = "4"
-	test CanBeValidatedUsingTheDoesNotContainOption {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131345 CanBeValidatedUsingTheDoesNotContainOption pending implementation
 	}
 
 	@description = "Verify that the "Does Not Match" option can be used to validate a Text Field"
@@ -221,7 +176,7 @@ definition {
 		// TODO LPS-131334 TypeCanBeChanged pending implementation
 	}
 
-	@description = "Verify that Validation options are reset after changing the Field Type from Text Field to Numeric Field and vice versa"
+	@description = "Verify that Validation options are reset after changing the Field Type from Text Field to Numeric Field"
 	@ignore = "true"
 	@priority = "4"
 	test ValidationIsResetAfterChangingFieldType {

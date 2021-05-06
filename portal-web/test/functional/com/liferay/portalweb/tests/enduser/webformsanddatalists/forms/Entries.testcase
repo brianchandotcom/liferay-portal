@@ -68,15 +68,6 @@ definition {
 		// TODO LPS-131074 CanBeViewed pending implementation
 	}
 
-	@description = "Verify that Entries for the Grid and Multiple Selection Fields display a Bar Graph in the Summary Tab"
-	@ignore = "true"
-	@priority = "5"
-	test DisplayBarGraphInSummaryTab {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131081 DisplayBarGraphInSummaryTab pending implementation
-	}
-
 	@description = "Verify that Entries Previews display the correct information"
 	@ignore = "true"
 	@priority = "5"
@@ -88,7 +79,7 @@ definition {
 
 	@description = "Verify that the correct number of Entries are displayed"
 	@ignore = "true"
-	@priority = "5"
+	@priority = "3"
 	test DisplayCorrectNumberOfEntries {
 		property portal.acceptance = "false";
 
@@ -111,15 +102,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131082 DisplayNoMetricsInSummaryTab pending implementation
-	}
-
-	@description = "Verify that Entries for the Select From List and Single Selection Fields display a Pie Chart in the Summary Tab"
-	@ignore = "true"
-	@priority = "5"
-	test DisplayPieChartInSummaryTab {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131080 DisplayPieChartInSummaryTab pending implementation
 	}
 
 	@description = "Verify that Entries for the Numeric Field display a Field List, Average, Maximum Value, Minimum Value, and Sum in the Summary Tab"

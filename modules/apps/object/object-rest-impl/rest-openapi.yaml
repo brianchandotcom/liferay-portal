@@ -21,6 +21,7 @@ components:
                     additionalProperties:
                         type: object
                     type: object
+                    x-json-map: true
             type: object
 info:
     license:

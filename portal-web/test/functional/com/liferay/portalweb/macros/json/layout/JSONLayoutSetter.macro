@@ -17,23 +17,11 @@ definition {
 	}
 
 	macro setGroupId {
-		JSONUtil2._exclusiveOrCheck(
-			A = "${groupName}",
-			B = "${groupKey}",
-			failMessage = "Please only set 'groupName' or 'groupKey' but not both or none.");
-
-		if (isSet(groupName)) {
-			if (!(isSet(site))) {
-				var site = "true";
-			}
-
-			var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		if (!(isSet(site))) {
+			var site = "true";
 		}
-		else if (isSet(groupKey)) {
-			var site = JSONLayoutSetter.setSite(site = "${site}");
 
-			var groupId = JSONGroupAPI._getGroupIdByGroupKey(groupKey = "${groupKey}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
-		}
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}");
 
 		return "${groupId}";
 	}

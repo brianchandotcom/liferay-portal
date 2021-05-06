@@ -70,9 +70,22 @@ definition {
 	macro deleteOrganizationByName {
 		Variables.assertDefined(parameterList = "${organizationName}");
 
-		var organizationId = JSONOrganization.getOrganizationIdByName(
-			organizationName = "${organizationName}"
-		);
+		if (isSet(parentOrganizationName)) {
+			var parentOrganizationId = JSONOrganization.getOrganizationIdByName(
+				organizationName = "${parentOrganizationName}"
+			);
+
+			var organizationId = JSONOrganization.getOrganizationIdByName(
+				organizationName = "${organizationName}",
+				parentOrganizationId = "${parentOrganizationId}"
+			);
+		}
+
+		else {
+			var organizationId = JSONOrganization.getOrganizationIdByName(
+				organizationName = "${organizationName}"
+			);
+		}
 
 		JSONOrganizationAPI._deleteOrganization(organizationId = "${organizationId}");
 	}

@@ -31,6 +31,12 @@ definition {
 			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 				Segmentation.tearDown();
 			}
+
+			JSONUser.tearDownNonAdminUsers();
+
+			Suborganization.tearDownCP();
+
+			Organization.tearDownCP();
 		}
 	}
 

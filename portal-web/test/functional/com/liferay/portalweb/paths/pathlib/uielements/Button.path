@@ -544,6 +544,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE_IMAGE_LAST</td>
+	<td>xpath=(//button[*[name()='svg'][contains(@class,'lexicon-icon-trash')]])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE_REDIRECT</td>
 	<td>//button[contains(.,'Remove Redirect')]</td>
 	<td></td>

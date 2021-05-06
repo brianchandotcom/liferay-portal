@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ENTRY_COVER_IMAGE_CAPTION</td>
+	<td>//div[contains(@class,'cover-image-caption')]</td>
+	<td></td>
+</tr>	
+<tr>
 	<td>ENTRY_COVER_IMAGE</td>
 	<td>//div[contains(@class,'cover-image') and contains(@style,'${key_uploadFileName}')] | //div[contains(@class,'cover-image')]//img</td>
 	<td></td>

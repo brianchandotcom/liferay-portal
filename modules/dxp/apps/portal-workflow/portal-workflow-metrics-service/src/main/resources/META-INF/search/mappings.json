@@ -479,6 +479,27 @@
 				"store": true,
 				"type": "long"
 			},
+			"slaResults": {
+				"properties": {
+					"onTime": {
+						"store": true,
+						"type": "boolean"
+					},
+					"remainingTime": {
+						"store": true,
+						"type": "long"
+					},
+					"slaDefinitionId": {
+						"store": true,
+						"type": "long"
+					},
+					"status": {
+						"store": true,
+						"type": "keyword"
+					}
+				},
+				"type": "nested"
+			},
 			"slaStatus": {
 				"store": true,
 				"type": "keyword"

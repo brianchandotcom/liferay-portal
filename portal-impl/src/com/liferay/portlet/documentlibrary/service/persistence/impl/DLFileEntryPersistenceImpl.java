@@ -15507,13 +15507,13 @@ public class DLFileEntryPersistenceImpl
 		ctStrictColumnNames.add("fileEntryTypeId");
 		ctMergeColumnNames.add("version");
 		ctStrictColumnNames.add("size_");
+		ctStrictColumnNames.add("expirationDate");
+		ctStrictColumnNames.add("reviewDate");
 		ctStrictColumnNames.add("smallImageId");
 		ctStrictColumnNames.add("largeImageId");
 		ctStrictColumnNames.add("custom1ImageId");
 		ctStrictColumnNames.add("custom2ImageId");
 		ctStrictColumnNames.add("manualCheckInRequired");
-		ctStrictColumnNames.add("expirationDate");
-		ctStrictColumnNames.add("reviewDate");
 		ctStrictColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

@@ -71,13 +71,13 @@ public class DLFileEntryWrapper
 		attributes.put("fileEntryTypeId", getFileEntryTypeId());
 		attributes.put("version", getVersion());
 		attributes.put("size", getSize());
+		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("reviewDate", getReviewDate());
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("largeImageId", getLargeImageId());
 		attributes.put("custom1ImageId", getCustom1ImageId());
 		attributes.put("custom2ImageId", getCustom2ImageId());
 		attributes.put("manualCheckInRequired", isManualCheckInRequired());
-		attributes.put("expirationDate", getExpirationDate());
-		attributes.put("reviewDate", getReviewDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -235,6 +235,18 @@ public class DLFileEntryWrapper
 			setSize(size);
 		}
 
+		Date expirationDate = (Date)attributes.get("expirationDate");
+
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
+		Date reviewDate = (Date)attributes.get("reviewDate");
+
+		if (reviewDate != null) {
+			setReviewDate(reviewDate);
+		}
+
 		Long smallImageId = (Long)attributes.get("smallImageId");
 
 		if (smallImageId != null) {
@@ -264,18 +276,6 @@ public class DLFileEntryWrapper
 
 		if (manualCheckInRequired != null) {
 			setManualCheckInRequired(manualCheckInRequired);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
-
-		Date reviewDate = (Date)attributes.get("reviewDate");
-
-		if (reviewDate != null) {
-			setReviewDate(reviewDate);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");

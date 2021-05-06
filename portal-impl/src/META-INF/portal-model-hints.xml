@@ -256,13 +256,13 @@
 		<field name="fileEntryTypeId" type="long" />
 		<field name="version" type="String" />
 		<field name="size" type="long" />
+		<field name="expirationDate" type="Date" />
+		<field name="reviewDate" type="Date" />
 		<field name="smallImageId" type="long" />
 		<field name="largeImageId" type="long" />
 		<field name="custom1ImageId" type="long" />
 		<field name="custom2ImageId" type="long" />
 		<field name="manualCheckInRequired" type="boolean" />
-		<field name="expirationDate" type="Date" />
-		<field name="reviewDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntryMetadata">

@@ -58,13 +58,13 @@ public class DLFileEntrySoap implements Serializable {
 		soapModel.setFileEntryTypeId(model.getFileEntryTypeId());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setSize(model.getSize());
+		soapModel.setExpirationDate(model.getExpirationDate());
+		soapModel.setReviewDate(model.getReviewDate());
 		soapModel.setSmallImageId(model.getSmallImageId());
 		soapModel.setLargeImageId(model.getLargeImageId());
 		soapModel.setCustom1ImageId(model.getCustom1ImageId());
 		soapModel.setCustom2ImageId(model.getCustom2ImageId());
 		soapModel.setManualCheckInRequired(model.isManualCheckInRequired());
-		soapModel.setExpirationDate(model.getExpirationDate());
-		soapModel.setReviewDate(model.getReviewDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
@@ -319,6 +319,22 @@ public class DLFileEntrySoap implements Serializable {
 		_size = size;
 	}
 
+	public Date getExpirationDate() {
+		return _expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		_expirationDate = expirationDate;
+	}
+
+	public Date getReviewDate() {
+		return _reviewDate;
+	}
+
+	public void setReviewDate(Date reviewDate) {
+		_reviewDate = reviewDate;
+	}
+
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -363,22 +379,6 @@ public class DLFileEntrySoap implements Serializable {
 		_manualCheckInRequired = manualCheckInRequired;
 	}
 
-	public Date getExpirationDate() {
-		return _expirationDate;
-	}
-
-	public void setExpirationDate(Date expirationDate) {
-		_expirationDate = expirationDate;
-	}
-
-	public Date getReviewDate() {
-		return _reviewDate;
-	}
-
-	public void setReviewDate(Date reviewDate) {
-		_reviewDate = reviewDate;
-	}
-
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -412,13 +412,13 @@ public class DLFileEntrySoap implements Serializable {
 	private long _fileEntryTypeId;
 	private String _version;
 	private long _size;
+	private Date _expirationDate;
+	private Date _reviewDate;
 	private long _smallImageId;
 	private long _largeImageId;
 	private long _custom1ImageId;
 	private long _custom2ImageId;
 	private boolean _manualCheckInRequired;
-	private Date _expirationDate;
-	private Date _reviewDate;
 	private Date _lastPublishDate;
 
 }

@@ -337,13 +337,13 @@ create table DLFileEntry (
 	fileEntryTypeId LONG,
 	version VARCHAR(75) null,
 	size_ LONG,
+	expirationDate DATE null,
+	reviewDate DATE null,
 	smallImageId LONG,
 	largeImageId LONG,
 	custom1ImageId LONG,
 	custom2ImageId LONG,
 	manualCheckInRequired BOOLEAN,
-	expirationDate DATE null,
-	reviewDate DATE null,
 	lastPublishDate DATE null,
 	primary key (fileEntryId, ctCollectionId)
 );

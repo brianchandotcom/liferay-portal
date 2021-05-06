@@ -129,6 +129,10 @@ public class DLFileEntryCacheModel
 		sb.append(version);
 		sb.append(", size=");
 		sb.append(size);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
+		sb.append(", reviewDate=");
+		sb.append(reviewDate);
 		sb.append(", smallImageId=");
 		sb.append(smallImageId);
 		sb.append(", largeImageId=");
@@ -139,10 +143,6 @@ public class DLFileEntryCacheModel
 		sb.append(custom2ImageId);
 		sb.append(", manualCheckInRequired=");
 		sb.append(manualCheckInRequired);
-		sb.append(", expirationDate=");
-		sb.append(expirationDate);
-		sb.append(", reviewDate=");
-		sb.append(reviewDate);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -261,11 +261,6 @@ public class DLFileEntryCacheModel
 		}
 
 		dlFileEntryImpl.setSize(size);
-		dlFileEntryImpl.setSmallImageId(smallImageId);
-		dlFileEntryImpl.setLargeImageId(largeImageId);
-		dlFileEntryImpl.setCustom1ImageId(custom1ImageId);
-		dlFileEntryImpl.setCustom2ImageId(custom2ImageId);
-		dlFileEntryImpl.setManualCheckInRequired(manualCheckInRequired);
 
 		if (expirationDate == Long.MIN_VALUE) {
 			dlFileEntryImpl.setExpirationDate(null);
@@ -280,6 +275,12 @@ public class DLFileEntryCacheModel
 		else {
 			dlFileEntryImpl.setReviewDate(new Date(reviewDate));
 		}
+
+		dlFileEntryImpl.setSmallImageId(smallImageId);
+		dlFileEntryImpl.setLargeImageId(largeImageId);
+		dlFileEntryImpl.setCustom1ImageId(custom1ImageId);
+		dlFileEntryImpl.setCustom2ImageId(custom2ImageId);
+		dlFileEntryImpl.setManualCheckInRequired(manualCheckInRequired);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			dlFileEntryImpl.setLastPublishDate(null);
@@ -333,6 +334,8 @@ public class DLFileEntryCacheModel
 		version = objectInput.readUTF();
 
 		size = objectInput.readLong();
+		expirationDate = objectInput.readLong();
+		reviewDate = objectInput.readLong();
 
 		smallImageId = objectInput.readLong();
 
@@ -343,8 +346,6 @@ public class DLFileEntryCacheModel
 		custom2ImageId = objectInput.readLong();
 
 		manualCheckInRequired = objectInput.readBoolean();
-		expirationDate = objectInput.readLong();
-		reviewDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -453,6 +454,8 @@ public class DLFileEntryCacheModel
 		}
 
 		objectOutput.writeLong(size);
+		objectOutput.writeLong(expirationDate);
+		objectOutput.writeLong(reviewDate);
 
 		objectOutput.writeLong(smallImageId);
 
@@ -463,8 +466,6 @@ public class DLFileEntryCacheModel
 		objectOutput.writeLong(custom2ImageId);
 
 		objectOutput.writeBoolean(manualCheckInRequired);
-		objectOutput.writeLong(expirationDate);
-		objectOutput.writeLong(reviewDate);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -493,13 +494,13 @@ public class DLFileEntryCacheModel
 	public long fileEntryTypeId;
 	public String version;
 	public long size;
+	public long expirationDate;
+	public long reviewDate;
 	public long smallImageId;
 	public long largeImageId;
 	public long custom1ImageId;
 	public long custom2ImageId;
 	public boolean manualCheckInRequired;
-	public long expirationDate;
-	public long reviewDate;
 	public long lastPublishDate;
 
 }

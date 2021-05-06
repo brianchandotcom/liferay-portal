@@ -83,6 +83,10 @@ public class DLFileEntryTable extends BaseTable<DLFileEntryTable> {
 		"version", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<DLFileEntryTable, Long> size = createColumn(
 		"size_", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<DLFileEntryTable, Date> expirationDate = createColumn(
+		"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<DLFileEntryTable, Date> reviewDate = createColumn(
+		"reviewDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DLFileEntryTable, Long> smallImageId = createColumn(
 		"smallImageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<DLFileEntryTable, Long> largeImageId = createColumn(
@@ -95,10 +99,6 @@ public class DLFileEntryTable extends BaseTable<DLFileEntryTable> {
 		createColumn(
 			"manualCheckInRequired", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
-	public final Column<DLFileEntryTable, Date> expirationDate = createColumn(
-		"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<DLFileEntryTable, Date> reviewDate = createColumn(
-		"reviewDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<DLFileEntryTable, Date> lastPublishDate = createColumn(
 		"lastPublishDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 

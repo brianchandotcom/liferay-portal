@@ -26,9 +26,11 @@ SelectAssetVocabularyDisplayContext selectAssetVocabularyDisplayContext = (Selec
 	</c:when>
 	<c:otherwise>
 		<div class="container-fluid container-fluid-max-xl p-4">
-			<div class="alert alert-info">
-				<liferay-ui:message key="select-the-vocabulary-or-category-to-be-displayed" />
-			</div>
+			<c:if test="<%= selectAssetVocabularyDisplayContext.isShowInfoMessage() %>">
+				<div class="alert alert-info">
+					<liferay-ui:message key="select-the-vocabulary-or-category-to-be-displayed" />
+				</div>
+			</c:if>
 
 			<div class="align-items-center d-flex justify-content-between">
 				<liferay-site-navigation:breadcrumb

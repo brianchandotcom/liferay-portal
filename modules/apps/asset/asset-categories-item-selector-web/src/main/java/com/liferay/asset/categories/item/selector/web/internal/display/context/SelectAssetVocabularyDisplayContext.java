@@ -47,13 +47,22 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectAssetVocabularyDisplayContext {
 
 	public SelectAssetVocabularyDisplayContext(
-		HttpServletRequest httpServletRequest, PortletURL portletURL) {
+		boolean allowSelectVocabulary, HttpServletRequest httpServletRequest,
+		PortletURL portletURL, boolean showInfoMessage) {
 
+		_allowSelectVocabulary = allowSelectVocabulary;
 		_httpServletRequest = httpServletRequest;
 		_portletURL = portletURL;
+		_showInfoMessage = showInfoMessage;
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public SelectAssetVocabularyDisplayContext(
+		HttpServletRequest httpServletRequest, PortletURL portletURL) {
+
+		this(true, httpServletRequest, portletURL, true);
 	}
 
 	public long getAssetCategoryTreeNodeId() {
@@ -99,6 +108,14 @@ public class SelectAssetVocabularyDisplayContext {
 
 	public List<BreadcrumbEntry> getBreadcrumbEntries() {
 		return ListUtil.fromArray(_getAssetVocabulariesBreadcrumbEntry());
+	}
+
+	public boolean isAllowSelectVocabulary() {
+		return _allowSelectVocabulary;
+	}
+
+	public boolean isShowInfoMessage() {
+		return _showInfoMessage;
 	}
 
 	private BreadcrumbEntry _createBreadcrumbEntry(String title, String url) {
@@ -160,9 +177,11 @@ public class SelectAssetVocabularyDisplayContext {
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 
+	private final boolean _allowSelectVocabulary;
 	private Long _assetCategoryTreeNodeId;
 	private final HttpServletRequest _httpServletRequest;
 	private final PortletURL _portletURL;
+	private final boolean _showInfoMessage;
 	private final ThemeDisplay _themeDisplay;
 
 }

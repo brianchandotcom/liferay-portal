@@ -385,9 +385,9 @@ definition {
 			entryTitle = "WC WebContent Title 2 Edit",
 			warningMessage = "Modification conflicts with a deletion.");
 
-		Publications.gotoViewDiffInConflictingPublications(entryTitle = "WC WebContent Title 2 Edit");
+		Publications.gotoViewChangeDiffInConflictingPublications(entryTitle = "WC WebContent Title 2 Edit");
 
-		Publications.viewPublicationDiff(
+		Publications.viewChangeDiff(
 			columnName = "Title",
 			columnValueInPublication = "WC WebContent Title 2 Edit",
 			publicationName = "Publication 2 Name");

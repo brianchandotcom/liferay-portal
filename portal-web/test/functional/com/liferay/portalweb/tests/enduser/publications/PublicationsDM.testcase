@@ -137,9 +137,9 @@ definition {
 			entryTitle = "DM Document Title Edit",
 			warningMessage = "The conflict cannot be automatically resolved.");
 
-		Publications.gotoViewDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
+		Publications.gotoViewChangeDiffInConflictingPublications(entryTitle = "DM Document Title Edit");
 
-		Publications.viewPublicationDiff(
+		Publications.viewChangeDiff(
 			columnName = "Title",
 			columnValueInProduction = "DM Document 2 Title Edit",
 			columnValueInPublication = "DM Document Title Edit",

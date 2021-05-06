@@ -252,7 +252,7 @@ definition {
 			value1 = "${changeTitle}");
 	}
 
-	macro gotoViewDiffInConflictingPublications {
+	macro gotoViewChangeDiffInConflictingPublications {
 		Click(
 			key_entryTitle = "${entryTitle}",
 			locator1 = "Publications#CONFLICTING_CHANGES_CONTENT_LINK");
@@ -494,18 +494,7 @@ definition {
 			locator1 = "Publications#CONFLICTING_CHANGES_SUCCESS_CONTENT");
 	}
 
-	macro viewNeedsManualResolution {
-		AssertElementPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
-
-		AssertElementPresent(
-			key_entryTitle = "${entryTitle}",
-			key_warningMessage = "${warningMessage}",
-			locator1 = "Publications#CONFLICTING_CHANGES_WARNING_CONTENT");
-
-		AssertVisible(locator1 = "Publications#DISABLED_PUBLISH_BUTTON");
-	}
-
-	macro viewPublicationDiff {
+		macro viewChangeDiff {
 		AssertTextEquals(
 			key_displayItem = "Unified",
 			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
@@ -554,6 +543,17 @@ definition {
 				locator1 = "Publications#COLUMN_VALUE_IN_PUBLICATION",
 				value1 = "${columnValueInPublication}");
 		}
+	}
+
+	macro viewNeedsManualResolution {
+		AssertElementPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
+
+		AssertElementPresent(
+			key_entryTitle = "${entryTitle}",
+			key_warningMessage = "${warningMessage}",
+			locator1 = "Publications#CONFLICTING_CHANGES_WARNING_CONTENT");
+
+		AssertVisible(locator1 = "Publications#DISABLED_PUBLISH_BUTTON");
 	}
 
 	macro viewPublicationPublished {

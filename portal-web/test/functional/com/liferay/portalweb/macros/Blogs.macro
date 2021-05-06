@@ -187,6 +187,10 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		if (isSet(captionField)) {
+			AssertElementPresent(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_CAPTION");
+		}
+
 		BlogsEntry.addEntryContent(
 			entryContent = "${entryContent}",
 			entrySubtitle = "${entrySubtitle}",

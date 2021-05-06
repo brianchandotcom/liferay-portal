@@ -35,13 +35,63 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130281."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationCountry {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130281 AddSegmentByOrganizationCountry pending implementation. This test is already created as EditSegmentUserByOrganizationCountryAndRegion, but if you are able to do it better, delete the test EditSegmentUserByOrganizationCountryAndRegion.
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.editOrganizationCP(orgName = "organization Name");
+
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "Spain");
+
+		PortletEntry.save();
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Country");
+
+		Segmentation.fillProperty(optionsValue = "Spain");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationCountry Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByOrganizationCountry Test");
+
+		Segmentation.viewSegment(
+			criterion = "options",
+			value = "spain");
 	}
 
 	@description = "This is a test for LPS-130275."

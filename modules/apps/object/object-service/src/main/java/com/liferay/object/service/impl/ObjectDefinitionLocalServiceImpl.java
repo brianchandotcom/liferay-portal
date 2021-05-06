@@ -200,6 +200,25 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 	}
 
+	@Override
+	public void undeployObjectDefinitions() {
+		for (Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap :
+				_serviceRegistrationsMapMap.values()) {
+
+			for (List<ServiceRegistration<?>> serviceRegistrations :
+					serviceRegistrationsMap.values()) {
+
+				for (ServiceRegistration<?> serviceRegistration :
+						serviceRegistrations) {
+
+					serviceRegistration.unregister();
+				}
+			}
+
+			serviceRegistrationsMap.clear();
+		}
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_objectDefinitionDeployerServiceTracker = new ServiceTracker<>(

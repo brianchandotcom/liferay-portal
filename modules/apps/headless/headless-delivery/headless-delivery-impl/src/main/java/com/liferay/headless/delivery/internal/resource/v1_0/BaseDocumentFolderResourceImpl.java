@@ -236,10 +236,11 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "DocumentFolder")})
-	public void putAssetLibraryDocumentFolderPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
-				assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryDocumentFolderPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+					Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -255,6 +256,8 @@ public abstract class BaseDocumentFolderResourceImpl
 				contextCompany.getCompanyId(), permissions, assetLibraryId,
 				portletName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(assetLibraryId, portletName, null);
 	}
 
 	/**
@@ -536,10 +539,12 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "DocumentFolder")})
-	public void putDocumentFolderPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("documentFolderId")
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putDocumentFolderPermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("documentFolderId")
 				Long documentFolderId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -551,12 +556,15 @@ public abstract class BaseDocumentFolderResourceImpl
 			getPermissionCheckerGroupId(documentFolderId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(documentFolderId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**
@@ -807,9 +815,11 @@ public abstract class BaseDocumentFolderResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "DocumentFolder")})
-	public void putSiteDocumentFolderPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteDocumentFolderPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -825,6 +835,8 @@ public abstract class BaseDocumentFolderResourceImpl
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
 				roleLocalService));
+
+		return toPermissionPage(siteId, portletName, null);
 	}
 
 	@Override

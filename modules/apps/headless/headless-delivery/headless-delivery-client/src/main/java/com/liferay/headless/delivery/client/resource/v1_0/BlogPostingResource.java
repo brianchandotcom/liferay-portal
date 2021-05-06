@@ -122,7 +122,7 @@ public interface BlogPostingResource {
 			Long blogPostingId, String roleNames)
 		throws Exception;
 
-	public void putBlogPostingPermission(
+	public Page<Permission> putBlogPostingPermission(
 			Long blogPostingId, Permission[] permissions)
 		throws Exception;
 
@@ -173,7 +173,7 @@ public interface BlogPostingResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteBlogPostingPermission(
+	public Page<Permission> putSiteBlogPostingPermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -1154,7 +1154,7 @@ public interface BlogPostingResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putBlogPostingPermission(
+		public Page<Permission> putBlogPostingPermission(
 				Long blogPostingId, Permission[] permissions)
 			throws Exception {
 
@@ -1188,7 +1188,7 @@ public interface BlogPostingResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1688,7 +1688,7 @@ public interface BlogPostingResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteBlogPostingPermission(
+		public Page<Permission> putSiteBlogPostingPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -1721,7 +1721,7 @@ public interface BlogPostingResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

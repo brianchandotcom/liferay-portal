@@ -894,7 +894,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			taxonomyCategoryResource.putTaxonomyCategoryPermissionHttpResponse(
 				taxonomyCategory.getId(),
 				new Permission[] {
@@ -909,7 +909,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyCategoryResource.putTaxonomyCategoryPermissionHttpResponse(
-				RandomTestUtil.randomString(),
+				0L,
 				new Permission[] {
 					new Permission() {
 						{

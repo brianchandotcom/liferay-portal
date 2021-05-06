@@ -98,7 +98,7 @@ public interface KnowledgeBaseFolderResource {
 				Long knowledgeBaseFolderId, String roleNames)
 		throws Exception;
 
-	public void putKnowledgeBaseFolderPermission(
+	public Page<Permission> putKnowledgeBaseFolderPermission(
 			Long knowledgeBaseFolderId, Permission[] permissions)
 		throws Exception;
 
@@ -162,7 +162,7 @@ public interface KnowledgeBaseFolderResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteKnowledgeBaseFolderPermission(
+	public Page<Permission> putSiteKnowledgeBaseFolderPermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -821,7 +821,7 @@ public interface KnowledgeBaseFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putKnowledgeBaseFolderPermission(
+		public Page<Permission> putKnowledgeBaseFolderPermission(
 				Long knowledgeBaseFolderId, Permission[] permissions)
 			throws Exception {
 
@@ -855,7 +855,7 @@ public interface KnowledgeBaseFolderResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1442,7 +1442,7 @@ public interface KnowledgeBaseFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteKnowledgeBaseFolderPermission(
+		public Page<Permission> putSiteKnowledgeBaseFolderPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -1476,7 +1476,7 @@ public interface KnowledgeBaseFolderResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

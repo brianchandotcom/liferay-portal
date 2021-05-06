@@ -620,7 +620,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			taxonomyVocabularyResource.
 				putAssetLibraryTaxonomyVocabularyPermissionHttpResponse(
 					testDepotEntry.getDepotEntryId(),
@@ -1089,7 +1089,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			taxonomyVocabularyResource.
 				putSiteTaxonomyVocabularyPermissionHttpResponse(
 					taxonomyVocabulary.getSiteId(),
@@ -1353,7 +1353,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			taxonomyVocabularyResource.
 				putTaxonomyVocabularyPermissionHttpResponse(
 					taxonomyVocabulary.getId(),

@@ -581,7 +581,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			contentStructureResource.
 				putAssetLibraryContentStructurePermissionHttpResponse(
 					testDepotEntry.getDepotEntryId(),
@@ -713,7 +713,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			contentStructureResource.putContentStructurePermissionHttpResponse(
 				contentStructure.getId(),
 				new Permission[] {
@@ -1134,7 +1134,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			contentStructureResource.
 				putSiteContentStructurePermissionHttpResponse(
 					contentStructure.getSiteId(),

@@ -77,7 +77,7 @@ public interface KeywordResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryKeywordPermission(
+	public Page<Permission> putAssetLibraryKeywordPermission(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -132,7 +132,8 @@ public interface KeywordResource {
 			Long keywordId, String roleNames)
 		throws Exception;
 
-	public void putKeywordPermission(Long keywordId, Permission[] permissions)
+	public Page<Permission> putKeywordPermission(
+			Long keywordId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putKeywordPermissionHttpResponse(
@@ -172,7 +173,8 @@ public interface KeywordResource {
 			Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteKeywordPermission(Long siteId, Permission[] permissions)
+	public Page<Permission> putSiteKeywordPermission(
+			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putSiteKeywordPermissionHttpResponse(
@@ -607,7 +609,7 @@ public interface KeywordResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putAssetLibraryKeywordPermission(
+		public Page<Permission> putAssetLibraryKeywordPermission(
 				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -641,7 +643,7 @@ public interface KeywordResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1270,7 +1272,7 @@ public interface KeywordResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putKeywordPermission(
+		public Page<Permission> putKeywordPermission(
 				Long keywordId, Permission[] permissions)
 			throws Exception {
 
@@ -1303,7 +1305,7 @@ public interface KeywordResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1714,7 +1716,7 @@ public interface KeywordResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteKeywordPermission(
+		public Page<Permission> putSiteKeywordPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -1747,7 +1749,7 @@ public interface KeywordResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

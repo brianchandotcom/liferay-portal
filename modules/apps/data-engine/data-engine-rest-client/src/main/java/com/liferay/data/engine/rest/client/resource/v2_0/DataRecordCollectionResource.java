@@ -130,7 +130,7 @@ public interface DataRecordCollectionResource {
 				Long dataRecordCollectionId, String roleNames)
 		throws Exception;
 
-	public void putDataRecordCollectionPermission(
+	public Page<Permission> putDataRecordCollectionPermission(
 			Long dataRecordCollectionId, Permission[] permissions)
 		throws Exception;
 
@@ -1073,7 +1073,7 @@ public interface DataRecordCollectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putDataRecordCollectionPermission(
+		public Page<Permission> putDataRecordCollectionPermission(
 				Long dataRecordCollectionId, Permission[] permissions)
 			throws Exception {
 
@@ -1107,7 +1107,7 @@ public interface DataRecordCollectionResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

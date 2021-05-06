@@ -88,9 +88,10 @@ public interface WikiPageResource {
 			getWikiPagePermissionsPage(Long wikiPageId, String roleNames)
 		throws Exception;
 
-	public void putWikiPagePermission(
-			Long wikiPageId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putWikiPagePermission(
+				Long wikiPageId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void putWikiPageSubscribe(Long wikiPageId) throws Exception;

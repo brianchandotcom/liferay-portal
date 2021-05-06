@@ -72,9 +72,10 @@ public interface StructuredContentFolderResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryStructuredContentFolderPermission(
-			Long assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryStructuredContentFolderPermission(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<StructuredContentFolder> getSiteStructuredContentFoldersPage(
@@ -96,9 +97,10 @@ public interface StructuredContentFolderResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteStructuredContentFolderPermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteStructuredContentFolderPermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
@@ -106,9 +108,10 @@ public interface StructuredContentFolderResource {
 				Long structuredContentFolderId, String roleNames)
 		throws Exception;
 
-	public void putStructuredContentFolderPermission(
-			Long structuredContentFolderId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putStructuredContentFolderPermission(
+				Long structuredContentFolderId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<StructuredContentFolder>

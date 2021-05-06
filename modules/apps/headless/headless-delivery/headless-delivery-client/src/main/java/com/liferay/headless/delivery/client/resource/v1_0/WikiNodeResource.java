@@ -77,7 +77,8 @@ public interface WikiNodeResource {
 			Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteWikiNodePermission(Long siteId, Permission[] permissions)
+	public Page<Permission> putSiteWikiNodePermission(
+			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putSiteWikiNodePermissionHttpResponse(
@@ -123,7 +124,8 @@ public interface WikiNodeResource {
 			Long wikiNodeId, String roleNames)
 		throws Exception;
 
-	public void putWikiNodePermission(Long wikiNodeId, Permission[] permissions)
+	public Page<Permission> putWikiNodePermission(
+			Long wikiNodeId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putWikiNodePermissionHttpResponse(
@@ -566,7 +568,7 @@ public interface WikiNodeResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteWikiNodePermission(
+		public Page<Permission> putSiteWikiNodePermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -599,7 +601,7 @@ public interface WikiNodeResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1132,7 +1134,7 @@ public interface WikiNodeResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putWikiNodePermission(
+		public Page<Permission> putWikiNodePermission(
 				Long wikiNodeId, Permission[] permissions)
 			throws Exception {
 
@@ -1165,7 +1167,7 @@ public interface WikiNodeResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

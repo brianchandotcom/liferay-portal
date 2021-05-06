@@ -381,7 +381,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			navigationMenuResource.putNavigationMenuPermissionHttpResponse(
 				navigationMenu.getId(),
 				new Permission[] {
@@ -630,7 +630,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			navigationMenuResource.putSiteNavigationMenuPermissionHttpResponse(
 				navigationMenu.getSiteId(),
 				new Permission[] {

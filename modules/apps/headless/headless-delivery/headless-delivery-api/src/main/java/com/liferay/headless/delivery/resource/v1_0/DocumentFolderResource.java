@@ -70,9 +70,10 @@ public interface DocumentFolderResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryDocumentFolderPermission(
-			Long assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryDocumentFolderPermission(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void deleteDocumentFolder(Long documentFolderId) throws Exception;
@@ -99,9 +100,10 @@ public interface DocumentFolderResource {
 				Long documentFolderId, String roleNames)
 		throws Exception;
 
-	public void putDocumentFolderPermission(
-			Long documentFolderId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putDocumentFolderPermission(
+				Long documentFolderId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void putDocumentFolderSubscribe(Long documentFolderId)
@@ -138,9 +140,10 @@ public interface DocumentFolderResource {
 			getSiteDocumentFolderPermissionsPage(Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteDocumentFolderPermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteDocumentFolderPermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

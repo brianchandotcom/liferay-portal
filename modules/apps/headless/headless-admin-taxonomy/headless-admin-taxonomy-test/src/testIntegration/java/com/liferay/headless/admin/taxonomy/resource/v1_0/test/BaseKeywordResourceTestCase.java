@@ -561,7 +561,7 @@ public abstract class BaseKeywordResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			keywordResource.putAssetLibraryKeywordPermissionHttpResponse(
 				testDepotEntry.getDepotEntryId(),
 				new Permission[] {
@@ -818,7 +818,7 @@ public abstract class BaseKeywordResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			keywordResource.putKeywordPermissionHttpResponse(
 				keyword.getId(),
 				new Permission[] {
@@ -1211,7 +1211,7 @@ public abstract class BaseKeywordResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			keywordResource.putSiteKeywordPermissionHttpResponse(
 				keyword.getSiteId(),
 				new Permission[] {

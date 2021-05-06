@@ -121,7 +121,7 @@ public interface DataDefinitionResource {
 				Long dataDefinitionId, String roleNames)
 		throws Exception;
 
-	public void putDataDefinitionPermission(
+	public Page<Permission> putDataDefinitionPermission(
 			Long dataDefinitionId, Permission[] permissions)
 		throws Exception;
 
@@ -1065,7 +1065,7 @@ public interface DataDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putDataDefinitionPermission(
+		public Page<Permission> putDataDefinitionPermission(
 				Long dataDefinitionId, Permission[] permissions)
 			throws Exception {
 
@@ -1099,7 +1099,7 @@ public interface DataDefinitionResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

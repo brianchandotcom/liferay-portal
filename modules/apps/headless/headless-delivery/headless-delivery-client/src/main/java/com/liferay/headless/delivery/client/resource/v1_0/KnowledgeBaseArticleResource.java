@@ -137,7 +137,7 @@ public interface KnowledgeBaseArticleResource {
 				Long knowledgeBaseArticleId, String roleNames)
 		throws Exception;
 
-	public void putKnowledgeBaseArticlePermission(
+	public Page<Permission> putKnowledgeBaseArticlePermission(
 			Long knowledgeBaseArticleId, Permission[] permissions)
 		throws Exception;
 
@@ -260,7 +260,7 @@ public interface KnowledgeBaseArticleResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteKnowledgeBaseArticlePermission(
+	public Page<Permission> putSiteKnowledgeBaseArticlePermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -1275,7 +1275,7 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putKnowledgeBaseArticlePermission(
+		public Page<Permission> putKnowledgeBaseArticlePermission(
 				Long knowledgeBaseArticleId, Permission[] permissions)
 			throws Exception {
 
@@ -1309,7 +1309,7 @@ public interface KnowledgeBaseArticleResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2400,7 +2400,7 @@ public interface KnowledgeBaseArticleResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteKnowledgeBaseArticlePermission(
+		public Page<Permission> putSiteKnowledgeBaseArticlePermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -2434,7 +2434,7 @@ public interface KnowledgeBaseArticleResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

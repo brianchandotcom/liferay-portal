@@ -88,7 +88,7 @@ public interface StructuredContentFolderResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryStructuredContentFolderPermission(
+	public Page<Permission> putAssetLibraryStructuredContentFolderPermission(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -136,7 +136,7 @@ public interface StructuredContentFolderResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteStructuredContentFolderPermission(
+	public Page<Permission> putSiteStructuredContentFolderPermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -154,7 +154,7 @@ public interface StructuredContentFolderResource {
 				Long structuredContentFolderId, String roleNames)
 		throws Exception;
 
-	public void putStructuredContentFolderPermission(
+	public Page<Permission> putStructuredContentFolderPermission(
 			Long structuredContentFolderId, Permission[] permissions)
 		throws Exception;
 
@@ -702,8 +702,9 @@ public interface StructuredContentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putAssetLibraryStructuredContentFolderPermission(
-				Long assetLibraryId, Permission[] permissions)
+		public Page<Permission>
+				putAssetLibraryStructuredContentFolderPermission(
+					Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -736,7 +737,7 @@ public interface StructuredContentFolderResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1165,7 +1166,7 @@ public interface StructuredContentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteStructuredContentFolderPermission(
+		public Page<Permission> putSiteStructuredContentFolderPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -1199,7 +1200,7 @@ public interface StructuredContentFolderResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1348,7 +1349,7 @@ public interface StructuredContentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putStructuredContentFolderPermission(
+		public Page<Permission> putStructuredContentFolderPermission(
 				Long structuredContentFolderId, Permission[] permissions)
 			throws Exception {
 
@@ -1382,7 +1383,7 @@ public interface StructuredContentFolderResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

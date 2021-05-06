@@ -81,7 +81,7 @@ public interface TaxonomyVocabularyResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryTaxonomyVocabularyPermission(
+	public Page<Permission> putAssetLibraryTaxonomyVocabularyPermission(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -125,7 +125,7 @@ public interface TaxonomyVocabularyResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteTaxonomyVocabularyPermission(
+	public Page<Permission> putSiteTaxonomyVocabularyPermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -187,7 +187,7 @@ public interface TaxonomyVocabularyResource {
 				Long taxonomyVocabularyId, String roleNames)
 		throws Exception;
 
-	public void putTaxonomyVocabularyPermission(
+	public Page<Permission> putTaxonomyVocabularyPermission(
 			Long taxonomyVocabularyId, Permission[] permissions)
 		throws Exception;
 
@@ -628,7 +628,7 @@ public interface TaxonomyVocabularyResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putAssetLibraryTaxonomyVocabularyPermission(
+		public Page<Permission> putAssetLibraryTaxonomyVocabularyPermission(
 				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -662,7 +662,7 @@ public interface TaxonomyVocabularyResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1080,7 +1080,7 @@ public interface TaxonomyVocabularyResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteTaxonomyVocabularyPermission(
+		public Page<Permission> putSiteTaxonomyVocabularyPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -1114,7 +1114,7 @@ public interface TaxonomyVocabularyResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1750,7 +1750,7 @@ public interface TaxonomyVocabularyResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putTaxonomyVocabularyPermission(
+		public Page<Permission> putTaxonomyVocabularyPermission(
 				Long taxonomyVocabularyId, Permission[] permissions)
 			throws Exception {
 
@@ -1784,7 +1784,7 @@ public interface TaxonomyVocabularyResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

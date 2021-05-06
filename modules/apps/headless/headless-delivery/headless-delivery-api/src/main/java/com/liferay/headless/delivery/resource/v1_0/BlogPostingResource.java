@@ -84,9 +84,10 @@ public interface BlogPostingResource {
 			getBlogPostingPermissionsPage(Long blogPostingId, String roleNames)
 		throws Exception;
 
-	public void putBlogPostingPermission(
-			Long blogPostingId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putBlogPostingPermission(
+				Long blogPostingId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public String getBlogPostingRenderedContentByDisplayPageDisplayPageKey(
@@ -110,9 +111,10 @@ public interface BlogPostingResource {
 			getSiteBlogPostingPermissionsPage(Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteBlogPostingPermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteBlogPostingPermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void putSiteBlogPostingSubscribe(Long siteId) throws Exception;

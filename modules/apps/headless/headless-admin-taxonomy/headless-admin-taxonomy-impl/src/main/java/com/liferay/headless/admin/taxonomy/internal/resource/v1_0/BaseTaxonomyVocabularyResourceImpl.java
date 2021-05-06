@@ -232,10 +232,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
-	public void putAssetLibraryTaxonomyVocabularyPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
-				assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryTaxonomyVocabularyPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+					Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -251,6 +252,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				contextCompany.getCompanyId(), permissions, assetLibraryId,
 				portletName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(assetLibraryId, portletName, null);
 	}
 
 	/**
@@ -391,9 +394,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
-	public void putSiteTaxonomyVocabularyPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteTaxonomyVocabularyPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -409,6 +414,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
 				roleLocalService));
+
+		return toPermissionPage(siteId, portletName, null);
 	}
 
 	/**
@@ -707,11 +714,12 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "TaxonomyVocabulary")})
-	public void putTaxonomyVocabularyPermission(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("taxonomyVocabularyId")
-			Long taxonomyVocabularyId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putTaxonomyVocabularyPermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("taxonomyVocabularyId")
+				Long taxonomyVocabularyId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -723,12 +731,15 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			getPermissionCheckerGroupId(taxonomyVocabularyId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(taxonomyVocabularyId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	@Override

@@ -437,7 +437,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			blogPostingResource.putBlogPostingPermissionHttpResponse(
 				blogPosting.getId(),
 				new Permission[] {
@@ -858,7 +858,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			blogPostingResource.putSiteBlogPostingPermissionHttpResponse(
 				blogPosting.getSiteId(),
 				new Permission[] {

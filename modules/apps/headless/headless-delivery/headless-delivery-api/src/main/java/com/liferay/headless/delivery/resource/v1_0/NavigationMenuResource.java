@@ -69,9 +69,10 @@ public interface NavigationMenuResource {
 				Long navigationMenuId, String roleNames)
 		throws Exception;
 
-	public void putNavigationMenuPermission(
-			Long navigationMenuId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putNavigationMenuPermission(
+				Long navigationMenuId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
@@ -90,9 +91,10 @@ public interface NavigationMenuResource {
 			getSiteNavigationMenuPermissionsPage(Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteNavigationMenuPermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteNavigationMenuPermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

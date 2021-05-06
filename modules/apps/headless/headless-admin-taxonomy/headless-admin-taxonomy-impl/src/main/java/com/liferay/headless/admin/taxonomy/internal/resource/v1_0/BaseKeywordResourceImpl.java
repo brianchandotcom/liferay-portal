@@ -231,10 +231,11 @@ public abstract class BaseKeywordResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "Keyword")})
-	public void putAssetLibraryKeywordPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
-				assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryKeywordPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+					Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -250,6 +251,8 @@ public abstract class BaseKeywordResourceImpl
 				contextCompany.getCompanyId(), permissions, assetLibraryId,
 				portletName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(assetLibraryId, portletName, null);
 	}
 
 	/**
@@ -460,10 +463,11 @@ public abstract class BaseKeywordResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "Keyword")})
-	public void putKeywordPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
-				keywordId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putKeywordPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
+					keywordId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(keywordId);
@@ -474,12 +478,15 @@ public abstract class BaseKeywordResourceImpl
 			getPermissionCheckerGroupId(keywordId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(keywordId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**
@@ -620,9 +627,11 @@ public abstract class BaseKeywordResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "Keyword")})
-	public void putSiteKeywordPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteKeywordPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -638,6 +647,8 @@ public abstract class BaseKeywordResourceImpl
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
 				roleLocalService));
+
+		return toPermissionPage(siteId, portletName, null);
 	}
 
 	@Override

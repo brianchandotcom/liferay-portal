@@ -123,7 +123,8 @@ public interface WikiPageResource {
 			Long wikiPageId, String roleNames)
 		throws Exception;
 
-	public void putWikiPagePermission(Long wikiPageId, Permission[] permissions)
+	public Page<Permission> putWikiPagePermission(
+			Long wikiPageId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putWikiPagePermissionHttpResponse(
@@ -1119,7 +1120,7 @@ public interface WikiPageResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putWikiPagePermission(
+		public Page<Permission> putWikiPagePermission(
 				Long wikiPageId, Permission[] permissions)
 			throws Exception {
 
@@ -1152,7 +1153,7 @@ public interface WikiPageResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

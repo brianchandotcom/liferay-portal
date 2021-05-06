@@ -69,9 +69,10 @@ public interface TaxonomyVocabularyResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryTaxonomyVocabularyPermission(
-			Long assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryTaxonomyVocabularyPermission(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
@@ -92,9 +93,10 @@ public interface TaxonomyVocabularyResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteTaxonomyVocabularyPermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteTaxonomyVocabularyPermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void deleteTaxonomyVocabulary(Long taxonomyVocabularyId)
@@ -124,9 +126,10 @@ public interface TaxonomyVocabularyResource {
 				Long taxonomyVocabularyId, String roleNames)
 		throws Exception;
 
-	public void putTaxonomyVocabularyPermission(
-			Long taxonomyVocabularyId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putTaxonomyVocabularyPermission(
+				Long taxonomyVocabularyId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -428,10 +428,11 @@ public abstract class BaseWikiPageResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "WikiPage")})
-	public void putWikiPagePermission(
-			@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
-				wikiPageId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putWikiPagePermission(
+				@NotNull @Parameter(hidden = true) @PathParam("wikiPageId") Long
+					wikiPageId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(wikiPageId);
@@ -442,12 +443,15 @@ public abstract class BaseWikiPageResourceImpl
 			getPermissionCheckerGroupId(wikiPageId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(wikiPageId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**

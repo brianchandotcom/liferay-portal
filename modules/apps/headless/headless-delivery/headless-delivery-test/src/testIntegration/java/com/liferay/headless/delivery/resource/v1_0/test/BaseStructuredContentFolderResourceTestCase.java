@@ -653,7 +653,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			structuredContentFolderResource.
 				putAssetLibraryStructuredContentFolderPermissionHttpResponse(
 					testDepotEntry.getDepotEntryId(),
@@ -1151,7 +1151,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			structuredContentFolderResource.
 				putSiteStructuredContentFolderPermissionHttpResponse(
 					structuredContentFolder.getSiteId(),
@@ -1220,7 +1220,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			structuredContentFolderResource.
 				putStructuredContentFolderPermissionHttpResponse(
 					structuredContentFolder.getId(),

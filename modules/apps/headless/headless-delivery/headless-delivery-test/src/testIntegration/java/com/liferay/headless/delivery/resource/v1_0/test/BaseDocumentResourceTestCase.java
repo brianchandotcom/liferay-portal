@@ -586,7 +586,7 @@ public abstract class BaseDocumentResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			documentResource.putAssetLibraryDocumentPermissionHttpResponse(
 				testDepotEntry.getDepotEntryId(),
 				new Permission[] {
@@ -1173,7 +1173,7 @@ public abstract class BaseDocumentResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			documentResource.putDocumentPermissionHttpResponse(
 				document.getId(),
 				new Permission[] {
@@ -1579,7 +1579,7 @@ public abstract class BaseDocumentResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			documentResource.putSiteDocumentPermissionHttpResponse(
 				document.getSiteId(),
 				new Permission[] {

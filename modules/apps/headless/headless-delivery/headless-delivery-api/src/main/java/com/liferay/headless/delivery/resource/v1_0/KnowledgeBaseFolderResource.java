@@ -77,9 +77,10 @@ public interface KnowledgeBaseFolderResource {
 				Long knowledgeBaseFolderId, String roleNames)
 		throws Exception;
 
-	public void putKnowledgeBaseFolderPermission(
-			Long knowledgeBaseFolderId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putKnowledgeBaseFolderPermission(
+				Long knowledgeBaseFolderId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<KnowledgeBaseFolder>
@@ -109,9 +110,10 @@ public interface KnowledgeBaseFolderResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteKnowledgeBaseFolderPermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteKnowledgeBaseFolderPermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

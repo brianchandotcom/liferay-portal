@@ -87,7 +87,7 @@ public interface NavigationMenuResource {
 				Long navigationMenuId, String roleNames)
 		throws Exception;
 
-	public void putNavigationMenuPermission(
+	public Page<Permission> putNavigationMenuPermission(
 			Long navigationMenuId, Permission[] permissions)
 		throws Exception;
 
@@ -128,7 +128,7 @@ public interface NavigationMenuResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteNavigationMenuPermission(
+	public Page<Permission> putSiteNavigationMenuPermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -690,7 +690,7 @@ public interface NavigationMenuResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putNavigationMenuPermission(
+		public Page<Permission> putNavigationMenuPermission(
 				Long navigationMenuId, Permission[] permissions)
 			throws Exception {
 
@@ -724,7 +724,7 @@ public interface NavigationMenuResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1123,7 +1123,7 @@ public interface NavigationMenuResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteNavigationMenuPermission(
+		public Page<Permission> putSiteNavigationMenuPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -1157,7 +1157,7 @@ public interface NavigationMenuResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

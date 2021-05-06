@@ -64,7 +64,7 @@ public interface ContentStructureResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryContentStructurePermission(
+	public Page<Permission> putAssetLibraryContentStructurePermission(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -89,7 +89,7 @@ public interface ContentStructureResource {
 				Long contentStructureId, String roleNames)
 		throws Exception;
 
-	public void putContentStructurePermission(
+	public Page<Permission> putContentStructurePermission(
 			Long contentStructureId, Permission[] permissions)
 		throws Exception;
 
@@ -116,7 +116,7 @@ public interface ContentStructureResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteContentStructurePermission(
+	public Page<Permission> putSiteContentStructurePermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -392,7 +392,7 @@ public interface ContentStructureResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putAssetLibraryContentStructurePermission(
+		public Page<Permission> putAssetLibraryContentStructurePermission(
 				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -426,7 +426,7 @@ public interface ContentStructureResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -655,7 +655,7 @@ public interface ContentStructureResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putContentStructurePermission(
+		public Page<Permission> putContentStructurePermission(
 				Long contentStructureId, Permission[] permissions)
 			throws Exception {
 
@@ -689,7 +689,7 @@ public interface ContentStructureResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -944,7 +944,7 @@ public interface ContentStructureResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteContentStructurePermission(
+		public Page<Permission> putSiteContentStructurePermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -978,7 +978,7 @@ public interface ContentStructureResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

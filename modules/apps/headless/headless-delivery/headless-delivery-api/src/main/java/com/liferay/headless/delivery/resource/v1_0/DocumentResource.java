@@ -73,9 +73,10 @@ public interface DocumentResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryDocumentPermission(
-			Long assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryDocumentPermission(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<Document> getDocumentFolderDocumentsPage(
@@ -124,9 +125,10 @@ public interface DocumentResource {
 			getDocumentPermissionsPage(Long documentId, String roleNames)
 		throws Exception;
 
-	public void putDocumentPermission(
-			Long documentId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putDocumentPermission(
+				Long documentId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public String getDocumentRenderedContentByDisplayPageDisplayPageKey(
@@ -151,9 +153,10 @@ public interface DocumentResource {
 			getSiteDocumentPermissionsPage(Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteDocumentPermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteDocumentPermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

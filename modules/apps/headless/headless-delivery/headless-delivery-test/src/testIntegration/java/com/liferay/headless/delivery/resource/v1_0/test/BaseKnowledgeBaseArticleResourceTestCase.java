@@ -480,7 +480,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			knowledgeBaseArticleResource.
 				putKnowledgeBaseArticlePermissionHttpResponse(
 					knowledgeBaseArticle.getId(),
@@ -1790,7 +1790,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			knowledgeBaseArticleResource.
 				putSiteKnowledgeBaseArticlePermissionHttpResponse(
 					knowledgeBaseArticle.getSiteId(),

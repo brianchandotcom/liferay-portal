@@ -760,7 +760,7 @@ public abstract class BaseWikiPageResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			wikiPageResource.putWikiPagePermissionHttpResponse(
 				wikiPage.getId(),
 				new Permission[] {

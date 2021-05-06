@@ -402,11 +402,12 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "DataRecordCollection")})
-	public void putDataRecordCollectionPermission(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("dataRecordCollectionId")
-			Long dataRecordCollectionId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putDataRecordCollectionPermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("dataRecordCollectionId")
+				Long dataRecordCollectionId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -419,12 +420,15 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			getPermissionCheckerGroupId(dataRecordCollectionId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(dataRecordCollectionId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**

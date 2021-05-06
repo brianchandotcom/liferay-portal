@@ -430,7 +430,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			knowledgeBaseFolderResource.
 				putKnowledgeBaseFolderPermissionHttpResponse(
 					knowledgeBaseFolder.getId(),
@@ -873,7 +873,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			knowledgeBaseFolderResource.
 				putSiteKnowledgeBaseFolderPermissionHttpResponse(
 					knowledgeBaseFolder.getSiteId(),

@@ -687,11 +687,12 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
-	public void putMessageBoardThreadPermission(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("messageBoardThreadId")
-			Long messageBoardThreadId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putMessageBoardThreadPermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("messageBoardThreadId")
+				Long messageBoardThreadId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -703,12 +704,15 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			getPermissionCheckerGroupId(messageBoardThreadId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(messageBoardThreadId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**
@@ -924,9 +928,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "MessageBoardThread")})
-	public void putSiteMessageBoardThreadPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteMessageBoardThreadPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -942,6 +948,8 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
 				roleLocalService));
+
+		return toPermissionPage(siteId, portletName, null);
 	}
 
 	@Override

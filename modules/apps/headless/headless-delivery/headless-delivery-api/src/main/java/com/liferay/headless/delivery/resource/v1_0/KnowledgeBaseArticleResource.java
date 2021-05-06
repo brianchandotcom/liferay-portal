@@ -96,9 +96,10 @@ public interface KnowledgeBaseArticleResource {
 				Long knowledgeBaseArticleId, String roleNames)
 		throws Exception;
 
-	public void putKnowledgeBaseArticlePermission(
-			Long knowledgeBaseArticleId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putKnowledgeBaseArticlePermission(
+				Long knowledgeBaseArticleId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void putKnowledgeBaseArticleSubscribe(Long knowledgeBaseArticleId)
@@ -155,9 +156,10 @@ public interface KnowledgeBaseArticleResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteKnowledgeBaseArticlePermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteKnowledgeBaseArticlePermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public void putSiteKnowledgeBaseArticleSubscribe(Long siteId)

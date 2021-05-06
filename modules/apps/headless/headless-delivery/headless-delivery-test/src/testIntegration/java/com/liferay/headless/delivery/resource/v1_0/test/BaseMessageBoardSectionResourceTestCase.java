@@ -436,7 +436,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			messageBoardSectionResource.
 				putMessageBoardSectionPermissionHttpResponse(
 					messageBoardSection.getId(),
@@ -1346,7 +1346,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			messageBoardSectionResource.
 				putSiteMessageBoardSectionPermissionHttpResponse(
 					messageBoardSection.getSiteId(),

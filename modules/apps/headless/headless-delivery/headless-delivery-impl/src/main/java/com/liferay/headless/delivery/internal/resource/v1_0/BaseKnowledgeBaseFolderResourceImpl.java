@@ -377,11 +377,12 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
-	public void putKnowledgeBaseFolderPermission(
-			@NotNull @Parameter(hidden = true)
-			@PathParam("knowledgeBaseFolderId")
-			Long knowledgeBaseFolderId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putKnowledgeBaseFolderPermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("knowledgeBaseFolderId")
+				Long knowledgeBaseFolderId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -393,12 +394,15 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			getPermissionCheckerGroupId(knowledgeBaseFolderId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(knowledgeBaseFolderId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**
@@ -602,9 +606,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
-	public void putSiteKnowledgeBaseFolderPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteKnowledgeBaseFolderPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -620,6 +626,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
 				roleLocalService));
+
+		return toPermissionPage(siteId, portletName, null);
 	}
 
 	@Override

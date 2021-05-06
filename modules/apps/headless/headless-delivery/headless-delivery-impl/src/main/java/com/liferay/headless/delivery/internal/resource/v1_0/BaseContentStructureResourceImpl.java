@@ -165,10 +165,11 @@ public abstract class BaseContentStructureResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "ContentStructure")})
-	public void putAssetLibraryContentStructurePermission(
-			@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId") Long
-				assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryContentStructurePermission(
+				@NotNull @Parameter(hidden = true) @PathParam("assetLibraryId")
+					Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(assetLibraryId);
@@ -184,6 +185,8 @@ public abstract class BaseContentStructureResourceImpl
 				contextCompany.getCompanyId(), permissions, assetLibraryId,
 				portletName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(assetLibraryId, portletName, null);
 	}
 
 	/**
@@ -257,10 +260,12 @@ public abstract class BaseContentStructureResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "ContentStructure")})
-	public void putContentStructurePermission(
-			@NotNull @Parameter(hidden = true) @PathParam("contentStructureId")
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putContentStructurePermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("contentStructureId")
 				Long contentStructureId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -272,12 +277,15 @@ public abstract class BaseContentStructureResourceImpl
 			getPermissionCheckerGroupId(contentStructureId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(contentStructureId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**
@@ -359,9 +367,11 @@ public abstract class BaseContentStructureResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "ContentStructure")})
-	public void putSiteContentStructurePermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteContentStructurePermission(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -377,6 +387,8 @@ public abstract class BaseContentStructureResourceImpl
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
 				roleLocalService));
+
+		return toPermissionPage(siteId, portletName, null);
 	}
 
 	@Override

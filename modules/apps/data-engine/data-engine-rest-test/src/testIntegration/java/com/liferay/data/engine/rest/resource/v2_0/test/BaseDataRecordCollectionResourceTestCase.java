@@ -638,7 +638,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			dataRecordCollectionResource.
 				putDataRecordCollectionPermissionHttpResponse(
 					dataRecordCollection.getId(),

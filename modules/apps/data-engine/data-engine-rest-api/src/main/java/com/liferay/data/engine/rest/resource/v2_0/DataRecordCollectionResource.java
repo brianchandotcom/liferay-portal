@@ -91,9 +91,10 @@ public interface DataRecordCollectionResource {
 				Long dataRecordCollectionId, String roleNames)
 		throws Exception;
 
-	public void putDataRecordCollectionPermission(
-			Long dataRecordCollectionId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putDataRecordCollectionPermission(
+				Long dataRecordCollectionId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public String getDataRecordCollectionPermissionByCurrentUser(

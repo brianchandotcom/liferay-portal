@@ -281,10 +281,12 @@ public abstract class BaseNavigationMenuResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "NavigationMenu")})
-	public void putNavigationMenuPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("navigationMenuId")
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putNavigationMenuPermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("navigationMenuId")
 				Long navigationMenuId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -296,12 +298,15 @@ public abstract class BaseNavigationMenuResourceImpl
 			getPermissionCheckerGroupId(navigationMenuId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(navigationMenuId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**
@@ -435,9 +440,11 @@ public abstract class BaseNavigationMenuResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "NavigationMenu")})
-	public void putSiteNavigationMenuPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteNavigationMenuPermission(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String portletName = getPermissionCheckerPortletName(siteId);
@@ -453,6 +460,8 @@ public abstract class BaseNavigationMenuResourceImpl
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
 				roleLocalService));
+
+		return toPermissionPage(siteId, portletName, null);
 	}
 
 	@Override

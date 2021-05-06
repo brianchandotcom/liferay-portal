@@ -571,7 +571,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			wikiNodeResource.putSiteWikiNodePermissionHttpResponse(
 				wikiNode.getSiteId(),
 				new Permission[] {
@@ -761,7 +761,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			wikiNodeResource.putWikiNodePermissionHttpResponse(
 				wikiNode.getId(),
 				new Permission[] {

@@ -89,7 +89,7 @@ public interface DocumentResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryDocumentPermission(
+	public Page<Permission> putAssetLibraryDocumentPermission(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -211,7 +211,8 @@ public interface DocumentResource {
 			Long documentId, String roleNames)
 		throws Exception;
 
-	public void putDocumentPermission(Long documentId, Permission[] permissions)
+	public Page<Permission> putDocumentPermission(
+			Long documentId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putDocumentPermissionHttpResponse(
@@ -265,7 +266,8 @@ public interface DocumentResource {
 			Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteDocumentPermission(Long siteId, Permission[] permissions)
+	public Page<Permission> putSiteDocumentPermission(
+			Long siteId, Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putSiteDocumentPermissionHttpResponse(
@@ -721,7 +723,7 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putAssetLibraryDocumentPermission(
+		public Page<Permission> putAssetLibraryDocumentPermission(
 				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -755,7 +757,7 @@ public interface DocumentResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2008,7 +2010,7 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putDocumentPermission(
+		public Page<Permission> putDocumentPermission(
 				Long documentId, Permission[] permissions)
 			throws Exception {
 
@@ -2041,7 +2043,7 @@ public interface DocumentResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2558,7 +2560,7 @@ public interface DocumentResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteDocumentPermission(
+		public Page<Permission> putSiteDocumentPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -2591,7 +2593,7 @@ public interface DocumentResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

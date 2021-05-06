@@ -83,7 +83,7 @@ public interface DocumentFolderResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryDocumentFolderPermission(
+	public Page<Permission> putAssetLibraryDocumentFolderPermission(
 			Long assetLibraryId, Permission[] permissions)
 		throws Exception;
 
@@ -144,7 +144,7 @@ public interface DocumentFolderResource {
 				Long documentFolderId, String roleNames)
 		throws Exception;
 
-	public void putDocumentFolderPermission(
+	public Page<Permission> putDocumentFolderPermission(
 			Long documentFolderId, Permission[] permissions)
 		throws Exception;
 
@@ -225,7 +225,7 @@ public interface DocumentFolderResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteDocumentFolderPermission(
+	public Page<Permission> putSiteDocumentFolderPermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -671,7 +671,7 @@ public interface DocumentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putAssetLibraryDocumentFolderPermission(
+		public Page<Permission> putAssetLibraryDocumentFolderPermission(
 				Long assetLibraryId, Permission[] permissions)
 			throws Exception {
 
@@ -705,7 +705,7 @@ public interface DocumentFolderResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1332,7 +1332,7 @@ public interface DocumentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putDocumentFolderPermission(
+		public Page<Permission> putDocumentFolderPermission(
 				Long documentFolderId, Permission[] permissions)
 			throws Exception {
 
@@ -1366,7 +1366,7 @@ public interface DocumentFolderResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -2151,7 +2151,7 @@ public interface DocumentFolderResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteDocumentFolderPermission(
+		public Page<Permission> putSiteDocumentFolderPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -2185,7 +2185,7 @@ public interface DocumentFolderResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

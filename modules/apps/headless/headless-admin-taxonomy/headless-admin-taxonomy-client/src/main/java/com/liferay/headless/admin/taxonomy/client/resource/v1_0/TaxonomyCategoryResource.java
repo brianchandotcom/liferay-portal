@@ -125,7 +125,7 @@ public interface TaxonomyCategoryResource {
 				String taxonomyCategoryId, String roleNames)
 		throws Exception;
 
-	public void putTaxonomyCategoryPermission(
+	public Page<Permission> putTaxonomyCategoryPermission(
 			String taxonomyCategoryId, Permission[] permissions)
 		throws Exception;
 
@@ -1092,7 +1092,7 @@ public interface TaxonomyCategoryResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putTaxonomyCategoryPermission(
+		public Page<Permission> putTaxonomyCategoryPermission(
 				String taxonomyCategoryId, Permission[] permissions)
 			throws Exception {
 
@@ -1126,7 +1126,7 @@ public interface TaxonomyCategoryResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

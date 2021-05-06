@@ -61,9 +61,10 @@ public interface ContentStructureResource {
 				Long assetLibraryId, String roleNames)
 		throws Exception;
 
-	public void putAssetLibraryContentStructurePermission(
-			Long assetLibraryId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryContentStructurePermission(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public ContentStructure getContentStructure(Long contentStructureId)
@@ -74,9 +75,10 @@ public interface ContentStructureResource {
 				Long contentStructureId, String roleNames)
 		throws Exception;
 
-	public void putContentStructurePermission(
-			Long contentStructureId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putContentStructurePermission(
+				Long contentStructureId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public Page<ContentStructure> getSiteContentStructuresPage(
@@ -90,9 +92,10 @@ public interface ContentStructureResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteContentStructurePermission(
-			Long siteId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putSiteContentStructurePermission(
+				Long siteId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

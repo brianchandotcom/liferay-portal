@@ -723,7 +723,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			dataDefinitionResource.putDataDefinitionPermissionHttpResponse(
 				dataDefinition.getId(),
 				new Permission[] {

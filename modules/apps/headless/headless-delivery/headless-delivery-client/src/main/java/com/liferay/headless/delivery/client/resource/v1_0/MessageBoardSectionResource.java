@@ -99,7 +99,7 @@ public interface MessageBoardSectionResource {
 				Long messageBoardSectionId, String roleNames)
 		throws Exception;
 
-	public void putMessageBoardSectionPermission(
+	public Page<Permission> putMessageBoardSectionPermission(
 			Long messageBoardSectionId, Permission[] permissions)
 		throws Exception;
 
@@ -186,7 +186,7 @@ public interface MessageBoardSectionResource {
 				Long siteId, String roleNames)
 		throws Exception;
 
-	public void putSiteMessageBoardSectionPermission(
+	public Page<Permission> putSiteMessageBoardSectionPermission(
 			Long siteId, Permission[] permissions)
 		throws Exception;
 
@@ -845,7 +845,7 @@ public interface MessageBoardSectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putMessageBoardSectionPermission(
+		public Page<Permission> putMessageBoardSectionPermission(
 				Long messageBoardSectionId, Permission[] permissions)
 			throws Exception {
 
@@ -879,7 +879,7 @@ public interface MessageBoardSectionResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -1678,7 +1678,7 @@ public interface MessageBoardSectionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putSiteMessageBoardSectionPermission(
+		public Page<Permission> putSiteMessageBoardSectionPermission(
 				Long siteId, Permission[] permissions)
 			throws Exception {
 
@@ -1712,7 +1712,7 @@ public interface MessageBoardSectionResource {
 			}
 
 			try {
-				return;
+				return Page.of(content, Permission::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(

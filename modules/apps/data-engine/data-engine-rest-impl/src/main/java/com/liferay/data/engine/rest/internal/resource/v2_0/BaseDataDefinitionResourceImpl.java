@@ -428,10 +428,12 @@ public abstract class BaseDataDefinitionResourceImpl
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "DataDefinition")})
-	public void putDataDefinitionPermission(
-			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putDataDefinitionPermission(
+				@NotNull @Parameter(hidden = true)
+				@PathParam("dataDefinitionId")
 				Long dataDefinitionId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception {
 
 		String resourceName = getPermissionCheckerResourceName(
@@ -443,12 +445,15 @@ public abstract class BaseDataDefinitionResourceImpl
 			getPermissionCheckerGroupId(dataDefinitionId));
 
 		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
+			contextCompany.getCompanyId(),
+			getPermissionCheckerGroupId(dataDefinitionId), resourceName,
 			String.valueOf(resourceId),
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
+
+		return toPermissionPage(resourceId, resourceName, null);
 	}
 
 	/**

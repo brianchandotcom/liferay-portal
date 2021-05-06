@@ -34,9 +34,11 @@ definition {
 
 			JSONUser.tearDownNonAdminUsers();
 
-			Suborganization.tearDownCP();
+			JSONOrganization.deleteOrganizationByName(
+				organizationName = "Organization Name",
+				parentOrganizationName = "Parent Organization Name");
 
-			Organization.tearDownCP();
+			JSONOrganization.deleteOrganizationByName(organizationName = "Parent Organization Name");
 		}
 	}
 

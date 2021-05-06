@@ -20,6 +20,8 @@ import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -57,8 +59,11 @@ public class ImageImpl extends ImageBaseImpl {
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
 			}
 			else {
+				Image image = ImageLocalServiceUtil.getImage(imageId);
+
 				inputStream = DLStoreUtil.getFileAsStream(
-					_DEFAULT_COMPANY_ID, _DEFAULT_REPOSITORY_ID, getFileName());
+					image.getCompanyId(), _DEFAULT_REPOSITORY_ID,
+					getFileName());
 			}
 
 			byte[] bytes = FileUtil.getBytes(inputStream);
@@ -80,8 +85,6 @@ public class ImageImpl extends ImageBaseImpl {
 	protected String getFileName() {
 		return getImageId() + StringPool.PERIOD + getType();
 	}
-
-	private static final long _DEFAULT_COMPANY_ID = 0;
 
 	private static final long _DEFAULT_REPOSITORY_ID = 0;
 

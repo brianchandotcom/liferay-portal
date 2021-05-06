@@ -33,7 +33,7 @@ public class JobFactory {
 			topLevelBuild.getJobName(), topLevelBuild.getTestSuiteName(),
 			topLevelBuild.getBranchName(),
 			topLevelBuild.getBaseGitRepositoryName(),
-			topLevelBuild.getBuildProfile());
+			topLevelBuild.getBuildProfile(), topLevelBuild.getProjectNames());
 	}
 
 	public static Job newJob(BuildData buildData) {
@@ -101,6 +101,16 @@ public class JobFactory {
 	private static Job _newJob(
 		String jobName, String testSuiteName, String branchName,
 		String repositoryName, Job.BuildProfile buildProfile) {
+
+		return _newJob(
+			jobName, testSuiteName, branchName, repositoryName, buildProfile,
+			null);
+	}
+
+	private static Job _newJob(
+		String jobName, String testSuiteName, String branchName,
+		String repositoryName, Job.BuildProfile buildProfile,
+		List<String> projectNames) {
 
 		if (buildProfile == null) {
 			buildProfile = Job.BuildProfile.PORTAL;
@@ -342,12 +352,14 @@ public class JobFactory {
 		}
 
 		if (jobName.equals("test-qa-websites-functional-daily") ||
-			jobName.equals("test-qa-websites-functional-environment")) {
+			jobName.equals("test-qa-websites-functional-environment") ||
+			jobName.equals("test-qa-websites-functional-weekly")) {
 
 			_jobs.put(
 				jobKey,
 				new QAWebsitesGitRepositoryJob(
-					jobName, buildProfile, testSuiteName, branchName));
+					jobName, buildProfile, testSuiteName, branchName,
+					projectNames));
 
 			return _jobs.get(jobKey);
 		}

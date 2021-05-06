@@ -493,6 +493,10 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return metricLabels;
 	}
 
+	public List<String> getProjectNames() {
+		return new ArrayList<>();
+	}
+
 	@Override
 	public String getStatusReport(int indentSize) {
 		String statusReport = super.getStatusReport(indentSize);

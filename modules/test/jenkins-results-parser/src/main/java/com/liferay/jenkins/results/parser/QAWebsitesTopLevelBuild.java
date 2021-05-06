@@ -45,6 +45,7 @@ public class QAWebsitesTopLevelBuild
 		return _portalMasterBranchInformation;
 	}
 
+	@Override
 	public List<String> getProjectNames() {
 		String projectNames = getParameterValue("PROJECT_NAMES");
 
@@ -54,11 +55,6 @@ public class QAWebsitesTopLevelBuild
 	@Override
 	public BranchInformation getQAWebsitesBranchInformation() {
 		return getBranchInformation("qa.websites");
-	}
-
-	@Override
-	public String getTestSuiteName() {
-		return JenkinsResultsParserUtil.join(",", getProjectNames());
 	}
 
 	public static class PortalMasterBranchInformation

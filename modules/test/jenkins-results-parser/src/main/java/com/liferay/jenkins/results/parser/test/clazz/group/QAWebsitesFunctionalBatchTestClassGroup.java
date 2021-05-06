@@ -81,7 +81,8 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 		}
 
 		return JenkinsResultsParserUtil.getProperty(
-			testProperties, "test.batch.property.query", testBaseDir.getName());
+			testProperties, "test.batch.property.query", testBaseDir.getName(),
+			testSuiteName);
 	}
 
 	@Override

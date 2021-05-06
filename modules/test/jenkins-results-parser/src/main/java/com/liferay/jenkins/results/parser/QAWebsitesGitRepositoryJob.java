@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -28,7 +26,7 @@ import java.util.Set;
  * @author Michael Hashimoto
  */
 public class QAWebsitesGitRepositoryJob
-	extends GitRepositoryJob implements PortalTestClassJob {
+	extends GitRepositoryJob implements PortalTestClassJob, TestSuiteJob {
 
 	public String getBranchName() {
 		return _upstreamBranchName;
@@ -51,22 +49,23 @@ public class QAWebsitesGitRepositoryJob
 	}
 
 	public List<String> getProjectNames() {
-		if (JenkinsResultsParserUtil.isNullOrEmpty(_projectNames)) {
-			return new ArrayList<>();
-		}
+		return _projectNames;
+	}
 
-		return Arrays.asList(_projectNames.split(","));
+	@Override
+	public String getTestSuiteName() {
+		return _testSuiteName;
 	}
 
 	protected QAWebsitesGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String projectNames,
-		String upstreamBranchName) {
+		String jobName, BuildProfile buildProfile, String testSuiteName,
+		String upstreamBranchName, List<String> projectNames) {
 
 		super(jobName, buildProfile);
 
-		_projectNames = projectNames;
-
+		_testSuiteName = testSuiteName;
 		_upstreamBranchName = upstreamBranchName;
+		_projectNames = projectNames;
 
 		gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(
 			_upstreamBranchName, _getQAWebsitesGitRepositoryDir(),
@@ -135,7 +134,8 @@ public class QAWebsitesGitRepositoryJob
 		return qaWebsitesRepository;
 	}
 
-	private final String _projectNames;
+	private final List<String> _projectNames;
+	private final String _testSuiteName;
 	private final String _upstreamBranchName;
 
 }

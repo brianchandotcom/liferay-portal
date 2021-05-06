@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.internal.upgrade.v3_3_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v3_3_0.util.CPAttachmentFileEntryTable;
 import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl;
 
 /**
@@ -26,12 +27,12 @@ public class CPAttachmentFileEntryCDNUpgradeProcess
 	@Override
 	public void doUpgrade() throws Exception {
 		addColumn(
-			CPAttachmentFileEntryModelImpl.class,
-			CPAttachmentFileEntryModelImpl.TABLE_NAME, "cdn", "BOOLEAN");
+			CPAttachmentFileEntryTable.class,
+			CPAttachmentFileEntryTable.TABLE_NAME, "cdn", "BOOLEAN");
 
 		addColumn(
-			CPAttachmentFileEntryModelImpl.class,
-			CPAttachmentFileEntryModelImpl.TABLE_NAME, "cdnUrl",
+				CPAttachmentFileEntryTable.class,
+				CPAttachmentFileEntryTable.TABLE_NAME, "cdnUrl",
 			"VARCHAR(255)");
 	}
 

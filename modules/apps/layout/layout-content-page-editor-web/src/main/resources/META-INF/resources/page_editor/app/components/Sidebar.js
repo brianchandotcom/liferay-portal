@@ -15,10 +15,13 @@
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useIsMounted, useStateSafe} from '@liferay/frontend-js-react-web';
+import {
+	useIsMounted,
+	useStateSafe,
+	ReactPortal,
+} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React from 'react';
-import {createPortal} from 'react-dom';
 
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
@@ -202,129 +205,131 @@ export default function Sidebar() {
 		);
 	};
 
-	return createPortal(
-		<div
-			className="page-editor__sidebar page-editor__theme-adapter-forms"
-			ref={dropClearRef}
-		>
+	return (
+		<ReactPortal>
 			<div
-				className={classNames('page-editor__sidebar__buttons', {
-					light: true,
-				})}
-				onClick={deselectItem}
+				className="page-editor__sidebar page-editor__theme-adapter-forms"
+				ref={dropClearRef}
 			>
-				{panels.reduce((elements, group, groupIndex) => {
-					const buttons = group.map((panelId) => {
-						const panel = config.sidebarPanels[panelId];
+				<div
+					className={classNames('page-editor__sidebar__buttons', {
+						light: true,
+					})}
+					onClick={deselectItem}
+				>
+					{panels.reduce((elements, group, groupIndex) => {
+						const buttons = group.map((panelId) => {
+							const panel = config.sidebarPanels[panelId];
 
-						const active =
-							sidebarOpen && sidebarPanelId === panelId;
-						const {
-							icon,
-							isLink,
-							label,
-							pluginEntryPoint,
-							url,
-						} = panel;
+							const active =
+								sidebarOpen && sidebarPanelId === panelId;
+							const {
+								icon,
+								isLink,
+								label,
+								pluginEntryPoint,
+								url,
+							} = panel;
 
-						if (isLink) {
+							if (isLink) {
+								return (
+									<a
+										className={classNames({active})}
+										data-tooltip-align="left"
+										href={url}
+										key={panel.sidebarPanelId}
+										title={label}
+									>
+										<ClayIcon symbol={icon} />
+									</a>
+								);
+							}
+
+							const prefetch = () =>
+								load(
+									panel.sidebarPanelId,
+									pluginEntryPoint
+								).then(...swallow);
+
 							return (
-								<a
+								<ClayButtonWithIcon
+									aria-pressed={active}
 									className={classNames({active})}
 									data-tooltip-align="left"
-									href={url}
+									displayType="unstyled"
+									id={`${sidebarId}${panel.sidebarPanelId}`}
 									key={panel.sidebarPanelId}
+									onClick={() => handleClick(panel)}
+									onFocus={prefetch}
+									onMouseEnter={prefetch}
+									small={true}
+									symbol={icon}
 									title={label}
-								>
-									<ClayIcon symbol={icon} />
-								</a>
+								/>
 							);
+						});
+
+						// Add separator between groups.
+
+						if (groupIndex === panels.length - 1) {
+							return elements.concat(buttons);
 						}
-
-						const prefetch = () =>
-							load(panel.sidebarPanelId, pluginEntryPoint).then(
-								...swallow
-							);
-
-						return (
-							<ClayButtonWithIcon
-								aria-pressed={active}
-								className={classNames({active})}
-								data-tooltip-align="left"
-								displayType="unstyled"
-								id={`${sidebarId}${panel.sidebarPanelId}`}
-								key={panel.sidebarPanelId}
-								onClick={() => handleClick(panel)}
-								onFocus={prefetch}
-								onMouseEnter={prefetch}
-								small={true}
-								symbol={icon}
-								title={label}
-							/>
-						);
-					});
-
-					// Add separator between groups.
-
-					if (groupIndex === panels.length - 1) {
-						return elements.concat(buttons);
-					}
-					else {
-						return elements.concat([
-							...buttons,
-							<hr key={`separator-${groupIndex}`} />,
-						]);
-					}
-				}, [])}
-			</div>
-			<div
-				className={classNames({
-					'page-editor__sidebar__content': true,
-					'page-editor__sidebar__content--open': sidebarOpen,
-					rtl:
-						Liferay.Language.direction[
-							themeDisplay?.getLanguageId()
-						] === 'rtl',
-				})}
-				onClick={deselectItem}
-			>
-				{hasError ? (
-					<div>
-						<ClayButton
-							block
-							displayType="secondary"
-							onClick={() => {
-								dispatch(
-									Actions.switchSidebarPanel({
-										sidebarOpen: false,
-										sidebarPanelId:
-											panels[0] && panels[0][0],
-									})
-								);
-								setHasError(false);
+						else {
+							return elements.concat([
+								...buttons,
+								<hr key={`separator-${groupIndex}`} />,
+							]);
+						}
+					}, [])}
+				</div>
+				<div
+					className={classNames({
+						'page-editor__sidebar__content': true,
+						'page-editor__sidebar__content--open': sidebarOpen,
+						rtl:
+							Liferay.Language.direction[
+								themeDisplay?.getLanguageId()
+							] === 'rtl',
+					})}
+					onClick={deselectItem}
+				>
+					{hasError ? (
+						<div>
+							<ClayButton
+								block
+								displayType="secondary"
+								onClick={() => {
+									dispatch(
+										Actions.switchSidebarPanel({
+											sidebarOpen: false,
+											sidebarPanelId:
+												panels[0] && panels[0][0],
+										})
+									);
+									setHasError(false);
+								}}
+								small
+							>
+								{Liferay.Language.get('refresh')}
+							</ClayButton>
+						</div>
+					) : (
+						<ErrorBoundary
+							handleError={() => {
+								setHasError(true);
 							}}
-							small
 						>
-							{Liferay.Language.get('refresh')}
-						</ClayButton>
-					</div>
-				) : (
-					<ErrorBoundary
-						handleError={() => {
-							setHasError(true);
-						}}
-					>
-						<Suspense fallback={<ClayLoadingIndicator />}>
-							<SidebarPanel
-								getInstance={getInstance}
-								pluginId={sidebarPanelId}
-							/>
-						</Suspense>
-					</ErrorBoundary>
-				)}
+							<Suspense fallback={<ClayLoadingIndicator />}>
+								<SidebarPanel
+									getInstance={getInstance}
+									pluginId={sidebarPanelId}
+								/>
+							</Suspense>
+						</ErrorBoundary>
+					)}
+				</div>
 			</div>
-		</div>,
-		document.body
+		</ReactPortal>
 	);
 }
 

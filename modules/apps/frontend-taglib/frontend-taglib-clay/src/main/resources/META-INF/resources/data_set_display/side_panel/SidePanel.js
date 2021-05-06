@@ -15,10 +15,10 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Modal from '../modal/Modal';
 import debounce from '../utils/debounce';
@@ -423,7 +423,9 @@ export default class SidePanel extends React.Component {
 			</>
 		);
 
-		return ReactDOM.createPortal(content, this.state.wrapper);
+		return (
+			<ReactPortal container={this.state.wrapper}>{content}</ReactPortal>
+		);
 	}
 }
 

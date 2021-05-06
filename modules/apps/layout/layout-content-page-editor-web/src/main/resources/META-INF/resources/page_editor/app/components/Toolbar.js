@@ -14,10 +14,10 @@
 
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import classNames from 'classnames';
 import {useModal} from '@clayui/modal';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {useIsMounted, ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
 
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
@@ -43,7 +43,7 @@ import Undo from './undo/Undo';
 
 const {Suspense, useCallback, useRef} = React;
 
-function ToolbarBody() {
+function ToolbarBody({className}) {
 	const dispatch = useDispatch();
 	const dropClearRef = useDropClear();
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
@@ -195,7 +195,10 @@ function ToolbarBody() {
 
 	return (
 		<ClayLayout.ContainerFluid
-			className="page-editor__theme-adapter-buttons"
+			className={classNames(
+				'page-editor__theme-adapter-buttons',
+				className
+			)}
 			onClick={deselectItem}
 			ref={dropClearRef}
 		>
@@ -374,5 +377,9 @@ export default function Toolbar() {
 		}
 	}
 
-	return ReactDOM.createPortal(<ToolbarBody />, container);
+	return (
+		<ReactPortal container={container} wrapper={false}>
+			<ToolbarBody />
+		</ReactPortal>
+	);
 }

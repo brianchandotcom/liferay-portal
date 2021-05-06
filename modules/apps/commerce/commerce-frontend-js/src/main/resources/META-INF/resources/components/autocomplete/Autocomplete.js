@@ -15,10 +15,9 @@
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
 import {FocusScope} from '@clayui/shared';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {useIsMounted, ReactPortal} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
-import {createPortal} from 'react-dom';
 
 import {debouncePromise} from '../../utilities/debounce';
 import {AUTOCOMPLETE_VALUE_UPDATED} from '../../utilities/eventsDefinitions';
@@ -294,10 +293,12 @@ function Autocomplete({onItemsUpdated, onValueUpdated, ...props}) {
 			{CustomView &&
 				!props.disabled &&
 				(props.contentWrapperRef
-					? props.contentWrapperRef.current &&
-					  createPortal(
-							wrappedResults,
-							props.contentWrapperRef.current
+					? props.contentWrapperRef.current && (
+							<ReactPortal
+								container={props.contentWrapperRef.current}
+							>
+								{wrappedResults}
+							</ReactPortal>
 					  )
 					: wrappedResults)}
 		</>

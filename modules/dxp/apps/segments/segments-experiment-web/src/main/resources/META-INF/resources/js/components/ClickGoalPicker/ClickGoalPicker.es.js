@@ -12,12 +12,11 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useEventListener} from '@liferay/frontend-js-react-web';
+import {ReactPortal, useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {throttle} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import {StateContext as GlobalStateContext} from './../../state/context.es';
 import {StateContext, getInitialState, reducer} from './reducer.es';
@@ -417,13 +416,14 @@ function OverlayContainer({allowEdit, root}) {
 	useEventListener('mousedown', handleMouseDown, false, document);
 	useEventListener('mouseup', handleMouseUp, false, document);
 
-	return ReactDOM.createPortal(
-		<ClickGoalPicker.Overlay
-			allowEdit={allowEdit}
-			root={root}
-			targetableElements={targetableElements.current}
-		/>,
-		root
+	return (
+		<ReactPortal container={root}>
+			<ClickGoalPicker.Overlay
+				allowEdit={allowEdit}
+				root={root}
+				targetableElements={targetableElements.current}
+			/>
+		</ReactPortal>
 	);
 }
 

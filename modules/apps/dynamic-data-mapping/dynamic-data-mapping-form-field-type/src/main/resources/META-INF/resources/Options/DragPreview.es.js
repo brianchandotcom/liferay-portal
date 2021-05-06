@@ -14,7 +14,7 @@
 
 import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
-import ReactDOM from 'react-dom';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 import {OPTIONS_TYPES} from './DnD.es';
 
@@ -59,17 +59,18 @@ export default function DragPreview({children, component: Component}) {
 		return null;
 	}
 
-	return ReactDOM.createPortal(
-		<div style={layerStyles}>
-			<Component
-				{...item.option}
-				className="dragging"
-				ref={ref}
-				style={getItemStyles(currentOffset, ref, initialOffset)}
-			>
-				{children({index: item.position, option: item.option})}
-			</Component>
-		</div>,
-		document.body
+	return (
+		<ReactPortal>
+			<div style={layerStyles}>
+				<Component
+					{...item.option}
+					className="dragging"
+					ref={ref}
+					style={getItemStyles(currentOffset, ref, initialOffset)}
+				>
+					{children({index: item.position, option: item.option})}
+				</Component>
+			</div>
+		</ReactPortal>
 	);
 }

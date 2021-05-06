@@ -17,9 +17,9 @@ declare const ReactPortal: React.FunctionComponent<
 	React.HTMLAttributes<HTMLDivElement> & {
 
 		/**
-		 * Ref of element to render portal into.
+		 * Element to render portal into.
 		 */
-		containerRef?: React.RefObject<Element>;
+		container?: Element;
 
 		/**
 		 * Ref of element to render nested portals into.

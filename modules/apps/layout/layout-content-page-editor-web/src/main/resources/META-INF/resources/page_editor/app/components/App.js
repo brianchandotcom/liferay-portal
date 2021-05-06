@@ -14,7 +14,7 @@
 
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo} from 'react';
-import {createPortal} from 'react-dom';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {INIT} from '../actions/types';
@@ -71,14 +71,15 @@ export default function App({state}) {
 					<DragAndDropContextProvider>
 						<EditableProcessorContextProvider>
 							<DisplayPagePreviewItemContextProvider>
-								{displayPagePreviewItemSelectorWrapper
-									? createPortal(
-											<DisplayPagePreviewItemSelector
-												dark
-											/>,
+								{displayPagePreviewItemSelectorWrapper ? (
+									<ReactPortal
+										container={
 											displayPagePreviewItemSelectorWrapper
-									  )
-									: null}
+										}
+									>
+										<DisplayPagePreviewItemSelector dark />
+									</ReactPortal>
+								) : null}
 
 								<DragPreview />
 								<Toolbar />

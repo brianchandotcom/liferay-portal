@@ -17,10 +17,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
-import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {useIsMounted, ReactPortal} from '@liferay/frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
-import {createPortal} from 'react-dom';
 
 import {config} from '../../../app/config/index';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
@@ -371,8 +370,8 @@ const ExperienceSelector = ({
 				</ClayLayout.ContentRow>
 			</ClayButton>
 
-			{open &&
-				createPortal(
+			{open && (
+				<ReactPortal>
 					<div
 						className="dropdown-menu p-4 page-editor__toolbar-experience__dropdown-menu toggled"
 						onBlur={handleDropdownBlur}
@@ -408,9 +407,9 @@ const ExperienceSelector = ({
 								onPriorityIncrease={increasePriority}
 							/>
 						)}
-					</div>,
-					document.body
-				)}
+					</div>
+				</ReactPortal>
+			)}
 
 			{openModal && (
 				<ExperienceModal

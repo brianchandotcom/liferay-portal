@@ -13,7 +13,7 @@
  */
 
 import ClayPopover from '@clayui/popover';
-import {useEventListener} from '@liferay/frontend-js-react-web';
+import {ReactPortal, useEventListener} from '@liferay/frontend-js-react-web';
 import {ALIGN_POSITIONS, align, suggestAlignBestRegion} from 'frontend-js-web';
 import React, {
 	useCallback,
@@ -22,7 +22,7 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import {createPortal} from 'react-dom';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useGlobalContext} from '../contexts/GlobalContext';
@@ -94,8 +94,7 @@ const DisabledArea = () => {
 		if (element) {
 			if (sidebarOpen && !withinIframe) {
 				element.classList.add('collapsed');
-			}
-			else {
+			} else {
 				element.classList.remove('collapsed');
 			}
 		}
@@ -124,8 +123,7 @@ const DisabledArea = () => {
 				setCurrentElementClicked(event.target);
 				selectItem(null);
 				setShow(true);
-			}
-			else if (show) {
+			} else if (show) {
 				setCurrentElementClicked(null);
 				setShow(false);
 			}
@@ -194,28 +192,28 @@ const DisabledArea = () => {
 	}, [globalContext, isDisabled, withinIframe]);
 
 	return (
-		show &&
-		createPortal(
-			<ClayPopover alignPosition={position} ref={popoverRef} show>
-				<div
-					dangerouslySetInnerHTML={{
-						__html: Liferay.Util.sub(
-							Liferay.Language.get(
-								'this-area-is-defined-by-the-theme.-you-can-change-the-theme-settings-by-clicking-x-in-the-x-panel-on-the-sidebar'
+		show && (
+			<ReactPortal container={globalContext.document.body}>
+				<ClayPopover alignPosition={position} ref={popoverRef} show>
+					<div
+						dangerouslySetInnerHTML={{
+							__html: Liferay.Util.sub(
+								Liferay.Language.get(
+									'this-area-is-defined-by-the-theme.-you-can-change-the-theme-settings-by-clicking-x-in-the-x-panel-on-the-sidebar'
+								),
+								[
+									`<strong>${Liferay.Language.get(
+										'more'
+									)}</strong>`,
+									`<strong>${Liferay.Language.get(
+										'page-design-options'
+									)}</strong>`,
+								]
 							),
-							[
-								`<strong>${Liferay.Language.get(
-									'more'
-								)}</strong>`,
-								`<strong>${Liferay.Language.get(
-									'page-design-options'
-								)}</strong>`,
-							]
-						),
-					}}
-				/>
-			</ClayPopover>,
-			globalContext.document.body
+						}}
+					/>
+				</ClayPopover>
+			</ReactPortal>
 		)
 	);
 };

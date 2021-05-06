@@ -12,10 +12,9 @@
  * details.
  */
 
-import {useIsMounted} from '@liferay/frontend-js-react-web';
+import {useIsMounted, ReactPortal} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {createPortal} from 'react-dom';
 
 import RawDOM from '../../common/components/RawDOM';
 import {config} from '../config/index';
@@ -104,7 +103,7 @@ export function GlobalContextFrame({children, useIframe}) {
 	let content;
 
 	if (useIframe && baseElement && iframeContext) {
-		content = createPortal(<>{children}</>, baseElement);
+		content = <ReactPortal container={baseElement}>{children}</ReactPortal>;
 		context = iframeContext;
 
 		iframeElement.classList.remove(

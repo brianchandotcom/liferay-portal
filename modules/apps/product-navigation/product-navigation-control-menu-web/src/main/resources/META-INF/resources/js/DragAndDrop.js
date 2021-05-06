@@ -13,7 +13,7 @@
  */
 
 import React, {useState} from 'react';
-import {createPortal} from 'react-dom';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 import {
 	DragAndDropProvider,
@@ -47,11 +47,11 @@ const DragAndDropElements = () => {
 				setDropTargetItem,
 			}}
 		>
-			{columnHasChildren &&
-				createPortal(
-					<DragIndicator position={dragIndicatorPosition} />,
-					document.body
-				)}
+			{columnHasChildren && (
+				<ReactPortal>
+					<DragIndicator position={dragIndicatorPosition} />
+				</ReactPortal>
+			)}
 
 			{dropItems.map((dropItem, index) => (
 				<DropTarget dropItem={dropItem} key={index} />

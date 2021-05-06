@@ -214,11 +214,11 @@ public abstract class Base${schemaName}ResourceImpl
 					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
 					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
 
-					PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId, getPermissionCheckerGroupId(${schemaVarName}Id));
-
-					resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), 0, resourceName, String.valueOf(resourceId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, resourceId, resourceName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
-
-					return toPermissionPage(resourceId, resourceName, null);
+					<@updatePermissions
+						groupId="getPermissionCheckerGroupId(${schemaVarName}Id)"
+						resourceId="resourceId"
+						resourceName="resourceName"
+					/>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -227,21 +227,21 @@ public abstract class Base${schemaName}ResourceImpl
 
 				String portletName = getPermissionCheckerPortletName(assetLibraryId);
 
-				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, assetLibraryId, assetLibraryId);
-
-				resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), assetLibraryId, portletName, String.valueOf(assetLibraryId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, assetLibraryId, portletName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
-
-				return toPermissionPage(assetLibraryId, portletName, null);
+				<@updatePermissions
+					groupId="assetLibraryId"
+					resourceId="assetLibraryId"
+					resourceName="portletName"
+				/>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "Permission")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
 				String portletName = getPermissionCheckerPortletName(siteId);
 
-				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId, siteId);
-
-				resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), siteId, portletName, String.valueOf(siteId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, siteId, portletName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
-
-				return toPermissionPage(siteId, portletName, null);
+				<@updatePermissions
+					groupId="siteId"
+					resourceId="siteId"
+					resourceName="portletName"
+				/>
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||
@@ -579,4 +579,14 @@ public abstract class Base${schemaName}ResourceImpl
 	</#if>
 
 	)
+</#macro>
+
+<#macro updatePermissions
+	groupId resourceId resourceName
+>
+	PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, ${resourceName}, ${resourceId}, ${groupId});
+
+	resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), ${groupId}, ${resourceName}, String.valueOf(${resourceId}), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
+
+	return toPermissionPage(${resourceId}, ${resourceName}, null);
 </#macro>

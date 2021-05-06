@@ -301,17 +301,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
-									0D
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
-									0
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
-									0L
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-									"-"
-								<#else>
-									null
-								</#if>
+								<@getDefaultParameter javaMethodParameter=javaMethodParameter />
 							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
@@ -1152,34 +1142,21 @@ public abstract class Base${schemaName}ResourceTestCase {
 				200,
 				${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-							${schemaVarName}.getId()
-						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-							${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-							testDepotEntry.getDepotEntryId()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-							testGroup.getGroupId()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-							${schemaVarName}
-						<#elseif stringUtil.equals(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
-							new Permission[] {
-								new Permission() {
-									{
-										setActionIds(new String[] {
-											<#if javaMethodSignature.methodName?contains("AssetLibrary") || javaMethodSignature.methodName?contains("Site")>
-												"PERMISSIONS"
-											<#else>
-												"VIEW"
-											</#if>
-										});
-										setRoleName(role.getName());
-									}
-								}
-							}
-						<#else>
-							null
-						</#if>
+
+						<@selectPermissionParameter
+							javaMethodParameter=javaMethodParameter
+							javaMethodSignature=javaMethodSignature
+							properties=properties
+							roleName="role.getName()"
+							schemaVarName=schemaVarName
+							schemaVarNameId="${schemaVarName}.getId()"
+						>
+							<#if javaMethodSignature.methodName?contains("AssetLibrary") || javaMethodSignature.methodName?contains("Site")>
+								"PERMISSIONS"
+							<#else>
+								"VIEW"
+							</#if>
+						</@selectPermissionParameter>
 						<#sep>, </#sep>
 					</#list>
 					));
@@ -1188,38 +1165,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 					404,
 					${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-							<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
-								0D
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
-								0
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
-								0L
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-								RandomTestUtil.randomString()
-							<#else>
-								null
-							</#if>
-						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-							${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
-							testDepotEntry.getDepotEntryId()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-							testGroup.getGroupId()
-						<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-							${schemaVarName}
-						<#elseif stringUtil.startsWith(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
-							new Permission[]{
-								new Permission() {
-									{
-										setActionIds(new String[] {"-"});
-										setRoleName("-");
-									}
-								}
-							}
-						<#else>
-							null
-						</#if>
+						<@selectPermissionParameter
+							javaMethodParameter=javaMethodParameter
+							javaMethodSignature=javaMethodSignature
+							properties=properties
+							roleName="\"-\""
+							schemaVarName=schemaVarName
+							schemaVarNameId="0L"
+						>
+							"-"
+						</@selectPermissionParameter>
 						<#sep>, </#sep>
 					</#list>
 				));
@@ -1358,21 +1313,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 								testGroup.getGroupId()
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 								${schemaVarName}
-							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
-								new Permission[] {
-									new Permission() {
-										{
-											setActionIds(new String[] {
-												<#if javaMethodSignature.methodName?contains("AssetLibrary") || javaMethodSignature.methodName?contains("Site")>
-													"PERMISSIONS"
-												<#else>
-													"VIEW"
-												</#if>
-												});
-											setRoleName(role.getName());
-										}
-									}
-								}
 							<#else>
 								null
 							</#if>
@@ -1385,17 +1325,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
-									0D
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
-									0
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
-									0L
-								<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-									RandomTestUtil.randomString()
-								<#else>
-									null
-								</#if>
+								<@getDefaultParameter javaMethodParameter=javaMethodParameter />
 							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
@@ -1404,15 +1334,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 								testGroup.getGroupId()
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 								${schemaVarName}
-						 	<#elseif stringUtil.startsWith(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
-								new Permission[]{
-									new Permission() {
-										{
-											setActionIds(new String[] {"-"});
-											setRoleName("-");
-										}
-									}
-								}
 							<#else>
 								null
 							</#if>
@@ -2513,3 +2434,48 @@ public abstract class Base${schemaName}ResourceTestCase {
 	private ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource _${schemaVarName}Resource;
 
 }
+
+<#macro getDefaultParameter
+	javaMethodParameter
+>
+	<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
+		0D
+	<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Integer")>
+		0
+	<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
+		0L
+	<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
+		"-"
+	<#else>
+		null
+	</#if>
+</#macro>
+
+<#macro selectPermissionParameter
+	javaMethodParameter javaMethodSignature properties roleName schemaVarName schemaVarNameId
+>
+	<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
+		 ${schemaVarNameId}
+	<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
+		 ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+	<#elseif stringUtil.equals(javaMethodParameter.parameterName, "assetLibraryId")>
+		 testDepotEntry.getDepotEntryId()
+	<#elseif stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
+		testGroup.getGroupId()
+	<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+		${schemaVarName}
+	<#elseif stringUtil.equals(javaMethodParameter.parameterType, "[Lcom.liferay.portal.vulcan.permission.Permission;")>
+		new Permission[] {
+			new Permission() {
+				{
+					setActionIds(new String[] {
+						<#nested>
+					});
+					setRoleName(${roleName});
+				}
+			}
+		}
+	<#else>
+		null
+	</#if>
+</#macro>

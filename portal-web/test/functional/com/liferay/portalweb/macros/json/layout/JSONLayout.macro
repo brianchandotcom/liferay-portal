@@ -1,12 +1,12 @@
 definition {
 
-	@summary = "Add a private site page or private child site page to an existing site or child site via groupKey"
+	@summary = "Add a private site page or private child site page to an existing site or child site via groupName"
 	macro addPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
 		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
 			groupId = "${groupId}",
@@ -62,13 +62,13 @@ definition {
 			type = "${type}");
 	}
 
-	@summary = "Add a public site page  or public child site page to an existing site or child site via groupKey"
+	@summary = "Add a public site page  or public child site page to an existing site or child site via groupName"
 	macro addPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
 		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
 			groupId = "${groupId}",
@@ -128,7 +128,7 @@ definition {
 	macro addWidgetToPrivateLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
@@ -152,7 +152,7 @@ definition {
 	macro addWidgetToPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${widgetName}");
 
-		var groupId = JSONLayoutSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
 
 		var layoutId = JSONLayoutSetter.setLayoutId(
 			groupId = "${groupId}",
@@ -173,7 +173,7 @@ definition {
 			typeSettings = "${typeSettings}");
 	}
 
-	@summary = "Delete a public site page under an existing site via groupKey"
+	@summary = "Delete a public site page under an existing site via groupName"
 	macro deletePublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 

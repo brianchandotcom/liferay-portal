@@ -3291,10 +3291,6 @@ definition {
 
 		SignIn.signIn(userEmailAddress = "user@liferay.com");
 
-		var portalURL = PropsUtil.get("portal.url");
-
-		AssertLocation(value1 = "${portalURL}/web/guest/home");
-
 		Navigator.gotoPage(pageName = "Web Content");
 
 		WebContent.viewPGViaWCD(webContentContent = "Web Content Content");

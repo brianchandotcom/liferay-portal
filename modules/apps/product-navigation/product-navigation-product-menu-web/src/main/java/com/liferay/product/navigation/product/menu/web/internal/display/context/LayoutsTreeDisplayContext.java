@@ -259,11 +259,13 @@ public class LayoutsTreeDisplayContext {
 
 	public Map<String, Object> getPageTypeSelectorData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"addCollectionLayoutURL", getAddCollectionLayoutURL()
+			"addCollectionLayoutURL",
+			_addDefaultselPlidParam(getAddCollectionLayoutURL())
 		).put(
-			"addLayoutURL", getAddLayoutURL()
+			"addLayoutURL", _addDefaultselPlidParam(getAddLayoutURL())
 		).put(
-			"configureLayoutSetURL", getConfigureLayoutSetURL()
+			"configureLayoutSetURL",
+			_addDefaultselPlidParam(getConfigureLayoutSetURL())
 		).put(
 			"namespace", getNamespace()
 		).put(
@@ -355,6 +357,13 @@ public class LayoutsTreeDisplayContext {
 					ProductNavigationProductMenuWebKeys.PRIVATE_LAYOUT,
 				"false"),
 			layout.isPrivateLayout());
+	}
+
+	private String _addDefaultselPlidParam(String portletUrl) {
+		return StringBundler.concat(
+			portletUrl, StringPool.AMPERSAND,
+			PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE, "selPlid=",
+			LayoutConstants.DEFAULT_PLID);
 	}
 
 	private Long _groupId;

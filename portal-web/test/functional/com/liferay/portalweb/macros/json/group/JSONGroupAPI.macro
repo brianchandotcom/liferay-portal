@@ -130,6 +130,37 @@ definition {
 		return "${depotId}";
 	}
 
+	@summary = "Get the grandParentGroupId from any existing site by using groupName"
+	macro _getGrandParentGroupIdByName {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/group/get-groups \
+				-u test@liferay.com:test \
+				-d companyId=${companyId} \
+				-d parentGroupId=0 \
+				-d site=${site}
+		''';
+
+		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
+		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
+		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
+
+		if ("${groupId}" == "[]") {
+			fail("FAIL. Cannot find group.");
+		}
+
+		return "${groupId}";
+	}
+
 	@summary = "Get the groupId from any existing group by using groupKey"
 	macro _getGroupIdByGroupKey {
 		Variables.assertDefined(parameterList = "${groupKey},${site}");

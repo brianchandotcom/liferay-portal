@@ -189,8 +189,8 @@ public class AuthVerifierTest {
 			).put(
 				"auth-verifier-matched-test-auth-verifier-filter-helper", true
 			).put(
-				"auth.verifier.auth.verifier.AuthVerifierTest$TestAuthVerifier." +
-					"urls.includes",
+				"auth.verifier.auth.verifier." +
+					"AuthVerifierTest$TestAuthVerifier.urls.includes",
 				"*"
 			).build());
 
@@ -204,8 +204,8 @@ public class AuthVerifierTest {
 			).put(
 				"auth-verifier-matched-test-auth-verifier-filter-helper", true
 			).put(
-				"auth.verifier.auth.verifier.AuthVerifierTest$TestAuthVerifier." +
-					"urls.includes",
+				"auth.verifier.auth.verifier." +
+					"AuthVerifierTest$TestAuthVerifier.urls.includes",
 				"/wrongPath"
 			).build());
 

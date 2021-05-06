@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletResponse;
@@ -826,7 +827,13 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 			linkTag.setCssClass("nav-link nav-link-monospaced");
 			linkTag.setDisplayType("unstyled");
-			linkTag.setIcon("order-arrow");
+
+			if (Objects.equals(getSortingOrder(), "desc")) {
+				linkTag.setIcon("order-list-down");
+			}
+			else {
+				linkTag.setIcon("order-list-up");
+			}
 
 			linkTag.doTag(pageContext);
 

@@ -511,15 +511,16 @@ definition {
 	}
 
 	macro removeSmallImage {
-		Click(locator1 = "Button#REMOVE_IMAGE");
+		if (isSet(images)) {
+			Click(locator1 = "Button#REMOVE_IMAGE_LAST");
+		}
+		else {
+			Click(locator1 = "Button#REMOVE_IMAGE");
+		}
 
 		AssertElementNotPresent(
 			key_smallImage = "${uploadFileName}",
 			locator1 = "BlogsEntry#SMALL_IMAGE");
-
-		AssertTextEquals(
-			locator1 = "Button#SELECT",
-			value1 = "Select File");
 	}
 
 	macro removeViewPermissionsPG {

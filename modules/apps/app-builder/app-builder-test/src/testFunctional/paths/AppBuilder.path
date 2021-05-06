@@ -304,7 +304,7 @@
 </tr>
 <tr>
 	<td>FILTER_LIST_ASCEND_AND_DESCEND_BUTTON</td>
-	<td>//*[contains(@class,'lexicon-icon-order-arrow')]</td>
+	<td>//*[contains(@class,'lexicon-icon-order')]</td>
 	<td></td>
 </tr>
 <tr>

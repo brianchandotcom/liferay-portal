@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ORDER_ICON_GENERIC</td>
-	<td>//nav[contains(@class,'management-bar')]//a[*[name()='svg'][contains(@class,'icon-order-arrow')]]</td>
+	<td>//nav[contains(@class,'management-bar')]//a[*[name()='svg'][contains(@class,'icon-order')]]</td>
 	<td></td>
 </tr>
 <tr>

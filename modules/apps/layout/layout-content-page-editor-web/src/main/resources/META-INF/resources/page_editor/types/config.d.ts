@@ -99,6 +99,7 @@ export interface Config {
 	discardDraftRedirectURL: string;
 	discardDraftURL: string;
 	draft: boolean;
+	dropdownWidgetTopperEnabled: boolean;
 	duplicateItemURL: string;
 	duplicateSegmentsExperienceURL: string;
 	editFragmentEntryLinkCommentURL: string;

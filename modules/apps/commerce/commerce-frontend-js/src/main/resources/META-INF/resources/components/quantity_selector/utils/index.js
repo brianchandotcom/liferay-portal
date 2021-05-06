@@ -12,52 +12,47 @@
  * details.
  */
 
-export const MAX_QUANTITY_CAP = 100;
-
 export const UPDATE_AFTER = 500;
 
-export const generateQuantityOptions = ({
-	allowedQuantities = [],
-	maxQuantity = 1,
-	multipleQuantity = 1,
-}) => {
-	if (allowedQuantities?.length > 0) {
-		return allowedQuantities.map((value) => ({
-			label: value.toString(),
-			value,
-		}));
+export default class QuantityControls {
+	constructor({maxQuantity, minQuantity, multipleQuantity}) {
+		this.max = maxQuantity;
+		this.step = multipleQuantity;
+
+		this.min =
+			this.step > 1
+				? this._getUpperBound(minQuantity, this.step)
+				: minQuantity;
+	}
+
+	getConfiguration() {
+		return {...this};
 	}
 
 	/**
-	 * As this is used to render a ClaySelectWithOption component,
-	 * in order to avoid maximum call stack size errors, we temporarily need
-	 * to put a cap to the number of options.
-	 *
-	 * @type {number}
+	 * If this.step > 1,
+	 * value will always be floored to the
+	 * closest lower multiple value.
 	 */
-	const quantityOptionsCap = Math.min(
-		MAX_QUANTITY_CAP,
-		maxQuantity / multipleQuantity
-	);
-
-	const quantityOptions = [];
-
-	for (let i = 1; i <= quantityOptionsCap; i++) {
-		const value = i * multipleQuantity;
-
-		quantityOptions.push({
-			label: value.toString(),
-			value,
-		});
+	getLowerBound(value = NaN) {
+		return value > this.min ? value - (value % this.step) : this.min;
 	}
 
-	return quantityOptions;
-};
+	_getUpperBound(min) {
+		if (min > this.step) {
+			const remainder = min % this.step;
 
-export function getMinMultipleQuantity(minQuantity, multipleQuantity) {
-	if (minQuantity <= multipleQuantity) {
-		return multipleQuantity;
+			return remainder
+				? /**
+				   * min is *not* a multiple of this.step
+				   */
+				  min + this.step - remainder
+				: /**
+				   * and min *is* a multiple of this.step
+				   */
+				  min;
+		}
+
+		return this.step;
 	}
-
-	return minQuantity - (minQuantity % multipleQuantity) + multipleQuantity;
 }

@@ -103,7 +103,7 @@ describe('LayoutReportsIssuesList', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders congratulations messages (no seo and accessibility issues)', () => {
+	it('renders no issues message (no seo and accessibility issues)', () => {
 		const {getAllByText, getByText} = render(
 			<StoreContextProvider
 				value={{
@@ -120,9 +120,6 @@ describe('LayoutReportsIssuesList', () => {
 		expect(getByText('Accessibility')).toBeInTheDocument();
 		expect(getByText('SEO')).toBeInTheDocument();
 		expect(getAllByText('0').length).toBe(2);
-		expect(getByText('congratulations')).toBeInTheDocument();
-		expect(
-			getByText('your-page-does-not-have-any-issues-to-fix')
-		).toBeInTheDocument();
+		expect(getByText('your-page-has-no-issues')).toBeInTheDocument();
 	});
 });

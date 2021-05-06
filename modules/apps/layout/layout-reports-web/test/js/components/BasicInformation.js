@@ -13,7 +13,6 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import BasicInformation from '../../../src/main/resources/META-INF/resources/js/components/BasicInformation';
@@ -34,6 +33,8 @@ const testProps = {
 		},
 	],
 	defaultLanguageId: 'en-US',
+	onLanguageChange: () => {},
+	selectedLanguageId: 'es-ES',
 };
 
 describe('BasicInformation', () => {
@@ -44,6 +45,7 @@ describe('BasicInformation', () => {
 			<BasicInformation
 				canonicalURLs={testProps.canonicalURLs}
 				defaultLanguageId={testProps.defaultLanguageId}
+				onLanguageChange={testProps.onLanguageChange}
 			/>
 		);
 
@@ -53,17 +55,15 @@ describe('BasicInformation', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders page title and canonicalURL changed when selecting another language in the dropdown', () => {
+	it('renders corresponding page title and canonicalURL changed when getting a selected language id', () => {
 		const {getByText} = render(
 			<BasicInformation
 				canonicalURLs={testProps.canonicalURLs}
 				defaultLanguageId={testProps.defaultLanguageId}
+				onLanguageChange={testProps.onLanguageChange}
+				selectedLanguageId={testProps.selectedLanguageId}
 			/>
 		);
-
-		const dropdownItem = getByText('es-ES');
-
-		userEvent.click(dropdownItem);
 
 		expect(getByText('Inicio')).toBeInTheDocument();
 		expect(

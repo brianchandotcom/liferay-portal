@@ -162,7 +162,7 @@ definition {
 
 	macro addVirtualHostsURLCP {
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-details",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Site URL");
@@ -669,7 +669,7 @@ definition {
 
 	macro editFriendlyURLCP {
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-details",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Site URL");

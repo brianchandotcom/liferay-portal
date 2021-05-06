@@ -41,7 +41,7 @@ if (liferayVersion.startsWith("7.0")) {
 	fileNames = [".babelrc", ".npmbundlerrc", "package.json", "src/main/resources/META-INF/resources/"+ artifactId + ".es.js"]
 }
 
-if (liferayVersion.startsWith("7.2") || liferayVersion.startsWith("7.3")) {
+if (!(liferayVersion.startsWith("7.0") || liferayVersion.startsWith("7.1"))) {
 	fileNames.add("src/main/resources/META-INF/resources/config.js")
 	fileNames.add("src/main/resources/META-INF/resources/"+ artifactId + "_field.js")
 

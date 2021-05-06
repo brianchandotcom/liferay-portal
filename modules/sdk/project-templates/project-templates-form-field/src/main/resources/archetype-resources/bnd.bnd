@@ -4,7 +4,7 @@ Bundle-Version: ${version}
 #if (!(${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")}))
 Liferay-JS-Config: /META-INF/resources/config.js
 #end
-#if (${liferayVersion.startsWith("7.2")} || (${liferayVersion.startsWith("7.3")} && !${reactTemplate.equals("true")}))
+#if ((!${liferayVersion.startsWith("7.0")} || (!${liferayVersion.startsWith("7.1")}) && !${reactTemplate.equals("true")}))
 Provide-Capability:\
 	soy;\
 		type:String="LiferayFormField"
@@ -17,7 +17,7 @@ Web-ContextPath: /dynamic-data-${artifactId}-form-field
 -metatype: *
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
 -plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
-#if (${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+#if (${liferayVersion.startsWith("7.1")})
 -plugin.npm: com.liferay.ant.bnd.npm.NpmAnalyzerPlugin
 #end
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin

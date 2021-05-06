@@ -1,6 +1,6 @@
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api"
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+#if (!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")}))
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.js.loader.modules.extender.api"
 #end
 #if (${liferayVersion.startsWith("7.0")})
@@ -9,7 +9,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations"
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+#if (!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")}))
 
 	jsCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type"
 #end

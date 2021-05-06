@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.layout.reports.web.internal.frontend.taglib.form.navigator.test;
+package com.liferay.layout.reports.web.internal.portal.settings.configuration.admin.display.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,7 +43,8 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntryTest {
+public class
+	LayoutReportsGooglePageSpeedSiteSettingsConfigurationScreenContributorTest {
 
 	@ClassRule
 	@Rule
@@ -53,6 +56,15 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntryTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = new ServiceContext();
+
+		_serviceContext.setScopeGroupId(_group.getGroupId());
+		_serviceContext.setUserId(TestPropsValues.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@Test
@@ -68,8 +80,7 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntryTest {
 					).build())) {
 
 			Assert.assertTrue(
-				_formNavigatorEntry.isVisible(
-					TestPropsValues.getUser(), _group));
+				_siteSettingsConfigurationScreenContributor.isVisible(_group));
 		}
 	}
 
@@ -98,8 +109,8 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntryTest {
 							_settingsFactory)) {
 
 				Assert.assertFalse(
-					_formNavigatorEntry.isVisible(
-						TestPropsValues.getUser(), _group));
+					_siteSettingsConfigurationScreenContributor.isVisible(
+						_group));
 			}
 		}
 	}
@@ -115,8 +126,7 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntryTest {
 					).build())) {
 
 			Assert.assertFalse(
-				_formNavigatorEntry.isVisible(
-					TestPropsValues.getUser(), _group));
+				_siteSettingsConfigurationScreenContributor.isVisible(_group));
 		}
 	}
 
@@ -145,21 +155,24 @@ public class LayoutReportsGooglePageSpeedSiteFormNavigatorEntryTest {
 							_settingsFactory)) {
 
 				Assert.assertTrue(
-					_formNavigatorEntry.isVisible(
-						TestPropsValues.getUser(), _group));
+					_siteSettingsConfigurationScreenContributor.isVisible(
+						_group));
 			}
 		}
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.layout.reports.web.internal.frontend.taglib.form.navigator.LayoutReportsGooglePageSpeedSiteFormNavigatorEntry"
-	)
-	private FormNavigatorEntry _formNavigatorEntry;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private ServiceContext _serviceContext;
+
 	@Inject
 	private SettingsFactory _settingsFactory;
+
+	@Inject(
+		filter = "component.name=com.liferay.layout.reports.web.internal.portal.settings.configuration.admin.display.LayoutReportsGooglePageSpeedSiteSettingsConfigurationScreenContributor"
+	)
+	private SiteSettingsConfigurationScreenContributor
+		_siteSettingsConfigurationScreenContributor;
 
 }

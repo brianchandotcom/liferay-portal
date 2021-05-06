@@ -83,15 +83,12 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 
 		slaResult1.setDateModified(DateUtils.addDays(dateModified, -2));
 
-		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
-			testGroup.getCompanyId(), _instance, slaResult1);
-
 		SLAResult slaResult2 = randomSLAResult();
 
 		slaResult2.setDateModified(dateModified);
 
 		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
-			testGroup.getCompanyId(), _instance, slaResult2);
+			testGroup.getCompanyId(), _instance, slaResult1, slaResult2);
 
 		SLAResult getSLAResult = slaResultResource.getProcessLastSLAResult(
 			_process.getId());
@@ -137,13 +134,15 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 				dateModified = DateUtils.truncate(
 					RandomTestUtil.nextDate(), Calendar.SECOND);
 				dateOverdue = RandomTestUtil.nextDate();
-
 				id = RandomTestUtil.randomLong();
+
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 				onTime = RandomTestUtil.randomBoolean();
 
 				remainingTime = onTime ? 100L : -100L;
+
+				status = Status.RUNNING;
 			}
 		};
 	}

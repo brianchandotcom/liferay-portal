@@ -43,7 +43,7 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		DDMFormEvaluatorEvaluateRequest ddmFormEvaluatorEvaluateRequest) {
 
 		DDMFormEvaluatorHelper formEvaluatorHelper = new DDMFormEvaluatorHelper(
-			ddmFormEvaluatorEvaluateRequest, ddmExpressionFactory,
+			ddmExpressionFactory, ddmFormEvaluatorEvaluateRequest,
 			ddmFormFieldTypeServicesTracker, ddmFormPageChangeTracker);
 
 		return formEvaluatorHelper.evaluate();

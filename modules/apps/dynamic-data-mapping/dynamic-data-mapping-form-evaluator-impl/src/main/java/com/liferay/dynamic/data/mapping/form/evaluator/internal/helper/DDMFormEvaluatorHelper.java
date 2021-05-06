@@ -79,13 +79,13 @@ import java.util.stream.Stream;
 public class DDMFormEvaluatorHelper {
 
 	public DDMFormEvaluatorHelper(
-		DDMFormEvaluatorEvaluateRequest ddmFormEvaluatorEvaluateRequest,
 		DDMExpressionFactory ddmExpressionFactory,
+		DDMFormEvaluatorEvaluateRequest ddmFormEvaluatorEvaluateRequest,
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker,
 		DDMFormPageChangeTracker ddmFormPageChangeTracker) {
 
-		_ddmFormEvaluatorEvaluateRequest = ddmFormEvaluatorEvaluateRequest;
 		_ddmExpressionFactory = ddmExpressionFactory;
+		_ddmFormEvaluatorEvaluateRequest = ddmFormEvaluatorEvaluateRequest;
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
 		_ddmFormPageChangeTracker = ddmFormPageChangeTracker;
 
@@ -106,7 +106,7 @@ public class DDMFormEvaluatorHelper {
 
 		_ddmFormLayout = ddmFormEvaluatorEvaluateRequest.getDDMFormLayout();
 
-		_ddmFormRuleHelper = new DDMFormEvaluatorRuleHelper(
+		_ddmFormEvaluatorRuleHelper = new DDMFormEvaluatorRuleHelper(
 			_ddmFormFieldsMap, ddmFormEvaluatorExpressionObserver);
 
 		ddmFormEvaluatorDDMExpressionFieldAccessor =
@@ -212,10 +212,11 @@ public class DDMFormEvaluatorHelper {
 
 		if (_ddmFormLayout.getNextPage() != _ddmFormLayout.getPreviousPage()) {
 			DDMFormPageChange ddmFormPageChange =
-				_ddmFormPageChangeTracker.getDDMFormPageChangeByDDMFormInstanceId(
-					String.valueOf(
-						_ddmFormEvaluatorEvaluateRequest.
-							getDDMFormInstanceId()));
+				_ddmFormPageChangeTracker.
+					getDDMFormPageChangeByDDMFormInstanceId(
+						String.valueOf(
+							_ddmFormEvaluatorEvaluateRequest.
+								getDDMFormInstanceId()));
 
 			if (ddmFormPageChange == null) {
 				return;
@@ -259,7 +260,8 @@ public class DDMFormEvaluatorHelper {
 					copyDDMFormRule.setActions(actionsNotEvaluated);
 				}
 
-				_ddmFormRuleHelper.checkFieldAffectedByAction(copyDDMFormRule);
+				_ddmFormEvaluatorRuleHelper.checkFieldAffectedByAction(
+					copyDDMFormRule);
 			}
 		}
 	}
@@ -897,6 +899,7 @@ public class DDMFormEvaluatorHelper {
 		_ddmFormEvaluatorEvaluateRequest;
 	private final DDMFormEvaluatorFormValuesHelper
 		_ddmFormEvaluatorFormValuesHelper;
+	private final DDMFormEvaluatorRuleHelper _ddmFormEvaluatorRuleHelper;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
 		_ddmFormFieldsPropertyChanges = new HashMap<>();
@@ -904,7 +907,6 @@ public class DDMFormEvaluatorHelper {
 		_ddmFormFieldTypeServicesTracker;
 	private final DDMFormLayout _ddmFormLayout;
 	private final DDMFormPageChangeTracker _ddmFormPageChangeTracker;
-	private final DDMFormEvaluatorRuleHelper _ddmFormRuleHelper;
 	private List<String> _evaluatedActions;
 	private final Map<Integer, Integer> _pageFlow = new HashMap<>();
 	private ResourceBundle _resourceBundle;

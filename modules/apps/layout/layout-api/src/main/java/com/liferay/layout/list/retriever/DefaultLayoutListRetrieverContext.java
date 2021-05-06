@@ -30,6 +30,11 @@ public class DefaultLayoutListRetrieverContext
 	}
 
 	@Override
+	public Optional<Object> getContextObjectOptional() {
+		return Optional.ofNullable(_contextObject);
+	}
+
+	@Override
 	public Optional<Pagination> getPaginationOptional() {
 		return Optional.ofNullable(_pagination);
 	}
@@ -50,6 +55,10 @@ public class DefaultLayoutListRetrieverContext
 
 	public void setAssetCategoryIds(long[][] assetCategoryIds) {
 		_assetCategoryIds = assetCategoryIds;
+	}
+
+	public void setContextObject(Object contextObject) {
+		_contextObject = contextObject;
 	}
 
 	public void setPagination(Pagination pagination) {
@@ -78,6 +87,7 @@ public class DefaultLayoutListRetrieverContext
 	}
 
 	private long[][] _assetCategoryIds;
+	private Object _contextObject;
 	private Pagination _pagination;
 	private long[] _segmentsEntryIds;
 	private long[] _segmentsExperienceIds;

@@ -28,6 +28,8 @@ public interface LayoutListRetrieverContext {
 
 	public Optional<long[][]> getAssetCategoryIdsOptional();
 
+	public Optional<Object> getContextObjectOptional();
+
 	public Optional<Pagination> getPaginationOptional();
 
 	public Optional<long[]> getSegmentsEntryIdsOptional();

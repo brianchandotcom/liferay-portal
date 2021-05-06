@@ -29,6 +29,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DDL_RECORD_DIFF_ADDED_VALUE</td>
+	<td>//span[contains(@class,'diff-html-added') and contains(.,'${key_diffAddedValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_VALUE_IN_PRODUCTION</td>
+	<td>//label[contains(.,'${key_fieldName}')]//following-sibling::input[contains(@value,'${key_fieldValueInProduction}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_VALUE_IN_PUBLICATION</td>
+	<td>//label[contains(.,'${key_fieldName}')]//following-sibling::input[contains(@value,'${key_fieldValueInPublication}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATIONS_CHANGE_SITE</td>
 	<td>//tr[contains(@class,'table-divider') and contains(.,'${key_changeCategory}')]//following-sibling::tr[${changeOrder}]/td[2][contains(.,'${key_changeSite}')]</td>
 	<td></td>

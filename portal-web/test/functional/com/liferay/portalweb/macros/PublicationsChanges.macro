@@ -76,4 +76,50 @@ definition {
 			value1 = "${changeDescription}");
 	}
 
+	macro viewDDLRecordChangeDiff {
+		if (IsElementNotPresent(locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM", key_displayItem = "Unified")) {
+			Publications.changeDiffDisplayItem(displayItem = "Unified");
+		}
+
+		var key_fieldName = "${fieldName}";
+
+		if (isSet(diffAddedValue)) {
+			key_diffAddedValue = "${diffAddedValue}";
+
+			AssertElementPresent(
+				locator1 = "PublicationsChanges#DDL_RECORD_DIFF_ADDED_VALUE",
+				value1 = "${diffAddedValue}");
+		}
+
+		Publications.changeDiffDisplayItem(displayItem = "Production");
+
+		AssertTextEquals(
+			key_displayItem = "Production",
+			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+			value1 = "Production");
+
+		if (isSet(fieldValueInProduction)) {
+			key_fieldValueInProduction = "${fieldValueInProduction}";
+
+			AssertElementPresent(
+				locator1 = "PublicationsChanges#FIELD_VALUE_IN_PRODUCTION",
+				value1 = "${fieldValueInProduction}");
+		}
+
+		Publications.changeDiffDisplayItem(displayItem = "Publication: ${publicationName}");
+
+		AssertTextEquals.assertPartialText(
+			key_displayItem = "${publicationName}",
+			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",
+			value1 = "${publicationName}");
+
+		if (isSet(fieldValueInPublication)) {
+			key_fieldValueInPublication = "${fieldValueInPublication}";
+
+			AssertElementPresent(
+				locator1 = "PublicationsChanges#FIELD_VALUE_IN_PUBLICATION",
+				value1 = "${fieldValueInPublication}");
+		}
+	}
+
 }

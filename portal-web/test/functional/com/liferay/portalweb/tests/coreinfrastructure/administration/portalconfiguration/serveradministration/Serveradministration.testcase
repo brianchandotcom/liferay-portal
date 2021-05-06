@@ -12,7 +12,7 @@ definition {
 	@description = "This is a use case for LPS-111757"
 	@priority = "4"
 	test ViewGlobalLibDirectory {
-		property environment.acceptance = "true";
+		property environment.acceptance = "quarantine";
 
 		ServerAdministration.openServerAdmin();
 

@@ -166,9 +166,9 @@ public class InfoItemRelatedListProviderItemSelectorView
 							WebKeys.THEME_DISPLAY);
 
 					return JSONUtil.put(
-						"key", infoItemRelatedItemsProvider.getKey()
+						"itemType", relatedItemClass.getName()
 					).put(
-						"relatedItemType", relatedItemClass.getName()
+						"key", infoItemRelatedItemsProvider.getKey()
 					).put(
 						"sourceItemType", sourceItemClass.getName()
 					).put(

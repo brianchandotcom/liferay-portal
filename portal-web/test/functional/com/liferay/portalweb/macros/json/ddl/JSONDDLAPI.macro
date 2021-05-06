@@ -1,5 +1,25 @@
 definition {
 
+	macro _getRecordId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddl.ddlrecord/get-records \
+			-u test@liferay.com:test \
+			-d recordSetId=${recordSetId}
+		''';
+
+		var recordId = JSONCurlUtil.post("${curl}","$.[?(@['recordSetId'] == '${recordSetId}')]['recordId']");
+		var recordId = StringUtil.replace("${recordId}", "[&quot;", "");
+		var recordId = StringUtil.replace("${recordId}", "&quot;]", "");
+
+		if ("${recordId}" == "[]") {
+			fail("FAIL. Cannot find recordId.");
+		}
+
+		return "${recordId}";
+	}
+
 	macro _getRecordSetId {
 		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
 

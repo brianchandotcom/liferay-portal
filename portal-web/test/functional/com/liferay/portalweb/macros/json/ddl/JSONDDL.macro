@@ -1,0 +1,11 @@
+definition {
+
+	macro getRecordId {
+		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
+
+		var recordSetId = JSONDDLAPI._getRecordSetId(groupName = "${groupName}", ddlListName = "${ddlListName}");
+
+		JSONDDLAPI._getRecordId(recordSetId = "${recordSetId}");
+	}
+
+}

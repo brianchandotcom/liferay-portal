@@ -56,10 +56,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
+			organizationName = "Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -67,7 +67,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		Organization.editOrganizationCP(orgName = "organization Name");
+		Organization.editOrganizationCP(orgName = "Organization Name");
 
 		Select(
 			locator1 = "Select#COUNTRY",
@@ -116,10 +116,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
+			organizationName = "Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
 		LexiconEntry.gotoAdd();
@@ -178,10 +178,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
+			organizationName = "Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
 		LexiconEntry.gotoAdd();
@@ -190,7 +190,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Hierarchy Path");
 
-		Segmentation.fillProperty(propertyField = "organization Name");
+		Segmentation.fillProperty(propertyField = "Organization Name");
 
 		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationHierarchyPath Test");
 
@@ -202,7 +202,7 @@ definition {
 
 		Segmentation.editSegment(entry = "AddSegmentByOrganizationHierarchyPath Test");
 
-		Segmentation.viewSegment(propertyField = "organization Name");
+		Segmentation.viewSegment(propertyField = "Organization Name");
 	}
 
 	@description = "This is a test for LPS-130277."
@@ -221,10 +221,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
+			organizationName = "Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
 		LexiconEntry.gotoAdd();
@@ -233,7 +233,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Name");
 
-		Segmentation.fillProperty(propertyField = "organization Name");
+		Segmentation.fillProperty(propertyField = "Organization Name");
 
 		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationName Test");
 
@@ -245,7 +245,7 @@ definition {
 
 		Segmentation.editSegment(entry = "AddSegmentByOrganizationName Test");
 
-		Segmentation.viewSegment(propertyField = "organization Name");
+		Segmentation.viewSegment(propertyField = "Organization Name");
 	}
 
 	@description = "This is a test for LPS-130278."
@@ -265,10 +265,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
+			organizationName = "Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
 		LexiconEntry.gotoAdd();
@@ -277,7 +277,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Organization");
 
-		Segmentation.assignOrganization(orgName = "organization Name");
+		Segmentation.assignOrganization(orgName = "Organization Name");
 
 		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationOrganization Test");
 
@@ -291,7 +291,7 @@ definition {
 
 		Segmentation.viewSegment(
 			criterion = "select-input",
-			value = "organization Name");
+			value = "Organization Name");
 	}
 
 	@description = "This is a test for LPS-130279."
@@ -360,10 +360,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
+			organizationName = "Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -371,7 +371,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		Organization.editOrganizationCP(orgName = "organization Name");
+		Organization.editOrganizationCP(orgName = "Organization Name");
 
 		Select(
 			locator1 = "Select#COUNTRY",
@@ -424,10 +424,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
+			organizationName = "Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -435,7 +435,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		Organization.editOrganizationCP(orgName = "organization Name");
+		Organization.editOrganizationCP(orgName = "Organization Name");
 
 		AssetCategorization.addTag(tagName = "tagName");
 
@@ -482,10 +482,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		JSONOrganization.addOrganization(organizationName = "organization Name");
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
 		JSONOrganization.assignUserToOrganization(
-			organizationName = "organization Name",
+			organizationName = "Organization Name",
 			userEmailAddress = "userea@liferay.com");
 
 		LexiconEntry.gotoAdd();

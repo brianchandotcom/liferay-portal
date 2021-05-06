@@ -945,7 +945,7 @@ definition {
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
-		WebContent.viewSelectedDisplayPageTemplateCP(displayPageTemplateType = "No Display Page Template");
+		WebContent.viewSelectedDisplayPageTemplateCP(displayPageTemplateType = "None");
 	}
 
 	@description = "Add a fragment with multiple editable fields in it."

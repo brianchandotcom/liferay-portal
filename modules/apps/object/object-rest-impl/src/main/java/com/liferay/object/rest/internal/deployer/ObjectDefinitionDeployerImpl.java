@@ -20,12 +20,15 @@ import com.liferay.object.rest.graphql.ObjectDefinitionGraphQL;
 import com.liferay.object.rest.internal.graphql.ObjectDefinitionGraphQLImpl;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 
 import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,6 +41,23 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
+
+		String contextPath = TextFormatter.formatPlural(
+			StringUtil.toLowerCase(objectDefinition.getName()));
+
+		_componentFactory.newInstance(
+			HashMapDictionaryBuilder.<String, Object>put(
+				"liferay.jackson", false
+			).put(
+				"osgi.jaxrs.application.base", "/" + contextPath
+			).put(
+				"osgi.jaxrs.extension.select",
+				"(osgi.jaxrs.name=Liferay.Vulcan)"
+			).put(
+				"osgi.jaxrs.name", objectDefinition.getName()
+			).put(
+				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
+			).build());
 
 		return Collections.singletonList(
 			_bundleContext.registerService(
@@ -57,6 +77,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference(
+		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplicationFactory)"
+	)
+	private ComponentFactory _componentFactory;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

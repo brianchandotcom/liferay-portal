@@ -83,15 +83,12 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 
 		slaResult1.setLastCheckDate(DateUtils.addDays(lastCheckDate, -2));
 
-		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
-			testGroup.getCompanyId(), _instance, slaResult1);
-
 		SLAResult slaResult2 = randomSLAResult();
 
 		slaResult2.setLastCheckDate(lastCheckDate);
 
 		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
-			testGroup.getCompanyId(), _instance, slaResult2);
+			testGroup.getCompanyId(), _instance, slaResult1, slaResult2);
 
 		SLAResult getSLAResult = slaResultResource.getProcessLastSLAResult(
 			_process.getId());
@@ -122,7 +119,9 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"lastCheckDate"};
+		return new String[] {
+			"lastCheckDate", "onTime", "remainingTime", "status"
+		};
 	}
 
 	@Override
@@ -130,17 +129,16 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 		return new SLAResult() {
 			{
 				dateOverdue = RandomTestUtil.nextDate();
-
 				id = RandomTestUtil.randomLong();
-
 				lastCheckDate = DateUtils.truncate(
 					RandomTestUtil.nextDate(), Calendar.SECOND);
-
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 				onTime = RandomTestUtil.randomBoolean();
 
 				remainingTime = onTime ? 100L : -100L;
+
+				status = Status.RUNNING;
 			}
 		};
 	}

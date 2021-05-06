@@ -155,7 +155,7 @@ definition {
 
 		LexiconEntry.delete(rowEntry = "Delete AG");
 
-		Search.searchCP(searchTerm = '''"Delete AG"''');
+		Search.searchCP(searchTerm = "Delete");
 
 		AccountGroups.viewDefault(tabName = "Account Groups");
 
@@ -164,7 +164,7 @@ definition {
 			panel = "Applications",
 			portlet = "Account Groups");
 
-		Search.searchCP(searchTerm = '''"Delete AG"''');
+		Search.searchCP(searchTerm = "Delete");
 
 		AccountGroups.viewDefault(tabName = "Account Groups");
 	}

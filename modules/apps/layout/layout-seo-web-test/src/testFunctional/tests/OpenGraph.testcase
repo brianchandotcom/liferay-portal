@@ -122,7 +122,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertElementNotPresent(
@@ -437,10 +437,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			altDescription = "This is image alternative description",

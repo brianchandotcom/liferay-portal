@@ -74,10 +74,8 @@ definition {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 			Click(
-				key_url = "site-configuration-other",
+				key_url = "site-configuration-open-graph",
 				locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-			Panel.expandPanel(panel = "Open Graph");
 
 			OpenGraph.configureOpenGraph(
 				customImage = "true",
@@ -118,10 +116,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");
 
@@ -177,10 +173,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -207,10 +201,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
 
@@ -248,10 +240,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			altDescription = "This is image alternative description",
@@ -295,10 +285,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");
 
@@ -329,10 +317,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		AssertVisible(
 			key_imageName = "Document_1.jpg",

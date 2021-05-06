@@ -535,10 +535,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -562,10 +560,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",
@@ -590,10 +586,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		AssertElementNotPresent(
 			key_imageName = "Document_2.jpg",
@@ -610,10 +604,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		AssertElementNotPresent(
 			key_imageName = "Document_2.jpg",
@@ -1522,10 +1514,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1549,10 +1539,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		AssertVisible(
 			key_imageName = "Document_1.jpg",
@@ -1561,10 +1549,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name-staging");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1589,10 +1575,8 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-open-graph",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-		Panel.expandPanel(panel = "Open Graph");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",

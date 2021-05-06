@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Image Service
+Bundle-SymbolicName: com.liferay.image.service
+Bundle-Version: 1.0.0

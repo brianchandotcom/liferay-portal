@@ -44,7 +44,7 @@ public class InfoPage<T> {
 		return _pageItems;
 	}
 
-	public long getTotalCount() {
+	public int getTotalCount() {
 		return _totalCountSupplier.get();
 	}
 

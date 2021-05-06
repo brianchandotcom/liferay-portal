@@ -46,124 +46,65 @@ public class LdapUtilTest extends PowerMockito {
 			"liferay.com"
 		);
 
-		String name = LdapUtil.buildName(null, "Liferay", company);
-
-		Assert.assertEquals("ou=liferay.com,o=Liferay", name);
-
-		name = LdapUtil.buildName("testName", "Liferay", company);
-
-		Assert.assertEquals("cn=testName,ou=liferay.com,o=Liferay", name);
-
-		name = LdapUtil.buildName("testName", "Liferay", company, "Guest");
-
 		Assert.assertEquals(
-			"cn=testName,ou=Guest,ou=liferay.com,o=Liferay", name);
-
-		name = LdapUtil.buildName("testName", "Liferay", company, "ou=Guest");
-
+			"ou=liferay.com,o=Liferay",
+			LdapUtil.buildName(null, "Liferay", company));
 		Assert.assertEquals(
-			"cn=testName,ou=Guest,ou=liferay.com,o=Liferay", name);
+			"cn=testName,ou=liferay.com,o=Liferay",
+			LdapUtil.buildName("testName", "Liferay", company));
+		Assert.assertEquals(
+			"cn=testName,ou=Guest,ou=liferay.com,o=Liferay",
+			LdapUtil.buildName("testName", "Liferay", company, "Guest"));
+		Assert.assertEquals(
+			"cn=testName,ou=Guest,ou=liferay.com,o=Liferay",
+			LdapUtil.buildName("testName", "Liferay", company, "ou=Guest"));
 	}
 
 	@Test
 	public void testEscape() {
-		String name = LdapUtil.escape("Liferay");
-
-		Assert.assertEquals("Liferay", name);
-
-		name = LdapUtil.escape("o=Liferay");
-
-		Assert.assertEquals("o=Liferay", name);
-
-		name = LdapUtil.escape("Liferay,Test");
-
-		Assert.assertEquals("Liferay\\,Test", name);
-
-		name = LdapUtil.escape("o=Liferay,Test");
-
-		Assert.assertEquals("o=Liferay\\,Test", name);
-
-		name = LdapUtil.escape("o=Liferay\\Test");
-
-		Assert.assertEquals("o=Liferay\\\\Test", name);
-
-		name = LdapUtil.escape("o=Liferay#Test");
-
-		Assert.assertEquals("o=Liferay\\#Test", name);
-
-		name = LdapUtil.escape("o=Liferay+Test");
-
-		Assert.assertEquals("o=Liferay\\+Test", name);
-
-		name = LdapUtil.escape("o=Liferay<Test");
-
-		Assert.assertEquals("o=Liferay\\<Test", name);
-
-		name = LdapUtil.escape("o=Liferay>Test");
-
-		Assert.assertEquals("o=Liferay\\>Test", name);
-
-		name = LdapUtil.escape("o=Liferay;Test");
-
-		Assert.assertEquals("o=Liferay\\;Test", name);
-
-		name = LdapUtil.escape("o=Liferay\"Test");
-
-		Assert.assertEquals("o=Liferay\\\"Test", name);
-
-		name = LdapUtil.escape("o=Liferay=Test");
-
-		Assert.assertEquals("o=Liferay\\=Test", name);
+		Assert.assertEquals("Liferay", LdapUtil.escape("Liferay"));
+		Assert.assertEquals("o=Liferay", LdapUtil.escape("o=Liferay"));
+		Assert.assertEquals("Liferay\\,Test", LdapUtil.escape("Liferay,Test"));
+		Assert.assertEquals(
+			"o=Liferay\\,Test", LdapUtil.escape("o=Liferay,Test"));
+		Assert.assertEquals(
+			"o=Liferay\\\\Test", LdapUtil.escape("o=Liferay\\Test"));
+		Assert.assertEquals(
+			"o=Liferay\\#Test", LdapUtil.escape("o=Liferay#Test"));
+		Assert.assertEquals(
+			"o=Liferay\\+Test", LdapUtil.escape("o=Liferay+Test"));
+		Assert.assertEquals(
+			"o=Liferay\\<Test", LdapUtil.escape("o=Liferay<Test"));
+		Assert.assertEquals(
+			"o=Liferay\\>Test", LdapUtil.escape("o=Liferay>Test"));
+		Assert.assertEquals(
+			"o=Liferay\\;Test", LdapUtil.escape("o=Liferay;Test"));
+		Assert.assertEquals(
+			"o=Liferay\\\"Test", LdapUtil.escape("o=Liferay\"Test"));
+		Assert.assertEquals(
+			"o=Liferay\\=Test", LdapUtil.escape("o=Liferay=Test"));
 	}
 
 	@Test
 	public void testGetRdnType() throws Exception {
 		Dn dn = new Dn("cn=test,ou=liferay.com,o=Liferay");
 
-		String rdnType = LdapUtil.getRdnType(dn, -1);
-
-		Assert.assertEquals(null, rdnType);
-
-		rdnType = LdapUtil.getRdnType(dn, 0);
-
-		Assert.assertEquals("o", rdnType);
-
-		rdnType = LdapUtil.getRdnType(dn, 1);
-
-		Assert.assertEquals("ou", rdnType);
-
-		rdnType = LdapUtil.getRdnType(dn, 2);
-
-		Assert.assertEquals("cn", rdnType);
-
-		rdnType = LdapUtil.getRdnType(dn, 3);
-
-		Assert.assertEquals(null, rdnType);
+		Assert.assertEquals(null, LdapUtil.getRdnType(dn, -1));
+		Assert.assertEquals("o", LdapUtil.getRdnType(dn, 0));
+		Assert.assertEquals("ou", LdapUtil.getRdnType(dn, 1));
+		Assert.assertEquals("cn", LdapUtil.getRdnType(dn, 2));
+		Assert.assertEquals(null, LdapUtil.getRdnType(dn, 3));
 	}
 
 	@Test
 	public void testGetRdnValue() throws Exception {
 		Dn dn = new Dn("cn=test,ou=liferay.com,o=Liferay");
 
-		String rdnType = LdapUtil.getRdnValue(dn, -1);
-
-		Assert.assertEquals(null, rdnType);
-
-		rdnType = LdapUtil.getRdnValue(dn, 0);
-
-		Assert.assertEquals("Liferay", rdnType);
-
-		rdnType = LdapUtil.getRdnValue(dn, 1);
-
-		Assert.assertEquals("liferay.com", rdnType);
-
-		rdnType = LdapUtil.getRdnValue(dn, 2);
-
-		Assert.assertEquals("test", rdnType);
-
-		rdnType = LdapUtil.getRdnValue(dn, 3);
-
-		Assert.assertEquals(null, rdnType);
+		Assert.assertEquals(null, LdapUtil.getRdnValue(dn, -1));
+		Assert.assertEquals("Liferay", LdapUtil.getRdnValue(dn, 0));
+		Assert.assertEquals("liferay.com", LdapUtil.getRdnValue(dn, 1));
+		Assert.assertEquals("test", LdapUtil.getRdnValue(dn, 2));
+		Assert.assertEquals(null, LdapUtil.getRdnValue(dn, 3));
 	}
 
 }

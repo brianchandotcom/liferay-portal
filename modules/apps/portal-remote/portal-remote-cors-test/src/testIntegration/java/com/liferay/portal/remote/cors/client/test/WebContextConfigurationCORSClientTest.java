@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.remote.cors.configuration.WebContextCORSConfiguration;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
-
 import javax.ws.rs.HttpMethod;
 
 import org.junit.Before;
@@ -44,20 +42,18 @@ public class WebContextConfigurationCORSClientTest
 
 	@Before
 	public void setUp() {
-		Dictionary<String, Object> properties =
+		registerJaxRsApplication(
+			new CORSTestApplication(), "cors",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"osgi.jaxrs.name", "test-cors"
-			).build();
-
-		registerJaxRsApplication(new CORSTestApplication(), "cors", properties);
-
-		properties = HashMapDictionaryBuilder.<String, Object>put(
-			"servlet.context.helper.select.filter",
-			"(osgi.jaxrs.name=test-cors)"
-		).build();
+			).build());
 
 		createFactoryConfiguration(
-			WebContextCORSConfiguration.class.getName(), properties);
+			WebContextCORSConfiguration.class.getName(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"servlet.context.helper.select.filter",
+				"(osgi.jaxrs.name=test-cors)"
+			).build());
 	}
 
 	@Test

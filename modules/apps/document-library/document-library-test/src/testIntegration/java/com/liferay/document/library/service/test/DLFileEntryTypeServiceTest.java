@@ -247,9 +247,9 @@ public class DLFileEntryTypeServiceTest {
 			_subfolder.getName(), _subfolder.getDescription(),
 			_getFolderServiceContext(_basicDocumentDLFileEntryType));
 
-		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
-
-		assertFileEntryType(fileEntry, _basicDocumentDLFileEntryType);
+		assertFileEntryType(
+			DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId()),
+			_basicDocumentDLFileEntryType);
 	}
 
 	@Test

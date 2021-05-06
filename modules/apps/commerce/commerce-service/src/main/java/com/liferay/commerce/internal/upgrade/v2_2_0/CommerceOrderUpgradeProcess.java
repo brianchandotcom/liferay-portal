@@ -120,9 +120,8 @@ public class CommerceOrderUpgradeProcess
 							user.getUserId(), StringPool.BLANK,
 							StringPool.BLANK, serviceContext);
 
-					commerceAccountId = commerceAccount.getCommerceAccountId();
-
-					preparedStatement2.setLong(1, commerceAccountId);
+					preparedStatement2.setLong(
+						1, commerceAccount.getCommerceAccountId());
 
 					preparedStatement2.setLong(2, orderUserId);
 

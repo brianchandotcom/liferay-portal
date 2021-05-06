@@ -75,10 +75,10 @@ public class KBCommentsChecker extends EmptyOnClickRowChecker {
 		KBComment kbComment = null;
 
 		try {
-			kbComment = KBCommentLocalServiceUtil.getKBComment(kbCommentId);
-
 			KBCommentPermission.contains(
-				_permissionChecker, kbComment, ActionKeys.DELETE);
+				_permissionChecker,
+				KBCommentLocalServiceUtil.getKBComment(kbCommentId),
+				ActionKeys.DELETE);
 		}
 		catch (PortalException portalException) {
 

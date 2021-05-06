@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.Dictionary;
 
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -88,22 +87,19 @@ public class SAPClientTest extends BaseClientTestCase {
 
 			User user = UserTestUtil.getAdminUser(defaultCompanyId);
 
-			Dictionary<String, Object> properties =
+			registerJaxRsApplication(
+				new TestSAPApplication(), "SAP",
 				HashMapDictionaryBuilder.<String, Object>put(
 					"osgi.jaxrs.name", TestSAPApplication.class.getName()
-				).build();
+				).build());
 
 			registerJaxRsApplication(
-				new TestSAPApplication(), "SAP", properties);
-
-			properties = HashMapDictionaryBuilder.<String, Object>put(
-				"oauth2.service.access.policy.name", "CUSTOM_SAP"
-			).put(
-				"osgi.jaxrs.name", "custom-sap-application"
-			).build();
-
-			registerJaxRsApplication(
-				new TestSAPApplication(), "CUSTOM_SAP", properties);
+				new TestSAPApplication(), "CUSTOM_SAP",
+				HashMapDictionaryBuilder.<String, Object>put(
+					"oauth2.service.access.policy.name", "CUSTOM_SAP"
+				).put(
+					"osgi.jaxrs.name", "custom-sap-application"
+				).build());
 
 			createOAuth2Application(
 				defaultCompanyId, user, "oauthTestApplication",

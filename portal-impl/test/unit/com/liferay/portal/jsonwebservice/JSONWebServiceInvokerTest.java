@@ -788,10 +788,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
-		result = invokerResult.getResult();
-
-		Assert.assertEquals("Welcome 173 to Jupiter", result);
-
+		Assert.assertEquals(
+			"Welcome 173 to Jupiter", invokerResult.getResult());
 		Assert.assertEquals(
 			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
 	}
@@ -817,9 +815,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
-		result = invokerResult.getResult();
-
-		Assert.assertEquals("Welcome 173 to Jupiter", result);
+		Assert.assertEquals(
+			"Welcome 173 to Jupiter", invokerResult.getResult());
 
 		Assert.assertEquals(
 			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
@@ -845,9 +842,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
-		result = invokerResult.getResult();
-
-		Assert.assertEquals("Welcome 173 to Jupiter", result);
+		Assert.assertEquals(
+			"Welcome 173 to Jupiter", invokerResult.getResult());
 
 		Assert.assertEquals(
 			"\"Welcome 173 to Jupiter\"", toJSON(invokerResult));
@@ -873,9 +869,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
-		result = invokerResult.getResult();
-
-		Assert.assertEquals("Welcome 173 to null", result);
+		Assert.assertEquals("Welcome 173 to null", invokerResult.getResult());
 
 		Assert.assertEquals("\"Welcome 173 to null\"", toJSON(invokerResult));
 	}
@@ -902,9 +896,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
-		result = invokerResult.getResult();
-
-		Assert.assertEquals("2012, 1/3, en/2, 173/3", result);
+		Assert.assertEquals(
+			"2012, 1/3, en/2, 173/3", invokerResult.getResult());
 	}
 
 	@Test
@@ -929,9 +922,8 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		JSONWebServiceInvokerAction.InvokerResult invokerResult =
 			(JSONWebServiceInvokerAction.InvokerResult)result;
 
-		result = invokerResult.getResult();
-
-		Assert.assertEquals("2012, 1/3, en/2, 173/3", result);
+		Assert.assertEquals(
+			"2012, 1/3, en/2, 173/3", invokerResult.getResult());
 	}
 
 	@Test

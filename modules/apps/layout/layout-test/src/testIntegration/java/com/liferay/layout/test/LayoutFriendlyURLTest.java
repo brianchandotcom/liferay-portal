@@ -489,23 +489,23 @@ public class LayoutFriendlyURLTest {
 	public void testValidFriendlyURLMapperURLInDefaultLocale()
 		throws Exception {
 
-		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.US, "/blogs"
-		).build();
+		addLayout(
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.US, "/blogs"
+			).build());
 
-		addLayout(_group.getGroupId(), false, friendlyURLMap);
+		addLayout(
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.US, "/home/blogs"
+			).build());
 
-		friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.US, "/home/blogs"
-		).build();
-
-		addLayout(_group.getGroupId(), false, friendlyURLMap);
-
-		friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.US, "/blogs/home"
-		).build();
-
-		addLayout(_group.getGroupId(), false, friendlyURLMap);
+		addLayout(
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.US, "/blogs/home"
+			).build());
 	}
 
 	@Test

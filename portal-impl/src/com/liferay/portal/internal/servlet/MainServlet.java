@@ -1292,76 +1292,67 @@ public class MainServlet extends HttpServlet {
 	private void _registerPortalInitialized() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			"module.service.lifecycle", "portal.initialized"
-		).put(
-			"service.vendor", ReleaseInfo.getVendor()
-		).put(
-			"service.version", ReleaseInfo.getVersion()
-		).build();
-
 		_portalInitializedModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
 				ModuleServiceLifecycle.class,
 				new ModuleServiceLifecycle() {
 				},
-				properties);
-
-		properties = HashMapBuilder.<String, Object>put(
-			"module.service.lifecycle", "portlets.initialized"
-		).put(
-			"service.vendor", ReleaseInfo.getVendor()
-		).put(
-			"service.version", ReleaseInfo.getVersion()
-		).build();
+				HashMapBuilder.<String, Object>put(
+					"module.service.lifecycle", "portal.initialized"
+				).put(
+					"service.vendor", ReleaseInfo.getVendor()
+				).put(
+					"service.version", ReleaseInfo.getVersion()
+				).build());
 
 		_portalPortletsInitializedModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
 				ModuleServiceLifecycle.class,
 				new ModuleServiceLifecycle() {
 				},
-				properties);
-
-		properties = HashMapBuilder.<String, Object>put(
-			"bean.id", ServletContext.class.getName()
-		).put(
-			"original.bean", Boolean.TRUE
-		).put(
-			"service.vendor", ReleaseInfo.getVendor()
-		).build();
+				HashMapBuilder.<String, Object>put(
+					"module.service.lifecycle", "portlets.initialized"
+				).put(
+					"service.vendor", ReleaseInfo.getVendor()
+				).put(
+					"service.version", ReleaseInfo.getVersion()
+				).build());
 
 		_servletContextServiceRegistration = registry.registerService(
-			ServletContext.class, getServletContext(), properties);
-
-		properties = HashMapBuilder.<String, Object>put(
-			"module.service.lifecycle", "system.check"
-		).put(
-			"service.vendor", ReleaseInfo.getVendor()
-		).put(
-			"service.version", ReleaseInfo.getVersion()
-		).build();
+			ServletContext.class, getServletContext(),
+			HashMapBuilder.<String, Object>put(
+				"bean.id", ServletContext.class.getName()
+			).put(
+				"original.bean", Boolean.TRUE
+			).put(
+				"service.vendor", ReleaseInfo.getVendor()
+			).build());
 
 		_systemCheckModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
 				ModuleServiceLifecycle.class,
 				new ModuleServiceLifecycle() {
 				},
-				properties);
-
-		properties = HashMapBuilder.<String, Object>put(
-			"module.service.lifecycle", "license.install"
-		).put(
-			"service.vendor", ReleaseInfo.getVendor()
-		).put(
-			"service.version", ReleaseInfo.getVersion()
-		).build();
+				HashMapBuilder.<String, Object>put(
+					"module.service.lifecycle", "system.check"
+				).put(
+					"service.vendor", ReleaseInfo.getVendor()
+				).put(
+					"service.version", ReleaseInfo.getVersion()
+				).build());
 
 		_licenseInstallModuleServiceLifecycleServiceRegistration =
 			registry.registerService(
 				ModuleServiceLifecycle.class,
 				new ModuleServiceLifecycle() {
 				},
-				properties);
+				HashMapBuilder.<String, Object>put(
+					"module.service.lifecycle", "license.install"
+				).put(
+					"service.vendor", ReleaseInfo.getVendor()
+				).put(
+					"service.version", ReleaseInfo.getVersion()
+				).build());
 	}
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =

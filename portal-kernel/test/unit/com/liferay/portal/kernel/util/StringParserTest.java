@@ -30,96 +30,100 @@ public class StringParserTest {
 		StringParser stringParser = StringParser.create(
 			"/{nodeId:\\d+}/{title:[^/]+}/");
 
-		Map<String, String> params = HashMapBuilder.put(
-			"nodeId", "123"
-		).put(
-			"title", "abc"
-		).build();
+		Assert.assertEquals(
+			"/123/abc/",
+			stringParser.build(
+				HashMapBuilder.put(
+					"nodeId", "123"
+				).put(
+					"title", "abc"
+				).build()));
 
-		Assert.assertEquals("/123/abc/", stringParser.build(params));
+		Assert.assertNull(
+			stringParser.build(
+				HashMapBuilder.put(
+					"nodeId", "1a3"
+				).put(
+					"title", "abc"
+				).build()));
 
-		params = HashMapBuilder.put(
-			"nodeId", "1a3"
-		).put(
-			"title", "abc"
-		).build();
-
-		Assert.assertNull(stringParser.build(params));
-
-		params = HashMapBuilder.put(
-			"nodeId", "123"
-		).put(
-			"title", "ab/c"
-		).build();
-
-		Assert.assertNull(stringParser.build(params));
+		Assert.assertNull(
+			stringParser.build(
+				HashMapBuilder.put(
+					"nodeId", "123"
+				).put(
+					"title", "ab/c"
+				).build()));
 
 		stringParser = StringParser.create("{mvcPathName}");
 
-		params = HashMapBuilder.put(
-			"mvcPathName", "test-path"
-		).build();
-
-		Assert.assertEquals("test-path", stringParser.build(params));
+		Assert.assertEquals(
+			"test-path",
+			stringParser.build(
+				HashMapBuilder.put(
+					"mvcPathName", "test-path"
+				).build()));
 
 		stringParser = StringParser.create("/maximized");
 
-		params = HashMapBuilder.put(
-			"nodeId", "123"
-		).put(
-			"title", "abc"
-		).build();
-
-		Assert.assertEquals("/maximized", stringParser.build(params));
+		Assert.assertEquals(
+			"/maximized",
+			stringParser.build(
+				HashMapBuilder.put(
+					"nodeId", "123"
+				).put(
+					"title", "abc"
+				).build()));
 
 		stringParser = StringParser.create(
 			"/{userIdAndInstanceId}/{type}/{urlTitle:(?!id/)[^/]+}");
 
-		params = HashMapBuilder.put(
-			"type", "abc"
-		).put(
-			"urlTitle", "xyz"
-		).put(
-			"userIdAndInstanceId", "123"
-		).build();
+		Assert.assertEquals(
+			"/123/abc/xyz",
+			stringParser.build(
+				HashMapBuilder.put(
+					"type", "abc"
+				).put(
+					"urlTitle", "xyz"
+				).put(
+					"userIdAndInstanceId", "123"
+				).build()));
 
-		Assert.assertEquals("/123/abc/xyz", stringParser.build(params));
+		Assert.assertNull(
+			stringParser.build(
+				HashMapBuilder.put(
+					"type", "abc"
+				).put(
+					"urlTitle", "id/xyz"
+				).put(
+					"userIdAndInstanceId", "123"
+				).build()));
 
-		params = HashMapBuilder.put(
-			"type", "abc"
-		).put(
-			"urlTitle", "id/xyz"
-		).put(
-			"userIdAndInstanceId", "123"
-		).build();
-
-		Assert.assertNull(stringParser.build(params));
-
-		params = HashMapBuilder.put(
-			"type", "abc"
-		).put(
-			"urlTitle", "xy/z"
-		).put(
-			"userIdAndInstanceId", "123"
-		).build();
-
-		Assert.assertNull(stringParser.build(params));
+		Assert.assertNull(
+			stringParser.build(
+				HashMapBuilder.put(
+					"type", "abc"
+				).put(
+					"urlTitle", "xy/z"
+				).put(
+					"userIdAndInstanceId", "123"
+				).build()));
 
 		stringParser = StringParser.create("/{test}");
 
-		params = HashMapBuilder.put(
-			"test", "a."
-		).build();
-
-		Assert.assertNull(stringParser.build(params));
+		Assert.assertNull(
+			stringParser.build(
+				HashMapBuilder.put(
+					"test", "a."
+				).build()));
 
 		stringParser = StringParser.create("/{test:\\d+}");
 
-		params = HashMapBuilder.put(
-			"test", "1a"
-		).build();
-
-		Assert.assertNull(stringParser.build(params));
+		Assert.assertNull(
+			stringParser.build(
+				HashMapBuilder.put(
+					"test", "1a"
+				).build()));
 	}
 
 	@Test

@@ -238,9 +238,8 @@ public class RecurrenceUtil {
 
 			jCalendar.set(Calendar.DAY_OF_WEEK, weekday.getCalendarWeekday());
 
-			jCalendar = JCalendarUtil.getJCalendar(jCalendar, timeZone);
-
-			weekday = Weekday.getWeekday(jCalendar);
+			weekday = Weekday.getWeekday(
+				JCalendarUtil.getJCalendar(jCalendar, timeZone));
 
 			positionalWeekday = new PositionalWeekday(
 				weekday, positionalWeekday.getPosition());

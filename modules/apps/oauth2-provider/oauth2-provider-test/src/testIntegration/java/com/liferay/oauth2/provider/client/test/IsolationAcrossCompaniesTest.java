@@ -24,8 +24,6 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
-
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
@@ -106,20 +104,17 @@ public class IsolationAcrossCompaniesTest extends BaseClientTestCase {
 
 		@Override
 		protected void prepareTest() throws Exception {
-			Dictionary<String, Object> properties =
+			registerJaxRsApplication(
+				new TestAnnotatedApplication(), "annotated",
 				HashMapDictionaryBuilder.<String, Object>put(
 					"oauth2.scope.checker.type", "annotations"
-				).build();
+				).build());
 
 			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "annotated", properties);
-
-			properties = HashMapDictionaryBuilder.<String, Object>put(
-				"oauth2.scope.checker.type", "none"
-			).build();
-
-			registerJaxRsApplication(
-				new TestAnnotatedApplication(), "no-scopes", properties);
+				new TestAnnotatedApplication(), "no-scopes",
+				HashMapDictionaryBuilder.<String, Object>put(
+					"oauth2.scope.checker.type", "none"
+				).build());
 
 			Company company1 = createCompany("host1");
 

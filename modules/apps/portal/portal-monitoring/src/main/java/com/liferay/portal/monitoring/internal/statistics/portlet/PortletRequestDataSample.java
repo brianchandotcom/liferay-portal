@@ -113,17 +113,13 @@ public class PortletRequestDataSample extends BaseDataSample {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
-			groupId = themeDisplay.getScopeGroupId();
-
-			setGroupId(groupId);
+			setGroupId(themeDisplay.getScopeGroupId());
 
 			return;
 		}
 
 		try {
-			groupId = portal.getScopeGroupId(portletRequest);
-
-			setGroupId(groupId);
+			setGroupId(portal.getScopeGroupId(portletRequest));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

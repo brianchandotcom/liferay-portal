@@ -97,11 +97,9 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		ServiceReference<SafePortalLDAP> serviceReference =
 			_bundleContext.getServiceReference(SafePortalLDAP.class);
 
-		bundle = serviceReference.getBundle();
-
 		_componentDescriptionDTO =
 			_serviceComponentRuntime.getComponentDescriptionDTO(
-				bundle,
+				serviceReference.getBundle(),
 				"com.liferay.portal.security.ldap.internal.configuration." +
 					"LDAPConfigurationListener");
 

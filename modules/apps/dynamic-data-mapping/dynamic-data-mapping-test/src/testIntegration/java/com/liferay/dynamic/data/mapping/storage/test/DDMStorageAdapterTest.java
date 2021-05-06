@@ -113,9 +113,7 @@ public class DDMStorageAdapterTest {
 
 		_deleteDDMFormValues(testDDMStorageAdapter, primaryKey);
 
-		ddmFormValues = _getDDMFormValues(testDDMStorageAdapter, primaryKey);
-
-		Assert.assertNull(ddmFormValues);
+		Assert.assertNull(_getDDMFormValues(testDDMStorageAdapter, primaryKey));
 	}
 
 	private static void _setUpDDMStorageAdapterTracker() {

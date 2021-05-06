@@ -82,15 +82,13 @@ public class BasicRegistryImplTest {
 		ServiceRegistration<Foo> serviceRegistration2 =
 			registry.registerService(Foo.class, foo2, properties);
 
-		serviceReference = registry.getServiceReference(Foo.class);
-
-		Assert.assertSame(foo2, registry.getService(serviceReference));
+		Assert.assertSame(
+			foo2, registry.getService(registry.getServiceReference(Foo.class)));
 
 		serviceRegistration2.unregister();
 
-		serviceReference = registry.getServiceReference(Foo.class);
-
-		Assert.assertSame(foo1, registry.getService(serviceReference));
+		Assert.assertSame(
+			foo1, registry.getService(registry.getServiceReference(Foo.class)));
 
 		serviceRegistration1.unregister();
 	}

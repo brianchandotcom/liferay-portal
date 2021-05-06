@@ -59,10 +59,8 @@ public class IconDeactivateTag extends IconTag {
 		sb.append(url);
 		sb.append(" } else { self.focus(); }");
 
-		url = sb.toString();
-
 		setMessage("deactivate");
-		setUrl(url);
+		setUrl(sb.toString());
 
 		return super.getPage();
 	}

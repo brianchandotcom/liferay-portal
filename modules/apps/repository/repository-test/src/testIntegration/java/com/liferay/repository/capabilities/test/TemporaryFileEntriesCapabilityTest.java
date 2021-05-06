@@ -101,10 +101,8 @@ public class TemporaryFileEntriesCapabilityTest {
 
 		temporaryFileEntriesCapability.deleteExpiredTemporaryFileEntries();
 
-		foldersAndFileEntriesAndFileShortcutsCount =
-			getFoldersAndFileEntriesAndFileShortcutsCount(localRepository);
-
-		Assert.assertEquals(0, foldersAndFileEntriesAndFileShortcutsCount);
+		Assert.assertEquals(
+			0, getFoldersAndFileEntriesAndFileShortcutsCount(localRepository));
 	}
 
 	protected int getFoldersAndFileEntriesAndFileShortcutsCount(

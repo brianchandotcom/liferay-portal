@@ -27,7 +27,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
 
-import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicReference;
 
 import javax.portlet.PortletException;
@@ -84,12 +83,12 @@ public class SharedSessionPortletContainerTest
 
 		};
 
-		Dictionary<String, Object> properties =
+		setUpPortlet(
+			testPortlet,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portlet.private-session-attributes", Boolean.FALSE
-			).build();
-
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+			).build(),
+			TEST_PORTLET_ID);
 
 		LifecycleAction lifecycleAction = new LifecycleAction() {
 
@@ -107,11 +106,11 @@ public class SharedSessionPortletContainerTest
 
 		};
 
-		properties = HashMapDictionaryBuilder.<String, Object>put(
-			"key", "servlet.service.events.pre"
-		).build();
-
-		registerService(LifecycleAction.class, lifecycleAction, properties);
+		registerService(
+			LifecycleAction.class, lifecycleAction,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"key", "servlet.service.events.pre"
+			).build());
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			PortletContainerTestUtil.getHttpServletRequest(group, layout),
@@ -151,12 +150,12 @@ public class SharedSessionPortletContainerTest
 
 		};
 
-		Dictionary<String, Object> properties =
+		setUpPortlet(
+			testPortlet,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"com.liferay.portlet.private-session-attributes", Boolean.FALSE
-			).build();
-
-		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
+			).build(),
+			TEST_PORTLET_ID);
 
 		LifecycleAction lifecycleAction = new LifecycleAction() {
 
@@ -176,11 +175,11 @@ public class SharedSessionPortletContainerTest
 
 		};
 
-		properties = HashMapDictionaryBuilder.<String, Object>put(
-			"key", "servlet.service.events.post"
-		).build();
-
-		registerService(LifecycleAction.class, lifecycleAction, properties);
+		registerService(
+			LifecycleAction.class, lifecycleAction,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"key", "servlet.service.events.post"
+			).build());
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			PortletContainerTestUtil.getHttpServletRequest(group, layout),

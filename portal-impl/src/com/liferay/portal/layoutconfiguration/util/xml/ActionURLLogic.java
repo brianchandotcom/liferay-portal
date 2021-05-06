@@ -66,9 +66,8 @@ public class ActionURLLogic extends RuntimeLogic {
 		String portletId = root.attributeValue("portlet-name");
 
 		if (portletId != null) {
-			portletId = PortalUtil.getJsSafePortletId(portletId);
-
-			liferayPortletURL.setPortletId(portletId);
+			liferayPortletURL.setPortletId(
+				PortalUtil.getJsSafePortletId(portletId));
 		}
 
 		for (int i = 1;; i++) {

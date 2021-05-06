@@ -147,9 +147,7 @@ public class SharepointRequest {
 				addParam(key, value);
 			}
 
-			bytes = ArrayUtil.subset(bytes, url.length() + 1, bytes.length);
-
-			setBytes(bytes);
+			setBytes(ArrayUtil.subset(bytes, url.length() + 1, bytes.length));
 		}
 		catch (Exception exception) {
 			throw new SharepointException(exception);

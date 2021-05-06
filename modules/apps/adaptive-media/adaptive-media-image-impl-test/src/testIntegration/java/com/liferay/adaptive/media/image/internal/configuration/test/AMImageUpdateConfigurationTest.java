@@ -158,24 +158,21 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithBlankMaxHeight()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", ""
-		).put(
-			"max-width", "200"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", ""
+			).put(
+				"max-width", "200"
+			).build());
 
 		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
@@ -199,46 +196,40 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithBlankMaxHeightOnly()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", ""
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", ""
+			).build());
 	}
 
 	@Test
 	public void testUpdateConfigurationEntryWithBlankMaxWidth()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", ""
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "200"
+			).put(
+				"max-width", ""
+			).build());
 
 		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
@@ -262,24 +253,21 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithBlankMaxWidthAndBlankMaxHeight()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", ""
-		).put(
-			"max-width", ""
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", ""
+			).put(
+				"max-width", ""
+			).build());
 	}
 
 	@Test(
@@ -288,24 +276,21 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithBlankMaxWidthAndZeroMaxHeight()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", ""
-		).put(
-			"max-width", "0"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", ""
+			).put(
+				"max-width", "0"
+			).build());
 	}
 
 	@Test(
@@ -314,22 +299,19 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithBlankMaxWidthOnly()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-width", ""
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-width", ""
+			).build());
 	}
 
 	@Test(expected = AMImageConfigurationException.InvalidNameException.class)
@@ -427,22 +409,19 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithMaxHeightOnly()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "200"
+			).build());
 
 		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
@@ -464,22 +443,19 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithMaxWidthOnly()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-width", "200"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-width", "200"
+			).build());
 
 		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
@@ -501,44 +477,38 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithNegativeNumberMaxHeight()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "-10"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "-10"
+			).build());
 	}
 
 	@Test(expected = AMImageConfigurationException.InvalidWidthException.class)
 	public void testUpdateConfigurationEntryWithNegativeNumberMaxWidth()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-width", "-10"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-width", "-10"
+			).build());
 	}
 
 	@Test(expected = AMImageConfigurationException.InvalidUuidException.class)
@@ -563,44 +533,38 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithNotNumberMaxHeight()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "Invalid"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "Invalid"
+			).build());
 	}
 
 	@Test(expected = AMImageConfigurationException.InvalidWidthException.class)
 	public void testUpdateConfigurationEntryWithNotNumberMaxWidth()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-width", "Invalid"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-width", "Invalid"
+			).build());
 	}
 
 	@Test(
@@ -629,24 +593,21 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithZeroMaxHeight()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "0"
-		).put(
-			"max-width", "200"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "0"
+			).put(
+				"max-width", "200"
+			).build());
 
 		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
@@ -670,46 +631,40 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithZeroMaxHeightOnly()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "0"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "0"
+			).build());
 	}
 
 	@Test
 	public void testUpdateConfigurationEntryWithZeroMaxWidth()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "0"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "200"
+			).put(
+				"max-width", "0"
+			).build());
 
 		Optional<AMImageConfigurationEntry> amImageConfigurationEntryOptional =
 			_amImageConfigurationHelper.getAMImageConfigurationEntry(
@@ -733,24 +688,21 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithZeroMaxWidthAndBlankMaxHeight()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "0"
-		).put(
-			"max-width", ""
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "0"
+			).put(
+				"max-width", ""
+			).build());
 	}
 
 	@Test(
@@ -759,24 +711,21 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithZeroMaxWidthAndZeroMaxHeight()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "0"
-		).put(
-			"max-width", "0"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-height", "0"
+			).put(
+				"max-width", "0"
+			).build());
 	}
 
 	@Test(
@@ -785,22 +734,19 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateConfigurationEntryWithZeroMaxWidthOnly()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "desc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-width", "0"
-		).build();
+			TestPropsValues.getCompanyId(), "one", "desc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one", "desc", "1",
-			properties);
+			HashMapBuilder.put(
+				"max-width", "0"
+			).build());
 	}
 
 	@Test
@@ -859,25 +805,22 @@ public class AMImageUpdateConfigurationTest
 		expected = AMImageConfigurationException.DuplicateAMImageConfigurationNameException.class
 	)
 	public void testUpdateDuplicateConfigurationEntryName() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "100"
+				).put(
+					"max-width", "100"
+				).build());
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "two", "twodesc", "2", properties);
+			TestPropsValues.getCompanyId(), "two", "twodesc", "2",
+			HashMapBuilder.put(
+				"max-height", "200"
+			).put(
+				"max-width", "200"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "two", "twodesc", "1",
@@ -888,25 +831,22 @@ public class AMImageUpdateConfigurationTest
 		expected = AMImageConfigurationException.DuplicateAMImageConfigurationUuidException.class
 	)
 	public void testUpdateDuplicateConfigurationEntryUuid() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "100"
+				).put(
+					"max-width", "100"
+				).build());
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "two", "twodesc", "2", properties);
+			TestPropsValues.getCompanyId(), "two", "twodesc", "2",
+			HashMapBuilder.put(
+				"max-height", "200"
+			).put(
+				"max-width", "200"
+			).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "two-bis", "twodesc", "2",
@@ -915,27 +855,23 @@ public class AMImageUpdateConfigurationTest
 
 	@Test
 	public void testUpdateFirstConfigurationEntryName() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "100"
+				).put(
+					"max-width", "100"
+				).build());
 
 		AMImageConfigurationEntry amImageConfigurationEntry2 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "two", "twodesc", "2",
-				properties);
+				HashMapBuilder.put(
+					"max-height", "200"
+				).put(
+					"max-width", "200"
+				).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1", "one-bis", "onedesc-bis", "1",
@@ -996,40 +932,35 @@ public class AMImageUpdateConfigurationTest
 
 	@Test
 	public void testUpdateFirstConfigurationEntryProperties() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "100"
+				).put(
+					"max-width", "100"
+				).build());
 
 		AMImageConfigurationEntry amImageConfigurationEntry2 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "two", "twodesc", "2",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "500"
-		).put(
-			"max-width", "800"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "200"
+				).put(
+					"max-width", "200"
+				).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(),
 			amImageConfigurationEntry1.getUUID(),
 			amImageConfigurationEntry1.getName(),
 			amImageConfigurationEntry1.getDescription(),
-			amImageConfigurationEntry1.getUUID(), properties);
+			amImageConfigurationEntry1.getUUID(),
+			HashMapBuilder.put(
+				"max-height", "500"
+			).put(
+				"max-width", "800"
+			).build());
 
 		Optional<AMImageConfigurationEntry>
 			actualAMImageConfigurationEntry1Optional =
@@ -1088,27 +1019,23 @@ public class AMImageUpdateConfigurationTest
 
 	@Test
 	public void testUpdateFirstConfigurationEntryUuid() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "100"
+				).put(
+					"max-width", "100"
+				).build());
 
 		AMImageConfigurationEntry amImageConfigurationEntry2 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "two", "twodesc", "2",
-				properties);
+				HashMapBuilder.put(
+					"max-height", "200"
+				).put(
+					"max-width", "200"
+				).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1",
@@ -1199,27 +1126,23 @@ public class AMImageUpdateConfigurationTest
 
 	@Test
 	public void testUpdateSecondConfigurationEntryName() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "100"
+				).put(
+					"max-width", "100"
+				).build());
 
 		AMImageConfigurationEntry amImageConfigurationEntry2 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "two", "twodesc", "2",
-				properties);
+				HashMapBuilder.put(
+					"max-height", "200"
+				).put(
+					"max-width", "200"
+				).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "2", "two-bis", "twodesc-bis", "2",
@@ -1282,40 +1205,35 @@ public class AMImageUpdateConfigurationTest
 	public void testUpdateSecondConfigurationEntryProperties()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "100"
+				).put(
+					"max-width", "100"
+				).build());
 
 		AMImageConfigurationEntry amImageConfigurationEntry2 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "two", "twodesc", "2",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "500"
-		).put(
-			"max-width", "800"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "200"
+				).put(
+					"max-width", "200"
+				).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(),
 			amImageConfigurationEntry2.getUUID(),
 			amImageConfigurationEntry2.getName(),
 			amImageConfigurationEntry2.getDescription(),
-			amImageConfigurationEntry2.getUUID(), properties);
+			amImageConfigurationEntry2.getUUID(),
+			HashMapBuilder.put(
+				"max-height", "500"
+			).put(
+				"max-width", "800"
+			).build());
 
 		Optional<AMImageConfigurationEntry>
 			actualAMImageConfigurationEntry2Optional =
@@ -1374,27 +1292,23 @@ public class AMImageUpdateConfigurationTest
 
 	@Test
 	public void testUpdateSecondConfigurationEntryUuid() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		AMImageConfigurationEntry amImageConfigurationEntry1 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "one", "onedesc", "1",
-				properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
+				HashMapBuilder.put(
+					"max-height", "100"
+				).put(
+					"max-width", "100"
+				).build());
 
 		AMImageConfigurationEntry amImageConfigurationEntry2 =
 			_amImageConfigurationHelper.addAMImageConfigurationEntry(
 				TestPropsValues.getCompanyId(), "two", "twodesc", "2",
-				properties);
+				HashMapBuilder.put(
+					"max-height", "200"
+				).put(
+					"max-width", "200"
+				).build());
 
 		_amImageConfigurationHelper.updateAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "2",

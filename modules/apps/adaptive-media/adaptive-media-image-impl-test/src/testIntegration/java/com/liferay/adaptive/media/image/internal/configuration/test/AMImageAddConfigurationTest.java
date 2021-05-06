@@ -275,26 +275,24 @@ public class AMImageAddConfigurationTest
 	public void testAddConfigurationEntryWithExistingDisabledConfiguration()
 		throws Exception {
 
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "onedesc", "1", properties);
+			TestPropsValues.getCompanyId(), "one", "onedesc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.disableAMImageConfigurationEntry(
 			TestPropsValues.getCompanyId(), "1");
 
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
-
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "two", "twodesc", "2", properties);
+			TestPropsValues.getCompanyId(), "two", "twodesc", "2",
+			HashMapBuilder.put(
+				"max-height", "200"
+			).put(
+				"max-width", "200"
+			).build());
 
 		Collection<AMImageConfigurationEntry> amImageConfigurationEntries =
 			_amImageConfigurationHelper.getAMImageConfigurationEntries(
@@ -546,46 +544,42 @@ public class AMImageAddConfigurationTest
 		expected = AMImageConfigurationException.DuplicateAMImageConfigurationNameException.class
 	)
 	public void testAddDuplicateConfigurationEntryName() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
+		_amImageConfigurationHelper.addAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "one", "onedesc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "onedesc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
-
-		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "onedesc", "2", properties);
+			TestPropsValues.getCompanyId(), "one", "onedesc", "2",
+			HashMapBuilder.put(
+				"max-height", "200"
+			).put(
+				"max-width", "200"
+			).build());
 	}
 
 	@Test(
 		expected = AMImageConfigurationException.DuplicateAMImageConfigurationUuidException.class
 	)
 	public void testAddDuplicateConfigurationEntryUuid() throws Exception {
-		Map<String, String> properties = HashMapBuilder.put(
-			"max-height", "100"
-		).put(
-			"max-width", "100"
-		).build();
+		_amImageConfigurationHelper.addAMImageConfigurationEntry(
+			TestPropsValues.getCompanyId(), "one", "onedesc", "1",
+			HashMapBuilder.put(
+				"max-height", "100"
+			).put(
+				"max-width", "100"
+			).build());
 
 		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "one", "onedesc", "1", properties);
-
-		properties = HashMapBuilder.put(
-			"max-height", "200"
-		).put(
-			"max-width", "200"
-		).build();
-
-		_amImageConfigurationHelper.addAMImageConfigurationEntry(
-			TestPropsValues.getCompanyId(), "two", "twodesc", "1", properties);
+			TestPropsValues.getCompanyId(), "two", "twodesc", "1",
+			HashMapBuilder.put(
+				"max-height", "200"
+			).put(
+				"max-width", "200"
+			).build());
 	}
 
 	@Test

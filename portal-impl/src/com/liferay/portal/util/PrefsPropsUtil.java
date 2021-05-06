@@ -365,9 +365,7 @@ public class PrefsPropsUtil {
 
 		String value = PropsUtil.get(name);
 
-		value = preferences.getValue(name, value);
-
-		return StringUtil.split(value, delimiter);
+		return StringUtil.split(preferences.getValue(name, value), delimiter);
 	}
 
 	public static String[] getStringArray(

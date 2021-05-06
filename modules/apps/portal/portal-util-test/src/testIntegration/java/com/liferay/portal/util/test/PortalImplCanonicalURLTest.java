@@ -52,7 +52,6 @@ import com.liferay.portal.util.PropsValues;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Locale;
-import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -105,62 +104,56 @@ public class PortalImplCanonicalURLTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Map<Locale, String> nameMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY, "Zuhause1"
-		).put(
-			LocaleUtil.SPAIN, "Casa1"
-		).put(
-			LocaleUtil.US, "Home1"
-		).build();
-
-		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY, "/zuhause1"
-		).put(
-			LocaleUtil.SPAIN, "/casa1"
-		).put(
-			LocaleUtil.US, "/home1"
-		).build();
-
 		_layout1 = LayoutTestUtil.addLayout(
-			_group.getGroupId(), false, nameMap, friendlyURLMap);
-
-		nameMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY, "Zuhause2"
-		).put(
-			LocaleUtil.SPAIN, "Casa2"
-		).put(
-			LocaleUtil.US, "Home2"
-		).build();
-
-		friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY, "/zuhause2"
-		).put(
-			LocaleUtil.SPAIN, "/casa2"
-		).put(
-			LocaleUtil.US, "/home2"
-		).build();
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, "Zuhause1"
+			).put(
+				LocaleUtil.SPAIN, "Casa1"
+			).put(
+				LocaleUtil.US, "Home1"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, "/zuhause1"
+			).put(
+				LocaleUtil.SPAIN, "/casa1"
+			).put(
+				LocaleUtil.US, "/home1"
+			).build());
 
 		_layout2 = LayoutTestUtil.addLayout(
-			_group.getGroupId(), false, nameMap, friendlyURLMap);
-
-		nameMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY, _group.getName(LocaleUtil.GERMANY)
-		).put(
-			LocaleUtil.SPAIN, _group.getName(LocaleUtil.SPAIN)
-		).put(
-			LocaleUtil.US, _group.getName(LocaleUtil.US)
-		).build();
-
-		friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.GERMANY, _group.getFriendlyURL()
-		).put(
-			LocaleUtil.SPAIN, _group.getFriendlyURL()
-		).put(
-			LocaleUtil.US, _group.getFriendlyURL()
-		).build();
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, "Zuhause2"
+			).put(
+				LocaleUtil.SPAIN, "Casa2"
+			).put(
+				LocaleUtil.US, "Home2"
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, "/zuhause2"
+			).put(
+				LocaleUtil.SPAIN, "/casa2"
+			).put(
+				LocaleUtil.US, "/home2"
+			).build());
 
 		_layout3 = LayoutTestUtil.addLayout(
-			_group.getGroupId(), false, nameMap, friendlyURLMap);
+			_group.getGroupId(), false,
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, _group.getName(LocaleUtil.GERMANY)
+			).put(
+				LocaleUtil.SPAIN, _group.getName(LocaleUtil.SPAIN)
+			).put(
+				LocaleUtil.US, _group.getName(LocaleUtil.US)
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.GERMANY, _group.getFriendlyURL()
+			).put(
+				LocaleUtil.SPAIN, _group.getFriendlyURL()
+			).put(
+				LocaleUtil.US, _group.getFriendlyURL()
+			).build());
 
 		String groupKey = PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME;
 

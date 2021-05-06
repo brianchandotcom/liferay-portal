@@ -378,9 +378,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			group.getGroupId(), false);
 
-		layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
-
-		exportImportLayouts(layoutIds, getImportParameterMap());
+		exportImportLayouts(
+			ExportImportHelperUtil.getLayoutIds(layouts),
+			getImportParameterMap());
 
 		importedLayout1 = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			layout1.getUuid(), importedGroup.getGroupId(), false);

@@ -837,12 +837,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void testVerifyConditionNotOnBefore() throws Exception {
 		prepareIdentityProvider(IDP_ENTITY_ID);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(SSO_URL);
-
 		MessageContext<?> idpMessageContext =
 			_webSsoProfileImpl.getMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
+				getMockHttpServletRequest(SSO_URL),
+				new MockHttpServletResponse());
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			idpMessageContext.getSubcontext(SAMLPeerEntityContext.class);
@@ -859,11 +857,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		prepareServiceProvider(SP_ENTITY_ID);
 
-		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
-
 		MessageContext<?> spMessageContext =
 			_webSsoProfileImpl.getMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
+				getMockHttpServletRequest(ACS_URL),
+				new MockHttpServletResponse());
 
 		_webSsoProfileImpl.verifyConditions(spMessageContext, conditions);
 	}
@@ -872,12 +869,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void testVerifyConditionNotOnOrAfter() throws Exception {
 		prepareIdentityProvider(IDP_ENTITY_ID);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(SSO_URL);
-
 		MessageContext<?> idpMessageContext =
 			_webSsoProfileImpl.getMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
+				getMockHttpServletRequest(SSO_URL),
+				new MockHttpServletResponse());
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			idpMessageContext.getSubcontext(SAMLPeerEntityContext.class);
@@ -894,11 +889,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		prepareServiceProvider(SP_ENTITY_ID);
 
-		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
-
 		MessageContext<?> spMessageContext =
 			_webSsoProfileImpl.getMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
+				getMockHttpServletRequest(ACS_URL),
+				new MockHttpServletResponse());
 
 		_webSsoProfileImpl.verifyConditions(spMessageContext, conditions);
 	}
@@ -907,12 +901,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void testVerifyConditionsNoDates() throws Exception {
 		prepareIdentityProvider(IDP_ENTITY_ID);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(SSO_URL);
-
 		MessageContext<?> idpMessageContext =
 			_webSsoProfileImpl.getMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
+				getMockHttpServletRequest(SSO_URL),
+				new MockHttpServletResponse());
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			idpMessageContext.getSubcontext(SAMLPeerEntityContext.class);
@@ -927,11 +919,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		prepareServiceProvider(SP_ENTITY_ID);
 
-		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
-
 		_webSsoProfileImpl.verifyConditions(
 			_webSsoProfileImpl.getMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse()),
+				getMockHttpServletRequest(ACS_URL),
+				new MockHttpServletResponse()),
 			conditions);
 	}
 
@@ -1059,12 +1050,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void testVerifyReplayNoConditionsDate() throws Exception {
 		prepareIdentityProvider(IDP_ENTITY_ID);
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(SSO_URL);
-
 		MessageContext<?> idpMessageContext =
 			_webSsoProfileImpl.getMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
+				getMockHttpServletRequest(SSO_URL),
+				new MockHttpServletResponse());
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			idpMessageContext.getSubcontext(SAMLPeerEntityContext.class);
@@ -1079,11 +1068,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		prepareServiceProvider(SP_ENTITY_ID);
 
-		mockHttpServletRequest = getMockHttpServletRequest(ACS_URL);
-
 		MessageContext<?> spMessageContext =
 			_webSsoProfileImpl.getMessageContext(
-				mockHttpServletRequest, new MockHttpServletResponse());
+				getMockHttpServletRequest(ACS_URL),
+				new MockHttpServletResponse());
 
 		Assertion assertion = OpenSamlUtil.buildAssertion();
 

@@ -120,21 +120,21 @@ public class DDLRecordSearchTest {
 
 		DDMFormValues ddmFormValues = createDDMFormValues(LocaleUtil.US);
 
-		Map<Locale, String> values = HashMapBuilder.put(
-			LocaleUtil.US, "Joe Bloggs"
-		).build();
-
 		DDMFormFieldValue nameDDMFormFieldValue =
-			createLocalizedDDMFormFieldValue("name", values);
+			createLocalizedDDMFormFieldValue(
+				"name",
+				HashMapBuilder.put(
+					LocaleUtil.US, "Joe Bloggs"
+				).build());
 
 		ddmFormValues.addDDMFormFieldValue(nameDDMFormFieldValue);
 
-		values = HashMapBuilder.put(
-			LocaleUtil.US, "Simple description"
-		).build();
-
 		DDMFormFieldValue descriptionDDMFormFieldValue =
-			createLocalizedDDMFormFieldValue("description", values);
+			createLocalizedDDMFormFieldValue(
+				"description",
+				HashMapBuilder.put(
+					LocaleUtil.US, "Simple description"
+				).build());
 
 		ddmFormValues.addDDMFormFieldValue(descriptionDDMFormFieldValue);
 

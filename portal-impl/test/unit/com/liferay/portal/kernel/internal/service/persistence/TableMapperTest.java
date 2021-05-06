@@ -1212,10 +1212,9 @@ public class TableMapperTest {
 		_mappingStore.put(leftPrimaryKey1, new long[] {rightPrimaryKey});
 		_mappingStore.put(leftPrimaryKey2, new long[] {rightPrimaryKey});
 
-		leftPrimaryKeys = _tableMapperImpl.getLeftPrimaryKeys(rightPrimaryKey);
-
 		Assert.assertArrayEquals(
-			new long[] {leftPrimaryKey2, leftPrimaryKey1}, leftPrimaryKeys);
+			new long[] {leftPrimaryKey2, leftPrimaryKey1},
+			_tableMapperImpl.getLeftPrimaryKeys(rightPrimaryKey));
 
 		// Database error
 
@@ -1400,10 +1399,9 @@ public class TableMapperTest {
 		_mappingStore.put(
 			leftPrimaryKey, new long[] {rightPrimaryKey1, rightPrimaryKey2});
 
-		rightPrimaryKeys = _tableMapperImpl.getRightPrimaryKeys(leftPrimaryKey);
-
 		Assert.assertArrayEquals(
-			new long[] {rightPrimaryKey2, rightPrimaryKey1}, rightPrimaryKeys);
+			new long[] {rightPrimaryKey2, rightPrimaryKey1},
+			_tableMapperImpl.getRightPrimaryKeys(leftPrimaryKey));
 
 		// Database error
 

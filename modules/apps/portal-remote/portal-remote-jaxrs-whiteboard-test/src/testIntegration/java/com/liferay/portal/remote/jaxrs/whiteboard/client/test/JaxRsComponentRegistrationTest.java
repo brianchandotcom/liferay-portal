@@ -90,15 +90,14 @@ public class JaxRsComponentRegistrationTest {
 			bundleContext.registerService(
 				Application.class, new Greeter(), properties));
 
-		properties = HashMapDictionaryBuilder.<String, Object>put(
-			"osgi.jaxrs.application.select", "(addonable=true)"
-		).put(
-			"osgi.jaxrs.resource", Boolean.TRUE
-		).build();
-
 		_serviceRegistrations.add(
 			bundleContext.registerService(
-				Object.class, new Addon(), properties));
+				Object.class, new Addon(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"osgi.jaxrs.application.select", "(addonable=true)"
+				).put(
+					"osgi.jaxrs.resource", Boolean.TRUE
+				).build()));
 	}
 
 	@AfterClass

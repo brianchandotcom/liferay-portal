@@ -778,14 +778,10 @@ public class DocumentImpl implements Document {
 			return get(name, defaultName);
 		}
 
-		String localizedName = Field.getLocalizedName(locale, name);
-
-		Field field = getField(localizedName);
+		Field field = getField(Field.getLocalizedName(locale, name));
 
 		if (field == null) {
-			localizedName = Field.getLocalizedName(locale, defaultName);
-
-			field = getField(localizedName);
+			field = getField(Field.getLocalizedName(locale, defaultName));
 		}
 
 		if (field == null) {

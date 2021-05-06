@@ -344,9 +344,7 @@ public class NestedFieldsWriterInterceptorTest {
 
 		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
 
-		Sku[] skus = product.getSkus();
-
-		Assert.assertNull(skus);
+		Assert.assertNull(product.getSkus());
 
 		NestedFieldsContextThreadLocal.setNestedFieldsContext(
 			new NestedFieldsContext(
@@ -355,9 +353,7 @@ public class NestedFieldsWriterInterceptorTest {
 
 		_nestedFieldsWriterInterceptor.aroundWriteTo(_writerInterceptorContext);
 
-		skus = product.getSkus();
-
-		Assert.assertNull(skus);
+		Assert.assertNull(product.getSkus());
 	}
 
 	@Test

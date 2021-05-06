@@ -129,11 +129,8 @@ public class ReplaceContentFilterReader
 			to = FileUtil.read(to);
 		}
 
-		from = _normalize(from);
-		to = _normalize(to);
-
-		setFrom(from);
-		setTo(to);
+		setFrom(_normalize(from));
+		setTo(_normalize(to));
 	}
 
 	private String _normalize(String s) {

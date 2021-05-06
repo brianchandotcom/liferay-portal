@@ -250,10 +250,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			dlAppService.cancelCheckOut(fileEntryId);
 
-			fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
 			return toSyncDLObject(
-				fileEntry, SyncDLObjectConstants.EVENT_CANCEL_CHECK_OUT);
+				dlAppLocalService.getFileEntry(fileEntryId),
+				SyncDLObjectConstants.EVENT_CANCEL_CHECK_OUT);
 		}
 		catch (PortalException portalException) {
 			throw new PortalException(
@@ -280,10 +279,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 				DLVersionNumberIncrease.fromMajorVersion(majorVersion),
 				changeLog, serviceContext);
 
-			fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
 			return toSyncDLObject(
-				fileEntry, SyncDLObjectConstants.EVENT_CHECK_IN);
+				dlAppLocalService.getFileEntry(fileEntryId),
+				SyncDLObjectConstants.EVENT_CHECK_IN);
 		}
 		catch (PortalException portalException) {
 			throw new PortalException(
@@ -306,10 +304,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
 
-			fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
 			return toSyncDLObject(
-				fileEntry, SyncDLObjectConstants.EVENT_CHECK_OUT);
+				dlAppLocalService.getFileEntry(fileEntryId),
+				SyncDLObjectConstants.EVENT_CHECK_OUT);
 		}
 		catch (PortalException portalException) {
 			throw new PortalException(
@@ -1043,10 +1040,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			dlTrashService.restoreFileEntryFromTrash(fileEntryId);
 
-			fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
-
 			return toSyncDLObject(
-				fileEntry, SyncDLObjectConstants.EVENT_RESTORE);
+				dlAppLocalService.getFileEntry(fileEntryId),
+				SyncDLObjectConstants.EVENT_RESTORE);
 		}
 		catch (PortalException portalException) {
 			throw new PortalException(
@@ -1066,9 +1062,9 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			dlTrashService.restoreFolderFromTrash(folderId);
 
-			folder = dlAppLocalService.getFolder(folderId);
-
-			return toSyncDLObject(folder, SyncDLObjectConstants.EVENT_RESTORE);
+			return toSyncDLObject(
+				dlAppLocalService.getFolder(folderId),
+				SyncDLObjectConstants.EVENT_RESTORE);
 		}
 		catch (PortalException portalException) {
 			throw new PortalException(

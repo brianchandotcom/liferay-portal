@@ -473,20 +473,17 @@ public class JSONWebServiceActionsManagerImpl
 					" and method ", method, " for ", contextName));
 		}
 
-		String[] parameterNames =
-			jsonWebServiceActionParameters.getParameterNames();
-
 		JSONWebServiceActionConfig jsonWebServiceActionConfig =
 			_getJSONWebServiceActionConfig(
-				contextName, path, method, parameterNames);
+				contextName, path, method,
+				jsonWebServiceActionParameters.getParameterNames());
 
 		if ((jsonWebServiceActionConfig == null) &&
 			jsonWebServiceActionParameters.includeDefaultParameters()) {
 
-			parameterNames = jsonWebServiceActionParameters.getParameterNames();
-
 			jsonWebServiceActionConfig = _getJSONWebServiceActionConfig(
-				contextName, path, method, parameterNames);
+				contextName, path, method,
+				jsonWebServiceActionParameters.getParameterNames());
 		}
 
 		if (jsonWebServiceActionConfig == null) {

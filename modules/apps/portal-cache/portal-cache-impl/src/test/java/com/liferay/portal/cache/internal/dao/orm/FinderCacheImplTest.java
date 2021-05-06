@@ -202,18 +202,14 @@ public class FinderCacheImplTest {
 
 		finderCache.putResult(_finderPath, _KEY1, values);
 
-		Object result = finderCache.getResult(_finderPath, _KEY1);
-
-		Assert.assertEquals(values, result);
+		Assert.assertEquals(values, finderCache.getResult(_finderPath, _KEY1));
 
 		map.put("c", new TestBaseModel("c"));
 
 		finderCache.putResult(
 			_finderPath, _KEY1, new ArrayList<>(map.values()));
 
-		result = finderCache.getResult(_finderPath, _KEY1);
-
-		Assert.assertNull(result);
+		Assert.assertNull(finderCache.getResult(_finderPath, _KEY1));
 	}
 
 	private FinderCacheImpl _activateFinderCache(MultiVMPool multiVMPool) {

@@ -106,9 +106,7 @@ public class SearchEngineAdapterTest {
 
 		_deleteDocument(uid);
 
-		document = _getDocument(uid);
-
-		Assert.assertNull(document);
+		Assert.assertNull(_getDocument(uid));
 	}
 
 	@Test

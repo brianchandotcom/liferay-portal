@@ -49,9 +49,9 @@ public class WebDAVEnvironmentConfigClassTestRule
 
 			tuple = _baseWebDAVTestCase.service(Method.MKCOL, "", null, null);
 
-			statusCode = BaseWebDAVTestCase.getStatusCode(tuple);
-
-			Assert.assertEquals(HttpServletResponse.SC_CREATED, statusCode);
+			Assert.assertEquals(
+				HttpServletResponse.SC_CREATED,
+				BaseWebDAVTestCase.getStatusCode(tuple));
 		}
 
 		return null;

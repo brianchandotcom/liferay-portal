@@ -84,9 +84,8 @@ public class StaticBlockCheck extends BaseCheck {
 
 		DetailAST firstUseVariableDetailAST = variableDetailASTList.get(0);
 
-		topLevelDetailAST = _getTopLevelDetailAST(firstUseVariableDetailAST);
-
-		int statementStartLineNumber = getStartLineNumber(topLevelDetailAST);
+		int statementStartLineNumber = getStartLineNumber(
+			_getTopLevelDetailAST(firstUseVariableDetailAST));
 
 		if (!_isRequiredMethodCall(
 				variableName, classObjectNames, identDetailASTMap,

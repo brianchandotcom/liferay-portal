@@ -315,19 +315,15 @@ public class NpmAnalyzerPluginTest {
 			"/liferay-1.2.4",
 			analyzer.getProperty(NpmAnalyzerPlugin.WEB_CONTEXT_PATH));
 
-		String property = analyzer.getProperty(Constants.PROVIDE_CAPABILITY);
-
 		Assert.assertEquals(
 			"osgi.webresource;osgi.webresource=liferay;" +
 				"version:Version=\"1.2.4\"",
-			property);
-
-		property = analyzer.getProperty(Constants.REQUIRE_CAPABILITY);
+			analyzer.getProperty(Constants.PROVIDE_CAPABILITY));
 
 		Assert.assertEquals(
 			"osgi.webresource;filter:=\"(&(osgi.webresource=liferay)" +
 				"(&(version>=1.0.0)(!(version>=1.1.0))))\"",
-			property);
+			analyzer.getProperty(Constants.REQUIRE_CAPABILITY));
 	}
 
 	@Test

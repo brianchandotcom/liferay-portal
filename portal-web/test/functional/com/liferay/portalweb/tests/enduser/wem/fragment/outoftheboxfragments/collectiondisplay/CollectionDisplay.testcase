@@ -2356,7 +2356,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
-			value1 = "Item Type:Asset");
+			value1 = "Type:Asset");
 
 		for (var field : list "Title,Description,Summary,User Name,Create Date,Modified Date,Expiration Date,View Count,URL,All Categories,Tags") {
 			AssertElementPresent(
@@ -2380,7 +2380,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
-			value1 = "Item Type:Asset");
+			value1 = "Type:Asset");
 
 		for (var field : list "Title,Description,Summary,User Name,Create Date,Modified Date,Expiration Date,View Count,URL,All Categories,Tags") {
 			AssertElementPresent(
@@ -2458,11 +2458,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
-			value1 = "Item Type:Web Content Article");
+			value1 = "Type:Web Content Article");
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SUB_TYPE_LABEL",
-			value1 = "Item Subtype:Basic Web Content");
+			value1 = "Subtype:Basic Web Content");
 
 		PageEditor.editCollectionDisplay(
 			assetListName = "Manual Collection",
@@ -2479,11 +2479,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
-			value1 = "Item Type:Document");
+			value1 = "Type:Document");
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_SUB_TYPE_LABEL",
-			value1 = "Item Subtype:Basic Document");
+			value1 = "Subtype:Basic Document");
 	}
 
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with single itemType, the Item Type label will be shown in mapping panel."
@@ -2566,7 +2566,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
-			value1 = "Item Type:Web Content Article");
+			value1 = "Type:Web Content Article");
 
 		PageEditor.editCollectionDisplay(
 			assetListName = "Second Dynamic Collection",
@@ -2583,7 +2583,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
-			value1 = "Item Type:Blogs Entry");
+			value1 = "Type:Blogs Entry");
 
 		PageEditor.editCollectionDisplay(
 			assetListName = "Manual Collection",
@@ -2600,7 +2600,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TYPE_LABEL",
-			value1 = "Item Type:Document");
+			value1 = "Type:Document");
 	}
 
 	@description = "This is a use case for LPS-114770. The Collection Display can select a manual collection with multiple asset types."

@@ -244,7 +244,7 @@ definition {
 		Accounts.viewAssignee(assigneeName = "edituserfn");
 	}
 
-	@description = "This is a use case for LPS-107598."
+	@description = "This is a use case for LPS-107598 and LPS-129713"
 	@priority = "3"
 	test FilterAccountUserInTheUsersAdminPortlet {
 		ApplicationsMenu.gotoPortlet(
@@ -281,13 +281,13 @@ definition {
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
 
-		LexiconEntry.viewNoEntry(rowEntry = "userac userac");
-
-		ManagementBar.setFilterAndOrder(filterBy = "All");
-
 		LexiconEntry.viewEntryName(rowEntry = "userac userac");
 
+		ManagementBar.setFilterAndOrder(filterBy = "Company Users");
+
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userac userac");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Account Users");
 

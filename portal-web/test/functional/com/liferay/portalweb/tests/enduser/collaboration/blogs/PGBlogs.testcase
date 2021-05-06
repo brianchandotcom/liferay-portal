@@ -776,6 +776,48 @@ definition {
 			value1 = "Select File");
 	}
 
+	@description = "This ensures that the small image can be replaced."
+	@priority = "4"
+	@refactorneeded
+	test CanReplaceSmallImage {
+		BlogsNavigator.openToAddEntry(
+			layoutName = "Blogs Page",
+			siteURLKey = "guest");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addSmallImage(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		Panel.expandPanel(panel = "Configuration");
+
+		BlogsEntry.addSmallImage(
+			browseImage = "true",
+			navTab = "Documents and Media",
+			uploadFileName = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertVisible(
+			key_imageFileName = "Document_2.jpg",
+			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE",
+			value1 = "Document_2.jpg");
+	}
+
 	@description = "This checks that a blog entry that is scheduled is in a pre-publish status in the UI."
 	@priority = "4"
 	@refactordone

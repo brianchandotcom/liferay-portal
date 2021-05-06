@@ -12,6 +12,9 @@ definition {
 		else if ("${contentType}" == "Blogs Entry") {
 			var value = "com.liferay.blogs.model.BlogsEntry";
 		}
+		else if ("${contentType}" == "Category") {
+			var value = "com.liferay.asset.kernel.model.AssetCategory";
+		}
 		else {
 			fail("'value' is either invalid or not yet set.");
 		}

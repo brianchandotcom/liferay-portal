@@ -14,6 +14,9 @@ definition {
 		else if ("${contentType}" == "Blogs Entry") {
 			var classTypeId = "0";
 		}
+		else if ("${contentType}" == "Category") {
+			var classTypeId = "0";
+		}
 		else {
 			if ("${subType}" == "Basic Web Content") {
 				var globalGroupId = JSONGroupAPI._getGroupIdByName(

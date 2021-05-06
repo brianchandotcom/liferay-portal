@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>CRITERION_INPUT_FORM_CONTROL</td>
-	<td>//div[@class='criterion']//*[contains(@data-testid, '${key_criterion}')]</td>
+	<td>//div[@class='criterion']//*[contains(@data-testid, '${key_criterion}') and (contains(@class,'form-control'))] | //div[@class='criterion']//*[contains(@data-testid, '${key_criterion}')]/following-sibling::input[contains(@class,'form-control')]</td>
 	<td></td>
 </tr>
 <tr>

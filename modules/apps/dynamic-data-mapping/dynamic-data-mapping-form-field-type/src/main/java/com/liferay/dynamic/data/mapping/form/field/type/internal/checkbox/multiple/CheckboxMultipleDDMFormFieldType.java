@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.icon=check-circle-full",
 		"ddm.form.field.type.label=checkbox-multiple-field-type-label",
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE,
-		"ddm.form.field.type.scope=app-builder,document-library,forms,journal"
+		"ddm.form.field.type.scope=document-library,forms,journal"
 	},
 	service = DDMFormFieldType.class
 )

@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.icon=radio-button",
 		"ddm.form.field.type.label=radio-field-type-label",
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.RADIO,
-		"ddm.form.field.type.scope=app-builder,document-library,forms,journal"
+		"ddm.form.field.type.scope=document-library,forms,journal"
 	},
 	service = DDMFormFieldType.class
 )

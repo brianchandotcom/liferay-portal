@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=adjust",
 		"ddm.form.field.type.label=fieldset-field-type-label",
 		"ddm.form.field.type.name=" + DDMFormFieldTypeConstants.FIELDSET,
-		"ddm.form.field.type.scope=app-builder,document-library,forms,journal",
+		"ddm.form.field.type.scope=document-library,forms,journal",
 		"ddm.form.field.type.system=true"
 	},
 	service = DDMFormFieldType.class

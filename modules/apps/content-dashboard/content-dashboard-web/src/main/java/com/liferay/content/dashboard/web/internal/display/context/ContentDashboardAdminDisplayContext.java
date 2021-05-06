@@ -66,7 +66,6 @@ import java.util.stream.Stream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
 /**
@@ -214,7 +213,7 @@ public class ContentDashboardAdminDisplayContext {
 			setDesiredItemSelectorReturnTypes(
 				Collections.singletonList(new UUIDItemSelectorReturnType()));
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_itemSelector.getItemSelectorURL(
 				requestBackedPortletURLFactory,
 				_liferayPortletResponse.getNamespace() +
@@ -237,9 +236,7 @@ public class ContentDashboardAdminDisplayContext {
 					String[]::new
 				);
 			}
-		).build();
-
-		return String.valueOf(portletURL);
+		).buildString();
 	}
 
 	public List<? extends ContentDashboardItemType>

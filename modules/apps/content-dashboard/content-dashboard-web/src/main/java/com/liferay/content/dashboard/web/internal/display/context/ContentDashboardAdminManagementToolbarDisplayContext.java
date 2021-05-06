@@ -96,7 +96,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getClearResultsURL() {
-		PortletURL clearResultsURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			getPortletURL()
 		).setKeywords(
 			StringPool.BLANK
@@ -112,9 +112,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 			"scopeId", (String)null
 		).setParameter(
 			"status", WorkflowConstants.STATUS_ANY
-		).build();
-
-		return String.valueOf(clearResultsURL);
+		).buildString();
 	}
 
 	@Override

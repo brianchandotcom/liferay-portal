@@ -13,18 +13,43 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo, useState} from 'react';
 
 import Collapse from '../../../../../common/components/Collapse';
 import PageContent from './PageContent';
 import SearchContents from './SearchContents';
 
 export default function PageContents({pageContents}) {
+	const [searchValue, setSearchValue] = useState('');
+
+	const filteredContents = useMemo(
+		() =>
+			searchValue
+				? Object.entries(pageContents).reduce(
+						(acc, [key, pageContent]) => {
+							const filteredContent = pageContent.filter(
+								(content) =>
+									content.title
+										.toLowerCase()
+										.indexOf(searchValue.toLowerCase()) !==
+									-1
+							);
+
+							return filteredContent.length
+								? {...acc, ...{[key]: filteredContent}}
+								: acc;
+						},
+						{}
+				  )
+				: pageContents,
+		[pageContents, searchValue]
+	);
+
 	return (
 		<>
-			<SearchContents />
+			<SearchContents onChange={setSearchValue} />
 
-			{Object.keys(pageContents).map((type) => (
+			{Object.keys(filteredContents).map((type) => (
 				<Collapse key={type} label={type} open>
 					<ul className="list-unstyled mb-1">
 						{pageContents[type].map((pageContent, index) => (

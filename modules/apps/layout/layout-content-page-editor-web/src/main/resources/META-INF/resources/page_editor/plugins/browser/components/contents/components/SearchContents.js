@@ -20,7 +20,7 @@ import SearchForm from '../../../../../common/components/SearchForm';
 
 const ALL_CONTENT_LABEL = Liferay.Language.get('all-content');
 
-export default function SearchContents() {
+export default function SearchContents({onChange}) {
 	const [active, setActive] = useState(false);
 	const [selectedOption, setSelectedOption] = useState(ALL_CONTENT_LABEL);
 
@@ -30,7 +30,7 @@ export default function SearchContents() {
 				{Liferay.Language.get('content-filtering-help')}
 			</p>
 
-			<SearchForm className="mb-2" onChange={() => {}} />
+			<SearchForm className="mb-2" onChange={onChange} />
 
 			<ClayDropDown
 				active={active}

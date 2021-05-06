@@ -26,6 +26,8 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectDefinitionLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectEntryPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,19 +39,17 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Marco Leo
@@ -152,19 +152,17 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void deployObjectDefinition(ObjectDefinition objectDefinition) {
-		for (Map.Entry
-				<ObjectDefinitionDeployer,
-				 Map<Long, List<ServiceRegistration<?>>>> entry :
-					_serviceRegistrationsMapMap.entrySet()) {
+		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-			ObjectDefinitionDeployer objectDefinitionDeployer = entry.getKey();
-			Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
-				entry.getValue();
+		for (ObjectDefinitionDeployer objectDefinitionDeployer :
+				_serviceTrackerList) {
 
-			serviceRegistrationsMap.computeIfAbsent(
-				objectDefinition.getObjectDefinitionId(),
-				key -> objectDefinitionDeployer.deploy(objectDefinition));
+			serviceRegistrations.addAll(
+				objectDefinitionDeployer.deploy(objectDefinition));
 		}
+
+		_serviceRegistrationsMap.put(
+			objectDefinition.getObjectDefinitionId(), serviceRegistrations);
 	}
 
 	@Override
@@ -184,113 +182,42 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void undeployObjectDefinition(long objectDefinitionId) {
-		for (Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap :
-				_serviceRegistrationsMapMap.values()) {
+		List<ServiceRegistration<?>> serviceRegistrations =
+			_serviceRegistrationsMap.remove(objectDefinitionId);
 
-			List<ServiceRegistration<?>> serviceRegistrations =
-				serviceRegistrationsMap.remove(objectDefinitionId);
+		if (serviceRegistrations != null) {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
 
-			if (serviceRegistrations != null) {
-				for (ServiceRegistration<?> serviceRegistration :
-						serviceRegistrations) {
-
-					serviceRegistration.unregister();
-				}
+				serviceRegistration.unregister();
 			}
 		}
 	}
 
 	@Override
 	public void undeployObjectDefinitions() {
-		for (Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap :
-				_serviceRegistrationsMapMap.values()) {
+		for (List<ServiceRegistration<?>> serviceRegistrations :
+				_serviceRegistrationsMap.values()) {
 
-			for (List<ServiceRegistration<?>> serviceRegistrations :
-					serviceRegistrationsMap.values()) {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
 
-				for (ServiceRegistration<?> serviceRegistration :
-						serviceRegistrations) {
-
-					serviceRegistration.unregister();
-				}
+				serviceRegistration.unregister();
 			}
-
-			serviceRegistrationsMap.clear();
 		}
+
+		_serviceRegistrationsMap.clear();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_objectDefinitionDeployerServiceTracker = new ServiceTracker<>(
-			bundleContext, ObjectDefinitionDeployer.class,
-			new ServiceTrackerCustomizer
-				<ObjectDefinitionDeployer, ObjectDefinitionDeployer>() {
-
-				@Override
-				public ObjectDefinitionDeployer addingService(
-					ServiceReference<ObjectDefinitionDeployer>
-						serviceReference) {
-
-					ObjectDefinitionDeployer objectDefinitionDeployer =
-						bundleContext.getService(serviceReference);
-
-					Map<Long, List<ServiceRegistration<?>>>
-						serviceRegistrationsMap = new ConcurrentHashMap<>();
-
-					List<ObjectDefinition> objectDefinitions =
-						objectDefinitionPersistence.findAll();
-
-					for (ObjectDefinition objectDefinition :
-							objectDefinitions) {
-
-						serviceRegistrationsMap.put(
-							objectDefinition.getObjectDefinitionId(),
-							objectDefinitionDeployer.deploy(objectDefinition));
-					}
-
-					_serviceRegistrationsMapMap.put(
-						objectDefinitionDeployer, serviceRegistrationsMap);
-
-					return objectDefinitionDeployer;
-				}
-
-				@Override
-				public void modifiedService(
-					ServiceReference<ObjectDefinitionDeployer> serviceReference,
-					ObjectDefinitionDeployer objectDefinitionDeployer) {
-				}
-
-				@Override
-				public void removedService(
-					ServiceReference<ObjectDefinitionDeployer> serviceReference,
-					ObjectDefinitionDeployer objectDefinitionDeployer) {
-
-					Map<Long, List<ServiceRegistration<?>>>
-						serviceRegistrationsMap =
-							_serviceRegistrationsMapMap.remove(
-								objectDefinitionDeployer);
-
-					for (List<ServiceRegistration<?>> serviceRegistrations :
-							serviceRegistrationsMap.values()) {
-
-						for (ServiceRegistration<?> serviceRegistration :
-								serviceRegistrations) {
-
-							serviceRegistration.unregister();
-						}
-					}
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
-
-		_objectDefinitionDeployerServiceTracker.open();
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, ObjectDefinitionDeployer.class);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_objectDefinitionDeployerServiceTracker.close();
+		_serviceTrackerList.close();
 	}
 
 	private void _createTable(
@@ -347,9 +274,6 @@ public class ObjectDefinitionLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionLocalServiceImpl.class);
 
-	private ServiceTracker<ObjectDefinitionDeployer, ObjectDefinitionDeployer>
-		_objectDefinitionDeployerServiceTracker;
-
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
@@ -362,9 +286,11 @@ public class ObjectDefinitionLocalServiceImpl
 	@Reference
 	private ObjectFieldPersistence _objectFieldPersistence;
 
-	private final Map
-		<ObjectDefinitionDeployer, Map<Long, List<ServiceRegistration<?>>>>
-			_serviceRegistrationsMapMap = new ConcurrentHashMap<>();
+	private final Map<Long, List<ServiceRegistration<?>>>
+		_serviceRegistrationsMap = new HashMap<>();
+	private ServiceTrackerList
+		<ObjectDefinitionDeployer, ObjectDefinitionDeployer>
+			_serviceTrackerList;
 
 	@Reference
 	private UserLocalService _userLocalService;

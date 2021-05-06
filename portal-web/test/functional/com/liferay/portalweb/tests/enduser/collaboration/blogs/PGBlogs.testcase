@@ -730,6 +730,45 @@ definition {
 			value1 = "custom-url");
 	}
 
+	@description = "This ensures that the cover image can be removed from the blog entry."
+	@priority = "4"
+	@refactorneeded
+	test CanRemoveCoverImageFromEntry {
+		Blogs.addEntryWithUploadedCoverImage(
+			coverImageName = "Document_1",
+			entryContent = "Blogs Entry Content",
+			entrySubtitle = "Blogs Entry Subtitle",
+			entryTitle = "Blogs Entry Title",
+			navTab = "Blog Images",
+			uploadFileName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		BlogsEntry.removeCoverImage(coverImageName = "Document_1.jpg");
+
+		PortletEntry.publish();
+
+		BlogsNavigator.openToEditEntryInSite(
+			entryTitle = "Blogs Entry Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		AssertElementNotPresent(
+			key_coverImageName = "Document_1.jpg",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		AssertElementNotPresent(
+			key_uploadFileName = "Document_1.jpg",
+			locator1 = "BlogsEntry#ENTRY_COVER_IMAGE");
+	}
+
 	@description = "This is a usecase for LPS-83229. This is the only small image test for blogs."
 	@priority = "5"
 	@refactordone

@@ -50,16 +50,34 @@ import java.util.Map;
 public abstract class CMISRepositoryHandler
 	extends BaseRepositoryImpl implements Capability {
 
-	@Override
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, String, String, String,
+	 *             String, String, InputStream, long, ServiceContext)}
+	 */
+	@Deprecated
 	public FileEntry addFileEntry(
 			long userId, long folderId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addFileEntry(
+			null, userId, folderId, sourceFileName, mimeType, title,
+			description, changeLog, inputStream, size, serviceContext);
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream inputStream,
+			long size, ServiceContext serviceContext)
+		throws PortalException {
+
 		return _baseCmisRepository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, inputStream, size, serviceContext);
+			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
+			title, description, changeLog, inputStream, size, serviceContext);
 	}
 
 	@Override

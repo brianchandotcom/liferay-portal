@@ -59,15 +59,17 @@ public abstract class BaseRepositoryImpl
 
 	@Override
 	public FileEntry addFileEntry(
-			long userId, long folderId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog, File file,
+			String externalReferenceCode, long userId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		try (InputStream inputStream = new FileInputStream(file)) {
 			return addFileEntry(
-				userId, folderId, sourceFileName, mimeType, title, description,
-				changeLog, inputStream, file.length(), serviceContext);
+				externalReferenceCode, userId, folderId, sourceFileName,
+				mimeType, title, description, changeLog, inputStream,
+				file.length(), serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);

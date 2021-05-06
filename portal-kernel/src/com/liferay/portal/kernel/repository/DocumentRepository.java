@@ -38,40 +38,18 @@ import java.util.List;
 public interface DocumentRepository extends CapabilityProvider {
 
 	public FileEntry addFileEntry(
-			long userId, long folderId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog, File file,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public FileEntry addFileEntry(
-			long userId, long folderId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
-			InputStream inputStream, long size, ServiceContext serviceContext)
-		throws PortalException;
-
-	public default FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws PortalException;
 
-		return addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, file, serviceContext);
-	}
-
-	public default FileEntry addFileEntry(
+	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream inputStream,
 			long size, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, inputStream, size, serviceContext);
-	}
+		throws PortalException;
 
 	public FileShortcut addFileShortcut(
 			long userId, long folderId, long toFileEntryId,

@@ -3152,7 +3152,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		String sourceFileName = DLAppUtil.getSourceFileName(latestFileVersion);
 
 		FileEntry destinationFileEntry = toRepository.addFileEntry(
-			getUserId(), newFolderId, sourceFileName,
+			null, getUserId(), newFolderId, sourceFileName,
 			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
 			latestFileVersion.getDescription(), StringPool.BLANK,
 			latestFileVersion.getContentStream(false),

@@ -1,0 +1,20 @@
+if (ctx._source.containsKey("slaResults")) {
+	ctx._source.slaResults.removeIf(
+		slaResult -> slaResult.slaDefinitionId == params.slaDefinitionId);
+
+	def slaStatus = "Untracked";
+
+	for (slaResult in ctx._source.slaResults) {
+		if (!slaResult.status.equals("NEW")) {
+			if (!slaResult.onTime) {
+				slaStatus = "Overdue";
+
+				break;
+			}
+
+			slaStatus = "OnTime";
+		}
+	}
+
+	ctx._source.slaStatus = slaStatus;
+}

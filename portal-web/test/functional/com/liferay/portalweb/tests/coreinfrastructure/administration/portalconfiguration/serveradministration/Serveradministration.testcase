@@ -23,15 +23,12 @@ definition {
 			out.println(PropsUtil.get(PropsKeys.${propsKey}));
 		''';
 
-		for (var propsKey : list "LIFERAY_LIB_GLOBAL_DIR,LIFERAY_LIB_PORTAL_DIR,LIFERAY_WEB_PORTAL_DIR") {
+		for (var propsKey : list "LIFERAY_LIB_PORTAL_DIR,LIFERAY_WEB_PORTAL_DIR") {
 			ServerAdministration.executeScript(
 				language = "Groovy",
 				script = "${script}");
 
-			if ("${propsKey}" == "LIFERAY_LIB_GLOBAL_DIR") {
-				var dirName = PropsUtil.get("liferay.app.server.global.lib.dir");
-			}
-			else if ("${propsKey}" == "LIFERAY_LIB_PORTAL_DIR") {
+			if ("${propsKey}" == "LIFERAY_LIB_PORTAL_DIR") {
 				var dirName = PropsUtil.get("liferay.app.server.portal.lib.dir");
 			}
 			else {

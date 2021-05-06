@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -167,10 +168,20 @@ public class JournalArticleCTDisplayRenderer
 
 		Locale locale = displayBuilder.getLocale();
 
+		DisplayContext<JournalArticle> displayContext =
+			displayBuilder.getDisplayContext();
+
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		JournalArticleDisplay journalArticleDisplay =
 			_journalContent.getDisplay(
 				journalArticle, "", "", _language.getLanguageId(locale), 1,
-				null, displayBuilder.getThemeDisplay());
+				null, themeDisplay);
 
 		displayBuilder.display(
 			"name", journalArticle.getTitle(locale)

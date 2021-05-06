@@ -173,11 +173,11 @@ const Autocomplete = ({
 	syncDelay,
 	value: initialValue,
 }) => {
-	const inputRef = useRef(null);
-	const itemListRef = useRef(null);
 	const [selectedItem, setSelectedItem] = useState(false);
 	const [value, setValue] = useSyncValue(initialValue, syncDelay);
 	const [visible, setVisible] = useState(false);
+	const inputRef = useRef(null);
+	const itemListRef = useRef(null);
 
 	const escapeChars = (string) =>
 		string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');

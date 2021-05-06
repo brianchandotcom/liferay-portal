@@ -1,9 +1,0 @@
-apiDir: "../app-builder-rest-api/src/main/java"
-apiPackagePath: "com.liferay.app.builder.rest"
-application:
-    baseURI: "/app-builder"
-    className: "AppBuilderRESTApplication"
-    name: "Liferay.App.Builder.REST"
-author: "Gabriel Albuquerque"
-clientDir: "../app-builder-rest-client/src/main/java"
-testDir: "../app-builder-rest-test/src/testIntegration/java"

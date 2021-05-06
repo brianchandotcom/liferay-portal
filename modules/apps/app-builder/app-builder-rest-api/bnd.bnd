@@ -1,6 +1,0 @@
-Bundle-Name: Liferay App Builder REST API
-Bundle-SymbolicName: com.liferay.app.builder.rest.api
-Bundle-Version: 5.0.1
-Export-Package:\
-	com.liferay.app.builder.rest.dto.v1_0,\
-	com.liferay.app.builder.rest.resource.v1_0

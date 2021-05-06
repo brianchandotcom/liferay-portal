@@ -1,7 +1,0 @@
-Bundle-Name: Liferay App Builder Service
-Bundle-SymbolicName: com.liferay.app.builder.service
-Bundle-Version: 2.0.4
-Liferay-Require-SchemaVersion: 2.2.0
-Liferay-Service: true
-Web-ContextPath: /app-builder-service
--dsannotations-options: inherit

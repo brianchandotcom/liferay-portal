@@ -1,6 +1,0 @@
-Bundle-Name: Liferay App Builder Workflow REST API
-Bundle-SymbolicName: com.liferay.app.builder.workflow.rest.api
-Bundle-Version: 4.0.1
-Export-Package:\
-	com.liferay.app.builder.workflow.rest.dto.v1_0,\
-	com.liferay.app.builder.workflow.rest.resource.v1_0

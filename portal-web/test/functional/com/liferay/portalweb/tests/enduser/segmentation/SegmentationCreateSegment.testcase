@@ -1182,6 +1182,61 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a use case for LPS-131815"
+	@priority = "5"
+	test SegmentationCheckSpecialCharacters {
+		property portal.acceptance = "true";
+
+		JSONUser.addUser(
+			userEmailAddress = "u1@liferay.com",
+			userFirstName = "User",
+			jobTitle = "# Mkt+ /",
+			userLastName = "1&",
+			userScreenName = "u1"
+			);
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.fillTitle(titleField = "Segment With Special Characters");
+
+		Segmentation.addProperties(propertyOption = "Job Title");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(propertyField = "#");
+
+		AssertTextEquals(
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "1 Member");
+
+		Segmentation.fillProperty(propertyField = "/");
+
+		AssertTextEquals(
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "1 Member");
+
+		Segmentation.viewMembers(memberName = "User 1");
+
+		Segmentation.deleteProperties();
+
+		Segmentation.addProperties(propertyOption = "Last Name");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(propertyField = "&");
+
+		AssertTextEquals(
+			locator1 = "Segmentation#MEMBERS_MATCHED",
+			value1 = "1 Member");
+
+		Segmentation.viewMembers(memberName = "User 1");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+	}
+
 	@description = "This is a use case for LPS-103516."
 	@priority = "5"
 	test ViewSegmentFieldsType {

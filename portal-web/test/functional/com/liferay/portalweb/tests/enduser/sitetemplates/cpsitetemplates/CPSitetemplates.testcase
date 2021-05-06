@@ -638,6 +638,10 @@ definition {
 
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
+		Click(
+			key_url = "site-configuration-pages",
+			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
 		AssertAlertNotPresent();
 
 		var actualScript = '''<script>alert(123);</script>''';

@@ -17,12 +17,15 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
 import SearchForm from '../../../../../common/components/SearchForm';
+import {CONTENT_TYPE_LABELS} from './PageContents';
 
-const ALL_CONTENT_LABEL = Liferay.Language.get('all-content');
-
-export default function SearchContents({onChange}) {
+export default function SearchContents({
+	contentTypes,
+	onChangeInput,
+	onChangeSelect,
+	selectedType,
+}) {
 	const [active, setActive] = useState(false);
-	const [selectedOption, setSelectedOption] = useState(ALL_CONTENT_LABEL);
 
 	return (
 		<div className="page-editor__page-contents__content-filter">
@@ -30,7 +33,7 @@ export default function SearchContents({onChange}) {
 				{Liferay.Language.get('content-filtering-help')}
 			</p>
 
-			<SearchForm className="mb-2" onChange={onChange} />
+			<SearchForm className="mb-2" onChange={onChangeInput} />
 
 			<ClayDropDown
 				active={active}
@@ -43,22 +46,33 @@ export default function SearchContents({onChange}) {
 						small
 						type="button"
 					>
-						<span>{selectedOption}</span>
+						<span>{selectedType}</span>
 					</ClayButton>
 				}
 			>
 				<ClayDropDown.ItemList>
-					<ClayDropDown.Item
-						onClick={() => setSelectedOption(ALL_CONTENT_LABEL)}
-						symbolRight={
-							selectedOption === ALL_CONTENT_LABEL
-								? 'check'
-								: undefined
-						}
-					>
-						{ALL_CONTENT_LABEL}
-					</ClayDropDown.Item>
-					<ClayDropDown.Divider />
+					{contentTypes?.map((type) => (
+						<React.Fragment key={type}>
+							{type === CONTENT_TYPE_LABELS.inlineText && (
+								<ClayDropDown.Divider />
+							)}
+							<ClayDropDown.Item
+								onClick={() => {
+									onChangeSelect(type);
+									setActive(false);
+								}}
+								symbolRight={
+									selectedType === type ? 'check' : undefined
+								}
+							>
+								{type}
+							</ClayDropDown.Item>
+							{[
+								CONTENT_TYPE_LABELS.allContent,
+								CONTENT_TYPE_LABELS.collection,
+							].includes(type) && <ClayDropDown.Divider />}
+						</React.Fragment>
+					))}
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 		</div>

@@ -236,6 +236,22 @@ definition {
 			locator1 = "Publications#MANGE_PUBLICATIONS_NAVBAR_TITLE");
 	}
 
+	macro gotoViewChangeDiff {
+		var key_changeCategory = "${changeCategory}";
+		var key_changeTitle = "${changeTitle}";
+
+		if (isSet(changeOrder)) {
+			var changeOrder = "${changeOrder}";
+		}
+		else {
+			var changeOrder = "1";
+		}
+
+		Click(
+			locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_TITLE",
+			value1 = "${changeTitle}");
+	}
+
 	macro gotoViewDiffInConflictingPublications {
 		Click(
 			key_entryTitle = "${entryTitle}",

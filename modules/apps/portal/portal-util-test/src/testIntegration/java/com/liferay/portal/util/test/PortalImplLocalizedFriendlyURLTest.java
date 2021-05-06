@@ -638,12 +638,6 @@ public class PortalImplLocalizedFriendlyURLTest {
 		mockHttpServletRequestWrapper.setPathInfo(
 			group.getFriendlyURL() + layoutFriendlyURL);
 
-		String groupServletMapping = _PUBLIC_GROUP_SERVLET_MAPPING;
-
-		if (layout.isPrivateLayout()) {
-			groupServletMapping = _PRIVATE_GROUP_SERVLET_MAPPING;
-		}
-
 		String i18nPathLanguageId = _portal.getI18nPathLanguageId(
 			locale, StringPool.BLANK);
 
@@ -652,7 +646,8 @@ public class PortalImplLocalizedFriendlyURLTest {
 		mockHttpServletRequest.setRequestURI(i18nPath + layoutFriendlyURL);
 
 		mockHttpServletRequestWrapper.setRequestURI(
-			groupServletMapping + group.getFriendlyURL() + layoutFriendlyURL);
+			_PRIVATE_GROUP_SERVLET_MAPPING + group.getFriendlyURL() +
+				layoutFriendlyURL);
 
 		Assert.assertEquals(
 			i18nPath.concat(expectedLayoutFriendlyURL),

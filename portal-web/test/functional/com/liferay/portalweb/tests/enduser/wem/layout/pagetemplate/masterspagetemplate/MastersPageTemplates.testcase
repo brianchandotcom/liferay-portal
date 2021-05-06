@@ -1225,7 +1225,7 @@ definition {
 
 		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
-		for (var fragmentName : list "Button,Card,Heading,HTML,Image,Paragraph,Separator,Slider,Social,Spacer,Video") {
+		for (var fragmentName : list "Button,Card,Heading,HTML,Image,Paragraph,Separator,Slider,Social,Spacer,Video URL") {
 			AssertVisible(
 				key_collectionName = "Basic Components",
 				key_fragmentName = "${fragmentName}",

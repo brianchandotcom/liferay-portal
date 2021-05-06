@@ -411,13 +411,61 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130283."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationTag {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130283 AddSegmentByOrganizationTag pending implementation. This test is already created as EditSegmentUserByOrganizationTag, but if you are able to do it better, delete the test EditSegmentUserByOrganizationTag.
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.editOrganizationCP(orgName = "organization Name");
+
+		AssetCategorization.addTag(tagName = "tagName");
+
+		PortletEntry.save();
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Tag");
+
+		Segmentation.fillProperty(tagName = "tagname");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationTag Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByOrganizationTag Test");
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "tagname");
 	}
 
 	@description = "This is a test for LPS-130280."
@@ -470,6 +518,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130345 AddSegmentByOtherSegments pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130346."

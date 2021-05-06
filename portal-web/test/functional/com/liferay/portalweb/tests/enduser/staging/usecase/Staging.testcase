@@ -71,9 +71,7 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		JSONStaging.enableLocalStaging(
-			globalSite = "true",
-			groupName = "Global");
+		JSONStaging.enableLocalStaging(groupName = "Global");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 

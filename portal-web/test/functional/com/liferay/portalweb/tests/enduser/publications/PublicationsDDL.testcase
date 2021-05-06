@@ -440,7 +440,7 @@ definition {
 			ddlListName = "List Name");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text Field",
+			ddlRecordFieldData = "Record Text",
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
@@ -476,7 +476,7 @@ definition {
 		DDLRecord.editCP(
 			ddlDataDefinitionName = "Data Definition",
 			ddlListName = "List Name",
-			ddlRecordFieldData = "Text Field");
+			ddlRecordFieldData = "Record Text");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Record Text Edited",
@@ -509,6 +509,39 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name Edit",
+			groupName = "Guest");
+
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Dynamic Data Lists Record",
+			changeDescription = "Test Test modified a Dynamic Data Lists Record in Guest",
+			changeTitle = "${changeTitle}");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Lists Record",
+			changeSite = "Guest",
+			changeTitle = "${changeTitle}",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		Publications.gotoViewChangeDiff(
+			changeCategory = "Dynamic Data Lists Record",
+			changeTitle = "${changeTitle}");
+
+		PublicationsChanges.viewDDLRecordChangeDiff(
+			diffAddedValue = "Edit",
+			fieldName = "Text",
+			fieldValueInProduction = "Record Text",
+			fieldValueInPublication = "Record Text Edited",
+			publicationName = "Publication Name");
+
+		PublicationsChanges.viewDDLRecordChangeDiff(
+			diffAddedValue = "3/30/21",
+			fieldName = "Date",
+			fieldValueInPublication = "3/30/21",
+			publicationName = "Publication Name");
+
 		// Workaround LPS-129885
 
 		/*PublicationsChanges.viewChangesViaChangesStyle(
@@ -533,24 +566,6 @@ definition {
 			changeTitle = "Data Definition",
 			changeType = "Modified",
 			changeUser = "Test Test",
-			showAllItems = "true");
-
-		var changeTitle = JSONDDL.getRecordId(
-			ddlListName = "List Name Edit",
-			groupName = "Guest");
-
-		PublicationsChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Lists Record",
-			changeSite = "Guest",
-			changeTitle = "${changeTitle}",
-			changeType = "Modified",
-			changeUser = "Test Test",
-			showAllItems = "true");
-
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Dynamic Data Lists Record",
-			changeDescription = "Test Test modified a Dynamic Data Lists Record in Guest",
-			changeTitle = "${changeTitle}",
 			showAllItems = "true");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");

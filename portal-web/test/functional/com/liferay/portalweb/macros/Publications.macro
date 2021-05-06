@@ -494,7 +494,7 @@ definition {
 			locator1 = "Publications#CONFLICTING_CHANGES_SUCCESS_CONTENT");
 	}
 
-		macro viewChangeDiff {
+	macro viewChangeDiff {
 		AssertTextEquals(
 			key_displayItem = "Unified",
 			locator1 = "Publications#CURRENT_DIFF_DISPLAY_ITEM",

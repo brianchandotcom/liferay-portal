@@ -270,6 +270,23 @@ export default ({
 	const [showModal, setShowModal] = useState(false);
 	const [updatedRoles, setUpdatedRoles] = useState({});
 
+	const {
+		refetch: collaboratorsRefetch,
+		resource: collaboratorsResource,
+	} = useResource({
+		fetchOptions: {
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			method: 'GET',
+		},
+		fetchRetry: {
+			attempts: 0,
+		},
+		link: getCollaboratorsURL,
+	});
+
+	const collaborators = collaboratorsResource;
+
 	const updateRole = (role, user) => {
 		setNavigation(NAVIGATION_EDIT_ROLES);
 
@@ -278,10 +295,32 @@ export default ({
 		const keys = Object.keys(updatedRoles);
 
 		for (let i = 0; i < keys.length; i++) {
-			json[keys[i]] = updatedRoles[keys[i]];
+			if (keys[i] !== user.userId.toString()) {
+				json[keys[i]] = updatedRoles[keys[i]];
+			}
 		}
 
-		json[user.userId.toString()] = role;
+		let savedRoleId = null;
+
+		if (collaborators) {
+			for (let i = 0; i < collaborators.length; i++) {
+				if (collaborators[i].userId === user.userId) {
+					savedRoleId = collaborators[i].roleId;
+
+					break;
+				}
+			}
+		}
+
+		if (
+			savedRoleId !== role.id ||
+			!Object.prototype.hasOwnProperty.call(
+				updatedRoles,
+				user.userId.toString()
+			)
+		) {
+			json[user.userId.toString()] = role;
+		}
 
 		setUpdatedRoles(json);
 	};
@@ -299,17 +338,6 @@ export default ({
 	const [selectedRole, setSelectedRole] = useState(defaultRole);
 
 	const emailValidationInProgress = useRef(false);
-
-	const resetForm = () => {
-		setEmailAddressErrorMessages([]);
-		setMultiSelectValue('');
-		setNavigation(null);
-		setSelectedItems([]);
-		setSelectedRole(defaultRole);
-		setUpdatedRoles({});
-
-		emailValidationInProgress.current = false;
-	};
 
 	const {observer, onClose} = useModal({
 		onClose: () => {
@@ -331,6 +359,17 @@ export default ({
 		const emailRegex = /.+@.+\..+/i;
 
 		return emailRegex.test(email);
+	};
+
+	const resetForm = () => {
+		setEmailAddressErrorMessages([]);
+		setMultiSelectValue('');
+		setNavigation(null);
+		setSelectedItems([]);
+		setSelectedRole(defaultRole);
+		setUpdatedRoles({});
+
+		emailValidationInProgress.current = false;
 	};
 
 	const showNotification = (message, error) => {
@@ -536,23 +575,6 @@ export default ({
 
 	const autocompleteUsers = autocompleteResource;
 
-	const {
-		refetch: collaboratorsRefetch,
-		resource: collaboratorsResource,
-	} = useResource({
-		fetchOptions: {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		},
-		fetchRetry: {
-			attempts: 0,
-		},
-		link: getCollaboratorsURL,
-	});
-
-	const collaborators = collaboratorsResource;
-
 	const renderCollaborators = () => {
 		if (
 			navigation === NAVIGATION_INVITE_USERS ||
@@ -730,7 +752,11 @@ export default ({
 	const renderSubmit = () => {
 		if (navigation === NAVIGATION_EDIT_ROLES) {
 			return (
-				<ClayButton displayType="primary" type="submit">
+				<ClayButton
+					disabled={Object.keys(updatedRoles).length === 0}
+					displayType="primary"
+					type="submit"
+				>
 					{Liferay.Language.get('save')}
 				</ClayButton>
 			);

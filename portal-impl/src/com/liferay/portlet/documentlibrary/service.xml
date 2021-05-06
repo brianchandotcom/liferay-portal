@@ -66,13 +66,13 @@
 		<column name="fileEntryTypeId" type="long" />
 		<column change-tracking-resolution-type="merge" name="version" type="String" />
 		<column name="size" type="long" />
+		<column name="expirationDate" type="Date" />
+		<column name="reviewDate" type="Date" />
 		<column name="smallImageId" type="long" />
 		<column name="largeImageId" type="long" />
 		<column name="custom1ImageId" type="long" />
 		<column name="custom2ImageId" type="long" />
 		<column name="manualCheckInRequired" type="boolean" />
-		<column name="expirationDate" type="Date" />
-		<column name="reviewDate" type="Date" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

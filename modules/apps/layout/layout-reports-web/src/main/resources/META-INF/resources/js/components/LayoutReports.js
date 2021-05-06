@@ -87,6 +87,7 @@ export default function LayoutReports({
 	);
 
 	const [percentage, setPercentage] = useState(0);
+	const [selectedLanguageId, setSelectedLanguageId] = useState(null);
 
 	useEffect(() => {
 		if (loading && !error) {
@@ -150,6 +151,27 @@ export default function LayoutReports({
 		}
 	}, [eventTriggered, data, layoutReportsDataURL, getData]);
 
+	const onLanguageChange = (languageId) => {
+		setPercentage(0);
+		setSelectedLanguageId(languageId);
+
+		safeDispatch({
+			data: {
+				...data,
+				layoutReportsIssues: null,
+			},
+			loading: true,
+			type: 'SET_DATA',
+		});
+
+		loadIssues({
+			data,
+			dispatch: safeDispatch,
+			languageId,
+			portletNamespace,
+		});
+	};
+
 	return (
 		<>
 			{data?.validConnection &&
@@ -187,6 +209,8 @@ export default function LayoutReports({
 							<BasicInformation
 								canonicalURLs={data.canonicalURLs}
 								defaultLanguageId={data.defaultLanguageId}
+								onLanguageChange={onLanguageChange}
+								selectedLanguageId={selectedLanguageId}
 							/>
 
 							{data.validConnection &&

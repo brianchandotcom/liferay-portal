@@ -1708,7 +1708,13 @@ definition {
 
 	macro editLayoutContainer {
 		var key_elementType = "Container";
-		var key_position = "1";
+
+		if (!(isSet(position))) {
+			var key_position = "1";
+		}
+		else {
+			var key_position = "${position}";
+		}
 
 		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
 			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");

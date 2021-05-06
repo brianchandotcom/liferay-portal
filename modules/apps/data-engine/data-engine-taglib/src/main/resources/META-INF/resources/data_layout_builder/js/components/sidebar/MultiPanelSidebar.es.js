@@ -12,18 +12,16 @@
  * details.
  */
 
-import './MultiPanelSidebar.scss';
-
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted, useStateSafe} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import useLoad from '../../hooks/useLoad.es';
 
-const {useEffect} = React;
+import './MultiPanelSidebar.scss';
 
 const CLASSNAME_INDICATORS = [
 	'.change-tracking-indicator',
@@ -84,78 +82,35 @@ export default function MultiPanelSidebar({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMounted, load]);
 
-	const changeAlertClassName = (styleName) => {
-		const formBuilderMessage = document.querySelector(
-			'.data-engine-form-builder-messages'
-		);
-
-		if (formBuilderMessage) {
-			const className = formBuilderMessage.className;
-
-			formBuilderMessage.className = className.replace(
-				formBuilderMessage.className,
-				styleName
-			);
-		}
-	};
-
 	useEffect(() => {
-		const sideNavigation = Liferay.SideNavigation.instance(
+		const productMenu = Liferay.SideNavigation.instance(
 			document.querySelector('.product-menu-toggle')
 		);
 
-		if (sideNavigation) {
-			const onCloseSidebar = () => {
-				if (open) {
-					changeAlertClassName('data-engine-form-builder-messages');
-				}
+		if (productMenu) {
 
-				onChange({
-					sidebarOpen: false,
-					sidebarPanelId: null,
-				});
-			};
+			// Close product menu whenever sidebarOpen becomes true
 
-			if (sideNavigation.visible()) {
-				onCloseSidebar();
+			if (open) {
+				productMenu.hide();
 			}
 
-			const sideNavigationListener = sideNavigation.on(
+			// Add listener on product menu to turn sidebarOpen false if opened
+
+			const sideNavigationListener = productMenu.on(
 				'openStart.lexicon.sidenav',
-				onCloseSidebar
+				() => onChange({sidebarOpen: false})
 			);
 
-			return () => {
-				sideNavigationListener.removeListener();
-			};
+			return () => sideNavigationListener.removeListener();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [open]);
+	}, [onChange, open]);
 
-	const handleClick = (panel) => {
-		const isOpen = panel.sidebarPanelId === currentPanelId ? !open : true;
-		const productMenuToggle = document.querySelector(
-			'.product-menu-toggle'
-		);
-
-		if (productMenuToggle && !open) {
-			Liferay.SideNavigation.hide(productMenuToggle);
-		}
-
-		if (isOpen) {
-			changeAlertClassName(
-				'data-engine-form-builder-messages data-engine-form-builder-messages--collapsed'
-			);
-		}
-		else {
-			changeAlertClassName('data-engine-form-builder-messages');
-		}
-
+	const handlePanelClick = ({sidebarPanelId}) =>
 		onChange({
-			sidebarOpen: isOpen,
-			sidebarPanelId: panel.sidebarPanelId,
+			sidebarOpen: sidebarPanelId !== currentPanelId || !open,
+			sidebarPanelId,
 		});
-	};
 
 	return (
 		<div
@@ -223,7 +178,9 @@ export default function MultiPanelSidebar({
 											data-tooltip-align="left"
 											displayType="unstyled"
 											id={panel.sidebarPanelId}
-											onClick={() => handleClick(panel)}
+											onClick={() =>
+												handlePanelClick(panel)
+											}
 											onFocus={prefetch}
 											onMouseEnter={prefetch}
 											symbol={icon}
@@ -257,10 +214,7 @@ export default function MultiPanelSidebar({
 							block
 							displayType="secondary"
 							onClick={() => {
-								onChange({
-									sidebarOpen: false,
-									sidebarPanelId: panels[0] && panels[0][0],
-								});
+								onChange({sidebarOpen: false});
 								setHasError(false);
 							}}
 							small

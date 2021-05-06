@@ -31,15 +31,14 @@ import DragLayer from '../js/drag-and-drop/DragLayer.es';
 import {getItem} from '../js/utils/client.es';
 import {EVENT_TYPES} from './eventTypes';
 
-const SIDEBAR_INITIAL_STATE = {
-	sidebarOpen: false,
-	sidebarPanelId: 'fields',
-};
-
 export const FormBuilder = () => {
 	const dispatch = useForm();
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
-	const {rules, sidebarPanels: initialSidebarPanels} = useFormState();
+	const {
+		focusedField,
+		rules,
+		sidebarPanels: initialSidebarPanels,
+	} = useFormState();
 
 	const {
 		allowFieldSets,
@@ -48,7 +47,10 @@ export const FormBuilder = () => {
 		portletNamespace,
 	} = useConfig();
 
-	const [sidebarState, setSidebarState] = useState(SIDEBAR_INITIAL_STATE);
+	const [{sidebarOpen, sidebarPanelId}, setSidebarState] = useState({
+		sidebarOpen: false,
+		sidebarPanelId: 'fields',
+	});
 
 	const {panels, sidebarPanels, sidebarVariant} = useMemo(
 		() =>
@@ -103,12 +105,41 @@ export const FormBuilder = () => {
 		}
 	}, [allowFieldSets, contentType, dispatch, groupId]);
 
+	/**
+	 * Adjusts alert messages size according to sidebarOpen state
+	 */
+	useEffect(() => {
+		const alerts = document.querySelector(
+			'.data-engine-form-builder-messages'
+		);
+
+		if (alerts) {
+			alerts.className = classNames('data-engine-form-builder-messages', {
+				'data-engine-form-builder-messages--collapsed': sidebarOpen,
+			});
+		}
+	}, [sidebarOpen]);
+
+	/**
+	 * Opens the sidebar whenever a field is focused
+	 */
+	useEffect(() => {
+		const hasFocusedField = Object.keys(focusedField).length > 0;
+
+		if (hasFocusedField) {
+			setSidebarState(({sidebarPanelId}) => ({
+				sidebarOpen: true,
+				sidebarPanelId,
+			}));
+		}
+	}, [focusedField]);
+
 	return (
 		<div
 			className={classNames(
 				'data-engine-form-builder ddm-form-builder pb-5',
 				{
-					'ddm-form-builder--sidebar-open': sidebarState.sidebarOpen,
+					'ddm-form-builder--sidebar-open': sidebarOpen,
 				}
 			)}
 		>
@@ -159,14 +190,9 @@ export const FormBuilder = () => {
 								sidebarOpen,
 								sidebarPanelId,
 							})}
-							currentPanelId={sidebarState.sidebarPanelId}
-							onChange={({sidebarOpen, sidebarPanelId}) =>
-								setSidebarState({
-									sidebarOpen,
-									sidebarPanelId,
-								})
-							}
-							open={sidebarState.sidebarOpen}
+							currentPanelId={sidebarPanelId}
+							onChange={setSidebarState}
+							open={sidebarOpen}
 							panels={panels}
 							sidebarPanels={sidebarPanels}
 							variant={sidebarVariant}

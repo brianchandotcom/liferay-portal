@@ -67,9 +67,9 @@ export const FormBuilder = () => {
 	} = useFormState();
 	const [{onClose}, modalDispatch] = useContext(ModalContext);
 
-	const [{currentPanelId, sidebarOpen}, setSidebarStatus] = useState({
-		currentPanelId: 'fields',
+	const [{sidebarOpen, sidebarPanelId}, setSidebarState] = useState({
 		sidebarOpen: true,
+		sidebarPanelId: 'fields',
 	});
 
 	const dispatch = useForm();
@@ -87,25 +87,16 @@ export const FormBuilder = () => {
 
 	const addToast = useToast();
 
-	const sidebarRef = useRef(null);
-
+	/**
+	 * Opens the sidebar whenever a field is focused
+	 */
 	useEffect(() => {
 		const hasFocusedField = Object.keys(focusedField).length > 0;
 
-		if (!hasFocusedField) {
-			return;
-		}
-
-		if (sidebarRef.current) {
-			sidebarRef.current.current.open();
-		}
-		else {
-
-			// In case of use Data Engine's MultiPanelSidebar
-
-			setSidebarStatus(({currentPanelId}) => ({
-				currentPanelId,
+		if (hasFocusedField) {
+			setSidebarState(({sidebarPanelId}) => ({
 				sidebarOpen: true,
+				sidebarPanelId,
 			}));
 		}
 	}, [focusedField]);
@@ -114,14 +105,17 @@ export const FormBuilder = () => {
 		const currentPage = pages[activePage];
 		const isEmpty = currentPage.rows[0]?.columns[0].fields.length === 0;
 
-		if (isEmpty && sidebarRef.current) {
-			sidebarRef.current.current.open();
+		if (isEmpty) {
+			setSidebarState(({sidebarPanelId}) => ({
+				sidebarOpen: true,
+				sidebarPanelId,
+			}));
 		}
 
 		// We only want to cause this useEffect to be called again if the
 		// number of pages changes and not the page data.
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pages.length, activePage]);
+	}, [activePage, pages.length, setSidebarState]);
 
 	const getFormUrl = useCallback(
 		async (path) => {
@@ -350,13 +344,8 @@ export const FormBuilder = () => {
 						sidebarOpen,
 						sidebarPanelId,
 					})}
-					currentPanelId={currentPanelId}
-					onChange={({sidebarOpen, sidebarPanelId}) =>
-						setSidebarStatus({
-							currentPanelId: sidebarPanelId,
-							sidebarOpen,
-						})
-					}
+					currentPanelId={sidebarPanelId}
+					onChange={setSidebarState}
 					open={sidebarOpen}
 					panels={[['fields']]}
 					sidebarPanels={sidebarPanels}

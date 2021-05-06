@@ -455,7 +455,7 @@ public class ProjectTemplatesFormFieldTest
 
 	@Test
 	public void testBuildTemplateFormField73() throws Exception {
-		String liferayVersion = "7.3.5";
+		String liferayVersion = "7.3.6";
 		String name = "foobar";
 
 		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
@@ -465,7 +465,7 @@ public class ProjectTemplatesFormFieldTest
 			"--liferay-version", liferayVersion);
 
 		writeGradlePropertiesInWorkspace(
-			workspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+			workspaceDir, "liferay.workspace.product=portal-7.3-ga7");
 
 		testContains(
 			gradleProjectDir, "bnd.bnd", "Provide-Capability:", "soy;",
@@ -525,17 +525,63 @@ public class ProjectTemplatesFormFieldTest
 	}
 
 	@Test
+	public void testBuildTemplateFormField73Maven() throws Exception {
+		String groupId = "com.test";
+		String liferayVersion = "7.3.6";
+		String name = "foobar";
+		String template = "form-field";
+
+		File mavenWorkspaceDir = buildWorkspace(
+			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
+
+		List<String> completeArgs = new ArrayList<>();
+
+		completeArgs.add("archetype:generate");
+		completeArgs.add("--batch-mode");
+
+		String archetypeArtifactId =
+			"com.liferay.project.templates." + template.replace('-', '.');
+
+		completeArgs.add("-DarchetypeArtifactId=" + archetypeArtifactId);
+
+		String projectTemplateVersion =
+			ProjectTemplatesUtil.getArchetypeVersion(archetypeArtifactId);
+
+		Assert.assertTrue(
+			"Unable to get project template version",
+			Validator.isNotNull(projectTemplateVersion));
+
+		completeArgs.add("-DarchetypeGroupId=com.liferay");
+		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
+		completeArgs.add("-DartifactId=" + name);
+		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
+		completeArgs.add("-DclassName=FooBar");
+		completeArgs.add("-DgroupId=" + groupId);
+		completeArgs.add("-DliferayVersion=" + liferayVersion);
+
+		String mavenOutput = executeMaven(
+			mavenWorkspaceDir, true, mavenExecutor,
+			completeArgs.toArray(new String[0]));
+
+		Assert.assertTrue(
+			mavenOutput,
+			mavenOutput.contains(
+				"Form Field project in Maven is only supported in 7.0 and " +
+					"7.1"));
+	}
+
+	@Test
 	public void testBuildTemplateFormField73WithReactFramework()
 		throws Exception {
 
 		String jsFramework = "react";
-		String liferayVersion = "7.3.5";
+		String liferayVersion = "7.3.6";
 		String name = "foobar";
 
 		File workspaceDir = buildWorkspace(temporaryFolder, liferayVersion);
 
 		writeGradlePropertiesInWorkspace(
-			workspaceDir, "liferay.workspace.product=portal-7.3-ga6");
+			workspaceDir, "liferay.workspace.product=portal-7.3-ga7");
 
 		File gradleProjectDir = buildTemplateWithGradle(
 			new File(workspaceDir, "modules"), "form-field", name,

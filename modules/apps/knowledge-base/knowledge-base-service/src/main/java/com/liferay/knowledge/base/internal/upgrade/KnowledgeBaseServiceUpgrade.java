@@ -19,6 +19,8 @@ import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBArticleTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBCommentTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBFolderTable;
 import com.liferay.knowledge.base.internal.upgrade.v3_0_0.util.KBTemplateTable;
+import com.liferay.knowledge.base.internal.upgrade.v4_1_0.KBArticleExternalReferenceCodeUpgradeProcess;
+import com.liferay.knowledge.base.internal.upgrade.v4_1_0.KBFolderExternalReferenceCodeUpgradeProcess;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -158,6 +160,11 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 			"3.1.0", "4.0.0",
 			new ViewCountUpgradeProcess(
 				"KBArticle", KBArticle.class, "kbArticleId", "viewCount"));
+
+		registry.register(
+			"4.0.0", "4.1.0",
+			new KBArticleExternalReferenceCodeUpgradeProcess(),
+			new KBFolderExternalReferenceCodeUpgradeProcess());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

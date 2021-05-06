@@ -654,13 +654,8 @@ public class PortalImplLocalizedFriendlyURLTest {
 		mockHttpServletRequestWrapper.setRequestURI(
 			groupServletMapping + group.getFriendlyURL() + layoutFriendlyURL);
 
-		StringBundler sb = new StringBundler(2);
-
-		sb.append(i18nPath);
-		sb.append(expectedLayoutFriendlyURL);
-
 		Assert.assertEquals(
-			sb.toString(),
+			i18nPath.concat(expectedLayoutFriendlyURL),
 			_portal.getLocalizedFriendlyURL(
 				mockHttpServletRequestWrapper, layout, locale, originalLocale));
 	}

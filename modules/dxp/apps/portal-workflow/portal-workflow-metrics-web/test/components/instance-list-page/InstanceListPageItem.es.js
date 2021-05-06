@@ -293,6 +293,47 @@ describe('The instance list item should', () => {
 		expect(dateText).toBeTruthy();
 	});
 
+	test('Be rendered with remaining time when the SLA is less than a minute.', () => {
+		const slaResult = {
+			dateOverdue: '2021-04-16T12:44:25Z',
+			name: 'SLA Test',
+			onTime: true,
+			remainingTime: 10000,
+			status: 'RUNNING',
+		};
+
+		const {baseElement, getByText} = render(
+			<Table.Item
+				{...instance}
+				slaResults={[slaResult]}
+				slaStatus="OnTime"
+			/>,
+			{
+				wrapper: ContainerMock,
+			}
+		);
+
+		const dateText = getByText('Apr 16');
+
+		expect(dateText).toBeTruthy();
+
+		fireEvent.mouseOver(dateText);
+
+		act(() => {
+			jest.advanceTimersByTime(1001);
+		});
+
+		const popoverElement = baseElement.querySelector('.popover');
+
+		expect(popoverElement).toBeTruthy();
+
+		const slaDateTimeRemaingTime = getByText(
+			'Apr 16, 12:44 PM (10sec left)'
+		);
+
+		expect(slaDateTimeRemaingTime).toBeTruthy();
+	});
+
 	test('Be rendered with due date when the slaResults is empty', () => {
 		const {container} = render(
 			<Table.Item {...instance} slaResults={[]} slaStatus="OnTime" />,

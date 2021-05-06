@@ -16,6 +16,8 @@ module.exports = {
 		'notice/notice': [
 			'error',
 			{
+				nonMatchingTolerance: 0.7,
+				onNonMatchingHeader: 'replace',
 				templateFile: path.join(__dirname, 'copyright.js'),
 			},
 		],

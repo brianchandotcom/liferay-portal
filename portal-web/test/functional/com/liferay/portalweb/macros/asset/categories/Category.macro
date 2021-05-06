@@ -76,6 +76,41 @@ definition {
 			PortletEntry.inputDescription(description = "${categoryDescription}");
 		}
 
+		if (isSet(displayPageTemplateType)) {
+			Panel.expandPanel(panel = "Display Page");
+
+			Select(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				value1 = "${displayPageTemplateType}");
+
+			if ("${displayPageTemplateType}" != "None") {
+				if ("${displayPageTemplateType}" == "Default") {
+					AssertTextEquals(
+						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						value1 = "${displayPageName}");
+				}
+				if ("${displayPageTemplateType}" == "Specific") {
+					AssertTextEquals(
+						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						value1 = "No Display Page Template Selected");
+
+					WaitForLiferayEvent.initializeLiferayEventLog();
+
+					Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
+
+					SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+					LexiconCard.clickCard(card = "${displayPageName}");
+
+					SelectFrameTop();
+
+					AssertTextEquals(
+						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						value1 = "${displayPageName}");
+				}
+			}
+		}
+
 		PortletEntry.save();
 	}
 
@@ -222,7 +257,48 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "${categoryName}");
 
-		PortletEntry.inputTitle(title = "${categoryNameEdit}");
+		if (isSet(categoryNameEdit)) {
+			PortletEntry.inputTitle(title = "${categoryNameEdit}");
+		}
+
+		if (isSet(displayPageTemplateType)) {
+			Panel.expandPanel(panel = "Display Page");
+
+			Select(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				value1 = "${displayPageTemplateType}");
+
+			if ("${displayPageTemplateType}" != "None") {
+				if ("${displayPageTemplateType}" == "Default") {
+					AssertTextEquals(
+						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						value1 = "${displayPageName}");
+				}
+				if ("${displayPageTemplateType}" == "Specific") {
+					if (!(isSet(selectedDisplayPageName))) {
+						var selectedDisplayPageName = "No Display Page Template Selected";
+					}
+
+					AssertTextEquals(
+						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						value1 = "${selectedDisplayPageName}");
+
+					WaitForLiferayEvent.initializeLiferayEventLog();
+
+					Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
+
+					SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+					LexiconCard.clickCard(card = "${displayPageName}");
+
+					SelectFrameTop();
+
+					AssertTextEquals(
+						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						value1 = "${displayPageName}");
+				}
+			}
+		}
 
 		PortletEntry.save();
 	}

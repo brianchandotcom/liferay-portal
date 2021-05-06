@@ -768,10 +768,10 @@ public class AccountEntryUserRelLocalServiceTest {
 		public String lastName = RandomTestUtil.randomString();
 		public Locale locale = LocaleThreadLocal.getDefaultLocale();
 		public String middleName = RandomTestUtil.randomString();
-		public long prefixId = RandomTestUtil.randomLong();
+		public long prefixId = 0;
 		public String screenName = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
-		public long suffixId = RandomTestUtil.randomLong();
+		public long suffixId = 0;
 
 	}
 

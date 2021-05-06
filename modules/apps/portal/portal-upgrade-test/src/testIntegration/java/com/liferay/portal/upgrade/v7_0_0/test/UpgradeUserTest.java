@@ -69,9 +69,9 @@ public class UpgradeUserTest {
 
 		GroupUtil.clearCache();
 
-		group = _groupLocalService.getGroup(_user.getGroupId());
-
-		Assert.assertFalse(_groupLocalService.isLiveGroupActive(group));
+		Assert.assertFalse(
+			_groupLocalService.isLiveGroupActive(
+				_groupLocalService.getGroup(_user.getGroupId())));
 	}
 
 	@Inject

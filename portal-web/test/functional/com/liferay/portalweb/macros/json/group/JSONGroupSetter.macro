@@ -6,7 +6,7 @@ definition {
 				var site = "true";
 			}
 
-			var grandParentGroupId = JSONGroupAPI._getGroupIdByName(groupName = "${grandParentGroupName}", site = "${site}");
+			var grandParentGroupId = JSONGroupAPI._getGrandParentGroupIdByName(groupName = "${grandParentGroupName}", site = "${site}");
 		}
 		else {
 			var grandParentGroupId = "0";

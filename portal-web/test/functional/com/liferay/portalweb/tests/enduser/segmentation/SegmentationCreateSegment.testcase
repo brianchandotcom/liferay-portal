@@ -289,13 +289,9 @@ definition {
 
 		Segmentation.editSegment(entry = "AddSegmentByOrganizationOrganization Test");
 
-		var organizationId = JSONOrganization.getOrganizationIdByName(
-			organizationName = "organization Name"
-		);
-
 		Segmentation.viewSegment(
 			criterion = "select-input",
-			value = "${organizationId}");
+			value = "organization Name");
 	}
 
 	@description = "This is a test for LPS-130279."
@@ -343,13 +339,9 @@ definition {
 
 		Segmentation.editSegment(entry = "AddSegmentByOrganizationParentOrganization Test");
 
-		var organizationId = JSONOrganization.getOrganizationIdByName(
-			organizationName = "Parent Organization Name"
-		);
-
 		Segmentation.viewSegment(
 			criterion = "select-input",
-			value = "${organizationId}");
+			value = "Parent Organization Name");
 	}
 
 	@description = "This is a test for LPS-130282."

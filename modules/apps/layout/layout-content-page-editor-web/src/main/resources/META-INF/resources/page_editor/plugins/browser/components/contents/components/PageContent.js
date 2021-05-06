@@ -159,7 +159,7 @@ export default function PageContent({
 						onActiveChange={setActive}
 						trigger={
 							<ClayButton
-								className="btn-monospaced btn-sm text-secondary"
+								className="btn-sm mr-2 text-secondary"
 								displayType="unstyled"
 							>
 								<span className="sr-only">
@@ -211,7 +211,7 @@ export default function PageContent({
 					</ClayDropDown>
 				) : (
 					<ClayButton
-						className="btn-monospaced btn-sm text-secondary"
+						className="btn-sm mr-2 text-secondary"
 						displayType="unstyled"
 						onClick={onClickEditInlineText}
 					>

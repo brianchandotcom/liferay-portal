@@ -19,7 +19,6 @@ $tabsBottomMargin: 16px;
 	&__tabs {
 		border-bottom: 1px solid $gray-300;
 		font-size: 0.75rem;
-		margin-bottom: $tabsBottomMargin;
-		padding: 0 16px;
+		margin: 0 $tabsBottomMargin $tabsBottomMargin;
 	}
 }

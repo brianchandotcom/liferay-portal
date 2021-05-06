@@ -15,6 +15,7 @@
 
 		.sheet-subtitle {
 			border: 0;
+			color: $gray-600;
 			font-size: 0.688rem;
 			margin-bottom: 2px;
 		}
@@ -22,31 +23,36 @@
 		&__page-content {
 			font-size: 0.75rem;
 			margin-bottom: 4px;
-			padding: 4px 0 4px 12px;
+			padding: 8px 0 8px 12px;
 
 			&:hover {
 				button.text-secondary {
 					opacity: 1;
+
+					&:hover .lexicon-icon {
+						color: $gray-900;
+						transition: color ease 0.3s;
+					}
 				}
 			}
 
 			&--mapped-item-hovered {
 				background-color: $gray-100;
+				border-radius: 4px;
 				transition: background-color ease 0.3s;
 			}
 
 			button.text-secondary {
-				min-width: 2rem;
 				opacity: 0;
 			}
 
-			.lexicon-icon {
-				margin-top: 0;
-				min-width: 1rem;
+			.dropdown .lexicon-icon {
+				margin-top: 1px;
 			}
 
-			.text-secondary {
-				margin-bottom: 4px;
+			.lexicon-icon {
+				font-size: 0.875rem;
+				min-width: 1rem;
 			}
 		}
 

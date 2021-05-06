@@ -2,6 +2,7 @@ Bundle-Name: Liferay JSON Store API
 Bundle-SymbolicName: com.liferay.json.store.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.json.store.constants,\
 	com.liferay.json.store.exception,\
 	com.liferay.json.store.model,\
 	com.liferay.json.store.service,\

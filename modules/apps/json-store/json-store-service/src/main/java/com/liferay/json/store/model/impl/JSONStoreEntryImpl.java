@@ -14,23 +14,52 @@
 
 package com.liferay.json.store.model.impl;
 
+import com.liferay.json.store.constants.JSONStoreEntryConstants;
+import com.liferay.petra.string.StringPool;
+
 /**
- * The extended model implementation for the JSONStoreEntry service. Represents a row in the &quot;JSONStoreEntry&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.json.store.model.JSONStoreEntry</code> interface.
- * </p>
- *
  * @author Preston Crary
  */
 public class JSONStoreEntryImpl extends JSONStoreEntryBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a json store entry model instance should use the {@link com.liferay.json.store.model.JSONStoreEntry} interface instead.
-	 */
-	public JSONStoreEntryImpl() {
+	@Override
+	public Object getValue() {
+		int type = getType();
+
+		if (type == JSONStoreEntryConstants.TYPE_VALUE_LONG) {
+			return getValueLong();
+		}
+
+		if (type == JSONStoreEntryConstants.TYPE_VALUE_LONG_QUOTED) {
+			return String.valueOf(getValueLong());
+		}
+
+		if (type == JSONStoreEntryConstants.TYPE_VALUE_STRING) {
+			return getValueString();
+		}
+
+		return null;
+	}
+
+	@Override
+	public void setValue(Object value) {
+		int type = getType();
+
+		if ((type == JSONStoreEntryConstants.TYPE_VALUE_LONG) ||
+			(type == JSONStoreEntryConstants.TYPE_VALUE_LONG_QUOTED)) {
+
+			setValueLong((Long)value);
+		}
+		else {
+			setValueLong(0);
+		}
+
+		if (type == JSONStoreEntryConstants.TYPE_VALUE_STRING) {
+			setValueString((String)value);
+		}
+		else {
+			setValueString(StringPool.BLANK);
+		}
 	}
 
 }

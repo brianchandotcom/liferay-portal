@@ -72,8 +72,6 @@ public class KBCommentsChecker extends EmptyOnClickRowChecker {
 
 		long kbCommentId = GetterUtil.getLong(primaryKey);
 
-		KBComment kbComment = null;
-
 		try {
 			KBCommentPermission.contains(
 				_permissionChecker,

@@ -140,6 +140,112 @@ definition {
 
 	@description = "This is a use case for LPS-120693."
 	@priority = "3"
+	test ConfigureContainerStylesAfterUpgrade735 {
+		property data.archive.type = "data-archive-container-with-fragments";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.5";
+
+		task ("View fragments shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Fragment Content Page",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Card Title Example");
+		}
+
+		task ("View the Container styles in edit mode") {
+			ContentPages.clickPencil();
+
+			AssertElementNotPresent(
+				key_contentDisplay = "",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
+
+			PageEditor.viewContainerStyle(
+				containerWidth = "Fluid",
+				position = "1");
+		}
+
+		task ("Configure the Container to Flex Row") {
+			PageEditor.editLayoutContainer(
+				alignItems = "Center",
+				contentDisplay = "Flex Row",
+				justifyContent = "Center",
+				panel = "Styles");
+		}
+
+		task ("View the Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "center",
+				containerWidth = "Fluid",
+				contentDisplay = "row",
+				justifyContent = "center",
+				position = "1");
+		}
+
+		task ("Configure the Container to Flex Column") {
+			PageEditor.editLayoutContainer(
+				alignItems = "End",
+				contentDisplay = "Flex Column",
+				justifyContent = "Between",
+				panel = "Styles");
+		}
+
+		task ("View the Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "end",
+				containerWidth = "Fluid",
+				contentDisplay = "column",
+				justifyContent = "between",
+				position = "1");
+		}
+
+		task ("Configure the Container to Fixed Width and Flex Row") {
+			PageEditor.editLayoutContainer(
+				alignItems = "Start",
+				containerWidth = "Fixed Width",
+				contentDisplay = "Flex Row",
+				justifyContent = "End",
+				panel = "Styles");
+		}
+
+		task ("View the inner Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "start",
+				containerWidth = "Fixed Width",
+				contentDisplay = "row",
+				justifyContent = "end",
+				position = "1");
+		}
+
+		task ("Configure the Fixed Width Container to Flex Column") {
+			PageEditor.editLayoutContainer(
+				alignItems = "Baseline",
+				contentDisplay = "Flex Column",
+				justifyContent = "Around",
+				panel = "Styles");
+		}
+
+		task ("View the Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "baseline",
+				containerWidth = "Fixed Width",
+				contentDisplay = "column",
+				justifyContent = "around",
+				position = "1");
+		}
+	}
+
+	@description = "This is a use case for LPS-120693."
+	@priority = "3"
 	test ConfigureContainerStylesAfterUpgrade72104 {
 		property data.archive.type = "data-archive-section-with-fragments";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";

@@ -79,8 +79,6 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	</div>
 </div>
 
-<portlet:actionURL name="/site/upload_open_graph_image" var="uploadOpenGraphImageURL" />
-
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(

@@ -75,6 +75,11 @@ public class OpenGraphSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
+	public String getSaveMVCActionCommandName() {
+		return "/layout/edit_open_graph_site_settings";
+	}
+
+	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}

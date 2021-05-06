@@ -19,6 +19,7 @@ import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.engine.CommerceSubscriptionEngine;
 import com.liferay.commerce.payment.method.paypal.internal.constants.PayPalCommercePaymentMethodConstants;
 import com.liferay.commerce.payment.util.CommercePaymentHttpHelper;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -64,27 +65,27 @@ public class CommercePaymentMethodPayPalServlet extends HttpServlet {
 			CommerceOrder commerceOrder =
 				_commercePaymentHttpHelper.getCommerceOrder(httpServletRequest);
 
-			String paymentId = ParamUtil.getString(
-				httpServletRequest, "paymentId");
+			String orderType = ParamUtil.getString(
+				httpServletRequest, "orderType");
 
 			boolean cancel = ParamUtil.getBoolean(httpServletRequest, "cancel");
 
 			if (cancel) {
 				_commercePaymentEngine.cancelPayment(
-					commerceOrder.getCommerceOrderId(), paymentId,
+					commerceOrder.getCommerceOrderId(), StringPool.BLANK,
 					httpServletRequest);
 			}
 			else {
 				String token = ParamUtil.getString(httpServletRequest, "token");
 
-				if (paymentId.isEmpty() && !token.isEmpty()) {
+				if (orderType.equals("subscription")) {
 					_commerceSubscriptionEngine.completeRecurringPayment(
 						commerceOrder.getCommerceOrderId(), token,
 						httpServletRequest);
 				}
-				else {
+				else if (orderType.equals("normal")) {
 					_commercePaymentEngine.completePayment(
-						commerceOrder.getCommerceOrderId(), paymentId,
+						commerceOrder.getCommerceOrderId(), token,
 						httpServletRequest);
 				}
 			}

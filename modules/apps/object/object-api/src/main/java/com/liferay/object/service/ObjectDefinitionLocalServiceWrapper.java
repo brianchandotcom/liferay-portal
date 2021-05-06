@@ -386,6 +386,11 @@ public class ObjectDefinitionLocalServiceWrapper
 			objectDefinitionId);
 	}
 
+	@Override
+	public void undeployObjectDefinitions() {
+		_objectDefinitionLocalService.undeployObjectDefinitions();
+	}
+
 	/**
 	 * Updates the object definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -299,6 +299,8 @@ public interface ObjectDefinitionLocalService
 	@Clusterable
 	public void undeployObjectDefinition(long objectDefinitionId);
 
+	public void undeployObjectDefinitions();
+
 	/**
 	 * Updates the object definition in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -26,8 +26,12 @@ $white: #fff;
 				box-shadow: none;
 			}
 
+			.card-body {
+				padding: 0.5rem;
+			}
+
 			&.form-check-middle-left .card-horizontal > .card-body {
-				padding-left: 1rem;
+				padding-left: 0.5rem;
 			}
 		}
 

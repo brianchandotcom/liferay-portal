@@ -299,4 +299,63 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-110247. The user can navigate to associated display page template via View Display Page of category."
+	@priority = "5"
+	test ViewMappedContentInDisplayPageTemplate {
+		task ("Add a display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Heading fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Mapping the Description field to Heading fragment") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Name",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category and select the display page template as specific display page template") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addCP(
+				categoryName = "Category Name",
+				displayPageName = "Display Page Name",
+				displayPageTemplateType = "Specific",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the mapped content in display page template") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View Display Page",
+				rowEntry = "Category Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Category Name");
+		}
+	}
+
 }

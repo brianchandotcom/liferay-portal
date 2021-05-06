@@ -85,10 +85,17 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 		Class<? extends VulcanBatchEngineTaskItemDelegate> clazz =
 			_vulcanBatchEngineTaskItemDelegate.getClass();
 
-		Class<?> superclass = clazz.getSuperclass();
+		Class<T> itemClass = _getItemClassFromGenericInterfaces(
+			clazz.getGenericInterfaces());
 
-		return _getItemClassFromGenericInterfaces(
-			superclass.getGenericInterfaces());
+		if (itemClass == null) {
+			Class<?> superclass = clazz.getSuperclass();
+
+			itemClass = _getItemClassFromGenericInterfaces(
+				superclass.getGenericInterfaces());
+		}
+
+		return itemClass;
 	}
 
 	@Override

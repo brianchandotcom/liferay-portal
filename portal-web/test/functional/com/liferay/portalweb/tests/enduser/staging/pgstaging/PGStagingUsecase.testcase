@@ -116,7 +116,7 @@ definition {
 			roleTitle = "Organization Administrator",
 			userEmailAddress = "usereaoa@liferay.com");
 
-		JSONStaging.enableLocalStaging(groupName = "Staging Organization Name LFR_ORGANIZATION");
+		JSONStaging.enableLocalStaging(groupName = "Staging Organization Name");
 
 		Workflow.openWorkflowAdmin(siteURLKey = "staging-organization-name-staging");
 

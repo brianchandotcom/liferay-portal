@@ -1353,7 +1353,7 @@ definition {
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Organization Name LFR_ORGANIZATION",
+			groupName = "Organization Name",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
 

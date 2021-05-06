@@ -85,7 +85,7 @@ definition {
 		JSONStaging.enableLocalStaging(
 			branchingPrivate = "true",
 			branchingPublic = "true",
-			groupName = "Staging Organization Name LFR_ORGANIZATION");
+			groupName = "Staging Organization Name");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Site Page Name",

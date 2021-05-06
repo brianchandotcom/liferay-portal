@@ -1,31 +1,5 @@
 definition {
 
-	macro addProductRelation {
-		Click(locator1 = "Button#PLUS");
-
-		Click(
-			key_selectAction = "Add Up-Sell Product",
-			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION_FIELDSET");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-
-		Type(
-			locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
-			value1 = "${productNameRelation}");
-
-		Click(locator1 = "Button#SEARCH");
-
-		Check.checkToggleSwitch(
-			locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",
-			productName = "${productNameRelation}");
-
-		SelectFrameTop();
-
-		Button.clickAdd();
-
-		Alert.viewSuccessMessage();
-	}
-	
 	macro addAnyProductRelation {
 		Click(locator1 = "Button#PLUS");
 
@@ -44,6 +18,32 @@ definition {
 		Check.checkToggleSwitch(
 			locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",
 			productName = "${key_product}");
+
+		SelectFrameTop();
+
+		Button.clickAdd();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro addProductRelation {
+		Click(locator1 = "Button#PLUS");
+
+		Click(
+			key_selectAction = "Add Up-Sell Product",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION_FIELDSET");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Type(
+			locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
+			value1 = "${productNameRelation}");
+
+		Click(locator1 = "Button#SEARCH");
+
+		Check.checkToggleSwitch(
+			locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",
+			productName = "${productNameRelation}");
 
 		SelectFrameTop();
 

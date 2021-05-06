@@ -84,14 +84,12 @@ public class CommerceOrderUpgradeProcess
 					"CommerceOrder")) {
 
 			while (resultSet.next()) {
-				long commerceAccountId = 0;
-
 				long orderOrganizationId = resultSet.getLong(
 					"orderOrganizationId");
 				long orderUserId = resultSet.getLong("orderUserId");
 
 				if (orderOrganizationId > 0) {
-					commerceAccountId = _getCommerceAccountId(
+					long commerceAccountId = _getCommerceAccountId(
 						orderOrganizationId);
 
 					if (commerceAccountId == 0) {

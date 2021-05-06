@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.object.internal;
+package com.liferay.object.internal.deployer;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(immediate = true, service = {})
-public class ObjectDefinitionSampleGenerator {
+public class ObjectDefinitionDeployerActivator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {

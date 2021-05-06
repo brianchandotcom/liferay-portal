@@ -81,7 +81,9 @@ public class VariableDeclarationAsUsedCheck extends BaseCheck {
 			}
 		}
 
-		if (_hasChainStyle(assignMethodCallDetailAST, "build", "map", "put")) {
+		if (_hasChainStyle(
+				assignMethodCallDetailAST, "build", "create.*", "map", "put")) {
+
 			if (_isInsideStatementClause(identDetailAST)) {
 				return;
 			}

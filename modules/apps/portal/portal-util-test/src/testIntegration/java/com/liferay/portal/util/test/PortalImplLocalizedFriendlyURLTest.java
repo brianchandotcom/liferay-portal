@@ -47,7 +47,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.junit.AfterClass;
@@ -245,12 +244,6 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		mockHttpServletRequest.setPathInfo(layoutFriendlyURL);
 
-		MockHttpServletRequestWrapper mockHttpServletRequestWrapper =
-			new MockHttpServletRequestWrapper(mockHttpServletRequest);
-
-		mockHttpServletRequestWrapper.setPathInfo(
-			_group.getFriendlyURL() + layoutFriendlyURL);
-
 		Locale locale = LocaleUtil.SPAIN;
 
 		String i18nPathLanguageId = _portal.getI18nPathLanguageId(
@@ -260,14 +253,22 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		mockHttpServletRequest.setRequestURI(i18nPath + layoutFriendlyURL);
 
-		mockHttpServletRequestWrapper.setRequestURI(
-			_PRIVATE_GROUP_SERVLET_MAPPING + _group.getFriendlyURL() +
-				layoutFriendlyURL);
-
 		Assert.assertEquals(
 			i18nPath.concat("/inicio"),
 			_portal.getLocalizedFriendlyURL(
-				mockHttpServletRequestWrapper,
+				new HttpServletRequestWrapper(mockHttpServletRequest) {
+
+					@Override
+					public String getPathInfo() {
+						return _group.getFriendlyURL() + layoutFriendlyURL;
+					}
+
+					@Override
+					public String getRequestURI() {
+						return _PRIVATE_GROUP_SERVLET_MAPPING + getPathInfo();
+					}
+
+				},
 				LayoutTestUtil.addLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				locale, LocaleUtil.US));
@@ -892,40 +893,5 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;
-
-	private class MockHttpServletRequestWrapper
-		extends HttpServletRequestWrapper {
-
-		public MockHttpServletRequestWrapper(
-			HttpServletRequest httpServletRequest) {
-
-			super(httpServletRequest);
-
-			_pathInfo = httpServletRequest.getPathInfo();
-			_requestURI = httpServletRequest.getRequestURI();
-		}
-
-		@Override
-		public String getPathInfo() {
-			return _pathInfo;
-		}
-
-		@Override
-		public String getRequestURI() {
-			return _requestURI;
-		}
-
-		public void setPathInfo(String pathInfo) {
-			_pathInfo = pathInfo;
-		}
-
-		public void setRequestURI(String requestURI) {
-			_requestURI = requestURI;
-		}
-
-		private String _pathInfo;
-		private String _requestURI;
-
-	}
 
 }

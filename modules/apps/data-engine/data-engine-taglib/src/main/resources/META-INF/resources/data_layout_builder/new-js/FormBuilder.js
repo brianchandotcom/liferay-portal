@@ -32,7 +32,7 @@ import {getItem} from '../js/utils/client.es';
 import {EVENT_TYPES} from './eventTypes';
 
 const SIDEBAR_INITIAL_STATE = {
-	sidebarOpen: true,
+	sidebarOpen: false,
 	sidebarPanelId: 'fields',
 };
 

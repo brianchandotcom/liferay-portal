@@ -20,6 +20,124 @@ definition {
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 	}
 
+	@description = "This is a use case for LPS-120693."
+	@priority = "3"
+	test ConfigureContainerStylesAfterUpgrade721 {
+		property data.archive.type = "data-archive-section-with-fragments";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.2.1";
+
+		task ("View fragments shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Fragment Content Page",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "card",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Card Title Example");
+		}
+
+		task ("View the outer Container styles in edit mode") {
+			ContentPages.clickPencil();
+
+			AssertElementNotPresent(
+				key_contentDisplay = "",
+				key_position = "1",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
+
+			PageEditor.viewContainerStyle(
+				containerWidth = "Fluid",
+				position = "1");
+		}
+
+		task ("Configure the outer Container to Flex Row") {
+			PageEditor.editLayoutContainer(
+				alignItems = "Center",
+				contentDisplay = "Flex Row",
+				justifyContent = "Center",
+				panel = "Styles");
+		}
+
+		task ("View the outer Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "center",
+				containerWidth = "Fluid",
+				contentDisplay = "row",
+				justifyContent = "center",
+				position = "1");
+		}
+
+		task ("Configure the outer Container to Flex Column") {
+			PageEditor.editLayoutContainer(
+				alignItems = "End",
+				contentDisplay = "Flex Column",
+				justifyContent = "Between",
+				panel = "Styles");
+		}
+
+		task ("View the outer Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "end",
+				containerWidth = "Fluid",
+				contentDisplay = "column",
+				justifyContent = "between",
+				position = "1");
+		}
+
+		task ("View the inner Container styles in edit mode") {
+			AssertElementNotPresent(
+				key_contentDisplay = "",
+				key_position = "2",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_CONTENT_DISPLAY");
+
+			PageEditor.viewContainerStyle(
+				containerWidth = "Fixed Width",
+				position = "2");
+		}
+
+		task ("Configure the inner Container to Flex Row") {
+			PageEditor.editLayoutContainer(
+				alignItems = "Start",
+				contentDisplay = "Flex Row",
+				justifyContent = "End",
+				panel = "Styles",
+				position = "2");
+		}
+
+		task ("View the inner Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "start",
+				containerWidth = "Fixed Width",
+				contentDisplay = "row",
+				justifyContent = "end",
+				position = "2");
+		}
+
+		task ("Configure the inner Container to Flex Column") {
+			PageEditor.editLayoutContainer(
+				alignItems = "Baseline",
+				contentDisplay = "Flex Column",
+				justifyContent = "Around",
+				panel = "Styles",
+				position = "2");
+		}
+
+		task ("View the inner Container styles") {
+			PageEditor.viewContainerStyle(
+				alignItems = "baseline",
+				containerWidth = "Fixed Width",
+				contentDisplay = "column",
+				justifyContent = "around",
+				position = "2");
+		}
+	}
+
 	@description = "This is a basic test for modern site building components such as Content Pages, Page Templates, Fragments, Display Page Templates, and Navigation Menus. After the upgrade is complete, all of those elements should still be present, and a user should still be able to perform basic modern site building functions."
 	@priority = "5"
 	test ConfigurePageEditorAfterUpgrade721 {

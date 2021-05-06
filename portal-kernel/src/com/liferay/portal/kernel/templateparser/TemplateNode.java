@@ -222,6 +222,12 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
 
+			String friendlyUrl = jsonObject.getString("value");
+
+			if (Validator.isNotNull(friendlyUrl)) {
+				return friendlyUrl;
+			}
+
 			layoutGroupId = jsonObject.getLong("groupId");
 			layoutId = jsonObject.getLong("layoutId");
 

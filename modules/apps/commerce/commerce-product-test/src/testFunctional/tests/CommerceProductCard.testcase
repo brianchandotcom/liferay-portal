@@ -145,9 +145,7 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-
 		CPCommerceCatalog.newProductsEntry(
-			
 			productCatalog = "Minium",
 			productName = "Simple T-Shirt",
 			productType = "Simple");

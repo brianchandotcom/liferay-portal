@@ -16,7 +16,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.jaxrs.exception.mapper
 
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.NoSuchInstanceException;
+import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.NoSuchSLAResultException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -35,14 +35,14 @@ import org.osgi.service.component.annotations.Component;
 	service = ExceptionMapper.class
 )
 public class NoSuchSLAResultExceptionMapper
-	extends BaseExceptionMapper<NoSuchInstanceException> {
+	extends BaseExceptionMapper<NoSuchSLAResultException> {
 
 	@Override
 	protected Problem getProblem(
-		NoSuchInstanceException noSuchInstanceException) {
+		NoSuchSLAResultException noSuchSLAResultException) {
 
 		return new Problem(
-			Response.Status.NOT_FOUND, noSuchInstanceException.getMessage());
+			Response.Status.NOT_FOUND, noSuchSLAResultException.getMessage());
 	}
 
 }

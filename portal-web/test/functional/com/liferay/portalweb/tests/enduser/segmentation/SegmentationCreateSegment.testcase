@@ -347,12 +347,67 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130282."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationRegion {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130282 AddSegmentByOrganizationRegion pending implementation. This test is already created as EditSegmentUserByOrganizationCountryAndRegion, but if you are able to do it better, delete the test EditSegmentUserByOrganizationCountryAndRegion.
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.editOrganizationCP(orgName = "organization Name");
+
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "Spain");
+
+		Select(
+			locator1 = "Select#REGION",
+			value1 = "Madrid");
+
+		PortletEntry.save();
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Region");
+
+		Segmentation.fillProperty(optionsValue = "Spain - Madrid");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationRegion Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByOrganizationRegion Test");
+
+		Segmentation.viewSegment(
+			criterion = "options",
+			value = "madrid");
 	}
 
 	@description = "This is a test for LPS-130283."
@@ -362,6 +417,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130283 AddSegmentByOrganizationTag pending implementation. This test is already created as EditSegmentUserByOrganizationTag, but if you are able to do it better, delete the test EditSegmentUserByOrganizationTag.
+
 	}
 
 	@description = "This is a test for LPS-130280."

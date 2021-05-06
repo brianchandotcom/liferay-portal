@@ -1,0 +1,27 @@
+definition {
+
+	macro _getRecordSetId {
+		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONDDLSetter.setGroupId(groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddl.ddlrecordset/get-record-sets \
+			-u test@liferay.com:test \
+			-d groupIds=${groupId}
+		''';
+
+		var recordSetId = JSONCurlUtil.post("${curl}","$.[?(@['nameCurrentValue'] == '${ddlListName}')]['recordSetId']");
+		var recordSetId = StringUtil.replace("${recordSetId}", "[&quot;", "");
+		var recordSetId = StringUtil.replace("${recordSetId}", "&quot;]", "");
+
+		if ("${recordSetId}" == "[]") {
+			fail("FAIL. Cannot find recordSetId.");
+		}
+
+		return "${recordSetId}";
+	}
+
+}

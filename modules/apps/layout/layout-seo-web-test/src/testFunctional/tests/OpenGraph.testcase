@@ -122,12 +122,12 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertElementNotPresent(
-			key_panel = "open graph",
-			locator1 = "Panel#PANEL_COLLAPSED");
+			key_panel = "Open Graph",
+			locator1 = "NavTab#TAB_LINK");
 
 		User.logoutPG();
 

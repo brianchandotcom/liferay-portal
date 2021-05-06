@@ -65,4 +65,156 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-110247. View available mapping fields in different type editable fields of fragment."
+	@priority = "4"
+	test ViewAvailableMappingFields {
+		task ("Add a display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Heading fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("View available mapping fields in Heading fragment") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Category (Default)");
+
+			for (var field : list "Name,Description,Vocabulary") {
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Basic Information",
+					key_value = "${field}",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Fields",
+				key_value = "Friendly URL",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+		}
+
+		task ("Add a Banner Center fragment to display page template") {
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center",
+				targetFragmentName = "Heading");
+		}
+
+		task ("View available mapping fields in Banner Center fragment") {
+			for (var id : list "01-title,03-link") {
+				PageEditorMapping.gotoEditableFieldMapping(
+					fragmentName = "Banner Center",
+					id = "${id}");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Source",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Category (Default)");
+
+				for (var field : list "Name,Description,Vocabulary") {
+					AssertElementPresent(
+						key_fieldLabel = "Field",
+						key_groupLabel = "Basic Information",
+						key_value = "${field}",
+						locator1 = "Select#GROUPED_SELECT_VALUE");
+				}
+
+				AssertElementPresent(
+					key_fieldLabel = "Field",
+					key_groupLabel = "Fields",
+					key_value = "Friendly URL",
+					locator1 = "Select#GROUPED_SELECT_VALUE");
+			}
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "banner-center");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Category (Default)");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Fields",
+				key_value = "Main Image",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+		}
+
+		task ("Add an Image fragment to display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				targetFragmentName = "Banner Center");
+
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Image",
+				id = "image-square");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Category (Default)");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Fields",
+				key_value = "Main Image",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+		}
+
+		task ("Add a Container element to display page template") {
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container",
+				targetFragmentName = "Image");
+
+			Click.clickNoWaitForVisible(
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+			Click(
+				key_navItem = "Styles",
+				locator1 = "PageEditor#NAV_ITEM_BUTTON",
+				value1 = "Styles");
+
+			Pause(locator1 = "3000");
+
+			Select(
+				key_fieldLabel = "Image Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Mapping");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Source",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Category (Default)");
+
+			AssertElementPresent(
+				key_fieldLabel = "Field",
+				key_groupLabel = "Fields",
+				key_value = "Main Image",
+				locator1 = "Select#GROUPED_SELECT_VALUE");
+		}
+	}
+
 }

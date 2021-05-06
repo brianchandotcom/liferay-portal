@@ -224,6 +224,11 @@
 			<property name="description" value="Checks that additional information is provided when calling `Assert.assertEquals`." />
 			<message key="assert.add.information" value="Add ''{0}'' as extra parameter at the beginning of the ''Assert.assertEquals'' call to provide more information to the test. See LPS-70411." />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.AssignAsUsedCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds cases where an assign statement can be inlined or moved closer to where it is used." />
+			<message key="variable.inline" value="No need to assign variable ''{0}''. Pass the method call directly as parameter on line ''{1}''." />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.AttributeOrderCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks that attributes in anonymous classes are ordered alphabetically." />

@@ -49,8 +49,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -108,26 +106,26 @@ public class CommercePaymentMethodClayTable
 
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
-				PortletURL portletURL = PortletURLBuilder.create(
-					PortletProviderUtil.getPortletURL(
-						httpServletRequest,
-						CommercePaymentMethodGroupRel.class.getName(),
-						PortletProvider.Action.EDIT)
-				).setParameter(
-					"commerceChannelId",
-					ParamUtil.getLong(httpServletRequest, "commerceChannelId")
-				).setParameter(
-					"commercePaymentMethodEngineKey",
-					() -> {
-						PaymentMethod paymentMethod = (PaymentMethod)model;
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletProviderUtil.getPortletURL(
+							httpServletRequest,
+							CommercePaymentMethodGroupRel.class.getName(),
+							PortletProvider.Action.EDIT)
+					).setParameter(
+						"commerceChannelId",
+						ParamUtil.getLong(
+							httpServletRequest, "commerceChannelId")
+					).setParameter(
+						"commercePaymentMethodEngineKey",
+						() -> {
+							PaymentMethod paymentMethod = (PaymentMethod)model;
 
-						return paymentMethod.getKey();
-					}
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).build();
-
-				dropdownItem.setHref(portletURL);
+							return paymentMethod.getKey();
+						}
+					).setWindowState(
+						LiferayWindowState.POP_UP
+					).build());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "edit"));

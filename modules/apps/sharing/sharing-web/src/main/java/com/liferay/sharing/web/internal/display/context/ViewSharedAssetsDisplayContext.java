@@ -148,13 +148,12 @@ public class ViewSharedAssetsDisplayContext {
 			navigationItem -> {
 				navigationItem.setActive(_isIncoming());
 
-				PortletURL sharedWithMeURL = PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setParameter(
-					"incoming", Boolean.TRUE.toString()
-				).build();
-
-				navigationItem.setHref(sharedWithMeURL);
+				navigationItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setParameter(
+						"incoming", Boolean.TRUE.toString()
+					).build());
 
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "shared-with-me"));
@@ -163,13 +162,12 @@ public class ViewSharedAssetsDisplayContext {
 			navigationItem -> {
 				navigationItem.setActive(!_isIncoming());
 
-				PortletURL sharedByMeURL = PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setParameter(
-					"incoming", Boolean.FALSE.toString()
-				).build();
-
-				navigationItem.setHref(sharedByMeURL);
+				navigationItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setParameter(
+						"incoming", Boolean.FALSE.toString()
+					).build());
 
 				navigationItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "shared-by-me"));
@@ -392,14 +390,13 @@ public class ViewSharedAssetsDisplayContext {
 			dropdownItem -> {
 				dropdownItem.setActive(Validator.isNull(className));
 
-				PortletURL viewAllClassNamesURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_currentURLObj, _liferayPortletResponse)
-				).setParameter(
-					"className", (String)null
-				).build();
-
-				dropdownItem.setHref(viewAllClassNamesURL);
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setParameter(
+						"className", (String)null
+					).build());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "all"));

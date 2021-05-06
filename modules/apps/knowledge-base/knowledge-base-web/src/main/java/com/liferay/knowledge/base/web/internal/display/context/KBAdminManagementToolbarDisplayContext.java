@@ -177,21 +177,20 @@ public class KBAdminManagementToolbarDisplayContext {
 
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
-					PortletURL addFolderURL = PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/common/edit_folder.jsp"
-					).setRedirect(
-						PortalUtil.getCurrentURL(_httpServletRequest)
-					).setParameter(
-						"parentResourceClassNameId",
-						PortalUtil.getClassNameId(
-							KBFolderConstants.getClassName())
-					).setParameter(
-						"parentResourcePrimKey", parentResourcePrimKey
-					).build();
-
-					dropdownItem.setHref(addFolderURL);
+					dropdownItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setMVCPath(
+							"/admin/common/edit_folder.jsp"
+						).setRedirect(
+							PortalUtil.getCurrentURL(_httpServletRequest)
+						).setParameter(
+							"parentResourceClassNameId",
+							PortalUtil.getClassNameId(
+								KBFolderConstants.getClassName())
+						).setParameter(
+							"parentResourcePrimKey", parentResourcePrimKey
+						).build());
 
 					dropdownItem.setLabel(
 						LanguageUtil.get(_httpServletRequest, "folder"));
@@ -207,7 +206,7 @@ public class KBAdminManagementToolbarDisplayContext {
 
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
-					PortletURL addBasicKBArticleURL =
+					dropdownItem.setHref(
 						PortletURLBuilder.createRenderURL(
 							_liferayPortletResponse
 						).setMVCPath(
@@ -219,9 +218,7 @@ public class KBAdminManagementToolbarDisplayContext {
 							parentResourceClassNameId
 						).setParameter(
 							"parentResourcePrimKey", parentResourcePrimKey
-						).build();
-
-					dropdownItem.setHref(addBasicKBArticleURL);
+						).build());
 
 					dropdownItem.setLabel(
 						LanguageUtil.get(_httpServletRequest, "basic-article"));
@@ -240,7 +237,7 @@ public class KBAdminManagementToolbarDisplayContext {
 				for (KBTemplate kbTemplate : kbTemplates) {
 					creationMenu.addDropdownItem(
 						dropdownItem -> {
-							PortletURL addKBArticleURL =
+							dropdownItem.setHref(
 								PortletURLBuilder.createRenderURL(
 									_liferayPortletResponse
 								).setMVCPath(
@@ -256,9 +253,7 @@ public class KBAdminManagementToolbarDisplayContext {
 								).setParameter(
 									"parentResourcePrimKey",
 									parentResourcePrimKey
-								).build();
-
-							dropdownItem.setHref(addKBArticleURL);
+								).build());
 
 							dropdownItem.setLabel(
 								LanguageUtil.get(
@@ -280,17 +275,16 @@ public class KBAdminManagementToolbarDisplayContext {
 
 			creationMenu.addDropdownItem(
 				dropdownItem -> {
-					PortletURL importURL = PortletURLBuilder.createRenderURL(
-						_liferayPortletResponse
-					).setMVCPath(
-						"/admin/import.jsp"
-					).setRedirect(
-						PortalUtil.getCurrentURL(_httpServletRequest)
-					).setParameter(
-						"parentKBFolderId", parentResourcePrimKey
-					).build();
-
-					dropdownItem.setHref(importURL);
+					dropdownItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setMVCPath(
+							"/admin/import.jsp"
+						).setRedirect(
+							PortalUtil.getCurrentURL(_httpServletRequest)
+						).setParameter(
+							"parentKBFolderId", parentResourcePrimKey
+						).build());
 
 					dropdownItem.setLabel(
 						LanguageUtil.get(_httpServletRequest, "import"));

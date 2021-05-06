@@ -606,20 +606,19 @@ public class DLAdminManagementToolbarDisplayContext
 				dropdownItem.setActive(
 					navigation.equals("home") && (fileEntryTypeId == -1));
 
-				PortletURL viewAllDocumentsURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_currentURLObj, _liferayPortletResponse)
-				).setMVCRenderCommandName(
-					"/document_library/view"
-				).setNavigation(
-					"home"
-				).setParameter(
-					"browseBy", (String)null
-				).setParameter(
-					"fileEntryTypeId", (String)null
-				).build();
-
-				dropdownItem.setHref(viewAllDocumentsURL);
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setMVCRenderCommandName(
+						"/document_library/view"
+					).setNavigation(
+						"home"
+					).setParameter(
+						"browseBy", (String)null
+					).setParameter(
+						"fileEntryTypeId", (String)null
+					).build());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "all"));
@@ -628,16 +627,15 @@ public class DLAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setActive(navigation.equals("recent"));
 
-				PortletURL viewRecentDocumentsURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_currentURLObj, _liferayPortletResponse)
-				).setMVCRenderCommandName(
-					"/document_library/view"
-				).setNavigation(
-					"recent"
-				).build();
-
-				dropdownItem.setHref(viewRecentDocumentsURL);
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setMVCRenderCommandName(
+						"/document_library/view"
+					).setNavigation(
+						"recent"
+					).build());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "recent"));
@@ -647,16 +645,15 @@ public class DLAdminManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.setActive(navigation.equals("mine"));
 
-				PortletURL viewMyDocumentsURL = PortletURLBuilder.create(
-					PortletURLUtil.clone(
-						_currentURLObj, _liferayPortletResponse)
-				).setMVCRenderCommandName(
-					"/document_library/view"
-				).setNavigation(
-					"mine"
-				).build();
-
-				dropdownItem.setHref(viewMyDocumentsURL);
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						PortletURLUtil.clone(
+							_currentURLObj, _liferayPortletResponse)
+					).setMVCRenderCommandName(
+						"/document_library/view"
+					).setNavigation(
+						"mine"
+					).build());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "mine"));

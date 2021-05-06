@@ -84,14 +84,14 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 			categoriesMap.put(translatedCategory, category);
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			getPortletURL()
-		).setParameter(
-			"resetCur", Boolean.TRUE.toString()
-		).build();
-
 		return getDropdownItems(
-			categoriesMap, portletURL, "category", getCategory());
+			categoriesMap,
+			PortletURLBuilder.create(
+				getPortletURL()
+			).setParameter(
+				"resetCur", Boolean.TRUE.toString()
+			).build(),
+			"category", getCategory());
 	}
 
 	@Override
@@ -130,14 +130,14 @@ public abstract class BaseAppManagerManagementToolbarDisplayContext
 			BundleStateConstants.INSTALLED_LABEL
 		};
 
-		PortletURL portletURL = PortletURLBuilder.create(
-			getPortletURL()
-		).setParameter(
-			"resetCur", Boolean.TRUE.toString()
-		).build();
-
 		return getDropdownItems(
-			getDefaultEntriesMap(states), portletURL, "state", getState());
+			getDefaultEntriesMap(states),
+			PortletURLBuilder.create(
+				getPortletURL()
+			).setParameter(
+				"resetCur", Boolean.TRUE.toString()
+			).build(),
+			"state", getState());
 	}
 
 	@Override

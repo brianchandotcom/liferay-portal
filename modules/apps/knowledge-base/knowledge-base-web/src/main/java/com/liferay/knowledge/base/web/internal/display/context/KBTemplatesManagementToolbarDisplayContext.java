@@ -115,15 +115,14 @@ public class KBTemplatesManagementToolbarDisplayContext {
 
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				PortletURL addKBTemplateURL = PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCPath(
-					_templatePath + "edit_template.jsp"
-				).setRedirect(
-					PortalUtil.getCurrentURL(_httpServletRequest)
-				).build();
-
-				dropdownItem.setHref(addKBTemplateURL);
+				dropdownItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).setMVCPath(
+						_templatePath + "edit_template.jsp"
+					).setRedirect(
+						PortalUtil.getCurrentURL(_httpServletRequest)
+					).build());
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add-template"));

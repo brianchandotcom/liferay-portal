@@ -39,7 +39,6 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionURL;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -285,13 +284,12 @@ public class RedirectNotFoundEntriesManagementToolbarDisplayContext
 		return dropdownItem -> {
 			dropdownItem.setActive(days == _getFilterDate());
 
-			PortletURL portletURL = PortletURLBuilder.create(
-				getPortletURL()
-			).setParameter(
-				"filterDate", days
-			).build();
-
-			dropdownItem.setHref(portletURL);
+			dropdownItem.setHref(
+				PortletURLBuilder.create(
+					getPortletURL()
+				).setParameter(
+					"filterDate", days
+				).build());
 
 			dropdownItem.setLabel(_getFilterDateLabel(days));
 		};

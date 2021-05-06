@@ -44,16 +44,14 @@ public class RemoteAppAdminDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				PortletURL addRemoteAppEntryURL =
+				dropdownItem.setHref(
 					PortletURLBuilder.createRenderURL(
 						_renderResponse
 					).setMVCRenderCommandName(
 						"/remote_app_admin/edit_remote_app_entry"
 					).setRedirect(
 						_getRedirect()
-					).build();
-
-				dropdownItem.setHref(addRemoteAppEntryURL);
+					).build());
 
 				dropdownItem.setLabel(_getLabel("add-remote-web-app"));
 			}

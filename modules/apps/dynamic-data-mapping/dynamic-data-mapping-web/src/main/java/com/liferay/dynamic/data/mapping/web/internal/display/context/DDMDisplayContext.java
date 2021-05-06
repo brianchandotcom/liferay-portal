@@ -419,18 +419,18 @@ public class DDMDisplayContext {
 			"groupId", _ddmWebRequestHelper.getScopeGroupId()
 		).build();
 
-		PortletURL addTemplateURL = PortletURLBuilder.createRenderURL(
-			_renderResponse
-		).setMVCPath(
-			"/edit_structure.jsp"
-		).setRedirect(
-			redirectURL.toString()
-		).setParameter(
-			"groupId", _ddmWebRequestHelper.getScopeGroupId()
-		).build();
-
 		return CreationMenuBuilder.addPrimaryDropdownItem(
-			getCreationMenuDropdownItem(addTemplateURL, "add")
+			getCreationMenuDropdownItem(
+				PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCPath(
+					"/edit_structure.jsp"
+				).setRedirect(
+					redirectURL.toString()
+				).setParameter(
+					"groupId", _ddmWebRequestHelper.getScopeGroupId()
+				).build(),
+				"add")
 		).build();
 	}
 

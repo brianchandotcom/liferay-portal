@@ -37,7 +37,8 @@ public class DLHook extends BaseHook {
 		String fileName = getFileName(image.getImageId(), image.getType());
 
 		try {
-			DLStoreUtil.deleteFile(_COMPANY_ID, _REPOSITORY_ID, fileName);
+			DLStoreUtil.deleteFile(
+				image.getCompanyId(), _REPOSITORY_ID, fileName);
 		}
 		catch (NoSuchFileException noSuchFileException) {
 			throw new NoSuchImageException(noSuchFileException);
@@ -47,7 +48,7 @@ public class DLHook extends BaseHook {
 	@Override
 	public byte[] getImageAsBytes(Image image) throws PortalException {
 		InputStream inputStream = DLStoreUtil.getFileAsStream(
-			_COMPANY_ID, _REPOSITORY_ID,
+			image.getCompanyId(), _REPOSITORY_ID,
 			getFileName(image.getImageId(), image.getType()));
 
 		byte[] bytes = null;
@@ -65,7 +66,7 @@ public class DLHook extends BaseHook {
 	@Override
 	public InputStream getImageAsStream(Image image) throws PortalException {
 		return DLStoreUtil.getFileAsStream(
-			_COMPANY_ID, _REPOSITORY_ID,
+			image.getCompanyId(), _REPOSITORY_ID,
 			getFileName(image.getImageId(), image.getType()));
 	}
 
@@ -77,18 +78,20 @@ public class DLHook extends BaseHook {
 
 		DLValidatorUtil.validateFileSize(fileName, bytes);
 
-		if (DLStoreUtil.hasFile(_COMPANY_ID, _REPOSITORY_ID, fileName)) {
-			DLStoreUtil.deleteFile(_COMPANY_ID, _REPOSITORY_ID, fileName);
+		if (DLStoreUtil.hasFile(
+				image.getCompanyId(), _REPOSITORY_ID, fileName)) {
+
+			DLStoreUtil.deleteFile(
+				image.getCompanyId(), _REPOSITORY_ID, fileName);
 		}
 
-		DLStoreUtil.addFile(_COMPANY_ID, _REPOSITORY_ID, fileName, true, bytes);
+		DLStoreUtil.addFile(
+			image.getCompanyId(), _REPOSITORY_ID, fileName, true, bytes);
 	}
 
 	protected String getFileName(long imageId, String type) {
 		return imageId + StringPool.PERIOD + type;
 	}
-
-	private static final long _COMPANY_ID = 0;
 
 	private static final long _REPOSITORY_ID = 0;
 

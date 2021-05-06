@@ -38,12 +38,53 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6062. AddAProductRelations"
-	@ignore = "true"
 	@priority = "3"
 	test AddAProductRelations {
 		property portal.acceptance = "false";
+        property test.name.skip.portal.instance = "CPCommerceProductProductRelations#AddAProductRelations";
 
-		// TODO COMMERCE-6062 AddAProductRelations
+        CommerceNavigator.gotoPortlet(
+            category = "Product Management",
+            portlet = "Products");
+
+        CPCommerceCatalog.newProductsEntry(
+            productCatalog = "Master",
+            productName = "Simple T-Shirt",
+            productType = "Simple");
+
+        Click(locator1 = "Icon#BACK");
+
+        CPCommerceCatalog.newProductsEntry(
+            productCatalog = "Master",
+            productName = "Shoes",
+            productType = "Simple");
+        Click(locator1 = "Icon#BACK");
+
+        AppBuilderAdmin.searchByItem(itemName = "Simple T-Shirt");
+
+        CommerceNavigator.gotoEntry(entryName = "Simple T-Shirt");
+
+        CommerceEntry.gotoMenuTab(menuTab = "Product Relations");
+
+        CommerceRelations.addAnyProductRelation(
+			key_relation = "Up-Sell Product",
+			key_product = "Shoes");
+
+        CommerceRelations.addAnyProductRelation(
+			key_relation = "Cross-Sell Product",
+			key_product = "Shoes");
+
+        CommerceRelations.addAnyProductRelation(
+			key_relation = "Related Product",
+			key_product = "Shoes");
+
+        CommerceRelations.addAnyProductRelation(
+			key_relation = "Accessories Product",
+			key_product = "Shoes");
+
+        CommerceRelations.addAnyProductRelation(
+			key_relation = "Spare Product",
+			key_product = "Shoes");
 
 	}
 

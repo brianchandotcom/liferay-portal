@@ -25,6 +25,32 @@ definition {
 
 		Alert.viewSuccessMessage();
 	}
+	
+	macro addAnyProductRelation {
+		Click(locator1 = "Button#PLUS");
+
+		Click(
+			key_selectAction = "Add ${key_relation}",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION_FIELDSET");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Type(
+			locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS",
+			value1 = "${key_product}");
+
+		Click(locator1 = "Button#SEARCH");
+
+		Check.checkToggleSwitch(
+			locator1 = "CommerceAccelerators#SELECT_PRODUCT_RELATIONS",
+			productName = "${key_product}");
+
+		SelectFrameTop();
+
+		Button.clickAdd();
+
+		Alert.viewSuccessMessage();
+	}
 
 	macro assignAllRelationsToProductsEntry {
 		Click(locator1 = "CommerceEntry#ADD_BUTTON");

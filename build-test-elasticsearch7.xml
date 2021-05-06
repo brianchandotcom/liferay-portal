@@ -1416,11 +1416,22 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 	</target>
 
 	<target name="stop-kibana">
-		<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash" osfamily="unix">
-			<arg value="-c" />
-			<arg value="pkill -F pid-kibana" />
-		</exec>
+		<if>
+			<available file="${elastic.kibana.dir}/bin" type="dir" />
+			<then>
+				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash" osfamily="unix">
+					<arg value="-c" />
+					<arg value="pkill -F pid-kibana" />
+				</exec>
 
-		<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
+				<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
+			</then>
+			<else>
+				<exec executable="/bin/bash" osfamily="unix">
+					<arg value="-c" />
+					<arg value="fuser -k 5601/tcp" />
+				</exec>
+			</else>
+		</if>
 	</target>
 </project>

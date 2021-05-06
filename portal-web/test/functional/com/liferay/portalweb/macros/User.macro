@@ -456,32 +456,6 @@ definition {
 			value1 = "The screen name you requested is reserved.");
 	}
 
-	macro addScreenNameNumberSiteIdCP {
-		LexiconEntry.gotoAdd();
-
-		Paste(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
-			value1 = "${siteID}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
-			value1 = "${userEmailAddress}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
-			value1 = "${userFirstName}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
-			value1 = "${userLastName}");
-
-		Button.clickSave();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#ERROR_1",
-			value1 = "The screen name cannot contain only numeric values.");
-	}
-
 	macro advancedSearchViaFriendsDirectoryPG {
 		Click(locator1 = "NavBar#SEARCH_TOGGLE_ADVANCED");
 

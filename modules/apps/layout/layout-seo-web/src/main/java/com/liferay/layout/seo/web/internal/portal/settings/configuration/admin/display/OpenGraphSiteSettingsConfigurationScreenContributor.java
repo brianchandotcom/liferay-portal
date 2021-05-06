@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -85,16 +82,9 @@ public class OpenGraphSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
-	public boolean isVisible() {
+	public boolean isVisible(Group group) {
 		try {
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-			Group group = themeDisplay.getSiteGroup();
-
-			if ((group == null) || group.isCompany() ||
+			if (group.isCompany() ||
 				!_openGraphConfiguration.isOpenGraphEnabled(
 					_companyLocalService.getCompany(group.getCompanyId()))) {
 

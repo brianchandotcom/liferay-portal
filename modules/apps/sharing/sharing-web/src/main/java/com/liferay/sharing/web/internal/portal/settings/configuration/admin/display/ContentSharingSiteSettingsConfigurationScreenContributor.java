@@ -16,9 +16,6 @@ package com.liferay.sharing.web.internal.portal.settings.configuration.admin.dis
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
@@ -68,20 +65,9 @@ public class ContentSharingSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
-	public boolean isVisible() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		Group siteGroup = themeDisplay.getSiteGroup();
-
-		if (siteGroup == null) {
-			return false;
-		}
-
+	public boolean isVisible(Group group) {
 		int contentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(
-			siteGroup.getCompanyId(),
+			group.getCompanyId(),
 			PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
 
 		if (contentSharingWithChildrenEnabled == 0) {

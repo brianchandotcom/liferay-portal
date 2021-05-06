@@ -19,8 +19,6 @@ import com.liferay.map.util.MapProviderHelperUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
@@ -64,22 +62,6 @@ public class MapsSiteSettingsConfigurationScreenContributor
 	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
-	}
-
-	@Override
-	public boolean isVisible() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		Group siteGroup = themeDisplay.getSiteGroup();
-
-		if (siteGroup == null) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override

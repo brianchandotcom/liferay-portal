@@ -71,20 +71,18 @@ public class MentionsSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
-	public boolean isVisible() {
+	public boolean isVisible(Group group) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
-
 		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId(), true);
+			PrefsPropsUtil.getPreferences(group.getCompanyId(), true);
 
 		return PrefsParamUtil.getBoolean(
-			companyPortletPreferences, httpServletRequest, "mentionsEnabled",
-			true);
+			companyPortletPreferences, themeDisplay.getRequest(),
+			"mentionsEnabled", true);
 	}
 
 	@Override

@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
@@ -69,15 +66,8 @@ public class CustomFieldsSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
-	public boolean isVisible() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		Group siteGroup = themeDisplay.getSiteGroup();
-
-		if ((siteGroup == null) || siteGroup.isCompany()) {
+	public boolean isVisible(Group group) {
+		if (group.isCompany()) {
 			return false;
 		}
 
@@ -86,8 +76,8 @@ public class CustomFieldsSiteSettingsConfigurationScreenContributor
 		try {
 			hasCustomAttributesAvailable =
 				CustomAttributesUtil.hasCustomAttributes(
-					themeDisplay.getCompanyId(), Group.class.getName(),
-					siteGroup.getGroupId(), null);
+					group.getCompanyId(), Group.class.getName(),
+					group.getGroupId(), null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

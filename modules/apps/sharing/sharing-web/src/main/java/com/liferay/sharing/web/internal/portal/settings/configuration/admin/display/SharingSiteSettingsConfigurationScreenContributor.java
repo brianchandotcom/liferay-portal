@@ -15,8 +15,7 @@
 package com.liferay.sharing.web.internal.portal.settings.configuration.admin.display;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
@@ -66,15 +65,9 @@ public class SharingSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
-	public boolean isVisible() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
+	public boolean isVisible(Group group) {
 		SharingConfiguration groupSharingConfiguration =
-			_sharingConfigurationFactory.getGroupSharingConfiguration(
-				themeDisplay.getSiteGroup());
+			_sharingConfigurationFactory.getGroupSharingConfiguration(group);
 
 		return groupSharingConfiguration.isAvailable();
 	}

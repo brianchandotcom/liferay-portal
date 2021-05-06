@@ -17,9 +17,6 @@ package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
@@ -69,20 +66,13 @@ public class AnalyticsSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
-	public boolean isVisible() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		Group siteGroup = themeDisplay.getSiteGroup();
-
-		if ((siteGroup == null) || siteGroup.isCompany()) {
+	public boolean isVisible(Group group) {
+		if (group.isCompany()) {
 			return false;
 		}
 
 		String[] analyticsTypes = PrefsPropsUtil.getStringArray(
-			siteGroup.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES,
+			group.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_TYPES,
 			StringPool.NEW_LINE);
 
 		if (analyticsTypes.length == 0) {

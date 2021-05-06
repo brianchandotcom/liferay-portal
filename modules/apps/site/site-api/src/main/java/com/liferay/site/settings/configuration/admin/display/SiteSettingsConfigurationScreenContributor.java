@@ -47,7 +47,7 @@ public interface SiteSettingsConfigurationScreenContributor {
 
 	public ServletContext getServletContext();
 
-	public default boolean isVisible() {
+	public default boolean isVisible(Group group) {
 		return true;
 	}
 

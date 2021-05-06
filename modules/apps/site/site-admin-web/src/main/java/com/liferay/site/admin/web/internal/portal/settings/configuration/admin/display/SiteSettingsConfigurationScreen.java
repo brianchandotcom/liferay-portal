@@ -17,6 +17,9 @@ package com.liferay.site.admin.web.internal.portal.settings.configuration.admin.
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.admin.web.internal.constants.SiteAdminWebKeys;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
@@ -71,7 +74,13 @@ public class SiteSettingsConfigurationScreen implements ConfigurationScreen {
 
 	@Override
 	public boolean isVisible() {
-		return _siteSettingsConfigurationScreenContributor.isVisible();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		return _siteSettingsConfigurationScreenContributor.isVisible(
+			themeDisplay.getSiteGroup());
 	}
 
 	@Override

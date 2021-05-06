@@ -70,21 +70,19 @@ public class PagesSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
-	public boolean isVisible() {
+	public boolean isVisible(Group group) {
+		if ((group != null) && group.isCompany()) {
+			return false;
+		}
+
+		if (group != null) {
+			return true;
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		Group siteGroup = themeDisplay.getSiteGroup();
-
-		if ((siteGroup != null) && siteGroup.isCompany()) {
-			return false;
-		}
-
-		if (siteGroup != null) {
-			return true;
-		}
 
 		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
 

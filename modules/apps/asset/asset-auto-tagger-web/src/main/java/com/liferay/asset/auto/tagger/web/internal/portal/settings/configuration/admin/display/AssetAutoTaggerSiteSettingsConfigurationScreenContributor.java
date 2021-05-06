@@ -17,8 +17,7 @@ package com.liferay.asset.auto.tagger.web.internal.portal.settings.configuration
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,16 +67,10 @@ public class AssetAutoTaggerSiteSettingsConfigurationScreenContributor
 	}
 
 	@Override
-	public boolean isVisible() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
+	public boolean isVisible(Group group) {
 		AssetAutoTaggerConfiguration assetAutoTaggerConfiguration =
 			_assetAutoTaggerConfigurationFactory.
-				getGroupAssetAutoTaggerConfiguration(
-					themeDisplay.getSiteGroup());
+				getGroupAssetAutoTaggerConfiguration(group);
 
 		return assetAutoTaggerConfiguration.isAvailable();
 	}

@@ -125,9 +125,13 @@ definition {
 			gotoManagePublications = "true",
 			publicationName = "Publication Name 1");
 
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name",
+			groupName = "Guest");
+
 		Publications.discardChanges(
 			changeCategory = "Dynamic Data Lists Record",
-			changeTitle = "Dynamic Data Lists Record",
+			changeTitle = "${changeTitle}",
 			conflictingPublications = "true",
 			entryTitle = "Dynamic Data Lists Record");
 
@@ -203,6 +207,10 @@ definition {
 
 		Navigator.openURL();
 
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name",
+			groupName = "Guest");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Dynamic Data Lists");
@@ -247,7 +255,15 @@ definition {
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Lists Record",
 			changeSite = "Guest",
-			changeTitle = "Dynamic Data Lists Record",
+			changeTitle = "${changeTitle}",
+			changeType = "Deleted",
+			changeUser = "Test Test",
+			showAllItems = "true");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Lists Record Set",
+			changeSite = "Guest",
+			changeTitle = "List Name",
 			changeType = "Deleted",
 			changeUser = "Test Test",
 			showAllItems = "true");
@@ -263,7 +279,7 @@ definition {
 		PublicationsChanges.viewChangesViaContextStyle(
 			changeCategory = "Dynamic Data Lists Record",
 			changeDescription = "Test Test deleted a Dynamic Data Lists Record in Guest",
-			changeTitle = "Dynamic Data Lists Record",
+			changeTitle = "${changeTitle}",
 			showAllItems = "true");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
@@ -504,9 +520,9 @@ definition {
 			showAllItems = "true");*/
 
 		PublicationsChanges.viewChangesViaChangesStyle(
-			changeCategory = "Dynamic Data Lists Record",
+			changeCategory = "Dynamic Data Lists Record Set",
 			changeSite = "Guest",
-			changeTitle = "Dynamic Data Lists Record",
+			changeTitle = "List Name Edit",
 			changeType = "Modified",
 			changeUser = "Test Test",
 			showAllItems = "true");
@@ -519,10 +535,22 @@ definition {
 			changeUser = "Test Test",
 			showAllItems = "true");
 
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name Edit",
+			groupName = "Guest");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Lists Record",
+			changeSite = "Guest",
+			changeTitle = "${changeTitle}",
+			changeType = "Modified",
+			changeUser = "Test Test",
+			showAllItems = "true");
+
 		PublicationsChanges.viewChangesViaContextStyle(
 			changeCategory = "Dynamic Data Lists Record",
 			changeDescription = "Test Test modified a Dynamic Data Lists Record in Guest",
-			changeTitle = "Dynamic Data Lists Record",
+			changeTitle = "${changeTitle}",
 			showAllItems = "true");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
@@ -719,10 +747,22 @@ definition {
 			changeUser = "Test Test",
 			showAllItems = "true");
 
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name",
+			groupName = "Guest");
+
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Lists Record",
 			changeSite = "Guest",
-			changeTitle = "Dynamic Data Lists Record",
+			changeTitle = "${changeTitle}",
+			changeType = "Added",
+			changeUser = "Test Test",
+			showAllItems = "true");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Lists Record Set",
+			changeSite = "Guest",
+			changeTitle = "List Name",
 			changeType = "Added",
 			changeUser = "Test Test",
 			showAllItems = "true");

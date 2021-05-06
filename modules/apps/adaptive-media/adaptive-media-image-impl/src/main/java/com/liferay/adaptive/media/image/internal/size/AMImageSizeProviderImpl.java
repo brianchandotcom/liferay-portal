@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Modified;
 		"com.liferay.adaptive.media.image.internal.configuration.AMImageConfiguration",
 		"com.liferay.document.library.configuration.DLFileEntryConfiguration"
 	},
-	service = AMImageValidator.class
+	service = AMImageSizeProvider.class
 )
 public class AMImageSizeProviderImpl implements AMImageSizeProvider {
 

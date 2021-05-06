@@ -10,6 +10,8 @@ package ${configYAML.apiPackagePath}.dto.${escapedVersion};
 	</#if>
 </#list>
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,6 +36,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -133,6 +136,10 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 			@DecimalMin("${propertySchema.minimum}")
 		</#if>
 
+		<#if propertySchema.jsonMap>
+			@JsonAnyGetter
+		</#if>
+
 		@Schema(
 			<#if propertySchema.deprecated>
 				deprecated = ${propertySchema.deprecated?c}
@@ -220,7 +227,12 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 				@NotNull
 			</#if>
 		</#if>
-		protected ${propertyType} ${propertyName};
+		<#if propertySchema.jsonMap>
+			@JsonAnySetter
+			protected ${propertyType} ${propertyName} = new HashMap();
+		<#else>
+			protected ${propertyType} ${propertyName};
+		</#if>
 	</#list>
 
 	@Override

@@ -106,6 +106,10 @@ public class Schema {
 		return _deprecated;
 	}
 
+	public boolean isJsonMap() {
+		return _jsonMap;
+	}
+
 	public boolean isReadOnly() {
 		return _readOnly;
 	}
@@ -159,6 +163,10 @@ public class Schema {
 		_items = items;
 	}
 
+	public void setJsonMap(boolean jsonMap) {
+		_jsonMap = jsonMap;
+	}
+
 	public void setMaximum(Double maximum) {
 		_maximum = maximum;
 	}
@@ -207,6 +215,7 @@ public class Schema {
 	private String _example;
 	private String _format;
 	private Items _items;
+	private boolean _jsonMap;
 	private Double _maximum;
 	private Double _minimum;
 	private List<Schema> _oneOfSchemas;

@@ -176,6 +176,9 @@ public class YAMLUtil {
 
 		schemaTypeDescription.addPropertyParameters("required", String.class);
 
+		schemaTypeDescription.substituteProperty(
+			"x-json-map", boolean.class, "getJsonMap", "setJsonMap");
+
 		openAPIYAMLConstructor.addTypeDescription(schemaTypeDescription);
 
 		_YAML_OPEN_API = new Yaml(

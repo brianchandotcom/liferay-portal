@@ -17,15 +17,10 @@ package com.liferay.object.rest.internal.graphql;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.graphql.ObjectDefinitionGraphQL;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.odata.entity.DateTimeEntityField;
-import com.liferay.portal.odata.entity.EntityField;
+import com.liferay.object.rest.internal.odata.entity.ObjectEntryEntityModel;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.IntegerEntityField;
-import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Javier Gamarra
@@ -38,50 +33,7 @@ public class ObjectDefinitionGraphQLImpl implements ObjectDefinitionGraphQL {
 		_objectDefinition = objectDefinition;
 		_objectFields = objectFields;
 
-		_entityModel = new EntityModel() {
-
-			@Override
-			public Map<String, EntityField> getEntityFieldsMap() {
-				Map<String, EntityField> entityFieldMap =
-					EntityModel.toEntityFieldsMap(
-						new DateTimeEntityField(
-							"dateCreated",
-							locale -> Field.getSortableFieldName(
-								Field.CREATE_DATE),
-							locale -> Field.CREATE_DATE),
-						new DateTimeEntityField(
-							"dateModified",
-							locale -> Field.getSortableFieldName(
-								Field.MODIFIED_DATE),
-							locale -> Field.MODIFIED_DATE),
-						new IntegerEntityField(
-							"objectDefinitionId",
-							locale -> "objectDefinitionId"),
-						new IntegerEntityField(
-							"siteId", locale -> Field.GROUP_ID),
-						new IntegerEntityField(
-							"userId", locale -> Field.USER_ID));
-
-				for (ObjectField objectField : objectFields) {
-					String type = objectField.getType();
-
-					if (type.equals(String.class.getSimpleName())) {
-						String name = objectField.getName();
-
-						entityFieldMap.put(
-							name, new StringEntityField(name, locale -> name));
-					}
-				}
-
-				return entityFieldMap;
-			}
-
-			@Override
-			public String getName() {
-				return objectDefinition.getName();
-			}
-
-		};
+		_entityModel = new ObjectEntryEntityModel(objectFields);
 	}
 
 	@Override

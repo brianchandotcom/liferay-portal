@@ -240,7 +240,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 			_group.getGroupId(),
 			LayoutTestUtil.addLayout(
 				_group.getGroupId(), false, _nameMap, _friendlyURLMap),
-			"/home", LocaleUtil.SPAIN, LocaleUtil.US, "/inicio", true);
+			"/home", LocaleUtil.SPAIN, LocaleUtil.US, "/inicio");
 	}
 
 	@Test
@@ -620,7 +620,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 	private void _assertLocalizedSiteLayoutFriendlyURLWithVirtualHost(
 			long groupId, Layout layout, String layoutFriendlyURL,
 			Locale locale, Locale originalLocale,
-			String expectedLayoutFriendlyURL, boolean includeI18nPath)
+			String expectedLayoutFriendlyURL)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -654,12 +654,9 @@ public class PortalImplLocalizedFriendlyURLTest {
 		mockHttpServletRequestWrapper.setRequestURI(
 			groupServletMapping + group.getFriendlyURL() + layoutFriendlyURL);
 
-		StringBundler sb = new StringBundler(includeI18nPath ? 5 : 3);
+		StringBundler sb = new StringBundler(2);
 
-		if (includeI18nPath) {
-			sb.append(i18nPath);
-		}
-
+		sb.append(i18nPath);
 		sb.append(expectedLayoutFriendlyURL);
 
 		Assert.assertEquals(

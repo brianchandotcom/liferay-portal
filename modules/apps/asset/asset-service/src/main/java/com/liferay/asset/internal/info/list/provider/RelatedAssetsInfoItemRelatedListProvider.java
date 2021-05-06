@@ -57,8 +57,8 @@ public class RelatedAssetsInfoItemRelatedListProvider
 
 		try {
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
-				assetEntry.getCompanyId(), assetEntry.getGroupId(),
-				sort.getFieldName(), _getOrderByType(sort), pagination);
+				assetEntry.getCompanyId(), assetEntry.getGroupId(), pagination,
+				sort);
 
 			assetEntryQuery.setLinkedAssetEntryId(assetEntry.getEntryId());
 
@@ -72,8 +72,7 @@ public class RelatedAssetsInfoItemRelatedListProvider
 	}
 
 	private AssetEntryQuery _getAssetEntryQuery(
-			long companyId, long groupId, String orderByCol, String orderByType,
-			Pagination pagination)
+			long companyId, long groupId, Pagination pagination, Sort sort)
 		throws PortalException {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
@@ -96,6 +95,14 @@ public class RelatedAssetsInfoItemRelatedListProvider
 
 		if (pagination != null) {
 			assetEntryQuery.setEnd(pagination.getEnd());
+		}
+
+		String orderByCol = Field.MODIFIED_DATE;
+		String orderByType = "DESC";
+
+		if (sort != null) {
+			orderByCol = sort.getFieldName();
+			orderByType = _getOrderByType(sort);
 		}
 
 		assetEntryQuery.setGroupIds(new long[] {groupId});
@@ -122,8 +129,7 @@ public class RelatedAssetsInfoItemRelatedListProvider
 	private int _getTotalCount(AssetEntry assetEntry, Sort sort) {
 		try {
 			AssetEntryQuery assetEntryQuery = _getAssetEntryQuery(
-				assetEntry.getCompanyId(), assetEntry.getGroupId(),
-				sort.getFieldName(), _getOrderByType(sort), null);
+				assetEntry.getCompanyId(), assetEntry.getGroupId(), null, sort);
 
 			assetEntryQuery.setLinkedAssetEntryId(assetEntry.getEntryId());
 

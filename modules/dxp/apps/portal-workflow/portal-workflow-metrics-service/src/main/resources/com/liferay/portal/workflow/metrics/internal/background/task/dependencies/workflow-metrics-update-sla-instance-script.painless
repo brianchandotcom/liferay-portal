@@ -1,3 +1,23 @@
-if (!ctx._source.slaStatus.equals("Overdue")) {
- 	ctx._source.slaStatus = params.slaStatus;
+if (!ctx._source.slaStatus.equals("Overdue") && params.slaResult.slaStatus.equals("RUNNING")) {
+ 	if (params.slaResult.onTime) {
+ 		ctx._source.slaStatus = "OnTime";
+ 	}
+ 	else {
+ 		ctx._source.slaStatus = "Overdue";
+ 	}
+}
+
+if (!ctx._source.containsKey("slaResults")) {
+	ctx._source["slaResults"] = [params.slaResult];
+}
+else {
+	def slaResult = ctx._source.slaResults.find(item -> item.slaDefinitionId == params.slaResult.slaDefinitionId);
+
+	if (slaResult == null) {
+		ctx._source.slaResults.add(params.slaResult);
+	} else {
+		slaResult.onTime = params.slaResult.onTime;
+		slaResult.remainingTime = params.slaResult.remainingTime;
+		slaResult.slaStatus = params.slaResult.slaStatus;
+	}
 }

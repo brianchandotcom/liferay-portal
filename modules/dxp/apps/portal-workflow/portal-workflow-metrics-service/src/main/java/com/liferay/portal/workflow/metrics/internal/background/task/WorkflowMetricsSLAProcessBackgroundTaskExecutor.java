@@ -44,7 +44,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.RangeTermQuery;
-import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
 import com.liferay.portal.search.script.Scripts;
@@ -54,7 +53,6 @@ import com.liferay.portal.workflow.metrics.internal.search.index.SLAInstanceResu
 import com.liferay.portal.workflow.metrics.internal.search.index.SLATaskResultWorkflowMetricsIndexer;
 import com.liferay.portal.workflow.metrics.internal.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
-import com.liferay.portal.workflow.metrics.internal.sla.WorkflowMetricsInstanceSLAStatus;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAInstanceResult;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLAProcessor;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
@@ -81,7 +79,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -187,17 +184,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 		return null;
 	}
 
-	@Activate
-	protected void activate() {
-		_workflowMetricsInstanceSLAStatusScriptMap = HashMapBuilder.put(
-			WorkflowMetricsInstanceSLAStatus.ON_TIME,
-			_createScript(WorkflowMetricsInstanceSLAStatus.ON_TIME)
-		).put(
-			WorkflowMetricsInstanceSLAStatus.OVERDUE,
-			_createScript(WorkflowMetricsInstanceSLAStatus.OVERDUE)
-		).build();
-	}
-
 	private BooleanQuery _createBooleanQuery(
 		boolean completed, Date endDate, long instanceId, long processId,
 		long slaDefinitionId, Date startDate) {
@@ -247,25 +233,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 		return booleanQuery.addMustNotQueryClauses(
 			_queries.exists("completionDate"));
-	}
-
-	private Script _createScript(
-		WorkflowMetricsInstanceSLAStatus workflowMetricsInstanceSLAStatus) {
-
-		ScriptBuilder builder = _scripts.builder();
-
-		return builder.idOrCode(
-			StringUtil.read(
-				getClass(),
-				"dependencies/workflow-metrics-update-sla-instance-script." +
-					"painless")
-		).language(
-			"painless"
-		).putParameter(
-			"slaStatus", workflowMetricsInstanceSLAStatus.getValue()
-		).scriptType(
-			ScriptType.INLINE
-		).build();
 	}
 
 	private BooleanQuery _createSLAInstanceResultsBooleanQuery(
@@ -665,29 +632,46 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 							workflowMetricsSLATaskResult));
 				}
 
-				if (workflowMetricsSLAInstanceResult.getElapsedTime() != 0) {
-					WorkflowMetricsInstanceSLAStatus
-						workflowMetricsInstanceSLAStatus =
-							WorkflowMetricsInstanceSLAStatus.OVERDUE;
+				ScriptBuilder builder = _scripts.builder();
 
-					if (workflowMetricsSLAInstanceResult.isOnTime()) {
-						workflowMetricsInstanceSLAStatus =
-							WorkflowMetricsInstanceSLAStatus.ON_TIME;
-					}
+				WorkflowMetricsSLAStatus workflowMetricsSLAStatus =
+					workflowMetricsSLAInstanceResult.
+						getWorkflowMetricsSLAStatus();
 
-					bulkDocumentRequest.addBulkableDocumentRequest(
-						new UpdateDocumentRequest(
-							_instanceWorkflowMetricsIndex.getIndexName(
+				bulkDocumentRequest.addBulkableDocumentRequest(
+					new UpdateDocumentRequest(
+						_instanceWorkflowMetricsIndex.getIndexName(
+							workflowMetricsSLAInstanceResult.getCompanyId()),
+						WorkflowMetricsIndexerUtil.digest(
+							_instanceWorkflowMetricsIndex.getIndexType(),
+							workflowMetricsSLAInstanceResult.getCompanyId(),
+							workflowMetricsSLAInstanceResult.getInstanceId()),
+						builder.idOrCode(
+							StringUtil.read(
+								getClass(),
+								"dependencies/workflow-metrics-update-sla-" +
+									"instance-script.painless")
+						).language(
+							"painless"
+						).putParameter(
+							"slaResult",
+							HashMapBuilder.<String, Object>put(
+								"onTime",
+								workflowMetricsSLAInstanceResult.isOnTime()
+							).put(
+								"remainingTime",
 								workflowMetricsSLAInstanceResult.
-									getCompanyId()),
-							WorkflowMetricsIndexerUtil.digest(
-								_instanceWorkflowMetricsIndex.getIndexType(),
-								workflowMetricsSLAInstanceResult.getCompanyId(),
+									getRemainingTime()
+							).put(
+								"slaDefinitionId",
 								workflowMetricsSLAInstanceResult.
-									getInstanceId()),
-							_workflowMetricsInstanceSLAStatusScriptMap.get(
-								workflowMetricsInstanceSLAStatus)));
-				}
+									getSLADefinitionId()
+							).put(
+								"slaStatus", workflowMetricsSLAStatus.name()
+							).build()
+						).scriptType(
+							ScriptType.INLINE
+						).build()));
 			}
 		);
 
@@ -800,9 +784,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 	@Reference(target = "(workflow.metrics.index.entity.name=task)")
 	private WorkflowMetricsIndexNameBuilder
 		_taskWorkflowMetricsIndexNameBuilder;
-
-	private Map<WorkflowMetricsInstanceSLAStatus, Script>
-		_workflowMetricsInstanceSLAStatusScriptMap;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

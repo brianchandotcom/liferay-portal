@@ -1467,7 +1467,7 @@ definition {
 
 	macro viewSiteClonedFromSiteTemplateCP {
 		Click(
-			key_url = "site-configuration-other",
+			key_url = "site-configuration-click-to-chat",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Site Template");

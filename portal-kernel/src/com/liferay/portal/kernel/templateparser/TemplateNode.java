@@ -465,7 +465,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	private String _getNumericData() {
-		String numberValue = (String)get("data");
+		String data = (String)get("data");
 
 		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
 			LocaleUtil.getMostRelevantLocale());
@@ -474,7 +474,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
 		decimalFormat.setParseBigDecimal(true);
 
-		return decimalFormat.format(Double.valueOf(numberValue));
+		return decimalFormat.format(Double.valueOf(data));
 	}
 
 	private static final String _LAYOUT_TYPE_PRIVATE_GROUP = "private-group";

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR</td>
+	<td>//div[contains(@class,'modal-header')]//button[contains(@class,'display-page-preview-item-selector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZATION_DROPDOWN_TOGGLE</td>
 	<td>//div[contains(@class, 'modal-dialog')]//div[contains(@class,'localizable-dropdown')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

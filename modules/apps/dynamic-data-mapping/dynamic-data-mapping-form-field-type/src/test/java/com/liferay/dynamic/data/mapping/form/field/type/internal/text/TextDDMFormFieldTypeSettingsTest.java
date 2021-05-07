@@ -75,14 +75,14 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		Assert.assertNotNull(confirmationErrorMessageDDMFormField.getLabel());
 		Assert.assertNotNull(
-			confirmationErrorMessageDDMFormField.getPredefinedValue());
+			confirmationErrorMessageDDMFormField.getProperty("initialValue"));
 
 		DDMFormField confirmationLabelDDMFormField = ddmFormFieldsMap.get(
 			"confirmationLabel");
 
 		Assert.assertNotNull(confirmationLabelDDMFormField.getLabel());
 		Assert.assertNotNull(
-			confirmationLabelDDMFormField.getPredefinedValue());
+			confirmationLabelDDMFormField.getProperty("initialValue"));
 
 		DDMFormField dataSourceTypeDDMFormField = ddmFormFieldsMap.get(
 			"dataSourceType");

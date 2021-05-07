@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FEEDBACK</td>
+	<td>//div[contains(@class,'feedback')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANAGE</td>
 	<td>//ul[contains(@id,'toolbarContainer')]/li/a[@title='Manage']</td>
 	<td></td>

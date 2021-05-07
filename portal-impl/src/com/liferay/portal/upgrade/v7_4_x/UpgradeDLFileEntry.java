@@ -14,26 +14,64 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.v7_4_x.util.DLFileEntryTable;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  * @author Alicia García
+ * @author Javier de Arcos
  */
 public class UpgradeDLFileEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("DLFileEntry", "expirationDate")) {
+		if (!hasColumn(DLFileEntryTable.TABLE_NAME, "expirationDate")) {
 			alter(
 				DLFileEntryTable.class,
 				new AlterTableAddColumn("expirationDate", "DATE null"));
 		}
 
-		if (!hasColumn("DLFileEntry", "reviewDate")) {
+		if (!hasColumn(DLFileEntryTable.TABLE_NAME, "reviewDate")) {
 			alter(
 				DLFileEntryTable.class,
 				new AlterTableAddColumn("reviewDate", "DATE null"));
+		}
+
+		if (!hasColumn(DLFileEntryTable.TABLE_NAME, "externalReferenceCode")) {
+			alter(
+				DLFileEntryTable.class,
+				new AlterTableAddColumn(
+					"externalReferenceCode", "VARCHAR(75)"));
+
+			_populateExternalReferenceCode();
+		}
+	}
+
+	private void _populateExternalReferenceCode() throws Exception {
+		try (PreparedStatement ps1 = connection.prepareStatement(
+				"select fileEntryId from DLFileEntry where " +
+					"externalReferenceCode is null or externalReferenceCode " +
+						"= ''");
+			ResultSet rs = ps1.executeQuery();
+			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
+				connection.prepareStatement(
+					"update DLFileEntry set externalReferenceCode = ? where " +
+						"fileEntryId = ?"))) {
+
+			while (rs.next()) {
+				long fileEntryId = rs.getLong(1);
+
+				ps2.setString(1, String.valueOf(fileEntryId));
+				ps2.setLong(2, fileEntryId);
+
+				ps2.addBatch();
+			}
+
+			ps2.executeBatch();
 		}
 	}
 

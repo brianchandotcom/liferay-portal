@@ -29,20 +29,20 @@ public class DLFileEntryTable {
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"uuid_", Types.VARCHAR}, {"fileEntryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"repositoryId", Types.BIGINT}, {"folderId", Types.BIGINT},
-		{"treePath", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"fileName", Types.VARCHAR}, {"extension", Types.VARCHAR},
-		{"mimeType", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"extraSettings", Types.CLOB},
-		{"fileEntryTypeId", Types.BIGINT}, {"version", Types.VARCHAR},
-		{"size_", Types.BIGINT}, {"smallImageId", Types.BIGINT},
-		{"largeImageId", Types.BIGINT}, {"custom1ImageId", Types.BIGINT},
-		{"custom2ImageId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"externalReferenceCode", Types.VARCHAR},
+		{"fileEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"repositoryId", Types.BIGINT},
+		{"folderId", Types.BIGINT}, {"treePath", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"fileName", Types.VARCHAR},
+		{"extension", Types.VARCHAR}, {"mimeType", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"extraSettings", Types.CLOB}, {"fileEntryTypeId", Types.BIGINT},
+		{"version", Types.VARCHAR}, {"size_", Types.BIGINT},
+		{"smallImageId", Types.BIGINT}, {"largeImageId", Types.BIGINT},
+		{"custom1ImageId", Types.BIGINT}, {"custom2ImageId", Types.BIGINT},
 		{"manualCheckInRequired", Types.BOOLEAN},
 		{"expirationDate", Types.TIMESTAMP}, {"reviewDate", Types.TIMESTAMP},
 		{"lastPublishDate", Types.TIMESTAMP}
@@ -57,6 +57,8 @@ TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
+
+TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 
@@ -120,7 +122,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table DLFileEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,primary key (fileEntryId, ctCollectionId))";
+"create table DLFileEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fileEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,expirationDate DATE null,reviewDate DATE null,lastPublishDate DATE null,primary key (fileEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 
@@ -132,6 +134,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		"create index IX_C0A6F645 on DLFileEntry (fileEntryTypeId, ctCollectionId)",
 		"create index IX_F951AC2E on DLFileEntry (folderId, name[$COLUMN_LENGTH:255$], ctCollectionId)",
 		"create index IX_60830094 on DLFileEntry (groupId, ctCollectionId)",
+		"create index IX_273362A5 on DLFileEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId)",
 		"create index IX_BAF654E5 on DLFileEntry (groupId, fileEntryTypeId)",
 		"create index IX_95A2D1F1 on DLFileEntry (groupId, folderId, ctCollectionId)",
 		"create index IX_D8883586 on DLFileEntry (groupId, folderId, fileEntryTypeId, ctCollectionId)",

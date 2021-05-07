@@ -34,7 +34,6 @@ definition {
 				key_actionsDescription = "${actionsDescription}",
 				locator1 = "Button#EXECUTE_ACTION");
 
-			var reindexElapsedTime = "0";
 			var reindexStartTime = "0";
 
 			echo("Current Elasticsearch Tasks:");
@@ -57,6 +56,8 @@ definition {
 			else {
 				echo("Started reindexing ${reindexStartTime} second(s) after clicking 'Execute'.");
 			}
+
+			var reindexElapsedTime = "0";
 
 			while (((contains("${elasticsearchTasks}", "indices:data/write/bulk")) || IsElementPresent.pauseIsElementPresent(locator1 = "ControlMenu#RELOAD_TOOLTIP")) && ("${reindexElapsedTime}" != "480") && (maxIterations = "48")) {
 				Pause.pauseNoSPARefresh(locator1 = "10000");

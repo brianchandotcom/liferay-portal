@@ -984,12 +984,40 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130285."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserDateOfBirth {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130285 AddSegmentByUserDateOfBirth pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Date of Birth");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserDateOfBirth Test");
+
+		Segmentation.fillProperty(dateValue = "05/31/1986");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserDateOfBirth Test");
+
+		Segmentation.viewSegment(
+			criterion = "date",
+			value = "1986-05-31");
 	}
 
 	@description = "This is a test for LPS-130291."

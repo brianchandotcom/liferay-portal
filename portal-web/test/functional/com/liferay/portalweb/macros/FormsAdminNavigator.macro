@@ -61,9 +61,7 @@ definition {
 
 		ScrollBy(value1 = "0, 230");
 
-		while (IsElementNotPresent(locator1 = "Form#SIDEBAR_MENUITEM_REMOVE_FIELD")) {
-			Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
-		}
+		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");		
 
 		Click(locator1 = "Form#SIDEBAR_MENUITEM_REMOVE_FIELD");
 	}

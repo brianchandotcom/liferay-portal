@@ -138,9 +138,7 @@ definition {
 	}
 
 	macro deleteFieldModalConfirmation {
-		FormsAdminNavigator.gotoDeleteField(
-			fieldLabel = "${fieldLabel}",
-			fieldName = "${fieldName}");
+		FormsAdminNavigator.gotoDeleteField(fieldName = "${fieldName}");
 
 		while (IsElementPresent(locator1 = "Form#VALIDATE_DELETE_FIELD_MODAL_DELETE_MESSAGE")) {
 			Click(locator1 = "Form#SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON");

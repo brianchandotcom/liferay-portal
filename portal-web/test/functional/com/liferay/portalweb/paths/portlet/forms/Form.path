@@ -369,7 +369,7 @@
 </tr>
 <tr>
     <td>SIDEBAR_MENUITEM_REMOVE_FIELD</td>
-    <td>//a[@title='Remove Field'] | //button[text()='Remove Field']</td>
+    <td>//div[contains(@class,'dropdown-menu show')]//button[contains(@class,'dropdown-item')][contains(text(),'Delete')]</td>
     <td></td>
 </tr>
 <tr>
@@ -379,7 +379,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON</td>
-	<td>//div[contains(@class,'modal d-block show')]//button[contains(@class,'btn btn-danger')][contains(text(),'Confirm')]</td>
+	<td>//button[contains(@class,'btn btn-danger')]</td>
 	<td></td>
 </tr>
 <tr>

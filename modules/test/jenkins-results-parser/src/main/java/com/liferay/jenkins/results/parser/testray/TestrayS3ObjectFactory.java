@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
+import com.google.cloud.storage.Blob;
+
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.util.HashMap;
@@ -25,17 +27,21 @@ import java.util.Map;
 public class TestrayS3ObjectFactory {
 
 	public static TestrayS3Object newTestrayS3Object(
-		TestrayS3Bucket testrayS3Bucket, String key) {
+		TestrayS3Bucket testrayS3Bucket, Blob blob) {
+
+		if (blob == null) {
+			return null;
+		}
 
 		String mapKey = JenkinsResultsParserUtil.combine(
-			testrayS3Bucket.getTestrayS3BaseURL(), "/", key);
+			testrayS3Bucket.getName(), "/", blob.getName());
 
 		if (_testrayS3Objects.containsKey(mapKey)) {
 			return _testrayS3Objects.get(mapKey);
 		}
 
 		TestrayS3Object testrayS3Object = new TestrayS3Object(
-			testrayS3Bucket, key);
+			testrayS3Bucket, blob);
 
 		_testrayS3Objects.put(mapKey, testrayS3Object);
 

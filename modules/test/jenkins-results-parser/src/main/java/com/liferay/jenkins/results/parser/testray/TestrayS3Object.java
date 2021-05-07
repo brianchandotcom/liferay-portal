@@ -14,30 +14,30 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.google.cloud.storage.Blob;
 
-import java.io.IOException;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Michael Hashimoto
  */
 public class TestrayS3Object {
 
+	public void delete() {
+		_blob.delete();
+	}
+
 	public boolean exists() {
-		if (_exists != null) {
-			return _exists;
-		}
-
-		_exists = JenkinsResultsParserUtil.exists(getURL());
-
-		return _exists;
+		return _blob.exists();
 	}
 
 	public String getKey() {
-		return _key;
+		return _blob.getName();
 	}
 
 	public TestrayS3Bucket getTestrayS3Bucket() {
@@ -53,22 +53,11 @@ public class TestrayS3Object {
 	}
 
 	public String getValue() {
-		if (_value != null) {
-			return _value;
-		}
-
 		if (!exists()) {
 			return null;
 		}
 
-		try {
-			_value = JenkinsResultsParserUtil.toString(getURLString());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return _value;
+		return new String(_blob.getContent(), StandardCharsets.UTF_8);
 	}
 
 	@Override
@@ -76,9 +65,9 @@ public class TestrayS3Object {
 		return getURLString();
 	}
 
-	protected TestrayS3Object(TestrayS3Bucket testrayS3Bucket, String key) {
+	protected TestrayS3Object(TestrayS3Bucket testrayS3Bucket, Blob blob) {
 		_testrayS3Bucket = testrayS3Bucket;
-		_key = key;
+		_blob = blob;
 
 		try {
 			_url = new URL(
@@ -89,10 +78,8 @@ public class TestrayS3Object {
 		}
 	}
 
-	private Boolean _exists;
-	private final String _key;
+	private final Blob _blob;
 	private final TestrayS3Bucket _testrayS3Bucket;
 	private final URL _url;
-	private String _value;
 
 }

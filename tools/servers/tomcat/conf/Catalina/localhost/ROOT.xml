@@ -22,12 +22,4 @@
 	-->
 
 	<!--<Manager className="com.liferay.support.tomcat.session.SessionLessManagerBase" />-->
-
-	<Resources>
-		<PreResources
-			base="${catalina.base}/lib/ext/portal"
-			className="com.liferay.support.tomcat.webresources.ExtResourceSet"
-			webAppMount="/WEB-INF/lib"
-		/>
-	</Resources>
 </Context>

@@ -11524,13 +11524,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</if>
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="tomcat" />
-			<then>
-				<antcall target="prepare-tomcat-ext-environment" />
-			</then>
-		</if>
-
-		<if>
 			<or>
 				<equals arg1="${app.server.type}" arg2="weblogic" />
 				<equals arg1="${app.server.type}" arg2="websphere" />
@@ -11541,66 +11534,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</if>
 
 		<lstopwatch action="total" name="prepare.bundles.${app.server.name}" />
-	</target>
-
-	<target name="prepare-tomcat-ext-environment">
-		<if>
-			<and>
-				<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
-				<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
-				<not>
-					<resourcecontains
-						resource="${app.server.dir}/conf/Catalina/localhost/ROOT.xml"
-						substring="ExtResourceSet"
-					/>
-				</not>
-			</and>
-			<then>
-				<local name="enable.ext.environment" />
-
-				<get-fixpack-version patch.file.zip.url="${test.build.fix.pack.zip.url}" />
-
-				<beanshell>
-					<![CDATA[
-						String fixpackVersion = project.getProperty("fixpack.version");
-
-						if (fixpackVersion != null) {
-							int fixpackVersionInt = Integer.valueOf(fixpackVersion);
-
-							if (fixpackVersionInt >= 16) {
-								project.setProperty("enable.ext.environment", "true");
-							}
-						}
-					]]>
-				</beanshell>
-
-				<get-testcase-property property.name="test.ignore.tomcat.ext.environment" />
-
-				<if>
-					<and>
-						<equals arg1="${enable.ext.environment}" arg2="true" />
-						<not>
-							<equals arg1="${test.ignore.tomcat.ext.environment}" arg2="true" />
-						</not>
-					</and>
-					<then>
-						<replace
-							file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml"
-						>
-							<replacetoken><![CDATA[</Context>]]></replacetoken>
-							<replacevalue><![CDATA[	<Resources>
-		<PreResources
-			base="${catalina.base}/lib/ext/portal"
-			className="com.liferay.support.tomcat.webresources.ExtResourceSet"
-			webAppMount="/WEB-INF/lib"
-		/>
-	</Resources>
-</Context>]]></replacevalue>
-						</replace>
-					</then>
-				</if>
-			</then>
-		</if>
 	</target>
 
 	<target name="prepare-virtual-host-name-properties">

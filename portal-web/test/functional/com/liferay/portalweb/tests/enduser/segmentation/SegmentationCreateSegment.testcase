@@ -1030,12 +1030,38 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130286."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserFirstName {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130286 AddSegmentByUserFirstName pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "First Name");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserFirstName Test");
+
+		Segmentation.fillProperty(propertyField = "userfn");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserFirstName Test");
+
+		Segmentation.viewSegment(propertyField = "userfn");
 	}
 
 	@description = "This is a test for LPS-130287."

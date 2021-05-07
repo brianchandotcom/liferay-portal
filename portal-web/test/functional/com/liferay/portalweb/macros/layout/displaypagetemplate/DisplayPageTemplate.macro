@@ -10,4 +10,67 @@ definition {
 		MenuItem.clickNoError(menuItem = "${item}");
 	}
 
+	macro selectPreviewItem {
+		if (isSet(modal)) {
+			Click(locator1 = "Modal#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
+
+			if (isSet(item)) {
+				DropdownMenuItem.click(menuItem = "${item}");
+			}
+			else {
+				DropdownMenuItem.click(menuItem = "Select Other Item");
+
+				SelectFrame(
+					key_title = "Select",
+					locator1 = "IFrame#MODAL_ANY");
+
+				if ("${assetType}" == "Web Content Article") {
+					Click(
+						key_listEntry = "${assetTitle}",
+						locator1 = "LexiconList#LIST_ENTRY_TITLE");
+				}
+				else if (("${assetType}" == "Blogs Entry") || ("${assetType}" == "Document")) {
+					Click(
+						key_card = "${assetTitle}",
+						locator1 = "Card#CARD_TITLE");
+				}
+
+				SelectFrameTop();
+			}
+
+			AssertTextEquals(
+				locator1 = "Modal#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR",
+				value1 = "${assetTitle}");
+		}
+		else {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
+
+			if (isSet(item)) {
+				DropdownMenuItem.click(menuItem = "${item}");
+			}
+			else {
+				DropdownMenuItem.click(menuItem = "Select Other Item");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				if ("${assetType}" == "Web Content Article") {
+					Click(
+						key_listEntry = "${assetTitle}",
+						locator1 = "LexiconList#LIST_ENTRY_TITLE");
+				}
+				else if (("${assetType}" == "Blogs Entry") || ("${assetType}" == "Document")) {
+					LexiconCard.clickCardTitle(card = "${assetTitle}");
+				}
+
+				SelectFrameTop();
+			}
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR",
+				value1 = "${assetTitle}");
+		}
+	}
+
 }

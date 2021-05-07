@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -237,31 +236,6 @@ public class DataRecordCollectionResourceImpl
 		return _updateDataRecordCollection(
 			dataRecordCollectionId, dataRecordCollection.getDescription(),
 			dataRecordCollection.getName());
-	}
-
-	@Override
-	public void putDataRecordCollectionPermission(
-			Long dataRecordCollectionId, Permission[] permissions)
-		throws Exception {
-
-		DataRecordCollection dataRecordCollection = _getDataRecordCollection(
-			dataRecordCollectionId);
-
-		_dataDefinitionModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			dataRecordCollection.getDataDefinitionId(), ActionKeys.PERMISSIONS);
-
-		String resourceName = getPermissionCheckerResourceName(
-			dataRecordCollectionId);
-
-		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), 0, resourceName,
-			String.valueOf(dataRecordCollectionId),
-			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions,
-				dataRecordCollectionId, resourceName,
-				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService));
 	}
 
 	@Override

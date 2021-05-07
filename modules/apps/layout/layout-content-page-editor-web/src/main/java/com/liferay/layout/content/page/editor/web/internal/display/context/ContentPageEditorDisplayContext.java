@@ -1830,6 +1830,10 @@ public class ContentPageEditorDisplayContext {
 
 			mappedInfoItems.add(
 				HashMapBuilder.<String, Object>put(
+					"className",
+					PortalUtil.getClassName(
+						layoutDisplayPageObjectProvider.getClassNameId())
+				).put(
 					"classNameId",
 					layoutDisplayPageObjectProvider.getClassNameId()
 				).put(

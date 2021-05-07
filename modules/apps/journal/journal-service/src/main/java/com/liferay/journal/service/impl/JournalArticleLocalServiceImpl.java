@@ -7136,8 +7136,13 @@ public class JournalArticleLocalServiceImpl
 			String portletId = PortletProviderUtil.getPortletId(
 				JournalArticle.class.getName(), PortletProvider.Action.EDIT);
 
+			String namespace = _portal.getPortletNamespace(portletId);
+
 			String articleURL = _portal.getControlPanelFullURL(
 				article.getGroupId(), portletId, null);
+
+			articleURL = _http.addParameter(
+				articleURL, namespace + "mvcPath", "/edit_article.jsp");
 
 			articleURL = buildArticleURL(
 				articleURL, article.getGroupId(), article.getFolderId(),

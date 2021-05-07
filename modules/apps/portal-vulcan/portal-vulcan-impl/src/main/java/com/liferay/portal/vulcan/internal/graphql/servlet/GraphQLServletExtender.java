@@ -1474,18 +1474,9 @@ public class GraphQLServletExtender {
 
 		builder.name("Input" + objectDefinition.getName());
 
-		GraphQLInputObjectField.Builder inputBuilder =
-			GraphQLInputObjectField.newInputObjectField();
-
-		builder.field(
-			inputBuilder.name(
-				objectDefinition.getPrimaryKeyColumnName()
-			).type(
-				Scalars.GraphQLLong
-			).build());
-
 		for (com.liferay.object.model.ObjectField objectField : objectFields) {
-			inputBuilder = GraphQLInputObjectField.newInputObjectField();
+			GraphQLInputObjectField.Builder inputBuilder =
+				GraphQLInputObjectField.newInputObjectField();
 
 			builder.field(
 				inputBuilder.name(
@@ -1970,7 +1961,10 @@ public class GraphQLServletExtender {
 		mutationBuilder.field(
 			_addField(
 				graphQLObjectType, updateName,
-				_addArgument(graphQLInputType, objectDefinition.getName())));
+				_addArgument(graphQLInputType, objectDefinition.getName()),
+				_addArgument(
+					Scalars.GraphQLLong,
+					objectDefinition.getPrimaryKeyColumnName())));
 
 		schemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
@@ -1986,7 +1980,7 @@ public class GraphQLServletExtender {
 						objectDefinition,
 						_objectEntryLocalService.updateObjectEntry(
 							user.getUserId(),
-							(Long)values.get(
+							dataFetchingEnvironment.getArgument(
 								objectDefinition.getPrimaryKeyColumnName()),
 							values, new ServiceContext()));
 				}

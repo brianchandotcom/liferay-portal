@@ -119,10 +119,7 @@ AUI.add(
 
 							row.removeClass(CSS_TEMPLATE);
 
-							row.attr(
-								'id',
-								instance._originalConfig.id + '_' + id
-							);
+							row.attr('id', instance.get('id') + '_' + id);
 
 							instance._ids.push(id);
 						}

@@ -553,7 +553,7 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
-			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+			AssertConfirm(value1 = "Are you sure you want to delete this page?");
 		}
 
 		AssertElementNotPresent(

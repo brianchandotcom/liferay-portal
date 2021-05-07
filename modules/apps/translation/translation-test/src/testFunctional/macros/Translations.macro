@@ -202,6 +202,16 @@ definition {
 			value1 = "update-translation-file -Dtranslation.content.target.original=<![CDATA[${webContentContent}]]></target> -Dtranslation.content.target=<![CDATA[${contentTranslateion}]]></target> -Dtranslation.description.target.original=<![CDATA[${webContentDescription}]]></target> -Dtranslation.description.target=<![CDATA[${descriptionTranslateion}]]></target> -Dtranslation.file.encoding=${encoding} -Dtranslation.title.target.original=<![CDATA[${webContentTitle}]]></target> -Dtranslation.title.target=<![CDATA[${titleTranslation}]]></target> -Dtranslation.zip.file.name=${translationZipFileName} -Dtranslation.file.name=${translationFileName} -Dtranslation.file.rename=${translationFileRename}");
 	}
 
+	macro translateWithGoogle {
+		Click(
+			key_text = "Auto Translate",
+			locator1 = "Button#ANY");
+
+		AssertTextEquals(
+			locator1 = "Toolbar#FEEDBACK",
+			value1 = "Successfully received translations.");
+	}
+
 	macro viewBaseFields {
 		if (isSet(webContentTitle)) {
 			AssertElementPresent(

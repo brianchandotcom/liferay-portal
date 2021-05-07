@@ -203,7 +203,6 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO",
 			value1 = "90.00");
-		
 	}
 
 	@description = "COMMERCE-6342. As a buyer, I want to see the barred list price and the sale price on the mini-cart item and I want to be able to see tier price in the mini-cart summary"

@@ -474,7 +474,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
 		decimalFormat.setParseBigDecimal(true);
 
-		return decimalFormat.format(Double.valueOf(data));
+		return decimalFormat.format(GetterUtil.getDouble(data));
 	}
 
 	private static final String _LAYOUT_TYPE_PRIVATE_GROUP = "private-group";

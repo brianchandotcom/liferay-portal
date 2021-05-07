@@ -51,21 +51,22 @@ definition {
 		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 
 		AssertElementNotPresent(
-			key_productName = "Break Fluid",
+			key_productName = "Brake Fluid",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD");
 
 		AssertElementNotPresent(
-			key_productName = "Break Fluid",
+			key_productName = "Brake Fluid",
 			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
 
 		AssertElementNotPresent(
-			key_productName = "Break Fluid",
+			key_productName = "Brake Fluid",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_AVAILABILITY_LABEL");
 
 		AssertElementNotPresent(

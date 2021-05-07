@@ -352,6 +352,12 @@
 	<td>//div[contains(@class,'add-to-cart d-flex my-2 pt-5')]//a[contains(@href,'${key_productName}')]</td>
     <td></td>
 </tr>
+<!--COMPARE-->
+<tr>
+	<td>CHECK_ITEM_COMPARE</td>
+	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

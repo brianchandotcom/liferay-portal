@@ -95,12 +95,41 @@ definition {
 	}
 
 	@description = "COMMERCE-5913. As a buyer, I want to deselect items in Catalog for compare in MiniCompare widget"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveComparisonItemFromMiniCompare {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5913 RemoveComparisonItemFromMiniCompare pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click.clickAtNotVisible(
+			key_productName = "U-Joint",
+			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+		Click.clickAtNotVisible(
+			key_productName = "Transmission Fluid",
+			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_productName = "u-joint",
+			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_REMOVE_BUTTON");
+
+		AssertElementPresent(
+			key_productName = "transmission-fluid",
+			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_REMOVE_BUTTON");
+
+		Click(
+			key_productName = "u-joint",
+			locator1 = "CommerceFrontStore#MINI_COMPARE_ITEM_REMOVE_BUTTON");
+
+		AssertElementNotPresent(
+			key_productName = "u-joint",
+			locator1 = "CommerceAccelerators#CHECK_ITEM_COMPARE");
+
+			
 	}
 
 	@description = "COMMERCE-5914. As a buyer, I want to deselect a item in Product Details for compare in Product Widget"

@@ -237,7 +237,7 @@ if (portletTitleBasedNavigation) {
 										commonFileMetadataContainer.unplug(A.LoadingMask);
 
 										if (!itemFailed) {
-											location.href = '<%= HtmlUtil.escapeJS(redirect) %>';
+											Liferay.Util.navigate('<%= HtmlUtil.escapeJS(redirect) %>');
 										}
 									})
 									.catch((error) => {
@@ -287,6 +287,14 @@ if (portletTitleBasedNavigation) {
 									submit();
 								}
 							};
+
+							function cleanUp() {
+								Liferay.detach('ddmFormValid', ddmFormValid);
+								Liferay.detach('ddmFormError', ddmFormError);
+								Liferay.detach('destroyPortlet', cleanUp);
+							}
+
+							Liferay.on('destroyPortlet', cleanUp);
 						</aui:script>
 					</clay:col>
 				</clay:row>

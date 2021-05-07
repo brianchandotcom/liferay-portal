@@ -37,9 +37,9 @@ definition {
 			var reindexStartTime = "0";
 
 			while ((!(contains("${elasticsearchTasks}", "indices:data/write/bulk"))) && ("${reindexStartTime}" != "60")) {
-				Pause.pauseNoSPARefresh(locator1 = "5000");
+				Pause.pauseNoSPARefresh(locator1 = "1000");
 
-				var reindexStartTime = ${reindexStartTime} + 5;
+				var reindexStartTime = ${reindexStartTime} + 1;
 
 				echo("Current Elasticsearch Tasks:");
 

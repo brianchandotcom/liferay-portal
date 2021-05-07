@@ -252,6 +252,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
+
+			throw new PortalException(exception);
 		}
 
 		portletURL.setParameter("checkoutStepName", checkoutStepName);
@@ -262,6 +264,8 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		}
 		catch (WindowStateException windowStateException) {
 			_log.error(windowStateException, windowStateException);
+
+			throw new PortalException(windowStateException);
 		}
 
 		if (commerceOrder.getCommerceAccountId() ==

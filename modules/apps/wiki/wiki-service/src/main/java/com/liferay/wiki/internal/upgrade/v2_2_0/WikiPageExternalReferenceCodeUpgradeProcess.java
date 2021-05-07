@@ -40,25 +40,26 @@ public class WikiPageExternalReferenceCodeUpgradeProcess
 	}
 
 	private void _populateExternalReferenceCode() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareCall(
+		try (PreparedStatement preparedStatement1 = connection.prepareCall(
 				"select pageId from WikiPage where externalReferenceCode is " +
 					"null or externalReferenceCode = ''");
-			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
-					"update WikiPage set externalReferenceCode = ? where " +
-						"pageId = ?"))) {
+			ResultSet resultSet = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update WikiPage set externalReferenceCode = ? where " +
+							"pageId = ?"))) {
 
-			while (rs.next()) {
-				long pageId = rs.getLong(1);
+			while (resultSet.next()) {
+				long pageId = resultSet.getLong(1);
 
-				ps2.setString(1, String.valueOf(pageId));
-				ps2.setLong(2, pageId);
+				preparedStatement2.setString(1, String.valueOf(pageId));
+				preparedStatement2.setLong(2, pageId);
 
-				ps2.addBatch();
+				preparedStatement2.addBatch();
 			}
 
-			ps2.executeBatch();
+			preparedStatement2.executeBatch();
 		}
 	}
 

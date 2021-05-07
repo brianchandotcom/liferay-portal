@@ -40,25 +40,26 @@ public class WikiNodeExternalReferenceCodeUpgradeProcess
 	}
 
 	private void _populateExternalReferenceCode() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select nodeId from WikiNode where externalReferenceCode is " +
 					"null or externalReferenceCode = ''");
-			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
-					"update WikiNode set externalReferenceCode = ? where " +
-						"nodeId = ?"))) {
+			ResultSet resultSet = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update WikiNode set externalReferenceCode = ? where " +
+							"nodeId = ?"))) {
 
-			while (rs.next()) {
-				long nodeId = rs.getLong(1);
+			while (resultSet.next()) {
+				long nodeId = resultSet.getLong(1);
 
-				ps2.setString(1, String.valueOf(nodeId));
-				ps2.setLong(2, nodeId);
+				preparedStatement2.setString(1, String.valueOf(nodeId));
+				preparedStatement2.setLong(2, nodeId);
 
-				ps2.addBatch();
+				preparedStatement2.addBatch();
 			}
 
-			ps2.executeBatch();
+			preparedStatement2.executeBatch();
 		}
 	}
 

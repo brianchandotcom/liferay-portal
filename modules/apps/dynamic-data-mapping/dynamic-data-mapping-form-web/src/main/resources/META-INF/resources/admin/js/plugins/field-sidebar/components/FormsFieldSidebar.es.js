@@ -74,7 +74,6 @@ export const FormsFieldSidebar = ({title}) => {
 		},
 		tabs,
 		unimplementedProperties: [
-			'allowGuestUsers',
 			'fieldNamespace',
 			'readOnly',
 			'visibilityExpression',

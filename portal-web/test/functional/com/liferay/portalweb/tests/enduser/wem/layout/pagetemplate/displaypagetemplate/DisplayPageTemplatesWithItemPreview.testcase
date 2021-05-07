@@ -1,0 +1,335 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-128904. View mapped content in page editor when select preview items."
+	@priority = "5"
+	test ViewMappedContentOfPreviewItem {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document with an image") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add the first display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name 1",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Heading fragment to the first display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Mapping the Title field to Heading fragment") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Select the web content via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Web Content Title",
+				assetType = "Web Content Article");
+		}
+
+		task ("View title of web content shown in Heading fragment") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Web Content Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Select the None via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "-- None --",
+				item = "-- None --");
+		}
+
+		task ("View Heading Example shown in Heading fragment") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Open the Preview modal") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(locator1 = "PageEditor#PREVIEW");
+		}
+
+		task ("Select the web content via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Web Content Title",
+				assetType = "Web Content Article",
+				modal = "true");
+		}
+
+		task ("View title of web content shown in Heading fragment") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Web Content Title");
+
+			SelectFrameTop();
+		}
+
+		task ("Select the None via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "-- None --",
+				item = "-- None --",
+				modal = "true");
+		}
+
+		task ("View Heading Example shown in Heading fragment") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Heading Example");
+		}
+
+		task ("Add the second display page template for Blogs Entry") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name 2",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Button fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Mapping the Title field to Button fragment") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Button",
+				id = "link");
+		}
+
+		task ("Select the blogs entry via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry");
+		}
+
+		task ("View title of blogs entry shown in Button fragment") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Blogs Entry Title",
+				fragmentName = "Button",
+				id = "link");
+		}
+
+		task ("Select the None via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "-- None --",
+				item = "-- None --");
+		}
+
+		task ("View Go Somewhere shown in Button fragment") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Go Somewhere",
+				fragmentName = "Button",
+				id = "link");
+		}
+
+		task ("Open the Preview modal") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(locator1 = "PageEditor#PREVIEW");
+		}
+
+		task ("Select the blogs entry via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Blogs Entry Title",
+				assetType = "Blogs Entry",
+				modal = "true");
+		}
+
+		task ("View title of blogs entry shown in Button fragment") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Blogs Entry Title");
+
+			SelectFrameTop();
+		}
+
+		task ("Select the None via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "-- None --",
+				item = "-- None --",
+				modal = "true");
+		}
+
+		task ("View Go Somewhere shown in Button fragment") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
+		}
+
+		task ("Add the third display page template for Document") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name 3",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+		}
+
+		task ("Add an Image fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 3");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Mapping the Preview Image field to Image fragment") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Image",
+				id = "image-square");
+
+			Select(
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Preview Image");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("Select the document via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Document Title",
+				assetType = "Document");
+		}
+
+		task ("View image of document shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
+		}
+
+		task ("Select the None via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "-- None --",
+				item = "-- None --");
+		}
+
+		task ("View the placeholder shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "data:image/png");
+		}
+
+		task ("Open the Preview modal") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(locator1 = "PageEditor#PREVIEW");
+		}
+
+		task ("Select the document via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Document Title",
+				assetType = "Document",
+				modal = "true");
+		}
+
+		task ("View image of document shown in Image fragment") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
+
+			SelectFrameTop();
+		}
+
+		task ("Select the None via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "-- None --",
+				item = "-- None --",
+				modal = "true");
+		}
+
+		task ("View the placeholder shown in Image fragment") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "data:image/png");
+		}
+	}
+
+}

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.style.book.internal.upgrade.v1_3_0;
+package com.liferay.style.book.internal.upgrade.v1_2_0;
 
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.style.book.internal.upgrade.v1_3_0.util.StyleBookEntryVersionTable;
+import com.liferay.style.book.internal.upgrade.v1_2_0.util.StyleBookEntryVersionTable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

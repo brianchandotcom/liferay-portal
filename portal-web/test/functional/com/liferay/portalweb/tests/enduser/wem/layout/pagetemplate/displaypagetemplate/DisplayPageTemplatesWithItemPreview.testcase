@@ -28,6 +28,83 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-128904. The page editor should still work when select a preview item."
+	@priority = "4"
+	test EditPageContentWhenPreviewItemSelected {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Banner Center fragment to the display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Mapping the Title field to title editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Banner Center",
+				id = "01-title");
+		}
+
+		task ("Select the web content via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Web Content Title",
+				assetType = "Web Content Article");
+		}
+
+		task ("View title of web content shown in title editable field") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Web Content Title",
+				fragmentName = "Banner Center",
+				id = "01-title");
+		}
+
+		task ("Mapping the Content field to subtitle editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
+				fragmentName = "Banner Center",
+				id = "02-subtitle");
+		}
+
+		task ("View content of web content shown in subtitle editable field") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Web Content Content",
+				fragmentName = "Banner Center",
+				id = "02-subtitle");
+		}
+
+		task ("Edit inline content of link editable field") {
+			PageEditor.editFragmentText(
+				fragmentName = "Banner Center",
+				id = "03-link",
+				text = "Edited Text");
+		}
+
+		task ("View the edited inline content of link editable field") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Edited Text",
+				fragmentName = "Banner Center",
+				id = "03-link");
+		}
+	}
+
 	@description = "This is a test for LPS-128904. View mapped content in page editor when select preview items."
 	@priority = "5"
 	test ViewMappedContentOfPreviewItem {

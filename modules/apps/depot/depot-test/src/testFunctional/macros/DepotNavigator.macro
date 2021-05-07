@@ -293,6 +293,8 @@ definition {
 
 		if ("${stagingItem}" == "Publish to Live") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			WaitForElementPresent(locator1 = "Button#PUBLISH");
 		}
 	}
 

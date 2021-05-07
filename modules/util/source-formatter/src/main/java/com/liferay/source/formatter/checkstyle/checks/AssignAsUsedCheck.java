@@ -45,12 +45,15 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 
 			if (parentDetailAST.getType() == TokenTypes.SLIST) {
 				_checkAssign(
-					assignDetailAST, getEndLineNumber(parentDetailAST));
+					detailAST, assignDetailAST,
+					getEndLineNumber(parentDetailAST));
 			}
 		}
 	}
 
-	private void _checkAssign(DetailAST assignDetailAST, int endRange) {
+	private void _checkAssign(
+		DetailAST detailAST, DetailAST assignDetailAST, int endRange) {
+
 		if (hasParentWithTokenType(
 				assignDetailAST, TokenTypes.FOR_EACH_CLAUSE,
 				TokenTypes.FOR_INIT)) {
@@ -62,6 +65,13 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 			TokenTypes.IDENT);
 
 		if (nameDetailAST == null) {
+			return;
+		}
+
+		DetailAST methodCallDetailAST = assignDetailAST.findFirstToken(
+			TokenTypes.METHOD_CALL);
+
+		if (methodCallDetailAST == null) {
 			return;
 		}
 
@@ -101,9 +111,24 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 				return;
 			}
 
+			if (checkMoveStatement(assignDetailAST)) {
+				checkMoveAfterBranchingStatement(
+					detailAST, assignDetailAST, variableName,
+					dependentIdentDetailAST);
+
+				if (!hasParentWithTokenType(
+						assignDetailAST, TokenTypes.LITERAL_WHILE)) {
+
+					checkMoveInsideIfStatement(
+						assignDetailAST, nameDetailAST, variableName,
+						dependentIdentDetailAST,
+						dependentIdentDetailASTList.get(
+							dependentIdentDetailASTList.size() - 1));
+				}
+			}
+
 			checkInline(
-				assignDetailAST, variableName,
-				assignDetailAST.findFirstToken(TokenTypes.METHOD_CALL),
+				assignDetailAST, variableName, methodCallDetailAST,
 				dependentIdentDetailAST, dependentIdentDetailASTList);
 
 			return;

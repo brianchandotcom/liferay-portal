@@ -67,7 +67,10 @@ definition {
 				var elasticsearchTasks = JSONCurlUtil.get("${curl}");
 			}
 
-			if ("${reindexElapsedTime}" == "480") {
+			if ("${reindexElapsedTime}" == "0") {
+				echo("Elasticsearch failed to receive reindex request.");
+			}
+			else if ("${reindexElapsedTime}" == "480") {
 				echo("Reindex timed out after 480 seconds.");
 
 				takeScreenshot();

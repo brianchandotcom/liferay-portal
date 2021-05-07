@@ -11,6 +11,17 @@
 	<version>1.0.0</version>
 	<packaging>mule-extension</packaging>
 	<name>Liferay Connector</name>
+
+	<properties>
+		<munit.input.directory>src/test/munit</munit.input.directory>
+		<munit.output.directory>${basedir}/target/test-mule/munit</munit.output.directory>
+		<munit.extensions.maven.plugin.version>1.0.0</munit.extensions.maven.plugin.version>
+		<munit.version>2.2.3</munit.version>
+		<munit.runtime.version>4.2.2</munit.runtime.version>
+		<munit.mtftool.version>1.0.0</munit.mtftool.version>
+		<mavenResourcesVersion>3.0.2</mavenResourcesVersion>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -43,24 +54,24 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<!--		<pluginManagement>-->
-		<!--			<plugins>-->
-		<!--				<plugin>-->
-		<!--					<groupId>org.apache.maven.plugins</groupId>-->
-		<!--					<artifactId>maven-surefire-plugin</artifactId>-->
-		<!--					<version>2.22.0</version>-->
-		<!--					<configuration>-->
-		<!--						<excludes>-->
-		<!--							<exclude>**/LiferayCreateOperationTest.java</exclude>-->
-		<!--							<exclude>**/LiferayDeleteOperationTest.java</exclude>-->
-		<!--							<exclude>**/LiferayGetOperationTest.java</exclude>-->
-		<!--							<exclude>**/LiferayUpdateOperationTest.java</exclude>-->
-		<!--							<exclude>**/OAuth2CachedConnectionProviderTest.java</exclude>-->
-		<!--						</excludes>-->
-		<!--					</configuration>-->
-		<!--				</plugin>-->
-		<!--			</plugins>-->
-		<!--		</pluginManagement>-->
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.0</version>
+					<configuration>
+						<excludes>
+							<exclude>**/LiferayCreateOperationTest.java</exclude>
+							<exclude>**/LiferayDeleteOperationTest.java</exclude>
+							<exclude>**/LiferayGetOperationTest.java</exclude>
+							<exclude>**/LiferayUpdateOperationTest.java</exclude>
+							<exclude>**/OAuth2CachedConnectionProviderTest.java</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>com.liferay</groupId>
@@ -86,6 +97,70 @@
 					<fileName>src/test/resources/test-get-operation.xml</fileName>
 					<fileName>src/test/resources/test-update-operation.xml</fileName>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${mavenResourcesVersion}</version>
+				<executions>
+					<execution>
+						<id>copy-munit-resources</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${munit.output.directory}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${munit.input.directory}</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.mulesoft.munit</groupId>
+				<artifactId>munit-extensions-maven-plugin</artifactId>
+				<version>${munit.extensions.maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<phase>integration-test</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<runtimeVersion>${munit.runtime.version}</runtimeVersion>
+					<runtimeConfiguration>
+						<discoverRuntimes>
+							<product>EE</product>
+							<includeSnapshots>false</includeSnapshots>
+						</discoverRuntimes>
+					</runtimeConfiguration>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.mulesoft.munit</groupId>
+						<artifactId>munit-runner</artifactId>
+						<version>${munit.version}</version>
+						<classifier>mule-plugin</classifier>
+					</dependency>
+					<dependency>
+						<groupId>com.mulesoft.munit</groupId>
+						<artifactId>munit-tools</artifactId>
+						<version>${munit.version}</version>
+						<classifier>mule-plugin</classifier>
+					</dependency>
+					<dependency>
+						<groupId>com.mulesoft.munit</groupId>
+						<artifactId>mtf-tools</artifactId>
+						<version>${munit.mtftool.version}</version>
+						<classifier>mule-plugin</classifier>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

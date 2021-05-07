@@ -119,7 +119,7 @@ definition {
 			productType = "Simple");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Options");
-		
+
 		Type(
 			key_title = "Add Options",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
@@ -159,70 +159,70 @@ definition {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-		
+
 		Refresh();
 
 		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
-		
+
 		Click(locator1 = "Button#PLUS");
-		
+
 		Click(
 			key_fieldName = "Add SKU",
 			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
-			
+
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-		
+
 		Type(
 			key_fieldLabel = "SKU",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "BLACKSKU");
-		
+
 		Click(locator1 = "Dropdown#TRIGGER");
-		
+
 		Click(
 			key_fieldName = "Black",
 			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
-		
+
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Purchasable",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-		
+
 		Type(
 			key_fieldLabel = "Base Price",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "10.0");
-		
+
 		Button.click(button = "Publish");
 
-		Pause(locator1="1000");
-		
+		Pause(locator1 = "1000");
+
 		Refresh();
-		
+
 		ApplicationsMenu.gotoSite(site = "Minium");
-		
+
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-		
+
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
 			accountName = "First Account",
 			adminEmailAddress = "test@liferay.com");
-		
+
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-		
+
 		Click(
 			key_productName = "bundled-product",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
-		
+
 		Click(
 			key_productName = "Bundled Product",
 			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_BY_PRODUCT");
-		
+
 		CommerceNavigator.gotoMiniCart();
-		
+
 		Type(
 			key_cartItemSKU = "BLACKSKU",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = "3");
-		
+
 		AssertElementPresent(
 			key_cartItemSKU = "BLACKSKU",
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",

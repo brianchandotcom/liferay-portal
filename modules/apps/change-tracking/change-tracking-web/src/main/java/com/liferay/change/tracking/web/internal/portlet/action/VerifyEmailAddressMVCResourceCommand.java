@@ -17,11 +17,10 @@ package com.liferay.change.tracking.web.internal.portlet.action;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -35,8 +34,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -90,59 +87,57 @@ public class VerifyEmailAddressMVCResourceCommand
 			themeDisplay.getCompanyId(),
 			ParamUtil.getString(resourceRequest, "emailAddress"));
 
-		if (user != null) {
-			if (user.getUserId() == ctCollection.getUserId()) {
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse,
-					JSONUtil.put(
-						"errorMessage",
-						_language.get(
-							httpServletRequest, "user-is-already-invited")));
+		if (user == null) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONFactoryUtil.createJSONObject());
 
-				return;
-			}
+			return;
+		}
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
+		if (user.getUserId() == themeDisplay.getUserId()) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"you-cannot-update-permissions-for-yourself")));
 
-			Group group = ctCollection.getGroup();
+			return;
+		}
+		else if (user.getUserId() == ctCollection.getUserId()) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"cannot-update-permissions-for-an-owner")));
 
-			if (group != null) {
-				List<UserGroupRole> userGroupRoles =
-					_userGroupRoleLocalService.getUserGroupRoles(
-						user.getUserId(), group.getGroupId());
+			return;
+		}
 
-				if (!userGroupRoles.isEmpty()) {
-					JSONPortletResponseUtil.writeJSON(
-						resourceRequest, resourceResponse,
-						JSONUtil.put(
-							"errorMessage",
-							_language.get(
-								httpServletRequest,
-								"user-is-already-invited")));
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
 
-					return;
-				}
-			}
+		if (!_portletPermission.contains(
+				permissionChecker, CTPortletKeys.PUBLICATIONS,
+				ActionKeys.ACCESS_IN_CONTROL_PANEL) ||
+			!_portletPermission.contains(
+				permissionChecker, CTPortletKeys.PUBLICATIONS,
+				ActionKeys.VIEW)) {
 
-			if (!_portletPermission.contains(
-					permissionChecker, CTPortletKeys.PUBLICATIONS,
-					ActionKeys.ACCESS_IN_CONTROL_PANEL) ||
-				!_portletPermission.contains(
-					permissionChecker, CTPortletKeys.PUBLICATIONS,
-					ActionKeys.VIEW)) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"user-does-not-have-permissions-to-access-" +
+							"publications")));
 
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse,
-					JSONUtil.put(
-						"errorMessage",
-						_language.get(
-							httpServletRequest,
-							"user-does-not-have-permissions-to-access-" +
-								"publications")));
-
-				return;
-			}
+			return;
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -155,10 +150,7 @@ public class VerifyEmailAddressMVCResourceCommand
 					"fullName", user.getFullName()
 				).put(
 					"userId", Long.valueOf(user.getUserId())
-				)
-			).put(
-				"userExists", user != null
-			));
+				)));
 	}
 
 	@Reference

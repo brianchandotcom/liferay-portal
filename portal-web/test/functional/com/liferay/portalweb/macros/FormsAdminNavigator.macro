@@ -61,7 +61,7 @@ definition {
 
 		ScrollBy(value1 = "0, 230");
 
-		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");		
+		Click(locator1 = "Form#SIDEBAR_ELLIPSIS");
 
 		Click(locator1 = "Form#SIDEBAR_MENUITEM_REMOVE_FIELD");
 	}

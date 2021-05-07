@@ -1,7 +1,7 @@
 apiDir: "../headless-commerce-punchout-api/src/main/java"
 apiPackagePath: "com.liferay.headless.commerce.punchout"
 application:
-    baseURI: "headless-commerce-punchout"
+    baseURI: "/headless-commerce-punchout"
     className: "HeadlessCommercePunchOutApplication"
     name: "Liferay.Headless.Commerce.PunchOut"
 author: "Jaclyn Ong"

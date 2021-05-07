@@ -51,7 +51,6 @@ definition {
 		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-		
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 

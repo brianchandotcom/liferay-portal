@@ -147,18 +147,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return _getGeolocationData();
 		}
 		else if (type.equals("numeric")) {
-			String numberValue = (String)get("data");
-
-			Locale locale = LocaleUtil.getMostRelevantLocale();
-
-			DecimalFormat decimalFormat =
-				(DecimalFormat)DecimalFormat.getInstance(locale);
-
-			decimalFormat.setGroupingUsed(false);
-			decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
-			decimalFormat.setParseBigDecimal(true);
-
-			return decimalFormat.format(Double.valueOf(numberValue));
+			return _getNumericData();
 		}
 
 		return (String)get("data");
@@ -473,6 +462,21 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		}
 
 		return (String)get("data");
+	}
+
+	private String _getNumericData() {
+		String numberValue = (String)get("data");
+
+		Locale locale = LocaleUtil.getMostRelevantLocale();
+
+		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
+			locale);
+
+		decimalFormat.setGroupingUsed(false);
+		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+		decimalFormat.setParseBigDecimal(true);
+
+		return decimalFormat.format(Double.valueOf(numberValue));
 	}
 
 	private static final String _LAYOUT_TYPE_PRIVATE_GROUP = "private-group";

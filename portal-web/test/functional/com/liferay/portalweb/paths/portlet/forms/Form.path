@@ -151,18 +151,8 @@
 </tr>
 <!--ADD_FIELD-->
 <tr>
-    <td>ADD_FIELD_TARGET</td>
-    <td>//div[contains(@class,'col-empty')]/div[contains(@class,'target')]</td>
-    <td></td>
-</tr>
-<tr>
     <td>ADD_FIELD</td>
     <td>//button[contains(@class,'add-button-large')]/span | //div[contains(@class,'portlet-forms')]//button[contains(@class,'ddm-add-field')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>ADD_FIELD_TYPE</td>
-    <td>//div[contains(@class,'field-type')]//span[contains(text(),'${key_fieldType}')]</td>
     <td></td>
 </tr>
 <tr>
@@ -178,6 +168,16 @@
 <tr>
     <td>ADD_FIELD_POSITION_1</td>
     <td>//div[contains(@class,'ddm-target')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ADD_FIELD_TARGET</td>
+    <td>//div[contains(@class,'col-empty')]/div[contains(@class,'target')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ADD_FIELD_TYPE</td>
+    <td>//div[contains(@class,'field-type')]//span[contains(text(),'${key_fieldType}')]</td>
     <td></td>
 </tr>
 <tr>

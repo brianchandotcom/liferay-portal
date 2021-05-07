@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -62,7 +61,6 @@ import com.liferay.registry.ServiceRegistration;
 import com.sun.syndication.io.XmlReader;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.zip.ZipFile;
@@ -129,22 +127,6 @@ public class InitUtil {
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
-		}
-
-		if (ServerDetector.isTomcat()) {
-			try {
-				Class<?> clazz = Class.forName(
-					"com.liferay.support.tomcat.loader." +
-						"PortalClassLoaderFactory");
-
-				Method method = clazz.getMethod(
-					"setClassLoader", ClassLoader.class);
-
-				method.invoke(null, PortalClassLoaderUtil.getClassLoader());
-			}
-			catch (Exception exception) {
-				exception.printStackTrace();
-			}
 		}
 
 		// Properties

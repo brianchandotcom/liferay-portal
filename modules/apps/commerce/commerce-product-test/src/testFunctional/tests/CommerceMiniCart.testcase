@@ -172,12 +172,38 @@ definition {
 	}
 
 	@description = "COMMERCE-6336. As a buyer, I want to see the barred list price and a sale price of an item in the mini-cart, if a promotion is set"
-	@ignore = "true"
 	@priority = "3"
 	test ViewMiniCartItemWithPromotion {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6336 ViewMiniCartItemWithPromotion pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Descending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Premium Brake Fluid",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+			value1 = "100.00");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO",
+			value1 = "90.00");
+		
 	}
 
 	@description = "COMMERCE-6342. As a buyer, I want to see the barred list price and the sale price on the mini-cart item and I want to be able to see tier price in the mini-cart summary"

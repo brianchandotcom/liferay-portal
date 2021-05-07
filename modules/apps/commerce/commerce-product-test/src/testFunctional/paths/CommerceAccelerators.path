@@ -124,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_LIST_PRICE_PROMO</td>
+	<td>//div[contains(@class,'price')]//span[contains(@class,'price-value-promo')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_NET_PRICE</td>
 	<td>//div[contains(@class,'price')]//span[contains(@class,'price-value-final')]</td>
 	<td></td>

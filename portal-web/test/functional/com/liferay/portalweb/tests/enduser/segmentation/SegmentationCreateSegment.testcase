@@ -1145,12 +1145,43 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130289."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserRole {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130289 AddSegmentByUserRole pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Regular Role");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserRole Test");
+
+		Segmentation.fillProperty(selectRole = "Regular Role");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserRole Test");
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "Regular Role");
 	}
 
 	@description = "This is a test for LPS-130290."

@@ -51,8 +51,8 @@ public class WorkflowMetricsSLATaskResult {
 		return _instanceId;
 	}
 
-	public LocalDateTime getLastCheckLocalDateTime() {
-		return _lastCheckLocalDateTime;
+	public LocalDateTime getModifiedLocalDateTime() {
+		return _modifiedLocalDateTime;
 	}
 
 	public long getNodeId() {
@@ -131,10 +131,8 @@ public class WorkflowMetricsSLATaskResult {
 		_instanceId = instanceId;
 	}
 
-	public void setLastCheckLocalDateTime(
-		LocalDateTime lastCheckLocalDateTime) {
-
-		_lastCheckLocalDateTime = lastCheckLocalDateTime;
+	public void setModifiedLocalDateTime(LocalDateTime modifiedLocalDateTime) {
+		_modifiedLocalDateTime = modifiedLocalDateTime;
 	}
 
 	public void setNodeId(long nodeId) {
@@ -176,7 +174,7 @@ public class WorkflowMetricsSLATaskResult {
 	private boolean _instanceCompleted;
 	private LocalDateTime _instanceCompletionLocalDateTime;
 	private long _instanceId;
-	private LocalDateTime _lastCheckLocalDateTime;
+	private LocalDateTime _modifiedLocalDateTime;
 	private long _nodeId;
 	private boolean _onTime;
 	private long _processId;

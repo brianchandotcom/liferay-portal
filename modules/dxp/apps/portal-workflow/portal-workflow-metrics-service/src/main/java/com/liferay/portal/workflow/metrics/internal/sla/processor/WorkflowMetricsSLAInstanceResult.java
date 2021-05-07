@@ -42,8 +42,8 @@ public class WorkflowMetricsSLAInstanceResult {
 		return _instanceId;
 	}
 
-	public LocalDateTime getLastCheckLocalDateTime() {
-		return _lastCheckLocalDateTime;
+	public LocalDateTime getModifiedLocalDateTime() {
+		return _modifiedLocalDateTime;
 	}
 
 	public LocalDateTime getOverdueLocalDateTime() {
@@ -94,10 +94,8 @@ public class WorkflowMetricsSLAInstanceResult {
 		_instanceId = instanceId;
 	}
 
-	public void setLastCheckLocalDateTime(
-		LocalDateTime lastCheckLocalDateTime) {
-
-		_lastCheckLocalDateTime = lastCheckLocalDateTime;
+	public void setModifiedLocalDateTime(LocalDateTime modifiedLocalDateTime) {
+		_modifiedLocalDateTime = modifiedLocalDateTime;
 	}
 
 	public void setOnTime(boolean onTime) {
@@ -136,7 +134,7 @@ public class WorkflowMetricsSLAInstanceResult {
 	private LocalDateTime _completionLocalDateTime;
 	private long _elapsedTime;
 	private long _instanceId;
-	private LocalDateTime _lastCheckLocalDateTime;
+	private LocalDateTime _modifiedLocalDateTime;
 	private boolean _onTime;
 	private LocalDateTime _overdueLocalDateTime;
 	private long _processId;

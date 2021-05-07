@@ -546,7 +546,7 @@ public class WorkflowMetricsSLAProcessorTest extends PowerMockito {
 			new WorkflowMetricsSLAInstanceResult() {
 				{
 					setElapsedTime(10000);
-					setLastCheckLocalDateTime(nowLocalDateTime);
+					setModifiedLocalDateTime(nowLocalDateTime);
 					setRemainingTime(0);
 					setWorkflowMetricsSLAStatus(
 						WorkflowMetricsSLAStatus.STOPPED);

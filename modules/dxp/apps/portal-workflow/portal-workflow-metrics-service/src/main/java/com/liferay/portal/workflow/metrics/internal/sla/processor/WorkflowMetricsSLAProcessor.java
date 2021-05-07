@@ -65,7 +65,7 @@ public class WorkflowMetricsSLAProcessor {
 			elapsedTime = workflowMetricsSLAInstanceResult.getElapsedTime();
 
 			lastCheckLocalDateTime =
-				workflowMetricsSLAInstanceResult.getLastCheckLocalDateTime();
+				workflowMetricsSLAInstanceResult.getModifiedLocalDateTime();
 			workflowMetricsSLAStatus =
 				workflowMetricsSLAInstanceResult.getWorkflowMetricsSLAStatus();
 
@@ -276,7 +276,7 @@ public class WorkflowMetricsSLAProcessor {
 
 					setElapsedTime(elapsedTime);
 					setInstanceId(instanceId);
-					setLastCheckLocalDateTime(nowLocalDateTime);
+					setModifiedLocalDateTime(nowLocalDateTime);
 					setOnTime(
 						elapsedTime <=
 							workflowMetricsSLADefinitionVersion.getDuration());
@@ -442,9 +442,9 @@ public class WorkflowMetricsSLAProcessor {
 				setInstanceCompletionLocalDateTime(
 					instanceCompletionLocalDateTime);
 				setInstanceId(workflowMetricsSLAInstanceResult.getInstanceId());
-				setLastCheckLocalDateTime(
+				setModifiedLocalDateTime(
 					workflowMetricsSLAInstanceResult.
-						getLastCheckLocalDateTime());
+						getModifiedLocalDateTime());
 				setNodeId(document.getLong("nodeId"));
 				setOnTime(
 					WorkflowMetricsSLAProcessor.this.isOnTime(

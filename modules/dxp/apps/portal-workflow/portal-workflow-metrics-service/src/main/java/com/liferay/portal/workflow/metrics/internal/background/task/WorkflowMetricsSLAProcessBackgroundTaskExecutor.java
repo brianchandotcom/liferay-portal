@@ -350,7 +350,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 					startInstanceId)));
 
 		searchSearchRequest.setSelectedFieldNames(
-			"elapsedTime", "instanceId", "lastCheckDate", "onTime",
+			"elapsedTime", "instanceId", "modifiedDate", "onTime",
 			"overdueDate", "remainingTime", "status");
 		searchSearchRequest.setSize(10000);
 
@@ -370,9 +370,9 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 					setCompanyId(companyId);
 					setElapsedTime(document.getLong("elapsedTime"));
 					setInstanceId(document.getLong("instanceId"));
-					setLastCheckLocalDateTime(
+					setModifiedLocalDateTime(
 						LocalDateTime.parse(
-							document.getDate("lastCheckDate"),
+							document.getDate("modifiedDate"),
 							_dateTimeFormatter));
 					setOnTime(
 						GetterUtil.getBoolean(document.getValue("onTime")));

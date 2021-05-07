@@ -823,11 +823,11 @@ public class WorkflowMetricsRESTTestHelper {
 			"instanceId", instance.getId()
 		);
 
-		if (slaResult.getDateChecked() != null) {
+		if (slaResult.getDateModified() != null) {
 			documentBuilder.setValue(
-				"lastCheckDate",
+				"modifiedDate",
 				DateUtil.getDate(
-					slaResult.getDateChecked(), "yyyyMMddHHmmss",
+					slaResult.getDateModified(), "yyyyMMddHHmmss",
 					LocaleUtil.getDefault()));
 		}
 

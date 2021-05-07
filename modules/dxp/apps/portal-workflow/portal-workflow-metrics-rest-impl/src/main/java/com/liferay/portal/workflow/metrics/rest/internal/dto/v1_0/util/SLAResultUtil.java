@@ -42,7 +42,7 @@ public class SLAResultUtil {
 			workflowMetricsSLADefinitionFunction) {
 
 		return _toSLAResult(
-			() -> _parseDate(document.getDate("lastCheckDate")),
+			() -> _parseDate(document.getDate("modifiedDate")),
 			slaDefinitionId -> _getSLAName(
 				slaDefinitionId, workflowMetricsSLADefinitionFunction),
 			() -> document.getBoolean("onTime"),
@@ -59,7 +59,7 @@ public class SLAResultUtil {
 
 		return _toSLAResult(
 			() -> _parseDate(
-				GetterUtil.getString(sourcesMap.get("lastCheckDate"))),
+				GetterUtil.getString(sourcesMap.get("modifiedDate"))),
 			slaDefinitionId -> _getSLAName(
 				slaDefinitionId, workflowMetricsSLADefinitionFunction),
 			() -> GetterUtil.getBoolean(sourcesMap.get("onTime")),
@@ -116,7 +116,7 @@ public class SLAResultUtil {
 	}
 
 	private static SLAResult _toSLAResult(
-		Supplier<Date> lastCheckDateSupplier,
+		Supplier<Date> modifiedDateSupplier,
 		Function<Long, String> nameFunction, Supplier<Boolean> onTimeSupplier,
 		Supplier<Date> overdueDateSupplier,
 		Supplier<Long> remainingTimeSupplier,
@@ -125,7 +125,7 @@ public class SLAResultUtil {
 
 		return new SLAResult() {
 			{
-				dateChecked = lastCheckDateSupplier.get();
+				dateModified = modifiedDateSupplier.get();
 				dateOverdue = overdueDateSupplier.get();
 
 				id = slaDefinitionIdSupplier.get();

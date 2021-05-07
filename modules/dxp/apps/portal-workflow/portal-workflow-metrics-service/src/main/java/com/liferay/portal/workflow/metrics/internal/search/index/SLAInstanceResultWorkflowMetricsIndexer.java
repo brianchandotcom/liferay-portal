@@ -78,14 +78,14 @@ public class SLAInstanceResultWorkflowMetricsIndexer
 			"instanceId", workflowMetricsSLAInstanceResult.getInstanceId()
 		);
 
-		if (workflowMetricsSLAInstanceResult.getLastCheckLocalDateTime() !=
+		if (workflowMetricsSLAInstanceResult.getModifiedLocalDateTime() !=
 				null) {
 
 			documentBuilder.setDate(
-				"lastCheckDate",
+				"modifiedDate",
 				formatLocalDateTime(
 					workflowMetricsSLAInstanceResult.
-						getLastCheckLocalDateTime()));
+						getModifiedLocalDateTime()));
 		}
 
 		documentBuilder.setValue(

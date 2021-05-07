@@ -51,7 +51,7 @@ public class SLAResultResourceImpl extends BaseSLAResultResourceImpl {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.addSorts(
-			_sorts.field("lastCheckDate", SortOrder.DESC));
+			_sorts.field("modifiedDate", SortOrder.DESC));
 
 		searchSearchRequest.setIndexNames(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(

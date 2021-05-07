@@ -128,8 +128,6 @@ definition {
 		AssertElementNotPresent(
 			key_productName = "u-joint",
 			locator1 = "CommerceAccelerators#CHECK_ITEM_COMPARE");
-
-			
 	}
 
 	@description = "COMMERCE-5914. As a buyer, I want to deselect a item in Product Details for compare in Product Widget"

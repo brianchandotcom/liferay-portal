@@ -27,7 +27,7 @@ definition {
 
 		var reindexElapsedTime = "0";
 
-		while ("${reindexElapsedTime}" == "0" || "${reindexElapsedTime}" == "10" || "${reindexElapsedTime}" == "480" && (maxIterations = "2")) {
+		while ("${reindexElapsedTime}" == "0" || "${reindexElapsedTime}" == "480" && (maxIterations = "2")) {
 			Navigator.gotoNavItem(navItem = "Index Actions");
 
 			Click(

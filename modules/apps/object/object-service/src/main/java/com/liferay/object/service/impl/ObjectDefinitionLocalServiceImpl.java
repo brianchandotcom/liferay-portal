@@ -183,29 +183,12 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinitionPersistence.countByCompanyId(companyId);
 	}
 
-	@Clusterable
 	@Override
-	public void undeployObjectDefinition(long objectDefinitionId) {
-		for (Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap :
-				_serviceRegistrationsMaps.values()) {
+	public void setAopProxy(Object aopProxy) {
+		super.setAopProxy(aopProxy);
 
-			List<ServiceRegistration<?>> serviceRegistrations =
-				serviceRegistrationsMap.remove(objectDefinitionId);
-
-			if (serviceRegistrations != null) {
-				for (ServiceRegistration<?> serviceRegistration :
-						serviceRegistrations) {
-
-					serviceRegistration.unregister();
-				}
-			}
-		}
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
 		_objectDefinitionDeployerServiceTracker = new ServiceTracker<>(
-			bundleContext, ObjectDefinitionDeployer.class,
+			_bundleContext, ObjectDefinitionDeployer.class,
 			new ServiceTrackerCustomizer
 				<ObjectDefinitionDeployer, ObjectDefinitionDeployer>() {
 
@@ -215,7 +198,7 @@ public class ObjectDefinitionLocalServiceImpl
 						serviceReference) {
 
 					ObjectDefinitionDeployer objectDefinitionDeployer =
-						bundleContext.getService(serviceReference);
+						_bundleContext.getService(serviceReference);
 
 					Map<Long, List<ServiceRegistration<?>>>
 						serviceRegistrationsMap = new ConcurrentHashMap<>();
@@ -264,7 +247,7 @@ public class ObjectDefinitionLocalServiceImpl
 						}
 					}
 
-					bundleContext.ungetService(serviceReference);
+					_bundleContext.ungetService(serviceReference);
 				}
 
 			});
@@ -272,9 +255,38 @@ public class ObjectDefinitionLocalServiceImpl
 		_objectDefinitionDeployerServiceTracker.open();
 	}
 
+	@Clusterable
+	@Override
+	public void undeployObjectDefinition(long objectDefinitionId) {
+		for (Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap :
+				_serviceRegistrationsMaps.values()) {
+
+			List<ServiceRegistration<?>> serviceRegistrations =
+				serviceRegistrationsMap.remove(objectDefinitionId);
+
+			if (serviceRegistrations != null) {
+				for (ServiceRegistration<?> serviceRegistration :
+						serviceRegistrations) {
+
+					serviceRegistration.unregister();
+				}
+			}
+		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
 	@Deactivate
+	@Override
 	protected void deactivate() {
-		_objectDefinitionDeployerServiceTracker.close();
+		super.deactivate();
+
+		if (_objectDefinitionDeployerServiceTracker != null) {
+			_objectDefinitionDeployerServiceTracker.close();
+		}
 	}
 
 	private void _createTable(
@@ -331,6 +343,7 @@ public class ObjectDefinitionLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectDefinitionLocalServiceImpl.class);
 
+	private BundleContext _bundleContext;
 	private ServiceTracker<ObjectDefinitionDeployer, ObjectDefinitionDeployer>
 		_objectDefinitionDeployerServiceTracker;
 

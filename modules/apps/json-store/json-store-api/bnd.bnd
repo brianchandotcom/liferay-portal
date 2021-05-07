@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.json.store.exception,\
 	com.liferay.json.store.model,\
 	com.liferay.json.store.service,\
-	com.liferay.json.store.service.persistence
+	com.liferay.json.store.service.persistence,\
+	com.liferay.json.store.upgrade

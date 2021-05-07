@@ -364,6 +364,16 @@ definition {
 	macro editCP {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
 
+		if (isSet(threadBody)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CKEditor#BODY",
+				value1 = "${threadBody}");
+
+			SelectFrameTop();
+		}
+
 		if ("${threadAttachmentRemove}" == "true") {
 			Panel.expandPanel(panel = "Attachments");
 

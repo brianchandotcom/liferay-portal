@@ -1,6 +1,6 @@
 {
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
-	"presets": ["@babel/preset-env"#if(${liferayVersion.startsWith("7.3")} && ${reactTemplate.equals("true")}), "@babel/preset-react"#end],
+#if (!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")}))
+	"presets": ["@babel/preset-env"#if(!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")} || ${liferayVersion.startsWith("7.2")}) && ${reactTemplate.equals("true")}), "@babel/preset-react"#end],
 	"plugins": [
 		"@babel/proposal-class-properties",
 		"@babel/proposal-object-rest-spread"

@@ -1,5 +1,5 @@
 {
-#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
+#if (!(${liferayVersion.startsWith("7.0")} || ${liferayVersion.startsWith("7.1")}))
 	"config": {
 		"imports": {
 			"dynamic-data-mapping-form-field-type": {

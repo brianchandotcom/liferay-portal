@@ -36,10 +36,6 @@ definition {
 
 			var reindexStartTime = "0";
 
-			echo("Current Elasticsearch Tasks:");
-
-			var elasticsearchTasks = JSONCurlUtil.get("${curl}");
-
 			while ((!(contains("${elasticsearchTasks}", "indices:data/write/bulk"))) && ("${reindexStartTime}" != "60")) {
 				Pause.pauseNoSPARefresh(locator1 = "5000");
 
@@ -47,7 +43,7 @@ definition {
 
 				echo("Current Elasticsearch Tasks:");
 
-				elasticsearchTasks = JSONCurlUtil.get("${curl}");
+				var elasticsearchTasks = JSONCurlUtil.get("${curl}");
 			}
 
 			if ("${reindexStartTime}" == "60") {
@@ -66,7 +62,7 @@ definition {
 
 				echo("Current Elasticsearch Tasks:");
 
-				elasticsearchTasks = JSONCurlUtil.get("${curl}");
+				var elasticsearchTasks = JSONCurlUtil.get("${curl}");
 			}
 
 			takeScreenshot();

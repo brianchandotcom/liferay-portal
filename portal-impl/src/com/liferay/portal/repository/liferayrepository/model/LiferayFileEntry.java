@@ -183,6 +183,11 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public String getExternalReferenceCode() {
+		return _dlFileEntry.getExternalReferenceCode();
+	}
+
+	@Override
 	public long getFileEntryId() {
 		return _dlFileEntry.getFileEntryId();
 	}

@@ -156,11 +156,6 @@
     <td></td>
 </tr>
 <tr>
-    <td>ADD_FIELD_NEW</td>
-    <td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}']</td>
-    <td></td>
-</tr>
-<tr>
     <td>ADD_FIELD</td>
     <td>//button[contains(@class,'add-button-large')]/span | //div[contains(@class,'portlet-forms')]//button[contains(@class,'ddm-add-field')]</td>
     <td></td>
@@ -303,9 +298,14 @@
 </tr>
 <!--SIDEBAR -->
 <tr>
-	<td>ACTIVE_TAB</td>
-	<td>//div[contains(@class,'sidebar')]//*[@*='${key_tabName}'][contains(@aria-pressed,'true')]</td>
-	<td></td>
+	<td>ACTIVE_BUILDER_SIDEBAR_PANEL</td>
+	<td>//div[contains(@class,'sidebar')]//*[@*='Builder'][contains(@aria-pressed,'true')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>BUILDER_SIDEBAR_PANEL</td>
+	<td>//div[contains(@class,'sidebar')]//*[@*='Builder']</td>
+    <td></td>
 </tr>
 <tr>
     <td>SIDEBAR_AUTOCOMPLETE_TAB</td>

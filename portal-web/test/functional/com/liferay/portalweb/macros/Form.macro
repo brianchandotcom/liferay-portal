@@ -5,16 +5,12 @@ definition {
 	var rowNumber = "1";
 
 	macro _addField {
-		if (IsElementNotPresent(key_tabName = "Builder", locator1 = "Form#ACTIVE_TAB")) {
-			MouseOver.mouseOverNotVisible(
-				key_tabName = "Builder",
-				locator1 = "Form#ADD_FIELD_NEW");
+		if (IsElementNotPresent(locator1 = "Form#ACTIVE_BUILDER_SIDEBAR_PANEL")) {
+			MouseOver.mouseOverNotVisible(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
 
 			ScrollBy(value1 = "0, 230");
 
-			Click(
-				key_tabName = "Builder",
-				locator1 = "Form#ADD_FIELD_NEW");
+			Click(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
 		}
 	}
 
@@ -256,9 +252,7 @@ definition {
 
 		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
 
-		AssertVisible(
-			key_tabName = "Builder",
-			locator1 = "Form#ADD_FIELD_NEW");
+		AssertVisible(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
 
 		AssertVisible(locator1 = "Form#NAME_FIELD");
 
@@ -272,9 +266,7 @@ definition {
 	macro editNameLocalized {
 		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
 
-		AssertVisible(
-			key_tabName = "Builder",
-			locator1 = "Form#ADD_FIELD_NEW");
+		AssertVisible(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
 
 		AssertVisible(locator1 = "Form#NAME_FIELD");
 

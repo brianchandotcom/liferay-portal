@@ -74,8 +74,8 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 
 		WikiPage putWikiPage =
 			wikiPageResource.putSiteWikiPageByExternalReferenceCode(
-				randomWikiPage.getExternalReferenceCode(), testGroup.getGroupId(),
-				randomWikiPage);
+				randomWikiPage.getExternalReferenceCode(),
+				testGroup.getGroupId(), randomWikiPage);
 
 		assertEquals(randomWikiPage, putWikiPage);
 		assertValid(putWikiPage);

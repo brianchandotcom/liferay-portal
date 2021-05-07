@@ -59,7 +59,7 @@ public class FormFieldProjectTemplateCustomizer
 		}
 
 		if (!(liferayVersion.startsWith("7.0") ||
-			liferayVersion.startsWith("7.1"))) {
+			  liferayVersion.startsWith("7.1"))) {
 
 			fileNames.add("src/main/resources/META-INF/resources/config.js");
 			fileNames.add(

@@ -37,7 +37,9 @@
 		</munit:execution>
 		<munit:validation>
 			<munit-tools:assert-that expression="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" is="#[MunitTools::notNullValue()]" />
-			<munit-tools:assert-that expression="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" is="#[MunitTools::everyItem(MunitTools::hasKey('active'))]"/>
+			<foreach collection="#[payload]">
+				<munit-tools:assert-that expression="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" is="#[MunitTools::hasKey('active')]" />
+			</foreach>
 		</munit:validation>
 	</munit:test>
 

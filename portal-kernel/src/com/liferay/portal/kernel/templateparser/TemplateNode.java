@@ -146,7 +146,9 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		else if (type.equals("geolocation")) {
 			return _getGeolocationData();
 		}
-		else if (type.equals("numeric")) {
+		else if (type.equals("ddm-decimal") || type.equals("ddm-number") ||
+				 type.equals("numeric")) {
+
 			return _getNumericData();
 		}
 

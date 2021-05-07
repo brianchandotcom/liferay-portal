@@ -137,7 +137,9 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	public String getData() {
 		String type = getType();
 
-		if (type.equals("ddm-journal-article")) {
+		if (type.equals("ddm-journal-article") ||
+			type.equals("journal_article")) {
+
 			return _getLatestArticleData();
 		}
 		else if (type.equals("document_library") || type.equals("image")) {

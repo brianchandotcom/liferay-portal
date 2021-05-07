@@ -467,10 +467,8 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	private String _getNumericData() {
 		String numberValue = (String)get("data");
 
-		Locale locale = LocaleUtil.getMostRelevantLocale();
-
 		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
-			locale);
+			LocaleUtil.getMostRelevantLocale());
 
 		decimalFormat.setGroupingUsed(false);
 		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);

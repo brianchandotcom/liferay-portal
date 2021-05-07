@@ -14,9 +14,14 @@
 
 package com.liferay.commerce.account.model.impl;
 
+import com.liferay.account.model.AccountGroupRel;
 import com.liferay.commerce.account.model.CommerceAccountGroup;
+import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * @author Marco Leo
@@ -24,6 +29,42 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class CommerceAccountGroupRelImpl
 	extends CommerceAccountGroupRelBaseImpl {
+
+	public static CommerceAccountGroupRel fromAccountGroupRel(
+		AccountGroupRel accountGroupRel) {
+
+		if (accountGroupRel == null) {
+			return null;
+		}
+
+		CommerceAccountGroupRel commerceAccountGroupRel =
+			new CommerceAccountGroupRelImpl();
+
+		Map<String, BiConsumer<CommerceAccountGroupRel, Object>>
+			attributeSetterBiConsumers =
+				commerceAccountGroupRel.getAttributeSetterBiConsumers();
+
+		Map<String, Object> modelAttributes =
+			accountGroupRel.getModelAttributes();
+
+		for (Map.Entry<String, Object> entry : modelAttributes.entrySet()) {
+			BiConsumer<CommerceAccountGroupRel, Object>
+				commerceAccountGroupRelObjectBiConsumer =
+					attributeSetterBiConsumers.get(entry.getKey());
+
+			if (commerceAccountGroupRelObjectBiConsumer != null) {
+				commerceAccountGroupRelObjectBiConsumer.accept(
+					commerceAccountGroupRel, entry.getValue());
+			}
+		}
+
+		commerceAccountGroupRel.setCommerceAccountGroupRelId(
+			accountGroupRel.getAccountGroupRelId());
+		commerceAccountGroupRel.setCommerceAccountGroupId(
+			accountGroupRel.getAccountGroupId());
+
+		return commerceAccountGroupRel;
+	}
 
 	public CommerceAccountGroupRelImpl() {
 	}

@@ -243,6 +243,8 @@ definition {
 			itemSubtype = "Basic Document",
 			itemType = "Document");
 
+		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
+
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 
 		Staging.publishToLive(remoteStaging = "true");

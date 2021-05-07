@@ -137,13 +137,14 @@ public interface TextDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "string", label = "%error-message",
-		predefinedValue = "%the-information-does-not-match", type = "text"
+		properties = "initialValue=%the-information-does-not-match",
+		type = "text"
 	)
 	public LocalizedValue confirmationErrorMessage();
 
 	@DDMFormField(
-		dataType = "string", label = "%label", predefinedValue = "%confirm",
-		type = "text"
+		dataType = "string", label = "%label",
+		properties = "initialValue=%confirm", type = "text"
 	)
 	public LocalizedValue confirmationLabel();
 

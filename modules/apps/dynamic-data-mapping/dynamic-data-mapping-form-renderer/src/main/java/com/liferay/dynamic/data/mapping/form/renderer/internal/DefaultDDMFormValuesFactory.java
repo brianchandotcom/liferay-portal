@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
@@ -81,16 +82,12 @@ public class DefaultDDMFormValuesFactory {
 	}
 
 	protected Value createDefaultValue(DDMFormField ddmFormField) {
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
+		String defaultValueString = _getDefaultValueString(
+			ddmFormField.getPredefinedValue());
 
-		String defaultValueString = null;
-
-		if (predefinedValue == null) {
-			defaultValueString = StringPool.BLANK;
-		}
-		else {
-			defaultValueString = GetterUtil.getString(
-				predefinedValue.getString(_locale));
+		if (Validator.isNull(defaultValueString)) {
+			defaultValueString = _getDefaultValueString(
+				(LocalizedValue)ddmFormField.getProperty("initialValue"));
 		}
 
 		if (ddmFormField.isLocalizable()) {
@@ -98,6 +95,14 @@ public class DefaultDDMFormValuesFactory {
 		}
 
 		return new UnlocalizedValue(defaultValueString);
+	}
+
+	private String _getDefaultValueString(LocalizedValue localizedValue) {
+		if (localizedValue == null) {
+			return StringPool.BLANK;
+		}
+
+		return GetterUtil.getString(localizedValue.getString(_locale));
 	}
 
 	private final DDMForm _ddmForm;

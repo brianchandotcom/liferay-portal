@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR</td>
+	<td>//button[contains(@class,'display-page-preview-item-selector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADING</td>
 	<td>//*[@data-qa-id='headerTitle']</td>
 	<td></td>

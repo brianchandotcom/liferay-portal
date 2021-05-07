@@ -105,6 +105,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-128904. Look for the item via scroll bar when there are lots of items shown in Preview With dropdown list."
+	@priority = "4"
+	test ViewItemInDropdownListViaScrollBar {
+		task ("Add 21 web contents based on Basic Web Content") {
+			var n = "1";
+
+			while ("${n}" != "22" && (maxIterations = "30")) {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${n}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Heading fragment to the display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Mapping the Title field to Heading fragment") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Preview 16 different web contents via preview item selector") {
+			var n = "1";
+
+			while ("${n}" != "17" && (maxIterations = "30")) {
+				DisplayPageTemplate.selectPreviewItem(
+					assetTitle = "Web Content Title ${n}",
+					assetType = "Web Content Article",
+					searchTerm = "Web Content Title ${n}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the bottom item in dropdown list via scroll bar") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Web Content Title 1",
+				assetType = "Web Content Article",
+				item = "Web Content Title 1");
+		}
+	}
+
 	@description = "This is a test for LPS-128904. View mapped content in page editor when select preview items."
 	@priority = "5"
 	test ViewMappedContentOfPreviewItem {

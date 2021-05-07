@@ -203,6 +203,13 @@ public class CommercePaymentUtilsImpl implements CommercePaymentUtils {
 			httpServletRequest, commerceOrder, redirect, commercePaymentMethod,
 			0);
 
+		if (commerceOrder.isSubscriptionOrder()) {
+			sb.append("&orderType=subscription");
+		}
+		else {
+			sb.append("&orderType=normal");
+		}
+
 		return sb.toString();
 	}
 

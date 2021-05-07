@@ -29,8 +29,8 @@ describe('EmptyLayoutReports', () => {
 			<StoreContextProvider
 				value={{
 					data: {
-						assetsPath: 'assetsPath',
 						configureGooglePageSpeedURL: null,
+						imagesPath: 'imagesPath',
 					},
 				}}
 			>
@@ -55,8 +55,8 @@ describe('EmptyLayoutReports', () => {
 			<StoreContextProvider
 				value={{
 					data: {
-						assetsPath: 'assetsPath',
 						configureGooglePageSpeedURL: 'validURL',
+						imagesPath: 'imagesPath',
 					},
 				}}
 			>

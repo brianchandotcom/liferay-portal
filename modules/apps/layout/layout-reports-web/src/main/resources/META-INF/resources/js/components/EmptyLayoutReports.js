@@ -20,9 +20,9 @@ import {StoreStateContext} from '../context/StoreContext';
 export default function EmptyLayoutReports() {
 	const {data} = useContext(StoreStateContext);
 
-	const {assetsPath, configureGooglePageSpeedURL} = data;
+	const {configureGooglePageSpeedURL, imagesPath} = data;
 
-	const defaultIllustration = `${assetsPath}/issues_default.svg`;
+	const defaultIllustration = `${imagesPath}/issues_default.svg`;
 
 	return (
 		<div className="text-center">

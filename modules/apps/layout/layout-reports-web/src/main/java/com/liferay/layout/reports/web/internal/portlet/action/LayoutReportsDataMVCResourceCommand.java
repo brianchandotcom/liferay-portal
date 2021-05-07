@@ -116,9 +116,6 @@ public class LayoutReportsDataMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
-				"assetsPath",
-				_portal.getPathContext(resourceRequest) + "/assets/"
-			).put(
 				"canonicalURLs",
 				_getCanonicalURLsJSONArray(
 					resourceRequest, resourceResponse, layout)
@@ -128,6 +125,9 @@ public class LayoutReportsDataMVCResourceCommand
 			).put(
 				"defaultLanguageId",
 				LocaleUtil.toW3cLanguageId(_getDefaultLocale(layout))
+			).put(
+				"imagesPath",
+				_portal.getPathContext(resourceRequest) + "/images/"
 			).put(
 				"validConnection", layoutReportsDataProvider.isValidConnection()
 			));

@@ -67,7 +67,7 @@ describe('LayoutReportsIssuesList', () => {
 			<StoreContextProvider
 				value={{
 					data: {
-						assetsPath: 'assetsPath',
+						imagesPath: 'imagesPath',
 						layoutReportsIssues: mockLayoutReportsIssues,
 					},
 				}}
@@ -87,7 +87,7 @@ describe('LayoutReportsIssuesList', () => {
 			<StoreContextProvider
 				value={{
 					data: {
-						assetsPath: 'assetsPath',
+						imagesPath: 'imagesPath',
 						layoutReportsIssues: mockLayoutReportsIssuesNoSEO,
 					},
 				}}
@@ -108,7 +108,7 @@ describe('LayoutReportsIssuesList', () => {
 			<StoreContextProvider
 				value={{
 					data: {
-						assetsPath: 'assetsPath',
+						imagesPath: 'imagesPath',
 						layoutReportsIssues: mockLayoutReportsIssuesNoAccessibilityNoSEO,
 					},
 				}}

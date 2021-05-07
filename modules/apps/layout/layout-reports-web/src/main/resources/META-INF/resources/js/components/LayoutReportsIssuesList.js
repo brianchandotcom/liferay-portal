@@ -22,13 +22,13 @@ import {StoreStateContext} from '../context/StoreContext';
 export default function LayoutReportsIssuesList() {
 	const {data} = useContext(StoreStateContext);
 
-	const {assetsPath, layoutReportsIssues} = data;
+	const {imagesPath, layoutReportsIssues} = data;
 
 	const hasIssues = useMemo(() => {
 		return layoutReportsIssues.some(({total}) => total > 0);
 	}, [layoutReportsIssues]);
 
-	const successIllustration = `${assetsPath}/issues_success.gif`;
+	const successIllustration = `${imagesPath}/issues_success.gif`;
 
 	return (
 		<div className="c-my-4">

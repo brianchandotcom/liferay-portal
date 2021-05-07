@@ -120,10 +120,18 @@ public class LiferayPortlet extends GenericPortlet {
 					throwable.getClass(), throwable);
 			}
 			else if (isSessionErrorException(throwable)) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(throwable, throwable);
+				}
+
 				SessionErrors.add(
 					actionRequest, throwable.getClass(), throwable);
 			}
 			else {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portletException, portletException);
+				}
+
 				throw portletException;
 			}
 		}
@@ -576,10 +584,6 @@ public class LiferayPortlet extends GenericPortlet {
 	}
 
 	protected boolean isSessionErrorException(Throwable throwable) {
-		if (_log.isDebugEnabled()) {
-			_log.debug(throwable, throwable);
-		}
-
 		if (throwable instanceof PortalException) {
 			return true;
 		}

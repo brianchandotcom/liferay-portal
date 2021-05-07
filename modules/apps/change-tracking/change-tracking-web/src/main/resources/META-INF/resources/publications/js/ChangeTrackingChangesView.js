@@ -1623,6 +1623,7 @@ class ChangeTrackingChangesView extends React.Component {
 					trigger={
 						<ClayButton
 							className="nav-link nav-link-monospaced"
+							disabled={this.changes.length === 0}
 							displayType="unstyled"
 						>
 							<ClayIcon
@@ -2204,6 +2205,7 @@ class ChangeTrackingChangesView extends React.Component {
 							trigger={
 								<ClayButton
 									className="nav-link"
+									disabled={this.changes.length === 0}
 									displayType="unstyled"
 								>
 									<span className="navbar-breakpoint-down-d-none">
@@ -2236,6 +2238,7 @@ class ChangeTrackingChangesView extends React.Component {
 					>
 						<ClayButton
 							className={this.state.sortDirectionClass}
+							disabled={this.changes.length === 0}
 							displayType="unstyled"
 							onClick={() => this._handleSortDirectionChange()}
 						>
@@ -2250,6 +2253,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 					<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
 						<ClayToggle
+							disabled={this.changes.length === 0}
 							label={Liferay.Language.get('show-all-items')}
 							onToggle={(showHideable) =>
 								this._handleShowHideableToggle(showHideable)

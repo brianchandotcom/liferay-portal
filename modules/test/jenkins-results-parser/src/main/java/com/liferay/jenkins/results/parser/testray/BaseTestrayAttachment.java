@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.io.IOException;
+
 /**
  * @author Michael Hashimoto
  */
@@ -40,6 +42,20 @@ public abstract class BaseTestrayAttachment implements TestrayAttachment {
 	@Override
 	public String getName() {
 		return _name;
+	}
+
+	@Override
+	public String getValue() {
+		if (!exists()) {
+			return null;
+		}
+
+		try {
+			return JenkinsResultsParserUtil.toString(String.valueOf(getURL()));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected BaseTestrayAttachment(

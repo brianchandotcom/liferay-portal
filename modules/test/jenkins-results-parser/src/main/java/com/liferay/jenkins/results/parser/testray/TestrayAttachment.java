@@ -29,4 +29,6 @@ public interface TestrayAttachment {
 
 	public URL getURL();
 
+	public String getValue();
+
 }

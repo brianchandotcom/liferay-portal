@@ -26,23 +26,36 @@ public class S3TestrayAttachment extends BaseTestrayAttachment {
 
 		super(testrayCaseResult, name, key);
 
-		_testrayS3Object = TestrayS3ObjectFactory.newTestrayS3Object(
-			TestrayS3Bucket.getInstance(), key);
+		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
+
+		_testrayS3Object = testrayS3Bucket.getTestrayS3Object(key);
 	}
 
 	@Override
 	public boolean exists() {
+		if (_testrayS3Object == null) {
+			return false;
+		}
+
 		return _testrayS3Object.exists();
 	}
 
 	@Override
-	public String getKey() {
-		return _testrayS3Object.getKey();
+	public URL getURL() {
+		if (_testrayS3Object == null) {
+			return null;
+		}
+
+		return _testrayS3Object.getURL();
 	}
 
 	@Override
-	public URL getURL() {
-		return _testrayS3Object.getURL();
+	public String getValue() {
+		if (_testrayS3Object == null) {
+			return null;
+		}
+
+		return _testrayS3Object.getValue();
 	}
 
 	private final TestrayS3Object _testrayS3Object;

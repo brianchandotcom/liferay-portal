@@ -730,9 +730,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.VariableDeclarationAsUsedCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where a variable declaration can be inlined or moved closer to where it is used." />
-			<message key="variable.declaration.move.after.branching.statement" value="For better performance, the variable declaration for ''{0}'' should come after the ''{1}'' statement on line ''{2}''" />
-			<message key="variable.declaration.move.inside.if.statement" value="For better performance, the variable declaration for ''{0}'' should be moved inside the if-statement on line ''{1}''" />
 			<message key="variable.inline" value="No need to declare variable ''{0}''. Pass the method call directly as parameter on line ''{1}''." />
+			<message key="variable.move.after.branching.statement" value="For better performance, the variable declaration for ''{0}'' should come after the ''{1}'' statement on line ''{2}''" />
+			<message key="variable.move.inside.if.statement" value="For better performance, the variable declaration for ''{0}'' should be moved inside the if-statement on line ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.VariableNameCheck">
 			<property name="allowedVariableNames" value="bitMode,metadata,superClass,userName" />

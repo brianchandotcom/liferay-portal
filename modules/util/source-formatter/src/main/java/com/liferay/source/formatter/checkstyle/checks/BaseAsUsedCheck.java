@@ -32,7 +32,7 @@ import java.util.Objects;
 public abstract class BaseAsUsedCheck extends BaseCheck {
 
 	protected void checkInline(
-		DetailAST detailAST, String variableName,
+		DetailAST assignDetailAST, String variableName,
 		DetailAST assignMethodCallDetailAST, DetailAST identDetailAST,
 		List<DetailAST> dependentIdentDetailASTList) {
 
@@ -53,7 +53,7 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			return;
 		}
 
-		int endLineNumber = getEndLineNumber(detailAST);
+		int endLineNumber = getEndLineNumber(assignDetailAST);
 
 		for (DetailAST dependentIdentDetailAST : dependentIdentDetailASTList) {
 			if (variableName.equals(dependentIdentDetailAST.getText()) &&
@@ -95,7 +95,7 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			TokenTypes.LITERAL_WHILE);
 
 		if ((parentDetailAST != null) &&
-			(parentDetailAST.getLineNo() >= detailAST.getLineNo())) {
+			(parentDetailAST.getLineNo() >= assignDetailAST.getLineNo())) {
 
 			return;
 		}
@@ -113,15 +113,15 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 		}
 
 		log(
-			detailAST, _MSG_INLINE_VARIABLE, variableName,
+			assignDetailAST, _MSG_INLINE_VARIABLE, variableName,
 			identDetailAST.getLineNo());
 	}
 
 	protected void checkMoveAfterBranchingStatement(
-		DetailAST detailAST, DetailAST variableDefinitionDetailAST,
-		String variableName, DetailAST firstDependentIdentDetailAST) {
+		DetailAST detailAST, DetailAST assignDetailAST, String variableName,
+		DetailAST firstDependentIdentDetailAST) {
 
-		int endLineNumber = getEndLineNumber(variableDefinitionDetailAST);
+		int endLineNumber = getEndLineNumber(assignDetailAST);
 
 		DetailAST lastBranchingStatementDetailAST =
 			_getLastBranchingStatementDetailAST(
@@ -131,20 +131,19 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 
 		if (lastBranchingStatementDetailAST != null) {
 			log(
-				variableDefinitionDetailAST,
-				_MSG_VARIABLE_DECLARATION_MOVE_AFTER_BRANCHING_STATEMENT,
+				assignDetailAST, _MSG_MOVE_VARIABLE_AFTER_BRANCHING_STATEMENT,
 				variableName, lastBranchingStatementDetailAST.getText(),
 				lastBranchingStatementDetailAST.getLineNo());
 		}
 	}
 
 	protected void checkMoveInsideIfStatement(
-		DetailAST variableDefinitionDetailAST, DetailAST nameDetailAST,
-		String variableName, List<DetailAST> dependentIdentDetailASTList) {
+		DetailAST assignDetailAST, DetailAST nameDetailAST, String variableName,
+		DetailAST firstDependentIdentDetailAST,
+		DetailAST lastDependentIdentDetailAST) {
 
 		DetailAST ifStatementDetailAST = _getIfStatementDetailAST(
-			dependentIdentDetailASTList.get(0),
-			getEndLineNumber(variableDefinitionDetailAST));
+			firstDependentIdentDetailAST, getEndLineNumber(assignDetailAST));
 
 		if (ifStatementDetailAST == null) {
 			return;
@@ -157,8 +156,7 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			TokenTypes.LITERAL_WHILE);
 
 		if ((parentDetailAST != null) &&
-			(parentDetailAST.getLineNo() >=
-				variableDefinitionDetailAST.getLineNo())) {
+			(parentDetailAST.getLineNo() >= assignDetailAST.getLineNo())) {
 
 			return;
 		}
@@ -166,15 +164,11 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 		DetailAST slistDetailAST = ifStatementDetailAST.findFirstToken(
 			TokenTypes.SLIST);
 
-		DetailAST lastDependentIdentDetailAST = dependentIdentDetailASTList.get(
-			dependentIdentDetailASTList.size() - 1);
-
 		if (getEndLineNumber(slistDetailAST) >
 				lastDependentIdentDetailAST.getLineNo()) {
 
 			log(
-				nameDetailAST,
-				_MSG_VARIABLE_DECLARATION_MOVE_INSIDE_IF_STATEMENT,
+				nameDetailAST, _MSG_MOVE_VARIABLE_INSIDE_IF_STATEMENT,
 				variableName, ifStatementDetailAST.getLineNo());
 		}
 	}
@@ -464,12 +458,10 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 
 	private static final String _MSG_INLINE_VARIABLE = "variable.inline";
 
-	private static final String
-		_MSG_VARIABLE_DECLARATION_MOVE_AFTER_BRANCHING_STATEMENT =
-			"variable.declaration.move.after.branching.statement";
+	private static final String _MSG_MOVE_VARIABLE_AFTER_BRANCHING_STATEMENT =
+		"variable.move.after.branching.statement";
 
-	private static final String
-		_MSG_VARIABLE_DECLARATION_MOVE_INSIDE_IF_STATEMENT =
-			"variable.declaration.move.inside.if.statement";
+	private static final String _MSG_MOVE_VARIABLE_INSIDE_IF_STATEMENT =
+		"variable.move.inside.if.statement";
 
 }

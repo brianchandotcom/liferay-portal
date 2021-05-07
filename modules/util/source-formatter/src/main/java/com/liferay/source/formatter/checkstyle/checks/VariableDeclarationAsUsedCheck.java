@@ -51,6 +51,13 @@ public class VariableDeclarationAsUsedCheck extends BaseAsUsedCheck {
 			return;
 		}
 
+		DetailAST assignDetailAST = variableDefinitionDetailAST.findFirstToken(
+			TokenTypes.ASSIGN);
+
+		if (assignDetailAST == null) {
+			return;
+		}
+
 		DetailAST nameDetailAST = variableDefinitionDetailAST.findFirstToken(
 			TokenTypes.IDENT);
 
@@ -70,29 +77,22 @@ public class VariableDeclarationAsUsedCheck extends BaseAsUsedCheck {
 
 		if (checkMoveStatement(variableDefinitionDetailAST)) {
 			checkMoveAfterBranchingStatement(
-				detailAST, variableDefinitionDetailAST, variableName,
+				detailAST, assignDetailAST, variableName,
 				firstDependentIdentDetailAST);
 			checkMoveInsideIfStatement(
-				variableDefinitionDetailAST, nameDetailAST, variableName,
-				dependentIdentDetailASTList);
+				assignDetailAST, nameDetailAST, variableName,
+				firstDependentIdentDetailAST,
+				dependentIdentDetailASTList.get(
+					dependentIdentDetailASTList.size() - 1));
 		}
 
 		checkInline(
-			variableDefinitionDetailAST, variableName,
-			_getAssignMethodCallDetailAST(variableDefinitionDetailAST),
+			assignDetailAST, variableName,
+			_getAssignMethodCallDetailAST(assignDetailAST),
 			firstDependentIdentDetailAST, dependentIdentDetailASTList);
 	}
 
-	private DetailAST _getAssignMethodCallDetailAST(
-		DetailAST variableDefinitionDetailAST) {
-
-		DetailAST assignDetailAST = variableDefinitionDetailAST.findFirstToken(
-			TokenTypes.ASSIGN);
-
-		if (assignDetailAST == null) {
-			return null;
-		}
-
+	private DetailAST _getAssignMethodCallDetailAST(DetailAST assignDetailAST) {
 		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
 
 		if ((firstChildDetailAST == null) ||

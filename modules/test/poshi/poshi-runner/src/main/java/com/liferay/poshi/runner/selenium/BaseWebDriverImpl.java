@@ -98,7 +98,10 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.InvalidSelectorException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -2324,16 +2327,21 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void saveScreenshot() throws Exception {
+	public void saveScreenshot(String fileName) throws Exception {
 		if (!PropsValues.SAVE_SCREENSHOT) {
 			return;
 		}
 
-		_screenshotCount++;
+		try {
+			TakesScreenshot takesScreenshot = (TakesScreenshot)_webDriver;
 
-		LiferaySeleniumUtil.captureScreen(
-			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
-				_screenshotCount + ".jpg");
+			FileUtil.write(
+				new File(fileName),
+				takesScreenshot.getScreenshotAs(OutputType.BYTES));
+		}
+		catch (UnhandledAlertException unhandledAlertException) {
+			LiferaySeleniumUtil.captureScreen(fileName);
+		}
 	}
 
 	@Override
@@ -2343,18 +2351,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void saveScreenshotBeforeAction(boolean actionFailed)
 		throws Exception {
-
-		if (!PropsValues.SAVE_SCREENSHOT) {
-			return;
-		}
-
-		if (actionFailed) {
-			_screenshotErrorCount++;
-		}
-
-		LiferaySeleniumUtil.captureScreen(
-			_CURRENT_DIR_NAME + "test-results/functional/screenshots" +
-				"/ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
 	}
 
 	@Override
@@ -4687,9 +4683,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	}
 
-	private static final String _CURRENT_DIR_NAME = FileUtil.getCanonicalPath(
-		".");
-
 	private static final String _OCULAR_RESULT_IMAGE_DIR_NAME;
 
 	private static final String _OCULAR_SNAP_IMAGE_DIR_NAME;
@@ -4761,8 +4754,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	private Stack<WebElement> _frameWebElements = new Stack<>();
 	private int _navigationBarHeight = 120;
 	private String _primaryTestSuiteName;
-	private int _screenshotCount;
-	private int _screenshotErrorCount;
 	private int _totalPauseDuration;
 	private final WebDriver _webDriver;
 

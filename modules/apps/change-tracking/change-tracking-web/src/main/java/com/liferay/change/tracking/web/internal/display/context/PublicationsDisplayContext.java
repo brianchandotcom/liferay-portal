@@ -110,6 +110,10 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 				autocompleteUserURL.setResourceID(
 					"/change_tracking/autocomplete_user");
 
+				autocompleteUserURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId()));
+
 				return autocompleteUserURL.toString();
 			}
 		).put(

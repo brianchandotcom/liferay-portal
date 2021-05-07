@@ -100,9 +100,7 @@ const CollaboratorRow = ({
 	let title = null;
 
 	if (user.isOwner) {
-		title = Liferay.Language.get(
-			'you-cannot-update-permissions-for-an-owner'
-		);
+		title = Liferay.Language.get('cannot-update-permissions-for-an-owner');
 	}
 	else if (user.isCurrentUser) {
 		title = Liferay.Language.get(
@@ -177,6 +175,7 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 	return (
 		<ClayDropDown.ItemList>
 			{sourceItems
+				.filter((item) => !item.isSelected)
 				.sort((a, b) => {
 					if (a.emailAddress < b.emailAddress) {
 						return -1;
@@ -192,12 +191,9 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 							'user-does-not-have-permissions-to-access-publications'
 						);
 					}
-					else if (item.isInvited) {
-						title = Liferay.Language.get('user-is-already-invited');
-					}
-					else if (item.selected) {
+					else if (item.isOwner) {
 						title = Liferay.Language.get(
-							'user-is-already-selected'
+							'cannot-update-permissions-for-an-owner'
 						);
 					}
 
@@ -496,15 +492,14 @@ export default ({
 						method: 'POST',
 					})
 						.then((response) => response.json())
-						.then(({errorMessage, user, userExists}) => {
+						.then(({errorMessage, user}) => {
 							if (errorMessage) {
 								return {
 									error: errorMessage,
 									item,
 								};
 							}
-
-							if (userExists) {
+							else if (user) {
 								return {
 									item: {
 										emailAddress: user.emailAddress,
@@ -660,30 +655,6 @@ export default ({
 									sourceItems={
 										multiSelectValue && autocompleteUsers
 											? autocompleteUsers.map((user) => {
-													let isInvited = false;
-
-													if (
-														collaborators &&
-														collaborators.length
-													) {
-														for (
-															let i = 0;
-															i <
-															collaborators.length;
-															i++
-														) {
-															if (
-																collaborators[i]
-																	.userId ===
-																user.userId
-															) {
-																isInvited = true;
-
-																break;
-															}
-														}
-													}
-
 													return {
 														emailAddress:
 															user.emailAddress,
@@ -691,15 +662,15 @@ export default ({
 														hasPublicationsAccess:
 															user.hasPublicationsAccess,
 														id: user.userId,
-														isInvited,
-														label: user.fullName,
-														portraitURL:
-															user.portraitURL,
-														selected: !!selectedItems.find(
+														isOwner: user.isOwner,
+														isSelected: !!selectedItems.find(
 															(item) =>
 																item.value ===
 																user.emailAddress
 														),
+														label: user.fullName,
+														portraitURL:
+															user.portraitURL,
 														value:
 															user.emailAddress,
 													};

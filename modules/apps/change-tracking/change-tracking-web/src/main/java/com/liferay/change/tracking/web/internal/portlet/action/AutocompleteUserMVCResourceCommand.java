@@ -14,6 +14,8 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -109,6 +111,9 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -142,6 +147,10 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 						permissionChecker, CTPortletKeys.PUBLICATIONS,
 						ActionKeys.VIEW)
 				).put(
+					"isOwner",
+					(ctCollection != null) &&
+					(ctCollection.getUserId() == user.getUserId())
+				).put(
 					"portraitURL", portraitURL
 				).put(
 					"userId", Long.valueOf(user.getUserId())
@@ -150,6 +159,9 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return jsonArray;
 	}
+
+	@Reference
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private PortletPermission _portletPermission;

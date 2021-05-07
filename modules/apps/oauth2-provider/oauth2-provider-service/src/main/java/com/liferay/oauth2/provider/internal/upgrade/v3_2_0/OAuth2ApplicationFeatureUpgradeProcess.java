@@ -34,7 +34,7 @@ public class OAuth2ApplicationFeatureUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			ResultSet applicationFeaturesResultSet =
-				_getApplicationFeatures()) {
+				_getApplicationFeaturesResultSet()) {
 
 			while (applicationFeaturesResultSet.next()) {
 				List<String> features = Arrays.asList(
@@ -53,7 +53,7 @@ public class OAuth2ApplicationFeatureUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private ResultSet _getApplicationFeatures() throws SQLException {
+	private ResultSet _getApplicationFeaturesResultSet() throws SQLException {
 		String sql =
 			"select oAuth2ApplicationId, features from OAuth2Application " +
 				"where features is not NULL";

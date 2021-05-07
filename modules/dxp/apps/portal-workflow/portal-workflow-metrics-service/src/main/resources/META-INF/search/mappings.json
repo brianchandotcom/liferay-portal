@@ -1109,7 +1109,7 @@
 				"store": true,
 				"type": "long"
 			},
-			"lastCheckDate": {
+			"modifiedDate": {
 				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"
@@ -1202,7 +1202,7 @@
 				"store": true,
 				"type": "long"
 			},
-			"lastCheckDate": {
+			"modifiedDate": {
 				"format": "yyyyMMddHHmmss",
 				"store": true,
 				"type": "date"

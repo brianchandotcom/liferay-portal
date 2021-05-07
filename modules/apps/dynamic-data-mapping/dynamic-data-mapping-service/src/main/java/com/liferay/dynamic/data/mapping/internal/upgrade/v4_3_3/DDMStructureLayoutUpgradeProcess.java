@@ -60,22 +60,23 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 		sb.append("DDMStructureVersion.structureId where ");
 		sb.append("DDMStructure.classNameId = ?");
 
-		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-			PreparedStatement ps2 =
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				sb.toString());
+			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructureLayout set definition = ? where " +
 						"structureLayoutId = ?")) {
 
-			ps1.setLong(
+			preparedStatement1.setLong(
 				1, PortalUtil.getClassNameId(DDMFormInstance.class.getName()));
 
-			try (ResultSet rs = ps1.executeQuery()) {
-				while (rs.next()) {
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
 					DDMFormLayout ddmFormLayout =
 						DDMFormLayoutDeserializeUtil.deserialize(
 							_ddmFormLayoutDeserializer,
-							rs.getString("definition"));
+							resultSet.getString("definition"));
 
 					if (!Objects.equals(
 							ddmFormLayout.getPaginationMode(),
@@ -94,18 +95,19 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 										ddmFormLayout
 									).build());
 
-					ps2.setString(
+					preparedStatement2.setString(
 						1,
 						ddmFormLayoutSerializerSerializeResponse.getContent());
 
-					long structureLayoutId = rs.getLong("structureLayoutId");
+					long structureLayoutId = resultSet.getLong(
+						"structureLayoutId");
 
-					ps2.setLong(2, structureLayoutId);
+					preparedStatement2.setLong(2, structureLayoutId);
 
-					ps2.addBatch();
+					preparedStatement2.addBatch();
 				}
 
-				ps2.executeBatch();
+				preparedStatement2.executeBatch();
 			}
 		}
 	}

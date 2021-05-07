@@ -34,34 +34,37 @@ public class CommerceAccountGroupUpgradeProcess extends UpgradeProcess {
 				"commerceAccountGroupId asc";
 
 		try (Statement selectStatement = connection.createStatement()) {
-			ResultSet rs = selectStatement.executeQuery(
+			ResultSet resultSet = selectStatement.executeQuery(
 				selectCommerceAccountGroupSQL);
 
-			while (rs.next()) {
-				boolean system = rs.getBoolean("system_");
+			while (resultSet.next()) {
+				boolean system = resultSet.getBoolean("system_");
 
 				if (system) {
 					continue;
 				}
 
-				long accountGroupId = rs.getLong("commerceAccountGroupId");
+				long accountGroupId = resultSet.getLong(
+					"commerceAccountGroupId");
 
 				AccountGroup accountGroup =
 					AccountGroupLocalServiceUtil.createAccountGroup(
 						accountGroupId);
 
-				accountGroup.setCompanyId(rs.getLong("companyId"));
-				accountGroup.setCreateDate(rs.getTimestamp("createDate"));
+				accountGroup.setCompanyId(resultSet.getLong("companyId"));
+				accountGroup.setCreateDate(
+					resultSet.getTimestamp("createDate"));
 				accountGroup.setDefaultAccountGroup(system);
 				accountGroup.setExternalReferenceCode(
-					rs.getString("externalReferenceCode"));
-				accountGroup.setUserId(rs.getLong("userId"));
-				accountGroup.setUserName(rs.getString("userName"));
-				accountGroup.setModifiedDate(rs.getTimestamp("modifiedDate"));
-				accountGroup.setName(rs.getString("name"));
+					resultSet.getString("externalReferenceCode"));
+				accountGroup.setUserId(resultSet.getLong("userId"));
+				accountGroup.setUserName(resultSet.getString("userName"));
+				accountGroup.setModifiedDate(
+					resultSet.getTimestamp("modifiedDate"));
+				accountGroup.setName(resultSet.getString("name"));
 				accountGroup.setType(
 					CommerceAccountGroupImpl.toAccountGroupType(
-						rs.getInt("type_")));
+						resultSet.getInt("type_")));
 
 				AccountGroupLocalServiceUtil.addAccountGroup(accountGroup);
 			}

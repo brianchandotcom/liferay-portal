@@ -494,7 +494,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	public List<String> getProjectNames() {
-		return new ArrayList<>();
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -448,6 +448,12 @@
 	max-width: 232px;
 }
 
+.modal-open .modal {
+	min-height: 570px;
+	min-width: 870px;
+	overflow-y: hidden !important;
+}
+
 .portal-popup .calendar-portlet .fieldset {
 	margin-bottom: 2em;
 }

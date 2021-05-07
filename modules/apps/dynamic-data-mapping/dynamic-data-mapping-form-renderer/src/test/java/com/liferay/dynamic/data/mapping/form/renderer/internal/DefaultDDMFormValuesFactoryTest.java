@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -63,6 +64,31 @@ public class DefaultDDMFormValuesFactoryTest {
 	}
 
 	@Test
+	public void testDDMFormFieldValueInitialValue() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			"Name", false, false, false);
+
+		ddmFormField.setProperty(
+			"initialValue",
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"Test", "Teste", LocaleUtil.US));
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		Value value = _getValue(
+			new DefaultDDMFormValuesFactory(ddmForm, LocaleUtil.BRAZIL));
+
+		Assert.assertEquals("Teste", value.getString(LocaleUtil.BRAZIL));
+
+		value = _getValue(
+			new DefaultDDMFormValuesFactory(ddmForm, LocaleUtil.US));
+
+		Assert.assertEquals("Test", value.getString(LocaleUtil.US));
+	}
+
+	@Test
 	public void testDDMFormFieldValueLocalizedValue() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
@@ -98,39 +124,23 @@ public class DefaultDDMFormValuesFactoryTest {
 		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
 			"Name", false, false, false);
 
-		LocalizedValue predefinedValue = new LocalizedValue(LocaleUtil.US);
-
-		predefinedValue.addString(LocaleUtil.BRAZIL, "Roberto");
-		predefinedValue.addString(LocaleUtil.US, "Robert");
-
-		ddmFormField.setPredefinedValue(predefinedValue);
+		ddmFormField.setPredefinedValue(
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"Robert", "Roberto", LocaleUtil.US));
+		ddmFormField.setProperty(
+			"initialValue",
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"Test", "Teste", LocaleUtil.US));
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DefaultDDMFormValuesFactory defaultDDMFormValuesFactory =
-			new DefaultDDMFormValuesFactory(ddmForm, LocaleUtil.BRAZIL);
-
-		DDMFormValues ddmFormValues = defaultDDMFormValuesFactory.create();
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			ddmFormValues.getDDMFormFieldValues();
-
-		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
-
-		Value value = ddmFormFieldValue.getValue();
+		Value value = _getValue(
+			new DefaultDDMFormValuesFactory(ddmForm, LocaleUtil.BRAZIL));
 
 		Assert.assertEquals("Roberto", value.getString(LocaleUtil.BRAZIL));
 
-		defaultDDMFormValuesFactory = new DefaultDDMFormValuesFactory(
-			ddmForm, LocaleUtil.SPAIN);
-
-		ddmFormValues = defaultDDMFormValuesFactory.create();
-
-		ddmFormFieldValues = ddmFormValues.getDDMFormFieldValues();
-
-		ddmFormFieldValue = ddmFormFieldValues.get(0);
-
-		value = ddmFormFieldValue.getValue();
+		value = _getValue(
+			new DefaultDDMFormValuesFactory(ddmForm, LocaleUtil.SPAIN));
 
 		Assert.assertEquals("Robert", value.getString(LocaleUtil.SPAIN));
 	}
@@ -214,6 +224,19 @@ public class DefaultDDMFormValuesFactoryTest {
 
 		Assert.assertEquals(
 			StringPool.BLANK, ageValue.getString(LocaleUtil.BRAZIL));
+	}
+
+	private Value _getValue(
+		DefaultDDMFormValuesFactory defaultDDMFormValuesFactory) {
+
+		DDMFormValues ddmFormValues = defaultDDMFormValuesFactory.create();
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		return ddmFormFieldValue.getValue();
 	}
 
 }

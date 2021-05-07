@@ -172,8 +172,6 @@ definition {
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
-		MessageboardsThread.gotoCP(threadSubject = "MB Thread Message Subject");
-
 		MessageboardsThread.editCP(
 			threadBody = "MB Thread Message Body",
 			threadBodyEdit = "MB Thread Message Body Edit",

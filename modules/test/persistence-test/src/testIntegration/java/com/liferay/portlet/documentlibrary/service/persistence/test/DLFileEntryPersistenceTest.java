@@ -129,6 +129,8 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setUuid(RandomTestUtil.randomString());
 
+		newDLFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newDLFileEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newDLFileEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -200,6 +202,9 @@ public class DLFileEntryPersistenceTest {
 			newDLFileEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingDLFileEntry.getUuid(), newDLFileEntry.getUuid());
+		Assert.assertEquals(
+			existingDLFileEntry.getExternalReferenceCode(),
+			newDLFileEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingDLFileEntry.getFileEntryId(),
 			newDLFileEntry.getFileEntryId());
@@ -483,6 +488,15 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_ERC(0L, "null");
+
+		_persistence.countByG_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFileEntry newDLFileEntry = addDLFileEntry();
 
@@ -514,12 +528,12 @@ public class DLFileEntryPersistenceTest {
 	protected OrderByComparator<DLFileEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"DLFileEntry", "mvccVersion", true, "ctCollectionId", true, "uuid",
-			true, "fileEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"repositoryId", true, "folderId", true, "treePath", true, "name",
-			true, "fileName", true, "extension", true, "mimeType", true,
-			"title", true, "description", true, "fileEntryTypeId", true,
+			true, "externalReferenceCode", true, "fileEntryId", true, "groupId",
+			true, "companyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "repositoryId", true, "folderId", true, "treePath",
+			true, "name", true, "fileName", true, "extension", true, "mimeType",
+			true, "title", true, "description", true, "fileEntryTypeId", true,
 			"version", true, "size", true, "smallImageId", true, "largeImageId",
 			true, "custom1ImageId", true, "custom2ImageId", true,
 			"manualCheckInRequired", true, "expirationDate", true, "reviewDate",
@@ -846,6 +860,17 @@ public class DLFileEntryPersistenceTest {
 			ReflectionTestUtil.invoke(
 				dlFileEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "title"));
+
+		Assert.assertEquals(
+			Long.valueOf(dlFileEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				dlFileEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			dlFileEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				dlFileEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected DLFileEntry addDLFileEntry() throws Exception {
@@ -858,6 +883,8 @@ public class DLFileEntryPersistenceTest {
 		dlFileEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		dlFileEntry.setUuid(RandomTestUtil.randomString());
+
+		dlFileEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		dlFileEntry.setGroupId(RandomTestUtil.nextLong());
 

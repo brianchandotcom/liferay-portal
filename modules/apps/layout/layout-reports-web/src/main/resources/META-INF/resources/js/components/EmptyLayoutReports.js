@@ -22,7 +22,7 @@ export default function EmptyLayoutReports() {
 
 	const {assetsPath, configureGooglePageSpeedURL} = data;
 
-	const defaultIllustration = `${assetsPath}/issues-default.svg`;
+	const defaultIllustration = `${assetsPath}/issues_default.svg`;
 
 	return (
 		<div className="text-center">

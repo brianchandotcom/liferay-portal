@@ -177,6 +177,10 @@
 			<finder-column name="classPK" />
 			<finder-column name="commerceAccountGroupId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="AccountGroupRel" package-path="com.liferay.account" />
 	</entity>
 	<entity local-service="true" name="CommerceAccountOrganizationRel" remote-service="true">
 

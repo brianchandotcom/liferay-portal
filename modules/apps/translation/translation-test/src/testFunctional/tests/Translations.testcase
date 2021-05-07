@@ -218,6 +218,10 @@ definition {
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title");
 
+		AssertElementNotPresent(
+			key_text = "Auto Translate",
+			locator1 = "Button#ANY");
+
 		Translations.changeTargetLocale(
 			currentTargetLocale = "ar-SA",
 			newTargetLocale = "es-ES");

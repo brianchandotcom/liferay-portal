@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.item.selector;
+package com.liferay.item.selector.criteria.internal.info.item;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterion;
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class BlogsEntryItemSelectorCriterionHandler
+public class InfoItemItemSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler<InfoItemItemSelectorCriterion> {
 
 	@Override

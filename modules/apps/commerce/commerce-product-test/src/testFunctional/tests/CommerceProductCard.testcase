@@ -441,7 +441,6 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-
 		AssertElementPresent(
 			key_optionValue = "5",
 			key_productName = "U-Joint",

@@ -30,7 +30,9 @@ definition {
 			locator1 = "TextInput#SEARCH",
 			value1 = "\RETURN");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
+		if (!(isSet(modal))) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+		}
 	}
 
 	macro searchPG {

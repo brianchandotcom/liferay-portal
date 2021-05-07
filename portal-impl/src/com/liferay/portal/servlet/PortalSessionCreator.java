@@ -42,10 +42,6 @@ public class PortalSessionCreator extends BasePortalLifecycle {
 
 	@Override
 	protected void doPortalInit() {
-		if (PropsValues.SESSION_DISABLED) {
-			return;
-		}
-
 		try {
 			PortalSessionContext.put(_httpSession.getId(), _httpSession);
 		}

@@ -53,10 +53,6 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 
 	@Override
 	protected void doPortalInit() {
-		if (PropsValues.SESSION_DISABLED) {
-			return;
-		}
-
 		PortalSessionContext.remove(_httpSession.getId());
 
 		try {

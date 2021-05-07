@@ -192,10 +192,6 @@ public class AuthenticatedSessionManagerImpl
 
 		int loginMaxAge = PropsValues.COMPANY_SECURITY_AUTO_LOGIN_MAX_AGE;
 
-		if (PropsValues.SESSION_DISABLED) {
-			rememberMe = true;
-		}
-
 		if (rememberMe) {
 			companyIdCookie.setMaxAge(loginMaxAge);
 			idCookie.setMaxAge(loginMaxAge);

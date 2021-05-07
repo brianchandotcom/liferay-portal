@@ -1351,8 +1351,7 @@ public class PropsValues {
 
 	public static final boolean LAYOUT_AJAX_RENDER_ENABLE =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LAYOUT_AJAX_RENDER_ENABLE)) &&
-		!GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SESSION_DISABLED));
+			PropsUtil.get(PropsKeys.LAYOUT_AJAX_RENDER_ENABLE));
 
 	public static final String LAYOUT_CLONE_IMPL = PropsUtil.get(
 		PropsKeys.LAYOUT_CLONE_IMPL);
@@ -2641,6 +2640,10 @@ public class PropsValues {
 				PropsKeys.SESSION_COOKIE_USE_FULL_HOSTNAME,
 				new Filter(ServerDetector.getServerId())));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final boolean SESSION_DISABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.SESSION_DISABLED));
 

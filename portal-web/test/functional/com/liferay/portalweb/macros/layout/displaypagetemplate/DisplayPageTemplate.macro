@@ -56,6 +56,16 @@ definition {
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 				if ("${assetType}" == "Web Content Article") {
+					if (isSet(searchTerm)) {
+						Search.searchCP(
+							modal = "true",
+							searchTerm = "${searchTerm}");
+
+						AssertTextEquals(
+							locator1 = "Search#SEARCH_INFO",
+							value1 = "1 Results for ${searchTerm}");
+					}
+
 					Click(
 						key_listEntry = "${assetTitle}",
 						locator1 = "LexiconList#LIST_ENTRY_TITLE");

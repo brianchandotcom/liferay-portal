@@ -1428,6 +1428,8 @@ definition {
 
 		Translations.openTranslationAdmin(siteURLKey = "guest");
 
+		AssertConsoleTextNotPresent(value1 = "com.liferay.journal.exception.NoSuchArticleException");
+
 		Translations.viewTranslationEntry(
 			language = "es-ES",
 			status = "Approved",

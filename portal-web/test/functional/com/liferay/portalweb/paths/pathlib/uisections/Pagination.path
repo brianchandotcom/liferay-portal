@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_PAGE</td>
+	<td>//ul[contains(@class,'pagination')]//li[@class='page-item ']//a[text()='${key_pageNumber}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_PAGE_SELECT</td>
 	<td>//p[contains(@class,'pagination-results')]</td>
 	<td></td>

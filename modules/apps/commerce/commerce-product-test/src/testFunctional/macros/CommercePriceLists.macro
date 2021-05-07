@@ -1,5 +1,28 @@
 definition {
 
+	macro addNewPriceModifier {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${name}");
+
+		Select(
+			key_fieldLabel = "Target",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${target}");
+
+		Select(
+			key_fieldLabel = "Modifier",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${modifier}");
+
+		Button.click(button = "Submit");
+	}
+
 	macro editPriceListEntryPrice {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

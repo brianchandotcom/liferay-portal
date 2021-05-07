@@ -644,6 +644,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CREATE_NEW</td>
+	<td>//button[contains(@class,'btn-sm btn-primary') and text()='Create New']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH</td>
 	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'Search')]</td>
 	<td></td>

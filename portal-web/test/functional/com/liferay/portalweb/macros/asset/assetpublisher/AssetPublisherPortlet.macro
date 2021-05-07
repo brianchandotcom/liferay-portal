@@ -221,7 +221,28 @@ definition {
 
 		Click(locator1 = "Button#SELECT_CATEGORIES");
 
-		AssetCategorization.selectCategory(categoryName = "${categoryName}");
+		AssetCategorization.gotoSelectCategory();
+
+		Pause(locator1 = "3000");
+
+		Portlet.selectTreeNode(nodeName = "${categoryName}");
+
+		SelectFrameTop();
+
+		SelectFrame(
+			key_title = "Asset Publisher",
+			locator1 = "IFrame#MODAL_ANY");
+
+		if (IsElementPresent(locator1 = "//button[contains(@class,'toolbar') and contains(.,'Add')]")) {
+			AssertClick(
+				locator1 = "//button[contains(@class,'toolbar') and contains(.,'Add')]",
+				value1 = "Add");
+		}
+		else if (IsElementPresent(locator1 = "Button#DONE")) {
+			AssertClick(
+				locator1 = "Button#DONE",
+				value1 = "Done");
+		}
 
 		AssertTextEquals(
 			key_categoryName = "${categoryName}",
@@ -230,7 +251,7 @@ definition {
 
 		PortletEntry.save();
 
-		IFrame.selectTopFrame();
+		SelectFrameTop();
 	}
 
 	macro configureCollectionProviderPG {

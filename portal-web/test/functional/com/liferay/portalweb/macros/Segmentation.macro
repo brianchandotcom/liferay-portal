@@ -131,6 +131,8 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 
 			SelectFrame(value1 = "relative=top");
+
+			Click(locator1 = "Modal#SELECT_BUTTON");
 		}
 
 		else if (isSet(tagName)) {

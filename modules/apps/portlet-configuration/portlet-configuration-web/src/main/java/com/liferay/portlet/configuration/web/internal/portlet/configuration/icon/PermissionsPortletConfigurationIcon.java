@@ -121,8 +121,6 @@ public class PermissionsPortletConfigurationIcon
 			portletId = portletDisplay.getPortletResource();
 		}
 
-		boolean showPermissionsIcon = false;
-
 		Layout layout = themeDisplay.getLayout();
 
 		if (!SitesUtil.isLayoutUpdateable(layout)) {
@@ -135,9 +133,12 @@ public class PermissionsPortletConfigurationIcon
 			try {
 				if (PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(), layout, portletId,
-						ActionKeys.PERMISSIONS)) {
+						ActionKeys.PERMISSIONS) &&
+					!layout.isLayoutPrototypeLinkActive() &&
+					!layout.isTypeControlPanel() &&
+					!isEmbeddedPersonalApplicationLayout(layout)) {
 
-					showPermissionsIcon = true;
+					return true;
 				}
 			}
 			catch (PortalException portalException) {
@@ -147,24 +148,10 @@ public class PermissionsPortletConfigurationIcon
 				if (_log.isDebugEnabled()) {
 					_log.debug(portalException, portalException);
 				}
-
-				showPermissionsIcon = false;
 			}
 		}
 
-		if (layout.isLayoutPrototypeLinkActive()) {
-			showPermissionsIcon = false;
-		}
-
-		if (layout.isTypeControlPanel()) {
-			showPermissionsIcon = false;
-		}
-
-		if (isEmbeddedPersonalApplicationLayout(layout)) {
-			showPermissionsIcon = false;
-		}
-
-		return showPermissionsIcon;
+		return false;
 	}
 
 	@Override

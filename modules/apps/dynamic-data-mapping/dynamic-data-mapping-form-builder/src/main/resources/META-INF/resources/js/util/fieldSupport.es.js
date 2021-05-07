@@ -18,6 +18,7 @@ import {
 	generateName,
 	getRepeatedIndex,
 	normalizeFieldName,
+	parseName,
 } from 'data-engine-js-components-web';
 
 import {updateField} from '../components/LayoutProvider/util/settingsContext.es';
@@ -273,7 +274,7 @@ export const normalizeSettingsContextPages = (
 
 	return visitor.mapFields(
 		(field) => {
-			const {fieldName, instanceId} = field;
+			const {fieldName} = field;
 
 			if (fieldName === 'fieldReference' || fieldName === 'name') {
 				field = {
@@ -360,10 +361,16 @@ export const normalizeSettingsContextPages = (
 
 				Object.keys(editorConfig).map((key) => {
 					if (typeof editorConfig[key] === 'string') {
-						editorConfig[key] = editorConfig[key].replace(
-							instanceId,
-							newInstanceId
+						const parsedName = parseName(
+							decodeURIComponent(editorConfig[key])
 						);
+
+						if (parsedName.instanceId) {
+							editorConfig[key] = editorConfig[key].replace(
+								parsedName.instanceId,
+								newInstanceId
+							);
+						}
 					}
 				});
 			}

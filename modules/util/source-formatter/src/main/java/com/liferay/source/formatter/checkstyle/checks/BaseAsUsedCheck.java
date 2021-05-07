@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
@@ -113,6 +115,214 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 		log(
 			detailAST, _MSG_INLINE_VARIABLE, variableName,
 			identDetailAST.getLineNo());
+	}
+
+	protected void checkMoveAfterBranchingStatement(
+		DetailAST detailAST, DetailAST variableDefinitionDetailAST,
+		String variableName, DetailAST firstDependentIdentDetailAST) {
+
+		int endLineNumber = getEndLineNumber(variableDefinitionDetailAST);
+
+		DetailAST lastBranchingStatementDetailAST =
+			_getLastBranchingStatementDetailAST(
+				detailAST, endLineNumber,
+				_getClosestParentLineNumber(
+					firstDependentIdentDetailAST, endLineNumber));
+
+		if (lastBranchingStatementDetailAST != null) {
+			log(
+				variableDefinitionDetailAST,
+				_MSG_VARIABLE_DECLARATION_MOVE_AFTER_BRANCHING_STATEMENT,
+				variableName, lastBranchingStatementDetailAST.getText(),
+				lastBranchingStatementDetailAST.getLineNo());
+		}
+	}
+
+	protected void checkMoveInsideIfStatement(
+		DetailAST variableDefinitionDetailAST, DetailAST nameDetailAST,
+		String variableName, List<DetailAST> dependentIdentDetailASTList) {
+
+		DetailAST ifStatementDetailAST = _getIfStatementDetailAST(
+			dependentIdentDetailASTList.get(0),
+			getEndLineNumber(variableDefinitionDetailAST));
+
+		if (ifStatementDetailAST == null) {
+			return;
+		}
+
+		DetailAST parentDetailAST = getParentWithTokenType(
+			ifStatementDetailAST, TokenTypes.LAMBDA, TokenTypes.LITERAL_DO,
+			TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_NEW,
+			TokenTypes.LITERAL_SYNCHRONIZED, TokenTypes.LITERAL_TRY,
+			TokenTypes.LITERAL_WHILE);
+
+		if ((parentDetailAST != null) &&
+			(parentDetailAST.getLineNo() >=
+				variableDefinitionDetailAST.getLineNo())) {
+
+			return;
+		}
+
+		DetailAST slistDetailAST = ifStatementDetailAST.findFirstToken(
+			TokenTypes.SLIST);
+
+		DetailAST lastDependentIdentDetailAST = dependentIdentDetailASTList.get(
+			dependentIdentDetailASTList.size() - 1);
+
+		if (getEndLineNumber(slistDetailAST) >
+				lastDependentIdentDetailAST.getLineNo()) {
+
+			log(
+				nameDetailAST,
+				_MSG_VARIABLE_DECLARATION_MOVE_INSIDE_IF_STATEMENT,
+				variableName, ifStatementDetailAST.getLineNo());
+		}
+	}
+
+	protected boolean checkMoveStatement(DetailAST detailAST) {
+		if (_containsMethodName(
+				detailAST,
+				StringBundler.concat(
+					"_?(add|channel|close|copy|create|delete|execute|import|",
+					"manage|next|open|post|put|read|register|resolve|run|send|",
+					"test|transform|unzip|update|upsert|zip)([A-Z].*)?"),
+				"currentTimeMillis", "nextVersion", "toString") ||
+			_containsVariableType(detailAST, "ActionQueue", "File")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _containsMethodName(
+		DetailAST variableDefinitionDetailAST, String... methodNameRegexArray) {
+
+		List<DetailAST> methodCallDetailASTList = getAllChildTokens(
+			variableDefinitionDetailAST, true, TokenTypes.METHOD_CALL);
+
+		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			String methodName = getMethodName(methodCallDetailAST);
+
+			for (String methodNameRegex : methodNameRegexArray) {
+				if (methodName.matches(methodNameRegex)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _containsVariableType(
+		DetailAST variableDefinitionDetailAST, String... variableTypeNames) {
+
+		List<DetailAST> identDetailASTList = getAllChildTokens(
+			variableDefinitionDetailAST, true, TokenTypes.IDENT);
+
+		for (DetailAST identDetailAST : identDetailASTList) {
+			if (ArrayUtil.contains(
+					variableTypeNames,
+					getVariableTypeName(
+						identDetailAST, identDetailAST.getText(), false))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private int _getClosestParentLineNumber(
+		DetailAST firstNameDetailAST, int lineNumber) {
+
+		int closestLineNumber = firstNameDetailAST.getLineNo();
+
+		DetailAST parentDetailAST = firstNameDetailAST.getParent();
+
+		while (true) {
+			if (parentDetailAST.getLineNo() <= lineNumber) {
+				return closestLineNumber;
+			}
+
+			closestLineNumber = parentDetailAST.getLineNo();
+
+			parentDetailAST = parentDetailAST.getParent();
+		}
+	}
+
+	private DetailAST _getIfStatementDetailAST(
+		DetailAST detailAST, int lineNumber) {
+
+		DetailAST ifStatementDetailAST = null;
+
+		DetailAST slistDetailAST = getParentWithTokenType(
+			detailAST, TokenTypes.SLIST);
+
+		while (true) {
+			if ((slistDetailAST == null) ||
+				(slistDetailAST.getLineNo() < lineNumber)) {
+
+				return ifStatementDetailAST;
+			}
+
+			DetailAST parentDetailAST = slistDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.LITERAL_IF) {
+				ifStatementDetailAST = parentDetailAST;
+			}
+
+			slistDetailAST = getParentWithTokenType(
+				slistDetailAST, TokenTypes.SLIST);
+		}
+	}
+
+	private DetailAST _getLastBranchingStatementDetailAST(
+		DetailAST detailAST, int start, int end) {
+
+		DetailAST lastBranchingStatementDetailAST = null;
+
+		List<DetailAST> branchingStatementDetailASTList = getAllChildTokens(
+			detailAST, true, TokenTypes.LITERAL_BREAK,
+			TokenTypes.LITERAL_CONTINUE, TokenTypes.LITERAL_RETURN);
+
+		for (DetailAST branchingStatementDetailAST :
+				branchingStatementDetailASTList) {
+
+			int lineNumber = getEndLineNumber(branchingStatementDetailAST);
+
+			if ((start >= lineNumber) || (end <= lineNumber)) {
+				continue;
+			}
+
+			DetailAST branchedStatementDetailAST = null;
+
+			if ((branchingStatementDetailAST.getType() ==
+					TokenTypes.LITERAL_BREAK) ||
+				(branchingStatementDetailAST.getType() ==
+					TokenTypes.LITERAL_CONTINUE)) {
+
+				branchedStatementDetailAST = getParentWithTokenType(
+					branchingStatementDetailAST, TokenTypes.LITERAL_DO,
+					TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_WHILE);
+			}
+			else {
+				branchedStatementDetailAST = getParentWithTokenType(
+					branchingStatementDetailAST, TokenTypes.CTOR_DEF,
+					TokenTypes.LAMBDA, TokenTypes.METHOD_DEF);
+			}
+
+			if ((branchedStatementDetailAST != null) &&
+				(branchedStatementDetailAST.getLineNo() < start) &&
+				((lastBranchingStatementDetailAST == null) ||
+				 (branchingStatementDetailAST.getLineNo() >
+					 lastBranchingStatementDetailAST.getLineNo()))) {
+
+				lastBranchingStatementDetailAST = branchingStatementDetailAST;
+			}
+		}
+
+		return lastBranchingStatementDetailAST;
 	}
 
 	private boolean _hasChainStyle(
@@ -253,5 +463,13 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 	}
 
 	private static final String _MSG_INLINE_VARIABLE = "variable.inline";
+
+	private static final String
+		_MSG_VARIABLE_DECLARATION_MOVE_AFTER_BRANCHING_STATEMENT =
+			"variable.declaration.move.after.branching.statement";
+
+	private static final String
+		_MSG_VARIABLE_DECLARATION_MOVE_INSIDE_IF_STATEMENT =
+			"variable.declaration.move.inside.if.statement";
 
 }

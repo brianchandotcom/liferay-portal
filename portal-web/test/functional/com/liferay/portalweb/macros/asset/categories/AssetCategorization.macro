@@ -60,11 +60,7 @@ definition {
 	}
 
 	macro gotoSelectCategory {
-		SelectFrameTop();
-
-		if (IsElementPresent(locator1 = "IFrame#SELECT_CATEGORY")) {
-			IFrame.selectCategoryFrame();
-		}
+		IFrame.selectCategoryFrame();
 
 		Pause(locator1 = "3000");
 

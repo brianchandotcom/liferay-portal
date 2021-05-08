@@ -178,8 +178,9 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 				detailAST,
 				StringBundler.concat(
 					"_?(add|channel|close|copy|create|delete|execute|import|",
-					"manage|next|open|post|put|read|register|resolve|run|send|",
-					"test|transform|unzip|update|upsert|zip)([A-Z].*)?"),
+					"increment|manage|next|open|post|put|read|register|",
+					"resolve|run|send|test|transform|unzip|update|upsert|zip)",
+					"([A-Z].*)?"),
 				"currentTimeMillis", "nextVersion", "toString") ||
 			_containsVariableType(detailAST, "ActionQueue", "File")) {
 

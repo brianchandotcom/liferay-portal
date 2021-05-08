@@ -337,6 +337,14 @@ table.publications-render-view {
 	height: auto;
 	min-height: 3.5rem;
 
+	.autofit-col {
+		padding-left: 16px;
+	}
+
+	.autofit-col:first-child {
+		padding-left: 0;
+	}
+
 	.publication-name {
 		color: #272833;
 		font-size: 18px;

@@ -45,4 +45,21 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Directly update the typeSettings of an Asset List Entry using the JSON API"
+	macro _updateAssetListEntryTypeSettings {
+		Variables.assertDefined(parameterList = "${assetListEntryId},${segmentsEntryId},${typeSettings}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/assetlist.assetlistentry/update-asset-list-entry-type-settings \
+			-u test@liferay.com:test \
+			-d assetListEntryId=${assetListEntryId} \
+			-d segmentsEntryId=${segmentsEntryId} \
+			-d typeSettings=${typeSettings}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

@@ -394,6 +394,8 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			_uiItemsBuilder.addCheckinMenuItem(menuItems);
 
+			_uiItemsBuilder.addCollectESignatureMenuItem(menuItems);
+
 			_uiItemsBuilder.addMoveMenuItem(menuItems);
 
 			MenuItem menuItem = null;

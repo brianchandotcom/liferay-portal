@@ -14,7 +14,11 @@ definition {
 			-d type=${type}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		var assetListEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['assetListEntryId']");
+		var assetListEntryId = StringUtil.replace("${assetListEntryId}", "[&quot;", "");
+		var assetListEntryId = StringUtil.replace("${assetListEntryId}", "&quot;]", "");
+
+		return "${assetListEntryId}";
 	}
 
 	@summary = "Directly creates an Dynamic Asset List Entry using the JSON API"

@@ -31,6 +31,9 @@ public class DLUIItemKeys {
 	public static final String CHECKOUT =
 		DLUIItemKeys.class.getName() + "#checkout";
 
+	public static final String COLLECT_E_SIGNATURE =
+		DLUIItemKeys.class.getName() + "#collect-e-signature";
+
 	public static final String COMPARE_TO =
 		DLUIItemKeys.class.getName() + "#compare-to";
 

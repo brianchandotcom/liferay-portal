@@ -15,9 +15,8 @@
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
-import Collapse from '../../../../../common/components/Collapse';
-import PageContent from './PageContent';
-import SearchContents from './SearchContents';
+import ContentFilter from './ContentFilter';
+import ContentList from './ContentList';
 
 export const CONTENT_TYPE_LABELS = {
 	allContent: Liferay.Language.get('all-content'),
@@ -70,25 +69,16 @@ export default function PageContents({pageContents}) {
 
 	return (
 		<>
-			<SearchContents
+			<ContentFilter
 				contentTypes={sortedTypes}
 				onChangeInput={setSearchValue}
 				onChangeSelect={setSelectedType}
 				selectedType={selectedType}
 			/>
-
-			{Object.keys(filteredContents).map((type) => (
-				<Collapse key={type} label={type} open>
-					<ul className="list-unstyled mb-1">
-						{pageContents[type].map((pageContent, index) => (
-							<PageContent
-								key={`${pageContent.classPK}${index}`}
-								{...pageContent}
-							/>
-						))}
-					</ul>
-				</Collapse>
-			))}
+			<ContentList
+				contents={filteredContents}
+				selectedType={selectedType}
+			/>
 		</>
 	);
 }

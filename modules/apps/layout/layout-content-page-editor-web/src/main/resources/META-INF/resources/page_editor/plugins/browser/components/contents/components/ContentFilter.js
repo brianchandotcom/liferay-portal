@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 import SearchForm from '../../../../../common/components/SearchForm';
 import {CONTENT_TYPE_LABELS} from './PageContents';
 
-export default function SearchContents({
+export default function ContentFilter({
 	contentTypes,
 	onChangeInput,
 	onChangeSelect,

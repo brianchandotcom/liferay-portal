@@ -153,10 +153,17 @@ definition {
 				DisplayPageTemplate.selectPreviewItem(
 					assetTitle = "Web Content Title ${n}",
 					assetType = "Web Content Article",
-					searchTerm = "Web Content Title ${n}");
+					searchTerm = "&quot;Web Content Title ${n}&quot;");
 
 				var n = ${n} + 1;
 			}
+		}
+
+		task ("Select the top item in dropdown list via scroll bar") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Web Content Title 16",
+				assetType = "Web Content Article",
+				item = "Web Content Title 16");
 		}
 
 		task ("Select the bottom item in dropdown list via scroll bar") {

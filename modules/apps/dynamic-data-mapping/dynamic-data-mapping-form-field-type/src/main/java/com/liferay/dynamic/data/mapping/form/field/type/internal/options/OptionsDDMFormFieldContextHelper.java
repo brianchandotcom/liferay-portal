@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.options;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -97,9 +97,13 @@ public class OptionsDDMFormFieldContextHelper {
 	}
 
 	protected List<Object> createDefaultOptions() {
+		String defaultOptionLabel = getDefaultOptionLabel();
+
+		String defaultOptionValue = getDefaultOptionValue(defaultOptionLabel);
+
 		return ListUtil.fromArray(
 			createOption(
-				getDefaultOptionLabel(), StringPool.BLANK, StringPool.BLANK));
+				defaultOptionLabel, defaultOptionValue, defaultOptionValue));
 	}
 
 	protected Map<String, String> createOption(
@@ -138,12 +142,23 @@ public class OptionsDDMFormFieldContextHelper {
 		return LanguageUtil.get(resourceBundle, "option");
 	}
 
+	protected String getDefaultOptionValue(String defaultOptionValue) {
+		for (int i = 0; i < _DEFAULT_OPTION_VALUE_RANDOM_NUMBERS_LENGTH; i++) {
+			defaultOptionValue = defaultOptionValue.concat(
+				String.valueOf(RandomUtil.nextInt(10)));
+		}
+
+		return defaultOptionValue;
+	}
+
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		Class<?> clazz = getClass();
 
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, clazz.getClassLoader());
 	}
+
+	private static final int _DEFAULT_OPTION_VALUE_RANDOM_NUMBERS_LENGTH = 8;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OptionsDDMFormFieldContextHelper.class);

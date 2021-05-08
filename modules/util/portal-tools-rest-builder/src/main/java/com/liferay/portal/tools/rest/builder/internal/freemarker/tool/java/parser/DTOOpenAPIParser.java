@@ -26,6 +26,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 /**
@@ -117,26 +118,13 @@ public class DTOOpenAPIParser {
 	public static boolean isSchemaProperty(
 		OpenAPIYAML openAPIYAML, String propertyName, Schema schema) {
 
-		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
-
 		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
 			String propertySchemaName = entry.getKey();
-			Schema propertySchema = entry.getValue();
 
-			String curPropertyName = _getPropertyName(
-				propertySchema, propertySchemaName);
-
-			if (StringUtil.equalsIgnoreCase(curPropertyName, propertyName)) {
-				String schemaName = StringUtil.upperCaseFirstLetter(
-					propertySchemaName);
-
-				if (propertySchema.getItems() != null) {
-					schemaName = OpenAPIUtil.formatSingular(schemaName);
-				}
-
-				if (schemas.containsKey(schemaName)) {
+			if (propertySchemaName.equals(propertyName)) {
+				if (_isSchema(entry.getValue())) {
 					return true;
 				}
 
@@ -279,6 +267,32 @@ public class DTOOpenAPIParser {
 		}
 
 		return propertyType;
+	}
+
+	private static boolean _isObject(Schema schema, String type) {
+		if (Objects.equals("object", type) &&
+			(schema.getAdditionalPropertySchema() == null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isSchema(Schema schema) {
+		Items items = schema.getItems();
+
+		if (_isObject(schema, schema.getType()) ||
+			(schema.getReference() != null) ||
+			(schema.getAllOfSchemas() != null) ||
+			((items != null) &&
+			 (_isObject(schema, items.getType()) ||
+			  (items.getReference() != null)))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

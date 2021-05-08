@@ -30,4 +30,31 @@ definition {
 		return "${structureId}";
 	}
 
+	@summary = "Get structureId of ddmStructures in specific group."
+	macro _getStructureIds {
+		Variables.assertDefined(parameterList = "${classNameId},${groupId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddm.ddmstructure/get-structures \
+			  -u test@liferay.com:test \
+			  -d companyId=${companyId} \
+			  -d groupIds=[${groupId}] \
+			  -d classNameId=${classNameId} \
+			  -d "start=-1" \
+			  -d "end=-1" \
+			  -d -orderByComparator=
+		''';
+
+		var structureIds = JSONCurlUtil.post("${curl}", "$..structureId");
+		var structureIds = StringUtil.replace("${structureIds}", "[", "");
+		var structureIds = StringUtil.replace("${structureIds}", "]", "");
+		var structureIds = StringUtil.replace("${structureIds}", "&quot;", "");
+
+		return "${structureIds}";
+	}
+
 }

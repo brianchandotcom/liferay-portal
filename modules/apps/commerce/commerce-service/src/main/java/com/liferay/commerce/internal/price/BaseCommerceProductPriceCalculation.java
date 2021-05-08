@@ -358,11 +358,11 @@ public abstract class BaseCommerceProductPriceCalculation
 			activePrice = BigDecimal.ZERO;
 		}
 
-		activePrice = activePrice.multiply(BigDecimal.valueOf(quantity));
-
 		if (discountsTargetNetPrice) {
 			CommerceCurrency commerceCurrency =
 				commerceContext.getCommerceCurrency();
+
+			activePrice = activePrice.multiply(BigDecimal.valueOf(quantity));
 
 			commerceProductPriceImpl.setCommerceDiscountValueWithTaxAmount(
 				CommercePriceConverterUtil.getConvertedCommerceDiscountValue(

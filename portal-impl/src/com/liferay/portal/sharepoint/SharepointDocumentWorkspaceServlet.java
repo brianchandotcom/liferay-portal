@@ -143,9 +143,10 @@ public class SharepointDocumentWorkspaceServlet extends HttpServlet {
 		boolean minimal = false;
 
 		beginPos = xml.lastIndexOf("<minimal>");
-		endPos = xml.lastIndexOf("</minimal>");
 
 		if (beginPos != -1) {
+			endPos = xml.lastIndexOf("</minimal>");
+
 			minimal = GetterUtil.getBoolean(
 				xml.substring(beginPos + 9, endPos));
 		}

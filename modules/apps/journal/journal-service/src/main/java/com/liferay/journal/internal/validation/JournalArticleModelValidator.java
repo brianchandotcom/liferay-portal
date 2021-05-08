@@ -458,13 +458,12 @@ public class JournalArticleModelValidator
 			byte[] smallImageBytes, long smallImageId, String content)
 		throws PortalException {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			JournalArticle.class.getName());
-
 		if (Validator.isNotNull(ddmStructureKey)) {
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					_portal.getSiteGroupId(groupId), classNameId,
+					_portal.getSiteGroupId(groupId),
+					_classNameLocalService.getClassNameId(
+						JournalArticle.class.getName()),
 					ddmStructureKey, true);
 
 			if (ddmStructure == null) {
@@ -472,13 +471,12 @@ public class JournalArticleModelValidator
 			}
 		}
 
-		classNameId = _classNameLocalService.getClassNameId(
-			DDMStructure.class.getName());
-
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-				_portal.getSiteGroupId(groupId), classNameId, ddmTemplateKey,
-				true);
+				_portal.getSiteGroupId(groupId),
+				_classNameLocalService.getClassNameId(
+					DDMStructure.class.getName()),
+				ddmTemplateKey, true);
 
 			if (ddmTemplate == null) {
 				throw new NoSuchTemplateException();

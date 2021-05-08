@@ -68,13 +68,6 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 			return;
 		}
 
-		DetailAST methodCallDetailAST = assignDetailAST.findFirstToken(
-			TokenTypes.METHOD_CALL);
-
-		if (methodCallDetailAST == null) {
-			return;
-		}
-
 		String variableName = nameDetailAST.getText();
 
 		DetailAST typeDetailAST = getVariableTypeDetailAST(
@@ -111,24 +104,24 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 				return;
 			}
 
-			if (checkMoveStatement(assignDetailAST)) {
+			if (checkMoveStatement(assignDetailAST) &&
+				!hasParentWithTokenType(
+					assignDetailAST, TokenTypes.LITERAL_FOR,
+					TokenTypes.LITERAL_WHILE)) {
+
 				checkMoveAfterBranchingStatement(
 					detailAST, assignDetailAST, variableName,
 					dependentIdentDetailAST);
-
-				if (!hasParentWithTokenType(
-						assignDetailAST, TokenTypes.LITERAL_WHILE)) {
-
-					checkMoveInsideIfStatement(
-						assignDetailAST, nameDetailAST, variableName,
-						dependentIdentDetailAST,
-						dependentIdentDetailASTList.get(
-							dependentIdentDetailASTList.size() - 1));
-				}
+				checkMoveInsideIfStatement(
+					assignDetailAST, nameDetailAST, variableName,
+					dependentIdentDetailAST,
+					dependentIdentDetailASTList.get(
+						dependentIdentDetailASTList.size() - 1));
 			}
 
 			checkInline(
-				assignDetailAST, variableName, methodCallDetailAST,
+				assignDetailAST, variableName,
+				assignDetailAST.findFirstToken(TokenTypes.METHOD_CALL),
 				dependentIdentDetailAST, dependentIdentDetailASTList);
 
 			return;

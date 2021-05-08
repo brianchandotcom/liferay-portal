@@ -19,6 +19,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.odata.entity.ObjectEntryEntityModel;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -36,11 +37,15 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.io.Serializable;
+
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,6 +60,28 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ObjectEntryResource.class
 )
 public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
+
+	@Override
+	public void create(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		_loadObjectDefinition(parameters);
+
+		super.create(objectEntries, parameters);
+	}
+
+	@Override
+	public void delete(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		_loadObjectDefinition(parameters);
+
+		super.delete(objectEntries, parameters);
+	}
 
 	@Override
 	public void deleteObjectEntry(Long objectEntryId) throws Exception {
@@ -135,6 +162,37 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				(Map)objectEntry.getProperties(), new ServiceContext()));
 	}
 
+	@Override
+	public void update(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		_loadObjectDefinition(parameters);
+
+		super.update(objectEntries, parameters);
+	}
+
+	private void _loadObjectDefinition(Map<String, Serializable> parameters)
+		throws Exception {
+
+		String parameterString = (String)parameters.get("objectDefinitionId");
+
+		String parameterArray = parameterString.substring(
+			1, parameterString.length() - 1);
+
+		String[] objectDefinitions = parameterArray.split(",");
+
+		if (objectDefinitions.length > 0) {
+			_objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					GetterUtil.getLong(objectDefinitions[0]));
+		}
+		else {
+			throw new NotFoundException("Missing objectDefinitionId");
+		}
+	}
+
 	private ObjectEntry _toObjectEntry(
 		com.liferay.object.model.ObjectEntry objectEntry) {
 
@@ -152,6 +210,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Context
 	private ObjectDefinition _objectDefinition;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;

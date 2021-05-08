@@ -45,6 +45,25 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Directly create a Manual Asset List Entry using the JSON API"
+	macro _addManualAssetListEntry {
+		Variables.assertDefined(parameterList = "${groupId},${itemType},${title}");
+
+		var assetListEntryId = JSONAssetlistAPI._addAssetListEntry(
+			groupId = "${groupId}",
+			title = "${title}",
+			type = "1");
+
+		var typeSettings = JSONAssetlistSetter.setTypeSettings(
+			itemType = "${itemType}",
+			selectionType = "manual");
+
+		JSONAssetlistAPI._updateAssetListEntryTypeSettings(
+			assetListEntryId = "${assetListEntryId}",
+			segmentsEntryId = "0",
+			typeSettings = "${typeSettings}");
+	}
+
 	@summary = "Directly update the typeSettings of an Asset List Entry using the JSON API"
 	macro _updateAssetListEntryTypeSettings {
 		Variables.assertDefined(parameterList = "${assetListEntryId},${segmentsEntryId},${typeSettings}");

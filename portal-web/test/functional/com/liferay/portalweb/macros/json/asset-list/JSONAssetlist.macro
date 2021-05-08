@@ -37,4 +37,15 @@ definition {
 			type = "${type}");
 	}
 
+	macro addManualAssetListEntryWithItemType {
+		Variables.assertDefined(parameterList = "${groupName},${itemType},${title}");
+
+		var groupId = JSONAssetlistSetter.setGroupId(groupName = "${groupName}", site = "${site}");
+
+		JSONAssetlistAPI._addManualAssetListEntry(
+			groupId = "${groupId}",
+			itemType = "${itemType}",
+			title = "${title}");
+	}
+
 }

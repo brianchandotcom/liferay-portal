@@ -136,8 +136,12 @@ definition {
 			WebContentStructures.addCP(structureName = "WC Structure Name");
 
 			DataEngine.addField(
-				fieldFieldLabel = "Text",
-				fieldName = "Text");
+				fieldFieldLabel = "Text1",
+				fieldName = "Text1");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text2",
+				fieldName = "Text2");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}
@@ -154,7 +158,7 @@ definition {
 
 		task ("Type content in Text field under en-US") {
 			Type(
-				key_fieldFieldLabel = "Text",
+				key_fieldFieldLabel = "Text1",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "This is a Text field");
 		}
@@ -163,7 +167,7 @@ definition {
 			PortletEntry.changeLocale(locale = "es-ES");
 
 			Type(
-				key_fieldFieldLabel = "Text",
+				key_fieldFieldLabel = "Text2",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "Este es un campo de texto");
 
@@ -177,7 +181,7 @@ definition {
 
 			AssertAttributeValue(
 				attribute1 = "value",
-				key_fieldFieldLabel = "Text",
+				key_fieldFieldLabel = "Text1",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "This is a Text field");
 
@@ -185,7 +189,7 @@ definition {
 
 			AssertAttributeValue(
 				attribute1 = "value",
-				key_fieldFieldLabel = "Text",
+				key_fieldFieldLabel = "Text2",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
 				value1 = "Este es un campo de texto");
 		}

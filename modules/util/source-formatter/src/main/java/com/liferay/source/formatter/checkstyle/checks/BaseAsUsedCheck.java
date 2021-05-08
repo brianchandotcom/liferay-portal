@@ -142,18 +142,18 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 		DetailAST firstDependentIdentDetailAST,
 		DetailAST lastDependentIdentDetailAST) {
 
-		DetailAST ifStatementDetailAST = _getIfStatementDetailAST(
+		DetailAST elseOrIfStatementDetailAST = _getElseOrIfStatementDetailAST(
 			firstDependentIdentDetailAST, getEndLineNumber(assignDetailAST));
 
-		if (ifStatementDetailAST == null) {
+		if (elseOrIfStatementDetailAST == null) {
 			return;
 		}
 
 		DetailAST parentDetailAST = getParentWithTokenType(
-			ifStatementDetailAST, TokenTypes.LAMBDA, TokenTypes.LITERAL_DO,
-			TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_NEW,
-			TokenTypes.LITERAL_SYNCHRONIZED, TokenTypes.LITERAL_TRY,
-			TokenTypes.LITERAL_WHILE);
+			elseOrIfStatementDetailAST, TokenTypes.LAMBDA,
+			TokenTypes.LITERAL_DO, TokenTypes.LITERAL_FOR,
+			TokenTypes.LITERAL_NEW, TokenTypes.LITERAL_SYNCHRONIZED,
+			TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_WHILE);
 
 		if ((parentDetailAST != null) &&
 			(parentDetailAST.getLineNo() >= assignDetailAST.getLineNo())) {
@@ -161,15 +161,34 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST slistDetailAST = ifStatementDetailAST.findFirstToken(
+		DetailAST slistDetailAST = elseOrIfStatementDetailAST.findFirstToken(
 			TokenTypes.SLIST);
 
-		if (getEndLineNumber(slistDetailAST) >
+		if (getEndLineNumber(slistDetailAST) <=
 				lastDependentIdentDetailAST.getLineNo()) {
 
+			return;
+		}
+
+		if (elseOrIfStatementDetailAST.getType() == TokenTypes.LITERAL_ELSE) {
 			log(
 				nameDetailAST, _MSG_MOVE_VARIABLE_INSIDE_IF_STATEMENT,
-				variableName, ifStatementDetailAST.getLineNo());
+				variableName, "else", elseOrIfStatementDetailAST.getLineNo());
+		}
+		else {
+			parentDetailAST = elseOrIfStatementDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.LITERAL_ELSE) {
+				log(
+					nameDetailAST, _MSG_MOVE_VARIABLE_INSIDE_IF_STATEMENT,
+					variableName, "else if",
+					elseOrIfStatementDetailAST.getLineNo());
+			}
+			else {
+				log(
+					nameDetailAST, _MSG_MOVE_VARIABLE_INSIDE_IF_STATEMENT,
+					variableName, "if", elseOrIfStatementDetailAST.getLineNo());
+			}
 		}
 	}
 
@@ -246,10 +265,10 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 		}
 	}
 
-	private DetailAST _getIfStatementDetailAST(
+	private DetailAST _getElseOrIfStatementDetailAST(
 		DetailAST detailAST, int lineNumber) {
 
-		DetailAST ifStatementDetailAST = null;
+		DetailAST elseOrIfStatementDetailAST = null;
 
 		DetailAST slistDetailAST = getParentWithTokenType(
 			detailAST, TokenTypes.SLIST);
@@ -258,13 +277,15 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			if ((slistDetailAST == null) ||
 				(slistDetailAST.getLineNo() < lineNumber)) {
 
-				return ifStatementDetailAST;
+				return elseOrIfStatementDetailAST;
 			}
 
 			DetailAST parentDetailAST = slistDetailAST.getParent();
 
-			if (parentDetailAST.getType() == TokenTypes.LITERAL_IF) {
-				ifStatementDetailAST = parentDetailAST;
+			if ((parentDetailAST.getType() == TokenTypes.LITERAL_ELSE) ||
+				(parentDetailAST.getType() == TokenTypes.LITERAL_IF)) {
+
+				elseOrIfStatementDetailAST = parentDetailAST;
 			}
 
 			slistDetailAST = getParentWithTokenType(

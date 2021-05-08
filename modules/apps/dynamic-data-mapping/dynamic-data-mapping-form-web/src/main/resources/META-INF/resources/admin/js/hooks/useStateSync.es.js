@@ -60,20 +60,24 @@ const getSerializedFormBuilderContext = (state, defaultLanguageId) => {
 
 	return JSON.stringify({
 		...state,
-		pages: visitor.mapFields((field) => {
-			return {
-				...field,
-				settingsContext: {
-					...field.settingsContext,
-					availableLanguageIds: state.availableLanguageIds,
-					defaultLanguageId: state.defaultLanguageId,
-					pages: getSerializedSettingsContextPages(
-						field.settingsContext.pages,
-						defaultLanguageId
-					),
-				},
-			};
-		}),
+		pages: visitor.mapFields(
+			(field) => {
+				return {
+					...field,
+					settingsContext: {
+						...field.settingsContext,
+						availableLanguageIds: state.availableLanguageIds,
+						defaultLanguageId: state.defaultLanguageId,
+						pages: getSerializedSettingsContextPages(
+							field.settingsContext.pages,
+							defaultLanguageId
+						),
+					},
+				};
+			},
+			true,
+			true
+		),
 	});
 };
 

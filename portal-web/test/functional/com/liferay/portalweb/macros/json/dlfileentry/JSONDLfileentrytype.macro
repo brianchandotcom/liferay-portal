@@ -23,4 +23,24 @@ definition {
 		return "${fileEntryTypeId}";
 	}
 
+	@summary = "Get fileEntryTypeId of dlFileEntryTypes in specific group."
+	macro _getFileEntryTypeIds {
+		Variables.assertDefined(parameterList = "${groupId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileentrytype/get-file-entry-types \
+			  -u test@liferay.com:test \
+			  -d groupIds=[${groupId}]
+		''';
+
+		var fileEntryTypeIds = JSONCurlUtil.post("${curl}", "$..fileEntryTypeId");
+		var fileEntryTypeIds = StringUtil.replace("${fileEntryTypeIds}", "[", "");
+		var fileEntryTypeIds = StringUtil.replace("${fileEntryTypeIds}", "]", "");
+		var fileEntryTypeIds = StringUtil.replace("${fileEntryTypeIds}", "&quot;", "");
+
+		return "${fileEntryTypeIds}";
+	}
+
 }

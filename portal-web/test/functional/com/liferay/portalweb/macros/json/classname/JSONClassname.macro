@@ -16,7 +16,7 @@ definition {
 		var classNameId = StringUtil.replace("${classNameId}", "&quot;]", "");
 
 		if ("${classNameId}" == "[]") {
-			fail("FAIL. Cannot find classNameId.");
+			echo("The ${value} doesn't exist.");
 		}
 
 		return "${classNameId}";

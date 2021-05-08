@@ -52,13 +52,11 @@ public class SLAResultResourceImpl extends BaseSLAResultResourceImpl {
 
 		searchSearchRequest.addSorts(
 			_sorts.field("modifiedDate", SortOrder.DESC));
-
 		searchSearchRequest.setIndexNames(
 			_slaInstanceResultWorkflowMetricsIndexNameBuilder.getIndexName(
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
-
 		BooleanQuery filterBooleanQuery = _queries.booleanQuery();
 
 		searchSearchRequest.setQuery(

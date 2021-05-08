@@ -307,11 +307,6 @@ public abstract class BaseOrganizationResourceImpl
 				organization.getNumberOfOrganizations());
 		}
 
-		if (organization.getParentOrganization() != null) {
-			existingOrganization.setParentOrganization(
-				organization.getParentOrganization());
-		}
-
 		preparePatch(organization, existingOrganization);
 
 		return putOrganization(organizationId, existingOrganization);

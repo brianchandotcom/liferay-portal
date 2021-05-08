@@ -283,11 +283,6 @@ public abstract class BaseDataDefinitionResourceImpl
 				dataDefinition.getDateModified());
 		}
 
-		if (dataDefinition.getDefaultDataLayout() != null) {
-			existingDataDefinition.setDefaultDataLayout(
-				dataDefinition.getDefaultDataLayout());
-		}
-
 		if (dataDefinition.getDefaultLanguageId() != null) {
 			existingDataDefinition.setDefaultLanguageId(
 				dataDefinition.getDefaultLanguageId());

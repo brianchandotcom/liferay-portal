@@ -385,6 +385,10 @@ public abstract class BaseUserAccountResourceImpl
 			existingUserAccount.setDateModified(userAccount.getDateModified());
 		}
 
+		if (userAccount.getEmailAddress() != null) {
+			existingUserAccount.setEmailAddress(userAccount.getEmailAddress());
+		}
+
 		if (userAccount.getFamilyName() != null) {
 			existingUserAccount.setFamilyName(userAccount.getFamilyName());
 		}

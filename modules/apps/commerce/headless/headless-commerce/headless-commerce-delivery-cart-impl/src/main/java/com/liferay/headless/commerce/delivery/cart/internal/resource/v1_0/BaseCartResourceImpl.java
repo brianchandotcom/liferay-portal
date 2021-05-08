@@ -190,16 +190,16 @@ public abstract class BaseCartResourceImpl
 			existingCart.setAuthor(cart.getAuthor());
 		}
 
-		if (cart.getBillingAddress() != null) {
-			existingCart.setBillingAddress(cart.getBillingAddress());
-		}
-
 		if (cart.getBillingAddressId() != null) {
 			existingCart.setBillingAddressId(cart.getBillingAddressId());
 		}
 
 		if (cart.getChannelId() != null) {
 			existingCart.setChannelId(cart.getChannelId());
+		}
+
+		if (cart.getCouponCode() != null) {
+			existingCart.setCouponCode(cart.getCouponCode());
 		}
 
 		if (cart.getCreateDate() != null) {
@@ -226,16 +226,12 @@ public abstract class BaseCartResourceImpl
 			existingCart.setModifiedDate(cart.getModifiedDate());
 		}
 
-		if (cart.getNotes() != null) {
-			existingCart.setNotes(cart.getNotes());
-		}
-
-		if (cart.getOrderStatusInfo() != null) {
-			existingCart.setOrderStatusInfo(cart.getOrderStatusInfo());
-		}
-
 		if (cart.getOrderUUID() != null) {
 			existingCart.setOrderUUID(cart.getOrderUUID());
+		}
+
+		if (cart.getPaymentMethod() != null) {
+			existingCart.setPaymentMethod(cart.getPaymentMethod());
 		}
 
 		if (cart.getPaymentMethodLabel() != null) {
@@ -244,10 +240,6 @@ public abstract class BaseCartResourceImpl
 
 		if (cart.getPaymentStatus() != null) {
 			existingCart.setPaymentStatus(cart.getPaymentStatus());
-		}
-
-		if (cart.getPaymentStatusInfo() != null) {
-			existingCart.setPaymentStatusInfo(cart.getPaymentStatusInfo());
 		}
 
 		if (cart.getPaymentStatusLabel() != null) {
@@ -262,12 +254,20 @@ public abstract class BaseCartResourceImpl
 			existingCart.setPurchaseOrderNumber(cart.getPurchaseOrderNumber());
 		}
 
-		if (cart.getShippingAddress() != null) {
-			existingCart.setShippingAddress(cart.getShippingAddress());
-		}
-
 		if (cart.getShippingAddressId() != null) {
 			existingCart.setShippingAddressId(cart.getShippingAddressId());
+		}
+
+		if (cart.getShippingMethod() != null) {
+			existingCart.setShippingMethod(cart.getShippingMethod());
+		}
+
+		if (cart.getShippingOption() != null) {
+			existingCart.setShippingOption(cart.getShippingOption());
+		}
+
+		if (cart.getStatus() != null) {
+			existingCart.setStatus(cart.getStatus());
 		}
 
 		if (cart.getUseAsBilling() != null) {
@@ -276,10 +276,6 @@ public abstract class BaseCartResourceImpl
 
 		if (cart.getValid() != null) {
 			existingCart.setValid(cart.getValid());
-		}
-
-		if (cart.getWorkflowStatusInfo() != null) {
-			existingCart.setWorkflowStatusInfo(cart.getWorkflowStatusInfo());
 		}
 
 		preparePatch(cart, existingCart);

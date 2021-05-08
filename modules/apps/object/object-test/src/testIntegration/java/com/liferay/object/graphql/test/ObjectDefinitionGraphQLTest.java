@@ -227,9 +227,10 @@ public class ObjectDefinitionGraphQLTest {
 					HashMapBuilder.<String, Object>put(
 						_objectDefinitionName,
 						StringBundler.concat(
-							"{", _objectDefinition.getPrimaryKeyColumnName(),
-							": ", String.valueOf(objectEntryId), ", ",
-							_objectFieldName, ": \"", value, "\"}")
+							"{", _objectFieldName, ": \"", value, "\"}")
+					).put(
+						_objectDefinition.getPrimaryKeyColumnName(),
+						String.valueOf(objectEntryId)
 					).build(),
 					new GraphQLField(_objectFieldName))));
 

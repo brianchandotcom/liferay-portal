@@ -30,6 +30,8 @@ definition {
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
 
 		var typeSettings = JSONAssetlistSetter.setTypeSettings(
+			groupId = "${groupId}",
+			itemSubtype = "${itemSubtype}",
 			itemType = "${itemType}",
 			selectionType = "dynamic");
 
@@ -55,6 +57,8 @@ definition {
 			type = "1");
 
 		var typeSettings = JSONAssetlistSetter.setTypeSettings(
+			groupId = "${groupId}",
+			itemSubtype = "${itemSubtype}",
 			itemType = "${itemType}",
 			selectionType = "manual");
 

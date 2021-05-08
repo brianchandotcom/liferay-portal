@@ -20,6 +20,7 @@ definition {
 
 		JSONAssetlistAPI._addDynamicAssetListEntry(
 			groupId = "${groupId}",
+			itemSubtype = "${itemSubtype}",
 			itemType = "${itemType}",
 			title = "${title}");
 	}
@@ -44,6 +45,7 @@ definition {
 
 		JSONAssetlistAPI._addManualAssetListEntry(
 			groupId = "${groupId}",
+			itemSubtype = "${itemSubtype}",
 			itemType = "${itemType}",
 			title = "${title}");
 	}

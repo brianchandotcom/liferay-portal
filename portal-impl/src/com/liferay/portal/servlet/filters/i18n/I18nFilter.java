@@ -135,9 +135,6 @@ public class I18nFilter extends BasePortalFilter {
 			requestURI = requestURI.substring(contextPath.length());
 		}
 
-		requestURI = StringUtil.replace(
-			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
-
 		String i18nLanguageId = prependI18nLanguageId(
 			httpServletRequest, PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
@@ -150,6 +147,9 @@ public class I18nFilter extends BasePortalFilter {
 		if (!LanguageUtil.isAvailableLocale(locale)) {
 			return null;
 		}
+
+		requestURI = StringUtil.replace(
+			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 		String i18nPathLanguageId = PortalUtil.getI18nPathLanguageId(
 			locale, i18nLanguageId);

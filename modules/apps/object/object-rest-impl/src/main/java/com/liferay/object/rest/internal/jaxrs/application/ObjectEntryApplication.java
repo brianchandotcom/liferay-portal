@@ -14,6 +14,7 @@
 
 package com.liferay.object.rest.internal.jaxrs.application;
 
+import com.liferay.object.rest.internal.jaxrs.container.request.filter.ObjectDefinitionIdContainerRequestFilter;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
 import com.liferay.object.rest.internal.resource.v1_0.OpenAPIResourceImpl;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
@@ -48,6 +49,8 @@ public class ObjectEntryApplication extends Application {
 			new ObjectDefinitionContextProvider(
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					_objectDefinitionId)));
+		objects.add(
+			new ObjectDefinitionIdContainerRequestFilter(_objectDefinitionId));
 
 		return objects;
 	}

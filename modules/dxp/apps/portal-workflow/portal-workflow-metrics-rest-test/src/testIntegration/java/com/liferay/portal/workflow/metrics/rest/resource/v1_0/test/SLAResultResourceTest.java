@@ -129,19 +129,17 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 
 	@Override
 	protected SLAResult randomSLAResult() throws Exception {
+		boolean slaResultOntime = RandomTestUtil.randomBoolean();
+
 		return new SLAResult() {
 			{
 				dateModified = DateUtils.truncate(
 					RandomTestUtil.nextDate(), Calendar.SECOND);
 				dateOverdue = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();
-
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-
-				onTime = RandomTestUtil.randomBoolean();
-
-				remainingTime = onTime ? 100L : -100L;
-
+				onTime = slaResultOntime;
+				remainingTime = slaResultOntime ? 100L : -100L;
 				status = Status.RUNNING;
 			}
 		};

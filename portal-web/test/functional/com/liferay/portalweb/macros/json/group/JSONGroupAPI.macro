@@ -150,7 +150,7 @@ definition {
 				-d site=${site}
 		''';
 
-		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
+		var groupId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
 		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
 		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 

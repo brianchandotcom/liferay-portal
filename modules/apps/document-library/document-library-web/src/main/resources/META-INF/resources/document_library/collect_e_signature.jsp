@@ -61,10 +61,8 @@ if (dlEditFileEntryDisplayContext.isVersionInfoVisible()) {
 	</liferay-frontend:info-bar>
 </c:if>
 
-<clay:container-fluid
-	cssClass="container-form-lg"
->
+<div id="digital-signature">
 	<react:component
-		module="document_library/js/digital-signature/CollectDigitalSignature"
+		module="document_library/js/digital-signature/pages/CollectDigitalSignature"
 	/>
-</clay:container-fluid>
+</div>

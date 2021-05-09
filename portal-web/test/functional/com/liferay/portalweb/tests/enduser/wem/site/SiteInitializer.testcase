@@ -469,19 +469,10 @@ definition {
 
 			AssertLocation(value1 = "${portalURL}/web/test-site-name");
 
-			Button.click(button = "Sign In");
-
-			Type.typePause(
-				locator1 = "TextInput#EMAIL_ADDRESS",
-				value1 = "test@liferay.com");
-
-			Type.typePause(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test");
-
-			Click(locator1 = "Button#SIGN_IN");
-
-			WaitForLiferayEvent.initializeLiferayEventLog();
+			User.firstLoginUI(
+				specificURL = "${portalURL}/web/test-site-name",
+				userEmailAddress = "test@liferay.com",
+				userPassword = "test");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Dashboard");
 
@@ -489,11 +480,10 @@ definition {
 
 			AssertLocation(value1 = "${portalURL}/web/test-site-name");
 
-			User.firstLoginPG(
+			User.firstLoginUI(
+				specificURL = "${portalURL}/group/test-site-name",
 				userEmailAddress = "test@liferay.com",
 				userPassword = "test");
-
-			Open(locator1 = "${portalURL}/group/test-site-name");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Dashboard");
 		}

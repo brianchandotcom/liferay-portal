@@ -1185,14 +1185,6 @@ org.apache.level=WARNING]]>
 						<param-name>compilerTargetVM</param-name>
 						<param-value>1.8</param-value>
 					</init-param>
-					<init-param>
-						<param-name>enablePooling</param-name>
-						<param-value>false</param-value>
-					</init-param>
-					<init-param>
-						<param-name>tagpoolClassName</param-name>
-						<param-value>com.liferay.support.tomcat.jasper.runtime.TagHandlerPool</param-value>
-					</init-param>
 					<load-on-startup>3</load-on-startup>
 				]]>
 			</replacevalue>

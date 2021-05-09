@@ -293,7 +293,8 @@ public abstract class BaseTaskResourceImpl
 		throws Exception {
 
 		for (Task task : tasks) {
-			postProcessTask((Long)parameters.get("processId"), task);
+			postProcessTask(
+				Long.parseLong((String)parameters.get("processId")), task);
 		}
 	}
 
@@ -325,7 +326,8 @@ public abstract class BaseTaskResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessTasksPage((Long)parameters.get("processId"));
+		return getProcessTasksPage(
+			Long.parseLong((String)parameters.get("processId")));
 	}
 
 	@Override

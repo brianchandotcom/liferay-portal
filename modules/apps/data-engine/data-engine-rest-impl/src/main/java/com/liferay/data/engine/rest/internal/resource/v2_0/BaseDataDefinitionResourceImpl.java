@@ -616,7 +616,7 @@ public abstract class BaseDataDefinitionResourceImpl
 		for (DataDefinition dataDefinition : dataDefinitions) {
 			putDataDefinition(
 				dataDefinition.getId() != null ? dataDefinition.getId() :
-					(Long)parameters.get("dataDefinitionId"),
+					Long.parseLong((String)parameters.get("dataDefinitionId")),
 				dataDefinition);
 		}
 	}

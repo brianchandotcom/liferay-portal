@@ -291,7 +291,9 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 				knowledgeBaseAttachments) {
 
 			postKnowledgeBaseArticleKnowledgeBaseAttachment(
-				(Long)parameters.get("knowledgeBaseArticleId"), null);
+				Long.parseLong(
+					(String)parameters.get("knowledgeBaseArticleId")),
+				null);
 		}
 	}
 
@@ -331,7 +333,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 		throws Exception {
 
 		return getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
-			(Long)parameters.get("knowledgeBaseArticleId"));
+			Long.parseLong((String)parameters.get("knowledgeBaseArticleId")));
 	}
 
 	@Override

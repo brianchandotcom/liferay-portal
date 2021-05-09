@@ -473,7 +473,8 @@ public abstract class BaseNavigationMenuResourceImpl
 
 		for (NavigationMenu navigationMenu : navigationMenus) {
 			postSiteNavigationMenu(
-				(Long)parameters.get("siteId"), navigationMenu);
+				Long.parseLong((String)parameters.get("siteId")),
+				navigationMenu);
 		}
 	}
 
@@ -510,7 +511,7 @@ public abstract class BaseNavigationMenuResourceImpl
 		throws Exception {
 
 		return getSiteNavigationMenusPage(
-			(Long)parameters.get("siteId"), pagination);
+			Long.parseLong((String)parameters.get("siteId")), pagination);
 	}
 
 	@Override
@@ -544,7 +545,7 @@ public abstract class BaseNavigationMenuResourceImpl
 		for (NavigationMenu navigationMenu : navigationMenus) {
 			putNavigationMenu(
 				navigationMenu.getId() != null ? navigationMenu.getId() :
-					(Long)parameters.get("navigationMenuId"),
+					Long.parseLong((String)parameters.get("navigationMenuId")),
 				navigationMenu);
 		}
 	}

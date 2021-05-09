@@ -994,7 +994,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticles) {
 
 			postSiteKnowledgeBaseArticle(
-				(Long)parameters.get("siteId"), knowledgeBaseArticle);
+				Long.parseLong((String)parameters.get("siteId")),
+				knowledgeBaseArticle);
 		}
 	}
 
@@ -1033,8 +1034,9 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return getSiteKnowledgeBaseArticlesPage(
-			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, null, filter, pagination, sorts);
+			Long.parseLong((String)parameters.get("siteId")),
+			Boolean.parseBoolean((String)parameters.get("flatten")), search,
+			null, filter, pagination, sorts);
 	}
 
 	@Override
@@ -1071,7 +1073,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			putKnowledgeBaseArticle(
 				knowledgeBaseArticle.getId() != null ?
 					knowledgeBaseArticle.getId() :
-						(Long)parameters.get("knowledgeBaseArticleId"),
+						Long.parseLong(
+							(String)parameters.get("knowledgeBaseArticleId")),
 				knowledgeBaseArticle);
 		}
 	}

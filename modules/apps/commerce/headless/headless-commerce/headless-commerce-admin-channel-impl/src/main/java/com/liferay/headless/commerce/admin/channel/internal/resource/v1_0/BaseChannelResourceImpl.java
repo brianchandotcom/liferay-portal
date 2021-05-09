@@ -417,7 +417,7 @@ public abstract class BaseChannelResourceImpl
 		for (Channel channel : channels) {
 			putChannel(
 				channel.getId() != null ? channel.getId() :
-					(Long)parameters.get("channelId"),
+					Long.parseLong((String)parameters.get("channelId")),
 				channel);
 		}
 	}

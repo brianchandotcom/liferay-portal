@@ -276,7 +276,8 @@ public abstract class BaseObjectEntryResourceImpl
 		throws Exception {
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			postSiteObjectEntry((Long)parameters.get("siteId"), objectEntry);
+			postSiteObjectEntry(
+				Long.parseLong((String)parameters.get("siteId")), objectEntry);
 		}
 	}
 
@@ -346,7 +347,7 @@ public abstract class BaseObjectEntryResourceImpl
 		for (ObjectEntry objectEntry : objectEntries) {
 			putObjectEntry(
 				objectEntry.getId() != null ? objectEntry.getId() :
-					(Long)parameters.get("objectEntryId"),
+					Long.parseLong((String)parameters.get("objectEntryId")),
 				objectEntry);
 		}
 	}

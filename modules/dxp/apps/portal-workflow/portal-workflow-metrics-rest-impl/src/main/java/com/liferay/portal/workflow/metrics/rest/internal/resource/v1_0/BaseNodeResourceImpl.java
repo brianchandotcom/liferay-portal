@@ -191,7 +191,8 @@ public abstract class BaseNodeResourceImpl
 		throws Exception {
 
 		for (Node node : nodes) {
-			postProcessNode((Long)parameters.get("processId"), node);
+			postProcessNode(
+				Long.parseLong((String)parameters.get("processId")), node);
 		}
 	}
 
@@ -223,7 +224,8 @@ public abstract class BaseNodeResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getProcessNodesPage((Long)parameters.get("processId"));
+		return getProcessNodesPage(
+			Long.parseLong((String)parameters.get("processId")));
 	}
 
 	@Override

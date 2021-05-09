@@ -349,7 +349,8 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 			putAvailabilityEstimate(
 				availabilityEstimate.getId() != null ?
 					availabilityEstimate.getId() :
-						(Long)parameters.get("availabilityEstimateId"),
+						Long.parseLong(
+							(String)parameters.get("availabilityEstimateId")),
 				availabilityEstimate);
 		}
 	}

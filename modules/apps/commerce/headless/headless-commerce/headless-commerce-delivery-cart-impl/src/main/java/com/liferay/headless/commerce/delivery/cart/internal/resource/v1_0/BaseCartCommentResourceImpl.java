@@ -383,7 +383,7 @@ public abstract class BaseCartCommentResourceImpl
 		for (CartComment cartComment : cartComments) {
 			putCartComment(
 				cartComment.getId() != null ? cartComment.getId() :
-					(Long)parameters.get("cartCommentId"),
+					Long.parseLong((String)parameters.get("cartCommentId")),
 				cartComment);
 		}
 	}

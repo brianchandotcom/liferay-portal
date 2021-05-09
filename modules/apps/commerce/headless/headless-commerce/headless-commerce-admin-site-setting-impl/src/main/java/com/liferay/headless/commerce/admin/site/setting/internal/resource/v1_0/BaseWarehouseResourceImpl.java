@@ -344,7 +344,7 @@ public abstract class BaseWarehouseResourceImpl
 		for (Warehouse warehouse : warehouses) {
 			putWarehouse(
 				warehouse.getId() != null ? warehouse.getId() :
-					(Long)parameters.get("warehouseId"),
+					Long.parseLong((String)parameters.get("warehouseId")),
 				warehouse);
 		}
 	}

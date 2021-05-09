@@ -163,7 +163,7 @@ public abstract class BaseFormStructureResourceImpl
 		throws Exception {
 
 		return getSiteFormStructuresPage(
-			(Long)parameters.get("siteId"), pagination);
+			Long.parseLong((String)parameters.get("siteId")), pagination);
 	}
 
 	@Override

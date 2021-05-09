@@ -315,7 +315,8 @@ public abstract class BaseSLAResourceImpl
 		throws Exception {
 
 		for (SLA sla : slas) {
-			postProcessSLA((Long)parameters.get("processId"), sla);
+			postProcessSLA(
+				Long.parseLong((String)parameters.get("processId")), sla);
 		}
 	}
 
@@ -352,8 +353,8 @@ public abstract class BaseSLAResourceImpl
 		throws Exception {
 
 		return getProcessSLAsPage(
-			(Long)parameters.get("processId"),
-			(Integer)parameters.get("status"), pagination);
+			Long.parseLong((String)parameters.get("processId")),
+			Integer.parseInt((String)parameters.get("status")), pagination);
 	}
 
 	@Override
@@ -387,7 +388,7 @@ public abstract class BaseSLAResourceImpl
 		for (SLA sla : slas) {
 			putSLA(
 				sla.getId() != null ? sla.getId() :
-					(Long)parameters.get("slaId"),
+					Long.parseLong((String)parameters.get("slaId")),
 				sla);
 		}
 	}

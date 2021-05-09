@@ -405,8 +405,9 @@ public abstract class BaseAppResourceImpl
 		throws Exception {
 
 		return getSiteAppsPage(
-			(Long)parameters.get("siteId"), (String)parameters.get("keywords"),
-			(String)parameters.get("scope"), pagination, sorts);
+			Long.parseLong((String)parameters.get("siteId")),
+			(String)parameters.get("keywords"), (String)parameters.get("scope"),
+			pagination, sorts);
 	}
 
 	@Override
@@ -440,7 +441,7 @@ public abstract class BaseAppResourceImpl
 		for (App app : apps) {
 			putApp(
 				app.getId() != null ? app.getId() :
-					(Long)parameters.get("appId"),
+					Long.parseLong((String)parameters.get("appId")),
 				app);
 		}
 	}

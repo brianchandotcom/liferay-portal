@@ -594,7 +594,8 @@ public abstract class BaseCommentResourceImpl
 
 		for (Comment comment : comments) {
 			postBlogPostingComment(
-				(Long)parameters.get("blogPostingId"), comment);
+				Long.parseLong((String)parameters.get("blogPostingId")),
+				comment);
 		}
 	}
 
@@ -631,8 +632,8 @@ public abstract class BaseCommentResourceImpl
 		throws Exception {
 
 		return getBlogPostingCommentsPage(
-			(Long)parameters.get("blogPostingId"), search, null, filter,
-			pagination, sorts);
+			Long.parseLong((String)parameters.get("blogPostingId")), search,
+			null, filter, pagination, sorts);
 	}
 
 	@Override
@@ -666,7 +667,7 @@ public abstract class BaseCommentResourceImpl
 		for (Comment comment : comments) {
 			putComment(
 				comment.getId() != null ? comment.getId() :
-					(Long)parameters.get("commentId"),
+					Long.parseLong((String)parameters.get("commentId")),
 				comment);
 		}
 	}

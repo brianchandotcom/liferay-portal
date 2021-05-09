@@ -606,7 +606,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 
 		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
 			postTaxonomyVocabularyTaxonomyCategory(
-				(Long)parameters.get("taxonomyVocabularyId"), taxonomyCategory);
+				Long.parseLong((String)parameters.get("taxonomyVocabularyId")),
+				taxonomyCategory);
 		}
 	}
 

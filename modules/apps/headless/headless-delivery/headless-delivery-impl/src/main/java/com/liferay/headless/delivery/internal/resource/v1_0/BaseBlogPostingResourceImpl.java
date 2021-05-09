@@ -735,7 +735,8 @@ public abstract class BaseBlogPostingResourceImpl
 		throws Exception {
 
 		for (BlogPosting blogPosting : blogPostings) {
-			postSiteBlogPosting((Long)parameters.get("siteId"), blogPosting);
+			postSiteBlogPosting(
+				Long.parseLong((String)parameters.get("siteId")), blogPosting);
 		}
 	}
 
@@ -772,8 +773,8 @@ public abstract class BaseBlogPostingResourceImpl
 		throws Exception {
 
 		return getSiteBlogPostingsPage(
-			(Long)parameters.get("siteId"), search, null, filter, pagination,
-			sorts);
+			Long.parseLong((String)parameters.get("siteId")), search, null,
+			filter, pagination, sorts);
 	}
 
 	@Override
@@ -807,7 +808,7 @@ public abstract class BaseBlogPostingResourceImpl
 		for (BlogPosting blogPosting : blogPostings) {
 			putBlogPosting(
 				blogPosting.getId() != null ? blogPosting.getId() :
-					(Long)parameters.get("blogPostingId"),
+					Long.parseLong((String)parameters.get("blogPostingId")),
 				blogPosting);
 		}
 	}

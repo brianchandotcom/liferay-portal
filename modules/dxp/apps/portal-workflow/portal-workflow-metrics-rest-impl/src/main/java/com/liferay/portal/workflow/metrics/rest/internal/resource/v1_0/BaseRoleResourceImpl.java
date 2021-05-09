@@ -138,8 +138,8 @@ public abstract class BaseRoleResourceImpl
 		throws Exception {
 
 		return getProcessRolesPage(
-			(Long)parameters.get("processId"),
-			(Boolean)parameters.get("completed"));
+			Long.parseLong((String)parameters.get("processId")),
+			Boolean.parseBoolean((String)parameters.get("completed")));
 	}
 
 	@Override

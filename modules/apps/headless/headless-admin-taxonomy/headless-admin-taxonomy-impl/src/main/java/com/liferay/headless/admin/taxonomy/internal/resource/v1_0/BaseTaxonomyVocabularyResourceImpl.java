@@ -751,7 +751,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 
 		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
 			postSiteTaxonomyVocabulary(
-				(Long)parameters.get("siteId"), taxonomyVocabulary);
+				Long.parseLong((String)parameters.get("siteId")),
+				taxonomyVocabulary);
 		}
 	}
 
@@ -822,7 +823,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			putTaxonomyVocabulary(
 				taxonomyVocabulary.getId() != null ?
 					taxonomyVocabulary.getId() :
-						(Long)parameters.get("taxonomyVocabularyId"),
+						Long.parseLong(
+							(String)parameters.get("taxonomyVocabularyId")),
 				taxonomyVocabulary);
 		}
 	}

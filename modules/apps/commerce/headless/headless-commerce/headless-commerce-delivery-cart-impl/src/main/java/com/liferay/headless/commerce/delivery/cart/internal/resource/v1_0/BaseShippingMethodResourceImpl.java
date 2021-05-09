@@ -130,7 +130,8 @@ public abstract class BaseShippingMethodResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getCartShippingMethodsPage((Long)parameters.get("cartId"));
+		return getCartShippingMethodsPage(
+			Long.parseLong((String)parameters.get("cartId")));
 	}
 
 	@Override

@@ -203,8 +203,8 @@ public abstract class BaseContentTemplateResourceImpl
 		throws Exception {
 
 		return getSiteContentTemplatesPage(
-			(Long)parameters.get("siteId"), search, null, filter, pagination,
-			sorts);
+			Long.parseLong((String)parameters.get("siteId")), search, null,
+			filter, pagination, sorts);
 	}
 
 	@Override

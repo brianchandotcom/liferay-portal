@@ -345,7 +345,7 @@ public abstract class BaseMeasurementUnitResourceImpl
 		for (MeasurementUnit measurementUnit : measurementUnits) {
 			putMeasurementUnit(
 				measurementUnit.getId() != null ? measurementUnit.getId() :
-					(Long)parameters.get("measurementUnitId"),
+					Long.parseLong((String)parameters.get("measurementUnitId")),
 				measurementUnit);
 		}
 	}

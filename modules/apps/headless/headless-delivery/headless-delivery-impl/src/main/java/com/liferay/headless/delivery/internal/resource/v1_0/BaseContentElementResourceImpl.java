@@ -178,8 +178,8 @@ public abstract class BaseContentElementResourceImpl
 		throws Exception {
 
 		return getSiteContentElementsPage(
-			(Long)parameters.get("siteId"), search, null, filter, pagination,
-			sorts);
+			Long.parseLong((String)parameters.get("siteId")), search, null,
+			filter, pagination, sorts);
 	}
 
 	@Override

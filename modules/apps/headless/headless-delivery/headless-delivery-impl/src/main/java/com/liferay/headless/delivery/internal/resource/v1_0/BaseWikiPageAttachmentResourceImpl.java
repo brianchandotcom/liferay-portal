@@ -267,7 +267,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 
 		for (WikiPageAttachment wikiPageAttachment : wikiPageAttachments) {
 			postWikiPageWikiPageAttachment(
-				(Long)parameters.get("wikiPageId"), null);
+				Long.parseLong((String)parameters.get("wikiPageId")), null);
 		}
 	}
 
@@ -304,7 +304,7 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 		throws Exception {
 
 		return getWikiPageWikiPageAttachmentsPage(
-			(Long)parameters.get("wikiPageId"));
+			Long.parseLong((String)parameters.get("wikiPageId")));
 	}
 
 	@Override

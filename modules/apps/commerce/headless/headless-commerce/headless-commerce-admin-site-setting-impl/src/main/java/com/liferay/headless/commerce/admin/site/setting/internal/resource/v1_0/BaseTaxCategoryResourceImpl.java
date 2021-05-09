@@ -342,7 +342,7 @@ public abstract class BaseTaxCategoryResourceImpl
 		for (TaxCategory taxCategory : taxCategories) {
 			putTaxCategory(
 				taxCategory.getId() != null ? taxCategory.getId() :
-					(Long)parameters.get("taxCategoryId"),
+					Long.parseLong((String)parameters.get("taxCategoryId")),
 				taxCategory);
 		}
 	}

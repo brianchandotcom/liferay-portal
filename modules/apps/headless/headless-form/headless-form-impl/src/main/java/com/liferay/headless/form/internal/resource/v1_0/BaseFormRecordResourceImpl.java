@@ -282,7 +282,8 @@ public abstract class BaseFormRecordResourceImpl
 		throws Exception {
 
 		for (FormRecord formRecord : formRecords) {
-			postFormFormRecord((Long)parameters.get("formId"), formRecord);
+			postFormFormRecord(
+				Long.parseLong((String)parameters.get("formId")), formRecord);
 		}
 	}
 
@@ -315,7 +316,7 @@ public abstract class BaseFormRecordResourceImpl
 		throws Exception {
 
 		return getFormFormRecordsPage(
-			(Long)parameters.get("formId"), pagination);
+			Long.parseLong((String)parameters.get("formId")), pagination);
 	}
 
 	@Override
@@ -349,7 +350,7 @@ public abstract class BaseFormRecordResourceImpl
 		for (FormRecord formRecord : formRecords) {
 			putFormRecord(
 				formRecord.getId() != null ? formRecord.getId() :
-					(Long)parameters.get("formRecordId"),
+					Long.parseLong((String)parameters.get("formRecordId")),
 				formRecord);
 		}
 	}

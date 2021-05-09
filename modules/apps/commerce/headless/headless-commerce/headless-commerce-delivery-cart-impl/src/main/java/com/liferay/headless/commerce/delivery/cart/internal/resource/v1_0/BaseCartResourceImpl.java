@@ -504,7 +504,7 @@ public abstract class BaseCartResourceImpl
 		for (Cart cart : carts) {
 			putCart(
 				cart.getId() != null ? cart.getId() :
-					(Long)parameters.get("cartId"),
+					Long.parseLong((String)parameters.get("cartId")),
 				cart);
 		}
 	}

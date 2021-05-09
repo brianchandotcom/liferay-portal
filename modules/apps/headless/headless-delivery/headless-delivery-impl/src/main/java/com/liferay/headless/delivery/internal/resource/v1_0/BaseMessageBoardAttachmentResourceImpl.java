@@ -393,7 +393,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 				messageBoardAttachments) {
 
 			postMessageBoardMessageMessageBoardAttachment(
-				(Long)parameters.get("messageBoardMessageId"), null);
+				Long.parseLong((String)parameters.get("messageBoardMessageId")),
+				null);
 		}
 	}
 
@@ -433,7 +434,7 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		throws Exception {
 
 		return getMessageBoardMessageMessageBoardAttachmentsPage(
-			(Long)parameters.get("messageBoardMessageId"));
+			Long.parseLong((String)parameters.get("messageBoardMessageId")));
 	}
 
 	@Override

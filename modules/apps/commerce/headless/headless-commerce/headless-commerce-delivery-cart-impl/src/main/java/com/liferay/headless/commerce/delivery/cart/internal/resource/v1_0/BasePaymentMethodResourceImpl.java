@@ -130,7 +130,8 @@ public abstract class BasePaymentMethodResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getCartPaymentMethodsPage((Long)parameters.get("cartId"));
+		return getCartPaymentMethodsPage(
+			Long.parseLong((String)parameters.get("cartId")));
 	}
 
 	@Override

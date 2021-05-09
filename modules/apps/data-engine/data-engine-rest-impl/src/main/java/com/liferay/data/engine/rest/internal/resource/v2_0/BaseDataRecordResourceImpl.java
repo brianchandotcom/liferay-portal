@@ -496,7 +496,8 @@ public abstract class BaseDataRecordResourceImpl
 
 		for (DataRecord dataRecord : dataRecords) {
 			postDataDefinitionDataRecord(
-				(Long)parameters.get("dataDefinitionId"), dataRecord);
+				Long.parseLong((String)parameters.get("dataDefinitionId")),
+				dataRecord);
 		}
 	}
 
@@ -533,8 +534,8 @@ public abstract class BaseDataRecordResourceImpl
 		throws Exception {
 
 		return getDataDefinitionDataRecordsPage(
-			(Long)parameters.get("dataDefinitionId"),
-			(Long)parameters.get("dataListViewId"),
+			Long.parseLong((String)parameters.get("dataDefinitionId")),
+			Long.parseLong((String)parameters.get("dataListViewId")),
 			(String)parameters.get("keywords"), pagination, sorts);
 	}
 
@@ -569,7 +570,7 @@ public abstract class BaseDataRecordResourceImpl
 		for (DataRecord dataRecord : dataRecords) {
 			putDataRecord(
 				dataRecord.getId() != null ? dataRecord.getId() :
-					(Long)parameters.get("dataRecordId"),
+					Long.parseLong((String)parameters.get("dataRecordId")),
 				dataRecord);
 		}
 	}

@@ -848,7 +848,8 @@ public abstract class BaseDocumentFolderResourceImpl
 
 		for (DocumentFolder documentFolder : documentFolders) {
 			postSiteDocumentFolder(
-				(Long)parameters.get("siteId"), documentFolder);
+				Long.parseLong((String)parameters.get("siteId")),
+				documentFolder);
 		}
 	}
 
@@ -885,8 +886,9 @@ public abstract class BaseDocumentFolderResourceImpl
 		throws Exception {
 
 		return getSiteDocumentFoldersPage(
-			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, null, filter, pagination, sorts);
+			Long.parseLong((String)parameters.get("siteId")),
+			Boolean.parseBoolean((String)parameters.get("flatten")), search,
+			null, filter, pagination, sorts);
 	}
 
 	@Override
@@ -920,7 +922,7 @@ public abstract class BaseDocumentFolderResourceImpl
 		for (DocumentFolder documentFolder : documentFolders) {
 			putDocumentFolder(
 				documentFolder.getId() != null ? documentFolder.getId() :
-					(Long)parameters.get("documentFolderId"),
+					Long.parseLong((String)parameters.get("documentFolderId")),
 				documentFolder);
 		}
 	}

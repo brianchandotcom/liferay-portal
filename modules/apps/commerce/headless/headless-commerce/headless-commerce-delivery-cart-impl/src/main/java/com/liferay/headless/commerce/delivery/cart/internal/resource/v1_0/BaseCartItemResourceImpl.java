@@ -425,7 +425,7 @@ public abstract class BaseCartItemResourceImpl
 		for (CartItem cartItem : cartItems) {
 			putCartItem(
 				cartItem.getId() != null ? cartItem.getId() :
-					(Long)parameters.get("cartItemId"),
+					Long.parseLong((String)parameters.get("cartItemId")),
 				cartItem);
 		}
 	}

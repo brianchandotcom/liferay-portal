@@ -577,7 +577,7 @@ public abstract class BaseAccountResourceImpl
 		for (Account account : accounts) {
 			putAccount(
 				account.getId() != null ? account.getId() :
-					(Long)parameters.get("accountId"),
+					Long.parseLong((String)parameters.get("accountId")),
 				account);
 		}
 	}

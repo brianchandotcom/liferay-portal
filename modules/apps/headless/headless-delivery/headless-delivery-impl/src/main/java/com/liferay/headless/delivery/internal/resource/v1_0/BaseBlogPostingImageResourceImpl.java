@@ -269,7 +269,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 		throws Exception {
 
 		for (BlogPostingImage blogPostingImage : blogPostingImages) {
-			postSiteBlogPostingImage((Long)parameters.get("siteId"), null);
+			postSiteBlogPostingImage(
+				Long.parseLong((String)parameters.get("siteId")), null);
 		}
 	}
 
@@ -306,8 +307,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 		throws Exception {
 
 		return getSiteBlogPostingImagesPage(
-			(Long)parameters.get("siteId"), search, null, filter, pagination,
-			sorts);
+			Long.parseLong((String)parameters.get("siteId")), search, null,
+			filter, pagination, sorts);
 	}
 
 	@Override

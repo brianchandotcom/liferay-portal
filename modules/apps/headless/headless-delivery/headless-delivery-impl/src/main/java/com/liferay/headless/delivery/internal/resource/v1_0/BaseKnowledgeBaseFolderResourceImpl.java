@@ -639,7 +639,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 
 		for (KnowledgeBaseFolder knowledgeBaseFolder : knowledgeBaseFolders) {
 			postSiteKnowledgeBaseFolder(
-				(Long)parameters.get("siteId"), knowledgeBaseFolder);
+				Long.parseLong((String)parameters.get("siteId")),
+				knowledgeBaseFolder);
 		}
 	}
 
@@ -676,7 +677,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		return getSiteKnowledgeBaseFoldersPage(
-			(Long)parameters.get("siteId"), pagination);
+			Long.parseLong((String)parameters.get("siteId")), pagination);
 	}
 
 	@Override
@@ -711,7 +712,8 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			putKnowledgeBaseFolder(
 				knowledgeBaseFolder.getId() != null ?
 					knowledgeBaseFolder.getId() :
-						(Long)parameters.get("knowledgeBaseFolderId"),
+						Long.parseLong(
+							(String)parameters.get("knowledgeBaseFolderId")),
 				knowledgeBaseFolder);
 		}
 	}

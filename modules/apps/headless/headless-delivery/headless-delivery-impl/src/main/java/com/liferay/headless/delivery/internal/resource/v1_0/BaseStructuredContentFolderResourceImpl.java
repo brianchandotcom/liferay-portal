@@ -913,7 +913,8 @@ public abstract class BaseStructuredContentFolderResourceImpl
 				structuredContentFolders) {
 
 			postSiteStructuredContentFolder(
-				(Long)parameters.get("siteId"), structuredContentFolder);
+				Long.parseLong((String)parameters.get("siteId")),
+				structuredContentFolder);
 		}
 	}
 
@@ -953,8 +954,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		throws Exception {
 
 		return getSiteStructuredContentFoldersPage(
-			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, null, filter, pagination, sorts);
+			Long.parseLong((String)parameters.get("siteId")),
+			Boolean.parseBoolean((String)parameters.get("flatten")), search,
+			null, filter, pagination, sorts);
 	}
 
 	@Override
@@ -992,7 +994,9 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			putStructuredContentFolder(
 				structuredContentFolder.getId() != null ?
 					structuredContentFolder.getId() :
-						(Long)parameters.get("structuredContentFolderId"),
+						Long.parseLong(
+							(String)parameters.get(
+								"structuredContentFolderId")),
 				structuredContentFolder);
 		}
 	}

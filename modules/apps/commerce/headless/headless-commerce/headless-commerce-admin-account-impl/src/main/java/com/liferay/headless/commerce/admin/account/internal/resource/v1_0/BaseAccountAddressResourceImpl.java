@@ -611,7 +611,7 @@ public abstract class BaseAccountAddressResourceImpl
 		for (AccountAddress accountAddress : accountAddresses) {
 			putAccountAddress(
 				accountAddress.getId() != null ? accountAddress.getId() :
-					(Long)parameters.get("accountAddressId"),
+					Long.parseLong((String)parameters.get("accountAddressId")),
 				accountAddress);
 		}
 	}

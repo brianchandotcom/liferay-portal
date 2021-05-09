@@ -166,7 +166,8 @@ public abstract class BaseSegmentResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getSiteSegmentsPage((Long)parameters.get("siteId"), pagination);
+		return getSiteSegmentsPage(
+			Long.parseLong((String)parameters.get("siteId")), pagination);
 	}
 
 	@Override

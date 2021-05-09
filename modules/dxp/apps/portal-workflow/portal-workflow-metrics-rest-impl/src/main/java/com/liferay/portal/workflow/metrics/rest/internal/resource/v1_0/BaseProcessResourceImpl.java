@@ -355,7 +355,7 @@ public abstract class BaseProcessResourceImpl
 		for (Process process : processes) {
 			putProcess(
 				process.getId() != null ? process.getId() :
-					(Long)parameters.get("processId"),
+					Long.parseLong((String)parameters.get("processId")),
 				process);
 		}
 	}

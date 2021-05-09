@@ -428,8 +428,8 @@ public abstract class BaseContentStructureResourceImpl
 		throws Exception {
 
 		return getSiteContentStructuresPage(
-			(Long)parameters.get("siteId"), search, null, filter, pagination,
-			sorts);
+			Long.parseLong((String)parameters.get("siteId")), search, null,
+			filter, pagination, sorts);
 	}
 
 	@Override

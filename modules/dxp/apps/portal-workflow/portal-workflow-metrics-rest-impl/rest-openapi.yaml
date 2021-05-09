@@ -930,10 +930,6 @@ paths:
                           type: integer
                       type: array
                 - in: query
-                  name: completed
-                  schema:
-                      type: boolean
-                - in: query
                   name: dateEnd
                   schema:
                       format: date-time

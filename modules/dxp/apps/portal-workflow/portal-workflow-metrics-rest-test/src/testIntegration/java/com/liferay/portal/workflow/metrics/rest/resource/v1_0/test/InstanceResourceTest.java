@@ -91,30 +91,41 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		super.testGetProcessInstancesPage();
 
 		_testGetProcessInstancesPage(
-			new Long[] {_user.getUserId()}, null,
-			(instance1, instance2, page) -> assertEquals(
-				Collections.singletonList(instance2),
-				(List<Instance>)page.getItems()));
+			null, null, DateUtils.truncate(new Date(), Calendar.SECOND),
+			DateUtils.truncate(new Date(), Calendar.SECOND),
+			new String[] {"Completed", "Pending"},
+			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+				Arrays.asList(instance1, instance2), instances));
 		_testGetProcessInstancesPage(
-			null, new Long[] {_classPK},
-			(instance1, instance2, page) -> assertEquals(
-				Collections.singletonList(instance1),
-				(List<Instance>)page.getItems()));
+			null, null, DateUtils.truncate(new Date(), Calendar.SECOND),
+			DateUtils.truncate(new Date(), Calendar.SECOND),
+			new String[] {"Completed"},
+			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+				Collections.singletonList(instance1), instances));
 		_testGetProcessInstancesPage(
-			null, null,
-			(instance1, instance2, page) -> assertEquals(
-				Collections.singletonList(instance1),
-				(List<Instance>)page.getItems()));
+			new Long[] {_user.getUserId()}, null, null, null, null,
+			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+				Collections.singletonList(instance2), instances));
 		_testGetProcessInstancesPage(
-			null, null,
-			(instance1, instance2, page) -> assertEqualsIgnoringOrder(
-				Arrays.asList(instance1, instance2),
-				(List<Instance>)page.getItems()));
+			null, new Long[] {_classPK}, null, null, null,
+			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+				Collections.singletonList(instance1), instances));
 		_testGetProcessInstancesPage(
-			null, null,
-			(instance1, instance2, page) -> assertEquals(
-				Collections.singletonList(instance2),
-				(List<Instance>)page.getItems()));
+			null, null, null, null, new String[] {"Completed"},
+			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+				Collections.singletonList(instance1), instances));
+		_testGetProcessInstancesPage(
+			null, null, null, null, null,
+			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+				Arrays.asList(instance1, instance2), instances));
+		_testGetProcessInstancesPage(
+			null, null, null, null, new String[] {"Pending"},
+			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+				Collections.singletonList(instance2), instances));
+		_testGetProcessInstancesPage(
+			null, null, null, null, new String[] {"Completed", "Pending"},
+			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+				Arrays.asList(instance1, instance2), instances));
 	}
 
 	@Override
@@ -280,8 +291,9 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	}
 
 	private void _testGetProcessInstancesPage(
-			Long[] assigneeIds, Long[] classPKs,
-			UnsafeTriConsumer<Instance, Instance, Page<Instance>, Exception>
+			Long[] assigneeIds, Long[] classPKs, Date dateEnd, Date dateStart,
+			String[] processStatuses,
+			UnsafeTriConsumer<Instance, Instance, List<Instance>, Exception>
 				unsafeTriConsumer)
 		throws Exception {
 
@@ -291,7 +303,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		instance1.setClassPK(_classPK);
 		instance1.setCompleted(true);
-		instance1.setDateCompletion(RandomTestUtil.nextDate());
+		instance1.setDateCompletion(
+			DateUtils.truncate(new Date(), Calendar.SECOND));
 
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance1);
 
@@ -314,10 +327,11 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			_process.getId(), assigneeIds, classPKs, null, null,
-			null, null, Pagination.of(1, 2), null);
+			_process.getId(), assigneeIds, classPKs, dateEnd, dateStart,
+			processStatuses, null, null, Pagination.of(1, 2), null);
 
-		unsafeTriConsumer.accept(instance1, instance2, page);
+		unsafeTriConsumer.accept(
+			instance1, instance2, (List<Instance>)page.getItems());
 	}
 
 	private SLAResult _toSLAResult(

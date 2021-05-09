@@ -206,7 +206,7 @@ public class InstanceResourceImpl
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _createInstancesBooleanQuery(
-			new Long[0], new Long[0], null, null, null, processId,
+			new Long[0], new Long[0], null, null, processId,
 			new String[0], null, new String[0]);
 
 		searchSearchRequest.setQuery(
@@ -266,13 +266,12 @@ public class InstanceResourceImpl
 	@Override
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
-			Boolean completed, Date dateEnd, Date dateStart,
-			String[] slaStatuses, String[] taskNames, Pagination pagination,
-			Sort[] sorts)
+			Date dateEnd, Date dateStart, String[] slaStatuses,
+			String[] taskNames, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		long instanceCount = _getInstanceCount(
-			assigneeIds, classPKs, completed, dateEnd, dateStart, processId,
+			assigneeIds, classPKs, dateEnd, dateStart, processId,
 			slaStatuses, taskNames);
 
 		if (instanceCount > 0) {
@@ -283,9 +282,8 @@ public class InstanceResourceImpl
 
 				while (endPosition > 10000) {
 					startInstanceId = _getInstanceId(
-						assigneeIds, classPKs, completed, dateEnd, dateStart,
-						processId, slaStatuses, sorts, startInstanceId,
-						taskNames);
+						assigneeIds, classPKs, dateEnd, dateStart,
+						processId, slaStatuses, sorts, startInstanceId, taskNames);
 
 					endPosition = endPosition - 10000;
 				}
@@ -297,7 +295,7 @@ public class InstanceResourceImpl
 
 			return Page.of(
 				_getInstances(
-					assigneeIds, classPKs, completed, dateEnd, dateStart,
+					assigneeIds, classPKs, dateEnd, dateStart,
 					pagination, processId, slaStatuses, sorts, startInstanceId,
 					taskNames),
 				pagination, instanceCount);
@@ -425,7 +423,7 @@ public class InstanceResourceImpl
 	}
 
 	private BooleanQuery _createInstancesBooleanQuery(
-		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
+		Long[] assigneeIds, Long[] classPKs, Date dateEnd,
 		Date dateStart, long processId, String[] slaStatuses,
 		Long startInstanceId, String[] taskNames) {
 
@@ -473,11 +471,6 @@ public class InstanceResourceImpl
 				));
 
 			booleanQuery.addMustQueryClauses(termsQuery);
-		}
-
-		if (completed != null) {
-			booleanQuery.addMustQueryClauses(
-				_queries.term("completed", completed));
 		}
 
 		if ((dateEnd != null) && (dateStart != null)) {
@@ -619,7 +612,7 @@ public class InstanceResourceImpl
 	}
 
 	private long _getInstanceCount(
-		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
+		Long[] assigneeIds, Long[] classPKs, Date dateEnd,
 		Date dateStart, long processId, String[] slaStatuses,
 		String[] taskNames) {
 
@@ -634,7 +627,7 @@ public class InstanceResourceImpl
 		countSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
-					assigneeIds, classPKs, completed, dateEnd, dateStart,
+					assigneeIds, classPKs, dateEnd, dateStart,
 					processId, slaStatuses, null, taskNames)));
 
 		CountSearchResponse countSearchResponse =
@@ -644,7 +637,7 @@ public class InstanceResourceImpl
 	}
 
 	private long _getInstanceId(
-		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
+		Long[] assigneeIds, Long[] classPKs, Date dateEnd,
 		Date dateStart, long processId, String[] slaStatuses, Sort[] sorts,
 		long startInstanceId, String[] taskNames) {
 
@@ -661,7 +654,7 @@ public class InstanceResourceImpl
 		searchSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
-					assigneeIds, classPKs, completed, dateEnd, dateStart,
+					assigneeIds, classPKs, dateEnd, dateStart,
 					processId, slaStatuses, startInstanceId, taskNames)));
 
 		searchSearchRequest.setSize(1);
@@ -686,7 +679,7 @@ public class InstanceResourceImpl
 	}
 
 	private Collection<Instance> _getInstances(
-		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
+		Long[] assigneeIds, Long[] classPKs, Date dateEnd,
 		Date dateStart, Pagination pagination, long processId,
 		String[] slaStatuses, Sort[] sorts, Long startInstanceId,
 		String[] taskNames) {
@@ -705,7 +698,7 @@ public class InstanceResourceImpl
 		searchSearchRequest.setQuery(
 			booleanQuery.addFilterQueryClauses(
 				_createInstancesBooleanQuery(
-					assigneeIds, classPKs, completed, dateEnd, dateStart,
+					assigneeIds, classPKs, dateEnd, dateStart,
 					processId, slaStatuses, startInstanceId, taskNames)));
 
 		searchSearchRequest.setSize(pagination.getPageSize());

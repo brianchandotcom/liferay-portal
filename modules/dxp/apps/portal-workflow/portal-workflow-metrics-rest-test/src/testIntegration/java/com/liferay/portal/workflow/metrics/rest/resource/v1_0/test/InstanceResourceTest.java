@@ -91,27 +91,27 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		super.testGetProcessInstancesPage();
 
 		_testGetProcessInstancesPage(
-			new Long[] {_user.getUserId()}, null, null,
+			new Long[] {_user.getUserId()}, null,
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance2),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			null, new Long[] {_classPK}, null,
+			null, new Long[] {_classPK},
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance1),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			null, null, true,
+			null, null,
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance1),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			null, null, null,
+			null, null,
 			(instance1, instance2, page) -> assertEqualsIgnoringOrder(
 				Arrays.asList(instance1, instance2),
 				(List<Instance>)page.getItems()));
 		_testGetProcessInstancesPage(
-			null, null, false,
+			null, null,
 			(instance1, instance2, page) -> assertEquals(
 				Collections.singletonList(instance2),
 				(List<Instance>)page.getItems()));
@@ -280,7 +280,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	}
 
 	private void _testGetProcessInstancesPage(
-			Long[] assigneeIds, Long[] classPKs, Boolean completed,
+			Long[] assigneeIds, Long[] classPKs,
 			UnsafeTriConsumer<Instance, Instance, Page<Instance>, Exception>
 				unsafeTriConsumer)
 		throws Exception {
@@ -314,7 +314,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			_process.getId(), assigneeIds, classPKs, completed, null, null,
+			_process.getId(), assigneeIds, classPKs, null, null,
 			null, null, Pagination.of(1, 2), null);
 
 		unsafeTriConsumer.accept(instance1, instance2, page);

@@ -317,7 +317,10 @@ public abstract class Base${schemaName}ResourceImpl
 							<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
 								${schemaVarName}
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, postBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-								<@castType type=javaMethodParameter.parameterType />parameters.get("${postBatchJavaMethodSignature.parentSchemaName!?uncap_first}Id")
+								<@castParameters
+									type=javaMethodParameter.parameterType
+									value="${postBatchJavaMethodSignature.parentSchemaName!?uncap_first}Id"
+								/>
 							<#else>
 								null
 							</#if>
@@ -363,7 +366,10 @@ public abstract class Base${schemaName}ResourceImpl
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "filter") || stringUtil.equals(javaMethodParameter.parameterName, "pagination") || stringUtil.equals(javaMethodParameter.parameterName, "search") || stringUtil.equals(javaMethodParameter.parameterName, "sorts") || stringUtil.equals(javaMethodParameter.parameterName, "user")>
 							${javaMethodParameter.parameterName}
 						<#else>
-							<@castType type=javaMethodParameter.parameterType />parameters.get("${javaMethodParameter.parameterName}")
+							<@castParameters
+								type=javaMethodParameter.parameterType
+								value=javaMethodParameter.parameterName
+							/>
 						</#if>
 						<#sep>, </#sep>
 					</#list>
@@ -414,9 +420,15 @@ public abstract class Base${schemaName}ResourceImpl
 									(${schemaVarName}.get${schemaName}Id() != null) ? ${schemaVarName}.get${schemaName}Id() :
 								</#if>
 
-								<@castType type=javaMethodParameter.parameterType />parameters.get("${schemaVarName}Id")
+								<@castParameters
+									type=javaMethodParameter.parameterType
+									value="${schemaVarName}Id"
+								/>
 							<#elseif putBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putBatchJavaMethodSignature.parentSchemaName?uncap_first + "Id")>
-								<@castType type=javaMethodParameter.parameterType />parameters.get("${javaMethodSignature.parentSchemaName?uncap_first}Id")
+								<@castParameters
+									type=javaMethodParameter.parameterType
+									value="${javaMethodSignature.parentSchemaName?uncap_first}Id"
+								/>
 							<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
 								null
 							<#else>
@@ -557,30 +569,45 @@ public abstract class Base${schemaName}ResourceImpl
 
 }
 
-<#macro castType
+<#macro castParameters
 	type
+	value
 >
-	(
-
-	<#if type?contains("java.lang.Boolean")>
-		Boolean
-	<#elseif type?contains("java.util.Date")>
-		java.util.Date
-	<#elseif type?contains("java.lang.Double")>
-		Double
-	<#elseif type?contains("java.lang.Integer")>
-		Integer
-	<#elseif type?contains("java.lang.Long")>
-		Long
-	<#elseif type?contains("java.lang.String")>
-		String
-	</#if>
-
 	<#if stringUtil.startsWith(type, "[L")>
-		[]
-	</#if>
+		(
+		<#if type?contains("java.lang.Boolean")>
+			Boolean[]
+		<#elseif type?contains("java.util.Date")>
+			java.util.Date[]
+		<#elseif type?contains("java.lang.Double")>
+			Double[]
+		<#elseif type?contains("java.lang.Integer")>
+			Integer[]
+		<#elseif type?contains("java.lang.Long")>
+			Long[]
+		<#else>
+			String[]
+		</#if>
+		)parameters.get("${value}")
+	<#else>
+		<#if type?contains("java.lang.Boolean")>
+			Boolean.parseBoolean(
+		<#elseif type?contains("java.util.Date")>
+			new java.util.Date(
+		<#elseif type?contains("java.lang.Double")>
+			Double.parseDouble(
+		<#elseif type?contains("java.lang.Integer")>
+			Integer.parseInt(
+		<#elseif type?contains("java.lang.Long")>
+			Long.parseLong(
+		</#if>
 
-	)
+		(String)parameters.get("${value}")
+
+		<#if !type?contains("java.lang.String")>
+			)
+		</#if>
+	</#if>
 </#macro>
 
 <#macro updateResourcePermissions

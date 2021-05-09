@@ -940,6 +940,13 @@ paths:
                       format: date-time
                       type: string
                 - in: query
+                  name: processStatuses
+                  schema:
+                      items:
+                          enum: [Completed, Pending]
+                          type: string
+                      type: array
+                - in: query
                   name: slaStatuses
                   schema:
                       items:

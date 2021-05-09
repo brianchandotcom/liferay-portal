@@ -906,23 +906,33 @@ public class GraphQLServletExtender {
 			dataFetchingEnvironment.getFieldDefinition();
 		Object instance = null;
 
-		if ((dataFetchingEnvironment.getRoot() ==
-				dataFetchingEnvironment.getSource()) ||
-			Objects.equals(graphQLFieldDefinition.getName(), "graphQLNode") ||
-			(field == null)) {
+		Class<?> contributorClass = _getContributorClass(declaringClass);
 
-			instance = _createQueryInstance(
-				method.getDeclaringClass(), dataFetchingEnvironment);
+		Object source = dataFetchingEnvironment.getSource();
+
+		if (contributorClass != null) {
+			instance = _getContributorInstance(
+				contributorClass, declaringClass, source);
 		}
 		else {
-			Object queryInstance = _createQueryInstance(
-				field.getType(), dataFetchingEnvironment);
+			if ((dataFetchingEnvironment.getRoot() == source) ||
+				Objects.equals(
+					graphQLFieldDefinition.getName(), "graphQLNode") ||
+				(field == null)) {
 
-			Constructor<?>[] constructors = declaringClass.getConstructors();
+				instance = _createQueryInstance(
+					method.getDeclaringClass(), dataFetchingEnvironment);
+			}
+			else {
+				Object queryInstance = _createQueryInstance(
+					field.getType(), dataFetchingEnvironment);
 
-			instance = ReflectionKit.constructNewInstance(
-				constructors[0], queryInstance,
-				dataFetchingEnvironment.getSource());
+				Constructor<?>[] constructors =
+					declaringClass.getConstructors();
+
+				instance = ReflectionKit.constructNewInstance(
+					constructors[0], queryInstance, source);
+			}
 		}
 
 		SiteParamConverterProvider siteParamConverterProvider =
@@ -1396,6 +1406,52 @@ public class GraphQLServletExtender {
 		return null;
 	}
 
+	private Class<?> _getContributorClass(Class<?> clazz) {
+		Class<?> enclosingClass = clazz.getEnclosingClass();
+
+		if (enclosingClass == null) {
+			if (GraphQLContributor.class.isAssignableFrom(clazz)) {
+				return clazz;
+			}
+
+			return null;
+		}
+
+		return _getContributorClass(enclosingClass);
+	}
+
+	private Object _getContributorInstance(
+		Class<?> contributorClass, Class<?> declaringClass, Object source) {
+
+		Object service = _getService(contributorClass);
+
+		Class<?> queryClass = declaringClass.getEnclosingClass();
+
+		Constructor<?> constructor = queryClass.getConstructors()[0];
+
+		Object[] args;
+
+		if (constructor.getParameterCount() == 0) {
+			args = new Object[0];
+		}
+		else {
+			args = new Object[] {service};
+		}
+
+		Object query = ReflectionKit.constructNewInstance(constructor, args);
+
+		constructor = declaringClass.getConstructors()[0];
+
+		if (constructor.getParameterCount() == 1) {
+			args = new Object[] {source};
+		}
+		else {
+			args = new Object[] {query, source};
+		}
+
+		return ReflectionKit.constructNewInstance(constructor, args);
+	}
+
 	private DTOConverterContext _getDTOConverterContext(
 			DataFetchingEnvironment dataFetchingEnvironment,
 			Map<String, Serializable> attributes)
@@ -1555,6 +1611,16 @@ public class GraphQLServletExtender {
 
 		if (serviceReference != null) {
 			return _bundleContext.getService(serviceReference);
+		}
+
+		return null;
+	}
+
+	private Object _getService(Class<?> clazz) {
+		for (Object service : _graphQLContributorServiceTracker.getServices()) {
+			if (clazz.isAssignableFrom(service.getClass())) {
+				return service;
+			}
 		}
 
 		return null;

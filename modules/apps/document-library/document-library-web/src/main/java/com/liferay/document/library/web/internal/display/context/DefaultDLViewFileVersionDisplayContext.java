@@ -35,6 +35,7 @@ import com.liferay.document.library.web.internal.display.context.logic.UIItemsBu
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.display.context.util.JSPRenderer;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.document.library.web.internal.util.DLDigitalSignatureConfigurationUtil;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -394,7 +395,11 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			_uiItemsBuilder.addCheckinMenuItem(menuItems);
 
-			_uiItemsBuilder.addCollectESignatureMenuItem(menuItems);
+			if (_dlDigitalSignatureConfigurationUtil.
+					showCollectESignatureMenuItem()) {
+
+				_uiItemsBuilder.addCollectESignatureMenuItem(menuItems);
+			}
 
 			_uiItemsBuilder.addMoveMenuItem(menuItems);
 
@@ -481,6 +486,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		DefaultDLViewFileVersionDisplayContext.class);
 
 	private List<DDMStructure> _ddmStructures;
+	private DLDigitalSignatureConfigurationUtil _dlDigitalSignatureConfigurationUtil;
 	private final DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;

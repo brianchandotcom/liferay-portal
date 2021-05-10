@@ -34,13 +34,18 @@ const getEditableTitle = (editable, languageId) => {
 	return div.textContent;
 };
 
-const getEditableValues = (fragmentEntryLinks, languageId) =>
+const getEditableValues = (
+	fragmentEntryLinks,
+	languageId,
+	segmentsExperienceId
+) =>
 	Object.values(fragmentEntryLinks)
 		.filter(
 			(fragmentEntryLink) =>
 				!fragmentEntryLink.masterLayout &&
 				fragmentEntryLink.editableValues &&
-				!fragmentEntryLink.removed
+				!fragmentEntryLink.removed &&
+				fragmentEntryLink.segmentsExperienceId === segmentsExperienceId
 		)
 		.map((fragmentEntryLink) => {
 			const editableValues = Object.entries(
@@ -92,13 +97,18 @@ export default function ContentsSidebar() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
 	const pageContents = useSelector((state) => state.pageContents);
+	const segmentsExperienceId = useSelector(
+		(state) => state.segmentsExperienceId
+	);
 
 	const inlineTextContents = useMemo(
 		() =>
-			getEditableValues(fragmentEntryLinks, languageId).map((editable) =>
-				normalizeEditableValues(editable, languageId)
-			),
-		[fragmentEntryLinks, languageId]
+			getEditableValues(
+				fragmentEntryLinks,
+				languageId,
+				segmentsExperienceId
+			).map((editable) => normalizeEditableValues(editable, languageId)),
+		[fragmentEntryLinks, languageId, segmentsExperienceId]
 	);
 
 	const contents = normalizePageContents(pageContents);

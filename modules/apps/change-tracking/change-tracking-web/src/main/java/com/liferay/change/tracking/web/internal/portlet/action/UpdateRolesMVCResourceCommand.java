@@ -19,21 +19,29 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -79,10 +87,10 @@ public class UpdateRolesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = portal.getHttpServletRequest(
 			resourceRequest);
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+		CTCollection ctCollection = ctCollectionLocalService.fetchCTCollection(
 			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
 
 		if (ctCollection == null) {
@@ -90,7 +98,7 @@ public class UpdateRolesMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"errorMessage",
-					_language.get(
+					language.get(
 						httpServletRequest,
 						"this-publication-no-longer-exists")));
 
@@ -108,7 +116,7 @@ public class UpdateRolesMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"errorMessage",
-					_language.get(
+					language.get(
 						httpServletRequest,
 						"you-do-not-have-permission-to-update-permissions-" +
 							"for-this-publication")));
@@ -120,7 +128,7 @@ public class UpdateRolesMVCResourceCommand
 
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
 
-		_userGroupRoleLocalService.deleteUserGroupRoles(
+		userGroupRoleLocalService.deleteUserGroupRoles(
 			userIds, ctCollection.getGroupId());
 
 		for (int i = 0; i < userIds.length; i++) {
@@ -128,11 +136,9 @@ public class UpdateRolesMVCResourceCommand
 				continue;
 			}
 
-			Role role = _roleLocalService.fetchRole(
-				themeDisplay.getCompanyId(),
-				PublicationRoleConstants.getRoleName(roles[i]));
+			Role role = getRole(resourceRequest, roles[i], themeDisplay);
 
-			_userGroupRoleLocalService.addUserGroupRole(
+			userGroupRoleLocalService.addUserGroupRole(
 				userIds[i], ctCollection.getGroupId(), role.getRoleId());
 		}
 
@@ -140,25 +146,61 @@ public class UpdateRolesMVCResourceCommand
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"successMessage",
-				_language.get(
+				language.get(
 					httpServletRequest,
 					"permissions-were-updated-successfully")));
 	}
 
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
+	protected Role getRole(
+			ResourceRequest resourceRequest, int roleId,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String name = PublicationRoleConstants.getRoleName(roleId);
+
+		Role role = roleLocalService.fetchRole(
+			themeDisplay.getCompanyId(), name);
+
+		if (role == null) {
+			role = roleLocalService.addRole(
+				themeDisplay.getDefaultUserId(), null, 0, name,
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), name
+				).build(),
+				null, RoleConstants.TYPE_PUBLICATION, StringPool.BLANK,
+				ServiceContextFactory.getInstance(resourceRequest));
+
+			for (String actionId :
+					PublicationRoleConstants.getModelResourceActions(roleId)) {
+
+				resourcePermissionLocalService.addResourcePermission(
+					themeDisplay.getCompanyId(), CTCollection.class.getName(),
+					ResourceConstants.SCOPE_GROUP_TEMPLATE,
+					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+					role.getRoleId(), actionId);
+			}
+		}
+
+		return role;
+	}
 
 	@Reference
-	private Language _language;
+	protected CTCollectionLocalService ctCollectionLocalService;
 
 	@Reference
-	private Portal _portal;
+	protected Language language;
 
 	@Reference
-	private RoleLocalService _roleLocalService;
+	protected Portal portal;
 
 	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
+	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	@Reference
+	protected RoleLocalService roleLocalService;
+
+	@Reference
+	protected UserGroupRoleLocalService userGroupRoleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -85,6 +85,12 @@ definition {
 					value1 = "${displayPageTemplateType}");
 			}
 
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				value1 = "${displayPageTemplateType}");
+
 			if ("${displayPageTemplateType}" != "None") {
 				if ("${displayPageTemplateType}" == "Default") {
 					AssertTextEquals(
@@ -267,6 +273,12 @@ definition {
 			Panel.expandPanel(panel = "Display Page");
 
 			Select(
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+				value1 = "${displayPageTemplateType}");
+
+			Pause(locator1 = "3000");
+
+			AssertSelectedLabel(
 				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
 				value1 = "${displayPageTemplateType}");
 

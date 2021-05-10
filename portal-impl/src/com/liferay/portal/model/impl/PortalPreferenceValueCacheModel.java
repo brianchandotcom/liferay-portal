@@ -76,12 +76,14 @@ public class PortalPreferenceValueCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", portalPreferenceValueId=");
 		sb.append(portalPreferenceValueId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", portalPreferencesId=");
 		sb.append(portalPreferencesId);
 		sb.append(", index=");
@@ -107,6 +109,7 @@ public class PortalPreferenceValueCacheModel
 		portalPreferenceValueImpl.setMvccVersion(mvccVersion);
 		portalPreferenceValueImpl.setPortalPreferenceValueId(
 			portalPreferenceValueId);
+		portalPreferenceValueImpl.setCompanyId(companyId);
 		portalPreferenceValueImpl.setPortalPreferencesId(portalPreferencesId);
 		portalPreferenceValueImpl.setIndex(index);
 
@@ -151,6 +154,8 @@ public class PortalPreferenceValueCacheModel
 
 		portalPreferenceValueId = objectInput.readLong();
 
+		companyId = objectInput.readLong();
+
 		portalPreferencesId = objectInput.readLong();
 
 		index = objectInput.readInt();
@@ -165,6 +170,8 @@ public class PortalPreferenceValueCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(portalPreferenceValueId);
+
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(portalPreferencesId);
 
@@ -201,6 +208,7 @@ public class PortalPreferenceValueCacheModel
 
 	public long mvccVersion;
 	public long portalPreferenceValueId;
+	public long companyId;
 	public long portalPreferencesId;
 	public int index;
 	public String key;

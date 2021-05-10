@@ -1161,12 +1161,14 @@
 	<model name="com.liferay.portal.kernel.model.PortalPreferences">
 		<field name="mvccVersion" type="long" />
 		<field name="portalPreferencesId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="ownerId" type="long" />
 		<field name="ownerType" type="int" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.PortalPreferenceValue">
 		<field name="mvccVersion" type="long" />
 		<field name="portalPreferenceValueId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="portalPreferencesId" type="long" />
 		<field name="index" type="int" />
 		<field name="key" type="String">

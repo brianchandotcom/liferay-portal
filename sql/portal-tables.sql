@@ -974,6 +974,7 @@ create table PluginSetting (
 create table PortalPreferenceValue (
 	mvccVersion LONG default 0 not null,
 	portalPreferenceValueId LONG not null primary key,
+	companyId LONG,
 	portalPreferencesId LONG,
 	index_ INTEGER,
 	key_ VARCHAR(255) null,
@@ -985,6 +986,7 @@ create table PortalPreferenceValue (
 create table PortalPreferences (
 	mvccVersion LONG default 0 not null,
 	portalPreferencesId LONG not null primary key,
+	companyId LONG,
 	ownerId LONG,
 	ownerType INTEGER
 );

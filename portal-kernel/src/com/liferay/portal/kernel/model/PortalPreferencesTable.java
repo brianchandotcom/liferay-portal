@@ -38,6 +38,8 @@ public class PortalPreferencesTable extends BaseTable<PortalPreferencesTable> {
 		createColumn(
 			"portalPreferencesId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<PortalPreferencesTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<PortalPreferencesTable, Long> ownerId = createColumn(
 		"ownerId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<PortalPreferencesTable, Integer> ownerType =

@@ -34,6 +34,7 @@ public class PortalPreferencesSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setPortalPreferencesId(model.getPortalPreferencesId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setOwnerId(model.getOwnerId());
 		soapModel.setOwnerType(model.getOwnerType());
 
@@ -113,6 +114,14 @@ public class PortalPreferencesSoap implements Serializable {
 		_portalPreferencesId = portalPreferencesId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getOwnerId() {
 		return _ownerId;
 	}
@@ -131,6 +140,7 @@ public class PortalPreferencesSoap implements Serializable {
 
 	private long _mvccVersion;
 	private long _portalPreferencesId;
+	private long _companyId;
 	private long _ownerId;
 	private int _ownerType;
 

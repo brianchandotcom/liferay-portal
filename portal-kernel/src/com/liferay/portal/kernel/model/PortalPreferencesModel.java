@@ -29,7 +29,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface PortalPreferencesModel
-	extends BaseModel<PortalPreferences>, MVCCModel {
+	extends BaseModel<PortalPreferences>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -80,6 +80,22 @@ public interface PortalPreferencesModel
 	 * @param portalPreferencesId the portal preferences ID of this portal preferences
 	 */
 	public void setPortalPreferencesId(long portalPreferencesId);
+
+	/**
+	 * Returns the company ID of this portal preferences.
+	 *
+	 * @return the company ID of this portal preferences
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this portal preferences.
+	 *
+	 * @param companyId the company ID of this portal preferences
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the owner ID of this portal preferences.

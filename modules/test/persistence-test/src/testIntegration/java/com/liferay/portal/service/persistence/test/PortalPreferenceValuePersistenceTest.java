@@ -128,6 +128,8 @@ public class PortalPreferenceValuePersistenceTest {
 
 		newPortalPreferenceValue.setMvccVersion(RandomTestUtil.nextLong());
 
+		newPortalPreferenceValue.setCompanyId(RandomTestUtil.nextLong());
+
 		newPortalPreferenceValue.setPortalPreferencesId(
 			RandomTestUtil.nextLong());
 
@@ -154,6 +156,9 @@ public class PortalPreferenceValuePersistenceTest {
 		Assert.assertEquals(
 			existingPortalPreferenceValue.getPortalPreferenceValueId(),
 			newPortalPreferenceValue.getPortalPreferenceValueId());
+		Assert.assertEquals(
+			existingPortalPreferenceValue.getCompanyId(),
+			newPortalPreferenceValue.getCompanyId());
 		Assert.assertEquals(
 			existingPortalPreferenceValue.getPortalPreferencesId(),
 			newPortalPreferenceValue.getPortalPreferencesId());
@@ -248,8 +253,9 @@ public class PortalPreferenceValuePersistenceTest {
 	protected OrderByComparator<PortalPreferenceValue> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"PortalPreferenceValue", "mvccVersion", true,
-			"portalPreferenceValueId", true, "portalPreferencesId", true,
-			"index", true, "key", true, "namespace", true, "smallValue", true);
+			"portalPreferenceValueId", true, "companyId", true,
+			"portalPreferencesId", true, "index", true, "key", true,
+			"namespace", true, "smallValue", true);
 	}
 
 	@Test
@@ -575,6 +581,8 @@ public class PortalPreferenceValuePersistenceTest {
 		PortalPreferenceValue portalPreferenceValue = _persistence.create(pk);
 
 		portalPreferenceValue.setMvccVersion(RandomTestUtil.nextLong());
+
+		portalPreferenceValue.setCompanyId(RandomTestUtil.nextLong());
 
 		portalPreferenceValue.setPortalPreferencesId(RandomTestUtil.nextLong());
 

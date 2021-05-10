@@ -40,6 +40,9 @@ public class PortalPreferenceValueTable
 		portalPreferenceValueId = createColumn(
 			"portalPreferenceValueId", Long.class, Types.BIGINT,
 			Column.FLAG_PRIMARY);
+	public final Column<PortalPreferenceValueTable, Long> companyId =
+		createColumn(
+			"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<PortalPreferenceValueTable, Long> portalPreferencesId =
 		createColumn(
 			"portalPreferencesId", Long.class, Types.BIGINT,

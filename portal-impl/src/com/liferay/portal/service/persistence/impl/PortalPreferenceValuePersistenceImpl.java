@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PortalPreferenceValue;
 import com.liferay.portal.kernel.model.PortalPreferenceValueTable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.PortalPreferenceValuePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3091,6 +3092,8 @@ public class PortalPreferenceValuePersistenceImpl
 
 		portalPreferenceValue.setNew(true);
 		portalPreferenceValue.setPrimaryKey(portalPreferenceValueId);
+
+		portalPreferenceValue.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return portalPreferenceValue;
 	}

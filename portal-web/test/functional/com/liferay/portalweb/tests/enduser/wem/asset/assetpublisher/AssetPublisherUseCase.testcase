@@ -917,69 +917,6 @@ definition {
 	}
 
 	@priority = "4"
-	test DisplayAssetsFilterByTagsOrCategoryViaAssetPublisher {
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name");
-
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		var categoryId = JSONCategory.getCategoryId(
-			categoryName = "Category Name",
-			groupName = "Test Site Name",
-			vocabularyName = "Vocabulary Name");
-
-		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId}",
-			content = "Web Content Category Content",
-			groupName = "Test Site Name",
-			title = "Web Content Category Title");
-
-		JSONWebcontent.addWebContent(
-			assetTagNames = "tagname",
-			content = "Web Content Tag Content",
-			groupName = "Test Site Name",
-			title = "Web Content Tag Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.configureCategoriesFilterPG(
-			categoryName = "Category Name",
-			vocabularyName = "Vocabulary Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(
-			assetContent = "Web Content Tag Content",
-			assetTitle = "Web Content Tag Title");
-
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "Web Content Category Content",
-			assetTitle = "Web Content Category Title");
-
-		AssetPublisherPortlet.configureTagsFilterPG(tagNameList = "tagname");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.viewAssetNotPresentPG(
-			assetContent = "Web Content Category Content",
-			assetTitle = "Web Content Category Title");
-
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "Web Content Tag Content",
-			assetTitle = "Web Content Tag Title");
-	}
-
-	@priority = "4"
 	test ViewAPPortletAsNewUserSiteAdministratorViaUserSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1111,6 +1048,119 @@ definition {
 		AssetPublisherPortlet.viewAssetNotPresentPG(
 			assetContent = "WC Content 7",
 			assetTitle = "WC Title 7");
+	}
+
+	@description = "View assets filter by tag or category in Asset Publisher."
+	@priority = "4"
+	test ViewAssetsFilterByTagOrCategoryInAssetPublisher {
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add the first wiki front page with category") {
+			JSONWiki.addWikiPage(
+				assetCategoryIds = "${categoryId}",
+				groupName = "Test Site Name",
+				wikiNodeName = "Main",
+				wikiPageContent = "Wiki FrontPage Content 1",
+				wikiPageName = "Wiki FrontPage 1");
+		}
+
+		task ("Add the second wiki front page with tag") {
+			JSONWiki.addWikiPage(
+				groupName = "Test Site Name",
+				tagName = "tagname",
+				wikiNodeName = "Main",
+				wikiPageContent = "Wiki FrontPage Content 2",
+				wikiPageName = "Wiki FrontPage 2");
+		}
+
+		task ("Add the first web content with category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content 1",
+				groupName = "Test Site Name",
+				title = "Web Content Title 1");
+		}
+
+		task ("Add the second web content with tag") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tagname",
+				content = "Web Content Content 2",
+				groupName = "Test Site Name",
+				title = "Web Content Title 2");
+		}
+
+		task ("Filter assets by category in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureCategoriesFilterPG(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View displayed content in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Wiki FrontPage Content 2",
+				assetTitle = "Wiki FrontPage 2");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Web Content Content 2",
+				assetTitle = "Web Content Title 2");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Wiki FrontPage Content",
+				assetTitle = "Wiki FrontPage 1");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title 1");
+		}
+
+		task ("Filter assets by tag in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureTagsFilterPG(tagNameList = "tagname");
+		}
+
+		task ("View displayed content in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Wiki FrontPage Content 2",
+				assetTitle = "Wiki FrontPage 2");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content 2",
+				assetTitle = "Web Content Title 2");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Wiki FrontPage Content 1",
+				assetTitle = "Wiki FrontPage 1");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Web Content Content 1",
+				assetTitle = "Web Content Title 1");
+		}
 	}
 
 	@priority = "3"

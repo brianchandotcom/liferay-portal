@@ -67,9 +67,6 @@ public class SLAResultResourceImpl extends BaseSLAResultResourceImpl {
 				filterBooleanQuery.addMustNotQueryClauses(
 					_queries.term("instanceId", 0))));
 
-		searchSearchRequest.setQuery(
-			booleanQuery.addFilterQueryClauses(filterBooleanQuery));
-
 		searchSearchRequest.setSize(1);
 
 		return Stream.of(

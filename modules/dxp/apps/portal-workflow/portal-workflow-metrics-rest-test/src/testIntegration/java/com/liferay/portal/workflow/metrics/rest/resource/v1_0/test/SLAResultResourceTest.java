@@ -95,7 +95,6 @@ public class SLAResultResourceTest extends BaseSLAResultResourceTestCase {
 
 		Assert.assertEquals(
 			slaResult2.getDateModified(), getSLAResult.getDateModified());
-
 		Assert.assertEquals(slaResult2.getId(), getSLAResult.getId());
 
 		assertEquals(slaResult2, getSLAResult);

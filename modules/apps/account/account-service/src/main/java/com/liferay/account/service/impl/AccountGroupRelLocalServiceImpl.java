@@ -93,6 +93,11 @@ public class AccountGroupRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAccountGroupRelsByAccountGroupId(long accountGroupId) {
+		accountGroupRelPersistence.removeByAccountGroupId(accountGroupId);
+	}
+
+	@Override
 	public AccountGroupRel fetchAccountGroupRel(
 		long accountGroupId, String className, long classPK) {
 

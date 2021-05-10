@@ -46,6 +46,7 @@ import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
+import com.liferay.translation.translator.Translator;
 import com.liferay.translation.web.internal.configuration.FFAutoTranslateConfiguration;
 import com.liferay.translation.web.internal.display.context.TranslateDisplayContext;
 
@@ -67,6 +68,9 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Ambrín Chaudhary
@@ -104,7 +108,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 					TranslateDisplayContext.class.getName(),
 					new TranslateDisplayContext(
 						Collections.emptyList(), Collections.emptyList(),
-						className, classPK, _ffAutoTranslateConfiguration, null,
+						() ->
+							_ffAutoTranslateConfiguration.enabled() &&
+							(_translator != null) && _translator.isEnabled(),
+						className, classPK, null,
 						_portal.getLiferayPortletRequest(renderRequest),
 						_portal.getLiferayPortletResponse(renderResponse), null,
 						null, null, null, null, _translationInfoFieldChecker));
@@ -148,7 +155,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				TranslateDisplayContext.class.getName(),
 				new TranslateDisplayContext(
 					availableSourceLanguageIds, availableTargetLanguageIds,
-					className, classPK, _ffAutoTranslateConfiguration, infoForm,
+					() ->
+						_ffAutoTranslateConfiguration.enabled() &&
+						(_translator != null) && _translator.isEnabled(),
+					className, classPK, infoForm,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse), object,
 					sourceInfoItemFieldValues, sourceLanguageId,
@@ -320,5 +330,12 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private TranslationInfoFieldChecker _translationInfoFieldChecker;
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile Translator _translator;
 
 }

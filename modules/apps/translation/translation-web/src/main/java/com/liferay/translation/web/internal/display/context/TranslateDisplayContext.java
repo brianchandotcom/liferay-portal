@@ -48,7 +48,6 @@ import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalServiceUtil;
-import com.liferay.translation.web.internal.configuration.FFAutoTranslateConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +57,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -72,8 +72,8 @@ public class TranslateDisplayContext {
 
 	public TranslateDisplayContext(
 		List<String> availableSourceLanguageIds,
-		List<String> availableTargetLanguageIds, String className, long classPK,
-		FFAutoTranslateConfiguration ffAutoTranslateConfiguration,
+		List<String> availableTargetLanguageIds,
+		BooleanSupplier booleanSupplier, String className, long classPK,
 		InfoForm infoForm, LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, Object object,
 		InfoItemFieldValues sourceInfoItemFieldValues, String sourceLanguageId,
@@ -82,9 +82,9 @@ public class TranslateDisplayContext {
 
 		_availableSourceLanguageIds = availableSourceLanguageIds;
 		_availableTargetLanguageIds = availableTargetLanguageIds;
+		_booleanSupplier = booleanSupplier;
 		_className = className;
 		_classPK = classPK;
-		_ffAutoTranslateConfiguration = ffAutoTranslateConfiguration;
 		_infoForm = infoForm;
 		_liferayPortletResponse = liferayPortletResponse;
 		_object = object;
@@ -404,9 +404,7 @@ public class TranslateDisplayContext {
 	}
 
 	public boolean isAutoTranslateEnabled() {
-		if (_ffAutoTranslateConfiguration.enabled() &&
-			hasTranslationPermission()) {
-
+		if (_booleanSupplier.getAsBoolean() && hasTranslationPermission()) {
 			return true;
 		}
 
@@ -485,9 +483,9 @@ public class TranslateDisplayContext {
 
 	private final List<String> _availableSourceLanguageIds;
 	private final List<String> _availableTargetLanguageIds;
+	private final BooleanSupplier _booleanSupplier;
 	private final String _className;
 	private final long _classPK;
-	private final FFAutoTranslateConfiguration _ffAutoTranslateConfiguration;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoForm _infoForm;

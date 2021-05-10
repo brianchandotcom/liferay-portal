@@ -74,7 +74,7 @@ definition {
 				"headline": "${headline}",
 				"keywords": [${tagName}],
 				"parentWikiPageId": 0,
-				"taxonomyCategoryIds": [${assetCategoryIds}"],
+				"taxonomyCategoryIds": [${assetCategoryIds}],
 				"viewableBy": "${viewableBy}"
 			}'
 		''';

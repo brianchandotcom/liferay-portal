@@ -169,7 +169,11 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 		sourceItemTypes.add(layoutPageTemplateEntry.getClassName());
 
-		if (_shouldIncludeAssetType(layoutPageTemplateEntry.getClassName())) {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				layoutPageTemplateEntry.getClassName());
+
+		if (assetRendererFactory != null) {
 			sourceItemTypes.add(AssetEntry.class.getName());
 		}
 
@@ -371,18 +375,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 				).build();
 			}
 		).build();
-	}
-
-	private boolean _shouldIncludeAssetType(String className) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
-
-		if (assetRendererFactory != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private final ItemSelector _itemSelector;

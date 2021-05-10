@@ -15,43 +15,28 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
-import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -72,28 +57,18 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class InviteUsersMVCResourceCommand
-	extends BaseMVCResourceCommand implements AopService, MVCResourceCommand {
-
-	@Override
-	@Transactional(
-		propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class
-	)
-	public boolean serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws PortletException {
-
-		return super.serveResource(resourceRequest, resourceResponse);
-	}
+	extends UpdateRolesMVCResourceCommand
+	implements AopService, MVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortalException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+		HttpServletRequest httpServletRequest = portal.getHttpServletRequest(
 			resourceRequest);
 
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
+		CTCollection ctCollection = ctCollectionLocalService.fetchCTCollection(
 			ParamUtil.getLong(resourceRequest, "ctCollectionId"));
 
 		if (ctCollection == null) {
@@ -101,7 +76,7 @@ public class InviteUsersMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"errorMessage",
-					_language.get(
+					language.get(
 						httpServletRequest,
 						"this-publication-no-longer-exists")));
 
@@ -119,7 +94,7 @@ public class InviteUsersMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"errorMessage",
-					_language.get(
+					language.get(
 						httpServletRequest,
 						"you-do-not-have-permission-to-invite-users-to-this-" +
 							"publication")));
@@ -148,13 +123,15 @@ public class InviteUsersMVCResourceCommand
 			long[] userIds = ParamUtil.getLongValues(
 				resourceRequest, "userIds");
 
-			_userGroupRoleLocalService.deleteUserGroupRoles(
+			userGroupRoleLocalService.deleteUserGroupRoles(
 				userIds, group.getGroupId());
 
-			Role role = _getRole(resourceRequest, themeDisplay);
+			Role role = getRole(
+				resourceRequest,
+				ParamUtil.getInteger(resourceRequest, "roleId"), themeDisplay);
 
 			for (long userId : userIds) {
-				_userGroupRoleLocalService.addUserGroupRole(
+				userGroupRoleLocalService.addUserGroupRole(
 					userId, group.getGroupId(), role.getRoleId());
 			}
 		}
@@ -165,7 +142,7 @@ public class InviteUsersMVCResourceCommand
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"errorMessage",
-					_language.get(
+					language.get(
 						httpServletRequest, "an-unexpected-error-occurred")));
 
 			return;
@@ -175,66 +152,14 @@ public class InviteUsersMVCResourceCommand
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"successMessage",
-				_language.get(
+				language.get(
 					httpServletRequest, "users-were-invited-successfully")));
-	}
-
-	private Role _getRole(
-			ResourceRequest resourceRequest, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		int roleId = ParamUtil.getInteger(resourceRequest, "roleId");
-
-		String name = PublicationRoleConstants.getRoleName(roleId);
-
-		Role role = _roleLocalService.fetchRole(
-			themeDisplay.getCompanyId(), name);
-
-		if (role == null) {
-			role = _roleLocalService.addRole(
-				themeDisplay.getDefaultUserId(), null, 0, name,
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), name
-				).build(),
-				null, RoleConstants.TYPE_PUBLICATION, StringPool.BLANK,
-				ServiceContextFactory.getInstance(resourceRequest));
-
-			for (String actionId :
-					PublicationRoleConstants.getModelResourceActions(roleId)) {
-
-				_resourcePermissionLocalService.addResourcePermission(
-					themeDisplay.getCompanyId(), CTCollection.class.getName(),
-					ResourceConstants.SCOPE_GROUP_TEMPLATE,
-					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-					role.getRoleId(), actionId);
-			}
-		}
-
-		return role;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InviteUsersMVCResourceCommand.class);
 
 	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

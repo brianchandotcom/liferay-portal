@@ -20,7 +20,12 @@
 </tr>
 <tr>
 	<td>FILTER_AND_ORDER_ACTIVE_ITEM</td>
-	<td>//div[contains(@class,'dropdown-menu')]//a[contains(@class,'active')][contains(text(),'${key_menuItem}')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//a[contains(text(),'${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_AND_ORDER_ITEM</td>
+	<td>//div[contains(@class,'dropdown-menu')]//a[contains(text(),'${key_menuItem}')]</td>
 	<td></td>
 </tr>
 <tr>

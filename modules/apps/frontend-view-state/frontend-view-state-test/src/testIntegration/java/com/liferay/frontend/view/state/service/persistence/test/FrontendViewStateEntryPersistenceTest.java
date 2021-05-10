@@ -230,8 +230,7 @@ public class FrontendViewStateEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"FrontendViewStateEntry", "mvccVersion", true, "uuid", true,
 			"frontendViewStateEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"viewState", true);
+			"userName", true, "createDate", true, "modifiedDate", true);
 	}
 
 	@Test

@@ -1159,23 +1159,26 @@ public abstract class Base${schemaName}ResourceTestCase {
 						</#list>
 						));
 
-					assertHttpResponseStatusCode(
-						404,
-						${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
-							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-								<@getPermissionParameter
-									javaMethodParameter=javaMethodParameter
-									javaMethodSignature=javaMethodSignature
-									properties=properties
-									roleName="\"-\""
-									schemaVarName=schemaVarName
-									schemaVarNameId="0L"
-								>
-									"-"
-								</@getPermissionParameter>
-								<#sep>, </#sep>
-							</#list>
-				));
+				assertHttpResponseStatusCode(
+					404,
+					${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(
+						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+							<#assign schemaVarNameId>
+								<@getDefaultParameter javaMethodParameter=javaMethodParameter />
+							</#assign>
+							<@getPermissionParameter
+								javaMethodParameter=javaMethodParameter
+								javaMethodSignature=javaMethodSignature
+								properties=properties
+								roleName="\"-\""
+								schemaVarName=schemaVarName
+								schemaVarNameId=schemaVarNameId
+							>
+								"-"
+							</@getPermissionParameter>
+							<#sep>, </#sep>
+						</#list>
+						));
 			}
 
 			protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {

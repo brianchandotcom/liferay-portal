@@ -177,6 +177,12 @@ definition {
 			value1 = "${titleField}");
 	}
 
+	macro gotoSidebar {
+		Click(
+			key_typeName = "${fieldType}",
+			locator1 = "Segmentation#SEGMENT_FIELDS_TYPE");
+	}
+
 	macro openSegmentOptions {
 		Click(locator1 = "Segmentation#SEARCH_FIELD");
 

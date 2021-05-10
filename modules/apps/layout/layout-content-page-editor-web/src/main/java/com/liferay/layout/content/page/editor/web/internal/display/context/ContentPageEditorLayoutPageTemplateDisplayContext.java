@@ -145,13 +145,13 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 
 	@Override
 	protected List<ItemSelectorCriterion>
-		getCollectionItemSelectorCriterionList() {
+		getCollectionItemSelectorCriterions() {
 
-		List<ItemSelectorCriterion> collectionItemSelectorCriterionList =
-			super.getCollectionItemSelectorCriterionList();
+		List<ItemSelectorCriterion> collectionItemSelectorCriterions =
+			super.getCollectionItemSelectorCriterions();
 
 		if (!_pageIsDisplayPage) {
-			return collectionItemSelectorCriterionList;
+			return collectionItemSelectorCriterions;
 		}
 
 		InfoItemRelatedListProviderItemSelectorCriterion
@@ -177,7 +177,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			sourceItemTypes);
 
 		return ListUtil.concat(
-			collectionItemSelectorCriterionList,
+			collectionItemSelectorCriterions,
 			Collections.singletonList(
 				infoItemRelatedListProviderItemSelectorCriterion));
 	}

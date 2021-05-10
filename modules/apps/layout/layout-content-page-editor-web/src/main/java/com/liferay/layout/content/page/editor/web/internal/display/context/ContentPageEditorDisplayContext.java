@@ -688,7 +688,7 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	protected List<ItemSelectorCriterion>
-		getCollectionItemSelectorCriterionList() {
+		getCollectionItemSelectorCriterions() {
 
 		InfoListItemSelectorCriterion infoListItemSelectorCriterion =
 			new InfoListItemSelectorCriterion();
@@ -934,13 +934,13 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private String _getCollectionSelectorURL() {
-		List<ItemSelectorCriterion> collectionItemSelectorCriterionList =
-			getCollectionItemSelectorCriterionList();
+		List<ItemSelectorCriterion> collectionItemSelectorCriterions =
+			getCollectionItemSelectorCriterions();
 
 		PortletURL infoListSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest),
 			_renderResponse.getNamespace() + "selectInfoList",
-			collectionItemSelectorCriterionList.toArray(
+			collectionItemSelectorCriterions.toArray(
 				new ItemSelectorCriterion[0]));
 
 		if (infoListSelectorURL == null) {

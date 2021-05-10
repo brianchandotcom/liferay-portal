@@ -1,4 +1,4 @@
-if (!ctx._source.slaStatus.equals("Overdue") && params.slaResult.slaStatus.equals("RUNNING")) {
+if (!ctx._source.slaStatus.equals("Overdue") && params.slaResult.status.equals("RUNNING")) {
  	if (params.slaResult.onTime) {
  		ctx._source.slaStatus = "OnTime";
  	}
@@ -19,6 +19,6 @@ else {
 	else {
 		slaResult.onTime = params.slaResult.onTime;
 		slaResult.remainingTime = params.slaResult.remainingTime;
-		slaResult.slaStatus = params.slaResult.slaStatus;
+		slaResult.status = params.slaResult.status;
 	}
 }

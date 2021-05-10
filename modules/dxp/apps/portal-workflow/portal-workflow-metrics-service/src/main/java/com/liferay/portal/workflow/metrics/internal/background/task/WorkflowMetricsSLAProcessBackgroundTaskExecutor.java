@@ -671,7 +671,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 								workflowMetricsSLAInstanceResult.
 									getSLADefinitionId()
 							).put(
-								"slaStatus", workflowMetricsSLAStatus.name()
+								"status", workflowMetricsSLAStatus.name()
 							).build()
 						).scriptType(
 							ScriptType.INLINE

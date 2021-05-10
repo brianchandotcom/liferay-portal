@@ -588,8 +588,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getName());
 
 		DLFileEntry newDLFileEntry = addFileEntry(
-			dlFileEntry.getExternalReferenceCode(), userId, groupId,
-			repositoryId, destFolderId, sourceFileName,
+			null, userId, groupId, repositoryId, destFolderId, sourceFileName,
 			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
 			dlFileEntry.getDescription(), null,
 			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,

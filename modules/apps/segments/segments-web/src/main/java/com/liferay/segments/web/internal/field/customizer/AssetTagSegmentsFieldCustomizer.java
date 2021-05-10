@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
@@ -105,7 +106,12 @@ public class AssetTagSegmentsFieldCustomizer
 
 			portletURL.setParameter("mvcPath", "/select_single.jsp");
 			portletURL.setParameter(
-				"groupIds", String.valueOf(companyGroup.getGroupId()));
+				"groupIds",
+				StringUtil.merge(
+					new long[] {
+						companyGroup.getGroupId(),
+						_portal.getScopeGroupId(portletRequest)
+					}));
 			portletURL.setParameter("eventName", "selectEntity");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 

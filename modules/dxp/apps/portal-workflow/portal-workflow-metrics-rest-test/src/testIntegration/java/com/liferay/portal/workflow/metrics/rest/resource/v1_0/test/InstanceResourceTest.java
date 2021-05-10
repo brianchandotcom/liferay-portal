@@ -37,9 +37,12 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.test.helper.Workfl
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
 import org.junit.Before;
@@ -289,6 +292,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		return new SLAResult() {
 			{
+				dateModified = DateUtils.truncate(
+					RandomTestUtil.nextDate(), Calendar.SECOND);
 				dateOverdue = null;
 				id = RandomTestUtil.randomLong();
 				name = StringPool.BLANK;

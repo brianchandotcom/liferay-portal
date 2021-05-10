@@ -62,6 +62,7 @@ import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +75,7 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.Assert;
 
@@ -356,6 +358,8 @@ public class WorkflowMetricsRESTTestHelper {
 					companyId, instance,
 					new SLAResult() {
 						{
+							dateModified = DateUtils.truncate(
+								RandomTestUtil.nextDate(), Calendar.SECOND);
 							dateOverdue = null;
 							id = RandomTestUtil.randomLong();
 							name = null;
@@ -372,6 +376,8 @@ public class WorkflowMetricsRESTTestHelper {
 					companyId, instance,
 					new SLAResult() {
 						{
+							dateModified = DateUtils.truncate(
+								RandomTestUtil.nextDate(), Calendar.SECOND);
 							dateOverdue = null;
 							id = RandomTestUtil.randomLong();
 							name = null;
@@ -821,17 +827,12 @@ public class WorkflowMetricsRESTTestHelper {
 			"instanceCompleted", Objects.nonNull(instance.getDateCompletion())
 		).setValue(
 			"instanceId", instance.getId()
-		);
-
-		if (slaResult.getDateModified() != null) {
-			documentBuilder.setValue(
-				"modifiedDate",
-				DateUtil.getDate(
-					slaResult.getDateModified(), "yyyyMMddHHmmss",
-					LocaleUtil.getDefault()));
-		}
-
-		documentBuilder.setValue(
+		).setValue(
+			"modifiedDate",
+			DateUtil.getDate(
+				slaResult.getDateModified(), "yyyyMMddHHmmss",
+				LocaleUtil.getDefault())
+		).setValue(
 			"onTime", slaResult.getOnTime()
 		).setValue(
 			"processId", instance.getProcessId()

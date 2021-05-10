@@ -131,6 +131,10 @@ public interface AccountGroupRelLocalService
 			long accountGroupId, String className, long[] classPKs)
 		throws PortalException;
 
+	public void deleteAccountGroupRels(String className, long[] classPKs);
+
+	public void deleteAccountGroupRelsByAccountGroupId(long accountGroupId);
+
 	/**
 	 * @throws PortalException
 	 */
@@ -247,8 +251,18 @@ public interface AccountGroupRelLocalService
 		String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountGroupRel> getAccountGroupRels(
+		String className, long classPK, int start, int end,
+		OrderByComparator<AccountGroupRel> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountGroupRel> getAccountGroupRelsByAccountGroupId(
 		long accountGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountGroupRel> getAccountGroupRelsByAccountGroupId(
+		long accountGroupId, int start, int end,
+		OrderByComparator<AccountGroupRel> orderByComparator);
 
 	/**
 	 * Returns the number of account group rels.
@@ -257,6 +271,9 @@ public interface AccountGroupRelLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAccountGroupRelsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getAccountGroupRelsCount(String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getAccountGroupRelsCountByAccountGroupId(long accountGroupId);

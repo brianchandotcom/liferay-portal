@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -48,6 +50,7 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1636,6 +1639,31 @@ public class AccountGroupRelPersistenceImpl
 
 		AccountGroupRelModelImpl accountGroupRelModelImpl =
 			(AccountGroupRelModelImpl)accountGroupRel;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (accountGroupRel.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				accountGroupRel.setCreateDate(date);
+			}
+			else {
+				accountGroupRel.setCreateDate(
+					serviceContext.getCreateDate(date));
+			}
+		}
+
+		if (!accountGroupRelModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				accountGroupRel.setModifiedDate(date);
+			}
+			else {
+				accountGroupRel.setModifiedDate(
+					serviceContext.getModifiedDate(date));
+			}
+		}
 
 		Session session = null;
 

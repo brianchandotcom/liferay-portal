@@ -17,6 +17,7 @@ package com.liferay.account.model;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +45,10 @@ public class AccountGroupRelWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("accountGroupRelId", getAccountGroupRelId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("accountGroupId", getAccountGroupId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -69,6 +74,30 @@ public class AccountGroupRelWrapper
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long accountGroupId = (Long)attributes.get("accountGroupId");
@@ -151,6 +180,26 @@ public class AccountGroupRelWrapper
 	}
 
 	/**
+	 * Returns the create date of this account group rel.
+	 *
+	 * @return the create date of this account group rel
+	 */
+	@Override
+	public Date getCreateDate() {
+		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the modified date of this account group rel.
+	 *
+	 * @return the modified date of this account group rel
+	 */
+	@Override
+	public Date getModifiedDate() {
+		return model.getModifiedDate();
+	}
+
+	/**
 	 * Returns the mvcc version of this account group rel.
 	 *
 	 * @return the mvcc version of this account group rel
@@ -168,6 +217,36 @@ public class AccountGroupRelWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the user ID of this account group rel.
+	 *
+	 * @return the user ID of this account group rel
+	 */
+	@Override
+	public long getUserId() {
+		return model.getUserId();
+	}
+
+	/**
+	 * Returns the user name of this account group rel.
+	 *
+	 * @return the user name of this account group rel
+	 */
+	@Override
+	public String getUserName() {
+		return model.getUserName();
+	}
+
+	/**
+	 * Returns the user uuid of this account group rel.
+	 *
+	 * @return the user uuid of this account group rel
+	 */
+	@Override
+	public String getUserUuid() {
+		return model.getUserUuid();
 	}
 
 	@Override
@@ -231,6 +310,26 @@ public class AccountGroupRelWrapper
 	}
 
 	/**
+	 * Sets the create date of this account group rel.
+	 *
+	 * @param createDate the create date of this account group rel
+	 */
+	@Override
+	public void setCreateDate(Date createDate) {
+		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the modified date of this account group rel.
+	 *
+	 * @param modifiedDate the modified date of this account group rel
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
 	 * Sets the mvcc version of this account group rel.
 	 *
 	 * @param mvccVersion the mvcc version of this account group rel
@@ -248,6 +347,36 @@ public class AccountGroupRelWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the user ID of this account group rel.
+	 *
+	 * @param userId the user ID of this account group rel
+	 */
+	@Override
+	public void setUserId(long userId) {
+		model.setUserId(userId);
+	}
+
+	/**
+	 * Sets the user name of this account group rel.
+	 *
+	 * @param userName the user name of this account group rel
+	 */
+	@Override
+	public void setUserName(String userName) {
+		model.setUserName(userName);
+	}
+
+	/**
+	 * Sets the user uuid of this account group rel.
+	 *
+	 * @param userUuid the user uuid of this account group rel
+	 */
+	@Override
+	public void setUserUuid(String userUuid) {
+		model.setUserUuid(userUuid);
 	}
 
 	@Override

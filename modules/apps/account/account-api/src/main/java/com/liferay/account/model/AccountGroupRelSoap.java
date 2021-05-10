@@ -17,6 +17,7 @@ package com.liferay.account.model;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,10 @@ public class AccountGroupRelSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setAccountGroupRelId(model.getAccountGroupRelId());
 		soapModel.setCompanyId(model.getCompanyId());
+		soapModel.setUserId(model.getUserId());
+		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
+		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setAccountGroupId(model.getAccountGroupId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
@@ -121,6 +126,38 @@ public class AccountGroupRelSoap implements Serializable {
 		_companyId = companyId;
 	}
 
+	public long getUserId() {
+		return _userId;
+	}
+
+	public void setUserId(long userId) {
+		_userId = userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	public void setUserName(String userName) {
+		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public void setModifiedDate(Date modifiedDate) {
+		_modifiedDate = modifiedDate;
+	}
+
 	public long getAccountGroupId() {
 		return _accountGroupId;
 	}
@@ -148,6 +185,10 @@ public class AccountGroupRelSoap implements Serializable {
 	private long _mvccVersion;
 	private long _accountGroupRelId;
 	private long _companyId;
+	private long _userId;
+	private String _userName;
+	private Date _createDate;
+	private Date _modifiedDate;
 	private long _accountGroupId;
 	private long _classNameId;
 	private long _classPK;

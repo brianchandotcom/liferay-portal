@@ -14,10 +14,14 @@
 
 package com.liferay.account.model;
 
+import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
+import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+
+import java.util.Date;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -34,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AccountGroupRelModel
-	extends AttachedModel, BaseModel<AccountGroupRel>, MVCCModel, ShardedModel {
+	extends AttachedModel, AuditedModel, BaseModel<AccountGroupRel>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -101,6 +106,87 @@ public interface AccountGroupRelModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the user ID of this account group rel.
+	 *
+	 * @return the user ID of this account group rel
+	 */
+	@Override
+	public long getUserId();
+
+	/**
+	 * Sets the user ID of this account group rel.
+	 *
+	 * @param userId the user ID of this account group rel
+	 */
+	@Override
+	public void setUserId(long userId);
+
+	/**
+	 * Returns the user uuid of this account group rel.
+	 *
+	 * @return the user uuid of this account group rel
+	 */
+	@Override
+	public String getUserUuid();
+
+	/**
+	 * Sets the user uuid of this account group rel.
+	 *
+	 * @param userUuid the user uuid of this account group rel
+	 */
+	@Override
+	public void setUserUuid(String userUuid);
+
+	/**
+	 * Returns the user name of this account group rel.
+	 *
+	 * @return the user name of this account group rel
+	 */
+	@AutoEscape
+	@Override
+	public String getUserName();
+
+	/**
+	 * Sets the user name of this account group rel.
+	 *
+	 * @param userName the user name of this account group rel
+	 */
+	@Override
+	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this account group rel.
+	 *
+	 * @return the create date of this account group rel
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this account group rel.
+	 *
+	 * @param createDate the create date of this account group rel
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this account group rel.
+	 *
+	 * @return the modified date of this account group rel
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this account group rel.
+	 *
+	 * @param modifiedDate the modified date of this account group rel
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the account group ID of this account group rel.

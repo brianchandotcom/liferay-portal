@@ -3,16 +3,11 @@ definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
-	property portal.upstream = "quarantine";
 	property testray.component.names = "Workflow";
 	property testray.main.component.name = "Upgrades Workflow";
 
 	setUp {
 		SignIn.signIn();
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		AssertLocation(value1 = "${portalURL}/web/guest/home");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

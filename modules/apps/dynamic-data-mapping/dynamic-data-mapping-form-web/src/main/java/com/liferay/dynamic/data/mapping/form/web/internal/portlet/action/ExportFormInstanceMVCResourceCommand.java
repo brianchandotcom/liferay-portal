@@ -23,6 +23,8 @@ import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporte
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -91,10 +93,21 @@ public class ExportFormInstanceMVCResourceCommand
 				WorkflowConstants.STATUS_APPROVED
 			).build();
 
-		DDMFormInstanceRecordExporterResponse
-			ddmFormInstanceRecordExporterResponse =
-				_ddmFormInstanceRecordExporter.export(
-					ddmFormInstanceRecordExporterRequest);
+		byte[] content;
+
+		try {
+			DDMFormInstanceRecordExporterResponse
+				ddmFormInstanceRecordExporterResponse =
+					_ddmFormInstanceRecordExporter.export(
+						ddmFormInstanceRecordExporterRequest);
+
+			content = ddmFormInstanceRecordExporterResponse.getContent();
+		}
+		catch (Exception exception) {
+			content = new byte[0];
+
+			_log.error(exception, exception);
+		}
 
 		DDMFormInstance formInstance = _ddmFormInstanceService.getFormInstance(
 			formInstanceId);
@@ -104,8 +117,7 @@ public class ExportFormInstanceMVCResourceCommand
 				fileExtension;
 
 		PortletResponseUtil.sendFile(
-			resourceRequest, resourceResponse, fileName,
-			ddmFormInstanceRecordExporterResponse.getContent(),
+			resourceRequest, resourceResponse, fileName, content,
 			MimeTypesUtil.getContentType(fileName));
 	}
 
@@ -114,6 +126,9 @@ public class ExportFormInstanceMVCResourceCommand
 
 		_ddmFormWebConfigurationActivator = null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportFormInstanceMVCResourceCommand.class);
 
 	@Reference
 	private DDMFormInstanceRecordExporter _ddmFormInstanceRecordExporter;

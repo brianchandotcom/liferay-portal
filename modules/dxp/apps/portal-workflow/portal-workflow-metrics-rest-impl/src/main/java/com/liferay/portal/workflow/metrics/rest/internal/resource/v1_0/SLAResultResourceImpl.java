@@ -57,6 +57,7 @@ public class SLAResultResourceImpl extends BaseSLAResultResourceImpl {
 				contextCompany.getCompanyId()));
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
+
 		BooleanQuery filterBooleanQuery = _queries.booleanQuery();
 
 		searchSearchRequest.setQuery(

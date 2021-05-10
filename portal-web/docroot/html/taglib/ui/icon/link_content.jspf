@@ -47,6 +47,8 @@
 		<span class="taglib-text-icon"><%= localizeMessage ? LanguageUtil.get(resourceBundle, message) : message %></span>
 	</c:when>
 	<c:otherwise>
-		<span class="taglib-text <%= label ? StringPool.BLANK : "hide-accessible" %>"><%= localizeMessage ? LanguageUtil.get(resourceBundle, message) : message %></span>
+		<c:if test="<%= Validator.isNotNull(message) %>">
+			<span class="taglib-text <%= label ? StringPool.BLANK : "hide-accessible" %>"><%= localizeMessage ? LanguageUtil.get(resourceBundle, message) : message %></span>
+		</c:if>
 	</c:otherwise>
 </c:choose>

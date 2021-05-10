@@ -16,10 +16,10 @@ package com.liferay.object.rest.internal.deployer;
 
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.rest.graphql.ObjectDefinitionGraphQL;
-import com.liferay.object.rest.internal.graphql.ObjectDefinitionGraphQLImpl;
+import com.liferay.object.rest.internal.graphql.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,13 +57,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		return Collections.singletonList(
 			_bundleContext.registerService(
-				ObjectDefinitionGraphQL.class,
-				new ObjectDefinitionGraphQLImpl(
+				GraphQLDTOContributor.class,
+				ObjectDefinitionGraphQLDTOContributor.of(
 					objectDefinition,
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())),
 				HashMapDictionaryBuilder.<String, Object>put(
-					"db.table.name", objectDefinition.getDBTableName()
+					"dto.name", objectDefinition.getDBTableName()
 				).build()));
 	}
 

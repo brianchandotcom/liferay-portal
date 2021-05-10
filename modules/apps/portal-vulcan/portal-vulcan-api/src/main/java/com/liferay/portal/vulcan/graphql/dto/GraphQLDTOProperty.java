@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.internal.graphql.servlet;
+package com.liferay.portal.vulcan.graphql.dto;
 
 /**
  * @author Javier de Arcos

@@ -1825,11 +1825,23 @@ definition {
 
 	@summary = "Log into Liferay using the UI"
 	macro firstLoginUI {
-		Navigator.openURL();
+		if (isSet(specificURL)) {
+			Navigator.openSpecificURL(url = "${specificURL}");
+		}
+		else {
+			Navigator.openURL();
+		}
 
-		AssertClick(
-			locator1 = "UserBar#USER_SIGN_IN",
-			value1 = "Sign In");
+		if (IsElementNotPresent(locator1 = "TextInput#EMAIL_ADDRESS")) {
+			if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
+				AssertClick(
+					locator1 = "UserBar#USER_SIGN_IN",
+					value1 = "Sign In");
+			}
+			else if (IsElementPresent(key_text = "Sign In", locator1 = "Button#ANY")) {
+				Button.click(button = "Sign In");
+			}
+		}
 
 		Type.typePause(
 			locator1 = "TextInput#EMAIL_ADDRESS",

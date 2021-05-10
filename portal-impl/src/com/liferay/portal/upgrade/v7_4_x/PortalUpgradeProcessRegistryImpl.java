@@ -59,6 +59,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(new Version(12, 1, 0), new UpgradeDLFileEntry());
 
 		upgradeProcesses.put(new Version(12, 1, 1), new UpgradeDLFileVersion());
+
+		upgradeProcesses.put(new Version(12, 2, 0), new UpgradeCompanyId());
 	}
 
 }

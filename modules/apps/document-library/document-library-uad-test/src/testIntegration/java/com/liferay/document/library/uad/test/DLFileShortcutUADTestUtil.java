@@ -58,7 +58,7 @@ public class DLFileShortcutUADTestUtil {
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.addFileEntry(
-			userId, dlFolder.getGroupId(), dlFolder.getRepositoryId(),
+			null, userId, dlFolder.getGroupId(), dlFolder.getRepositoryId(),
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK,

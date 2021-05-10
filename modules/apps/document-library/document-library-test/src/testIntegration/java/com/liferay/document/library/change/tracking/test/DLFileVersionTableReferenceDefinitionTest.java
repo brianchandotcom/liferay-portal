@@ -67,8 +67,8 @@ public class DLFileVersionTableReferenceDefinitionTest
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 
 		_dlFileEntry = _dlFileEntryLocalService.addFileEntry(
-			group.getCreatorUserId(), group.getGroupId(), group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, group.getCreatorUserId(), group.getGroupId(),
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,

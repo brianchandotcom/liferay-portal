@@ -58,7 +58,7 @@ public class DLFolderSearchFixture {
 			false, serviceContext);
 
 		dlFileEntryLocalService.addFileEntry(
-			user.getUserId(), group.getGroupId(), group.getGroupId(),
+			null, user.getUserId(), group.getGroupId(), group.getGroupId(),
 			dlFolder.getFolderId(), RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString(), keywords, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,

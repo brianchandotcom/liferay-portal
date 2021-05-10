@@ -133,7 +133,7 @@ public class DLFileEntryLocalServiceTest {
 		Date reviewDate = new Date();
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
 			StringPool.BLANK, -1, new HashMap<>(), null,
@@ -241,7 +241,7 @@ public class DLFileEntryLocalServiceTest {
 		Date reviewDate = new Date();
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
@@ -259,7 +259,7 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
@@ -283,7 +283,7 @@ public class DLFileEntryLocalServiceTest {
 		Date reviewDate = new Date();
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
@@ -303,7 +303,7 @@ public class DLFileEntryLocalServiceTest {
 		Date expirationDate = new Date();
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
@@ -325,7 +325,7 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
 			StringPool.BLANK, -1, new HashMap<>(), null,
@@ -491,7 +491,7 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
@@ -572,7 +572,7 @@ public class DLFileEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), dlFolder.getGroupId(),
 			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
 			StringPool.BLANK, StringPool.BLANK,
@@ -580,7 +580,7 @@ public class DLFileEntryLocalServiceTest {
 			ddmFormValuesMap, null, inputStream, 0, null, null, serviceContext);
 
 		DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), dlFolder.getGroupId(),
 			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
 			StringPool.BLANK, StringPool.BLANK,
@@ -673,7 +673,7 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
 			StringPool.BLANK, -1, new HashMap<>(), null,
@@ -700,7 +700,7 @@ public class DLFileEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), originDLFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), originDLFolder.getGroupId(),
 			originDLFolder.getRepositoryId(), originDLFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
@@ -713,7 +713,7 @@ public class DLFileEntryLocalServiceTest {
 			_group.getGroupId());
 
 		DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), destinationDLFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), destinationDLFolder.getGroupId(),
 			destinationDLFolder.getRepositoryId(),
 			destinationDLFolder.getFolderId(), StringUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, StringUtil.randomString(),
@@ -746,7 +746,7 @@ public class DLFileEntryLocalServiceTest {
 		String title = StringUtil.randomString();
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), originDLFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), originDLFolder.getGroupId(),
 			originDLFolder.getRepositoryId(), originDLFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
 			StringPool.BLANK, StringPool.BLANK,
@@ -759,7 +759,7 @@ public class DLFileEntryLocalServiceTest {
 			_group.getGroupId());
 
 		DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), destinationDLFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), destinationDLFolder.getGroupId(),
 			destinationDLFolder.getRepositoryId(),
 			destinationDLFolder.getFolderId(), StringUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
@@ -781,7 +781,7 @@ public class DLFileEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), originDLFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), originDLFolder.getGroupId(),
 			originDLFolder.getRepositoryId(), originDLFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
@@ -814,7 +814,7 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
 			StringPool.BLANK, -1, new HashMap<>(), null,
@@ -878,7 +878,7 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
@@ -906,7 +906,7 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
@@ -924,7 +924,7 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		DLFileEntry dlFileEntry1 = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
@@ -936,7 +936,7 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry1.getFileEntryTypeId(), serviceContext);
 
 		DLFileEntry dlFileEntry2 = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
@@ -961,7 +961,7 @@ public class DLFileEntryLocalServiceTest {
 		throws Exception {
 
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			null, TestPropsValues.getUserId(), dlFolder.getGroupId(),
 			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,

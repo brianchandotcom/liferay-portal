@@ -75,7 +75,7 @@ public class DLFolderTableReferenceDefinitionTest
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 
 		_dlFileEntryLocalService.addFileEntry(
-			childFolder.getUserId(), childFolder.getGroupId(),
+			null, childFolder.getUserId(), childFolder.getGroupId(),
 			childFolder.getRepositoryId(), childFolder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,

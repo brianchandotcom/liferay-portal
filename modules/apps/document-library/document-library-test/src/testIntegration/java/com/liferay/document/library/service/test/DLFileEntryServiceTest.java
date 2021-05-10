@@ -316,7 +316,7 @@ public class DLFileEntryServiceTest {
 		String fileEntryTitle = RandomTestUtil.randomString();
 
 		return DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), folderId, sourceFileName, null, fileEntryTitle,
 			RandomTestUtil.randomString(), StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,

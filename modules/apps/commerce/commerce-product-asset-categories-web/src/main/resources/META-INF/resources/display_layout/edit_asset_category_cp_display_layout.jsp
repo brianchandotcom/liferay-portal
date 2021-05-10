@@ -99,173 +99,19 @@ if (cpDisplayLayout != null) {
 	</aui:form>
 </commerce-ui:side-panel-content>
 
-<aui:script use="liferay-item-selector-dialog">
-	var displayPageItemContainer = window.document.querySelector(
-		'#<portlet:namespace />displayPageItemContainer'
-	);
-	var displayPageItemRemove = window.document.querySelector(
-		'#<portlet:namespace />displayPageItemRemove'
-	);
-	var displayPageNameInput = window.document.querySelector(
-		'#<portlet:namespace />displayPageNameInput'
-	);
-	var pagesContainerInput = window.document.querySelector(
-		'#<portlet:namespace />pagesContainerInput'
-	);
-
-	window.document
-		.querySelector('#<portlet:namespace />chooseDisplayPage')
-		.addEventListener('click', (event) => {
-			var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-				eventName: 'selectDisplayPage',
-				on: {
-					selectedItemChange: function (event) {
-						var selectedItem = event.newVal;
-
-						if (selectedItem) {
-							pagesContainerInput.value = selectedItem.id;
-
-							displayPageNameInput.innerText = selectedItem.name;
-
-							displayPageItemRemove.classList.remove('hide');
-						}
-					},
-				},
-				'strings.add': '<liferay-ui:message key="done" />',
-				title: '<liferay-ui:message key="select-category-display-page" />',
-				url:
-					'<%= categoryCPDisplayLayoutDisplayContext.getItemSelectorUrl(renderRequest) %>',
-			});
-
-			itemSelectorDialog.open();
-		});
-
-	displayPageItemRemove.addEventListener('click', () => {
-		displayPageNameInput.innerHTML = '<liferay-ui:message key="none" />';
-
-		pagesContainerInput.value = '';
-
-		displayPageItemRemove.classList.add('hide');
-	});
-</aui:script>
-
-<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-	var assetCategoryId = <%= (assetCategory == null) ? "null" : assetCategory.getCategoryId() %>;
-
-	var assetCategoryName =
-		'<%= (assetCategory == null) ? "" : HtmlUtil.escapeJS(assetCategory.getTitle(locale)) %>';
-
-	var categoriesContainer = document.querySelector(
-		'#<portlet:namespace />categoriesContainer'
-	);
-
-	var classPK = document.querySelector('#<portlet:namespace />classPK');
-
-	function createLabel(id, title) {
-		var labelContainer = document.createElement('span');
-		labelContainer.classList.add('label');
-		labelContainer.classList.add('label-dismissible');
-		labelContainer.classList.add('label-secondary');
-		labelContainer.setAttribute('id', id);
-
-		var linkContainer = document.createElement('span');
-		linkContainer.classList.add('label-item');
-		linkContainer.classList.add('label-item-expand');
-
-		var link = document.createElement('a');
-		link.setAttribute('href', '#' + id);
-		link.innerText = title;
-		linkContainer.appendChild(link);
-
-		var buttonContainer = document.createElement('span');
-		buttonContainer.classList.add('label-item');
-		buttonContainer.classList.add('label-item-after');
-
-		var button = document.createElement('button');
-		button.classList.add('close');
-		button.setAttribute('aria-label', 'Close');
-		button.setAttribute('type', 'button');
-		button.addEventListener('click', handleCloseButtonClick);
-
-		var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-		svg.classList.add('lexicon-icon');
-		svg.classList.add('lexicon-icon-times');
-		svg.setAttribute('focusable', false);
-		svg.setAttribute('role', 'presentation');
-
-		var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
-		use.setAttribute(
-			'href',
-			Liferay.ThemeDisplay.getPathThemeImages() + '/clay/icons.svg#times'
-		);
-
-		svg.appendChild(use);
-		button.appendChild(svg);
-		buttonContainer.appendChild(button);
-
-		labelContainer.appendChild(linkContainer);
-		labelContainer.appendChild(buttonContainer);
-
-		return labelContainer;
-	}
-
-	function handleCloseButtonClick(event) {
-		var button = event.currentTarget;
-		categoriesContainer.removeChild(button.parentElement.parentElement);
-	}
-
-	if (assetCategoryId) {
-		var categoryNode = createLabel(
-			'category-' + assetCategoryId,
-			assetCategoryName
-		);
-		categoriesContainer.appendChild(categoryNode);
-		classPK.value = assetCategoryId;
-	}
-
-	window.document
-		.querySelector('#<portlet:namespace />selectCategories')
-		.addEventListener('click', (event) => {
-			var itemSelectorDialog = new ItemSelectorDialog.default({
-				eventName: '<portlet:namespace />selectCategory',
-				'strings.add': '<liferay-ui:message key="done" />',
-				title: '<liferay-ui:message key="select-category-display-page" />',
-				url:
-					'<%= categoryCPDisplayLayoutDisplayContext.getCategorySelectorURL(renderResponse) %>',
-			});
-
-			itemSelectorDialog.open();
-
-			itemSelectorDialog.on('selectedItemChange', (event) => {
-				if (event.selectedItem) {
-					var selectedItem = event.selectedItem;
-
-					Object.keys(selectedItem).forEach((key) => {
-						var item = selectedItem[key];
-
-						if (!item.unchecked) {
-							var categoryNodes = categoriesContainer.children;
-
-							for (var i = 0; i < categoryNodes.length; i++) {
-								categoriesContainer.removeChild(
-									categoryNodes.item(i)
-								);
-							}
-
-							delete selectedItem.key;
-
-							var categoryNode = createLabel(
-								'category-' + item.categoryId,
-								item.value
-							);
-
-							categoriesContainer.appendChild(categoryNode);
-							classPK.value = item.categoryId;
-
-							return;
-						}
-					});
-				}
-			});
-		});
-</aui:script>
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"assetCategory", assetCategory
+		).put(
+			"categorySelectorUrl", categoryCPDisplayLayoutDisplayContext.getCategorySelectorURL(renderResponse)
+		).put(
+			"itemSelectorUrl", categoryCPDisplayLayoutDisplayContext.getItemSelectorUrl(renderRequest)
+		).put(
+			"locale", locale
+		).put(
+			"portletNamespace", liferayPortletResponse.getNamespace()
+		).build()
+	%>'
+	module="js/EditAssetCategoryCPDisplayLayout"
+/>

@@ -46,8 +46,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.List;
-
 import org.frutilla.FrutillaRule;
 
 import org.junit.Assert;
@@ -104,7 +102,8 @@ public class CPDisplayLayoutLocalServiceTest {
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
 			_serviceContext);
 
-		_assetVocabulary = AssetVocabularyLocalServiceUtil.addDefaultVocabulary(_group1.getGroupId());
+		_assetVocabulary = AssetVocabularyLocalServiceUtil.addDefaultVocabulary(
+			_group1.getGroupId());
 
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),

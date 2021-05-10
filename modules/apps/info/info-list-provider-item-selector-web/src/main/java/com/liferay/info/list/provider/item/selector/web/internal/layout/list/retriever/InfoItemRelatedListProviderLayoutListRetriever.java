@@ -147,8 +147,6 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 			return InfoPage.of(Collections.emptyList());
 		}
 
-		Object contextObject = contextObjectOptional.get();
-
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();
 
@@ -160,7 +158,7 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 				AssetEntry.class)) {
 
 			Optional<AssetEntry> assetEntryOptional = _getAssetEntryOptional(
-				contextObject);
+				contextObjectOptional.get());
 
 			return (InfoPage<Object>)assetEntryOptional.map(
 				assetEntry ->
@@ -174,7 +172,8 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 
 		return (InfoPage<Object>)
 			infoItemRelatedListProvider.getRelatedItemsInfoPage(
-				contextObject, _getInfoListProviderContext(), pagination, null);
+				contextObjectOptional.get(), _getInfoListProviderContext(),
+				pagination, null);
 	}
 
 	@Reference

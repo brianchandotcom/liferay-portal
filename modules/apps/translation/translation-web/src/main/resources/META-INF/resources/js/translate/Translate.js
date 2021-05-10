@@ -52,14 +52,14 @@ const getInfoFields = (infoFieldSetEntries = []) => {
 	};
 };
 
-const normalizeFields = (fields = []) =>
+const massageResponseFields = (fields = []) =>
 	fields.reduce((acc, field) => {
 		const [id, content] = Object.entries(field)[0];
 
 		return {...acc, [id]: {content}};
 	}, {});
 
-const denormalizeFields = (fields = {}) =>
+const prepareFields = (fields = {}) =>
 	Object.entries(fields).map(([key, value]) => ({[key]: value}));
 
 const reducer = (state, action) => {
@@ -158,7 +158,7 @@ const Translate = ({
 			type: ACTION_TYPES.UPDATE_FETCH_STATUS,
 		});
 
-		fetchAutoTranslation({fields: denormalizeFields(sourceFields)})
+		fetchAutoTranslation({fields: prepareFields(sourceFields)})
 			.then(({error, fields}) => {
 				if (error) {
 					throw error;
@@ -166,7 +166,7 @@ const Translate = ({
 
 				if (isMounted()) {
 					dispatch({
-						payload: normalizeFields(fields),
+						payload: massageResponseFields(fields),
 						type: ACTION_TYPES.UPDATE_FIELDS_BULK,
 					});
 
@@ -207,7 +207,7 @@ const Translate = ({
 		});
 
 		fetchAutoTranslation({
-			fields: denormalizeFields({[fieldId]: sourceFields[fieldId]}),
+			fields: prepareFields({[fieldId]: sourceFields[fieldId]}),
 		})
 			.then(({error, fields}) => {
 				if (error) {
@@ -216,7 +216,7 @@ const Translate = ({
 
 				if (isMounted()) {
 					const [id, {content}] = Object.entries(
-						normalizeFields(fields)
+						massageResponseFields(fields)
 					)[0];
 
 					dispatch({

@@ -74,9 +74,10 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 		Response response = invocationBuilder.post(Entity.form(formData));
 
 		Assert.assertEquals(
-			applicationClientId, parseJsonField(response, "client_id"));
+			Response.Status.OK.getStatusCode(), response.getStatus());
 
-		Assert.assertEquals("Test Test", parseJsonField(response, "username"));
+		Assert.assertEquals(
+			applicationClientId, parseJsonField(response, "client_id"));
 	}
 
 	@Test
@@ -103,9 +104,10 @@ public class TokenIntrospectionTest extends BaseClientTestCase {
 		Response response = invocationBuilder.post(Entity.form(formData));
 
 		Assert.assertEquals(
-			applicationClientId, parseJsonField(response, "client_id"));
+			Response.Status.OK.getStatusCode(), response.getStatus());
 
-		Assert.assertEquals("Test Test", parseJsonField(response, "username"));
+		Assert.assertEquals(
+			applicationClientId, parseJsonField(response, "client_id"));
 	}
 
 	public static class TokenIntrospectionTestPreparatorBundleActivator

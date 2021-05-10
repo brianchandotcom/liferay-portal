@@ -52,26 +52,27 @@ public class UpgradeDLFileEntry extends UpgradeProcess {
 	}
 
 	private void _populateExternalReferenceCode() throws Exception {
-		try (PreparedStatement ps1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select fileEntryId from DLFileEntry where " +
 					"externalReferenceCode is null or externalReferenceCode " +
 						"= ''");
-			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				connection.prepareStatement(
-					"update DLFileEntry set externalReferenceCode = ? where " +
-						"fileEntryId = ?"))) {
+			ResultSet resultSet = preparedStatement1.executeQuery();
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection.prepareStatement(
+						"update DLFileEntry set externalReferenceCode = ? " +
+							"where fileEntryId = ?"))) {
 
-			while (rs.next()) {
-				long fileEntryId = rs.getLong(1);
+			while (resultSet.next()) {
+				long fileEntryId = resultSet.getLong(1);
 
-				ps2.setString(1, String.valueOf(fileEntryId));
-				ps2.setLong(2, fileEntryId);
+				preparedStatement2.setString(1, String.valueOf(fileEntryId));
+				preparedStatement2.setLong(2, fileEntryId);
 
-				ps2.addBatch();
+				preparedStatement2.addBatch();
 			}
 
-			ps2.executeBatch();
+			preparedStatement2.executeBatch();
 		}
 	}
 

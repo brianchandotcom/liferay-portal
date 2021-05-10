@@ -263,7 +263,7 @@ public class DataSetDisplayTag extends IncludeTag {
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		_clayDataSetDisplayViewSerializer =
-			ServletContextUtil.getClayDataSetDisplayViewSerializer();
+			ServicesProvider.getClayDataSetDisplayViewSerializer();
 
 		super.setPageContext(pageContext);
 

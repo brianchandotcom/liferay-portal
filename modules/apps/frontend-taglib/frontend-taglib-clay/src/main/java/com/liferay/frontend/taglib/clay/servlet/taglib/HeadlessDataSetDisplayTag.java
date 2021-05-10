@@ -221,10 +221,10 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		_clayDataSetDisplayViewSerializer =
-			ServletContextUtil.getClayDataSetDisplayViewSerializer();
+			ServicesProvider.getClayDataSetDisplayViewSerializer();
 
 		_clayDataSetFilterSerializer =
-			ServletContextUtil.getClayDataSetFilterSerializer();
+			ServicesProvider.getClayDataSetFilterSerializer();
 
 		super.setPageContext(pageContext);
 

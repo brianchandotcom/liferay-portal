@@ -15,6 +15,8 @@
 package com.liferay.frontend.taglib.clay.internal.util;
 
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerializer;
+import com.liferay.frontend.taglib.clay.data.set.filter.ClayDataSetFilterSerializer;
 import com.liferay.frontend.view.state.active.FrontendViewStateActiveSettingsFactory;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
@@ -26,6 +28,16 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = {})
 public class ServicesProvider {
+
+	public static ClayDataSetDisplayViewSerializer
+		getClayDataSetDisplayViewSerializer() {
+
+		return _clayDataSetDisplayViewSerializer;
+	}
+
+	public static ClayDataSetFilterSerializer getClayDataSetFilterSerializer() {
+		return _clayDataSetFilterSerializer;
+	}
 
 	public static FrontendViewStateActiveSettingsFactory
 		getFrontendViewStateActiveSettingsFactory() {
@@ -60,6 +72,23 @@ public class ServicesProvider {
 		_reactRenderer = reactRenderer;
 	}
 
+	@Reference(unbind = "-")
+	protected void setClayDataSetDisplayViewSerializer(
+		ClayDataSetDisplayViewSerializer clayDataSetDisplayViewSerializer) {
+
+		_clayDataSetDisplayViewSerializer = clayDataSetDisplayViewSerializer;
+	}
+
+	@Reference(unbind = "-")
+	protected void setClayDataSetFilterSerializer(
+		ClayDataSetFilterSerializer clayDataSetFilterSerializer) {
+
+		_clayDataSetFilterSerializer = clayDataSetFilterSerializer;
+	}
+
+	private static ClayDataSetDisplayViewSerializer
+		_clayDataSetDisplayViewSerializer;
+	private static ClayDataSetFilterSerializer _clayDataSetFilterSerializer;
 	private static FrontendViewStateActiveSettingsFactory
 		_frontendViewStateActiveSettingsFactory;
 	private static JSModuleResolver _jsModuleResolver;

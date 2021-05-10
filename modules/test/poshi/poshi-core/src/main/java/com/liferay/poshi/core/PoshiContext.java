@@ -56,7 +56,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
@@ -655,6 +654,20 @@ public class PoshiContext {
 		return new Exception(sb.toString());
 	}
 
+	private static String _getIgnoreAttributeValue(
+		Element rootElement, Element commandElement) {
+
+		if (commandElement.attributeValue("ignore") != null) {
+			return commandElement.attributeValue("ignore");
+		}
+
+		if (rootElement.attributeValue("ignore") != null) {
+			return rootElement.attributeValue("ignore");
+		}
+
+		return "true";
+	}
+
 	private static List<URL> _getPoshiURLs(
 			FileSystem fileSystem, String[] includes, String baseDirName)
 		throws IOException {
@@ -719,7 +732,10 @@ public class PoshiContext {
 							rootElement, extendsCommandElement,
 							extendsCommandName)) {
 
-						properties.setProperty("ignored", "true");
+						properties.setProperty(
+							"ignored",
+							_getIgnoreAttributeValue(
+								rootElement, extendsCommandElement));
 					}
 
 					String namespacedClassCommandName = StringUtil.combine(
@@ -749,7 +765,9 @@ public class PoshiContext {
 						_namespacedClassCommandNamePropertiesMap.get(
 							namespacedClassCommandName);
 
-					properties.setProperty("ignored", "true");
+					properties.setProperty(
+						"ignored",
+						_getIgnoreAttributeValue(rootElement, commandElement));
 
 					_namespacedClassCommandNamePropertiesMap.put(
 						namespacedClassCommandName, properties);
@@ -771,12 +789,8 @@ public class PoshiContext {
 	private static boolean _isIgnorableCommandNames(
 		Element rootElement, Element commandElement, String commandName) {
 
-		if (Objects.equals(commandElement.attributeValue("ignore"), "true")) {
+		if (commandElement.attributeValue("ignore") != null) {
 			return true;
-		}
-
-		if (Objects.equals(commandElement.attributeValue("ignore"), "false")) {
-			return false;
 		}
 
 		List<String> ignorableCommandNames = new ArrayList<>();
@@ -793,7 +807,7 @@ public class PoshiContext {
 			return true;
 		}
 
-		if (Objects.equals(rootElement.attributeValue("ignore"), "true")) {
+		if (rootElement.attributeValue("ignore") != null) {
 			return true;
 		}
 

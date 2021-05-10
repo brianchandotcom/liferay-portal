@@ -31,6 +31,14 @@ public class CompanyIterationCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		String absolutePath = getAbsolutePath();
+
+		if (absolutePath.contains("/upgrade/") ||
+			absolutePath.contains("/verify/")) {
+
+			return;
+		}
+
 		DetailAST forEachClauseDetailAST = detailAST.findFirstToken(
 			TokenTypes.FOR_EACH_CLAUSE);
 

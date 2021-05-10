@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110247. The user can create a display page template for Category and mark it as default."
+	@description = "This is a test for LPS-110247 and LPS-112578. The user can create a display page template for Category and mark it as default. The new non-subcategory will be associated to the Default."
 	@priority = "5"
 	test AddDisplayPageTemplateAndMarkItAsDefault {
 		task ("Navigate to Display Page Template admin") {
@@ -62,6 +62,35 @@ definition {
 
 		task ("Mark the display page template as default") {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category in vocabulary") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addCP(
+				categoryName = "Category Name",
+				displayPageName = "Display Page Name",
+				displayPageTemplateType = "Default",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the mapped content in display page template") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View Display Page",
+				rowEntry = "Category Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Category Name");
 		}
 	}
 

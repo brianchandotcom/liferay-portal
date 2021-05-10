@@ -943,7 +943,9 @@ public class ResourceOpenAPIParser {
 				return void.class.getName();
 			}
 
-			if (path.endsWith("permissions")) {
+			if ((operation instanceof Get || operation instanceof Put) &&
+				path.endsWith("/permissions")) {
+
 				return _getPageClassName(
 					"[L" + Permission.class.getName() + ";");
 			}

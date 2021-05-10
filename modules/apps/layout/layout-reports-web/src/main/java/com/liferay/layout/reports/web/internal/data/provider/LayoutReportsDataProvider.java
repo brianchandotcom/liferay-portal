@@ -105,7 +105,10 @@ public class LayoutReportsDataProvider {
 		PagespeedInsights pagespeedInsights = new PagespeedInsights.Builder(
 			GoogleNetHttpTransport.newTrustedTransport(),
 			JacksonFactory.getDefaultInstance(),
-			request -> request.setConnectTimeout(_TIMEOUT)
+			request -> {
+				request.setConnectTimeout(_CONNECT_TIMEOUT);
+				request.setReadTimeout(_READ_TIMEOUT);
+			}
 		).build();
 
 		PagespeedInsights.Pagespeedapi pagespeedapi =
@@ -154,7 +157,9 @@ public class LayoutReportsDataProvider {
 				).sum()));
 	}
 
-	private static final int _TIMEOUT = 30000;
+	private static final int _CONNECT_TIMEOUT = 30000;
+
+	private static final int _READ_TIMEOUT = 120000;
 
 	private final String _apiKey;
 

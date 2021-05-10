@@ -35,8 +35,6 @@ definition {
 	@description = "This is the test for LPS-107774. Can create a Collection Page based on Collections or Collection Providers in Pages Tree panel of Staging site."
 	@priority = "4"
 	test AddCollectionPageViaPageFinder {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
@@ -50,6 +48,7 @@ definition {
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name (Staging)",
+				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				site = "false",
 				title = "Dynamic Collection");

@@ -106,18 +106,17 @@ definition {
 		}
 
 		task ("Add a manual collection with All Types") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "All Types",
 				title = "Manual Collection");
+		}
 
+		task ("Select all assets as collection items") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
-			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
-		}
-
-		task ("Select all assets as collection items") {
 			for (var assetName : list "Web Content Title With Category A,Web Content Title With Both Categories") {
 				AssetListsAdmin.selectAsset(
 					assetName = "${assetName}",
@@ -429,18 +428,17 @@ definition {
 		}
 
 		task ("Add a manual collection with All Types") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "All Types",
 				title = "Manual Collection");
+		}
 
+		task ("Select all assets as collection items") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
-			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
-		}
-
-		task ("Select all assets as collection items") {
 			for (var assetName : list "Web Content Title,Web Content Title With Category") {
 				AssetListsAdmin.selectAsset(
 					assetName = "${assetName}",
@@ -756,18 +754,17 @@ definition {
 		}
 
 		task ("Add a manual collection with All Types") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "All Types",
 				title = "Manual Collection");
+		}
 
+		task ("Select all assets as collection items") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
-			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
-		}
-
-		task ("Select all assets as collection items") {
 			for (var assetName : list "Web Content Title,Web Content Title With Category") {
 				AssetListsAdmin.selectAsset(
 					assetName = "${assetName}",
@@ -999,18 +996,17 @@ definition {
 		}
 
 		task ("Add a manual collection with All Types") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "All Types",
 				title = "Manual Collection");
+		}
 
+		task ("Select all assets as collection items") {
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection");
 
-			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
-		}
-
-		task ("Select all assets as collection items") {
 			for (var assetName : list "Web Content Title With Category,Web Content Title With Subcategory") {
 				AssetListsAdmin.selectAsset(
 					assetName = "${assetName}",

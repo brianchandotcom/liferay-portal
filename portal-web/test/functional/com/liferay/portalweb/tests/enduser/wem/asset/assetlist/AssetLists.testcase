@@ -85,7 +85,6 @@ definition {
 	@description = "Assert that the UI works correctly for deleting Asset Lists."
 	@priority = "5"
 	test DeleteAssetList {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Create a manual asset list") {
@@ -95,9 +94,8 @@ definition {
 		}
 
 		task ("Create a dynamic asset list") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+			JSONAssetlist.addDynamicAssetListEntry(
 				groupName = "Test Site Name",
-				itemType = "All Types",
 				title = "Dynamic Asset List Test");
 		}
 
@@ -151,8 +149,10 @@ definition {
 		}
 
 		task ("Create a manual asset list") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
 				title = "Manual Asset List Test");
 		}
 
@@ -162,9 +162,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Asset List Test",
 				assetName = "WC WebContent Title",
-				assetType = "Basic Web Content",
-				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article");
+				assetType = "Basic Web Content");
 		}
 
 		task ("Assert the selected web content article is viewable from the View Content action for the asset list") {
@@ -220,8 +218,6 @@ definition {
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on grouped keywords displayed correctly in Asset Publisher."
 	@priority = "4"
 	test ViewWCViaAPWithAssetListBasedOnGroupedKeywords {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		task ("Create public page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -486,7 +482,6 @@ definition {
 	@description = "This is for LPS-101228. Validate if web content articles matching with content sets based on keywords displayed correctly in Asset Publisher."
 	@priority = "5"
 	test ViewWebContentViaAssetPublisherWithAssetListBasedOnKeywords {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Create public page") {

@@ -318,8 +318,6 @@ definition {
 	@description = "This is a test for LPS-111946. Undo can bring deleted Collection Display with collection items back."
 	@priority = "3"
 	test UndoDeletedFragmentWithCollection {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content ${i}",
@@ -329,6 +327,7 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Web Content",
 			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
 

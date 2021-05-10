@@ -27,7 +27,6 @@ definition {
 	@description = "This is use case for LPS-107776. Can add collection items in a collection page based on dynamic collection with all types."
 	@priority = "5"
 	test AddCollectionItemsInCollectionPageBasedOnDynamicCollection {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Add a dynamic collection with All Types") {
@@ -255,19 +254,11 @@ definition {
 	@priority = "4"
 	test AddSingleTypeCollectionItemsInCollectionPageBasedOnManualCollectionWithSingleItemType {
 		task ("Add a manual collection with Web Content Article item type") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
-				title = "Manual Collection");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			Click(
-				key_title = "Manual Collection",
-				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
-
-			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
+				itemType = "Web Content Article",
+				title = "Manual Collection");
 		}
 
 		task ("Add a collection page based on maual collection") {
@@ -386,8 +377,10 @@ definition {
 			PortletEntry.publish();
 		}
 
-		JSONAssetlist.addManualAssetListEntry(
+		JSONAssetlist.addManualAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Web Content",
+			itemType = "Web Content Article",
 			title = "Manual Collection");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -395,9 +388,7 @@ definition {
 		AssetListsAdmin.selectAsset(
 			assetListName = "Manual Collection",
 			assetType = "Basic Web Content",
-			entryList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3",
-			itemSubtype = "Basic Web Content",
-			itemType = "Web Content Article");
+			entryList = "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -1137,7 +1128,6 @@ definition {
 	@description = "This is a test for LPS-110183. Can view information about collection items of collection page."
 	@priority = "5"
 	test ViewCollectionItemViaPageFinderAndPageAdmin {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(

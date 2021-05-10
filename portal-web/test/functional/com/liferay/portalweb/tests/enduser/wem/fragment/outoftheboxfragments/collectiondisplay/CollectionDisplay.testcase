@@ -32,8 +32,6 @@ definition {
 	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are compatible and consistent in the same cell of Collection Display."
 	@priority = "4"
 	test AddAllThreeContentFragmentsToOneCell {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		for (var i : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content ${i}",
@@ -43,6 +41,7 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Web Content",
 			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
 
@@ -153,7 +152,6 @@ definition {
 	@description = "This is a use case for LPS-86141. The fragment should be added to all cells of the Collection Display when add it to one cell."
 	@priority = "5"
 	test AddFragmentToOneCell {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {
@@ -168,6 +166,7 @@ definition {
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
 		}
@@ -210,8 +209,6 @@ definition {
 	@description = "This is a use case for LPS-86141. The mapped content of asset entries in selected collection should be respectively shown in each cell of the Collection Display when map content to editable field of one fragment in one cell."
 	@priority = "4"
 	test MapContentToTextFragment {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
@@ -224,6 +221,7 @@ definition {
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
 		}
@@ -341,22 +339,18 @@ definition {
 		}
 
 		task ("Add a dynamic collection with Web Content Article and new web content structure") {
-			JSONAssetlist.addDynamicAssetListEntry(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
-				title = "Dynamic Collection");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "WC Structure Name",
-				itemType = "Web Content Article");
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
 		}
 
 		task ("Add a manual collection with new document entry") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "DM Document Type Name",
+				itemType = "Document",
 				title = "Manual Collection");
 
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -364,9 +358,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "DM Document Title",
-				assetType = "DM Document Type Name",
-				itemSubtype = "DM Document Type Name",
-				itemType = "Document");
+				assetType = "DM Document Type Name");
 		}
 
 		task ("Map custom ddmfield of web content structure to Heading fragment in Collection Display based on the dynamic collection") {
@@ -491,8 +483,10 @@ definition {
 		}
 
 		task ("Add a manual collecton with Web Content Article item type and WC Structure Name item subtype") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article",
 				title = "Manual Collection");
 
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -500,9 +494,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "Web Content Title",
-				assetType = "WC Structure Name",
-				itemSubtype = "WC Structure Name",
-				itemType = "Web Content Article");
+				assetType = "WC Structure Name");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -671,8 +663,6 @@ definition {
 	@description = "This is a use case for LPS-86141. The changes will be propagated to others cells when edit inline content of fragment in one cell."
 	@priority = "4"
 	test PropagateChangesOfInlineContentToOtherCells {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		task ("Add three documents") {
 			for (var entryTitle : list "First Document,Second Document,Third Document") {
 				JSONDocument.addFile(
@@ -685,6 +675,7 @@ definition {
 		task ("Add a dynamic Collections and select Document as Asset Entry Type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "Basic Document",
 				itemType = "Document",
 				title = "Dynamic Collection");
 		}
@@ -1298,8 +1289,6 @@ definition {
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."
 	@priority = "4"
 	test ViewBlogEntryInContentDisplay {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		for (var i : list "1,2,3") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content ${i}",
@@ -1375,8 +1364,6 @@ definition {
 	@description = "This is a test for LPS-112093. The documents of collection are displayed using Abstract when add a Content Display to Collection Display."
 	@priority = "4"
 	test ViewDocumentInContentDisplay {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		for (var i : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
@@ -1388,6 +1375,7 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Document",
 			itemType = "Document",
 			title = "Dynamic Asset List Test");
 
@@ -1476,15 +1464,10 @@ definition {
 		}
 
 		task ("Add a dynamic Collection and select Any as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntry(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "All Types",
 				title = "Dynamic Collection");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -1588,7 +1571,6 @@ definition {
 	@description = "This is a test for LPS-112249. The flags of each collection item are shown when add a Content Flags fragment to Collection Display."
 	@priority = "5"
 	test ViewFlagsInContentFlags {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
@@ -1600,6 +1582,7 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Web Content",
 			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
 
@@ -2276,8 +2259,6 @@ definition {
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with multiple itemTypes, the Item Type label will be shown in mapping label."
 	@priority = "4"
 	test ViewItemTypeLabelMappedInCollectionWithMultipleItemTypes {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",
@@ -2299,8 +2280,9 @@ definition {
 			itemType = "All Types",
 			title = "Dynamic Collection");
 
-		JSONAssetlist.addManualAssetListEntry(
+		JSONAssetlist.addManualAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemType = "All Types",
 			title = "Manual Collection");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -2308,8 +2290,7 @@ definition {
 		AssetListsAdmin.selectAsset(
 			assetListName = "Manual Collection",
 			assetName = "Document Title",
-			assetType = "Basic Document",
-			itemType = "All Types");
+			assetType = "Basic Document");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
@@ -2393,8 +2374,6 @@ definition {
 	@description = "This is a use case for LPS-112749. When mapping asset field fragment in Collection Display based on collection with single itemType and specific subType, the Item Type and Item Subtype label will be shown in mapping panel."
 	@priority = "4"
 	test ViewItemTypeLabelMappedInCollectionWithSingleAndSpecificItemType {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",
@@ -2408,17 +2387,14 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Web Content",
 			itemType = "Web Content Article",
 			title = "Dynamic Collection");
 
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
-
-		AssetListsAdmin.configureItemTypeInDynamicCollection(itemSubtype = "Basic Web Content");
-
-		JSONAssetlist.addManualAssetListEntry(
+		JSONAssetlist.addManualAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Document",
+			itemType = "Document",
 			title = "Manual Collection");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -2426,9 +2402,7 @@ definition {
 		AssetListsAdmin.selectAsset(
 			assetListName = "Manual Collection",
 			assetName = "Document Title",
-			assetType = "Basic Document",
-			itemSubtype = "Basic Document",
-			itemType = "Document");
+			assetType = "Basic Document");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -2489,8 +2463,6 @@ definition {
 	@description = "This is a use case for LPS-112749. When mapping asset field to fragment in Collection Display based on collection with single itemType, the Item Type label will be shown in mapping panel."
 	@priority = "4"
 	test ViewItemTypeLabelMappedInCollectionWithSingleItemType {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",
@@ -2509,6 +2481,7 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Web Content",
 			itemType = "Web Content Article",
 			title = "First Dynamic Collection");
 
@@ -2517,19 +2490,11 @@ definition {
 			itemType = "Blogs Entry",
 			title = "Second Dynamic Collection");
 
-		JSONAssetlist.addManualAssetListEntry(
+		JSONAssetlist.addManualAssetListEntryWithItemType(
 			groupName = "Test Site Name",
-			title = "Manual Collection");
-
-		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-		Click(
-			key_title = "Manual Collection",
-			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
-
-		AssetListsAdmin.configureItemTypeInManualCollection(
 			itemSubtype = "All Subtypes",
-			itemType = "Document");
+			itemType = "Document",
+			title = "Manual Collection");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
@@ -2628,8 +2593,9 @@ definition {
 		}
 
 		task ("Add a manual Collection and select the Web Content Article,Blogs Entry and document") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "All Types",
 				title = "Manual Collection");
 
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -2637,8 +2603,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "Web Content Title",
-				assetType = "Basic Web Content",
-				itemType = "All Types");
+				assetType = "Basic Web Content");
 
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
@@ -2688,8 +2653,6 @@ definition {
 	@description = "This is a test for LPS-118979. The mappable fields are grouped by fieldset in Collection Display based on single type collection."
 	@priority = "4"
 	test ViewMappableFieldsAreGroupedByFieldsetBasedOnSingleTypeCollection {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		task ("Add a web content article based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -2726,13 +2689,11 @@ definition {
 		}
 
 		task ("Add a dynamic collection based on Web Content Article and Basic Web Content") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection 1");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article");
+				itemType = "Web Content Article",
+				title = "Dynamic Collection 1");
 		}
 
 		task ("Add a dynamic collection based on Blogs Entry") {
@@ -2743,8 +2704,10 @@ definition {
 		}
 
 		task ("Add a manual collection based on Document and new document type and Select the document") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "DM Document Type Name",
+				itemType = "Document",
 				title = "Manual Collection");
 
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -2752,9 +2715,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetName = "DM Document Title",
-				assetType = "DM Document Type Name",
-				itemSubtype = "DM Document Type Name",
-				itemType = "Document");
+				assetType = "DM Document Type Name");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -3190,7 +3151,6 @@ definition {
 	@description = "This is a test for LPS-112249. The ratings of each collection item are shown when add a Content Ratings fragment to Collection Display."
 	@priority = "5"
 	test ViewRatingsInContentRatings {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
@@ -3202,6 +3162,7 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Web Content",
 			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
 
@@ -3610,7 +3571,6 @@ definition {
 	@priority = "5"
 	test ViewTitleListItemStyleInDifferentListStyles {
 		property environment.acceptance = "true";
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Add a Web Content Article,a Blogs Entry and a document") {
@@ -3855,7 +3815,6 @@ definition {
 	@description = "This is a use case for LPS-86141. The title of asset entries in selected collection should be shown as a list in the Collection Display."
 	@priority = "5"
 	test ViewTitleOfCollectionItems {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		task ("Add three Web Content Articles based on Basic Web Content") {
@@ -3879,13 +3838,15 @@ definition {
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
 		}
 
 		task ("Add a manual Collections and select three Blogs entries") {
-			JSONAssetlist.addManualAssetListEntry(
+			JSONAssetlist.addManualAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemType = "Blogs Entry",
 				title = "Manual Collection");
 
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
@@ -3893,8 +3854,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Manual Collection",
 				assetType = "Blogs Entry",
-				entryList = "First Blogs Entry,Second Blogs Entry,Third Blogs Entry",
-				itemType = "Blogs Entry");
+				entryList = "First Blogs Entry,Second Blogs Entry,Third Blogs Entry");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -3953,7 +3913,6 @@ definition {
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
 	@priority = "5"
 	test ViewWebContentInContentDisplay {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		for (var i : list "1,2,3") {
@@ -3965,6 +3924,7 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "Basic Web Content",
 			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
 
@@ -4031,7 +3991,6 @@ definition {
 	@description = "This is a test for LPS-112093. Can display Web Content Articles of collection using custom template when add a Content Display to Collection Display."
 	@priority = "5"
 	test ViewWebContentWithCustomTemplateInContentDisplay {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
 		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -4075,6 +4034,7 @@ definition {
 
 		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Site Name",
+			itemSubtype = "WC Structure Name",
 			itemType = "Web Content Article",
 			title = "Dynamic Asset List Test");
 

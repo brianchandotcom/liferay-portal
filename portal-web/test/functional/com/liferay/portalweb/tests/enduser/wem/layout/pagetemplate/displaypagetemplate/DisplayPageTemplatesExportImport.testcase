@@ -139,8 +139,6 @@ definition {
 	@description = "This is a use case for LPS-86193. The Collection Display with mapping content should be exported and imported with display page template."
 	@priority = "4"
 	test ExportImportDisplayPageTemplateWithCollectionDisplayContainingMappingContent {
-		property osgi.app.includes = "bookmarks,document-library-google-docs";
-
 		task ("Add three Web Content Articles based on Basic Web Content") {
 			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
 				JSONWebcontent.addWebContent(
@@ -153,6 +151,7 @@ definition {
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
 		}

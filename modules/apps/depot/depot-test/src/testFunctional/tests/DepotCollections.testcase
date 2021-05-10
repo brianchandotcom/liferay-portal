@@ -58,18 +58,11 @@ definition {
 				dmDocumentTypeName = "DM Document Type Name 2");
 		}
 
-		JSONAssetlist.addManualAssetListEntry(
+		JSONAssetlist.addManualAssetListEntryWithItemType(
 			groupName = "Test Depot Name",
+			itemType = "All Types",
 			site = "false",
 			title = "Depot Manual Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetTypeList(
-			assetListName = "Depot Manual Asset List",
-			assetType = "Web Content Folder,Basic Document,Basic Web Content,Documents Folder,DM Document Type Name 1,DM Document Type Name 2",
-			itemType = "All Types",
-			manualSelection = "true");
 
 		for (var i : list "1,2") {
 			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
@@ -448,7 +441,7 @@ definition {
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.viewAssetTypeList(
-			allAssetsDisabled = "ture",
+			allAssetsDisabled = "true",
 			assetListName = "Depot Manual Asset List",
 			manualSelection = "true");
 
@@ -852,8 +845,10 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		JSONAssetlist.addManualAssetListEntry(
+		JSONAssetlist.addManualAssetListEntryWithItemType(
 			groupName = "Test Depot Name",
+			itemSubtype = "Basic Web Content",
+			itemType = "Web Content Article",
 			site = "false",
 			title = "Depot Manual Asset List");
 
@@ -869,9 +864,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Depot Manual Asset List",
 				assetName = "WC WebContent Title ${i}",
-				assetType = "Basic Web Content",
-				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article");
+				assetType = "Basic Web Content");
 		}
 
 		AssetListsAdmin.deleteManualSelectionAssets(assetsList = "WC WebContent Title 2");
@@ -912,19 +905,11 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntry(
+		JSONAssetlist.addDynamicAssetListEntryWithItemType(
 			groupName = "Test Depot Name",
+			itemType = "All Types",
 			site = "false",
 			title = "Depot Dynamic Asset List");
-
-		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
-
-		AssetListsAdmin.viewAssetTypeList(
-			assetListName = "Depot Dynamic Asset List",
-			assetType = "Web Content Folder,Web Content Article,Document,Documents Folder",
-			dynamicSelection = "true");
-
-		AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 
 		for (var i : list "1,2,3") {
 			DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
@@ -1052,8 +1037,10 @@ definition {
 				sourceFileName = "${documentName}");
 		}
 
-		JSONAssetlist.addManualAssetListEntry(
+		JSONAssetlist.addManualAssetListEntryWithItemType(
 			groupName = "Test Depot Name",
+			itemSubtype = "Basic Document",
+			itemType = "Document",
 			site = "false",
 			title = "Depot Manual Asset List");
 
@@ -1069,9 +1056,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Depot Manual Asset List",
 				assetName = "${documentName}",
-				assetType = "Basic Document",
-				itemSubtype = "Basic Document",
-				itemType = "Document");
+				assetType = "Basic Document");
 		}
 
 		for (var documentName : list "Document_1.doc,Document_2.jpg,Document_3.txt") {
@@ -1096,8 +1081,10 @@ definition {
 				title = "WC WebContent Title ${i}");
 		}
 
-		JSONAssetlist.addManualAssetListEntry(
+		JSONAssetlist.addManualAssetListEntryWithItemType(
 			groupName = "Test Depot Name",
+			itemSubtype = "Basic Web Content",
+			itemType = "Web Content Article",
 			site = "false",
 			title = "Depot Manual Asset List");
 
@@ -1113,9 +1100,7 @@ definition {
 			AssetListsAdmin.selectAsset(
 				assetListName = "Depot Manual Asset List",
 				assetName = "WC WebContent Title ${i}",
-				assetType = "Basic Web Content",
-				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article");
+				assetType = "Basic Web Content");
 		}
 
 		for (var i : list "1,2,3") {

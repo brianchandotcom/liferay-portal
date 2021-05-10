@@ -120,6 +120,58 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddFileEntryWithExpirationDateReviewDateUpdateDeletingThem()
+		throws Exception {
+
+		String content = StringUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Date expirationDate = new Date();
+		Date reviewDate = new Date();
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
+			StringPool.BLANK, -1, new HashMap<>(), null,
+			new ByteArrayInputStream(content.getBytes()), 0, expirationDate,
+			reviewDate, serviceContext);
+
+		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		Assert.assertEquals(expirationDate, dlFileVersion.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileVersion.getReviewDate());
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
+			dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
+			dlFileEntry.getFileName(), dlFileEntry.getMimeType(),
+			dlFileEntry.getTitle(), dlFileEntry.getTitle(), StringPool.BLANK,
+			DLVersionNumberIncrease.fromMajorVersion(false),
+			dlFileEntry.getFileEntryTypeId(), new HashMap<>(), null,
+			new ByteArrayInputStream(content.getBytes()), 0, null, null,
+			serviceContext);
+
+		dlFileVersion = dlFileEntry.getFileVersion();
+
+		Assert.assertNull(dlFileVersion.getExpirationDate());
+		Assert.assertNull(dlFileVersion.getReviewDate());
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
+
+		Assert.assertNull(dlFileEntry.getExpirationDate());
+		Assert.assertNull(dlFileEntry.getReviewDate());
+	}
+
+	@Test
 	public void testAddFileEntryWithExternalReferenceCode() throws Exception {
 		String externalReferenceCode = StringUtil.randomString();
 
@@ -751,6 +803,56 @@ public class DLFileEntryLocalServiceTest {
 		finally {
 			GroupLocalServiceUtil.deleteGroup(destinationGroup);
 		}
+	}
+
+	@Test
+	public void testUpdateExpirationDateReviewDate() throws Exception {
+		String content = StringUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"file.txt", ContentTypes.TEXT_PLAIN, "file.txt", StringPool.BLANK,
+			StringPool.BLANK, -1, new HashMap<>(), null,
+			new ByteArrayInputStream(content.getBytes()), 0, null, null,
+			serviceContext);
+
+		Assert.assertNull(dlFileEntry.getExpirationDate());
+		Assert.assertNull(dlFileEntry.getReviewDate());
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		Assert.assertNull(dlFileVersion.getExpirationDate());
+		Assert.assertNull(dlFileVersion.getReviewDate());
+
+		Date expirationDate = new Date();
+		Date reviewDate = new Date();
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
+			dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
+			dlFileEntry.getFileName(), dlFileEntry.getMimeType(),
+			dlFileEntry.getTitle(), dlFileEntry.getTitle(), StringPool.BLANK,
+			DLVersionNumberIncrease.fromMajorVersion(false),
+			dlFileEntry.getFileEntryTypeId(), new HashMap<>(), null,
+			new ByteArrayInputStream(content.getBytes()), 0, expirationDate,
+			reviewDate, serviceContext);
+
+		dlFileVersion = dlFileEntry.getFileVersion();
+
+		Assert.assertEquals(expirationDate, dlFileVersion.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileVersion.getReviewDate());
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
+
+		Assert.assertEquals(expirationDate, dlFileEntry.getExpirationDate());
+		Assert.assertEquals(reviewDate, dlFileEntry.getReviewDate());
 	}
 
 	@Test(expected = DuplicateFolderNameException.class)

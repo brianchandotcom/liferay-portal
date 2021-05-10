@@ -30,11 +30,12 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier de Arcos
@@ -43,8 +44,8 @@ import java.util.Map;
 public class ObjectEntryManager {
 
 	public ObjectEntry addObjectEntry(
-			long userId, long siteId, long objectDefinitionId, ObjectEntry objectEntry,
-			DTOConverterContext dtoConverterContext)
+			long userId, long siteId, long objectDefinitionId,
+			ObjectEntry objectEntry, DTOConverterContext dtoConverterContext)
 		throws Exception {
 
 		return _toObjectEntry(
@@ -58,17 +59,10 @@ public class ObjectEntryManager {
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId);
 	}
 
-	public ObjectEntry getObjectEntry(
-			long objectEntryId, DTOConverterContext dtoConverterContext)
-		throws Exception {
-
-		return _toObjectEntry(
-			dtoConverterContext,
-			_objectEntryLocalService.getObjectEntry(objectEntryId));
-	}
-
 	public Page<ObjectEntry> getObjectEntries(
-		long companyId, long objectDefinitionId, Aggregation aggregation, Filter filter, Pagination pagination, String search, Sort[] sorts, DTOConverterContext dtoConverterContext)
+			long companyId, long objectDefinitionId, Aggregation aggregation,
+			Filter filter, Pagination pagination, String search, Sort[] sorts,
+			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -93,8 +87,17 @@ public class ObjectEntryManager {
 			},
 			sorts,
 			document -> getObjectEntry(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
-					dtoConverterContext));
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)),
+				dtoConverterContext));
+	}
+
+	public ObjectEntry getObjectEntry(
+			long objectEntryId, DTOConverterContext dtoConverterContext)
+		throws Exception {
+
+		return _toObjectEntry(
+			dtoConverterContext,
+			_objectEntryLocalService.getObjectEntry(objectEntryId));
 	}
 
 	public ObjectEntry updateObjectEntry(
@@ -105,8 +108,8 @@ public class ObjectEntryManager {
 		return _toObjectEntry(
 			dtoConverterContext,
 			_objectEntryLocalService.updateObjectEntry(
-				userId, objectEntryId,
-				(Map)objectEntry.getProperties(), new ServiceContext()));
+				userId, objectEntryId, (Map)objectEntry.getProperties(),
+				new ServiceContext()));
 	}
 
 	private ObjectEntry _toObjectEntry(
@@ -121,4 +124,5 @@ public class ObjectEntryManager {
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
 }

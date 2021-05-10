@@ -79,6 +79,7 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
+import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -1805,6 +1806,18 @@ public class JenkinsResultsParserUtil {
 		return retryable.executeWithRetries();
 	}
 
+	public static List<String> getJenkinsNodes() {
+		Map<String, List<String>> jenkinsNodeMap = getJenkinsNodeMap();
+
+		Set<String> jenkinsNodes = new TreeSet<>(jenkinsNodeMap.keySet());
+
+		for (List<String> jenkinsSlaves : jenkinsNodeMap.values()) {
+			jenkinsNodes.addAll(jenkinsSlaves);
+		}
+
+		return new ArrayList<>(jenkinsNodes);
+	}
+
 	public static Properties getJenkinsProperties() throws IOException {
 		Properties properties = new Properties();
 
@@ -2532,15 +2545,29 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static boolean isCINode() {
-		String hostName = getHostName("");
-
-		if (hostName.startsWith("cloud-10-0-") ||
-			hostName.startsWith("test-")) {
-
-			return true;
+		if (_ciNode != null) {
+			return _ciNode;
 		}
 
-		return false;
+		String hostName = getHostName("");
+
+		List<String> jenkinsNodes = getJenkinsNodes();
+
+		String hostNameSuffix = ".lax.liferay.com";
+
+		if (hostName.endsWith(hostNameSuffix)) {
+			hostName = hostName.substring(
+				0, hostName.length() - hostNameSuffix.length());
+		}
+
+		if (jenkinsNodes.contains(hostName)) {
+			_ciNode = true;
+		}
+		else {
+			_ciNode = false;
+		}
+
+		return _ciNode;
 	}
 
 	public static boolean isFileExcluded(
@@ -2984,7 +3011,7 @@ public class JenkinsResultsParserUtil {
 			HTTPAuthorization httpAuthorizationHeader)
 		throws IOException {
 
-		if (!isCINode() && url.startsWith("file:") &&
+		if (url.startsWith("file:") &&
 			url.contains("liferay-jenkins-results-parser-samples-ee")) {
 
 			File file = new File(url.replace("file:", ""));
@@ -4535,6 +4562,7 @@ public class JenkinsResultsParserUtil {
 	private static final Hashtable<Object, Object> _buildProperties =
 		new Hashtable<>();
 	private static String[] _buildPropertiesURLs;
+	private static Boolean _ciNode;
 	private static final Pattern _curlyBraceExpansionPattern = Pattern.compile(
 		"\\{.*?\\}");
 	private static Long _currentTimeMillisDelta;

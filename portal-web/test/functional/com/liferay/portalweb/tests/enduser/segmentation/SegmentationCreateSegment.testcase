@@ -1021,12 +1021,40 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130291."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserEmailAddress {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130291 AddSegmentByUserEmailAddress pending implementation. This test is already created as AddSegmentUserEmailAddressContains, but if you are able to do it better, delete the test AddSegmentUserEmailAddressContains.
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserEmailAddress Test");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(propertyField = "liferay");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserEmailAddress Test");
+
+		Segmentation.viewSegment(propertyField = "liferay");
 	}
 
 	@description = "This is a test for LPS-130286."

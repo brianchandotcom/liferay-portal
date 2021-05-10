@@ -136,7 +136,7 @@ const ItemSelectorPreview = ({
 				title: file.title,
 				url: file.url,
 				uuid: file.uuid,
-				value: file.resolvedValue
+				value: file.resolvedValue,
 			};
 
 			if (!newItem.value) {
@@ -164,15 +164,18 @@ const ItemSelectorPreview = ({
 		setReloadOnHide(true);
 	};
 
-	const updateCurrentItem = (itemData) => {
-		if (isMounted()) {
-			const newItemList = [...itemList];
+	const updateCurrentItem = useCallback(
+		(itemData) => {
+			if (isMounted()) {
+				const newItemList = [...itemList];
 
-			newItemList[currentItemIndex] = {...currentItem, ...itemData};
+				newItemList[currentItemIndex] = {...currentItem, ...itemData};
 
-			updateItemList(newItemList);
-		}
-	};
+				updateItemList(newItemList);
+			}
+		},
+		[currentItem, currentItemIndex, isMounted, itemList]
+	);
 
 	useEffect(() => {
 		document.documentElement.addEventListener('keydown', handleOnKeyDown);

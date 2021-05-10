@@ -189,51 +189,50 @@ AUI.add(
 						}
 					);
 
-					var itemSelectorDialog = new A.LiferayItemSelectorDialog({
-						eventName: instance.get('eventName'),
-						on: {
-							selectedItemChange(event) {
-								var data = event.newVal;
+					const openerWindow = Liferay.Util.getOpener();
 
-								if (data) {
-									for (var key in data) {
-										var found = false;
+					openerWindow.Liferay.Util.openSelectionModal({
+						buttonAddLabel: Liferay.Language.get('add'),
+						multiple: true,
+						onSelect: (selectedItems) => {
+							if (selectedItems) {
+								for (const key in selectedItems) {
+									let found = false;
 
-										instance.entries.each((item) => {
-											if (key === item.value) {
-												found = true;
-											}
-
-											if (
-												key === item.value &&
-												data[key].unchecked
-											) {
-												instance.entries.remove(item);
-											}
-										});
-
-										data[key][0] = key;
-
-										if (!found && !data[key].unchecked) {
-											instance.entries.add(data[key]);
+									instance.entries.each((item) => {
+										if (key === item.value) {
+											found = true;
 										}
+
+										if (
+											key === item.value &&
+											selectedItems[key].unchecked
+										) {
+											instance.entries.remove(item);
+										}
+									});
+
+									selectedItems[key][0] = key;
+
+									if (
+										!found &&
+										!selectedItems[key].unchecked
+									) {
+										instance.entries.add(
+											selectedItems[key]
+										);
 									}
 								}
+							}
 
-								instance.set(
-									'categoryIds',
-									instance.entries.keys
-								);
+							instance.set('categoryIds', instance.entries.keys);
 
-								instance._updateInputHidden();
-							},
+							instance._updateInputHidden();
 						},
-						'strings.add': Liferay.Language.get('add'),
+						selectEventName: instance.get('eventName'),
 						title: Liferay.Language.get('select-categories'),
 						url: uri,
 					});
-
-					itemSelectorDialog.open();
 				},
 
 				_updateInputHidden() {

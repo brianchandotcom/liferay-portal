@@ -35,7 +35,6 @@
 							'aui-template-deprecated',
 							'aui-textboxlist-deprecated',
 							'datasource-cache',
-							'liferay-item-selector-dialog',
 							'liferay-service-datasource',
 						],
 					},

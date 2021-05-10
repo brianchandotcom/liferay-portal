@@ -123,7 +123,7 @@ public class SLAResultUtil {
 		Supplier<Long> slaDefinitionIdSupplier,
 		Supplier<SLAResult.Status> slaResultStatusSupplier) {
 
-		String slaResultId = slaDefinitionIdSupplier.get();
+		Long slaResultId = slaDefinitionIdSupplier.get();
 
 		return new SLAResult() {
 			{

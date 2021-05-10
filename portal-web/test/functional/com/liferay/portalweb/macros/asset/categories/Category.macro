@@ -79,14 +79,16 @@ definition {
 		if (isSet(displayPageTemplateType)) {
 			Panel.expandPanel(panel = "Display Page");
 
-			Select(
-				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
-				value1 = "${displayPageTemplateType}");
+			if ("${displayPageTemplateType}" != "Default") {
+				Select(
+					locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
+					value1 = "${displayPageTemplateType}");
+			}
 
 			if ("${displayPageTemplateType}" != "None") {
 				if ("${displayPageTemplateType}" == "Default") {
 					AssertTextEquals(
-						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
 						value1 = "${displayPageName}");
 				}
 				if ("${displayPageTemplateType}" == "Specific") {
@@ -271,7 +273,7 @@ definition {
 			if ("${displayPageTemplateType}" != "None") {
 				if ("${displayPageTemplateType}" == "Default") {
 					AssertTextEquals(
-						locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+						locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
 						value1 = "${displayPageName}");
 				}
 				if ("${displayPageTemplateType}" == "Specific") {

@@ -102,6 +102,10 @@ public class KBArticleStagedModelDataHandlerTest
 			kbArticle.getUuid(), liveGroup);
 
 		Assert.assertEquals(
+			kbArticle.getExternalReferenceCode(),
+			importedKBArticle.getExternalReferenceCode());
+
+		Assert.assertEquals(
 			ClassNameLocalServiceUtil.getClassNameId(
 				KBFolderConstants.getClassName()),
 			importedKBArticle.getParentResourceClassNameId());

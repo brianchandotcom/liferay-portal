@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
@@ -49,10 +52,14 @@ import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.search.script.Scripts;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.NestedSort;
+import com.liferay.portal.search.sort.SortMode;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Creator;
@@ -61,6 +68,7 @@ import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Transition;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.AssigneeUtil;
 import com.liferay.portal.workflow.metrics.rest.internal.dto.v1_0.util.SLAResultUtil;
+import com.liferay.portal.workflow.metrics.rest.internal.odata.entity.v1_0.InstanceEntityModel;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.exception.NoSuchInstanceException;
 import com.liferay.portal.workflow.metrics.rest.internal.resource.helper.ResourceHelper;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
@@ -74,15 +82,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,7 +105,8 @@ import org.osgi.service.component.annotations.ServiceScope;
 	properties = "OSGI-INF/liferay/rest/v1_0/instance.properties",
 	scope = ServiceScope.PROTOTYPE, service = InstanceResource.class
 )
-public class InstanceResourceImpl extends BaseInstanceResourceImpl {
+public class InstanceResourceImpl
+	extends BaseInstanceResourceImpl implements EntityModelResource {
 
 	@Override
 	public void deleteProcessInstance(Long processId, Long instanceId)
@@ -103,6 +114,13 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		_instanceWorkflowMetricsIndexer.deleteInstance(
 			contextCompany.getCompanyId(), instanceId);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
 	}
 
 	@Override
@@ -249,7 +267,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
 			Boolean completed, Date dateEnd, Date dateStart,
-			String[] slaStatuses, String[] taskNames, Pagination pagination)
+			String[] slaStatuses, String[] taskNames, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		long instanceCount = _getInstanceCount(
@@ -265,7 +284,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				while (endPosition > 10000) {
 					startInstanceId = _getInstanceId(
 						assigneeIds, classPKs, completed, dateEnd, dateStart,
-						processId, slaStatuses, startInstanceId, taskNames);
+						processId, slaStatuses, sorts, startInstanceId,
+						taskNames);
 
 					endPosition = endPosition - 10000;
 				}
@@ -278,7 +298,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 			return Page.of(
 				_getInstances(
 					assigneeIds, classPKs, completed, dateEnd, dateStart,
-					pagination, processId, slaStatuses, startInstanceId,
+					pagination, processId, slaStatuses, sorts, startInstanceId,
 					taskNames),
 				pagination, instanceCount);
 		}
@@ -625,12 +645,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private long _getInstanceId(
 		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
-		Date dateStart, long processId, String[] slaStatuses,
+		Date dateStart, long processId, String[] slaStatuses, Sort[] sorts,
 		long startInstanceId, String[] taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.addSorts(_sorts.field("instanceId", SortOrder.ASC));
+		searchSearchRequest.addSorts(_toFieldSort(sorts));
 		searchSearchRequest.setSelectedFieldNames("instanceId");
 		searchSearchRequest.setIndexNames(
 			_instanceWorkflowMetricsIndexNameBuilder.getIndexName(
@@ -668,11 +688,12 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private Collection<Instance> _getInstances(
 		Long[] assigneeIds, Long[] classPKs, Boolean completed, Date dateEnd,
 		Date dateStart, Pagination pagination, long processId,
-		String[] slaStatuses, Long startInstanceId, String[] taskNames) {
+		String[] slaStatuses, Sort[] sorts, Long startInstanceId,
+		String[] taskNames) {
 
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
-		searchSearchRequest.addSorts(_sorts.field("instanceId", SortOrder.ASC));
+		searchSearchRequest.addSorts(_toFieldSort(sorts));
 		searchSearchRequest.setFetchSource(true);
 		searchSearchRequest.setSelectedFieldNames("");
 		searchSearchRequest.setIndexNames(
@@ -703,7 +724,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		).map(
 			this::_createInstance
 		).collect(
-			Collectors.toMap(Instance::getId, Function.identity())
+			LinkedHashMap::new,
+			(map, instance) -> map.put(instance.getId(), instance), Map::putAll
 		);
 
 		_setSLAResults(processId, instancesMap);
@@ -1096,6 +1118,37 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		};
 	}
 
+	private FieldSort _toFieldSort(Sort[] sorts) {
+		FieldSort fieldSort = _sorts.field("instanceId", SortOrder.ASC);
+
+		if (ArrayUtil.isEmpty(sorts)) {
+			return fieldSort;
+		}
+
+		Sort sort = (Sort)ArrayUtil.getValue(sorts, 0);
+
+		if (StringUtil.equals(sort.getFieldName(), "overdueDate")) {
+			fieldSort = _sorts.field(
+				"slaResults.overdueDate",
+				sort.isReverse() ? SortOrder.DESC : SortOrder.ASC);
+
+			fieldSort.setMissing("_last");
+
+			NestedSort nestedSort = _sorts.nested("slaResults");
+
+			nestedSort.setFilterQuery(
+				_queries.term(
+					"slaResults.status",
+					WorkflowMetricsSLAStatus.RUNNING.name()));
+
+			fieldSort.setNestedSort(nestedSort);
+
+			fieldSort.setSortMode(SortMode.MIN);
+		}
+
+		return fieldSort;
+	}
+
 	private Transition _toTransition(String name) {
 		Transition transition = new Transition();
 
@@ -1118,6 +1171,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InstanceResourceImpl.class);
+
+	private static final EntityModel _entityModel = new InstanceEntityModel();
 
 	@Reference
 	private Aggregations _aggregations;

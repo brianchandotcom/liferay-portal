@@ -127,8 +127,36 @@ const ItemSelectorPreview = ({
 		[close, handleClickNext, handleClickPrevious, isMounted]
 	);
 
-	const handleSaveEditedImage = () => {
-		setIsEditing(false);
+	const handleSaveEditedImage = ({file, success}) => {
+		if (success) {
+			const newItem = {
+				...currentItem,
+				fileEntryId: file.fileEntryId,
+				groupId: file.groupId,
+				title: file.title,
+				url: file.url,
+				uuid: file.uuid,
+				value: file.resolvedValue
+			};
+
+			if (!newItem.value) {
+				const imageValue = {
+					fileEntryId: newItem.fileEntryId,
+					groupId: newItem.groupId,
+					title: newItem.title,
+					type: newItem.type,
+					url: newItem.url,
+					uuid: newItem.uuid,
+				};
+
+				newItem.value = JSON.stringify(imageValue);
+			}
+
+			setIsEditing(false);
+
+			close();
+			handleSelectedItem(newItem);
+		}
 	};
 
 	const updateItemList = (newItemList) => {

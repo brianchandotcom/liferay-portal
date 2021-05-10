@@ -673,6 +673,30 @@ definition {
 			value1 = "<userfn> userln");
 	}
 
+	@description = "This is a use case for LPS-130750."
+	@priority = "2"
+	test AssertRelevanceSortOptionDisplaysWhenSearching {
+		JSONUser.addUser(
+			userEmailAddress = "userea1@liferay.com",
+			userFirstName = "userfn1",
+			userLastName = "userln1",
+			userScreenName = "usersn1");
+
+		JSONUser.addUser(
+			userEmailAddress = "testuser@liferay.com",
+			userFirstName = "testuserfn",
+			userLastName = "testuserln",
+			userScreenName = "testusersn");
+
+		User.openUsersAdmin();
+
+		ManagementBar.viewFilterAndOrderNoItem(menuItem = "Relevance");
+
+		Search.searchCP(searchTerm = "user");
+
+		ManagementBar.viewFilterAndOrderItem(menuItem = "Relevance");
+	}
+
 	@priority = "4"
 	test AssignUserGroupToUser {
 		JSONUser.addUser(

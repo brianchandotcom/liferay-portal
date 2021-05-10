@@ -20,6 +20,7 @@ definition {
 		var pageId = JSONWikiSetter.setPageId(groupName = "${groupName}", title = "${wikiParentPageName}", name = "${wikiNodeName}");
 
 		JSONWikiAPI._addWikiChildPage(
+			assetCategoryIds = "${assetCategoryIds}",
 			content = "${wikiChildPageContent}",
 			encodingFormat = "${encodingFormat}",
 			headline = "${wikiChildPageName}",
@@ -48,6 +49,7 @@ definition {
 		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}");
 
 		JSONWikiAPI._addWikiPage(
+			assetCategoryIds = "${assetCategoryIds}",
 			content = "${wikiPageContent}",
 			encodingFormat = "${encodingFormat}",
 			headline = "${wikiPageName}",

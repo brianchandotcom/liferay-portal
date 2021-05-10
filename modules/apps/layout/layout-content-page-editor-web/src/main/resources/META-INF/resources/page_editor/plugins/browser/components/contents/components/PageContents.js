@@ -15,14 +15,9 @@
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
+import {CONTENT_TYPE_LABELS} from '../../../../../app/config/constants/contentTypeLabels';
 import ContentFilter from './ContentFilter';
 import ContentList from './ContentList';
-
-export const CONTENT_TYPE_LABELS = {
-	allContent: Liferay.Language.get('all-content'),
-	collection: Liferay.Language.get('collection'),
-	inlineText: Liferay.Language.get('inline-text'),
-};
 
 export default function PageContents({pageContents}) {
 	const [searchValue, setSearchValue] = useState('');

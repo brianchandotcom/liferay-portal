@@ -15,10 +15,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {CONTENT_TYPE_LABELS} from '../../../../../app/config/constants/contentTypeLabels';
 import Collapse from '../../../../../common/components/Collapse';
 import NoPageContents from './NoPageContents';
 import PageContent from './PageContent';
-import {CONTENT_TYPE_LABELS} from './PageContents';
 
 export default function ContentList({contents, selectedType}) {
 	const filteredContentTypes = Object.keys(contents);

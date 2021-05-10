@@ -19,7 +19,8 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
-import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -191,24 +192,33 @@ public class SelectUsersDisplayContext {
 			userParams.put(
 				"usersGroups", Long.valueOf(group.getParentGroupId()));
 		}
-		else {
-			userParams.put(Field.GROUP_ID, Long.valueOf(getGroupId()));
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			if (permissionChecker.isGroupAdmin(getGroupId())) {
+				PermissionThreadLocal.setPermissionChecker(null);
+			}
+
+			int usersCount = UserLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams);
+
+			userSearch.setTotal(usersCount);
+
+			List<User> users = UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), userParams, userSearch.getStart(),
+				userSearch.getEnd(), userSearch.getOrderByComparator());
+
+			userSearch.setResults(users);
+
+			_userSearch = userSearch;
 		}
-
-		int usersCount = UserLocalServiceUtil.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams);
-
-		userSearch.setTotal(usersCount);
-
-		List<User> users = UserLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-			searchTerms.getStatus(), userParams, userSearch.getStart(),
-			userSearch.getEnd(), userSearch.getOrderByComparator());
-
-		userSearch.setResults(users);
-
-		_userSearch = userSearch;
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 
 		return _userSearch;
 	}

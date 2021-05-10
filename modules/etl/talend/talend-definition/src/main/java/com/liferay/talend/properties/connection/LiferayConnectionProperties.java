@@ -228,7 +228,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 		forceHttps.setValue(false);
 
-		loginType.setRequired();
 		loginType.setValue(LoginType.BASIC);
 
 		name.setRequired();

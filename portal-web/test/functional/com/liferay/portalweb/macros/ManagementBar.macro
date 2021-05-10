@@ -83,6 +83,14 @@ definition {
 			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
 	}
 
+	macro viewFilterAndOrderNoItem {
+		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
+
+		AssertElementNotPresent(
+			key_menuItem = "${menuItem}",
+			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
+	}
+
 	macro viewNoSubheaderInFilterAndOrder {
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 

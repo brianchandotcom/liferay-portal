@@ -33,7 +33,7 @@ export default function LayoutReportsIssuesList() {
 	return (
 		<div className="c-my-4">
 			{!hasIssues && (
-				<div className="text-center">
+				<div className="pb-5 text-center">
 					<img
 						alt={Liferay.Language.get(
 							'success-page-audit-image-alt-description'

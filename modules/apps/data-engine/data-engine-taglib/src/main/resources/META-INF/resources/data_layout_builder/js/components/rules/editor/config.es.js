@@ -34,18 +34,6 @@ export const RIGHT_OPERAND_TYPES = {
 	select: 'select',
 };
 
-export const BINARY_OPERATOR = [
-	'belongs-to',
-	'contains',
-	'equals-to',
-	'greater-than-equals',
-	'greater-than',
-	'less-than-equals',
-	'less-than',
-	'not-contains',
-	'not-equals-to',
-];
-
 export const DEFAULT_RULE = {
 	actions: [
 		{

@@ -20,11 +20,7 @@ import React, {useContext, useMemo} from 'react';
 
 import Timeline from './Timeline.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
-import {
-	BINARY_OPERATOR,
-	OPERATOR_OPTIONS_TYPES,
-	RIGHT_OPERAND_TYPES,
-} from './config.es';
+import {OPERATOR_OPTIONS_TYPES, RIGHT_OPERAND_TYPES} from './config.es';
 
 function FieldOperator({
 	left,
@@ -49,16 +45,27 @@ function FieldOperator({
 		}));
 	}, [left, operatorsByType]);
 
+	const isBinaryOperator = (operator) => {
+		const option = options?.find(({value}) => value === operator);
+
+		return option?.parameterTypes?.length === 2;
+	};
+
 	return (
 		<>
 			<Timeline.FormGroupItem>
 				<FieldStateless
-					onChange={(event) =>
+					onChange={(event) => {
+						const operator = event.value[0];
+
 						onChange({
-							payload: event.value[0],
+							payload: {
+								isBinaryOperator: isBinaryOperator(operator),
+								operator,
+							},
 							type: ACTIONS_TYPES.CHANGE_OPERATOR,
-						})
-					}
+						});
+					}}
 					options={options}
 					placeholder={Liferay.Language.get('choose-an-option')}
 					readOnly={readOnly}
@@ -67,7 +74,7 @@ function FieldOperator({
 					value={[operator]}
 				/>
 			</Timeline.FormGroupItem>
-			{BINARY_OPERATOR.includes(operator) && left.type !== 'user' && (
+			{isBinaryOperator(operator) && left.type !== 'user' && (
 				<Timeline.FormGroupItem>
 					<FieldStateless
 						onChange={(event) =>

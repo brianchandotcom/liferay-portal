@@ -25,12 +25,7 @@ import React, {useEffect, useReducer} from 'react';
 import {Actions} from './Actions.es';
 import {Conditions} from './Conditions.es';
 import {ACTIONS_TYPES} from './actionsTypes.es';
-import {
-	ACTION_TARGET_SHAPE,
-	BINARY_OPERATOR,
-	DEFAULT_RULE,
-	RIGHT_TYPES,
-} from './config.es';
+import {ACTION_TARGET_SHAPE, DEFAULT_RULE, RIGHT_TYPES} from './config.es';
 
 const CONFIG_DATA = {
 	actions: {
@@ -296,13 +291,15 @@ const reducer = (state, action) => {
 
 			const operands = [left];
 
-			if (BINARY_OPERATOR.includes(value) && newRight) {
+			const {isBinaryOperator, operator} = value;
+
+			if (isBinaryOperator && newRight) {
 				operands.push(newRight);
 			}
 
 			conditions[loc] = {
 				operands,
-				operator: value,
+				operator,
 			};
 
 			return {

@@ -414,12 +414,10 @@ definition {
 		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 
 		if (isSet(manualSelection)) {
-			if (IsElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT")) {
-				if (isSet(itemType)) {
-					Select(
-						locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-						value1 = "${itemType}");
-				}
+			if (isSet(itemType)) {
+				Select(
+					locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
+					value1 = "${itemType}");
 
 				if (isSet(itemSubtype)) {
 					Select(
@@ -433,7 +431,13 @@ definition {
 			}
 
 			if (isSet(allAssetsDisabled)) {
-				AssertElementNotPresent(locator1 = "AssetLists#ASSET_LIST_SELECT_BUTTON");
+				Click(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT");
+
+				for (var assetType : list "Document,Documents Folder,Web Content Article,Web Content Folder") {
+					AssertElementNotPresent(
+						key_assetType = "${assetType}",
+						locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_OPTION");
+				}
 			}
 			else {
 				Click(locator1 = "AssetLists#ASSET_LIST_SELECT_BUTTON");

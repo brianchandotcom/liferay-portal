@@ -132,18 +132,20 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 		KeyListObjectReference keyListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
+		Optional<Object> contextObjectOptional =
+			layoutListRetrieverContext.getContextObjectOptional();
+
+		if (!contextObjectOptional.isPresent()) {
+			return InfoPage.of(Collections.emptyList());
+		}
+
 		InfoItemRelatedListProvider<Object, Object>
 			infoItemRelatedListProvider =
 				_infoItemServiceTracker.getInfoItemService(
 					InfoItemRelatedListProvider.class,
 					keyListObjectReference.getKey());
 
-		Optional<Object> contextObjectOptional =
-			layoutListRetrieverContext.getContextObjectOptional();
-
-		if ((infoItemRelatedListProvider == null) ||
-			!contextObjectOptional.isPresent()) {
-
+		if (infoItemRelatedListProvider == null) {
 			return InfoPage.of(Collections.emptyList());
 		}
 

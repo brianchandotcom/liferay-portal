@@ -46,13 +46,15 @@ public interface InstanceResource {
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
 			Boolean completed, java.util.Date dateEnd, java.util.Date dateStart,
-			String[] slaStatuses, String[] taskNames, Pagination pagination)
+			String[] slaStatuses, String[] taskNames, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
 			Boolean completed, java.util.Date dateEnd, java.util.Date dateStart,
-			String[] slaStatuses, String[] taskNames, Pagination pagination)
+			String[] slaStatuses, String[] taskNames, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public Instance postProcessInstance(Long processId, Instance instance)
@@ -175,13 +177,13 @@ public interface InstanceResource {
 				Long processId, Long[] assigneeIds, Long[] classPKs,
 				Boolean completed, java.util.Date dateEnd,
 				java.util.Date dateStart, String[] slaStatuses,
-				String[] taskNames, Pagination pagination)
+				String[] taskNames, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProcessInstancesPageHttpResponse(
 					processId, assigneeIds, classPKs, completed, dateEnd,
-					dateStart, slaStatuses, taskNames, pagination);
+					dateStart, slaStatuses, taskNames, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -224,7 +226,7 @@ public interface InstanceResource {
 				Long processId, Long[] assigneeIds, Long[] classPKs,
 				Boolean completed, java.util.Date dateEnd,
 				java.util.Date dateStart, String[] slaStatuses,
-				String[] taskNames, Pagination pagination)
+				String[] taskNames, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -298,6 +300,10 @@ public interface InstanceResource {
 					"page", String.valueOf(pagination.getPage()));
 				httpInvoker.parameter(
 					"pageSize", String.valueOf(pagination.getPageSize()));
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
 			}
 
 			httpInvoker.path(

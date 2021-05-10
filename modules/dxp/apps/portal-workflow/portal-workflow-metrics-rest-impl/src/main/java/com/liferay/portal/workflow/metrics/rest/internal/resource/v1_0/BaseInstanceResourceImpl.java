@@ -99,7 +99,8 @@ public abstract class BaseInstanceResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "slaStatuses"),
 			@Parameter(in = ParameterIn.QUERY, name = "taskNames"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
-			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
+			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
+			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
 	@Path("/processes/{processId}/instances")
@@ -121,7 +122,7 @@ public abstract class BaseInstanceResourceImpl
 				slaStatuses,
 			@Parameter(hidden = true) @QueryParam("taskNames") String[]
 				taskNames,
-			@Context Pagination pagination)
+			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -339,7 +340,7 @@ public abstract class BaseInstanceResourceImpl
 			(java.util.Date)parameters.get("dateEnd"),
 			(java.util.Date)parameters.get("dateStart"),
 			(String[])parameters.get("slaStatuses"),
-			(String[])parameters.get("taskNames"), pagination);
+			(String[])parameters.get("taskNames"), pagination, sorts);
 	}
 
 	@Override

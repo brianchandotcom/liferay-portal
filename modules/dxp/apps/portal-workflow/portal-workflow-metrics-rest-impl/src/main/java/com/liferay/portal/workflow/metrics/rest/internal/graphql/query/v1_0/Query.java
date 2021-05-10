@@ -239,7 +239,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeIds: ___, classPKs: ___, completed: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, taskNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeIds: ___, classPKs: ___, completed: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, sorts: ___, taskNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public InstancePage processInstances(
@@ -252,7 +252,8 @@ public class Query {
 			@GraphQLName("slaStatuses") String[] slaStatuses,
 			@GraphQLName("taskNames") String[] taskNames,
 			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("page") int page,
+			@GraphQLName("sort") String sortsString)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -262,7 +263,8 @@ public class Query {
 				instanceResource.getProcessInstancesPage(
 					processId, assigneeIds, classPKs, completed, dateEnd,
 					dateStart, slaStatuses, taskNames,
-					Pagination.of(page, pageSize))));
+					Pagination.of(page, pageSize),
+					_sortsBiFunction.apply(instanceResource, sortsString))));
 	}
 
 	/**
@@ -800,7 +802,8 @@ public class Query {
 				@GraphQLName("slaStatuses") String[] slaStatuses,
 				@GraphQLName("taskNames") String[] taskNames,
 				@GraphQLName("pageSize") int pageSize,
-				@GraphQLName("page") int page)
+				@GraphQLName("page") int page,
+				@GraphQLName("sort") String sortsString)
 			throws Exception {
 
 			return _applyComponentServiceObjects(
@@ -810,7 +813,9 @@ public class Query {
 					instanceResource.getProcessInstancesPage(
 						_process.getId(), assigneeIds, classPKs, completed,
 						dateEnd, dateStart, slaStatuses, taskNames,
-						Pagination.of(page, pageSize))));
+						Pagination.of(page, pageSize),
+						_sortsBiFunction.apply(
+							instanceResource, sortsString))));
 		}
 
 		private Process _process;

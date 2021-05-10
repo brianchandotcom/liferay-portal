@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0;
 
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -53,7 +54,8 @@ public interface InstanceResource {
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
 			Boolean completed, Date dateEnd, Date dateStart,
-			String[] slaStatuses, String[] taskNames, Pagination pagination)
+			String[] slaStatuses, String[] taskNames, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public Instance postProcessInstance(Long processId, Instance instance)

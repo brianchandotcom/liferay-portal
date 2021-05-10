@@ -1579,6 +1579,10 @@ public class ContentPageEditorDisplayContext {
 						"masterLayout",
 						layout.getMasterLayoutPlid() ==
 							fragmentEntryLink.getPlid()
+					).put(
+						"segmentsExperienceId",
+						String.valueOf(
+							fragmentEntryLink.getSegmentsExperienceId())
 					).putAll(
 						_getFragmentEntry(
 							fragmentEntryLink, fragmentEntry, content)

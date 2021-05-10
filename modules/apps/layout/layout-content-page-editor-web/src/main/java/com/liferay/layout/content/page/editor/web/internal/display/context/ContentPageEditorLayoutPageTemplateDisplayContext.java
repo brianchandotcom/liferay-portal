@@ -162,10 +162,10 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			setDesiredItemSelectorReturnTypes(
 				new InfoItemRelatedListProviderItemSelectorReturnType());
 
+		List<String> sourceItemTypes = new ArrayList<>();
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
-
-		List<String> sourceItemTypes = new ArrayList<>();
 
 		sourceItemTypes.add(layoutPageTemplateEntry.getClassName());
 

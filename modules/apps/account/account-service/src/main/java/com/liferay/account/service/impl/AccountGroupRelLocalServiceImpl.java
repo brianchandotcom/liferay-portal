@@ -23,6 +23,7 @@ import com.liferay.account.service.base.AccountGroupRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -127,6 +128,15 @@ public class AccountGroupRelLocalServiceImpl
 		long accountGroupId) {
 
 		return accountGroupRelPersistence.findByAccountGroupId(accountGroupId);
+	}
+
+	@Override
+	public List<AccountGroupRel> getAccountGroupRelsByAccountGroupId(
+		long accountGroupId, int start, int end,
+		OrderByComparator<AccountGroupRel> orderByComparator) {
+
+		return accountGroupRelPersistence.findByAccountGroupId(
+			accountGroupId, start, end, orderByComparator);
 	}
 
 	@Override

@@ -104,11 +104,7 @@ public class CPDisplayLayoutLocalServiceTest {
 			CommerceChannelConstants.CHANNEL_TYPE_SITE, null, StringPool.BLANK,
 			_serviceContext);
 
-		List<AssetVocabulary> companyAssetVocabularies =
-			AssetVocabularyLocalServiceUtil.getCompanyVocabularies(
-				_company.getCompanyId());
-
-		_assetVocabulary = companyAssetVocabularies.get(0);
+		_assetVocabulary = AssetVocabularyLocalServiceUtil.addDefaultVocabulary(_group1.getGroupId());
 
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),

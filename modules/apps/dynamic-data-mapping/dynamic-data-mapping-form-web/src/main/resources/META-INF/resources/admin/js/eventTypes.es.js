@@ -20,7 +20,6 @@ const RULE = {
 };
 
 const SIDEBAR = {
-	BLUR: 'sidebar_blur',
 	CHANGE_FIELD_TYPE: 'sidebar_change_field_type',
 	CHANGES_CANCEL: 'sidebar_changes_cancel',
 };

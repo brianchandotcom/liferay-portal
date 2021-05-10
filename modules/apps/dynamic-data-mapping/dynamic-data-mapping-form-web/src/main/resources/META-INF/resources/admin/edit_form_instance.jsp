@@ -167,9 +167,9 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					).put(
 						"defaultLanguageId", ddmFormAdminDisplayContext.getDefaultLanguageId()
 					).put(
-						"fieldSetDefinitionURL", ddmFormAdminDisplayContext.getFieldSetDefinitionURL()
+						"elementSets", ddmFormAdminDisplayContext.getFieldSetsJSONArray()
 					).put(
-						"fieldSets", ddmFormAdminDisplayContext.getFieldSetsJSONArray()
+						"fieldSetDefinitionURL", ddmFormAdminDisplayContext.getFieldSetDefinitionURL()
 					).put(
 						"fieldTypes", ddmFormAdminDisplayContext.getDDMFormFieldTypesJSONArray()
 					).put(

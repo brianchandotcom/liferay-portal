@@ -14,6 +14,7 @@
 
 import {
 	elementSetAdded,
+	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
@@ -35,8 +36,9 @@ const EmptyPanel = ({searchTerm}) => (
 	</div>
 );
 
-const ElementSetList = ({elementSets, searchTerm = '', ...context}) => {
-	const {activePage, pages} = useFormState();
+const ElementSetList = ({searchTerm = ''}) => {
+	const {fieldSetDefinitionURL, portletNamespace} = useConfig();
+	const {activePage, editingLanguageId, elementSets, pages} = useFormState();
 	const dispatch = useForm();
 	const regex = SearchUtils.getSearchRegex(searchTerm);
 
@@ -46,8 +48,11 @@ const ElementSetList = ({elementSets, searchTerm = '', ...context}) => {
 		<div className="mt-3">
 			{elementSetList.map((elementSet, key) => {
 				const payload = {
+					definitionURL: fieldSetDefinitionURL,
+					editingLanguageId,
 					elementSetId: elementSet.id,
-					...context,
+					elementSets,
+					namespace: portletNamespace,
 				};
 
 				return (

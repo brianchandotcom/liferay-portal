@@ -158,13 +158,24 @@ definition {
 	macro _getUserIdByEmailAddress {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
+		var companyId = JSONCompany.getCompanyId(
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-email-address/company-id/${companyId}/email-address/${userEmailAddress} \
-				-u test@liferay.com:test
+				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 
 		var userId = JSONCurlUtil.get("${curl}", "$['userId']");

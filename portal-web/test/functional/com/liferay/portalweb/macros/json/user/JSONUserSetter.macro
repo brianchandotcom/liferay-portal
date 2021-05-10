@@ -51,6 +51,8 @@ definition {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(
+			creatorEmailAddress = "${creatorEmailAddress}",
+			creatorPassword = "${creatorPassword}",
 			portalInstanceName = "${portalInstanceName}",
 			userEmailAddress = "${userEmailAddress}");
 

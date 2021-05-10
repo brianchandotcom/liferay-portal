@@ -34,7 +34,7 @@ definition {
 	@priority = "4"
 	test PreviewDeviceRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property testray.component.names = "Mobile Web,User Interface";
+		property testray.component.names = "Roles,Simulation";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",

@@ -1185,12 +1185,38 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130290."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByUserScreenName {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddSegmentByUserScreenName pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Screen Name");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserScreenName Test");
+
+		Segmentation.fillProperty(propertyField = "usersn");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserScreenName Test");
+
+		Segmentation.viewSegment(propertyField = "usersn");
 	}
 
 	@description = "Validate if the user can create a segment with Properties User and Email Segment with Contains Option"

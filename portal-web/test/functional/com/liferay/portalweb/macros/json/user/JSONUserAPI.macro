@@ -223,4 +223,59 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _updateUser {
+		Variables.assertDefined(parameterList = "${screenNameUpdate},${userId},${userEmailAddressUpdate},${userFirstName},${userLastName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/update-user \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d userId=${userId} \
+				-d oldPassword= \
+				-d newPassword1= \
+				-d newPassword2= \
+				-d passwordReset=false \
+				-d reminderQueryQuestion= \
+				-d reminderQueryAnswer= \
+		  		-d screenName=${screenNameUpdate} \
+		  		-d emailAddress=${userEmailAddressUpdate} \
+				-d facebookId=0 \
+				-d openId=0 \
+				-d hasPortrait=false \
+				-d portraitBytes= \
+				-d languageId=0 \
+				-d timeZoneId=0 \
+				-d greeting= \
+				-d comments= \
+				-d firstName=${userFirstName} \
+				-d middleName= \
+				-d lastName=${userLastName} \
+				-d prefixId=0 \
+				-d suffixId=0 \
+				-d male=true \
+				-d birthdayMonth=${birthdayMonth} \
+				-d birthdayDay=${birthdayDay} \
+				-d birthdayYear=${birthdayYear} \
+				-d smsSn=${userEmailAddressUpdate} \
+				-d facebookSn= \
+				-d jabberSn= \
+				-d skypeSn= \
+				-d twitterSn= \
+				-d jobTitle= \
+				-d groupIds= \
+				-d organizationIds= \
+				-d roleIds= \
+				-d userGroupRoles= \
+				-d userGroupIds= \
+				-d addresses= \
+				-d emailAddresses= \
+				-d phones= \
+				-d websites= \
+				-d announcementsDelivers=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

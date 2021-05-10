@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.internal.util;
 
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
+import com.liferay.frontend.view.state.active.FrontendViewStateActiveSettingsFactory;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
 import org.osgi.service.component.annotations.Component;
@@ -26,12 +27,27 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class ServicesProvider {
 
+	public static FrontendViewStateActiveSettingsFactory
+		getFrontendViewStateActiveSettingsFactory() {
+
+		return _frontendViewStateActiveSettingsFactory;
+	}
+
 	public static JSModuleResolver getJSModuleResolver() {
 		return _jsModuleResolver;
 	}
 
 	public static ReactRenderer getReactRenderer() {
 		return _reactRenderer;
+	}
+
+	@Reference(unbind = "-")
+	public void setFrontendViewStateActiveSettingsFactory(
+		FrontendViewStateActiveSettingsFactory
+			frontendViewStateActiveSettingsFactory) {
+
+		_frontendViewStateActiveSettingsFactory =
+			frontendViewStateActiveSettingsFactory;
 	}
 
 	@Reference(unbind = "-")
@@ -44,6 +60,8 @@ public class ServicesProvider {
 		_reactRenderer = reactRenderer;
 	}
 
+	private static FrontendViewStateActiveSettingsFactory
+		_frontendViewStateActiveSettingsFactory;
 	private static JSModuleResolver _jsModuleResolver;
 	private static ReactRenderer _reactRenderer;
 

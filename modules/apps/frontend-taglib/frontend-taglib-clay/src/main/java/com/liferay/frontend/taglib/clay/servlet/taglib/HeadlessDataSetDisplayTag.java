@@ -21,15 +21,16 @@ import com.liferay.frontend.taglib.clay.data.set.model.ClayPaginationEntry;
 import com.liferay.frontend.taglib.clay.data.set.servlet.taglib.util.ClayDataSetActionDropdownItem;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.clay.internal.util.ServicesProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList;
+import com.liferay.frontend.view.state.active.FrontendViewStateActiveSettings;
+import com.liferay.frontend.view.state.active.FrontendViewStateActiveSettingsFactory;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
@@ -391,15 +392,16 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	}
 
 	private void _setActiveViewSettingsJSON() {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+		FrontendViewStateActiveSettingsFactory
+			frontendViewStateActiveSettingsFactory =
+				ServicesProvider.getFrontendViewStateActiveSettingsFactory();
 
-		String clayDataSetDisplaySettingsNamespace =
-			ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
-				request, _id);
+		FrontendViewStateActiveSettings frontendViewStateActiveSettings =
+			frontendViewStateActiveSettingsFactory.
+				getFrontendViewStateActiveSettings(request, _id);
 
-		_activeViewSettingsJSON = portalPreferences.getValue(
-			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
+		_activeViewSettingsJSON =
+			frontendViewStateActiveSettings.getViewState();
 	}
 
 	private void _setClayDataSetDisplayViewsContext() {

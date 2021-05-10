@@ -774,6 +774,12 @@ definition {
 			changeUser = "Test Test",
 			showAllItems = "true");
 
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Dynamic Data Lists Record",
+			changeDescription = "Test Test added a Dynamic Data Lists Record in Guest",
+			changeTitle = "${changeTitle}",
+			showAllItems = "true");
+
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Lists Record Set",
 			changeSite = "Guest",
@@ -788,12 +794,6 @@ definition {
 			changeTitle = "Data Definition",
 			changeType = "Added",
 			changeUser = "Test Test",
-			showAllItems = "true");
-
-		PublicationsChanges.viewChangesViaContextStyle(
-			changeCategory = "Dynamic Data Lists Record",
-			changeDescription = "Test Test added a Dynamic Data Lists Record in Guest",
-			changeTitle = "Dynamic Data Lists Record",
 			showAllItems = "true");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");

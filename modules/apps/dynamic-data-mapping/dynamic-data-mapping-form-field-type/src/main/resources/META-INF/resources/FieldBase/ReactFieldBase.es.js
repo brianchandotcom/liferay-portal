@@ -121,11 +121,8 @@ const FieldProperties = ({required, showPopover, tooltip}) => {
 					{showPopover ? (
 						<Popover tooltip={tooltip} />
 					) : (
-						<span className="ddm-tooltip">
-							<ClayIcon
-								symbol="question-circle-full"
-								title={tooltip}
-							/>
+						<span className="ddm-tooltip" title={tooltip}>
+							<ClayIcon symbol="question-circle-full" />
 						</span>
 					)}
 				</>

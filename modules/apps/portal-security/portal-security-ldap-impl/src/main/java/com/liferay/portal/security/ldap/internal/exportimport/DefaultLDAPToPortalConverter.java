@@ -177,6 +177,20 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		Contact contact = _contactPersistence.create(0);
 
+		if (contactExpandoMappings.containsKey(ContactConverterKeys.PREFIX)) {
+			String prefix = contactExpandoMappings.getProperty(
+				ContactConverterKeys.PREFIX);
+
+			contactMappings.put(ContactConverterKeys.PREFIX, prefix);
+		}
+
+		if (contactExpandoMappings.containsKey(ContactConverterKeys.SUFFIX)) {
+			String suffix = contactExpandoMappings.getProperty(
+				ContactConverterKeys.SUFFIX);
+
+			contactMappings.put(ContactConverterKeys.SUFFIX, suffix);
+		}
+
 		long prefixId = getListTypeId(
 			attributes, contactMappings, ContactConverterKeys.PREFIX,
 			ListTypeConstants.CONTACT_PREFIX);

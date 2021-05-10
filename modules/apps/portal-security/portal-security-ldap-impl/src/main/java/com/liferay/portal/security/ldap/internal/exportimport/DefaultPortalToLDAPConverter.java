@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserOperation;
+import com.liferay.portal.security.ldap.ContactConverterKeys;
 import com.liferay.portal.security.ldap.GroupConverterKeys;
 import com.liferay.portal.security.ldap.SafeLdapName;
 import com.liferay.portal.security.ldap.SafeLdapNameFactory;
@@ -157,6 +158,20 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		if (contactMappings.isEmpty() && contactExpandoMappings.isEmpty()) {
 			return null;
+		}
+
+		if (contactExpandoMappings.containsKey(ContactConverterKeys.PREFIX)) {
+			String prefix = contactExpandoMappings.getProperty(
+				ContactConverterKeys.PREFIX);
+
+			contactMappings.put(ContactConverterKeys.PREFIX, prefix);
+		}
+
+		if (contactExpandoMappings.containsKey(ContactConverterKeys.SUFFIX)) {
+			String suffix = contactExpandoMappings.getProperty(
+				ContactConverterKeys.SUFFIX);
+
+			contactMappings.put(ContactConverterKeys.SUFFIX, suffix);
 		}
 
 		Modifications modifications = getModifications(
@@ -733,11 +748,11 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		boolean listTypeFieldName = false;
 
-		if (fieldName.equals("prefix")) {
+		if (fieldName.equals(ContactConverterKeys.PREFIX)) {
 			fieldName = "prefixId";
 			listTypeFieldName = true;
 		}
-		else if (fieldName.equals("suffix")) {
+		else if (fieldName.equals(ContactConverterKeys.SUFFIX)) {
 			fieldName = "suffixId";
 			listTypeFieldName = true;
 		}

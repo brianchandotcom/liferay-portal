@@ -16,7 +16,9 @@ package com.liferay.info.list.provider.item.selector.web.internal.layout.list.re
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -96,8 +98,19 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 		InfoItemReference infoItemReference =
 			infoItemFieldValues.getInfoItemReference();
 
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return Optional.empty();
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			infoItemReference.getClassName(), infoItemReference.getClassPK());
+			infoItemReference.getClassName(),
+			classPKInfoItemIdentifier.getClassPK());
 
 		return Optional.ofNullable(assetEntry);
 	}

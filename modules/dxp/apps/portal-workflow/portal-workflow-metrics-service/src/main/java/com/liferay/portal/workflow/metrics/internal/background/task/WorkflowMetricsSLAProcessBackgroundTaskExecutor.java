@@ -658,6 +658,11 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 								"onTime",
 								workflowMetricsSLAInstanceResult.isOnTime()
 							).put(
+								"overdueDate",
+								_dateTimeFormatter.format(
+									workflowMetricsSLAInstanceResult.
+										getOverdueLocalDateTime())
+							).put(
 								"remainingTime",
 								workflowMetricsSLAInstanceResult.
 									getRemainingTime()

@@ -485,6 +485,11 @@
 						"store": true,
 						"type": "boolean"
 					},
+					"overdueDate": {
+						"format": "yyyyMMddHHmmss",
+						"store": true,
+						"type": "date"
+					},
 					"remainingTime": {
 						"store": true,
 						"type": "long"

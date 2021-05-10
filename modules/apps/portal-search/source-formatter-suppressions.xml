@@ -3,6 +3,7 @@
 <suppressions>
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/SearchEngineInitializer\.java" />
+		<suppress checks="CompanyIterationCheck" files=".*" />
 		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/PermissionFilterFacetedSearcherTest\.java" />
 		<suppress checks="FactoryCheck" files="portal-search-test/src/testIntegration/java/com/liferay/portal/search/facet/faceted/searcher/test/SearchPermissionCheckerFacetedSearcherTest\.java" />
 		<suppress checks="GenericTypeCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/indexer/IndexerDocumentBuilderImpl\.java" />

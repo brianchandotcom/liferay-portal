@@ -19,6 +19,8 @@ package com.liferay.translation.translator;
  */
 public interface Translator {
 
+	public boolean isEnabled();
+
 	public TranslatorPacket translate(TranslatorPacket translatorPacket);
 
 }

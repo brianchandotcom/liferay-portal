@@ -26,7 +26,7 @@ package com.liferay.frontend.view.state.model.impl;
 public class FrontendViewStateActiveEntryImpl
 	extends FrontendViewStateActiveEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a frontend view state active entry model instance should use the {@link com.liferay.frontend.view.state.model.FrontendViewStateActiveEntry} interface instead.

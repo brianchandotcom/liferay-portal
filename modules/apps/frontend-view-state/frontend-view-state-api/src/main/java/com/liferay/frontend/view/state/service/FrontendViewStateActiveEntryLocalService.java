@@ -88,6 +88,10 @@ public interface FrontendViewStateActiveEntryLocalService
 	public FrontendViewStateActiveEntry createFrontendViewStateActiveEntry(
 		long frontendViewStateActiveEntryId);
 
+	public FrontendViewStateActiveEntry createFrontendViewStateActiveEntry(
+		String datasetDisplayId, long frontendViewStateEntryId, long plid,
+		String portletId, long userId);
+
 	/**
 	 * @throws PortalException
 	 */
@@ -203,6 +207,10 @@ public interface FrontendViewStateActiveEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FrontendViewStateActiveEntry fetchFrontendViewStateActiveEntry(
 		long frontendViewStateActiveEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FrontendViewStateActiveEntry fetchFrontendViewStateActiveEntry(
+		String datasetDisplayId, long plid, String portletId, long userId);
 
 	/**
 	 * Returns the frontend view state active entry with the matching UUID and company.

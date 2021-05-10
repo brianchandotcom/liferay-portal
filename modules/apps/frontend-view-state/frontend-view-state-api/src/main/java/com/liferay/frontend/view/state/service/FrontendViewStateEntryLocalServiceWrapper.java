@@ -68,6 +68,14 @@ public class FrontendViewStateEntryLocalServiceWrapper
 			frontendViewStateEntryId);
 	}
 
+	@Override
+	public com.liferay.frontend.view.state.model.FrontendViewStateEntry
+		createFrontendViewStateEntry(String viewState) {
+
+		return _frontendViewStateEntryLocalService.createFrontendViewStateEntry(
+			viewState);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

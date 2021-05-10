@@ -70,6 +70,18 @@ public class FrontendViewStateActiveEntryLocalServiceWrapper
 			createFrontendViewStateActiveEntry(frontendViewStateActiveEntryId);
 	}
 
+	@Override
+	public com.liferay.frontend.view.state.model.FrontendViewStateActiveEntry
+		createFrontendViewStateActiveEntry(
+			String datasetDisplayId, long frontendViewStateEntryId, long plid,
+			String portletId, long userId) {
+
+		return _frontendViewStateActiveEntryLocalService.
+			createFrontendViewStateActiveEntry(
+				datasetDisplayId, frontendViewStateEntryId, plid, portletId,
+				userId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -239,6 +251,16 @@ public class FrontendViewStateActiveEntryLocalServiceWrapper
 
 		return _frontendViewStateActiveEntryLocalService.
 			fetchFrontendViewStateActiveEntry(frontendViewStateActiveEntryId);
+	}
+
+	@Override
+	public com.liferay.frontend.view.state.model.FrontendViewStateActiveEntry
+		fetchFrontendViewStateActiveEntry(
+			String datasetDisplayId, long plid, String portletId, long userId) {
+
+		return _frontendViewStateActiveEntryLocalService.
+			fetchFrontendViewStateActiveEntry(
+				datasetDisplayId, plid, portletId, userId);
 	}
 
 	/**

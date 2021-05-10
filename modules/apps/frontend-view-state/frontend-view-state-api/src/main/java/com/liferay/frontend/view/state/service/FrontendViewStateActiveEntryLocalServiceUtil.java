@@ -76,6 +76,16 @@ public class FrontendViewStateActiveEntryLocalServiceUtil {
 			frontendViewStateActiveEntryId);
 	}
 
+	public static FrontendViewStateActiveEntry
+		createFrontendViewStateActiveEntry(
+			String datasetDisplayId, long frontendViewStateEntryId, long plid,
+			String portletId, long userId) {
+
+		return getService().createFrontendViewStateActiveEntry(
+			datasetDisplayId, frontendViewStateEntryId, plid, portletId,
+			userId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -220,6 +230,14 @@ public class FrontendViewStateActiveEntryLocalServiceUtil {
 
 		return getService().fetchFrontendViewStateActiveEntry(
 			frontendViewStateActiveEntryId);
+	}
+
+	public static FrontendViewStateActiveEntry
+		fetchFrontendViewStateActiveEntry(
+			String datasetDisplayId, long plid, String portletId, long userId) {
+
+		return getService().fetchFrontendViewStateActiveEntry(
+			datasetDisplayId, plid, portletId, userId);
 	}
 
 	/**

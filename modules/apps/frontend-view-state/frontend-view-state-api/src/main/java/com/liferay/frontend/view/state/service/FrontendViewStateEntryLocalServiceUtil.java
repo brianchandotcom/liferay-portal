@@ -74,6 +74,12 @@ public class FrontendViewStateEntryLocalServiceUtil {
 			frontendViewStateEntryId);
 	}
 
+	public static FrontendViewStateEntry createFrontendViewStateEntry(
+		String viewState) {
+
+		return getService().createFrontendViewStateEntry(viewState);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

@@ -88,6 +88,9 @@ public interface FrontendViewStateEntryLocalService
 	public FrontendViewStateEntry createFrontendViewStateEntry(
 		long frontendViewStateEntryId);
 
+	public FrontendViewStateEntry createFrontendViewStateEntry(
+		String viewState);
+
 	/**
 	 * @throws PortalException
 	 */

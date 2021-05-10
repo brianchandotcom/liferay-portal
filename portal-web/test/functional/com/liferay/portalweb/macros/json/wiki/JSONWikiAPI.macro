@@ -49,6 +49,13 @@ definition {
 			var encodingFormat = "creole";
 		}
 
+		if (isSet(tagName)) {
+			var tagName = '''"${tagName}"''';
+		}
+		else {
+			var tagName = "";
+		}
+
 		if (isSet(assetCategoryIds)) {
 			var assetCategoryIds = "${assetCategoryIds}";
 		}
@@ -65,9 +72,7 @@ definition {
 				"creator": {},
 				"encodingFormat": "${encodingFormat}",
 				"headline": "${headline}",
-				"keywords": [
-				"${tagName}"
-				],
+				"keywords": [${tagName}],
 				"parentWikiPageId": 0,
 				"taxonomyCategoryIds": [${assetCategoryIds}"],
 				"viewableBy": "${viewableBy}"
@@ -132,6 +137,13 @@ definition {
 			var encodingFormat = "creole";
 		}
 
+		if (isSet(tagName)) {
+			var tagName = '''"${tagName}"''';
+		}
+		else {
+			var tagName = "";
+		}
+
 		if (isSet(assetCategoryIds)) {
 			var assetCategoryIds = "${assetCategoryIds}";
 		}
@@ -148,9 +160,7 @@ definition {
 				"creator": {},
 				"encodingFormat": "${encodingFormat}",
 				"headline": "${headline}",
-				"keywords": [
-				"${tagName}"
-				],
+				"keywords": [${tagName}],
 				"taxonomyCategoryIds": [${assetCategoryIds}],
 				"viewableBy": "${viewableBy}"
 			}'

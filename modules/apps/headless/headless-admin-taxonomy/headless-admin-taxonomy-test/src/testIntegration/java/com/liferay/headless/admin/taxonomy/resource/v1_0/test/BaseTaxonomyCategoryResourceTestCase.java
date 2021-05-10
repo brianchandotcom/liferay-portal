@@ -909,7 +909,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyCategoryResource.putTaxonomyCategoryPermissionHttpResponse(
-				0L,
+				"-",
 				new Permission[] {
 					new Permission() {
 						{

@@ -3,20 +3,39 @@ definition {
 	macro _addCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Add Subcategory",
-			rowEntry = "${categoryName}");
+		if (isSet(grandSubcategoryName)) {
+			Click(
+				key_categoryName = "${categoryName}",
+				locator1 = "Categories#CATEGORY_ENTRY_LINK");
 
-		PortletEntry.inputTitle(title = "${subcategoryName}");
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Add Subcategory",
+				rowEntry = "${subcategoryName}");
 
-		if (!(contains("${subcategoryDescription}", "{subcategoryDescription}"))) {
-			PortletEntry.inputDescription(description = "${subcategoryDescription}");
+			PortletEntry.inputTitle(title = "${grandSubcategoryName}");
+
+			if (!(contains("${grandSubcategoryDescription}", "{grandSubcategoryDescription}"))) {
+				PortletEntry.inputDescription(description = "${grandSubcategoryDescription}");
+			}
+		}
+		else {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Add Subcategory",
+				rowEntry = "${categoryName}");
+
+			PortletEntry.inputTitle(title = "${subcategoryName}");
+
+			if (!(contains("${subcategoryDescription}", "{subcategoryDescription}"))) {
+				PortletEntry.inputDescription(description = "${subcategoryDescription}");
+			}
 		}
 	}
 
 	macro addCP {
 		Subcategory._addCP(
 			categoryName = "${categoryName}",
+			grandSubcategoryDescription = "${grandSubcategoryDescription}",
+			grandSubcategoryName = "${grandSubcategoryName}",
 			subcategoryDescription = "${subcategoryDescription}",
 			subcategoryName = "${subcategoryName}",
 			vocabularyName = "${vocabularyName}");

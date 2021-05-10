@@ -152,13 +152,11 @@ definition {
 		}
 
 		var curl = '''
-			${portalURL}/api/jsonws/wiki.wikinode/get-node \
-				-u test@liferay.com:test \
-				-d groupId=${groupId} \
-				-d name=${name}
+			${portalURL}/api/jsonws/wiki.wikinode/get-nodes/group-id/${groupId} \
+				-u test@liferay.com:test
 		''';
 
-		var nodeId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${name}')]['nodeId']");
+		var nodeId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${name}')]['nodeId']");
 		var nodeId = StringUtil.replace("${nodeId}", "[&quot;", "");
 		var nodeId = StringUtil.replace("${nodeId}", "&quot;]", "");
 

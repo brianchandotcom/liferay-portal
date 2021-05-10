@@ -34,6 +34,17 @@ import java.util.List;
 public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
 	@Override
+	protected void doUpgrade() throws Exception {
+		for (TableUpdater tableUpdater : getTableUpdaters()) {
+			if (!hasColumn(tableUpdater.getTableName(), "companyId")) {
+				tableUpdater.setCreateCompanyIdColumn(true);
+			}
+
+			tableUpdater.call();
+		}
+	}
+
+	@Override
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
 			new PortalPreferencesTableUpdater("PortalPreferences"),

@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.view.state.service.impl;
 
+import com.liferay.frontend.view.state.model.FrontendViewStateEntry;
 import com.liferay.frontend.view.state.service.base.FrontendViewStateEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -39,9 +40,16 @@ import org.osgi.service.component.annotations.Component;
 public class FrontendViewStateEntryLocalServiceImpl
 	extends FrontendViewStateEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.frontend.view.state.service.FrontendViewStateEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.frontend.view.state.service.FrontendViewStateEntryLocalServiceUtil</code>.
-	 */
+	public FrontendViewStateEntry createFrontendViewStateEntry(
+		String viewState) {
+
+		FrontendViewStateEntry frontendViewStateEntry =
+			frontendViewStateEntryLocalService.createFrontendViewStateEntry(
+				counterLocalService.increment());
+
+		frontendViewStateEntry.setViewState(viewState);
+
+		return frontendViewStateEntry;
+	}
+
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.view.state.service.impl;
 
+import com.liferay.frontend.view.state.model.FrontendViewStateActiveEntry;
 import com.liferay.frontend.view.state.service.base.FrontendViewStateActiveEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -39,9 +40,30 @@ import org.osgi.service.component.annotations.Component;
 public class FrontendViewStateActiveEntryLocalServiceImpl
 	extends FrontendViewStateActiveEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.frontend.view.state.service.FrontendViewStateActiveEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.frontend.view.state.service.FrontendViewStateActiveEntryLocalServiceUtil</code>.
-	 */
+	public FrontendViewStateActiveEntry createFrontendViewStateActiveEntry(
+		String datasetDisplayId, long frontendViewStateEntryId, long plid,
+		String portletId, long userId) {
+
+		FrontendViewStateActiveEntry frontendViewStateActiveEntry =
+			frontendViewStateActiveEntryLocalService.
+				createFrontendViewStateActiveEntry(
+					counterLocalService.increment());
+
+		frontendViewStateActiveEntry.setUserId(userId);
+		frontendViewStateActiveEntry.setDatasetDisplayId(datasetDisplayId);
+		frontendViewStateActiveEntry.setFrontendViewStateEntryId(
+			frontendViewStateEntryId);
+		frontendViewStateActiveEntry.setPlid(plid);
+		frontendViewStateActiveEntry.setPortletId(portletId);
+
+		return frontendViewStateActiveEntry;
+	}
+
+	public FrontendViewStateActiveEntry fetchFrontendViewStateActiveEntry(
+		String datasetDisplayId, long plid, String portletId, long userId) {
+
+		return frontendViewStateActiveEntryPersistence.fetchByU_D_P_P(
+			userId, datasetDisplayId, plid, portletId);
+	}
+
 }

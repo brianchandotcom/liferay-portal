@@ -35,6 +35,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-130453. Display video from Documents and Media in External Video fragment."
+	@priority = "5"
+	test DisplayVideoFromDocumentsAndMediaInExternalVideo {
+		task ("Add an external video shortcut") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			VideoShortcut.addCP(
+				videoShortcutTitle = "Liferay Digital Experience Platform",
+				videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+		}
+
+		task ("Add an External Video fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "External Video");
+		}
+
+		task ("Select a video from Documents and Media in External Video") {
+			PageEditor.gotoConfiguration(fragmentName = "External Video");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(
+				key_fieldLabel = "Video",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+
+			ItemSelector.addVideoFromDM(
+				navTab = "Documents and Media",
+				videoShortcutTitle = "Liferay Digital Experience Platform");
+		}
+
+		task ("View the video displayed in External Video") {
+			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+
+			YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
+		}
+
+		task ("View the video displayed in Preview modal") {
+			Click(locator1 = "PageEditor#PREVIEW");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+
+			YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
+
+			IFrame.closeFrame();
+
+			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the video displayed in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
+		}
+	}
+
 	@description = "This is a test for LPS-130453. Display video from URL in External Video fragment."
 	@priority = "5"
 	test DisplayVideoFromURLInExternalVideo {

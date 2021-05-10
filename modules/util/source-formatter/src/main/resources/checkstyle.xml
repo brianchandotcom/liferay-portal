@@ -227,6 +227,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.AssignAsUsedCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where an assign statement can be inlined or moved closer to where it is used." />
+			<property name="enabled" value="false" />
 			<message key="variable.inline" value="No need to assign variable ''{0}''. Pass the method call directly as parameter on line ''{1}''." />
 			<message key="variable.move.after.branching.statement" value="For better performance, the variable assignment for ''{0}'' should come after the ''{1}'' statement on line ''{2}''" />
 			<message key="variable.move.inside.if.statement" value="For better performance, the variable assignment for ''{0}'' should be moved inside the {1}-statement on line ''{2}''" />

@@ -12,9 +12,17 @@ definition {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
-				-u test@liferay.com:test
+				-u ${creatorEmailAddress}:${creatorPassword}
 		''';
 
 		var companyId = JSONCurlUtil.get("${curl}", "$['companyId']");

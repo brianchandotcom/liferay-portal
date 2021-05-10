@@ -23,13 +23,12 @@ import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetProviderReg
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.SortContextProvider;
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.ThemeDisplayContextProvider;
-import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
+import com.liferay.frontend.view.state.active.FrontendViewStateActiveSettings;
+import com.liferay.frontend.view.state.active.FrontendViewStateActiveSettingsFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -143,17 +142,13 @@ public class FrontendClayApplication extends Application {
 		String activeViewSettingsJSON) {
 
 		try {
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					httpServletRequest);
-
-			String currentActiveViewSettingsJSON = portalPreferences.getValue(
-				ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
-					httpServletRequest, id),
-				"activeViewSettingsJSON", "{}");
+			FrontendViewStateActiveSettings frontendViewStateActiveSettings =
+				_frontendViewStateActiveSettingsFactory.
+					getFrontendViewStateActiveSettings(httpServletRequest, id);
 
 			JSONObject currentActiveViewSettingsJSONObject =
-				_jsonFactory.createJSONObject(currentActiveViewSettingsJSON);
+				_jsonFactory.createJSONObject(
+					frontendViewStateActiveSettings.getViewState());
 
 			JSONObject activeViewSettingsJSONObject =
 				_jsonFactory.createJSONObject(activeViewSettingsJSON);
@@ -163,11 +158,12 @@ public class FrontendClayApplication extends Application {
 					key, activeViewSettingsJSONObject.get(key));
 			}
 
-			portalPreferences.setValue(
-				ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
-					httpServletRequest, id),
-				"activeViewSettingsJSON",
+			frontendViewStateActiveSettings.setViewState(
 				currentActiveViewSettingsJSONObject.toJSONString());
+
+			_frontendViewStateActiveSettingsFactory.
+				storeFrontendViewStateActiveSettings(
+					frontendViewStateActiveSettings);
 
 			return Response.ok(
 			).build();
@@ -192,6 +188,10 @@ public class FrontendClayApplication extends Application {
 
 	@Reference
 	private FilterFactoryRegistry _filterFactoryRegistry;
+
+	@Reference
+	private FrontendViewStateActiveSettingsFactory
+		_frontendViewStateActiveSettingsFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -140,7 +140,7 @@ const Translate = ({
 		});
 	};
 
-	const fetchAutoTranslate = ({fields}) =>
+	const fetchAutoTranslation = ({fields}) =>
 		fetch(getAutoTranslateURL, {
 			body: JSON.stringify({
 				fields,
@@ -158,7 +158,7 @@ const Translate = ({
 			type: ACTION_TYPES.UPDATE_FETCH_STATUS,
 		});
 
-		fetchAutoTranslate({fields: denormalizeFields(sourceFields)})
+		fetchAutoTranslation({fields: denormalizeFields(sourceFields)})
 			.then(({error, fields}) => {
 				if (error) {
 					throw error;
@@ -206,7 +206,7 @@ const Translate = ({
 			type: ACTION_TYPES.UPDATE_FIELD,
 		});
 
-		fetchAutoTranslate({
+		fetchAutoTranslation({
 			fields: denormalizeFields({[fieldId]: sourceFields[fieldId]}),
 		})
 			.then(({error, fields}) => {

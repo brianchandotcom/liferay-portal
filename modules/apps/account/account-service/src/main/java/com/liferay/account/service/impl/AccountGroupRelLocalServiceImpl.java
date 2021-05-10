@@ -124,6 +124,16 @@ public class AccountGroupRelLocalServiceImpl
 	}
 
 	@Override
+	public List<AccountGroupRel> getAccountGroupRels(
+		String className, long classPK, int start, int end,
+		OrderByComparator<AccountGroupRel> orderByComparator) {
+
+		return accountGroupRelPersistence.findByC_C(
+			_classNameLocalService.getClassNameId(className), classPK, start,
+			end, orderByComparator);
+	}
+
+	@Override
 	public List<AccountGroupRel> getAccountGroupRelsByAccountGroupId(
 		long accountGroupId) {
 

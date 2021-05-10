@@ -344,6 +344,11 @@
 </tr>
 <!--VIDEO_GENERATION-->
 <tr>
+	<td>VIDEO_GENERATION_INFO</td>
+	<td>//div[contains(@class,'video-embed-placeholder-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIDEO_GENERATION_THUMBNAIL_RESOLUTION</td>
 	<td>//head/title[contains(.,'${key_videoGenerationThumbnailResolution}')]</td>
 	<td></td>

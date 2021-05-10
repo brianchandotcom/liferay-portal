@@ -91,12 +91,112 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6247. Multiple shipment for the same order"
-	@ignore = "true"
 	@priority = "3"
 	test CreateMultipleShipmentsForOneOrder {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6247 CreateMultipleShipmentsForOneOrder Pending Implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		for (var productCard : list "U-Joint,Transmission Cooler Line Assembly,Torque Converters,Wheel Seal - Front,Mount") {
+			FrontStore.addInitializerProductToCart(
+				productName = "${productCard}",
+				productQuantity = "1");
+		}
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Address");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test City");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "United States");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Zip Code");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test City");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "Standard",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		ClickNoError(
+			key_orderStatus = "Pending",
+			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+		CommerceEntry.clickNoError(menuItem = "View");
+
+		Click(
+			key_index = "Accept Order",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		CommerceOrders.createShipment(
+			productSKUList = "MIN55857,MIN55858,MIN55859",
+			warehouseName = "Italy");
+
+		Click(locator1 = "Icon#BACK");
+
+		AssertElementPresent(
+			key_orderStatus = "Partially Shipped",
+			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+		ClickNoError(
+			key_orderStatus = "Partially Shipped",
+			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+		CommerceEntry.clickNoError(menuItem = "View");
+
+		CommerceOrders.createShipment(
+			productSKUList = "MIN55860,MIN55861",
+			warehouseName = "Italy");
+
+		Click(
+			key_index = "Completed",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Click(locator1 = "Icon#BACK");
+
+		AssertElementPresent(
+			key_orderStatus = "Completed",
+			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
 	}
 
 	@description = "This is a test for COMMERCE-6237. Create a shipment from an order"

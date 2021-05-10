@@ -1,5 +1,50 @@
 definition {
 
+	macro createShipment {
+		Click(
+			key_index = "Create Shipment",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		for (var productSKU : list "${productSKUList}") {
+			Check.checkToggleSwitch(
+				key_productSKU = "${productSKU}",
+				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+		}
+
+		Button.clickSubmitButton();
+
+		for (var productSKU : list "${productSKUList}") {
+			CommerceNavigator.gotoEntry(entryName = "${productSKU}");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_warehouseName = "${warehouseName}",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = "1");
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			Refresh();
+		}
+
+		Click(
+			key_index = "Finish Processing",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Click(
+			key_index = "Ship",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Click(locator1 = "Icon#BACK");
+	}
+
 	macro editOrderItemDetails {
 		CommerceNavigator.gotoEntry(entryName = "${orderItemSKU}");
 

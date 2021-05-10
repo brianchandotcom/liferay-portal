@@ -328,6 +328,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-112578. The new subcategory will inherit associated display page template from parent category."
+	@priority = "5"
+	test ViewInheritedAssociatedDisplayPageTemplateFromParentCategory {
+		task ("Add a display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Button fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Mapping the Name field to Button fragment") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Name",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category in vocabulary and select the display page template as Specific") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addCP(
+				categoryName = "Category Name",
+				displayPageName = "Display Page Name",
+				displayPageTemplateType = "Specific",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory in category") {
+			Subcategory.addCP(
+				categoryName = "Category Name",
+				displayPageTemplateType = "Inherited",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the mapped content in display page template") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View Display Page",
+				rowEntry = "Subcategory Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Subcategory Name");
+		}
+	}
+
 	@description = "This is a test for LPS-110247. The user can navigate to associated display page template via View Display Page of category."
 	@priority = "5"
 	test ViewMappedContentInDisplayPageTemplate {

@@ -17,6 +17,8 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.Objects;
+
 /**
  * @author Hugo Huijser
  */
@@ -34,6 +36,24 @@ public class CompanyIterationCheck extends BaseCheck {
 
 		if (forEachClauseDetailAST == null) {
 			return;
+		}
+
+		DetailAST methodCallDetailAST = _getIteratorMethodCallDetailAST(
+			forEachClauseDetailAST);
+
+		if (methodCallDetailAST != null) {
+			DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+				firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+				if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
+					Objects.equals(
+						firstChildDetailAST.getText(), "PortalInstances")) {
+
+					return;
+				}
+			}
 		}
 
 		DetailAST variableDefinitionDetailAST =
@@ -59,6 +79,62 @@ public class CompanyIterationCheck extends BaseCheck {
 				detailAST, _MSG_USE_COMPANY_LOCAL_SERVICE, "forEachCompanyId",
 				typeName + " " + variableName);
 		}
+	}
+
+	private DetailAST _getIteratorMethodCallDetailAST(
+		DetailAST forEachClauseDetailAST) {
+
+		DetailAST lastChildDetailAST = forEachClauseDetailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() != TokenTypes.EXPR) {
+			return null;
+		}
+
+		DetailAST firstChildDetailAST = lastChildDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
+			return firstChildDetailAST;
+		}
+
+		if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
+			return null;
+		}
+
+		String variableName = firstChildDetailAST.getText();
+
+		DetailAST typeDetailAST = getVariableTypeDetailAST(
+			firstChildDetailAST, variableName, false);
+
+		if (typeDetailAST == null) {
+			return null;
+		}
+
+		DetailAST parentDetailAST = typeDetailAST.getParent();
+
+		if (parentDetailAST.getType() != TokenTypes.VARIABLE_DEF) {
+			return null;
+		}
+
+		DetailAST assignDetailAST = parentDetailAST.findFirstToken(
+			TokenTypes.ASSIGN);
+
+		if (assignDetailAST == null) {
+			return null;
+		}
+
+		firstChildDetailAST = assignDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
+			return null;
+		}
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
+			return firstChildDetailAST;
+		}
+
+		return null;
 	}
 
 	private static final String _MSG_USE_COMPANY_LOCAL_SERVICE =

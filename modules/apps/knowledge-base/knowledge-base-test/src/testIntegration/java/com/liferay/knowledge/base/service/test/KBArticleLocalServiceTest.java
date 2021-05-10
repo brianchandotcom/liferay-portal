@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.exception.DuplicateKBArticleExternalReferenceCodeException;
 import com.liferay.knowledge.base.exception.KBArticleContentException;
 import com.liferay.knowledge.base.exception.KBArticleParentException;
 import com.liferay.knowledge.base.exception.KBArticleSourceURLException;
@@ -315,6 +316,40 @@ public class KBArticleLocalServiceTest {
 			StringUtil.randomString(), null, null, null, _serviceContext);
 	}
 
+	@Test(expected = DuplicateKBArticleExternalReferenceCodeException.class)
+	public void testAddKBArticleWithExistingExternalReferenceCode()
+		throws Exception {
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			RandomTestUtil.randomString(), _user.getUserId(),
+			_kbFolderClassNameId, KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, null, null, _serviceContext);
+
+		KBArticleLocalServiceUtil.addKBArticle(
+			kbArticle.getExternalReferenceCode(), _user.getUserId(),
+			_kbFolderClassNameId, KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, null, null, _serviceContext);
+	}
+
+	@Test
+	public void testAddKBArticleWithExternalReferenceCode() throws Exception {
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			externalReferenceCode, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, null, null, _serviceContext);
+
+		Assert.assertEquals(
+			externalReferenceCode, kbArticle.getExternalReferenceCode());
+	}
+
 	@Test(expected = KBArticleParentException.class)
 	public void testAddKBArticleWithInvalidParentClassNameId()
 		throws Exception {
@@ -416,6 +451,22 @@ public class KBArticleLocalServiceTest {
 			StringUtil.randomString(), null, null, null, _serviceContext);
 
 		Assert.assertTrue(Validator.isNotNull(kbArticle.getUrlTitle()));
+	}
+
+	@Test
+	public void testAddKBArticleWithoutExternalReferenceCode()
+		throws Exception {
+
+		KBArticle kbArticle = KBArticleLocalServiceUtil.addKBArticle(
+			null, _user.getUserId(), _kbFolderClassNameId,
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, null, null, _serviceContext);
+
+		Assert.assertEquals(
+			kbArticle.getExternalReferenceCode(),
+			String.valueOf(kbArticle.getKbArticleId()));
 	}
 
 	@Test

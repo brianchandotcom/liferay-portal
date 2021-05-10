@@ -1,0 +1,133 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFAutoTranslateConfiguration.config";
+	property osgi.module.configurations = "enabled=B&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Translations Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
+	}
+
+	tearDown {
+		JSONGroup.deleteGroupByName(groupName = "Site Name");
+	}
+
+	@description = "This ensures that Google Translation can be used to auto-translate a Web Content into Japanese"
+	@priority = "5"
+	test CanTranslateWCToJapaneseWithGoogle {
+		property test.name.skip.portal.instance = "AutoTranslation#CanTranslateWCToJapaneseWithGoogle";
+
+		JSONWebcontent.addWebContent(
+			content = "This is the content of a web article in English",
+			description = "This is the description of a web article in English",
+			groupName = "Site Name",
+			title = "This is the title of a web article in English");
+
+		SystemSettings.openToSpecificApp(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		SystemSettings.saveConfiguration();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "ja-JP");
+
+		Translations.translateWithGoogle();
+
+		Translations.viewTargetFields(
+			webContentContent = "これは英語のウェブ記事の内容です",
+			webContentDescription = "これは英語のウェブ記事の説明です",
+			webContentTitle = "これは英語のウェブ記事のタイトルです");
+
+		PortletEntry.publish();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Translation Processes");
+
+		Translations.viewTranslationEntry(
+			language = "ja-JP",
+			status = "Approved",
+			title = "Translation of WC WebContent Title to ja-JP");
+	}
+
+	@description = "The Auto Translate button should not appear in the side-by-side view after Google Translations are enabled then disabled"
+	@priority = "5"
+	test CanViewTranslationAfterDisablingGoogleConfiguration {
+		property test.name.skip.portal.instance = "AutoTranslation#CanViewTranslationAfterDisablingGoogleConfiguration";
+
+		JSONWebcontent.addWebContent(
+			content = "This is the content of a web article in English",
+			description = "This is the description of a web article in English",
+			groupName = "Site Name",
+			title = "This is the title of a web article in English");
+
+		SystemSettings.openToSpecificApp(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enabled");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Service Account Private Key",
+			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
+
+		SystemSettings.saveConfiguration();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
+
+		Translations.changeTargetLocale(
+			currentTargetLocale = "ar-SA",
+			newTargetLocale = "es-ES");
+
+		Translations.translateWithGoogle();
+
+		PortletEntry.publish();
+
+		SystemSettings.openToSpecificApp(portlet = "Google Cloud Translator");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Enabled");
+
+		SystemSettings.saveConfiguration();
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+		Translations.gotoTranslate(webContentTitle = "This is the title of a web article in English");
+
+		AssertElementNotPresent(
+			key_text = "Auto Translate",
+			locator1 = "Button#ANY");
+
+		Translations.viewTargetFields(
+			webContentContent = "Este es el contenido de un artículo web en inglés.",
+			webContentDescription = "Esta es la descripción de un artículo web en inglés",
+			webContentTitle = "Este es el título de un artículo web en inglés.");
+	}
+
+}

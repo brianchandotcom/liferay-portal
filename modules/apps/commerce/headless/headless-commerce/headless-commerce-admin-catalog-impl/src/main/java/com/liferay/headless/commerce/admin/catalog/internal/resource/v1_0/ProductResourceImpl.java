@@ -413,8 +413,8 @@ public class ProductResourceImpl
 		}
 		else if (cpDefinition != null) {
 			long[] categoryIds = _assetCategoryLocalService.getCategoryIds(
-					cpDefinition.getModelClassName(),
-					cpDefinition.getCPDefinitionId());
+				cpDefinition.getModelClassName(),
+				cpDefinition.getCPDefinitionId());
 
 			serviceContext.setAssetCategoryIds(categoryIds);
 		}

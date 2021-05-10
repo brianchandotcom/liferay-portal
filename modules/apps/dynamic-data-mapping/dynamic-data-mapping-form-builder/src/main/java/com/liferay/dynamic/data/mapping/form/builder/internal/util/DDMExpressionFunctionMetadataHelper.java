@@ -14,17 +14,25 @@
 
 package com.liferay.dynamic.data.mapping.form.builder.internal.util;
 
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +51,10 @@ public class DDMExpressionFunctionMetadataHelper {
 		Map<String, List<DDMExpressionFunctionMetadata>>
 			ddmExpressionFunctionsMetadata = new HashMap<>();
 
-		populateMap(ddmExpressionFunctionsMetadata, getResourceBundle(locale));
+		populateCustomDDMExpressionFunctionsMetadata(
+			ddmExpressionFunctionsMetadata);
+		populateDDMExpressionFunctionsMetadata(
+			ddmExpressionFunctionsMetadata, getResourceBundle(locale));
 
 		return ddmExpressionFunctionsMetadata;
 	}
@@ -114,7 +125,50 @@ public class DDMExpressionFunctionMetadataHelper {
 			portletResourceBundle, portalResourceBundle);
 	}
 
-	protected void populateMap(
+	protected void populateCustomDDMExpressionFunctionsMetadata(
+		Map<String, List<DDMExpressionFunctionMetadata>>
+			ddmExpressionFunctionsMetadata) {
+
+		Map<String, DDMExpressionFunction> customDDMExpressionFunctions =
+			_ddmExpressionFunctionTracker.getCustomDDMExpressionFunctions();
+
+		for (Map.Entry<String, DDMExpressionFunction> entry :
+				customDDMExpressionFunctions.entrySet()) {
+
+			DDMExpressionFunction ddmExpressionFunction = entry.getValue();
+
+			Class<?> clazz = ddmExpressionFunction.getClass();
+
+			Stream<Method> stream = Arrays.stream(clazz.getMethods());
+
+			Optional<Method> optional = stream.filter(
+				method ->
+					Objects.equals(method.getName(), "apply") &&
+					Objects.equals(method.getReturnType(), Boolean.class)
+			).findFirst();
+
+			if (!optional.isPresent()) {
+				continue;
+			}
+
+			Method method = optional.get();
+
+			addDDMExpressionFunctionMetadata(
+				ddmExpressionFunctionsMetadata,
+				new DDMExpressionFunctionMetadata(
+					entry.getKey(), entry.getKey(), _TYPE_BOOLEAN,
+					_getParameterTypes(
+						method.getParameterCount(), _TYPE_NUMBER)));
+			addDDMExpressionFunctionMetadata(
+				ddmExpressionFunctionsMetadata,
+				new DDMExpressionFunctionMetadata(
+					entry.getKey(), entry.getKey(), _TYPE_BOOLEAN,
+					_getParameterTypes(
+						method.getParameterCount(), _TYPE_TEXT)));
+		}
+	}
+
+	protected void populateDDMExpressionFunctionsMetadata(
 		Map<String, List<DDMExpressionFunctionMetadata>>
 			ddmExpressionFunctionsMetadata,
 		ResourceBundle resourceBundle) {
@@ -218,6 +272,16 @@ public class DDMExpressionFunctionMetadataHelper {
 				new String[] {_TYPE_TEXT}));
 	}
 
+	private String[] _getParameterTypes(
+		int parameterCount, String parameterType) {
+
+		String[] parameterTypes = new String[parameterCount];
+
+		Arrays.fill(parameterTypes, parameterType);
+
+		return parameterTypes;
+	}
+
 	private static final String _TYPE_BOOLEAN = "boolean";
 
 	private static final String _TYPE_LIST = "list";
@@ -227,6 +291,9 @@ public class DDMExpressionFunctionMetadataHelper {
 	private static final String _TYPE_TEXT = "text";
 
 	private static final String _TYPE_USER = "user";
+
+	@Reference
+	private DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
 
 	@Reference
 	private Portal _portal;

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Frontend View State API
+Bundle-SymbolicName: com.liferay.frontend.view.state.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.frontend.view.state.exception,\
+	com.liferay.frontend.view.state.model,\
+	com.liferay.frontend.view.state.service,\
+	com.liferay.frontend.view.state.service.persistence

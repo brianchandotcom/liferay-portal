@@ -176,6 +176,109 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-112578. The user can define associated display page template in subcategory and it will be inherited by its subcategory."
+	@priority = "5"
+	test SelectSpecificDisplayPageTemplateInSubcategoryEditor {
+		task ("Add the first display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name 1",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Button fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Mapping the Name field to Button fragment") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Name",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add the second display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name 2",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Heading fragment to display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Mapping the Name field to Heading fragment") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Name",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category in vocabulary and select the display page template as Specific") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addCP(
+				categoryName = "Category Name",
+				displayPageName = "Display Page Name 1",
+				displayPageTemplateType = "Specific",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a subcategory in category") {
+			Subcategory.addCP(
+				categoryName = "Category Name",
+				displayPageName = "Display Page Name 2",
+				displayPageTemplateType = "Specific",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a grand subcategory in subcategory") {
+			Subcategory.addCP(
+				categoryName = "Category Name",
+				displayPageTemplateType = "Inherited",
+				grandSubcategoryName = "Grand Subcategory Name",
+				subcategoryName = "Subcategory Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("View the mapped content in display page template") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "View Display Page",
+				rowEntry = "Grand Subcategory Name");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name 2");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Grand Subcategory Name");
+		}
+	}
+
 	@description = "This is a test for LPS-110247. View available mapping fields in different type editable fields of fragment."
 	@priority = "4"
 	test ViewAvailableMappingFields {

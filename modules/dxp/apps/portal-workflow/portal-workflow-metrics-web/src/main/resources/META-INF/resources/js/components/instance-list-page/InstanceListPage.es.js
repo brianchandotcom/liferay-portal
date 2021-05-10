@@ -53,15 +53,28 @@ function InstanceListPage({routeParams}) {
 	const completed = statuses?.some(
 		(status) => status === processStatusConstants.completed
 	);
+	const pending = statuses?.some(
+		(status) => status === processStatusConstants.pending
+	);
+
+	const processStatuses = [];
+
+	if (completed) {
+		processStatuses.push(processStatusConstants.completed);
+	}
+
+	if (pending) {
+		processStatuses.push(processStatusConstants.pending);
+	}
 
 	const timeRange = completed ? getTimeRangeParams(dateStart, dateEnd) : {};
 
 	const {data, fetchData} = useFetch({
 		params: {
 			assigneeIds,
-			completed,
 			page,
 			pageSize,
+			processStatuses,
 			slaStatuses,
 			sort,
 			taskNames,

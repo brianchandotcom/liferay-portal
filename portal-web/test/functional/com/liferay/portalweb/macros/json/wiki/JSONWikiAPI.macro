@@ -49,6 +49,13 @@ definition {
 			var encodingFormat = "creole";
 		}
 
+		if (isSet(assetCategoryIds)) {
+			var assetCategoryIds = "${assetCategoryIds}";
+		}
+		else {
+			var assetCategoryIds = "0";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-pages/${pageId}/wiki-pages \
 			-H 'Content-Type: application/json' \
@@ -62,6 +69,7 @@ definition {
 				"${tagName}"
 				],
 				"parentWikiPageId": 0,
+				"taxonomyCategoryIds": [${assetCategoryIds}"],
 				"viewableBy": "${viewableBy}"
 			}'
 		''';
@@ -124,6 +132,13 @@ definition {
 			var encodingFormat = "creole";
 		}
 
+		if (isSet(assetCategoryIds)) {
+			var assetCategoryIds = "${assetCategoryIds}";
+		}
+		else {
+			var assetCategoryIds = "0";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/wiki-nodes/${nodeId}/wiki-pages \
 			-H 'Content-Type: application/json' \
@@ -136,6 +151,7 @@ definition {
 				"keywords": [
 				"${tagName}"
 				],
+				"taxonomyCategoryIds": [${assetCategoryIds}],
 				"viewableBy": "${viewableBy}"
 			}'
 		''';

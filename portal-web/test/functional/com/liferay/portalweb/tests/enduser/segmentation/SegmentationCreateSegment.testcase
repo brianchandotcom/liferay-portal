@@ -1247,24 +1247,6 @@ definition {
 		Segmentation.viewSegment(propertyField = "usersn");
 	}
 
-	@description = "Validate if the user can create a segment with Properties User and Email Segment with Contains Option"
-	@priority = "5"
-	test AddSegmentUserEmailAddressContains {
-		LexiconEntry.gotoAdd();
-
-		Segmentation.addProperties(propertyOption = "Email Address");
-
-		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressContains Test");
-
-		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-		Segmentation.fillProperty(propertyField = "liferay");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
-	}
-
 	@description = "Validate if the user can create a segment with Properties User and Email Segment with Equals Option"
 	@priority = "5"
 	test AddSegmentUserEmailAddressEquals {

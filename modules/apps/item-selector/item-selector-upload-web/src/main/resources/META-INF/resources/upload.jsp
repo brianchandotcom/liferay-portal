@@ -64,6 +64,8 @@ if (Validator.isNotNull(namespace)) {
 		HashMapBuilder.<String, Object>put(
 			"closeCaption", itemSelectorUploadViewDisplayContext.getTitle(locale)
 		).put(
+			"editImageURL", uploadURL
+		).put(
 			"eventName", itemSelectorUploadViewDisplayContext.getItemSelectedEventName()
 		).put(
 			"maxFileSize", itemSelectorUploadViewDisplayContext.getMaxFileSize()

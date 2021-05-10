@@ -172,10 +172,9 @@ public class WikiNodeStagedModelDataHandler
 					serviceContext);
 			}
 			else {
-				nodeName = getNodeName(portletDataContext, node, nodeName, 2);
-
 				importedNode = _wikiNodeLocalService.addNode(
-					node.getExternalReferenceCode(), userId, nodeName,
+					node.getExternalReferenceCode(), userId,
+					getNodeName(portletDataContext, node, nodeName, 2),
 					node.getDescription(), serviceContext);
 			}
 		}

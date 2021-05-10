@@ -12,13 +12,22 @@
  * details.
  */
 
-export {default as render} from './render';
-export {default as useEventListener} from './hooks/useEventListener';
-export {default as useInterval} from './hooks/useInterval';
-export {default as useIsMounted} from './hooks/useIsMounted';
-export {default as useLiferayState} from './hooks/useLiferayState';
-export {default as usePrevious} from './hooks/usePrevious';
-export {default as useStateSafe} from './hooks/useStateSafe';
-export {default as useThunk} from './hooks/useThunk';
-export {default as useTimeout} from './hooks/useTimeout';
-export {A11y} from './components/A11y/index';
+import type {CheckResult, ImpactValue} from 'axe-core';
+import type {A11yCheckerOptions} from '../components/A11y/A11yChecker';
+export declare type Violation = {
+	all: Array<CheckResult>;
+	any: Array<CheckResult>;
+	help: string;
+	helpUrl: string;
+	id: string;
+	impact?: ImpactValue;
+};
+declare type Violations = {
+	modifyIndex: number;
+	target: string;
+	violations: Array<Violation>;
+};
+export default function useA11y(
+	props: Omit<A11yCheckerOptions, 'callback'>
+): Violations[];
+export {};

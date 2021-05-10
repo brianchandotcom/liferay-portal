@@ -12,13 +12,4 @@
  * details.
  */
 
-export {default as render} from './render';
-export {default as useEventListener} from './hooks/useEventListener';
-export {default as useInterval} from './hooks/useInterval';
-export {default as useIsMounted} from './hooks/useIsMounted';
-export {default as useLiferayState} from './hooks/useLiferayState';
-export {default as usePrevious} from './hooks/usePrevious';
-export {default as useStateSafe} from './hooks/useStateSafe';
-export {default as useThunk} from './hooks/useThunk';
-export {default as useTimeout} from './hooks/useTimeout';
-export {A11y} from './components/A11y/index';
+export {default as A11y} from './A11y';

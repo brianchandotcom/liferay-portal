@@ -73,6 +73,15 @@ com.liferay.wiki.model.WikiPage
 
 		var basicDocumentClassTypeId = "0";
 
+		var classTypeIdsDLFileEntry = JSONDLfileentrytype._getFileEntryTypeIds(groupId = "${groupId}");
+
+		if ("${classTypeIdsDLFileEntry}" == "") {
+			var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId}''';
+		}
+		else {
+			var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId},${classTypeIdsDLFileEntry}''';
+		}
+
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
 
 		var basicWebContentClassTypeId = JSONDDMstructure._getStructureId(
@@ -80,28 +89,24 @@ com.liferay.wiki.model.WikiPage
 			groupId = "${globalGroupId}",
 			structureName = "Basic Web Content");
 
-		if ("${itemType}" == "All Types") {
-			var itemType = "true";
-		}
-		else if ("${itemType}" == "Web Content Article") {
-			var itemType = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
-		}
-		else if ("${itemType}" == "Blogs Entry") {
-			var itemType = JSONClassname._getClassNameId(value = "com.liferay.blogs.model.BlogsEntry");
-		}
-		else if ("${itemType}" == "Document") {
-			var itemType = JSONClassname._getClassNameId(value = "com.liferay.document.library.kernel.model.DLFileEntry");
+		var classTypeIdsDDMStructure = JSONDDMstructure._getStructureIds(
+			classNameId = "${classNameId}",
+			groupId = "${groupId}");
+
+		if ("${classTypeIdsDDMStructure}" == "") {
+			var classTypeIdsDDMStructure = '''${basicWebContentClassTypeId}''';
 		}
 		else {
-			fail("'itemType' is either invalid or not yet set.");
+			var classTypeIdsDDMStructure = '''${basicWebContentClassTypeId},${classTypeIdsDDMStructure}''';
 		}
 
-		if ("${selectionType}" == "${dynamic}") {
-			var typeSettings = '''
-anyAssetType=${itemType}
+		if ("${itemType}" == "All Types") {
+			if ("${selectionType}" == "dynamic") {
+				var typeSettings = '''
+anyAssetType=true
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId}
-classTypeIdsJournalArticleAssetRendererFactory=${basicWebContentClassTypeId}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 groupIds=${groupId}
 orderByColumn1=modifiedDate
 orderByColumn2=title
@@ -113,14 +118,198 @@ queryName0=assetTags
 subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory=false
 subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
 ''';
+			}
+			else if ("${selectionType}" == "manual") {
+				var typeSettings = '''
+anyAssetType=true
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+''';
+			}
 		}
-		else if ("${selectionType}" == "${manual}") {
-			var typeSettings = '''
+		else if ("${itemType}" == "Web Content Article") {
+			var itemType = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
+
+			if ("${itemSubtype}" == "All Subtypes") {
+				if ("${selectionType}" == "dynamic") {
+					var typeSettings = '''
+anyAssetType=${itemType}
+anyClassTypeJournalArticleAssetRendererFactory=true
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+groupIds=${groupId}
+orderByColumn1=modifiedDate
+orderByColumn2=title
+orderByType1=DESC
+orderByType2=ASC
+queryAndOperator0=true
+queryContains0=true
+queryName0=assetTags
+subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory=false
+subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
+''';
+				}
+				else if ("${selectionType}" == "manual") {
+					var typeSettings = '''
+anyAssetType=${itemType}
+anyClassTypeJournalArticleAssetRendererFactory=true
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+''';
+				}
+			}
+			else {
+				if ("${itemSubtype}" == "Basic Web Content") {
+					var classTypeId = "${basicWebContentClassTypeId}";
+				}
+				else {
+					var classTypeId = JSONDDMstructure._getStructureId(
+						classNameId = "${classNameId}",
+						groupId = "${groupId}",
+						structureName = "${itemSubtype}");
+				}
+
+				if ("${selectionType}" == "dynamic") {
+					var typeSettings = '''
+anyAssetType=${itemType}
+anyClassTypeJournalArticleAssetRendererFactory=${classTypeId}
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+groupIds=${groupId}
+orderByColumn1=modifiedDate
+orderByColumn2=title
+orderByType1=DESC
+orderByType2=ASC
+queryAndOperator0=true
+queryContains0=true
+queryName0=assetTags
+subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory=false
+subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
+''';
+				}
+				else if ("${selectionType}" == "manual") {
+					var typeSettings = '''
+anyAssetType=${itemType}
+anyClassTypeJournalArticleAssetRendererFactory=${classTypeId}
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+''';
+				}
+			}
+		}
+		else if ("${itemType}" == "Blogs Entry") {
+			var itemType = JSONClassname._getClassNameId(value = "com.liferay.blogs.model.BlogsEntry");
+
+			if ("${selectionType}" == "dynamic") {
+				var typeSettings = '''
 anyAssetType=${itemType}
 classNameIds=${classNameIds}
-classTypeIdsDLFileEntryAssetRendererFactory=${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId}
-classTypeIdsJournalArticleAssetRendererFactory=${basicWebContentClassTypeId}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+groupIds=${groupId}
+orderByColumn1=modifiedDate
+orderByColumn2=title
+orderByType1=DESC
+orderByType2=ASC
+queryAndOperator0=true
+queryContains0=true
+queryName0=assetTags
+subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory=false
+subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
 ''';
+			}
+			else if ("${selectionType}" == "manual") {
+				var typeSettings = '''
+anyAssetType=${itemType}
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+''';
+			}
+		}
+		else if ("${itemType}" == "Document") {
+			var itemType = JSONClassname._getClassNameId(value = "com.liferay.document.library.kernel.model.DLFileEntry");
+
+			if ("${itemSubtype}" == "All Subtypes") {
+				if ("${selectionType}" == "dynamic") {
+					var typeSettings = '''
+anyAssetType=${itemType}
+anyClassTypeDLFileEntryAssetRendererFactory=true
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+groupIds=${groupId}
+orderByColumn1=modifiedDate
+orderByColumn2=title
+orderByType1=DESC
+orderByType2=ASC
+queryAndOperator0=true
+queryContains0=true
+queryName0=assetTags
+subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory=false
+subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
+''';
+				}
+				else if ("${selectionType}" == "manual") {
+					var typeSettings = '''
+anyAssetType=${itemType}
+anyClassTypeDLFileEntryAssetRendererFactory=true
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+''';
+				}
+			}
+			else {
+				if ("${itemSubtype}" == "Basic Document") {
+					var classTypeId = "${basicDocumentClassTypeId}";
+				}
+				else if ("${itemSubtype}" == "Google Drive Shortcut") {
+					var classTypeId = "${googleDriveShortcutClassTypeId}";
+				}
+				else {
+					var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
+						fileEntryTypeName = "${itemSubtype}",
+						groupId = "${groupId}");
+				}
+
+				if ("${selectionType}" == "dynamic") {
+					var typeSettings = '''
+anyAssetType=${itemType}
+anyClassTypeDLFileEntryAssetRendererFactory=${classTypeId}
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+groupIds=${groupId}
+orderByColumn1=modifiedDate
+orderByColumn2=title
+orderByType1=DESC
+orderByType2=ASC
+queryAndOperator0=true
+queryContains0=true
+queryName0=assetTags
+subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory=false
+subtypeFieldsFilterEnabledJournalArticleAssetRendererFactory=false
+''';
+				}
+				else if ("${selectionType}" == "manual") {
+					var typeSettings = '''
+anyAssetType=${itemType}
+anyClassTypeDLFileEntryAssetRendererFactory=${classTypeId}
+classNameIds=${classNameIds}
+classTypeIdsDLFileEntryAssetRendererFactory=${classTypeIdsDLFileEntry}
+classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
+''';
+				}
+			}
+		}
+		else {
+			fail("'itemType' is either invalid or not yet set.");
 		}
 
 		var typeSettings = StringUtil.regexReplaceAll("${typeSettings}", "${newLine}", "%0A");

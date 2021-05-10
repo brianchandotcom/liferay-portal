@@ -277,7 +277,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 			%>
 
 				<div class="supportedFeature">
-					<aui:input checked="<%= checked %>" label="<%= oAuth2Feature.equals("token.introspection") ? "token-introspection" : HtmlUtil.escape(oAuth2Feature) %>" name="<%= name %>" type="checkbox" />
+					<aui:input checked="<%= checked %>" label='<%= oAuth2Feature.equals("token.introspection") ? "token-introspection" : HtmlUtil.escape(oAuth2Feature) %>' name="<%= name %>" type="checkbox" />
 				</div>
 
 			<%

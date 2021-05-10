@@ -200,12 +200,12 @@ AUI.add(
 									let found = false;
 
 									instance.entries.each((item) => {
-										if (key === item.value) {
+										if (key === item.categoryId) {
 											found = true;
 										}
 
 										if (
-											key === item.value &&
+											key === item.categoryId &&
 											selectedItems[key].unchecked
 										) {
 											instance.entries.remove(item);

@@ -20,8 +20,14 @@ import com.liferay.frontend.view.state.model.FrontendViewStateActiveEntry;
 import com.liferay.frontend.view.state.model.FrontendViewStateEntry;
 import com.liferay.frontend.view.state.service.FrontendViewStateActiveEntryLocalService;
 import com.liferay.frontend.view.state.service.FrontendViewStateEntryLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.portlet.PortalPreferences;
+import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,30 +59,20 @@ public class FrontendViewStateActiveSettingsFactoryImpl
 
 		FrontendViewStateEntry frontendViewStateEntry;
 
-		if (frontendViewStateActiveEntry == null) {
-			frontendViewStateEntry =
-				_frontendViewStateEntryLocalService.
-					createFrontendViewStateEntry("{}");
-
-			_frontendViewStateEntryLocalService.updateFrontendViewStateEntry(
-				frontendViewStateEntry);
-
-			frontendViewStateActiveEntry =
-				_frontendViewStateActiveEntryLocalService.
-					createFrontendViewStateActiveEntry(
-						datasetDisplayId,
-						frontendViewStateEntry.getFrontendViewStateEntryId(),
-						themeDisplay.getPlid(), portletDisplay.getId(),
-						themeDisplay.getUserId());
-
-			_frontendViewStateActiveEntryLocalService.
-				updateFrontendViewStateActiveEntry(
-					frontendViewStateActiveEntry);
-		}
-		else {
+		if (frontendViewStateActiveEntry != null) {
 			frontendViewStateEntry =
 				_frontendViewStateEntryLocalService.fetchFrontendViewStateEntry(
 					frontendViewStateActiveEntry.getFrontendViewStateEntryId());
+		}
+		else {
+			frontendViewStateEntry = _upgradeFrontendViewStateEntry(
+				httpServletRequest, datasetDisplayId);
+
+			if (frontendViewStateEntry == null) {
+				frontendViewStateEntry = _createFrontendViewStateEntry(
+					datasetDisplayId, themeDisplay.getPlid(),
+					portletDisplay.getId(), themeDisplay.getUserId(), "{}");
+			}
 		}
 
 		return new FrontendViewStateActiveSettingsImpl(frontendViewStateEntry);
@@ -94,6 +90,85 @@ public class FrontendViewStateActiveSettingsFactoryImpl
 			frontendViewStateActiveSettingsImpl.getFrontendViewStateEntry());
 	}
 
+	private FrontendViewStateEntry _createFrontendViewStateEntry(
+		String datasetDisplayId, long plid, String portletId, long userId,
+		String viewState) {
+
+		FrontendViewStateEntry frontendViewStateEntry =
+			_frontendViewStateEntryLocalService.createFrontendViewStateEntry(
+				viewState);
+
+		_frontendViewStateEntryLocalService.updateFrontendViewStateEntry(
+			frontendViewStateEntry);
+
+		FrontendViewStateActiveEntry frontendViewStateActiveEntry =
+			_frontendViewStateActiveEntryLocalService.
+				createFrontendViewStateActiveEntry(
+					datasetDisplayId,
+					frontendViewStateEntry.getFrontendViewStateEntryId(), plid,
+					portletId, userId);
+
+		_frontendViewStateActiveEntryLocalService.
+			updateFrontendViewStateActiveEntry(frontendViewStateActiveEntry);
+
+		return frontendViewStateEntry;
+	}
+
+	private String _getClayDataSetDisplaySettingsNamespace(
+		String datasetDisplayId, long plid, String portletId) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("com.liferay.frontend.taglib.clay.servlet.taglib.");
+		sb.append("DataSetDisplayTag");
+		sb.append(StringPool.POUND);
+		sb.append(_portal.getPortletNamespace(portletId));
+		sb.append(StringPool.POUND);
+		sb.append(plid);
+		sb.append(StringPool.POUND);
+		sb.append(datasetDisplayId);
+
+		return sb.toString();
+	}
+
+	private FrontendViewStateEntry _upgradeFrontendViewStateEntry(
+		HttpServletRequest httpServletRequest, String datasetDisplayId) {
+
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				httpServletRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String clayDataSetDisplaySettingsNamespace =
+			_getClayDataSetDisplaySettingsNamespace(
+				datasetDisplayId, themeDisplay.getPlid(),
+				portletDisplay.getId());
+
+		String activeViewSettingsJSON = portalPreferences.getValue(
+			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
+
+		if (Validator.isNotNull(activeViewSettingsJSON)) {
+			FrontendViewStateEntry frontendViewStateEntry =
+				_createFrontendViewStateEntry(
+					datasetDisplayId, themeDisplay.getPlid(),
+					portletDisplay.getId(), themeDisplay.getUserId(),
+					activeViewSettingsJSON);
+
+			portalPreferences.setValue(
+				clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON",
+				null);
+
+			return frontendViewStateEntry;
+		}
+
+		return null;
+	}
+
 	@Reference
 	private FrontendViewStateActiveEntryLocalService
 		_frontendViewStateActiveEntryLocalService;
@@ -101,5 +176,8 @@ public class FrontendViewStateActiveSettingsFactoryImpl
 	@Reference
 	private FrontendViewStateEntryLocalService
 		_frontendViewStateEntryLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.util.LayoutTypeControllerTracker;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -505,9 +507,7 @@ public class LayoutRevisionLocalServiceImpl
 			copyPortletPreferences(
 				layoutRevision, layoutRevision.getParentLayoutRevisionId());
 
-			String command = serviceContext.getCommand();
-
-			if (command.equals("delete")) {
+			if (Objects.equals(serviceContext.getCommand(), Constants.DELETE)) {
 				String[] removePortletIdsArray =
 					(String[])serviceContext.getAttribute("removePortletIds");
 

@@ -51,7 +51,9 @@ definition {
 	}
 
 	macro selectTagFrame {
-		SelectFrame(locator1 = "IFrame#SELECT_TAG");
+		SelectFrame(
+			key_title = "Tags",
+			locator1 = "IFrame#MODAL_ANY");
 	}
 
 	macro selectTopFrame {

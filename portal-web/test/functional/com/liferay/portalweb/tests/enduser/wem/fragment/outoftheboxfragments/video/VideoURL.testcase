@@ -1,0 +1,90 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-101330. A user should be able to add a Video URL fragment and display a video."
+	@priority = "5"
+	test DisplayVideoInVideoURL {
+		property portal.acceptance = "true";
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+		}
+
+		task ("Add a Video URL fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Video URL");
+		}
+
+		task ("Define a video url") {
+			PageEditor.gotoConfiguration(fragmentName = "Video URL");
+
+			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the video displayed in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			YoutubePortlet.assertVideoTitle(videoTitle = "Life at Liferay - A Look into Liferay Culture");
+		}
+
+		task ("Change the video url") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoConfiguration(fragmentName = "Video URL");
+
+			PageEditor.addVideoFragmentURL(videoLink = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the new video displayed in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			YoutubePortlet.assertVideoTitle(videoTitle = "Liferay Digital Experience Platform");
+		}
+	}
+
+}

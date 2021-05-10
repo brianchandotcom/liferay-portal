@@ -117,10 +117,6 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 			JSONObject jsonObject = _serveResource(layout);
 
-			String assetsPath = jsonObject.getString("assetsPath");
-
-			Assert.assertTrue(assetsPath.contains("assets"));
-
 			JSONArray canonicalURLsJSONArray = jsonObject.getJSONArray(
 				"canonicalURLs");
 
@@ -130,6 +126,10 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 			JSONObject canonicalURLJSONObject1 =
 				canonicalURLsJSONArray.getJSONObject(0);
+
+			String imagesPath = jsonObject.getString("imagesPath");
+
+			Assert.assertTrue(imagesPath.contains("images"));
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
@@ -260,10 +260,6 @@ public class LayoutReportsDataMVCResourceCommandTest {
 						InfoDisplayWebKeys.INFO_ITEM, new MockObject())
 				});
 
-			String assetsPath = jsonObject.getString("assetsPath");
-
-			Assert.assertTrue(assetsPath.contains("assets"));
-
 			JSONArray canonicalURLsJSONArray = jsonObject.getJSONArray(
 				"canonicalURLs");
 
@@ -282,6 +278,10 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 			JSONObject canonicalURLJSONObject2 =
 				canonicalURLsJSONArray.getJSONObject(1);
+
+			String imagesPath = jsonObject.getString("imagesPath");
+
+			Assert.assertTrue(imagesPath.contains("images"));
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),

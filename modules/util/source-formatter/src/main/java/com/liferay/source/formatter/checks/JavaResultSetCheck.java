@@ -39,7 +39,7 @@ public class JavaResultSetCheck extends BaseFileCheck {
 				continue;
 			}
 
-			int pos4 = content.indexOf("rs.getLong(1)", pos1);
+			int pos4 = content.indexOf("resultSet.getLong(1)", pos1);
 			int pos5 = content.indexOf(StringPool.TAB + "finally {", pos1);
 
 			if ((pos3 == -1) || (pos4 == -1) || (pos5 == -1)) {
@@ -47,7 +47,7 @@ public class JavaResultSetCheck extends BaseFileCheck {
 			}
 
 			if ((pos3 < pos4) && (pos4 < pos5)) {
-				addMessage(fileName, "Use rs.getInt(1) for count");
+				addMessage(fileName, "Use resultSet.getInt(1) for count");
 			}
 		}
 

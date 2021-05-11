@@ -376,7 +376,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 
 		sb.append("</div></div></div><div class=\"sidebar-body\"><span ");
 		sb.append("aria-hidden=\"true\" class=\"loading-animation ");
-		sb.append("loading-animation-sm\"></span>");
+		sb.append("loading-animation-sm\"></span></div>");
 
 		jspWriter.write(sb.toString());
 
@@ -399,7 +399,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			throw new IOException(exception);
 		}
 
-		jspWriter.write("</div></div></div>");
+		jspWriter.write("</div></div>");
 	}
 
 	private static final String _ICON_TMPL_CONTENT = StringUtil.read(

@@ -655,7 +655,7 @@
 </tr>
 <tr>
 	<td>TRANSLATIONS_TARGET_FIELD</td>
-	<td>//div[contains(@class,'form-group') and contains(.,'${key_fieldName}')]//input[not(@readonly)]</td>
+	<td>//div[contains(@class,'form-group')]//label[text()='${key_fieldName}']/following::input[not(@readonly)]</td>
 	<td></td>
 </tr>
 <tr>

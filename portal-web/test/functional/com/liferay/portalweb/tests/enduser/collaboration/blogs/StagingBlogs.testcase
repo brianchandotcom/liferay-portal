@@ -107,11 +107,7 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishEntryWithDeletedSmallImage {
-		BlogsNavigator.openToStagingCP(
-			groupName = "Site Name",
-			siteURLKey = "site-name-staging");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",
@@ -499,11 +495,7 @@ definition {
 	test StagingBlogsWithScheduledPublishing {
 		property test.name.skip.portal.instance = "BlogsUsecase#StagingBlogsWithScheduledPublishing";
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoAddEntry();
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

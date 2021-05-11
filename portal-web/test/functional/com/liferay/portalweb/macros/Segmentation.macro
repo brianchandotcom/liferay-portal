@@ -35,6 +35,14 @@ definition {
 		Click(locator1 = "Modal#SELECT_BUTTON");
 	}
 
+	macro changeCriterionConjunction {
+		Click(locator1 = "Segmentation#CRITERION_CONJUNCTION");
+
+		Click(
+			key_criterionConjunctionItem = "${criterionConjunctionItem}",
+			locator1 = "Segmentation#CRITERION_CONJUNCTION_ITEM");
+	}
+
 	macro changeCriterionInput {
 		var key_criterionInputOption = "${criterionInputOption}";
 
@@ -136,7 +144,15 @@ definition {
 		}
 
 		else if (isSet(tagName)) {
-			Click(locator1 = "Button#SELECT");
+			if (isSet(indexNumber)) {
+				Click(
+					key_indexNumber = "${indexNumber}",
+					key_text = "Select",
+					locator1 = "Button#ANY_N");
+			}
+			else {
+				Click(locator1 = "Button#SELECT");
+			}
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

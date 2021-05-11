@@ -142,7 +142,7 @@ definition {
 	test DisableConfigurationAtSiteLevel {
 		property test.name.skip.portal.instance = "OpenGraph#DisableConfigurationAtSiteLevel";
 
-		OpenGraph.disableOpenGraphAtSiteLevel();
+		OpenGraph.disableOpenGraphAtSiteLevel(siteURLKey = "test-site-name");
 
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 

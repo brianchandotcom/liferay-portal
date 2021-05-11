@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Rafael Praxedes
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil}
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Deprecated
 public class NumericDDMFormFieldUtil {

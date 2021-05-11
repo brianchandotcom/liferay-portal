@@ -53,11 +53,10 @@ public class NumericDDMFormFieldValueLocalizer
 	@Override
 	public String localize(String value, Locale locale) {
 		try {
-			DecimalFormat defaultDecimalFormat =
-				NumericDDMFormFieldUtil.getNumberFormat(LocaleUtil.US);
+			DecimalFormat defaultDecimalFormat = _getDecimalFormat(
+				LocaleUtil.US);
 
-			DecimalFormat decimalFormat =
-				NumericDDMFormFieldUtil.getNumberFormat(locale);
+			DecimalFormat decimalFormat = _getDecimalFormat(locale);
 
 			Number number = null;
 
@@ -121,6 +120,17 @@ public class NumericDDMFormFieldValueLocalizer
 		}
 
 		return false;
+	}
+
+	private DecimalFormat _getDecimalFormat(Locale locale) {
+		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
+			locale);
+
+		decimalFormat.setGroupingUsed(false);
+		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+		decimalFormat.setParseBigDecimal(true);
+
+		return decimalFormat;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

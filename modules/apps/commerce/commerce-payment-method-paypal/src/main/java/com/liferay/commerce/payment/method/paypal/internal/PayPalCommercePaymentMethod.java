@@ -60,15 +60,20 @@ import com.paypal.core.PayPalEnvironment;
 import com.paypal.core.PayPalHttpClient;
 import com.paypal.http.HttpResponse;
 import com.paypal.http.exceptions.HttpException;
+import com.paypal.orders.AddressPortable;
+import com.paypal.orders.AmountBreakdown;
 import com.paypal.orders.AmountWithBreakdown;
 import com.paypal.orders.ApplicationContext;
+import com.paypal.orders.Item;
 import com.paypal.orders.LinkDescription;
+import com.paypal.orders.Name;
 import com.paypal.orders.Order;
 import com.paypal.orders.OrderRequest;
 import com.paypal.orders.OrdersAuthorizeRequest;
 import com.paypal.orders.OrdersCaptureRequest;
 import com.paypal.orders.OrdersCreateRequest;
 import com.paypal.orders.PurchaseUnitRequest;
+import com.paypal.orders.ShippingDetail;
 import com.paypal.payments.AuthorizationsCaptureRequest;
 import com.paypal.payments.Capture;
 import com.paypal.payments.CapturesRefundRequest;
@@ -79,6 +84,7 @@ import com.paypal.payments.RefundRequest;
 import java.io.IOException;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -182,7 +188,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			orderRequest.checkoutPaymentIntent(
 				PayPalCommercePaymentMethodConstants.INTENT_AUTHORIZE);
-			orderRequest.purchaseUnits(_buildRequestBody(commerceOrder));
+			orderRequest.purchaseUnits(
+				_buildRequestBody(
+					commerceOrder, commercePaymentRequest.getLocale()));
 
 			OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest();
 
@@ -616,7 +624,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			orderRequest.checkoutPaymentIntent(
 				PayPalCommercePaymentMethodConstants.INTENT_CAPTURE);
-			orderRequest.purchaseUnits(_buildRequestBody(commerceOrder));
+			orderRequest.purchaseUnits(
+				_buildRequestBody(
+					commerceOrder, commercePaymentRequest.getLocale()));
 
 			ApplicationContext applicationContext = new ApplicationContext();
 
@@ -838,26 +848,120 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		return null;
 	}
 
-	private RefundRequest _buildRefundRequestBody(
-		String amount, String currencyCode) {
+	private List<PurchaseUnitRequest> _buildFullRequestBody(
+			CommerceOrder commerceOrder, Locale locale)
+		throws PortalException {
 
-		Money money = new Money();
+		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
 
-		money.currencyCode(currencyCode);
-		money.value(amount);
+		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		RefundRequest refundRequest = new RefundRequest();
+		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
 
-		refundRequest.amount(money);
+		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
+		amountWithBreakdown.value(
+			_getAmountValue(commerceOrder.getTotal(), commerceCurrency));
 
-		return refundRequest;
+		AmountBreakdown amountBreakdown = new AmountBreakdown();
+
+		com.paypal.orders.Money shipping = new com.paypal.orders.Money();
+
+		shipping.currencyCode(commerceCurrency.getCode());
+		shipping.value(
+			_getAmountValue(
+				commerceOrder.getShippingAmount(), commerceCurrency));
+
+		amountBreakdown.shipping(shipping);
+
+		com.paypal.orders.Money itemTotal = new com.paypal.orders.Money();
+
+		itemTotal.currencyCode(commerceCurrency.getCode());
+		itemTotal.value(
+			_getAmountValue(commerceOrder.getSubtotal(), commerceCurrency));
+
+		amountBreakdown.itemTotal(itemTotal);
+
+		com.paypal.orders.Money taxTotal = new com.paypal.orders.Money();
+
+		taxTotal.currencyCode(commerceCurrency.getCode());
+		taxTotal.value(
+			_getAmountValue(commerceOrder.getTaxAmount(), commerceCurrency));
+
+		amountBreakdown.taxTotal(taxTotal);
+
+		amountWithBreakdown.amountBreakdown(amountBreakdown);
+
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+
+		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
+
+		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+
+		if (shippingAddress != null) {
+			ShippingDetail shippingDetail = new ShippingDetail();
+
+			Name name = new Name();
+
+			name.fullName(shippingAddress.getName());
+
+			shippingDetail.name(name);
+
+			AddressPortable addressPortable = new AddressPortable();
+
+			addressPortable.addressLine1(shippingAddress.getStreet1());
+			addressPortable.addressLine2(shippingAddress.getStreet2());
+			addressPortable.postalCode(shippingAddress.getZip());
+
+			Country country = shippingAddress.getCountry();
+
+			addressPortable.countryCode(country.getA2());
+
+			Region region = shippingAddress.getRegion();
+
+			addressPortable.adminArea1(region.getRegionCode());
+
+			addressPortable.adminArea2(shippingAddress.getCity());
+
+			shippingDetail.addressPortable(addressPortable);
+
+			purchaseUnitRequest.shippingDetail(shippingDetail);
+		}
+
+		List<Item> items = new ArrayList<>();
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			Item item = new Item();
+
+			item.name(commerceOrderItem.getName(locale));
+			item.quantity(String.valueOf(commerceOrderItem.getQuantity()));
+			item.sku(commerceOrderItem.getSku());
+
+			com.paypal.orders.Money unitAmount = new com.paypal.orders.Money();
+
+			unitAmount.currencyCode(commerceCurrency.getCode());
+			unitAmount.value(
+				_getAmountValue(
+					commerceOrderItem.getUnitPrice(), commerceCurrency));
+
+			item.unitAmount(unitAmount);
+
+			items.add(item);
+		}
+
+		purchaseUnitRequest.items(items);
+
+		purchaseUnitRequests.add(purchaseUnitRequest);
+
+		return purchaseUnitRequests;
 	}
 
-	private List<PurchaseUnitRequest> _buildRequestBody(
+	private List<PurchaseUnitRequest> _buildMinimalRequestBody(
 			CommerceOrder commerceOrder)
 		throws PortalException {
 
-		List<PurchaseUnitRequest> purchaseUnits = new ArrayList<>();
+		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
@@ -877,10 +981,44 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
 
-			purchaseUnits.add(purchaseUnitRequest);
+			purchaseUnitRequests.add(purchaseUnitRequest);
 		}
 
-		return purchaseUnits;
+		return purchaseUnitRequests;
+	}
+
+	private RefundRequest _buildRefundRequestBody(
+		String amount, String currencyCode) {
+
+		Money money = new Money();
+
+		money.currencyCode(currencyCode);
+		money.value(amount);
+
+		RefundRequest refundRequest = new RefundRequest();
+
+		refundRequest.amount(money);
+
+		return refundRequest;
+	}
+
+	private List<PurchaseUnitRequest> _buildRequestBody(
+			CommerceOrder commerceOrder, Locale locale)
+		throws PortalException {
+
+		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
+			_getPayPalGroupServiceConfiguration(commerceOrder.getGroupId());
+
+		String requestDetails =
+			payPalGroupServiceConfiguration.requestDetails();
+
+		if (requestDetails.equals(
+				PayPalCommercePaymentMethodConstants.REQUEST_DETAILS_FULL)) {
+
+			return _buildFullRequestBody(commerceOrder, locale);
+		}
+
+		return _buildMinimalRequestBody(commerceOrder);
 	}
 
 	private Agreement _getAgreement(
@@ -943,6 +1081,15 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		agreement.setShippingAddress(shippingAddress);
 
 		return agreement.create(apiContext);
+	}
+
+	private String _getAmountValue(
+		BigDecimal amount, CommerceCurrency commerceCurrency) {
+
+		BigDecimal scaledAmount = amount.setScale(
+			2, RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
+
+		return scaledAmount.toPlainString();
 	}
 
 	private APIContext _getAPIContext(long groupId) throws PortalException {

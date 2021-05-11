@@ -87,6 +87,7 @@ class ItemSelectorRepositoryEntryBrowser extends PortletBase {
 			editImageURL: this.editImageURL,
 			handleSelectedItem: this._onItemSelected.bind(this),
 			headerTitle: this.closeCaption,
+			itemReturnType: this.uploadItemReturnType,
 			items,
 		};
 

@@ -3135,6 +3135,24 @@ definition {
 		}
 	}
 
+	macro viewVideoPreviewGeneratingInfo {
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO",
+			value1 = "Generating video preview will take a few minutes.");
+
+		while (IsElementPresent(locator1 = "DocumentsAndMediaDocument#VIDEO_GENERATION_INFO")) {
+			Pause(locator1 = "1000");
+
+			Refresh();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
+		}
+
+		SelectFrame.selectFrameTop();
+	}
+
 	macro viewWebDAVURL {
 		DMDocument.expandInfo();
 

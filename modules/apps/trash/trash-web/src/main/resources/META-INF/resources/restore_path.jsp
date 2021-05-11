@@ -81,3 +81,57 @@
 	<aui:input name="classPK" type="hidden" value="" />
 	<aui:input name="containerModelId" type="hidden" value="" />
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />restoreDialog(uri) {
+		Liferay.Util.openSelectionModal({
+			onSelect: (event) => {
+				const selectContainerForm = document.getElementById(
+					'<portlet:namespace />selectContainerForm'
+				);
+
+				if (selectContainerForm) {
+					const className = selectContainerForm.querySelector(
+						'#<portlet:namespace />className'
+					);
+
+					if (className) {
+						className.setAttribute('value', event.classname);
+					}
+
+					const classPK = selectContainerForm.querySelector(
+						'#<portlet:namespace />classPK'
+					);
+
+					if (classPK) {
+						classPK.setAttribute('value', event.classpk);
+					}
+
+					const containerModelId = selectContainerForm.querySelector(
+						'#<portlet:namespace />containerModelId'
+					);
+
+					if (containerModelId) {
+						containerModelId.setAttribute(
+							'value',
+							event.containermodelid
+						);
+					}
+
+					const redirect = selectContainerForm.querySelector(
+						'#<portlet:namespace />redirect'
+					);
+
+					if (redirect) {
+						redirect.setAttribute('value', event.redirect);
+					}
+
+					submitForm(selectContainerForm);
+				}
+			},
+			selectEventName: '<portlet:namespace />selectContainer',
+			title: '<liferay-ui:message key="warning" />',
+			url: uri,
+		});
+	}
+</aui:script>

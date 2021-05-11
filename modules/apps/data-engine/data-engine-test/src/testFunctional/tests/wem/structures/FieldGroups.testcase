@@ -68,7 +68,7 @@ definition {
 	@description = "This is a test for LRQA-66584. This test validates the fields creation into a field group up to 3 levels, field groups edition, and field groups deletion"
 	@priority = "5"
 	test CreateEditAndDeleteFieldGroups {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		DataEngine.addField(
 			fieldFieldLabel = "Text",

@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetLinkLocalServiceUtil;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.test.util.BookmarksTestUtil;
+import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
@@ -40,17 +41,21 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -83,6 +88,21 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 		_bookmarksEntry = BookmarksTestUtil.addEntry(group.getGroupId(), true);
 
 		addAssetLink(_journalArticle, _bookmarksEntry, 1);
+
+		_configurationProvider.saveCompanyConfiguration(
+			ExportImportServiceConfiguration.class, group.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"includeAllAssetLinks", true
+			).build());
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		_configurationProvider.deleteCompanyConfiguration(
+			ExportImportServiceConfiguration.class, group.getCompanyId());
 	}
 
 	@Test
@@ -291,6 +311,10 @@ public class AssetLinkExportImportTest extends BaseExportImportTestCase {
 	}
 
 	private BookmarksEntry _bookmarksEntry;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
+
 	private JournalArticle _journalArticle;
 
 }

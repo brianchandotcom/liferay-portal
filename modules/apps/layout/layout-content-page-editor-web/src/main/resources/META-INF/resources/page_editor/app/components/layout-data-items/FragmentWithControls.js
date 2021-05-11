@@ -111,10 +111,10 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
-				[`mb-${marginBottom}`]: marginBottom != null,
-				[`ml-${marginLeft}`]: marginLeft != null,
-				[`mr-${marginRight}`]: marginRight != null,
-				[`mt-${marginTop}`]: marginTop != null,
+				[`mb-${marginBottom}`]: !isNaN(parseInt(marginBottom, 10)),
+				[`ml-${marginLeft}`]: !isNaN(parseInt(marginLeft, 10)),
+				[`mr-${marginRight}`]: !isNaN(parseInt(marginRight, 10)),
+				[`mt-${marginTop}`]: !isNaN(parseInt(marginTop, 10)),
 				'page-editor__topper--hovered': hovered,
 			})}
 			item={item}

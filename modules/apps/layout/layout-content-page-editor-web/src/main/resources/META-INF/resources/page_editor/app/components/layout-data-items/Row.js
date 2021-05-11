@@ -117,30 +117,28 @@ const Row = React.forwardRef(
 
 		const rowContent = (
 			<ClayLayout.Row
-				className={classNames(
-					className,
-					`mb-${marginBottom || 0}`,
-					`mt-${marginTop || 0}`,
-					`pb-${paddingBottom || 0}`,
-					`pl-${paddingLeft || 0}`,
-					`pr-${paddingRight || 0}`,
-					`pt-${paddingTop || 0}`,
-					{
-						'flex-column-reverse':
-							item.config.numberOfColumns === 2 &&
-							modulesPerRow === 1 &&
-							reverseOrder,
-						[`ml-${marginLeft}`]: marginLeft && marginLeft !== '0',
-						[`mr-${marginRight}`]:
-							marginRight && marginRight !== '0',
-						'no-gutters': !item.config.gutters,
-						[textAlign
-							? textAlign.startsWith('text-')
-								? textAlign
-								: `text-${textAlign}`
-							: '']: textAlign,
-					}
-				)}
+				className={classNames(className, {
+					'flex-column-reverse':
+						item.config.numberOfColumns === 2 &&
+						modulesPerRow === 1 &&
+						reverseOrder,
+					[`mb-${marginBottom}`]: !isNaN(parseInt(marginBottom, 10)),
+					[`mt-${marginTop}`]: !isNaN(parseInt(marginTop, 10)),
+					[`pb-${paddingBottom}`]: !isNaN(
+						parseInt(paddingBottom, 10)
+					),
+					[`pl-${paddingLeft}`]: !isNaN(parseInt(paddingLeft, 10)),
+					[`pr-${paddingRight}`]: !isNaN(parseInt(paddingRight, 10)),
+					[`pt-${paddingTop}`]: !isNaN(parseInt(paddingTop, 10)),
+					[`ml-${marginLeft}`]: !isNaN(parseInt(marginLeft, 10)),
+					[`mr-${marginRight}`]: !isNaN(parseInt(marginRight, 10)),
+					'no-gutters': !item.config.gutters,
+					[textAlign
+						? textAlign.startsWith('text-')
+							? textAlign
+							: `text-${textAlign}`
+						: '']: textAlign,
+				})}
 				id={elementId}
 				ref={ref}
 				style={style}

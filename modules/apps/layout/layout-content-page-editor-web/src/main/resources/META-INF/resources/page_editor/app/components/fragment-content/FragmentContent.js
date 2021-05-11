@@ -282,17 +282,27 @@ const FragmentContent = ({
 			<UnsafeHTML
 				className={classNames(
 					className,
-					`pb-${paddingBottom || 0}`,
-					`pl-${paddingLeft || 0}`,
-					`pr-${paddingRight || 0}`,
-					`pt-${paddingTop || 0}`,
 					'page-editor__fragment-content',
 					{
 						'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
-						[`mb-${marginBottom || 0}`]: !withinTopper,
-						[`ml-${marginLeft || 0}`]: !withinTopper,
-						[`mr-${marginRight || 0}`]: !withinTopper,
-						[`mt-${marginTop || 0}`]: !withinTopper,
+						[`mb-${marginBottom}`]:
+							!isNaN(parseInt(marginBottom, 10)) && !withinTopper,
+						[`ml-${marginLeft}`]:
+							!isNaN(parseInt(marginLeft, 10)) && !withinTopper,
+						[`mr-${marginRight}`]:
+							!isNaN(parseInt(marginRight, 10)) && !withinTopper,
+						[`mt-${marginTop}`]:
+							!isNaN(parseInt(marginTop, 10)) && !withinTopper,
+						[`pb-${paddingBottom}`]: !isNaN(
+							parseInt(paddingBottom, 10)
+						),
+						[`pl-${paddingLeft}`]: !isNaN(
+							parseInt(paddingLeft, 10)
+						),
+						[`pr-${paddingRight}`]: !isNaN(
+							parseInt(paddingRight, 10)
+						),
+						[`pt-${paddingTop}`]: !isNaN(parseInt(paddingTop, 10)),
 						[textAlign
 							? textAlign.startsWith('text-')
 								? textAlign

@@ -84,8 +84,11 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 				[`container-fluid`]: widthType === CONTAINER_WIDTH_TYPES.fixed,
 				[`container-fluid-max-xl`]:
 					widthType === CONTAINER_WIDTH_TYPES.fixed,
-				[`ml-${marginLeft}`]: widthType !== CONTAINER_WIDTH_TYPES.fixed,
+				[`ml-${marginLeft}`]:
+					!isNaN(parseInt(marginLeft, 10)) &&
+					widthType !== CONTAINER_WIDTH_TYPES.fixed,
 				[`mr-${marginRight}`]:
+					!isNaN(parseInt(marginRight, 10)) &&
 					widthType !== CONTAINER_WIDTH_TYPES.fixed,
 				'p-0': widthType === CONTAINER_WIDTH_TYPES.fixed,
 				'page-editor__topper--hovered': hovered,

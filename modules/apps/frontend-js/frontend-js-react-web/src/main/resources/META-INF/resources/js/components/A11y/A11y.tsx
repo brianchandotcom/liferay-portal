@@ -25,6 +25,12 @@ import useA11y from '../../hooks/useA11y';
 import type {Violation as TViolation} from '../../hooks/useA11y';
 import type {A11yCheckerOptions} from './A11yChecker';
 
+declare var Liferay: {
+	Language: {
+		get(value: string): string;
+	};
+};
+
 const rectAttrs: Array<keyof DOMRect> = [
 	'bottom',
 	'height',
@@ -138,8 +144,7 @@ function Violation({target, violations}: ViolationProps) {
 					</div>
 					<div className="inline-item inline-item-after">
 						<span>
-							{/* @ts-ignore */}
-							{Liferay.Language.get('Accessibility violation')}
+							{Liferay.Language.get('accessibility-violation')}
 						</span>
 					</div>
 				</>
@@ -176,7 +181,7 @@ function Violation({target, violations}: ViolationProps) {
 	);
 }
 
-export default function A11y(props: A11yCheckerOptions) {
+export default function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 	const violations = useA11y(props);
 
 	if (violations) {

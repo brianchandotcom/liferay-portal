@@ -21,16 +21,7 @@ export const INITIAL_PAGES = [
 		localizedTitle: {
 			[themeDisplay.getLanguageId()]: '',
 		},
-		rows: [
-			{
-				columns: [
-					{
-						fields: [],
-						size: 12,
-					},
-				],
-			},
-		],
+		rows: [],
 		title: '',
 	},
 ];

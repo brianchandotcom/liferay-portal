@@ -1091,15 +1091,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Navigator.ensureLocaleURL(locale = "es");
-
-		AssertClick(
-			key_dmDocumentTitle = "DM Document Title",
-			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
-			value1 = "DM Document Title");
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewDocumentTypePG(
 			fieldFieldLabel = "Text",
+			locale = "es",
 			textContent = "Texto de prueba");
 	}
 

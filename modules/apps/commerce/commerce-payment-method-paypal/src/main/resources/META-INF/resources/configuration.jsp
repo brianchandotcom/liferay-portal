@@ -39,7 +39,7 @@ PayPalGroupServiceConfiguration payPalGroupServiceConfiguration = (PayPalGroupSe
 
 			<aui:input id="paypal-client-secret" label="client-secret" name="settings--clientSecret--" value="<%= payPalGroupServiceConfiguration.clientSecret() %>" />
 
-			<aui:select id="paypal-settings--mode" name="settings--mode--">
+			<aui:select id="paypal-settings-mode" name="settings--mode--">
 
 				<%
 				for (String mode : PayPalCommercePaymentMethodConstants.MODES) {
@@ -57,6 +57,20 @@ PayPalGroupServiceConfiguration payPalGroupServiceConfiguration = (PayPalGroupSe
 		<commerce-ui:info-box
 			title="options"
 		>
+			<aui:select id="paypal-settings-request" name="settings--request--">
+
+				<%
+				for (String requestDetailsOption : PayPalCommercePaymentMethodConstants.REQUEST_DETAILS_OPTIONS) {
+				%>
+
+					<aui:option label="<%= requestDetailsOption %>" selected="<%= requestDetailsOption.equals(payPalGroupServiceConfiguration.requestDetails()) %>" value="<%= requestDetailsOption %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
 			<aui:input id="paypal-payment-attempts-max-count" label="payment-attempts-max-count" name="settings--paymentAttempts--" value="<%= payPalGroupServiceConfiguration.paymentAttemptsMaxCount() %>" />
 		</commerce-ui:info-box>
 	</commerce-ui:panel>

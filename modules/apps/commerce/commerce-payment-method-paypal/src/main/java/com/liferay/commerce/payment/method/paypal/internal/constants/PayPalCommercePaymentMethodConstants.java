@@ -63,6 +63,15 @@ public class PayPalCommercePaymentMethodConstants {
 
 	public static final String PLAN_INFINITE = "INFINITE";
 
+	public static final String REQUEST_DETAILS_FULL = "request-details-full";
+
+	public static final String REQUEST_DETAILS_MINIMAL =
+		"request-details-minimal";
+
+	public static final String[] REQUEST_DETAILS_OPTIONS = {
+		REQUEST_DETAILS_FULL, REQUEST_DETAILS_MINIMAL
+	};
+
 	public static final String SERVICE_NAME =
 		"com.liferay.commerce.payment.engine.method.paypal";
 

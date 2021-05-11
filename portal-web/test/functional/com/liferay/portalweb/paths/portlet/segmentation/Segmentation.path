@@ -54,6 +54,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERION_CONJUNCTION</td>
+	<td>//div[contains(@class,'criteria')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CRITERION_CONJUNCTION_ITEM</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_criterionConjunctionItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_SEGMENT</td>
 	<td>//*[contains(@class, 'lexicon-icon-times-circle')]</td>
 	<td></td>

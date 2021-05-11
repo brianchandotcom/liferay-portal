@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_N</td>
+	<td>xpath=(//*[contains(@class,'btn')][normalize-space(text())='${key_text}'])[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_WITH_COLOR</td>
 	<td>//*[contains(@class,'btn-${key_color}')][normalize-space(text())='${key_text}']</td>
 	<td></td>

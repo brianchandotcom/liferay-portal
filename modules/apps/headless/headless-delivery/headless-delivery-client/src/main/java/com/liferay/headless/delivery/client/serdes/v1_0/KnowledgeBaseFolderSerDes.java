@@ -152,6 +152,20 @@ public class KnowledgeBaseFolderSerDes {
 			sb.append("\"");
 		}
 
+		if (knowledgeBaseFolder.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(knowledgeBaseFolder.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (knowledgeBaseFolder.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -320,6 +334,15 @@ public class KnowledgeBaseFolderSerDes {
 				String.valueOf(knowledgeBaseFolder.getDescription()));
 		}
 
+		if (knowledgeBaseFolder.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(knowledgeBaseFolder.getExternalReferenceCode()));
+		}
+
 		if (knowledgeBaseFolder.getId() == null) {
 			map.put("id", null);
 		}
@@ -451,6 +474,14 @@ public class KnowledgeBaseFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseFolder.setDescription(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseFolder.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
 				}
 			}

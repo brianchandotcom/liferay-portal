@@ -105,6 +105,21 @@ public interface KnowledgeBaseFolderResource {
 			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public KnowledgeBaseFolder
+			getSiteKnowledgeBaseFolderByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public KnowledgeBaseFolder
+			putSiteKnowledgeBaseFolderByExternalReferenceCode(
+				Long siteId, String externalReferenceCode,
+				KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteKnowledgeBaseFolderPermissionsPage(
 				Long siteId, String roleNames)

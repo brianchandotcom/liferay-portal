@@ -251,23 +251,13 @@ definition {
 		property test.name.skip.portal.instance = "WebContentDisplay#AddVideoViaWebContent";
 		property testray.component.names = "Web Content Administration";
 
-		SystemSettings.openSystemSettingsAdmin();
+		task ("Add an external video shortcut") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "FFMPEG Video Converter",
-			configurationScope = "System Scope");
-
-		FormFields.enableCheckbox(fieldName = "enabled");
-
-		SystemSettings.saveConfiguration();
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.mp4",
-			groupName = "Test Site Name",
-			mimeType = "video/mp4",
-			sourceFileName = "Document_1.mp4");
+			VideoShortcut.addCP(
+				videoShortcutTitle = "Liferay Digital Experience Platform",
+				videoURL = "https://www.youtube.com/watch?v=HOdbzGCI5ME");
+		}
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -279,8 +269,7 @@ definition {
 
 		WebContent.uploadVideo(
 			navTab = "Documents and Media",
-			videoShortcutPreview = "Document_1.mp4",
-			videoShortcutTitle = "Document_1.mp4");
+			videoShortcutTitle = "Liferay Digital Experience Platform");
 
 		PortletEntry.publish();
 
@@ -292,7 +281,9 @@ definition {
 
 		IFrame.closeFrame();
 
-		WebContent.viewVideoViaWCD(videoShortcutTitle = "Document_1.mp4");
+		WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+
+		WebContent.viewVideoViaWCD(videoShortcutTitle = "Liferay Digital Experience Platform");
 	}
 
 	@priority = "5"

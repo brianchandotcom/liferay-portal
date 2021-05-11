@@ -306,16 +306,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		if (isSet(freeLogin)) {
-			if (!(isSet(userEmailAddress))) {
-				var userEmailAddress = "test@liferay.com";
-			}
-
-			Open(locator1 = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
-		}
-		else {
-			Open(locator1 = "${baseURL}/web/guest/home");
-		}
+		Open(locator1 = "${baseURL}/web/guest/home");
 	}
 
 	macro openWithAppendToBaseURL {

@@ -92,6 +92,13 @@ definition {
 		}
 
 		var displayDateYear = DateUtil.getCurrentYear();
+
+		var i = MathUtil.quotient("${displayDateDay}", "10");
+
+		if ("${i}" == "0") {
+			var displayDateDay= "0${displayDateDay}";
+		}
+
 		var displayDate = "${displayDateYear}-${displayDateMonth}-${displayDateDay}";
 
 		Segmentation.viewSegment(

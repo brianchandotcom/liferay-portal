@@ -3978,6 +3978,12 @@ go</echo>
 					</then>
 				</elseif>
 				<elseif>
+					<equals arg1="@{liferay.portal.bundle}" arg2="7.0.10.16" />
+					<then>
+						<var name="app.server.tomcat.version" value="8.5.63" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="@{liferay.portal.bundle}" substring="7.0" />
 					<then>
 						<var name="app.server.tomcat.version" value="8.0.53" />

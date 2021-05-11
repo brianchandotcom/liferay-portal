@@ -17,6 +17,7 @@ package com.liferay.object.rest.internal.deployer;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.internal.graphql.ObjectDefinitionGraphQLDTOContributor;
+import com.liferay.object.rest.internal.manager.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
@@ -59,7 +60,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				GraphQLDTOContributor.class,
 				ObjectDefinitionGraphQLDTOContributor.of(
-					objectDefinition,
+					objectDefinition, _objectEntryManager,
 					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())),
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -78,6 +79,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		target = "(component.factory=com.liferay.object.internal.jaxrs.application.ObjectEntryApplication)"
 	)
 	private ComponentFactory _componentFactory;
+
+	@Reference
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

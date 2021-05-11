@@ -41,18 +41,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Javier de Arcos
  */
-@Component(immediate = true, service = GraphQLDTOContributor.class)
 public class ObjectDefinitionGraphQLDTOContributor
 	implements GraphQLDTOContributor<ObjectEntry> {
 
 	public static ObjectDefinitionGraphQLDTOContributor of(
-		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
+		ObjectDefinition objectDefinition,
+		ObjectEntryManager objectEntryManager, List<ObjectField> objectFields) {
 
 		List<GraphQLDTOProperty> properties = new ArrayList<>();
 
@@ -71,7 +68,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return new ObjectDefinitionGraphQLDTOContributor(
 			new ObjectEntryEntityModel(objectFields),
 			objectDefinition.getName(),
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), objectEntryManager,
 			objectDefinition.getPrimaryKeyColumnName(), properties);
 	}
 
@@ -82,7 +79,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 		return _objectEntryManager.addObjectEntry(
 			dtoConverterContext.getUserId(),
-			(long)dtoConverterContext.getAttribute("siteId"),
+			(Long)dtoConverterContext.getAttribute("siteId"),
 			_objectDefinitionId, objectEntry, dtoConverterContext);
 	}
 
@@ -108,7 +105,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 		throws Exception {
 
 		return _objectEntryManager.getObjectEntries(
-			(long)dtoConverterContext.getAttribute("companyId"),
+			(Long)dtoConverterContext.getAttribute("companyId"),
 			_objectDefinitionId, aggregation, filter, pagination, search, sorts,
 			dtoConverterContext);
 	}
@@ -146,11 +143,13 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	private ObjectDefinitionGraphQLDTOContributor(
 		EntityModel entityModel, String name, long objectDefinitionId,
-		String primaryKeyPropertyName, List<GraphQLDTOProperty> properties) {
+		ObjectEntryManager objectEntryManager, String primaryKeyPropertyName,
+		List<GraphQLDTOProperty> properties) {
 
 		_entityModel = entityModel;
 		_name = name;
 		_objectDefinitionId = objectDefinitionId;
+		_objectEntryManager = objectEntryManager;
 		_primaryKeyPropertyName = primaryKeyPropertyName;
 		_properties = properties;
 	}
@@ -185,10 +184,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	private final EntityModel _entityModel;
 	private final String _name;
 	private final long _objectDefinitionId;
-
-	@Reference
-	private ObjectEntryManager _objectEntryManager;
-
+	private final ObjectEntryManager _objectEntryManager;
 	private final String _primaryKeyPropertyName;
 	private final List<GraphQLDTOProperty> _properties;
 

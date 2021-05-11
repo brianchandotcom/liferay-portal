@@ -16,19 +16,12 @@ package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.AudioConverter;
 import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.petra.log4j.Log4JUtil;
-import com.liferay.petra.process.ProcessCallable;
-import com.liferay.petra.process.ProcessChannel;
-import com.liferay.petra.process.ProcessException;
-import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.fabric.InputResource;
-import com.liferay.portal.fabric.OutputResource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -36,29 +29,18 @@ import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListene
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xuggler.XugglerUtil;
-import com.liferay.portal.log.Log4jLogFactoryImpl;
-import com.liferay.portal.util.PortalClassPathUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
 import java.io.InputStream;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.Future;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -165,7 +147,7 @@ public class AudioProcessorImpl
 
 	@Override
 	public boolean isSupported(String mimeType) {
-		if (_audioMimeTypes.contains(mimeType) && XugglerUtil.isEnabled()) {
+		if (_audioMimeTypes.contains(mimeType) && _audioConverter.isEnabled()) {
 			return true;
 		}
 
@@ -288,7 +270,9 @@ public class AudioProcessorImpl
 				return;
 			}
 
-			if (!XugglerUtil.isEnabled() || _hasAudio(destinationFileVersion)) {
+			if (!_audioConverter.isEnabled() ||
+				_hasAudio(destinationFileVersion)) {
+
 				return;
 			}
 
@@ -362,54 +346,9 @@ public class AudioProcessorImpl
 		stopWatch.start();
 
 		try {
-			if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
-				ProcessCallable<String> processCallable =
-					new LiferayAudioProcessCallable(
-						ServerDetector.getServerId(),
-						PropsUtil.get(PropsKeys.LIFERAY_HOME),
-						HashMapBuilder.putAll(
-							Log4JUtil.getCustomLogSettings()
-						).put(
-							PropsUtil.class.getName(), "WARN"
-						).build(),
-						srcFile, destFile, containerType,
-						PropsUtil.getProperties(
-							PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
-
-				ProcessChannel<String> processChannel =
-					_processExecutor.execute(
-						PortalClassPathUtil.getPortalProcessConfig(),
-						processCallable);
-
-				Future<String> future =
-					processChannel.getProcessNoticeableFuture();
-
-				String processIdentity = String.valueOf(
-					fileVersion.getFileVersionId());
-
-				futures.put(processIdentity, future);
-
-				future.get();
-			}
-			else {
-				LiferayConverter liferayConverter = new LiferayAudioConverter(
-					srcFile.getCanonicalPath(), destFile.getCanonicalPath(),
-					containerType,
-					PropsUtil.getProperties(
-						PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO, false));
-
-				liferayConverter.convert();
-			}
-		}
-		catch (CancellationException cancellationException) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Cancellation received for ",
-						fileVersion.getFileVersionId(), " ",
-						fileVersion.getTitle()),
-					cancellationException);
-			}
+			FileUtil.write(
+				destFile,
+				_audioConverter.generateAudioPreview(srcFile, containerType));
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -426,9 +365,9 @@ public class AudioProcessorImpl
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				StringBundler.concat(
-					"Xuggler generated a ", containerType,
-					" preview audio for ", fileVersion.getFileVersionId(),
-					" in ", stopWatch.getTime(), "ms"));
+					"Generated a ", containerType, " preview audio for ",
+					fileVersion.getFileVersionId(), " in ", stopWatch.getTime(),
+					"ms"));
 		}
 	}
 
@@ -477,83 +416,18 @@ public class AudioProcessorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AudioProcessorImpl.class);
 
+	private static volatile AudioConverter _audioConverter =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			AudioConverter.class, AudioProcessorImpl.class, "_audioConverter",
+			false);
 	private static volatile FileVersionPreviewEventListener
 		_fileVersionPreviewEventListener =
 			ServiceProxyFactory.newServiceTrackedInstance(
 				FileVersionPreviewEventListener.class, AudioProcessorImpl.class,
 				"_fileVersionPreviewEventListener", false, false);
-	private static volatile ProcessExecutor _processExecutor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ProcessExecutor.class, AudioProcessorImpl.class, "_processExecutor",
-			true);
 
 	private final Set<String> _audioMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_MIME_TYPES);
 	private final List<Long> _fileVersionIds = new Vector<>();
-
-	private static class LiferayAudioProcessCallable
-		implements ProcessCallable<String> {
-
-		public LiferayAudioProcessCallable(
-			String serverId, String liferayHome,
-			Map<String, String> customLogSettings, File inputFile,
-			File outputFile, String audioContainer,
-			Properties audioProperties) {
-
-			_serverId = serverId;
-			_liferayHome = liferayHome;
-			_customLogSettings = customLogSettings;
-			_inputFile = inputFile;
-			_outputFile = outputFile;
-			_audioContainer = audioContainer;
-			_audioProperties = audioProperties;
-		}
-
-		@Override
-		public String call() throws ProcessException {
-			XugglerAutoInstallUtil.installNativeLibraries();
-
-			Properties systemProperties = System.getProperties();
-
-			SystemEnv.setProperties(systemProperties);
-
-			Class<?> clazz = getClass();
-
-			Log4JUtil.initLog4J(
-				_serverId, _liferayHome, clazz.getClassLoader(),
-				new Log4jLogFactoryImpl(), _customLogSettings);
-
-			try {
-				LiferayConverter liferayConverter = new LiferayAudioConverter(
-					_inputFile.getCanonicalPath(),
-					_outputFile.getCanonicalPath(), _audioContainer,
-					_audioProperties);
-
-				liferayConverter.convert();
-			}
-			catch (Exception exception) {
-				throw new ProcessException(exception);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		private static final long serialVersionUID = 1L;
-
-		private final String _audioContainer;
-		private final Properties _audioProperties;
-		private final Map<String, String> _customLogSettings;
-
-		@InputResource
-		private final File _inputFile;
-
-		private final String _liferayHome;
-
-		@OutputResource
-		private final File _outputFile;
-
-		private final String _serverId;
-
-	}
 
 }

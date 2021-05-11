@@ -1673,7 +1673,8 @@ public class GraphQLServletExtender {
 							dataFetchingEnvironment,
 							HashMapBuilder.<String, Serializable>put(
 								"siteId",
-								dataFetchingEnvironment.getArgument("siteId")
+								(Long)dataFetchingEnvironment.getArgument(
+									"siteId")
 							).build()))
 			).build());
 

@@ -404,9 +404,7 @@ definition {
 	}
 
 	@description = "It ensures that the MP4 file can be previewed."
-	@ignore = "true"
 	@priority = "4"
-	@refactorneeded
 	test PreviewMP4 {
 		property test.name.skip.portal.instance = "DLVideo#PreviewMP4";
 

@@ -224,11 +224,13 @@ const DatePicker = ({
 		<>
 			<input
 				aria-hidden="true"
+				id={name + '_fieldDetails'}
 				name={name}
 				type="hidden"
 				value={getValueForHidden(value)}
 			/>
 			<ClayDatePicker
+				aria-labelledby={name + '_fieldDetails'}
 				dateFormat={dateMask}
 				disabled={disabled}
 				expanded={expanded}

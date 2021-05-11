@@ -2400,6 +2400,10 @@ definition {
 			Refresh();
 		}
 
+		if (isSet(locale)) {
+			Navigator.ensureLocaleURL(locale = "es");
+		}
+
 		DMDocument.expandInfo();
 
 		if (isSet(booleanValue)) {

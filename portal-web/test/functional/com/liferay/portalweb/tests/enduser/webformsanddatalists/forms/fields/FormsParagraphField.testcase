@@ -230,24 +230,6 @@ definition {
 		// TODO LPS-131227 FieldReferenceCanBeEdited pending implementation
 	}
 
-	@description = "Verify that the Field Type can be changed"
-	@ignore = "true"
-	@priority = "5"
-	test FieldTypeCanBeChanged {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131232 FieldTypeCanBeChanged pending implementation
-	}
-
-	@description = "Verify that the Field Label can be edited"
-	@ignore = "true"
-	@priority = "5"
-	test LabelCanBeEdited {
-		property portal.acceptance = "false";
-
-		// TODO LPS-131226 LabelCanBeEdited pending implementation
-	}
-
 	@description = "Verify that text in the Body Text can be Bolded, Italicized and Underlined"
 	@ignore = "true"
 	@priority = "5"
@@ -255,6 +237,24 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131246 TextCanBeBoldedItalicizedAndUnderlined pending implementation
+	}
+
+	@description = "Verify that the Field Title can be edited"
+	@ignore = "true"
+	@priority = "5"
+	test TitleCanBeEdited {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131226 TitleCanBeEdited pending implementation
+	}
+
+	@description = "Verify that the Field Type can be changed"
+	@ignore = "true"
+	@priority = "5"
+	test TypeCanBeChanged {
+		property portal.acceptance = "false";
+
+		// TODO LPS-131232 TypeCanBeChanged pending implementation
 	}
 
 }

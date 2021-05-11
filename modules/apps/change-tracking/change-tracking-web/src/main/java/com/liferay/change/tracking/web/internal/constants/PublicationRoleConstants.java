@@ -22,45 +22,44 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
  */
 public class PublicationRoleConstants {
 
-	public static final String LABEL_EDIT = "edit";
+	public static final String LABEL_EDITOR = "editor";
 
-	public static final String LABEL_PERMISSIONS = "permissions";
+	public static final String LABEL_INVITER = "inviter";
 
-	public static final String LABEL_PUBLISH = "publish";
+	public static final String LABEL_PUBLISHER = "publisher";
 
-	public static final String LABEL_VIEW = "view";
+	public static final String LABEL_VIEWER = "viewer";
 
-	public static final String NAME_EDIT =
-		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.edit";
+	public static final String NAME_EDITOR =
+		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.editor";
 
-	public static final String NAME_PERMISSIONS =
-		"com_liferay_change_tracking_web_portlet_PublicationsPortlet." +
-			"permissions";
+	public static final String NAME_INVITER =
+		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.inviter";
 
-	public static final String NAME_PUBLISH =
-		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.publish";
+	public static final String NAME_PUBLISHER =
+		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.publisher";
 
-	public static final String NAME_VIEW =
-		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.view";
+	public static final String NAME_VIEWER =
+		"com_liferay_change_tracking_web_portlet_PublicationsPortlet.viewer";
 
-	public static final int ROLE_EDIT = 1;
+	public static final int ROLE_EDITER = 1;
 
-	public static final int ROLE_PERMISSIONS = 2;
+	public static final int ROLE_INVITER = 2;
 
-	public static final int ROLE_PUBLISH = 3;
+	public static final int ROLE_PUBLISHER = 3;
 
-	public static final int ROLE_VIEW = 0;
+	public static final int ROLE_VIEWER = 0;
 
 	public static String[] getModelResourceActions(int role) {
-		if (role == ROLE_EDIT) {
+		if (role == ROLE_EDITER) {
 			return new String[] {ActionKeys.UPDATE, ActionKeys.VIEW};
 		}
-		else if (role == ROLE_PERMISSIONS) {
+		else if (role == ROLE_INVITER) {
 			return new String[] {
 				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
 			};
 		}
-		else if (role == ROLE_PUBLISH) {
+		else if (role == ROLE_PUBLISHER) {
 			return new String[] {
 				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW,
 				CTActionKeys.PUBLISH
@@ -71,45 +70,59 @@ public class PublicationRoleConstants {
 	}
 
 	public static String getNameLabel(String name) {
-		if (name.equals(NAME_EDIT)) {
-			return LABEL_EDIT;
+		if (name.equals(NAME_EDITOR)) {
+			return LABEL_EDITOR;
 		}
-		else if (name.equals(NAME_PERMISSIONS)) {
-			return LABEL_PERMISSIONS;
+		else if (name.equals(NAME_INVITER)) {
+			return LABEL_INVITER;
 		}
-		else if (name.equals(NAME_PUBLISH)) {
-			return LABEL_PUBLISH;
+		else if (name.equals(NAME_PUBLISHER)) {
+			return LABEL_PUBLISHER;
 		}
 
-		return LABEL_VIEW;
+		return LABEL_VIEWER;
 	}
 
 	public static int getNameRole(String name) {
-		if (name.equals(NAME_EDIT)) {
-			return ROLE_EDIT;
+		if (name.equals(NAME_EDITOR)) {
+			return ROLE_EDITER;
 		}
-		else if (name.equals(NAME_PERMISSIONS)) {
-			return ROLE_PERMISSIONS;
+		else if (name.equals(NAME_INVITER)) {
+			return ROLE_INVITER;
 		}
-		else if (name.equals(NAME_PUBLISH)) {
-			return ROLE_PUBLISH;
+		else if (name.equals(NAME_PUBLISHER)) {
+			return ROLE_PUBLISHER;
 		}
 
-		return ROLE_VIEW;
+		return ROLE_VIEWER;
+	}
+
+	public static String getRoleLabel(int role) {
+		if (role == ROLE_EDITER) {
+			return LABEL_EDITOR;
+		}
+		else if (role == ROLE_INVITER) {
+			return LABEL_INVITER;
+		}
+		else if (role == ROLE_PUBLISHER) {
+			return LABEL_PUBLISHER;
+		}
+
+		return LABEL_VIEWER;
 	}
 
 	public static String getRoleName(int role) {
-		if (role == ROLE_EDIT) {
-			return NAME_EDIT;
+		if (role == ROLE_EDITER) {
+			return NAME_EDITOR;
 		}
-		else if (role == ROLE_PERMISSIONS) {
-			return NAME_PERMISSIONS;
+		else if (role == ROLE_INVITER) {
+			return NAME_INVITER;
 		}
-		else if (role == ROLE_PUBLISH) {
-			return NAME_PUBLISH;
+		else if (role == ROLE_PUBLISHER) {
+			return NAME_PUBLISHER;
 		}
 
-		return NAME_VIEW;
+		return NAME_VIEWER;
 	}
 
 }

@@ -126,13 +126,16 @@ public class InviteUsersMVCResourceCommand
 			userGroupRoleLocalService.deleteUserGroupRoles(
 				userIds, group.getGroupId());
 
-			Role role = getRole(
-				resourceRequest,
-				ParamUtil.getInteger(resourceRequest, "roleId"), themeDisplay);
+			int roleId = ParamUtil.getInteger(resourceRequest, "roleId");
+
+			Role role = getRole(resourceRequest, roleId, themeDisplay);
 
 			for (long userId : userIds) {
 				userGroupRoleLocalService.addUserGroupRole(
 					userId, group.getGroupId(), role.getRoleId());
+
+				sendNotificationEvent(
+					ctCollection, userId, roleId, themeDisplay);
 			}
 		}
 		catch (PortalException portalException) {

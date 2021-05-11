@@ -9,9 +9,9 @@ definition {
 	property testray.main.component.name = "Mentions";
 
 	setUp {
-		TestCase.setUpPortalInstance(freeLogin = "true");
+		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG(freeLogin = "true");
+		User.firstLoginPG();
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

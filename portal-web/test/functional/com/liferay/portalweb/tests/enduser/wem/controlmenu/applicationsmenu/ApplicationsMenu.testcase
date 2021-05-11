@@ -8,9 +8,9 @@ definition {
 	property testray.main.component.name = "Control Menu";
 
 	setUp {
-		TestCase.setUpPortalInstance(freeLogin = "true");
+		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG(freeLogin = "true");
+		User.firstLoginPG();
 	}
 
 	tearDown {
@@ -266,7 +266,6 @@ definition {
 
 		task ("Sign In virtual instance") {
 			User.firstLoginPG(
-				freeLogin = "true",
 				password = "test",
 				portalInstanceName = "www.able.com",
 				userEmailAddress = "test@www.able.com",

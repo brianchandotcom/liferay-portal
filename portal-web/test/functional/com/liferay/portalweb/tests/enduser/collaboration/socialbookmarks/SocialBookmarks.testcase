@@ -8,9 +8,9 @@ definition {
 	property testray.main.component.name = "Social Bookmarks";
 
 	setUp {
-		TestCase.setUpPortalInstance(freeLogin = "true");
+		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG(freeLogin = "true");
+		User.firstLoginPG();
 	}
 
 	tearDown {

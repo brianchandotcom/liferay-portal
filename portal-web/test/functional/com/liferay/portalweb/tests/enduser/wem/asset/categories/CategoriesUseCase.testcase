@@ -9,9 +9,9 @@ definition {
 	property testray.main.component.name = "Categories";
 
 	setUp {
-		TestCase.setUpPortalInstance(freeLogin = "true");
+		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG(freeLogin = "true");
+		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
@@ -100,7 +100,6 @@ definition {
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
-				freeLogin = "true",
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 		}
@@ -386,7 +385,6 @@ definition {
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
-				freeLogin = "true",
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 		}
@@ -770,7 +768,6 @@ definition {
 
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
-				freeLogin = "true",
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 		}

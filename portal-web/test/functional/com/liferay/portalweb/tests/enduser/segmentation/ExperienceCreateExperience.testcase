@@ -9,9 +9,9 @@ definition {
 	property testray.main.component.name = "Segmentation";
 
 	setUp {
-		TestCase.setUpPortalInstance(freeLogin = "true");
+		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG(freeLogin = "true");
+		User.firstLoginPG();
 
 		for (var num : list "1,2") {
 			JSONUser.addUser(

@@ -56,50 +56,52 @@ public class LiferayDocumentFormatRegistry implements DocumentFormatRegistry {
 			).put(
 				"java",
 				new DocumentFormat(
-					"Java", DocumentFamily.TEXT, "text/x-java-source", "java")
+					"Java", DocumentFamily.TEXT,
+					ContentTypes.TEXT_X_JAVA_SOURCE, "java")
 			).put(
 				"js",
 				new DocumentFormat(
-					"Javascript", DocumentFamily.TEXT, "application/javascript",
-					"js")
+					"Javascript", DocumentFamily.TEXT,
+					ContentTypes.APPLICATION_JAVASCRIPT, "js")
 			).put(
 				"jsp",
 				new DocumentFormat(
-					"JSP", DocumentFamily.TEXT, "text/jsp", "jsp")
+					"JSP", DocumentFamily.TEXT, ContentTypes.TEXT_X_JSP, "jsp")
 			).put(
 				"jspf",
 				new DocumentFormat(
-					"JSPF", DocumentFamily.TEXT, "text/jspf", "jspf")
+					"JSPF", DocumentFamily.TEXT, ContentTypes.TEXT_X_JSP,
+					"jspf")
 			).put(
 				"sh",
 				new DocumentFormat(
-					"Shell Script", DocumentFamily.TEXT, "application/x-sh",
-					"sh")
+					"Shell Script", DocumentFamily.TEXT,
+					ContentTypes.APPLICATION_X_SH, "sh")
 			).build();
 	private static final Map<String, DocumentFormat>
 		_documentFormatsByMimeType = HashMapBuilder.<String, DocumentFormat>put(
-			"application/javascript",
+			ContentTypes.APPLICATION_JAVASCRIPT,
 			new DocumentFormat(
-				"Javascript", DocumentFamily.TEXT, "application/javascript",
-				"js")
+				"Javascript", DocumentFamily.TEXT,
+				ContentTypes.APPLICATION_JAVASCRIPT, "js")
 		).put(
-			"application/x-sh",
+			ContentTypes.APPLICATION_X_SH,
 			new DocumentFormat(
-				"Shell Script", DocumentFamily.TEXT, "application/x-sh", "sh")
+				"Shell Script", DocumentFamily.TEXT,
+				ContentTypes.APPLICATION_X_SH, "sh")
 		).put(
 			ContentTypes.TEXT_CSS,
 			new DocumentFormat(
 				"CSS", DocumentFamily.TEXT, ContentTypes.TEXT_CSS, "css")
 		).put(
-			"text/x-java-source",
+			ContentTypes.TEXT_X_JAVA_SOURCE,
 			new DocumentFormat(
-				"Java", DocumentFamily.TEXT, "text/x-java-source", "java")
+				"Java", DocumentFamily.TEXT, ContentTypes.TEXT_X_JAVA_SOURCE,
+				"java")
 		).put(
-			"text/x-jsp",
-			new DocumentFormat("JSP", DocumentFamily.TEXT, "text/x-jsp", "jsp")
-		).put(
-			"text/x-jsp",
-			new DocumentFormat("JSPF", DocumentFamily.TEXT, "text/jspf", "jspf")
+			ContentTypes.TEXT_X_JSP,
+			new DocumentFormat(
+				"JSP", DocumentFamily.TEXT, ContentTypes.TEXT_X_JSP, "jsp")
 		).build();
 
 	private final DocumentFormatRegistry _documentFormatRegistry =

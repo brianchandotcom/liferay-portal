@@ -102,10 +102,8 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

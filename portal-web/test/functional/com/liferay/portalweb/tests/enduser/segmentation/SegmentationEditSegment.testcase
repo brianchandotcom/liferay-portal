@@ -58,7 +58,7 @@ definition {
 
 		Segmentation.deleteProperties();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Country");
 
@@ -79,7 +79,7 @@ definition {
 
 		Segmentation.deleteProperties();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "URL");
 

@@ -81,7 +81,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Country");
 
@@ -126,7 +126,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Date Modified");
 
@@ -188,7 +188,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Hierarchy Path");
 
@@ -231,7 +231,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Name");
 
@@ -275,7 +275,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Organization");
 
@@ -325,7 +325,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Parent Organization");
 
@@ -389,7 +389,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Region");
 
@@ -447,7 +447,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Tag");
 
@@ -492,7 +492,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectOrganization();
+		Segmentation.gotoSidebar(fieldType = "Organization");
 
 		Segmentation.addProperties(propertyOption = "Type");
 
@@ -603,7 +603,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Browser");
 
@@ -627,7 +627,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Cookies");
 
@@ -655,7 +655,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Device Brand");
 
@@ -679,7 +679,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Device Model");
 
@@ -703,7 +703,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Device Screen Resolution Height");
 
@@ -729,7 +729,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Device Screen Resolution Width");
 
@@ -755,7 +755,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Hostname");
 
@@ -779,7 +779,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Language");
 
@@ -808,7 +808,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Last Sign In Date");
 
@@ -834,7 +834,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Local Date");
 
@@ -860,7 +860,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Referrer URL");
 
@@ -884,7 +884,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Request Parameters");
 
@@ -912,7 +912,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "Signed In");
 
@@ -941,7 +941,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "URL");
 
@@ -965,7 +965,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Segmentation.selectSession();
+		Segmentation.gotoSidebar(fieldType = "Session");
 
 		Segmentation.addProperties(propertyOption = "URL");
 

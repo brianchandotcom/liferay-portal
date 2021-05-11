@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  * @author Kevin Lee
  */
 @RunWith(Arquillian.class)
-public class UpgradeExpiredJournalArticleTest {
+public class DataRemovalTest {
 
 	@ClassRule
 	@Rule

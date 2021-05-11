@@ -89,7 +89,7 @@ export default ({
 
 			formData.append('fileEntryId', imageId);
 			formData.append('imageBlob', blob, imageId);
-			formData.append('itemReturnType', itemReturnType);
+			formData.append('returnType', itemReturnType);
 
 			fetch(saveURL, {
 				body: formData,

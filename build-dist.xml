@@ -1028,7 +1028,7 @@ this task.
 			file="${app.server.tcserver.conf.dir}/catalina.properties"
 		>
 			<replacetoken><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar]]></replacetoken>
-			<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/lib/ext,${catalina.home}/lib/ext/*.jar]]></replacevalue>
+			<replacevalue><![CDATA[common.loader=${catalina.base}/lib,${catalina.base}/lib/*.jar,${catalina.home}/lib,${catalina.home}/lib/*.jar,${catalina.home}/webapps/ROOT/WEB-INF/lib/support-tomcat.jar]]></replacevalue>
 		</replace>
 
 		<replace
@@ -1119,7 +1119,7 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 			file="${app.server.tomcat.dir}/conf/catalina.properties"
 		>
 			<replacetoken><![CDATA[common.loader="${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar"]]></replacetoken>
-			<replacevalue><![CDATA[common.loader="${catalina.home}/lib/ext","${catalina.home}/lib/ext/*.jar","${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar"]]></replacevalue>
+			<replacevalue><![CDATA[common.loader="${catalina.home}/webapps/ROOT/WEB-INF/lib/support-tomcat.jar","${catalina.base}/lib","${catalina.base}/lib/*.jar","${catalina.home}/lib","${catalina.home}/lib/*.jar"]]></replacevalue>
 		</replace>
 
 		<echo append="true" file="${app.server.tomcat.dir}/conf/catalina.properties">

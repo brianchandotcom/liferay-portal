@@ -6,19 +6,19 @@ definition {
 	property testray.main.component.name = "Questions";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance(freeLogin = "true");
 
-		User.firstLoginPG();
+		User.firstLoginPG(freeLogin = "true");
 
-		Navigator.openURL();
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Questions Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		ContentPages.addPage(pageName = "Questions Page");
-
-		PageEditor.addWidget(portletName = "Questions");
-
-		PageEditor.clickPublish();
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Questions Page",
+			widgetName = "Questions");
 	}
 
 	tearDown {
@@ -38,151 +38,6 @@ definition {
 
 			Page.tearDownCP();
 		}
-	}
-
-	@description = "Validate if the user can create a question with an AL image."
-	@priority = "4"
-	@refactorneeded
-	test AddQuestionWithDepotImage {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpeg",
-			groupName = "Test Depot Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpeg");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Depot.connectSite(siteList = "${siteName}");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheALImage",
-			depotName = "Test Depot Name",
-			imageFileName = "Document_2.jpeg",
-			titleField = "Title AddQuestionWithTheALImage");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestionWithTheALImage");
-
-		AssertVisible(
-			key_imageFileName = "Document_2.jpeg",
-			locator1 = "Questions#QUESTIONS_IMAGE_NAME");
-	}
-
-	@description = "Validate if the user can create a question with an image."
-	@priority = "4"
-	@refactorneeded
-	test AddQuestionWithImage {
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.svg",
-			groupName = "Guest",
-			mimeType = "image/svg+xml",
-			sourceFileName = "Document_1.svg");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheImage",
-			imageFileName = "Document_1.svg",
-			titleField = "Title AddQuestionWithTheImage");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestionWithTheImage");
-
-		AssertVisible(
-			key_imageFileName = "Document_1.svg",
-			locator1 = "Questions#QUESTIONS_IMAGE_NAME");
-
-		AssertTextEquals(
-			locator1 = "Questions#RELATED_QUESTIONS_EMPTY_TEXT",
-			value1 = "No related questions were found.");
-	}
-
-	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
-	@priority = "2"
-	@refactorneeded
-	test AddQuestionWithMoreThanTheMaximumTagsIsNotPossible {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
-			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5,Tag6",
-			titleField = "Title AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
-
-		AssertElementPresent(
-			key_errorMessage = "This is an invalid tag.",
-			locator1 = "Questions#ASK_QUESTION_ERROR_MESSAGE");
-	}
-
-	@description = "Validate if the user can create a question with the maximum of 5 tags with unexisting tag"
-	@priority = "3"
-	@refactorneeded
-	test AddQuestionWithTheMaximumTags {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Question AddQuestionWithTheMaximumTags",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Question AddQuestionWithTheMaximumTags");
-
-		AssertElementNotPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
-
-		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
-
-		AssertElementPresent(
-			key_emptyInfo = "This topic is empty.",
-			locator1 = "Questions#EMPTY_STATE_MESSAGE");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheMaximumTags",
-			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5",
-			titleField = "Title AddQuestionWithTheMaximumTags");
-
-		AssertElementPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
-
-		AssertElementPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
-
-		Questions.viewList(listedQuestions = "Title AddQuestionWithTheMaximumTags");
 	}
 
 	@description = "Validate if the user can view the topic selector and category label."
@@ -371,10 +226,115 @@ definition {
 			value1 = "Title Anonymous User Ask questions");
 	}
 
+	@description = "Validate if the user can create a question with an AL image."
+	@priority = "4"
+	@refactordone
+	test CanAddQuestionWithDepotImage {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpeg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Depot.connectSite(siteList = "${siteName}");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithTheALImage",
+			depotName = "Test Depot Name",
+			imageFileName = "Document_2.jpeg",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			titleField = "Title AddQuestionWithTheALImage",
+			topicName = "questions-test-category");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestionwiththealimage",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewImageInQuestion(imageFileName = "Document_2.jpeg");
+	}
+
+	@description = "Validate if the user can create a question with an image."
+	@priority = "4"
+	@refactordone
+	@uitest
+	test CanAddQuestionWithImage {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.svg",
+			groupName = "Guest",
+			mimeType = "image/svg+xml",
+			sourceFileName = "Document_1.svg");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithTheImage",
+			imageFileName = "Document_1.svg",
+			titleField = "Title AddQuestionWithTheImage");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestionWithTheImage");
+
+		Questions.viewImageInQuestion(imageFileName = "Document_1.svg");
+
+		Questions.viewNoRelatedQuestions();
+	}
+
+	@description = "Validate if the user can create a question with the maximum of 5 tags with unexisting tag"
+	@priority = "3"
+	@refactordone
+	test CanAddQuestionWithTheMaximumTags {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithTheMaximumTags",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5",
+			titleField = "Title AddQuestionWithTheMaximumTags",
+			topicName = "questions-test-category");
+
+		Questions.viewList(listedQuestions = "Title AddQuestionWithTheMaximumTags");
+	}
+
 	@description = "Validate if the user can cancel the deletions."
 	@priority = "4"
-	@refactorneeded
-	test CancelDeletions {
+	@refactordone
+	test CanCancelDeletions {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Questions Test Category",
@@ -386,13 +346,11 @@ definition {
 			tagField = "test tag",
 			titleField = "Title AddQuestion");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestion");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
 
 		Questions.answerQuestion(contentField = "This is my answer");
 
@@ -411,9 +369,57 @@ definition {
 			questionTitle = "Title AddQuestion");
 	}
 
+	@description = "Validate if the user can delete an answer to a question."
+	@priority = "4"
+	@refactordone
+	test CanDeleteAnswer {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Body AddQuestion",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.answerQuestion(contentField = "This is my answer");
+
+		Questions.deleteAnswer(contentField = "This is my answer");
+	}
+
+	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
+	@priority = "2"
+	@refactordone
+	test CannotAddQuestionWithMoreThanTheMaximumTags {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithMoreThanTheMaximumTags",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			tagLocatorList = "Tag1,Tag2,Tag3,Tag4,Tag5,Tag6",
+			titleField = "Title AddQuestionWithMoreThanTheMaximumTags",
+			topicName = "questions-test-category");
+
+		AssertElementPresent(
+			key_errorMessage = "This is an invalid tag.",
+			locator1 = "Questions#ASK_QUESTION_ERROR_MESSAGE");
+	}
+
 	@description = "Validate if the user can add root topic without permission."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CannotAddRootTopicWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -455,19 +461,18 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.logoutAndLoginPG(
+			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		AssertElementNotPresent(
-			key_card = "New Topic",
-			locator1 = "Card#CARD");
+		Questions.viewNoPermissionsAddTopic();
 	}
 
 	@description = "Validate if the user can add subtopic without permission."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CannotAddSubTopicWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -509,25 +514,25 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.logoutAndLoginPG(
+			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
 
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		AssertElementNotPresent(locator1 = "Questions#NEW_TOPIC");
+		Questions.viewNoPermissionsAddTopic();
 	}
 
 	@description = "Validate if the guest user cannot ask question, it also covers LPS-128823."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CannotAskQuestionAsGuest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoTab(questionTabField = "Questions");
 
 		Questions.addRootTopic(
 			rootTopicDescription = "Questions Test Category Description",
@@ -544,21 +549,19 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			freeLogin = "true",
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		Questions.viewTopicDefault();
 
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		AssertElementPresent(
-			key_emptyInfo = "This topic is empty.",
-			locator1 = "Questions#EMPTY_STATE_MESSAGE");
-
-		AssertElementNotPresent(locator1 = "Questions#ASK_QUESTION_BUTTON");
+		Questions.viewNoPermissionsAddQuestion();
 	}
 
 	@description = "Validate if the user can setup the landing page topic navigation for the widget."
@@ -703,34 +706,6 @@ definition {
 		Questions.changeTopic(
 			parentTopicName = "Questions Test SubCategory",
 			subTopicName = "New Questions Test SubCategory");
-	}
-
-	@description = "Validate if the user can delete an answer to a question."
-	@priority = "4"
-	@refactorneeded
-	test DeleteAnswer {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body 1",
-			categoryName = "Questions Test Category",
-			tagField = "test tag",
-			titleField = "What is your Chinese name?");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "What is your Chinese name?");
-
-		Questions.answerQuestion(contentField = "This is my answer");
-
-		Questions.deleteAnswer(contentField = "This is my answer");
 	}
 
 	@description = "Validate if the user can delete a comment to an answer."

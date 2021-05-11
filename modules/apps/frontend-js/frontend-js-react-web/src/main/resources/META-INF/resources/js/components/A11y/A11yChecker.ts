@@ -142,10 +142,6 @@ class Scheduler<T> {
 	}
 
 	private requestHostCallback() {
-
-		// We should consider something alternative because
-		// requestIdleCallback is not supported in Safari.
-
 		this.scheduledHostHandle = window.requestIdleCallback(async () => {
 			const currentTime = performance.now();
 
@@ -309,7 +305,7 @@ export class A11yChecker {
 
 	private async run(target: HTMLElement) {
 
-		// Only perform the analysis if the element exists on the screen
+		// Only perform the analysis if the element exists on the DOM
 
 		if (!document.body.contains(target)) {
 			return;

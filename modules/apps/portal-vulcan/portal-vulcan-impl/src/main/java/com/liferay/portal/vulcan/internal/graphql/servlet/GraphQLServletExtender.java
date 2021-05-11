@@ -1748,18 +1748,24 @@ public class GraphQLServletExtender {
 					Optional<HttpServletRequest> httpServletRequestOptional =
 						graphQLContext.getHttpServletRequest();
 
-					String aggregationString =
-						dataFetchingEnvironment.getArgument("aggregation");
-
 					AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
 						httpServletRequestOptional.orElse(null), _language,
 						_portal);
 
-					return graphQLDTOContributor.getDTOs(
-						_getAggregation(
+					String aggregationString =
+						dataFetchingEnvironment.getArgument("aggregation");
+
+					Aggregation aggregation = null;
+
+					if (aggregationString != null) {
+						aggregation = _getAggregation(
 							acceptLanguage,
 							Arrays.asList(aggregationString.split(",")),
-							graphQLDTOContributor.getEntityModel()),
+							graphQLDTOContributor.getEntityModel());
+					}
+
+					return graphQLDTOContributor.getDTOs(
+						aggregation,
 						_getFilter(
 							acceptLanguage,
 							graphQLDTOContributor.getEntityModel(),

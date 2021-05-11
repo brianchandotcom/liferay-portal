@@ -19,13 +19,13 @@ package com.liferay.portal.vulcan.graphql.dto;
  */
 public class GraphQLDTOProperty {
 
+	public static GraphQLDTOProperty of(String name, Class<?> type) {
+		return new GraphQLDTOProperty(name, type);
+	}
+
 	public GraphQLDTOProperty(String name, Class<?> type) {
 		_name = name;
 		_type = type;
-	}
-
-	public static GraphQLDTOProperty of(String name, Class<?> type) {
-		return new GraphQLDTOProperty(name, type);
 	}
 
 	public String getName() {
@@ -38,4 +38,5 @@ public class GraphQLDTOProperty {
 
 	private final String _name;
 	private final Class<?> _type;
+
 }

@@ -29,24 +29,28 @@ import java.util.List;
  */
 public interface GraphQLDTOContributor<T> {
 
+	public T createDTO(T dto, DTOConverterContext dtoConverterContext)
+		throws Exception;
+
+	public boolean deleteDTO(long id) throws Exception;
+
+	public EntityModel getEntityModel();
+
 	public String getName();
 
 	public String getPrimaryKeyPropertyName();
 
 	public List<GraphQLDTOProperty> getProperties();
 
-	public EntityModel getEntityModel();
-
-	public T createDTO(T dto, DTOConverterContext dtoConverterContext)
-		throws Exception;
-
-	public boolean deleteDTO(long id) throws Exception;
-
 	T getDTO(long id, DTOConverterContext dtoConverterContext) throws Exception;
 
-	Page<T> getDTOs(Aggregation aggregation, Filter filter, Pagination pagination, String search, Sort[] sorts, DTOConverterContext dtoConverterContext)
+	Page<T> getDTOs(
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			String search, Sort[] sorts,
+			DTOConverterContext dtoConverterContext)
 		throws Exception;
 
 	public T updateDTO(long id, T dto, DTOConverterContext dtoConverterContext)
 		throws Exception;
+
 }

@@ -110,7 +110,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		assertHttpResponseStatusCode(
-			204,
+			200,
 			keywordResource.putKeywordPermissionHttpResponse(
 				keyword.getId(),
 				new Permission[] {

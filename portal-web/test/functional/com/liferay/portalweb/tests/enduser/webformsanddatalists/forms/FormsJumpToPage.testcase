@@ -53,7 +53,7 @@ definition {
 			formTitleNumber = "1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Single Selection");
 
 		Form.editFieldLabelMetal(fieldValue = "Choose Your Destiny");
@@ -82,13 +82,13 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "3");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "5");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "7");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
 			}
 
 			var addPageNumber = ${pageNumber} - 1;
@@ -182,7 +182,7 @@ definition {
 			formTitleNumber = "1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Single Selection");
 
 		var fieldNameChooseYourDestiny = FormFields.getFieldName();
@@ -213,17 +213,17 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "3");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
 
 				var fieldNameDestiny1 = FormFields.getFieldName();
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "5");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
 
 				var fieldNameDestiny2 = FormFields.getFieldName();
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "7");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
 
 				var fieldNameDestiny3 = FormFields.getFieldName();
 			}
@@ -357,7 +357,7 @@ definition {
 			formTitleNumber = "1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Single Selection");
 
 		var fieldNameChooseYourDestiny = FormFields.getFieldName();
@@ -388,13 +388,13 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "3");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "5");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "7");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
 			}
 
 			var addPageNumber = ${pageNumber} - 1;
@@ -496,7 +496,7 @@ definition {
 			formTitleNumber = "1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Single Selection");
 
 		var fieldNameChooseYourDestiny = FormFields.getFieldName();
@@ -527,13 +527,13 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "3");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "5");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "7");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
 			}
 
 			var addPageNumber = ${pageNumber} - 1;
@@ -638,7 +638,7 @@ definition {
 			formTitleNumber = "1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Single Selection");
 
 		Form.editFieldLabelMetal(fieldValue = "Choose Your Destiny");
@@ -667,13 +667,13 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "3");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "5");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "7");
+				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
 			}
 
 			var addPageNumber = ${pageNumber} - 1;

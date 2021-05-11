@@ -29,20 +29,31 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 
+import java.io.InputStream;
 import java.io.StringReader;
+import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.Signature;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.PKCS8EncodedKeySpec;
 
+import java.security.spec.RSAPrivateCrtKeySpec;
+import java.security.spec.RSAPrivateKeySpec;
 import java.util.Base64;
+
 
 import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
 
 /**
  * @author Brian Wing Shun Chan
@@ -175,19 +186,15 @@ public class DSHttp {
 
 	private PrivateKey _readPrivateKey() throws Exception {
 
-		// TODO Replace with native Java
+		Class<?> clazz = DSHttp.class;
 
-		JcaPEMKeyConverter jcaPEMKeyConverter = new JcaPEMKeyConverter();
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/private_key.txt");
 
-		PEMParser pemParser = new PEMParser(
-			new StringReader(
-				StringUtil.read(getClass(), "dependencies/private_key.txt")));
+		PrivateKeyReader privateKeyReader = new PrivateKeyReader(inputStream);
 
-		PEMKeyPair pemKeyPair = (PEMKeyPair)pemParser.readObject();
+		return privateKeyReader.getPrivateKey();
 
-		KeyPair keyPair = jcaPEMKeyConverter.getKeyPair(pemKeyPair);
-
-		return keyPair.getPrivate();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DSHttp.class);

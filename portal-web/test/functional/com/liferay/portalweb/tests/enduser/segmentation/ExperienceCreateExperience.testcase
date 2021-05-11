@@ -462,7 +462,7 @@ definition {
 
 		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
-		Segmentation.assignOrganization(orgName = "organization Name");
+		Segmentation.fillProperty(selectCheckbox = "organization Name");
 
 		Button.clickSave();
 
@@ -540,7 +540,7 @@ definition {
 
 		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
-		Segmentation.assignOrganization(orgName = "organization Name");
+		Segmentation.fillProperty(selectCheckbox = "organization Name");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",
@@ -1697,7 +1697,7 @@ definition {
 
 		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
-		Segmentation.fillProperty(selectRole = "Administrator");
+		Segmentation.fillProperty(selectCheckbox = "Administrator");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",

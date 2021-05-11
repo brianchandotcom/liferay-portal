@@ -279,7 +279,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Organization");
 
-		Segmentation.assignOrganization(orgName = "Organization Name");
+		Segmentation.fillProperty(selectCheckbox = "Organization Name");
 
 		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationOrganization Test");
 
@@ -329,7 +329,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Parent Organization");
 
-		Segmentation.assignOrganization(orgName = "Parent Organization Name");
+		Segmentation.fillProperty(selectCheckbox = "Parent Organization Name");
 
 		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationParentOrganization Test");
 
@@ -1280,7 +1280,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentByUserRole Test");
 
-		Segmentation.fillProperty(selectRole = "Regular Role");
+		Segmentation.fillProperty(selectCheckbox = "Regular Role");
 
 		Segmentation.viewMembers(memberName = "userfn userln");
 

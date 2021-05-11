@@ -21,20 +21,6 @@ definition {
 			value1 = "${propertyOption}");
 	}
 
-	macro assignOrganization {
-		Click(locator1 = "Button#SELECT");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Check(
-			key_checkboxName = "${orgName}",
-			locator1 = "Checkbox#ENABLE_CHECKBOX");
-
-		IFrame.selectTopFrame();
-
-		Click(locator1 = "Modal#SELECT_BUTTON");
-	}
-
 	macro changeCriterionConjunction {
 		Click(locator1 = "Segmentation#CRITERION_CONJUNCTION");
 
@@ -129,13 +115,13 @@ definition {
 				value1 = "${resolutionValue}");
 		}
 
-		else if (isSet(selectRole)) {
+		else if (isSet(selectCheckbox)) {
 			Click(locator1 = "Button#SELECT");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			Check(
-				key_tableEntry = "${selectRole}",
+				key_tableEntry = "${selectCheckbox}",
 				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 
 			SelectFrame(value1 = "relative=top");

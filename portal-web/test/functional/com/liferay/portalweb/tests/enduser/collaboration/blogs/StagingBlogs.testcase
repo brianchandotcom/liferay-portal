@@ -16,6 +16,12 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Staging Blogs Page");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Staging Blogs Page",
+			widgetName = "Blogs");
+
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 	}
 
@@ -60,14 +66,6 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Blogs");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
 		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
 
 		BlogsNavigator.openToStagingCP(
@@ -109,12 +107,6 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishEntryWithDeletedSmallImage {
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
-
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
 			siteURLKey = "site-name-staging");
@@ -511,12 +503,6 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Blogs");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -565,8 +551,6 @@ definition {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -658,8 +642,6 @@ definition {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",

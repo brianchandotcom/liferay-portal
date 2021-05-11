@@ -15,6 +15,12 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Blogs Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Site Name",
+			layoutName = "Staging Blogs Page",
+			widgetName = "Blogs");
 	}
 
 	tearDown {
@@ -112,12 +118,6 @@ definition {
 			pageName = "Staging Blogs Page",
 			siteName = "Site Name");
 
-		Portlet.addPG(portletName = "Blogs");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
 		Blogs.addWithWorkflow(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -191,12 +191,6 @@ definition {
 			sourceFileName = "Document_2.jpg");
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Blogs");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

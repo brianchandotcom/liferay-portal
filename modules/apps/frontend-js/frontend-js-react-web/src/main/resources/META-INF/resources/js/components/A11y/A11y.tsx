@@ -45,7 +45,9 @@ interface IRectState {
 	hasRectChanged: boolean;
 }
 
-const rectChanged = (a: DOMRect = {} as DOMRect, b: DOMRect = {} as DOMRect) =>
+const DOMRectStub = {} as DOMRect;
+
+const rectChanged = (a: DOMRect, b: DOMRect = DOMRectStub) =>
 	rectAttrs.some((prop) => a[prop] !== b[prop]);
 
 const useObserveRect = (

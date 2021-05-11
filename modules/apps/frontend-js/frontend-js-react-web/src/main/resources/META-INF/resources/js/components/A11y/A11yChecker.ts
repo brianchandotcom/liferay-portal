@@ -46,7 +46,7 @@ class Queue<T> {
 	}
 
 	peek() {
-		return this.queue.length === 0 ? undefined : this.queue[0];
+		return this.queue.length === 0 ? null : this.queue[0];
 	}
 
 	has(selector: Selector<T>) {
@@ -91,31 +91,27 @@ class Queue<T> {
  * empty.
  */
 class Scheduler<T> {
-	private taskIdCounter: number = 0;
-	private readonly queue: Queue<Task<T>>;
-	private currentTask: Task<T> | undefined = undefined;
-	private scheduledHostHandle: number = 0;
-	private isCallbackScheduled: boolean = false;
-	private isPerformingWork: boolean = false;
+	private taskIdCounter = 0;
+	private readonly queue = new Queue<Task<T>>();
+	private currentTask: Task<T> | null = null;
+	private scheduledHostHandle = 0;
+	private isCallbackScheduled = false;
+	private isPerformingWork = false;
 
 	/**
 	 * The frame phases can be recognized as lanes which are a space of time
 	 * where the scheduler yields up the main thread to the host in that time
 	 * interval before taking up again.
 	 */
-	private nextFramePhase: number = 0;
+	private nextFramePhase = 0;
 
 	/**
 	 * The yield interval is defined based on the RAIL model, this value is
 	 * static and means that we yield 100ms to the host and define the deadline
 	 * to maximize the chances of hitting 60 fps.
 	 */
-	private readonly yieldInterval: number = 100;
-	private deadline: number = 0;
-
-	constructor() {
-		this.queue = new Queue();
-	}
+	private readonly yieldInterval = 100;
+	private deadline = 0;
 
 	cancelHostCallback() {
 		window.cancelIdleCallback(this.scheduledHostHandle);
@@ -136,7 +132,7 @@ class Scheduler<T> {
 			return await this.workLoop();
 		}
 		finally {
-			this.currentTask = undefined;
+			this.currentTask = null;
 			this.isPerformingWork = false;
 		}
 	}
@@ -187,7 +183,7 @@ class Scheduler<T> {
 	private async workLoop() {
 		this.currentTask = this.queue.peek();
 
-		while (this.currentTask !== undefined) {
+		while (this.currentTask !== null) {
 			if (this.shouldYieldToHost()) {
 
 				// We no longer have time to run currentTask now
@@ -206,7 +202,7 @@ class Scheduler<T> {
 
 		// Return whether there's additional work
 
-		return this.currentTask !== undefined;
+		return this.currentTask !== null;
 	}
 
 	scheduleCallback(callback: Function, target: T) {

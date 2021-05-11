@@ -9,6 +9,10 @@ definition {
 
 		SelectFrame(value1 = "relative=top");
 
+		if (IsElementNotPresent(locator1 = "Button#REPLY")) {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
 		AssertClick(
 			locator1 = "Button#REPLY",
 			value1 = "Reply");

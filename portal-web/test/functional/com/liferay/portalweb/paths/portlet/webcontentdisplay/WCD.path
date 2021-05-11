@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>WEB_CONTENT_VIDEO</td>
-	<td>//div[contains(@class,'VideoPortlet')]//video[contains(@poster,'${key_videoShortcutTitle}')]</td>
+	<td>//div[contains(@class,'video-player')][contains(.,'${key_videoShortcutTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

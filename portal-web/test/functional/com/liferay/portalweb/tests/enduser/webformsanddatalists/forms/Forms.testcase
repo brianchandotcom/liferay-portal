@@ -1354,7 +1354,7 @@ definition {
 			formPageName = "Page 1",
 			formTitleNumber = "1");
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(formPageNumber = "0");
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field Page 1");
 
@@ -1370,7 +1370,7 @@ definition {
 			formPageName = "Page 2",
 			formTitleNumber = "2");
 
-		Form.addTextField(fieldPositionNumber = "3");
+		Form.addTextField(formPageNumber = "1");
 
 		Form.editFieldLabelMetal(fieldValue = "Text Field Page 2");
 
@@ -3209,8 +3209,9 @@ definition {
 			formTitleNumber = "1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
-			fieldType = "Paragraph");
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph",
+			formPageNumber = "0");
 
 		var fieldParagraphField = FormFields.getFieldName();
 
@@ -3218,7 +3219,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addTextField(fieldPositionNumber = "2");
+		Form.addTextField(fieldPositionNumber = "1", formPageNumber = "0");
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -3226,7 +3227,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addTextField(fieldPositionNumber = "3");
+		Form.addTextField(fieldPositionNumber = "2", formPageNumber = "0");
 
 		var fieldMultilineTextField = FormFields.getFieldName();
 
@@ -3239,8 +3240,9 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "4",
-			fieldType = "Select from List");
+			fieldPositionNumber = "3",
+			fieldType = "Select from List",
+			formPageNumber = "0");
 
 		var fieldSelectFromListField = FormFields.getFieldName();
 
@@ -3258,8 +3260,9 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "5",
-			fieldType = "Single Selection");
+			fieldPositionNumber = "4",
+			fieldType = "Single Selection",
+			formPageNumber = "0");
 
 		var fieldSingleSelectionField = FormFields.getFieldName();
 
@@ -3279,16 +3282,18 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "6",
-			fieldType = "Date");
+			fieldPositionNumber = "5",
+			fieldType = "Date",
+			formPageNumber = "0");
 
 		var fieldDateField = FormFields.getFieldName();
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "7",
-			fieldType = "Multiple Selection");
+			fieldPositionNumber = "6",
+			fieldType = "Multiple Selection",
+			formPageNumber = "0");
 
 		var fieldMultipleSelectionField = FormFields.getFieldName();
 
@@ -3315,8 +3320,9 @@ definition {
 			formTitleNumber = "2");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "9",
-			fieldType = "Grid");
+			fieldPositionNumber = "0",
+			fieldType = "Grid",
+			formPageNumber = "1");
 
 		var fieldGridField = FormFields.getFieldName();
 
@@ -3345,20 +3351,22 @@ definition {
 			formTitleNumber = "3");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "11",
-			fieldType = "Upload");
+			fieldPositionNumber = "0",
+			fieldType = "Upload",
+			formPageNumber = "2");
 
 		var fieldUploadField = FormFields.getFieldName();
 
 		Form.editFieldLabelMetal(
-			fieldPositionNumber = "11",
+			fieldPositionNumber = "0",
 			fieldValue = "Upload Field");
 
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "12",
-			fieldType = "Numeric");
+			fieldPositionNumber = "1",
+			fieldType = "Numeric",
+			formPageNumber = "2");
 
 		var fieldNumericField = FormFields.getFieldName();
 
@@ -3367,8 +3375,9 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "13",
-			fieldType = "Color");
+			fieldPositionNumber = "2",
+			fieldType = "Color",
+			formPageNumber = "2");
 
 		var colorFieldName = FormFields.getFieldName();
 
@@ -5188,7 +5197,7 @@ definition {
 			formPageName = "Page 1",
 			formTitleNumber = "1");
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(fieldPositionNumber = "0", formPageNumber = "0");
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -5202,7 +5211,7 @@ definition {
 			formPageName = "Page 2",
 			formTitleNumber = "2");
 
-		Form.addTextField(fieldPositionNumber = "3");
+		Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
 
 		var fieldTextField2 = FormFields.getFieldName();
 
@@ -5218,7 +5227,7 @@ definition {
 			formPageName = "Page 3",
 			formTitleNumber = "3");
 
-		Form.addTextField(fieldPositionNumber = "5");
+		Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
 
 		var fieldTextField3 = FormFields.getFieldName();
 

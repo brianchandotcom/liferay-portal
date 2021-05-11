@@ -101,7 +101,8 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 			groupId, privateLayout, layoutId, layout.getParentLayoutId(),
 			layout.getNameMap(), titleMap, descriptionMap, keywordsMap,
 			robotsMap, layout.getType(), layout.isHidden(),
-			layout.getFriendlyURLMap(), layout.isIconImage(), null, 0, 0,
+			layout.getFriendlyURLMap(), layout.isIconImage(), null,
+			layout.getMasterLayoutPlid(), layout.getStyleBookEntryId(),
 			serviceContext);
 
 		boolean canonicalURLEnabled = ParamUtil.getBoolean(
@@ -126,7 +127,8 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 				titleMap, descriptionMap, keywordsMap, robotsMap,
 				draftLayout.getType(), draftLayout.isHidden(),
 				draftLayout.getFriendlyURLMap(), draftLayout.isIconImage(),
-				null, 0, 0, serviceContext);
+				null, draftLayout.getMasterLayoutPlid(),
+				draftLayout.getStyleBookEntryId(), serviceContext);
 
 			draftLayout = LayoutTypeSettingsUtil.updateTypeSettings(
 				draftLayout, _layoutService, formTypeSettingsUnicodeProperties);

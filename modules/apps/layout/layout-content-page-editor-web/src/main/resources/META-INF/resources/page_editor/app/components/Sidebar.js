@@ -28,7 +28,6 @@ import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../contexts/StoreContext';
 import selectAvailablePanels from '../selectors/selectAvailablePanels';
-import selectAvailableSidebarPanels from '../selectors/selectAvailableSidebarPanels';
 import {useDropClear} from '../utils/drag-and-drop/useDragAndDrop';
 import {useId} from '../utils/useId';
 
@@ -51,7 +50,9 @@ const swallow = [(value) => value, (_error) => undefined];
 const getActivePanelData = ({panelId, panels, sidebarPanels}) => {
 	let sidebarPanelId = panelId;
 
-	let panel = sidebarPanels[sidebarPanelId];
+	let panel = panels.some((panel) => panel.includes(sidebarPanelId))
+		? sidebarPanels[sidebarPanelId]
+		: null;
 
 	if (!panel) {
 		sidebarPanelId = panels[0][0];
@@ -73,14 +74,11 @@ export default function Sidebar() {
 	const store = useSelector((state) => state);
 
 	const panels = useSelector(selectAvailablePanels(config.panels));
-	const sidebarPanels = useSelector(
-		selectAvailableSidebarPanels(config.sidebarPanels)
-	);
 	const sidebarOpen = store.sidebar.open;
 	const {panel, sidebarPanelId} = getActivePanelData({
 		panelId: store.sidebar.panelId,
 		panels,
-		sidebarPanels,
+		sidebarPanels: config.sidebarPanels,
 	});
 
 	const promise = panel
@@ -217,7 +215,7 @@ export default function Sidebar() {
 			>
 				{panels.reduce((elements, group, groupIndex) => {
 					const buttons = group.map((panelId) => {
-						const panel = sidebarPanels[panelId];
+						const panel = config.sidebarPanels[panelId];
 
 						const active =
 							sidebarOpen && sidebarPanelId === panelId;

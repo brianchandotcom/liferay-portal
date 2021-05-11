@@ -22,6 +22,7 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -70,7 +71,7 @@ public class ProductSpecificationUtil {
 		CPSpecificationOption cpSpecificationOption =
 			cpSpecificationOptionService.fetchCPSpecificationOption(
 				companyId,
-				StringUtil.toLowerCase(
+				FriendlyURLNormalizerUtil.normalize(
 					productSpecification.getSpecificationKey()));
 
 		if (cpSpecificationOption == null) {

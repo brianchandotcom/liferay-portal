@@ -433,16 +433,12 @@ definition {
 				widgetName = "Wiki");
 		}
 
-		task ("Add a front page") {
-			Navigator.gotoSitePage(
-				pageName = "ADT Test Page",
-				siteName = "Test Site Name");
-
-			WikiPage.addFrontPagePG(wikiPageContent = "Test Wiki Content");
-
-			WikiNavigator.gotoFrontPagePG();
-
-			WikiPage.viewFrontPageDefaultADTPG(wikiPageContent = "Test Wiki Content");
+		task ("Add content to FrontPage") {
+			JSONWiki.updateWikiPage(
+				groupName = "Test Site Name",
+				wikiNodeName = "Main",
+				wikiPageContent = "Test Wiki Content",
+				wikiPageName = "FrontPage");
 		}
 
 		task ("Add a Wiki type widget template") {

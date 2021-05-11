@@ -55,7 +55,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(fieldPositionNumber = "0");
 
 		var fieldTextField = FormFields.getFieldName();
 
@@ -165,7 +165,7 @@ definition {
 		Form.editDescription();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Date");
 
 		var fieldDateField = FormFields.getFieldName();
@@ -279,7 +279,7 @@ definition {
 		Form.editDescription();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Select from List");
 
 		var selectFromListField = FormFields.getFieldName();
@@ -292,7 +292,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addTextField(fieldPositionNumber = "2");
+		Form.addTextField(fieldPositionNumber = "1");
 
 		var textField_1 = FormFields.getFieldName();
 
@@ -301,7 +301,7 @@ definition {
 		Form.closeSidebar();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "3",
+			fieldPositionNumber = "2",
 			fieldType = "Single Selection");
 
 		var singleSelectionField = FormFields.getFieldName();
@@ -314,7 +314,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addTextField(fieldPositionNumber = "4");
+		Form.addTextField(fieldPositionNumber = "3");
 
 		var textField_2 = FormFields.getFieldName();
 

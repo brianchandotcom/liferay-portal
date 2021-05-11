@@ -254,7 +254,7 @@ definition {
 
 		Form.editDescription(formDescription = "Form Description");
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(fieldPositionNumber = "0");
 
 		var fieldName = FormFields.getFieldName();
 

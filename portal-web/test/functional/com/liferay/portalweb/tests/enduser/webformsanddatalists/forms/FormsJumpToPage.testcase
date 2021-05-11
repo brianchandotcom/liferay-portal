@@ -82,13 +82,19 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "1");
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "2");
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "3");
 			}
 
 			var addPageNumber = ${pageNumber} - 1;
@@ -213,17 +219,23 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "1");
 
 				var fieldNameDestiny1 = FormFields.getFieldName();
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "2");
 
 				var fieldNameDestiny2 = FormFields.getFieldName();
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "3");
 
 				var fieldNameDestiny3 = FormFields.getFieldName();
 			}
@@ -388,13 +400,19 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "1");
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "2");
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "3");
 			}
 
 			var addPageNumber = ${pageNumber} - 1;
@@ -527,13 +545,19 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "1");
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "2");
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "3");
 			}
 
 			var addPageNumber = ${pageNumber} - 1;
@@ -667,13 +691,19 @@ definition {
 				formTitleNumber = "${pageNumber}");
 
 			if ("${pageNumber}" == "2") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "1");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "1");
 			}
 			else if ("${pageNumber}" == "3") {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "2");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "2");
 			}
 			else {
-				Form.addTextField(fieldPositionNumber = "0", formPageNumber = "3");
+				Form.addTextField(
+					fieldPositionNumber = "0",
+					formPageNumber = "3");
 			}
 
 			var addPageNumber = ${pageNumber} - 1;

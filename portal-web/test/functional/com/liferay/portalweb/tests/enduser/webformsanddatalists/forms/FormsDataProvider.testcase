@@ -82,7 +82,7 @@ definition {
 
 		Form.editDescription();
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(fieldPositionNumber = "0");
 
 		var fieldNameTextFieldAuto = FormFields.getFieldName();
 
@@ -248,7 +248,7 @@ definition {
 		Form.editDescription();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Select from List");
 
 		var fieldNameDataProvider = FormFields.getFieldName();
@@ -354,7 +354,7 @@ definition {
 		Form.editDescription();
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "0",
 			fieldType = "Select from List");
 
 		var fieldNameCountries = FormFields.getFieldName();

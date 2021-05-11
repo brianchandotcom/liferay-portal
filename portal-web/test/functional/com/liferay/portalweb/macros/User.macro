@@ -2183,18 +2183,11 @@ definition {
 
 		UserBar.signOut();
 
-		if (isSet(freeLogin)) {
-			Navigator.openURL(
-				freeLogin = "true",
-				userEmailAddress = "${userLoginEmailAddress}");
-		}
-		else {
-			User.loginPG(
-				authenticationMethod = "${authenticationMethod}",
-				nodePort = "${nodePort}",
-				userEmailAddress = "${userLoginEmailAddress}",
-				userScreenName = "${userScreenName}");
-		}
+		User.loginPG(
+			authenticationMethod = "${authenticationMethod}",
+			nodePort = "${nodePort}",
+			userEmailAddress = "${userLoginEmailAddress}",
+			userScreenName = "${userScreenName}");
 	}
 
 	@description = "Log out of Liferay Portal."

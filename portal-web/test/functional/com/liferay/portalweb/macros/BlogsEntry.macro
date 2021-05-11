@@ -547,9 +547,7 @@ definition {
 	}
 
 	macro saveAsDraft {
-		AssertClick(
-			locator1 = "Button#SAVE_AS_DRAFT",
-			value1 = "Save as Draft");
+		Click(locator1 = "Button#SAVE_AS_DRAFT");
 
 		Alert.viewSuccessMessage();
 	}

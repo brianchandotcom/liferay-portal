@@ -103,10 +103,10 @@ definition {
 			publicationType = "Local");
 	}
 
-	@description = "This is a use case for LPS-78833 and LPS-122140."
+	@description = "This is a use case for LPS-122140. It ensures that a small image can be published."
 	@priority = "5"
-	@refactorneeded
-	test PublishEntryWithDeletedSmallImage {
+	@refactordone
+	test CanPublishSmallImage {
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
 		BlogsEntry.addEntryContent(
@@ -129,31 +129,47 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
+		BlogsNavigator.openToBlogEntry(
+			entryTitle = "Blogs Entry Title",
+			layoutName = "Staging Blogs Page",
+			siteURLKey = "Site Name");
 
-		AssertVisible(
-			key_imageFileName = "Document_3.jpg",
+		Refresh();
+
+		AssertElementPresent(
+			key_smallImage = "Document_3.jpg",
 			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
+	}
 
-		ProductMenu.gotoLiveSite(site = "Site Name");
+	@description = "This is a use case for LPS-78833. It ensures that a small image deletion can be published."
+	@priority = "5"
+	@refactorneeded
+	test CanPublishSmallImageDeletion {
+		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+		Panel.expandPanel(panel = "Configuration");
 
-		Blogs.viewEntryPresent(entryTitle = "Blogs Entry Title");
+		BlogsEntry.addSmallImage(
+			navTab = "Blog Images",
+			uploadFileName = "Document_3.jpg");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
+		PortletEntry.publish();
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Navigator.gotoStagedView();
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -171,25 +187,7 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openToStagingCP(
-			groupName = "Site Name",
-			siteURLKey = "site-name-staging");
-
-		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
-
-		AssertElementNotPresent(
-			key_smallImage = "Document_3.jpg",
-			locator1 = "BlogsEntry#SMALL_IMAGE");
-
-		AssertTextEquals(
-			locator1 = "Button#SELECT_FILE_SMALL_IMAGE",
-			value1 = "Select File");
-
-		ProductMenu.gotoLiveSite(site = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 

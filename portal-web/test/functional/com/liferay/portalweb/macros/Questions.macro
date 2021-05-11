@@ -8,6 +8,10 @@ definition {
 		}
 	}
 
+	macro _openToAddQuestion {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/new");
+	}
+
 	macro addQuestionByAPI {
 		Navigator.openURL();
 
@@ -135,7 +139,15 @@ definition {
 	}
 
 	macro askQuestionFillingTheMandatoryFields {
-		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
+		if (isSet(siteURLKey)) {
+			Questions._openToAddQuestion(
+				layoutName = "${layoutName}",
+				siteURLKey = "${siteURLKey}",
+				topicName = "${topicName}");
+		}
+		else {
+			Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
+		}
 
 		if (isSet(anonymousUser)) {
 			Type.typePause(
@@ -570,6 +582,18 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_ACTIVE_TAB_FIELD");
 	}
 
+	macro openToEditQuestion {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}/edit");
+	}
+
+	macro openToQuestionDetails {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}");
+	}
+
+	macro openToQuestionsTopic {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}");
+	}
+
 	macro removeRootTopicConfiguration {
 		Portlet.gotoPortletOptions(
 			portletName = "Questions",
@@ -701,6 +725,12 @@ definition {
 		}
 	}
 
+	macro viewImageInQuestion {
+		AssertVisible(
+			key_imageFileName = "${imageFileName}",
+			locator1 = "Questions#QUESTIONS_IMAGE_NAME");
+	}
+
 	macro viewList {
 		if (isSet(unlistedQuestions)) {
 			for (var unlistedQuestion : list "${unlistedQuestions}") {
@@ -755,6 +785,20 @@ definition {
 			key_emptyInfo = "No results found",
 			locator1 = "Questions#EMPTY_STATE_MESSAGE",
 			value1 = "No results found");
+	}
+
+	macro viewNoPermissionsAddQuestion {
+		AssertElementNotPresent(locator1 = "Questions#ASK_QUESTION_BUTTON");
+	}
+
+	macro viewNoPermissionsAddTopic {
+		AssertElementNotPresent(locator1 = "Questions#NEW_TOPIC");
+	}
+
+	macro viewNoRelatedQuestions {
+		AssertTextEquals(
+			locator1 = "Questions#RELATED_QUESTIONS_EMPTY_TEXT",
+			value1 = "No related questions were found.");
 	}
 
 	macro viewNoSearchResults {
@@ -870,6 +914,12 @@ definition {
 				locator1 = "Questions#TAGS_POSITION",
 				value1 = "Created");
 		}
+	}
+
+	macro viewTopicDefault {
+		AssertElementPresent(
+			key_emptyInfo = "This topic is empty.",
+			locator1 = "Questions#EMPTY_STATE_MESSAGE");
 	}
 
 	macro viewUnlockedQuestion {

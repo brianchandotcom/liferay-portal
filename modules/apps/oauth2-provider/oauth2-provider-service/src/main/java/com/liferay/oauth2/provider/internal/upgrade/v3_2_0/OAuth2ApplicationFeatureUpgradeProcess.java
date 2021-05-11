@@ -32,35 +32,28 @@ public class OAuth2ApplicationFeatureUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			ResultSet applicationFeaturesResultSet =
-				_getApplicationFeaturesResultSet()) {
+		String sql =
+			"select oAuth2ApplicationId, features from OAuth2Application " +
+				"where features is not NULL";
 
-			while (applicationFeaturesResultSet.next()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				sql);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
 				List<String> features = Arrays.asList(
-					StringUtil.split(
-						applicationFeaturesResultSet.getString("features")));
+					StringUtil.split(resultSet.getString("features")));
 
 				if (features.contains("token_introspection")) {
-					long oAuth2ApplicationId =
-						applicationFeaturesResultSet.getLong(
-							"oAuth2ApplicationId");
+					long oAuth2ApplicationId = resultSet.getLong(
+						"oAuth2ApplicationId");
 
 					_updateTokenIntrospectionFeature(
 						oAuth2ApplicationId, features);
 				}
 			}
 		}
-	}
-
-	private ResultSet _getApplicationFeaturesResultSet() throws SQLException {
-		String sql =
-			"select oAuth2ApplicationId, features from OAuth2Application " +
-				"where features is not NULL";
-
-		PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
-		return preparedStatement.executeQuery();
 	}
 
 	private void _updateTokenIntrospectionFeature(

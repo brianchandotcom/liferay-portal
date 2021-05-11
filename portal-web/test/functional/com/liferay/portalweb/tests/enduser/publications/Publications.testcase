@@ -34,6 +34,17 @@ definition {
 	test AllowPublicationsPermissionUserToAddAndPublishPublications {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
 		JSONRole.addRegularRole(
 			roleKey = "Publications Role",
 			roleTitle = "Publications Role");
@@ -59,24 +70,9 @@ definition {
 				roleTitle = "Publications Role");
 		}
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
 		JSONRole.assignRoleToUser(
 			roleTitle = "Publications Role",
 			userEmailAddress = "userea@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -87,9 +83,11 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Publications.gotoPublish(
 			gotoManagePublications = "true",
@@ -113,18 +111,22 @@ definition {
 
 		Publications.deletePublication(publicationName = "Publication Name");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "ADD_PUBLICATION",
 			resourceName = "com.liferay.change.tracking",
 			roleTitle = "Publications Role");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
@@ -139,9 +141,11 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		Permissions.removePermissionViaAPI(
 			resourceAction = "PUBLISH",
@@ -157,9 +161,11 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title 3");
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
@@ -198,14 +204,10 @@ definition {
 			roleTitle = "Power User",
 			userEmailAddress = "userea@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "userea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

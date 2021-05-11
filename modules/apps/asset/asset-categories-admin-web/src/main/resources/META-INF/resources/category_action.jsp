@@ -103,32 +103,25 @@ String displayPageURL = assetCategoriesDisplayContext.getDisplayPageURL(category
 </liferay-ui:icon-menu>
 
 <c:if test="<%= assetCategoriesDisplayContext.hasPermission(category, ActionKeys.UPDATE) %>">
-	<aui:script require="frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
-		var moveCategoryIcon = document.getElementById(
+	<aui:script sandbox="<%= true %>">
+		const moveCategoryIcon = document.getElementById(
 			'<portlet:namespace /><%= row.getRowId() %>moveCategory'
 		);
 
 		if (moveCategoryIcon) {
 			moveCategoryIcon.addEventListener('click', (event) => {
-				var itemSelectorDialog = new ItemSelectorDialog.default({
-					eventName: '<portlet:namespace />selectCategory',
-					title:
-						'<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
-					url:
-						'<%= assetCategoriesDisplayContext.getSelectCategoryURL(category.getVocabularyId()) %>',
-				});
+				Liferay.Util.openSelectionModal({
+					multiple: true,
+					onSelect: (selectedItems) => {
+						if (!selectedItems) {
+							return;
+						}
 
-				itemSelectorDialog.open();
+						let parentCategoryId = 0;
+						let vocabularyId = 0;
 
-				itemSelectorDialog.on('selectedItemChange', (event) => {
-					var selectedItem = event.selectedItem;
-
-					if (selectedItem) {
-						var parentCategoryId = 0;
-						var vocabularyId = 0;
-
-						for (var key in selectedItem) {
-							var item = selectedItem[key];
+						for (const key in selectedItems) {
+							const item = selectedItems[key];
 
 							if (!item.unchecked) {
 								parentCategoryId = item.categoryId || 0;
@@ -139,14 +132,25 @@ String displayPageURL = assetCategoriesDisplayContext.getDisplayPageURL(category
 						}
 
 						if (vocabularyId > 0 || parentCategoryId > 0) {
-							document.<portlet:namespace />moveCategoryFm.<portlet:namespace />categoryId.value =
-								'<%= category.getCategoryId() %>';
-							document.<portlet:namespace />moveCategoryFm.<portlet:namespace />parentCategoryId.value = parentCategoryId;
-							document.<portlet:namespace />moveCategoryFm.<portlet:namespace />vocabularyId.value = vocabularyId;
+							const form = document.getElementById(
+								'<portlet:namespace />moveCategoryFm'
+							);
 
-							submitForm(document.<portlet:namespace />moveCategoryFm);
+							if (form) {
+								form.<portlet:namespace />categoryId.value =
+									'<%= category.getCategoryId() %>';
+								form.<portlet:namespace />parentCategoryId.value = parentCategoryId;
+								form.<portlet:namespace />vocabularyId.value = vocabularyId;
+
+								submitForm(form);
+							}
 						}
-					}
+					},
+					selectEventName: '<portlet:namespace />selectCategory',
+					title:
+						'<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="move-x" />',
+					url:
+						'<%= assetCategoriesDisplayContext.getSelectCategoryURL(category.getVocabularyId()) %>',
 				});
 			});
 		}

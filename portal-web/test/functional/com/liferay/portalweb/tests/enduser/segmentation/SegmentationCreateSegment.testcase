@@ -1138,8 +1138,11 @@ definition {
 	}
 
 	@description = "Validate if the members are assigned correctly depending on the criteria selected"
+	@ignore = "true"
 	@priority = "5"
 	test SegmentationCheckMembers {
+		// TODO LPS-132013 It is a little bit flaky, waiting for fix
+
 		property portal.acceptance = "true";
 
 		JSONUser.addUser(

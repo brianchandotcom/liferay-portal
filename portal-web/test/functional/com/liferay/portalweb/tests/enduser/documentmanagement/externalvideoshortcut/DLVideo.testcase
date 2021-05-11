@@ -191,12 +191,19 @@ definition {
 	@description = "This test ensures that no internal video is not listed via item selector after disabling Xuggler."
 	@priority = "3"
 	@refactorneeded
-	test AssertNoVideoInItemSelectorAfterDisablingXuggler {
-		property test.name.skip.portal.instance = "DLVideo#AssertNoVideoInItemSelectorAfterDisablingXuggler";
+	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
+		property test.name.skip.portal.instance = "DLVideo#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
 
-		ServerAdministration.openServerAdmin();
+		SystemSettings.openSystemSettingsAdmin();
 
-		ServerAdministration.configureExternalServices(enableXuggler = "false");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		PortletEntry.update();
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 

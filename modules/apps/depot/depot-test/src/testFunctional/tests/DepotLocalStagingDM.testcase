@@ -1373,7 +1373,7 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
-	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling Xuggler."
+	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling FFmpeg."
 	@ignore = "true"
 	@priority = "4"
 	@refactorneeded

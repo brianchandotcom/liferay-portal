@@ -181,7 +181,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseArticleId": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -237,6 +237,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getEncodingFormat());
 		}
 
+		if (knowledgeBaseArticle.getExternalReferenceCode() != null) {
+			existingKnowledgeBaseArticle.setExternalReferenceCode(
+				knowledgeBaseArticle.getExternalReferenceCode());
+		}
+
 		if (knowledgeBaseArticle.getFriendlyUrlPath() != null) {
 			existingKnowledgeBaseArticle.setFriendlyUrlPath(
 				knowledgeBaseArticle.getFriendlyUrlPath());
@@ -255,6 +260,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		if (knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles() != null) {
 			existingKnowledgeBaseArticle.setNumberOfKnowledgeBaseArticles(
 				knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles());
+		}
+
+		if (knowledgeBaseArticle.getParentKnowledgeBaseArticleId() != null) {
+			existingKnowledgeBaseArticle.setParentKnowledgeBaseArticleId(
+				knowledgeBaseArticle.getParentKnowledgeBaseArticleId());
 		}
 
 		if (knowledgeBaseArticle.getParentKnowledgeBaseFolderId() != null) {
@@ -296,7 +306,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{knowledgeBaseArticleId}' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseArticleId": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -663,7 +673,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-articles/{parentKnowledgeBaseArticleId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseArticleId": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -739,7 +749,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseArticleId": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -851,7 +861,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseArticleId": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new knowledge base article.")
@@ -907,6 +917,103 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				KnowledgeBaseArticle.class.getName(), callbackURL, null, object)
 		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Operation(
+		description = "Deletes the knowledge base article by external reference code."
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public void deleteSiteKnowledgeBaseArticleByExternalReferenceCode(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Operation(
+		description = "Retrieves the site's knowledge base article by external reference code."
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public KnowledgeBaseArticle
+			getSiteKnowledgeBaseArticleByExternalReferenceCode(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("externalReferenceCode")
+				String externalReferenceCode)
+		throws Exception {
+
+		return new KnowledgeBaseArticle();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}' -d $'{"articleBody": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "keywords": ___, "parentKnowledgeBaseArticleId": ___, "parentKnowledgeBaseFolderId": ___, "taxonomyCategoryIds": ___, "title": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates the site's knowledge base article with the given external reference code, or creates it if it not exists."
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "KnowledgeBaseArticle")})
+	public KnowledgeBaseArticle
+			putSiteKnowledgeBaseArticleByExternalReferenceCode(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				KnowledgeBaseArticle knowledgeBaseArticle)
+		throws Exception {
+
+		return new KnowledgeBaseArticle();
 	}
 
 	/**

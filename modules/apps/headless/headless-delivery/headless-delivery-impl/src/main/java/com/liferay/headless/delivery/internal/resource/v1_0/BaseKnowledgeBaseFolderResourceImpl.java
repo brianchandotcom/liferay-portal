@@ -180,7 +180,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}' -d $'{"customFields": ___, "description": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -226,6 +226,11 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 				knowledgeBaseFolder.getDescription());
 		}
 
+		if (knowledgeBaseFolder.getExternalReferenceCode() != null) {
+			existingKnowledgeBaseFolder.setExternalReferenceCode(
+				knowledgeBaseFolder.getExternalReferenceCode());
+		}
+
 		if (knowledgeBaseFolder.getName() != null) {
 			existingKnowledgeBaseFolder.setName(knowledgeBaseFolder.getName());
 		}
@@ -264,7 +269,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}' -d $'{"customFields": ___, "description": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{knowledgeBaseFolderId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -469,7 +474,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/knowledge-base-folders/{parentKnowledgeBaseFolderId}/knowledge-base-folders' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(
@@ -530,7 +535,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders' -d $'{"customFields": ___, "description": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Creates a new knowledge base folder.")
@@ -586,6 +591,103 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				KnowledgeBaseFolder.class.getName(), callbackURL, null, object)
 		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Operation(
+		description = "Deletes the knowledge base folder by external reference code."
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/sites/{siteId}/knowledge-base-folders/by-external-reference-code/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	public void deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
+			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@GET
+	@Operation(
+		description = "Retrieves the site's knowledge base folder by external reference code."
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/sites/{siteId}/knowledge-base-folders/by-external-reference-code/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	public KnowledgeBaseFolder
+			getSiteKnowledgeBaseFolderByExternalReferenceCode(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("externalReferenceCode")
+				String externalReferenceCode)
+		throws Exception {
+
+		return new KnowledgeBaseFolder();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/sites/{siteId}/knowledge-base-folders/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "parentKnowledgeBaseFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@Consumes({"application/json", "application/xml"})
+	@Operation(
+		description = "Updates the site's knowledge base folder with the given external reference code, or creates it if it not exists."
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "siteId"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/sites/{siteId}/knowledge-base-folders/by-external-reference-code/{externalReferenceCode}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@PUT
+	@Tags(value = {@Tag(name = "KnowledgeBaseFolder")})
+	public KnowledgeBaseFolder
+			putSiteKnowledgeBaseFolderByExternalReferenceCode(
+				@NotNull @Parameter(hidden = true) @PathParam("siteId") Long
+					siteId,
+				@NotNull @Parameter(hidden = true)
+				@PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		return new KnowledgeBaseFolder();
 	}
 
 	/**

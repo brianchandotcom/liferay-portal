@@ -201,6 +201,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		knowledgeBaseArticle.setArticleBody(regex);
 		knowledgeBaseArticle.setDescription(regex);
 		knowledgeBaseArticle.setEncodingFormat(regex);
+		knowledgeBaseArticle.setExternalReferenceCode(regex);
 		knowledgeBaseArticle.setFriendlyUrlPath(regex);
 		knowledgeBaseArticle.setTitle(regex);
 
@@ -213,6 +214,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Assert.assertEquals(regex, knowledgeBaseArticle.getArticleBody());
 		Assert.assertEquals(regex, knowledgeBaseArticle.getDescription());
 		Assert.assertEquals(regex, knowledgeBaseArticle.getEncodingFormat());
+		Assert.assertEquals(
+			regex, knowledgeBaseArticle.getExternalReferenceCode());
 		Assert.assertEquals(regex, knowledgeBaseArticle.getFriendlyUrlPath());
 		Assert.assertEquals(regex, knowledgeBaseArticle.getTitle());
 	}
@@ -1761,6 +1764,170 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteKnowledgeBaseArticleByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseArticleResource.
+				deleteSiteKnowledgeBaseArticleByExternalReferenceCodeHttpResponse(
+					knowledgeBaseArticle.getSiteId(),
+					knowledgeBaseArticle.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCodeHttpResponse(
+					knowledgeBaseArticle.getSiteId(),
+					knowledgeBaseArticle.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCodeHttpResponse(
+					knowledgeBaseArticle.getSiteId(),
+					knowledgeBaseArticle.getExternalReferenceCode()));
+	}
+
+	protected KnowledgeBaseArticle
+			testDeleteSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle()
+		throws Exception {
+
+		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+	}
+
+	@Test
+	public void testGetSiteKnowledgeBaseArticleByExternalReferenceCode()
+		throws Exception {
+
+		KnowledgeBaseArticle postKnowledgeBaseArticle =
+			testGetSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle getKnowledgeBaseArticle =
+			knowledgeBaseArticleResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCode(
+					postKnowledgeBaseArticle.getSiteId(),
+					postKnowledgeBaseArticle.getExternalReferenceCode());
+
+		assertEquals(postKnowledgeBaseArticle, getKnowledgeBaseArticle);
+		assertValid(getKnowledgeBaseArticle);
+	}
+
+	protected KnowledgeBaseArticle
+			testGetSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle()
+		throws Exception {
+
+		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+	}
+
+	@Test
+	public void testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCode()
+		throws Exception {
+
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			testGraphQLKnowledgeBaseArticle_addKnowledgeBaseArticle();
+
+		Assert.assertTrue(
+			equals(
+				knowledgeBaseArticle,
+				KnowledgeBaseArticleSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"knowledgeBaseArticleByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												knowledgeBaseArticle.
+													getSiteId() + "\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												knowledgeBaseArticle.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/knowledgeBaseArticleByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteKnowledgeBaseArticleByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"knowledgeBaseArticleByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutSiteKnowledgeBaseArticleByExternalReferenceCode()
+		throws Exception {
+
+		KnowledgeBaseArticle postKnowledgeBaseArticle =
+			testPutSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle putKnowledgeBaseArticle =
+			knowledgeBaseArticleResource.
+				putSiteKnowledgeBaseArticleByExternalReferenceCode(
+					postKnowledgeBaseArticle.getSiteId(),
+					postKnowledgeBaseArticle.getExternalReferenceCode(),
+					randomKnowledgeBaseArticle);
+
+		assertEquals(randomKnowledgeBaseArticle, putKnowledgeBaseArticle);
+		assertValid(putKnowledgeBaseArticle);
+
+		KnowledgeBaseArticle getKnowledgeBaseArticle =
+			knowledgeBaseArticleResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCode(
+					putKnowledgeBaseArticle.getSiteId(),
+					putKnowledgeBaseArticle.getExternalReferenceCode());
+
+		assertEquals(randomKnowledgeBaseArticle, getKnowledgeBaseArticle);
+		assertValid(getKnowledgeBaseArticle);
+	}
+
+	protected KnowledgeBaseArticle
+			testPutSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle()
+		throws Exception {
+
+		return knowledgeBaseArticleResource.postSiteKnowledgeBaseArticle(
+			testGroup.getGroupId(), randomKnowledgeBaseArticle());
+	}
+
+	@Test
 	public void testGetSiteKnowledgeBaseArticlePermissionsPage()
 		throws Exception {
 
@@ -2020,6 +2187,8 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		graphQLFields.add(new GraphQLField("id"));
 
 		return jsonDeserializer.deserialize(
@@ -2190,6 +2359,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (knowledgeBaseArticle.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (knowledgeBaseArticle.getFriendlyUrlPath() == null) {
 					valid = false;
@@ -2221,6 +2400,19 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					additionalAssertFieldName)) {
 
 				if (knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parentKnowledgeBaseArticleId",
+					additionalAssertFieldName)) {
+
+				if (knowledgeBaseArticle.getParentKnowledgeBaseArticleId() ==
 						null) {
 
 					valid = false;
@@ -2577,6 +2769,19 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						knowledgeBaseArticle1.getExternalReferenceCode(),
+						knowledgeBaseArticle2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("friendlyUrlPath", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						knowledgeBaseArticle1.getFriendlyUrlPath(),
@@ -2632,6 +2837,21 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 							getNumberOfKnowledgeBaseArticles(),
 						knowledgeBaseArticle2.
 							getNumberOfKnowledgeBaseArticles())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"parentKnowledgeBaseArticleId",
+					additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						knowledgeBaseArticle1.getParentKnowledgeBaseArticleId(),
+						knowledgeBaseArticle2.
+							getParentKnowledgeBaseArticleId())) {
 
 					return false;
 				}
@@ -3038,6 +3258,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(
+					knowledgeBaseArticle.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("friendlyUrlPath")) {
 			sb.append("'");
 			sb.append(
@@ -3063,6 +3293,11 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfKnowledgeBaseArticles")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("parentKnowledgeBaseArticleId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -3169,11 +3404,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					RandomTestUtil.randomString());
 				encodingFormat = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				friendlyUrlPath = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				numberOfAttachments = RandomTestUtil.randomInt();
 				numberOfKnowledgeBaseArticles = RandomTestUtil.randomInt();
+				parentKnowledgeBaseArticleId = RandomTestUtil.randomLong();
 				parentKnowledgeBaseFolderId = RandomTestUtil.randomLong();
 				siteId = testGroup.getGroupId();
 				subscribed = RandomTestUtil.randomBoolean();

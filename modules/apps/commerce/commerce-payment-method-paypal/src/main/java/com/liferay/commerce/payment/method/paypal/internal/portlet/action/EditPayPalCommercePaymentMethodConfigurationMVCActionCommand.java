@@ -90,6 +90,11 @@ public class EditPayPalCommercePaymentMethodConfigurationMVCActionCommand
 
 		modifiableSettings.setValue("mode", mode);
 
+		String requestDetailsOption = ParamUtil.getString(
+			actionRequest, "settings--request--");
+
+		modifiableSettings.setValue("requestDetails", requestDetailsOption);
+
 		String paymentAttempts = ParamUtil.getString(
 			actionRequest, "settings--paymentAttempts--");
 

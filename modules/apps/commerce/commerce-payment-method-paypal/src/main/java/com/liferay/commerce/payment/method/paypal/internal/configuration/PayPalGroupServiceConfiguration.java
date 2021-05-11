@@ -34,13 +34,16 @@ public interface PayPalGroupServiceConfiguration {
 	@Meta.AD(name = "client-id", required = false)
 	public String clientId();
 
-	@Meta.AD(name = "mode", required = false)
-	public String mode();
-
 	@Meta.AD(name = "client-secret", required = false)
 	public String clientSecret();
 
+	@Meta.AD(name = "mode", required = false)
+	public String mode();
+
 	@Meta.AD(deflt = "0", name = "payment-attempts-max-count", required = false)
 	public String paymentAttemptsMaxCount();
+
+	@Meta.AD(name = "request-details", required = false)
+	public String requestDetails();
 
 }

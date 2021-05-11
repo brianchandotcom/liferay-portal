@@ -95,7 +95,8 @@ public class ObjectEntryLocalServiceTest {
 					_createObjectField("ageOfDeath", "Long"),
 					_createObjectField("authorOfGospel", "Boolean"),
 					_createObjectField("birthday", "Date"),
-					_createObjectField("emailAddress", "String"),
+					_createObjectField("emailAddress", "String", true),
+					_createObjectField("emailAddressDomain", "String", true),
 					_createObjectField("firstName", "String"),
 					_createObjectField("height", "Double"),
 					_createObjectField("lastName", "String"),
@@ -241,7 +242,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -262,13 +263,13 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -289,19 +290,19 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(2));
 
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("John", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		objectEntries = ObjectEntryLocalServiceUtil.getObjectEntries(
 			_irrelevantObjectDefinition.getObjectDefinitionId(),
@@ -337,7 +338,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(), values.get("testId"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		try {
 			ObjectEntryLocalServiceUtil.getValues(0);
@@ -381,7 +382,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -402,13 +403,13 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = valuesList.get(1);
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -429,19 +430,19 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = valuesList.get(1);
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = valuesList.get(2);
 
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
 		Assert.assertEquals("John", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		valuesList = ObjectEntryLocalServiceUtil.getValuesList(
 			_irrelevantObjectDefinition.getObjectDefinitionId(), null,
@@ -465,6 +466,8 @@ public class ObjectEntryLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddress", "peter@liferay.com"
 			).put(
+				"emailAddressDomain", "@liferay.com"
+			).put(
 				"firstName", "Peter"
 			).build());
 
@@ -478,12 +481,15 @@ public class ObjectEntryLocalServiceTest {
 		Map<String, Serializable> values = _getValues(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddress", "james@liferay.com"
+			).put(
+				"emailAddressDomain", "@liferay.com"
 			).put(
 				"firstName", "James"
 			).build());
@@ -498,18 +504,22 @@ public class ObjectEntryLocalServiceTest {
 		values = _getValues(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"emailAddress", "john@liferay.com"
+			).put(
+				"emailAddressDomain", "@liferay.com"
 			).put(
 				"firstName", "John"
 			).build());
@@ -524,26 +534,34 @@ public class ObjectEntryLocalServiceTest {
 		values = _getValues(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("James", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(2));
 
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("John", values.get("firstName"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		// With keywords
 
-		//_assertKeywords("@ liferay.com", 3);
-		//_assertKeywords("@-liferay.com", 0);
-		//_assertKeywords("@liferay.com", 3);
+		_assertKeywords("@ liferay.com", 0);
+		_assertKeywords("@-liferay.com", 0);
+		_assertKeywords("@liferay.com", 3);
+		_assertKeywords("@liferay", 3);
+		_assertKeywords("@life", 3);
+		_assertKeywords("liferay.com", 0);
+		_assertKeywords("liferay", 0);
+		_assertKeywords("life", 0);
 		_assertKeywords("Peter", 1);
 		_assertKeywords("j0hn", 0);
 		_assertKeywords("john", 1);
@@ -599,7 +617,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(0D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(), values.get("testId"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		Calendar calendar = new GregorianCalendar();
 
@@ -650,7 +668,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(60D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(), values.get("testId"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		ObjectEntryLocalServiceUtil.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
@@ -679,7 +697,7 @@ public class ObjectEntryLocalServiceTest {
 		Assert.assertEquals(65D, values.get("weight"));
 		Assert.assertEquals(
 			objectEntry.getObjectEntryId(), values.get("testId"));
-		Assert.assertEquals(values.toString(), 13, values.size());
+		Assert.assertEquals(values.toString(), 14, values.size());
 
 		try {
 			ObjectEntryLocalServiceUtil.updateObjectEntry(
@@ -779,11 +797,27 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private ObjectField _createObjectField(String name, String type) {
+		return _createObjectField(name, type, false);
+	}
+
+	private ObjectField _createObjectField(
+		String name, String type, boolean indexedAsKeyword) {
+
+		return _createObjectField(name, type, true, indexedAsKeyword, null);
+	}
+
+	private ObjectField _createObjectField(
+		String name, String type, boolean indexed, boolean indexedAsKeyword,
+		String locale) {
+
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
 		objectField.setName(name);
 		objectField.setType(type);
+		objectField.setIndexed(indexed);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setLocale(locale);
 
 		return objectField;
 	}

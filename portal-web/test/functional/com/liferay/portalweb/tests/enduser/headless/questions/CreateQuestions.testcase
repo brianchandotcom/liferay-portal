@@ -6,19 +6,19 @@ definition {
 	property testray.main.component.name = "Questions";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance(freeLogin = "true");
 
-		User.firstLoginPG();
+		User.firstLoginPG(freeLogin = "true");
 
-		Navigator.openURL();
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Questions Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		ContentPages.addPage(pageName = "Questions Page");
-
-		PageEditor.addWidget(portletName = "Questions");
-
-		PageEditor.clickPublish();
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Questions Page",
+			widgetName = "Questions");
 	}
 
 	tearDown {
@@ -40,26 +40,21 @@ definition {
 
 	@description = "Validate if the user can create a question category"
 	@priority = "5"
-	@refactorneeded
-	test AddQuestionCategory {
+	@refactordone
+	test CanAddQuestionCategory {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		JSONMBMessage.addCategory(
+			categoryDescription = "Question Description",
+			categoryName = "question AddQuestionCategory",
+			userEmailAddress = "test@liferay.com");
 
-		Questions.createSomethingInMessageBoards(
-			displayStyleOption = "Question",
-			menuItem = "Category",
-			nameField = "question AddQuestionCategory");
+		Questions.openToQuestionsTopic(
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			topicName = "question AddQuestionCategory");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "question AddQuestionCategory");
-
-		AssertElementPresent(
-			key_emptyInfo = "This topic is empty.",
-			locator1 = "Questions#EMPTY_STATE_MESSAGE");
+		Questions.viewTopicDefault();
 	}
 
 }

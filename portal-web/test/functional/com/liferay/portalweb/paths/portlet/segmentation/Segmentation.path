@@ -89,11 +89,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATION_MENU</td>
-	<td>//a[contains(@class, 'sidebar-collapse-header') and contains(text(),'Organization')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PROPERTIES_SEARCH</td>
 	<td>//input[@data-testid='search-input']</td>
 	<td></td>
@@ -121,11 +116,6 @@
 <tr>
 	<td>SEGMENT_OPTIONS_MENU</td>
 	<td>//*[@id='qfkd____']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SESSION_MENU</td>
-	<td>//a[contains(@class, 'sidebar-collapse-header') and contains(text(),'Session')]</td>
 	<td></td>
 </tr>
 <tr>

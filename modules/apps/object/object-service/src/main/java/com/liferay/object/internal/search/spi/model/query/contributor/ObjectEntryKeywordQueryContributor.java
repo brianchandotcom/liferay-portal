@@ -75,7 +75,7 @@ public class ObjectEntryKeywordQueryContributor
 
 		for (ObjectField objectField : objectFields) {
 			String name = objectField.getName();
-			boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
+			boolean indexedAsKeyword = objectField.isIndexedAsKeyword(); //TODO
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Add search term for object field " + name);

@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -71,7 +72,6 @@ import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortFieldBuilder;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
-import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
@@ -90,6 +90,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -323,15 +325,21 @@ public class ObjectEntryLocalServiceImpl
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
-		List<ObjectEntry> objectEntries = TransformUtil.transform(
-			searchHits.getSearchHits(),
+		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+
+		Stream<SearchHit> stream = searchHitsList.stream();
+
+		List<ObjectEntry> objectEntries = stream.map(
 			searchHit -> {
 				Document document = searchHit.getDocument();
 
 				long objectEntryId = document.getLong(Field.ENTRY_CLASS_PK);
 
 				return objectEntryPersistence.fetchByPrimaryKey(objectEntryId);
-			});
+			}
+		).collect(
+			Collectors.toList()
+		);
 
 		return new BaseModelSearchResult<>(
 			objectEntries, searchResponse.getTotalHits());

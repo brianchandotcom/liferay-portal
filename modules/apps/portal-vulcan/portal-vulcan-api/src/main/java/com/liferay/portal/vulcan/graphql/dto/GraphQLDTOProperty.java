@@ -12,24 +12,31 @@
  * details.
  */
 
-package com.liferay.object.rest.graphql;
-
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
-import com.liferay.portal.odata.entity.EntityModel;
-
-import java.util.List;
+package com.liferay.portal.vulcan.graphql.dto;
 
 /**
- * @author Javier Gamarra
- * @author Brian Wing Shun Chan
+ * @author Javier de Arcos
  */
-public interface ObjectDefinitionGraphQL {
+public class GraphQLDTOProperty {
 
-	public EntityModel getEntityModel();
+	public static GraphQLDTOProperty of(String name, Class<?> type) {
+		return new GraphQLDTOProperty(name, type);
+	}
 
-	public ObjectDefinition getObjectDefinition();
+	public GraphQLDTOProperty(String name, Class<?> type) {
+		_name = name;
+		_type = type;
+	}
 
-	public List<ObjectField> getObjectFields();
+	public String getName() {
+		return _name;
+	}
+
+	public Class<?> getType() {
+		return _type;
+	}
+
+	private final String _name;
+	private final Class<?> _type;
 
 }

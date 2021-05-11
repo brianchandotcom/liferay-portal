@@ -19,10 +19,6 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.rest.graphql.ObjectDefinitionGraphQL;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
@@ -34,19 +30,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -62,10 +53,14 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.graphql.contributor.GraphQLContributor;
+import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
+import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
@@ -79,10 +74,8 @@ import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 import com.liferay.portal.vulcan.internal.multipart.MultipartUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import graphql.ExceptionWhileDataFetching;
 import graphql.GraphQLError;
@@ -196,7 +189,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -567,33 +559,30 @@ public class GraphQLServletExtender {
 
 		_graphQLContributorServiceTracker.open();
 
-		_objectDefinitionGraphQLServiceTrackerMap =
+		_graphQLDTOContributorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, ObjectDefinitionGraphQL.class, "db.table.name",
+				bundleContext, GraphQLDTOContributor.class, "dto.name",
 				new ServiceTrackerMapListener
-					<String, ObjectDefinitionGraphQL,
-					 ObjectDefinitionGraphQL>() {
+					<String, GraphQLDTOContributor, GraphQLDTOContributor>() {
 
 					@Override
 					public void keyEmitted(
-						ServiceTrackerMap<String, ObjectDefinitionGraphQL>
+						ServiceTrackerMap<String, GraphQLDTOContributor>
 							serviceTrackerMap,
 						String key,
-						ObjectDefinitionGraphQL serviceObjectDefinitionGraphQL,
-						ObjectDefinitionGraphQL
-							contentObjectDefinitionGraphQL) {
+						GraphQLDTOContributor serviceGraphQLDTOContributor,
+						GraphQLDTOContributor contentGraphQLDTOContributor) {
 
 						_servlet = null;
 					}
 
 					@Override
 					public void keyRemoved(
-						ServiceTrackerMap<String, ObjectDefinitionGraphQL>
+						ServiceTrackerMap<String, GraphQLDTOContributor>
 							serviceTrackerMap,
 						String key,
-						ObjectDefinitionGraphQL serviceObjectDefinitionGraphQL,
-						ObjectDefinitionGraphQL
-							contentObjectDefinitionGraphQL) {
+						GraphQLDTOContributor serviceGraphQLDTOContributor,
+						GraphQLDTOContributor contentGraphQLDTOContributor) {
 
 						_servlet = null;
 					}
@@ -1313,7 +1302,7 @@ public class GraphQLServletExtender {
 				configurations, ServletData::getMutation, mutationBuilder,
 				graphQLSchemaBuilder, true, processingElementsContainer,
 				servletDatas);
-			_registerObjectDefinitionGraphQLs(
+			_registerGraphQLDTOContributors(
 				mutationBuilder, processingElementsContainer,
 				graphQLObjectTypeBuilder, graphQLSchemaBuilder);
 
@@ -1406,6 +1395,37 @@ public class GraphQLServletExtender {
 		return null;
 	}
 
+	private DefaultDTOConverterContext _getDTOConverterContext(
+			DataFetchingEnvironment dataFetchingEnvironment,
+			Map<String, Serializable> attributes)
+		throws PortalException {
+
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getLocalContext();
+
+		Optional<HttpServletRequest> httpServletRequestOptional =
+			graphQLContext.getHttpServletRequest();
+
+		HttpServletRequest httpServletRequest =
+			httpServletRequestOptional.orElse(null);
+
+		AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
+			httpServletRequest, _language, _portal);
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				acceptLanguage.isAcceptAllLanguages(), Collections.emptyMap(),
+				_dtoConverterRegistry, null,
+				acceptLanguage.getPreferredLocale(), null,
+				_portal.getUser(httpServletRequest));
+
+		if (attributes != null) {
+			defaultDTOConverterContext.setAttributes(attributes);
+		}
+
+		return defaultDTOConverterContext;
+	}
+
 	private EntityModel _getEntityModel(
 			Object resource, Map<String, String[]> parameterMap)
 		throws Exception {
@@ -1466,60 +1486,45 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
-		ObjectDefinition objectDefinition,
-		List<com.liferay.object.model.ObjectField> objectFields) {
+		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
 
 		GraphQLInputObjectType.Builder builder =
 			new GraphQLInputObjectType.Builder();
 
-		builder.name("Input" + objectDefinition.getName());
+		builder.name("Input" + graphQLDTOContributor.getResourceName());
 
-		for (com.liferay.object.model.ObjectField objectField : objectFields) {
+		for (GraphQLDTOProperty graphQLDTOProperty :
+				graphQLDTOContributor.getProperties()) {
+
 			GraphQLInputObjectField.Builder graphQLInputObjectFieldBuilder =
 				GraphQLInputObjectField.newInputObjectField();
 
 			builder.field(
 				graphQLInputObjectFieldBuilder.name(
-					objectField.getName()
+					graphQLDTOProperty.getName()
 				).type(
-					Scalars.GraphQLString
+					_toScalar(graphQLDTOProperty.getType())
 				).build());
 		}
 
 		return builder.build();
 	}
 
-	private GraphQLObjectType _getObjectDefinitionGraphQLObjectType(
-		ObjectDefinition objectDefinition,
-		List<com.liferay.object.model.ObjectField> objectFields) {
+	private GraphQLObjectType _getGraphQLObjectType(
+		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
 
 		GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
 
-		builder.field(
-			_addField(
-				Scalars.GraphQLLong,
-				objectDefinition.getPrimaryKeyColumnName()));
-		builder.name(objectDefinition.getName());
+		builder.name(graphQLDTOContributor.getResourceName());
 
-		for (com.liferay.object.model.ObjectField objectField : objectFields) {
+		for (GraphQLDTOProperty property :
+				graphQLDTOContributor.getProperties()) {
+
 			builder.field(
-				_addField(Scalars.GraphQLString, objectField.getName()));
+				_addField(_toScalar(property.getType()), property.getName()));
 		}
 
 		return builder.build();
-	}
-
-	private Map<String, Serializable> _getObjectEntryValues(
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
-
-		Map<String, Serializable> values = new HashMap<>(
-			objectEntry.getValues());
-
-		values.put(
-			objectDefinition.getPrimaryKeyColumnName(),
-			objectEntry.getObjectEntryId());
-
-		return values;
 	}
 
 	private GraphQLObjectType _getPageGraphQLObjectType(
@@ -1576,18 +1581,6 @@ public class GraphQLServletExtender {
 		}
 	}
 
-	private User _getUser(DataFetchingEnvironment dataFetchingEnvironment)
-		throws PortalException {
-
-		GraphQLContext graphQLContext =
-			dataFetchingEnvironment.getLocalContext();
-
-		Optional<HttpServletRequest> httpServletRequestOptional =
-			graphQLContext.getHttpServletRequest();
-
-		return _portal.getUser(httpServletRequestOptional.orElse(null));
-	}
-
 	private Integer _getVersion(Method method) {
 		Class<?> clazz = method.getDeclaringClass();
 
@@ -1642,6 +1635,191 @@ public class GraphQLServletExtender {
 		}
 
 		return Boolean.TRUE.equals(_getGraphQLFieldValue(method));
+	}
+
+	private void _registerGraphQLDTOContributor(
+		GraphQLDTOContributor graphQLDTOContributor,
+		GraphQLObjectType.Builder mutationBuilder,
+		ProcessingElementsContainer processingElementsContainer,
+		GraphQLObjectType.Builder queryBuilder,
+		GraphQLSchema.Builder schemaBuilder) {
+
+		String resourceName = graphQLDTOContributor.getResourceName();
+
+		// Create
+
+		GraphQLObjectType graphQLObjectType = _getGraphQLObjectType(
+			graphQLDTOContributor);
+
+		String createName = "create" + resourceName;
+
+		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
+			graphQLDTOContributor);
+
+		mutationBuilder.field(
+			_addField(
+				graphQLObjectType, createName,
+				_addArgument(graphQLInputType, resourceName),
+				_addArgument(Scalars.GraphQLLong, "siteId")));
+
+		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
+			processingElementsContainer.getCodeRegistryBuilder();
+
+		schemaBuilder.codeRegistry(
+			graphQLCodeRegistryBuilder.dataFetcher(
+				FieldCoordinates.coordinates("mutation", createName),
+				(DataFetcher<Object>)
+					dataFetchingEnvironment -> graphQLDTOContributor.createDTO(
+						dataFetchingEnvironment.getArgument(resourceName),
+						_getDTOConverterContext(
+							dataFetchingEnvironment,
+							HashMapBuilder.<String, Serializable>put(
+								"siteId",
+								(Long)dataFetchingEnvironment.getArgument(
+									"siteId")
+							).build()))
+			).build());
+
+		// Delete
+
+		String deleteName = "delete" + resourceName;
+
+		String idName = graphQLDTOContributor.getIdName();
+
+		mutationBuilder.field(
+			_addField(
+				Scalars.GraphQLBoolean, deleteName,
+				_addArgument(Scalars.GraphQLLong, idName)));
+
+		schemaBuilder.codeRegistry(
+			graphQLCodeRegistryBuilder.dataFetcher(
+				FieldCoordinates.coordinates("mutation", deleteName),
+				(DataFetcher<Object>)
+					dataFetchingEnvironment -> graphQLDTOContributor.deleteDTO(
+						dataFetchingEnvironment.<Long>getArgument(idName))
+			).build());
+
+		// Get
+
+		String getName = StringUtil.lowerCaseFirstLetter(resourceName);
+
+		queryBuilder.field(
+			_addField(
+				graphQLObjectType, getName,
+				_addArgument(Scalars.GraphQLLong, idName)));
+		schemaBuilder.codeRegistry(
+			graphQLCodeRegistryBuilder.dataFetcher(
+				FieldCoordinates.coordinates("query", getName),
+				(DataFetcher<Object>)
+					dataFetchingEnvironment -> graphQLDTOContributor.getDTO(
+						dataFetchingEnvironment.getArgument(idName),
+						_getDTOConverterContext(dataFetchingEnvironment, null))
+			).build());
+
+		// List
+
+		Map<String, GraphQLType> graphQLTypes =
+			processingElementsContainer.getTypeRegistry();
+		String listName = StringUtil.lowerCaseFirstLetter(
+			TextFormatter.formatPlural(resourceName));
+
+		queryBuilder.field(
+			_addField(
+				_getPageGraphQLObjectType(
+					graphQLTypes.get("Facet"), graphQLObjectType, resourceName),
+				listName,
+				_addArgument(
+					GraphQLList.list(Scalars.GraphQLString), "aggregation"),
+				_addArgument(Scalars.GraphQLString, "filter"),
+				_addArgument(1, Scalars.GraphQLInt, "page"),
+				_addArgument(20, Scalars.GraphQLInt, "pageSize"),
+				_addArgument(Scalars.GraphQLString, "search"),
+				_addArgument(Scalars.GraphQLString, "sort")));
+
+		schemaBuilder.codeRegistry(
+			graphQLCodeRegistryBuilder.dataFetcher(
+				FieldCoordinates.coordinates("query", listName),
+				(DataFetcher<Object>)dataFetchingEnvironment -> {
+					GraphQLContext graphQLContext =
+						dataFetchingEnvironment.getLocalContext();
+
+					Optional<HttpServletRequest> httpServletRequestOptional =
+						graphQLContext.getHttpServletRequest();
+
+					AcceptLanguage acceptLanguage = new AcceptLanguageImpl(
+						httpServletRequestOptional.orElse(null), _language,
+						_portal);
+
+					String aggregationString =
+						dataFetchingEnvironment.getArgument("aggregation");
+
+					Aggregation aggregation = null;
+
+					if (aggregationString != null) {
+						aggregation = _getAggregation(
+							acceptLanguage,
+							Arrays.asList(aggregationString.split(",")),
+							graphQLDTOContributor.getEntityModel());
+					}
+
+					return graphQLDTOContributor.getDTOs(
+						aggregation,
+						_getFilter(
+							acceptLanguage,
+							graphQLDTOContributor.getEntityModel(),
+							dataFetchingEnvironment.getArgument("filter")),
+						Pagination.of(
+							dataFetchingEnvironment.getArgument("page"),
+							dataFetchingEnvironment.getArgument("pageSize")),
+						dataFetchingEnvironment.getArgument("search"),
+						_getSorts(
+							acceptLanguage,
+							graphQLDTOContributor.getEntityModel(),
+							dataFetchingEnvironment.getArgument("sort")),
+						_getDTOConverterContext(
+							dataFetchingEnvironment,
+							HashMapBuilder.<String, Serializable>put(
+								"companyId", CompanyThreadLocal.getCompanyId()
+							).build()));
+				}
+			).build());
+
+		// Update
+
+		String updateName = "update" + resourceName;
+
+		mutationBuilder.field(
+			_addField(
+				graphQLObjectType, updateName,
+				_addArgument(graphQLInputType, resourceName),
+				_addArgument(Scalars.GraphQLLong, idName)));
+
+		schemaBuilder.codeRegistry(
+			graphQLCodeRegistryBuilder.dataFetcher(
+				FieldCoordinates.coordinates("mutation", updateName),
+				(DataFetcher<Object>)
+					dataFetchingEnvironment -> graphQLDTOContributor.updateDTO(
+						dataFetchingEnvironment.getArgument(idName),
+						dataFetchingEnvironment.
+							<Map<String, Serializable>>getArgument(
+								resourceName),
+						_getDTOConverterContext(dataFetchingEnvironment, null))
+			).build());
+	}
+
+	private void _registerGraphQLDTOContributors(
+		GraphQLObjectType.Builder mutationBuilder,
+		ProcessingElementsContainer processingElementsContainer,
+		GraphQLObjectType.Builder queryBuilder,
+		GraphQLSchema.Builder schemaBuilder) {
+
+		for (GraphQLDTOContributor graphQLDTOContributor :
+				_graphQLDTOContributorServiceTrackerMap.values()) {
+
+			_registerGraphQLDTOContributor(
+				graphQLDTOContributor, mutationBuilder,
+				processingElementsContainer, queryBuilder, schemaBuilder);
+		}
 	}
 
 	private void _registerInterfaces(
@@ -1777,231 +1955,6 @@ public class GraphQLServletExtender {
 		}
 	}
 
-	private void _registerObjectDefinitionGraphQL(
-		GraphQLObjectType.Builder mutationBuilder,
-		ObjectDefinitionGraphQL objectDefinitionGraphQL,
-		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder queryBuilder,
-		GraphQLSchema.Builder schemaBuilder) {
-
-		// Create
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionGraphQL.getObjectDefinition();
-		List<com.liferay.object.model.ObjectField> objectFields =
-			objectDefinitionGraphQL.getObjectFields();
-
-		GraphQLObjectType graphQLObjectType =
-			_getObjectDefinitionGraphQLObjectType(
-				objectDefinition, objectFields);
-
-		String createName = "create" + objectDefinition.getName();
-
-		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
-			objectDefinition, objectFields);
-
-		mutationBuilder.field(
-			_addField(
-				graphQLObjectType, createName,
-				_addArgument(graphQLInputType, objectDefinition.getName()),
-				_addArgument(Scalars.GraphQLLong, "siteId")));
-
-		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
-			processingElementsContainer.getCodeRegistryBuilder();
-
-		schemaBuilder.codeRegistry(
-			graphQLCodeRegistryBuilder.dataFetcher(
-				FieldCoordinates.coordinates("mutation", createName),
-				(DataFetcher<Object>)dataFetchingEnvironment -> {
-					User user = _getUser(dataFetchingEnvironment);
-
-					Map<String, Serializable> values =
-						dataFetchingEnvironment.getArgument(
-							objectDefinition.getName());
-
-					return _getObjectEntryValues(
-						objectDefinition,
-						_objectEntryLocalService.addObjectEntry(
-							user.getUserId(),
-							dataFetchingEnvironment.getArgument("siteId"),
-							objectDefinition.getObjectDefinitionId(), values,
-							new ServiceContext()));
-				}
-			).build());
-
-		// Delete
-
-		String deleteName = "delete" + objectDefinition.getName();
-
-		mutationBuilder.field(
-			_addField(
-				Scalars.GraphQLBoolean, deleteName,
-				_addArgument(
-					Scalars.GraphQLLong,
-					objectDefinition.getPrimaryKeyColumnName())));
-		schemaBuilder.codeRegistry(
-			graphQLCodeRegistryBuilder.dataFetcher(
-				FieldCoordinates.coordinates("mutation", deleteName),
-				(DataFetcher<Object>)dataFetchingEnvironment -> {
-					_objectEntryLocalService.deleteObjectEntry(
-						dataFetchingEnvironment.<Long>getArgument(
-							objectDefinition.getPrimaryKeyColumnName()));
-
-					return true;
-				}
-			).build());
-
-		// Get
-
-		String getName = StringUtil.lowerCaseFirstLetter(
-			objectDefinition.getName());
-
-		queryBuilder.field(
-			_addField(
-				graphQLObjectType, getName,
-				_addArgument(
-					Scalars.GraphQLLong,
-					objectDefinition.getPrimaryKeyColumnName())));
-		schemaBuilder.codeRegistry(
-			graphQLCodeRegistryBuilder.dataFetcher(
-				FieldCoordinates.coordinates("query", getName),
-				(DataFetcher<Object>)
-					dataFetchingEnvironment -> _getObjectEntryValues(
-						objectDefinition,
-						_objectEntryLocalService.getObjectEntry(
-							dataFetchingEnvironment.getArgument(
-								objectDefinition.getPrimaryKeyColumnName())))
-			).build());
-
-		// List
-
-		Map<String, GraphQLType> graphQLTypes =
-			processingElementsContainer.getTypeRegistry();
-		String listName = StringUtil.lowerCaseFirstLetter(
-			TextFormatter.formatPlural(objectDefinition.getName()));
-
-		queryBuilder.field(
-			_addField(
-				_getPageGraphQLObjectType(
-					graphQLTypes.get("Facet"), graphQLObjectType,
-					objectDefinition.getName()),
-				listName,
-				_addArgument(
-					GraphQLList.list(Scalars.GraphQLString), "aggregation"),
-				_addArgument(Scalars.GraphQLString, "filter"),
-				_addArgument(1, Scalars.GraphQLInt, "page"),
-				_addArgument(20, Scalars.GraphQLInt, "pageSize"),
-				_addArgument(Scalars.GraphQLString, "search"),
-				_addArgument(Scalars.GraphQLString, "sort")));
-
-		Stream<com.liferay.object.model.ObjectField> objectFieldsStream =
-			objectFields.stream();
-
-		List<String> objectFieldNames = objectFieldsStream.map(
-			com.liferay.object.model.ObjectField::getName
-		).collect(
-			Collectors.toList()
-		);
-
-		objectFieldNames.add(0, objectDefinition.getPrimaryKeyColumnName());
-
-		schemaBuilder.codeRegistry(
-			graphQLCodeRegistryBuilder.dataFetcher(
-				FieldCoordinates.coordinates("query", listName),
-				(DataFetcher<Object>)dataFetchingEnvironment -> {
-					GraphQLContext graphQLContext =
-						dataFetchingEnvironment.getLocalContext();
-
-					Optional<HttpServletRequest> httpServletRequestOptional =
-						graphQLContext.getHttpServletRequest();
-
-					Page<Document> page = _search(
-						new AcceptLanguageImpl(
-							httpServletRequestOptional.orElse(null), _language,
-							_portal),
-						dataFetchingEnvironment, objectDefinitionGraphQL,
-						objectFieldNames);
-
-					return HashMapBuilder.<String, Object>put(
-						"actions", page.getActions()
-					).put(
-						"facets", page.getFacets()
-					).put(
-						"items",
-						() -> {
-							Collection<Document> items = page.getItems();
-
-							Stream<Document> stream = items.stream();
-
-							return stream.map(
-								document ->
-									HashMapBuilder.<String, Serializable>put(
-										objectFieldNames, document::get
-									).build()
-							).collect(
-								Collectors.toList()
-							);
-						}
-					).put(
-						"lastPage", page.getLastPage()
-					).put(
-						"page", page.getPage()
-					).put(
-						"pageSize", page.getPageSize()
-					).put(
-						"totalCount", page.getTotalCount()
-					).build();
-				}
-			).build());
-
-		// Update
-
-		String updateName = "update" + objectDefinition.getName();
-
-		mutationBuilder.field(
-			_addField(
-				graphQLObjectType, updateName,
-				_addArgument(graphQLInputType, objectDefinition.getName()),
-				_addArgument(
-					Scalars.GraphQLLong,
-					objectDefinition.getPrimaryKeyColumnName())));
-
-		schemaBuilder.codeRegistry(
-			graphQLCodeRegistryBuilder.dataFetcher(
-				FieldCoordinates.coordinates("mutation", updateName),
-				(DataFetcher<Object>)dataFetchingEnvironment -> {
-					User user = _getUser(dataFetchingEnvironment);
-
-					Map<String, Serializable> values =
-						dataFetchingEnvironment.getArgument(
-							objectDefinition.getName());
-
-					return _getObjectEntryValues(
-						objectDefinition,
-						_objectEntryLocalService.updateObjectEntry(
-							user.getUserId(),
-							dataFetchingEnvironment.getArgument(
-								objectDefinition.getPrimaryKeyColumnName()),
-							values, new ServiceContext()));
-				}
-			).build());
-	}
-
-	private void _registerObjectDefinitionGraphQLs(
-		GraphQLObjectType.Builder mutationBuilder,
-		ProcessingElementsContainer processingElementsContainer,
-		GraphQLObjectType.Builder queryBuilder,
-		GraphQLSchema.Builder schemaBuilder) {
-
-		for (ObjectDefinitionGraphQL objectDefinitionGraphQL :
-				_objectDefinitionGraphQLServiceTrackerMap.values()) {
-
-			_registerObjectDefinitionGraphQL(
-				mutationBuilder, objectDefinitionGraphQL,
-				processingElementsContainer, queryBuilder, schemaBuilder);
-		}
-	}
-
 	private void _replaceFieldDefinition(
 			GraphQLInterfaceType graphQLInterfaceType,
 			GraphQLObjectType graphQLObjectType)
@@ -2091,50 +2044,21 @@ public class GraphQLServletExtender {
 			graphQLObjectType, Collections.singletonList(graphQLInterfaceType));
 	}
 
-	private Page<Document> _search(
-			AcceptLanguage acceptLanguage,
-			DataFetchingEnvironment dataFetchingEnvironment,
-			ObjectDefinitionGraphQL objectDefinitionGraphQL,
-			List<String> objectFieldNames)
-		throws Exception {
+	private GraphQLScalarType _toScalar(Class<?> type) {
+		if (String.class.equals(type)) {
+			return Scalars.GraphQLString;
+		}
+		else if (Long.class.equals(type)) {
+			return Scalars.GraphQLLong;
+		}
+		else if (Boolean.class.equals(type)) {
+			return Scalars.GraphQLBoolean;
+		}
+		else if (Integer.class.equals(type)) {
+			return Scalars.GraphQLInt;
+		}
 
-		ObjectDefinition objectDefinition =
-			objectDefinitionGraphQL.getObjectDefinition();
-
-		return SearchUtil.search(
-			new HashMap<>(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				booleanFilter.add(
-					new TermFilter(
-						"objectDefinitionId",
-						String.valueOf(
-							objectDefinition.getObjectDefinitionId())),
-					BooleanClauseOccur.MUST);
-			},
-			_getFilter(
-				acceptLanguage, objectDefinitionGraphQL.getEntityModel(),
-				dataFetchingEnvironment.getArgument("filter")),
-			ObjectEntry.class, dataFetchingEnvironment.getArgument("search"),
-			Pagination.of(
-				dataFetchingEnvironment.getArgument("page"),
-				dataFetchingEnvironment.getArgument("pageSize")),
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				objectFieldNames.toArray(new String[0])),
-			searchContext -> {
-				searchContext.addVulcanAggregation(
-					_getAggregation(
-						acceptLanguage,
-						dataFetchingEnvironment.getArgument("aggregation"),
-						objectDefinitionGraphQL.getEntityModel()));
-				searchContext.setCompanyId(CompanyThreadLocal.getCompanyId());
-			},
-			_getSorts(
-				acceptLanguage, objectDefinitionGraphQL.getEntityModel(),
-				dataFetchingEnvironment.getArgument("sort")),
-			document -> document);
+		return Scalars.GraphQLString;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -2338,6 +2262,9 @@ public class GraphQLServletExtender {
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
 
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
+
 	@Reference(
 		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
 	)
@@ -2348,6 +2275,8 @@ public class GraphQLServletExtender {
 
 	private ServiceTracker<GraphQLContributor, GraphQLContributor>
 		_graphQLContributorServiceTracker;
+	private ServiceTrackerMap<String, GraphQLDTOContributor>
+		_graphQLDTOContributorServiceTrackerMap;
 	private GraphQLFieldRetriever _graphQLFieldRetriever;
 
 	@Reference
@@ -2355,12 +2284,6 @@ public class GraphQLServletExtender {
 
 	@Reference
 	private Language _language;
-
-	private ServiceTrackerMap<String, ObjectDefinitionGraphQL>
-		_objectDefinitionGraphQLServiceTrackerMap;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private Portal _portal;

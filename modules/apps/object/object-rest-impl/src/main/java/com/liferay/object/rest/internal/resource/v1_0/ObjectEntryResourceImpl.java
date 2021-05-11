@@ -17,18 +17,13 @@ package com.liferay.object.rest.internal.resource.v1_0;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.converter.ObjectEntryDTOConverter;
+import com.liferay.object.rest.internal.manager.ObjectEntryManager;
 import com.liferay.object.rest.internal.odata.entity.ObjectEntryEntityModel;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -36,13 +31,11 @@ import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,7 +79,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Override
 	public void deleteObjectEntry(Long objectEntryId) throws Exception {
-		_objectEntryLocalService.deleteObjectEntry(objectEntryId);
+		_objectEntryManager.deleteObjectEntry(objectEntryId);
 	}
 
 	@Override
@@ -108,48 +101,26 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		return SearchUtil.search(
-			new HashMap<>(),
-			booleanQuery -> {
-				BooleanFilter booleanFilter =
-					booleanQuery.getPreBooleanFilter();
-
-				booleanFilter.add(
-					new TermFilter(
-						"objectDefinitionId",
-						String.valueOf(
-							_objectDefinition.getObjectDefinitionId())),
-					BooleanClauseOccur.MUST);
-			},
-			filter, com.liferay.object.model.ObjectEntry.class, search,
-			pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> {
-				searchContext.addVulcanAggregation(aggregation);
-				searchContext.setCompanyId(contextCompany.getCompanyId());
-			},
-			sorts,
-			document -> _toObjectEntry(
-				_objectEntryLocalService.getObjectEntry(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+		return _objectEntryManager.getObjectEntries(
+			contextCompany.getCompanyId(),
+			_objectDefinition.getObjectDefinitionId(), aggregation, filter,
+			pagination, search, sorts, _getDTOConverterContext(null));
 	}
 
 	@Override
 	public ObjectEntry getObjectEntry(Long objectEntryId) throws Exception {
-		return _toObjectEntry(
-			_objectEntryLocalService.getObjectEntry(objectEntryId));
+		return _objectEntryManager.getObjectEntry(
+			objectEntryId, _getDTOConverterContext(objectEntryId));
 	}
 
 	@Override
 	public ObjectEntry postSiteObjectEntry(Long siteId, ObjectEntry objectEntry)
 		throws Exception {
 
-		return _toObjectEntry(
-			_objectEntryLocalService.addObjectEntry(
-				contextUser.getUserId(), siteId,
-				_objectDefinition.getObjectDefinitionId(),
-				(Map)objectEntry.getProperties(), new ServiceContext()));
+		return _objectEntryManager.addObjectEntry(
+			contextUser.getUserId(), siteId,
+			_objectDefinition.getObjectDefinitionId(), objectEntry,
+			_getDTOConverterContext(null));
 	}
 
 	@Override
@@ -157,10 +128,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			Long objectEntryId, ObjectEntry objectEntry)
 		throws Exception {
 
-		return _toObjectEntry(
-			_objectEntryLocalService.updateObjectEntry(
-				contextUser.getUserId(), objectEntryId,
-				(Map)objectEntry.getProperties(), new ServiceContext()));
+		return _objectEntryManager.updateObjectEntry(
+			contextUser.getUserId(), objectEntryId, objectEntry,
+			_getDTOConverterContext(objectEntryId));
 	}
 
 	@Override
@@ -172,6 +142,16 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		_loadObjectDefinition(parameters);
 
 		super.update(objectEntries, parameters);
+	}
+
+	private DefaultDTOConverterContext _getDTOConverterContext(
+		Long objectEntryId) {
+
+		return new DefaultDTOConverterContext(
+			contextAcceptLanguage.isAcceptAllLanguages(),
+			Collections.emptyMap(), null, contextHttpServletRequest,
+			objectEntryId, contextAcceptLanguage.getPreferredLocale(),
+			contextUriInfo, contextUser);
 	}
 
 	private void _loadObjectDefinition(Map<String, Serializable> parameters)
@@ -195,19 +175,6 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		throw new NotFoundException("Missing parameter \"objectDefinitionId\"");
 	}
 
-	private ObjectEntry _toObjectEntry(
-		com.liferay.object.model.ObjectEntry objectEntry) {
-
-		return _objectEntryDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				Collections.emptyMap(), null, contextHttpServletRequest,
-				objectEntry.getObjectEntryId(),
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser),
-			objectEntry);
-	}
-
 	private EntityModel _entityModel;
 
 	@Context
@@ -220,7 +187,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	private ObjectEntryDTOConverter _objectEntryDTOConverter;
 
 	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	private ObjectEntryManager _objectEntryManager;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

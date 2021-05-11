@@ -35,9 +35,17 @@ definition {
 	}
 
 	macro addTextField {
-		Form.gotoAddField(
-			fieldType = "Text",
-			key_fieldPositionNumber = "${fieldPositionNumber}");
+		if (isSet(formPageNumber)) {
+			Form.gotoAddField(
+				fieldPositionNumber = "${fieldPositionNumber}",
+				fieldType = "Text",
+				formPageNumber = "${formPageNumber}");
+		}
+		else {
+			Form.gotoAddField(
+				fieldPositionNumber = "${fieldPositionNumber}",
+				fieldType = "Text");
+		}
 	}
 
 	macro addTranslation {
@@ -349,29 +357,24 @@ definition {
 
 		var key_fieldType = "${fieldType}";
 
-		if ("${key_fieldType}" == "Text") {
-			var key_fieldLocation = "${key_fieldPositionNumber}";
+		if (isSet(fieldPositionNumber)) {
+			var key_fieldPositionNumber = "${fieldPositionNumber}";
 		}
 		else {
-			var key_fieldLocation = "${fieldPositionNumber}";
+			var key_fieldPositionNumber = "0";
 		}
 
-		if (isSet(local)) {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fieldLocation = "${local}",
-				locator1 = "Form#ADD_FIELD_NAME",
-				locator2 = "Form#ADD_FIELD_POSITION",
-				value1 = "${fieldType}");
+		if (isSet(formPageNumber)) {
+			var key_formPageNumber = "${formPageNumber}";
 		}
 		else {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fieldLocation = "${local}",
-				locator1 = "Form#ADD_FIELD_NAME",
-				locator2 = "Form#ADD_FIELD_TARGET",
-				value1 = "${fieldType}");
+			var key_formPageNumber = "0";
 		}
 
-		Pause(locator1 = "3000");
+		DragAndDrop.javaScriptDragAndDropToObject(
+			locator1 = "Form#ADD_FIELD_NAME",
+			locator2 = "Form#ADD_FIELD_POSITION",
+			value1 = "${fieldType}");
 
 		if (IsElementNotPresent(key_tab = "Basic", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Basic");

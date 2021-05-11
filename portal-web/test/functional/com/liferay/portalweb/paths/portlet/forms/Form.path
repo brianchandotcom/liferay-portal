@@ -161,7 +161,7 @@
 </tr>
 <tr>
     <td>ADD_FIELD_POSITION</td>
-    <td>xpath=(//div[contains(@class,'col-empty')]/div[contains(@class,'target')])[${key_fieldLocation}] | //div[contains(@class,'yui3-dd-drop') and contains(@class,'col-empty')] | //div[contains(@class,'col-empty')])[${key_fieldLocation}]</td>
+    <td>//div[(@data-ddm-field-page='${key_formPageNumber}') and (@data-ddm-field-row = '${key_fieldPositionNumber}') and contains(@class,'col-empty')]/div[contains(@class,'target')  ]</td>
     <td></td>
 </tr>
 <tr>

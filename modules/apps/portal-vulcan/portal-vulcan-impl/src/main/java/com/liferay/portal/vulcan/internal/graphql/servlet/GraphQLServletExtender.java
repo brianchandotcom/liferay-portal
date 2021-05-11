@@ -1484,14 +1484,14 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLInputObjectType _getGraphQLInputObjectType(
-		GraphQLDTOContributor<?> graphQLDTOContributor) {
+		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
 
 		GraphQLInputObjectType.Builder builder =
 			new GraphQLInputObjectType.Builder();
 
-		builder.name("Input" + graphQLDTOContributor.getName());
+		builder.name("Input" + graphQLDTOContributor.getResourceName());
 
-		for (GraphQLDTOProperty property :
+		for (GraphQLDTOProperty graphQLDTOProperty :
 				graphQLDTOContributor.getProperties()) {
 
 			GraphQLInputObjectField.Builder graphQLInputObjectFieldBuilder =
@@ -1499,9 +1499,9 @@ public class GraphQLServletExtender {
 
 			builder.field(
 				graphQLInputObjectFieldBuilder.name(
-					property.getName()
+					graphQLDTOProperty.getName()
 				).type(
-					_toScalar(property.getType())
+					_toScalar(graphQLDTOProperty.getType())
 				).build());
 		}
 
@@ -1509,11 +1509,11 @@ public class GraphQLServletExtender {
 	}
 
 	private GraphQLObjectType _getGraphQLObjectType(
-		GraphQLDTOContributor<?> graphQLDTOContributor) {
+		GraphQLDTOContributor<?, ?> graphQLDTOContributor) {
 
 		GraphQLObjectType.Builder builder = new GraphQLObjectType.Builder();
 
-		builder.name(graphQLDTOContributor.getName());
+		builder.name(graphQLDTOContributor.getResourceName());
 
 		for (GraphQLDTOProperty property :
 				graphQLDTOContributor.getProperties()) {
@@ -1642,12 +1642,14 @@ public class GraphQLServletExtender {
 		GraphQLObjectType.Builder queryBuilder,
 		GraphQLSchema.Builder schemaBuilder) {
 
+		String resourceName = graphQLDTOContributor.getResourceName();
+
 		// Create
 
 		GraphQLObjectType graphQLObjectType = _getGraphQLObjectType(
 			graphQLDTOContributor);
 
-		String createName = "create" + graphQLDTOContributor.getName();
+		String createName = "create" + resourceName;
 
 		GraphQLInputObjectType graphQLInputType = _getGraphQLInputObjectType(
 			graphQLDTOContributor);
@@ -1655,7 +1657,7 @@ public class GraphQLServletExtender {
 		mutationBuilder.field(
 			_addField(
 				graphQLObjectType, createName,
-				_addArgument(graphQLInputType, graphQLDTOContributor.getName()),
+				_addArgument(graphQLInputType, resourceName),
 				_addArgument(Scalars.GraphQLLong, "siteId")));
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
@@ -1666,8 +1668,7 @@ public class GraphQLServletExtender {
 				FieldCoordinates.coordinates("mutation", createName),
 				(DataFetcher<Object>)
 					dataFetchingEnvironment -> graphQLDTOContributor.createDTO(
-						dataFetchingEnvironment.getArgument(
-							graphQLDTOContributor.getName()),
+						dataFetchingEnvironment.getArgument(resourceName),
 						_getDTOConverterContext(
 							dataFetchingEnvironment,
 							HashMapBuilder.<String, Serializable>put(
@@ -1678,42 +1679,37 @@ public class GraphQLServletExtender {
 
 		// Delete
 
-		String deleteName = "delete" + graphQLDTOContributor.getName();
+		String deleteName = "delete" + resourceName;
+
+		String idName = graphQLDTOContributor.getIdName();
 
 		mutationBuilder.field(
 			_addField(
 				Scalars.GraphQLBoolean, deleteName,
-				_addArgument(
-					Scalars.GraphQLLong,
-					graphQLDTOContributor.getPrimaryKeyPropertyName())));
+				_addArgument(Scalars.GraphQLLong, idName)));
 
 		schemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("mutation", deleteName),
 				(DataFetcher<Object>)
 					dataFetchingEnvironment -> graphQLDTOContributor.deleteDTO(
-						dataFetchingEnvironment.<Long>getArgument(
-							graphQLDTOContributor.getPrimaryKeyPropertyName()))
+						dataFetchingEnvironment.<Long>getArgument(idName))
 			).build());
 
 		// Get
 
-		String getName = StringUtil.lowerCaseFirstLetter(
-			graphQLDTOContributor.getName());
+		String getName = StringUtil.lowerCaseFirstLetter(resourceName);
 
 		queryBuilder.field(
 			_addField(
 				graphQLObjectType, getName,
-				_addArgument(
-					Scalars.GraphQLLong,
-					graphQLDTOContributor.getPrimaryKeyPropertyName())));
+				_addArgument(Scalars.GraphQLLong, idName)));
 		schemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("query", getName),
 				(DataFetcher<Object>)
 					dataFetchingEnvironment -> graphQLDTOContributor.getDTO(
-						dataFetchingEnvironment.getArgument(
-							graphQLDTOContributor.getPrimaryKeyPropertyName()),
+						dataFetchingEnvironment.getArgument(idName),
 						_getDTOConverterContext(dataFetchingEnvironment, null))
 			).build());
 
@@ -1722,13 +1718,12 @@ public class GraphQLServletExtender {
 		Map<String, GraphQLType> graphQLTypes =
 			processingElementsContainer.getTypeRegistry();
 		String listName = StringUtil.lowerCaseFirstLetter(
-			TextFormatter.formatPlural(graphQLDTOContributor.getName()));
+			TextFormatter.formatPlural(resourceName));
 
 		queryBuilder.field(
 			_addField(
 				_getPageGraphQLObjectType(
-					graphQLTypes.get("Facet"), graphQLObjectType,
-					graphQLDTOContributor.getName()),
+					graphQLTypes.get("Facet"), graphQLObjectType, resourceName),
 				listName,
 				_addArgument(
 					GraphQLList.list(Scalars.GraphQLString), "aggregation"),
@@ -1788,26 +1783,23 @@ public class GraphQLServletExtender {
 
 		// Update
 
-		String updateName = "update" + graphQLDTOContributor.getName();
+		String updateName = "update" + resourceName;
 
 		mutationBuilder.field(
 			_addField(
 				graphQLObjectType, updateName,
-				_addArgument(graphQLInputType, graphQLDTOContributor.getName()),
-				_addArgument(
-					Scalars.GraphQLLong,
-					graphQLDTOContributor.getPrimaryKeyPropertyName())));
+				_addArgument(graphQLInputType, resourceName),
+				_addArgument(Scalars.GraphQLLong, idName)));
 
 		schemaBuilder.codeRegistry(
 			graphQLCodeRegistryBuilder.dataFetcher(
 				FieldCoordinates.coordinates("mutation", updateName),
 				(DataFetcher<Object>)
 					dataFetchingEnvironment -> graphQLDTOContributor.updateDTO(
-						dataFetchingEnvironment.getArgument(
-							graphQLDTOContributor.getPrimaryKeyPropertyName()),
+						dataFetchingEnvironment.getArgument(idName),
 						dataFetchingEnvironment.
 							<Map<String, Serializable>>getArgument(
-								graphQLDTOContributor.getName()),
+								resourceName),
 						_getDTOConverterContext(dataFetchingEnvironment, null))
 			).build());
 	}

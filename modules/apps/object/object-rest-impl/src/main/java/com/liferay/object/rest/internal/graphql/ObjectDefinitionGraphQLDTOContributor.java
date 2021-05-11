@@ -30,22 +30,23 @@ import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import java.io.Serializable;
-
 import java.math.BigDecimal;
 
 import java.sql.Blob;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Javier de Arcos
  */
 public class ObjectDefinitionGraphQLDTOContributor
-	implements GraphQLDTOContributor<ObjectEntry> {
+	implements GraphQLDTOContributor<ObjectEntry, Map<String, Object>> {
 
 	public static ObjectDefinitionGraphQLDTOContributor of(
 		ObjectDefinition objectDefinition,
@@ -61,7 +62,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 			properties.add(
 				GraphQLDTOProperty.of(
 					objectField.getName(),
-					_MAPPED_TYPE_TO_CLASS.getOrDefault(
+					_mappedTypeToClass.getOrDefault(
 						objectField.getType(), Object.class)));
 		}
 
@@ -73,14 +74,15 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
-	public ObjectEntry createDTO(
+	public Map<String, Object> createDTO(
 			ObjectEntry objectEntry, DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		return _objectEntryManager.addObjectEntry(
-			dtoConverterContext.getUserId(),
-			(Long)dtoConverterContext.getAttribute("siteId"),
-			_objectDefinitionId, objectEntry, dtoConverterContext);
+		return _objectEntryToMap(
+			_objectEntryManager.addObjectEntry(
+				dtoConverterContext.getUserId(),
+				(Long)dtoConverterContext.getAttribute("siteId"),
+				_objectDefinitionId, objectEntry, dtoConverterContext));
 	}
 
 	@Override
@@ -91,23 +93,38 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
-	public ObjectEntry getDTO(long id, DTOConverterContext dtoConverterContext)
+	public Map<String, Object> getDTO(
+			long id, DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		return _objectEntryManager.getObjectEntry(id, dtoConverterContext);
+		return _objectEntryToMap(
+			_objectEntryManager.getObjectEntry(id, dtoConverterContext));
 	}
 
 	@Override
-	public Page<ObjectEntry> getDTOs(
+	public Page<Map<String, Object>> getDTOs(
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			String search, Sort[] sorts,
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		return _objectEntryManager.getObjectEntries(
+		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 			(Long)dtoConverterContext.getAttribute("companyId"),
 			_objectDefinitionId, aggregation, filter, pagination, search, sorts,
 			dtoConverterContext);
+
+		Collection<ObjectEntry> items = page.getItems();
+
+		Stream<ObjectEntry> stream = items.stream();
+
+		return Page.of(
+			page.getActions(), page.getFacets(),
+			stream.map(
+				this::_objectEntryToMap
+			).collect(
+				Collectors.toList()
+			),
+			pagination, page.getTotalCount());
 	}
 
 	@Override
@@ -116,12 +133,7 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
-	public String getName() {
-		return _name;
-	}
-
-	@Override
-	public String getPrimaryKeyPropertyName() {
+	public String getIdName() {
 		return _primaryKeyPropertyName;
 	}
 
@@ -131,14 +143,20 @@ public class ObjectDefinitionGraphQLDTOContributor
 	}
 
 	@Override
-	public ObjectEntry updateDTO(
+	public String getResourceName() {
+		return _name;
+	}
+
+	@Override
+	public Map<String, Object> updateDTO(
 			long id, ObjectEntry objectEntry,
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		return _objectEntryManager.updateObjectEntry(
-			dtoConverterContext.getUserId(), id, objectEntry,
-			dtoConverterContext);
+		return _objectEntryToMap(
+			_objectEntryManager.updateObjectEntry(
+				dtoConverterContext.getUserId(), id, objectEntry,
+				dtoConverterContext));
 	}
 
 	private ObjectDefinitionGraphQLDTOContributor(
@@ -154,15 +172,15 @@ public class ObjectDefinitionGraphQLDTOContributor
 		_properties = properties;
 	}
 
-	private ObjectEntry _objectEntryFromMap(Map<String, Serializable> values) {
-		ObjectEntry objectEntry = new ObjectEntry();
+	private Map<String, Object> _objectEntryToMap(ObjectEntry objectEntry) {
+		Map<String, Object> properties = objectEntry.getProperties();
 
-		objectEntry.setProperties((Map)values);
+		properties.put(getIdName(), objectEntry.getId());
 
-		return objectEntry;
+		return properties;
 	}
 
-	private static final Map<String, Class<?>> _MAPPED_TYPE_TO_CLASS =
+	private static final Map<String, Class<?>> _mappedTypeToClass =
 		HashMapBuilder.<String, Class<?>>put(
 			"BigDecimal", BigDecimal.class
 		).put(

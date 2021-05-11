@@ -45,7 +45,6 @@ definition {
 	test AddAudioViaWebContent {
 		property custom.properties = "xuggler.enabled=true";
 		property dummy.socket.proxy.disabled = "true";
-		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WebContentDisplay#AddAudioViaWebContent";
 		property testray.component.names = "Training,Web Content Administration";
@@ -247,7 +246,6 @@ definition {
 	@priority = "4"
 	test AddVideoViaWebContent {
 		property dummy.socket.proxy.disabled = "true";
-		property environment.acceptance = "true";
 		property test.name.skip.portal.instance = "WebContentDisplay#AddVideoViaWebContent";
 		property testray.component.names = "Web Content Administration";
 

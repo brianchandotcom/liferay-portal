@@ -27,7 +27,13 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.notifications.NotificationEvent;
+import com.liferay.portal.kernel.notifications.NotificationEventFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -37,6 +43,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -140,6 +147,9 @@ public class UpdateRolesMVCResourceCommand
 
 			userGroupRoleLocalService.addUserGroupRole(
 				userIds[i], ctCollection.getGroupId(), role.getRoleId());
+
+			sendNotificationEvent(
+				ctCollection, userIds[i], roles[i], themeDisplay);
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -184,6 +194,40 @@ public class UpdateRolesMVCResourceCommand
 		return role;
 	}
 
+	protected void sendNotificationEvent(
+			CTCollection ctCollection, long receiverUserId, int roleId,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (UserNotificationManagerUtil.isDeliver(
+				receiverUserId, CTPortletKeys.PUBLICATIONS, 0,
+				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE)) {
+
+			User user = themeDisplay.getUser();
+
+			NotificationEvent notificationEvent =
+				NotificationEventFactoryUtil.createNotificationEvent(
+					System.currentTimeMillis(), CTPortletKeys.PUBLICATIONS,
+					JSONUtil.put(
+						"classPK", ctCollection.getCtCollectionId()
+					).put(
+						"roleId", roleId
+					).put(
+						"userId", user.getUserId()
+					).put(
+						"userName", user.getFullName()
+					));
+
+			notificationEvent.setDeliveryRequired(0);
+			notificationEvent.setDeliveryType(
+				UserNotificationDeliveryConstants.TYPE_WEBSITE);
+
+			userNotificationEventLocalService.addUserNotificationEvent(
+				receiverUserId, false, notificationEvent);
+		}
+	}
+
 	@Reference
 	protected CTCollectionLocalService ctCollectionLocalService;
 
@@ -201,6 +245,10 @@ public class UpdateRolesMVCResourceCommand
 
 	@Reference
 	protected UserGroupRoleLocalService userGroupRoleLocalService;
+
+	@Reference
+	protected UserNotificationEventLocalService
+		userNotificationEventLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

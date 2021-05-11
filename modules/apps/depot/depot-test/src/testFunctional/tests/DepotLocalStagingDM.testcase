@@ -1374,7 +1374,6 @@ definition {
 	}
 
 	@description = "This ensures that an edited internal video in depot can be republished on a connected staging site with enabling FFmpeg."
-	@ignore = "true"
 	@priority = "4"
 	@refactorneeded
 	test EditInternalVideoInDepot {

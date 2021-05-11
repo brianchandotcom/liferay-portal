@@ -652,7 +652,6 @@ definition {
 			dmDocumentTitle = "Zero Document File");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	@refactorneeded
 	test ConfigureFFmpegVideoPreviewSizePG {

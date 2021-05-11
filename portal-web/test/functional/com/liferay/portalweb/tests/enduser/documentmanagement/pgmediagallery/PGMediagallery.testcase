@@ -345,7 +345,6 @@ definition {
 	}
 
 	@description = "This test covers LPS-89361. It ensures that video can be played via media gallery."
-	@ignore = "true"
 	@priority = "4"
 	@refactorneeded
 	test ViewVideoViaMediaGallery {

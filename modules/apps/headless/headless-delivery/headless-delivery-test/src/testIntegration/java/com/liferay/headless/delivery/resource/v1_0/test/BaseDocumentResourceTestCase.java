@@ -1893,6 +1893,8 @@ public abstract class BaseDocumentResourceTestCase {
 
 		graphQLFields.add(new GraphQLField("id"));
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		return jsonDeserializer.deserialize(
 			JSONUtil.getValueAsString(
 				invokeGraphQLMutation(

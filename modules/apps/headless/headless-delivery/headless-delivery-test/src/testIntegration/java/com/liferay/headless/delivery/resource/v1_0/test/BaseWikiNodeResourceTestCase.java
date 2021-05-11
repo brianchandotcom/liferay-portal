@@ -1062,6 +1062,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		graphQLFields.add(new GraphQLField("id"));
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		return jsonDeserializer.deserialize(
 			JSONUtil.getValueAsString(
 				invokeGraphQLMutation(

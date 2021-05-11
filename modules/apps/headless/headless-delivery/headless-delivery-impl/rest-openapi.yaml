@@ -10267,6 +10267,7 @@ paths:
             # @review
             description:
                 Deletes the knowledge base article by external reference code.
+            operationId: deleteSiteKnowledgeBaseArticleByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -10291,6 +10292,7 @@ paths:
             # @review
             description:
                 Retrieves the site's knowledge base article by external reference code.
+            operationId: getSiteKnowledgeBaseArticleByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -10320,6 +10322,7 @@ paths:
             description:
                 Updates the site's knowledge base article with the given external reference code, or creates it if it
                 not exists.
+            operationId: putSiteKnowledgeBaseArticleByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -10501,6 +10504,7 @@ paths:
             # @review
             description:
                 Deletes the knowledge base folder by external reference code.
+            operationId: deleteSiteKnowledgeBaseFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -10525,6 +10529,7 @@ paths:
             # @review
             description:
                 Retrieves the site's knowledge base folder by external reference code.
+            operationId: getSiteKnowledgeBaseFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -10554,6 +10559,7 @@ paths:
             description:
                 Updates the site's knowledge base folder with the given external reference code, or creates it if it not
                 exists.
+            operationId: putSiteKnowledgeBaseFolderByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

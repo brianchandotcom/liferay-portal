@@ -193,6 +193,20 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
+		if (knowledgeBaseArticle.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(knowledgeBaseArticle.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (knowledgeBaseArticle.getFriendlyUrlPath() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -261,6 +275,16 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"numberOfKnowledgeBaseArticles\": ");
 
 			sb.append(knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles());
+		}
+
+		if (knowledgeBaseArticle.getParentKnowledgeBaseArticleId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"parentKnowledgeBaseArticleId\": ");
+
+			sb.append(knowledgeBaseArticle.getParentKnowledgeBaseArticleId());
 		}
 
 		if (knowledgeBaseArticle.getParentKnowledgeBaseFolder() != null) {
@@ -517,6 +541,16 @@ public class KnowledgeBaseArticleSerDes {
 				String.valueOf(knowledgeBaseArticle.getEncodingFormat()));
 		}
 
+		if (knowledgeBaseArticle.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(
+					knowledgeBaseArticle.getExternalReferenceCode()));
+		}
+
 		if (knowledgeBaseArticle.getFriendlyUrlPath() == null) {
 			map.put("friendlyUrlPath", null);
 		}
@@ -558,6 +592,16 @@ public class KnowledgeBaseArticleSerDes {
 				"numberOfKnowledgeBaseArticles",
 				String.valueOf(
 					knowledgeBaseArticle.getNumberOfKnowledgeBaseArticles()));
+		}
+
+		if (knowledgeBaseArticle.getParentKnowledgeBaseArticleId() == null) {
+			map.put("parentKnowledgeBaseArticleId", null);
+		}
+		else {
+			map.put(
+				"parentKnowledgeBaseArticleId",
+				String.valueOf(
+					knowledgeBaseArticle.getParentKnowledgeBaseArticleId()));
 		}
 
 		if (knowledgeBaseArticle.getParentKnowledgeBaseFolder() == null) {
@@ -723,6 +767,14 @@ public class KnowledgeBaseArticleSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseArticle.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "friendlyUrlPath")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseArticle.setFriendlyUrlPath(
@@ -755,6 +807,14 @@ public class KnowledgeBaseArticleSerDes {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseArticle.setNumberOfKnowledgeBaseArticles(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "parentKnowledgeBaseArticleId")) {
+
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseArticle.setParentKnowledgeBaseArticleId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

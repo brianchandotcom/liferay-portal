@@ -141,6 +141,28 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}", "$['messageId']");
 	}
 
+	@summary = "This calls the JSON WS API to delete a category"
+	macro deleteCategory {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
+
+		var categoryId = JSONMBMessage.getCategoryIdByName(
+			groupName = "${groupName}",
+			categoryName = "${categoryName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbcategory/delete-category \
+				-u test@liferay.com:test \
+				-d categoryId=${categoryId} \
+				-d groupId=${groupId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to get the ID of a MB category through the URL"
 	macro getCategoryId {
 		var messageBoardsCategoryURL = selenium.getLocation();

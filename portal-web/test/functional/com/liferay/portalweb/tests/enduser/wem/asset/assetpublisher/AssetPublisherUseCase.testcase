@@ -1066,22 +1066,22 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
-		task ("Add the first wiki front page with category") {
+		task ("Add the first wiki page with category") {
 			JSONWiki.addWikiPage(
 				assetCategoryIds = "${categoryId}",
 				groupName = "Test Site Name",
 				wikiNodeName = "Main",
-				wikiPageContent = "Wiki FrontPage Content 1",
-				wikiPageName = "Wiki FrontPage 1");
+				wikiPageContent = "Wiki Page Content 1",
+				wikiPageName = "Wiki Page Name 1");
 		}
 
-		task ("Add the second wiki front page with tag") {
+		task ("Add the second wiki page with tag") {
 			JSONWiki.addWikiPage(
 				groupName = "Test Site Name",
 				tagName = "tagname",
 				wikiNodeName = "Main",
-				wikiPageContent = "Wiki FrontPage Content 2",
-				wikiPageName = "Wiki FrontPage 2");
+				wikiPageContent = "Wiki Page Content 2",
+				wikiPageName = "Wiki Page Name 2");
 		}
 
 		task ("Add the first web content with category") {
@@ -1116,16 +1116,16 @@ definition {
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetNotPresentPG(
-				assetContent = "Wiki FrontPage Content 2",
-				assetTitle = "Wiki FrontPage 2");
+				assetContent = "Wiki Page Content 2",
+				assetTitle = "Wiki Page Name 2");
 
 			AssetPublisherPortlet.viewAssetNotPresentPG(
 				assetContent = "Web Content Content 2",
 				assetTitle = "Web Content Title 2");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "Wiki FrontPage Content",
-				assetTitle = "Wiki FrontPage 1");
+				assetContent = "Wiki Page Content",
+				assetTitle = "Wiki Page Name 1");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "Web Content Content",
@@ -1146,16 +1146,16 @@ definition {
 				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "Wiki FrontPage Content 2",
-				assetTitle = "Wiki FrontPage 2");
+				assetContent = "Wiki Page Content 2",
+				assetTitle = "Wiki Page Name 2");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "Web Content Content 2",
 				assetTitle = "Web Content Title 2");
 
 			AssetPublisherPortlet.viewAssetNotPresentPG(
-				assetContent = "Wiki FrontPage Content 1",
-				assetTitle = "Wiki FrontPage 1");
+				assetContent = "Wiki Page Content 1",
+				assetTitle = "Wiki Page Name 1");
 
 			AssetPublisherPortlet.viewAssetNotPresentPG(
 				assetContent = "Web Content Content 1",

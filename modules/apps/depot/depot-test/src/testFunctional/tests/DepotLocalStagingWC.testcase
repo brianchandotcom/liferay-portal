@@ -38,13 +38,7 @@ definition {
 
 		Depot.activateStaging(depotName = "Test Depot Name");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging");
-
-		Staging.activateStagingCP(siteName = "Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 	}
 
 	tearDown {
@@ -622,13 +616,7 @@ definition {
 
 		Depot.activateStaging(depotName = "Test Embedded Video Depot Name");
 
-		Navigator.openSiteURL(siteName = "Test Embedded Video Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			portlet = "Staging");
-
-		Staging.activateStagingCP(siteName = "Test Embedded Video Site Name");
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Embedded Video Depot Name");
 

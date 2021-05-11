@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,9 +26,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -201,11 +200,7 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 	}
 
 	public String getUrl() {
-		String type = getType();
-
-		if (!type.equals("ddm-link-to-page") &&
-			!type.equals("link_to_layout")) {
-
+		if (_themeDisplay == null) {
 			return StringPool.BLANK;
 		}
 
@@ -215,79 +210,27 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 			return StringPool.BLANK;
 		}
 
-		long layoutGroupId = 0;
-		long layoutId = 0;
-		String layoutType = StringPool.BLANK;
-
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
 
-			String friendlyUrl = jsonObject.getString("value");
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				jsonObject.getLong("groupId"),
+				jsonObject.getBoolean("privateLayout"),
+				jsonObject.getLong("layoutId"));
 
-			if (Validator.isNotNull(friendlyUrl)) {
-				return friendlyUrl;
+			if (layout == null) {
+				return StringPool.BLANK;
 			}
 
-			layoutGroupId = jsonObject.getLong("groupId");
-			layoutId = jsonObject.getLong("layoutId");
-
-			if (jsonObject.getBoolean("privateLayout")) {
-				layoutType = _LAYOUT_TYPE_PRIVATE_GROUP;
-			}
-			else {
-				layoutType = _LAYOUT_TYPE_PUBLIC;
-			}
+			return PortalUtil.getLayoutFriendlyURL(layout, _themeDisplay);
 		}
-		catch (JSONException jsonException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Unable to parse JSON from data: " + data);
 			}
 
 			return StringPool.BLANK;
 		}
-
-		if (Validator.isNull(layoutType)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		if (layoutType.equals(_LAYOUT_TYPE_PRIVATE_GROUP)) {
-			sb.append(PortalUtil.getPathFriendlyURLPrivateGroup());
-		}
-		else if (layoutType.equals(_LAYOUT_TYPE_PRIVATE_USER)) {
-			sb.append(PortalUtil.getPathFriendlyURLPrivateUser());
-		}
-		else if (layoutType.equals(_LAYOUT_TYPE_PUBLIC)) {
-			sb.append(PortalUtil.getPathFriendlyURLPublic());
-		}
-		else {
-			sb.append("@friendly_url_current@");
-		}
-
-		sb.append(StringPool.SLASH);
-
-		try {
-			Group group = GroupLocalServiceUtil.getGroup(layoutGroupId);
-
-			String name = group.getFriendlyURL();
-
-			name = name.substring(1);
-
-			sb.append(name);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-
-			sb.append("@group_id@");
-		}
-
-		sb.append(StringPool.SLASH);
-		sb.append(layoutId);
-
-		return sb.toString();
 	}
 
 	private String _getDDMJournalArticleFriendlyURL() {
@@ -487,17 +430,11 @@ public class TemplateNode extends LinkedHashMap<String, Object> {
 		return decimalFormat.format(GetterUtil.getDouble(data));
 	}
 
-	private static final String _LAYOUT_TYPE_PRIVATE_GROUP = "private-group";
-
-	private static final String _LAYOUT_TYPE_PRIVATE_USER = "private-user";
-
-	private static final String _LAYOUT_TYPE_PUBLIC = "public";
-
 	private static final Log _log = LogFactoryUtil.getLog(TemplateNode.class);
 
 	private final Map<String, TemplateNode> _childTemplateNodes =
 		new LinkedHashMap<>();
 	private final List<TemplateNode> _siblingTemplateNodes = new ArrayList<>();
-	private ThemeDisplay _themeDisplay;
+	private final ThemeDisplay _themeDisplay;
 
 }

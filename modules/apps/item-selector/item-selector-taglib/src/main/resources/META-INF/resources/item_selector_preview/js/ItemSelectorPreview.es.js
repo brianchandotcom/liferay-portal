@@ -34,6 +34,7 @@ const ItemSelectorPreview = ({
 	editImageURL,
 	handleSelectedItem,
 	headerTitle,
+	itemReturnType,
 	items,
 }) => {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
@@ -228,6 +229,7 @@ const ItemSelectorPreview = ({
 				<ImageEditor
 					imageId={currentItem.fileEntryId || currentItem.fileentryid}
 					imageSrc={currentItem.url}
+					itemReturnType={itemReturnType}
 					onCancel={handleCancelEditing}
 					onSave={handleSaveEditedImage}
 					saveURL={editImageURL}

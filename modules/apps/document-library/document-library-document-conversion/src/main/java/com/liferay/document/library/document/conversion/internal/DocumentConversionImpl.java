@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.document.conversion.internal;
 
-import com.artofsolving.jodconverter.DefaultDocumentFormatRegistry;
 import com.artofsolving.jodconverter.DocumentConverter;
 import com.artofsolving.jodconverter.DocumentFormat;
 import com.artofsolving.jodconverter.DocumentFormatRegistry;
@@ -90,7 +89,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 		}
 
 		DocumentFormatRegistry documentFormatRegistry =
-			new DefaultDocumentFormatRegistry();
+			new LiferayDocumentFormatRegistry();
 
 		DocumentFormat inputDocumentFormat =
 			documentFormatRegistry.getFormatByFileExtension(sourceExtension);
@@ -335,7 +334,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 			Filter filter = new Filter(documentFamily);
 
 			DocumentFormatRegistry documentFormatRegistry =
-				new DefaultDocumentFormatRegistry();
+				new LiferayDocumentFormatRegistry();
 
 			String[] sourceExtensions = PropsUtil.getArray(
 				PropsKeys.OPENOFFICE_CONVERSION_SOURCE_EXTENSIONS, filter);

@@ -37,25 +37,6 @@ definition {
 	}
 
 	@priority = "4"
-	test AddWebContentPGViaAP {
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
-		Navigator.openSiteURL(siteName = "${siteName}");
-
-		Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-		WebContent.addPGViaAP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC Webcontent Title");
-
-		Navigator.gotoPage(pageName = "Asset Publisher Page");
-
-		WebContent.viewPGViaAP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC Webcontent Title");
-	}
-
-	@priority = "4"
 	test AddWebContentWithGlobalScopeViaCPToLiferayAP {
 		property test.name.skip.portal.instance = "AssetPublisherWithWebContent#AddWebContentWithGlobalScopeViaCPToLiferayAP";
 

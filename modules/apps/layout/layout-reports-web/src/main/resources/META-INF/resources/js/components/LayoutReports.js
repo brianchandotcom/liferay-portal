@@ -34,6 +34,8 @@ function loadIssues({data, dispatch, languageId, portletNamespace}) {
 	);
 
 	if (url) {
+		dispatch({type: 'LOAD_DATA'});
+
 		APIService.getLayoutReportsIssues(
 			url.layoutReportsIssuesURL,
 			portletNamespace
@@ -157,15 +159,6 @@ export default function LayoutReports({
 	const onLanguageChange = (languageId) => {
 		setSelectedLanguageId(languageId);
 
-		safeDispatch({
-			data: {
-				...data,
-				layoutReportsIssues: null,
-			},
-			loading: true,
-			type: 'SET_DATA',
-		});
-
 		loadIssues({
 			data,
 			dispatch: safeDispatch,
@@ -197,7 +190,7 @@ export default function LayoutReports({
 				))}
 
 			<div className="c-p-3">
-				{loading && !data?.layoutReportsIssues ? (
+				{loading ? (
 					<div className="text-secondary">
 						{Liferay.Language.get(
 							'connecting-with-google-pagespeed'

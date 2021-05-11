@@ -800,7 +800,7 @@ public class ObjectEntryLocalServiceTest {
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
-		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setIndexedAsKeyword(indexedAsKeyword); //TODO
 		objectField.setName(name);
 		objectField.setType(type);
 

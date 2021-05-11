@@ -120,7 +120,7 @@ public class ObjectEntryModelDocumentContributor
 				continue;
 			}
 
-			boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
+			boolean indexedAsKeyword = objectField.isIndexedAsKeyword(); //TODO
 
 			if (indexedAsKeyword) {
 				_addNestedField(

@@ -33,7 +33,7 @@ MercanetGroupServiceConfiguration mercanetCommercePaymentEngineGroupServiceConfi
 
 	<commerce-ui:panel>
 		<commerce-ui:info-box
-			title="authentication"
+			title='<%= LanguageUtil.get(request, "authentication") %>'
 		>
 			<aui:input label="merchant-id" name="settings--merchantId--" value="<%= mercanetCommercePaymentEngineGroupServiceConfiguration.merchantId() %>" />
 

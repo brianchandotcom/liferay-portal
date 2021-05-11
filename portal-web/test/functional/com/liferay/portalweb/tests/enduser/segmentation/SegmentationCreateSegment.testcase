@@ -315,12 +315,46 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130280."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOrganizationType {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130280 AddSegmentByOrganizationType pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONOrganization.addOrganization(organizationName = "organization Name");
+
+		JSONOrganization.assignUserToOrganization(
+			organizationName = "organization Name",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.selectOrganization();
+
+		Segmentation.addProperties(propertyOption = "Type");
+
+		Segmentation.fillProperty(propertyField = "organization");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationType Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByOrganizationType Test");
+
+		Segmentation.viewSegment(propertyField = "organization");
 	}
 
 	@description = "This is a test for LPS-130345."

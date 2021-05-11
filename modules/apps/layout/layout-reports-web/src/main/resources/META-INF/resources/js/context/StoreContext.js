@@ -14,9 +14,7 @@
 
 import React, {createContext, useReducer} from 'react';
 
-const LOAD_DATA = 'LOAD_DATA';
-const SET_ERROR = 'SET_ERROR';
-const SET_DATA = 'SET_DATA';
+import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
 
 const INITIAL_STATE = {
 	data: null,

@@ -20,6 +20,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
+import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import APIService from '../utils/APIService';
 import getPageSpeedProgress from '../utils/getPageSpeedProgress';
@@ -34,7 +35,7 @@ function loadIssues({data, dispatch, languageId, portletNamespace}) {
 	);
 
 	if (url) {
-		dispatch({type: 'LOAD_DATA'});
+		dispatch({type: LOAD_DATA});
 
 		APIService.getLayoutReportsIssues(
 			url.layoutReportsIssuesURL,
@@ -46,7 +47,7 @@ function loadIssues({data, dispatch, languageId, portletNamespace}) {
 						...data,
 						layoutReportsIssues,
 					},
-					type: 'SET_DATA',
+					type: SET_DATA,
 				});
 			})
 			.catch(() => {
@@ -55,14 +56,14 @@ function loadIssues({data, dispatch, languageId, portletNamespace}) {
 						buttonTitle: Liferay.Language.get('relaunch'),
 						message: Liferay.Language.get('connection-failed'),
 					},
-					type: 'SET_ERROR',
+					type: SET_ERROR,
 				});
 			});
 	}
 	else {
 		dispatch({
 			error: Liferay.Language.get('an-unexpected-error-occurred'),
-			type: 'SET_ERROR',
+			type: SET_ERROR,
 		});
 	}
 }
@@ -110,7 +111,7 @@ export default function LayoutReports({
 
 	const getData = useCallback(
 		(fetchURL) => {
-			safeDispatch({type: 'LOAD_DATA'});
+			safeDispatch({type: LOAD_DATA});
 
 			fetch(fetchURL, {method: 'GET'})
 				.then((response) =>
@@ -120,7 +121,7 @@ export default function LayoutReports({
 								...data,
 							},
 							loading: data.validConnection,
-							type: 'SET_DATA',
+							type: SET_DATA,
 						});
 
 						if (data.validConnection) {
@@ -137,7 +138,7 @@ export default function LayoutReports({
 						error: Liferay.Language.get(
 							'an-unexpected-error-occurred'
 						),
-						type: 'SET_ERROR',
+						type: SET_ERROR,
 					});
 				});
 		},

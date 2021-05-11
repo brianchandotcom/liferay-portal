@@ -963,15 +963,20 @@ definition {
 
 ##### `@ignore`
 
-When set to `true`, this test is not stored when Poshi files are loaded into the
-JVM.
+When this annotation is set, this test is not stored when Poshi files are
+loaded into the JVM.
 
-*Example:*
+*Examples:*
 
 ```javascript
-@ignore = "true"
+@ignore = "Reason for ignoring all test cases"
 definition {
 	...
+}
+...
+@ignore = "Reason for ignoring specific test case"
+test TestName {
+    ...
 }
 ```
 

@@ -40,8 +40,8 @@ definition {
 
 	@description = "This test covers LPS-79000. It ensures that users can only publish an Approved blog entry. Draft entries should not have the Publish option."
 	@priority = "5"
-	@refactorneeded
-	test PublishDraftViaSAP {
+	@refactordone
+	test CannotPublishUnapprovedDraft {
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
 			siteURLKey = "site-name-staging");
@@ -61,13 +61,7 @@ definition {
 	@description = "This test covers LPS-77658. It publishes a blog entry to live via Single Asset Publishing."
 	@priority = "4"
 	@refactorneeded
-	test PublishEntryViaSAP {
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
-
+	test CanPublishEntryViaSAP {
 		BlogsNavigator.openToStagingCP(
 			groupName = "Site Name",
 			siteURLKey = "site-name-staging");

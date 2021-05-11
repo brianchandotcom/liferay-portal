@@ -69,8 +69,6 @@ definition {
 	macro _agreeToTermsAndAnswerReminderQuery {
 		Variables.assertDefined(parameterList = "${userId}");
 
-		var companyId = JSONCompany.getCompanyId(portalInstanceName = "${portalInstanceName}");
-
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''

@@ -24,12 +24,6 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
 	}
 
 	tearDown {
@@ -49,147 +43,147 @@ definition {
 		}
 	}
 
+	@description = "Add and edit web content via Asset Publisher in organization site with virtual host."
 	@priority = "4"
-	test AddAndEditAssetsViaVirtualHostOrganizations {
+	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditAssetsViaVirtualHostOrganizations";
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
 
-		JSONOrganization.addOrganization(
-			organizationName = "Organization Name",
-			organizationSite = "true");
+		task ("Add an organization with site") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name",
+				organizationSite = "true");
+		}
 
-		for (var layoutName : list "Home,Documents and Media,News") {
-			JSONLayout.addPrivateLayoutByGroupName(
+		task ("Add private pages in organization site") {
+			for (var layoutName : list "Welcome,Documents and Media,News") {
+				JSONLayout.addPrivateLayout(
+					groupName = "Organization Name",
+					layoutName = "${layoutName}");
+			}
+		}
+
+		task ("Execute reindex all") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Search");
+
+			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		}
+
+		task ("Assign user to organization") {
+			JSONOrganization.assignUserToOrganization(
+				organizationName = "Organization Name",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("Define public virtual host and private virtual host") {
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
+
+			Site.addVirtualHostsURLCP(
+				publicPageVirtualHostURL = "www.able.com",
+				publicVirtualHosts = "true");
+
+			Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
+
+			Site.addVirtualHostsURLCP(
+				privatePageVirtualHostURL = "www.baker.com",
+				privateVirtualHosts = "true");
+		}
+
+		task ("Sign in the prviate virtual host") {
+			User.logoutPG();
+
+			User.firstLoginUI(specificURL = "http://www.baker.com:8080");
+		}
+
+		task ("View prviate pages") {
+			for (var sitePageName : list "Welcome,Documents and Media,News") {
+				AssertElementPresent(
+					key_pageName = "${sitePageName}",
+					locator1 = "Home#PAGE");
+			}
+		}
+
+		task ("Sign in the public virtual host") {
+			User.firstLoginUI(specificURL = "http://www.able.com:8080");
+		}
+
+		task ("View public pages not shown") {
+			for (var sitePageName : list "Welcome,Documents and Media,News") {
+				AssertElementNotPresent(
+					key_pageName = "${sitePageName}",
+					locator1 = "Home#PAGE");
+			}
+		}
+
+		task ("Add a public page in organization site") {
+			JSONLayout.addPublicLayout(
 				groupName = "Organization Name",
-				layoutName = "${layoutName}");
+				layoutName = "Web Content Page");
 		}
 
-		Search.openSearchAdmin(siteURLKey = "test-site-name");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
-		JSONOrganization.assignUserToOrganization(
-			organizationName = "Organization Name",
-			userEmailAddress = "test@liferay.com");
-
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
-
-		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.able.com",
-			publicVirtualHosts = "true");
-
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
-
-		Site.addVirtualHostsURLCP(
-			privatePageVirtualHostURL = "www.baker.com",
-			privateVirtualHosts = "true");
-
-		User.logoutPG();
-
-		User.firstLoginPG(
-			password = "test",
-			samlEnabled = "true",
-			userEmailAddress = "test@liferay.com",
-			virtualHostsURL = "http://www.baker.com:8080");
-
-		for (var sitePageName : list "Home,Documents and Media,News") {
-			AssertElementPresent(
-				key_pageName = "${sitePageName}",
-				locator1 = "Home#PAGE");
+		task ("Add an Asset Publisher to public page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Organization Name",
+				layoutName = "Web Content Page",
+				widgetName = "Asset Publisher");
 		}
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+		task ("Add a web content via Asset Publisher") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Web Content Page",
+				url = "http://www.able.com:8080");
 
-		for (var sitePageName : list "Documents and Media,News") {
-			AssertElementNotPresent(
-				key_pageName = "${sitePageName}",
-				locator1 = "Home#PAGE");
+			WebContent.addPGViaAP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
 		}
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com",
-			virtualHostsURL = "http://www.able.com:8080");
+		task ("Edit the web content via Asset Publisher") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Web Content Page",
+				url = "http://www.able.com:8080");
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+			AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WC WebContent Title");
 
-		JSONLayout.addPublicLayoutByGroupName(
-			groupName = "Organization Name",
-			layoutName = "Web Content Page");
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
 
-		Navigator.gotoSpecificURLPage(
-			pageName = "Web Content Page",
-			url = "http://www.able.com:8080");
+			PortletEntry.publish();
+		}
 
-		Portlet.addPG(portletName = "Web Content Display");
+		task ("View the edited web content in Asset Publisher") {
+			Navigator.gotoSpecificURLPage(
+				pageName = "Web Content Page",
+				url = "http://www.able.com:8080");
 
-		Refresh();
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
+		}
 
-		Portlet.addPG(portletName = "Asset Publisher");
+		task ("Sign in the localhost") {
+			User.logoutPG();
 
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+			User.loginPG();
+		}
 
-		Pause(locator1 = "3000");
+		task ("View the edited web content in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Page",
+				siteName = "Organization Name");
 
-		Navigator.gotoSpecificURLPage(
-			pageName = "Web Content Page",
-			url = "http://www.able.com:8080");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Web Content Page",
-			url = "http://www.able.com:8080");
-
-		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
-
-		WebContent.viewPGViaAP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Web Content Page",
-			url = "http://www.able.com:8080");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WC WebContent Title");
-
-		AssertElementNotPresent(locator1 = "SignIn#PORTLET_TITLE");
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Web Content Page",
-			url = "http://www.able.com:8080");
-
-		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "WC WebContent Title");
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content Edit",
-			webContentTitle = "WC WebContent Title Edit");
-
-		Button.clickPublish();
-
-		Pause(locator1 = "3000");
-
-		Navigator.gotoSpecificURLPage(
-			pageName = "Web Content Page",
-			url = "http://www.able.com:8080");
-
-		WebContent.viewPGViaAP(
-			webContentContent = "WC WebContent Content Edit",
-			webContentTitle = "WC WebContent Title Edit");
-
-		User.firstLoginPG();
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Page",
-			siteName = "Organization Name");
-
-		WebContent.viewPGViaAP(
-			webContentContent = "WC WebContent Content Edit",
-			webContentTitle = "WC WebContent Title Edit");
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
+		}
 	}
 
 	@priority = "4"

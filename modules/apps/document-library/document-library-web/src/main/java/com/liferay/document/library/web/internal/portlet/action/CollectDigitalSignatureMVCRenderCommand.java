@@ -15,17 +15,17 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContext;
-import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
-import com.liferay.document.library.web.internal.display.context.DLAdminManagementToolbarDisplayContext;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -54,25 +54,26 @@ public class CollectDigitalSignatureMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		renderRequest.setAttribute(
-			DDMFormValuesToMapConverter.class.getName(),
-			_ddmFormValuesToMapConverter);
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		DLAdminDisplayContext dlAdminDisplayContext =
-			_dlAdminDisplayContextProvider.getDLAdminDisplayContext(
-				_portal.getHttpServletRequest(renderRequest),
-				_portal.getHttpServletResponse(renderResponse));
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		renderRequest.setAttribute(
-			DLAdminDisplayContext.class.getName(), dlAdminDisplayContext);
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(renderRequest.getParameter("backURL"));
 
-		renderRequest.setAttribute(
-			DLAdminManagementToolbarDisplayContext.class.getName(),
-			_dlAdminDisplayContextProvider.
-				getDLAdminManagementToolbarDisplayContext(
-					_portal.getHttpServletRequest(renderRequest),
-					_portal.getHttpServletResponse(renderResponse),
-					dlAdminDisplayContext));
+		try {
+			FileEntry fileEntry = ActionUtil.getFileEntry(renderRequest);
+
+			if (fileEntry != null) {
+				renderResponse.setTitle(fileEntry.getTitle());
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+		}
 
 		return super.render(renderRequest, renderResponse);
 	}
@@ -91,19 +92,13 @@ public class CollectDigitalSignatureMVCRenderCommand
 		return "/document_library/collect_digital_signature.jsp";
 	}
 
-	@Reference
-	private DDMFormValuesToMapConverter _ddmFormValuesToMapConverter;
-
-	@Reference
-	private DLAdminDisplayContextProvider _dlAdminDisplayContextProvider;
+	private static final Log _log = LogFactoryUtil.getLog(
+		CollectDigitalSignatureMVCRenderCommand.class);
 
 	@Reference(
 		target = "(model.class.name=com.liferay.portal.kernel.repository.model.FileEntry)"
 	)
 	private volatile ModelResourcePermission<FileEntry>
 		_fileEntryModelResourcePermission;
-
-	@Reference
-	private Portal _portal;
 
 }

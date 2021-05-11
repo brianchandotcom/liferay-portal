@@ -17,7 +17,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {Input} from './FormBase';
+import {Input} from './DigitalSignatureFormBase';
 
 const MAX_LENGTH = {
 	EMAIL_MESSAGE: 10000,

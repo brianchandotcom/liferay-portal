@@ -27,7 +27,7 @@ import {
 	maxLength,
 	required,
 	validate,
-} from '../components/FormValidation';
+} from '../components/DigitalSignatureFormValidation';
 
 const defaultRecipient = {
 	email: '',

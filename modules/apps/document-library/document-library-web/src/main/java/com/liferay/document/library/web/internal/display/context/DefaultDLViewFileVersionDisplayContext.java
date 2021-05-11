@@ -396,7 +396,7 @@ public class DefaultDLViewFileVersionDisplayContext
 			_uiItemsBuilder.addCheckinMenuItem(menuItems);
 
 			if (FFDigitalSignatureConfigurationUtil.
-					showCollectDigitalSignatureMenuItem()) {
+					collectDigitalSignatureMenuItemEnabled()) {
 
 				_uiItemsBuilder.addCollectDigitalSignatureMenuItem(menuItems);
 			}

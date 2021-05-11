@@ -1,8 +1,8 @@
 @import 'atlas-variables';
 
-@import 'image_editor';
-
 @import 'collect_digital_signature';
+
+@import 'image_editor';
 
 @mixin file-icon($colorIndex, $color) {
 	[data-file-icon-color='#{$colorIndex}'] .lexicon-icon {

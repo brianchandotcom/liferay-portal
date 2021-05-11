@@ -32,9 +32,9 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class FFDigitalSignatureConfigurationUtil {
 
-	public static boolean showCollectDigitalSignatureMenuItem() {
+	public static boolean collectDigitalSignatureMenuItemEnabled() {
 		return _ffDigitalSignatureConfiguration.
-			showCollectDigitalSignatureMenuItem();
+			collectDigitalSignatureMenuItemEnabled();
 	}
 
 	@Activate

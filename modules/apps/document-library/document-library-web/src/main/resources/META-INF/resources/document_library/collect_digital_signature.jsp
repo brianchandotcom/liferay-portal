@@ -16,51 +16,6 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<%
-FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
-
-FileVersion fileVersion = null;
-
-long fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
-
-if (fileEntry != null) {
-	fileVersion = fileEntry.getLatestFileVersion();
-
-	if ((fileEntryTypeId == -1) && (fileVersion.getModel() instanceof DLFileVersion)) {
-		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
-		fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
-	}
-}
-
-DLFileEntryType dlFileEntryType = null;
-
-if (fileEntryTypeId >= 0) {
-	dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
-}
-
-DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
-
-if (fileEntry == null) {
-	dlEditFileEntryDisplayContext = dlDisplayContextProvider.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
-}
-else {
-	dlEditFileEntryDisplayContext = dlDisplayContextProvider.getDLEditFileEntryDisplayContext(request, response, fileEntry);
-}
-
-String version = null;
-
-if (dlEditFileEntryDisplayContext.isVersionInfoVisible()) {
-	version = fileVersion.getVersion();
-}
-%>
-
-<c:if test="<%= fileVersion != null %>">
-	<liferay-frontend:info-bar>
-		<aui:workflow-status markupView="lexicon" model="<%= DLFileEntry.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fileVersion.getStatus() %>" version="<%= version %>" />
-	</liferay-frontend:info-bar>
-</c:if>
-
 <div id="digital-signature">
 	<react:component
 		module="document_library/js/digital-signature/pages/CollectDigitalSignature"

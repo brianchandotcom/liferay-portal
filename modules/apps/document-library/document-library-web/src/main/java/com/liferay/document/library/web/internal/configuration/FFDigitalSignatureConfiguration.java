@@ -28,6 +28,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface FFDigitalSignatureConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
-	public boolean showCollectDigitalSignatureMenuItem();
+	public boolean collectDigitalSignatureMenuItemEnabled();
 
 }

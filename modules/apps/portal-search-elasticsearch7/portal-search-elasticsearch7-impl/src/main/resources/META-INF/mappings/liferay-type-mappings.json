@@ -729,6 +729,42 @@
 				"store": true,
 				"type": "date"
 			},
+			"nestedFieldArray": {
+				"properties": {
+					"fieldName": {
+						"type": "keyword"
+					},
+					"valueFieldName": {
+						"type": "keyword"
+					},
+					"value_binary": {
+						"type": "binary"
+					},
+					"value_boolean": {
+						"type": "boolean"
+					},
+					"value_date": {
+						"format": "yyyyMMddHHmmss",
+						"type": "date"
+					},
+					"value_double": {
+						"type": "double"
+					},
+					"value_integer": {
+						"type": "integer"
+					},
+					"value_keyword": {
+						"type": "keyword"
+					},
+					"value_long": {
+						"type": "long"
+					},
+					"value_text": {
+						"type": "text"
+					}
+				},
+				"type": "nested"
+			},
 			"nodeId": {
 				"store": true,
 				"type": "keyword"

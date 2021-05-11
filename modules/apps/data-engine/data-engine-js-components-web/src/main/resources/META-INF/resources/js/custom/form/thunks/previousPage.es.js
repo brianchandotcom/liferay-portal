@@ -57,6 +57,11 @@ export default function previousPage({
 				type: CORE_EVENT_TYPES.PAGE.CHANGE,
 			});
 
+			dispatch({
+				payload: evaluatedPages,
+				type: CORE_EVENT_TYPES.PAGE.UPDATE,
+			});
+
 			Liferay.fire('ddmFormPageShow', {
 				formId,
 				page: activePageUpdated,

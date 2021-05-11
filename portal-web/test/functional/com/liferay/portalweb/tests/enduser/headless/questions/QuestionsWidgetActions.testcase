@@ -6,9 +6,9 @@ definition {
 	property testray.main.component.name = "Questions";
 
 	setUp {
-		TestCase.setUpPortalInstance(freeLogin = "true");
+		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG(freeLogin = "true");
+		User.firstLoginPG();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -479,7 +479,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.logoutAndLoginPG(
-			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -532,7 +531,6 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		User.logoutAndLoginPG(
-			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -568,7 +566,6 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
-			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 

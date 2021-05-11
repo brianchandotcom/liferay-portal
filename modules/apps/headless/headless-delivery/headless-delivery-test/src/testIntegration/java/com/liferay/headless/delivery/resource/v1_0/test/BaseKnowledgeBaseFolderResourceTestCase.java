@@ -189,6 +189,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		KnowledgeBaseFolder knowledgeBaseFolder = randomKnowledgeBaseFolder();
 
 		knowledgeBaseFolder.setDescription(regex);
+		knowledgeBaseFolder.setExternalReferenceCode(regex);
 		knowledgeBaseFolder.setName(regex);
 
 		String json = KnowledgeBaseFolderSerDes.toJSON(knowledgeBaseFolder);
@@ -198,6 +199,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		knowledgeBaseFolder = KnowledgeBaseFolderSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, knowledgeBaseFolder.getDescription());
+		Assert.assertEquals(
+			regex, knowledgeBaseFolder.getExternalReferenceCode());
 		Assert.assertEquals(regex, knowledgeBaseFolder.getName());
 	}
 
@@ -844,6 +847,170 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			knowledgeBaseFolderResource.
+				deleteSiteKnowledgeBaseFolderByExternalReferenceCodeHttpResponse(
+					knowledgeBaseFolder.getSiteId(),
+					knowledgeBaseFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseFolderResource.
+				getSiteKnowledgeBaseFolderByExternalReferenceCodeHttpResponse(
+					knowledgeBaseFolder.getSiteId(),
+					knowledgeBaseFolder.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseFolderResource.
+				getSiteKnowledgeBaseFolderByExternalReferenceCodeHttpResponse(
+					knowledgeBaseFolder.getSiteId(),
+					knowledgeBaseFolder.getExternalReferenceCode()));
+	}
+
+	protected KnowledgeBaseFolder
+			testDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+	}
+
+	@Test
+	public void testGetSiteKnowledgeBaseFolderByExternalReferenceCode()
+		throws Exception {
+
+		KnowledgeBaseFolder postKnowledgeBaseFolder =
+			testGetSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder getKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.
+				getSiteKnowledgeBaseFolderByExternalReferenceCode(
+					postKnowledgeBaseFolder.getSiteId(),
+					postKnowledgeBaseFolder.getExternalReferenceCode());
+
+		assertEquals(postKnowledgeBaseFolder, getKnowledgeBaseFolder);
+		assertValid(getKnowledgeBaseFolder);
+	}
+
+	protected KnowledgeBaseFolder
+			testGetSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+	}
+
+	@Test
+	public void testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode()
+		throws Exception {
+
+		KnowledgeBaseFolder knowledgeBaseFolder =
+			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
+
+		Assert.assertTrue(
+			equals(
+				knowledgeBaseFolder,
+				KnowledgeBaseFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"knowledgeBaseFolderByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												knowledgeBaseFolder.
+													getSiteId() + "\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												knowledgeBaseFolder.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/knowledgeBaseFolderByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"knowledgeBaseFolderByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutSiteKnowledgeBaseFolderByExternalReferenceCode()
+		throws Exception {
+
+		KnowledgeBaseFolder postKnowledgeBaseFolder =
+			testPutSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder randomKnowledgeBaseFolder =
+			randomKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder putKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.
+				putSiteKnowledgeBaseFolderByExternalReferenceCode(
+					postKnowledgeBaseFolder.getSiteId(),
+					postKnowledgeBaseFolder.getExternalReferenceCode(),
+					randomKnowledgeBaseFolder);
+
+		assertEquals(randomKnowledgeBaseFolder, putKnowledgeBaseFolder);
+		assertValid(putKnowledgeBaseFolder);
+
+		KnowledgeBaseFolder getKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.
+				getSiteKnowledgeBaseFolderByExternalReferenceCode(
+					putKnowledgeBaseFolder.getSiteId(),
+					putKnowledgeBaseFolder.getExternalReferenceCode());
+
+		assertEquals(randomKnowledgeBaseFolder, getKnowledgeBaseFolder);
+		assertValid(getKnowledgeBaseFolder);
+	}
+
+	protected KnowledgeBaseFolder
+			testPutSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return knowledgeBaseFolderResource.postSiteKnowledgeBaseFolder(
+			testGroup.getGroupId(), randomKnowledgeBaseFolder());
+	}
+
+	@Test
 	public void testGetSiteKnowledgeBaseFolderPermissionsPage()
 		throws Exception {
 
@@ -991,6 +1158,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		graphQLFields.add(new GraphQLField("id"));
 
 		return jsonDeserializer.deserialize(
@@ -1124,6 +1293,16 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (knowledgeBaseFolder.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (knowledgeBaseFolder.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1358,6 +1537,19 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				if (!Objects.deepEquals(
 						knowledgeBaseFolder1.getDescription(),
 						knowledgeBaseFolder2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						knowledgeBaseFolder1.getExternalReferenceCode(),
+						knowledgeBaseFolder2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1642,6 +1834,15 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(
+				String.valueOf(knowledgeBaseFolder.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1732,6 +1933,8 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

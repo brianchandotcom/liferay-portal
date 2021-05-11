@@ -194,23 +194,23 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		boolean newDBPartitionAdded = DBPartitionUtil.addDBPartition(
 			company.getCompanyId());
 
-		company.setWebId(webId);
-		company.setMx(mx);
-		company.setSystem(system);
-		company.setMaxUsers(maxUsers);
-		company.setActive(active);
-
-		company = companyPersistence.update(company);
-
-		// Virtual host
-
-		updateVirtualHostname(company.getCompanyId(), virtualHostname);
-
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setInitializingCompanyIdWithSafeCloseable(
 				company.getCompanyId());
 
 		try {
+			company.setWebId(webId);
+			company.setMx(mx);
+			company.setSystem(system);
+			company.setMaxUsers(maxUsers);
+			company.setActive(active);
+
+			company = companyPersistence.update(company);
+
+			// Virtual host
+
+			updateVirtualHostname(company.getCompanyId(), virtualHostname);
+
 			if (newDBPartitionAdded) {
 				dlFileEntryTypeLocalService.
 					createBasicDocumentDLFileEntryType();

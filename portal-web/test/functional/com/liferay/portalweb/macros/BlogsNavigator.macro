@@ -5,11 +5,9 @@ definition {
 			Click(locator1 = "Blogs#ADD_BLOGS_ENTRY");
 		}
 		else {
-			var key_text = "New Entry";
-
-			AssertClick(
-				locator1 = "Button#ANY",
-				value1 = "New Entry");
+			Click(
+				key_text = "New Entry",
+				locator1 = "Button#ANY");
 		}
 
 		AssertVisible(locator1 = "BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE");

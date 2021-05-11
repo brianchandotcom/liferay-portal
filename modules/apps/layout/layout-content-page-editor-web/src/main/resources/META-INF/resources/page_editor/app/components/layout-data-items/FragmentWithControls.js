@@ -25,6 +25,7 @@ import {
 import {useSelector} from '../../contexts/StoreContext';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import Topper from '../Topper';
 import FragmentContent from '../fragment-content/FragmentContent';
 import FragmentContentInteractionsFilter from '../fragment-content/FragmentContentInteractionsFilter';
@@ -111,10 +112,10 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
-				[`mb-${marginBottom}`]: !isNaN(parseInt(marginBottom, 10)),
-				[`ml-${marginLeft}`]: !isNaN(parseInt(marginLeft, 10)),
-				[`mr-${marginRight}`]: !isNaN(parseInt(marginRight, 10)),
-				[`mt-${marginTop}`]: !isNaN(parseInt(marginTop, 10)),
+				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
+				[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
+				[`mr-${marginRight}`]: isValidSpacingOption(marginRight),
+				[`mt-${marginTop}`]: isValidSpacingOption(marginTop),
 				'page-editor__topper--hovered': hovered,
 			})}
 			item={item}

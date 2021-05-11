@@ -37,6 +37,7 @@ import resolveEditableConfig from '../../utils/editable-value/resolveEditableCon
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
 import UnsafeHTML from '../UnsafeHTML';
@@ -286,23 +287,23 @@ const FragmentContent = ({
 					{
 						'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
 						[`mb-${marginBottom}`]:
-							!isNaN(parseInt(marginBottom, 10)) && !withinTopper,
+							isValidSpacingOption(marginBottom) && !withinTopper,
 						[`ml-${marginLeft}`]:
-							!isNaN(parseInt(marginLeft, 10)) && !withinTopper,
+							isValidSpacingOption(marginLeft) && !withinTopper,
 						[`mr-${marginRight}`]:
-							!isNaN(parseInt(marginRight, 10)) && !withinTopper,
+							isValidSpacingOption(marginRight) && !withinTopper,
 						[`mt-${marginTop}`]:
-							!isNaN(parseInt(marginTop, 10)) && !withinTopper,
-						[`pb-${paddingBottom}`]: !isNaN(
-							parseInt(paddingBottom, 10)
+							isValidSpacingOption(marginTop) && !withinTopper,
+						[`pb-${paddingBottom}`]: isValidSpacingOption(
+							paddingBottom
 						),
-						[`pl-${paddingLeft}`]: !isNaN(
-							parseInt(paddingLeft, 10)
+						[`pl-${paddingLeft}`]: isValidSpacingOption(
+							paddingLeft
 						),
-						[`pr-${paddingRight}`]: !isNaN(
-							parseInt(paddingRight, 10)
+						[`pr-${paddingRight}`]: isValidSpacingOption(
+							paddingRight
 						),
-						[`pt-${paddingTop}`]: !isNaN(parseInt(paddingTop, 10)),
+						[`pt-${paddingTop}`]: isValidSpacingOption(paddingTop),
 						[textAlign
 							? textAlign.startsWith('text-')
 								? textAlign

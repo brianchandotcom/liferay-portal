@@ -26,6 +26,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
 import {useId} from '../../utils/useId';
 
@@ -166,20 +167,20 @@ const Container = React.forwardRef(
 					[`bg-${backgroundColor}`]:
 						backgroundColor && !backgroundColor.startsWith('#'),
 					[justify]: !!justify,
-					[`mb-${marginBottom}`]: !isNaN(parseInt(marginBottom, 10)),
-					[`mt-${marginTop}`]: !isNaN(parseInt(marginTop, 10)),
-					[`pb-${paddingBottom}`]: !isNaN(
-						parseInt(paddingBottom, 10)
+					[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
+					[`mt-${marginTop}`]: isValidSpacingOption(marginTop),
+					[`pb-${paddingBottom}`]: isValidSpacingOption(
+						paddingBottom
 					),
-					[`pl-${paddingLeft}`]: !isNaN(parseInt(paddingLeft, 10)),
-					[`pr-${paddingRight}`]: !isNaN(parseInt(paddingRight, 10)),
-					[`pt-${paddingTop}`]: !isNaN(parseInt(paddingTop, 10)),
+					[`pl-${paddingLeft}`]: isValidSpacingOption(paddingLeft),
+					[`pr-${paddingRight}`]: isValidSpacingOption(paddingRight),
+					[`pt-${paddingTop}`]: isValidSpacingOption(paddingTop),
 					[`ml-${marginLeft}`]:
-						!isNaN(parseInt(marginLeft, 10)) &&
+						isValidSpacingOption(marginLeft) &&
 						widthType !== CONTAINER_WIDTH_TYPES.fixed &&
 						!withinTopper,
 					[`mr-${marginRight}`]:
-						!isNaN(parseInt(marginRight, 10)) &&
+						isValidSpacingOption(marginRight) &&
 						widthType !== CONTAINER_WIDTH_TYPES.fixed &&
 						!withinTopper,
 					[textAlign

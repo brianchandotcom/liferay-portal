@@ -36,22 +36,18 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishDraftViaSAP {
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		Blogs.addDraft(
 			entryContent = "Blogs Entry Content",
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		Blogs.assertNoPublishOption(entryTitle = "Blogs Entry Title");
 	}
@@ -74,13 +70,9 @@ definition {
 
 		BlogsEntry.viewNoPG(entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
@@ -123,9 +115,9 @@ definition {
 
 		Portlet.addPG(portletName = "Blogs");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		BlogsNavigator.gotoAddEntry();
 
@@ -191,13 +183,9 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
 
@@ -245,25 +233,17 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
@@ -327,13 +307,9 @@ definition {
 
 		Staging.modifyVariation(enableOnPublicPages = "true");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Blogs Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Blogs");
+		BlogsNavigator.openToStagingCP(
+			groupName = "Site Name",
+			siteURLKey = "site-name-staging");
 
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",

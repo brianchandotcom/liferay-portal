@@ -39,6 +39,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import org.dom4j.Element;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -54,6 +56,7 @@ public class TestrayAttachmentRecorder {
 		_recordJenkinsConsole();
 
 		if (_build instanceof TopLevelBuild) {
+			_recordBuildResult();
 			_recordJenkinsReport();
 		}
 		else {
@@ -237,6 +240,33 @@ public class TestrayAttachmentRecorder {
 		}
 
 		return new File(getTestrayLogsDir(), sb.toString());
+	}
+
+	private void _recordBuildResult() {
+		if (!(_build instanceof TopLevelBuild)) {
+			return;
+		}
+
+		TopLevelBuild topLevelBuild = (TopLevelBuild)_build;
+
+		JSONObject jsonObject = topLevelBuild.getBuildResultsJSONObject(
+			null, null,
+			new String[] {
+				"buildURL", "duration", "errorDetails", "name", "status"
+			});
+
+		File buildResultsJSONObjectFile = new File(
+			_getTestrayLogsBuildDir(), "build-result.json");
+
+		try {
+			JenkinsResultsParserUtil.write(
+				buildResultsJSONObjectFile, jsonObject.toString());
+
+			_convertToGzipFile(buildResultsJSONObjectFile);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private void _recordJenkinsConsole() {

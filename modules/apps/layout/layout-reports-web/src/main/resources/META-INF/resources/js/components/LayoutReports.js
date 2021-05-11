@@ -99,7 +99,10 @@ export default function LayoutReports({
 				setPercentage(progress.toFixed(0));
 			}, 500);
 
-			return () => clearInterval(interval);
+			return () => {
+				clearInterval(interval);
+				setPercentage(0);
+			};
 		}
 	}, [error, loading]);
 
@@ -152,7 +155,6 @@ export default function LayoutReports({
 	}, [eventTriggered, data, layoutReportsDataURL, getData]);
 
 	const onLanguageChange = (languageId) => {
-		setPercentage(0);
 		setSelectedLanguageId(languageId);
 
 		safeDispatch({

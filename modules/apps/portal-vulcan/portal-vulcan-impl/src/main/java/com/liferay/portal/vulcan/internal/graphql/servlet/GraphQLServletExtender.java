@@ -1419,7 +1419,9 @@ public class GraphQLServletExtender {
 				acceptLanguage.getPreferredLocale(), null,
 				_portal.getUser(httpServletRequest));
 
-		defaultDTOConverterContext.setAttributes(attributes);
+		if (attributes != null) {
+			defaultDTOConverterContext.setAttributes(attributes);
+		}
 
 		return defaultDTOConverterContext;
 	}

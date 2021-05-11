@@ -46,7 +46,7 @@ import java.util.stream.Stream;
  * @author Javier de Arcos
  */
 public class ObjectDefinitionGraphQLDTOContributor
-	implements GraphQLDTOContributor<ObjectEntry, Map<String, Object>> {
+	implements GraphQLDTOContributor<Map<String, Object>, Map<String, Object>> {
 
 	public static ObjectDefinitionGraphQLDTOContributor of(
 		ObjectDefinition objectDefinition,
@@ -75,14 +75,15 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	@Override
 	public Map<String, Object> createDTO(
-			ObjectEntry objectEntry, DTOConverterContext dtoConverterContext)
+			Map<String, Object> map, DTOConverterContext dtoConverterContext)
 		throws Exception {
 
 		return _objectEntryToMap(
 			_objectEntryManager.addObjectEntry(
 				dtoConverterContext.getUserId(),
 				(Long)dtoConverterContext.getAttribute("siteId"),
-				_objectDefinitionId, objectEntry, dtoConverterContext));
+				_objectDefinitionId, _mapToObjectEntry(map),
+				dtoConverterContext));
 	}
 
 	@Override
@@ -149,13 +150,13 @@ public class ObjectDefinitionGraphQLDTOContributor
 
 	@Override
 	public Map<String, Object> updateDTO(
-			long id, ObjectEntry objectEntry,
+			long id, Map<String, Object> map,
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
 		return _objectEntryToMap(
 			_objectEntryManager.updateObjectEntry(
-				dtoConverterContext.getUserId(), id, objectEntry,
+				dtoConverterContext.getUserId(), id, _mapToObjectEntry(map),
 				dtoConverterContext));
 	}
 
@@ -170,6 +171,20 @@ public class ObjectDefinitionGraphQLDTOContributor
 		_objectEntryManager = objectEntryManager;
 		_primaryKeyPropertyName = primaryKeyPropertyName;
 		_properties = properties;
+	}
+
+	private ObjectEntry _mapToObjectEntry(Map<String, Object> map) {
+		ObjectEntry objectEntry = new ObjectEntry();
+
+		objectEntry.setId((Long)map.get(getIdName()));
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			properties.put(entry.getKey(), entry.getValue());
+		}
+
+		return objectEntry;
 	}
 
 	private Map<String, Object> _objectEntryToMap(ObjectEntry objectEntry) {

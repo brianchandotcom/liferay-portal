@@ -16,12 +16,15 @@ package com.liferay.digital.signature.manager;
 
 import org.osgi.annotation.versioning.ProviderType;
 
+import com.liferay.digital.signature.model.DSEnvelope;
+
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public interface DSEnvelopeManager {
 
-	public void addDSEnvelope();
+	public void addDSEnvelope(DSEnvelope envelope);
+	public void getDSEnvelope(String envelopeId);
 
 }

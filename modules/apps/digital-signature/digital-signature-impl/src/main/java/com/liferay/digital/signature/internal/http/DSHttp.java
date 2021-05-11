@@ -50,11 +50,22 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DSHttp.class)
 public class DSHttp {
 
-	public JSONObject invoke(
+	public JSONObject invokePost(
 		long groupId, String location, JSONObject bodyJSONObject) {
 
 		try {
-			return _invoke(groupId, location, bodyJSONObject);
+			return _invokePost(groupId, location, bodyJSONObject);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+	
+	public JSONObject invokeGet(
+		long groupId, String location) {
+
+		try {
+			return _invokeGet(groupId, location);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -151,7 +162,7 @@ public class DSHttp {
 			token + "." + _encode(signature.sign()), "=");
 	}
 
-	private JSONObject _invoke(
+	private JSONObject _invokePost(
 			long groupId, String location, JSONObject bodyJSONObject)
 		throws Exception {
 
@@ -169,6 +180,25 @@ public class DSHttp {
 				"https://demo.docusign.net/restapi/v2.1/accounts/",
 				_getDocuSignAPIAccountId(groupId), "/", location));
 		options.setPost(true);
+
+		return _jsonFactory.createJSONObject(_http.URLtoString(options));
+	}
+	
+	private JSONObject _invokeGet(
+			long groupId, String location)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		options.addHeader(
+			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		options.addHeader(
+			"Authorization", "Bearer " + _getDocuSignAccessToken(groupId));
+		options.setLocation(
+			StringBundler.concat(
+				"https://demo.docusign.net/restapi/v2.1/accounts/",
+				_getDocuSignAPIAccountId(groupId), "/", location));
+		options.setPost(false);
 
 		return _jsonFactory.createJSONObject(_http.URLtoString(options));
 	}

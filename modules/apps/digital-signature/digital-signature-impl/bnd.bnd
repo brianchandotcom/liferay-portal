@@ -1,4 +1,6 @@
 Bundle-Name: Liferay Digital Signature Implementation
 Bundle-SymbolicName: com.liferay.digital.signature.impl
 Bundle-Version: 3.0.0
+Export-Package:\
+	com.liferay.digital.signature.internal.model
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore

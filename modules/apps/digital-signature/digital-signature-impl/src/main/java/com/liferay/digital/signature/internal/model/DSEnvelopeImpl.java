@@ -20,4 +20,39 @@ import com.liferay.digital.signature.model.DSEnvelope;
  * @author Brian Wing Shun Chan
  */
 public class DSEnvelopeImpl implements DSEnvelope {
+	
+	@Override
+	public String getEnvelopeId() {
+		return _envelopeId;
+	}
+	
+	@Override
+	public String getEmailSubject() {
+		return _emailSubject;
+	}
+	
+	@Override
+	public String getStatus() {
+		return _status;
+	}
+
+	public void setEmailSubject(String emailSubject) {
+		_emailSubject = emailSubject;
+	}
+
+	public void setEnvelopeId(String envelopeId) {
+		_envelopeId = envelopeId;
+	}
+
+	@Override
+	public void setStatus(String status) {
+		_status = status;
+		
+	}
+
+	private String _emailSubject;
+	
+	private String _envelopeId;
+	
+	private String _status;
 }

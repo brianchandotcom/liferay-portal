@@ -21,4 +21,10 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DSEnvelope {
+	public String getEnvelopeId();
+	public String getEmailSubject();
+	public String getStatus();
+	public void setEmailSubject(String emailSubject);
+	public void setEnvelopeId(String envelopeId);
+	public void setStatus(String status);
 }

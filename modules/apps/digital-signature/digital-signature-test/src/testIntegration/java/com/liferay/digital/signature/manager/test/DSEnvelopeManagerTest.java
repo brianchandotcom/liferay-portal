@@ -14,16 +14,18 @@
 
 package com.liferay.digital.signature.manager.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.digital.signature.manager.DSEnvelopeManager;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.digital.signature.internal.model.DSEnvelopeImpl;
+import com.liferay.digital.signature.manager.DSEnvelopeManager;
+import com.liferay.digital.signature.model.DSEnvelope;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,7 +40,17 @@ public class DSEnvelopeManagerTest {
 
 	@Test
 	public void testAddDSEnvelope() throws Exception {
-		_dsEnvelopeManager.addDSEnvelope();
+		DSEnvelope envelope = new DSEnvelopeImpl();
+		
+		envelope.setEmailSubject("Test New Envelope " + System.currentTimeMillis());
+		envelope.setStatus("created");
+		
+		_dsEnvelopeManager.addDSEnvelope(envelope);
+	}
+	
+	@Test
+	public void testGetDSEnvelope() throws Exception {
+		_dsEnvelopeManager.getDSEnvelope("b3254f13-a6d0-4c13-9253-28486bc32604");
 	}
 
 	@Inject

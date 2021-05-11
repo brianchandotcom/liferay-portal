@@ -262,7 +262,15 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-		AssertElementPresent(locator1 = "Segmentation#MEMBER_NAME_LISTED");
+		if (isSet(memberNameList)) {
+			for (var key_memberName : list "${memberNameList}") {
+				AssertElementPresent(locator1 = "Segmentation#MEMBER_NAME_LISTED");
+			}
+		}
+
+		else {
+			AssertElementPresent(locator1 = "Segmentation#MEMBER_NAME_LISTED");
+		}
 
 		SelectFrame(value1 = "relative=top");
 

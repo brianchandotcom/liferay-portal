@@ -570,9 +570,7 @@ definition {
 
 		Segmentation.fillTitle(titleField = "AddSegmentByOtherSegments Test");
 
-		Segmentation.viewMembers(memberName = "userfn1 userln1");
-
-		Segmentation.viewMembers(memberName = "userfn2 userln2");
+		Segmentation.viewMembers(memberNameList = "userfn1 userln1,userfn2 userln2");
 
 		Button.clickSave();
 
@@ -586,6 +584,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130346 AddSegmentByOtherSegmentsUnableToAddNewSegments pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130347."

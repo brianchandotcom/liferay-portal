@@ -158,6 +158,8 @@ definition {
 			Type.typeCodeMirrorEditorNoError(
 				locator1 = "CKEditor#BODY_FIELD_SOURCE_ON",
 				value1 = "${webContentSourceHTML}");
+
+			Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON_2");
 		}
 
 		if (isSet(webContentText)) {

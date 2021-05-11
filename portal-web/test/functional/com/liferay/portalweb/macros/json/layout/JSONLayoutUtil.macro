@@ -100,6 +100,9 @@ definition {
 		else if ("${widgetName}" == "Profile") {
 			var portletId = "com_liferay_contacts_web_portlet_ProfilePortlet";
 		}
+		else if ("${widgetName}" == "Questions") {
+			var portletId = "com_liferay_questions_web_internal_portlet_QuestionsPortlet";
+		}
 		else if ("${widgetName}" == "Related Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet";
 		}

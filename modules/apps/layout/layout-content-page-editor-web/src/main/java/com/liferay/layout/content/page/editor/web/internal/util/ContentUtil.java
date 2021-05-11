@@ -116,11 +116,18 @@ public class ContentUtil {
 			HttpServletRequest httpServletRequest, long plid)
 		throws PortalException {
 
-		return JSONUtil.concat(
-			_getLayoutClassedModelPageContentsJSONArray(
-				httpServletRequest, plid),
-			AssetListEntryUsagesUtil.getPageContentsJSONArray(
-				httpServletRequest, plid));
+		if (FFLayoutContentPageEditorConfigurationUtil.
+				contentBrowsingEnabled()) {
+
+			return JSONUtil.concat(
+				_getLayoutClassedModelPageContentsJSONArray(
+					httpServletRequest, plid),
+				AssetListEntryUsagesUtil.getPageContentsJSONArray(
+					httpServletRequest, plid));
+		}
+
+		return _getLayoutClassedModelPageContentsJSONArray(
+			httpServletRequest, plid);
 	}
 
 	private static String _generateUniqueLayoutClassedModelUsageKey(

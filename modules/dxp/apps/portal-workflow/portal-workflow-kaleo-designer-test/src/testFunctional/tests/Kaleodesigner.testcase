@@ -147,7 +147,6 @@ definition {
 
 	@priority = "5"
 	test AddJoinXORWorkflowDefinitionViaViewTab {
-		property portal.acceptance = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(

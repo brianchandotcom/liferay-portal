@@ -72,6 +72,8 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name-staging");
 
+		// Need to check if we can add blog entry directly to staging via JSON
+
 		Blogs.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -146,6 +148,8 @@ definition {
 	@refactorneeded
 	test CanPublishSmallImageDeletion {
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name-staging");
+
+		// Can explore how to add Blog with small image via JSON
 
 		BlogsEntry.addEntryContent(
 			entryContent = "Blogs Entry Content",

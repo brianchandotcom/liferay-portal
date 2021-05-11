@@ -57,6 +57,7 @@ const noop = () => {};
 export default ({
 	imageId,
 	imageSrc,
+	itemReturnType,
 	onCancel = noop,
 	onSave = noop,
 	saveURL,
@@ -88,6 +89,7 @@ export default ({
 
 			formData.append('fileEntryId', imageId);
 			formData.append('imageBlob', blob, imageId);
+			formData.append('itemReturnType', itemReturnType);
 
 			fetch(saveURL, {
 				body: formData,

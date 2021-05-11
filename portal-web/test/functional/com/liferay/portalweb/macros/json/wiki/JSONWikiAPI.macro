@@ -223,4 +223,56 @@ definition {
 		return "${pageId}";
 	}
 
+	@summary = "Helper function to update the existing wiki page via JSON."
+	macro _updateWikiPage {
+		Variables.assertDefined(parameterList = "${content},${headline},${nodeId},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (isSet(description)) {
+			var description = "${description}";
+		}
+		else {
+			var description = "";
+		}
+
+		if (isSet(encodingFormat)) {
+			var encodingFormat = "${encodingFormat}";
+		}
+		else {
+			var encodingFormat = "creole";
+		}
+
+		if (isSet(version)) {
+			var version = "${version}";
+		}
+		else {
+			var version = "1.0";
+		}
+
+		if (isSet(minorEdit)) {
+			var minorEdit = "${minorEdit}";
+		}
+		else {
+			var minorEdit = "true";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/wiki.wikipage/update-page \
+				-u test@liferay.com:test \
+				-d nodeId=${nodeId} \
+				-d title=${headline} \
+				-d version=${version} \
+				-d content=${content} \
+				-d summary=${description} \
+				-d minorEdit=${minorEdit} \
+				-d format=${encodingFormat} \
+				-d parentTitle= \
+				-d redirectTitle= \
+				-d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

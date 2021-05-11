@@ -58,4 +58,25 @@ definition {
 			viewableBy = "${viewableBy}");
 	}
 
+	@summary = "Directly calls the JSON WS API to update a wiki page"
+	macro updateWikiPage {
+		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageContent},${wikiPageName}");
+
+		var nodeId = JSONWikiSetter.setNodeId(groupName = "${groupName}", name = "${wikiNodeName}");
+
+		var serviceContext = JSONWikiSetter.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}");
+
+		JSONWikiAPI._updateWikiPage(
+			content = "${wikiPageContent}",
+			description = "${description}",
+			encodingFormat = "${encodingFormat}",
+			headline = "${wikiPageName}",
+			minorEdit = "${minorEdit}",
+			nodeId = "${nodeId}",
+			serviceContext = "${serviceContext}",
+			version = "${version}");
+	}
+
 }

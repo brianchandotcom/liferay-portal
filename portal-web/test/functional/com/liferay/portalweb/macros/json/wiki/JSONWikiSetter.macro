@@ -42,4 +42,12 @@ definition {
 		return "${pageId}";
 	}
 
+	macro setServiceContext {
+		var serviceContext = JSONServiceContextUtil.setServiceContext(
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}");
+
+		return "${serviceContext}";
+	}
+
 }

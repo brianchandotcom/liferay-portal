@@ -166,8 +166,11 @@ public class DLAMImageOptimizer implements AMImageOptimizer {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to process file entry " +
-								fileEntry.getFileEntryId(),
-							exception);
+								fileEntry.getFileEntryId());
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception, exception);
 					}
 
 					_sendStatusMessage(

@@ -25,7 +25,7 @@ import ModalProvider from './modal/ModalProvider.es';
 function InstanceListPage({routeParams}) {
 	useTimeRangeFetch();
 
-	const {page, pageSize, processId} = routeParams;
+	const {page, pageSize, processId, sort} = routeParams;
 
 	useProcessTitle(processId, Liferay.Language.get('all-items'));
 
@@ -63,6 +63,7 @@ function InstanceListPage({routeParams}) {
 			page,
 			pageSize,
 			slaStatuses,
+			sort,
 			taskNames,
 			...timeRange,
 		},

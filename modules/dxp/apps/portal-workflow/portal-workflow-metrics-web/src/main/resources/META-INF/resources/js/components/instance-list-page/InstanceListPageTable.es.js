@@ -27,7 +27,7 @@ const Table = ({items, totalCount}) => {
 
 					<ClayTable.Cell headingCell style={{width: '14%'}}>
 						<ListHeadItem
-							name="dueDate"
+							name="dateOverdue"
 							title={Liferay.Language.get('due-date')}
 						/>
 					</ClayTable.Cell>

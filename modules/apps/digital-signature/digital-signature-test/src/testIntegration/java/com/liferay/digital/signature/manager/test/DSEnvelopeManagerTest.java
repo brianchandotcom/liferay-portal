@@ -50,8 +50,10 @@ public class DSEnvelopeManagerTest {
 
 	@Test
 	public void testAddDSEnvelope() throws Exception {
+		Class<?> clazz = getClass();
+
 		byte[] byteArray = FileUtil.getBytes(
-			getClass().getResourceAsStream("dependencies/Document_1.pdf"));
+			clazz.getResourceAsStream("dependencies/Document_1.pdf"));
 
 		String encode = Base64.encode(byteArray);
 

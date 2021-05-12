@@ -127,12 +127,35 @@ definition {
 	}
 
 	@description = "COMMERCE-6149.As a buyer, I want to search a product by its name using double quotes in the Search Bar widget and that product should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test SearchBarWidgetSearchProductByNameDoubleQuotes {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductByNameDoubleQuotes";
 
-		// TODO COMMERCE-6149 SearchBarWidgetSearchProductByNameDoubleQuotes pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+		
+
+		var product = '''"ABS Sensor"''';
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "${product}");
+		
+		Button.clickSubmitButton();
+
+		AssertElementPresent(
+			key_value = "1",
+			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+
+		AssertElementPresent(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementNotPresent(
+			key_value = "2",
+			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 	}
 
 	@description = "COMMERCE-6150. As a buyer, I want to search a product by its name using single quotes in the Search Bar widget and the results should be visible on the Search Results widget"

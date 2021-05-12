@@ -280,16 +280,16 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		Instance instance1 = randomInstance();
 
-		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
-			testGroup.getCompanyId(), instance1,
-			_toSLAResult(true, SLAResult.Status.STOPPED),
-			_toSLAResult(true, SLAResult.Status.PAUSED));
-
 		instance1.setClassPK(_classPK);
 		instance1.setCompleted(true);
 		instance1.setDateCompletion(RandomTestUtil.nextDate());
 
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance1);
+
+		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
+			testGroup.getCompanyId(), instance1,
+			_toSLAResult(true, SLAResult.Status.STOPPED),
+			_toSLAResult(true, SLAResult.Status.PAUSED));
 
 		Instance instance2 = randomInstance();
 

@@ -700,7 +700,7 @@ definition {
 
 		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
 
-		Segmentation.fillProperty(tagName = "tagname");
+		Segmentation.fillProperty(selectLink = "tagname");
 
 		AssertTextEquals(
 			locator1 = "Segmentation#MEMBERS_MATCHED",

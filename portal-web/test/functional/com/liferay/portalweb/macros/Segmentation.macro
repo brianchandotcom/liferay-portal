@@ -129,7 +129,7 @@ definition {
 			Click(locator1 = "Modal#SELECT_BUTTON");
 		}
 
-		else if (isSet(tagName)) {
+		else if (isSet(selectLink)) {
 			if (isSet(indexNumber)) {
 				Click(
 					key_indexNumber = "${indexNumber}",
@@ -143,9 +143,9 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertClick(
-				key_rowEntry = "${tagName}",
+				key_rowEntry = "${selectLink}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-				value1 = "${tagName}");
+				value1 = "${selectLink}");
 
 			SelectFrame(value1 = "relative=top");
 		}

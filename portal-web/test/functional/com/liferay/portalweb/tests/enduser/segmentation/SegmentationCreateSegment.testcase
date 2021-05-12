@@ -451,7 +451,7 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Tag");
 
-		Segmentation.fillProperty(tagName = "tagname");
+		Segmentation.fillProperty(selectLink = "tagname");
 
 		Segmentation.fillTitle(titleField = "AddSegmentByOrganizationTag Test");
 
@@ -558,13 +558,13 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Segment");
 
-		Segmentation.fillProperty(tagName = "Segment With User1");
+		Segmentation.fillProperty(selectLink = "Segment With User1");
 
 		Segmentation.addProperties(propertyOption = "Segment");
 
 		Segmentation.fillProperty(
 			indexNumber = "2",
-			tagName = "Segment With User2");
+			selectLink = "Segment With User2");
 
 		Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
 

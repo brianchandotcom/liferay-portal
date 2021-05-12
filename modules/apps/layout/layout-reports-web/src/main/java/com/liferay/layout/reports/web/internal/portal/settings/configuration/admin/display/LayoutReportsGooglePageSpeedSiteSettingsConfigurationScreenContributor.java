@@ -135,8 +135,6 @@ public class
 				LayoutReportsGooglePageSpeedDisplayContext.class.getName(),
 				new LayoutReportsGooglePageSpeedDisplayContext(
 					_layoutReportsGooglePageSpeedConfigurationProvider.
-						getApiKey(company),
-					_layoutReportsGooglePageSpeedConfigurationProvider.
 						isEnabled(company),
 					portletRequest));
 		}

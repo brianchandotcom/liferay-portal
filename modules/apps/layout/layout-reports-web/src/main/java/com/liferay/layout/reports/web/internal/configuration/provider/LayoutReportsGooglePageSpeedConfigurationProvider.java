@@ -39,10 +39,6 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 			layoutReportsGooglePageSpeedConfiguration;
 	}
 
-	public String getApiKey(Company company) throws ConfigurationException {
-		return _getApiKey(company.getCompanyId());
-	}
-
 	public String getApiKey(Group group) throws ConfigurationException {
 		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
 

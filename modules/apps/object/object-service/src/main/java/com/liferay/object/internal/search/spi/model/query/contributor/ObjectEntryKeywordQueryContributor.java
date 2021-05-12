@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
@@ -47,14 +46,6 @@ public class ObjectEntryKeywordQueryContributor
 	public void contribute(
 		String keywords, BooleanQuery booleanQuery,
 		KeywordQueryContributorHelper keywordQueryContributorHelper) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Keywords " + keywords);
-		}
-
-		if (Validator.isNull(keywords)) {
-			return;
-		}
 
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();

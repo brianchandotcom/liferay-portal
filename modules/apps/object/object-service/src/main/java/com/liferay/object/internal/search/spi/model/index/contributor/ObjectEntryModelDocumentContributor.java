@@ -95,18 +95,19 @@ public class ObjectEntryModelDocumentContributor
 				document.addKeyword(name, (Boolean)value);
 			}
 			else if (value instanceof Date) {
-				document.addDate(name, (Date)value);
+				document.addDateSortable(name, (Date)value);
 			}
 			else if (value instanceof Double) {
-				document.addNumber(name, (Double)value);
+				document.addNumberSortable(name, (Double)value);
 			}
 			else if (value instanceof Integer) {
-				document.addNumber(name, (Integer)value);
+				document.addNumberSortable(name, (Integer)value);
 			}
 			else if (value instanceof Long) {
-				document.addNumber(name, (Long)value);
+				document.addNumberSortable(name, (Long)value);
 			}
 			else if (value instanceof String) {
+				document.addKeywordSortable(name, (String)value);
 				document.addText(name, (String)value);
 			}
 			else if (value instanceof byte[]) {

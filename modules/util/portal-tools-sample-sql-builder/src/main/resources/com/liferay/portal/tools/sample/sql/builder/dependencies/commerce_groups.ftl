@@ -168,13 +168,7 @@
 	<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModels[0].groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, 0, 0, 0, "", 2) as openCommerceOrderModel>
 		${dataFactory.toInsertSQL(openCommerceOrderModel)}
 
-		<#assign
-			randomCProductModel = cProductModels[dataFactory.getRandomCProductModelIndex()]
-
-			openCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(openCommerceOrderModel, commercePriceListModel.commercePriceListId, randomCProductModel)
-		/>
-
-		${dataFactory.toInsertSQL(openCommerceOrderItemModel)}
+		${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(openCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[dataFactory.getRandomCProductModelIndex()]))}
 	</#list>
 
 	<#list commerceGroupModels as commerceGroupModel>

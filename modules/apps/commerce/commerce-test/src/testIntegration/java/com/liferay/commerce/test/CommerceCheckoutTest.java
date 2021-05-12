@@ -19,12 +19,16 @@ import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelLocalServiceUtil;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.exception.CommerceOrderGuestCheckoutException;
+import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
@@ -32,8 +36,13 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.string.StringPool;
@@ -58,6 +67,7 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -87,6 +97,7 @@ import org.junit.runner.RunWith;
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
+@Sync
 public class CommerceCheckoutTest {
 
 	@ClassRule
@@ -109,6 +120,15 @@ public class CommerceCheckoutTest {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		_commerceAccount = CommerceAccountTestUtil.addBusinessCommerceAccount(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
+			_serviceContext);
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
@@ -319,6 +339,74 @@ public class CommerceCheckoutTest {
 	}
 
 	@Test
+	public void testLowStockActivityOnCheckout() throws Exception {
+		frutillaRule.scenario(
+			"Use the Order Engine to place an Order containing a Product " +
+				"with low stock activity"
+		).given(
+			"An Order"
+		).and(
+			"A Product with low stock activity"
+		).when(
+			"We checkout the order"
+		).then(
+			"The product execute its low stock activity"
+		);
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_group.getGroupId(), _user.getUserId(),
+			_commerceAccount.getCommerceAccountId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		commerceOrder = CommerceTestUtil.addCheckoutDetailsToUserOrder(
+			commerceOrder, _user.getUserId(), false);
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
+			commerceOrderItem.getCPDefinitionId());
+
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpDefinition.getCPDefinitionId());
+
+		if (cpDefinitionInventory == null) {
+			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
+				_user.getUserId(), cpDefinition.getCPDefinitionId(), "default",
+				"default", false, false, 1, false, 0,
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
+				1);
+		}
+		else {
+			_cpDefinitionInventoryLocalService.updateCPDefinitionInventory(
+				cpDefinitionInventory.getCPDefinitionInventoryId(), "default",
+				"default", false, false, 1, false, 0,
+				CPDefinitionInventoryConstants.DEFAULT_MAX_ORDER_QUANTITY, null,
+				1);
+		}
+
+		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
+			_company.getCompanyId(), commerceOrderItem.getSku());
+
+		commerceOrderItem.setQuantity(stockQuantity);
+
+		_commerceOrderItemLocalService.updateCommerceOrderItem(
+			commerceOrderItem);
+
+		_commerceOrderEngine.checkoutCommerceOrder(
+			commerceOrder, _user.getUserId());
+
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			commerceOrderItem.getCPInstanceId());
+
+		Assert.assertEquals(cpInstance.isPublished(), false);
+	}
+
+	@Test
 	public void testUserCheckout() throws Exception {
 		frutillaRule.scenario(
 			"When multiple price lists are available, check that only the " +
@@ -396,6 +484,8 @@ public class CommerceCheckoutTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
+	private CommerceAccount _commerceAccount;
+
 	@Inject
 	private CommerceAccountLocalService _commerceAccountLocalService;
 
@@ -406,7 +496,13 @@ public class CommerceCheckoutTest {
 	private CommerceCurrency _commerceCurrency;
 
 	@Inject
+	private CommerceInventoryEngine _commerceInventoryEngine;
+
+	@Inject
 	private CommerceOrderEngine _commerceOrderEngine;
+
+	@Inject
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Inject
 	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
@@ -417,7 +513,18 @@ public class CommerceCheckoutTest {
 	@DeleteAfterTestRun
 	private Company _company;
 
+	@Inject
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject
+	private CPInstanceLocalService _cpInstanceLocalService;
+
 	private Group _group;
+	private ServiceContext _serviceContext;
 
 	@Inject
 	private SettingsFactory _settingsFactory;

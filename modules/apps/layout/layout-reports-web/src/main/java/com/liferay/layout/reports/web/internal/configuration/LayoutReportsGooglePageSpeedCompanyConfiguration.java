@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @Meta.OCD(
 	id = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedCompanyConfiguration",
 	localization = "content/Language",
-	name = "layout-reports-google-pagespeed-configuration-name"
+	name = "layout-reports-google-pagespeed-company-configuration-name"
 )
 public interface LayoutReportsGooglePageSpeedCompanyConfiguration {
 

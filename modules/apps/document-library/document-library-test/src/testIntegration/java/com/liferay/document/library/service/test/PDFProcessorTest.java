@@ -174,7 +174,6 @@ public class PDFProcessorTest {
 	}
 
 	@Ignore
-	@Override
 	@Test
 	public void testShouldCleanUpProcessorsOnUpdateAndCheckIn()
 		throws Exception {
@@ -367,7 +366,6 @@ public class PDFProcessorTest {
 	}
 
 	@Ignore
-	@Override
 	@Test
 	public void testShouldCreateNewPreviewOnUpdateAndCheckInWithContent()
 		throws Exception {

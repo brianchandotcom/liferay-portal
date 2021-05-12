@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,14 +42,15 @@ public interface DocumentRepository extends CapabilityProvider {
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream inputStream,
-			long size, ServiceContext serviceContext)
+			long size, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public FileShortcut addFileShortcut(

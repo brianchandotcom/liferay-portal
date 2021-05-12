@@ -47,6 +47,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,14 +63,14 @@ public abstract class BaseRepositoryImpl
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		try (InputStream inputStream = new FileInputStream(file)) {
 			return addFileEntry(
 				externalReferenceCode, userId, folderId, sourceFileName,
 				mimeType, title, description, changeLog, inputStream,
-				file.length(), serviceContext);
+				file.length(), expirationDate, reviewDate, serviceContext);
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);

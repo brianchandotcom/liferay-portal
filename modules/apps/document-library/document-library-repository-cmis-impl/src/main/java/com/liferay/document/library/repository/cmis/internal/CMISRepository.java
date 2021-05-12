@@ -80,6 +80,7 @@ import java.math.BigInteger;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -147,7 +148,8 @@ public class CMISRepository extends BaseCmisRepository {
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream inputStream,
-			long size, ServiceContext serviceContext)
+			long size, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (Validator.isNull(title)) {

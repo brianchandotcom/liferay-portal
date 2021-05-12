@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,12 +56,14 @@ public abstract class CMISRepositoryHandler
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream inputStream,
-			long size, ServiceContext serviceContext)
+			long size, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _baseCmisRepository.addFileEntry(
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, inputStream, size, serviceContext);
+			title, description, changeLog, inputStream, size, expirationDate,
+			reviewDate, serviceContext);
 	}
 
 	@Override

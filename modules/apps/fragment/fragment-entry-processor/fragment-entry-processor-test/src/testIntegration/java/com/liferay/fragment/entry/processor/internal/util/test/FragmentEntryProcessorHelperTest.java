@@ -190,11 +190,11 @@ public class FragmentEntryProcessorHelperTest {
 			RepositoryProviderUtil.getLocalRepository(_group.getGroupId());
 
 		return localRepository.addFileEntry(
-			TestPropsValues.getUserId(),
+			null, TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			inputStream, bytes.length, serviceContext);
+			inputStream, bytes.length, null, null, serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(

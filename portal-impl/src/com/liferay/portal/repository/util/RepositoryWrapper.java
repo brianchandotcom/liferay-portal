@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,12 +51,13 @@ public class RepositoryWrapper implements Repository {
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		return _repository.addFileEntry(
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, file, serviceContext);
+			title, description, changeLog, file, expirationDate, reviewDate,
+			serviceContext);
 	}
 
 	@Override
@@ -63,12 +65,14 @@ public class RepositoryWrapper implements Repository {
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream inputStream,
-			long size, ServiceContext serviceContext)
+			long size, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _repository.addFileEntry(
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, inputStream, size, serviceContext);
+			title, description, changeLog, inputStream, size, expirationDate,
+			reviewDate, serviceContext);
 	}
 
 	@Override

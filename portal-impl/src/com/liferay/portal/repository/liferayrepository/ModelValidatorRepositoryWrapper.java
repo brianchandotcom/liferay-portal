@@ -27,6 +27,8 @@ import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
@@ -46,7 +48,7 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileContentReference fileContentReference =
@@ -58,27 +60,8 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 
 		return super.addFileEntry(
 			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, file, serviceContext);
-	}
-
-	@Override
-	public FileEntry addFileEntry(
-			String externalReferenceCode, long userId, long folderId,
-			String sourceFileName, String mimeType, String title,
-			String description, String changeLog, InputStream inputStream,
-			long size, ServiceContext serviceContext)
-		throws PortalException {
-
-		FileContentReference fileContentReference =
-			FileContentReference.fromInputStream(
-				sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
-				mimeType, inputStream, size);
-
-		_modelValidator.validate(fileContentReference);
-
-		return super.addFileEntry(
-			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, inputStream, size, serviceContext);
+			title, description, changeLog, file, expirationDate, reviewDate,
+			serviceContext);
 	}
 
 	@Override

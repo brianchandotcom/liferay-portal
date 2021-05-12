@@ -190,15 +190,15 @@ public class DSHttp {
 	private PrivateKey _readPrivateKey() throws Exception {
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 
-		Class<?> clazz = DSHttp.class;
+		Class<?> clazz = getClass();
 
 		PEMReader pemReader = new PEMReader(
 			clazz.getResourceAsStream("dependencies/private_key.txt"));
 
-		PKCS1EncodedKeySpec encodedKeySpec = new PKCS1EncodedKeySpec(
+		PKCS1EncodedKeySpec pkcs1EncodedKeySpec = new PKCS1EncodedKeySpec(
 			pemReader.getDerBytes());
 
-		return keyFactory.generatePrivate(encodedKeySpec.getKeySpec());
+		return keyFactory.generatePrivate(pkcs1EncodedKeySpec.getKeySpec());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DSHttp.class);

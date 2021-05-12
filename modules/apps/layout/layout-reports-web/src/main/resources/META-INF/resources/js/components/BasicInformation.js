@@ -22,7 +22,6 @@ import LanguagesDropdown from './LanguagesDropdown';
 export default function BasicInformation({
 	canonicalURLs,
 	defaultLanguageId,
-	onLanguageChange,
 	selectedLanguageId,
 }) {
 	const selectedCanonicalURL = canonicalURLs.find(
@@ -39,7 +38,6 @@ export default function BasicInformation({
 							<LanguagesDropdown
 								canonicalURLs={canonicalURLs}
 								defaultLanguageId={defaultLanguageId}
-								onSelectedLanguageId={onLanguageChange}
 								selectedLanguageId={
 									selectedCanonicalURL.languageId
 								}
@@ -89,6 +87,5 @@ BasicInformation.propTypes = {
 		})
 	),
 	defaultLanguageId: PropTypes.string.isRequired,
-	onLanguageChange: PropTypes.func.isRequired,
 	selectedLanguageId: PropTypes.string,
 };

@@ -32,7 +32,7 @@ import LayoutReportsIssuesList from './LayoutReportsIssuesList';
 export default function LayoutReports({eventTriggered}) {
 	const isMounted = useIsMounted();
 
-	const {data, error, loading} = useContext(StoreStateContext);
+	const {data, error, languageId, loading} = useContext(StoreStateContext);
 
 	const {
 		isPanelStateOpen,
@@ -52,7 +52,6 @@ export default function LayoutReports({eventTriggered}) {
 	);
 
 	const [percentage, setPercentage] = useState(0);
-	const [selectedLanguageId, setSelectedLanguageId] = useState(null);
 
 	useEffect(() => {
 		if (loading && !error) {
@@ -88,8 +87,7 @@ export default function LayoutReports({eventTriggered}) {
 							const url = data.canonicalURLs.find(
 								(canonicalURL) =>
 									canonicalURL.languageId ===
-									(selectedLanguageId ||
-										data.defaultLanguageId)
+									(languageId || data.defaultLanguageId)
 							);
 
 							loadIssues({
@@ -109,7 +107,7 @@ export default function LayoutReports({eventTriggered}) {
 					});
 				});
 		},
-		[portletNamespace, safeDispatch]
+		[languageId, portletNamespace, safeDispatch]
 	);
 
 	useEffect(() => {
@@ -123,22 +121,6 @@ export default function LayoutReports({eventTriggered}) {
 			getData(layoutReportsDataURL);
 		}
 	}, [eventTriggered, data, layoutReportsDataURL, getData]);
-
-	const onLanguageChange = (languageId) => {
-		setSelectedLanguageId(languageId);
-
-		const url = data.canonicalURLs.find(
-			(canonicalURL) =>
-				canonicalURL.languageId ===
-				(selectedLanguageId || data.defaultLanguageId)
-		);
-
-		loadIssues({
-			dispatch: safeDispatch,
-			portletNamespace,
-			url,
-		});
-	};
 
 	return (
 		<>
@@ -177,8 +159,7 @@ export default function LayoutReports({eventTriggered}) {
 							<BasicInformation
 								canonicalURLs={data.canonicalURLs}
 								defaultLanguageId={data.defaultLanguageId}
-								onLanguageChange={onLanguageChange}
-								selectedLanguageId={selectedLanguageId}
+								selectedLanguageId={languageId}
 							/>
 
 							{data.validConnection &&

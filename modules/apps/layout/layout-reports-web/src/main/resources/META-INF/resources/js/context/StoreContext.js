@@ -14,11 +14,17 @@
 
 import React, {createContext, useReducer} from 'react';
 
-import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
+import {
+	LOAD_DATA,
+	SET_DATA,
+	SET_ERROR,
+	SET_LANGUAGE_ID,
+} from '../constants/actionTypes';
 
 const INITIAL_STATE = {
 	data: null,
 	error: null,
+	languageId: null,
 	loading: false,
 };
 
@@ -54,7 +60,15 @@ function reducer(state = INITIAL_STATE, action) {
 					...action.data,
 				},
 				error: action.data?.error,
-				loading: action?.loading || false,
+				languageId: state.languageId || action.data?.defaultLanguageId,
+				loading: action.loading || false,
+			};
+			break;
+
+		case SET_LANGUAGE_ID:
+			nextState = {
+				...state,
+				languageId: action.languageId,
 			};
 			break;
 

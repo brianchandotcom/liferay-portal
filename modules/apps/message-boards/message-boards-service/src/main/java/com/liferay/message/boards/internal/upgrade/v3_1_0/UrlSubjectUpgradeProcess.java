@@ -47,7 +47,7 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 		runSQL("drop index IX_TEMP on MBMessage");
 	}
 
-	private String _getUrlSubject(long id, String subject) {
+	private String _getURLSubject(long id, String subject) {
 		if (subject == null) {
 			return String.valueOf(id);
 		}
@@ -79,29 +79,28 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 							"= ?"))) {
 
 			int count = 0;
-			String curUrlSubject = null;
+			String curURLSubject = null;
 			String previousURLSubject = null;
 
 			while (resultSet.next()) {
 				long messageId = resultSet.getLong(1);
 				String subject = resultSet.getString(2);
 
-				curUrlSubject = _getUrlSubject(messageId, subject);
+				curURLSubject = _getURLSubject(messageId, subject);
 
 				String suffix = null;
 
-				if (StringUtil.equals(previousURLSubject, curUrlSubject)) {
+				if (StringUtil.equals(previousURLSubject, curURLSubject)) {
 					count++;
 					suffix = StringPool.DASH + count;
 				}
 				else {
 					count = 0;
-					previousURLSubject = curUrlSubject;
+					previousURLSubject = curURLSubject;
 					suffix = StringPool.BLANK;
 				}
 
-				preparedStatement2.setString(1, curUrlSubject + suffix);
-
+				preparedStatement2.setString(1, curURLSubject + suffix);
 				preparedStatement2.setLong(2, messageId);
 
 				preparedStatement2.addBatch();

@@ -14,7 +14,8 @@
 
 import ClayButton from '@clayui/button';
 import {Context as ModalContext} from '@clayui/modal';
-import {FieldStateless} from 'data-engine-js-components-web';
+import {FieldStateless, generateName} from 'data-engine-js-components-web';
+import {FieldSupport} from 'dynamic-data-mapping-form-builder';
 import React, {useContext, useMemo} from 'react';
 
 import Timeline from './Timeline.es';
@@ -150,10 +151,29 @@ function FieldRight({fields, left, right, roles, ...otherProps}) {
 					options: fields.filter(({type}) => type !== 'paragraph'),
 					value: [right.value],
 				};
-			default:
+			default: {
+				if (
+					left.field?.type === 'rich_text' &&
+					left.field?.editorConfig
+				) {
+					const instanceId = FieldSupport.generateInstanceId(8);
+
+					return {
+						editorConfig: FieldSupport.formatEditorConfig(
+							left.field.editorConfig,
+							instanceId
+						),
+						name: generateName(left.field.name, {
+							instanceId,
+						}),
+						value: right.value,
+					};
+				}
+
 				return {
 					value: right.value,
 				};
+			}
 		}
 	}, [left, right, roles, fields]);
 

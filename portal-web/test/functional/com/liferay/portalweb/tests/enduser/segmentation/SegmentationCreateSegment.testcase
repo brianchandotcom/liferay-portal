@@ -1193,7 +1193,6 @@ definition {
 			userLastName = "1 + / ? # &",
 			userScreenName = "u1");
 
-
 		LexiconEntry.gotoAdd();
 
 		Segmentation.fillTitle(titleField = "Segment With Special Characters");
@@ -1208,12 +1207,11 @@ definition {
 			locator1 = "Segmentation#MEMBERS_MATCHED",
 			value1 = "1 Member");
 
- 		Segmentation.viewMembers(memberName = "User 1 + / ? # &");
+		Segmentation.viewMembers(memberName = "User 1 + / ? # &");
 
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
-
 	}
 
 	@description = "This is a use case for LPS-103516."

@@ -101,9 +101,9 @@ CommerceAccount commerceAccount = commerceAddressDisplayContext.getCommerceAccou
 
 				<aui:input name="phoneNumber" />
 
-				<aui:input name="defaultBilling" />
+				<aui:input checked="<%= (commerceAddress.getType() == CommerceAddressConstants.ADDRESS_TYPE_BILLING) || (commerceAddress.getType() == CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING) %>" name="defaultBilling" type="checkbox" />
 
-				<aui:input name="defaultShipping" />
+				<aui:input checked="<%= (commerceAddress.getType() == CommerceAddressConstants.ADDRESS_TYPE_SHIPPING) || (commerceAddress.getType() == CommerceAddressConstants.ADDRESS_TYPE_BILLING_AND_SHIPPING) %>" name="defaultShipping" type="checkbox" />
 			</div>
 		</aui:fieldset>
 

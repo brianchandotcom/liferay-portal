@@ -78,7 +78,6 @@ definition {
 		CalendarEvent.view(eventTitle = "Event For Export");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test ImportCalendarAndViewEventComment {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -115,9 +114,17 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		LAR.exportPortlet(
-			larFileName = "calendar_calendar_with_comments.portlet.lar",
-			portletName = "Calendar");
+		LAR.openExportAdmin(siteScopeName = "Guest");
+
+		LexiconEntry.gotoAdd();
+
+		LAR.configureExportOptions(checkContentNameList = "Calendar");
+
+		LAR._exportSite();
+
+		var larFileName = LAR.getLarFileName();
+
+		LAR.downloadLar();
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
@@ -127,9 +134,9 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		LAR.importPortlet(
-			larFileName = "calendar_calendar_with_comments.portlet.lar",
-			portletName = "Calendar");
+		LAR.importSiteCP(
+			larFileName = "${larFileName}",
+			siteName = "Guest");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 

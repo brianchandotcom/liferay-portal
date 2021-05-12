@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
+import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -221,11 +222,7 @@ public class FieldsToDDMFormValuesConverterImpl
 				 !(fieldValue instanceof Integer)) {
 
 			DecimalFormat decimalFormat =
-				(DecimalFormat)DecimalFormat.getInstance(locale);
-
-			decimalFormat.setGroupingUsed(false);
-			decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
-			decimalFormat.setParseBigDecimal(true);
+				NumericDDMFormFieldUtil.getNumberFormat(locale);
 
 			Number number = (Number)fieldValue;
 

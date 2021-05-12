@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueEditing
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.util.NumberUtil;
+import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -53,10 +54,11 @@ public class NumericDDMFormFieldValueLocalizer
 	@Override
 	public String localize(String value, Locale locale) {
 		try {
-			DecimalFormat defaultDecimalFormat = _getDecimalFormat(
-				LocaleUtil.US);
+			DecimalFormat defaultDecimalFormat =
+				NumericDDMFormFieldUtil.getNumberFormat(LocaleUtil.US);
 
-			DecimalFormat decimalFormat = _getDecimalFormat(locale);
+			DecimalFormat decimalFormat =
+				NumericDDMFormFieldUtil.getNumberFormat(locale);
 
 			Number number = null;
 
@@ -120,17 +122,6 @@ public class NumericDDMFormFieldValueLocalizer
 		}
 
 		return false;
-	}
-
-	private DecimalFormat _getDecimalFormat(Locale locale) {
-		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
-			locale);
-
-		decimalFormat.setGroupingUsed(false);
-		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
-		decimalFormat.setParseBigDecimal(true);
-
-		return decimalFormat;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

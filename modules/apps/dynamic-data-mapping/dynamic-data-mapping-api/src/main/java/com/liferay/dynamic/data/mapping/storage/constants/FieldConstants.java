@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.storage.constants;
 
 import com.liferay.dynamic.data.mapping.util.NumberUtil;
+import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -95,24 +96,18 @@ public class FieldConstants {
 			DecimalFormat decimalFormat = null;
 
 			if (locale.equals(LocaleUtil.ROOT)) {
-				decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
+				decimalFormat = NumericDDMFormFieldUtil.getNumberFormat(
 					defaultLocale);
 			}
 			else {
-				decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
-					locale);
+				decimalFormat = NumericDDMFormFieldUtil.getNumberFormat(locale);
 			}
-
-			decimalFormat.setGroupingUsed(false);
-			decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
 
 			if (type.equals(FieldConstants.DOUBLE) ||
 				type.equals(FieldConstants.FLOAT)) {
 
 				decimalFormat.setMinimumFractionDigits(1);
 			}
-
-			decimalFormat.setParseBigDecimal(true);
 
 			value = GetterUtil.getString(value);
 

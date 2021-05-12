@@ -2485,7 +2485,15 @@ public class DataFactory {
 
 		// PK fields
 
-		cpDefinitionModel.setCPDefinitionId(_counter.get());
+		if (version ==
+				BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT) {
+
+			cpDefinitionModel.setCPDefinitionId(
+				cProductModel.getPublishedCPDefinitionId());
+		}
+		else {
+			cpDefinitionModel.setCPDefinitionId(_counter.get());
+		}
 
 		// Group instance
 
@@ -2865,6 +2873,7 @@ public class DataFactory {
 
 		// Other fields
 
+		cProductModel.setPublishedCPDefinitionId(_counter.get());
 		cProductModel.setLatestVersion(
 			BenchmarksPropsValues.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT);
 
@@ -5533,31 +5542,6 @@ public class DataFactory {
 		userName[1] = _lastNames.get((int)(index % _lastNames.size()));
 
 		return userName;
-	}
-
-	public CProductModel setCProductModelPublishedCPDefinitionId(
-		CProductModel cProductModel,
-		List<CPDefinitionModel> cpDefinitionModels) {
-
-		for (CPDefinitionModel cpDefinitionModel : cpDefinitionModels) {
-			if (cProductModel.getCProductId() !=
-					cpDefinitionModel.getCProductId()) {
-
-				continue;
-			}
-
-			if (cpDefinitionModel.getVersion() ==
-					BenchmarksPropsValues.
-						MAX_COMMERCE_PRODUCT_DEFINITION_COUNT) {
-
-				cProductModel.setPublishedCPDefinitionId(
-					cpDefinitionModel.getCPDefinitionId());
-
-				break;
-			}
-		}
-
-		return cProductModel;
 	}
 
 	public String toInsertSQL(BaseModel<?> baseModel) {

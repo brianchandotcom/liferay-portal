@@ -28,8 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -52,37 +51,29 @@ public class DSEnvelopeManagerTest {
 	public void testAddDSEnvelope() throws Exception {
 		Class<?> clazz = getClass();
 
-		List<DSDocument> documentsList = new ArrayList<>();
-
-		documentsList.add(
-			new DSDocument() {
-				{
-					data = Base64.encode(
-						FileUtil.getBytes(
-							clazz.getResourceAsStream(
-								"dependencies/Document.pdf")));
-					dsDocumentId = "1";
-					name = "Document";
-				}
-			});
-
-		List<DSRecipient> recipientsList = new ArrayList<>();
-
-		recipientsList.add(
-			new DSRecipient() {
-				{
-					dsRecipientId = "1";
-					emailAddress = "joseabelenda@gmail.com";
-					name = "José Abelenda";
-				}
-			});
-
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
-					dsDocuments = documentsList;
-					dsRecipients = recipientsList;
+					dsDocuments = Collections.singletonList(
+						new DSDocument() {
+							{
+								data = Base64.encode(
+									FileUtil.getBytes(
+										clazz.getResourceAsStream(
+											"dependencies/Document.pdf")));
+								dsDocumentId = "1";
+								name = "Document";
+							}
+						});
+					dsRecipients = Collections.singletonList(
+						new DSRecipient() {
+							{
+								dsRecipientId = "1";
+								emailAddress = "joseabelenda@gmail.com";
+								name = "José Abelenda";
+							}
+						});
 					emailBlurb = "Please, sign the documents";
 					emailSubject = "New " + System.currentTimeMillis();
 					status = "sent";

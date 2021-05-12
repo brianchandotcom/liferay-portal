@@ -18,9 +18,6 @@ import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.asm.ASMWrapperUtil;
-import com.liferay.portal.dao.orm.hibernate.event.MVCCSynchronizerPostUpdateEventListener;
-import com.liferay.portal.dao.orm.hibernate.event.ResetOriginalValuesLoadEventListener;
-import com.liferay.portal.dao.orm.hibernate.event.ResetOriginalValuesPostLoadEventListener;
 import com.liferay.portal.internal.change.tracking.hibernate.CTSQLInterceptor;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -58,10 +55,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.engine.query.QueryPlanCache;
-import org.hibernate.event.EventListeners;
-import org.hibernate.event.LoadEventListener;
-import org.hibernate.event.PostLoadEventListener;
-import org.hibernate.event.PostUpdateEventListener;
 
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
@@ -89,9 +82,14 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		bootstrapServiceRegistryBuilder.applyClassLoader(
 			getConfigurationClassLoader());
 
+		bootstrapServiceRegistryBuilder.applyIntegrator(
+			GlobalEventListenerIntegrator.INSTANCE);
+
 		if (_mvccEnabled) {
 			bootstrapServiceRegistryBuilder.applyIntegrator(
 				new CTModelIntegrator());
+			bootstrapServiceRegistryBuilder.applyIntegrator(
+				MVCCEventListenerIntegrator.INSTANCE);
 		}
 
 		setMetadataSources(
@@ -193,23 +191,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				}
 			}
 
-			EventListeners eventListeners = configuration.getEventListeners();
-
-			eventListeners.setLoadEventListeners(
-				new LoadEventListener[] {
-					ResetOriginalValuesLoadEventListener.INSTANCE
-				});
-			eventListeners.setPostLoadEventListeners(
-				new PostLoadEventListener[] {
-					ResetOriginalValuesPostLoadEventListener.INSTANCE
-				});
-
 			if (_mvccEnabled) {
-				eventListeners.setPostUpdateEventListeners(
-					new PostUpdateEventListener[] {
-						MVCCSynchronizerPostUpdateEventListener.INSTANCE
-					});
-
 				configuration.setInterceptor(new CTSQLInterceptor());
 			}
 		}

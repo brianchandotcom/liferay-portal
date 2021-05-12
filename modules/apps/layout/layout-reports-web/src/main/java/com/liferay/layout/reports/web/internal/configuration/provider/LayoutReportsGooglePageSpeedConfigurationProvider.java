@@ -112,7 +112,7 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private volatile LayoutReportsGooglePageSpeedConfiguration
+	private LayoutReportsGooglePageSpeedConfiguration
 		_layoutReportsGooglePageSpeedConfiguration;
 
 }

@@ -36,11 +36,11 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,9 +83,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public EntityModel getEntityModel(
-		Map<String, List<String>> multivaluedMap) {
-
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		if (_entityModel == null) {
 			_entityModel = new ObjectEntryEntityModel(
 				_objectFieldLocalService.getObjectFields(

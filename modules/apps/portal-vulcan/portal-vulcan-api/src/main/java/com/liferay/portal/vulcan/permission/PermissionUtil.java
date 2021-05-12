@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -64,6 +65,20 @@ public class PermissionUtil {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, resourceName, siteId, actionId);
 		}
+	}
+
+	public static List<ResourcePermission> getResourcePermissions(
+			long companyId, long resourceId, String resourceName,
+			ResourcePermissionLocalService resourcePermissionLocalService)
+		throws PortalException {
+
+		_checkResourceExist(
+			companyId, resourceId, resourceName,
+			resourcePermissionLocalService);
+
+		return resourcePermissionLocalService.getResourcePermissions(
+			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(resourceId));
 	}
 
 	public static List<Role> getRoles(
@@ -123,10 +138,14 @@ public class PermissionUtil {
 	}
 
 	public static Permission toPermission(
-		Long companyId, Long id, List<ResourceAction> resourceActions,
-		String resourceName,
-		ResourcePermissionLocalService resourcePermissionLocalService,
-		Role role) {
+			Long companyId, Long id, List<ResourceAction> resourceActions,
+			String resourceName,
+			ResourcePermissionLocalService resourcePermissionLocalService,
+			Role role)
+		throws PortalException {
+
+		_checkResourceExist(
+			companyId, id, resourceName, resourcePermissionLocalService);
 
 		ResourcePermission resourcePermission =
 			resourcePermissionLocalService.fetchResourcePermission(
@@ -138,6 +157,22 @@ public class PermissionUtil {
 		}
 
 		return toPermission(resourceActions, resourcePermission, role);
+	}
+
+	private static void _checkResourceExist(
+			long companyId, long resourceId, String resourceName,
+			ResourcePermissionLocalService resourcePermissionLocalService)
+		throws PortalException {
+
+		int count = resourcePermissionLocalService.getResourcePermissionsCount(
+			companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(resourceId));
+
+		if (count == 0) {
+			ResourceLocalServiceUtil.addResources(
+				companyId, resourceId, 0, resourceName,
+				String.valueOf(resourceId), false, true, true);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PermissionUtil.class);

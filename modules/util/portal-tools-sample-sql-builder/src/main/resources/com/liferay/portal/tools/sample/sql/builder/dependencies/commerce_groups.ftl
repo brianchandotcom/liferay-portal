@@ -171,7 +171,7 @@
 		<#assign
 			randomCProductModel = cProductModels[dataFactory.getRandomCProductModelIndex()]
 
-			openCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(openCommerceOrderModel, commercePriceListModel.commercePriceListId, randomCProductModel.CProductId, randomCProductModel.publishedCPDefinitionId)
+			openCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(openCommerceOrderModel, commercePriceListModel.commercePriceListId, randomCProductModel)
 		/>
 
 		${dataFactory.toInsertSQL(openCommerceOrderItemModel)}
@@ -237,7 +237,7 @@
 		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, commerceAddressModel.commerceAddressId, commerceAddressModel.commerceAddressId, commerceShippingMethodModel.commerceShippingMethodId, "Standard Delivery", 8) as cancelledCommerceOrderModel>
 			${dataFactory.toInsertSQL(cancelledCommerceOrderModel)}
 
-			${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(cancelledCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[0].CProductId, cProductModels[0].publishedCPDefinitionId))}
+			${dataFactory.toInsertSQL(dataFactory.newCommerceOrderItemModel(cancelledCommerceOrderModel, commercePriceListModel.commercePriceListId, cProductModels[0]))}
 		</#list>
 
 		<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModel.groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, commerceAddressModel.commerceAddressId, commerceAddressModel.commerceAddressId, commerceShippingMethodModel.commerceShippingMethodId, "Standard Delivery", 1) as pendingCommerceOrderModel>
@@ -246,7 +246,7 @@
 			<#assign
 				randomCProductModel = cProductModels[dataFactory.getRandomCProductModelIndex()]
 
-				pendingCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(pendingCommerceOrderModel, commercePriceListModel.commercePriceListId, randomCProductModel.CProductId, randomCProductModel.publishedCPDefinitionId)
+				pendingCommerceOrderItemModel = dataFactory.newCommerceOrderItemModel(pendingCommerceOrderModel, commercePriceListModel.commercePriceListId, randomCProductModel)
 			/>
 
 			${dataFactory.toInsertSQL(pendingCommerceOrderItemModel)}

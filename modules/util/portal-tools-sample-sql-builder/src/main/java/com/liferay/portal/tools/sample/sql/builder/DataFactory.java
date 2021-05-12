@@ -1724,7 +1724,7 @@ public class DataFactory {
 
 	public CommerceOrderItemModel newCommerceOrderItemModel(
 		CommerceOrderModel commerceOrderModel, long commercePriceListId,
-		long cProductId, long cpDefinitionId) {
+		CProductModel cProductModel) {
 
 		CommerceOrderItemModel commerceOrderItemModel =
 			new CommerceOrderItemModelImpl();
@@ -1751,9 +1751,10 @@ public class DataFactory {
 		commerceOrderItemModel.setCommerceOrderId(
 			commerceOrderModel.getCommerceOrderId());
 		commerceOrderItemModel.setCommercePriceListId(commercePriceListId);
-		commerceOrderItemModel.setCProductId(cProductId);
+		commerceOrderItemModel.setCProductId(cProductModel.getCProductId());
 
-		CPInstanceModel cpInstanceModel = _cpInstanceModels.get(cpDefinitionId);
+		CPInstanceModel cpInstanceModel = _cpInstanceModels.get(
+			cProductModel.getPublishedCPDefinitionId());
 
 		commerceOrderItemModel.setCPInstanceId(
 			cpInstanceModel.getCPInstanceId());

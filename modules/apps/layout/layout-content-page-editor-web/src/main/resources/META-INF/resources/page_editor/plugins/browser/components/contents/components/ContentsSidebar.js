@@ -16,6 +16,7 @@ import React, {useMemo} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
+import {config} from '../../../../../app/config/index';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
 import SidebarPanelContent from '../../../../../common/components/SidebarPanelContent';
@@ -25,7 +26,7 @@ import PageContents from './PageContents';
 const getEditableTitle = (editable, languageId) => {
 	const div = document.createElement('div');
 
-	div.innerHTML = editable[languageId];
+	div.innerHTML = editable[languageId] || editable[config.defaultLanguageId];
 
 	return div.textContent;
 };
@@ -70,7 +71,10 @@ const getEditableValues = (
 			],
 			[]
 		)
-		.filter((editable) => editable[languageId]);
+		.filter(
+			(editable) =>
+				editable[languageId] || editable[config.defaultLanguageId]
+		);
 
 const normalizeEditableValues = (editable, languageId) => {
 	return {

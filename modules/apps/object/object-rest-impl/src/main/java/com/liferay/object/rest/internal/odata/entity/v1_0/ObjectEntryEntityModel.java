@@ -99,18 +99,24 @@ public class ObjectEntryEntityModel implements EntityModel {
 		else if (type.equals("Date")) {
 			return Optional.of(
 				new DateEntityField(
-					entityFieldName, locale -> entityFieldName,
+					entityFieldName,
+					locale -> Field.getSortableFieldName(
+						entityFieldName + "_Number"),
 					locale -> entityFieldName));
 		}
 		else if (type.equals("Integer") || type.equals("Long")) {
 			return Optional.of(
 				new IntegerEntityField(
-					entityFieldName, locale -> entityFieldName));
+					entityFieldName,
+					locale -> Field.getSortableFieldName(
+						entityFieldName + "_Number")));
 		}
 		else if (type.equals("String")) {
 			return Optional.of(
 				new StringEntityField(
-					entityFieldName, locale -> entityFieldName));
+					entityFieldName,
+					locale -> Field.getSortableFieldName(
+						entityFieldName + "_String")));
 		}
 
 		return Optional.empty();

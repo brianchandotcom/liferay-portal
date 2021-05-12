@@ -212,8 +212,7 @@ definition {
 
 		AssertElementPresent(
 			key_numberEntries = "8 Entries",
-			locator1 ="Dropdown#ENTRIES_NUMBER");
-		
+			locator1 = "Dropdown#ENTRIES_NUMBER");
 	}
 
 	@description = "COMMERCE-6147. As a buyer, I want to switch from one results page to another in Search Results"

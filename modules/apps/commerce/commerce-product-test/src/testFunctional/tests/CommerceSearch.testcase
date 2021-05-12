@@ -145,12 +145,30 @@ definition {
 	}
 
 	@description = "COMMERCE-6151. As a buyer, I want to search a product by typing its SKU in the Search Bar widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test SearchBarWidgetSearchProductBySKU {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductBySKU";
 
-		// TODO COMMERCE-6151 SearchBarWidgetSearchProductBySKU pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "MIN93015");
+
+		Button.clickSubmitButton();
+
+		AssertElementPresent(
+			key_value = "1",
+			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+
+		AssertElementNotPresent(
+			key_value = "2",
+			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+
+
 	}
 
 	@description = "COMMERCE-6155. As a buyer, I want to search for products by typing a Category in Search Bar widget and the results should be visible on Search Results widget"

@@ -2,7 +2,6 @@
 
 <suppressions>
 	<source-check>
-		<suppress checks="BNDIncludeResourceCheck" files="com-webex-schemas/bnd\.bnd" />
 		<suppress checks="CDNCheck" files="org-gradle/org-gradle-resources-http/src/main/java/org/gradle/internal/resource/transport/http/LiferayHttpResourceAccessor\.java" />
 		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
 	</source-check>

@@ -67,6 +67,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.DLFolderOrderByCompar
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -106,7 +107,7 @@ public class LiferayRepository
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
@@ -126,7 +127,7 @@ public class LiferayRepository
 			externalReferenceCode, getGroupId(), getRepositoryId(),
 			toFolderId(folderId), sourceFileName, mimeType, title, description,
 			changeLog, fileEntryTypeId, ddmFormValuesMap, file, null, size,
-			serviceContext);
+			expirationDate, reviewDate, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}
@@ -136,7 +137,8 @@ public class LiferayRepository
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream inputStream,
-			long size, ServiceContext serviceContext)
+			long size, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
@@ -150,7 +152,7 @@ public class LiferayRepository
 			externalReferenceCode, getGroupId(), getRepositoryId(),
 			toFolderId(folderId), sourceFileName, mimeType, title, description,
 			changeLog, fileEntryTypeId, ddmFormValuesMap, null, inputStream,
-			size, serviceContext);
+			size, expirationDate, reviewDate, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

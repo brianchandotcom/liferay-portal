@@ -83,6 +83,8 @@ public class ObjectEntryManager {
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setAttribute(
+					"objectDefinitionId", objectDefinitionId);
 				searchContext.setCompanyId(companyId);
 			},
 			sorts,

@@ -52,16 +52,6 @@ const getInfoFields = (infoFieldSetEntries = []) => {
 	};
 };
 
-const massageResponseFields = (fields = []) =>
-	fields.reduce((acc, field) => {
-		const [id, content] = Object.entries(field)[0];
-
-		return {...acc, [id]: {content}};
-	}, {});
-
-const prepareFields = (fields = {}) =>
-	Object.entries(fields).map(([key, value]) => ({[key]: value}));
-
 const reducer = (state, action) => {
 	switch (action.type) {
 		case ACTION_TYPES.UPDATE_FIELD:
@@ -158,7 +148,7 @@ const Translate = ({
 			type: ACTION_TYPES.UPDATE_FETCH_STATUS,
 		});
 
-		fetchAutoTranslation({fields: prepareFields(sourceFields)})
+		fetchAutoTranslation({fields: sourceFields})
 			.then(({error, fields}) => {
 				if (error) {
 					throw error;
@@ -166,7 +156,14 @@ const Translate = ({
 
 				if (isMounted()) {
 					dispatch({
-						payload: massageResponseFields(fields),
+						payload: Object.entries(fields).reduce(
+							(acc, [id, content]) => {
+								acc[id] = {content};
+
+								return acc;
+							},
+							{}
+						),
 						type: ACTION_TYPES.UPDATE_FIELDS_BULK,
 					});
 
@@ -207,7 +204,7 @@ const Translate = ({
 		});
 
 		fetchAutoTranslation({
-			fields: prepareFields({[fieldId]: sourceFields[fieldId]}),
+			fields: {[fieldId]: sourceFields[fieldId]},
 		})
 			.then(({error, fields}) => {
 				if (error) {
@@ -215,20 +212,16 @@ const Translate = ({
 				}
 
 				if (isMounted()) {
-					const [id, {content}] = Object.entries(
-						massageResponseFields(fields)
-					)[0];
-
 					dispatch({
 						payload: {
 							field: {
-								content,
+								content: fields[fieldId],
 								message: Liferay.Language.get(
 									'field-translated'
 								),
 								status: FETCH_STATUS.SUCCESS,
 							},
-							id,
+							id: fieldId,
 						},
 						type: ACTION_TYPES.UPDATE_FIELD,
 					});

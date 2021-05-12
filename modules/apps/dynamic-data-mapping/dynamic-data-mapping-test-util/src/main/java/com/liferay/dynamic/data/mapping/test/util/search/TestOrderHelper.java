@@ -122,8 +122,8 @@ public abstract class TestOrderHelper {
 
 	public void testOrderByDDMNumberFieldRepeatable() throws Exception {
 		testOrderByDDMFieldRepeatable(
-			new String[] {"20|12.34", "16.0", "3.14"},
-			new String[] {"3.14", "20|12.34", "16.0"}, FieldConstants.DOUBLE,
+			new String[] {"20.0|12.34", "16.0", "3.14"},
+			new String[] {"3.14", "20.0|12.34", "16.0"}, FieldConstants.DOUBLE,
 			DDMFormFieldTypeConstants.NUMERIC);
 	}
 

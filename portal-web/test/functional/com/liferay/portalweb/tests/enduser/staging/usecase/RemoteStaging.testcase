@@ -125,10 +125,7 @@ definition {
 			customFieldValue = "DM Document Custom Field",
 			dmDocumentTitle = "DM Document Title");
 
-		User.logoutPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			password = "test",
@@ -171,10 +168,7 @@ definition {
 			importDeletions = "true",
 			larFileName = "custom_fields_deletion.portlet.lar");
 
-		User.logoutPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			password = "test",
@@ -298,10 +292,7 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Title");
 
-		User.logoutPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			password = "test",
@@ -660,10 +651,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		User.logoutPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			password = "test",

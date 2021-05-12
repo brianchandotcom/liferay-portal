@@ -87,6 +87,27 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			file, inputStream, size, null, null, serviceContext);
 	}
 
+	@Override
+	public DLFileEntry addFileEntry(
+			String externalReferenceCode, long groupId, long repositoryId,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, long fileEntryTypeId,
+			Map<String, DDMFormValues> ddmFormValuesMap, File file,
+			InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_folderModelResourcePermission, getPermissionChecker(), groupId,
+			folderId, ActionKeys.ADD_DOCUMENT);
+
+		return dlFileEntryLocalService.addFileEntry(
+			externalReferenceCode, getUserId(), groupId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
+			expirationDate, reviewDate, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addFileEntry(String, long, long, long, String, String,
@@ -103,32 +124,11 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionUtil.check(
-			_folderModelResourcePermission, getPermissionChecker(), groupId,
-			folderId, ActionKeys.ADD_DOCUMENT);
-
-		return dlFileEntryLocalService.addFileEntry(
-			externalReferenceCode, getUserId(), groupId, repositoryId, folderId,
-			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, null,
-			null, serviceContext);
-	}
-
-	@Override
-	public DLFileEntry addFileEntry(
-		String externalReferenceCode, long groupId, long repositoryId,
-		long folderId, String sourceFileName, String mimeType, String title,
-		String description, String changeLog, long fileEntryTypeId,
-		Map<String, DDMFormValues> ddmFormValuesMap, File file,
-		InputStream inputStream, long size, Date expirationDate,
-		Date reviewDate, ServiceContext serviceContext)
-		throws PortalException {
-
 		return addFileEntry(
 			externalReferenceCode, groupId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
-			expirationDate, reviewDate, serviceContext);
+			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, null,
+			null, serviceContext);
 	}
 
 	@Override

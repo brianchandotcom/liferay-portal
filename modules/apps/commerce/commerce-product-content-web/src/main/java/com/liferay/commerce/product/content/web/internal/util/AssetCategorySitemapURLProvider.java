@@ -12,40 +12,34 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.sitemap;
+package com.liferay.commerce.product.content.web.internal.util;
 
-import com.liferay.commerce.account.model.CommerceAccount;
-import com.liferay.commerce.account.util.CommerceAccountHelper;
-import com.liferay.commerce.product.catalog.CPCatalogEntry;
-import com.liferay.commerce.product.catalog.CPQuery;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryService;
+import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.data.source.CPDataSourceResult;
-import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CProduct;
-import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.admin.kernel.util.Sitemap;
 import com.liferay.layout.admin.kernel.util.SitemapURLProvider;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.io.Serializable;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,11 +50,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	enabled = false, immediate = true, service = SitemapURLProvider.class
 )
-public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
+public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 
 	@Override
 	public String getClassName() {
-		return CPDefinition.class.getName();
+		return AssetCategory.class.getName();
 	}
 
 	@Override
@@ -71,51 +65,34 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 
 		long plid = _portal.getPlidFromPortletId(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
-			CPPortletKeys.CP_CONTENT_WEB);
+			CPPortletKeys.CP_CATEGORY_CONTENT_WEB);
 
 		Layout layout = _layoutLocalService.getLayout(plid);
 
 		if (layoutUuid.equals(layout.getUuid())) {
-			long groupId =
-				_commerceChannelLocalService.
-					getCommerceChannelGroupIdBySiteGroupId(
-						layoutSet.getGroupId());
+			Group group = layoutSet.getGroup();
 
-			CommerceAccount commerceAccount =
-				_commerceAccountHelper.getCurrentCommerceAccount(
-					themeDisplay.getRequest());
+			Company company = _companyLocalService.getCompany(
+				group.getCompanyId());
 
-			SearchContext searchContext = new SearchContext();
+			List<AssetVocabulary> assetVocabularies =
+				_assetVocabularyService.getGroupVocabularies(
+					company.getGroupId(),
+					group.getName(themeDisplay.getLocale()), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
 
-			searchContext.setAttributes(
-				HashMapBuilder.<String, Serializable>put(
-					Field.STATUS, WorkflowConstants.STATUS_APPROVED
-				).put(
-					"commerceAccountGroupIds",
-					_commerceAccountHelper.getCommerceAccountGroupIds(
-						commerceAccount.getCommerceAccountId())
-				).put(
-					"commerceChannelGroupId", groupId
-				).build());
+			if (assetVocabularies.size() == 1) {
+				AssetVocabulary assetVocabulary = assetVocabularies.get(0);
 
-			searchContext.setCompanyId(themeDisplay.getCompanyId());
+				List<AssetCategory> assetCategories =
+					_assetCategoryService.getVocabularyRootCategories(
+						assetVocabulary.getGroupId(),
+						assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null);
 
-			CPQuery cpQuery = new CPQuery();
-
-			cpQuery.setOrderByCol1("title");
-			cpQuery.setOrderByCol2("modifiedDate");
-			cpQuery.setOrderByType1("ASC");
-			cpQuery.setOrderByType2("DESC");
-
-			CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(
-				groupId, searchContext, cpQuery, -1, -1);
-
-			for (CPCatalogEntry cpCatalogEntry :
-					cpDataSourceResult.getCPCatalogEntries()) {
-
-				if (layoutUuid.equals(layout.getUuid())) {
+				for (AssetCategory assetCategory : assetCategories) {
 					visitLayout(
-						element, layout, cpCatalogEntry.getCPDefinitionId(),
+						element, layout, assetCategory.getCategoryId(),
 						themeDisplay);
 				}
 			}
@@ -129,7 +106,7 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	protected void visitLayout(
-			Element element, Layout layout, long cpDefinitionId,
+			Element element, Layout layout, long assetCategoryId,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -151,16 +128,12 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 		String currentSiteURL = _portal.getGroupFriendlyURL(
 			layout.getLayoutSet(), themeDisplay);
 
-		String urlSeparator = _cpFriendlyURL.getProductURLSeparator(
+		String urlSeparator = _cpFriendlyURL.getAssetCategoryURLSeparator(
 			themeDisplay.getCompanyId());
-
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpDefinitionId);
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-				_portal.getClassNameId(CProduct.class),
-				cpDefinition.getCProductId());
+				_portal.getClassNameId(AssetCategory.class), assetCategoryId);
 
 		String productFriendlyURL =
 			currentSiteURL + urlSeparator +
@@ -172,16 +145,13 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	@Reference
-	private CommerceAccountHelper _commerceAccountHelper;
+	private AssetCategoryService _assetCategoryService;
 
 	@Reference
-	private CommerceChannelLocalService _commerceChannelLocalService;
+	private AssetVocabularyService _assetVocabularyService;
 
 	@Reference
-	private CPDefinitionHelper _cpDefinitionHelper;
-
-	@Reference
-	private CPDefinitionLocalService _cpDefinitionLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CPFriendlyURL _cpFriendlyURL;

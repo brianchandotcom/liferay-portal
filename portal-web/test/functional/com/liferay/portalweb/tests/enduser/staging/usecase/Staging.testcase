@@ -1096,10 +1096,7 @@ definition {
 
 		Vocabulary.viewCP(vocabularyName = "Vocabulary Name");
 
-		User.logoutPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			password = "test",

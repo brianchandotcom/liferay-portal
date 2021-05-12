@@ -74,7 +74,7 @@ public class FVSEntryModelImpl
 		{"fvsEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"viewState", Types.VARCHAR}
+		{"viewState", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,11 +89,11 @@ public class FVSEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("viewState", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("viewState", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FVSEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fvsEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,viewState VARCHAR(75) null)";
+		"create table FVSEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fvsEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,viewState TEXT null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FVSEntry";
 

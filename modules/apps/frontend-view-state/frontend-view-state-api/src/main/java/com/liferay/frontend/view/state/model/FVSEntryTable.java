@@ -17,6 +17,7 @@ package com.liferay.frontend.view.state.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -48,8 +49,8 @@ public class FVSEntryTable extends BaseTable<FVSEntryTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<FVSEntryTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<FVSEntryTable, String> viewState = createColumn(
-		"viewState", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<FVSEntryTable, Clob> viewState = createColumn(
+		"viewState", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private FVSEntryTable() {
 		super("FVSEntry", FVSEntryTable::new);

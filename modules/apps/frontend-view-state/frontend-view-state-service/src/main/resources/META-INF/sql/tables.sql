@@ -10,7 +10,7 @@ create table FVSActiveEntry (
 	datasetDisplayId VARCHAR(75) null,
 	fvsEntryId LONG,
 	plid LONG,
-	portletId VARCHAR(75) null
+	portletId VARCHAR(200) null
 );
 
 create table FVSEntry (
@@ -22,5 +22,5 @@ create table FVSEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	viewState VARCHAR(75) null
+	viewState TEXT null
 );

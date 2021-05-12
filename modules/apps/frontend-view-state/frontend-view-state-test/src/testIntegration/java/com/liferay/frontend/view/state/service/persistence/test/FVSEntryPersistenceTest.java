@@ -210,7 +210,7 @@ public class FVSEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"FVSEntry", "mvccVersion", true, "uuid", true, "fvsEntryId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "viewState", true);
+			true, "modifiedDate", true);
 	}
 
 	@Test

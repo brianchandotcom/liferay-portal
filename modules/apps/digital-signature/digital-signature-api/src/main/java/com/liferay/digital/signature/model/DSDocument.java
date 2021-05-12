@@ -18,4 +18,33 @@ package com.liferay.digital.signature.model;
  * @author Brian Wing Shun Chan
  */
 public class DSDocument {
+
+	public String getDocumentBase64() {
+		return documentBase64;
+	}
+
+	public String getDSDocumentId() {
+		return dsDocumentId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setDocumentBase64(String documentBase64) {
+		this.documentBase64 = documentBase64;
+	}
+
+	public void setDSDocumentId(String dsDocumentId) {
+		this.dsDocumentId = dsDocumentId;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	protected String documentBase64;
+	protected String dsDocumentId;
+	protected String name;
+
 }

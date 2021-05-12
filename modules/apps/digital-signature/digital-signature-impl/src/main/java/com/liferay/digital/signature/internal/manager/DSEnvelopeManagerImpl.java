@@ -16,11 +16,16 @@ package com.liferay.digital.signature.internal.manager;
 
 import com.liferay.digital.signature.internal.http.DSHttp;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
+import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
+import com.liferay.digital.signature.model.DSRecipient;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,13 +79,52 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	}
 
 	private JSONObject _toJSONObject(DSEnvelope dsEnvelope) {
-		return JSONUtil.put(
+		JSONObject dsEnvelopeJSONObject = JSONUtil.put(
+			"emailBlurb", dsEnvelope.getEmailBlurb()
+		).put(
 			"emailSubject", dsEnvelope.getEmailSubject()
 		).put(
 			"envelopeId", dsEnvelope.getDSEnvelopeId()
 		).put(
 			"status", dsEnvelope.getStatus()
 		);
+
+		if (Validator.isNotNull(dsEnvelope.getDocuments())) {
+			JSONArray documentsJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (DSDocument dsDocument : dsEnvelope.getDocuments()) {
+				documentsJSONArray.put(
+					JSONUtil.put(
+						"documentBase64", dsDocument.getDocumentBase64()
+					).put(
+						"documentId", dsDocument.getDSDocumentId()
+					).put(
+						"name", dsDocument.getName()
+					));
+			}
+
+			dsEnvelopeJSONObject.put("documents", documentsJSONArray);
+		}
+
+		if (Validator.isNotNull(dsEnvelope.getRecipients())) {
+			JSONArray signersJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (DSRecipient dsRecipient : dsEnvelope.getRecipients()) {
+				signersJSONArray.put(
+					JSONUtil.put(
+						"email", dsRecipient.getEmail()
+					).put(
+						"name", dsRecipient.getName()
+					).put(
+						"recipientId", dsRecipient.getDSRecipientId()
+					));
+			}
+
+			dsEnvelopeJSONObject.put(
+				"recipients", JSONUtil.put("signers", signersJSONArray));
+		}
+
+		return dsEnvelopeJSONObject;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

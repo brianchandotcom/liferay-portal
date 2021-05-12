@@ -1,5 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testIntegrationCompile group: "commons-io", name: "commons-io", version: "2.5"
 	testIntegrationCompile project(":apps:digital-signature:digital-signature-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

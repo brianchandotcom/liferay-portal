@@ -16,12 +16,22 @@ package com.liferay.digital.signature.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
+import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
+import com.liferay.digital.signature.model.DSRecipient;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.IOUtils;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -42,12 +52,44 @@ public class DSEnvelopeManagerTest {
 
 	@Test
 	public void testAddDSEnvelope() throws Exception {
+		InputStream inputStream = getClass().getResourceAsStream(
+			"Document_1.pdf");
+
+		byte[] byteArray = IOUtils.toByteArray(inputStream);
+
+		String encode = Base64.encode(byteArray);
+
+		List<DSDocument> documentsList = new ArrayList<>();
+
+		documentsList.add(
+			new DSDocument() {
+				{
+					documentBase64 = encode;
+					dsDocumentId = "1";
+					name = "Document 1";
+				}
+			});
+
+		List<DSRecipient> recipientsList = new ArrayList<>();
+
+		recipientsList.add(
+			new DSRecipient() {
+				{
+					dsRecipientId = "1";
+					email = "joseabelenda@gmail.com";
+					name = "José Abelenda";
+				}
+			});
+
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
+					documents = documentsList;
+					emailBlurb = "Please, sign the documents";
 					emailSubject = "New " + System.currentTimeMillis();
-					status = "created";
+					recipients = recipientsList;
+					status = "sent";
 				}
 			});
 

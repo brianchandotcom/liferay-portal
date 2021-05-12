@@ -14,38 +14,67 @@
 
 package com.liferay.digital.signature.model;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  * @author José Abelenda
  */
 public class DSEnvelope {
 
+	public List<DSDocument> getDocuments() {
+		return documents;
+	}
+
 	public String getDSEnvelopeId() {
 		return dsEnvelopeId;
+	}
+
+	public String getEmailBlurb() {
+		return emailBlurb;
 	}
 
 	public String getEmailSubject() {
 		return emailSubject;
 	}
 
+	public List<DSRecipient> getRecipients() {
+		return recipients;
+	}
+
 	public String getStatus() {
 		return status;
+	}
+
+	public void setDocuments(List<DSDocument> documents) {
+		this.documents = documents;
 	}
 
 	public void setDSEnvelopeId(String dsEnvelopeId) {
 		this.dsEnvelopeId = dsEnvelopeId;
 	}
 
+	public void setEmailBlurb(String emailBlurb) {
+		this.emailBlurb = emailBlurb;
+	}
+
 	public void setEmailSubject(String emailSubject) {
 		this.emailSubject = emailSubject;
+	}
+
+	public void setRecipients(List<DSRecipient> recipients) {
+		this.recipients = recipients;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	protected List<DSDocument> documents;
 	protected String dsEnvelopeId;
+	protected String emailBlurb;
 	protected String emailSubject;
+	protected List<DSRecipient> recipients;
 	protected String status;
 
 }

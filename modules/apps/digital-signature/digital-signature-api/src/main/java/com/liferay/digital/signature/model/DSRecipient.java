@@ -18,4 +18,33 @@ package com.liferay.digital.signature.model;
  * @author Brian Wing Shun Chan
  */
 public class DSRecipient {
+
+	public String getDSRecipientId() {
+		return dsRecipientId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setDSRecipientId(String dsRecipientId) {
+		this.dsRecipientId = dsRecipientId;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	protected String dsRecipientId;
+	protected String email;
+	protected String name;
+
 }

@@ -85,7 +85,8 @@ const FilterOrderControls = ({
 						href={sortingURL}
 						symbol={classnames({
 							'order-list-down': sortingOrder === 'desc',
-							'order-list-up': sortingOrder === 'asc',
+							'order-list-up':
+								sortingOrder === 'asc' || sortingOrder === null,
 						})}
 						title={Liferay.Language.get('reverse-sort-direction')}
 					/>

@@ -49,6 +49,7 @@ function reducer(state = INITIAL_STATE, action) {
 		case SET_DATA:
 			nextState = {
 				data: {
+					...state.data,
 					...action.data,
 				},
 				error: action.data?.error,

@@ -45,7 +45,6 @@ function loadIssues({data, dispatch, languageId, portletNamespace}) {
 			.then(({layoutReportsIssues}) => {
 				dispatch({
 					data: {
-						...data,
 						layoutReportsIssues,
 					},
 					type: SET_DATA,
@@ -119,9 +118,7 @@ export default function LayoutReports({eventTriggered}) {
 				.then((response) =>
 					response.json().then((data) => {
 						safeDispatch({
-							data: {
-								...data,
-							},
+							data,
 							loading: data.validConnection,
 							type: SET_DATA,
 						});

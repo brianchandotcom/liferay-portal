@@ -25,7 +25,7 @@ package com.liferay.frontend.view.state.model.impl;
  */
 public class FVSActiveEntryImpl extends FVSActiveEntryBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a fvs active entry model instance should use the {@link com.liferay.frontend.view.state.model.FVSActiveEntry} interface instead.

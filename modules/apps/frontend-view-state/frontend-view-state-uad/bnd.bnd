@@ -1,4 +1,4 @@
-Bundle-Name: Liferay Fvs UAD
+Bundle-Name: Liferay Frontend View State UAD
 Bundle-SymbolicName: com.liferay.frontend.view.state.uad
 Bundle-Version: 1.0.0
 -dsannotations-options: inherit

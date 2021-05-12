@@ -39,9 +39,10 @@ import org.osgi.service.component.annotations.Component;
 public class FVSActiveEntryLocalServiceImpl
 	extends FVSActiveEntryLocalServiceBaseImpl {
 
-	/*
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. Use <code>com.liferay.frontend.view.state.service.FVSActiveEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.frontend.view.state.service.FVSActiveEntryLocalServiceUtil</code>.
 	 */
+
 }

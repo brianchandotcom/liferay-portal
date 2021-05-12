@@ -118,7 +118,3 @@ dependencies {
 	compileOnly project(":core:registry-api")
 	compileOnly project(":core:registry-impl")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/core")
-}

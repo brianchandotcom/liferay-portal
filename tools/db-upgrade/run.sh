@@ -71,8 +71,6 @@ done
 
 IFS="${CURRENT_IFS}"
 
-exportJars ${LIFERAY_HOME}/osgi/core
-
 CLASSPATH=${CLASSPATH}:${LIFERAY_HOME}
 
 ${JAVA_BIN} ${JAVA_OPTS} -cp ${CLASSPATH} -Dfile.encoding=UTF8 -Duser.country=US -Duser.language=en -Duser.timezone=GMT com.liferay.portal.tools.DBUpgrader

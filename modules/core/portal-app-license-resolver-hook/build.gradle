@@ -5,7 +5,3 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":core:portal-app-license-api")
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/core")
-}

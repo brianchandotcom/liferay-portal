@@ -2,7 +2,3 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.log", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 }
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/core")
-}

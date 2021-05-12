@@ -11,10 +11,6 @@ dependencies {
 	compileOnly group: "org.eclipse.platform", name: "org.eclipse.osgi", version: "3.13.0"
 }
 
-liferay {
-	deployDir = file("${liferayHome}/osgi/core")
-}
-
 patch {
 	ext {
 		autoClean = false

@@ -141,13 +141,35 @@ function Item({totalCount, ...instance}) {
 				/>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell>{`${assetType}: ${assetTitle}`}</ClayTable.Cell>
+			<ClayTable.Cell
+				className="bounded-column"
+				data-tooltip-align="bottom"
+				title={`${assetType}: ${assetTitle}`}
+			>{`${assetType}: ${assetTitle}`}</ClayTable.Cell>
 
-			<ClayTable.Cell>{formattedTaskNames}</ClayTable.Cell>
+			<ClayTable.Cell
+				className="bounded-column"
+				data-tooltip-align="bottom"
+				title={formattedTaskNames}
+			>
+				{formattedTaskNames}
+			</ClayTable.Cell>
 
-			<ClayTable.Cell>{formattedAssignees}</ClayTable.Cell>
+			<ClayTable.Cell
+				className="bounded-column"
+				data-tooltip-align="bottom"
+				title={formattedAssignees}
+			>
+				{formattedAssignees}
+			</ClayTable.Cell>
 
-			<ClayTable.Cell>{creator ? creator.name : ''}</ClayTable.Cell>
+			<ClayTable.Cell
+				className="bounded-column"
+				data-tooltip-align="bottom"
+				title={creator ? creator.name : ''}
+			>
+				{creator ? creator.name : ''}
+			</ClayTable.Cell>
 
 			<ClayTable.Cell>
 				{moment

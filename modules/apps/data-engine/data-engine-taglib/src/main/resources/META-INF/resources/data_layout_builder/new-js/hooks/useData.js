@@ -64,20 +64,26 @@ const parseDataDefinition = (originalDataDefinition) => {
 	};
 };
 
+const DEFAULT_ID = '0';
 const NOT_FOUND = 404;
 
-const customFetch = (parse, defaultData) => (url, init) =>
-	fetch(url, init).then(async (response) => {
-		if (response.ok) {
-			return parse(await response.json());
-		}
+const customFetch = ({defaultData, id, parse}) => async (url, init) => {
+	if (id === DEFAULT_ID) {
+		return defaultData;
+	}
 
-		if (response.status === NOT_FOUND) {
-			return defaultData;
-		}
+	const response = await fetch(url, init);
 
-		throw response;
-	});
+	if (response.ok) {
+		return parse(await response.json());
+	}
+
+	if (response.status === NOT_FOUND) {
+		return defaultData;
+	}
+
+	throw response;
+};
 
 const DEFAULT_DATA_DEFINITION = {
 	dataDefinition: {
@@ -94,7 +100,11 @@ const DEFAULT_DATA_LAYOUT = {
 
 export const useData = ({dataDefinitionId, dataLayoutId}) => {
 	const {resource: dataDefinition} = useResource({
-		fetch: customFetch(parseDataDefinition, DEFAULT_DATA_DEFINITION),
+		fetch: customFetch({
+			defaultData: DEFAULT_DATA_DEFINITION,
+			id: dataDefinitionId,
+			parse: parseDataDefinition,
+		}),
 		fetchPolicy: 'cache-first',
 		fetchRetry: {
 			attempts: 0,
@@ -103,7 +113,11 @@ export const useData = ({dataDefinitionId, dataLayoutId}) => {
 	});
 
 	const {resource: dataLayout} = useResource({
-		fetch: customFetch(parseDataLayout, DEFAULT_DATA_LAYOUT),
+		fetch: customFetch({
+			defaultData: DEFAULT_DATA_LAYOUT,
+			id: dataLayoutId,
+			parse: parseDataLayout,
+		}),
 		fetchPolicy: 'cache-first',
 		fetchRetry: {
 			attempts: 0,

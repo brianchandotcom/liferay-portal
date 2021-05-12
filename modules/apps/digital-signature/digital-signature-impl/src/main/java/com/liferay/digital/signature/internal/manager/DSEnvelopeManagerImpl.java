@@ -59,6 +59,11 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		return dsEnvelope;
 	}
 
+	@Override
+	public byte[] getDSEnvelopeDocumentsAsZip(long envelopeId) {
+		return null;
+	}
+
 	private DSEnvelope _toDSEnvelope(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return new DSEnvelope();

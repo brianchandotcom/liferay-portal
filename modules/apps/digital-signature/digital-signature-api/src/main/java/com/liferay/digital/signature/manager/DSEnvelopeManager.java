@@ -28,4 +28,6 @@ public interface DSEnvelopeManager {
 
 	public DSEnvelope getDSEnvelope(long groupId, String dsEnvelopeId);
 
+	public byte[] getDSEnvelopeDocumentsAsZip(long envelopeId);
+
 }

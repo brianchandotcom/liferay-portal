@@ -66,13 +66,13 @@ public class UserModelDocumentContributor
 		try {
 			long[] organizationIds = user.getOrganizationIds();
 
+			long[] activeTransitiveGroupIds = getActiveTransitiveGroupIds(
+				user.getUserId());
+
 			document.addKeyword(Field.COMPANY_ID, user.getCompanyId());
-			document.addKeyword(
-				Field.GROUP_ID, getActiveTransitiveGroupIds(user.getUserId()));
+			document.addKeyword(Field.GROUP_ID, activeTransitiveGroupIds);
 			document.addDate(Field.MODIFIED_DATE, user.getModifiedDate());
-			document.addKeyword(
-				Field.SCOPE_GROUP_ID,
-				getActiveTransitiveGroupIds(user.getUserId()));
+			document.addKeyword(Field.SCOPE_GROUP_ID, activeTransitiveGroupIds);
 			document.addKeyword(Field.STATUS, user.getStatus());
 			document.addKeyword(Field.USER_ID, user.getUserId());
 			document.addKeyword(Field.USER_NAME, user.getFullName(), true);

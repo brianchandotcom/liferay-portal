@@ -932,11 +932,9 @@ definition {
 			Staging.submitForPublicationPageRevision();
 		}
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "userea1@liferay.com");
+		User.logoutPG();
 
-		User.loginPG(
+		User.loginUserPG(
 			password = "test",
 			userEmailAddress = "userea2@liferay.com");
 
@@ -970,11 +968,9 @@ definition {
 
 		AssertElementPresent(locator1 = "Portlet#SPECIFIC_TITLE");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "userea2@liferay.com");
+		User.logoutPG();
 
-		User.loginPG(
+		User.loginUserPG(
 			password = "test",
 			userEmailAddress = "userea1@liferay.com");
 
@@ -988,11 +984,9 @@ definition {
 			Staging.submitForPublicationPageRevision();
 		}
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "userea1@liferay.com");
+		User.logoutPG();
 
-		User.loginPG(
+		User.loginUserPG(
 			password = "test",
 			userEmailAddress = "userea2@liferay.com");
 
@@ -1690,9 +1684,7 @@ definition {
 
 		Staging.publishToRemoteUncheckContentViaCustomPublication(contentName = "Blogs");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",

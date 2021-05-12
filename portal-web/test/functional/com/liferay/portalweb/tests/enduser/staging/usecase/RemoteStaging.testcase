@@ -100,9 +100,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -150,9 +148,7 @@ definition {
 			larFileName = "custom_fields_deletion.portlet.lar",
 			portletName = "Custom Fields");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -195,9 +191,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -270,9 +264,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -354,9 +346,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -466,9 +456,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -521,9 +509,7 @@ definition {
 
 		Staging.publishToLiveNowViaPortletCP();
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -589,9 +575,7 @@ definition {
 
 		Staging.publishToLiveNowViaPortletPG();
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -628,9 +612,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -674,9 +656,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",
@@ -740,9 +720,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish the selected web content?",
 			entry = "Web Content Title");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",

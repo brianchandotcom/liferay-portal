@@ -51,6 +51,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -104,6 +105,27 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			sourceFileName, mimeType, title, description, changeLog,
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, null,
 			null, serviceContext);
+	}
+
+	@Override
+	public DLFileEntry addFileEntry(
+		String externalReferenceCode, long groupId, long repositoryId,
+		long folderId, String sourceFileName, String mimeType, String title,
+		String description, String changeLog, long fileEntryTypeId,
+		Map<String, DDMFormValues> ddmFormValuesMap, File file,
+		InputStream inputStream, long size, Date expirationDate,
+		Date reviewDate, ServiceContext serviceContext)
+		throws PortalException {
+
+		ModelResourcePermissionUtil.check(
+			_folderModelResourcePermission, getPermissionChecker(), groupId,
+			folderId, ActionKeys.ADD_DOCUMENT);
+
+		return dlFileEntryLocalService.addFileEntry(
+			externalReferenceCode, getUserId(), groupId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	@Override

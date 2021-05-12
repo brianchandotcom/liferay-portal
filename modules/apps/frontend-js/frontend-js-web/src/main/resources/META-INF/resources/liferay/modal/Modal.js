@@ -436,6 +436,11 @@ const openSelectionModal = ({
 
 					if (selectedDataSet.has(itemId)) {
 						itemElement.disabled = true;
+						itemElement.classList.add('disabled');
+					}
+					else {
+						itemElement.disabled = false;
+						itemElement.classList.remove('disabled');
 					}
 				});
 			}

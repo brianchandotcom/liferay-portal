@@ -69,7 +69,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addFileEntry(String, long, long, long, String, String,
 	 *             String, String, String, long, Map, File, InputStream, long,
-	 *             ServiceContext)}
+	 *             Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -84,9 +84,16 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		return addFileEntry(
 			null, groupId, repositoryId, folderId, sourceFileName, mimeType,
 			title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
-			file, inputStream, size, serviceContext);
+			file, inputStream, size, null, null, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, long, String, String,
+	 *             String, String, String, long, Map, File, InputStream, long,
+	 *             Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFileEntry addFileEntry(
 			String externalReferenceCode, long groupId, long repositoryId,
@@ -117,12 +124,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionUtil.check(
-			_folderModelResourcePermission, getPermissionChecker(), groupId,
-			folderId, ActionKeys.ADD_DOCUMENT);
-
-		return dlFileEntryLocalService.addFileEntry(
-			externalReferenceCode, getUserId(), groupId, repositoryId, folderId,
+		return addFileEntry(
+			externalReferenceCode, groupId, repositoryId, folderId,
 			sourceFileName, mimeType, title, description, changeLog,
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
 			expirationDate, reviewDate, serviceContext);

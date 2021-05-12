@@ -99,13 +99,13 @@ public class DocumentPreviewRendererProvider
 
 	private static final Set<String> _mimeTypes = new HashSet<>(
 		Arrays.asList(
-			"application/javascript", ContentTypes.APPLICATION_MSWORD,
-			ContentTypes.APPLICATION_PDF, ContentTypes.APPLICATION_TEXT,
+			ContentTypes.APPLICATION_MSWORD, ContentTypes.APPLICATION_PDF,
+			ContentTypes.APPLICATION_TEXT,
 			ContentTypes.APPLICATION_VND_MS_EXCEL,
 			ContentTypes.APPLICATION_VND_MS_POWERPOINT,
 			ContentTypes.APPLICATION_X_PDF, ContentTypes.TEXT_CSS,
-			ContentTypes.TEXT_HTML, "text/jsp", "text/jspf",
-			ContentTypes.TEXT_PLAIN, "application/rtf",
+			ContentTypes.TEXT_HTML, ContentTypes.TEXT_PLAIN,
+			"application/javascript", "application/rtf",
 			"application/vnd.oasis.opendocument.graphics",
 			"application/vnd.oasis.opendocument.presentation",
 			"application/vnd.oasis.opendocument.spreadsheet",
@@ -116,8 +116,8 @@ public class DocumentPreviewRendererProvider
 			"application/vnd.openxmlformats-officedocument.wordprocessingml." +
 				"document",
 			"application/vnd.sun.xml.calc", "application/vnd.sun.xml.writer",
-			"application/wordperfect", "application/x-sh", "text/rtf",
-			"text/x-java-source"));
+			"application/wordperfect", "application/x-sh", "text/jsp",
+			"text/jspf", "text/rtf", "text/x-java-source"));
 
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;

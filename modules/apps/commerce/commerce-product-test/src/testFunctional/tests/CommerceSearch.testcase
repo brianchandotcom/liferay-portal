@@ -135,14 +135,13 @@ definition {
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
-		
 
 		var product = '''"ABS Sensor"''';
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
 			value1 = "${product}");
-		
+
 		Button.clickSubmitButton();
 
 		AssertElementPresent(

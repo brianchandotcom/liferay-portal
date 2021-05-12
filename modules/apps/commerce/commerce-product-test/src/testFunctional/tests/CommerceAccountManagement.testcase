@@ -29,55 +29,53 @@ definition {
 	@description = "COMMERCE-6368. In Addresses tab, I want to be able to add addresses to the account(Billing, Shipping, Billing and Shipping)"
 	@priority = "3"
 	test AddAddressToAccount {
-                property portal.acceptance = "false";
-                property test.name.skip.portal.instance = "CommerceAccountManagement#AddAddressToAccount";
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountManagement#AddAddressToAccount";
 
-                CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-                Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
-                CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
-                CommerceAcceleratorsInitializer.createNewAccountViaFront(
-                        accountName = "Commerce Account",
-                        adminEmailAddress = "test@liferay.com");
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
 
-                Click(
-                        key_navUnderline = "Addresses",
-                        locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+		Click(
+			key_navUnderline = "Addresses",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
 
 		CommerceAcceleratorsInitializer.addAddressToAccount(
+			keyAddress = "Test Address",
+			keyCity = "Test City",
+			keyCountry = "United States",
+			keyName = "Test Name",
+			keyRegion = "Alaska",
+			keyTelephone = "Test Telephone",
 			keyType = "Billing",
-			keyAddress = "Test Address",
-			keyCity = "Test City",
-			keyCountry = "United States",
-			keyRegion = "Alaska",
-			keyZipCode = "Test Zip Code",
-			keyName = "Test Name",
-			keyTelephone = "Test Telephone");
-		
-		CommerceAcceleratorsInitializer.addAddressToAccount(
-			keyType = "Shipping",
-			keyAddress = "Test Address",
-			keyCity = "Test City",
-			keyCountry = "United States",
-			keyRegion = "Alaska",
-			keyZipCode = "Test Zip Code",
-			keyName = "Test Name",
-			keyTelephone = "Test Telephone");
+			keyZipCode = "Test Zip Code");
 
 		CommerceAcceleratorsInitializer.addAddressToAccount(
-			keyType = "Billing and Shipping",
 			keyAddress = "Test Address",
 			keyCity = "Test City",
 			keyCountry = "United States",
-			keyRegion = "Alaska",
-			keyZipCode = "Test Zip Code",
 			keyName = "Test Name",
-			keyTelephone = "Test Telephone");
-			
-               
-        }
+			keyRegion = "Alaska",
+			keyTelephone = "Test Telephone",
+			keyType = "Shipping",
+			keyZipCode = "Test Zip Code");
+
+		CommerceAcceleratorsInitializer.addAddressToAccount(
+			keyAddress = "Test Address",
+			keyCity = "Test City",
+			keyCountry = "United States",
+			keyName = "Test Name",
+			keyRegion = "Alaska",
+			keyTelephone = "Test Telephone",
+			keyType = "Billing and Shipping",
+			keyZipCode = "Test Zip Code");
+	}
 
 	@description = "COMMERCE-6337. In Info tab, I want to be able to add an organization to the account"
 	@ignore = "true"
@@ -86,6 +84,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6337 AddOrganizationToAccount pending implementation
+
 	}
 
 	@description = "COMMERCE-6347. In Info tab, I want to be unable to add an organization that is already added to the account"

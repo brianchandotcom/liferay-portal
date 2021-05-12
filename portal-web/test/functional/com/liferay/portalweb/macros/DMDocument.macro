@@ -1527,7 +1527,9 @@ definition {
 	}
 
 	macro enableActionsMenuOnPortlet {
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+		Portlet.gotoPortletOptions(
+			portletName = "Documents and Media",
+			portletOption = "Configuration");
 
 		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
 

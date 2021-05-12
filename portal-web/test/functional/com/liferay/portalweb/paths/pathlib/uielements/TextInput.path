@@ -274,11 +274,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GRACE_LIMIT</td>
-	<td>//div[label[contains(.,'Grace Limit')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>GROUPED_TEXT_INPUT</td>
 	<td>//div[contains(@class,'panel-group')][contains(.,'${key_groupLabel}')]//div[contains(@class,'form-group')][label[normalize-space(text())='${key_fieldLabel}']]//input</td>
 	<td></td>
@@ -339,43 +334,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MAXIMUM_FAILURE</td>
-	<td>//div[label[contains(.,'Maximum Failure')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MIDDLE_NAME</td>
 	<td>//div[label[contains(.,'Middle Name')]]/input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MINIMUM_ALPHA_NUMERIC</td>
-	<td>//div[label[contains(.,'Minimum Alpha Numeric')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MINIMUM_LENGTH</td>
-	<td>//div[label[contains(.,'Minimum Length')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MINIMUM_LOWER_CASE</td>
-	<td>//div[label[contains(.,'Minimum Lower Case')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MINIMUM_NUMBERS</td>
-	<td>//div[label[contains(.,'Minimum Numbers')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MINIMUM_SYMBOLS</td>
-	<td>//div[label[contains(.,'Minimum Symbols')]]//input[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MINIMUM_UPPER_CASE</td>
-	<td>//div[label[contains(.,'Minimum Upper Case')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -546,11 +506,6 @@
 <tr>
 	<td>PUBLIC_VIRTUAL_HOST_URL</td>
 	<td>//input[contains(@id,'publicVirtualHost')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REGULAR_EXPRESSION</td>
-	<td>//div[label[contains(.,'Regular Expression')]]//textarea</td>
 	<td></td>
 </tr>
 <tr>

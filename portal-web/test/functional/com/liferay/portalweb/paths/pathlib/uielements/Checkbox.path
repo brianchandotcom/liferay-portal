@@ -39,11 +39,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ALLOW_DICTIONARY_WORDS</td>
-	<td>//label[contains(.,'Allow Dictionary Words')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT</td>
 	<td>//label[contains(.,'Allow Manual Membership Management')]//input[@type='checkbox']</td>
 	<td></td>
@@ -81,16 +76,6 @@
 <tr>
 	<td>BLOGS_ENTRY</td>
 	<td>//input[contains(@id,'BlogsEntry')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGEABLE</td>
-	<td>//label[contains(.,'Changeable')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_REQUIRED</td>
-	<td>//label[contains(.,'Change Required')]/input[@type='checkbox'] | //input[@type='checkbox' and contains(@name,'changeRequired')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -206,16 +191,6 @@
 <tr>
 	<td>ENABLE_GOOGLE_AUTHENTICATION</td>
 	<td>//input[contains(@id,'google-auth')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENABLE_EXPIRATION</td>
-	<td>//label[contains(.,'Enable Expiration')]//input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENABLE_LOCKOUT</td>
-	<td>//label[contains(.,'Enable Lockout')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -481,11 +456,6 @@
 <tr>
 	<td>STATUS</td>
 	<td>//span[@class='icon-check' and contains(.,'${key_status}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENABLE_SYNTAX_CHECKING</td>
-	<td>//label[contains(.,'Enable Syntax Checking')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

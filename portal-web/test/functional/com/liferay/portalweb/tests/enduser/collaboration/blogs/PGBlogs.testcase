@@ -1356,4 +1356,90 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "View the related assets in Blogs."
+	@priority = "4"
+	@uitest
+	test ViewRelatedAssetsInBlogs {
+		task ("Add the first blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title");
+		}
+
+		task ("Add the second blogs entry and select the first one as related assets") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+			BlogsNavigator.gotoAddEntry();
+
+			BlogsEntry.addEntryContent(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title");
+
+			RelatedAssets.selectAsset(
+				assetTitle = "Blogs Entry1 Title",
+				assetType = "Blogs Entry");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the related assets in Blogs") {
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title");
+
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry1 Content",
+				entryTitle = "Blogs Entry1 Title");
+
+			AssertElementPresent(
+				locator1 = "Relatedassets#ASSET_ENTRY_STICKER",
+				rowNumber = "1");
+
+			AssertElementNotPresent(
+				locator1 = "Relatedassets#ASSET_ENTRY_STICKER",
+				rowNumber = "2");
+
+			AssertElementNotPresent(
+				locator1 = "Relatedassets#ASSET_TITLE",
+				rowNumber = "2");
+
+			AssertElementNotPresent(
+				locator1 = "Relatedassets#ASSET_EDIT",
+				rowNumber = "2");
+
+			Navigator.gotoPage(pageName = "Blogs Page");
+
+			BlogsNavigator.gotoEntryPG(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title");
+
+			BlogsEntry.viewPG(
+				entryContent = "Blogs Entry2 Content",
+				entryTitle = "Blogs Entry2 Title");
+
+			BlogsEntry.viewRelatedAssetPG(
+				assetTitle = "Blogs Entry1 Title",
+				assetType = "Blogs Entry",
+				entryTitle = "Blogs Entry2 Title");
+
+			AssertElementPresent(
+				locator1 = "Relatedassets#ASSET_ENTRY_STICKER",
+				rowNumber = "1");
+
+			AssertElementNotPresent(
+				locator1 = "Relatedassets#ASSET_ENTRY_STICKER",
+				rowNumber = "2");
+
+			AssertElementNotPresent(
+				locator1 = "Relatedassets#ASSET_TITLE",
+				rowNumber = "2");
+
+			AssertElementNotPresent(
+				locator1 = "Relatedassets#ASSET_EDIT",
+				rowNumber = "2");
+		}
+	}
+
 }

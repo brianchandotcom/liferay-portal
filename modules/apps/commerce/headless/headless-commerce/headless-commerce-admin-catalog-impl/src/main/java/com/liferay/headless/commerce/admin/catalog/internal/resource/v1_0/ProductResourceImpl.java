@@ -328,6 +328,16 @@ public class ProductResourceImpl
 		return _toProduct(cpDefinition.getCPDefinitionId());
 	}
 
+	@Override
+	public void update(
+			Collection<Product> products, Map<String, Serializable> parameters)
+		throws Exception {
+
+		for (Product product : products) {
+			patchProduct(product.getProductId(), product);
+		}
+	}
+
 	private CPDefinition _addOrUpdateProduct(Product product) throws Exception {
 		CommerceCatalog commerceCatalog =
 			_commerceCatalogLocalService.getCommerceCatalog(

@@ -14,13 +14,11 @@
 
 package com.liferay.layout.reports.web.internal.portlet.action;
 
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.layout.reports.web.internal.model.LayoutReportsIssue;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -28,7 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -45,23 +42,19 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
  */
 @Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutReportsPortletKeys.LAYOUT_REPORTS,
@@ -71,17 +64,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class GetLayoutReportsIssuesMVCResourceCommand
 	extends BaseMVCResourceCommand {
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_layoutReportsGooglePageSpeedConfigurationProvider =
-			new LayoutReportsGooglePageSpeedConfigurationProvider(
-				_configurationProvider,
-				ConfigurableUtil.createConfigurable(
-					LayoutReportsGooglePageSpeedConfiguration.class,
-					properties));
-	}
 
 	@Override
 	protected void doServeResource(
@@ -184,9 +166,6 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 		GetLayoutReportsIssuesMVCResourceCommand.class);
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -195,7 +174,8 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 	@Reference
 	private Language _language;
 
-	private volatile LayoutReportsGooglePageSpeedConfigurationProvider
+	@Reference
+	private LayoutReportsGooglePageSpeedConfigurationProvider
 		_layoutReportsGooglePageSpeedConfigurationProvider;
 
 	@Reference

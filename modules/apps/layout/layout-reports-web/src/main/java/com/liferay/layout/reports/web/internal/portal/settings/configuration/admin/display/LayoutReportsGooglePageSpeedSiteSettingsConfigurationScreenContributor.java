@@ -14,17 +14,14 @@
 
 package com.liferay.layout.reports.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.display.context.LayoutReportsGooglePageSpeedDisplayContext;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
@@ -32,7 +29,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
@@ -41,18 +37,13 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
  */
-@Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
-	service = SiteSettingsConfigurationScreenContributor.class
-)
+@Component(service = SiteSettingsConfigurationScreenContributor.class)
 public class
 	LayoutReportsGooglePageSpeedSiteSettingsConfigurationScreenContributor
 		implements SiteSettingsConfigurationScreenContributor {
@@ -143,17 +134,6 @@ public class
 		}
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_layoutReportsGooglePageSpeedConfigurationProvider =
-			new LayoutReportsGooglePageSpeedConfigurationProvider(
-				_configurationProvider,
-				ConfigurableUtil.createConfigurable(
-					LayoutReportsGooglePageSpeedConfiguration.class,
-					properties));
-	}
-
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -167,8 +147,6 @@ public class
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
-
 	private LayoutReportsGooglePageSpeedConfigurationProvider
 		_layoutReportsGooglePageSpeedConfigurationProvider;
 

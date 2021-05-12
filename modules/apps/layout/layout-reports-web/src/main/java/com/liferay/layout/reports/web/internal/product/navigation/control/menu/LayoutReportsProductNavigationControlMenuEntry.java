@@ -15,19 +15,16 @@
 package com.liferay.layout.reports.web.internal.product.navigation.control.menu;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -78,14 +75,12 @@ import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sarai Díaz
  */
 @Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
@@ -219,15 +214,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_layoutReportsGooglePageSpeedConfigurationProvider =
-			new LayoutReportsGooglePageSpeedConfigurationProvider(
-				_configurationProvider,
-				ConfigurableUtil.createConfigurable(
-					LayoutReportsGooglePageSpeedConfiguration.class,
-					properties));
-
 		_portletNamespace = _portal.getPortletNamespace(
 			LayoutReportsPortletKeys.LAYOUT_REPORTS);
 	}
@@ -422,9 +409,6 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		LayoutReportsProductNavigationControlMenuEntry.class);
 
 	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -436,7 +420,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
-	private volatile LayoutReportsGooglePageSpeedConfigurationProvider
+	@Reference
+	private LayoutReportsGooglePageSpeedConfigurationProvider
 		_layoutReportsGooglePageSpeedConfigurationProvider;
 
 	@Reference

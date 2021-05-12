@@ -249,8 +249,7 @@ public class BatchPlannerMappingPersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "batchPlannerPlanId",
 			true, "externalFieldName", true, "externalFieldType", true,
-			"internalFieldName", true, "internalFieldType", true, "script",
-			true);
+			"internalFieldName", true, "internalFieldType", true);
 	}
 
 	@Test

@@ -82,7 +82,7 @@ public class BatchPlannerMappingModelImpl
 		{"externalFieldName", Types.VARCHAR},
 		{"externalFieldType", Types.VARCHAR},
 		{"internalFieldName", Types.VARCHAR},
-		{"internalFieldType", Types.VARCHAR}, {"script", Types.VARCHAR}
+		{"internalFieldType", Types.VARCHAR}, {"script", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -101,11 +101,11 @@ public class BatchPlannerMappingModelImpl
 		TABLE_COLUMNS_MAP.put("externalFieldType", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("internalFieldName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("internalFieldType", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("script", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("script", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table BatchPlannerMapping (mvccVersion LONG default 0 not null,batchPlannerMappingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,batchPlannerPlanId LONG,externalFieldName VARCHAR(75) null,externalFieldType VARCHAR(75) null,internalFieldName VARCHAR(75) null,internalFieldType VARCHAR(75) null,script VARCHAR(75) null)";
+		"create table BatchPlannerMapping (mvccVersion LONG default 0 not null,batchPlannerMappingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,batchPlannerPlanId LONG,externalFieldName VARCHAR(75) null,externalFieldType VARCHAR(75) null,internalFieldName VARCHAR(75) null,internalFieldType VARCHAR(75) null,script TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table BatchPlannerMapping";

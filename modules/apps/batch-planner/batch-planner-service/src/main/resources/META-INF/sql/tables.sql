@@ -28,7 +28,7 @@ create table BatchPlannerMapping (
 	externalFieldType VARCHAR(75) null,
 	internalFieldName VARCHAR(75) null,
 	internalFieldType VARCHAR(75) null,
-	script VARCHAR(75) null
+	script TEXT null
 );
 
 create table BatchPlannerPlan (

@@ -185,7 +185,9 @@ public class BatchPlannerMappingCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		batchPlannerMappingId = objectInput.readLong();
@@ -202,7 +204,7 @@ public class BatchPlannerMappingCacheModel
 		externalFieldType = objectInput.readUTF();
 		internalFieldName = objectInput.readUTF();
 		internalFieldType = objectInput.readUTF();
-		script = objectInput.readUTF();
+		script = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -256,10 +258,10 @@ public class BatchPlannerMappingCacheModel
 		}
 
 		if (script == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(script);
+			objectOutput.writeObject(script);
 		}
 	}
 

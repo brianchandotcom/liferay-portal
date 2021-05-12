@@ -554,8 +554,6 @@ definition {
 
 		AssertElementPresent(locator1 = "Questions#QUESTIONS_HOME_ICON");
 
-		Pause(locator1 = "3000");
-
 		AssertVisible(
 			key_categoryTitle = "${categoryName}",
 			locator1 = "Questions#QUESTIONS_CATEGORY_TITLE");

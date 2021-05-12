@@ -839,9 +839,7 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
 		User.firstLoginUI(
 			password = "test",

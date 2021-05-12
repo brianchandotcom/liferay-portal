@@ -12,38 +12,27 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.field.type.internal.numeric;
+package com.liferay.dynamic.data.mapping.util;
 
 import java.text.DecimalFormat;
 
 import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Rafael Praxedes
- * @deprecated As of Cavanaugh (7.4.x)
+ * @author Guilherme Camacho
  */
-@Deprecated
 public class NumericDDMFormFieldUtil {
 
 	public static DecimalFormat getNumberFormat(Locale locale) {
-		DecimalFormat formatter = _decimalFormattersMap.get(locale);
+		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
+			locale);
 
-		if (formatter == null) {
-			formatter = (DecimalFormat)DecimalFormat.getInstance(locale);
+		decimalFormat.setGroupingUsed(false);
+		decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+		decimalFormat.setParseBigDecimal(true);
 
-			formatter.setGroupingUsed(false);
-			formatter.setMaximumFractionDigits(Integer.MAX_VALUE);
-			formatter.setParseBigDecimal(true);
-
-			_decimalFormattersMap.put(locale, formatter);
-		}
-
-		return formatter;
+		return decimalFormat;
 	}
-
-	private static final Map<Locale, DecimalFormat> _decimalFormattersMap =
-		new ConcurrentHashMap<>();
 
 }

@@ -122,6 +122,61 @@ definition {
 			locator1 = "CommerceAccelerators#ANY_BUTTON");
 	}
 
+	macro addAddressToAccount {
+		Click(
+                        key_text = "Add Address",
+                        locator1 = "Button#ANY");
+               
+                Select(
+                        key_fieldLabel = "Type",
+                        locator1 = "Select#GENERIC_SELECT_FIELD",
+                        value1 = "${keyType}");
+
+                Type(
+                        key_fieldLabel = "Address",
+                        locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                        value1 = "${keyAddress}");
+
+                Type(
+                        key_fieldLabel = "City",
+                        locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                        value1 = "${keyCity}");
+
+                Select(
+                        key_fieldLabel = "Country",
+                        locator1 = "Select#GENERIC_SELECT_FIELD",
+                        value1 = "${keyCountry}");
+
+                Select(
+                        key_fieldLabel = "Region",
+                        locator1 = "Select#GENERIC_SELECT_FIELD",
+                        value1 = "${keyRegion}");
+
+                Type(
+                        key_fieldLabel = "Zip Code",
+                        locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                        value1 = "${keyZipCode}");
+
+                Click(locator1 = "Button#ARROW_SUBMIT_BTN");
+
+                Type(
+                        key_fieldLabel = "Name",
+                        locator1 = "TextInput#GENERIC_TEXT_INPUT",
+                        value1 = "${keyName}");
+
+                Type(
+                        locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_INPUT_TELEPHONE",
+                        value1 = "${keyTelephone}");
+
+                Click(
+                        key_tab = "Create",
+                        locator1 = "Button#TAB_SUBMIT_BTN");
+
+		AssertElementPresent(
+			key_addressType = "${keyType}",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
+	}
+
 	macro reviewOrder {
 		Click(
 			key_orderAuthor = "${orderAuthor}",

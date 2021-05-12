@@ -774,6 +774,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ARROW_SUBMIT_BTN</td>
+	<td>//button[@type='submit'][contains(@class,'btn-primary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TWITCH_PLAY</td>
 	<td>//button[contains(@data-test-selector,'player-overlay-play-button') and contains(@aria-label,'Play')]</td>
 	<td></td>

@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_MANAGEMENT_INPUT_TELEPHONE</td>
+	<td>//div[label[contains(.,'')]]//input[@type='tel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_MANAGEMENT_ADDRESS_TYPE</td>
+	<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_addressType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM</td>
 	<td>//ul[contains(@class,'accounts-list')]//button[@class='dropdown-item']/span[contains(.,'${key_accountName}')]</td>
 	<td></td>

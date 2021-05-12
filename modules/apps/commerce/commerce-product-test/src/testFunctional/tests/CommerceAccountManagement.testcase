@@ -27,14 +27,57 @@ definition {
 	}
 
 	@description = "COMMERCE-6368. In Addresses tab, I want to be able to add addresses to the account(Billing, Shipping, Billing and Shipping)"
-	@ignore = "true"
 	@priority = "3"
 	test AddAddressToAccount {
-		property portal.acceptance = "false";
+                property portal.acceptance = "false";
+                property test.name.skip.portal.instance = "CommerceAccountManagement#AddAddressToAccount";
 
-		// TODO COMMERCE-6368 AddAddressToAccount pending implementation
+                CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-	}
+                Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+                CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+                CommerceAcceleratorsInitializer.createNewAccountViaFront(
+                        accountName = "Commerce Account",
+                        adminEmailAddress = "test@liferay.com");
+
+                Click(
+                        key_navUnderline = "Addresses",
+                        locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.addAddressToAccount(
+			keyType = "Billing",
+			keyAddress = "Test Address",
+			keyCity = "Test City",
+			keyCountry = "United States",
+			keyRegion = "Alaska",
+			keyZipCode = "Test Zip Code",
+			keyName = "Test Name",
+			keyTelephone = "Test Telephone");
+		
+		CommerceAcceleratorsInitializer.addAddressToAccount(
+			keyType = "Shipping",
+			keyAddress = "Test Address",
+			keyCity = "Test City",
+			keyCountry = "United States",
+			keyRegion = "Alaska",
+			keyZipCode = "Test Zip Code",
+			keyName = "Test Name",
+			keyTelephone = "Test Telephone");
+
+		CommerceAcceleratorsInitializer.addAddressToAccount(
+			keyType = "Billing and Shipping",
+			keyAddress = "Test Address",
+			keyCity = "Test City",
+			keyCountry = "United States",
+			keyRegion = "Alaska",
+			keyZipCode = "Test Zip Code",
+			keyName = "Test Name",
+			keyTelephone = "Test Telephone");
+			
+               
+        }
 
 	@description = "COMMERCE-6337. In Info tab, I want to be able to add an organization to the account"
 	@ignore = "true"

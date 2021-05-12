@@ -435,6 +435,54 @@ public abstract class BaseBuild implements Build {
 			testResultsJSONArray.put(testResultJSONObject);
 		}
 
+		JSONArray buildResultsJSONArray = new JSONArray();
+
+		if (this instanceof BatchBuild) {
+			for (Build downstreamBuild : getDownstreamBuilds(null)) {
+				JSONObject buildResultJSONObject = new JSONObject();
+
+				if (downstreamBuild instanceof AxisBuild) {
+					AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
+
+					buildResultJSONObject.put(
+						"axisName", downstreamAxisBuild.getAxisName());
+				}
+
+				if (dataTypesList.contains("buildURL")) {
+					buildResultJSONObject.put(
+						"buildURL", downstreamBuild.getBuildURL());
+				}
+
+				if (dataTypesList.contains("duration")) {
+					buildResultJSONObject.put(
+						"duration", downstreamBuild.getDuration());
+				}
+
+				buildResultJSONObject.put(
+					"result", downstreamBuild.getResult());
+
+				if ((downstreamBuild instanceof AxisBuild) &&
+					dataTypesList.contains("duration")) {
+
+					AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
+
+					StopWatchRecordsGroup stopWatchRecordsGroup =
+						downstreamAxisBuild.getStopWatchRecordsGroup();
+
+					JSONArray stopWatchRecordsGroupJSONArray =
+						stopWatchRecordsGroup.getJSONArray();
+
+					if (stopWatchRecordsGroupJSONArray.length() > 0) {
+						buildResultJSONObject.put(
+							"stopWatchRecords", stopWatchRecordsGroupJSONArray);
+					}
+				}
+
+				buildResultsJSONArray.put(buildResultJSONObject);
+			}
+		}
+
+		buildResultsJSONObject.put("buildResults", buildResultsJSONArray);
 		buildResultsJSONObject.put("jobVariant", getJobVariant());
 		buildResultsJSONObject.put("result", getResult());
 		buildResultsJSONObject.put("testResults", testResultsJSONArray);
@@ -2173,6 +2221,31 @@ public abstract class BaseBuild implements Build {
 			return _duration;
 		}
 
+		public JSONObject getJSONObject() {
+			JSONArray childStopWatchRecordJSONArray = new JSONArray();
+
+			if (_childStopWatchRecords != null) {
+				for (StopWatchRecord childStopWatchRecord :
+						_childStopWatchRecords) {
+
+					childStopWatchRecordJSONArray.put(
+						childStopWatchRecord.getJSONObject());
+				}
+			}
+
+			JSONObject jsonObject = new JSONObject();
+
+			if (childStopWatchRecordJSONArray.length() > 0) {
+				jsonObject.put(
+					"childStopWatchRecords", childStopWatchRecordJSONArray);
+			}
+
+			jsonObject.put("duration", getDuration());
+			jsonObject.put("name", getName());
+
+			return jsonObject;
+		}
+
 		public String getName() {
 			return _name;
 		}
@@ -2383,6 +2456,16 @@ public abstract class BaseBuild implements Build {
 
 		public StopWatchRecord get(String name) {
 			return _stopWatchRecordsMap.get(name);
+		}
+
+		public JSONArray getJSONArray() {
+			JSONArray jsonArray = new JSONArray();
+
+			for (StopWatchRecord stopWatchRecord : getStopWatchRecords()) {
+				jsonArray.put(stopWatchRecord.getJSONObject());
+			}
+
+			return jsonArray;
 		}
 
 		public List<StopWatchRecord> getStopWatchRecords() {

@@ -1,20 +1,24 @@
+@import 'atlas-variables';
+
 .lfr-layout-reports-panel {
 	&.open-admin-panel.sidenav-menu-slider {
 		visibility: visible;
 		width: 330px;
 	}
 
-	.sidebar-header,
-	.sidebar-header .sidenav-close {
-		color: #d5d6e1;
-	}
-
 	.sidebar-header {
-		background-color: #272833;
+		background-color: $dark;
+		color: $white;
+		height: 56px;
 		line-height: 32px;
 		padding-bottom: 8px;
 		padding-right: 9px;
 		padding-top: 8px;
+
+		.sidenav-close,
+		.sidenav-relaunch {
+			color: $white;
+		}
 	}
 
 	@media only screen and (min-width: 576px) {

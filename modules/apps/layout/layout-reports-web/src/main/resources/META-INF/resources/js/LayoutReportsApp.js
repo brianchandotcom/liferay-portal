@@ -13,16 +13,24 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import LayoutReports from './components/LayoutReports';
-import {StoreContextProvider} from './context/StoreContext';
+import {
+	StoreContextProvider,
+	StoreDispatchContext,
+	StoreStateContext,
+} from './context/StoreContext';
 
 import '../css/main.scss';
+
+import {ClayButtonWithIcon} from '@clayui/button';
+
 import {
 	ConstantsContext,
 	ConstantsContextProvider,
 } from './context/ConstantsContext';
+import loadIssues from './utils/loadIssues';
 
 export default function (props) {
 	const {portletNamespace} = props;
@@ -74,8 +82,55 @@ export default function (props) {
 	return (
 		<ConstantsContextProvider constants={props}>
 			<StoreContextProvider>
-				<LayoutReports eventTriggered={eventTriggered} />
+				<SidebarHeader />
+				<SidebarBody>
+					<LayoutReports eventTriggered={eventTriggered} />
+				</SidebarBody>
 			</StoreContextProvider>
 		</ConstantsContextProvider>
 	);
 }
+
+const SidebarHeader = () => {
+	const {data, languageId, loading} = useContext(StoreStateContext);
+	const {portletNamespace} = useContext(ConstantsContext);
+	const dispatch = useContext(StoreDispatchContext);
+
+	return (
+		<div className="d-flex justify-content-between sidebar-header">
+			<span>{Liferay.Language.get('page-audit')}</span>
+			<div>
+				<ClayButtonWithIcon
+					className="sidenav-relaunch"
+					disabled={loading}
+					displayType="unstyled"
+					onClick={() => {
+						const url = data.canonicalURLs.find(
+							(canonicalURL) =>
+								canonicalURL.languageId ===
+								(languageId || data.defaultLanguageId)
+						);
+
+						loadIssues({
+							dispatch,
+							portletNamespace,
+							url,
+						});
+					}}
+					symbol="reload"
+					title={Liferay.Language.get('relaunch')}
+				/>
+				<ClayButtonWithIcon
+					className="sidenav-close"
+					displayType="unstyled"
+					symbol="times"
+					title={Liferay.Language.get('close')}
+				/>
+			</div>
+		</div>
+	);
+};
+
+const SidebarBody = ({children}) => (
+	<div className="sidebar-body">{children}</div>
+);

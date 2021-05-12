@@ -42,8 +42,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -121,19 +123,26 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		testGetProcessInstancesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, instance1, instance2) -> {
-				Stream.of(
-					instance1.getSlaResults()
-				).forEach(
-					slaResult -> slaResult.setDateOverdue(
-						DateUtils.addDays(slaResult.getDateOverdue(), -2))
-				);
+				if (Objects.equals(entityField.getName(), "dateOverdue")) {
+					Stream.of(
+						instance1.getSlaResults()
+					).forEach(
+						slaResult -> slaResult.setDateOverdue(
+							DateUtils.addDays(slaResult.getDateOverdue(), -2))
+					);
 
-				Stream.of(
-					instance2.getSlaResults()
-				).forEach(
-					slaResult -> slaResult.setDateOverdue(
-						DateUtils.addDays(slaResult.getDateOverdue(), -1))
-				);
+					Stream.of(
+						instance2.getSlaResults()
+					).forEach(
+						slaResult -> slaResult.setDateOverdue(
+							DateUtils.addDays(slaResult.getDateOverdue(), -1))
+					);
+				}
+				else {
+					BeanUtils.setProperty(
+						instance1, entityField.getName(),
+						DateUtils.addMinutes(new Date(), -2));
+				}
 			});
 	}
 

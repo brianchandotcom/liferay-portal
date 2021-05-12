@@ -32,5 +32,7 @@ public interface DSEnvelopeManager {
 
 	public List<DSEnvelope> getDSEnvelopes(
 		long groupId, List<String> dsEnvelopeIds);
+		
+	public List<DSEnvelope> getDSEnvelopeList(long groupId, String fromDate);
 
 }

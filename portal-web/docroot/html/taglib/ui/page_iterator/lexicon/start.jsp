@@ -62,7 +62,9 @@ if (end > total) {
 	end = total;
 }
 
-String deltaURL = HttpUtil.removeParameter(url, namespace + deltaParam);
+if (deltaConfigurable) {
+	url = HttpUtil.setParameter(url, namespace + deltaParam, String.valueOf(delta));
+}
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 %>
@@ -99,11 +101,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 							continue;
 						}
 
-						String curDeltaURL = deltaURL + urlAnchor;
-
-						if (curDelta != delta) {
-							curDeltaURL = HttpUtil.addParameter(deltaURL + urlAnchor, namespace + deltaParam, curDelta);
-						}
+						String curDeltaURL = HttpUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
 					%>
 
 						<li>

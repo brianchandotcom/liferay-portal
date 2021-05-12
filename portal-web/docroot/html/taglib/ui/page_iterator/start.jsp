@@ -76,7 +76,9 @@ else {
 	}
 }
 
-String deltaURL = HttpUtil.removeParameter(url, namespace + deltaParam);
+if (deltaConfigurable) {
+	url = HttpUtil.setParameter(url, namespace + deltaParam, String.valueOf(delta));
+}
 
 NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 %>
@@ -236,11 +238,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 											continue;
 										}
 
-										String curDeltaURL = deltaURL + urlAnchor;
-
-										if (curDelta != delta) {
-											curDeltaURL = deltaURL + "&" + namespace + deltaParam + "=" + curDelta + urlAnchor;
-										}
+										String curDeltaURL = HttpUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
 									%>
 
 										<liferay-ui:icon

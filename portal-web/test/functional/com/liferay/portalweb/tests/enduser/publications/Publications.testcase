@@ -194,6 +194,8 @@ definition {
 	@description = "Assert Non-privileged user cannot see Publications bar."
 	@priority = "5"
 	test AssertNonPrivilegedUserCannotSeePublicationsBar {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",

@@ -257,9 +257,9 @@ public class UserIndexerTest {
 
 		addUserWithNameFields(firstName, middleName, lastName);
 
-		assertFieldValue("firstName", firstName, byQueryString("Fir"));
-		assertFieldValue("lastName", lastName, byQueryString("asT"));
-		assertFieldValue("middleName", middleName, byQueryString("idd"));
+		assertNoHits(byQueryString("irst"));
+		assertNoHits(byQueryString("asT"));
+		assertNoHits(byQueryString("idd"));
 	}
 
 	@Test

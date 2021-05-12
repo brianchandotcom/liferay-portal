@@ -28,7 +28,7 @@ export const INITIAL_CONFIG_STATE = {
 	...INITIAL_FORM_RENDERER_CONFIG_STATE,
 	allowFieldSets: false,
 	allowMultiplePages: false,
-	allowNestedFields: false,
+	allowNestedFields: true,
 	allowRules: true,
 	allowSuccessPage: false,
 	disabledProperties: [],

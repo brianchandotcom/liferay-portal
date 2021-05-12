@@ -26,20 +26,13 @@ import javax.portlet.PortletRequest;
 public class LayoutReportsGooglePageSpeedDisplayContext {
 
 	public LayoutReportsGooglePageSpeedDisplayContext(
-		String apiKey, boolean enable, PortletRequest portletRequest) {
+		boolean enable, PortletRequest portletRequest) {
 
-		_apiKey = apiKey;
 		_enable = enable;
 
 		_portletRequest = portletRequest;
 
 		_unicodeProperties = _getUnicodeProperties(_portletRequest);
-	}
-
-	public String getApiKey() {
-		return PropertiesParamUtil.getString(
-			_unicodeProperties, _portletRequest, "googlePageSpeedApiKey",
-			_apiKey);
 	}
 
 	public boolean isEnabled() {
@@ -60,7 +53,6 @@ public class LayoutReportsGooglePageSpeedDisplayContext {
 		return new UnicodeProperties();
 	}
 
-	private final String _apiKey;
 	private final boolean _enable;
 	private final PortletRequest _portletRequest;
 	private final UnicodeProperties _unicodeProperties;

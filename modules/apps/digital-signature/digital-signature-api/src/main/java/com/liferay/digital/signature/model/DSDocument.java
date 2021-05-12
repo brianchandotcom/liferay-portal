@@ -19,8 +19,8 @@ package com.liferay.digital.signature.model;
  */
 public class DSDocument {
 
-	public String getDocumentBase64() {
-		return documentBase64;
+	public String getData() {
+		return data;
 	}
 
 	public String getDSDocumentId() {
@@ -31,8 +31,8 @@ public class DSDocument {
 		return name;
 	}
 
-	public void setDocumentBase64(String documentBase64) {
-		this.documentBase64 = documentBase64;
+	public void setData(String data) {
+		this.data = data;
 	}
 
 	public void setDSDocumentId(String dsDocumentId) {
@@ -43,7 +43,7 @@ public class DSDocument {
 		this.name = name;
 	}
 
-	protected String documentBase64;
+	protected String data;
 	protected String dsDocumentId;
 	protected String name;
 

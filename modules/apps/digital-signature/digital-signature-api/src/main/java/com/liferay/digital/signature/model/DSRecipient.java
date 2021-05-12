@@ -23,8 +23,8 @@ public class DSRecipient {
 		return dsRecipientId;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailAddress() {
+		return emailAddress;
 	}
 
 	public String getName() {
@@ -35,8 +35,8 @@ public class DSRecipient {
 		this.dsRecipientId = dsRecipientId;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
 	}
 
 	public void setName(String name) {
@@ -44,7 +44,7 @@ public class DSRecipient {
 	}
 
 	protected String dsRecipientId;
-	protected String email;
+	protected String emailAddress;
 	protected String name;
 
 }

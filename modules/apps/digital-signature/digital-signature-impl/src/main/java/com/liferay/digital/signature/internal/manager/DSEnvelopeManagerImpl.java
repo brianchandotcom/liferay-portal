@@ -112,13 +112,13 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			"status", dsEnvelope.getStatus()
 		);
 
-		if (Validator.isNotNull(dsEnvelope.getDocuments())) {
+		if (Validator.isNotNull(dsEnvelope.getDSDocuments())) {
 			JSONArray documentsJSONArray = JSONFactoryUtil.createJSONArray();
 
-			for (DSDocument dsDocument : dsEnvelope.getDocuments()) {
+			for (DSDocument dsDocument : dsEnvelope.getDSDocuments()) {
 				documentsJSONArray.put(
 					JSONUtil.put(
-						"documentBase64", dsDocument.getDocumentBase64()
+						"documentBase64", dsDocument.getData()
 					).put(
 						"documentId", dsDocument.getDSDocumentId()
 					).put(
@@ -129,13 +129,13 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			dsEnvelopeJSONObject.put("documents", documentsJSONArray);
 		}
 
-		if (Validator.isNotNull(dsEnvelope.getRecipients())) {
+		if (Validator.isNotNull(dsEnvelope.getDSRecipients())) {
 			JSONArray signersJSONArray = JSONFactoryUtil.createJSONArray();
 
-			for (DSRecipient dsRecipient : dsEnvelope.getRecipients()) {
+			for (DSRecipient dsRecipient : dsEnvelope.getDSRecipients()) {
 				signersJSONArray.put(
 					JSONUtil.put(
-						"email", dsRecipient.getEmail()
+						"email", dsRecipient.getEmailAddress()
 					).put(
 						"name", dsRecipient.getName()
 					).put(

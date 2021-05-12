@@ -22,12 +22,16 @@ import java.util.List;
  */
 public class DSEnvelope {
 
-	public List<DSDocument> getDocuments() {
-		return documents;
+	public List<DSDocument> getDSDocuments() {
+		return dsDocuments;
 	}
 
 	public String getDSEnvelopeId() {
 		return dsEnvelopeId;
+	}
+
+	public List<DSRecipient> getDSRecipients() {
+		return dsRecipients;
 	}
 
 	public String getEmailBlurb() {
@@ -38,20 +42,20 @@ public class DSEnvelope {
 		return emailSubject;
 	}
 
-	public List<DSRecipient> getRecipients() {
-		return recipients;
-	}
-
 	public String getStatus() {
 		return status;
 	}
 
-	public void setDocuments(List<DSDocument> documents) {
-		this.documents = documents;
+	public void setDSDocuments(List<DSDocument> dsDocuments) {
+		this.dsDocuments = dsDocuments;
 	}
 
 	public void setDSEnvelopeId(String dsEnvelopeId) {
 		this.dsEnvelopeId = dsEnvelopeId;
+	}
+
+	public void setDSRecipients(List<DSRecipient> dsRecipients) {
+		this.dsRecipients = dsRecipients;
 	}
 
 	public void setEmailBlurb(String emailBlurb) {
@@ -62,19 +66,15 @@ public class DSEnvelope {
 		this.emailSubject = emailSubject;
 	}
 
-	public void setRecipients(List<DSRecipient> recipients) {
-		this.recipients = recipients;
-	}
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	protected List<DSDocument> documents;
+	protected List<DSDocument> dsDocuments;
 	protected String dsEnvelopeId;
+	protected List<DSRecipient> dsRecipients;
 	protected String emailBlurb;
 	protected String emailSubject;
-	protected List<DSRecipient> recipients;
 	protected String status;
 
 }

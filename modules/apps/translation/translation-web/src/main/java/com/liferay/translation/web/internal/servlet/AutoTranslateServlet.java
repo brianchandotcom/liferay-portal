@@ -17,8 +17,8 @@ package com.liferay.translation.web.internal.servlet;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -84,19 +84,19 @@ public class AutoTranslateServlet extends HttpServlet {
 		}
 	}
 
-	private JSONArray _getContentJSONArray(Map<String, String> fieldsMap) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+	private JSONObject _getFieldsJSONObject(Map<String, String> fieldsMap) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		for (Map.Entry<String, String> entry : fieldsMap.entrySet()) {
-			jsonArray.put(JSONUtil.put(entry.getKey(), entry.getValue()));
+			jsonObject.put(entry.getKey(), entry.getValue());
 		}
 
-		return jsonArray;
+		return jsonObject;
 	}
 
 	private String _toJSON(TranslatorPacket translatorPacket) {
 		return JSONUtil.put(
-			"fields", _getContentJSONArray(translatorPacket.getFieldsMap())
+			"fields", _getFieldsJSONObject(translatorPacket.getFieldsMap())
 		).put(
 			"sourceLanguageId", translatorPacket.getSourceLanguageId()
 		).put(

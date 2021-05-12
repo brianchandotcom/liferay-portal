@@ -14,10 +14,8 @@
 
 package com.liferay.translation.translator;
 
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -32,16 +30,10 @@ public class JSONTranslatorPacket implements TranslatorPacket {
 
 		_fieldsMap = new LinkedHashMap<>();
 
-		JSONArray fieldsJSONArray = jsonObject.getJSONArray("fields");
+		JSONObject fieldsJSONObject = jsonObject.getJSONObject("fields");
 
-		for (Object object : fieldsJSONArray) {
-			JSONObject fieldJSONObject = (JSONObject)object;
-
-			Iterator<String> iterator = fieldJSONObject.keys();
-
-			String key = iterator.next();
-
-			_fieldsMap.put(key, fieldJSONObject.getString(key));
+		for (String key : fieldsJSONObject.keySet()) {
+			_fieldsMap.put(key, fieldsJSONObject.getString(key));
 		}
 	}
 

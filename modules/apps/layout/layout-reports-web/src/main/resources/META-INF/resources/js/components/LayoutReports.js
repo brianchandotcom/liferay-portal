@@ -122,6 +122,20 @@ export default function LayoutReports({eventTriggered}) {
 		}
 	}, [eventTriggered, data, layoutReportsDataURL, getData]);
 
+	const onRelaunchButtonClick = () => {
+		const url = data.canonicalURLs.find(
+			(canonicalURL) =>
+				canonicalURL.languageId ===
+				(languageId || data.defaultLanguageId)
+		);
+
+		loadIssues({
+			dispatch: safeDispatch,
+			portletNamespace,
+			url,
+		});
+	};
+
 	return (
 		<>
 			{data?.validConnection &&
@@ -132,7 +146,10 @@ export default function LayoutReports({eventTriggered}) {
 
 						<ClayAlert.Footer>
 							<ClayButton.Group>
-								<ClayButton alert disabled>
+								<ClayButton
+									alert
+									onClick={onRelaunchButtonClick}
+								>
 									{error.buttonTitle}
 								</ClayButton>
 							</ClayButton.Group>

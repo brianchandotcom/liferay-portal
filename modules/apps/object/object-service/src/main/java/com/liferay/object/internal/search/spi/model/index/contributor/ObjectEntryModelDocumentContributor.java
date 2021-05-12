@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.io.Serializable;
@@ -105,6 +106,12 @@ public class ObjectEntryModelDocumentContributor
 				objectEntry.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
+			boolean indexed = true; //objectField.isIndexed(); //TODO
+
+			if (!indexed) {
+				continue;
+			}
+
 			String name = objectField.getName();
 
 			Object value = values.get(name);
@@ -120,7 +127,17 @@ public class ObjectEntryModelDocumentContributor
 				continue;
 			}
 
-			boolean indexedAsKeyword = objectField.isIndexedAsKeyword(); //TODO
+			boolean indexedAsKeyword =
+				name.equals("emailAddress") ||
+				name.equals("emailAddressDomain"); //objectField.isIndexedAsKeyword(); //TODO
+
+			String localeString = ""; //objectField.getLocaleString(); //TODO
+
+			if (indexedAsKeyword && !Validator.isBlank(localeString)) {
+				throw new IllegalArgumentException(
+					"Field " + name +
+						" is indexed as a keyword and should not be localized");
+			}
 
 			if (indexedAsKeyword) {
 				_addNestedField(
@@ -152,7 +169,15 @@ public class ObjectEntryModelDocumentContributor
 					fieldArray, name, "value_long", String.valueOf(value));
 			}
 			else if (value instanceof String) {
-				_addNestedField(fieldArray, name, "value_text", (String)value);
+				if (!Validator.isBlank(localeString)) {
+					_addNestedField(
+						fieldArray, name, "value_" + localeString,
+						(String)value);
+				}
+				else {
+					_addNestedField(
+						fieldArray, name, "value_text", (String)value);
+				}
 			}
 			else if (value instanceof byte[]) {
 				_addNestedField(

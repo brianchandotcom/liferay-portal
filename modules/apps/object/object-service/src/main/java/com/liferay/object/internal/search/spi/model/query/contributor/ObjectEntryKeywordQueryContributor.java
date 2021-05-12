@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,6 +39,7 @@ import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContrib
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,18 +87,28 @@ public class ObjectEntryKeywordQueryContributor
 			_objectFieldLocalService.getObjectFields(objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
-			String name = objectField.getName();
-			boolean indexedAsKeyword = objectField.isIndexedAsKeyword(); //TODO
+			boolean indexed = true; //objectField.isIndexed(); //TODO
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Add search term for object field " + name);
+			if (!indexed) {
+				continue;
 			}
 
-			if (indexedAsKeyword) {
-				try {
-					keywords = StringUtil.toLowerCase(keywords);
+			String name = objectField.getName();
+			String type = objectField.getType();
+			String localeString = ""; //objectField.getLocaleString(); //TODO
+			boolean indexedAsKeyword = //objectField.isIndexedAsKeyword(); //TODO
+				(name.equals("emailAddress") ||
+				name.equals("emailAddressDomain"));
 
-					BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
+			if (_log.isDebugEnabled()) {
+				_log.debug("Add search query for object field " + name);
+			}
+
+			try {
+				BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
+
+				if (indexedAsKeyword) {
+					keywords = StringUtil.toLowerCase(keywords);
 
 					nestedBooleanQuery.add(
 						new WildcardQueryImpl(
@@ -106,7 +120,69 @@ public class ObjectEntryKeywordQueryContributor
 						new TermQueryImpl(
 							"nestedFieldArray.value_keyword", keywords),
 						BooleanClauseOccur.SHOULD);
+				}
+				else if (type.equals("BigDecimal")) {
+					_addRangeQuery(
+						keywords, nestedBooleanQuery,
+						"nestedFieldArray.value_double");
+				}
+				else if (type.equals("Blob")) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Blob field " + name + " is not searchable");
+					}
+				}
+				else if (type.equals("Boolean")) {
+					if (StringUtil.equalsIgnoreCase(keywords, "true") ||
+						StringUtil.equalsIgnoreCase(keywords, "false")) {
 
+						nestedBooleanQuery.add(
+							new TermQueryImpl(
+								"nestedFieldArray.value_boolean",
+								StringUtil.toLowerCase(keywords)),
+							BooleanClauseOccur.MUST);
+					}
+				}
+				else if (type.equals("Date")) {
+					_addRangeQuery(
+						keywords, nestedBooleanQuery,
+						"nestedFieldArray.value_date");
+				}
+				else if (type.equals("Double")) {
+					_addRangeQuery(
+						keywords, nestedBooleanQuery,
+						"nestedFieldArray.value_double");
+				}
+				else if (type.equals("Integer")) {
+					_addRangeQuery(
+						keywords, nestedBooleanQuery,
+						"nestedFieldArray.value_integer");
+				}
+				else if (type.equals("Long")) {
+					_addRangeQuery(
+						keywords, nestedBooleanQuery,
+						"nestedFieldArray.value_long");
+				}
+				else if (type.equals("String")) {
+					Locale locale = searchContext.getLocale();
+
+					if (!Validator.isBlank(localeString) &&
+						localeString.equals(locale.toString())) {
+
+						nestedBooleanQuery.add(
+							new MatchQuery(
+								"nestedFieldArray.value_" + localeString,
+								keywords),
+							BooleanClauseOccur.MUST);
+					}
+					else {
+						nestedBooleanQuery.add(
+							new MatchQuery(
+								"nestedFieldArray.value_text", keywords),
+							BooleanClauseOccur.MUST);
+					}
+				}
+
+				if (nestedBooleanQuery.hasClauses()) {
 					nestedBooleanQuery.add(
 						new TermQueryImpl("nestedFieldArray.fieldName", name),
 						BooleanClauseOccur.MUST);
@@ -116,14 +192,26 @@ public class ObjectEntryKeywordQueryContributor
 
 					booleanQuery.add(nestedQuery, BooleanClauseOccur.SHOULD);
 				}
-				catch (ParseException parseException) {
-					throw new SystemException(parseException);
-				}
 			}
-			else {
-				_queryHelper.addSearchTerm(
-					booleanQuery, searchContext, name, false);
+			catch (ParseException parseException) {
+				throw new SystemException(parseException);
 			}
+		}
+	}
+
+	private void _addRangeQuery(
+			String keywords, BooleanQuery booleanQuery, String field)
+		throws ParseException {
+
+		String[] range = RangeParserUtil.parserRange(keywords);
+
+		String lowerTerm = range[0];
+		String upperTerm = range[1];
+
+		if ((lowerTerm != null) && (upperTerm != null)) {
+			booleanQuery.add(
+				new TermRangeQueryImpl(field, lowerTerm, upperTerm, true, true),
+				BooleanClauseOccur.MUST);
 		}
 	}
 

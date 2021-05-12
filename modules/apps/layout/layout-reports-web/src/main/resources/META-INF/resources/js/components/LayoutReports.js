@@ -23,50 +23,11 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
 import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
-import APIService from '../utils/APIService';
 import getPageSpeedProgress from '../utils/getPageSpeedProgress';
+import loadIssues from '../utils/loadIssues';
 import BasicInformation from './BasicInformation';
 import EmptyLayoutReports from './EmptyLayoutReports';
 import LayoutReportsIssuesList from './LayoutReportsIssuesList';
-
-function loadIssues({data, dispatch, languageId, portletNamespace}) {
-	const url = data.canonicalURLs.find(
-		(canonicalURL) =>
-			canonicalURL.languageId === languageId || data.defaultLanguageId
-	);
-
-	if (url) {
-		dispatch({type: LOAD_DATA});
-
-		APIService.getLayoutReportsIssues(
-			url.layoutReportsIssuesURL,
-			portletNamespace
-		)
-			.then(({layoutReportsIssues}) => {
-				dispatch({
-					data: {
-						layoutReportsIssues,
-					},
-					type: SET_DATA,
-				});
-			})
-			.catch(() => {
-				dispatch({
-					error: {
-						buttonTitle: Liferay.Language.get('relaunch'),
-						message: Liferay.Language.get('connection-failed'),
-					},
-					type: SET_ERROR,
-				});
-			});
-	}
-	else {
-		dispatch({
-			error: Liferay.Language.get('an-unexpected-error-occurred'),
-			type: SET_ERROR,
-		});
-	}
-}
 
 export default function LayoutReports({eventTriggered}) {
 	const isMounted = useIsMounted();
@@ -124,10 +85,17 @@ export default function LayoutReports({eventTriggered}) {
 						});
 
 						if (data.validConnection) {
+							const url = data.canonicalURLs.find(
+								(canonicalURL) =>
+									canonicalURL.languageId ===
+									(selectedLanguageId ||
+										data.defaultLanguageId)
+							);
+
 							loadIssues({
-								data,
 								dispatch: safeDispatch,
 								portletNamespace,
+								url,
 							});
 						}
 					})
@@ -159,11 +127,16 @@ export default function LayoutReports({eventTriggered}) {
 	const onLanguageChange = (languageId) => {
 		setSelectedLanguageId(languageId);
 
+		const url = data.canonicalURLs.find(
+			(canonicalURL) =>
+				canonicalURL.languageId ===
+				(selectedLanguageId || data.defaultLanguageId)
+		);
+
 		loadIssues({
-			data,
 			dispatch: safeDispatch,
-			languageId,
 			portletNamespace,
+			url,
 		});
 	};
 

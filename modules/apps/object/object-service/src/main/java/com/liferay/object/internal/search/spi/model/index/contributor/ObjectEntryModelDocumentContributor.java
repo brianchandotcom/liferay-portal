@@ -15,18 +15,28 @@
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.FieldArray;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.text.Format;
+
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,6 +69,14 @@ public class ObjectEntryModelDocumentContributor
 		}
 	}
 
+	private void _addNestedField(
+		FieldArray fieldArray, String fieldName, String valueFieldName,
+		String value) {
+
+		fieldArray.addField(
+			_createNestedField(fieldName, valueFieldName, value));
+	}
+
 	private void _contribute(Document document, ObjectEntry objectEntry)
 		throws Exception {
 
@@ -70,12 +88,26 @@ public class ObjectEntryModelDocumentContributor
 		document.addKeyword(
 			"objectDefinitionId", objectEntry.getObjectDefinitionId());
 
+		FieldArray fieldArray = (FieldArray)document.getField(
+			"nestedFieldArray");
+
+		if (fieldArray == null) {
+			fieldArray = new FieldArray("nestedFieldArray");
+
+			document.add(fieldArray);
+		}
+
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry.getObjectEntryId());
 
-		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			String name = entry.getKey();
-			Object value = entry.getValue();
+		List<ObjectField> objectFields =
+			_objectFieldLocalService.getObjectFields(
+				objectEntry.getObjectDefinitionId());
+
+		for (ObjectField objectField : objectFields) {
+			String name = objectField.getName();
+
+			Object value = values.get(name);
 
 			if (value == null) {
 				if (_log.isDebugEnabled()) {
@@ -88,30 +120,44 @@ public class ObjectEntryModelDocumentContributor
 				continue;
 			}
 
-			if (value instanceof BigDecimal) {
-				document.addNumber(name, (BigDecimal)value);
+			boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
+
+			if (indexedAsKeyword) {
+				_addNestedField(
+					fieldArray, name, "value_keyword",
+					StringUtil.lowerCase(String.valueOf(value)));
+			}
+			else if (value instanceof BigDecimal) {
+				_addNestedField(
+					fieldArray, name, "value_double", String.valueOf(value));
 			}
 			else if (value instanceof Boolean) {
-				document.addKeyword(name, (Boolean)value);
+				_addNestedField(
+					fieldArray, name, "value_boolean", String.valueOf(value));
 			}
 			else if (value instanceof Date) {
-				document.addDateSortable(name, (Date)value);
+				_addNestedField(
+					fieldArray, name, "value_date", _getDateString(value));
 			}
 			else if (value instanceof Double) {
-				document.addNumberSortable(name, (Double)value);
+				_addNestedField(
+					fieldArray, name, "value_double", String.valueOf(value));
 			}
 			else if (value instanceof Integer) {
-				document.addNumberSortable(name, (Integer)value);
+				_addNestedField(
+					fieldArray, name, "value_integer", String.valueOf(value));
 			}
 			else if (value instanceof Long) {
-				document.addNumberSortable(name, (Long)value);
+				_addNestedField(
+					fieldArray, name, "value_long", String.valueOf(value));
 			}
 			else if (value instanceof String) {
-				document.addKeywordSortable(name, (String)value);
-				document.addText(name, (String)value);
+				_addNestedField(fieldArray, name, "value_text", (String)value);
 			}
 			else if (value instanceof byte[]) {
-				document.addText(name, new String((byte[])value));
+				_addNestedField(
+					fieldArray, name, "value_binary",
+					Base64.encode((byte[])value));
 			}
 			else {
 				if (_log.isWarnEnabled()) {
@@ -125,10 +171,32 @@ public class ObjectEntryModelDocumentContributor
 		}
 	}
 
+	private Field _createNestedField(
+		String fieldName, String valueFieldName, String value) {
+
+		Field field = new Field("");
+
+		field.addField(new Field("fieldName", fieldName));
+		field.addField(new Field("valueFieldName", valueFieldName));
+		field.addField(new Field(valueFieldName, value));
+
+		return field;
+	}
+
+	private String _getDateString(Object value) {
+		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyyMMddHHmmss");
+
+		return dateFormat.format(value);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryModelDocumentContributor.class);
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

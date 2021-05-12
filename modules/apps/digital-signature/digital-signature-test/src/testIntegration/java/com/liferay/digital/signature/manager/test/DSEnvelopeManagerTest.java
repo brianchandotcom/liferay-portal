@@ -60,9 +60,9 @@ public class DSEnvelopeManagerTest {
 					data = Base64.encode(
 						FileUtil.getBytes(
 							clazz.getResourceAsStream(
-								"dependencies/Document_1.pdf")));
+								"dependencies/Document.pdf")));
 					dsDocumentId = "1";
-					name = "Document 1";
+					name = "Document";
 				}
 			});
 

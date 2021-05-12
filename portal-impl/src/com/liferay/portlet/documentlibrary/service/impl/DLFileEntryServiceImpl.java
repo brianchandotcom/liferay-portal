@@ -108,29 +108,6 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			expirationDate, reviewDate, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #addFileEntry(String, long, long, long, String, String,
-	 *             String, String, String, long, Map, File, InputStream, long,
-	 *             Date, Date, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public DLFileEntry addFileEntry(
-			String externalReferenceCode, long groupId, long repositoryId,
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, long fileEntryTypeId,
-			Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream inputStream, long size, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addFileEntry(
-			externalReferenceCode, groupId, repositoryId, folderId,
-			sourceFileName, mimeType, title, description, changeLog,
-			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, null,
-			null, serviceContext);
-	}
-
 	@Override
 	public DLFileVersion cancelCheckOut(long fileEntryId)
 		throws PortalException {

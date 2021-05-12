@@ -2,6 +2,13 @@ components:
     schemas:
         ObjectEntry:
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"

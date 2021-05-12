@@ -147,12 +147,12 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 			String dataType = ddmFormField.getDataType();
 
 			if (dataType.equals("double")) {
-				DecimalFormat numberFormat =
-					NumericDDMFormFieldUtil.getNumberFormat(locale);
+				DecimalFormat decimalFormat =
+					NumericDDMFormFieldUtil.getDecimalFormat(locale);
 
 				newValue.addString(
 					locale,
-					numberFormat.format(
+					decimalFormat.format(
 						GetterUtil.getDouble(
 							value, newValue.getDefaultLocale())));
 			}

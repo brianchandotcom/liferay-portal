@@ -62,8 +62,8 @@ public class NumericDDMFormFieldValueValidator
 
 	protected boolean isNumber(String valueString, Locale locale) {
 		try {
-			NumberFormat numberFormat = NumericDDMFormFieldUtil.getNumberFormat(
-				locale);
+			NumberFormat numberFormat =
+				NumericDDMFormFieldUtil.getDecimalFormat(locale);
 
 			numberFormat.parse(valueString);
 		}

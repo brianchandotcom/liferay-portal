@@ -222,7 +222,7 @@ public class FieldsToDDMFormValuesConverterImpl
 				 !(fieldValue instanceof Integer)) {
 
 			DecimalFormat decimalFormat =
-				NumericDDMFormFieldUtil.getNumberFormat(locale);
+				NumericDDMFormFieldUtil.getDecimalFormat(locale);
 
 			Number number = (Number)fieldValue;
 

@@ -57,7 +57,7 @@ public class NumericDDMFormFieldValueAccessor
 		Value value = ddmFormFieldValue.getValue();
 
 		try {
-			NumberFormat formatter = NumericDDMFormFieldUtil.getNumberFormat(
+			NumberFormat formatter = NumericDDMFormFieldUtil.getDecimalFormat(
 				locale);
 
 			return (BigDecimal)formatter.parse(value.getString(locale));

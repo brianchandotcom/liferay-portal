@@ -55,10 +55,10 @@ public class NumericDDMFormFieldValueLocalizer
 	public String localize(String value, Locale locale) {
 		try {
 			DecimalFormat defaultDecimalFormat =
-				NumericDDMFormFieldUtil.getNumberFormat(LocaleUtil.US);
+				NumericDDMFormFieldUtil.getDecimalFormat(LocaleUtil.US);
 
 			DecimalFormat decimalFormat =
-				NumericDDMFormFieldUtil.getNumberFormat(locale);
+				NumericDDMFormFieldUtil.getDecimalFormat(locale);
 
 			Number number = null;
 

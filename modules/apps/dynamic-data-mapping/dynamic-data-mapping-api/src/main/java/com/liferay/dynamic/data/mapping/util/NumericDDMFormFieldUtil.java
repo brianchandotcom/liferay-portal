@@ -24,7 +24,7 @@ import java.util.Locale;
  */
 public class NumericDDMFormFieldUtil {
 
-	public static DecimalFormat getNumberFormat(Locale locale) {
+	public static DecimalFormat getDecimalFormat(Locale locale) {
 		DecimalFormat decimalFormat = (DecimalFormat)DecimalFormat.getInstance(
 			locale);
 

@@ -142,7 +142,7 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 						languageId -> {
 							try {
 								DecimalFormat decimalFormat =
-									NumericDDMFormFieldUtil.getNumberFormat(
+									NumericDDMFormFieldUtil.getDecimalFormat(
 										LocaleUtil.fromLanguageId(
 											GetterUtil.getString(languageId)));
 
@@ -158,8 +158,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 
 								if (!valueString.equals(formattedNumber)) {
 									DecimalFormat defaultDecimalFormat =
-										NumericDDMFormFieldUtil.getNumberFormat(
-											LocaleUtil.US);
+										NumericDDMFormFieldUtil.
+											getDecimalFormat(LocaleUtil.US);
 
 									number = defaultDecimalFormat.parse(
 										valueString);

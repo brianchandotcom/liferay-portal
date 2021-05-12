@@ -136,21 +136,21 @@ public class NumericDDMFormFieldTemplateContextContributor
 		if (GetterUtil.getBoolean(
 				ddmFormFieldRenderingContext.getProperty("valueChanged"))) {
 
-			DecimalFormat numberFormat =
-				NumericDDMFormFieldUtil.getNumberFormat(locale);
+			DecimalFormat decimalFormat =
+				NumericDDMFormFieldUtil.getDecimalFormat(locale);
 
-			return numberFormat.format(GetterUtil.getNumber(value));
+			return decimalFormat.format(GetterUtil.getNumber(value));
 		}
 
 		return value;
 	}
 
 	protected Map<String, String> getSymbolsMap(Locale locale) {
-		DecimalFormat formatter = NumericDDMFormFieldUtil.getNumberFormat(
+		DecimalFormat decimalFormat = NumericDDMFormFieldUtil.getDecimalFormat(
 			locale);
 
 		DecimalFormatSymbols decimalFormatSymbols =
-			formatter.getDecimalFormatSymbols();
+			decimalFormat.getDecimalFormatSymbols();
 
 		return HashMapBuilder.put(
 			"decimalSymbol",

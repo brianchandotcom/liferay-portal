@@ -96,11 +96,12 @@ public class FieldConstants {
 			DecimalFormat decimalFormat = null;
 
 			if (locale.equals(LocaleUtil.ROOT)) {
-				decimalFormat = NumericDDMFormFieldUtil.getNumberFormat(
+				decimalFormat = NumericDDMFormFieldUtil.getDecimalFormat(
 					defaultLocale);
 			}
 			else {
-				decimalFormat = NumericDDMFormFieldUtil.getNumberFormat(locale);
+				decimalFormat = NumericDDMFormFieldUtil.getDecimalFormat(
+					locale);
 			}
 
 			if (type.equals(FieldConstants.DOUBLE) ||

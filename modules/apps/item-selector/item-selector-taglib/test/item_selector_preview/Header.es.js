@@ -24,6 +24,7 @@ const headerProps = {
 	handleClickBack: jest.fn(),
 	headerTitle,
 	showInfoIcon: true,
+	showNavbar: true,
 };
 
 describe('Header', () => {

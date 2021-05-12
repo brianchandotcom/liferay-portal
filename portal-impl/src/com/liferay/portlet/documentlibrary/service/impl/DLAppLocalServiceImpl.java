@@ -92,7 +92,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addFileEntry(String, long, long, long, String, String,
-	 *             byte[], ServiceContext)}
+	 *             byte[], Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -140,7 +140,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #addFileEntry(String, long, long, long, String, String,
-	 *             String, String, String, byte[], ServiceContext)}
+	 *             String, String, String, byte[], Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -188,7 +188,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * 			   #addFileEntry(String, long, long, long, String, String,
-	 * 			   String, String, String, File, ServiceContext)}
+	 * 			   String, String, String, File, Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -238,7 +238,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * 			   #addFileEntry(String, long, long, long, String, String,
-	 * 			   String, String, String, InputStream, long, ServiceContext)}
+	 * 			   String, String, String, InputStream, long, Date, Date,
+	 * 			   ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -269,6 +270,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, long, String, String,
+	 *             byte[], Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long repositoryId,
@@ -305,7 +312,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  description the file's description
 	 * @param  changeLog the file's version change log
 	 * @param  bytes the file's data (optionally <code>null</code>)
-	 * @param  expirationDate the file's expiration date (optionally <code>null</code>)
+	 * @param  expirationDate the file's expiration date (optionally <code>null
+	 *                           </code>)
 	 * @param  reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         asset category IDs, asset tag names, and expando bridge
@@ -376,7 +384,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, long, String, String,
+	 *             String, String, String, byte[], Date, Date, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long repositoryId,
@@ -385,25 +397,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		File file = null;
-
-		try {
-			if (ArrayUtil.isNotEmpty(bytes)) {
-				file = FileUtil.createTempFile(bytes);
-			}
-
-			return addFileEntry(
-				externalReferenceCode, userId, repositoryId, folderId,
-				sourceFileName, mimeType, title, description, changeLog, file,
-				serviceContext);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(
-				"Unable to write temporary file", ioException);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
+		return addFileEntry(
+			externalReferenceCode, userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog, bytes,
+			null, null, serviceContext);
 	}
 
 	/**
@@ -496,7 +493,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, long, String, String,
+	 *             String,  String, String, File, Date, Date, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long repositoryId,
@@ -505,20 +506,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((file == null) || !file.exists() || (file.length() == 0)) {
-			return addFileEntry(
-				externalReferenceCode, userId, repositoryId, folderId,
-				sourceFileName, mimeType, title, description, changeLog, null,
-				0, null, null, serviceContext);
-		}
-
-		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
-
-		LocalRepository localRepository = getLocalRepository(repositoryId);
-
-		return localRepository.addFileEntry(
-			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, file, null, null, serviceContext);
+		return addFileEntry(
+			externalReferenceCode, userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog, file, null,
+			null, serviceContext);
 	}
 
 	/**
@@ -546,7 +537,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  changeLog the file's version change log
 	 * @param  inputStream the file's data (optionally <code>null</code>)
 	 * @param  size the file's size (optionally <code>0</code>)
-	 * @param  expirationDate the file's expiration date (optionally <code>null</code>)
+	 * @param  expirationDate the file's expiration date (optionally <code>null
+	 *                           </code>)
 	 * @param  reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param  serviceContext the service context to be applied. Can set the
 	 *         asset category IDs, asset tag names, and expando bridge
@@ -642,7 +634,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #addFileEntry(String, long, long, long, String, String,
+	 *             String,  String, String, InputStream, long, Date, Date,
+	 *             ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long repositoryId,
@@ -651,47 +648,10 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (inputStream == null) {
-			inputStream = new UnsyncByteArrayInputStream(new byte[0]);
-			size = 0;
-		}
-
-		if (Validator.isNull(mimeType) ||
-			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-
-			if (size == 0) {
-				String extension = DLAppUtil.getExtension(
-					title, sourceFileName);
-
-				mimeType = MimeTypesUtil.getExtensionContentType(extension);
-			}
-			else {
-				File file = null;
-
-				try {
-					file = FileUtil.createTempFile(inputStream);
-
-					return addFileEntry(
-						externalReferenceCode, userId, repositoryId, folderId,
-						sourceFileName, mimeType, title, description, changeLog,
-						file, null, null, serviceContext);
-				}
-				catch (IOException ioException) {
-					throw new SystemException(
-						"Unable to write temporary file", ioException);
-				}
-				finally {
-					FileUtil.delete(file);
-				}
-			}
-		}
-
-		LocalRepository localRepository = getLocalRepository(repositoryId);
-
-		return localRepository.addFileEntry(
-			externalReferenceCode, userId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, inputStream, size, null, null,
-			serviceContext);
+		return addFileEntry(
+			externalReferenceCode, userId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog,
+			inputStream, size, null, null, serviceContext);
 	}
 
 	/**

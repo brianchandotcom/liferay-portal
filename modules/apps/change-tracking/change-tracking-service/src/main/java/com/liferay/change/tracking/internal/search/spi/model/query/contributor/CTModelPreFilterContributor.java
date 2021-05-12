@@ -50,7 +50,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(
-	immediate = true, property = "indexer.class.name=ALL",
+	immediate = true,
+	property = {"indexer.class.name=ALL", "indexer.clauses.mandatory=true"},
 	service = ModelPreFilterContributor.class
 )
 public class CTModelPreFilterContributor implements ModelPreFilterContributor {

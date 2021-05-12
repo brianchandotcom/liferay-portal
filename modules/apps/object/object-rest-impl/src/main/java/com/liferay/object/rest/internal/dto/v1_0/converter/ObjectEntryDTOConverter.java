@@ -48,6 +48,7 @@ public class ObjectEntryDTOConverter
 
 		return new ObjectEntry() {
 			{
+				actions = dtoConverterContext.getActions();
 				creator = CreatorUtil.toCreator(
 					_portal, dtoConverterContext.getUriInfoOptional(),
 					_userLocalService.fetchUser(objectEntry.getUserId()));

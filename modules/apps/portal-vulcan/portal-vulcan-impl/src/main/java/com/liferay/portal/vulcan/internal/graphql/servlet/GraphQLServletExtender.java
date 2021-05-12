@@ -1415,7 +1415,9 @@ public class GraphQLServletExtender {
 
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
-				acceptLanguage.isAcceptAllLanguages(), Collections.emptyMap(),
+				acceptLanguage.isAcceptAllLanguages(),
+				Collections.singletonMap(
+					"delete", Collections.singletonMap("delete", "")),
 				_dtoConverterRegistry, null,
 				acceptLanguage.getPreferredLocale(), null,
 				_portal.getUser(httpServletRequest));

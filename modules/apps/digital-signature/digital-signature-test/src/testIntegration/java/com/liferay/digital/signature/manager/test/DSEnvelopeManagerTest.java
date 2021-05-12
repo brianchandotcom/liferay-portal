@@ -54,7 +54,7 @@ public class DSEnvelopeManagerTest {
 	@Test
 	public void testAddDSEnvelope() throws Exception {
 		InputStream inputStream = getClass().getResourceAsStream(
-			"Document_1.pdf");
+			"dependencies/Document_1.pdf");
 
 		byte[] byteArray = IOUtils.toByteArray(inputStream);
 

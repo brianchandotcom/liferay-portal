@@ -219,6 +219,38 @@ public class UserIndexerTest {
 	}
 
 	@Test
+	public void testNameFieldsChinese() {
+		String firstName = "姓氏";
+		String lastName = "名字";
+
+		User user = addUserWithNameFields(firstName, null, lastName);
+
+		assertFieldValue(
+			"firstName", firstName, byAttribute("firstName", "姓氏"));
+		assertFieldValue("lastName", lastName, byAttribute("lastName", "名字"));
+
+		assertUserId(user.getUserId(), byQueryString("名字"));
+		assertUserId(user.getUserId(), byQueryString("名字姓氏"));
+		assertUserId(user.getUserId(), byQueryString(user.getFullName()));
+	}
+
+	@Test
+	public void testNameFieldsJapanese() {
+		String firstName = "宮崎";
+		String lastName = "駿";
+
+		User user = addUserWithNameFields(firstName, null, lastName);
+
+		assertFieldValue(
+			"firstName", firstName, byAttribute("firstName", "宮崎"));
+		assertFieldValue("lastName", lastName, byAttribute("lastName", "駿"));
+
+		assertUserId(user.getUserId(), byQueryString("宮崎"));
+		assertUserId(user.getUserId(), byQueryString("駿 宮崎"));
+		assertUserId(user.getUserId(), byQueryString(user.getFullName()));
+	}
+
+	@Test
 	public void testNameFieldsNotTokenized() throws Exception {
 		String firstName = "Liferay7";
 		String lastName = "dell'Apostrophe";
@@ -234,6 +266,27 @@ public class UserIndexerTest {
 		String middleName = "alloy_4";
 
 		testNameFields(firstName, lastName, middleName);
+	}
+
+	@Test
+	public void testNameFieldsSpanish() {
+		String firstName = "José";
+		String lastName = "Sánchez";
+		String middleName = "Pedro";
+
+		User user = addUserWithNameFields(firstName, middleName, lastName);
+
+		assertFieldValue(
+			"firstName", firstName, byAttribute("firstName", "José"));
+		assertFieldValue(
+			"lastName", lastName, byAttribute("lastName", "Sánchez"));
+		assertFieldValue(
+			"middleName", middleName, byAttribute("middleName", "Pedro"));
+
+		assertUserId(user.getUserId(), byQueryString("Pedro"));
+		assertUserId(user.getUserId(), byQueryString("José Sánchez"));
+		assertUserId(user.getUserId(), byQueryString("Sánchez José"));
+		assertUserId(user.getUserId(), byQueryString(user.getFullName()));
 	}
 
 	@Test

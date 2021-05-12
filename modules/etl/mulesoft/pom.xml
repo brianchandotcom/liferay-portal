@@ -39,17 +39,17 @@
 			<version>2.10.1</version>
 		</dependency>
 		<dependency>
+			<groupId>org.mule.connectors</groupId>
+			<artifactId>mule-file-connector</artifactId>
+			<version>1.3.4</version>
+			<classifier>mule-plugin</classifier>
+		</dependency>
+		<dependency>
 			<groupId>org.mule.services</groupId>
 			<artifactId>mule-service-http</artifactId>
 			<version>1.1.1</version>
 			<classifier>mule-service</classifier>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.connectors</groupId>
-			<artifactId>mule-file-connector</artifactId>
-			<version>1.3.4</version>
-			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
 			<groupId>org.mule.services</groupId>
@@ -98,6 +98,8 @@
 					<fileName>demo/liferay-connector-demo/src/main/mule/liferay-connector-demo.xml</fileName>
 					<fileName>demo/liferay-connector-demo/src/main/resources/log4j2.xml</fileName>
 					<fileName>demo/liferay-connector-demo/src/test/resources/log4j2-test.xml</fileName>
+					<fileName>src/test/munit/batch-test-suite.xml</fileName>
+					<fileName>src/test/munit/crud-operations-test-suite.xml</fileName>
 					<fileName>src/test/resources/test-create-operation.xml</fileName>
 					<fileName>src/test/resources/test-delete-operation.xml</fileName>
 					<fileName>src/test/resources/test-get-operation.xml</fileName>

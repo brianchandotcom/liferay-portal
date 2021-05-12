@@ -19,12 +19,14 @@ import LayoutReports from './components/LayoutReports';
 import {StoreContextProvider} from './context/StoreContext';
 
 import '../css/main.scss';
+import {
+	ConstantsContext,
+	ConstantsContextProvider,
+} from './context/ConstantsContext';
 
-export default function ({
-	isPanelStateOpen,
-	layoutReportsDataURL,
-	portletNamespace,
-}) {
+export default function (props) {
+	const {portletNamespace} = props;
+
 	const layoutReportsPanelToggle = document.getElementById(
 		`${portletNamespace}layoutReportsPanelToggleId`
 	);
@@ -70,13 +72,10 @@ export default function ({
 	);
 
 	return (
-		<StoreContextProvider>
-			<LayoutReports
-				eventTriggered={eventTriggered}
-				isPanelStateOpen={isPanelStateOpen}
-				layoutReportsDataURL={layoutReportsDataURL}
-				portletNamespace={portletNamespace}
-			/>
-		</StoreContextProvider>
+		<ConstantsContextProvider constants={props}>
+			<StoreContextProvider>
+				<LayoutReports eventTriggered={eventTriggered} />
+			</StoreContextProvider>
+		</ConstantsContextProvider>
 	);
 }

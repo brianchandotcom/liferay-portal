@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
+import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import APIService from '../utils/APIService';
 import getPageSpeedProgress from '../utils/getPageSpeedProgress';
@@ -68,15 +69,16 @@ function loadIssues({data, dispatch, languageId, portletNamespace}) {
 	}
 }
 
-export default function LayoutReports({
-	eventTriggered,
-	isPanelStateOpen,
-	layoutReportsDataURL,
-	portletNamespace,
-}) {
+export default function LayoutReports({eventTriggered}) {
 	const isMounted = useIsMounted();
 
 	const {data, error, loading} = useContext(StoreStateContext);
+
+	const {
+		isPanelStateOpen,
+		layoutReportsDataURL,
+		portletNamespace,
+	} = useContext(ConstantsContext);
 
 	const dispatch = useContext(StoreDispatchContext);
 
@@ -225,6 +227,4 @@ export default function LayoutReports({
 
 LayoutReports.propTypes = {
 	eventTriggered: PropTypes.bool.isRequired,
-	isPanelStateOpen: PropTypes.bool.isRequired,
-	layoutReportsDataURL: PropTypes.string.isRequired,
 };

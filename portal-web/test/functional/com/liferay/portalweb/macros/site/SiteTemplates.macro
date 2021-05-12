@@ -253,6 +253,23 @@ definition {
 		Button.clickSave();
 	}
 
+	macro enableActionsOnDMInSiteTemplate {
+		Portlet.gotoPortletOptions(
+			portletName = "Documents and Media",
+			portletOption = "Configuration",
+			siteTemplate = "true");
+
+		SelectFrame(locator1 = "DocumentsAndMedia#CONFIGURATION_IFRAME");
+
+		AssertElementPresent.pauseAssertVisible(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
+
+		Check(locator1 = "Checkbox#SHOW_ACTIONS_CHECKBOX");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro enablePropagation {
 		var key_siteTemplateName = "${siteTemplateName}";
 

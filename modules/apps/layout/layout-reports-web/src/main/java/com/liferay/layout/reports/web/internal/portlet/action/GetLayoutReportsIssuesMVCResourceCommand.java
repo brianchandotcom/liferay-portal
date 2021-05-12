@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsPageSpeedConfiguration",
+	configurationPid = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutReportsPortletKeys.LAYOUT_REPORTS,

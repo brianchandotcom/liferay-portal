@@ -60,13 +60,11 @@ definition {
 			larFileName = "custom_fields.portlet.lar",
 			portletName = "Custom Fields");
 
-		User.logoutPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG();
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -76,10 +74,7 @@ definition {
 
 		LAR.importPortlet(larFileName = "custom_fields.portlet.lar");
 
-		User.logoutPG(
-			nodePort = "9080",
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutPG(specificURL = "http://localhost:9080");
 
 		User.loginPG(
 			password = "test",
@@ -109,9 +104,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -162,9 +157,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -210,9 +205,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -285,9 +280,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -372,9 +367,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -484,9 +479,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
@@ -539,9 +534,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
@@ -607,9 +602,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
@@ -646,9 +641,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
@@ -695,9 +690,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(
@@ -761,9 +756,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		WebContentNavigator.openWebContentAdmin(

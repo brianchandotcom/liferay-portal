@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRIES_NUMBER</td>
+	<td>//div[@class='dropdown pagination-items-per-page']//a[@role='button' and contains(text(),'${key_numberEntries}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRIENDLY_URL_LOCALE</td>
 	<td>//button[contains(@id,'friendlyURLMenu')]//span[contains(@class,'btn-section')]</td>
 	<td></td>

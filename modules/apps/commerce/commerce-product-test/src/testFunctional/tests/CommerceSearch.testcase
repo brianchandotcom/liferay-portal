@@ -199,12 +199,21 @@ definition {
 	}
 
 	@description = "COMMERCE-6145. As a buyer, I want to change the number of items to display for every page from Search Results widget pagination bar"
-	@ignore = "true"
 	@priority = "3"
 	test SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar";
 
-		// TODO COMMERCE-6145 SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "8");
+
+		AssertElementPresent(
+			key_numberEntries = "8 Entries",
+			locator1 ="Dropdown#ENTRIES_NUMBER");
+		
 	}
 
 	@description = "COMMERCE-6147. As a buyer, I want to switch from one results page to another in Search Results"

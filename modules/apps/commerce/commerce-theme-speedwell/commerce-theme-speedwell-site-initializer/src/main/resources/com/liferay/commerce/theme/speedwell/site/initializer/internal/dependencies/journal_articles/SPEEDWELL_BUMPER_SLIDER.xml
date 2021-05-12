@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<root available-locales="[$LOCALE$]" default-locale="[$LOCALE$]" version="1.0">
+<root available-locales="[$LOCALE$]" default-locale="[$LOCALE$]">
 	<dynamic-element index-type="text" instance-id="uzgx" name="Image2x9w" type="image">
 		<dynamic-element index-type="keyword" instance-id="iugq" name="captionCategory" type="text">
 			<dynamic-content language-id="[$LOCALE$]"><![CDATA[Interior equipment]]></dynamic-content>

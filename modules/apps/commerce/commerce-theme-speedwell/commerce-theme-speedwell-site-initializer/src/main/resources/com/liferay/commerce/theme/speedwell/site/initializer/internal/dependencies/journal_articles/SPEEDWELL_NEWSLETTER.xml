@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<root available-locales="[$LOCALE$]" default-locale="[$LOCALE$]" version="1.0">
+<root available-locales="[$LOCALE$]" default-locale="[$LOCALE$]">
 	<dynamic-element index-type="text" instance-id="liac" name="backgroundImage" type="image">
 		<dynamic-element index-type="keyword" instance-id="copu" name="CallToActionText" type="text">
 			<dynamic-element index-type="keyword" instance-id="oube" name="CallToActionSecondaryText" type="text">

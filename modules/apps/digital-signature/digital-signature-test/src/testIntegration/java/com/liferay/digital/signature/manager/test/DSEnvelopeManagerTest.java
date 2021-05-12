@@ -23,16 +23,13 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.io.IOUtils;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -53,10 +50,8 @@ public class DSEnvelopeManagerTest {
 
 	@Test
 	public void testAddDSEnvelope() throws Exception {
-		InputStream inputStream = getClass().getResourceAsStream(
-			"dependencies/Document_1.pdf");
-
-		byte[] byteArray = IOUtils.toByteArray(inputStream);
+		byte[] byteArray = FileUtil.getBytes(
+			getClass().getResourceAsStream("dependencies/Document_1.pdf"));
 
 		String encode = Base64.encode(byteArray);
 

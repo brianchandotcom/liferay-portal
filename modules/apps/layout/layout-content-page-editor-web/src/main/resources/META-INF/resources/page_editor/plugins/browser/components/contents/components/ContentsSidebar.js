@@ -23,10 +23,6 @@ import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
 
 const getEditableTitle = (editable, languageId) => {
-	if (editable.type === EDITABLE_TYPES.text) {
-		return editable[languageId];
-	}
-
 	const div = document.createElement('div');
 
 	div.innerHTML = editable[languageId];

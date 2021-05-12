@@ -65,6 +65,12 @@ public interface CommerceOrderNoteService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrderNote addOrUpdateCommerceOrderNote(
+			String externalReferenceCode, long commerceOrderNoteId,
+			long commerceOrderId, String content, boolean restricted,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCommerceOrderNote(long commerceOrderNoteId)
 		throws PortalException;
 
@@ -109,12 +115,6 @@ public interface CommerceOrderNoteService extends BaseService {
 
 	public CommerceOrderNote updateCommerceOrderNote(
 			long commerceOrderNoteId, String content, boolean restricted)
-		throws PortalException;
-
-	public CommerceOrderNote upsertCommerceOrderNote(
-			String externalReferenceCode, long commerceOrderNoteId,
-			long commerceOrderId, String content, boolean restricted,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

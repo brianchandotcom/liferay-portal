@@ -76,6 +76,18 @@ public interface CommercePriceModifierService extends BaseService {
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommercePriceModifier addOrUpdateCommercePriceModifier(
+			String externalReferenceCode, long userId,
+			long commercePriceModifierId, long groupId, String title,
+			String target, long commercePriceListId, String modifierType,
+			BigDecimal modifierAmount, double priority, boolean active,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CommercePriceModifier deleteCommercePriceModifier(
 			long commercePriceModifierId)
 		throws PortalException;
@@ -140,18 +152,6 @@ public interface CommercePriceModifierService extends BaseService {
 		throws PortalException;
 
 	public CommercePriceModifier updateCommercePriceModifier(
-			long commercePriceModifierId, long groupId, String title,
-			String target, long commercePriceListId, String modifierType,
-			BigDecimal modifierAmount, double priority, boolean active,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePriceModifier upsertCommercePriceModifier(
-			String externalReferenceCode, long userId,
 			long commercePriceModifierId, long groupId, String title,
 			String target, long commercePriceListId, String modifierType,
 			BigDecimal modifierAmount, double priority, boolean active,

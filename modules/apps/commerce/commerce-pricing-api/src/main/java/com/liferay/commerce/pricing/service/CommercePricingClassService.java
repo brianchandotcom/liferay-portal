@@ -77,6 +77,12 @@ public interface CommercePricingClassService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommercePricingClass addOrUpdateCommercePricingClass(
+			String externalReferenceCode, long commercePricingClassId,
+			long userId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException;
+
 	public CommercePricingClass deleteCommercePricingClass(
 			long commercePricingClassId)
 		throws PortalException;
@@ -142,12 +148,6 @@ public interface CommercePricingClassService extends BaseService {
 
 	public CommercePricingClass updateCommercePricingClassExternalReferenceCode(
 			String externalReferenceCode, long commercePricingClassId)
-		throws PortalException;
-
-	public CommercePricingClass upsertCommercePricingClass(
-			String externalReferenceCode, long commercePricingClassId,
-			long userId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 
 }

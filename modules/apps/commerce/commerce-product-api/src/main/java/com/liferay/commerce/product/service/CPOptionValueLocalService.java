@@ -99,6 +99,12 @@ public interface CPOptionValueLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPOptionValue addOrUpdateCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			Map<Locale, String> nameMap, double priority, String key,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new cp option value with the primary key. Does not add the cp option value to the database.
 	 *
@@ -414,12 +420,6 @@ public interface CPOptionValueLocalService
 	public CPOptionValue updateCPOptionValue(
 			long cpOptionValueId, Map<Locale, String> nameMap, double priority,
 			String key, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CPOptionValue upsertCPOptionValue(
-			String externalReferenceCode, long cpOptionId,
-			Map<Locale, String> nameMap, double priority, String key,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

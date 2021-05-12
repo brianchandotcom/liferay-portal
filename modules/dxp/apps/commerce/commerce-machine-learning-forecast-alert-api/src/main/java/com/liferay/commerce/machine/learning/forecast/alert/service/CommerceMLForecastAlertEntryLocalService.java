@@ -79,6 +79,12 @@ public interface CommerceMLForecastAlertEntryLocalService
 	public CommerceMLForecastAlertEntry addCommerceMLForecastAlertEntry(
 		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceMLForecastAlertEntry addOrUpdateCommerceMLForecastAlertEntry(
+			long companyId, long userId, long commerceAccountId, Date timestamp,
+			float actual, float forecast, float relativeChange)
+		throws PortalException;
+
 	/**
 	 * Creates a new commerce ml forecast alert entry with the primary key. Does not add the commerce ml forecast alert entry to the database.
 	 *
@@ -341,12 +347,6 @@ public interface CommerceMLForecastAlertEntryLocalService
 
 	public CommerceMLForecastAlertEntry updateStatus(
 			long userId, long commerceMLForecastAlertEntryId, int status)
-		throws PortalException;
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceMLForecastAlertEntry upsertCommerceMLForecastAlertEntry(
-			long companyId, long userId, long commerceAccountId, Date timestamp,
-			float actual, float forecast, float relativeChange)
 		throws PortalException;
 
 }

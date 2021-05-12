@@ -94,6 +94,13 @@ public interface CommerceAccountLocalService
 			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceAccount addOrUpdateCommerceAccount(
+			String name, long parentCommerceAccountId, boolean logo,
+			byte[] logoBytes, String email, String taxId, int type,
+			boolean active, String externalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public CommerceAccount addPersonalCommerceAccount(
 			long userId, String taxId, String externalReferenceCode,
 			ServiceContext serviceContext)
@@ -438,13 +445,6 @@ public interface CommerceAccountLocalService
 			long userId, long commerceAccountId, int status,
 			ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
-		throws PortalException;
-
-	public CommerceAccount upsertCommerceAccount(
-			String name, long parentCommerceAccountId, boolean logo,
-			byte[] logoBytes, String email, String taxId, int type,
-			boolean active, String externalReferenceCode,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

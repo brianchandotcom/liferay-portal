@@ -79,6 +79,21 @@ public class CommercePricingClassLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.pricing.model.CommercePricingClass
+			addOrUpdateCommercePricingClass(
+				String externalReferenceCode, long commercePricingClassId,
+				long userId, java.util.Map<java.util.Locale, String> titleMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePricingClassLocalService.
+			addOrUpdateCommercePricingClass(
+				externalReferenceCode, commercePricingClassId, userId, titleMap,
+				descriptionMap, serviceContext);
+	}
+
 	/**
 	 * Creates a new commerce pricing class with the primary key. Does not add the commerce pricing class to the database.
 	 *
@@ -573,20 +588,6 @@ public class CommercePricingClassLocalServiceWrapper
 		return _commercePricingClassLocalService.
 			updateCommercePricingClassExternalReferenceCode(
 				externalReferenceCode, commercePricingClassId);
-	}
-
-	@Override
-	public com.liferay.commerce.pricing.model.CommercePricingClass
-			upsertCommercePricingClass(
-				String externalReferenceCode, long commercePricingClassId,
-				long userId, java.util.Map<java.util.Locale, String> titleMap,
-				java.util.Map<java.util.Locale, String> descriptionMap,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commercePricingClassLocalService.upsertCommercePricingClass(
-			externalReferenceCode, commercePricingClassId, userId, titleMap,
-			descriptionMap, serviceContext);
 	}
 
 	@Override

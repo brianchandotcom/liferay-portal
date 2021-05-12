@@ -76,6 +76,27 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 			quantity);
 	}
 
+	public static CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				long userId, long commerceInventoryWarehouseId, String sku,
+				int quantity)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceInventoryWarehouseItem(
+			userId, commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	public static CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long companyId, long userId,
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceInventoryWarehouseItem(
+			externalReferenceCode, companyId, userId,
+			commerceInventoryWarehouseId, sku, quantity);
+	}
+
 	public static void deleteCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseItemId)
 		throws PortalException {
@@ -274,7 +295,7 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #upsertCommerceInventoryWarehouseItem(String,
+	 #addOrUpdateCommerceInventoryWarehouseItem(String,
 	 long, long, long, String, int)}
 	 */
 	@Deprecated
@@ -287,27 +308,6 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 		return getService().upsertCommerceInventoryWarehouseItem(
 			companyId, userId, commerceInventoryWarehouseId,
 			externalReferenceCode, sku, quantity);
-	}
-
-	public static CommerceInventoryWarehouseItem
-			upsertCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws PortalException {
-
-		return getService().upsertCommerceInventoryWarehouseItem(
-			userId, commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	public static CommerceInventoryWarehouseItem
-			upsertCommerceInventoryWarehouseItem(
-				String externalReferenceCode, long companyId, long userId,
-				long commerceInventoryWarehouseId, String sku, int quantity)
-		throws PortalException {
-
-		return getService().upsertCommerceInventoryWarehouseItem(
-			externalReferenceCode, companyId, userId,
-			commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	public static CommerceInventoryWarehouseItemService getService() {

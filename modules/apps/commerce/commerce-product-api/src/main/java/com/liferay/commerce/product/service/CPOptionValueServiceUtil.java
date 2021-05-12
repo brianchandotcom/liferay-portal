@@ -49,6 +49,17 @@ public class CPOptionValueServiceUtil {
 			cpOptionId, titleMap, priority, key, serviceContext);
 	}
 
+	public static CPOptionValue addOrUpdateCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			Map<java.util.Locale, String> nameMap, double priority, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCPOptionValue(
+			externalReferenceCode, cpOptionId, nameMap, priority, key,
+			serviceContext);
+	}
+
 	public static void deleteCPOptionValue(long cpOptionValueId)
 		throws PortalException {
 
@@ -123,17 +134,6 @@ public class CPOptionValueServiceUtil {
 
 		return getService().updateCPOptionValue(
 			cpOptionValueId, titleMap, priority, key, serviceContext);
-	}
-
-	public static CPOptionValue upsertCPOptionValue(
-			String externalReferenceCode, long cpOptionId,
-			Map<java.util.Locale, String> nameMap, double priority, String key,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCPOptionValue(
-			externalReferenceCode, cpOptionId, nameMap, priority, key,
-			serviceContext);
 	}
 
 	public static CPOptionValueService getService() {

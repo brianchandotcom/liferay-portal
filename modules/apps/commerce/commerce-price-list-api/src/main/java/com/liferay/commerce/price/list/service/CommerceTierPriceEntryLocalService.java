@@ -138,6 +138,66 @@ public interface CommerceTierPriceEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
+			BigDecimal discountLevel1, BigDecimal discountLevel2,
+			BigDecimal discountLevel3, BigDecimal discountLevel4,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * This method is used to insert a new CommerceTierPriceEntry or update an
+	 * existing one
+	 *
+	 * @param externalReferenceCode - The external identifier code from a 3rd
+	 party system to be able to locate the same entity in the portal
+	 <b>Only</b> used when updating an entity; the first entity with a
+	 matching reference code one will be updated
+	 * @param commerceTierPriceEntryId - <b>Only</b> used when updating an
+	 entity; the matching one will be updated
+	 * @param commercePriceEntryId - <b>Only</b> used when adding a new entity
+	 * @param price
+	 * @param promoPrice
+	 * @param minQuantity
+	 * @param priceEntryExternalReferenceCode - <b>Only</b> used when adding a
+	 new entity, similar as <code>commercePriceEntryId</code> but the
+	 external identifier code from a 3rd party system. If
+	 commercePriceEntryId is used, it doesn't have any effect,
+	 otherwise it tries to fetch the CommercePriceEntry against the
+	 external code reference
+	 * @param serviceContext
+	 * @return CommerceTierPriceEntry
+	 * @throws PortalException
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, int minQuantity,
+			boolean bulkPricing, boolean discountDiscovery,
+			BigDecimal discountLevel1, BigDecimal discountLevel2,
+			BigDecimal discountLevel3, BigDecimal discountLevel4,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void checkCommerceTierPriceEntries() throws PortalException;
 
 	/**
@@ -495,66 +555,6 @@ public interface CommerceTierPriceEntryLocalService
 			long userId, long commerceTierPriceEntryId, int status,
 			ServiceContext serviceContext,
 			Map<String, Serializable> workflowContext)
-		throws PortalException;
-
-	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String priceEntryExternalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	/**
-	 * This method is used to insert a new CommerceTierPriceEntry or update an
-	 * existing one
-	 *
-	 * @param externalReferenceCode - The external identifier code from a 3rd
-	 party system to be able to locate the same entity in the portal
-	 <b>Only</b> used when updating an entity; the first entity with a
-	 matching reference code one will be updated
-	 * @param commerceTierPriceEntryId - <b>Only</b> used when updating an
-	 entity; the matching one will be updated
-	 * @param commercePriceEntryId - <b>Only</b> used when adding a new entity
-	 * @param price
-	 * @param promoPrice
-	 * @param minQuantity
-	 * @param priceEntryExternalReferenceCode - <b>Only</b> used when adding a
-	 new entity, similar as <code>commercePriceEntryId</code> but the
-	 external identifier code from a 3rd party system. If
-	 commercePriceEntryId is used, it doesn't have any effect,
-	 otherwise it tries to fetch the CommercePriceEntry against the
-	 external code reference
-	 * @param serviceContext
-	 * @return CommerceTierPriceEntry
-	 * @throws PortalException
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			int minQuantity, String priceEntryExternalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, BigDecimal price, int minQuantity,
-			boolean bulkPricing, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String priceEntryExternalReferenceCode,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

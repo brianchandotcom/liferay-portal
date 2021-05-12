@@ -89,6 +89,27 @@ public interface CommerceTierPriceEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
+			int minQuantity, String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, BigDecimal price, int minQuantity,
+			boolean bulkPricing, boolean discountDiscovery,
+			BigDecimal discountLevel1, BigDecimal discountLevel2,
+			BigDecimal discountLevel3, BigDecimal discountLevel4,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String priceEntryExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCommerceTierPriceEntry(long commerceTierPriceEntryId)
 		throws PortalException;
 
@@ -179,27 +200,6 @@ public interface CommerceTierPriceEntryService extends BaseService {
 	public CommerceTierPriceEntry updateExternalReferenceCode(
 			CommerceTierPriceEntry commerceTierPriceEntry,
 			String externalReferenceCode)
-		throws PortalException;
-
-	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, BigDecimal price, BigDecimal promoPrice,
-			int minQuantity, String priceEntryExternalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, BigDecimal price, int minQuantity,
-			boolean bulkPricing, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String priceEntryExternalReferenceCode,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

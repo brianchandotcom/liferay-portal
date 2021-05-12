@@ -72,6 +72,12 @@ public interface CommerceOrderItemService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrderItem addOrUpdateCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, String json, int quantity,
+			int shippedQuantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public int countSubscriptionCommerceOrderItems(long commerceOrderId)
 		throws PortalException;
 
@@ -244,12 +250,6 @@ public interface CommerceOrderItemService extends BaseService {
 
 	public CommerceOrderItem updateCustomFields(
 			long commerceOrderItemId, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommerceOrderItem upsertCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

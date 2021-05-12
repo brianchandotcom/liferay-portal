@@ -69,6 +69,12 @@ public interface CPOptionValueService extends BaseService {
 			String key, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPOptionValue addOrUpdateCPOptionValue(
+			String externalReferenceCode, long cpOptionId,
+			Map<Locale, String> nameMap, double priority, String key,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCPOptionValue(long cpOptionValueId)
 		throws PortalException;
 
@@ -114,12 +120,6 @@ public interface CPOptionValueService extends BaseService {
 	public CPOptionValue updateCPOptionValue(
 			long cpOptionValueId, Map<Locale, String> titleMap, double priority,
 			String key, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CPOptionValue upsertCPOptionValue(
-			String externalReferenceCode, long cpOptionId,
-			Map<Locale, String> nameMap, double priority, String key,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

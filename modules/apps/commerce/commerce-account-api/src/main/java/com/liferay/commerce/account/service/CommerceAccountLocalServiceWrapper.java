@@ -82,6 +82,20 @@ public class CommerceAccountLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.account.model.CommerceAccount
+			addOrUpdateCommerceAccount(
+				String name, long parentCommerceAccountId, boolean logo,
+				byte[] logoBytes, String email, String taxId, int type,
+				boolean active, String externalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountLocalService.addOrUpdateCommerceAccount(
+			name, parentCommerceAccountId, logo, logoBytes, email, taxId, type,
+			active, externalReferenceCode, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.account.model.CommerceAccount
 			addPersonalCommerceAccount(
 				long userId, String taxId, String externalReferenceCode,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -645,20 +659,6 @@ public class CommerceAccountLocalServiceWrapper
 
 		return _commerceAccountLocalService.updateStatus(
 			userId, commerceAccountId, status, serviceContext, workflowContext);
-	}
-
-	@Override
-	public com.liferay.commerce.account.model.CommerceAccount
-			upsertCommerceAccount(
-				String name, long parentCommerceAccountId, boolean logo,
-				byte[] logoBytes, String email, String taxId, int type,
-				boolean active, String externalReferenceCode,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceAccountLocalService.upsertCommerceAccount(
-			name, parentCommerceAccountId, logo, logoBytes, email, taxId, type,
-			active, externalReferenceCode, serviceContext);
 	}
 
 	@Override

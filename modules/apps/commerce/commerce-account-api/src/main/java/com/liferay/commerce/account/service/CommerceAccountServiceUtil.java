@@ -62,6 +62,18 @@ public class CommerceAccountServiceUtil {
 			externalReferenceCode, serviceContext);
 	}
 
+	public static CommerceAccount addOrUpdateCommerceAccount(
+			String name, long parentCommerceAccountId, boolean logo,
+			byte[] logoBytes, String email, String taxId, int type,
+			boolean active, String externalReferenceCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceAccount(
+			name, parentCommerceAccountId, logo, logoBytes, email, taxId, type,
+			active, externalReferenceCode, serviceContext);
+	}
+
 	public static void deleteCommerceAccount(long commerceAccountId)
 		throws PortalException {
 
@@ -204,18 +216,6 @@ public class CommerceAccountServiceUtil {
 
 		return getService().updateDefaultShippingAddress(
 			commerceAccountId, commerceAddressId);
-	}
-
-	public static CommerceAccount upsertCommerceAccount(
-			String name, long parentCommerceAccountId, boolean logo,
-			byte[] logoBytes, String email, String taxId, int type,
-			boolean active, String externalReferenceCode,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCommerceAccount(
-			name, parentCommerceAccountId, logo, logoBytes, email, taxId, type,
-			active, externalReferenceCode, serviceContext);
 	}
 
 	public static CommerceAccountService getService() {

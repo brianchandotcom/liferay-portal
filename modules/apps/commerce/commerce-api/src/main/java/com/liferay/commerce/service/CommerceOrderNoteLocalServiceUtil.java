@@ -81,6 +81,17 @@ public class CommerceOrderNoteLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static CommerceOrderNote addOrUpdateCommerceOrderNote(
+			String externalReferenceCode, long commerceOrderNoteId,
+			long commerceOrderId, String content, boolean restricted,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceOrderNote(
+			externalReferenceCode, commerceOrderNoteId, commerceOrderId,
+			content, restricted, serviceContext);
+	}
+
 	/**
 	 * Creates a new commerce order note with the primary key. Does not add the commerce order note to the database.
 	 *
@@ -416,17 +427,6 @@ public class CommerceOrderNoteLocalServiceUtil {
 
 		return getService().updateCommerceOrderNote(
 			externalReferenceCode, commerceOrderNoteId, content, restricted);
-	}
-
-	public static CommerceOrderNote upsertCommerceOrderNote(
-			String externalReferenceCode, long commerceOrderNoteId,
-			long commerceOrderId, String content, boolean restricted,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCommerceOrderNote(
-			externalReferenceCode, commerceOrderNoteId, commerceOrderId,
-			content, restricted, serviceContext);
 	}
 
 	public static CommerceOrderNoteLocalService getService() {

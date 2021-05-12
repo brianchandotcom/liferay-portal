@@ -47,6 +47,20 @@ public class CommerceOrderItemServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrderItem
+			addOrUpdateCommerceOrderItem(
+				long commerceOrderId, long cpInstanceId, String json,
+				int quantity, int shippedQuantity,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemService.addOrUpdateCommerceOrderItem(
+			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,
+			commerceContext, serviceContext);
+	}
+
+	@Override
 	public int countSubscriptionCommerceOrderItems(long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -397,19 +411,6 @@ public class CommerceOrderItemServiceWrapper
 
 		return _commerceOrderItemService.updateCustomFields(
 			commerceOrderItemId, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrderItem upsertCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, String json, int quantity,
-			int shippedQuantity,
-			com.liferay.commerce.context.CommerceContext commerceContext,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceOrderItemService.upsertCommerceOrderItem(
-			commerceOrderId, cpInstanceId, json, quantity, shippedQuantity,
-			commerceContext, serviceContext);
 	}
 
 	@Override

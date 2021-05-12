@@ -110,6 +110,27 @@ public interface CommercePriceEntryService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommercePriceEntry addOrUpdateCommercePriceEntry(
+			String externalReferenceCode, long commercePriceEntryId,
+			long cProductId, String cpInstanceUuid, long commercePriceListId,
+			BigDecimal price, BigDecimal promoPrice,
+			String skuExternalReferenceCode, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommercePriceEntry addOrUpdateCommercePriceEntry(
+			String externalReferenceCode, long commercePriceEntryId,
+			long cProductId, String cpInstanceUuid, long commercePriceListId,
+			BigDecimal price, boolean discountDiscovery,
+			BigDecimal discountLevel1, BigDecimal discountLevel2,
+			BigDecimal discountLevel3, BigDecimal discountLevel4,
+			int displayDateMonth, int displayDateDay, int displayDateYear,
+			int displayDateHour, int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String skuExternalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCommercePriceEntry(long commercePriceEntryId)
 		throws PortalException;
 
@@ -264,7 +285,7 @@ public interface CommercePriceEntryService extends BaseService {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #upsertCommercePriceEntry(String, long, long, String, long,
+	 #addOrUpdateCommercePriceEntry(String, long, long, String, long,
 	 BigDecimal, BigDecimal, String, ServiceContext)}
 	 */
 	@Deprecated
@@ -277,7 +298,7 @@ public interface CommercePriceEntryService extends BaseService {
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #upsertCommercePriceEntry(String, long, long, String, long,
+	 #addOrUpdateCommercePriceEntry(String, long, long, String, long,
 	 BigDecimal, boolean, BigDecimal, BigDecimal, BigDecimal,
 	 BigDecimal, int, int, int, int, int, int, int, int, int,
 	 int, boolean, String, ServiceContext)}
@@ -286,27 +307,6 @@ public interface CommercePriceEntryService extends BaseService {
 	public CommercePriceEntry upsertCommercePriceEntry(
 			long commercePriceEntryId, long cProductId, String cpInstanceUuid,
 			long commercePriceListId, String externalReferenceCode,
-			BigDecimal price, boolean discountDiscovery,
-			BigDecimal discountLevel1, BigDecimal discountLevel2,
-			BigDecimal discountLevel3, BigDecimal discountLevel4,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String skuExternalReferenceCode,
-			ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePriceEntry upsertCommercePriceEntry(
-			String externalReferenceCode, long commercePriceEntryId,
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
-			BigDecimal price, BigDecimal promoPrice,
-			String skuExternalReferenceCode, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePriceEntry upsertCommercePriceEntry(
-			String externalReferenceCode, long commercePriceEntryId,
-			long cProductId, String cpInstanceUuid, long commercePriceListId,
 			BigDecimal price, boolean discountDiscovery,
 			BigDecimal discountLevel1, BigDecimal discountLevel2,
 			BigDecimal discountLevel3, BigDecimal discountLevel4,

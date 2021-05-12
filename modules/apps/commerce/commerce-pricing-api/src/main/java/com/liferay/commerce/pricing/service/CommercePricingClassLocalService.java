@@ -96,6 +96,12 @@ public interface CommercePricingClassLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommercePricingClass addOrUpdateCommercePricingClass(
+			String externalReferenceCode, long commercePricingClassId,
+			long userId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new commerce pricing class with the primary key. Does not add the commerce pricing class to the database.
 	 *
@@ -405,12 +411,6 @@ public interface CommercePricingClassLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePricingClass updateCommercePricingClassExternalReferenceCode(
 			String externalReferenceCode, long commercePricingClassId)
-		throws PortalException;
-
-	public CommercePricingClass upsertCommercePricingClass(
-			String externalReferenceCode, long commercePricingClassId,
-			long userId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException;
 
 }

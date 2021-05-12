@@ -53,6 +53,20 @@ public class CPOptionServiceUtil {
 			skuContributor, key, serviceContext);
 	}
 
+	public static CPOption addOrUpdateCPOption(
+			String externalReferenceCode, Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			boolean skuContributor, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCPOption(
+			externalReferenceCode, nameMap, descriptionMap,
+			ddmFormFieldTypeName, facetable, required, skuContributor, key,
+			serviceContext);
+	}
+
 	public static void deleteCPOption(long cpOptionId) throws PortalException {
 		getService().deleteCPOption(cpOptionId);
 	}
@@ -128,20 +142,6 @@ public class CPOptionServiceUtil {
 
 		return getService().updateCPOptionExternalReferenceCode(
 			externalReferenceCode, cpOptionId);
-	}
-
-	public static CPOption upsertCPOption(
-			String externalReferenceCode, Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
-			boolean skuContributor, String key,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCPOption(
-			externalReferenceCode, nameMap, descriptionMap,
-			ddmFormFieldTypeName, facetable, required, skuContributor, key,
-			serviceContext);
 	}
 
 	public static CPOptionService getService() {

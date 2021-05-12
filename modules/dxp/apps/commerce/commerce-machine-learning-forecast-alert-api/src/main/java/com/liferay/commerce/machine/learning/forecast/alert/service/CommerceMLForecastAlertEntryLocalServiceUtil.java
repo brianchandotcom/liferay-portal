@@ -62,6 +62,18 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 			commerceMLForecastAlertEntry);
 	}
 
+	public static CommerceMLForecastAlertEntry
+			addOrUpdateCommerceMLForecastAlertEntry(
+				long companyId, long userId, long commerceAccountId,
+				java.util.Date timestamp, float actual, float forecast,
+				float relativeChange)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceMLForecastAlertEntry(
+			companyId, userId, commerceAccountId, timestamp, actual, forecast,
+			relativeChange);
+	}
+
 	/**
 	 * Creates a new commerce ml forecast alert entry with the primary key. Does not add the commerce ml forecast alert entry to the database.
 	 *
@@ -414,18 +426,6 @@ public class CommerceMLForecastAlertEntryLocalServiceUtil {
 
 		return getService().updateStatus(
 			userId, commerceMLForecastAlertEntryId, status);
-	}
-
-	public static CommerceMLForecastAlertEntry
-			upsertCommerceMLForecastAlertEntry(
-				long companyId, long userId, long commerceAccountId,
-				java.util.Date timestamp, float actual, float forecast,
-				float relativeChange)
-		throws PortalException {
-
-		return getService().upsertCommerceMLForecastAlertEntry(
-			companyId, userId, commerceAccountId, timestamp, actual, forecast,
-			relativeChange);
 	}
 
 	public static CommerceMLForecastAlertEntryLocalService getService() {

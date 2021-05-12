@@ -73,6 +73,13 @@ public interface CommerceAccountService extends BaseService {
 			String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceAccount addOrUpdateCommerceAccount(
+			String name, long parentCommerceAccountId, boolean logo,
+			byte[] logoBytes, String email, String taxId, int type,
+			boolean active, String externalReferenceCode,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCommerceAccount(long commerceAccountId)
 		throws PortalException;
 
@@ -157,13 +164,6 @@ public interface CommerceAccountService extends BaseService {
 
 	public CommerceAccount updateDefaultShippingAddress(
 			long commerceAccountId, long commerceAddressId)
-		throws PortalException;
-
-	public CommerceAccount upsertCommerceAccount(
-			String name, long parentCommerceAccountId, boolean logo,
-			byte[] logoBytes, String email, String taxId, int type,
-			boolean active, String externalReferenceCode,
-			ServiceContext serviceContext)
 		throws PortalException;
 
 }

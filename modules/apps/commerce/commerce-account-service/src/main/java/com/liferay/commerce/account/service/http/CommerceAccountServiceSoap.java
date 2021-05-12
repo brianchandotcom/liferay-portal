@@ -112,6 +112,30 @@ public class CommerceAccountServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.account.model.CommerceAccountSoap
+			addOrUpdateCommerceAccount(
+				String name, long parentCommerceAccountId, boolean logo,
+				byte[] logoBytes, String email, String taxId, int type,
+				boolean active, String externalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.account.model.CommerceAccount returnValue =
+				CommerceAccountServiceUtil.addOrUpdateCommerceAccount(
+					name, parentCommerceAccountId, logo, logoBytes, email,
+					taxId, type, active, externalReferenceCode, serviceContext);
+
+			return com.liferay.commerce.account.model.CommerceAccountSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static void deleteCommerceAccount(long commerceAccountId)
 		throws RemoteException {
 
@@ -412,30 +436,6 @@ public class CommerceAccountServiceSoap {
 			com.liferay.commerce.account.model.CommerceAccount returnValue =
 				CommerceAccountServiceUtil.updateDefaultShippingAddress(
 					commerceAccountId, commerceAddressId);
-
-			return com.liferay.commerce.account.model.CommerceAccountSoap.
-				toSoapModel(returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.account.model.CommerceAccountSoap
-			upsertCommerceAccount(
-				String name, long parentCommerceAccountId, boolean logo,
-				byte[] logoBytes, String email, String taxId, int type,
-				boolean active, String externalReferenceCode,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.account.model.CommerceAccount returnValue =
-				CommerceAccountServiceUtil.upsertCommerceAccount(
-					name, parentCommerceAccountId, logo, logoBytes, email,
-					taxId, type, active, externalReferenceCode, serviceContext);
 
 			return com.liferay.commerce.account.model.CommerceAccountSoap.
 				toSoapModel(returnValue);

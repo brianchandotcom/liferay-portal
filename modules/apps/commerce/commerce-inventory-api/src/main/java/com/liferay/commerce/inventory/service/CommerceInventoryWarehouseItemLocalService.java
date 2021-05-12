@@ -99,6 +99,18 @@ public interface CommerceInventoryWarehouseItemLocalService
 			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException;
 
+	public CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				long userId, long commerceInventoryWarehouseId, String sku,
+				int quantity)
+		throws PortalException;
+
+	public CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long companyId, long userId,
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws PortalException;
+
 	public int countItemsByCompanyId(long companyId, String sku);
 
 	/**
@@ -444,23 +456,13 @@ public interface CommerceInventoryWarehouseItemLocalService
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #upsertCommerceInventoryWarehouseItem(String,
+	 #addOrUpdateCommerceInventoryWarehouseItem(String,
 	 long, long, long, String, int)}
 	 */
 	@Deprecated
 	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
 			long companyId, long userId, long commerceInventoryWarehouseId,
 			String externalReferenceCode, String sku, int quantity)
-		throws PortalException;
-
-	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
-			long userId, long commerceInventoryWarehouseId, String sku,
-			int quantity)
-		throws PortalException;
-
-	public CommerceInventoryWarehouseItem upsertCommerceInventoryWarehouseItem(
-			String externalReferenceCode, long companyId, long userId,
-			long commerceInventoryWarehouseId, String sku, int quantity)
 		throws PortalException;
 
 }

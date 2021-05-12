@@ -160,6 +160,99 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, java.math.BigDecimal price,
+			java.math.BigDecimal promoPrice, int minQuantity,
+			boolean bulkPricing, boolean discountDiscovery,
+			java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal discountLevel2,
+			java.math.BigDecimal discountLevel3,
+			java.math.BigDecimal discountLevel4, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String priceEntryExternalReferenceCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceTierPriceEntry(
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, promoPrice, minQuantity, bulkPricing,
+			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
+			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, priceEntryExternalReferenceCode,
+			serviceContext);
+	}
+
+	/**
+	 * This method is used to insert a new CommerceTierPriceEntry or update an
+	 * existing one
+	 *
+	 * @param externalReferenceCode - The external identifier code from a 3rd
+	 party system to be able to locate the same entity in the portal
+	 <b>Only</b> used when updating an entity; the first entity with a
+	 matching reference code one will be updated
+	 * @param commerceTierPriceEntryId - <b>Only</b> used when updating an
+	 entity; the matching one will be updated
+	 * @param commercePriceEntryId - <b>Only</b> used when adding a new entity
+	 * @param price
+	 * @param promoPrice
+	 * @param minQuantity
+	 * @param priceEntryExternalReferenceCode - <b>Only</b> used when adding a
+	 new entity, similar as <code>commercePriceEntryId</code> but the
+	 external identifier code from a 3rd party system. If
+	 commercePriceEntryId is used, it doesn't have any effect,
+	 otherwise it tries to fetch the CommercePriceEntry against the
+	 external code reference
+	 * @param serviceContext
+	 * @return CommerceTierPriceEntry
+	 * @throws PortalException
+	 */
+	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, java.math.BigDecimal price,
+			java.math.BigDecimal promoPrice, int minQuantity,
+			String priceEntryExternalReferenceCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceTierPriceEntry(
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, promoPrice, minQuantity,
+			priceEntryExternalReferenceCode, serviceContext);
+	}
+
+	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
+			String externalReferenceCode, long commerceTierPriceEntryId,
+			long commercePriceEntryId, java.math.BigDecimal price,
+			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
+			java.math.BigDecimal discountLevel1,
+			java.math.BigDecimal discountLevel2,
+			java.math.BigDecimal discountLevel3,
+			java.math.BigDecimal discountLevel4, int displayDateMonth,
+			int displayDateDay, int displayDateYear, int displayDateHour,
+			int displayDateMinute, int expirationDateMonth,
+			int expirationDateDay, int expirationDateYear,
+			int expirationDateHour, int expirationDateMinute,
+			boolean neverExpire, String priceEntryExternalReferenceCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCommerceTierPriceEntry(
+			externalReferenceCode, commerceTierPriceEntryId,
+			commercePriceEntryId, price, minQuantity, bulkPricing,
+			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
+			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, priceEntryExternalReferenceCode,
+			serviceContext);
+	}
+
 	public static void checkCommerceTierPriceEntries() throws PortalException {
 		getService().checkCommerceTierPriceEntries();
 	}
@@ -665,99 +758,6 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 		return getService().updateStatus(
 			userId, commerceTierPriceEntryId, status, serviceContext,
 			workflowContext);
-	}
-
-	public static CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
-			boolean bulkPricing, boolean discountDiscovery,
-			java.math.BigDecimal discountLevel1,
-			java.math.BigDecimal discountLevel2,
-			java.math.BigDecimal discountLevel3,
-			java.math.BigDecimal discountLevel4, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String priceEntryExternalReferenceCode,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCommerceTierPriceEntry(
-			externalReferenceCode, commerceTierPriceEntryId,
-			commercePriceEntryId, price, promoPrice, minQuantity, bulkPricing,
-			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
-			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, priceEntryExternalReferenceCode,
-			serviceContext);
-	}
-
-	/**
-	 * This method is used to insert a new CommerceTierPriceEntry or update an
-	 * existing one
-	 *
-	 * @param externalReferenceCode - The external identifier code from a 3rd
-	 party system to be able to locate the same entity in the portal
-	 <b>Only</b> used when updating an entity; the first entity with a
-	 matching reference code one will be updated
-	 * @param commerceTierPriceEntryId - <b>Only</b> used when updating an
-	 entity; the matching one will be updated
-	 * @param commercePriceEntryId - <b>Only</b> used when adding a new entity
-	 * @param price
-	 * @param promoPrice
-	 * @param minQuantity
-	 * @param priceEntryExternalReferenceCode - <b>Only</b> used when adding a
-	 new entity, similar as <code>commercePriceEntryId</code> but the
-	 external identifier code from a 3rd party system. If
-	 commercePriceEntryId is used, it doesn't have any effect,
-	 otherwise it tries to fetch the CommercePriceEntry against the
-	 external code reference
-	 * @param serviceContext
-	 * @return CommerceTierPriceEntry
-	 * @throws PortalException
-	 */
-	public static CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, java.math.BigDecimal price,
-			java.math.BigDecimal promoPrice, int minQuantity,
-			String priceEntryExternalReferenceCode,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCommerceTierPriceEntry(
-			externalReferenceCode, commerceTierPriceEntryId,
-			commercePriceEntryId, price, promoPrice, minQuantity,
-			priceEntryExternalReferenceCode, serviceContext);
-	}
-
-	public static CommerceTierPriceEntry upsertCommerceTierPriceEntry(
-			String externalReferenceCode, long commerceTierPriceEntryId,
-			long commercePriceEntryId, java.math.BigDecimal price,
-			int minQuantity, boolean bulkPricing, boolean discountDiscovery,
-			java.math.BigDecimal discountLevel1,
-			java.math.BigDecimal discountLevel2,
-			java.math.BigDecimal discountLevel3,
-			java.math.BigDecimal discountLevel4, int displayDateMonth,
-			int displayDateDay, int displayDateYear, int displayDateHour,
-			int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, String priceEntryExternalReferenceCode,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCommerceTierPriceEntry(
-			externalReferenceCode, commerceTierPriceEntryId,
-			commercePriceEntryId, price, minQuantity, bulkPricing,
-			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
-			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, priceEntryExternalReferenceCode,
-			serviceContext);
 	}
 
 	public static CommerceTierPriceEntryLocalService getService() {

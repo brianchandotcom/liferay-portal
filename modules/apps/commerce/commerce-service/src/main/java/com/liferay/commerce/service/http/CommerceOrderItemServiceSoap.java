@@ -87,6 +87,30 @@ public class CommerceOrderItemServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderItemSoap
+			addOrUpdateCommerceOrderItem(
+				long commerceOrderId, long cpInstanceId, String json,
+				int quantity, int shippedQuantity,
+				com.liferay.commerce.context.CommerceContext commerceContext,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.commerce.model.CommerceOrderItem returnValue =
+				CommerceOrderItemServiceUtil.addOrUpdateCommerceOrderItem(
+					commerceOrderId, cpInstanceId, json, quantity,
+					shippedQuantity, commerceContext, serviceContext);
+
+			return com.liferay.commerce.model.CommerceOrderItemSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int countSubscriptionCommerceOrderItems(long commerceOrderId)
 		throws RemoteException {
 
@@ -654,30 +678,6 @@ public class CommerceOrderItemServiceSoap {
 			com.liferay.commerce.model.CommerceOrderItem returnValue =
 				CommerceOrderItemServiceUtil.updateCustomFields(
 					commerceOrderItemId, serviceContext);
-
-			return com.liferay.commerce.model.CommerceOrderItemSoap.toSoapModel(
-				returnValue);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw new RemoteException(exception.getMessage());
-		}
-	}
-
-	public static com.liferay.commerce.model.CommerceOrderItemSoap
-			upsertCommerceOrderItem(
-				long commerceOrderId, long cpInstanceId, String json,
-				int quantity, int shippedQuantity,
-				com.liferay.commerce.context.CommerceContext commerceContext,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-
-		try {
-			com.liferay.commerce.model.CommerceOrderItem returnValue =
-				CommerceOrderItemServiceUtil.upsertCommerceOrderItem(
-					commerceOrderId, cpInstanceId, json, quantity,
-					shippedQuantity, commerceContext, serviceContext);
 
 			return com.liferay.commerce.model.CommerceOrderItemSoap.toSoapModel(
 				returnValue);

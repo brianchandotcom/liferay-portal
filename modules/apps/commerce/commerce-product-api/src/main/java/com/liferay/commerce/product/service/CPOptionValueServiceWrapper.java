@@ -44,6 +44,20 @@ public class CPOptionValueServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.product.model.CPOptionValue
+			addOrUpdateCPOptionValue(
+				String externalReferenceCode, long cpOptionId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				double priority, String key,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionValueService.addOrUpdateCPOptionValue(
+			externalReferenceCode, cpOptionId, nameMap, priority, key,
+			serviceContext);
+	}
+
+	@Override
 	public void deleteCPOptionValue(long cpOptionValueId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -131,19 +145,6 @@ public class CPOptionValueServiceWrapper
 
 		return _cpOptionValueService.updateCPOptionValue(
 			cpOptionValueId, titleMap, priority, key, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOptionValue upsertCPOptionValue(
-			String externalReferenceCode, long cpOptionId,
-			java.util.Map<java.util.Locale, String> nameMap, double priority,
-			String key,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpOptionValueService.upsertCPOptionValue(
-			externalReferenceCode, cpOptionId, nameMap, priority, key,
-			serviceContext);
 	}
 
 	@Override

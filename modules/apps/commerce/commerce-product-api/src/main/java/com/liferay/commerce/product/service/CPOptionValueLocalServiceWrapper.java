@@ -74,6 +74,20 @@ public class CPOptionValueLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPOptionValue
+			addOrUpdateCPOptionValue(
+				String externalReferenceCode, long cpOptionId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				double priority, String key,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpOptionValueLocalService.addOrUpdateCPOptionValue(
+			externalReferenceCode, cpOptionId, nameMap, priority, key,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new cp option value with the primary key. Does not add the cp option value to the database.
 	 *
@@ -554,19 +568,6 @@ public class CPOptionValueLocalServiceWrapper
 
 		return _cpOptionValueLocalService.updateCPOptionValue(
 			cpOptionValueId, nameMap, priority, key, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.product.model.CPOptionValue upsertCPOptionValue(
-			String externalReferenceCode, long cpOptionId,
-			java.util.Map<java.util.Locale, String> nameMap, double priority,
-			String key,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpOptionValueLocalService.upsertCPOptionValue(
-			externalReferenceCode, cpOptionId, nameMap, priority, key,
-			serviceContext);
 	}
 
 	@Override

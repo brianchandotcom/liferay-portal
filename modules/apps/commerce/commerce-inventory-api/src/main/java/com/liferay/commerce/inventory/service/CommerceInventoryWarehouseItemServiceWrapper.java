@@ -80,6 +80,31 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				long userId, long commerceInventoryWarehouseId, String sku,
+				int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemService.
+			addOrUpdateCommerceInventoryWarehouseItem(
+				userId, commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
+			addOrUpdateCommerceInventoryWarehouseItem(
+				String externalReferenceCode, long companyId, long userId,
+				long commerceInventoryWarehouseId, String sku, int quantity)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemService.
+			addOrUpdateCommerceInventoryWarehouseItem(
+				externalReferenceCode, companyId, userId,
+				commerceInventoryWarehouseId, sku, quantity);
+	}
+
+	@Override
 	public void deleteCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -316,7 +341,7 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #upsertCommerceInventoryWarehouseItem(String,
+	 #addOrUpdateCommerceInventoryWarehouseItem(String,
 	 long, long, long, String, int)}
 	 */
 	@Deprecated
@@ -331,31 +356,6 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 			upsertCommerceInventoryWarehouseItem(
 				companyId, userId, commerceInventoryWarehouseId,
 				externalReferenceCode, sku, quantity);
-	}
-
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			upsertCommerceInventoryWarehouseItem(
-				long userId, long commerceInventoryWarehouseId, String sku,
-				int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemService.
-			upsertCommerceInventoryWarehouseItem(
-				userId, commerceInventoryWarehouseId, sku, quantity);
-	}
-
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			upsertCommerceInventoryWarehouseItem(
-				String externalReferenceCode, long companyId, long userId,
-				long commerceInventoryWarehouseId, String sku, int quantity)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemService.
-			upsertCommerceInventoryWarehouseItem(
-				externalReferenceCode, companyId, userId,
-				commerceInventoryWarehouseId, sku, quantity);
 	}
 
 	@Override

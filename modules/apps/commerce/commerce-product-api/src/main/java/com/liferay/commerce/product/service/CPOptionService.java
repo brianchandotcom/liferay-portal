@@ -71,6 +71,13 @@ public interface CPOptionService extends BaseService {
 			boolean skuContributor, String key, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CPOption addOrUpdateCPOption(
+			String externalReferenceCode, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
+			boolean facetable, boolean required, boolean skuContributor,
+			String key, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteCPOption(long cpOptionId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -114,13 +121,6 @@ public interface CPOptionService extends BaseService {
 
 	public CPOption updateCPOptionExternalReferenceCode(
 			String externalReferenceCode, long cpOptionId)
-		throws PortalException;
-
-	public CPOption upsertCPOption(
-			String externalReferenceCode, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, String ddmFormFieldTypeName,
-			boolean facetable, boolean required, boolean skuContributor,
-			String key, ServiceContext serviceContext)
 		throws PortalException;
 
 }

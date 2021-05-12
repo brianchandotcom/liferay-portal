@@ -75,6 +75,21 @@ public class CPOptionLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static CPOption addOrUpdateCPOption(
+			String externalReferenceCode, long userId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap,
+			String ddmFormFieldTypeName, boolean facetable, boolean required,
+			boolean skuContributor, String key,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateCPOption(
+			externalReferenceCode, userId, nameMap, descriptionMap,
+			ddmFormFieldTypeName, facetable, required, skuContributor, key,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new cp option with the primary key. Does not add the cp option to the database.
 	 *
@@ -449,21 +464,6 @@ public class CPOptionLocalServiceUtil {
 
 		return getService().updateCPOptionExternalReferenceCode(
 			externalReferenceCode, cpOptionId);
-	}
-
-	public static CPOption upsertCPOption(
-			String externalReferenceCode, long userId,
-			Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, boolean facetable, boolean required,
-			boolean skuContributor, String key,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().upsertCPOption(
-			externalReferenceCode, userId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, facetable, required, skuContributor, key,
-			serviceContext);
 	}
 
 	public static CPOptionLocalService getService() {

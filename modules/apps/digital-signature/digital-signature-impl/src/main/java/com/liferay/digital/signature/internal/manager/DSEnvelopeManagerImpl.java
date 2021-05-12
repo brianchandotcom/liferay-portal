@@ -22,6 +22,7 @@ import com.liferay.digital.signature.model.DSRecipient;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -129,11 +130,11 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 					"name", dsDocument.getName()
 				))
 		).put(
-			"dsEnvelopeId", dsEnvelope.getDSEnvelopeId()
-		).put(
 			"emailBlurb", dsEnvelope.getEmailBlurb()
 		).put(
 			"emailSubject", dsEnvelope.getEmailSubject()
+		).put(
+			"envelopeId", dsEnvelope.getDSEnvelopeId()
 		).put(
 			"recipients",
 			JSONUtil.put(

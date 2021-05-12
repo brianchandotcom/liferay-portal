@@ -148,9 +148,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		return new DefaultDTOConverterContext(
 			contextAcceptLanguage.isAcceptAllLanguages(),
-			Collections.emptyMap(), null, contextHttpServletRequest,
-			objectEntryId, contextAcceptLanguage.getPreferredLocale(),
-			contextUriInfo, contextUser);
+			Collections.singletonMap(
+				"delete", Collections.singletonMap("delete", "")),
+			null, contextHttpServletRequest, objectEntryId,
+			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+			contextUser);
 	}
 
 	private void _loadObjectDefinition(Map<String, Serializable> parameters)

@@ -92,6 +92,7 @@ public class KnowledgeBaseArticleDTOConverter
 				dateModified = kbArticle.getModifiedDate();
 				description = kbArticle.getDescription();
 				encodingFormat = "text/html";
+				externalReferenceCode = kbArticle.getExternalReferenceCode();
 				friendlyUrlPath = kbArticle.getUrlTitle();
 				id = kbArticle.getResourcePrimKey();
 				keywords = ListUtil.toArray(
@@ -109,6 +110,8 @@ public class KnowledgeBaseArticleDTOConverter
 					_kbArticleService.getKBArticlesCount(
 						kbArticle.getGroupId(), kbArticle.getResourcePrimKey(),
 						WorkflowConstants.STATUS_APPROVED);
+				parentKnowledgeBaseArticleId =
+					kbArticle.getParentResourcePrimKey();
 				parentKnowledgeBaseFolderId = kbArticle.getKbFolderId();
 				relatedContents = RelatedContentUtil.toRelatedContents(
 					_assetEntryLocalService, _assetLinkLocalService,

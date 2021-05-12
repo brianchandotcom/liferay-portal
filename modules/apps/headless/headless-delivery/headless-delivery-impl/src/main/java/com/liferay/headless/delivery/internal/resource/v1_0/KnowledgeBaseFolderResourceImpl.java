@@ -22,8 +22,11 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.ParentKnowledgeBaseF
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseFolderResource;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBConstants;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
+import com.liferay.knowledge.base.exception.NoSuchFolderException;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 
 import java.io.Serializable;
 
@@ -56,6 +60,18 @@ public class KnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		_kbFolderService.deleteKBFolder(knowledgeBaseFolderId);
+	}
+
+	@Override
+	public void deleteSiteKnowledgeBaseFolderByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		KBFolder kbFolder =
+			_kbFolderLocalService.getKBFolderByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		_kbFolderService.deleteKBFolder(kbFolder.getKbFolderId());
 	}
 
 	@Override
@@ -101,6 +117,27 @@ public class KnowledgeBaseFolderResourceImpl
 	}
 
 	@Override
+	public KnowledgeBaseFolder
+			getSiteKnowledgeBaseFolderByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		KBFolder kbFolder = _getKBFolderByExternalReferenceCode(
+			externalReferenceCode, siteId);
+
+		String resourceName = getPermissionCheckerResourceName(
+			kbFolder.getKbFolderId());
+		Long resourceId = getPermissionCheckerResourceId(
+			kbFolder.getKbFolderId());
+
+		PermissionUtil.checkPermission(
+			ActionKeys.VIEW, groupLocalService, resourceName, resourceId,
+			getPermissionCheckerGroupId(kbFolder.getKbFolderId()));
+
+		return _toKnowledgeBaseFolder(kbFolder);
+	}
+
+	@Override
 	public Page<KnowledgeBaseFolder> getSiteKnowledgeBaseFoldersPage(
 			Long siteId, Pagination pagination)
 		throws Exception {
@@ -135,14 +172,9 @@ public class KnowledgeBaseFolderResourceImpl
 			parentKnowledgeBaseFolderId);
 
 		return _toKnowledgeBaseFolder(
-			_kbFolderService.addKBFolder(
-				null, parentKBFolder.getGroupId(), _getClassNameId(),
-				parentKnowledgeBaseFolderId, knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder),
-					parentKBFolder.getGroupId(), contextHttpServletRequest,
-					knowledgeBaseFolder.getViewableByAsString())));
+			_addKnowledgeBaseFolder(
+				null, parentKnowledgeBaseFolderId, knowledgeBaseFolder,
+				parentKBFolder.getGroupId()));
 	}
 
 	@Override
@@ -151,14 +183,7 @@ public class KnowledgeBaseFolderResourceImpl
 		throws Exception {
 
 		return _toKnowledgeBaseFolder(
-			_kbFolderService.addKBFolder(
-				null, siteId, _getClassNameId(), 0,
-				knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder), siteId,
-					contextHttpServletRequest,
-					knowledgeBaseFolder.getViewableByAsString())));
+			_addKnowledgeBaseFolder(null, 0, knowledgeBaseFolder, siteId));
 	}
 
 	@Override
@@ -174,13 +199,41 @@ public class KnowledgeBaseFolderResourceImpl
 		}
 
 		return _toKnowledgeBaseFolder(
-			_kbFolderService.updateKBFolder(
-				_getClassNameId(), parentKnowledgeBaseFolderId,
-				knowledgeBaseFolderId, knowledgeBaseFolder.getName(),
-				knowledgeBaseFolder.getDescription(),
-				ServiceContextRequestUtil.createServiceContext(
-					_getExpandoBridgeAttributes(knowledgeBaseFolder), 0,
-					contextHttpServletRequest, null)));
+			_updateKnowledgeBaseFolder(
+				knowledgeBaseFolderId, knowledgeBaseFolder,
+				parentKnowledgeBaseFolderId));
+	}
+
+	@Override
+	public KnowledgeBaseFolder
+			putSiteKnowledgeBaseFolderByExternalReferenceCode(
+				Long siteId, String externalReferenceCode,
+				KnowledgeBaseFolder knowledgeBaseFolder)
+		throws Exception {
+
+		KBFolder kbFolder =
+			_kbFolderLocalService.fetchKBFolderByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		Long parentKnowledgeBaseFolderId =
+			knowledgeBaseFolder.getParentKnowledgeBaseFolderId();
+
+		if (parentKnowledgeBaseFolderId == null) {
+			parentKnowledgeBaseFolderId =
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		if (kbFolder == null) {
+			return _toKnowledgeBaseFolder(
+				_addKnowledgeBaseFolder(
+					externalReferenceCode, parentKnowledgeBaseFolderId,
+					knowledgeBaseFolder, siteId));
+		}
+
+		return _toKnowledgeBaseFolder(
+			_updateKnowledgeBaseFolder(
+				kbFolder.getKbFolderId(), knowledgeBaseFolder,
+				parentKnowledgeBaseFolderId));
 	}
 
 	@Override
@@ -200,6 +253,21 @@ public class KnowledgeBaseFolderResourceImpl
 		return KBFolder.class.getName();
 	}
 
+	private KBFolder _addKnowledgeBaseFolder(
+			String externalReferenceCode, long parentResourcePrimKey,
+			KnowledgeBaseFolder knowledgeBaseFolder, long siteId)
+		throws Exception {
+
+		return _kbFolderService.addKBFolder(
+			externalReferenceCode, siteId, _getClassNameId(),
+			parentResourcePrimKey, knowledgeBaseFolder.getName(),
+			knowledgeBaseFolder.getDescription(),
+			ServiceContextRequestUtil.createServiceContext(
+				_getExpandoBridgeAttributes(knowledgeBaseFolder), siteId,
+				contextHttpServletRequest,
+				knowledgeBaseFolder.getViewableByAsString()));
+	}
+
 	private long _getClassNameId() {
 		return _portal.getClassNameId(KBFolder.class.getName());
 	}
@@ -211,6 +279,23 @@ public class KnowledgeBaseFolderResourceImpl
 			KBFolder.class.getName(), contextCompany.getCompanyId(),
 			knowledgeBaseFolder.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private KBFolder _getKBFolderByExternalReferenceCode(
+			String externalReferenceCode, long siteId)
+		throws Exception {
+
+		KBFolder kbFolder =
+			_kbFolderLocalService.fetchKBFolderByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		if (kbFolder == null) {
+			throw new NoSuchFolderException(
+				"No knowledge base folder exists with external reference " +
+					"code " + externalReferenceCode);
+		}
+
+		return kbFolder;
 	}
 
 	private KnowledgeBaseFolder _toKnowledgeBaseFolder(KBFolder kbFolder)
@@ -247,6 +332,7 @@ public class KnowledgeBaseFolderResourceImpl
 				dateCreated = kbFolder.getCreateDate();
 				dateModified = kbFolder.getModifiedDate();
 				description = kbFolder.getDescription();
+				externalReferenceCode = kbFolder.getExternalReferenceCode();
 				id = kbFolder.getKbFolderId();
 				name = kbFolder.getName();
 				numberOfKnowledgeBaseArticles =
@@ -263,8 +349,25 @@ public class KnowledgeBaseFolderResourceImpl
 		};
 	}
 
+	private KBFolder _updateKnowledgeBaseFolder(
+			long knowledgeBaseFolderId, KnowledgeBaseFolder knowledgeBaseFolder,
+			long parentKnowledgeBaseFolderId)
+		throws Exception {
+
+		return _kbFolderService.updateKBFolder(
+			_getClassNameId(), parentKnowledgeBaseFolderId,
+			knowledgeBaseFolderId, knowledgeBaseFolder.getName(),
+			knowledgeBaseFolder.getDescription(),
+			ServiceContextRequestUtil.createServiceContext(
+				_getExpandoBridgeAttributes(knowledgeBaseFolder), 0,
+				contextHttpServletRequest, null));
+	}
+
 	@Reference
 	private KBArticleService _kbArticleService;
+
+	@Reference
+	private KBFolderLocalService _kbFolderLocalService;
 
 	@Reference
 	private KBFolderService _kbFolderService;

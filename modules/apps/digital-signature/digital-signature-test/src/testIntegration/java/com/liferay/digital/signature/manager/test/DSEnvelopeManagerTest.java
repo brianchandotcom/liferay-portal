@@ -52,17 +52,15 @@ public class DSEnvelopeManagerTest {
 	public void testAddDSEnvelope() throws Exception {
 		Class<?> clazz = getClass();
 
-		byte[] byteArray = FileUtil.getBytes(
-			clazz.getResourceAsStream("dependencies/Document_1.pdf"));
-
-		String encode = Base64.encode(byteArray);
-
 		List<DSDocument> documentsList = new ArrayList<>();
 
 		documentsList.add(
 			new DSDocument() {
 				{
-					data = encode;
+					data = Base64.encode(
+						FileUtil.getBytes(
+							clazz.getResourceAsStream(
+								"dependencies/Document_1.pdf")));
 					dsDocumentId = "1";
 					name = "Document 1";
 				}

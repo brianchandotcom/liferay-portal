@@ -1,5 +1,23 @@
 # Poshi Runner Change Log
 
+## 1.0.304
+
+### Core
+
+* [POSHI-164](https://issues.liferay.com/browse/POSHI-164) - Repurpose 'ignore' annotation to include test stub information to be reflected in Poshi CSV report
+
+### Logger
+
+* [POSHI-161](https://issues.liferay.com/browse/POSHI-161) - Update Poshi log's alloyui cdn url
+
+### Utils
+
+* [POSHI-165](https://issues.liferay.com/browse/POSHI-165) - Simplify json-path result in Poshi test usage
+
+### WebDriver
+
+* [POSHI-163](https://issues.liferay.com/browse/POSHI-163) - Fix issues when running Safari locally
+
 ## 1.0.299
 
 ### Other

@@ -16,11 +16,20 @@ package com.liferay.object.internal.search.spi.model.query.contributor;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.NestedQuery;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.query.QueryHelper;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
@@ -65,14 +74,47 @@ public class ObjectEntryKeywordQueryContributor
 			_objectFieldLocalService.getObjectFields(objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
+			String name = objectField.getName();
+			boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
+
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Add search term for object field " +
-						objectField.getName());
+				_log.debug("Add search term for object field " + name);
 			}
 
-			_queryHelper.addSearchTerm(
-				booleanQuery, searchContext, objectField.getName(), false);
+			if (indexedAsKeyword) {
+				try {
+					keywords = StringUtil.toLowerCase(keywords);
+
+					BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
+
+					nestedBooleanQuery.add(
+						new WildcardQueryImpl(
+							"nestedFieldArray.value_keyword",
+							keywords + StringPool.STAR),
+						BooleanClauseOccur.MUST);
+
+					nestedBooleanQuery.add(
+						new TermQueryImpl(
+							"nestedFieldArray.value_keyword", keywords),
+						BooleanClauseOccur.SHOULD);
+
+					nestedBooleanQuery.add(
+						new TermQueryImpl("nestedFieldArray.fieldName", name),
+						BooleanClauseOccur.MUST);
+
+					NestedQuery nestedQuery = new NestedQuery(
+						"nestedFieldArray", nestedBooleanQuery);
+
+					booleanQuery.add(nestedQuery, BooleanClauseOccur.SHOULD);
+				}
+				catch (ParseException parseException) {
+					throw new SystemException(parseException);
+				}
+			}
+			else {
+				_queryHelper.addSearchTerm(
+					booleanQuery, searchContext, name, false);
+			}
 		}
 	}
 

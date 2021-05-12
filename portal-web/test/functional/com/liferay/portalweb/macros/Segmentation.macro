@@ -121,8 +121,8 @@ definition {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			Check(
-				key_tableEntry = "${selectCheckbox}",
-				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+				key_checkboxName = "${selectCheckbox}",
+				locator1 = "Checkbox#ENABLE_CHECKBOX");
 
 			SelectFrame(value1 = "relative=top");
 

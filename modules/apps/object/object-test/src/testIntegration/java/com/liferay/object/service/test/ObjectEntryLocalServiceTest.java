@@ -481,6 +481,7 @@ public class ObjectEntryLocalServiceTest {
 		Map<String, Serializable> values = _getValues(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
@@ -503,12 +504,14 @@ public class ObjectEntryLocalServiceTest {
 		values = _getValues(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("James", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
@@ -531,18 +534,21 @@ public class ObjectEntryLocalServiceTest {
 		values = _getValues(objectEntries.get(0));
 
 		Assert.assertEquals("peter@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("Peter", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(1));
 
 		Assert.assertEquals("james@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("James", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
 		values = _getValues(objectEntries.get(2));
 
 		Assert.assertEquals("john@liferay.com", values.get("emailAddress"));
+		Assert.assertEquals("@liferay.com", values.get("emailAddressDomain"));
 		Assert.assertEquals("John", values.get("firstName"));
 		Assert.assertEquals(values.toString(), 14, values.size());
 
@@ -800,7 +806,7 @@ public class ObjectEntryLocalServiceTest {
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
-		objectField.setIndexedAsKeyword(indexedAsKeyword); //TODO
+		//objectField.setIndexedAsKeyword(indexedAsKeyword); //TODO
 		objectField.setName(name);
 		objectField.setType(type);
 

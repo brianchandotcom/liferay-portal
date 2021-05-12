@@ -27,15 +27,13 @@ import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.io.Serializable;
 
-import java.math.BigDecimal;
-
 import java.text.Format;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -105,6 +103,12 @@ public class ObjectEntryModelDocumentContributor
 				objectEntry.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
+			boolean indexed = true; //objectField.isIndexed(); //TODO
+
+			if (!indexed) {
+				continue;
+			}
+
 			String name = objectField.getName();
 
 			Object value = values.get(name);
@@ -120,44 +124,70 @@ public class ObjectEntryModelDocumentContributor
 				continue;
 			}
 
-			boolean indexedAsKeyword = objectField.isIndexedAsKeyword(); //TODO
+			//objectField.isIndexedAsKeyword(); //TODO
+
+			boolean indexedAsKeyword = false;
+
+			if (name.equals("emailAddress") ||
+				name.equals("emailAddressDomain")) {
+
+				indexedAsKeyword = true;
+			}
+
+			String localeString = ""; //objectField.getLocaleString(); //TODO
+
+			if (indexedAsKeyword && !Validator.isBlank(localeString)) {
+				throw new IllegalArgumentException(
+					"Field " + name +
+						" is indexed as a keyword and should not be localized");
+			}
+
+			String type = objectField.getType();
 
 			if (indexedAsKeyword) {
 				_addNestedField(
 					fieldArray, name, "value_keyword",
 					StringUtil.lowerCase(String.valueOf(value)));
 			}
-			else if (value instanceof BigDecimal) {
+			else if (type.equals("BigDecimal")) {
 				_addNestedField(
 					fieldArray, name, "value_double", String.valueOf(value));
 			}
-			else if (value instanceof Boolean) {
-				_addNestedField(
-					fieldArray, name, "value_boolean", String.valueOf(value));
-			}
-			else if (value instanceof Date) {
-				_addNestedField(
-					fieldArray, name, "value_date", _getDateString(value));
-			}
-			else if (value instanceof Double) {
-				_addNestedField(
-					fieldArray, name, "value_double", String.valueOf(value));
-			}
-			else if (value instanceof Integer) {
-				_addNestedField(
-					fieldArray, name, "value_integer", String.valueOf(value));
-			}
-			else if (value instanceof Long) {
-				_addNestedField(
-					fieldArray, name, "value_long", String.valueOf(value));
-			}
-			else if (value instanceof String) {
-				_addNestedField(fieldArray, name, "value_text", (String)value);
-			}
-			else if (value instanceof byte[]) {
+			else if (type.equals("Blob")) {
 				_addNestedField(
 					fieldArray, name, "value_binary",
 					Base64.encode((byte[])value));
+			}
+			else if (type.equals("Boolean")) {
+				_addNestedField(
+					fieldArray, name, "value_boolean", String.valueOf(value));
+			}
+			else if (type.equals("Date")) {
+				_addNestedField(
+					fieldArray, name, "value_date", _getDateString(value));
+			}
+			else if (type.equals("Double")) {
+				_addNestedField(
+					fieldArray, name, "value_double", String.valueOf(value));
+			}
+			else if (type.equals("Integer")) {
+				_addNestedField(
+					fieldArray, name, "value_integer", String.valueOf(value));
+			}
+			else if (type.equals("Long")) {
+				_addNestedField(
+					fieldArray, name, "value_long", String.valueOf(value));
+			}
+			else if (type.equals("String")) {
+				if (Validator.isBlank(localeString)) {
+					_addNestedField(
+						fieldArray, name, "value_text", (String)value);
+				}
+				else {
+					_addNestedField(
+						fieldArray, name, "value_" + localeString,
+						(String)value);
+				}
 			}
 			else {
 				if (_log.isWarnEnabled()) {

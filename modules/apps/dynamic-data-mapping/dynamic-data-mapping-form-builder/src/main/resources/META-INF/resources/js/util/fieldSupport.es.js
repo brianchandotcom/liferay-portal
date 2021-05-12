@@ -357,22 +357,13 @@ export const normalizeSettingsContextPages = (
 			const newInstanceId = generateInstanceId(8);
 
 			if (field.type === 'rich_text' && field.editorConfig) {
-				const {editorConfig} = field;
-
-				Object.keys(editorConfig).map((key) => {
-					if (typeof editorConfig[key] === 'string') {
-						const parsedName = parseName(
-							decodeURIComponent(editorConfig[key])
-						);
-
-						if (parsedName.instanceId) {
-							editorConfig[key] = editorConfig[key].replace(
-								parsedName.instanceId,
-								newInstanceId
-							);
-						}
-					}
-				});
+				field = {
+					...field,
+					editorConfig: formatEditorConfig(
+						field.editorConfig,
+						newInstanceId
+					),
+				};
 			}
 
 			return {
@@ -467,6 +458,23 @@ export const createField = (props, event) => {
 		spritemap,
 		type: fieldType.name,
 	};
+};
+
+export const formatEditorConfig = (editorConfig, instanceId) => {
+	Object.keys(editorConfig).map((key) => {
+		if (typeof editorConfig[key] === 'string') {
+			const parsedName = parseName(decodeURIComponent(editorConfig[key]));
+
+			if (parsedName.instanceId) {
+				editorConfig[key] = editorConfig[key].replace(
+					parsedName.instanceId,
+					instanceId
+				);
+			}
+		}
+	});
+
+	return editorConfig;
 };
 
 export const formatFieldName = (instanceId, languageId, value) => {

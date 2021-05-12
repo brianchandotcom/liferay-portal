@@ -51,7 +51,7 @@ PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configurat
 	<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
 </aui:select>
 
-<aui:input helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--" type="text" value="<%= assetPublisherDisplayContext.getDelta() %>">
+<aui:input helpMessage='<%= LanguageUtil.get(request, "number-of-items-to-display-help") + ' ' + LanguageUtil.get(request, "maximum-allowed-value-is-x") %>' label="number-of-items-to-display" name="preferences--delta--" type="text" value="<%= assetPublisherDisplayContext.getDelta() %>">
 	<aui:validator name="digits" />
 </aui:input>
 

@@ -19,6 +19,7 @@ import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,6 +27,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,6 +66,25 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		}
 
 		return dsEnvelope;
+	}
+
+	@Override
+	public List<DSEnvelope> getDSEnvelopeList(long groupId, String fromDate) {
+		JSONObject jsonObject = _dsHttp.get(
+			groupId,
+			StringBundler.concat(
+				"envelopes?from_date=", fromDate,
+				"&include=recipients,documents&order=desc"));
+
+		List<DSEnvelope> dsEnvelopes = new ArrayList<>();
+
+		JSONArray envelopesJSONArray = jsonObject.getJSONArray("envelopes");
+
+		envelopesJSONArray.forEach(
+			dsEnvelopeJSONObject -> dsEnvelopes.add(
+				_toDSEnvelope((JSONObject)dsEnvelopeJSONObject)));
+
+		return dsEnvelopes;
 	}
 
 	private DSEnvelope _toDSEnvelope(JSONObject jsonObject) {

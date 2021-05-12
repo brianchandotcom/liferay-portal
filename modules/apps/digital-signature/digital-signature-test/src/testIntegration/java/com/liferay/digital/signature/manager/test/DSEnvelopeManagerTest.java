@@ -22,6 +22,7 @@ import com.liferay.digital.signature.model.DSRecipient;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -113,6 +114,14 @@ public class DSEnvelopeManagerTest {
 			TestPropsValues.getGroupId(), dsEnvelope.getDSEnvelopeId());
 
 		Assert.assertEquals(expectedEmailSubject, dsEnvelope.getEmailSubject());
+	}
+
+	@Test
+	public void testGetDSEnvelopeList() throws Exception {
+		List<DSEnvelope> dsEnvelopes = _dsEnvelopeManager.getDSEnvelopeList(
+			TestPropsValues.getGroupId(), "2021-01-01");
+
+		Assert.assertTrue(ListUtil.isNotNull(dsEnvelopes));
 	}
 
 	@Inject

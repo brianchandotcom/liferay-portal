@@ -172,8 +172,12 @@ const Container = React.forwardRef(
 					[`pb-${paddingBottom}`]: isValidSpacingOption(
 						paddingBottom
 					),
-					[`pl-${paddingLeft}`]: isValidSpacingOption(paddingLeft),
-					[`pr-${paddingRight}`]: isValidSpacingOption(paddingRight),
+					[`pl-${paddingLeft || 0}`]:
+						isValidSpacingOption(paddingLeft) ||
+						CONTAINER_WIDTH_TYPES.fixed,
+					[`pr-${paddingRight || 0}`]:
+						isValidSpacingOption(paddingRight) ||
+						CONTAINER_WIDTH_TYPES.fixed,
 					[`pt-${paddingTop}`]: isValidSpacingOption(paddingTop),
 					[`ml-${marginLeft}`]:
 						isValidSpacingOption(marginLeft) &&

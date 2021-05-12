@@ -41,6 +41,7 @@ definition {
 	@description = "Validate if the user can create a question category"
 	@priority = "5"
 	@refactordone
+	@uitest
 	test CanAddQuestionCategory {
 		property portal.acceptance = "true";
 
@@ -49,10 +50,9 @@ definition {
 			categoryName = "question AddQuestionCategory",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "question AddQuestionCategory");
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "question AddQuestionCategory");
 
 		Questions.viewTopicDefault();
 	}

@@ -12,15 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.query;
+package com.liferay.portal.search.internal.indexer;
 
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.PreFilterContributor;
+import com.liferay.portal.kernel.search.AddSearchKeywordsQueryContributor;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.search.internal.indexer.PreFilterContributorHelper;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,20 +24,20 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = PreFilterContributor.class)
-public class BaseIndexerPreFilterContributor implements PreFilterContributor {
+@Component(immediate = true, service = AddSearchKeywordsQueryContributor.class)
+public class BaseIndexerAddSearchKeywordsQueryContributor
+	implements AddSearchKeywordsQueryContributor {
 
 	@Override
 	public void contribute(
-		BooleanFilter booleanFilter,
-		Map<String, Indexer<?>> entryClassNameIndexerMap,
-		SearchContext searchContext) {
+		BooleanQuery booleanQuery, SearchContext searchContext) {
 
-		preFilterContributorHelper.contribute(
-			booleanFilter, entryClassNameIndexerMap, searchContext);
+		addSearchKeywordsQueryContributorHelper.contribute(
+			booleanQuery, searchContext);
 	}
 
 	@Reference
-	protected PreFilterContributorHelper preFilterContributorHelper;
+	protected AddSearchKeywordsQueryContributorHelper
+		addSearchKeywordsQueryContributorHelper;
 
 }

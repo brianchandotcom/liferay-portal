@@ -15,7 +15,6 @@
 package com.liferay.portal.search.internal.searcher;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.search.ExpandoQueryContributor;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -24,6 +23,9 @@ import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.constants.SearchContextAttributes;
+import com.liferay.portal.search.internal.expando.ExpandoQueryContributorHelper;
+import com.liferay.portal.search.internal.indexer.AddSearchKeywordsQueryContributorHelper;
+import com.liferay.portal.search.internal.indexer.PostProcessSearchQueryContributorHelper;
 import com.liferay.portal.search.internal.indexer.PreFilterContributorHelper;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.test.util.DocumentFixture;
@@ -141,8 +143,10 @@ public class FacetedSearcherImplTest {
 
 	protected FacetedSearcherImpl createFacetedSearcher() {
 		return new FacetedSearcherImpl(
-			expandoQueryContributor, indexerRegistry, indexSearcherHelper,
-			preFilterContributorHelper, searchableAssetClassNamesProvider,
+			addSearchKeywordsQueryContributorHelper,
+			expandoQueryContributorHelper, indexerRegistry, indexSearcherHelper,
+			postProcessSearchQueryContributorHelper, preFilterContributorHelper,
+			searchableAssetClassNamesProvider,
 			createSearchRequestBuilderFactory());
 	}
 
@@ -158,7 +162,11 @@ public class FacetedSearcherImplTest {
 	}
 
 	@Mock
-	protected ExpandoQueryContributor expandoQueryContributor;
+	protected AddSearchKeywordsQueryContributorHelper
+		addSearchKeywordsQueryContributorHelper;
+
+	@Mock
+	protected ExpandoQueryContributorHelper expandoQueryContributorHelper;
 
 	protected FacetedSearcher facetedSearcher;
 
@@ -167,6 +175,10 @@ public class FacetedSearcherImplTest {
 
 	@Mock
 	protected IndexSearcherHelper indexSearcherHelper;
+
+	@Mock
+	protected PostProcessSearchQueryContributorHelper
+		postProcessSearchQueryContributorHelper;
 
 	@Mock
 	protected PreFilterContributorHelper preFilterContributorHelper;

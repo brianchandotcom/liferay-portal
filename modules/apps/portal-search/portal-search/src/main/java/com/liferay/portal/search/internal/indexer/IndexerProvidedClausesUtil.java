@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.expando;
+package com.liferay.portal.search.internal.indexer;
 
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
-
-import java.util.Collection;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author André de Oliveira
  */
-public interface ExpandoQueryContributorHelper {
+public class IndexerProvidedClausesUtil {
 
-	public void contribute(
-		String keywords, BooleanQuery booleanQuery,
-		Collection<String> classNames, SearchContext searchContext);
+	public static boolean shouldSuppress(SearchContext searchContext) {
+		return GetterUtil.getBoolean(
+			searchContext.getAttribute(
+				"search.full.query.suppress.indexer.provided.clauses"));
+	}
 
 }

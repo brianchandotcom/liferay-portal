@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.internal.expando;
+package com.liferay.portal.search.internal.indexer;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.ExpandoQueryContributor;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.PostProcessSearchQueryContributor;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.search.internal.indexer.IndexerProvidedClausesUtil;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 
-import java.util.Arrays;
+import java.util.Collection;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,24 +28,21 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = ExpandoQueryContributor.class)
-public class BaseIndexerExpandoQueryContributor
-	implements ExpandoQueryContributor {
+@Component(immediate = true, service = PostProcessSearchQueryContributor.class)
+public class BaseIndexerPostProcessSearchQueryContributor
+	implements PostProcessSearchQueryContributor {
 
 	@Override
 	public void contribute(
-		String keywords, BooleanQuery booleanQuery, String[] classNames,
-		SearchContext searchContext) {
+		BooleanQuery booleanQuery, BooleanFilter booleanFilter,
+		Collection<Indexer<?>> indexers, SearchContext searchContext) {
 
-		if (IndexerProvidedClausesUtil.shouldSuppress(searchContext)) {
-			return;
-		}
-
-		expandoQueryContributorHelper.contribute(
-			keywords, booleanQuery, Arrays.asList(classNames), searchContext);
+		postProcessSearchQueryContributorHelper.contribute(
+			booleanQuery, booleanFilter, indexers, searchContext);
 	}
 
 	@Reference
-	protected ExpandoQueryContributorHelper expandoQueryContributorHelper;
+	protected PostProcessSearchQueryContributorHelper
+		postProcessSearchQueryContributorHelper;
 
 }

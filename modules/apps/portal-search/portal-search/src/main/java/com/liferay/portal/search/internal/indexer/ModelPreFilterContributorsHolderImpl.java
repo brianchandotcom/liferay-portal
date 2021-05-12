@@ -18,8 +18,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -34,36 +35,79 @@ public class ModelPreFilterContributorsHolderImpl
 	implements ModelPreFilterContributorsHolder {
 
 	@Override
-	public void forEach(
-		String entryClassName, Consumer<ModelPreFilterContributor> consumer) {
+	public Stream<ModelPreFilterContributor> stream(
+		String entryClassName, boolean mandatoryOnly) {
 
-		List<ModelPreFilterContributor> list = _serviceTrackerMap.getService(
-			"ALL");
+		List<ModelPreFilterContributor> list = new ArrayList<>();
 
-		if (list != null) {
-			list.forEach(consumer);
+		_addAll(list, _getAllClassesContributors());
+		_addAll(list, _getClassContributors(entryClassName));
+
+		if (mandatoryOnly) {
+			_retainAll(list, _getMandatoryContributors());
 		}
 
-		list = _serviceTrackerMap.getService(entryClassName);
-
-		if (list != null) {
-			list.forEach(consumer);
-		}
+		return list.stream();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, ModelPreFilterContributor.class,
-			"indexer.class.name");
+		_classNameServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ModelPreFilterContributor.class,
+				"indexer.class.name");
+
+		_mandatoryServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, ModelPreFilterContributor.class,
+				"indexer.clauses.mandatory");
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		_classNameServiceTrackerMap.close();
+		_mandatoryServiceTrackerMap.close();
+	}
+
+	private void _addAll(
+		List<ModelPreFilterContributor> list1,
+		List<ModelPreFilterContributor> list2) {
+
+		if (list2 == null) {
+			return;
+		}
+
+		list1.addAll(list2);
+	}
+
+	private List<ModelPreFilterContributor> _getAllClassesContributors() {
+		return _classNameServiceTrackerMap.getService("ALL");
+	}
+
+	private List<ModelPreFilterContributor> _getClassContributors(
+		String entryClassName) {
+
+		return _classNameServiceTrackerMap.getService(entryClassName);
+	}
+
+	private List<ModelPreFilterContributor> _getMandatoryContributors() {
+		return _mandatoryServiceTrackerMap.getService("true");
+	}
+
+	private void _retainAll(
+		List<ModelPreFilterContributor> list1,
+		List<ModelPreFilterContributor> list2) {
+
+		if (list2 == null) {
+			return;
+		}
+
+		list1.retainAll(list2);
 	}
 
 	private ServiceTrackerMap<String, List<ModelPreFilterContributor>>
-		_serviceTrackerMap;
+		_classNameServiceTrackerMap;
+	private ServiceTrackerMap<String, List<ModelPreFilterContributor>>
+		_mandatoryServiceTrackerMap;
 
 }

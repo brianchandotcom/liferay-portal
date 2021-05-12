@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v3_2_4;
 
+import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -32,9 +33,6 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 
 import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -97,22 +95,6 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private DecimalFormat _getDecimalFormat(Locale locale) {
-		DecimalFormat decimalFormat = _decimalFormatsMap.get(locale);
-
-		if (decimalFormat == null) {
-			decimalFormat = (DecimalFormat)DecimalFormat.getInstance(locale);
-
-			decimalFormat.setGroupingUsed(false);
-			decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
-			decimalFormat.setParseBigDecimal(true);
-
-			_decimalFormatsMap.put(locale, decimalFormat);
-		}
-
-		return decimalFormat;
-	}
-
 	private HashMap<String, JSONObject> _mapDataFieldValues(
 		JSONArray fieldValuesJSONArray) {
 
@@ -159,9 +141,10 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 					namesJSONArray.forEach(
 						languageId -> {
 							try {
-								DecimalFormat decimalFormat = _getDecimalFormat(
-									LocaleUtil.fromLanguageId(
-										GetterUtil.getString(languageId)));
+								DecimalFormat decimalFormat =
+									NumericDDMFormFieldUtil.getNumberFormat(
+										LocaleUtil.fromLanguageId(
+											GetterUtil.getString(languageId)));
 
 								String valueString =
 									fieldValueJSONObject.getString(
@@ -175,7 +158,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 
 								if (!valueString.equals(formattedNumber)) {
 									DecimalFormat defaultDecimalFormat =
-										_getDecimalFormat(LocaleUtil.US);
+										NumericDDMFormFieldUtil.getNumberFormat(
+											LocaleUtil.US);
 
 									number = defaultDecimalFormat.parse(
 										valueString);
@@ -203,9 +187,6 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMContentUpgradeProcess.class);
-
-	private static final Map<Locale, DecimalFormat> _decimalFormatsMap =
-		new ConcurrentHashMap<>();
 
 	private final JSONFactory _jsonFactory;
 

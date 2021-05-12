@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
+import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.text.DecimalFormat;
@@ -29,7 +30,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -147,7 +147,8 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 			String dataType = ddmFormField.getDataType();
 
 			if (dataType.equals("double")) {
-				DecimalFormat numberFormat = _getDecimalFormat(locale);
+				DecimalFormat numberFormat =
+					NumericDDMFormFieldUtil.getNumberFormat(locale);
 
 				newValue.addString(
 					locale,
@@ -161,24 +162,5 @@ public class DDMFormValuesMergerImpl implements DDMFormValuesMerger {
 			}
 		}
 	}
-
-	private DecimalFormat _getDecimalFormat(Locale locale) {
-		DecimalFormat formatter = _decimalFormattersMap.get(locale);
-
-		if (formatter == null) {
-			formatter = (DecimalFormat)DecimalFormat.getInstance(locale);
-
-			formatter.setGroupingUsed(false);
-			formatter.setMaximumFractionDigits(Integer.MAX_VALUE);
-			formatter.setParseBigDecimal(true);
-
-			_decimalFormattersMap.put(locale, formatter);
-		}
-
-		return formatter;
-	}
-
-	private static final Map<Locale, DecimalFormat> _decimalFormattersMap =
-		new ConcurrentHashMap<>();
 
 }

@@ -20,6 +20,7 @@ import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -63,7 +64,7 @@ public class DSEnvelopeManagerTest {
 										clazz.getResourceAsStream(
 											"dependencies/Document.pdf")));
 								dsDocumentId = "1";
-								name = "Document";
+								name = RandomTestUtil.randomString();
 							}
 						});
 					dsRecipients = Collections.singletonList(
@@ -71,11 +72,11 @@ public class DSEnvelopeManagerTest {
 							{
 								dsRecipientId = "1";
 								emailAddress = "joseabelenda@gmail.com";
-								name = "José Abelenda";
+								name = RandomTestUtil.randomString();
 							}
 						});
-					emailBlurb = "Please, sign the documents";
-					emailSubject = "New " + System.currentTimeMillis();
+					emailBlurb = RandomTestUtil.randomString();
+					emailSubject = RandomTestUtil.randomString();
 					status = "sent";
 				}
 			});
@@ -85,7 +86,7 @@ public class DSEnvelopeManagerTest {
 
 	@Test
 	public void testGetDSEnvelope() throws Exception {
-		String expectedEmailSubject = "New " + System.currentTimeMillis();
+		String expectedEmailSubject = RandomTestUtil.randomString();
 
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getGroupId(),

@@ -117,18 +117,22 @@ String displayPageURL = assetCategoriesDisplayContext.getDisplayPageURL(category
 							return;
 						}
 
-						let parentCategoryId = 0;
-						let vocabularyId = 0;
+						const item = Object.values(selectedItems).find(
+							(item) => !item.unchecked
+						);
 
-						for (const key in selectedItems) {
-							const item = selectedItems[key];
+						const categoryId = '<%= category.getCategoryId() %>';
+						const parentCategoryId = item.categoryId || 0;
+						const vocabularyId = item.vocabularyId || 0;
 
-							if (!item.unchecked) {
-								parentCategoryId = item.categoryId || 0;
-								vocabularyId = item.vocabularyId || 0;
+						if (categoryId === parentCategoryId) {
+							Liferay.Util.openToast({
+								message:
+									'<liferay-ui:message arguments="<%= category.getTitle(locale) %>" key="unable-to-move-the-category-x-into-itself" />',
+								type: 'danger',
+							});
 
-								break;
-							}
+							return;
 						}
 
 						if (vocabularyId > 0 || parentCategoryId > 0) {
@@ -137,8 +141,7 @@ String displayPageURL = assetCategoriesDisplayContext.getDisplayPageURL(category
 							);
 
 							if (form) {
-								form.<portlet:namespace />categoryId.value =
-									'<%= category.getCategoryId() %>';
+								form.<portlet:namespace />categoryId.value = categoryId;
 								form.<portlet:namespace />parentCategoryId.value = parentCategoryId;
 								form.<portlet:namespace />vocabularyId.value = vocabularyId;
 

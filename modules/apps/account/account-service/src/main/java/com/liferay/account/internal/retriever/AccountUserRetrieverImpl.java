@@ -210,8 +210,7 @@ public class AccountUserRetrieverImpl implements AccountUserRetriever {
 				return user;
 			});
 
-		return new BaseModelSearchResult<>(
-			users, searchResponse.getTotalHits());
+		return new BaseModelSearchResult<>(users, searchHits.getTotalHits());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

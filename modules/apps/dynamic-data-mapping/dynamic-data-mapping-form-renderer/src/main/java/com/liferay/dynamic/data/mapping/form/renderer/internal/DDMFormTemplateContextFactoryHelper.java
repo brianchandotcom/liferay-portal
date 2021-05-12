@@ -105,7 +105,7 @@ public class DDMFormTemplateContextFactoryHelper {
 
 			Matcher matcher = pattern.matcher(expression);
 
-			if (matcher.matches()) {
+			if (matcher.find()) {
 				referencedFieldNames.add(ddmFormFieldName);
 			}
 		}

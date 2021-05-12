@@ -42,7 +42,7 @@ public class BuildXSDTask extends Zip {
 	public BuildXSDTask() {
 		setAppendix("xbean");
 		setExtension(Jar.DEFAULT_EXTENSION);
-		setVersion(null);
+		setVersion("");
 	}
 
 	@Override

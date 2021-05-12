@@ -62,7 +62,7 @@ public class DLAppServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, String, String, String,
-	 String, String, byte[], ServiceContext)}
+	 String, String, byte[], Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -110,7 +110,7 @@ public class DLAppServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, String, String, String,
-	 String, String, File, ServiceContext)}
+	 String, String, File, Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -159,7 +159,8 @@ public class DLAppServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, String, String, String,
-	 String, String, InputStream, long, ServiceContext)}
+	 String, String, InputStream, long, Date, Date,
+	 ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -198,6 +199,9 @@ public class DLAppServiceWrapper
 	 * @param description the file's description
 	 * @param changeLog the file's version change log
 	 * @param bytes the file's data (optionally <code>null</code>)
+	 * @param expirationDate the file's expiration date (optionally <code>null
+	 </code>)
+	 * @param reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param serviceContext the service context to be applied. Can set the
 	 asset category IDs, asset tag names, and expando bridge
 	 attributes for the file entry. In a Liferay repository, it may
@@ -207,6 +211,57 @@ public class DLAppServiceWrapper
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+			String externalReferenceCode, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, byte[] bytes,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.addFileEntry(
+			externalReferenceCode, repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, bytes, expirationDate,
+			reviewDate, serviceContext);
+	}
+
+	/**
+	 * Adds a file entry and associated metadata. It is created based on a byte
+	 * array.
+	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 *
+	 * @param externalReferenceCode the file entry's external reference code
+	 * @param repositoryId the primary key of the repository
+	 * @param folderId the primary key of the file entry's parent folder
+	 * @param sourceFileName the original file's name
+	 * @param mimeType the file's MIME type
+	 * @param title the name to be assigned to the file (optionally <code>null
+	 </code>)
+	 * @param description the file's description
+	 * @param changeLog the file's version change log
+	 * @param bytes the file's data (optionally <code>null</code>)
+	 * @param serviceContext the service context to be applied. Can set the
+	 asset category IDs, asset tag names, and expando bridge
+	 attributes for the file entry. In a Liferay repository, it may
+	 include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
+	 type </li> <li> fieldsMap - mapping for fields associated with a
+	 custom file entry type </li> </ul>
+	 * @return the file entry
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, String, String, String,
+	 String, String, byte[], Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
 			String externalReferenceCode, long repositoryId, long folderId,
@@ -243,6 +298,9 @@ public class DLAppServiceWrapper
 	 * @param description the file's description
 	 * @param changeLog the file's version change log
 	 * @param file the file's data (optionally <code>null</code>)
+	 * @param expirationDate the file's expiration date (optionally <code>null
+	 </code>)
+	 * @param reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param serviceContext the service context to be applied. Can set the
 	 asset category IDs, asset tag names, and expando bridge
 	 attributes for the file entry. In a Liferay repository, it may
@@ -252,6 +310,57 @@ public class DLAppServiceWrapper
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+			String externalReferenceCode, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog, java.io.File file,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.addFileEntry(
+			externalReferenceCode, repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, file, expirationDate,
+			reviewDate, serviceContext);
+	}
+
+	/**
+	 * Adds a file entry and associated metadata. It is created based on a
+	 * {@link File} object.
+	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 *
+	 * @param externalReferenceCode the file entry's external reference code.
+	 * @param repositoryId the primary key of the repository
+	 * @param folderId the primary key of the file entry's parent folder
+	 * @param sourceFileName the original file's name
+	 * @param mimeType the file's MIME type
+	 * @param title the name to be assigned to the file (optionally <code>null
+	 </code>)
+	 * @param description the file's description
+	 * @param changeLog the file's version change log
+	 * @param file the file's data (optionally <code>null</code>)
+	 * @param serviceContext the service context to be applied. Can set the
+	 asset category IDs, asset tag names, and expando bridge
+	 attributes for the file entry. In a Liferay repository, it may
+	 include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
+	 type </li> <li> fieldsMap - mapping for fields associated with a
+	 custom file entry type </li> </ul>
+	 * @return the file entry
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, String, String, String,
+	 String, String, File, Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
 			String externalReferenceCode, long repositoryId, long folderId,
@@ -289,6 +398,8 @@ public class DLAppServiceWrapper
 	 * @param changeLog the file's version change log
 	 * @param inputStream the file's data (optionally <code>null</code>)
 	 * @param size the file's size (optionally <code>0</code>)
+	 * @param expirationDate the file's expiration date (optionally <code>null</code>)
+	 * @param reviewDate the file's review Date (optionally <code>null</code>)
 	 * @param serviceContext the service context to be applied. Can set the
 	 asset category IDs, asset tag names, and expando bridge
 	 attributes for the file entry. In a Liferay repository, it may
@@ -298,6 +409,60 @@ public class DLAppServiceWrapper
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
 	 */
+	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
+			String externalReferenceCode, long repositoryId, long folderId,
+			String sourceFileName, String mimeType, String title,
+			String description, String changeLog,
+			java.io.InputStream inputStream, long size,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlAppService.addFileEntry(
+			externalReferenceCode, repositoryId, folderId, sourceFileName,
+			mimeType, title, description, changeLog, inputStream, size,
+			expirationDate, reviewDate, serviceContext);
+	}
+
+	/**
+	 * Adds a file entry and associated metadata. It is created based on a
+	 * {@link InputStream} object.
+	 *
+	 * <p>
+	 * This method takes two file names, the <code>sourceFileName</code> and the
+	 * <code>title</code>. The <code>sourceFileName</code> corresponds to the
+	 * name of the actual file being uploaded. The <code>title</code>
+	 * corresponds to a name the client wishes to assign this file after it has
+	 * been uploaded to the portal. If it is <code>null</code>, the <code>
+	 * sourceFileName</code> will be used.
+	 * </p>
+	 *
+	 * @param externalReferenceCode the file entry's external reference code.
+	 * @param repositoryId the primary key of the repository
+	 * @param folderId the primary key of the file entry's parent folder
+	 * @param sourceFileName the original file's name
+	 * @param mimeType the file's MIME type
+	 * @param title the name to be assigned to the file (optionally <code>null
+	 </code>)
+	 * @param description the file's description
+	 * @param changeLog the file's version change log
+	 * @param inputStream the file's data (optionally <code>null</code>)
+	 * @param size the file's size (optionally <code>0</code>)
+	 * @param serviceContext the service context to be applied. Can set the
+	 asset category IDs, asset tag names, and expando bridge
+	 attributes for the file entry. In a Liferay repository, it may
+	 include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
+	 type </li> <li> fieldsMap - mapping for fields associated with a
+	 custom file entry type </li> </ul>
+	 * @return the file entry
+	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, String, String, String,
+	 String, String, InputStream, long, Date, Date,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.portal.kernel.repository.model.FileEntry addFileEntry(
 			String externalReferenceCode, long repositoryId, long folderId,

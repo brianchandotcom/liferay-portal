@@ -31,6 +31,8 @@ public class InstanceEntityModel implements EntityModel {
 	public InstanceEntityModel() {
 		_entityFieldsMap = Stream.of(
 			new DateTimeEntityField(
+				"dateCreated", locale -> "createDate", locale -> "createDate"),
+			new DateTimeEntityField(
 				"dateOverdue", locale -> "overdueDate", locale -> "overdueDate")
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())

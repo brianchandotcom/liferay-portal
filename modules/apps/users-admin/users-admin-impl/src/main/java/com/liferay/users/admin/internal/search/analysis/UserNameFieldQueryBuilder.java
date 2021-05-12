@@ -14,10 +14,12 @@
 
 package com.liferay.users.admin.internal.search.analysis;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.analysis.KeywordTokenizer;
 
@@ -39,6 +41,12 @@ public class UserNameFieldQueryBuilder implements FieldQueryBuilder {
 		List<String> tokens = _keywordTokenizer.tokenize(keywords);
 
 		for (String token : tokens) {
+			token = StringUtil.removeChar(token, CharPool.PERCENT);
+
+			if (token.isEmpty()) {
+				continue;
+			}
+
 			booleanQueryImpl.add(
 				_getMatchPhrasePrefixQuery("userName.text", token),
 				BooleanClauseOccur.SHOULD);

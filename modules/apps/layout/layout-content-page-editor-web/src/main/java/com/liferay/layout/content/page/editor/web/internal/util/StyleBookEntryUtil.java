@@ -40,6 +40,10 @@ public class StyleBookEntryUtil {
 
 		Map<String, Object> frontendTokensValues = new LinkedHashMap<>();
 
+		if (frontendTokenDefinition == null) {
+			return frontendTokensValues;
+		}
+
 		JSONObject frontendTokenValuesJSONObject =
 			_getFrontendTokenValuesJSONObject(styleBookEntry);
 

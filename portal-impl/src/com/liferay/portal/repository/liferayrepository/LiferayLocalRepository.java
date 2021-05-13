@@ -249,6 +249,21 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public FileEntry fetchFileEntryByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		DLFileEntry dlFileEntry =
+			dlFileEntryLocalService.fetchFileEntryByExternalReferenceCode(
+				getGroupId(), externalReferenceCode);
+
+		if (dlFileEntry != null) {
+			return new LiferayFileEntry(dlFileEntry);
+		}
+
+		return null;
+	}
+
+	@Override
 	public List<FileEntry> getFileEntries(
 		long folderId, int status, int start, int end,
 		OrderByComparator<FileEntry> orderByComparator) {

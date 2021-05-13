@@ -136,12 +136,34 @@ definition {
 	}
 
 	@description = "COMMERCE-6150. As a buyer, I want to search a product by its name using single quotes in the Search Bar widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test SearchBarWidgetSearchProductByNameSingleQuotes {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductByNameSingleQuotes";
+		
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		// TODO COMMERCE-6150 SearchBarWidgetSearchProductByNameSingleQuotes pending implementation
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "'ABS Sensor'");
+
+		Button.clickSubmitButton();
+
+		for (var i : list "ABS Sensor,Wear Sensors,3") {
+			if ("${i}" == "3") {
+				AssertElementNotPresent(
+					key_value = "${i}",
+					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+			}
+			else {
+				AssertElementPresent(
+					key_productName = "${i}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+		}
+		
 	}
 
 	@description = "COMMERCE-6151. As a buyer, I want to search a product by typing its SKU in the Search Bar widget and the results should be visible on the Search Results widget"

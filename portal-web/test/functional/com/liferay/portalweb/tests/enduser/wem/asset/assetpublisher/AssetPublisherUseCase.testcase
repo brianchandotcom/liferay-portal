@@ -1204,86 +1204,82 @@ definition {
 		}
 	}
 
+	@description = "View related assets in Related Assets widget."
 	@priority = "3"
-	test ViewRelatedAssetsViaRelatedAssetsPortlet {
-		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Related Assets");
+	test ViewRelatedAssetsInRelatedAssetsWidget {
+		task ("Add a Related Assets to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Related Assets");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page",
-			widgetName = "Related Assets");
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page");
+		task ("Add a blogs entry and select the web content as related assets") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page",
-			widgetName = "Web Content Display");
+			BlogsNavigator.gotoAddEntry();
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Blogs Page");
+			BlogsEntry.addEntryContent(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
+			Panel.expandPanel(panel = "Related Assets");
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
+			RelatedAssets.selectAsset(
+				assetTitle = "WC WebContent Title",
+				assetType = "Basic Web Content");
 
-		WebContent.addPGViaWCD(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+			PortletEntry.publish();
+		}
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		task ("Enable Related Assets in Assets Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Test Site Name");
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Related Assets");
+		}
 
-		BlogsNavigator.gotoAddEntry();
+		task ("View the default content in Related Assets") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
 
-		BlogsEntry.addEntryContent(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			RelatedAssets.viewDefaultPG();
+		}
 
-		Panel.expandPanel(panel = "Related Assets");
+		task ("View related assets in Related Assets") {
+			AssetPublisherPortlet.viewPG(
+				assetContent = "WC WebContent Content",
+				assetTitle = "WC WebContent Title",
+				relatedAssetTitle = "Blogs Entry Title");
 
-		RelatedAssets.selectAsset(
-			assetTitle = "WC WebContent Title",
-			assetType = "Basic Web Content");
+			RelatedAssets.viewPG(relatedAssetTitle = "Blogs Entry Title");
+		}
 
-		PortletEntry.publish();
+		task ("View the default content in Related Assets") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
+			RelatedAssets.viewDefaultPG();
+		}
 
-		RelatedAssets.viewDefaultPG();
+		task ("View related assets in Related Assets") {
+			AssetPublisherPortlet.viewPG(
+				assetContent = "Blogs Entry Content",
+				assetTitle = "Blogs Entry Title",
+				relatedAssetTitle = "WC WebContent Title");
 
-		AssetPublisherPortlet.viewPG(
-			assetContent = "WC WebContent Content",
-			assetTitle = "WC WebContent Title",
-			relatedAssetTitle = "Blogs Entry Title");
-
-		RelatedAssets.viewPG(relatedAssetTitle = "Blogs Entry Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		RelatedAssets.viewDefaultPG();
-
-		AssetPublisherPortlet.viewPG(
-			assetContent = "Blogs Entry Content",
-			assetTitle = "Blogs Entry Title",
-			relatedAssetTitle = "WC WebContent Title");
-
-		RelatedAssets.viewPG(relatedAssetTitle = "WC WebContent Title");
+			RelatedAssets.viewPG(relatedAssetTitle = "WC WebContent Title");
+		}
 	}
 
 	@priority = "3"

@@ -171,4 +171,8 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>BatchPlannerPlanName</exception>
+		<exception>DuplicateBatchPlannerPlan</exception>
+	</exceptions>
 </service-builder>

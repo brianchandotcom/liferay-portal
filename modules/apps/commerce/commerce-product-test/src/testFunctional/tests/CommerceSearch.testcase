@@ -181,12 +181,49 @@ definition {
 	}
 
 	@description = "COMMERCE-6154. As a buyer, I want to search for products by typing different Specification Values in Search Bar widget and the results should be visible on Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test SearchBarWidgetSearchProductsByDifferentSpecificationValues {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsByDifferentSpecificationValues";
 
-		// TODO COMMERCE-6154 SearchBarWidgetSearchProductsByDifferentSpecificationValues pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Plastic Ceramic");
+
+		Button.clickSubmitButton();
+		
+
+		for (var i : list "1,Timing Chain Tensioner,2,Premium Brake Pads,3") {
+			if ("${i}" == "1") {
+				AssertElementPresent(
+					key_value = "${i}",
+					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+			}
+			else if ("${i}" == "Timing Chain Tensioner") {
+				AssertElementPresent(
+					key_productName = "${i}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+			else if ("${i}" == "2") {
+				AssertElementPresent(
+					key_value = "${i}",
+					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+			}
+			else if ("${i}" == "Premium Brake Pads") {
+				AssertElementPresent(
+					key_productName = "${i}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+			else {
+				AssertElementNotPresent(
+				key_value = "${i}",
+				locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+			}
+		}	
 	}
 
 	@description = "COMMERCE-6153. As a buyer, I want to search for products by typing a Specifications Value in Search Bar widget and the results should be visible on Search Results widget"

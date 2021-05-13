@@ -70,13 +70,14 @@ describe('The instance list card should', () => {
 		getByText = renderResult.getByText;
 	});
 
-	test('Be rendered with "sla-status", "process-status", "process-step" and "assignee" filters', () => {
+	test('Be rendered with "sla-status", "process-status", "completion-period", "process-step" and "assignee" filters', () => {
 		const filters = container.querySelectorAll('.dropdown-toggle');
 
 		expect(filters[0]).toHaveTextContent('sla-status');
 		expect(filters[1]).toHaveTextContent('process-status');
-		expect(filters[2]).toHaveTextContent('process-step');
-		expect(filters[3]).toHaveTextContent('assignee');
+		expect(filters[2]).toHaveTextContent('completion-period');
+		expect(filters[3]).toHaveTextContent('process-step');
+		expect(filters[4]).toHaveTextContent('assignee');
 	});
 
 	test('Select all page by clicking on check all button', () => {

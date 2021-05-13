@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSERT_PRODUCT_CARD</td>
+	<td>//*[@class='product-card-tiles']/div[${key_value}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_NAME</td>
 	<td>//p[@class='card-title']//span[text() = '${key_productName}']</td>
 	<td></td>

@@ -74,6 +74,14 @@ definition {
         Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
     }
+
+    macro assertSuccessfulConnection {
+
+        AssertConfirm.assertConfirmationNoError(
+			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE",
+			value1 = "Your DXP instance is connected to Analytics Cloud.");
+
+    }
         
     macro connectDXPtoAnalyticsCloud {
 
@@ -84,6 +92,8 @@ definition {
 		Paste(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
 
 		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+
+        ACDXPSettings.assertSuccessfulConnection();
 
 		ACDXPSettings.navToSyncedSitesMenu();
 

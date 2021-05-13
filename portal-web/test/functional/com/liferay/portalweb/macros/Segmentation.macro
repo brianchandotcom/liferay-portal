@@ -55,6 +55,18 @@ definition {
 		Click(locator1 = "Segmentation#DELETE_SEGMENT");
 	}
 
+	macro deleteSegment {
+		Click.waitForMenuToggleJSClick(
+			key_tableEntry = "${entry}",
+			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro disableAssingRolesBySegmentsCheckbox {
 		if (IsChecked(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX")) {
 			Click.javaScriptClick(locator1 = "Segmentation#ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX");

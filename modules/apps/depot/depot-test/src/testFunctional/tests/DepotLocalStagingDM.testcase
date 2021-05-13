@@ -1379,12 +1379,7 @@ definition {
 	test EditInternalVideoInDepot {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#EditInternalVideoInDepot";
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "FFMPEG Video Converter",
-			configurationScope = "System Scope");
+		SystemSettings.openToSpecificApp(portlet = "FFMPEG Video Converter");
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 

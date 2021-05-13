@@ -11,12 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "FFMPEG Video Converter",
-			configurationScope = "System Scope");
+		SystemSettings.openToSpecificApp(portlet = "FFMPEG Video Converter");
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
@@ -194,12 +189,7 @@ definition {
 	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
 		property test.name.skip.portal.instance = "DLVideo#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "FFMPEG Video Converter",
-			configurationScope = "System Scope");
+		SystemSettings.openToSpecificApp(portlet = "FFMPEG Video Converter");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
@@ -235,12 +225,7 @@ definition {
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "FFMPEG Video Converter",
-			configurationScope = "System Scope");
+		SystemSettings.openToSpecificApp(portlet = "FFMPEG Video Converter");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 

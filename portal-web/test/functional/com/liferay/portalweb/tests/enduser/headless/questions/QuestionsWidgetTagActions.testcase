@@ -10,15 +10,15 @@ definition {
 
 		User.firstLoginPG();
 
-		Navigator.openURL();
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Questions Page");
 
-		SitePages.openPagesAdmin(siteURLKey = "guest");
-
-		ContentPages.addPage(pageName = "Questions Page");
-
-		PageEditor.addWidget(portletName = "Questions");
-
-		PageEditor.clickPublish();
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Questions Page",
+			widgetName = "Questions");
 	}
 
 	tearDown {
@@ -40,20 +40,42 @@ definition {
 		}
 	}
 
+	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
+	@priority = "3"
+	@refactordone
+	test CanViewQuestionViaTag {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			categoryName = "Questions Test Category",
+			tagField = "tag1",
+			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
+
+		Questions.openToTagsTap(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
+
+		Questions.viewQuestionViaTag(
+			questionTitle = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			tagName = "tag1");
+	}
+
 	@description = "Validate if Question portlet have one tab with all tags used in the questions"
 	@priority = "3"
-	@refactorneeded
-	test ListOfTagsAppearsInTheTagsTab {
+	@refactordone
+	test ListOfTagsCanBeViewedInTagsTab {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
 			userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Question ListOfTagsAppearsInTheTagsTab");
-
-		Questions.gotoTab(questionTabField = "Tags");
+		Questions.openToTagsTap(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
 
 		Questions.viewTags(noTagResults = "true");
 
@@ -71,13 +93,9 @@ definition {
 			tagField = "tag1",
 			titleField = "Title ListOfTagsAppearsInTheTagsTab");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Question ListOfTagsAppearsInTheTagsTab");
-
-		Pause(locator = "3000");
-
-		Questions.gotoTab(questionTabField = "Tags");
+		Questions.openToTagsTap(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
 
 		Questions.configureTagsFilter(filterBy = "Latest Created");
 
@@ -88,8 +106,9 @@ definition {
 
 	@description = "Validate if the user can sort the tags."
 	@priority = "4"
-	@refactorneeded
-	test SortQuestionsTags {
+	@refactordone
+	@uitest
+	test QuestionsTagsCanBeSortedInTagsTab {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Questions Test Category",
@@ -148,44 +167,52 @@ definition {
 			usedTimes = "Used 1 Times");
 	}
 
-	@description = "Validate if when the user click in the tag of the Tags tab, the user is redirected to the questions that use this tag"
-	@priority = "3"
-	@refactorneeded
-	test TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			userEmailAddress = "test@liferay.com");
+	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
+	@priority = "4"
+	@refactordone
+	test QuestionTagsCanBeOrderedByOccurrenceInTagsTap {
+		for (var num : list "1,2") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Question ValidateTagsOccurrences${num}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		for (var num : list "1,2") {
+			Questions.addQuestionByAPI(
+				bodyField = "Question Body ${num}",
+				categoryName = "Question ValidateTagsOccurrences1",
+				tagField = "tag1",
+				titleField = "Question ${num}");
+		}
+
+		Questions.openToTagsTap(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
+
+		Questions.viewTags(
+			amountOfUsedTimes = "2",
+			tagName = "tag1");
 
 		Questions.addQuestionByAPI(
-			bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			bodyField = "Question Body 3",
+			categoryName = "Question ValidateTagsOccurrences2",
 			tagField = "tag1",
-			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
+			titleField = "Question 3");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		Questions.openToTagsTap(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
 
-		Questions.gotoCategory(categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
-
-		Pause(locator = "3000");
-
-		Click(
-			key_questionTabField = "Tags",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
-
-		Click(
-			key_tagName = "tag1",
-			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
-
-		AssertElementPresent(
-			key_titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
+		Questions.viewTags(
+			amountOfUsedTimes = "3",
+			tagName = "tag1");
 	}
 
 	@description = "This test covers LPS-119780. It ensures that the user can search by tags in the tags search field."
 	@priority = "4"
-	@refactorneeded
-	test ValidateSearchByQuestionTags {
+	@refactordone
+	test QuestionTagsCanBeSearchedInTagsTab {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Question ValidateSearchByQuestionTags",
@@ -199,21 +226,19 @@ definition {
 				titleField = "Question ${num}");
 		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoTab(questionTabField = "Tags");
+		Questions.openToTagsTap(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
 
 		Questions.search(
 			searchKey = "tag1",
 			searchTag = "true");
 
-		Pause(locator = "3000");
-
 		Questions.viewTags(tagName = "tag1");
 
 		Questions.viewNoTags(tagsList = "tag2,tag3");
 
-		Click(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+		Questions.clearSearchResults();
 
 		for (var tagName : list "tag1,tag2,tag3") {
 			Questions.viewTags(tagName = "${tagName}");
@@ -225,74 +250,15 @@ definition {
 			searchKey = "tag2",
 			searchTag = "true");
 
-		Pause(locator = "3000");
-
 		Questions.viewTags(tagName = "tag2");
 
 		Questions.viewNoTags(tagsList = "tag1,tag3");
 
-		Click(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+		Questions.clearSearchResults();
 
 		for (var tagName : list "tag1,tag2,tag3") {
 			Questions.viewTags(tagName = "${tagName}");
 		}
-	}
-
-	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
-	@priority = "4"
-	@refactorneeded
-	test ValidateTagsOccurrences {
-		for (var num : list "1,2") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoTab(questionTabField = "Questions");
-
-			Pause(locator1 = "2000");
-
-			Questions.addRootTopic(
-				rootTopicDescription = "Description",
-				rootTopicName = "Question ValidateTagsOccurrences${num}");
-		}
-
-		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences1");
-
-		for (var num : list "1,2") {
-			Questions.askQuestionFillingTheMandatoryFields(
-				contentField = "${num}- Body ValidateTagsOccurrences",
-				tagLocatorList = "tag1",
-				titleField = "${num}- Title ValidateTagsOccurrences");
-		}
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences1");
-
-		Pause(locator = "3000");
-
-		Click(
-			key_questionTabField = "Tags",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
-
-		Questions.viewTags(
-			amountOfUsedTimes = "2",
-			tagName = "tag1");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences2");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Content AddQuestion",
-			tagLocatorList = "Tag1",
-			titleField = "Title AddQuestion");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoTab(questionTabField = "Tags");
-
-		Questions.viewTags(
-			amountOfUsedTimes = "3",
-			tagName = "tag1");
 	}
 
 }

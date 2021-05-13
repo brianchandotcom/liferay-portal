@@ -77,9 +77,7 @@ definition {
 
     macro assertSuccessfulConnection {
 
-        AssertConfirm.assertConfirmationNoError(
-			locator1 = "AnalyticsCloudConnection#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE",
-			value1 = "Your DXP instance is connected to Analytics Cloud.");
+        AssertElementPresent(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE");
 
     }
         

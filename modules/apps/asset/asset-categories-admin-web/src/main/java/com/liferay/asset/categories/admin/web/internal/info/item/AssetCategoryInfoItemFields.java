@@ -33,6 +33,16 @@ public interface AssetCategoryInfoItemFields {
 			InfoLocalizedValue.localize(
 				AssetCategoryInfoItemFields.class, "description")
 		).build();
+	public static final InfoField<TextInfoFieldType> displayPageURLInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"displayPageURL"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetCategoryInfoItemFields.class, "display-page-url")
+		).build();
 	public static final InfoField<TextInfoFieldType> nameInfoField =
 		InfoField.builder(
 		).infoFieldType(

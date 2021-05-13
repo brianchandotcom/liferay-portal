@@ -55,6 +55,8 @@ public class AssetCategoryInfoItemFormProvider
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
 		).infoFieldSetEntry(
+			_getDisplayPageInfoFieldSet()
+		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				AssetCategory.class.getName())
 		).labelInfoLocalizedValue(
@@ -76,6 +78,17 @@ public class AssetCategoryInfoItemFormProvider
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(
 			"basic-information"
+		).build();
+	}
+
+	private InfoFieldSet _getDisplayPageInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			AssetCategoryInfoItemFields.displayPageURLInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "display-page")
+		).name(
+			"display-page"
 		).build();
 	}
 

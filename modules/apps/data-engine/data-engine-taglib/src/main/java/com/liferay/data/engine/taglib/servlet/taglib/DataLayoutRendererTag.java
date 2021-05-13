@@ -92,6 +92,7 @@ public class DataLayoutRendererTag extends BaseDataLayoutRendererTag {
 			dataLayoutRendererContext.setPersisted(getPersisted());
 			dataLayoutRendererContext.setPortletNamespace(getNamespace());
 			dataLayoutRendererContext.setReadOnly(getReadOnly());
+			dataLayoutRendererContext.setSubmittable(getSubmittable());
 
 			if (Validator.isNotNull(getDataLayoutId())) {
 				content = DataLayoutTaglibUtil.renderDataLayout(

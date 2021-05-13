@@ -293,6 +293,9 @@ public class DDMFormTemplateContextFactoryImpl
 		templateContext.put("submitLabel", submitLabel);
 
 		templateContext.put(
+			"submittable", ddmFormRenderingContext.isSubmittable());
+
+		templateContext.put(
 			"templateNamespace", getTemplateNamespace(ddmFormLayout));
 		templateContext.put("validations", _getValidations(locale));
 		templateContext.put("viewMode", ddmFormRenderingContext.isViewMode());

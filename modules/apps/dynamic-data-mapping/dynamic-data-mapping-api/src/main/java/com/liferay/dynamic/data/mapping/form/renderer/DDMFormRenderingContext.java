@@ -120,6 +120,10 @@ public class DDMFormRenderingContext {
 		return _showSubmitButton;
 	}
 
+	public boolean isSubmittable() {
+		return _submittable;
+	}
+
 	public boolean isViewMode() {
 		return MapUtil.getBoolean(_properties, "viewMode");
 	}
@@ -206,6 +210,10 @@ public class DDMFormRenderingContext {
 		_submitLabel = submitLabel;
 	}
 
+	public void setSubmittable(boolean submittable) {
+		_submittable = submittable;
+	}
+
 	public void setViewMode(boolean viewMode) {
 		_properties.put("viewMode", viewMode);
 	}
@@ -231,5 +239,6 @@ public class DDMFormRenderingContext {
 	private boolean _showRequiredFieldsWarning = true;
 	private boolean _showSubmitButton = true;
 	private String _submitLabel;
+	private boolean _submittable = true;
 
 }

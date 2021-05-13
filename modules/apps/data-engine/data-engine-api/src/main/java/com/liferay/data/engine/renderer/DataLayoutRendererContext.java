@@ -64,6 +64,10 @@ public class DataLayoutRendererContext {
 		return _readOnly;
 	}
 
+	public boolean isSubmittable() {
+		return _submittable;
+	}
+
 	public void setContainerId(String containerId) {
 		_containerId = containerId;
 	}
@@ -106,6 +110,10 @@ public class DataLayoutRendererContext {
 		_readOnly = readOnly;
 	}
 
+	public void setSubmittable(boolean submittable) {
+		_submittable = submittable;
+	}
+
 	private String _containerId;
 	private Map<String, Object> _dataRecordValues;
 	private String _defaultLanguageId;
@@ -116,5 +124,6 @@ public class DataLayoutRendererContext {
 	private boolean _persisted;
 	private String _portletNamespace;
 	private boolean _readOnly;
+	private boolean _submittable;
 
 }

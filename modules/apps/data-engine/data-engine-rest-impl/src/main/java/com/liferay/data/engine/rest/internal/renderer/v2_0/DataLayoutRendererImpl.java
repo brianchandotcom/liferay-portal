@@ -128,6 +128,8 @@ public class DataLayoutRendererImpl implements DataLayoutRenderer {
 			dataLayoutRendererContext.getPortletNamespace());
 		ddmFormRenderingContext.setReadOnly(
 			dataLayoutRendererContext.isReadOnly());
+		ddmFormRenderingContext.setSubmittable(
+			dataLayoutRendererContext.isSubmittable());
 		ddmFormRenderingContext.setShowSubmitButton(false);
 		ddmFormRenderingContext.setViewMode(true);
 

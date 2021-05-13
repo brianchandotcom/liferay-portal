@@ -172,12 +172,34 @@ definition {
 	}
 
 	@description = "COMMERCE-6152. As a buyer, I want to search for different products by typing their SKUs in the Search Bar widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test SearchBarWidgetSearchProductsByDifferentSKUs {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsByDifferentSKUs";
 
-		// TODO COMMERCE-6152 SearchBarWidgetSearchProductsByDifferentSKUs pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "MIN93015 MIN55861");
+
+		Button.clickSubmitButton();
+
+		for (var i : list "U-Joint,ABS Sensor,3") {
+			if ("${i}" == "3") {
+				AssertElementNotPresent(
+					key_value = "${i}",
+					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+			}
+			else {
+				AssertElementPresent(
+					key_productName = "${i}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+		}
+
 	}
 
 	@description = "COMMERCE-6154. As a buyer, I want to search for products by typing different Specification Values in Search Bar widget and the results should be visible on Search Results widget"

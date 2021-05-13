@@ -127,6 +127,8 @@ public class SynchronousDestinationTestRule
 		}
 
 		public void enableSync() {
+			Filter audioProcessorFilter = _registerDestinationFilter(
+				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
 			Filter auditFilter = _registerDestinationFilter(
 				DestinationNames.AUDIT);
 			Filter asyncFilter = _registerDestinationFilter(
@@ -165,14 +167,15 @@ public class SynchronousDestinationTestRule
 				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 
 			_waitForDependencies(
-				auditFilter, asyncFilter, backgroundTaskFilter,
-				backgroundTaskStatusFilter, commerceOrderFilter,
-				commercePaymentFilter, commerceShipmentFilter,
-				commerceStockFilter, commerceSubscriptionFilter,
-				ddmStructureReindexFilter, kaleoGraphWalkerFilter, mailFilter,
-				pdfProcessorFilter, rawMetaDataProcessorFilter,
-				segmentsEntryReindexFilter, subscrpitionSenderFilter,
-				tensorflowModelDownloadFilter, videoProcessorFilter);
+				audioProcessorFilter, auditFilter, asyncFilter,
+				backgroundTaskFilter, backgroundTaskStatusFilter,
+				commerceOrderFilter, commercePaymentFilter,
+				commerceShipmentFilter, commerceStockFilter,
+				commerceSubscriptionFilter, ddmStructureReindexFilter,
+				kaleoGraphWalkerFilter, mailFilter, pdfProcessorFilter,
+				rawMetaDataProcessorFilter, segmentsEntryReindexFilter,
+				subscrpitionSenderFilter, tensorflowModelDownloadFilter,
+				videoProcessorFilter);
 
 			_destinations = ReflectionTestUtil.getFieldValue(
 				MessageBusUtil.getMessageBus(), "_destinations");
@@ -180,6 +183,8 @@ public class SynchronousDestinationTestRule
 			_forceSyncSafeCloseable = ProxyModeThreadLocal.setWithSafeCloseable(
 				true);
 
+			replaceDestination(
+				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
 			replaceDestination(DestinationNames.AUDIT);
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
 			replaceDestination(DestinationNames.BACKGROUND_TASK);

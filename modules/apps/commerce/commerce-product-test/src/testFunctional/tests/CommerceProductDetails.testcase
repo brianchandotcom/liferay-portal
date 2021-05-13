@@ -31,30 +31,29 @@ definition {
 	test AddProductToCartFromProductDetails {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductDetails#AddProductToCartFromProductDetails";
-		
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-		
+
 		ApplicationsMenu.gotoSite(site = "Minium");
-		
+
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-		
+
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
-            accountName = "Test",
-            adminEmailAddress = "test@liferay.com");
+			accountName = "Test",
+			adminEmailAddress = "test@liferay.com");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
 		FrontStore.addInitializerProductToCart(
 			productName = "U-Joint",
 			productQuantity = "2");
-		
+
 		CommerceNavigator.gotoMiniCart();
 
 		AssertElementPresent(
-            key_cartItemSKU = "MIN55861",
-            locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
-            value1 = "U-Joint");
-
+			key_cartItemSKU = "MIN55861",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			value1 = "U-Joint");
 	}
 
 	@description = "COMMERCE-6354. As a buyer, I want to be able to add a product to wish list from Product Details and if I refresh the page, I want to be able to see that the product is already added to wishlist"
@@ -64,6 +63,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6354 AddProductToWishListFromProductDetails pending implementation
+
 	}
 
 	@description = "COMMERCE-6359. As a buyer, I want to be able to select only the allowed quantities of a product in Product Details, if set"

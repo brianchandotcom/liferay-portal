@@ -50,7 +50,7 @@ public class
 
 	@Override
 	public String getCategoryKey() {
-		return "other";
+		return "pages";
 	}
 
 	@Override

@@ -34,7 +34,7 @@ public class SiteURLSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getCategoryKey() {
-		return "general";
+		return "site-configuration";
 	}
 
 	@Override

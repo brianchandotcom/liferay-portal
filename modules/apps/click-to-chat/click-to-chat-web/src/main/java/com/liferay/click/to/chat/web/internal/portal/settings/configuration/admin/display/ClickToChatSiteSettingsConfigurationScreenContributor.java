@@ -50,7 +50,7 @@ public class ClickToChatSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getCategoryKey() {
-		return "other";
+		return "click-to-chat";
 	}
 
 	@Override

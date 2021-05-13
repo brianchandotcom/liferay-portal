@@ -224,7 +224,9 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		if (selectionStyle.equals(
 				AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC)) {
 
-			if (!_assetPublisherWebConfiguration.dynamicExportEnabled()) {
+			if (!_assetPublisherWebConfiguration.dynamicExportEnabled() ||
+				layout.isTypeAssetDisplay()) {
+
 				return;
 			}
 

@@ -15,6 +15,7 @@
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo} from 'react';
 
+import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/backgroundImageFragmentEntryProcessor';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
@@ -82,12 +83,21 @@ function FragmentContentInteractionsFilter({
 	);
 
 	const editableValues = useSelectorCallback(
-		(state) =>
-			state.fragmentEntryLinks[fragmentEntryLinkId]
-				? state.fragmentEntryLinks[fragmentEntryLinkId].editableValues[
-						EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-				  ]
-				: {},
+		(state) => {
+			const fragmentEntryLink =
+				state.fragmentEntryLinks[fragmentEntryLinkId];
+
+			return fragmentEntryLink
+				? {
+						...fragmentEntryLink.editableValues[
+							EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+						],
+						...fragmentEntryLink.editableValues[
+							BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
+						],
+				  }
+				: {};
+		},
 		[fragmentEntryLinkId],
 		deepEqual
 	);

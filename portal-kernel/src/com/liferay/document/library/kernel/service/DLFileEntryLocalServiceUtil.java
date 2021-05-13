@@ -456,6 +456,13 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().fetchFileEntryByAnyImageId(imageId);
 	}
 
+	public static DLFileEntry fetchFileEntryByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return getService().fetchFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	public static DLFileEntry fetchFileEntryByFileName(
 		long groupId, long folderId, String fileName) {
 

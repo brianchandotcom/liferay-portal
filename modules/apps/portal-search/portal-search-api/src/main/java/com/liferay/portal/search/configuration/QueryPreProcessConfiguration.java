@@ -33,7 +33,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface QueryPreProcessConfiguration {
 
 	@Meta.AD(
-		deflt = "license|path|properties|sku|tag|treePath|userName",
+		deflt = "license|path|properties|sku|tag|treePath",
 		name = "field-name-patterns", required = false
 	)
 	public String[] fieldNamePatterns();

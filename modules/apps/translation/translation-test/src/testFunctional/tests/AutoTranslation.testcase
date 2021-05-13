@@ -34,7 +34,7 @@ definition {
 			groupName = "Site Name",
 			title = "This is the title of a web article in English");
 
-		SystemSettings.openToSpecificApp(portlet = "Google Cloud Translator");
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "true",
@@ -84,7 +84,7 @@ definition {
 			groupName = "Site Name",
 			title = "This is the title of a web article in English");
 
-		SystemSettings.openToSpecificApp(portlet = "Google Cloud Translator");
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "true",
@@ -108,7 +108,7 @@ definition {
 
 		PortletEntry.publish();
 
-		SystemSettings.openToSpecificApp(portlet = "Google Cloud Translator");
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Cloud Translator");
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "false",

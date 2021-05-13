@@ -1379,7 +1379,7 @@ definition {
 	test EditInternalVideoInDepot {
 		property test.name.skip.portal.instance = "DepotLocalStagingDM#EditInternalVideoInDepot";
 
-		SystemSettings.openToSpecificApp(portlet = "FFMPEG Video Converter");
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 

@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-		SystemSettings.openToSpecificApp(portlet = "FFMPEG Video Converter");
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
@@ -189,7 +189,7 @@ definition {
 	test AssertNoVideoInItemSelectorAfterDisablingFFmpeg {
 		property test.name.skip.portal.instance = "DLVideo#AssertNoVideoInItemSelectorAfterDisablingFFmpeg";
 
-		SystemSettings.openToSpecificApp(portlet = "FFMPEG Video Converter");
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 
@@ -217,7 +217,7 @@ definition {
 	test CanDisableFFmpegAfterUploadingVideo {
 		property test.name.skip.portal.instance = "DLVideo#CanDisableFFmpegAfterUploadingVideo";
 
-		SystemSettings.openToSpecificApp(portlet = "FFMPEG Video Converter");
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
 		FormFields.disableCheckbox(fieldName = "enabled");
 

@@ -474,41 +474,34 @@ public class InstanceResourceImpl
 			booleanQuery.addMustQueryClauses(termsQuery);
 		}
 
-		final boolean hasCompletedFilter = ArrayUtil.contains(
-			processStatuses, "Completed");
-		final boolean hasPendingFilter = ArrayUtil.contains(
-			processStatuses, "Pending");
+		if (ArrayUtil.isNotEmpty(processStatuses)) {
+			BooleanQuery shouldBooleanQuery = _queries.booleanQuery();
 
-		if (!(hasCompletedFilter && hasPendingFilter)) {
-			if (hasCompletedFilter) {
-				booleanQuery.addMustQueryClauses(
+			shouldBooleanQuery.setMinimumShouldMatch(1);
+
+			if (ArrayUtil.contains(processStatuses, "Completed")) {
+				BooleanQuery mustBooleanQuery = _queries.booleanQuery();
+
+				mustBooleanQuery.addMustQueryClauses(
 					_queries.term("completed", true));
+
+				if ((dateEnd != null) && (dateStart != null)) {
+					mustBooleanQuery.addMustQueryClauses(
+						_queries.rangeTerm(
+							"completionDate", true, true,
+							_resourceHelper.getDate(dateStart),
+							_resourceHelper.getDate(dateEnd)));
+				}
+
+				shouldBooleanQuery.addShouldQueryClauses(mustBooleanQuery);
 			}
-			else if (hasPendingFilter) {
-				booleanQuery.addMustQueryClauses(
+
+			if (ArrayUtil.contains(processStatuses, "Pending")) {
+				shouldBooleanQuery.addShouldQueryClauses(
 					_queries.term("completed", false));
 			}
-		}
 
-		if ((dateEnd != null) && (dateStart != null) && hasCompletedFilter) {
-			if (!hasPendingFilter) {
-				booleanQuery.addMustQueryClauses(
-					_queries.dateRangeTerm(
-						"completionDate", true, true, _getDate(dateStart),
-						_getDate(dateEnd)));
-			}
-			else {
-				BooleanQuery shouldBooleanQuery = _queries.booleanQuery();
-				BooleanQuery mustNotBooleanQuery = _queries.booleanQuery();
-
-				booleanQuery.addMustQueryClauses(
-					shouldBooleanQuery.addShouldQueryClauses(
-						mustNotBooleanQuery.addMustNotQueryClauses(
-							_queries.exists("completionDate")),
-						_queries.dateRangeTerm(
-							"completionDate", true, true, _getDate(dateStart),
-							_getDate(dateEnd))));
-			}
+			booleanQuery.addMustQueryClauses(shouldBooleanQuery);
 		}
 
 		if (startInstanceId != null) {

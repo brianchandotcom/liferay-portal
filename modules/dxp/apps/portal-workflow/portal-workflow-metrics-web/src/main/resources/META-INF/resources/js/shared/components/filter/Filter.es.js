@@ -44,6 +44,7 @@ const Filter = ({
 	position = 'left',
 	prefixKey = '',
 	preventClick,
+	show = true,
 	withoutRouteParams,
 }) => {
 	const {dispatchFilter} = useFilter({withoutRouteParams});
@@ -183,46 +184,48 @@ const Filter = ({
 	}, [items, labelPropertyName, searchTerm]);
 
 	return (
-		<li className={classes.dropdown} ref={wrapperRef}>
-			<button
-				className={classes.custom}
-				disabled={disabled}
-				onClick={() => {
-					setExpanded(!expanded);
-				}}
-			>
-				<span className="mr-2 navbar-text-truncate">{name}</span>
-
-				<ClayIcon symbol="caret-bottom" />
-			</button>
-
-			<div className={classes.menu} role="menu">
-				<FilterSearch
-					filteredItems={filteredItems}
-					onChange={({target}) => {
-						setSearchTerm(target.value);
+		show && (
+			<li className={classes.dropdown} ref={wrapperRef}>
+				<button
+					className={classes.custom}
+					disabled={disabled}
+					onClick={() => {
+						setExpanded(!expanded);
 					}}
-					searchTerm={searchTerm}
-					totalCount={items.length}
 				>
-					<ul className="list-unstyled">
-						{filteredItems.map((item, index) => (
-							<FilterItem
-								{...item}
-								hideControl={hideControl}
-								key={index}
-								labelPropertyName={labelPropertyName}
-								multiple={multiple}
-								onClick={() => onSelect(item)}
-								preventClick={preventClick}
-							/>
-						))}
-					</ul>
-				</FilterSearch>
-			</div>
+					<span className="mr-2 navbar-text-truncate">{name}</span>
 
-			<div className={classes.children}>{children}</div>
-		</li>
+					<ClayIcon symbol="caret-bottom" />
+				</button>
+
+				<div className={classes.menu} role="menu">
+					<FilterSearch
+						filteredItems={filteredItems}
+						onChange={({target}) => {
+							setSearchTerm(target.value);
+						}}
+						searchTerm={searchTerm}
+						totalCount={items.length}
+					>
+						<ul className="list-unstyled">
+							{filteredItems.map((item, index) => (
+								<FilterItem
+									{...item}
+									hideControl={hideControl}
+									key={index}
+									labelPropertyName={labelPropertyName}
+									multiple={multiple}
+									onClick={() => onSelect(item)}
+									preventClick={preventClick}
+								/>
+							))}
+						</ul>
+					</FilterSearch>
+				</div>
+
+				<div className={classes.children}>{children}</div>
+			</li>
+		)
 	);
 };
 export default Filter;

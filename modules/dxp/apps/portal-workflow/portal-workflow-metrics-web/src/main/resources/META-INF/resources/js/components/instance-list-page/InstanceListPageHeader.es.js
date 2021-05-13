@@ -192,13 +192,12 @@ export default function Header({
 
 						<ProcessStatusFilter />
 
-						{completedSelected && (
-							<TimeRangeFilter
-								options={{
-									withSelectionTitle: false,
-								}}
-							/>
-						)}
+						<TimeRangeFilter
+							options={{
+								show: completedSelected,
+								withSelectionTitle: false,
+							}}
+						/>
 
 						<ProcessStepFilter processId={routeParams.processId} />
 

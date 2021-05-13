@@ -23,6 +23,11 @@ public class DigitalSignatureConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
+	public String getCategoryIcon() {
+		return "message-boards";
+	}
+
+	@Override
 	public String getCategoryKey() {
 		return "digital-signature";
 	}

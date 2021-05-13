@@ -21,6 +21,7 @@ const Table = ({items, totalCount}) => {
 			<ClayTable.Head>
 				<ClayTable.Row>
 					<ClayTable.Cell headingCell style={{width: '5%'}} />
+
 					<ClayTable.Cell headingCell style={{width: '5%'}}>
 						{Liferay.Language.get('id')}
 					</ClayTable.Cell>
@@ -47,8 +48,12 @@ const Table = ({items, totalCount}) => {
 					<ClayTable.Cell headingCell style={{width: '14%'}}>
 						{Liferay.Language.get('created-by')}
 					</ClayTable.Cell>
+
 					<ClayTable.Cell headingCell style={{width: '16%'}}>
-						{Liferay.Language.get('creation-date')}
+						<ListHeadItem
+							name="dateCreated"
+							title={Liferay.Language.get('creation-date')}
+						/>
 					</ClayTable.Cell>
 
 					<ClayTable.Cell headingCell style={{width: '5%'}} />

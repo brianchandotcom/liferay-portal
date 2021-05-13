@@ -1770,6 +1770,8 @@ definition {
 
 	@summary = "Log into Liferay using URL navigation"
 	macro firstLoginPG {
+		UserBar.signOut();
+
 		JSONUser.agreeToTermsAndAnswerReminderQuery(
 			portalURL = "${virtualHostsURL}",
 			userEmailAddress = "${userEmailAddress}");

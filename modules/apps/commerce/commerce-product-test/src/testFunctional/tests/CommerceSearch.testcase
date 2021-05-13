@@ -163,12 +163,33 @@ definition {
 	}
 
 	@description = "COMMERCE-6156. As a buyer, I want to search for products by typing different Categories in Search Bar widget and the results should be visible on Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test SearchBarWidgetSearchProductsByDifferentCategories {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsByDifferentCategories";
 
-		// TODO COMMERCE-6156 SearchBarWidgetSearchProductsByDifferentCategories pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Transmission Engine");
+
+		Button.clickSubmitButton();
+
+		var products = "Engine Mount,Transmission Fluid,Transmission Cooler Line Assembly,U-Joint,Torque Converters,Wheel Seal - Front,Mount,Drive Shafts,Universal CV Boot,CV Axles,Valve Cover Grommets,Timing Chain,Timing Chain Tensioner,Seal,Pulley Kit,Piston,Oil Pump,Oil Filter,Cams,Bearings";
+
+		for (var i : list "${products}") {
+			AssertElementPresent(
+				key_productName = "${i}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		AssertElementNotPresent(
+			key_value = "21",
+			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+		
 	}
 
 	@description = "COMMERCE-6152. As a buyer, I want to search for different products by typing their SKUs in the Search Bar widget and the results should be visible on the Search Results widget"

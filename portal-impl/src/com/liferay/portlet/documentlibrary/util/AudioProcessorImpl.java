@@ -247,6 +247,59 @@ public class AudioProcessorImpl
 	}
 
 	private void _generateAudio(
+			FileVersion fileVersion, File srcFile, File destFile,
+			String containerType)
+		throws Exception {
+
+		if (hasPreview(fileVersion, containerType)) {
+			return;
+		}
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
+
+		try {
+			FileUtil.write(
+				destFile,
+				_audioConverter.generateAudioPreview(srcFile, containerType));
+		}
+		catch (Exception exception) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to process ", fileVersion.getFileVersionId(), " ",
+					fileVersion.getTitle()),
+				exception);
+		}
+
+		addFileToStore(
+			fileVersion.getCompanyId(), PREVIEW_PATH,
+			getPreviewFilePath(fileVersion, containerType), destFile);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Generated a ", containerType, " preview audio for ",
+					fileVersion.getFileVersionId(), " in ", stopWatch.getTime(),
+					"ms"));
+		}
+	}
+
+	private void _generateAudio(
+		FileVersion fileVersion, File srcFile, File[] destFiles) {
+
+		try {
+			for (int i = 0; i < destFiles.length; i++) {
+				_generateAudio(
+					fileVersion, srcFile, destFiles[i], _PREVIEW_TYPES[i]);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+		}
+	}
+
+	private void _generateAudio(
 			FileVersion sourceFileVersion, FileVersion destinationFileVersion)
 		throws Exception {
 
@@ -287,7 +340,7 @@ public class AudioProcessorImpl
 				}
 
 				try {
-					_generateAudioXuggler(
+					_generateAudio(
 						destinationFileVersion, audioTempFile,
 						previewTempFiles);
 
@@ -329,59 +382,6 @@ public class AudioProcessorImpl
 			}
 
 			FileUtil.delete(audioTempFile);
-		}
-	}
-
-	private void _generateAudioXuggler(
-			FileVersion fileVersion, File srcFile, File destFile,
-			String containerType)
-		throws Exception {
-
-		if (hasPreview(fileVersion, containerType)) {
-			return;
-		}
-
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
-
-		try {
-			FileUtil.write(
-				destFile,
-				_audioConverter.generateAudioPreview(srcFile, containerType));
-		}
-		catch (Exception exception) {
-			_log.error(
-				StringBundler.concat(
-					"Unable to process ", fileVersion.getFileVersionId(), " ",
-					fileVersion.getTitle()),
-				exception);
-		}
-
-		addFileToStore(
-			fileVersion.getCompanyId(), PREVIEW_PATH,
-			getPreviewFilePath(fileVersion, containerType), destFile);
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Generated a ", containerType, " preview audio for ",
-					fileVersion.getFileVersionId(), " in ", stopWatch.getTime(),
-					"ms"));
-		}
-	}
-
-	private void _generateAudioXuggler(
-		FileVersion fileVersion, File srcFile, File[] destFiles) {
-
-		try {
-			for (int i = 0; i < destFiles.length; i++) {
-				_generateAudioXuggler(
-					fileVersion, srcFile, destFiles[i], _PREVIEW_TYPES[i]);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
 		}
 	}
 

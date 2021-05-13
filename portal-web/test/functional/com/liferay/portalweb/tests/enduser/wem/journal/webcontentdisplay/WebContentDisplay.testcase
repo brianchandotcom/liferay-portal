@@ -1077,6 +1077,104 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "View messages in Web Content Display."
+	@priority = "4"
+	@uitest
+	test ViewMessagesInWebContentDisplay {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("View the default message shown in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.viewDefaultMessage();
+		}
+
+		task ("Select the web content in Web Content Display") {
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the web content shown in Web Content Display") {
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		}
+
+		task ("Remove the web content from Web Content Display") {
+			WebContentDisplayPortlet.removeWebContent();
+		}
+
+		task ("View the default message shown in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.viewDefaultMessage();
+		}
+
+		task ("Select the web content in Web Content Display") {
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Move the web content to Recycle Bin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.moveToRecycleBinCP(
+				assetType = "Web Content Article",
+				webContentTitle = "WC WebContent Title");
+		}
+
+		task ("View the moved to Recycle Bin message shown in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.viewRecycleBinMessage(webContentTitle = "WC WebContent Title");
+		}
+
+		task ("Undo move to Recycle Bin in Web Content Display") {
+			WebContentDisplayPortlet.undoMoveToRecycleBin();
+		}
+
+		task ("View the web content shown in Web Content Display") {
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		}
+
+		task ("Delete the web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.deleteCP(
+				siteURLKey = "test-site-name",
+				webContentTitle = "WC WebContent Title");
+		}
+
+		task ("View the no longer exists message in Web Content Display") {
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.viewDeletedArticle();
+		}
+
+		task ("View the no longer exists message as Guest") {
+			User.logoutPG();
+
+			Navigator.gotoSitePage(
+				pageName = "Web Content Display Page",
+				siteName = "Test Site Name");
+
+			WebContent.viewNoContentAsGuestPGViaWCD(portletName = "Web Content Display");
+		}
+	}
+
 	@priority = "4"
 	test ViewPortletWCDShowAvailableLocales {
 		property testray.component.names = "Localization,Web Content Display";
@@ -1139,78 +1237,6 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			textIcon = "english-United States");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-	}
-
-	@priority = "4"
-	test ViewWebContentDisplayPortletMessages {
-		property testray.component.names = "Web Content Display";
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		WebContentDisplayPortlet.viewDefaultMessage();
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		IFrame.closeFrame();
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		WebContentDisplayPortlet.removeWebContent();
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		WebContentDisplayPortlet.viewDefaultMessage();
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		IFrame.closeFrame();
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContent.moveToRecycleBinCP(
-			assetType = "Web Content Article",
-			webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		WebContentDisplayPortlet.viewRecycleBinMessage(webContentTitle = "WC WebContent Title");
-
-		WebContentDisplayPortlet.undoMoveToRecycleBin();
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		WebContentDisplayPortlet.viewDeletedArticle();
 	}
 
 	@priority = "4"

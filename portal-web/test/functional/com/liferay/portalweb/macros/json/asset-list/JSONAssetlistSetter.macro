@@ -78,10 +78,20 @@ com.liferay.wiki.model.WikiPage
 		var classTypeIdsDLFileEntry = JSONDLfileentrytype._getFileEntryTypeIds(groupId = "${groupId}");
 
 		if ("${classTypeIdsDLFileEntry}" == "") {
-			var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId}''';
+			if ("${googleDriveShortcutClassTypeId}" != "[]") {
+				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId}''';
+			}
+			else {
+				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId}''';
+			}
 		}
 		else {
-			var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId},${classTypeIdsDLFileEntry}''';
+			if ("${googleDriveShortcutClassTypeId}" != "[]") {
+				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${googleDriveShortcutClassTypeId},${classTypeIdsDLFileEntry}''';
+			}
+			else {
+				var classTypeIdsDLFileEntry = '''${basicDocumentClassTypeId},${classTypeIdsDLFileEntry}''';
+			}
 		}
 
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");

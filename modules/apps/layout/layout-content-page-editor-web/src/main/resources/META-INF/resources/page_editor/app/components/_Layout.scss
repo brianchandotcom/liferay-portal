@@ -228,6 +228,11 @@ $dashedBorderWidth: 2px;
 				}
 			}
 
+			&--content-hovered {
+				outline: $dashedBorderWidth dashed fade_out($purple, 0.5);
+				outline-offset: -$dashedBorderWidth;
+			}
+
 			&--translated {
 				outline: solid $editablesBorderWidth fade_out($success-l1, 0.7);
 

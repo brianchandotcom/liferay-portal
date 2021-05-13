@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.validation;
+package com.liferay.dynamic.data.mapping.form.validation;
 
 import java.util.Locale;
 

@@ -22,6 +22,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.form.page.change,\
 	com.liferay.dynamic.data.mapping.form.renderer,\
 	com.liferay.dynamic.data.mapping.form.renderer.constants,\
+	com.liferay.dynamic.data.mapping.form.validation,\
 	com.liferay.dynamic.data.mapping.form.values.factory,\
 	com.liferay.dynamic.data.mapping.form.values.query,\
 	com.liferay.dynamic.data.mapping.info.display.field,\
@@ -40,7 +41,6 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.template,\
 	com.liferay.dynamic.data.mapping.util,\
 	com.liferay.dynamic.data.mapping.util.comparator,\
-	com.liferay.dynamic.data.mapping.validation,\
 	com.liferay.dynamic.data.mapping.validator,\
 	com.liferay.dynamic.data.mapping.webdav
 Provide-Capability:\

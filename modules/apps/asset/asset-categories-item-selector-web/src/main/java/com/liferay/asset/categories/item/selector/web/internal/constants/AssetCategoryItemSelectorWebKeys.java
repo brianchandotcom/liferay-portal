@@ -20,6 +20,10 @@ package com.liferay.asset.categories.item.selector.web.internal.constants;
 public class AssetCategoryItemSelectorWebKeys {
 
 	public static final String
+		SELECT_ASSET_CATEGORY_INFO_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT =
+			"SELECT_ASSET_CATEGORY_INFO_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT";
+
+	public static final String
 		SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT =
 			"SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT";
 

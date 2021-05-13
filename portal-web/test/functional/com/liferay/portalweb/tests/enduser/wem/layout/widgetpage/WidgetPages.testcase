@@ -408,9 +408,7 @@ definition {
 			groupName = "Site Name",
 			userEmailAddress = "userea@liferay.com");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -418,9 +416,7 @@ definition {
 			pageName = "Home",
 			siteName = "Site Name");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Home",
@@ -432,9 +428,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
+		User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 
 		Navigator.gotoSitePage(
 			pageName = "Home",
@@ -442,9 +436,7 @@ definition {
 
 		SiteTemplates.viewNoInfoMessage();
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 	}
 
 }

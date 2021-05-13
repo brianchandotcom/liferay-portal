@@ -836,6 +836,14 @@ definition {
 			value1 = "${results}");
 	}
 
+	macro viewRelatedQuestion {
+		AssertElementPresent(
+			key_questionTitle = "${questionTitle}",
+			locator1 = "Questions#RELATED_QUESTIONS_QUESTIONS_TITLE");
+
+		AssertElementNotPresent(locator1 = "Questions#RELATED_QUESTIONS_EMPTY_TEXT");
+	}
+
 	macro viewSearchResults {
 		for (var questionTitle : list "${questionsList}") {
 			AssertTextEquals(

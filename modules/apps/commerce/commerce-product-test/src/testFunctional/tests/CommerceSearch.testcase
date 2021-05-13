@@ -195,7 +195,6 @@ definition {
 			value1 = "Plastic Ceramic");
 
 		Button.clickSubmitButton();
-		
 
 		for (var i : list "1,Timing Chain Tensioner,2,Premium Brake Pads,3") {
 			if ("${i}" == "1") {
@@ -220,10 +219,10 @@ definition {
 			}
 			else {
 				AssertElementNotPresent(
-				key_value = "${i}",
-				locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+					key_value = "${i}",
+					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 			}
-		}	
+		}
 	}
 
 	@description = "COMMERCE-6153. As a buyer, I want to search for products by typing a Specifications Value in Search Bar widget and the results should be visible on Search Results widget"

@@ -34,6 +34,7 @@ function reducer(state = INITIAL_STATE, action) {
 		case LOAD_DATA:
 			nextState = {
 				...state,
+				error: false,
 				loading: true,
 			};
 			break;

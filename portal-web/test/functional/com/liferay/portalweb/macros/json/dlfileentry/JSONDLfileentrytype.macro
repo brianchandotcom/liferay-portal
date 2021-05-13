@@ -17,7 +17,7 @@ definition {
 		var fileEntryTypeId = StringUtil.replace("${fileEntryTypeId}", "&quot;]", "");
 
 		if ("${fileEntryTypeId}" == "[]") {
-			fail("FAIL. Cannot find fileEntryTypeId.");
+			echo("The ${fileEntryTypeName} doesn't exist.");
 		}
 
 		return "${fileEntryTypeId}";

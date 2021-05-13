@@ -234,8 +234,6 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_2.jpeg",
@@ -1227,24 +1225,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
 
 		AssertElementPresent(locator1 = "Questions#QUESTIONS_SUBSCRIBE");
-	}
-
-	@description = "Validate if the My Activity tab appears"
-	@priority = "4"
-	@refactorneeded
-	test ValidateIfTheMyActivityAppears {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Question ValidateIfTheMyActivityAppears",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Question ValidateIfTheMyActivityAppears");
-
-		AssertElementPresent(
-			key_questionTabField = "My Activity",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 
 	@description = "Validate if the user can view the statistics."

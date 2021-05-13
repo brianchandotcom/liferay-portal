@@ -15,6 +15,7 @@
 package com.liferay.batch.planner.service;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.batch.planner.plan.PlanExternalType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -75,6 +76,10 @@ public interface BatchPlannerPlanLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public BatchPlannerPlan addBatchPlannerPlan(
 		BatchPlannerPlan batchPlannerPlan);
+
+	public BatchPlannerPlan addBatchPlannerPlan(
+			long userId, String name, PlanExternalType planExternalType)
+		throws PortalException;
 
 	/**
 	 * Creates a new batch planner plan with the primary key. Does not add the batch planner plan to the database.
@@ -266,5 +271,9 @@ public interface BatchPlannerPlanLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public BatchPlannerPlan updateBatchPlannerPlan(
 		BatchPlannerPlan batchPlannerPlan);
+
+	public BatchPlannerPlan updateBatchPlannerPlan(
+			long batchPlannerPlanId, long userId, String name)
+		throws PortalException;
 
 }

@@ -89,6 +89,12 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public void deleteFolder(long folderId) throws PortalException;
 
+	public default FileEntry fetchFileEntryByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		return null;
+	}
+
 	public List<FileEntry> getFileEntries(
 			long folderId, int status, int start, int end,
 			OrderByComparator<FileEntry> orderByComparator)

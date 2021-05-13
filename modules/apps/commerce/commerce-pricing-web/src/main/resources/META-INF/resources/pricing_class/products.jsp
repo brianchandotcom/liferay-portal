@@ -43,7 +43,7 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 				function selectItem(product) {
 					var productData = {
 						productExternalReferenceCode: product.externalReferenceCode,
-						productId: product.id,
+						productId: product.productId,
 						productGroupExternalReferenceCode: pricingClassExternalReferenceCode,
 						productGroupId: id,
 					};

@@ -170,4 +170,35 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro getFileEntryId {
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		if (!(isSet(folderId))) {
+			var folderId = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/dlfileentry/get-file-entry \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d folderId=${folderId} \
+			  -d title=${dmDocumentTitle}
+		''';
+
+		var fileEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['fileEntryId']");
+
+		var fileEntryId = StringUtil.replace("${fileEntryId}", "[&quot;", "");
+		var fileEntryId = StringUtil.replace("${fileEntryId}", "&quot;]", "");
+
+		return "${fileEntryId}";
+
+		echo("## * File Entry ID: ${fileEntryId}");
+	}
+
 }

@@ -6,7 +6,7 @@ definition {
 		// Configure IdP (Identity Provider) on specific Portal URL or default to current URL
 
 		if (isSet(idpURL)) {
-			User.loginPG(
+			User.firstLoginUI(
 				password = "test",
 				specificURL = "${idpURL}",
 				userEmailAddress = "test@liferay.com");
@@ -47,19 +47,23 @@ definition {
 	@description = "Configures Liferay SAML as the SP."
 	macro configureLiferaySAMLAsSP {
 		if (isSet(userEmailAddress)) {
-			User.loginPG(
+			User.firstLoginUI(
 				password = "test",
 				specificURL = "${spURL}",
 				userEmailAddress = "${userEmailAddress}");
 		}
 		else {
-			User.loginPG(
+			User.firstLoginUI(
 				password = "test",
 				specificURL = "${spURL}",
 				userEmailAddress = "test@liferay.com");
 		}
 
+		takeScreenshot();
+
 		Navigator.openSpecificURL(url = "${spURL}");
+
+		takeScreenshot();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
@@ -104,7 +108,7 @@ definition {
 		Navigator.openSpecificURL(url = "${spURL}");
 
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.loginPG(
+			User.firstLoginUI(
 				password = "test",
 				specificURL = "${spURL}",
 				userEmailAddress = "test@liferay.com");
@@ -136,7 +140,7 @@ definition {
 		Navigator.openSpecificURL(url = "${idpURL}");
 
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-			User.loginPG(
+			User.firstLoginUI(
 				password = "test",
 				specificURL = "${idpURL}",
 				userEmailAddress = "test@liferay.com");
@@ -167,7 +171,7 @@ definition {
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
 		else {
-			User.loginPG(
+			User.firstLoginUI(
 				password = "${password}",
 				samlEnabled = "true",
 				specificURL = "${idpInitiatedSSOURL}",
@@ -182,23 +186,23 @@ definition {
 	@description = "Sign into portal by executing a SP initiated SSO login. In the SP, click on the Sign In button to."
 	macro executeSPInitiatedSSO {
 		if ("${autoLogin}" == "true") {
-			Navigator.openSpecificURL(url = "${specificURL}");
+			Navigator.openSpecificURL(url = "${spURL}");
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
 		else {
-			User.loginPG(
+			User.firstLoginUI(
 				idpName = "${idpName}",
 				password = "test",
 				rememberMeChecked = "${rememberMeChecked}",
 				samlMultiIdPs = "${samlMultiIdPs}",
-				specificURL = "${specificURL}",
+				specificURL = "${spURL}",
 				userEmailAddress = "test@liferay.com");
 		}
 
 		Pause(locator1 = "1000");
 
-		AssertLocation.assertPartialLocation(value1 = "${specificURL}");
+		AssertLocation.assertPartialLocation(value1 = "${spURL}");
 	}
 
 	macro waitForSLO {

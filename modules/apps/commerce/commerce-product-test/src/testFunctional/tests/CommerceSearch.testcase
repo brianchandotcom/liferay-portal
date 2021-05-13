@@ -199,7 +199,6 @@ definition {
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
 		}
-
 	}
 
 	@description = "COMMERCE-6154. As a buyer, I want to search for products by typing different Specification Values in Search Bar widget and the results should be visible on Search Results widget"

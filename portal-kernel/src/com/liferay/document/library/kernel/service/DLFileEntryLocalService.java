@@ -382,6 +382,10 @@ public interface DLFileEntryLocalService
 	public DLFileEntry fetchFileEntryByAnyImageId(long imageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntry fetchFileEntryByExternalReferenceCode(
+		long groupId, String externalReferenceCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntry fetchFileEntryByFileName(
 		long groupId, long folderId, String fileName);
 

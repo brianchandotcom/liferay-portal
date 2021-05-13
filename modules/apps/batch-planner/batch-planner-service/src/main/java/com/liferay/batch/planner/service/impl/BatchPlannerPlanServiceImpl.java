@@ -14,8 +14,12 @@
 
 package com.liferay.batch.planner.service.impl;
 
+import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.batch.planner.plan.PlanExternalType;
 import com.liferay.batch.planner.service.base.BatchPlannerPlanServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,4 +35,27 @@ import org.osgi.service.component.annotations.Component;
 )
 public class BatchPlannerPlanServiceImpl
 	extends BatchPlannerPlanServiceBaseImpl {
+
+	@Override
+	public BatchPlannerPlan addBatchPlannerPlan(
+			String name, PlanExternalType planExternalType)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		return batchPlannerPlanLocalService.addBatchPlannerPlan(
+			permissionChecker.getUserId(), name, planExternalType);
+	}
+
+	@Override
+	public BatchPlannerPlan updateBatchPlannerPlan(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		return batchPlannerPlanLocalService.updateBatchPlannerPlan(
+			batchPlannerPlanId, permissionChecker.getUserId(), name);
+	}
+
 }

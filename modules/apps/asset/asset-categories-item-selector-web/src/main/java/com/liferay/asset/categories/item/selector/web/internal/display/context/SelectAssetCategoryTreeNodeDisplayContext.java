@@ -56,25 +56,15 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectAssetCategoryTreeNodeDisplayContext {
 
 	public SelectAssetCategoryTreeNodeDisplayContext(
-		boolean allowSelectVocabulary, HttpServletRequest httpServletRequest,
-		String itemSelectedEventName, PortletURL portletURL,
-		boolean showInfoMessage) {
-
-		_allowSelectVocabulary = allowSelectVocabulary;
-		_httpServletRequest = httpServletRequest;
-		_itemSelectedEventName = itemSelectedEventName;
-		_portletURL = portletURL;
-		_showInfoMessage = showInfoMessage;
-
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
-	public SelectAssetCategoryTreeNodeDisplayContext(
 		HttpServletRequest httpServletRequest, String itemSelectedEventName,
 		PortletURL portletURL) {
 
-		this(true, httpServletRequest, itemSelectedEventName, portletURL, true);
+		_httpServletRequest = httpServletRequest;
+		_itemSelectedEventName = itemSelectedEventName;
+		_portletURL = portletURL;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public SearchContainer<AssetCategory> getAssetCategorySearchContainer()
@@ -182,30 +172,6 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
-	}
-
-	public boolean isAllowSelectVocabulary() {
-		return _allowSelectVocabulary;
-	}
-
-	public boolean isDisabledSelectThisLevelButton() {
-		if (isAllowSelectVocabulary()) {
-			return false;
-		}
-
-		String assetCategoryTreeNodeType = getAssetCategoryTreeNodeType();
-
-		if (assetCategoryTreeNodeType.equals(
-				AssetCategoryTreeNodeConstants.TYPE_ASSET_CATEGORY)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	public boolean isShowInfoMessage() {
-		return _showInfoMessage;
 	}
 
 	private BreadcrumbEntry _createBreadcrumbEntry(String title, String url) {
@@ -365,13 +331,11 @@ public class SelectAssetCategoryTreeNodeDisplayContext {
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 	}
 
-	private final boolean _allowSelectVocabulary;
 	private Long _assetCategoryTreeNodeId;
 	private String _assetCategoryTreeNodeType;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _itemSelectedEventName;
 	private final PortletURL _portletURL;
-	private final boolean _showInfoMessage;
 	private final ThemeDisplay _themeDisplay;
 
 }

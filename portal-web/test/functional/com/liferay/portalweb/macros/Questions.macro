@@ -601,6 +601,10 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}");
 	}
 
+	macro openToTagsTap {
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/tags");
+	}
+
 	macro removeRootTopicConfiguration {
 		Portlet.gotoPortletOptions(
 			portletName = "Questions",
@@ -834,6 +838,16 @@ definition {
 		AssertTextEquals(
 			locator1 = "Questions#PAGINATION_RESULTS",
 			value1 = "${results}");
+	}
+
+	macro viewQuestionViaTag {
+		Click(
+			key_tagName = "${tagName}",
+			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+
+		AssertElementPresent(
+			key_titleField = "${questionTitle}",
+			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
 	}
 
 	macro viewRelatedQuestion {

@@ -64,7 +64,7 @@ const SummaryCard = ({
 			onMouseOut={() => setHovered(false)}
 			onMouseOver={() => setHovered(true)}
 			query={{filters: filterParams}}
-			to={`/instance/${processId}/${defaultDelta}/1/dateOverdue:asc`}
+			to={`/instance/${processId}/${defaultDelta}/1/dateCreated:asc`}
 		>
 			<div>
 				<div className="header">

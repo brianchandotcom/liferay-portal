@@ -26,16 +26,15 @@ import PageContents from './PageContents';
 const getEditableTitle = (editable, languageId) => {
 	const div = document.createElement('div');
 
-	div.innerHTML = editable[languageId] || editable[config.defaultLanguageId];
+	div.innerHTML =
+		editable[languageId] ||
+		editable[config.defaultLanguageId] ||
+		editable.defaultValue;
 
 	return div.textContent;
 };
 
-const getEditableValues = (
-	fragmentEntryLinks,
-	languageId,
-	segmentsExperienceId
-) =>
+const getEditableValues = (fragmentEntryLinks, segmentsExperienceId) =>
 	Object.values(fragmentEntryLinks)
 		.filter(
 			(fragmentEntryLink) =>
@@ -70,10 +69,6 @@ const getEditableValues = (
 				...editableValuesB,
 			],
 			[]
-		)
-		.filter(
-			(editable) =>
-				editable[languageId] || editable[config.defaultLanguageId]
 		);
 
 const normalizeEditableValues = (editable, languageId) => {
@@ -105,7 +100,6 @@ export default function ContentsSidebar() {
 		() =>
 			getEditableValues(
 				fragmentEntryLinks,
-				languageId,
 				segmentsExperienceId
 			).map((editable) => normalizeEditableValues(editable, languageId)),
 		[fragmentEntryLinks, languageId, segmentsExperienceId]

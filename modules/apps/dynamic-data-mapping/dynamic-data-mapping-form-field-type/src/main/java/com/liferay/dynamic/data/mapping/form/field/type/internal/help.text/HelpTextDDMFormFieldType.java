@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTy
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Bruno Basto
+ * @author Mateus Melo
  */
 @Component(
 	immediate = true,

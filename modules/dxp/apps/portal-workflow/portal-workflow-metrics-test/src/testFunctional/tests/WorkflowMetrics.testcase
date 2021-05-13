@@ -3244,7 +3244,7 @@ definition {
 	@description = "LRQA-53659 Automate LPS-86652 [Reports] View all items for a certain process"
 	@priority = "5"
 	test ViewReports {
-		property environment.acceptance = "quarantine";
+		property environment.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewReports";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -3268,6 +3268,8 @@ definition {
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
+
+		WaitForPageLoad();
 
 		AssertTextEquals(
 			key_rowNumber = "1",

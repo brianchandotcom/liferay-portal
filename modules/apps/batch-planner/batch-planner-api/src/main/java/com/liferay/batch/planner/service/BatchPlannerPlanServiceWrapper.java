@@ -33,6 +33,16 @@ public class BatchPlannerPlanServiceWrapper
 		_batchPlannerPlanService = batchPlannerPlanService;
 	}
 
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPlan addBatchPlannerPlan(
+			String name,
+			com.liferay.batch.planner.plan.PlanExternalType planExternalType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPlanService.addBatchPlannerPlan(
+			name, planExternalType);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -41,6 +51,15 @@ public class BatchPlannerPlanServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _batchPlannerPlanService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPlan
+			updateBatchPlannerPlan(long batchPlannerPlanId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPlanService.updateBatchPlannerPlan(
+			batchPlannerPlanId, name);
 	}
 
 	@Override

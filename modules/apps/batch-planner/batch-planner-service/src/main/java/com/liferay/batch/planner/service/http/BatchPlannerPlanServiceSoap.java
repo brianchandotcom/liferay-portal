@@ -14,9 +14,15 @@
 
 package com.liferay.batch.planner.service.http;
 
+import com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.batch.planner.service.BatchPlannerPlanServiceUtil</code> service
+ * <code>BatchPlannerPlanServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,49 @@ package com.liferay.batch.planner.service.http;
  */
 @Deprecated
 public class BatchPlannerPlanServiceSoap {
+
+	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
+			addBatchPlannerPlan(
+				String name,
+				com.liferay.batch.planner.plan.PlanExternalType
+					planExternalType)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
+				BatchPlannerPlanServiceUtil.addBatchPlannerPlan(
+					name, planExternalType);
+
+			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
+			updateBatchPlannerPlan(long batchPlannerPlanId, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
+				BatchPlannerPlanServiceUtil.updateBatchPlannerPlan(
+					batchPlannerPlanId, name);
+
+			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BatchPlannerPlanServiceSoap.class);
+
 }

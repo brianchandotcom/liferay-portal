@@ -61,6 +61,14 @@ public class BatchPlannerPlanLocalServiceUtil {
 		return getService().addBatchPlannerPlan(batchPlannerPlan);
 	}
 
+	public static BatchPlannerPlan addBatchPlannerPlan(
+			long userId, String name,
+			com.liferay.batch.planner.plan.PlanExternalType planExternalType)
+		throws PortalException {
+
+		return getService().addBatchPlannerPlan(userId, name, planExternalType);
+	}
+
 	/**
 	 * Creates a new batch planner plan with the primary key. Does not add the batch planner plan to the database.
 	 *
@@ -298,6 +306,14 @@ public class BatchPlannerPlanLocalServiceUtil {
 		BatchPlannerPlan batchPlannerPlan) {
 
 		return getService().updateBatchPlannerPlan(batchPlannerPlan);
+	}
+
+	public static BatchPlannerPlan updateBatchPlannerPlan(
+			long batchPlannerPlanId, long userId, String name)
+		throws PortalException {
+
+		return getService().updateBatchPlannerPlan(
+			batchPlannerPlanId, userId, name);
 	}
 
 	public static BatchPlannerPlanLocalService getService() {

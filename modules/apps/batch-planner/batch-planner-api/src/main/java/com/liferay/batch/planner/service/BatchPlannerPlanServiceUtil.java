@@ -14,6 +14,9 @@
 
 package com.liferay.batch.planner.service;
 
+import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the remote service utility for BatchPlannerPlan. This utility wraps
  * <code>com.liferay.batch.planner.service.impl.BatchPlannerPlanServiceImpl</code> and is an
@@ -33,14 +36,28 @@ public class BatchPlannerPlanServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerPlanServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static BatchPlannerPlan addBatchPlannerPlan(
+			String name,
+			com.liferay.batch.planner.plan.PlanExternalType planExternalType)
+		throws PortalException {
+
+		return getService().addBatchPlannerPlan(name, planExternalType);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static BatchPlannerPlan updateBatchPlannerPlan(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		return getService().updateBatchPlannerPlan(batchPlannerPlanId, name);
 	}
 
 	public static BatchPlannerPlanService getService() {

@@ -393,6 +393,60 @@ definition {
 		Questions.deleteAnswer(contentField = "This is my answer");
 	}
 
+	@description = "Validate if the user can delete a comment to an answer."
+	@priority = "4"
+	@refactordone
+	test CanDeleteComment {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body Text",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.answerQuestion(contentField = "This is my answer");
+
+		Questions.replyToComment(commentReply = "This is my reply");
+
+		Questions.deleteComment(commentReply = "This is my reply");
+	}
+
+	@description = "Validate if the user can delete a question with an answer."
+	@priority = "4"
+	@refactordone
+	test CanDeleteQuestionWithAnAnswer {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body Text",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.answerQuestion(contentField = "This is my answer");
+
+		Questions.deleteQuestion();
+	}
+
 	@description = "Validate if the user can delete a topic, it also covers LPS-128699."
 	@priority = "5"
 	@refactordone
@@ -409,6 +463,32 @@ definition {
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Questions.viewDefault();
+	}
+
+	@description = "Validate if the user can edit an answer to a question."
+	@priority = "5"
+	@refactordone
+	test CanEditAnswer {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body Text",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.answerQuestion(contentField = "This is my answer");
+
+		Questions.editAnswer(contentField = "This is my edited answer");
 	}
 
 	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
@@ -607,6 +687,37 @@ definition {
 			repliedLabel = "true");
 	}
 
+	@description = "Validate if the user can unsubscribe a question from the details page, it also covers LPS-125842."
+	@priority = "3"
+	@refactordone
+	test CanUnsubscribeFromQuestionDetails {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Question Body Text",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			titleField = "Questions Title",
+			topicName = "questions-test-category");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Questions Title");
+
+		Questions.unSubscribeQuestionFromDetails();
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "questions-title",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewSubscribeAndUnsubscribeFromDetails(noSubscribedQuestion = "Questions Title");
+	}
+
 	@description = "Validate if the user can setup the landing page topic navigation for the widget."
 	@priority = "4"
 	@refactorneeded
@@ -751,90 +862,30 @@ definition {
 			subTopicName = "New Questions Test SubCategory");
 	}
 
-	@description = "Validate if the user can delete a comment to an answer."
-	@priority = "4"
-	@refactorneeded
-	test DeleteComment {
+	@description = "Validate if the user can view the statistics."
+	@priority = "3"
+	@refactordone
+	test CreatorStatisticsCanBeViewedInDetails {
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body Text",
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "Content Question Text",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
-			titleField = "What is your favorite food?");
+			titleField = "Question Title");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "question-title",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
 
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "What is your favorite food?");
-
-		Questions.answerQuestion(contentField = "This is my answer");
-
-		Questions.replyToComment(commentReply = "This is my reply");
-
-		Questions.deleteComment(commentReply = "This is my reply");
-	}
-
-	@description = "Validate if the user can delete a question with an answer."
-	@priority = "4"
-	@refactorneeded
-	test DeleteQuestionWithAnAnswer {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body Text",
-			categoryName = "Questions Test Category",
-			tagField = "test tag",
-			titleField = "What is your English name?");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "What is your English name?");
-
-		Questions.answerQuestion(contentField = "This is my answer");
-
-		Questions.deleteQuestion();
-	}
-
-	@description = "Validate if the user can edit an answer to a question."
-	@priority = "5"
-	@refactorneeded
-	test EditAnswer {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body Text",
-			categoryName = "Questions Test Category",
-			tagField = "test tag",
-			titleField = "What is your Chinese name?");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "What is your Chinese name?");
-
-		Questions.answerQuestion(contentField = "This is my answer");
-
-		Questions.editAnswer(contentField = "This is my edited answer");
+		Questions.viewStatistics(
+			headerName = "Youngling",
+			itemNameList = "Posts,Join Date,Last Post Date",
+			userName = "Test Test");
 	}
 
 	@description = "Validate if the user can lock and unlock a question through the MB."
@@ -1191,70 +1242,6 @@ definition {
 			locator1 = "Questions#QUESTIONS_TITLE");
 	}
 
-	@description = "Validate if the user can unsubscribe a question from the details page, it also covers LPS-125842."
-	@priority = "3"
-	@refactorneeded
-	test UnsubscribeFromQuestionDetails {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Add Question Body For Test",
-			titleField = "Questions Title");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Questions Title");
-
-		Click(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Questions Title");
-
-		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
-
-		AssertElementPresent(locator1 = "Questions#QUESTIONS_SUBSCRIBE");
-	}
-
-	@description = "Validate if the user can view the statistics."
-	@priority = "3"
-	@refactorneeded
-	test ViewCreatorStatistics {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Questions.addQuestionWithoutTagByAPI(
-			bodyField = "Content Question Text",
-			categoryName = "Questions Test Category",
-			titleField = "Question Title");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Question Title");
-
-		Questions.viewStatistics(
-			headerName = "Youngling",
-			itemNameList = "Posts,Join Date,Last Post Date",
-			userName = "Test Test");
-	}
-
 	@description = "Validate if the user can view the my activity default after delete all the responses."
 	@priority = "4"
 	@refactorneeded
@@ -1496,36 +1483,6 @@ definition {
 		AssertElementPresent(
 			key_questionTitle = "Question 2",
 			locator1 = "Questions#QUESTIONS_TITLE");
-	}
-
-	@description = "Validate if the user can view a question via an edited topic."
-	@priority = "5"
-	@refactorneeded
-	test ViewQuestionAfterEditingTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Questions Test Category");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheTestBody",
-			titleField = "Title AddQuestionWithTheTestTitle");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		Questions.editRootTopic(
-			categoryName = "Questions Test Category",
-			categoryNameEdit = "Edit Questions Test Category");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "Edit Questions Test Category");
-
-		Questions.gotoDetails(questionTitle = "Title AddQuestionWithTheTestTitle");
 	}
 
 	@description = "Validate if the user can filter by votes."

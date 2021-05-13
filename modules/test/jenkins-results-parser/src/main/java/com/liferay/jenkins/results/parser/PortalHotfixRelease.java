@@ -72,8 +72,8 @@ public class PortalHotfixRelease {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"https?://.+/(?<hotfixName>liferay-hotfix-(?<hotfixVersion>\\d+)-" +
-			"\\d{4})");
+		"https?://.+/(?<hotfixName>liferay-(hotfix|security-de|security-dxp)-" +
+			"(?<hotfixVersion>\\d+)(-\\d{6}-\\d)?-\\d{4})");
 
 	private final PortalFixpackRelease _portalFixpackRelease;
 	private final URL _portalHotfixReleaseURL;

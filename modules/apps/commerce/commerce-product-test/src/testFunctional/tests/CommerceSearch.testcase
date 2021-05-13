@@ -189,7 +189,6 @@ definition {
 		AssertElementNotPresent(
 			key_value = "21",
 			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
-		
 	}
 
 	@description = "COMMERCE-6152. As a buyer, I want to search for different products by typing their SKUs in the Search Bar widget and the results should be visible on the Search Results widget"

@@ -47,6 +47,7 @@ else {
 <clay:sheet>
 	<clay:content-row
 		containerElement="h2"
+		cssClass="mb-5"
 	>
 		<clay:content-col
 			containerElement="span"

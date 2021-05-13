@@ -26,7 +26,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 CompanyPortletRatingsDefinitionDisplayContext companyPortletRatingsDefinitionDisplayContext = new CompanyPortletRatingsDefinitionDisplayContext(companyPortletPreferences, request);
 %>
 
-<p class="text-muted"><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
+<p class="text-secondary"><liferay-ui:message key="select-the-ratings-type-for-the-following-applications" /></p>
 
 <aui:fieldset id='<%= liferayPortletResponse.getNamespace() + "ratingsSettingsContainer" %>'>
 

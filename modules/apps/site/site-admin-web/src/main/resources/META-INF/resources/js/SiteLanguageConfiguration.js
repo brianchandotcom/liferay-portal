@@ -108,8 +108,6 @@ export default function SiteLanguageConfiguration({
 
 	return (
 		<>
-			<h4>{Liferay.Language.get('language')}</h4>
-
 			<ClayRadioGroup
 				name={`${portletNamespace}TypeSettingsProperties--inheritLocales--`}
 				onSelectedValueChange={setInheritLocales}
@@ -131,7 +129,7 @@ export default function SiteLanguageConfiguration({
 			</ClayRadioGroup>
 
 			{inheritLocales === 'true' ? (
-				<div className="text-muted">
+				<div>
 					<h5 className="h4">
 						{Liferay.Language.get('default-language')}
 					</h5>
@@ -176,7 +174,7 @@ export default function SiteLanguageConfiguration({
 						</ClayAlert>
 					)}
 
-					<h5 className="h4 mt-4">
+					<h5 className="h4 mt-4 sheet-subtitle">
 						{Liferay.Language.get('available-languages')}
 					</h5>
 

@@ -139,7 +139,8 @@ if (privateVirtualHostnames.isEmpty()) {
 		<liferay-ui:message arguments="<%= new Object[] {HttpUtil.getProtocol(request), themeDisplay.getPortalURL() + themeDisplay.getPathFriendlyURLPublic()} %>" key="for-example,-if-the-public-virtual-host-is-www.helloworld.com-and-the-friendly-url-is-/helloworld" translateArguments="<%= false %>" />
 	</p>
 
-	<div id="<portlet:namespace />publicVirtualHostFields">
+	<div class="mb-5" id="<portlet:namespace />publicVirtualHostFields">
+		<h4 class="sheet-subtitle"><liferay-ui:message key="public-pages" /></h4>
 
 		<%
 		for (Map.Entry<String, String> entry : publicVirtualHostnames.entrySet()) {
@@ -152,7 +153,7 @@ if (privateVirtualHostnames.isEmpty()) {
 				cssClass="lfr-form-row"
 			>
 				<clay:row>
-					<aui:input inlineField="<%= true %>" label="public-pages" maxlength="200" name="publicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
+					<aui:input inlineField="<%= true %>" label="public-pages-virtual-host" maxlength="200" name="publicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
 					<aui:select inlineField="<%= true %>" label="language" name="publicVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
 						<aui:option label="default-language" value="" />
@@ -179,6 +180,7 @@ if (privateVirtualHostnames.isEmpty()) {
 	</div>
 
 	<div id="<portlet:namespace />privateVirtualHostFields">
+		<h4 class="sheet-subtitle"><liferay-ui:message key="private-pages" /></h4>
 
 		<%
 		for (Map.Entry<String, String> entry : privateVirtualHostnames.entrySet()) {
@@ -191,7 +193,7 @@ if (privateVirtualHostnames.isEmpty()) {
 				cssClass="lfr-form-row"
 			>
 				<clay:row>
-					<aui:input inlineField="<%= true %>" label="private-pages" maxlength="200" name="privateVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
+					<aui:input inlineField="<%= true %>" label="private-pages-virtual-host" maxlength="200" name="privateVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
 
 					<aui:select inlineField="<%= true %>" label="language" name="privateVirtualHostLanguageId[]" wrapperCssClass="col-sm-6">
 						<aui:option label="default-language" value="" />

@@ -22,4 +22,8 @@ Group siteGroup = (Group)request.getAttribute("site.group");
 UnicodeProperties groupTypeSettings = (UnicodeProperties)request.getAttribute("site.groupTypeSettings");
 %>
 
-<aui:input helpMessage='<%= LanguageUtil.format(request, "directory-indexing-help", new Object[] {HtmlUtil.escape(siteGroup.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + siteGroup.getFriendlyURL()}, false) %>' inlineLabel="right" label="enable-directory-indexing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value='<%= PropertiesParamUtil.getBoolean(groupTypeSettings, request, "directoryIndexingEnabled") %>' />
+<aui:field-wrapper cssClass="form-group">
+	<aui:input inlineLabel="right" label="enable-directory-indexing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value='<%= PropertiesParamUtil.getBoolean(groupTypeSettings, request, "directoryIndexingEnabled") %>' />
+
+	<span class="form-text"><liferay-ui:message arguments='<%= new Object[] {HtmlUtil.escape(siteGroup.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + siteGroup.getFriendlyURL()} %>' key="directory-indexing-help" translateArguments="<%= false %>" /></span>
+</aui:field-wrapper>

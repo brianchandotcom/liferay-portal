@@ -48,11 +48,26 @@ for (long defaultTeamId : defaultTeamIds) {
 	/>
 </liferay-util:buffer>
 
-<p class="text-muted">
+<p class="text-secondary">
 	<liferay-ui:message key="select-the-default-roles-and-teams-for-new-members" />
 </p>
 
-<h4 class="text-default"><liferay-ui:message key="site-roles" /> <liferay-ui:icon-help message="default-site-roles-assignment-help" /></h4>
+<clay:content-row
+	containerElement="h3"
+	cssClass="sheet-subtitle"
+>
+	<clay:content-col
+		expand="<%= true %>"
+	>
+		<span class="heading-text"><liferay-ui:message key="site-roles" /></span>
+	</clay:content-col>
+
+	<clay:content-col>
+		<span class="heading-end">
+			<aui:button cssClass="btn-sm modify-link" id="selectSiteRoleLink" value="select" />
+		</span>
+	</clay:content-col>
+</clay:content-row>
 
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
@@ -87,11 +102,22 @@ for (long defaultTeamId : defaultTeamIds) {
 	/>
 </liferay-ui:search-container>
 
-<div class="button-holder form-group">
-	<aui:button cssClass="modify-link" id="selectSiteRoleLink" value="select" />
-</div>
+<clay:content-row
+	containerElement="h3"
+	cssClass="sheet-subtitle"
+>
+	<clay:content-col
+		expand="<%= true %>"
+	>
+		<span class="heading-text"><liferay-ui:message key="teams" /></span>
+	</clay:content-col>
 
-<h4 class="text-default"><liferay-ui:message key="teams" /> <liferay-ui:icon-help message="default-teams-assignment-help" /></h4>
+	<clay:content-col>
+		<span class="heading-end">
+			<aui:button cssClass="btn-sm modify-link" id="selectTeamLink" value="select" />
+		</span>
+	</clay:content-col>
+</clay:content-row>
 
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"
@@ -125,10 +151,6 @@ for (long defaultTeamId : defaultTeamIds) {
 		paginate="<%= false %>"
 	/>
 </liferay-ui:search-container>
-
-<div class="button-holder">
-	<aui:button cssClass="modify-link" id="selectTeamLink" value="select" />
-</div>
 
 <aui:script use="escape,liferay-search-container">
 	var bindModifyLink = function (config) {

@@ -105,9 +105,49 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 	<aui:input disabled="<%= disabled %>" helpMessage='<%= disabled ? "this-site-cannot-inherit-the-content-from-its-parent-site-since-the-parent-site-is-already-inheriting-the-content-from-its-parent" : StringPool.BLANK %>' inlineLabel="right" labelCssClass="simple-toggle-switch" name="inheritContent" type="toggle-switch" value="<%= value %>" />
 </c:if>
 
-<h4 class="text-default"><liferay-ui:message key="membership-options" /></h4>
-
 <c:if test="<%= !siteGroup.isCompany() %>">
+
+	<%
+	String title = StringPool.BLANK;
+
+	if (parentGroup != null) {
+		title = HtmlUtil.escape(parentGroup.getDescriptiveName(locale)) + " (" + LanguageUtil.get(request, parentGroup.getTypeLabel()) + ")";
+	}
+	%>
+
+	<label class="control-label"><liferay-ui:message key="parent-site" /></label>
+
+	<div class="input-group mb-3">
+		<div class="input-group-item">
+			<input class="field form-control lfr-input-text" id="<portlet:namespace />parentSiteTitle" name="<portlet:namespace />parentSiteTitle" readonly="<%= true %>" value="<%= title %>" />
+
+			<aui:input name="parentGroupSearchContainerPrimaryKeys" type="hidden" value="<%= parentGroupId %>" />
+		</div>
+
+		<div class="input-group-item input-group-item-shrink">
+			<button class="btn btn-secondary mr-1" id="<portlet:namespace />clearParentSiteLink" type="button">
+				<liferay-ui:message key="clear" />
+			</button>
+
+			<button class="btn btn-secondary" id="<portlet:namespace />changeParentSiteLink" type="button">
+				<liferay-ui:message key="change" />
+			</button>
+		</div>
+	</div>
+
+	<div class="<%= (parentGroup == null) ? "membership-restriction-container hide" : "membership-restriction-container" %>" id="<portlet:namespace />membershipRestrictionContainer">
+
+		<%
+		boolean membershipRestriction = false;
+
+		if ((liveGroup != null) && (liveGroup.getMembershipRestriction() == GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS)) {
+			membershipRestriction = true;
+		}
+		%>
+
+		<aui:input inlineLabel="right" label="limit-membership-to-members-of-the-parent-site" labelCssClass="simple-toggle-switch" name="membershipRestriction" type="toggle-switch" value="<%= membershipRestriction %>" />
+	</div>
+
 	<aui:select label="membership-type" name="type">
 		<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
 		<aui:option label="restricted" value="<%= GroupConstants.TYPE_SITE_RESTRICTED %>" />
@@ -124,107 +164,17 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 
 	<aui:input inlineLabel="right" label="allow-manual-membership-management" labelCssClass="simple-toggle-switch" name="manualMembership" type="toggle-switch" value="<%= manualMembership %>" />
 
-	<%
-	List<Group> parentGroups = new ArrayList<Group>();
-
-	if (parentGroup != null) {
-		parentGroups.add(parentGroup);
-	}
-	%>
-
-	<liferay-util:buffer
-		var="removeGroupIcon"
-	>
-		<liferay-ui:icon
-			icon="times-circle"
-			markupView="lexicon"
-			message="remove"
-		/>
-	</liferay-util:buffer>
-
-	<h4 class="text-default"><liferay-ui:message key="parent-site" /></h4>
-
-	<liferay-ui:search-container
-		compactEmptyResultsMessage="<%= true %>"
-		emptyResultsMessage="none"
-		headerNames="name,type,null"
-		id="parentGroupSearchContainer"
-		total="<%= parentGroups.size() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= parentGroups %>"
-		/>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.model.Group"
-			escapedModel="<%= true %>"
-			keyProperty="groupId"
-			modelVar="curGroup"
-		>
-			<liferay-ui:search-container-column-text
-				name="name"
-				truncate="<%= true %>"
-				value="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="type"
-				value="<%= LanguageUtil.get(request, curGroup.getTypeLabel()) %>"
-			/>
-
-			<liferay-ui:search-container-column-text>
-				<a class="modify-link" data-rowId="<%= curGroup.getGroupId() %>" href="javascript:;"><%= removeGroupIcon %></a>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator
-			markupView="lexicon"
-			paginate="<%= false %>"
-		/>
-	</liferay-ui:search-container>
-
-	<div class="button-holder">
-		<aui:button cssClass="modify-link" id="selectParentSiteLink" value="select" />
-	</div>
-
-	<div class="<%= parentGroups.isEmpty() ? "membership-restriction-container hide" : "membership-restriction-container" %>" id="<portlet:namespace />membershipRestrictionContainer">
-
-		<%
-		boolean membershipRestriction = false;
-
-		if ((liveGroup != null) && (liveGroup.getMembershipRestriction() == GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS)) {
-			membershipRestriction = true;
-		}
-		%>
-
-		<aui:input inlineLabel="right" label="limit-membership-to-members-of-the-parent-site" labelCssClass="simple-toggle-switch" name="membershipRestriction" type="toggle-switch" value="<%= membershipRestriction %>" />
-	</div>
-
-	<aui:script use="liferay-search-container">
-		A.one('#<portlet:namespace />selectParentSiteLink').on('click', (event) => {
+	<aui:script use="aui-base">
+		A.one('#<portlet:namespace />changeParentSiteLink').on('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (event) {
-					var searchContainer = Liferay.SearchContainer.get(
-						'<portlet:namespace />parentGroupSearchContainer'
+					A.one('#<portlet:namespace />parentSiteTitle').val(
+						event.entityname + ' (' + event.grouptype + ')'
 					);
 
-					var rowColumns = [];
-
-					var href =
-						'<portlet:renderURL><portlet:param name="mvcPath" value="/edit_site.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=' +
-						event.entityid;
-
-					rowColumns.push(event.entityname);
-					rowColumns.push(event.grouptype);
-					rowColumns.push(
-						'<a class="modify-link" data-rowId="' +
-							event.entityid +
-							'" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>'
-					);
-
-					searchContainer.deleteRow(1, searchContainer.getData());
-					searchContainer.addRow(rowColumns, event.entityid);
-					searchContainer.updateDataStore(event.entityid);
+					A.one(
+						'#<portlet:namespace />parentGroupSearchContainerPrimaryKeys'
+					).val(event.entityid);
 
 					A.one(
 						'#<portlet:namespace />membershipRestrictionContainer'
@@ -237,11 +187,11 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 				PortletURL groupSelectorURL = PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE)
 				).setParameter(
-					"includeCurrentGroup", Boolean.FALSE.toString()
+					"eventName", liferayPortletResponse.getNamespace() + "selectGroup"
 				).setParameter(
 					"groupId", String.valueOf(siteGroup.getGroupId())
 				).setParameter(
-					"eventName", liferayPortletResponse.getNamespace() + "selectGroup"
+					"includeCurrentGroup", Boolean.FALSE.toString()
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();
@@ -251,22 +201,13 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 			});
 		});
 
-		var searchContainer = Liferay.SearchContainer.get(
-			'<portlet:namespace />parentGroupSearchContainer'
-		);
+		A.one('#<portlet:namespace />clearParentSiteLink').on('click', (event) => {
+			A.one('#<portlet:namespace />parentSiteTitle').val('');
+			A.one('#<portlet:namespace />parentGroupSearchContainerPrimaryKeys').val(
+				'<%= GroupConstants.DEFAULT_PARENT_GROUP_ID %>'
+			);
 
-		searchContainer.get('contentBox').delegate(
-			'click',
-			(event) => {
-				var link = event.currentTarget;
-
-				var tr = link.ancestor('tr');
-
-				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
-
-				A.one('#<portlet:namespace />membershipRestrictionContainer').hide();
-			},
-			'.modify-link'
-		);
+			A.one('#<portlet:namespace />membershipRestrictionContainer').hide();
+		});
 	</aui:script>
 </c:if>

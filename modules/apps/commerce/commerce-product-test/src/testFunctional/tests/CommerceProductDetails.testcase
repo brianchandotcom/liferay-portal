@@ -154,12 +154,49 @@ definition {
 	}
 
 	@description = "COMMERCE-6353. As a buyer, I want to be able to see product details in Product Details page(Product Availability, Number of Items in Stock, Product Name, Product SKU, Product MPN, Product Description, List Price, Product Specifications, Product Images/Attachments(if set))"
-	@ignore = "true"
 	@priority = "3"
 	test ViewProductDetailsWidget {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#ViewProductDetailsWidget";
 
-		// TODO COMMERCE-6353 ViewProductDetailsWidget pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_STOCK_QUANTITY");
+
+		AssertElementPresent(
+			key_availability = "",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+
+		AssertElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
+		
+		AssertElementPresent(
+			key_detail = "SKU",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL");
+
+		AssertElementPresent(
+			key_detail = "MPN",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL");
+
+		AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE");
+
+		for (var detail : list "Weight,Dimensions,Material,Quantity,Warranty") {
+			AssertElementPresent(
+				key_specification = "${detail}",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_SPECIFICATIONS");
+		}
+
+		AssertElementPresent(
+			key_FSProductImage = "",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+		
+
+		
 	}
 
 }

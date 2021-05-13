@@ -14,6 +14,31 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_DETAIL</td>
+	<td>//span[(normalize-space(text())='${key_detail}')]/following-sibling::span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_STOCK_QUANTITY</td>
+	<td>//div[contains(concat(' ',normalize-space(@class),' '),' stock-quantity ')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_AVAILABILITY</td>
+	<td>//div/div/span[contains(@class,'availability-label')]/span[contains(text(),'${key_availability}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_DESCRIPTION</td>
+	<td>//p[contains(concat(' ',normalize-space(@class),' '),'product-description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_SPECIFICATIONS</td>
+	<td>//dl/dt[@class="specification-term"][contains(text(),'${key_specification}')]/following-sibling::dd</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_NAME</td>
 	<td>//h2[@class='product-header-title']</td>
 	<td></td>

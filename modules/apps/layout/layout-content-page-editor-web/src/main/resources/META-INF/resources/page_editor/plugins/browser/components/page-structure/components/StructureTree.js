@@ -32,6 +32,7 @@ import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selec
 import canActivateEditable from '../../../../../app/utils/canActivateEditable';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
 import isMapped from '../../../../../app/utils/editable-value/isMapped';
+import isMappedToCollection from '../../../../../app/utils/editable-value/isMappedToCollection';
 import getLayoutDataItemLabel from '../../../../../app/utils/getLayoutDataItemLabel';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
@@ -211,16 +212,9 @@ function visit(
 			...getAllPortals(documentFragment),
 		].sort((a, b) => a.priority - b.priority);
 
-		const collectionAncestor = getCollectionAncestor(
-			layoutData,
-			item.itemId
-		);
-
-		const collectionConfig = collectionAncestor
-			? collectionAncestor.config.collection
-			: null;
-
 		const editableTypes = fragmentEntryLink.editableTypes;
+
+		let collectionAncestor = null;
 
 		sortedElements.forEach((element) => {
 			if (element.editableId) {
@@ -234,6 +228,19 @@ function visit(
 				const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;
 				const type =
 					editableTypes[editableId] || EDITABLE_TYPES.backgroundImage;
+
+				if (!collectionAncestor) {
+					collectionAncestor = isMappedToCollection(editable)
+						? getCollectionAncestor(
+								fragmentEntryLink.masterLayout
+									? masterLayoutData
+									: layoutData,
+								item.itemId
+						  )
+						: null;
+				}
+
+				const collectionConfig = collectionAncestor?.config?.collection;
 
 				const mappedFieldLabel = isMapped(editable)
 					? getMappedFieldLabel(

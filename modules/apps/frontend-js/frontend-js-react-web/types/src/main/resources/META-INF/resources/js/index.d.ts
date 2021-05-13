@@ -21,4 +21,3 @@ export {default as usePrevious} from './hooks/usePrevious';
 export {default as useStateSafe} from './hooks/useStateSafe';
 export {default as useThunk} from './hooks/useThunk';
 export {default as useTimeout} from './hooks/useTimeout';
-export {A11y} from './components/A11y/index';

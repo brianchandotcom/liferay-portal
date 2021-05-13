@@ -12,4 +12,22 @@
  * details.
  */
 
-export {default as A11y} from './A11y';
+import type {CheckResult, ImpactValue} from 'axe-core';
+import type {A11yCheckerOptions} from './A11yChecker';
+export declare type Violation = {
+	all: Array<CheckResult>;
+	any: Array<CheckResult>;
+	help: string;
+	helpUrl: string;
+	id: string;
+	impact?: ImpactValue;
+};
+declare type Violations = {
+	modifyIndex: number;
+	target: string;
+	violations: Array<Violation>;
+};
+export default function useA11y(
+	props: Omit<A11yCheckerOptions, 'callback'>
+): Violations[];
+export {};

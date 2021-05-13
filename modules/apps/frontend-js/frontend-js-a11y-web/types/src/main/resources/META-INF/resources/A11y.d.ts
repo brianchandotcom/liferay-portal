@@ -16,6 +16,6 @@
 
 import './A11y.scss';
 import type {A11yCheckerOptions} from './A11yChecker';
-export default function A11y(
+export declare function A11y(
 	props: Omit<A11yCheckerOptions, 'callback'>
 ): JSX.Element[] | null;

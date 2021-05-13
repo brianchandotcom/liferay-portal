@@ -20,10 +20,10 @@ import ClayPopover from '@clayui/popover';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 
-import useA11y from '../../hooks/useA11y';
+import useA11y from './useA11y';
 
-import type {Violation as TViolation} from '../../hooks/useA11y';
 import type {A11yCheckerOptions} from './A11yChecker';
+import type {Violation as TViolation} from './useA11y';
 
 declare var Liferay: {
 	Language: {
@@ -183,7 +183,7 @@ function Violation({target, violations}: ViolationProps) {
 	);
 }
 
-export default function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
+export function A11y(props: Omit<A11yCheckerOptions, 'callback'>) {
 	const violations = useA11y(props);
 
 	if (violations) {

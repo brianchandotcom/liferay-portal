@@ -1,10 +1,8 @@
 {
 	"dependencies": {
 		"@clayui/icon": "3.1.0",
-		"@clayui/popover": "3.28.0",
 		"@clayui/tooltip": "3.28.0",
 		"@liferay/frontend-js-state-web": "*",
-		"axe-core": "^4.2.0",
 		"classnames": "2.2.6",
 		"formik": "2.1.4",
 		"prop-types": "15.7.2",

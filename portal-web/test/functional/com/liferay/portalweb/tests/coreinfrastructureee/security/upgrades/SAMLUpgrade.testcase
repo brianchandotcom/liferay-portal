@@ -10,7 +10,7 @@ definition {
 	property testray.main.component.name = "Upgrades Security";
 
 	setUp {
-		SignIn.signIn();
+		User.firstLoginUI();
 
 		var portalURL = PropsUtil.get("portal.url");
 

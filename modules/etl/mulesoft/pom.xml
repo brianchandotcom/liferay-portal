@@ -60,24 +60,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.22.0</version>
-					<configuration>
-						<excludes>
-							<exclude>**/LiferayCreateOperationTest.java</exclude>
-							<exclude>**/LiferayDeleteOperationTest.java</exclude>
-							<exclude>**/LiferayGetOperationTest.java</exclude>
-							<exclude>**/LiferayUpdateOperationTest.java</exclude>
-							<exclude>**/OAuth2CachedConnectionProviderTest.java</exclude>
-						</excludes>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>com.liferay</groupId>
@@ -100,10 +82,6 @@
 					<fileName>demo/liferay-connector-demo/src/test/resources/log4j2-test.xml</fileName>
 					<fileName>src/test/munit/batch-test-suite.xml</fileName>
 					<fileName>src/test/munit/crud-operations-test-suite.xml</fileName>
-					<fileName>src/test/resources/test-create-operation.xml</fileName>
-					<fileName>src/test/resources/test-delete-operation.xml</fileName>
-					<fileName>src/test/resources/test-get-operation.xml</fileName>
-					<fileName>src/test/resources/test-update-operation.xml</fileName>
 				</configuration>
 			</plugin>
 			<plugin>

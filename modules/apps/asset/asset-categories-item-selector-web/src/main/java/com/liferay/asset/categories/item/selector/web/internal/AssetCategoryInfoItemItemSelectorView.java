@@ -14,15 +14,15 @@
 
 package com.liferay.asset.categories.item.selector.web.internal;
 
-import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCategoryTreeNodeItemSelectorWebKeys;
-import com.liferay.asset.categories.item.selector.web.internal.display.context.SelectAssetCategoryTreeNodeDisplayContext;
-import com.liferay.asset.categories.item.selector.web.internal.display.context.SelectAssetVocabularyDisplayContext;
+import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCategoryItemSelectorWebKeys;
+import com.liferay.asset.categories.item.selector.web.internal.display.context.SelectAssetCategoryInfoItemDisplayContext;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.io.IOException;
@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -93,30 +94,17 @@ public class AssetCategoryInfoItemItemSelectorView
 
 		ServletContext servletContext = getServletContext();
 
+		servletRequest.setAttribute(
+			AssetCategoryItemSelectorWebKeys.
+				SELECT_ASSET_CATEGORY_INFO_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			new SelectAssetCategoryInfoItemDisplayContext(
+				(HttpServletRequest)servletRequest, itemSelectedEventName,
+				(RenderResponse)servletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_RESPONSE)));
+
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/select_asset_vocabulary.jsp");
-
-		SelectAssetCategoryTreeNodeDisplayContext
-			selectAssetCategoryLevelDisplayContext =
-				new SelectAssetCategoryTreeNodeDisplayContext(
-					false, (HttpServletRequest)servletRequest,
-					itemSelectedEventName, portletURL, false);
-
-		servletRequest.setAttribute(
-			AssetCategoryTreeNodeItemSelectorWebKeys.
-				SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			selectAssetCategoryLevelDisplayContext);
-
-		SelectAssetVocabularyDisplayContext
-			selectAssetVocabularyDisplayContext =
-				new SelectAssetVocabularyDisplayContext(
-					false, (HttpServletRequest)servletRequest, portletURL,
-					false);
-
-		servletRequest.setAttribute(
-			AssetCategoryTreeNodeItemSelectorWebKeys.
-				SELECT_ASSET_VOCABULARY_DISPLAY_CONTEXT,
-			selectAssetVocabularyDisplayContext);
+			servletContext.getRequestDispatcher(
+				"/select_asset_category_info_item.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

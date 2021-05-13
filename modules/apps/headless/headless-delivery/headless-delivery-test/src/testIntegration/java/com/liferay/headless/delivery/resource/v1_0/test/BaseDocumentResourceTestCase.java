@@ -215,6 +215,7 @@ public abstract class BaseDocumentResourceTestCase {
 		document.setContentValue(regex);
 		document.setDescription(regex);
 		document.setEncodingFormat(regex);
+		document.setExternalReferenceCode(regex);
 		document.setFileExtension(regex);
 		document.setTitle(regex);
 
@@ -229,6 +230,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Assert.assertEquals(regex, document.getContentValue());
 		Assert.assertEquals(regex, document.getDescription());
 		Assert.assertEquals(regex, document.getEncodingFormat());
+		Assert.assertEquals(regex, document.getExternalReferenceCode());
 		Assert.assertEquals(regex, document.getFileExtension());
 		Assert.assertEquals(regex, document.getTitle());
 	}
@@ -1556,6 +1558,156 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteDocumentByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Document document =
+			testDeleteSiteDocumentByExternalReferenceCode_addDocument();
+
+		assertHttpResponseStatusCode(
+			204,
+			documentResource.
+				deleteSiteDocumentByExternalReferenceCodeHttpResponse(
+					document.getSiteId(), document.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentResource.getSiteDocumentByExternalReferenceCodeHttpResponse(
+				document.getSiteId(), document.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			documentResource.getSiteDocumentByExternalReferenceCodeHttpResponse(
+				document.getSiteId(), document.getExternalReferenceCode()));
+	}
+
+	protected Document
+			testDeleteSiteDocumentByExternalReferenceCode_addDocument()
+		throws Exception {
+
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
+	public void testGetSiteDocumentByExternalReferenceCode() throws Exception {
+		Document postDocument =
+			testGetSiteDocumentByExternalReferenceCode_addDocument();
+
+		Document getDocument =
+			documentResource.getSiteDocumentByExternalReferenceCode(
+				postDocument.getSiteId(),
+				postDocument.getExternalReferenceCode());
+
+		assertEquals(postDocument, getDocument);
+		assertValid(getDocument);
+	}
+
+	protected Document testGetSiteDocumentByExternalReferenceCode_addDocument()
+		throws Exception {
+
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
+	public void testGraphQLGetSiteDocumentByExternalReferenceCode()
+		throws Exception {
+
+		Document document = testGraphQLDocument_addDocument();
+
+		Assert.assertTrue(
+			equals(
+				document,
+				DocumentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"documentByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" + document.getSiteId() + "\"");
+										put(
+											"externalReferenceCode",
+											"\"" +
+												document.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/documentByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetSiteDocumentByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"documentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPutSiteDocumentByExternalReferenceCode() throws Exception {
+		Document postDocument =
+			testPutSiteDocumentByExternalReferenceCode_addDocument();
+
+		Document randomDocument = randomDocument();
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document putDocument =
+			documentResource.putSiteDocumentByExternalReferenceCode(
+				postDocument.getSiteId(),
+				postDocument.getExternalReferenceCode(), randomDocument,
+				multipartFiles);
+
+		assertEquals(randomDocument, putDocument);
+		assertValid(putDocument);
+
+		Document getDocument =
+			documentResource.getSiteDocumentByExternalReferenceCode(
+				putDocument.getSiteId(),
+				putDocument.getExternalReferenceCode());
+
+		assertEquals(randomDocument, getDocument);
+		assertValid(getDocument);
+
+		assertValid(getDocument, multipartFiles);
+	}
+
+	protected Document testPutSiteDocumentByExternalReferenceCode_addDocument()
+		throws Exception {
+
+		return documentResource.postSiteDocument(
+			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
 	public void testGetSiteDocumentPermissionsPage() throws Exception {
 		Page<Permission> page = documentResource.getSiteDocumentPermissionsPage(
 			testGroup.getGroupId(), RoleConstants.GUEST);
@@ -1929,6 +2081,16 @@ public abstract class BaseDocumentResourceTestCase {
 
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (document.getEncodingFormat() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (document.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -2322,6 +2484,19 @@ public abstract class BaseDocumentResourceTestCase {
 				if (!Objects.deepEquals(
 						document1.getEncodingFormat(),
 						document2.getEncodingFormat())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						document1.getExternalReferenceCode(),
+						document2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2774,6 +2949,14 @@ public abstract class BaseDocumentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(document.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("fileExtension")) {
 			sb.append("'");
 			sb.append(String.valueOf(document.getFileExtension()));
@@ -2901,6 +3084,8 @@ public abstract class BaseDocumentResourceTestCase {
 					RandomTestUtil.randomString());
 				documentFolderId = RandomTestUtil.randomLong();
 				encodingFormat = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				fileExtension = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

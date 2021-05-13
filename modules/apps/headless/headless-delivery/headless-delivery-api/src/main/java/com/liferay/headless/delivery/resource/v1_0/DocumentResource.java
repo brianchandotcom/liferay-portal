@@ -149,6 +149,19 @@ public interface DocumentResource {
 			Object object)
 		throws Exception;
 
+	public void deleteSiteDocumentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Document getSiteDocumentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception;
+
+	public Document putSiteDocumentByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			MultipartBody multipartBody)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteDocumentPermissionsPage(Long siteId, String roleNames)
 		throws Exception;

@@ -140,7 +140,7 @@ definition {
 	test SearchBarWidgetSearchProductByNameSingleQuotes {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductByNameSingleQuotes";
-		
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -163,7 +163,6 @@ definition {
 					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 			}
 		}
-		
 	}
 
 	@description = "COMMERCE-6151. As a buyer, I want to search a product by typing its SKU in the Search Bar widget and the results should be visible on the Search Results widget"

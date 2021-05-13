@@ -110,7 +110,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 		return new DSEnvelope() {
 			{
-				dsEnvelopeId = jsonObject.getString("dsEnvelopeId");
+				dsEnvelopeId = jsonObject.getString("envelopeId");
 				emailSubject = jsonObject.getString("emailSubject");
 				status = jsonObject.getString("status");
 			}

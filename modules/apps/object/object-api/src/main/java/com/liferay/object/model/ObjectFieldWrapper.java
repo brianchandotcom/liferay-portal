@@ -54,6 +54,9 @@ public class ObjectFieldWrapper
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
+		attributes.put("indexed", isIndexed());
+		attributes.put("indexedAsKeyword", isIndexedAsKeyword());
+		attributes.put("locale", getLocale());
 
 		return attributes;
 	}
@@ -125,6 +128,24 @@ public class ObjectFieldWrapper
 		if (type != null) {
 			setType(type);
 		}
+
+		Boolean indexed = (Boolean)attributes.get("indexed");
+
+		if (indexed != null) {
+			setIndexed(indexed);
+		}
+
+		Boolean indexedAsKeyword = (Boolean)attributes.get("indexedAsKeyword");
+
+		if (indexedAsKeyword != null) {
+			setIndexedAsKeyword(indexedAsKeyword);
+		}
+
+		String locale = (String)attributes.get("locale");
+
+		if (locale != null) {
+			setLocale(locale);
+		}
 	}
 
 	/**
@@ -150,6 +171,36 @@ public class ObjectFieldWrapper
 	@Override
 	public String getDBColumnName() {
 		return model.getDBColumnName();
+	}
+
+	/**
+	 * Returns the indexed of this object field.
+	 *
+	 * @return the indexed of this object field
+	 */
+	@Override
+	public boolean getIndexed() {
+		return model.getIndexed();
+	}
+
+	/**
+	 * Returns the indexed as keyword of this object field.
+	 *
+	 * @return the indexed as keyword of this object field
+	 */
+	@Override
+	public boolean getIndexedAsKeyword() {
+		return model.getIndexedAsKeyword();
+	}
+
+	/**
+	 * Returns the locale of this object field.
+	 *
+	 * @return the locale of this object field
+	 */
+	@Override
+	public String getLocale() {
+		return model.getLocale();
 	}
 
 	/**
@@ -262,6 +313,26 @@ public class ObjectFieldWrapper
 		return model.getUuid();
 	}
 
+	/**
+	 * Returns <code>true</code> if this object field is indexed.
+	 *
+	 * @return <code>true</code> if this object field is indexed; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIndexed() {
+		return model.isIndexed();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object field is indexed as keyword.
+	 *
+	 * @return <code>true</code> if this object field is indexed as keyword; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIndexedAsKeyword() {
+		return model.isIndexedAsKeyword();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -285,6 +356,36 @@ public class ObjectFieldWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets whether this object field is indexed.
+	 *
+	 * @param indexed the indexed of this object field
+	 */
+	@Override
+	public void setIndexed(boolean indexed) {
+		model.setIndexed(indexed);
+	}
+
+	/**
+	 * Sets whether this object field is indexed as keyword.
+	 *
+	 * @param indexedAsKeyword the indexed as keyword of this object field
+	 */
+	@Override
+	public void setIndexedAsKeyword(boolean indexedAsKeyword) {
+		model.setIndexedAsKeyword(indexedAsKeyword);
+	}
+
+	/**
+	 * Sets the locale of this object field.
+	 *
+	 * @param locale the locale of this object field
+	 */
+	@Override
+	public void setLocale(String locale) {
+		model.setLocale(locale);
 	}
 
 	/**

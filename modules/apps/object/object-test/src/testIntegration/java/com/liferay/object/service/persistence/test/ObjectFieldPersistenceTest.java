@@ -144,6 +144,12 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setType(RandomTestUtil.randomString());
 
+		newObjectField.setIndexed(RandomTestUtil.randomBoolean());
+
+		newObjectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
+
+		newObjectField.setLocale(RandomTestUtil.randomString());
+
 		_objectFields.add(_persistence.update(newObjectField));
 
 		ObjectField existingObjectField = _persistence.findByPrimaryKey(
@@ -176,6 +182,13 @@ public class ObjectFieldPersistenceTest {
 			existingObjectField.getName(), newObjectField.getName());
 		Assert.assertEquals(
 			existingObjectField.getType(), newObjectField.getType());
+		Assert.assertEquals(
+			existingObjectField.isIndexed(), newObjectField.isIndexed());
+		Assert.assertEquals(
+			existingObjectField.isIndexedAsKeyword(),
+			newObjectField.isIndexedAsKeyword());
+		Assert.assertEquals(
+			existingObjectField.getLocale(), newObjectField.getLocale());
 	}
 
 	@Test
@@ -240,7 +253,8 @@ public class ObjectFieldPersistenceTest {
 			"ObjectField", "mvccVersion", true, "uuid", true, "objectFieldId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "name", true, "type", true);
+			true, "name", true, "type", true, "indexed", true,
+			"indexedAsKeyword", true, "locale", true);
 	}
 
 	@Test
@@ -539,6 +553,12 @@ public class ObjectFieldPersistenceTest {
 		objectField.setName(RandomTestUtil.randomString());
 
 		objectField.setType(RandomTestUtil.randomString());
+
+		objectField.setIndexed(RandomTestUtil.randomBoolean());
+
+		objectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
+
+		objectField.setLocale(RandomTestUtil.randomString());
 
 		_objectFields.add(_persistence.update(objectField));
 

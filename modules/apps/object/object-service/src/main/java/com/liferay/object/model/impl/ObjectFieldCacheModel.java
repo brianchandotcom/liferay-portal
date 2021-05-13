@@ -77,7 +77,7 @@ public class ObjectFieldCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,12 @@ public class ObjectFieldCacheModel
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", indexed=");
+		sb.append(indexed);
+		sb.append(", indexedAsKeyword=");
+		sb.append(indexedAsKeyword);
+		sb.append(", locale=");
+		sb.append(locale);
 		sb.append("}");
 
 		return sb.toString();
@@ -160,6 +166,16 @@ public class ObjectFieldCacheModel
 			objectFieldImpl.setType(type);
 		}
 
+		objectFieldImpl.setIndexed(indexed);
+		objectFieldImpl.setIndexedAsKeyword(indexedAsKeyword);
+
+		if (locale == null) {
+			objectFieldImpl.setLocale("");
+		}
+		else {
+			objectFieldImpl.setLocale(locale);
+		}
+
 		objectFieldImpl.resetOriginalValues();
 
 		return objectFieldImpl;
@@ -182,6 +198,11 @@ public class ObjectFieldCacheModel
 		objectDefinitionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		type = objectInput.readUTF();
+
+		indexed = objectInput.readBoolean();
+
+		indexedAsKeyword = objectInput.readBoolean();
+		locale = objectInput.readUTF();
 	}
 
 	@Override
@@ -226,6 +247,17 @@ public class ObjectFieldCacheModel
 		else {
 			objectOutput.writeUTF(type);
 		}
+
+		objectOutput.writeBoolean(indexed);
+
+		objectOutput.writeBoolean(indexedAsKeyword);
+
+		if (locale == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(locale);
+		}
 	}
 
 	public long mvccVersion;
@@ -239,5 +271,8 @@ public class ObjectFieldCacheModel
 	public long objectDefinitionId;
 	public String name;
 	public String type;
+	public boolean indexed;
+	public boolean indexedAsKeyword;
+	public String locale;
 
 }

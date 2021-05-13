@@ -44,6 +44,9 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setObjectDefinitionId(model.getObjectDefinitionId());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
+		soapModel.setIndexed(model.isIndexed());
+		soapModel.setIndexedAsKeyword(model.isIndexedAsKeyword());
+		soapModel.setLocale(model.getLocale());
 
 		return soapModel;
 	}
@@ -185,6 +188,38 @@ public class ObjectFieldSoap implements Serializable {
 		_type = type;
 	}
 
+	public boolean getIndexed() {
+		return _indexed;
+	}
+
+	public boolean isIndexed() {
+		return _indexed;
+	}
+
+	public void setIndexed(boolean indexed) {
+		_indexed = indexed;
+	}
+
+	public boolean getIndexedAsKeyword() {
+		return _indexedAsKeyword;
+	}
+
+	public boolean isIndexedAsKeyword() {
+		return _indexedAsKeyword;
+	}
+
+	public void setIndexedAsKeyword(boolean indexedAsKeyword) {
+		_indexedAsKeyword = indexedAsKeyword;
+	}
+
+	public String getLocale() {
+		return _locale;
+	}
+
+	public void setLocale(String locale) {
+		_locale = locale;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _objectFieldId;
@@ -196,5 +231,8 @@ public class ObjectFieldSoap implements Serializable {
 	private long _objectDefinitionId;
 	private String _name;
 	private String _type;
+	private boolean _indexed;
+	private boolean _indexedAsKeyword;
+	private String _locale;
 
 }

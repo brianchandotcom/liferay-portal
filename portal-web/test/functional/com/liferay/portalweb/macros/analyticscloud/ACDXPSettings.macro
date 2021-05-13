@@ -42,6 +42,19 @@ definition {
 
         Click(locator1 = "ACDXPSettings#COMBINATED_PROPERTY_OPTION");
 
+        if(isSet(siteName)){
+
+            Click(locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD");
+
+            Type(
+                locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
+                value1 = "${siteName}");
+
+            KeyPress(
+                locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
+                value1 = "\ENTER");
+        }
+
         Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
 
         Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
@@ -82,6 +95,8 @@ definition {
     }
         
     macro connectDXPtoAnalyticsCloud {
+
+        var siteName = "${siteName}";
 
         ACDXPSettings.goToInstanceSettingsAC();
 

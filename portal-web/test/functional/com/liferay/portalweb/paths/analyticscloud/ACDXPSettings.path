@@ -71,6 +71,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SYNCED_SITES_SEARCH_FIELD</td>
+	<td>//input[contains(@class, 'input-group-inset-after')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MULTIPLE_PROPERTY_OPTION</td>
 	<td>//*[contains(@value, 'multiple')]</td>
 	<td></td>

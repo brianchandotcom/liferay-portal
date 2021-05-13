@@ -447,10 +447,10 @@ definition {
 			siteName = "${siteName}",
 			userScreenName = "usersn");
 
-		User.firstLoginPG(
-			password = "test",
+		User.firstLoginUI(
+			specificURL = "http://www.able.com:8080/test-private-page",
 			userEmailAddress = "userea@liferay.com",
-			virtualHostsURL = "http://www.able.com:8080/test-private-page");
+			userPassword = "test");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
 
@@ -561,9 +561,7 @@ definition {
 			emailVerification = "${emailVerification}",
 			userEmailAddress = PropsUtil.get("email.address.3"));
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+		User.firstLoginUI(specificURL = "http://www.able.com:8080/");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",

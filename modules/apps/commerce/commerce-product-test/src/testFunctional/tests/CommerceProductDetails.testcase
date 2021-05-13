@@ -27,12 +27,33 @@ definition {
 	}
 
 	@description = "COMMERCE-6356. As a buyer, I want to be able to select the quantity of a product and add it to cart from Product details"
-	@ignore = "true"
 	@priority = "3"
 	test AddProductToCartFromProductDetails {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#AddProductToCartFromProductDetails";
+		
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		
+		ApplicationsMenu.gotoSite(site = "Minium");
+		
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+		
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+            accountName = "Test",
+            adminEmailAddress = "test@liferay.com");
 
-		// TODO COMMERCE-6356 AddProductToCartFromProductDetails pending implementation
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "2");
+		
+		CommerceNavigator.gotoMiniCart();
+
+		AssertElementPresent(
+            key_cartItemSKU = "MIN55861",
+            locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+            value1 = "U-Joint");
 
 	}
 

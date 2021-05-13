@@ -754,7 +754,11 @@ definition {
 	}
 
 	macro editConfigureCategoriesFilterPG {
-		AssetPublisherPortlet.gotoConfigurationPG();
+		if (!(isSet(portletName))) {
+			var portletName = "Asset Publisher";
+		}
+
+		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
 
@@ -774,7 +778,11 @@ definition {
 			Portlet.selectTreeNode(nodeName = "${categoryName}");
 		}
 
-		SelectFrame(value1 = "relative=top");
+		SelectFrameTop();
+
+		SelectFrame(
+			key_title = "${portletName}",
+			locator1 = "IFrame#MODAL_ANY");
 
 		if (IsElementPresent(locator1 = "//button[contains(.,'Add')]")) {
 			AssertClick(
@@ -787,9 +795,9 @@ definition {
 				value1 = "Done");
 		}
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 		PortletEntry.save();
+
+		SelectFrameTop();
 	}
 
 	macro enableRSSSubscription {

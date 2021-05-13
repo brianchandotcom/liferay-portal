@@ -18,6 +18,7 @@ import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -294,12 +295,11 @@ public class DepotAdminSelectRoleDisplayContext {
 
 		public Map<String, Object> getData(Role role) throws PortalException {
 			return HashMapBuilder.<String, Object>put(
-				"entityid", role.getRoleId()
+				"entityid",
+				_group.getGroupId() + StringPool.DASH + role.getRoleId()
 			).put(
 				"groupdescriptivename",
 				_group.getDescriptiveName(_themeDisplay.getLocale())
-			).put(
-				"groupid", _group.getGroupId()
 			).put(
 				"iconcssclass", RolesAdminUtil.getIconCssClass(role)
 			).put(

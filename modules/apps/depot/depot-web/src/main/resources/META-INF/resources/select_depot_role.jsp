@@ -120,24 +120,6 @@ DepotAdminSelectRoleDisplayContext depotAdminSelectRoleDisplayContext = (DepotAd
 					markupView="lexicon"
 				/>
 			</liferay-ui:search-container>
-
-			<aui:script use="aui-base">
-				var Util = Liferay.Util;
-
-				var openingLiferay = Util.getOpener().Liferay;
-
-				openingLiferay.fire(
-					'<%= HtmlUtil.escape(step2.getSyncEntitiesEventName()) %>',
-					{
-						selectors: A.all('.selector-button'),
-					}
-				);
-
-				Util.selectEntityHandler(
-					'#<portlet:namespace />selectDepotRoleFm',
-					'<%= HtmlUtil.escapeJS(step2.getEventName()) %>'
-				);
-			</aui:script>
 		</c:when>
 	</c:choose>
 </aui:form>

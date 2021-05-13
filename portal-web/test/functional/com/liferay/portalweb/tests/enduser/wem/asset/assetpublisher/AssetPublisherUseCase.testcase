@@ -182,95 +182,6 @@ definition {
 		}
 	}
 
-	@priority = "3"
-	test AssetPublisherHasOpenOfficeFileTypeLinks {
-		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherHasOpenOfficeFileTypeLinks";
-
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Connectors",
-			configurationName = "OpenOffice Integration",
-			configurationScope = "System Scope");
-
-		FormFields.enableCheckbox(fieldName = "serverEnabled");
-
-		SystemSettings.saveConfiguration();
-
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.configureDisplayConversionsPG(
-			check = "true",
-			documentTypes = "doc,odt,pdf,rtf,sxw,txt");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.viewConversionLinksPGViaAP(
-			documentTypes = "doc,odt,pdf,rtf,sxw,txt",
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.configureDisplayConversionsPG(
-			check = "true",
-			documentTypes = "doc,pdf,txt");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.configureDisplayConversionsPG(
-			documentTypes = "odt,rtf,sxw",
-			uncheck = "true");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.viewConversionLinksPGViaAP(
-			documentTypes = "doc,pdf,txt",
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.viewNoConversionLinksPGViaAP(
-			documentTypes = "odt,rtf,sxw",
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		AssetPublisherPortlet.configureDisplayConversionsPG(
-			documentTypes = "doc,odt,pdf,rtf,sxw,txt",
-			uncheck = "true");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		WebContent.viewNoConversionLinksPGViaAP(
-			documentTypes = "doc,odt,pdf,rtf,sxw,txt",
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-	}
-
 	@description = "Configure the Asset Publisher as Site Administrator."
 	@priority = "4"
 	test ConfigureAssetPublisherAsSiteAdministrater {
@@ -999,58 +910,40 @@ definition {
 		}
 	}
 
+	@description = "View document types shown in manual selection."
 	@priority = "4"
-	test ViewDeletedWCDArticleAsAdminAndGuestCP {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
+	test ViewDocumentTypeShownInManualSelection {
+		task ("Add a global document type") {
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "global");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page");
+			DMNavigator.gotoDocumentType();
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Web Content Display Page",
-			widgetName = "Web Content Display");
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "Global Document Type Description",
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "Global Document Type Name");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
+		task ("Add a document type in normal site") {
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
-		WebContentDisplayPortlet.selectWebContent(
-			portletName = "Web Content Display",
-			webContentTitle = "WC WebContent Title");
+			DMNavigator.gotoDocumentType();
 
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
+			DMDocumentType.add(
+				dmDocumentTypeDescription = "Local Document Type Description",
+				dmDocumentTypeFieldNames = "Text",
+				dmDocumentTypeName = "Local Document Type Name");
+		}
 
-		WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content");
+		task ("View document types shown in manual selection") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			AssetPublisherPortlet.configureManualAssetSelectionPG();
 
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		WebContentDisplayPortlet.viewDeletedArticle();
-
-		User.logoutPG();
-
-		Navigator.gotoSitePage(
-			pageName = "Web Content Display Page",
-			siteName = "Test Site Name");
-
-		WebContent.viewNoContentAsGuestPGViaWCD(portletName = "Web Content Display");
-
-		User.loginPG();
+			AssetPublisherPortlet.viewManualAssetTypesPG(assetEntryTypes = "Global Document Type Name,Local Document Type Name");
+		}
 	}
 
 	@description = "View localized web content with localized categories."
@@ -1143,42 +1036,6 @@ definition {
 		}
 	}
 
-	@description = "View new asset types shown in manual selection."
-	@priority = "4"
-	test ViewNewAssetTypeShownInManualSelection {
-		task ("Add a global document type") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "global");
-
-			DMNavigator.gotoDocumentType();
-
-			DMDocumentType.add(
-				dmDocumentTypeDescription = "Global Document Type Description",
-				dmDocumentTypeFieldNames = "Text",
-				dmDocumentTypeName = "Global Document Type Name");
-		}
-
-		task ("Add a document type in normal site") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMNavigator.gotoDocumentType();
-
-			DMDocumentType.add(
-				dmDocumentTypeDescription = "Local Document Type Description",
-				dmDocumentTypeFieldNames = "Text",
-				dmDocumentTypeName = "Local Document Type Name");
-		}
-
-		task ("View new asset types shown in manual selection") {
-			Navigator.gotoSitePage(
-				pageName = "Asset Publisher Page",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.configureManualAssetSelectionPG();
-
-			AssetPublisherPortlet.viewManualAssetTypesPG(assetEntryTypes = "Global Document Type Name,Local Document Type Name");
-		}
-	}
-
 	@description = "View no console error thrown when refresh page as Guest."
 	@priority = "4"
 	test ViewNoConsoleErrorWhenRefreshPageAsGuest {
@@ -1201,6 +1058,101 @@ definition {
 			Refresh();
 
 			AssertConsoleTextNotPresent(value1 = "NoSuchResourceActionException");
+		}
+	}
+
+	@description = "Add and edit web content via Asset Publisher in organization site with virtual host."
+	@priority = "3"
+	@uitest
+	test ViewOpenOfficeFileTypeLinks {
+		property test.name.skip.portal.instance = "AssetPublisherUseCase#AssetPublisherHasOpenOfficeFileTypeLinks";
+
+		task ("Enable OpenOffice Integration") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Connectors",
+				configurationName = "OpenOffice Integration",
+				configurationScope = "System Scope");
+
+			FormFields.enableCheckbox(fieldName = "serverEnabled");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Enable display conversions") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplayConversionsPG(
+				check = "true",
+				documentTypes = "doc,odt,pdf,rtf,sxw,txt");
+		}
+
+		task ("View conversions links") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			WebContent.viewConversionLinksPGViaAP(
+				documentTypes = "doc,odt,pdf,rtf,sxw,txt",
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+		}
+
+		task ("Disable some display conversions") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplayConversionsPG(
+				documentTypes = "odt,rtf,sxw",
+				uncheck = "true");
+		}
+
+		task ("View conversions links") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			WebContent.viewConversionLinksPGViaAP(
+				documentTypes = "doc,pdf,txt",
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+
+			WebContent.viewNoConversionLinksPGViaAP(
+				documentTypes = "odt,rtf,sxw",
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+		}
+
+		task ("Display the rest display conversions") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.configureDisplayConversionsPG(
+				documentTypes = "doc,pdf,txt",
+				uncheck = "true");
+		}
+
+		task ("View no conversions links shown") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			WebContent.viewNoConversionLinksPGViaAP(
+				documentTypes = "doc,odt,pdf,rtf,sxw,txt",
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
 		}
 	}
 
@@ -1280,107 +1232,6 @@ definition {
 
 			RelatedAssets.viewPG(relatedAssetTitle = "WC WebContent Title");
 		}
-	}
-
-	@priority = "3"
-	test ViewRelatedAssetViaDMPortlet {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Blogs Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Blogs Page",
-			widgetName = "Blogs");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Test Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Documents and Media Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Documents and Media Page",
-			widgetName = "Documents and Media");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Test Site Name");
-
-		DMDocument.addPG(
-			assetTitle = "Blogs Entry Title",
-			assetType = "Blogs Entry",
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.docx",
-			dmDocumentRelatedAsset = "true",
-			dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Test Site Name");
-
-		DMDocument.viewPGDetails(
-			assetTitle = "Blogs Entry Title",
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentRelatedAsset = "true",
-			dmDocumentSize = "12 KB",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentUploader = "Test Test",
-			dmDocumentVersionNumber = "1.0",
-			portletName = "Documents and Media",
-			searchTerm = "DM Document Title",
-			workflow = "APPROVED");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Test Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Test Site Name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.editPG(
-			dmDocumentDescriptionEdit = "DM Document Description Edit",
-			dmDocumentFileEdit = "Document_2.docx",
-			dmDocumentTitle = "DM Document Title",
-			dmDocumentTitleEdit = "DM Document Title Edit");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Test Site Name");
-
-		DMDocument.viewPGDetails(
-			assetTitle = "Blogs Entry Title",
-			dmDocumentDescription = "DM Document Description Edit",
-			dmDocumentRelatedAsset = "true",
-			dmDocumentSize = "12 KB",
-			dmDocumentTitle = "DM Document Title Edit",
-			dmDocumentUploader = "Test Test",
-			dmDocumentVersionNumber = "2.0",
-			portletName = "Documents and Media",
-			searchTerm = "DM Document Title",
-			workflow = "APPROVED");
-
-		Navigator.gotoSitePage(
-			pageName = "Documents and Media Page",
-			siteName = "Test Site Name");
-
-		DMNavigator.gotoRelatedAssetPG(
-			assetTitle = "Blogs Entry Title",
-			dmDocumentTitle = "DM Document Title Edit");
-
-		BlogsEntry.viewAsRelatedAssetPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			relatedAssetTitle = "DM Document Title Edit");
 	}
 
 	@description = "View the web content author."
@@ -1509,46 +1360,48 @@ definition {
 		}
 	}
 
+	@description = "View web content in associated public page."
 	@priority = "4"
-	test ViewWebContentWithConfiguredDisplayPageViaAP {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page 2");
+	test ViewWebContentInAssociatedPublicPage {
+		task ("Set the Asset Publisher as default for page") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Asset Publisher Page 2",
-			widgetName = "Asset Publisher");
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page 2",
-			siteName = "Test Site Name");
+		task ("Add a web content and associate it to the page") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
 
-		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+			AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
+			WebContent.editDisplayPage(
+				pageName = "Asset Publisher Page",
+				pageType = "Public Pages");
 
-		WebContent.editDisplayPagePGViaAP(
-			assetTitle = "WC WebContent Title",
-			displayPageName = "Asset Publisher Page 2",
-			pageType = "Public Pages");
+			PortletEntry.publish();
+		}
 
-		PortletEntry.publish();
+		task ("View web content in associated public page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "WC WebContent Title",
+				menuItem = "View Content");
 
-		WebContent.viewLinkedAssetPGViaAP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+			ControlMenu.viewHeaderTitle(headerTitle = "Asset Publisher Page");
+
+			WebContent.viewLinkedAssetPGViaAP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
+		}
 	}
 
 }

@@ -17,7 +17,7 @@ package com.liferay.asset.categories.item.selector.web.internal.constants;
 /**
  * @author Rubén Pulido
  */
-public class AssetCategoryTreeNodeItemSelectorWebKeys {
+public class AssetCategoryItemSelectorWebKeys {
 
 	public static final String
 		SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT =

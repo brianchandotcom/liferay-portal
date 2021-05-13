@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectAssetVocabularyDisplayContext selectAssetVocabularyDisplayContext = (SelectAssetVocabularyDisplayContext)request.getAttribute(AssetCategoryTreeNodeItemSelectorWebKeys.SELECT_ASSET_VOCABULARY_DISPLAY_CONTEXT);
+SelectAssetVocabularyDisplayContext selectAssetVocabularyDisplayContext = (SelectAssetVocabularyDisplayContext)request.getAttribute(AssetCategoryItemSelectorWebKeys.SELECT_ASSET_VOCABULARY_DISPLAY_CONTEXT);
 %>
 
 <c:choose>

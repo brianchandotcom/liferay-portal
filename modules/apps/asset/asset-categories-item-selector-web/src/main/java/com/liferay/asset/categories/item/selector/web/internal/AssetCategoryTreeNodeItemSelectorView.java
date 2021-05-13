@@ -16,7 +16,7 @@ package com.liferay.asset.categories.item.selector.web.internal;
 
 import com.liferay.asset.categories.item.selector.AssetCategoryTreeNodeItemSelectorReturnType;
 import com.liferay.asset.categories.item.selector.criterion.AssetCategoryTreeNodeItemSelectorCriterion;
-import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCategoryTreeNodeItemSelectorWebKeys;
+import com.liferay.asset.categories.item.selector.web.internal.constants.AssetCategoryItemSelectorWebKeys;
 import com.liferay.asset.categories.item.selector.web.internal.display.context.SelectAssetCategoryTreeNodeDisplayContext;
 import com.liferay.asset.categories.item.selector.web.internal.display.context.SelectAssetVocabularyDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -91,7 +91,7 @@ public class AssetCategoryTreeNodeItemSelectorView
 					portletURL);
 
 		servletRequest.setAttribute(
-			AssetCategoryTreeNodeItemSelectorWebKeys.
+			AssetCategoryItemSelectorWebKeys.
 				SELECT_ASSET_CATEGORY_TREE_NODE_ITEM_SELECTOR_DISPLAY_CONTEXT,
 			selectAssetCategoryLevelDisplayContext);
 
@@ -101,7 +101,7 @@ public class AssetCategoryTreeNodeItemSelectorView
 					(HttpServletRequest)servletRequest, portletURL);
 
 		servletRequest.setAttribute(
-			AssetCategoryTreeNodeItemSelectorWebKeys.
+			AssetCategoryItemSelectorWebKeys.
 				SELECT_ASSET_VOCABULARY_DISPLAY_CONTEXT,
 			selectAssetVocabularyDisplayContext);
 

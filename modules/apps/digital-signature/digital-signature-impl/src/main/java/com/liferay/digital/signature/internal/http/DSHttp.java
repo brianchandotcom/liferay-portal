@@ -14,18 +14,20 @@
 
 package com.liferay.digital.signature.internal.http;
 
+import com.liferay.digital.signature.internal.configuration.DigitalSignatureConfiguration;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 
@@ -75,6 +77,13 @@ public class DSHttp {
 		return encoder.encodeToString(bytes);
 	}
 
+	private DigitalSignatureConfiguration _getConfiguration(long groupId)
+		throws Exception {
+
+		return ConfigurationProviderUtil.getGroupConfiguration(
+			DigitalSignatureConfiguration.class, groupId);
+	}
+
 	private String _getDocuSignAccessToken(long groupId) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Get DocuSign access token for group " + groupId);
@@ -97,34 +106,43 @@ public class DSHttp {
 		return jsonObject.getString("access_token");
 	}
 
-	private String _getDocuSignAPIAccountId(long groupId) {
+	private String _getDocuSignAPIAccountId(long groupId) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Get DocuSign API account ID for group " + groupId);
 		}
 
-		return "22d6e23f-1da3-440d-883d-";
+		DigitalSignatureConfiguration configuration = _getConfiguration(
+			groupId);
+
+		return configuration.digitalSignatureAPIAccountId();
 	}
 
-	private String _getDocuSignAPIUsername(long groupId) {
+	private String _getDocuSignAPIUsername(long groupId) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Get DocuSign API username for group " + groupId);
 		}
 
-		return "d5bb12fc-1460-4a8f-b33e-";
+		DigitalSignatureConfiguration configuration = _getConfiguration(
+			groupId);
+
+		return configuration.digitalSignatureAPIUsername();
 	}
 
-	private String _getDocuSignIntegrationKey(long groupId) {
+	private String _getDocuSignIntegrationKey(long groupId) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Get DocuSign integration key for group " + groupId);
 		}
 
-		return "4ac993f9-a4d6-4086-8c59-";
+		DigitalSignatureConfiguration configuration = _getConfiguration(
+			groupId);
+
+		return configuration.digitalSignatureIntegrationKey();
 	}
 
 	private String _getJWT(long groupId) throws Exception {
 		Signature signature = Signature.getInstance("SHA256withRSA");
 
-		signature.initSign(_readPrivateKey());
+		signature.initSign(_readPrivateKey(groupId));
 
 		String headerJSON = JSONUtil.put(
 			"alg", "RS256"
@@ -178,22 +196,30 @@ public class DSHttp {
 				StringPool.UTF8);
 		}
 
+		DigitalSignatureConfiguration configuration = _getConfiguration(
+			groupId);
+
+		String accountBaseURI = configuration.digitalSignatureAccountBaseURI();
+
 		options.setLocation(
 			StringBundler.concat(
-				"https://demo.docusign.net/restapi/v2.1/accounts/",
+				accountBaseURI, "/restapi/v2.1/accounts/",
 				_getDocuSignAPIAccountId(groupId), "/", location));
+
 		options.setMethod(method);
 
 		return _jsonFactory.createJSONObject(_http.URLtoString(options));
 	}
 
-	private PrivateKey _readPrivateKey() throws Exception {
+	private PrivateKey _readPrivateKey(long groupId) throws Exception {
 		KeyFactory keyFactory = KeyFactory.getInstance("RSA");
 
-		Class<?> clazz = getClass();
+		DigitalSignatureConfiguration configuration = _getConfiguration(
+			groupId);
 
-		PEMReader pemReader = new PEMReader(
-			clazz.getResourceAsStream("dependencies/private_key.txt"));
+		String privateKey = configuration.digitalSignaturePrivateKey();
+
+		PEMReader pemReader = new PEMReader(privateKey.getBytes());
 
 		PKCS1EncodedKeySpec pkcs1EncodedKeySpec = new PKCS1EncodedKeySpec(
 			pemReader.getDerBytes());

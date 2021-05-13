@@ -174,7 +174,7 @@ definition {
 			locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
 
 		AssertElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
-		
+
 		AssertElementPresent(
 			key_detail = "SKU",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_DETAIL");
@@ -194,9 +194,6 @@ definition {
 		AssertElementPresent(
 			key_FSProductImage = "",
 			locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
-		
-
-		
 	}
 
 }

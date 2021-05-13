@@ -27,8 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.digital.signature.internal.configuration.DigitalSignatureConfiguration",
-	localization = "content/Language",
-	name = "digital-signature-configuration"
+	localization = "content/Language", name = "digital-signature-configuration"
 )
 public interface DigitalSignatureConfiguration {
 

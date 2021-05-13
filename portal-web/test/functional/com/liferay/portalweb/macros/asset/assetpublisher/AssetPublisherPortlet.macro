@@ -201,6 +201,10 @@ definition {
 	}
 
 	macro configureCategoriesFilterPG {
+		if (!(isSet(portletName))) {
+			var portletName = "Asset Publisher";
+		}
+
 		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
@@ -230,7 +234,7 @@ definition {
 		SelectFrameTop();
 
 		SelectFrame(
-			key_title = "Asset Publisher",
+			key_title = "${portletName}",
 			locator1 = "IFrame#MODAL_ANY");
 
 		if (IsElementPresent(locator1 = "//button[contains(@class,'toolbar') and contains(.,'Add')]")) {

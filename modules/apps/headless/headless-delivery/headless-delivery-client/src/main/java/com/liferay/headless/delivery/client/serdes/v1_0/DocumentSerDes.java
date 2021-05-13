@@ -255,6 +255,20 @@ public class DocumentSerDes {
 			sb.append("\"");
 		}
 
+		if (document.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(document.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (document.getFileExtension() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -575,6 +589,15 @@ public class DocumentSerDes {
 				"encodingFormat", String.valueOf(document.getEncodingFormat()));
 		}
 
+		if (document.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(document.getExternalReferenceCode()));
+		}
+
 		if (document.getFileExtension() == null) {
 			map.put("fileExtension", null);
 		}
@@ -781,6 +804,14 @@ public class DocumentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {
 				if (jsonParserFieldValue != null) {
 					document.setEncodingFormat((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					document.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fileExtension")) {

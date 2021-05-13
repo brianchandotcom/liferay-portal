@@ -323,9 +323,11 @@ definition {
 			conditionOperator = "${conditionOperator}",
 			ruleNumber = "${ruleNumber}");
 
-		FormRules.viewConditionFieldConstantSummary(
-			conditionFieldConstant = "${conditionFieldConstant}",
-			ruleNumber = "${ruleNumber}");
+		if (isSet(conditionFieldConstant)) {
+			FormRules.viewConditionFieldConstantSummary(
+				conditionFieldConstant = "${conditionFieldConstant}",
+				ruleNumber = "${ruleNumber}");
+		}
 
 		FormRules.viewActionSummary(
 			action = "${action}",

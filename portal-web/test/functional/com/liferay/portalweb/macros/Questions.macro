@@ -687,6 +687,12 @@ definition {
 		MenuItem.clickNoError(menuItem = "Unsubscribe");
 	}
 
+	macro unSubscribeQuestionFromDetails {
+		Click(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
+	}
+
 	macro unSubscribeTopic {
 		LexiconCard.clickEllipsisItem(
 			card = "${topicName}",
@@ -843,6 +849,16 @@ definition {
 			AssertElementPresent(
 				key_itemName = "${itemNameList}",
 				locator1 = "Questions#QUESTIONS_STATISTICS_ITEM");
+		}
+	}
+
+	macro viewSubscribeAndUnsubscribeFromDetails {
+		if (isSet(subscribedQuestion)) {
+			AssertElementPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
+		}
+
+		if (isSet(noSubscribedQuestion)) {
+			AssertElementPresent(locator1 = "Questions#QUESTIONS_SUBSCRIBE");
 		}
 	}
 

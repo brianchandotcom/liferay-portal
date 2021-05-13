@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.validation;
 
-import com.liferay.dynamic.data.mapping.validation.DDMValidation;
+import com.liferay.dynamic.data.mapping.form.validation.DDMValidation;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;

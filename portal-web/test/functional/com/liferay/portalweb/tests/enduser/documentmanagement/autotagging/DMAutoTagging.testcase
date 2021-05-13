@@ -228,9 +228,10 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node2");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document JPG Node2",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node2");
 
@@ -245,9 +246,10 @@ definition {
 
 		Pause(locator = "3000");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node1");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document JPG Node1",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
 
@@ -262,11 +264,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document JPG Node1",
+			groupName = "Guest",
 			siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG Node1");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG Node1");
 
@@ -313,9 +315,10 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-enabled");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Site AutoTag Enabled",
+			siteURLKey = "site-autotag-enabled");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -328,9 +331,10 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_4.jpg");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-autotag-disabled");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document JPG");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Site AutoTag Disabled",
+			siteURLKey = "site-autotag-disabled");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document JPG");
 
@@ -438,9 +442,10 @@ definition {
 			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
 			dmDocumentTitle = "DM Document DOCX");
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document DOCX");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document DOCX",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document DOCX");
 

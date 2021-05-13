@@ -400,9 +400,10 @@ definition {
 	test PreviewMP4 {
 		property test.name.skip.portal.instance = "DLVideo#PreviewMP4";
 
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Video Title In Site");
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Video Title In Site",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}

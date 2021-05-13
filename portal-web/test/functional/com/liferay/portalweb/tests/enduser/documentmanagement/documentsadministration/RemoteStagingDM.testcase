@@ -84,11 +84,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
 			siteURLKey = "remote-site");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
@@ -272,11 +272,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
 			siteURLKey = "remote-site");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description",
@@ -311,11 +311,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
 			siteURLKey = "remote-site");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description Edit",
@@ -363,11 +363,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
 			siteURLKey = "remote-site");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "DM Document Title",
@@ -413,11 +413,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
 			siteURLKey = "remote-site");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(
 			dmDocumentTitle = "DM Document Title",
@@ -485,11 +485,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Remote Site",
 			siteURLKey = "remote-site");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description",
@@ -532,11 +532,11 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openDocumentsAndMediaAdmin(
+		DMNavigator.openToEntryInAdmin(
 			baseURL = "http://localhost:9080",
+			dmDocumentTitle = "DM Document Title Edit",
+			groupName = "Remote Site",
 			siteURLKey = "remote-site");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description Edit",

@@ -352,10 +352,9 @@ definition {
 			value1 = "${elementSetTitle}");
 	}
 
+	@description = "Add the ${key_fieldType} field inside page ${formPageNumber} in position ${fieldPositionNumber}."
 	macro gotoAddField {
 		Form._addField();
-
-		var key_fieldType = "${fieldType}";
 
 		if (isSet(fieldPositionNumber)) {
 			var key_fieldPositionNumber = "${fieldPositionNumber}";
@@ -363,6 +362,8 @@ definition {
 		else {
 			var key_fieldPositionNumber = "0";
 		}
+
+		var key_fieldType = "${fieldType}";
 
 		if (isSet(formPageNumber)) {
 			var key_formPageNumber = "${formPageNumber}";

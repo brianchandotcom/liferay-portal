@@ -190,12 +190,33 @@ definition {
 	}
 
 	@description = "COMMERCE-6153. As a buyer, I want to search for products by typing a Specifications Value in Search Bar widget and the results should be visible on Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test SearchBarWidgetSearchProductsBySpecificationValue {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsBySpecificationValue";
+		
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		// TODO COMMERCE-6153 SearchBarWidgetSearchProductsBySpecificationValue pending implementation
+		ApplicationsMenu.gotoSite(site = "Minium");
+		
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "Plastic");
+		
+		Button.clickSubmitButton();
+
+		AssertElementPresent(
+			key_value = "1",
+			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+
+		AssertElementPresent(
+			key_productName = "Timing Chain Tensioner",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementNotPresent(
+			key_value = "2",
+			locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
 	}
 
 	@description = "COMMERCE-6145. As a buyer, I want to change the number of items to display for every page from Search Results widget pagination bar"

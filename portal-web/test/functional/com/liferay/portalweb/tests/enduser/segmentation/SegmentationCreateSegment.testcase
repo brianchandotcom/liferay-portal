@@ -579,13 +579,27 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130346."
-	@ignore = "true"
 	@priority = "5"
 	test AddSegmentByOtherSegmentsUnableToAddNewSegments {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130346 AddSegmentByOtherSegmentsUnableToAddNewSegments pending implementation
+		LexiconEntry.gotoAdd();
 
+		Segmentation.gotoSidebar(fieldType = "Segments");
+
+		Segmentation.addProperties(propertyOption = "Segment");
+
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+
+		Click(locator1 = "Button#SELECT");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameTop();
+
+		Click(locator1 = "Icon#CLOSE");
 	}
 
 	@description = "This is a test for LPS-130347."
@@ -595,6 +609,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130347 AddSegmentByOtherSegmentsWarning pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130313."

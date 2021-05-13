@@ -1037,6 +1037,14 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntry fetchFileEntryByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return dlFileEntryPersistence.fetchByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntryByFileName(
 		long groupId, long folderId, String fileName) {
 

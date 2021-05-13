@@ -45,16 +45,16 @@ public interface InstanceResource {
 
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
-			Boolean completed, java.util.Date dateEnd, java.util.Date dateStart,
-			String[] slaStatuses, String[] taskNames, Pagination pagination,
-			String sortString)
+			java.util.Date dateEnd, java.util.Date dateStart,
+			String[] processStatuses, String[] slaStatuses, String[] taskNames,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
-			Boolean completed, java.util.Date dateEnd, java.util.Date dateStart,
-			String[] slaStatuses, String[] taskNames, Pagination pagination,
-			String sortString)
+			java.util.Date dateEnd, java.util.Date dateStart,
+			String[] processStatuses, String[] slaStatuses, String[] taskNames,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public Instance postProcessInstance(Long processId, Instance instance)
@@ -175,15 +175,16 @@ public interface InstanceResource {
 
 		public Page<Instance> getProcessInstancesPage(
 				Long processId, Long[] assigneeIds, Long[] classPKs,
-				Boolean completed, java.util.Date dateEnd,
-				java.util.Date dateStart, String[] slaStatuses,
+				java.util.Date dateEnd, java.util.Date dateStart,
+				String[] processStatuses, String[] slaStatuses,
 				String[] taskNames, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProcessInstancesPageHttpResponse(
-					processId, assigneeIds, classPKs, completed, dateEnd,
-					dateStart, slaStatuses, taskNames, pagination, sortString);
+					processId, assigneeIds, classPKs, dateEnd, dateStart,
+					processStatuses, slaStatuses, taskNames, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -224,8 +225,8 @@ public interface InstanceResource {
 
 		public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
 				Long processId, Long[] assigneeIds, Long[] classPKs,
-				Boolean completed, java.util.Date dateEnd,
-				java.util.Date dateStart, String[] slaStatuses,
+				java.util.Date dateEnd, java.util.Date dateStart,
+				String[] processStatuses, String[] slaStatuses,
 				String[] taskNames, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -267,10 +268,6 @@ public interface InstanceResource {
 				}
 			}
 
-			if (completed != null) {
-				httpInvoker.parameter("completed", String.valueOf(completed));
-			}
-
 			if (dateEnd != null) {
 				httpInvoker.parameter(
 					"dateEnd", liferayToJSONDateFormat.format(dateEnd));
@@ -279,6 +276,13 @@ public interface InstanceResource {
 			if (dateStart != null) {
 				httpInvoker.parameter(
 					"dateStart", liferayToJSONDateFormat.format(dateStart));
+			}
+
+			if (processStatuses != null) {
+				for (int i = 0; i < processStatuses.length; i++) {
+					httpInvoker.parameter(
+						"processStatuses", String.valueOf(processStatuses[i]));
+				}
 			}
 
 			if (slaStatuses != null) {

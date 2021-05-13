@@ -206,9 +206,9 @@ public abstract class BaseInstanceResourceTestCase {
 	@Test
 	public void testGetProcessInstancesPage() throws Exception {
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			testGetProcessInstancesPage_getProcessId(), null, null, null,
+			testGetProcessInstancesPage_getProcessId(), null, null,
 			RandomTestUtil.nextDate(), RandomTestUtil.nextDate(), null, null,
-			Pagination.of(1, 2), null);
+			null, Pagination.of(1, 2), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 

@@ -1061,9 +1061,9 @@ definition {
 
 		Segmentation.addProperties(propertyOption = "Date of Birth");
 
-		Segmentation.fillTitle(titleField = "AddSegmentByUserDateOfBirth Test");
-
 		Segmentation.fillProperty(dateValue = "05/31/1986");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserDateOfBirth Test");
 
 		Segmentation.viewMembers(memberName = "userfn userln");
 

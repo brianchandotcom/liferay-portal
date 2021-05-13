@@ -37,8 +37,10 @@ definition {
 
 	macro addViaSiteCP {
 		Click(
-			key_url = "site-configuration-categorization",
+			key_url = "site-configuration-asset-auto-tagger",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Categorization");
 
 		AssetCategorization.addTag(tagName = "${tagName}");
 

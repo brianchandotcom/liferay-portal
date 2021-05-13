@@ -269,6 +269,18 @@ public class UserIndexerTest {
 	}
 
 	@Test
+	public void testNameFieldsRandomString() throws Exception {
+		String firstName = RandomTestUtil.randomString();
+		String lastName = RandomTestUtil.randomString();
+		String middleName = "Middle";
+
+		User user = addUserWithNameFields(firstName, middleName, lastName);
+
+		assertUserId(user.getUserId(), byQueryString(firstName));
+		assertUserId(user.getUserId(), byQueryString(user.getFullName()));
+	}
+
+	@Test
 	public void testNameFieldsSpanish() {
 		String firstName = "José";
 		String lastName = "Sánchez";

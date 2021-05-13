@@ -194,16 +194,15 @@ definition {
 	test SearchBarWidgetSearchProductsBySpecificationValue {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsBySpecificationValue";
-		
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
-		
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
 			value1 = "Plastic");
-		
+
 		Button.clickSubmitButton();
 
 		AssertElementPresent(

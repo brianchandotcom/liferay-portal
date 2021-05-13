@@ -1,0 +1,634 @@
+definition {
+
+	macro add {
+		Click(locator1 = "AppBuilder#BUTTON_ADD");
+	}
+
+	macro addAllPermissionsFromRoles() {
+		for (var roleTitle : list "${roleList}") {
+			var key_roleTitle = "${roleTitle}";
+			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+			Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+		}
+
+		Button.clickSave();
+	}
+
+	macro addCustomObject {
+		if ("${isCreatingViaPlusIcon}" == "false") {
+			AppBuilderAdmin.gotoAddItemViaNewButton();
+		}
+		else {
+			AppBuilderAdmin.gotoAddCustomObject();
+		}
+
+		AppBuilderAdmin.editCustomObjectNameAtPopover(customObjectName = "${customObjectName}");
+
+		AppBuilderAdmin.viewCheckboxChecked();
+
+		if ("${isCreatingFormView}" == "false") {
+			AppBuilderAdmin.uncheckCheckbox(checkboxOption = "Continue and Create Form View");
+		}
+
+		AppBuilderAdmin.continueNewCustomObject();
+
+		AppBuilderAdmin.waitForContinueButtonNotVisible();
+	}
+
+	macro addEntry {
+		AppBuilderAdmin.add();
+		AppBuilderAdmin.waitForSaveButtonVisible();
+	}
+
+	macro addOrRemovePermissionFromRoles {
+		for (var roleTitle : list "${roleList}") {
+			var key_roleTitle = "${roleTitle}";
+
+			if ("${permission}" == "ADD") {
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+				}
+			}
+			else if ("${permission}" == "DELETE") {
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+				}
+			}
+			else if ("${permission}" == "UPDATE") {
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+				}
+			}
+			else if ("${permission}" == "VIEW") {
+				if ("${addOrRemovePermission}" == "ADD") {
+					Check(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+				}
+				else if ("${addOrRemovePermission}" == "REMOVE") {
+					Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+				}
+			}
+		}
+
+		Button.clickSave();
+	}
+
+	macro assertCheckboxPresent {
+		AssertElementPresent(
+			key_checkboxOption = "${checkboxOption}",
+			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+	}
+
+	macro assertNewButtonIsVisible {
+		AssertTextEquals(
+			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
+			value1 = "${buttonValue}");
+	}
+
+	macro cancel {
+		Click(locator1 = "AppBuilder#BUTTON_CANCEL");
+	}
+
+	macro chooseAppSearchFilterByOption {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click(
+			key_FilterOption = "${filterOption}",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		Button.clickDone();
+	}
+
+	macro chooseMultipleFilter {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click.clickAtNotVisible(
+			key_FilterOption = "${statusFilterOption}",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_STATUS");
+
+		Button.clickDone();
+
+		AppBuilderAdmin.filterByDeploymentType(itemName = "${deploymentFilterOption}");
+
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click.clickAtNotVisible(locator1 = "AppBuilder#CHOOSE_FILTER_BY_AUTHOR_ME");
+
+		Button.clickDone();
+	}
+
+	macro chooseSearchFilterByOption {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click(
+			key_FilterOption = "${filterOption}",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+	}
+
+	macro clearFilter {
+		Click(locator1 = "AppBuilder#CLEAR_FILTER");
+	}
+
+	macro clearSearch {
+		Click(locator1 = "AppBuilder#CLEAR_SEARCH");
+	}
+
+	macro continueNewCustomObject {
+		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
+	}
+
+	macro createFormViewAndTableView {
+		FormViewBuilder.addFormView(
+			fieldType = "${fieldType}",
+			formViewName = "${formViewName}");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "${fieldType}",
+			tableViewName = "${tableViewName}");
+	}
+
+	macro deleteApp {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		AssertElementNotPresent(
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "${key_itemName}");
+	}
+
+	macro deleteEntry {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "${key_itemName}");
+	}
+
+	macro deployApp {
+		AssertTextEquals(
+			deployStatus = "Undeployed",
+			locator1 = "AppBuilder#DEPLOY_APP_STATUS",
+			value1 = "Undeployed");
+
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Deploy");
+
+		AssertTextEquals(
+			deployStatus = "Deployed",
+			locator1 = "AppBuilder#DEPLOY_APP_STATUS",
+			value1 = "Deployed");
+	}
+
+	macro editAppName {
+		AppBuilderAdmin.setName(title = "${appTitle}");
+
+		Button.clickNext();
+
+		Button.clickNext();
+
+		Button.clickNext();
+
+		App.saveApp();
+	}
+
+	macro editCustomObjectNameAtPopover {
+		Type(
+			locator1 = "AppBuilder#INPUT_OBJECT_NAME",
+			value1 = "${customObjectName}");
+	}
+
+	macro editItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
+	macro filterByDeploymentType {
+		var key_itemName = "${itemName}";
+
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click.clickAtNotVisible(locator1 = "AppBuilder#CHOOSE_FILTER_BY_DEPLOYMENT_TYPE");
+
+		Button.clickDone();
+	}
+
+	macro filterListAscendAndDescend {
+		Click(locator1 = "AppBuilder#FILTER_LIST_ASCEND_AND_DESCEND_BUTTON");
+	}
+
+	macro gotoAddCustomObject {
+		AppBuilderAdmin.add();
+	}
+
+	macro gotoAddItemViaNewButton {
+		AssertClick(
+			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
+			value1 = "New Custom Object");
+	}
+
+	macro gotoBack {
+		Navigator.gotoBack();
+
+		if (IsElementPresent(locator1 = "Button#LEAVE")) {
+			Click(locator1 = "Button#LEAVE");
+		}
+	}
+
+	macro gotoCustomAppApplicationsMenuApplications {
+		Navigator.openURL();
+
+		ProductMenuHelper.closeProductMenu();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "${portlet}",
+			panel = "Applications",
+			portlet = "${portlet}");
+	}
+
+	macro openActionMenu {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+	}
+
+	macro openItem {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+	}
+
+	macro openStandAloneApp {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "Open Standalone App");
+	}
+
+	macro performCustomObjectCRUD {
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "Form View");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "Table View");
+
+		App.add(
+			appTitle = "App",
+			deployOption = "Product Menu",
+			formViewName = "Form View",
+			tableViewName = "Table View");
+
+		AppBuilderAdmin.gotoBack();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "my custom object");
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Form Views");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Form View");
+		AppBuilderAdmin.editItem(itemName = "Form View");
+		FormViewBuilder.setName(formViewName = "Edited Form");
+		FormViewBuilder.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Form");
+
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Table View");
+		AppBuilderAdmin.editItem(itemName = "Table View");
+		TableViewBuilder.setName(tableViewName = "Edited Table");
+		TableViewBuilder.save();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Edited Table");
+
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.undeployApp(itemName = "App");
+
+		AppBuilderAdmin.gotoBack();
+
+		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+		AppBuilderAdmin.assertNewButtonIsVisible(buttonValue = "New Custom Object");
+	}
+
+	macro removeAllPermissionsFromRoles() {
+		for (var roleTitle : list "${roleList}") {
+			var key_roleTitle = "${roleTitle}";
+			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+			Uncheck(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+		}
+
+		Button.clickSave();
+	}
+
+	macro renameObject {
+		Type(
+			locator1 = "AppBuilder#INPUT_OBJECT_RENAME",
+			value1 = "${newName}");
+	}
+
+	macro save {
+		Click(locator1 = "AppBuilder#SAVE_BUTTON");
+
+		AppBuilderAdmin.waitForSaveButtonNotVisible();
+	}
+
+	macro searchByItem {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${itemName}");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+	}
+
+	macro setName {
+		Type(
+			locator1 = "FormViewBuilder#FORM_VIEW_NAME",
+			value1 = "${title}");
+	}
+
+	macro switchTab {
+		Navigator.gotoNavItem(navItem = "${tabName}");
+	}
+
+	macro teardownAppBuilder {
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Applications",
+			portlet = "Objects");
+
+		Pause(locator1 = "2000");
+
+		while (IsElementPresent(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON")) {
+			LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro uncheckCheckbox {
+		Click(
+			key_checkboxOption = "${checkboxOption}",
+			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
+	}
+
+	macro undeployApp {
+		Click(
+			key_itemName = "${itemName}",
+			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
+
+		MenuItem.clickNoError(menuItem = "Undeploy");
+
+		Click(locator1 = "AppBuilder#UNDEPLOY_APP_BUTTON");
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#UNDEPLOY_APP_STATUS",
+			value1 = "UNDEPLOYED");
+	}
+
+	macro validateAppIsNotPresentOnApplicationsMenuApplications {
+		Navigator.openURL();
+
+		ProductMenuHelper.closeProductMenu();
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		Navigator.gotoNavTab(navTab = "Applications");
+
+		AssertElementNotPresent(
+			key_category = "${portlet}",
+			locator1 = "ApplicationsMenu#CATEGORY");
+	}
+
+	macro validateAppIsNotPresentOnSite {
+		ProductMenuHelper.openProductMenu();
+
+		ProductMenuHelper.expandCategory(category = "Content & Data");
+
+		AssertElementNotPresent(
+			key_portlet = "${portlet}",
+			locator1 = "ProductMenu#PORTLET");
+	}
+
+	macro validateCustomObjectNameOnHeader {
+		AssertTextEquals(
+			locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",
+			value1 = "${customObjectName}");
+	}
+
+	macro validateEmptyListMessage {
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_TITLE_EMPTY_LIST",
+			value1 = "${title}");
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_DESCRIPTION_EMPTY_LIST",
+			value1 = "${description}");
+	}
+
+	macro validateFieldIsOnTable {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "AppBuilder#FIELD_LABEL_IN_TABLE");
+	}
+
+	macro validateFilterAndOrder {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_DEPLOYMENT_TYPE");
+
+		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_STATUS");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#VALIDATE_FILTER_BY_STATUS_ANY");
+
+		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_AUTHOR");
+
+		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_ORDER");
+
+		Button.clickDone();
+	}
+
+	macro validateIfSearchItemIsFound {
+		AssertTextEquals(
+			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
+			value1 = "1 Results for ${itemName}");
+	}
+
+	macro validateIfSearchItemIsNotFound {
+		AssertTextEquals(
+			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
+			value1 = "0 Results for ${itemName}");
+
+		AssertTextEquals(
+			locator1 = "AppBuilder#VALIDATE_IF_ITEM_IS_NOT_FOUND",
+			value1 = "No results were found.");
+	}
+
+	macro validateItemNameOnTable {
+		AssertTextEquals(
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "${itemName}");
+	}
+
+	macro validateItemNameOnTableNotPresent {
+		AssertElementNotPresent(
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
+			value1 = "${itemName}");
+	}
+
+	macro validateListTitleAtRow {
+		AssertTextEquals(
+			key_RowNumber = "${rowNumber}",
+			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW",
+			value1 = "${title}");
+	}
+
+	macro validateNewButtonIconIsNotPresent {
+		AssertElementNotPresent(locator1 = "AppBuilder#BUTTON_ADD");
+	}
+
+	macro validateNewButtonIsNotPresent {
+		AssertElementNotPresent(
+			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
+			value1 = "${buttonValue}");
+	}
+
+	macro validatePermissionsFromRolesAreChecked() {
+		for (var roleTitle : list "${roleList}") {
+			var key_roleTitle = "${roleTitle}";
+
+			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+			AssertChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+		}
+	}
+
+	macro validatePermissionsFromRolesAreNotChecked() {
+		for (var roleTitle : list "${roleList}") {
+			var key_roleTitle = "${roleTitle}";
+
+			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_ADD_ENTRY");
+			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_DELETE_ENTRY");
+			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_UPDATE_ENTRY");
+			AssertNotChecked(locator1 = "AppBuilder#CONFIGURATION_PERMISSIONS_VIEW_ENTRY");
+		}
+	}
+
+	macro validateProductMenuApp {
+		AssertTextEquals(
+			locator1 = "AppBuilder#PRODUCT_MENU_DEPLOYED",
+			value1 = "${appName}");
+	}
+
+	macro validateRequiredValidNameMessage {
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
+			value1 = "This field is required.");
+	}
+
+	macro validateRequiredValidNameMessageStandAloneApp {
+		AssertTextEquals(
+			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD_FOR_STANDALONE_APP",
+			value1 = "This field is required.");
+	}
+
+	macro validateStandAloneApp {
+		AssertElementPresent(locator1 = "AppBuilder#STANDALONE_DEPLOYED");
+	}
+
+	macro validateStandAloneOptionNotPresent {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.viewNotPresent(menuItem = "Open Standalone App");
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+	}
+
+	macro validateSuccessMessage {
+		AssertElementPresent(locator1 = "AppBuilder#ENTRY_SUCCESS_MESSAGE");
+	}
+
+	macro validateTextBox {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#TEXT_BOX_FIELD");
+	}
+
+	macro validateUndeployedApp {
+		AssertTextEquals(
+			locator1 = "AppBuilder#PORTLET_UNDEPLOYED",
+			value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
+	}
+
+	macro validateWidgetApp {
+		AssertTextEquals(
+			locator1 = "AppBuilder#WIDGET_DEPLOYED",
+			value1 = "${appName}");
+	}
+
+	macro viewCheckboxChecked {
+		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
+	}
+
+	macro viewInactiveSaveButton {
+		AssertElementPresent(locator1 = "AppBuilder#SAVE_BUTTON_DISABLED");
+	}
+
+	macro viewItem {
+		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
+		MenuItem.clickNoError(menuItem = "View");
+	}
+
+	macro waitForContinueButtonNotVisible {
+		while (IsElementPresent(locator1 = "AppBuilder#BUTTON_CONTINUE")) {
+			Pause(locator1 = "1000");
+		}
+		Pause(locator1 = "1000");
+	}
+
+	macro waitForSaveButtonNotVisible {
+		while (IsElementPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
+			Pause(locator1 = "1000");
+		}
+		Pause(locator1 = "1000");
+	}
+
+	macro waitForSaveButtonVisible {
+		while (IsElementNotPresent(locator1 = "AppBuilder#SAVE_BUTTON")) {
+			Pause(locator1 = "1000");
+		}
+	}
+
+}

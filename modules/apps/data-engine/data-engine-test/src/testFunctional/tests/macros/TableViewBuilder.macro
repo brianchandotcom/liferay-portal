@@ -1,0 +1,152 @@
+definition {
+
+	macro addBasicTableView {
+		AppBuilderAdmin.switchTab(tabName = "Table Views");
+
+		AppBuilderAdmin.add();
+
+		TableViewBuilder.addColumnByDoubleClick(fieldType = "${fieldType}");
+
+		TableViewBuilder.setName(tableViewName = "${tableViewName}");
+
+		TableViewBuilder.save();
+	}
+
+	macro addColumnByDoubleClick {
+		var key_fieldLabel = "${fieldType}";
+
+		DoubleClick(locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL");
+
+		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
+	}
+
+	macro addColumnByDragAndDrop {
+		Pause(locator1 = "10000");
+
+		var key_fieldLabel = "${fieldType}";
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			locator1 = "FormViewBuilder#SIDEBAR_FIELD_LABEL",
+			locator2 = "TableViewBuilder#ADD_FIELD_POSITION",
+			value1 = "${fieldType}");
+
+		TableViewBuilder.validateColumnLabel(columnLabel = "${fieldType}");
+
+		TableViewBuilder.validateColumnLabelAtSidebar(columnLabel = "${fieldType}");
+	}
+
+	macro assertMessageNoResultsWereFoundIsShown {
+		AssertElementPresent(locator1 = "TableViewBuilder#NO_RESULTS_WERE_FOUND_MESSAGE");
+	}
+
+	macro assertMessageThereAreNoResultsForIsShown {
+		AssertElementPresent(locator1 = "TableViewBuilder#THERE_ARE_NO_RESULTS_FOR");
+	}
+
+	macro clearSearch {
+		Click(locator1 = "TableViewBuilder#CLEAR_SEARCH");
+	}
+
+	macro clickOnClearFilters {
+		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+		Click(locator1 = "TableViewBuilder#FILTER_CLEAR");
+		TableViewBuilder.selectTab(tabName = "Filters");
+	}
+
+	macro clickOnSelectAllFilters {
+		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+		Click(locator1 = "TableViewBuilder#FILTER_SELECT_ALL");
+		TableViewBuilder.selectTab(tabName = "Filters");
+	}
+
+	macro closeColumnSidebar {
+		Click(locator1 = "TableViewBuilder#CLOSE_COLUMN_SIDEBAR");
+	}
+
+	macro deleteSelectedColumnByName {
+		Click(locator1 = "TableViewBuilder#COLUMN_LABEL");
+
+		Click(locator1 = "TableViewBuilder#DELETE_COLUMN_BY_NAME");
+
+		AssertElementNotPresent(
+			locator1 = "TableViewBuilder#COLUMN_LABEL",
+			value1 = "${columnLabel}");
+	}
+
+	macro openFilterDropdown {
+		Click(
+			key_columnLabel = "${columnLabel}",
+			locator1 = "TableViewBuilder#FILTER_DROPDOWN");
+	}
+
+	macro save {
+		AppBuilderAdmin.save();
+	}
+
+	macro searchByItem {
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "${itemName}");
+	}
+
+	macro selectFilterDropdownItem {
+		TableViewBuilder.openFilterDropdown(columnLabel = "${columnLabel}");
+
+		for (var dropdownItem : list "${dropdownItemList}") {
+			var key_dropdownItem = "${dropdownItem}";
+			Click(locator1 = "TableViewBuilder#FILTER_DROPDOWN_ITEM");
+		}
+
+		TableViewBuilder.selectTab(tabName = "Filters");
+	}
+
+	macro selectTab {
+		Click(
+			key_tabName = "${tabName}",
+			locator1 = "TableViewBuilder#TAB_LABEL");
+	}
+
+	macro setName {
+		AppBuilderAdmin.setName(title = "${tableViewName}");
+	}
+
+	macro validateColumnLabel {
+		AssertTextEquals(
+			locator1 = "TableViewBuilder#COLUMN_LABEL",
+			value1 = "${columnLabel}");
+	}
+
+	macro validateColumnLabelAtSidebar {
+		AssertTextEquals(
+			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
+			value1 = "${columnLabel}");
+	}
+
+	macro validateDisabledField {
+		AssertElementPresent(
+			locator1 = "TableViewBuilder#DISABLED_COLUMN",
+			value1 = "${fieldType}");
+	}
+
+	macro validateFilterDropdownList {
+		AssertTextEquals(
+			key_columnLabel = "${columnLabel}",
+			locator1 = "TableViewBuilder#FILTER_DROPDOWN",
+			value1 = "${itemList}");
+	}
+
+	macro validateNoColumnLabel {
+		AssertElementNotPresent(
+			locator1 = "TableViewBuilder#COLUMN_LABEL",
+			value1 = "${columnLabel}");
+	}
+
+	macro validateNoColumnLabelAtSidebar {
+		AssertElementNotPresent(
+			locator1 = "TableViewBuilder#COLUMN_LABEL_AT_SIDEBAR",
+			value1 = "${columnLabel}");
+	}
+
+}

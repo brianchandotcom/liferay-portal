@@ -1,0 +1,181 @@
+definition {
+
+	macro add {
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+
+		AppBuilderAdmin.add();
+
+		App.selectFormView(formViewName = "${formViewName}");
+
+		App.selectTableView(tableViewName = "${tableViewName}");
+
+		Button.clickNext();
+
+		AppBuilderAdmin.setName(title = "${appTitle}");
+
+		App.toggleDeploy(deployOption = "${deployOption}");
+
+		if (isSet(menuOption) && isSet(siteOptionList)) {
+			App.selectProductMenuPlaceItDropdownOption(menuOption = "${menuOption}");
+
+			App.openProductMenuSiteOption();
+
+			for (var siteOption : list "${siteOptionList}") {
+				App.selectProductMenuSiteOption(siteOption = "${siteOption}");
+			}
+		}
+
+		App.clickDeploy();
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+	}
+
+	macro assertWorkflowColumnPresent {
+		AssertElementPresent(
+			key_workflowColumnName = "${workflowColumnName}",
+			locator1 = "AppBuilder#WORKFLOW_COLUMN");
+	}
+
+	macro assertWorkflowSelected {
+		AssertElementPresent(
+			key_itemName = "${workflowName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_SELECTED");
+	}
+
+	macro clickDeploy {
+		Button.click(button = "Deploy");
+		App.waitForDeployButtonNotVisible();
+	}
+
+	macro clickNewAppButton {
+		AssertClick(
+			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
+			value1 = "New App");
+	}
+
+	macro clickNext {
+		Button.click(button = "Next");
+	}
+
+	macro clickPrevious {
+		Button.click(button = "Previous");
+	}
+
+	macro editSiteDeployed {
+		AppBuilderAdmin.openItem(itemName = "${appTitle}");
+
+		App.toggleUndeploy(deployOption = "Product Menu");
+
+		App.toggleDeploy(deployOption = "Product Menu");
+
+		App.selectProductMenuPlaceItDropdownOption(menuOption = "${menuOption}");
+
+		App.openProductMenuSiteOption();
+
+		for (var siteOption : list "${siteOptionList}") {
+			App.selectProductMenuSiteOption(siteOption = "${siteOption}");
+		}
+
+		App.saveApp();
+
+		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+	}
+
+	macro openProductMenuPlaceItDropdown {
+		Click(locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN");
+	}
+
+	macro openProductMenuSiteOption {
+		Click(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
+	}
+
+	macro refreshWorkflowList {
+		Click(locator1 = "AppBuilder#REFRESH_WORKFLOW_BUTTON");
+	}
+
+	macro saveApp {
+		AppBuilderAdmin.save();
+	}
+
+	macro selectFormView {
+		Click(
+			key_itemName = "${formViewName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		Button.clickNext();
+	}
+
+	macro selectProductMenuPlaceItDropdownOption {
+		App.openProductMenuPlaceItDropdown();
+		Click(
+			key_dropdownOption = "${menuOption}",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
+	}
+
+	macro selectProductMenuSiteOption {
+		Click(
+			key_dropdownOption = "${siteOption}",
+			locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN_OPTION");
+	}
+
+	macro selectTableView {
+		Click(
+			key_itemName = "${tableViewName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		Button.clickNext();
+	}
+
+	macro selectTableViewWithoutClickNext {
+		Click(
+			key_itemName = "${tableViewName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+	}
+
+	macro selectWorkflow {
+		Click(
+			key_itemName = "${workflowName}",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		Button.clickNext();
+	}
+
+	macro toggleDeploy {
+		Check.checkToggleSwitch(
+			key_deployOption = "${deployOption}",
+			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+	}
+
+	macro toggleUndeploy {
+		for (var number : list "1,2,3") {
+			Button.clickNext();
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			key_deployOption = "${deployOption}",
+			locator1 = "AppBuilder#DEPLOY_APP_TOGGLE");
+	}
+
+	macro validateDeployedAs {
+		AssertTextEquals(
+			locator1 = "AppBuilder#DEPLOYED_AS",
+			value1 = "${title}");
+	}
+
+	macro validateProductMenuPlaceItDropdownList {
+		AssertElementPresent(
+			key_dropdownOption = "${menuOption}",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
+	}
+
+	macro validateProductMenuSiteDropdownPresent {
+		AssertElementPresent(locator1 = "AppBuilder#PRODUCT_MENU_SITE_DROPDOWN");
+	}
+
+	macro waitForDeployButtonNotVisible {
+		while (IsElementPresent(locator1 = "AppBuilder#DEPLOY_BUTTON")) {
+			Pause(locator1 = "1000");
+		}
+	}
+
+}

@@ -512,11 +512,6 @@ definition {
 			value1 = "Save");
 
 		Alert.viewSuccessMessage();
-
-		AssertTextEquals(
-			key_categoryName = "${categoryNameEdit}",
-			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
-			value1 = "${categoryNameEdit}");
 	}
 
 	macro enableRedirectToLogin {

@@ -16,131 +16,72 @@ import ClayButton from '@clayui/button';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 
-const HelpText = ({label, visible}) => {
-	const [enableHelpText, setEnableHelpText] = useState(false);
-	const [showHideButton, setShowHideButton] = useState(Liferay.Language.get('show-more'));
+const CharacterRow = ({characters, description}) => (
+	<div className="mb-2">
+		{characters.map((character, index) => (
+			<div className="c-kbd c-kbd-light mr-1" key={index}>
+				{character}
+			</div>
+		))}
 
-	const helpText = (
-		<div className="lfr-ddm-help-text-content">
-			<div className="lfr-ddm-help-text-line">
-				<kbd className="c-kbd">
-					<kbd className="c-kbd c-kbd-light">9</kbd>
-					<span className="c-kbd-separator"> </span>
-					<span className="c-kbd-separator">
-						{Liferay.Language.get(
-							'user-must-enter-a-numeric-digit'
-						)}
-					</span>
-				</kbd>
-			</div>
-			<div className="lfr-ddm-help-text-line">
-				<kbd className="c-kbd">
-					<kbd className="c-kbd c-kbd-light">0</kbd>
-					<span className="c-kbd-separator"> </span>
-					<span className="c-kbd-separator">
-						{Liferay.Language.get('user-may-enter-a-numeric-digit')}
-					</span>
-				</kbd>
-			</div>
-			<div className="lfr-ddm-help-text-line">
-				<kbd className="c-kbd">
-					<kbd className="c-kbd c-kbd-light">ABC</kbd>
-					<span className="c-kbd-separator"> </span>
-					<span className="c-kbd-separator">
-						{Liferay.Language.get('any-input-mask-character')}
-					</span>
-				</kbd>
-			</div>
-			<div className="lfr-ddm-help-text-line">
-				<kbd className="c-kbd">
-					<kbd className="c-kbd c-kbd-light">Space</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">-</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">/</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">:</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">,</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">.</kbd>
-					<span className="c-kbd-separator"> </span>
-					<span className="c-kbd-separator">
-						{Liferay.Language.get('separators')}
-					</span>
-				</kbd>
-			</div>
-			<div className="lfr-ddm-help-text-line">
-				<kbd className="c-kbd">
-					<kbd className="c-kbd c-kbd-light">(</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">)</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">[</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">]</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">&#x7B;</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">&#x7D;</kbd>
-					<span className="c-kbd-separator"> </span>
-					<span className="c-kbd-separator">
-						{Liferay.Language.get('group-separators')}
-					</span>
-				</kbd>
-			</div>
-			<div className="lfr-ddm-help-text-line">
-				<kbd className="c-kbd">
-					<kbd className="c-kbd c-kbd-light">#</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">$</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">%</kbd>
-					<span className="c-kbd-separator"> </span>
-					<kbd className="c-kbd c-kbd-light">+</kbd>
-					<span className="c-kbd-separator"> </span>
-					<span className="c-kbd-separator">
-						{Liferay.Language.get('prefix-and-suffix-symbols')}
-					</span>
-				</kbd>
-			</div>
-		</div>
-	);
+		<span className="ddm-field-text-small ml-1">{description}</span>
+	</div>
+);
+
+const HelpTextContent = () => (
+	<>
+		<CharacterRow
+			characters={['9']}
+			description={Liferay.Language.get(
+				'user-must-enter-a-numeric-digit'
+			)}
+		/>
+		<CharacterRow
+			characters={['0']}
+			description={Liferay.Language.get('user-may-enter-a-numeric-digit')}
+		/>
+		<CharacterRow
+			characters={['ABC']}
+			description={Liferay.Language.get('any-input-mask-character')}
+		/>
+		<CharacterRow
+			characters={['Space', '-', '/', ':', ',', '.']}
+			description={Liferay.Language.get('separators')}
+		/>
+		<CharacterRow
+			characters={['(', ')', '[', ']', '{', '}']}
+			description={Liferay.Language.get('group-separators')}
+		/>
+		<CharacterRow
+			characters={['#', '$', '%', '+']}
+			description={Liferay.Language.get('prefix-and-suffix-symbols')}
+		/>
+	</>
+);
+
+const HelpText = ({label, visible}) => {
+	const [showMore, setShowMore] = useState(false);
 
 	return (
 		<div className={classNames('form-group', {hide: !visible})}>
-			<div className="lfr-ddm-help-text-flex-container">
-				<div className="lfr-ddm-help-text-flex-element">
-					<label className="lfr-ddm-help-text-label" tabIndex="0">
-						{label}
-					</label>
-				</div>
-				<div className="lfr-ddm-help-text-flex-element">
-					<ClayButton
-						borderless={true}
-						className="lfr-ddm-help-text-button"
-						displayType="secondary"
-						name="enableHelpText"
-						onClick={() => {
-							setEnableHelpText(!enableHelpText);
-							setShowHideButton(
-								!enableHelpText ? Liferay.Language.get('show-less') : Liferay.Language.get('show-more')
-							);
-						}}
-						type="button"
-					>
-						{showHideButton}
-					</ClayButton>
-				</div>
+			<div className="align-items-center d-flex justify-content-between mb-2">
+				<label>{label}</label>
+
+				<ClayButton
+					borderless
+					displayType="secondary"
+					onClick={() => setShowMore(!showMore)}
+					small
+				>
+					{showMore
+						? Liferay.Language.get('show-less')
+						: Liferay.Language.get('show-more')}
+				</ClayButton>
 			</div>
 
-			{enableHelpText && helpText}
+			{showMore && <HelpTextContent />}
 		</div>
 	);
 };
 
-const Main = ({label, visible}) => {
-	return <HelpText label={label} visible={visible} />;
-};
-
-export default Main;
+export default HelpText;

@@ -1,7 +1,11 @@
-$c: '.ddm-field-types-base';
-
-#{$c} {
+.ddm-field-types-base {
 	&__nested {
 		margin-top: 15px;
+	}
+}
+
+.ddm-field {
+	& &-text-small {
+		font-size: 0.875rem;
 	}
 }

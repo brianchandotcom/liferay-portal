@@ -70,6 +70,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>SEGMENT_CREATION_PAGE</td>
+    <td>//h1/following-sibling::div</td>
+    <td></td>
+</tr>
+<tr>
     <td>SEGMENT_LABEL</td>
     <td>//h1/following-sibling::div/span</td>
     <td></td>
@@ -77,6 +82,11 @@
 <tr>
     <td>SEGMENT_ELLIPSES</td>
     <td>//div[contains(@class,'dropdown')]/button[contains(@class,'component')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SELECT_BUTTON</td>
+    <td>//div[@class='criteria-statement']//button[@type='button']</td>
     <td></td>
 </tr>
 <tr>

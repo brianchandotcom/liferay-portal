@@ -56,6 +56,7 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -151,6 +152,34 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		AssertUtils.assertEqualsSorted(assetTagNames, assetEntry.getTagNames());
+	}
+
+	@Test
+	public void testFileEntryShouldSaveExpirationDate() throws Exception {
+		Date expirationDate = new Date();
+
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			expirationDate, null, null);
+
+		Assert.assertEquals(expirationDate, fileEntry.getExpirationDate());
+
+		Assert.assertNull(fileEntry.getReviewDate());
+	}
+
+	@Test
+	public void testFileEntryShouldSaveReviewDate() throws Exception {
+		Date reviewDate = new Date();
+
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
+			null, group.getGroupId(), parentFolder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			reviewDate, null);
+
+		Assert.assertEquals(reviewDate, fileEntry.getReviewDate());
+
+		Assert.assertNull(fileEntry.getExpirationDate());
 	}
 
 	@Test

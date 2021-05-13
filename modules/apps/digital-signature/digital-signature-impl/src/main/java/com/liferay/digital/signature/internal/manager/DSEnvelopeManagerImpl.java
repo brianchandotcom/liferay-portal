@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -63,6 +66,17 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		}
 
 		return dsEnvelope;
+	}
+
+	@Override
+	public List<DSEnvelope> getDSEnvelopes(
+		long groupId, List<String> dsEnvelopeIds) {
+
+		// LPS-132126
+
+		// accounts/{accountId}/envelopes?envelopeIds=...
+
+		return Collections.emptyList();
 	}
 
 	private DSEnvelope _toDSEnvelope(JSONObject jsonObject) {

@@ -45,6 +45,8 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Michael Hashimoto
@@ -63,26 +65,33 @@ public class TestrayS3Bucket {
 
 			objectMetadata.setContentLength(file.length());
 
-			String fileName = file.getName();
+			Matcher matcher = _fileNamePattern.matcher(file.getName());
 
-			if (fileName.endsWith(".gz")) {
-				objectMetadata.setContentEncoding("gzip");
-			}
+			if (matcher.find()) {
+				String fileExtension = matcher.group("fileExtension");
 
-			if (fileName.endsWith("html") || fileName.endsWith("html.gz")) {
-				objectMetadata.setContentType("text/html");
-			}
-			else if (fileName.endsWith("jpg") || fileName.endsWith("jpg.gz")) {
-				objectMetadata.setContentType("image/jpeg");
-			}
-			else if (fileName.endsWith("json") ||
-					 fileName.endsWith("json.gz") || fileName.endsWith("txt") ||
-					 fileName.endsWith("txt.gz")) {
+				if (fileExtension.equals("html")) {
+					objectMetadata.setContentType("text/html");
+				}
+				else if (fileExtension.equals("jpg")) {
+					objectMetadata.setContentType("image/jpeg");
+				}
+				else if (fileExtension.equals("json") ||
+						 fileExtension.equals("txt")) {
 
-				objectMetadata.setContentType("text/plain");
-			}
-			else if (fileName.endsWith("xml") || fileName.endsWith("xml.gz")) {
-				objectMetadata.setContentType("text/xml");
+					objectMetadata.setContentType("text/plain");
+				}
+				else if (fileExtension.equals("xml")) {
+					objectMetadata.setContentType("text/xml");
+				}
+
+				String gzipFileExtension = matcher.group("gzipFileExtension");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(
+						gzipFileExtension)) {
+
+					objectMetadata.setContentEncoding("gzip");
+				}
 			}
 
 			PutObjectRequest putObjectRequest = new PutObjectRequest(
@@ -354,6 +363,8 @@ public class TestrayS3Bucket {
 
 	private static final int _MAX_S3_OBJECT_COUNT = 1000;
 
+	private static final Pattern _fileNamePattern = Pattern.compile(
+		".*\\.(?!gz)(?<fileExtension>([^\\.]+))(?<gzipFileExtension>\\.gz)?");
 	private static final TestrayS3Bucket _testrayS3Bucket =
 		new TestrayS3Bucket();
 

@@ -306,31 +306,30 @@ definition {
 			webContentTitle = "WC Title Edited");
 	}
 
-    @description = "Validade if when Web Content is updated its being corectly displayed"
-    @priority = "3"
-    test ContentDashboardExhibitEditedWebContent {
-
+	@description = "Validade if when Web Content is updated its being corectly displayed"
+	@priority = "3"
+	test ContentDashboardExhibitEditedWebContent {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",
-			title = "WC WebContent Title");	
+			title = "WC WebContent Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		ApplicationsMenu.gotoPortlet(
-            category = "Content",
-            panel = "Applications",
-            portlet = "Content Dashboard");
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
 
-        AssertTextPresent(
-            locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-            value1 = "WC WebContent Title");
-		
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC WebContent Title");
+
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		ProductMenu.gotoPortlet(
-            category = "Content &amp; Data",
-            portlet = "Web Content");
+			category = "Content &amp; Data",
+			portlet = "Web Content");
 
 		WebContent.viewTitle(webContentTitle = "WC WebContent Title");
 
@@ -342,46 +341,42 @@ definition {
 			webContentTitleEdit = "WC WebContent New Title");
 
 		ApplicationsMenu.gotoPortlet(
-            category = "Content",
-            panel = "Applications",
-            portlet = "Content Dashboard");
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
 
-        AssertTextPresent(
-            locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-            value1 = "WC WebContent New Title");
-    }
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC WebContent New Title");
+	}
 
-    @description = "Validade if a Web Content not associated with a Display Page Template is shown"
-    @priority = "5"
-    test ContentDashboardExhibitWebContent {
+	@description = "Validade if a Web Content not associated with a Display Page Template is shown"
+	@priority = "5"
+	test ContentDashboardExhibitWebContent {
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
 
-        JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-            groupName = "Test Site Name",
-            displayPageTemplateEntryName = "Display Page Name",
-            contentType = "Web Content Article",
-            subType = "Basic Web Content"
-            );
-			
-        JSONWebcontent.addWebContent(
-            content = "WC Content",
-            groupName = "Test Site Name",
-            title = "WC Title"
-            );
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
 
-        ApplicationsMenu.gotoPortlet(
-            category = "Content",
-            panel = "Applications",
-            portlet = "Content Dashboard");
-			
-        AssertTextPresent(
-            locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-            value1 = "WC Title");
-    }
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title");
+	}
 
 	@description = "Validade if a Web Content associated with a Display Page Template is shown"
-    @priority = "5"
-    test ContentDashboardExhibitWebContentAssociatedDisplayPageTemplate {
-		
+	@priority = "5"
+	test ContentDashboardExhibitWebContentAssociatedDisplayPageTemplate {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",
@@ -410,15 +405,14 @@ definition {
 		PageEditor.clickPublish();
 
 		ApplicationsMenu.gotoPortlet(
-            category = "Content",
-            panel = "Applications",
-            portlet = "Content Dashboard");
-			
-        AssertTextPresent(
-            locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-            value1 = "WebContent Title");
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
 
-    }
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WebContent Title");
+	}
 
 	@description = "Validate if the user can access to the Content Dashboard after s/he has expired a Web Content"
 	@priority = "5"

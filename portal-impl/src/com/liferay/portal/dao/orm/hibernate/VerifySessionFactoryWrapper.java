@@ -34,7 +34,7 @@ import java.sql.Connection;
 
 import java.util.function.Function;
 
-import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;

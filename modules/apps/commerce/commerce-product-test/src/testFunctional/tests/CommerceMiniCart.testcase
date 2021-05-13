@@ -167,7 +167,7 @@ definition {
 	test ViewMiniCartItemWithDiscountToTotal {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartItemWithDiscountToTotal";
-		
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(

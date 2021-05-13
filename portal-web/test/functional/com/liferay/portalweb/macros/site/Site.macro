@@ -64,10 +64,8 @@ definition {
 		if ("${siteType}" == "Site Template") {
 			if ("${uncheckPropagation}" == "true") {
 				Click(
-					key_url = "site-configuration-open-graph",
+					key_url = "site-configuration-pages",
 					locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
-
-				Navigator.gotoNavTab(navTab = "Pages");
 
 				Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_PROPAGATION");
 

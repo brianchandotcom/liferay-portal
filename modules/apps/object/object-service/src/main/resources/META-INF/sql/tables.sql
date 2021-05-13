@@ -39,7 +39,10 @@ create table ObjectField (
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
 	name VARCHAR(75) null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(75) null,
+	indexed BOOLEAN,
+	indexedAsKeyword BOOLEAN,
+	locale VARCHAR(75) null
 );
 
 create table ObjectLayout (

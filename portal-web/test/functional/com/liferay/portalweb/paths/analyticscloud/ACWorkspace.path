@@ -29,6 +29,11 @@
 	<td>//*[contains(@class,'workspace-name')]//span[contains(text(),'${key_WorkspaceName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FARO_DEMO_WORKSPACE</td>
+	<td>//*[contains(@class, 'workspace-link')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

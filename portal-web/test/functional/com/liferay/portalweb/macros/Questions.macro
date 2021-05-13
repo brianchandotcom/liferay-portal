@@ -491,11 +491,19 @@ definition {
 	}
 
 	macro editRootTopic {
-		var key_categoryName = "${categoryName}";
+		if (isSet(siteURLKey)) {
+			MessageboardsCategory.openToEditCategory(
+				categoryName = "${categoryName}",
+				groupName = "${groupName}",
+				siteURLKey = "${siteURLKey}");
+		}
+		else {
+			var key_categoryName = "${categoryName}";
 
-		LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
+			LexiconEntry.openEntryMenu(rowEntry = "${categoryName}");
 
-		MenuItem.click(menuItem = "Edit");
+			MenuItem.click(menuItem = "Edit");
+		}
 
 		PortletEntry.inputName(name = "${categoryNameEdit}");
 
@@ -506,6 +514,7 @@ definition {
 		Alert.viewSuccessMessage();
 
 		AssertTextEquals(
+			key_categoryName = "${categoryNameEdit}",
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
 			value1 = "${categoryNameEdit}");
 	}

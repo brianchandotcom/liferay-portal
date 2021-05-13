@@ -237,11 +237,11 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 				PortletURL groupSelectorURL = PortletURLBuilder.create(
 					PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE)
 				).setParameter(
-					"includeCurrentGroup", Boolean.FALSE.toString()
+					"eventName", liferayPortletResponse.getNamespace() + "selectGroup"
 				).setParameter(
 					"groupId", String.valueOf(siteGroup.getGroupId())
 				).setParameter(
-					"eventName", liferayPortletResponse.getNamespace() + "selectGroup"
+					"includeCurrentGroup", Boolean.FALSE.toString()
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).build();

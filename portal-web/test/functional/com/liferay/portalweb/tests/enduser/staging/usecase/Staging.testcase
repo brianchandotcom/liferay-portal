@@ -569,6 +569,7 @@ definition {
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Child SiteName",
+			parentGroupName = "Site Name",
 			remotePort = "9080");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");

@@ -951,6 +951,7 @@ definition {
 			branchingPrivate = "${branchingPrivate}",
 			branchingPublic = "${branchingPublic}",
 			groupName = "${groupName}",
+			parentGroupName = "${parentGroupName}",
 			remoteGroupId = "${remoteGroupId}",
 			remotePort = "${remotePort}");
 	}

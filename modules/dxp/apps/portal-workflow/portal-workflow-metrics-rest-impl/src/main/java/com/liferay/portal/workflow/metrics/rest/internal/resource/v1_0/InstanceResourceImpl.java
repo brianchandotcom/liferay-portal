@@ -621,20 +621,6 @@ public class InstanceResourceImpl
 		return assignees;
 	}
 
-	private String _getDate(Date date) {
-		try {
-			return DateUtil.getDate(
-				date, "yyyyMMddHHmmss", LocaleUtil.getDefault());
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception, exception);
-			}
-
-			return null;
-		}
-	}
-
 	private long _getInstanceCount(
 		Long[] assigneeIds, Long[] classPKs, Date dateEnd, Date dateStart,
 		long processId, String[] processStatuses, String[] slaStatuses,

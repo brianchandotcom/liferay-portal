@@ -4,5 +4,6 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.batch.planner.exception,\
 	com.liferay.batch.planner.model,\
+	com.liferay.batch.planner.plan,\
 	com.liferay.batch.planner.service,\
 	com.liferay.batch.planner.service.persistence

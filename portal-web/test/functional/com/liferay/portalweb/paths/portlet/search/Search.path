@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_SEARCH_CLEAN_BUTTON</td>
-	<td>//button[contains(@class, 'commerce-search__button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACCOUNT_SEARCH_SUGGESTION</td>
 	<td>//div[contains(@class,'commerce-item__content') and contains(.,'${key_entryName}')]</td>
 	<td></td>

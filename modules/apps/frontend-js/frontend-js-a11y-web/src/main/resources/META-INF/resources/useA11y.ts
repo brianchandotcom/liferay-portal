@@ -54,11 +54,11 @@ function segmentViolationsByNode(
 	);
 
 	const nodes = violations.reduce<Record<string, Violations>>(
-		(prev, current, index) => {
+		(prev, current) => {
 			current.nodes.forEach((node) => {
 				const {help, helpUrl, id, impact} = current;
 
-				const alert = {
+				const violation = {
 					all: node.all,
 					any: node.any,
 					help,
@@ -72,13 +72,19 @@ function segmentViolationsByNode(
 				if (!prev[target]) {
 					prev[target] = {
 						modifyIndex: 0,
-						target: node.target[0],
-						violations: [alert],
+						target,
+						violations: [violation],
 					};
 				}
 				else {
-					prev[target].modifyIndex++;
-					prev[target].violations[index] = alert;
+					const hasViolation = prev[target].violations.find(
+						(violation) => violation.id === id
+					);
+
+					if (!hasViolation) {
+						prev[target].modifyIndex++;
+						prev[target].violations.push(violation);
+					}
 				}
 			});
 

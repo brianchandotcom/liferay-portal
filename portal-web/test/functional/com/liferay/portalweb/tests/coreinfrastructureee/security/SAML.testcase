@@ -177,10 +177,14 @@ definition {
 	test AssertKeepAliveToKeepMySAMLSessionAlive {
 		property test.name.skip.portal.instance = "SAML#AssertKeepAliveToKeepMySAMLSessionAlive";
 
-		User.logoutAndLoginPG(
-			nodePort = "9080",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		// Add 2 new SP to the second portal instance at port 9080
+
+		UserBar.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			specificURL = "http://localhost:9080");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1242,10 +1246,14 @@ definition {
 	test ViewIdPSingleLogoutWithMultipleSPs {
 		property test.name.skip.portal.instance = "SAML#ViewIdPSingleLogoutWithMultipleSPs";
 
-		User.logoutAndLoginPG(
-			nodePort = "9080",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
+		// Add 2 new SP to the second portal instance at port 9080
+
+		UserBar.signOut();
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@liferay.com",
+			specificURL = "http://localhost:9080");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

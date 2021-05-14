@@ -1,0 +1,57 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+
+		// Open Analytics Cloud, login, open faro demo workspace and take the token to connect to DXP
+
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+
+		// Take token from Analytics Cloud
+
+		ACLogin.loginAs();
+
+        ACWorkspace.openWorkspace();
+
+        ACSettings.takeTokenFromAnalyticsCloud();
+
+		// Go to DXP portal
+
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+        ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Navigator.openURL();
+
+		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Validate if the user can connect AC to DXP"
+	@priority = "5"
+	test ConnectACtoDXP {
+
+        ACDXPSettings.connectDXPtoAnalyticsCloud();
+		
+	}
+
+}

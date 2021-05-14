@@ -16,12 +16,13 @@ import ClayTabs from '@clayui/tabs';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {useId} from '../../../app/utils/useId';
 import TabCollection from './TabCollection';
 
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
-export default function TabsPanel({tabs}) {
+export default function TabsPanel({displayStyle, tabs}) {
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId();
 
@@ -64,6 +65,7 @@ export default function TabsPanel({tabs}) {
 							{tab.collections.map((collection, index) => (
 								<TabCollection
 									collection={collection}
+									displayStyle={displayStyle}
 									key={index}
 									open={
 										index <
@@ -80,6 +82,7 @@ export default function TabsPanel({tabs}) {
 }
 
 TabsPanel.propTypes = {
+	displayStyle: PropTypes.oneOf(Object.values(FRAGMENTS_DISPLAY_STYLES)),
 	tabs: PropTypes.arrayOf(
 		PropTypes.shape({
 			collections: PropTypes.arrayOf(PropTypes.shape({})),

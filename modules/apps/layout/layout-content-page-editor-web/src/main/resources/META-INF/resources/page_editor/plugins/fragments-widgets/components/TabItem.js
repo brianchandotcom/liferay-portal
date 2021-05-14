@@ -19,6 +19,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
+import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import selectSegmentsExperienceId from '../../../app/selectors/selectSegmentsExperienceId';
@@ -27,7 +28,7 @@ import addItem from '../../../app/thunks/addItem';
 import addWidget from '../../../app/thunks/addWidget';
 import {useDragSymbol} from '../../../app/utils/drag-and-drop/useDragAndDrop';
 
-export default function TabItem({item}) {
+export default function TabItem({displayStyle, item}) {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const [showPreview, setShowPreview] = useState(false);
@@ -104,6 +105,7 @@ export default function TabItem({item}) {
 }
 
 TabItem.propTypes = {
+	displayStyle: PropTypes.oneOf(Object.values(FRAGMENTS_DISPLAY_STYLES)),
 	item: PropTypes.shape({
 		data: PropTypes.object.isRequired,
 		icon: PropTypes.string.isRequired,

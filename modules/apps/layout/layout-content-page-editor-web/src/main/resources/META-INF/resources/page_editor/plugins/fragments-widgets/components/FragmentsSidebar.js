@@ -203,9 +203,12 @@ export default function FragmentsSidebar() {
 					/>
 				</div>
 				{searchValue ? (
-					<SearchResultsPanel filteredTabs={filteredTabs} />
+					<SearchResultsPanel
+						displayStyle={displayStyle}
+						filteredTabs={filteredTabs}
+					/>
 				) : (
-					<TabsPanel tabs={tabs} />
+					<TabsPanel displayStyle={displayStyle} tabs={tabs} />
 				)}
 			</SidebarPanelContent>
 		</>

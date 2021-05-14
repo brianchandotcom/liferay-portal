@@ -17,7 +17,7 @@ import './A11y.scss';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayPopover from '@clayui/popover';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import useA11y from './useA11y';
@@ -114,7 +114,7 @@ function Violation({target, violations}: ViolationProps) {
 	const [visible, setVisible] = useState(false);
 	const [bounds, setBounds] = useState<React.CSSProperties>();
 
-	const node = document.querySelector(target);
+	const node = useMemo(() => document.querySelector(target), [target]);
 
 	useObserveRect(
 		useCallback(

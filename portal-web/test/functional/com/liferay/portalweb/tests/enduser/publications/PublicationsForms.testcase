@@ -369,7 +369,9 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.addPage(formAddNewPageNumber = "2");
+		// Workaround LPS-117633
+
+		/*Form.addPage(formAddNewPageNumber = "2");
 
 		Form.editPageTitle(
 			formPageName = "Page 3",
@@ -383,7 +385,7 @@ definition {
 
 		Form.editFieldLabelMetal(fieldValue = "Upload Field");
 
-		Form.closeSidebar();
+		Form.closeSidebar();*/
 
 		Form.save();
 
@@ -432,7 +434,7 @@ definition {
 			fieldName = "${fieldSingleSelectionField}",
 			radioOption = "Option 1");
 
-		FormPortlet.nextPage(
+		/*FormPortlet.nextPage(
 			formPageCurrent = "Page 2",
 			formPageNext = "Page 3");
 
@@ -444,7 +446,7 @@ definition {
 
 		ItemSelector.uploadFile(
 			navTab = "Documents and Media",
-			uploadFileName = "Document_1.jpg");
+			uploadFileName = "Document_1.jpg");*/
 
 		FormPortlet.submitSuccessfully();
 
@@ -464,9 +466,9 @@ definition {
 			fieldLabel = "Radio Field",
 			fieldValue = "Option 1");
 
-		FormsAdmin.viewFormTableEntry(
+		/*FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Upload Field",
-			fieldValue = "Document_1.jpg");
+			fieldValue = "Document_1.jpg");*/
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
@@ -488,9 +490,9 @@ definition {
 			fieldLabel = "Radio Field",
 			fieldValue = "Option 1");
 
-		FormsAdmin.viewFormTableEntry(
+		/*FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Upload Field",
-			fieldValue = "Document_1.jpg");
+			fieldValue = "Document_1.jpg");*/
 	}
 
 	@description = "Assert the form with rule can be submited successfully within publications and published to production."

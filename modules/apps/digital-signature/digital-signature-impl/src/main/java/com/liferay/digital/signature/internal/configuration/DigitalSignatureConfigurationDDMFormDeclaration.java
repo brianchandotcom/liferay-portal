@@ -14,33 +14,24 @@
 
 package com.liferay.digital.signature.internal.configuration;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author José Abelenda
  */
-@ExtendedObjectClassDefinition(
-	category = "digital-signature",
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+@Component(
+	immediate = true,
+	property = "configurationPid=com.liferay.digital.signature.internal.configuration.DigitalSignatureConfiguration",
+	service = ConfigurationDDMFormDeclaration.class
 )
-@Meta.OCD(
-	id = "com.liferay.digital.signature.internal.configuration.DigitalSignatureConfiguration",
-	localization = "content/Language", name = "digital-signature-configuration"
-)
-public interface DigitalSignatureConfiguration {
+public class DigitalSignatureConfigurationDDMFormDeclaration
+	implements ConfigurationDDMFormDeclaration {
 
-	public boolean enable();
-
-	public String apiUsername();
-
-	public String apiAccountId();
-
-	public String accountBaseURI();
-
-	public String integrationKey();
-
-	public String rsaPrivateKey();
+	@Override
+	public Class<?> getDDMFormClass() {
+		return DigitalSignatureConfigurationForm.class;
+	}
 
 }

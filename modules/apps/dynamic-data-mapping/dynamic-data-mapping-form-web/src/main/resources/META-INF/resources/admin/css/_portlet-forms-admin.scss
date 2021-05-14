@@ -15,8 +15,17 @@
 	margin-right: 5px;
 }
 
-.exception-container > div:first-child {
-	margin-top: 24px;
+.ddm-form-web__exception-container {
+	transition: padding ease $transition-time;
+
+	.alert-dismissible:first-child {
+		margin-top: 24px;
+	}
+
+	&--sidebar-open {
+		padding-left: 0;
+		padding-right: 338px;
+	}
 }
 
 .invalid-form-instance {

@@ -142,11 +142,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		<aui:input name="serializedFormBuilderContext" type="hidden" value="<%= formBuilderContextJSONObject %>" />
 		<aui:input name="serializedSettingsContext" type="hidden" value="" />
 
-		<clay:container-fluid>
-			<div class="exception-container">
-				<%@ include file="/admin/exceptions.jspf" %>
-			</div>
-		</clay:container-fluid>
+		<%@ include file="/admin/exceptions.jspf" %>
 
 		<div id="<portlet:namespace />-container">
 			<react:component

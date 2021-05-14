@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -119,6 +120,43 @@ public class DSEnvelopeManagerTest {
 			TestPropsValues.getGroupId(), "2021-01-01");
 
 		Assert.assertTrue(ListUtil.isNotNull(dsEnvelopes));
+
+		// TODO Clean up
+
+	}
+
+	@Test
+	public void testGetDSEnvelopesByIds() throws Exception {
+
+		// TODO Set up
+
+		DSEnvelope dsEnvelope1 = _dsEnvelopeManager.addDSEnvelope(
+			TestPropsValues.getGroupId(),
+			new DSEnvelope() {
+				{
+					emailSubject = RandomTestUtil.randomString();
+					status = "created";
+				}
+			});
+
+		DSEnvelope dsEnvelope2 = _dsEnvelopeManager.addDSEnvelope(
+			TestPropsValues.getGroupId(),
+			new DSEnvelope() {
+				{
+					emailSubject = RandomTestUtil.randomString();
+					status = "created";
+				}
+			});
+
+		List<String> dsEnvelopeIds = new ArrayList<>();
+
+		dsEnvelopeIds.add(dsEnvelope1.getDSEnvelopeId());
+		dsEnvelopeIds.add(dsEnvelope2.getDSEnvelopeId());
+
+		List<DSEnvelope> dsEnvelopes = _dsEnvelopeManager.getDSEnvelopes(
+			TestPropsValues.getGroupId(), dsEnvelopeIds);
+
+		Assert.assertTrue(dsEnvelopes.size() == 2);
 
 		// TODO Clean up
 

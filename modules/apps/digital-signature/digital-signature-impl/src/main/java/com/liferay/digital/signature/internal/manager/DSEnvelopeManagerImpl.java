@@ -18,13 +18,14 @@ import com.liferay.digital.signature.internal.http.DSHttp;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,7 +59,11 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	@Override
 	public DSEnvelope getDSEnvelope(long groupId, String dsEnvelopeId) {
 		DSEnvelope dsEnvelope = _toDSEnvelope(
-			_dsHttp.get(groupId, "envelopes/" + dsEnvelopeId));
+			_dsHttp.get(
+				groupId,
+				StringBundler.concat(
+					"envelopes/", dsEnvelopeId,
+					"?include=recipients,documents")));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -73,11 +78,21 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	public List<DSEnvelope> getDSEnvelopes(
 		long groupId, List<String> dsEnvelopeIds) {
 
-		// LPS-132126
+		try {
+			JSONObject jsonObject = _dsHttp.get(
+				groupId,
+				StringBundler.concat(
+					"envelopes/?envelope_ids=",
+					ListUtil.toString(dsEnvelopeIds, StringPool.BLANK),
+					"&include=recipients,documents"));
 
-		// envelopes?envelopeIds=
-
-		return Collections.emptyList();
+			return JSONUtil.toList(
+				jsonObject.getJSONArray("envelopes"),
+				evenlopeJSONObject -> _toDSEnvelope(evenlopeJSONObject));
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
 	@Override

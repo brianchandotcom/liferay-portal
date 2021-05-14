@@ -132,7 +132,7 @@ definition {
 		Refresh();
 
 		AssertElementPresent(
-			key_smallImage = "Document_3.jpg",
+			key_imageFileName = "Document_3.jpg",
 			locator1 = "BlogsEntry#CONTENT_SMALL_IMAGE");
 	}
 

@@ -49,7 +49,8 @@ public class ObjectFieldLocalServiceImpl
 
 	@Override
 	public ObjectField addObjectField(
-			long userId, long objectDefinitionId, String name, String type)
+			long userId, long objectDefinitionId, String name, String type,
+			boolean indexed, boolean indexedAsKeyword, String locale)
 		throws PortalException {
 
 		name = StringUtil.trim(name);
@@ -70,6 +71,9 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setObjectDefinitionId(objectDefinitionId);
 		objectField.setName(name);
 		objectField.setType(type);
+		objectField.setIndexed(indexed);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setLocale(locale);
 
 		return objectFieldPersistence.update(objectField);
 	}

@@ -67,6 +67,8 @@ definition {
 	}
 
 	macro gotoEditField {
+		Form.openSidebar();
+
 		var key_fieldName = "${fieldName}";
 		var key_fieldPositionNumber = "${fieldPositionNumber}";
 

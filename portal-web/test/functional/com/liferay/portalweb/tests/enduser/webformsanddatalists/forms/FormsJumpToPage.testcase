@@ -495,9 +495,10 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-68227."
-	@ignore = "true"
 	@priority = "3"
 	test ViewRuleAfterOptionValueEdit {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterOptionValueEdit";
 
 		Navigator.openURL();

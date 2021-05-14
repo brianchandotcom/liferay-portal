@@ -4,16 +4,6 @@ definition {
 	var formName = "Created Form Name";
 	var rowNumber = "1";
 
-	macro openSidebar {
-		if (IsElementNotPresent(locator1 = "Form#ACTIVE_BUILDER_SIDEBAR_PANEL")) {
-			MouseOver.mouseOverNotVisible(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
-
-			ScrollBy(value1 = "0, 230");
-
-			Click(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
-		}
-	}
-
 	macro addPage {
 		var key_formAddNewPageNumber = "${formAddNewPageNumber}";
 
@@ -459,6 +449,16 @@ definition {
 				value1 = "Properties");
 		}
 		Pause(locator1 = "1000");
+	}
+
+	macro openSidebar {
+		if (IsElementNotPresent(locator1 = "Form#ACTIVE_BUILDER_SIDEBAR_PANEL")) {
+			MouseOver.mouseOverNotVisible(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
+
+			ScrollBy(value1 = "0, 230");
+
+			Click(locator1 = "Form#BUILDER_SIDEBAR_PANEL");
+		}
 	}
 
 	macro previewForm {

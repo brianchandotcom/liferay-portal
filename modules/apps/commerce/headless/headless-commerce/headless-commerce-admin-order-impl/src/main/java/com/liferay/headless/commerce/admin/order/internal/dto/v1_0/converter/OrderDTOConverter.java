@@ -157,9 +157,10 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 		BigDecimal taxAmount = commerceOrder.getTaxAmount();
 
 		if (taxAmount != null) {
-			order.setTaxAmount(taxAmount.doubleValue());
+			order.setTaxAmount(taxAmount);
 			order.setTaxAmountFormatted(
 				_formatPrice(taxAmount, commerceCurrency, locale));
+			order.setTaxAmountValue(taxAmount.doubleValue());
 		}
 
 		_setOrderTotal(commerceCurrency, commerceOrder, order, locale);

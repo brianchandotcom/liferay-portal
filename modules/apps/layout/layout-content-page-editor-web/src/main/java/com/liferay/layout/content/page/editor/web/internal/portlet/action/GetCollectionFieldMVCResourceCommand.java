@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -25,6 +26,7 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
@@ -154,6 +156,13 @@ public class GetCollectionFieldMVCResourceCommand
 
 				defaultLayoutListRetrieverContext.setPagination(
 					Pagination.of(size, 0));
+
+				Object infoItem = _getInfoItem(httpServletRequest);
+
+				if (infoItem != null) {
+					defaultLayoutListRetrieverContext.setContextObject(
+						infoItem);
+				}
 
 				ListObjectReference listObjectReference =
 					listObjectReferenceFactory.getListObjectReference(
@@ -318,6 +327,40 @@ public class GetCollectionFieldMVCResourceCommand
 			(ClassPKInfoItemIdentifier)fileEntryInfoItemIdentifier;
 
 		return classPKInfoItemIdentifier.getClassPK();
+	}
+
+	private Object _getInfoItem(HttpServletRequest httpServletRequest) {
+		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
+		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
+
+		if ((classNameId <= 0) && (classPK <= 0)) {
+			return null;
+		}
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			(InfoItemObjectProvider<Object>)
+				_infoItemServiceTracker.getFirstInfoItemService(
+					InfoItemObjectProvider.class,
+					_portal.getClassName(classNameId));
+
+		if (infoItemObjectProvider == null) {
+			return null;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			new ClassPKInfoItemIdentifier(classPK);
+
+		try {
+			return infoItemObjectProvider.getInfoItem(
+				classPKInfoItemIdentifier);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException, noSuchInfoItemException);
+			}
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

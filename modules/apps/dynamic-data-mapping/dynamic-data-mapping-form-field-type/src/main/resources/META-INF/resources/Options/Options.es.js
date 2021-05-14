@@ -222,7 +222,7 @@ const Options = ({
 							};
 						}
 
-						const {label} = value[defaultLanguageId].find(
+						const {label} = value[languageId].find(
 							(defaultOption) =>
 								defaultOption.value === option.value
 						);

@@ -267,12 +267,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage page = wikiPagePersistence.create(pageId);
 
 		page.setUuid(serviceContext.getUuid());
-		page.setExternalReferenceCode(externalReferenceCode);
 		page.setResourcePrimKey(resourcePrimKey);
 		page.setGroupId(node.getGroupId());
 		page.setCompanyId(user.getCompanyId());
 		page.setUserId(user.getUserId());
 		page.setUserName(user.getFullName());
+		page.setExternalReferenceCode(externalReferenceCode);
 		page.setNodeId(nodeId);
 		page.setTitle(title);
 		page.setVersion(version);

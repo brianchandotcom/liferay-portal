@@ -22,7 +22,6 @@ create table WikiNode (
 create table WikiPage (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	externalReferenceCode VARCHAR(75) null,
 	pageId LONG not null primary key,
 	resourcePrimKey LONG,
 	groupId LONG,
@@ -31,6 +30,7 @@ create table WikiPage (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	externalReferenceCode VARCHAR(75) null,
 	nodeId LONG,
 	title VARCHAR(255) null,
 	version DOUBLE,

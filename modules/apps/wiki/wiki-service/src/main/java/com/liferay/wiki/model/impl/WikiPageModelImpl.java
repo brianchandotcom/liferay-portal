@@ -81,11 +81,11 @@ public class WikiPageModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR}, {"pageId", Types.BIGINT},
-		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"nodeId", Types.BIGINT},
+		{"pageId", Types.BIGINT}, {"resourcePrimKey", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"externalReferenceCode", Types.VARCHAR}, {"nodeId", Types.BIGINT},
 		{"title", Types.VARCHAR}, {"version", Types.DOUBLE},
 		{"minorEdit", Types.BOOLEAN}, {"content", Types.CLOB},
 		{"summary", Types.VARCHAR}, {"format", Types.VARCHAR},
@@ -101,7 +101,6 @@ public class WikiPageModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -110,6 +109,7 @@ public class WikiPageModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("nodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.DOUBLE);
@@ -128,7 +128,7 @@ public class WikiPageModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table WikiPage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,pageId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,nodeId LONG,title VARCHAR(255) null,version DOUBLE,minorEdit BOOLEAN,content TEXT null,summary STRING null,format VARCHAR(75) null,head BOOLEAN,parentTitle VARCHAR(255) null,redirectTitle VARCHAR(255) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table WikiPage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,pageId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,nodeId LONG,title VARCHAR(255) null,version DOUBLE,minorEdit BOOLEAN,content TEXT null,summary STRING null,format VARCHAR(75) null,head BOOLEAN,parentTitle VARCHAR(255) null,redirectTitle VARCHAR(255) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table WikiPage";
 
@@ -259,7 +259,6 @@ public class WikiPageModelImpl
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
-		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setPageId(soapModel.getPageId());
 		model.setResourcePrimKey(soapModel.getResourcePrimKey());
 		model.setGroupId(soapModel.getGroupId());
@@ -268,6 +267,7 @@ public class WikiPageModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setNodeId(soapModel.getNodeId());
 		model.setTitle(soapModel.getTitle());
 		model.setVersion(soapModel.getVersion());
@@ -439,11 +439,6 @@ public class WikiPageModelImpl
 		attributeGetterFunctions.put("uuid", WikiPage::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<WikiPage, String>)WikiPage::setUuid);
-		attributeGetterFunctions.put(
-			"externalReferenceCode", WikiPage::getExternalReferenceCode);
-		attributeSetterBiConsumers.put(
-			"externalReferenceCode",
-			(BiConsumer<WikiPage, String>)WikiPage::setExternalReferenceCode);
 		attributeGetterFunctions.put("pageId", WikiPage::getPageId);
 		attributeSetterBiConsumers.put(
 			"pageId", (BiConsumer<WikiPage, Long>)WikiPage::setPageId);
@@ -471,6 +466,11 @@ public class WikiPageModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<WikiPage, Date>)WikiPage::setModifiedDate);
+		attributeGetterFunctions.put(
+			"externalReferenceCode", WikiPage::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<WikiPage, String>)WikiPage::setExternalReferenceCode);
 		attributeGetterFunctions.put("nodeId", WikiPage::getNodeId);
 		attributeSetterBiConsumers.put(
 			"nodeId", (BiConsumer<WikiPage, Long>)WikiPage::setNodeId);
@@ -574,35 +574,6 @@ public class WikiPageModelImpl
 	@Deprecated
 	public String getOriginalUuid() {
 		return getColumnOriginalValue("uuid_");
-	}
-
-	@JSON
-	@Override
-	public String getExternalReferenceCode() {
-		if (_externalReferenceCode == null) {
-			return "";
-		}
-		else {
-			return _externalReferenceCode;
-		}
-	}
-
-	@Override
-	public void setExternalReferenceCode(String externalReferenceCode) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_externalReferenceCode = externalReferenceCode;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalExternalReferenceCode() {
-		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -793,6 +764,35 @@ public class WikiPageModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalExternalReferenceCode() {
+		return getColumnOriginalValue("externalReferenceCode");
 	}
 
 	@JSON
@@ -1471,7 +1471,6 @@ public class WikiPageModelImpl
 
 		wikiPageImpl.setMvccVersion(getMvccVersion());
 		wikiPageImpl.setUuid(getUuid());
-		wikiPageImpl.setExternalReferenceCode(getExternalReferenceCode());
 		wikiPageImpl.setPageId(getPageId());
 		wikiPageImpl.setResourcePrimKey(getResourcePrimKey());
 		wikiPageImpl.setGroupId(getGroupId());
@@ -1480,6 +1479,7 @@ public class WikiPageModelImpl
 		wikiPageImpl.setUserName(getUserName());
 		wikiPageImpl.setCreateDate(getCreateDate());
 		wikiPageImpl.setModifiedDate(getModifiedDate());
+		wikiPageImpl.setExternalReferenceCode(getExternalReferenceCode());
 		wikiPageImpl.setNodeId(getNodeId());
 		wikiPageImpl.setTitle(getTitle());
 		wikiPageImpl.setVersion(getVersion());
@@ -1612,16 +1612,6 @@ public class WikiPageModelImpl
 			wikiPageCacheModel.uuid = null;
 		}
 
-		wikiPageCacheModel.externalReferenceCode = getExternalReferenceCode();
-
-		String externalReferenceCode = wikiPageCacheModel.externalReferenceCode;
-
-		if ((externalReferenceCode != null) &&
-			(externalReferenceCode.length() == 0)) {
-
-			wikiPageCacheModel.externalReferenceCode = null;
-		}
-
 		wikiPageCacheModel.pageId = getPageId();
 
 		wikiPageCacheModel.resourcePrimKey = getResourcePrimKey();
@@ -1656,6 +1646,16 @@ public class WikiPageModelImpl
 		}
 		else {
 			wikiPageCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
+
+		wikiPageCacheModel.externalReferenceCode = getExternalReferenceCode();
+
+		String externalReferenceCode = wikiPageCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			wikiPageCacheModel.externalReferenceCode = null;
 		}
 
 		wikiPageCacheModel.nodeId = getNodeId();
@@ -1819,7 +1819,6 @@ public class WikiPageModelImpl
 
 	private long _mvccVersion;
 	private String _uuid;
-	private String _externalReferenceCode;
 	private long _pageId;
 	private long _resourcePrimKey;
 	private long _groupId;
@@ -1829,6 +1828,7 @@ public class WikiPageModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _externalReferenceCode;
 	private long _nodeId;
 	private String _title;
 	private double _version;
@@ -1876,8 +1876,6 @@ public class WikiPageModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("uuid_", _uuid);
-		_columnOriginalValues.put(
-			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("pageId", _pageId);
 		_columnOriginalValues.put("resourcePrimKey", _resourcePrimKey);
 		_columnOriginalValues.put("groupId", _groupId);
@@ -1886,6 +1884,8 @@ public class WikiPageModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put(
+			"externalReferenceCode", _externalReferenceCode);
 		_columnOriginalValues.put("nodeId", _nodeId);
 		_columnOriginalValues.put("title", _title);
 		_columnOriginalValues.put("version", _version);
@@ -1928,23 +1928,23 @@ public class WikiPageModelImpl
 
 		columnBitmasks.put("uuid_", 2L);
 
-		columnBitmasks.put("externalReferenceCode", 4L);
+		columnBitmasks.put("pageId", 4L);
 
-		columnBitmasks.put("pageId", 8L);
+		columnBitmasks.put("resourcePrimKey", 8L);
 
-		columnBitmasks.put("resourcePrimKey", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("groupId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("companyId", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("userId", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("userName", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("createDate", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("modifiedDate", 1024L);
+		columnBitmasks.put("externalReferenceCode", 1024L);
 
 		columnBitmasks.put("nodeId", 2048L);
 

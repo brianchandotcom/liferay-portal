@@ -1562,6 +1562,284 @@ public class WikiPageUtil {
 	}
 
 	/**
+	 * Returns all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching wiki pages
+	 */
+	public static List<WikiPage> findByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().findByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns a range of all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @return the range of matching wiki pages
+	 */
+	public static List<WikiPage> findByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end) {
+
+		return getPersistence().findByG_ERC(
+			groupId, externalReferenceCode, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki pages
+	 */
+	public static List<WikiPage> findByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
+
+		return getPersistence().findByG_ERC(
+			groupId, externalReferenceCode, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching wiki pages
+	 */
+	public static List<WikiPage> findByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByG_ERC(
+			groupId, externalReferenceCode, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page
+	 * @throws NoSuchPageException if a matching wiki page could not be found
+	 */
+	public static WikiPage findByG_ERC_First(
+			long groupId, String externalReferenceCode,
+			OrderByComparator<WikiPage> orderByComparator)
+		throws com.liferay.wiki.exception.NoSuchPageException {
+
+		return getPersistence().findByG_ERC_First(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	public static WikiPage fetchByG_ERC_First(
+		long groupId, String externalReferenceCode,
+		OrderByComparator<WikiPage> orderByComparator) {
+
+		return getPersistence().fetchByG_ERC_First(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page
+	 * @throws NoSuchPageException if a matching wiki page could not be found
+	 */
+	public static WikiPage findByG_ERC_Last(
+			long groupId, String externalReferenceCode,
+			OrderByComparator<WikiPage> orderByComparator)
+		throws com.liferay.wiki.exception.NoSuchPageException {
+
+		return getPersistence().findByG_ERC_Last(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	public static WikiPage fetchByG_ERC_Last(
+		long groupId, String externalReferenceCode,
+		OrderByComparator<WikiPage> orderByComparator) {
+
+		return getPersistence().fetchByG_ERC_Last(
+			groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param pageId the primary key of the current wiki page
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next wiki page
+	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
+	 */
+	public static WikiPage[] findByG_ERC_PrevAndNext(
+			long pageId, long groupId, String externalReferenceCode,
+			OrderByComparator<WikiPage> orderByComparator)
+		throws com.liferay.wiki.exception.NoSuchPageException {
+
+		return getPersistence().findByG_ERC_PrevAndNext(
+			pageId, groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching wiki pages that the user has permission to view
+	 */
+	public static List<WikiPage> filterFindByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().filterFindByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @return the range of matching wiki pages that the user has permission to view
+	 */
+	public static List<WikiPage> filterFindByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end) {
+
+		return getPersistence().filterFindByG_ERC(
+			groupId, externalReferenceCode, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki pages that the user has permission to view
+	 */
+	public static List<WikiPage> filterFindByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
+
+		return getPersistence().filterFindByG_ERC(
+			groupId, externalReferenceCode, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param pageId the primary key of the current wiki page
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next wiki page
+	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
+	 */
+	public static WikiPage[] filterFindByG_ERC_PrevAndNext(
+			long pageId, long groupId, String externalReferenceCode,
+			OrderByComparator<WikiPage> orderByComparator)
+		throws com.liferay.wiki.exception.NoSuchPageException {
+
+		return getPersistence().filterFindByG_ERC_PrevAndNext(
+			pageId, groupId, externalReferenceCode, orderByComparator);
+	}
+
+	/**
+	 * Removes all the wiki pages where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 */
+	public static void removeByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		getPersistence().removeByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching wiki pages
+	 */
+	public static int countByG_ERC(long groupId, String externalReferenceCode) {
+		return getPersistence().countByG_ERC(groupId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching wiki pages that the user has permission to view
+	 */
+	public static int filterCountByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return getPersistence().filterCountByG_ERC(
+			groupId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns all the wiki pages where nodeId = &#63; and title = &#63;.
 	 *
 	 * @param nodeId the node ID
@@ -2954,6 +3232,86 @@ public class WikiPageUtil {
 		long resourcePrimKey, long nodeId, int status) {
 
 		return getPersistence().countByR_N_S(resourcePrimKey, nodeId, status);
+	}
+
+	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the matching wiki page
+	 * @throws NoSuchPageException if a matching wiki page could not be found
+	 */
+	public static WikiPage findByG_ERC_V(
+			long groupId, String externalReferenceCode, double version)
+		throws com.liferay.wiki.exception.NoSuchPageException {
+
+		return getPersistence().findByG_ERC_V(
+			groupId, externalReferenceCode, version);
+	}
+
+	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	public static WikiPage fetchByG_ERC_V(
+		long groupId, String externalReferenceCode, double version) {
+
+		return getPersistence().fetchByG_ERC_V(
+			groupId, externalReferenceCode, version);
+	}
+
+	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	public static WikiPage fetchByG_ERC_V(
+		long groupId, String externalReferenceCode, double version,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByG_ERC_V(
+			groupId, externalReferenceCode, version, useFinderCache);
+	}
+
+	/**
+	 * Removes the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the wiki page that was removed
+	 */
+	public static WikiPage removeByG_ERC_V(
+			long groupId, String externalReferenceCode, double version)
+		throws com.liferay.wiki.exception.NoSuchPageException {
+
+		return getPersistence().removeByG_ERC_V(
+			groupId, externalReferenceCode, version);
+	}
+
+	/**
+	 * Returns the number of wiki pages where groupId = &#63; and externalReferenceCode = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the number of matching wiki pages
+	 */
+	public static int countByG_ERC_V(
+		long groupId, String externalReferenceCode, double version) {
+
+		return getPersistence().countByG_ERC_V(
+			groupId, externalReferenceCode, version);
 	}
 
 	/**
@@ -7152,74 +7510,6 @@ public class WikiPageUtil {
 
 		return getPersistence().filterCountByG_N_H_P_S(
 			groupId, nodeId, head, parentTitle, status);
-	}
-
-	/**
-	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the matching wiki page
-	 * @throws NoSuchPageException if a matching wiki page could not be found
-	 */
-	public static WikiPage findByG_ERC(
-			long groupId, String externalReferenceCode)
-		throws com.liferay.wiki.exception.NoSuchPageException {
-
-		return getPersistence().findByG_ERC(groupId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	 */
-	public static WikiPage fetchByG_ERC(
-		long groupId, String externalReferenceCode) {
-
-		return getPersistence().fetchByG_ERC(groupId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	 */
-	public static WikiPage fetchByG_ERC(
-		long groupId, String externalReferenceCode, boolean useFinderCache) {
-
-		return getPersistence().fetchByG_ERC(
-			groupId, externalReferenceCode, useFinderCache);
-	}
-
-	/**
-	 * Removes the wiki page where groupId = &#63; and externalReferenceCode = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the wiki page that was removed
-	 */
-	public static WikiPage removeByG_ERC(
-			long groupId, String externalReferenceCode)
-		throws com.liferay.wiki.exception.NoSuchPageException {
-
-		return getPersistence().removeByG_ERC(groupId, externalReferenceCode);
-	}
-
-	/**
-	 * Returns the number of wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the number of matching wiki pages
-	 */
-	public static int countByG_ERC(long groupId, String externalReferenceCode) {
-		return getPersistence().countByG_ERC(groupId, externalReferenceCode);
 	}
 
 	/**

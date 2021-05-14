@@ -126,10 +126,6 @@
 		<finder name="Format" return-type="Collection">
 			<finder-column name="format" />
 		</finder>
-		<finder name="G_E" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="externalReferenceCode" />
-		</finder>
 		<finder name="R_N" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="nodeId" />
@@ -137,6 +133,10 @@
 		<finder name="R_S" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="G_ERC" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="externalReferenceCode" />
 		</finder>
 		<finder name="N_T" return-type="Collection">
 			<finder-column name="nodeId" />
@@ -173,7 +173,7 @@
 			<finder-column name="nodeId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_E_V" return-type="WikiPage">
+		<finder name="G_ERC_V" return-type="WikiPage">
 			<finder-column name="groupId" />
 			<finder-column name="externalReferenceCode" />
 			<finder-column name="version" />

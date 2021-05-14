@@ -4545,6 +4545,1028 @@ public class WikiPagePersistenceImpl
 	private static final String _FINDER_COLUMN_R_S_STATUS_2 =
 		"wikiPage.status = ?";
 
+	private FinderPath _finderPathWithPaginationFindByG_ERC;
+	private FinderPath _finderPathWithoutPaginationFindByG_ERC;
+	private FinderPath _finderPathCountByG_ERC;
+
+	/**
+	 * Returns all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching wiki pages
+	 */
+	@Override
+	public List<WikiPage> findByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return findByG_ERC(
+			groupId, externalReferenceCode, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @return the range of matching wiki pages
+	 */
+	@Override
+	public List<WikiPage> findByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end) {
+
+		return findByG_ERC(groupId, externalReferenceCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki pages
+	 */
+	@Override
+	public List<WikiPage> findByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
+
+		return findByG_ERC(
+			groupId, externalReferenceCode, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching wiki pages
+	 */
+	@Override
+	public List<WikiPage> findByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByG_ERC;
+				finderArgs = new Object[] {groupId, externalReferenceCode};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByG_ERC;
+			finderArgs = new Object[] {
+				groupId, externalReferenceCode, start, end, orderByComparator
+			};
+		}
+
+		List<WikiPage> list = null;
+
+		if (useFinderCache) {
+			list = (List<WikiPage>)finderCache.getResult(
+				finderPath, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (WikiPage wikiPage : list) {
+					if ((groupId != wikiPage.getGroupId()) ||
+						!externalReferenceCode.equals(
+							wikiPage.getExternalReferenceCode())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_WIKIPAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				list = (List<WikiPage>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page
+	 * @throws NoSuchPageException if a matching wiki page could not be found
+	 */
+	@Override
+	public WikiPage findByG_ERC_First(
+			long groupId, String externalReferenceCode,
+			OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
+
+		WikiPage wikiPage = fetchByG_ERC_First(
+			groupId, externalReferenceCode, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
+
+		sb.append("}");
+
+		throw new NoSuchPageException(sb.toString());
+	}
+
+	/**
+	 * Returns the first wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	@Override
+	public WikiPage fetchByG_ERC_First(
+		long groupId, String externalReferenceCode,
+		OrderByComparator<WikiPage> orderByComparator) {
+
+		List<WikiPage> list = findByG_ERC(
+			groupId, externalReferenceCode, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page
+	 * @throws NoSuchPageException if a matching wiki page could not be found
+	 */
+	@Override
+	public WikiPage findByG_ERC_Last(
+			long groupId, String externalReferenceCode,
+			OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
+
+		WikiPage wikiPage = fetchByG_ERC_Last(
+			groupId, externalReferenceCode, orderByComparator);
+
+		if (wikiPage != null) {
+			return wikiPage;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
+
+		sb.append("}");
+
+		throw new NoSuchPageException(sb.toString());
+	}
+
+	/**
+	 * Returns the last wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	@Override
+	public WikiPage fetchByG_ERC_Last(
+		long groupId, String externalReferenceCode,
+		OrderByComparator<WikiPage> orderByComparator) {
+
+		int count = countByG_ERC(groupId, externalReferenceCode);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<WikiPage> list = findByG_ERC(
+			groupId, externalReferenceCode, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param pageId the primary key of the current wiki page
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next wiki page
+	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
+	 */
+	@Override
+	public WikiPage[] findByG_ERC_PrevAndNext(
+			long pageId, long groupId, String externalReferenceCode,
+			OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		WikiPage wikiPage = findByPrimaryKey(pageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			WikiPage[] array = new WikiPageImpl[3];
+
+			array[0] = getByG_ERC_PrevAndNext(
+				session, wikiPage, groupId, externalReferenceCode,
+				orderByComparator, true);
+
+			array[1] = wikiPage;
+
+			array[2] = getByG_ERC_PrevAndNext(
+				session, wikiPage, groupId, externalReferenceCode,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected WikiPage getByG_ERC_PrevAndNext(
+		Session session, WikiPage wikiPage, long groupId,
+		String externalReferenceCode,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_WIKIPAGE_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+		boolean bindExternalReferenceCode = false;
+
+		if (externalReferenceCode.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+		}
+		else {
+			bindExternalReferenceCode = true;
+
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		if (bindExternalReferenceCode) {
+			queryPos.add(externalReferenceCode);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(wikiPage)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<WikiPage> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching wiki pages that the user has permission to view
+	 */
+	@Override
+	public List<WikiPage> filterFindByG_ERC(
+		long groupId, String externalReferenceCode) {
+
+		return filterFindByG_ERC(
+			groupId, externalReferenceCode, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @return the range of matching wiki pages that the user has permission to view
+	 */
+	@Override
+	public List<WikiPage> filterFindByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end) {
+
+		return filterFindByG_ERC(
+			groupId, externalReferenceCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WikiPageModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param start the lower bound of the range of wiki pages
+	 * @param end the upper bound of the range of wiki pages (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching wiki pages that the user has permission to view
+	 */
+	@Override
+	public List<WikiPage> filterFindByG_ERC(
+		long groupId, String externalReferenceCode, int start, int end,
+		OrderByComparator<WikiPage> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_ERC(
+				groupId, externalReferenceCode, start, end, orderByComparator);
+		}
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_WIKIPAGE_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_WIKIPAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+		boolean bindExternalReferenceCode = false;
+
+		if (externalReferenceCode.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+		}
+		else {
+			bindExternalReferenceCode = true;
+
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_WIKIPAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), WikiPage.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, WikiPageImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, WikiPageImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(groupId);
+
+			if (bindExternalReferenceCode) {
+				queryPos.add(externalReferenceCode);
+			}
+
+			return (List<WikiPage>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param pageId the primary key of the current wiki page
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next wiki page
+	 * @throws NoSuchPageException if a wiki page with the primary key could not be found
+	 */
+	@Override
+	public WikiPage[] filterFindByG_ERC_PrevAndNext(
+			long pageId, long groupId, String externalReferenceCode,
+			OrderByComparator<WikiPage> orderByComparator)
+		throws NoSuchPageException {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_ERC_PrevAndNext(
+				pageId, groupId, externalReferenceCode, orderByComparator);
+		}
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		WikiPage wikiPage = findByPrimaryKey(pageId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			WikiPage[] array = new WikiPageImpl[3];
+
+			array[0] = filterGetByG_ERC_PrevAndNext(
+				session, wikiPage, groupId, externalReferenceCode,
+				orderByComparator, true);
+
+			array[1] = wikiPage;
+
+			array[2] = filterGetByG_ERC_PrevAndNext(
+				session, wikiPage, groupId, externalReferenceCode,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected WikiPage filterGetByG_ERC_PrevAndNext(
+		Session session, WikiPage wikiPage, long groupId,
+		String externalReferenceCode,
+		OrderByComparator<WikiPage> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_WIKIPAGE_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_WIKIPAGE_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+		boolean bindExternalReferenceCode = false;
+
+		if (externalReferenceCode.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+		}
+		else {
+			bindExternalReferenceCode = true;
+
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+		}
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_WIKIPAGE_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(WikiPageModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(WikiPageModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), WikiPage.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, WikiPageImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(_FILTER_ENTITY_TABLE, WikiPageImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(groupId);
+
+		if (bindExternalReferenceCode) {
+			queryPos.add(externalReferenceCode);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(wikiPage)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<WikiPage> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the wiki pages where groupId = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 */
+	@Override
+	public void removeByG_ERC(long groupId, String externalReferenceCode) {
+		for (WikiPage wikiPage :
+				findByG_ERC(
+					groupId, externalReferenceCode, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(wikiPage);
+		}
+	}
+
+	/**
+	 * Returns the number of wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching wiki pages
+	 */
+	@Override
+	public int countByG_ERC(long groupId, String externalReferenceCode) {
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByG_ERC;
+
+		Object[] finderArgs = new Object[] {groupId, externalReferenceCode};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_WIKIPAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of wiki pages that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching wiki pages that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_ERC(long groupId, String externalReferenceCode) {
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_ERC(groupId, externalReferenceCode);
+		}
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(_FILTER_SQL_COUNT_WIKIPAGE_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
+
+		boolean bindExternalReferenceCode = false;
+
+		if (externalReferenceCode.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
+		}
+		else {
+			bindExternalReferenceCode = true;
+
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), WikiPage.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(groupId);
+
+			if (bindExternalReferenceCode) {
+				queryPos.add(externalReferenceCode);
+			}
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
+		"wikiPage.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
+		"wikiPage.externalReferenceCode = ?";
+
+	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
+		"(wikiPage.externalReferenceCode IS NULL OR wikiPage.externalReferenceCode = '')";
+
 	private FinderPath _finderPathWithPaginationFindByN_T;
 	private FinderPath _finderPathWithoutPaginationFindByN_T;
 	private FinderPath _finderPathCountByN_T;
@@ -8729,6 +9751,304 @@ public class WikiPagePersistenceImpl
 
 	private static final String _FINDER_COLUMN_R_N_S_STATUS_2 =
 		"wikiPage.status = ?";
+
+	private FinderPath _finderPathFetchByG_ERC_V;
+	private FinderPath _finderPathCountByG_ERC_V;
+
+	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the matching wiki page
+	 * @throws NoSuchPageException if a matching wiki page could not be found
+	 */
+	@Override
+	public WikiPage findByG_ERC_V(
+			long groupId, String externalReferenceCode, double version)
+		throws NoSuchPageException {
+
+		WikiPage wikiPage = fetchByG_ERC_V(
+			groupId, externalReferenceCode, version);
+
+		if (wikiPage == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", version=");
+			sb.append(version);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchPageException(sb.toString());
+		}
+
+		return wikiPage;
+	}
+
+	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	@Override
+	public WikiPage fetchByG_ERC_V(
+		long groupId, String externalReferenceCode, double version) {
+
+		return fetchByG_ERC_V(groupId, externalReferenceCode, version, true);
+	}
+
+	/**
+	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
+	 */
+	@Override
+	public WikiPage fetchByG_ERC_V(
+		long groupId, String externalReferenceCode, double version,
+		boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, externalReferenceCode, version};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_ERC_V, finderArgs);
+		}
+
+		if (result instanceof WikiPage) {
+			WikiPage wikiPage = (WikiPage)result;
+
+			if ((groupId != wikiPage.getGroupId()) ||
+				!Objects.equals(
+					externalReferenceCode,
+					wikiPage.getExternalReferenceCode()) ||
+				(version != wikiPage.getVersion())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_SELECT_WIKIPAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_ERC_V_GROUPID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_G_ERC_V_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(version);
+
+				List<WikiPage> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_ERC_V, finderArgs, list);
+					}
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							if (!useFinderCache) {
+								finderArgs = new Object[] {
+									groupId, externalReferenceCode, version
+								};
+							}
+
+							_log.warn(
+								"WikiPagePersistenceImpl.fetchByG_ERC_V(long, String, double, boolean) with parameters (" +
+									StringUtil.merge(finderArgs) +
+										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					WikiPage wikiPage = list.get(0);
+
+					result = wikiPage;
+
+					cacheResult(wikiPage);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (WikiPage)result;
+		}
+	}
+
+	/**
+	 * Removes the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the wiki page that was removed
+	 */
+	@Override
+	public WikiPage removeByG_ERC_V(
+			long groupId, String externalReferenceCode, double version)
+		throws NoSuchPageException {
+
+		WikiPage wikiPage = findByG_ERC_V(
+			groupId, externalReferenceCode, version);
+
+		return remove(wikiPage);
+	}
+
+	/**
+	 * Returns the number of wiki pages where groupId = &#63; and externalReferenceCode = &#63; and version = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param externalReferenceCode the external reference code
+	 * @param version the version
+	 * @return the number of matching wiki pages
+	 */
+	@Override
+	public int countByG_ERC_V(
+		long groupId, String externalReferenceCode, double version) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		FinderPath finderPath = _finderPathCountByG_ERC_V;
+
+		Object[] finderArgs = new Object[] {
+			groupId, externalReferenceCode, version
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_WIKIPAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_ERC_V_GROUPID_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_G_ERC_V_VERSION_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(version);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_ERC_V_GROUPID_2 =
+		"wikiPage.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_2 =
+		"wikiPage.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_3 =
+		"(wikiPage.externalReferenceCode IS NULL OR wikiPage.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_G_ERC_V_VERSION_2 =
+		"wikiPage.version = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_N_H;
 	private FinderPath _finderPathWithoutPaginationFindByG_N_H;
@@ -22161,272 +23481,6 @@ public class WikiPagePersistenceImpl
 	private static final String _FINDER_COLUMN_G_N_H_P_S_STATUS_2 =
 		"wikiPage.status = ?";
 
-	private FinderPath _finderPathFetchByG_ERC;
-	private FinderPath _finderPathCountByG_ERC;
-
-	/**
-	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the matching wiki page
-	 * @throws NoSuchPageException if a matching wiki page could not be found
-	 */
-	@Override
-	public WikiPage findByG_ERC(long groupId, String externalReferenceCode)
-		throws NoSuchPageException {
-
-		WikiPage wikiPage = fetchByG_ERC(groupId, externalReferenceCode);
-
-		if (wikiPage == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("groupId=");
-			sb.append(groupId);
-
-			sb.append(", externalReferenceCode=");
-			sb.append(externalReferenceCode);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchPageException(sb.toString());
-		}
-
-		return wikiPage;
-	}
-
-	/**
-	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	 */
-	@Override
-	public WikiPage fetchByG_ERC(long groupId, String externalReferenceCode) {
-		return fetchByG_ERC(groupId, externalReferenceCode, true);
-	}
-
-	/**
-	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	 */
-	@Override
-	public WikiPage fetchByG_ERC(
-		long groupId, String externalReferenceCode, boolean useFinderCache) {
-
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {groupId, externalReferenceCode};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByG_ERC, finderArgs);
-		}
-
-		if (result instanceof WikiPage) {
-			WikiPage wikiPage = (WikiPage)result;
-
-			if ((groupId != wikiPage.getGroupId()) ||
-				!Objects.equals(
-					externalReferenceCode,
-					wikiPage.getExternalReferenceCode())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_WIKIPAGE_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				List<WikiPage> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByG_ERC, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									groupId, externalReferenceCode
-								};
-							}
-
-							_log.warn(
-								"WikiPagePersistenceImpl.fetchByG_ERC(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					WikiPage wikiPage = list.get(0);
-
-					result = wikiPage;
-
-					cacheResult(wikiPage);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (WikiPage)result;
-		}
-	}
-
-	/**
-	 * Removes the wiki page where groupId = &#63; and externalReferenceCode = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the wiki page that was removed
-	 */
-	@Override
-	public WikiPage removeByG_ERC(long groupId, String externalReferenceCode)
-		throws NoSuchPageException {
-
-		WikiPage wikiPage = findByG_ERC(groupId, externalReferenceCode);
-
-		return remove(wikiPage);
-	}
-
-	/**
-	 * Returns the number of wiki pages where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the number of matching wiki pages
-	 */
-	@Override
-	public int countByG_ERC(long groupId, String externalReferenceCode) {
-		externalReferenceCode = Objects.toString(externalReferenceCode, "");
-
-		FinderPath finderPath = _finderPathCountByG_ERC;
-
-		Object[] finderArgs = new Object[] {groupId, externalReferenceCode};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_WIKIPAGE_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
-
-			boolean bindExternalReferenceCode = false;
-
-			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
-			}
-			else {
-				bindExternalReferenceCode = true;
-
-				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				if (bindExternalReferenceCode) {
-					queryPos.add(externalReferenceCode);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
-		"wikiPage.groupId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
-		"wikiPage.externalReferenceCode = ?";
-
-	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
-		"(wikiPage.externalReferenceCode IS NULL OR wikiPage.externalReferenceCode = '')";
-
 	public WikiPagePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -22465,16 +23519,17 @@ public class WikiPagePersistenceImpl
 			wikiPage);
 
 		finderCache.putResult(
-			_finderPathFetchByN_T_V,
+			_finderPathFetchByG_ERC_V,
 			new Object[] {
-				wikiPage.getNodeId(), wikiPage.getTitle(), wikiPage.getVersion()
+				wikiPage.getGroupId(), wikiPage.getExternalReferenceCode(),
+				wikiPage.getVersion()
 			},
 			wikiPage);
 
 		finderCache.putResult(
-			_finderPathFetchByG_ERC,
+			_finderPathFetchByN_T_V,
 			new Object[] {
-				wikiPage.getGroupId(), wikiPage.getExternalReferenceCode()
+				wikiPage.getNodeId(), wikiPage.getTitle(), wikiPage.getVersion()
 			},
 			wikiPage);
 	}
@@ -22557,20 +23612,22 @@ public class WikiPagePersistenceImpl
 		finderCache.putResult(_finderPathFetchByR_N_V, args, wikiPageModelImpl);
 
 		args = new Object[] {
+			wikiPageModelImpl.getGroupId(),
+			wikiPageModelImpl.getExternalReferenceCode(),
+			wikiPageModelImpl.getVersion()
+		};
+
+		finderCache.putResult(_finderPathCountByG_ERC_V, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByG_ERC_V, args, wikiPageModelImpl);
+
+		args = new Object[] {
 			wikiPageModelImpl.getNodeId(), wikiPageModelImpl.getTitle(),
 			wikiPageModelImpl.getVersion()
 		};
 
 		finderCache.putResult(_finderPathCountByN_T_V, args, Long.valueOf(1));
 		finderCache.putResult(_finderPathFetchByN_T_V, args, wikiPageModelImpl);
-
-		args = new Object[] {
-			wikiPageModelImpl.getGroupId(),
-			wikiPageModelImpl.getExternalReferenceCode()
-		};
-
-		finderCache.putResult(_finderPathCountByG_ERC, args, Long.valueOf(1));
-		finderCache.putResult(_finderPathFetchByG_ERC, args, wikiPageModelImpl);
 	}
 
 	/**
@@ -23216,6 +24273,25 @@ public class WikiPagePersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"resourcePrimKey", "status"}, false);
 
+		_finderPathWithPaginationFindByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "externalReferenceCode"}, true);
+
+		_finderPathWithoutPaginationFindByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "externalReferenceCode"}, true);
+
+		_finderPathCountByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "externalReferenceCode"}, false);
+
 		_finderPathWithPaginationFindByN_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByN_T",
 			new String[] {
@@ -23376,6 +24452,23 @@ public class WikiPagePersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"resourcePrimKey", "nodeId", "status"}, false);
+
+		_finderPathFetchByG_ERC_V = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Double.class.getName()
+			},
+			new String[] {"groupId", "externalReferenceCode", "version"}, true);
+
+		_finderPathCountByG_ERC_V = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC_V",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Double.class.getName()
+			},
+			new String[] {"groupId", "externalReferenceCode", "version"},
+			false);
 
 		_finderPathWithPaginationFindByG_N_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_H",
@@ -23806,16 +24899,6 @@ public class WikiPagePersistenceImpl
 			},
 			new String[] {"groupId", "nodeId", "head", "parentTitle", "status"},
 			false);
-
-		_finderPathFetchByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, true);
-
-		_finderPathCountByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, false);
 	}
 
 	@Deactivate

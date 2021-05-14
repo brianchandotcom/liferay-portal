@@ -7,7 +7,7 @@ create unique index IX_7609B2AE on WikiNode (uuid_[$COLUMN_LENGTH:75$], groupId)
 
 create index IX_B65BBC83 on WikiPage (companyId);
 create index IX_A2001730 on WikiPage (format[$COLUMN_LENGTH:75$]);
-create index IX_8C2777D8 on WikiPage (groupId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_18565130 on WikiPage (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], version);
 create index IX_BA72B89A on WikiPage (groupId, nodeId, head, parentTitle[$COLUMN_LENGTH:255$], status);
 create index IX_E0092FF0 on WikiPage (groupId, nodeId, head, status);
 create index IX_941E429C on WikiPage (groupId, nodeId, status);

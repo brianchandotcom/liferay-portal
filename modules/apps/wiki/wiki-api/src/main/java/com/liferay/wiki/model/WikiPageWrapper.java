@@ -45,7 +45,6 @@ public class WikiPageWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
-		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("pageId", getPageId());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
@@ -54,6 +53,7 @@ public class WikiPageWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("nodeId", getNodeId());
 		attributes.put("title", getTitle());
 		attributes.put("version", getVersion());
@@ -85,13 +85,6 @@ public class WikiPageWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
-		}
-
-		String externalReferenceCode = (String)attributes.get(
-			"externalReferenceCode");
-
-		if (externalReferenceCode != null) {
-			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long pageId = (Long)attributes.get("pageId");
@@ -140,6 +133,13 @@ public class WikiPageWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long nodeId = (Long)attributes.get("nodeId");

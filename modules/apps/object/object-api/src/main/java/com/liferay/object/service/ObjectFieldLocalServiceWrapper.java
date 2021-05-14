@@ -35,11 +35,13 @@ public class ObjectFieldLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectField addObjectField(
-			long userId, long objectDefinitionId, String name, String type)
+			long userId, long objectDefinitionId, String name, String type,
+			boolean indexed, boolean indexedAsKeyword, String locale)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldLocalService.addObjectField(
-			userId, objectDefinitionId, name, type);
+			userId, objectDefinitionId, name, type, indexed, indexedAsKeyword,
+			locale);
 	}
 
 	/**

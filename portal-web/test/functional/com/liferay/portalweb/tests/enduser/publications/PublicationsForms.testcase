@@ -315,4 +315,113 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 	}
 
+	@description = "Assert the form with rule can be submited successfully within publications and published to production."
+	@priority = "4"
+	test SubmitFormWithRuleWithinPublicationsAndPublishToProduction {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.addTextField();
+
+		var fieldNameTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Date");
+
+		var fieldNameDateField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Date Field");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.addRule();
+
+		FormRules.configureConditionOptions(
+			conditionField = "Text Field",
+			conditionOperator = "Is not empty",
+			conditionRowNumber = "1");
+
+		FormRules.configureActionOptions(
+			action = "Show",
+			actionRowNumber = "1",
+			actionTarget = "Date Field");
+
+		FormRules.save();
+
+		FormsAdminNavigator.gotoFormBuilder();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "${fieldNameDateField}");
+
+		FormFields.editText(
+			fieldName = "${fieldNameTextField}",
+			fieldValue = "Test");
+
+		FormFields.viewDateField(
+			fieldLabel = "Date Field",
+			fieldName = "${fieldNameDateField}");
+
+		FormFields.editTextWithBackspace(fieldName = "${fieldNameTextField}");
+
+		FormFields.viewDateFieldNotPresent(
+			fieldLabel = "Date Field",
+			fieldName = "${fieldNameDateField}");
+
+		Navigator.openURL();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		FormsAdminNavigator.gotoRules();
+
+		FormRules.viewSummary(
+			action = "Show",
+			actionTarget = "Date Field",
+			conditionField = "Text Field",
+			conditionOperator = "Is not empty",
+			ruleNumber = "1");
+	}
+
 }

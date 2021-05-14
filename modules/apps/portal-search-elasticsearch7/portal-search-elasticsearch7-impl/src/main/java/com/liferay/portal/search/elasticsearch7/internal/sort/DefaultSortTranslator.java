@@ -14,11 +14,13 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.sort;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GeoDistanceSort;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,9 +31,11 @@ import java.util.Set;
 
 import org.elasticsearch.common.geo.GeoDistance;
 import org.elasticsearch.common.geo.GeoPoint;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.GeoDistanceSortBuilder;
+import org.elasticsearch.search.sort.NestedSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -118,6 +122,32 @@ public class DefaultSortTranslator implements SortTranslator {
 		return geoDistanceSortBuilder;
 	}
 
+	protected SortBuilder<?> getNestedFieldSortBuilder(
+		Sort sort, String sortFieldName) {
+
+		String[] parts = StringUtil.split(sortFieldName, StringPool.POUND);
+
+		String sortField = parts[0];
+
+		FieldSortBuilder fieldSortBuilder = SortBuilders.fieldSort(sortField);
+
+		if (sort.isReverse()) {
+			fieldSortBuilder.order(SortOrder.DESC);
+		}
+
+		NestedSortBuilder nestedSortBuilder = new NestedSortBuilder(
+			"nestedFieldArray");
+
+		String fieldName = parts[1];
+
+		nestedSortBuilder.setFilter(
+			QueryBuilders.termQuery("nestedFieldArray.fieldName", fieldName));
+
+		fieldSortBuilder.setNestedSort(nestedSortBuilder);
+
+		return fieldSortBuilder;
+	}
+
 	protected SortBuilder<?> getScoreSortBuilder(Sort sort) {
 		SortBuilder<?> sortBuilder = SortBuilders.scoreSort();
 
@@ -137,6 +167,10 @@ public class DefaultSortTranslator implements SortTranslator {
 			return getGeoDistanceSortBuilder(sort, fieldName);
 		}
 
+		if (fieldName.startsWith("nestedFieldArray.")) {
+			return getNestedFieldSortBuilder(sort, fieldName);
+		}
+
 		return getFieldSortBuilder(sort, fieldName);
 	}
 
@@ -148,6 +182,12 @@ public class DefaultSortTranslator implements SortTranslator {
 		}
 
 		if (Objects.equals(sortFieldName, "_score")) {
+			return sortFieldName;
+		}
+
+		if ((sortFieldName != null) &&
+			sortFieldName.startsWith("nestedFieldArray.")) {
+
 			return sortFieldName;
 		}
 

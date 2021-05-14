@@ -760,6 +760,13 @@
 						"type": "long"
 					},
 					"value_text": {
+						"fields": {
+							"sortable": {
+								"ignore_above": 256,
+								"normalizer": "lowercase",
+								"type": "keyword"
+							}
+						},
 						"type": "text"
 					}
 				},

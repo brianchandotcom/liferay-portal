@@ -125,10 +125,9 @@ definition {
 
 		Staging.publishToLive();
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "Site Name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
 		Refresh();
 

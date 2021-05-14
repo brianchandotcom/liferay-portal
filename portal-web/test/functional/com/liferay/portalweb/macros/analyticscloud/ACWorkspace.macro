@@ -8,7 +8,7 @@ definition {
 			Click(locator1 = "ACWorkspace#WORKSPACE_NAME");
 		}
 
-		if(!isSet(workspaceName)){
+		if(!(isSet(workspaceName))){
 			Click(locator1 = "ACWorkspace#FARO_DEMO_WORKSPACE");
 		}
 

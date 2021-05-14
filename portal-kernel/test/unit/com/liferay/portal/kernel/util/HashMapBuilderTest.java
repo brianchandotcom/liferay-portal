@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -98,6 +101,42 @@ public class HashMapBuilderTest {
 	}
 
 	@Test
+	public void testPutAllDictionary() {
+		Dictionary<String, Integer> dictionary = new Hashtable<>();
+
+		dictionary.put("One", 1);
+		dictionary.put("Three", 3);
+		dictionary.put("Two", 2);
+
+		Map<String, Integer> map = HashMapBuilder.putAll(
+			dictionary
+		).build();
+
+		Assert.assertEquals(map.size(), dictionary.size());
+
+		_assertContainsAll(map, dictionary);
+	}
+
+	@Test
+	public void testPutAllDictionaryAfterPut() {
+		Dictionary<String, Integer> dictionary = new Hashtable<>();
+
+		dictionary.put("One", 1);
+		dictionary.put("Three", 3);
+		dictionary.put("Two", 2);
+
+		HashMap<String, Integer> map = HashMapBuilder.put(
+			"Four", 4
+		).putAll(
+			dictionary
+		).build();
+
+		Assert.assertEquals(Integer.valueOf(4), map.get("Four"));
+
+		_assertContainsAll(map, dictionary);
+	}
+
+	@Test
 	public void testUnsafeFunction() {
 		List<String> list = ListUtil.fromArray("hello  ", "  world");
 
@@ -153,6 +192,18 @@ public class HashMapBuilderTest {
 					return array.length;
 				}
 			).build());
+	}
+
+	private <K, V> void _assertContainsAll(
+		Map<K, V> map, Dictionary<K, V> dictionary) {
+
+		for (Enumeration<? extends K> enumeration = dictionary.keys();
+			 enumeration.hasMoreElements();) {
+
+			K key = enumeration.nextElement();
+
+			Assert.assertEquals(map.get(key), dictionary.get(key));
+		}
 	}
 
 	private <K, V> void _assertContainsAll(Map<K, V> map1, Map<K, V> map2) {

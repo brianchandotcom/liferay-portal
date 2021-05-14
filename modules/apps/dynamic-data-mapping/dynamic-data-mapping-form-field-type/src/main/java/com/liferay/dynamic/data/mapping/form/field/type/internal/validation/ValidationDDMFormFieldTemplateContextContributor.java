@@ -18,6 +18,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateCont
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.validation.DDMValidation;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,9 +29,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Stream;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -51,8 +62,22 @@ public class ValidationDDMFormFieldTemplateContextContributor
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
 		return HashMapBuilder.<String, Object>put(
+			"validations",
+			_getValidations(ddmFormFieldRenderingContext.getLocale())
+		).put(
 			"value", getValue(ddmFormFieldRenderingContext)
 		).build();
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, DDMValidation.class, "ddm.validation.data.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	protected Map<String, Object> getValue(
@@ -93,7 +118,41 @@ public class ValidationDDMFormFieldTemplateContextContributor
 	@Reference
 	protected JSONFactory jsonFactory;
 
+	private HashMap<String, Object> _getValidations(Locale locale) {
+		HashMap<String, Object> map = new HashMap<>();
+
+		Set<String> keySet = _serviceTrackerMap.keySet();
+
+		for (String key : keySet) {
+			List<DDMValidation> ddmValidations = _serviceTrackerMap.getService(
+				key);
+
+			Stream<DDMValidation> stream = ddmValidations.stream();
+
+			map.put(
+				key,
+				stream.map(
+					ddmValidation -> HashMapBuilder.put(
+						"label", ddmValidation.getLabel(locale)
+					).put(
+						"name", ddmValidation.getName()
+					).put(
+						"parameterMessage",
+						ddmValidation.getParameterMessage(locale)
+					).put(
+						"regex", ddmValidation.getRegex()
+					).put(
+						"template", ddmValidation.getTemplate()
+					).build()
+				).toArray());
+		}
+
+		return map;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ValidationDDMFormFieldTemplateContextContributor.class);
+
+	private ServiceTrackerMap<String, List<DDMValidation>> _serviceTrackerMap;
 
 }

@@ -125,4 +125,85 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
 	}
 
+	@description = "Assert the form with edited Element Set is published to production"
+	@priority = "4"
+	test PublishPublicationWithEditedElementSetInForm {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set Name");
+
+		Form.editDescription(formDescription = "Element Set Description");
+
+		Form.addTextField();
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Image");
+
+		Form.closeSidebar();
+
+		Form.saveElementSet();
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Element Set Name");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Upload");
+
+		Form.closeSidebar();
+
+		Form.saveElementSet();
+
+		Publications.gotoReviewChanges(publicationName = "Publication Name 2");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "Element Set Name",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.gotoAddElementSet(elementSetTitle = "Element Set Name");
+
+		Form.save();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+	}
+
 }

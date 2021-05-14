@@ -54,10 +54,6 @@ definition {
 
 		Page.viewInactiveRequestMessage(resource = "site");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
-
 		Site.openSitesAdmin();
 
 		Site.activateInactive(siteName = "Site Name");

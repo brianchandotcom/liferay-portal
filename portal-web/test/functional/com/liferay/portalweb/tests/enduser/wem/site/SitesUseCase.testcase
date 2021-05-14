@@ -276,10 +276,6 @@ definition {
 		Navigator.openSpecificURL(url = "${baseURL}/web/organization-name-2");
 
 		Page.viewInactiveRequestMessage(resource = "site");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "3"
@@ -747,10 +743,6 @@ definition {
 		Navigator.openSpecificURL(url = "${baseURL}/web/site1-name");
 
 		Page.viewInactiveRequestMessage(resource = "site");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "4"

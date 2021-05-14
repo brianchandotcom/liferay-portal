@@ -871,6 +871,11 @@
 					"type": "keyword"
 				},
 				"userName": {
+					"fields": {
+						"text": {
+							"type": "text"
+						}
+					},
 					"store": true,
 					"type": "keyword"
 				},

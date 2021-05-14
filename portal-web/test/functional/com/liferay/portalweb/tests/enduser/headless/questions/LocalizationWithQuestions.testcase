@@ -14,19 +14,11 @@ definition {
 			groupName = "Guest",
 			layoutName = "Questions Page");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Portlet.addPG(portletName = "Questions");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.configurePage(
-			columnName = "1 Column",
-			pageName = "Questions Page",
-			privacy = "Public Pages",
-			sitePageType = "Widget Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Questions Page",
+			widgetName = "Questions");
 	}
 
 	tearDown {
@@ -122,39 +114,39 @@ definition {
 
 	@description = "Validate if the user can post a question with multiple tags that contain non-Latin characters."
 	@priority = "3"
-	@refactorneeded
-	test AddQuestionWithMultipleTags {
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
+	@refactordone
+	test CanAddQuestionWithMultipleTags {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			contentField = "私の好きな日本料理は寿司とすき焼きです",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
 			tagLocatorList = "いち,に,さん,し,ご",
-			titleField = "あなたの好きな日本料理は何ですか");
+			titleField = "あなたの好きな日本料理は何ですか",
+			topicName = "質問トピック");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			localization = "true",
+			siteURLKey = "guest",
+			topicName = "質問トピック");
 
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
+		AssertTextEquals(
+			key_questionTitle = "あなたの好きな日本料理は何ですか",
+			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+			value1 = "あなたの好きな日本料理は何ですか");
 	}
 
 	@description = "Validate if the user can post a question with non-Latin characters， it also covers LPS-128639."
 	@priority = "5"
-	@refactorneeded
-	test AddQuestionWithNonLatinCharacters {
+	@refactordone
+	@uitest
+	test CanAddQuestionWithNonLatinCharacters {
 		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoTab(questionTabField = "Questions");
 
 		Questions.addRootTopic(
 			rootTopicDescription = "トピック記述",
@@ -177,31 +169,23 @@ definition {
 
 	@description = "Validate if the user can cancel the deletions that contain non-Latin characters."
 	@priority = "4"
-	@refactorneeded
-	test CancelDeletions {
-		Navigator.gotoPage(pageName = "Questions Page");
+	@refactordone
+	test CanCancelDeletions {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
-		Questions.gotoTab(questionTabField = "Questions");
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			categoryName = "質問トピック",
+			titleField = "タイトル");
 
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
-			titleField = "あなたの好きな日本料理は何ですか");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "あなたの好きな日本料理は何ですか");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			localization = "true",
+			siteURLKey = "guest",
+			topicName = "質問トピック");
 
 		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
@@ -217,36 +201,28 @@ definition {
 
 		Questions.deleteQuestion(
 			cancel = "true",
-			questionTitle = "あなたの好きな日本料理は何ですか");
+			questionTitle = "タイトル");
 	}
 
 	@description = "Validate if the user can delete a comment that contains non-Latin characters to an answer."
 	@priority = "4"
-	@refactorneeded
-	test DeleteCommentWithNonLatinCharacters {
-		Navigator.gotoPage(pageName = "Questions Page");
+	@refactordone
+	test CanDeleteCommentWithNonLatinCharacters {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			categoryName = "質問トピック",
 			titleField = "あなたの好きな日本料理は何ですか");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "あなたの好きな日本料理は何ですか");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			localization = "true",
+			siteURLKey = "guest",
+			topicName = "質問トピック");
 
 		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
@@ -257,31 +233,23 @@ definition {
 
 	@description = "Validate if the user can delete an edited answer that contains non-Latin characters."
 	@priority = "4"
-	@refactorneeded
-	test DeleteEditedAnswer {
-		Navigator.gotoPage(pageName = "Questions Page");
+	@refactordone
+	test CanDeleteEditedAnswer {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			categoryName = "質問トピック",
 			titleField = "あなたの好きな日本料理は何ですか");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "あなたの好きな日本料理は何ですか");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			localization = "true",
+			siteURLKey = "guest",
+			topicName = "質問トピック");
 
 		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
@@ -292,31 +260,23 @@ definition {
 
 	@description = "Validate if the user can delete a question that contains non-Latin characters."
 	@priority = "4"
-	@refactorneeded
-	test DeleteQuestionWithComment {
-		Navigator.gotoPage(pageName = "Questions Page");
+	@refactordone
+	test CanDeleteQuestionWithComment {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			categoryName = "質問トピック",
 			titleField = "あなたの好きな日本料理は何ですか");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "あなたの好きな日本料理は何ですか");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			localization = "true",
+			siteURLKey = "guest",
+			topicName = "質問トピック");
 
 		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
@@ -327,21 +287,16 @@ definition {
 
 	@description = "Validate if the user can delete a topic that contains non-Latin characters."
 	@priority = "5"
-	@refactorneeded
-	test DeleteTopicWithNonLatinCharacters {
-		Navigator.gotoPage(pageName = "Questions Page");
+	@refactordone
+	test CanDeleteTopicWithNonLatinCharacters {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.deleteCP(
-			assetType = "Message Boards Category",
-			categoryName = "質問トピック");
+		JSONMBMessage.deleteCategory(
+			categoryName = "質問トピック",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -350,90 +305,115 @@ definition {
 
 	@description = "Validate if the user can add a comment to an answer with non-Latin characters."
 	@priority = "4"
-	@refactorneeded
-	test ReplyToAnAnswerWithNonLatinCharacters {
-		Navigator.gotoPage(pageName = "Questions Page");
+	@refactordone
+	test CanReplyToAnAnswerWithNonLatinCharacters {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			categoryName = "質問トピック",
 			titleField = "あなたの好きな日本料理は何ですか");
 
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "あなたの好きな日本料理は何ですか");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			localization = "true",
+			siteURLKey = "guest",
+			topicName = "質問トピック");
 
 		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
 		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 	}
 
+	@description = "Validate if the user can view the sorted tags that contain non-Latin characters."
+	@priority = "4"
+	@refactordone
+	test CanViewSortedTags {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
+
+		for (var num : list "1,2") {
+			Questions.addQuestionByAPI(
+				bodyField = "Question Body ${num}",
+				categoryName = "質問トピック",
+				tagField = "おおさか",
+				titleField = "Question ${num}");
+		}
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body 3",
+			categoryName = "質問トピック",
+			tagField = "とうきょう",
+			titleField = "Question 3");
+
+		Questions.openToTagsTap(
+			layoutName = "questions-page",
+			siteURLKey = "guest");
+
+		Questions.viewTagsFilterResults(
+			position = "1",
+			tagName = "おおさか",
+			usedTimes = "Used 2 Times");
+
+		Questions.viewTagsFilterResults(
+			position = "2",
+			tagName = "とうきょう",
+			usedTimes = "Used 1 Times");
+	}
+
 	@description = "Validate if the user can view a question via an edited topic that contains non-Latin characters."
 	@priority = "4"
-	@refactorneeded
-	test ViewQuestionAfterEditingTopic {
-		Navigator.gotoPage(pageName = "Questions Page");
+	@refactordone
+	test QuestionCanBeViewedAfterEditingTopic {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "あなたの好きな日本料理は寿司とすき焼きですか",
+		Questions.addQuestionWithoutTagByAPI(
+			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+			categoryName = "質問トピック",
 			titleField = "あなたの好きな日本料理は何ですか");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Questions.editRootTopic(
 			categoryName = "質問トピック",
-			categoryNameEdit = "質問トピックを編集する");
+			categoryNameEdit = "質問トピックを編集する",
+			groupName = "Guest",
+			siteURLKey = "guest");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			localization = "true",
+			siteURLKey = "guest",
+			topicName = "質問トピックを編集する");
 
-		Questions.gotoCategory(categoryName = "質問トピックを編集する");
-
-		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
+		AssertTextEquals(
+			key_questionTitle = "あなたの好きな日本料理は何ですか",
+			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+			value1 = "あなたの好きな日本料理は何ですか");
 	}
 
 	@description = "Validate if the user can redirect to the question after clicking a tag that contains non-Latin characters."
 	@priority = "5"
-	@refactorneeded
-	test ViewQuestionViaTags {
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
+	@refactordone
+	test QuestionCanBeViewedViaTag {
+		JSONMBMessage.addCategory(
+			categoryDescription = "トピック記述",
+			categoryName = "質問トピック",
+			userEmailAddress = "test@liferay.com");
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			contentField = "私の好きな日本料理は寿司とすき焼きです",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
 			tagLocatorList = "おおさか,とうきょう",
-			titleField = "あなたの好きな日本料理は何ですか");
+			titleField = "あなたの好きな日本料理は何ですか",
+			topicName = "質問トピック");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -453,60 +433,9 @@ definition {
 
 		Questions.viewNoTags(tagsList = "とうきょう");
 
-		Click(
-			key_tagName = "おおさか",
-			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
-
-		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
-	}
-
-	@description = "Validate if the user can view the sorted tags that contain non-Latin characters."
-	@priority = "4"
-	@refactorneeded
-	test ViewSortedTags {
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoTab(questionTabField = "Questions");
-
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
-
-		for (var num : list "1,2") {
-			Navigator.gotoPage(pageName = "Questions Page");
-
-			Questions.gotoCategory(categoryName = "質問トピック");
-
-			Questions.askQuestionFillingTheMandatoryFields(
-				contentField = "Question Body ${num}",
-				tagLocatorList = "おおさか",
-				titleField = "Question ${num}");
-		}
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Question Body 3",
-			tagLocatorList = "とうきょう",
-			titleField = "Question 3");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.gotoCategory(categoryName = "質問トピック");
-
-		Questions.gotoTab(questionTabField = "Tags");
-
-		Questions.viewTagsFilterResults(
-			position = "1",
-			tagName = "おおさか",
-			usedTimes = "Used 2 Times");
-
-		Questions.viewTagsFilterResults(
-			position = "2",
-			tagName = "とうきょう",
-			usedTimes = "Used 1 Times");
+		Questions.viewQuestionViaTag(
+			questionTitle = "あなたの好きな日本料理は何ですか",
+			tagName = "おおさか");
 	}
 
 }

@@ -100,9 +100,7 @@ definition {
 		if (isSet(parentSiteName)) {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			AssertClick(
-				locator1 = "Button#SELECT",
-				value1 = "Select");
+			Button.click(button = "Change");
 
 			var key_parentSiteName = "${parentSiteName}";
 
@@ -272,9 +270,7 @@ definition {
 			key_url = "site-configuration-default-user-associations",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
-		AssertClick(
-			locator1 = "SiteSettingsDefaultUserAssociations#TEAMS_SELECT",
-			value1 = "Select");
+		Button.click(button = "Change");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

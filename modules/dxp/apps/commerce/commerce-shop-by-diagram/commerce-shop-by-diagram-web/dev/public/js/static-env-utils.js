@@ -1,4 +1,4 @@
-/**
+ /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * The contents of this file are subject to the terms of the Liferay Enterprise

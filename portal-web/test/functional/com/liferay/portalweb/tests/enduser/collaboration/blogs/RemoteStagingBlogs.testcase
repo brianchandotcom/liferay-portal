@@ -43,7 +43,7 @@ definition {
 		property test.name.skip.portal.instance = "Staging#StagingRemoteLiveBlogsPG";
 
 		Staging.remoteStagingSetUpViaJson(
-			groupName = "Site Name",
+			groupName = "Remote Site",
 			remotePort = "9080");
 
 		Navigator.gotoSitePage(

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.validation;
 import com.liferay.dynamic.data.mapping.validation.DDMValidation;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
@@ -33,7 +34,10 @@ public class IsEmailDDMValidation implements DDMValidation {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "is-email");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getModuleAndPortalResourceBundle(
+				locale, getClass()),
+			"is-email");
 	}
 
 	@Override
@@ -43,7 +47,7 @@ public class IsEmailDDMValidation implements DDMValidation {
 
 	@Override
 	public String getParameterMessage(Locale locale) {
-		return LanguageUtil.get(locale, StringPool.BLANK);
+		return StringPool.BLANK;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.evaluator.internal.validation;
 
 import com.liferay.dynamic.data.mapping.validation.DDMValidation;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 
@@ -32,7 +33,10 @@ public class MatchDDMValidation implements DDMValidation {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "match");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getModuleAndPortalResourceBundle(
+				locale, getClass()),
+			"match");
 	}
 
 	@Override
@@ -42,7 +46,10 @@ public class MatchDDMValidation implements DDMValidation {
 
 	@Override
 	public String getParameterMessage(Locale locale) {
-		return LanguageUtil.get(locale, "regular-expression");
+		return LanguageUtil.get(
+			ResourceBundleUtil.getModuleAndPortalResourceBundle(
+				locale, getClass()),
+			"regular-expression");
 	}
 
 	@Override

@@ -1493,6 +1493,14 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("taxAmountValue", additionalAssertFieldName)) {
+				if (order.getTaxAmountValue() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("total", additionalAssertFieldName)) {
 				if (order.getTotal() == null) {
 					valid = false;
@@ -2668,6 +2676,17 @@ public abstract class BaseOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("taxAmountValue", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						order1.getTaxAmountValue(),
+						order2.getTaxAmountValue())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("total", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(order1.getTotal(), order2.getTotal())) {
 					return false;
@@ -3592,6 +3611,11 @@ public abstract class BaseOrderResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("taxAmountValue")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("total")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3850,9 +3874,9 @@ public abstract class BaseOrderResourceTestCase {
 				subtotalWithTaxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				subtotalWithTaxAmountValue = RandomTestUtil.randomDouble();
-				taxAmount = RandomTestUtil.randomDouble();
 				taxAmountFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				taxAmountValue = RandomTestUtil.randomDouble();
 				totalAmount = RandomTestUtil.randomDouble();
 				totalDiscountAmount = RandomTestUtil.randomDouble();
 				totalDiscountAmountFormatted = StringUtil.toLowerCase(

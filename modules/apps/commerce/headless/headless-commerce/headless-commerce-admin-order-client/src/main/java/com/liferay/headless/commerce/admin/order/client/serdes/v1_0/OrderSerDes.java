@@ -878,6 +878,16 @@ public class OrderSerDes {
 			sb.append("\"");
 		}
 
+		if (order.getTaxAmountValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxAmountValue\": ");
+
+			sb.append(order.getTaxAmountValue());
+		}
+
 		if (order.getTotal() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -1719,6 +1729,14 @@ public class OrderSerDes {
 				String.valueOf(order.getTaxAmountFormatted()));
 		}
 
+		if (order.getTaxAmountValue() == null) {
+			map.put("taxAmountValue", null);
+		}
+		else {
+			map.put(
+				"taxAmountValue", String.valueOf(order.getTaxAmountValue()));
+		}
+
 		if (order.getTotal() == null) {
 			map.put("total", null);
 		}
@@ -2420,7 +2438,7 @@ public class OrderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "taxAmount")) {
 				if (jsonParserFieldValue != null) {
 					order.setTaxAmount(
-						Double.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -2428,6 +2446,12 @@ public class OrderSerDes {
 
 				if (jsonParserFieldValue != null) {
 					order.setTaxAmountFormatted((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "taxAmountValue")) {
+				if (jsonParserFieldValue != null) {
+					order.setTaxAmountValue(
+						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "total")) {

@@ -1611,16 +1611,16 @@ public class Order implements Cloneable, Serializable {
 
 	protected Double subtotalWithTaxAmountValue;
 
-	public Double getTaxAmount() {
+	public BigDecimal getTaxAmount() {
 		return taxAmount;
 	}
 
-	public void setTaxAmount(Double taxAmount) {
+	public void setTaxAmount(BigDecimal taxAmount) {
 		this.taxAmount = taxAmount;
 	}
 
 	public void setTaxAmount(
-		UnsafeSupplier<Double, Exception> taxAmountUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> taxAmountUnsafeSupplier) {
 
 		try {
 			taxAmount = taxAmountUnsafeSupplier.get();
@@ -1630,7 +1630,7 @@ public class Order implements Cloneable, Serializable {
 		}
 	}
 
-	protected Double taxAmount;
+	protected BigDecimal taxAmount;
 
 	public String getTaxAmountFormatted() {
 		return taxAmountFormatted;
@@ -1652,6 +1652,27 @@ public class Order implements Cloneable, Serializable {
 	}
 
 	protected String taxAmountFormatted;
+
+	public Double getTaxAmountValue() {
+		return taxAmountValue;
+	}
+
+	public void setTaxAmountValue(Double taxAmountValue) {
+		this.taxAmountValue = taxAmountValue;
+	}
+
+	public void setTaxAmountValue(
+		UnsafeSupplier<Double, Exception> taxAmountValueUnsafeSupplier) {
+
+		try {
+			taxAmountValue = taxAmountValueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Double taxAmountValue;
 
 	public BigDecimal getTotal() {
 		return total;

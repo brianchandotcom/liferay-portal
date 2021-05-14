@@ -1115,6 +1115,60 @@ definition {
 		Segmentation.viewSegment(propertyField = "liferay");
 	}
 
+	@description = "Validate if the user can create a segment with Properties User and Email Segment with Equals Option"
+	@priority = "5"
+	test AddSegmentByUserEmailAddressEquals {
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressEquals Test");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
+
+		Segmentation.fillProperty(propertyField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Contains Option"
+	@priority = "5"
+	test AddSegmentByUserEmailAddressNotContains {
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotContains Test");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Not Contains");
+
+		Segmentation.fillProperty(propertyField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
+	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Equals Option"
+	@priority = "5"
+	test AddSegmentByUserEmailAddressNotEquals {
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Email Address");
+
+		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotEquals Test");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Not Equals");
+
+		Segmentation.fillProperty(propertyField = "liferay");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	@description = "This is a test for LPS-130286."
 	@priority = "5"
 	test AddSegmentByUserFirstName {
@@ -1331,58 +1385,58 @@ definition {
 		Segmentation.viewSegment(propertyField = "usersn");
 	}
 
-	@description = "Validate if the user can create a segment with Properties User and Email Segment with Equals Option"
+	@description = "This is a test for LPS-130290."
+	@ignore = "true"
 	@priority = "5"
-	test AddSegmentUserEmailAddressEquals {
-		LexiconEntry.gotoAdd();
+	test AddSegmentByUserSite {
+		property portal.acceptance = "false";
 
-		Segmentation.addProperties(propertyOption = "Email Address");
-
-		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressEquals Test");
-
-		Segmentation.changeCriterionInput(criterionInputOption = "Equals");
-
-		Segmentation.fillProperty(propertyField = "liferay");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
+		// TODO LPS-130290 AddSegmentByUserSite pending implementation
 	}
 
-	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Contains Option"
+	@description = "This is a test for LPS-130290."
+	@ignore = "true"
 	@priority = "5"
-	test AddSegmentUserEmailAddressNotContains {
-		LexiconEntry.gotoAdd();
+	test AddSegmentByUserSiteOrganizationRole {
+		property portal.acceptance = "false";
 
-		Segmentation.addProperties(propertyOption = "Email Address");
-
-		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotContains Test");
-
-		Segmentation.changeCriterionInput(criterionInputOption = "Not Contains");
-
-		Segmentation.fillProperty(propertyField = "liferay");
-
-		Button.clickSave();
-
-		Alert.viewSuccessMessage();
+		// TODO LPS-130290 AddSegmentByUserSiteOrganizationRole pending implementation
 	}
 
-	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Equals Option"
+	@description = "This is a test for LPS-130290."
+	@ignore = "true"
 	@priority = "5"
-	test AddSegmentUserEmailAddressNotEquals {
-		LexiconEntry.gotoAdd();
+	test AddSegmentByUserTag {
+		property portal.acceptance = "false";
 
-		Segmentation.addProperties(propertyOption = "Email Address");
+		// TODO LPS-130290 AddSegmentByUserTag pending implementation
+	}
 
-		Segmentation.fillTitle(titleField = "AddSegmentUserEmailAddressNotEquals Test");
+	@description = "This is a test for LPS-130290."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserTeam {
+		property portal.acceptance = "false";
 
-		Segmentation.changeCriterionInput(criterionInputOption = "Not Equals");
+		// TODO LPS-130290 AddSegmentByUserTeam pending implementation
+	}
 
-		Segmentation.fillProperty(propertyField = "liferay");
+	@description = "This is a test for LPS-130290."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserUser {
+		property portal.acceptance = "false";
 
-		Button.clickSave();
+		// TODO LPS-130290 AddSegmentByUserUser pending implementation
+	}
 
-		Alert.viewSuccessMessage();
+	@description = "This is a test for LPS-130290."
+	@ignore = "true"
+	@priority = "5"
+	test AddSegmentByUserUserGroup {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130290 AddSegmentByUserUserGroup pending implementation
 	}
 
 	@description = "When the user selects the Assign Site Roles option in the Segments Editor, it shows a dialog allowing user to assign/unassign site roles"

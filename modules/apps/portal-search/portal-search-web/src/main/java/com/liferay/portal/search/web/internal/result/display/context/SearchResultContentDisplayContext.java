@@ -54,6 +54,10 @@ public class SearchResultContentDisplayContext implements Serializable {
 		return _hasEditPermission;
 	}
 
+	public boolean isShowExtraInfo() {
+		return _showExtraInfo;
+	}
+
 	public boolean isVisible() {
 		return _visible;
 	}
@@ -88,6 +92,10 @@ public class SearchResultContentDisplayContext implements Serializable {
 		_iconURLString = iconURLString;
 	}
 
+	public void setShowExtraInfo(boolean showExtraInfo) {
+		_showExtraInfo = showExtraInfo;
+	}
+
 	public void setVisible(boolean visible) {
 		_visible = visible;
 	}
@@ -99,6 +107,7 @@ public class SearchResultContentDisplayContext implements Serializable {
 	private String _headerTitle;
 	private String _iconEditTarget;
 	private String _iconURLString;
+	private boolean _showExtraInfo;
 	private boolean _visible;
 
 }

@@ -110,6 +110,9 @@ public class SearchResultContentDisplayBuilder {
 						themeDisplay.getURLCurrent()
 					).buildString());
 			}
+
+			searchResultContentDisplayContext.setShowExtraInfo(
+				_type.equals("document"));
 		}
 
 		return searchResultContentDisplayContext;

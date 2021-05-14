@@ -76,5 +76,6 @@ SearchResultContentDisplayContext searchResultContentDisplayContext = searchResu
 		assetEntry="<%= searchResultContentDisplayContext.getAssetEntry() %>"
 		assetRenderer="<%= searchResultContentDisplayContext.getAssetRenderer() %>"
 		assetRendererFactory="<%= searchResultContentDisplayContext.getAssetRendererFactory() %>"
+		showExtraInfo="<%= searchResultContentDisplayContext.isShowExtraInfo() %>"
 	/>
 </c:if>

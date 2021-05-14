@@ -24,3 +24,9 @@ dependencies {
 
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 }
+
+test {
+	if (project.hasProperty('excludeTests')) {
+		exclude project.property('excludeTests')
+	}
+}

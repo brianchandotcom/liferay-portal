@@ -35,7 +35,7 @@ public class DLFileEntryServiceWrapper
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #addFileEntry(String, long, long, long, String, String,
 	 String, String, String, long, Map, File, InputStream, long,
-	 ServiceContext)}
+	 Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -56,6 +56,33 @@ public class DLFileEntryServiceWrapper
 			inputStream, size, serviceContext);
 	}
 
+	@Override
+	public DLFileEntry addFileEntry(
+			String externalReferenceCode, long groupId, long repositoryId,
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, long fileEntryTypeId,
+			java.util.Map
+				<String, com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+					ddmFormValuesMap,
+			java.io.File file, java.io.InputStream inputStream, long size,
+			java.util.Date expirationDate, java.util.Date reviewDate,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryService.addFileEntry(
+			externalReferenceCode, groupId, repositoryId, folderId,
+			sourceFileName, mimeType, title, description, changeLog,
+			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
+			expirationDate, reviewDate, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 #addFileEntry(String, long, long, long, String, String,
+	 String, String, String, long, Map, File, InputStream, long,
+	 Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFileEntry addFileEntry(
 			String externalReferenceCode, long groupId, long repositoryId,

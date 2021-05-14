@@ -18,11 +18,6 @@
 		"react": "16.12.0",
 		"react-dom": "16.12.0"
 	},
-	"jest": {
-		"testPathIgnorePatterns": [
-			"<rootDir>/test/item_selector_preview/ItemSelectorPreview.es.js"
-		]
-	},
 	"main": "index.es.js",
 	"name": "item-selector-taglib",
 	"scripts": {

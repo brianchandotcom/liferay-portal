@@ -101,6 +101,21 @@ export const FormBuilder = () => {
 		}
 	}, [focusedField]);
 
+	/**
+	 * Adjusts alert messages size according to sidebarOpen state
+	 */
+	useEffect(() => {
+		const alerts = document.querySelector(
+			'.ddm-form-web__exception-container'
+		);
+
+		if (alerts) {
+			alerts.className = classNames('ddm-form-web__exception-container', {
+				'ddm-form-web__exception-container--sidebar-open': sidebarOpen,
+			});
+		}
+	}, [sidebarOpen]);
+
 	useEffect(() => {
 		const currentPage = pages[activePage];
 		const isEmpty = currentPage.rows[0]?.columns[0].fields.length === 0;

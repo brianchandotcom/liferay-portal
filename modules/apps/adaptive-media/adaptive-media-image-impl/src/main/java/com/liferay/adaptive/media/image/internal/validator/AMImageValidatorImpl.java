@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
@@ -58,6 +59,15 @@ public class AMImageValidatorImpl implements AMImageValidator {
 		if (Objects.equals(
 				fileVersion.getMimeType(), ContentTypes.IMAGE_SVG_XML)) {
 
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean isProcessingSupported(String mimeType) {
+		if (StringUtil.equalsIgnoreCase(mimeType, ContentTypes.IMAGE_SVG_XML)) {
 			return false;
 		}
 

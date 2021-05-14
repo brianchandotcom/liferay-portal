@@ -602,9 +602,11 @@ definition {
 
 	macro remoteStagingSetUp {
 		if (isSet(remotePort)) {
-			User.loginPG(
-				nodePort = "${remotePort}",
+			User.logoutPG();
+
+			User.firstLoginUI(
 				password = "test",
+				specificURL = "http://localhost:${remotePort}",
 				userEmailAddress = "test@liferay.com");
 		}
 		else {

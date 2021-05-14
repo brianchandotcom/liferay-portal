@@ -630,10 +630,9 @@ definition {
 
 		User.viewLoggedOutPG();
 
-		Navigator.openSpecificURL(url = "http://www.able.com:9080");
-
-		User._login(
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@liferay.com");
 
 		AssertTextEquals(

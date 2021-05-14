@@ -21,7 +21,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AssertHighestRatededAsset {
+	test ViewHighestRatedAsset {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		for (var n : list "1,2") {

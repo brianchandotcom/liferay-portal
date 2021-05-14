@@ -17,6 +17,7 @@ package com.liferay.portal.search.internal.permission;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
+import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -233,6 +234,14 @@ public class DefaultSearchResultPermissionFilter
 					ActionKeys.VIEW)) {
 
 				return true;
+			}
+		}
+		catch (NoSuchResourceActionException noSuchResourceActionException) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"No company-scoped resource permissions found for " +
+						"className: " + className,
+					noSuchResourceActionException);
 			}
 		}
 		catch (PortalException portalException) {

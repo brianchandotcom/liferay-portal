@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -82,30 +84,67 @@ public class ObjectDefinitionSampleGenerator {
 					_createObjectField("able", "Long"),
 					_createObjectField("baker", "Boolean"),
 					_createObjectField("dog", "Date"),
-					_createObjectField("easy", "String")));
+					_createObjectField("easy", "String"),
+					_createObjectField("easykey", "String", true, true, null),
+					_createObjectField(
+						"easyen", "String", true, false, "en_US"),
+					_createObjectField(
+						"notindexed", "String", false, false, null),
+					_createObjectField("height", "Double"),
+					_createObjectField("numberOfBooksWritten", "Integer"),
+					_createObjectField("portrait", "Blob"),
+					_createObjectField("speed", "BigDecimal")));
 
 		for (int i = 0; i < 100; i++) {
+			String blob = "In the beginning" + i;
+
 			_objectEntryLocalService.addObjectEntry(
 				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"able", 10 + i
 				).put(
-					"baker", true
+					"baker", (i % 2) == 0
 				).put(
 					"dog", new Date()
 				).put(
 					"easy",
 					"The quick brown fox jumps over the lazy dog. " + i + "!"
+				).put(
+					"easyen",
+					"The english brown fox trusted the lazy dog. " + i + "!"
+				).put(
+					"easykey", "test" + i
+				).put(
+					"height", 180.5D + i
+				).put(
+					"notindexed",
+					"The unsearchable brown fox jumps over the lazy dog. " + i
+				).put(
+					"numberOfBooksWritten", 5 + i
+				).put(
+					"portrait", blob.getBytes()
+				).put(
+					"speed", BigDecimal.valueOf(45L + i)
 				).build(),
 				new ServiceContext());
 		}
 	}
 
 	private ObjectField _createObjectField(String name, String type) {
+		return _createObjectField(name, type, true, false, null);
+	}
+
+	private ObjectField _createObjectField(
+		String name, String type, boolean indexed, boolean indexedAsKeyword,
+		String locale) {
+
 		ObjectField objectField = _objectFieldLocalService.createObjectField(0);
 
 		objectField.setName(name);
 		objectField.setType(type);
+		objectField.setIndexed(indexed);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
+		objectField.setLocale(locale);
 
 		return objectField;
 	}

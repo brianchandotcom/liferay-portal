@@ -17,6 +17,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
 import {CollectionItemContextProvider} from '../../contexts/CollectionItemContext';
+import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import CollectionService from '../../services/CollectionService';
@@ -147,9 +148,13 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	const [collection, setCollection] = useState(DEFAULT_COLLECTION);
 
+	const displayPagePreviewItemData = useDisplayPagePreviewItem()?.data ?? {};
+
 	useEffect(() => {
 		if (collectionConfig.collection) {
 			CollectionService.getCollectionField({
+				classNameId: displayPagePreviewItemData.classNameId,
+				classPK: displayPagePreviewItemData.classPK,
 				collection: collectionConfig.collection,
 				languageId,
 				listItemStyle: collectionConfig.listItemStyle || null,
@@ -172,6 +177,8 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 				});
 		}
 	}, [
+		displayPagePreviewItemData.classNameId,
+		displayPagePreviewItemData.classPK,
 		collectionConfig.collection,
 		collectionConfig.listItemStyle,
 		collectionConfig.listStyle,

@@ -25,6 +25,8 @@ export default {
 	 * @param {function} options.onNetworkStatus
 	 */
 	getCollectionField({
+		classNameId,
+		classPK,
 		collection,
 		languageId,
 		listItemStyle,
@@ -37,6 +39,8 @@ export default {
 			config.getCollectionFieldURL,
 			{
 				body: {
+					classNameId,
+					classPK,
 					languageId,
 					layoutObjectReference: JSON.stringify(collection),
 					listItemStyle,

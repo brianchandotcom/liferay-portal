@@ -42,7 +42,7 @@ function segmentViolationsByNode(
 	const prevNodes = prevViolations.reduce<Record<string, Violations>>(
 		(prev, current) => {
 
-			// Revalidation if the target exists on the screen
+			// Revalidation if the target exists on the DOM
 
 			if (document.querySelector(current.target)) {
 				prev[current.target] = current;

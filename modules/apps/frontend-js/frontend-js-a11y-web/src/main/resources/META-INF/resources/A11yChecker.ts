@@ -222,8 +222,17 @@ class Scheduler<T> {
 }
 
 type Mutation = {
-	attributes: Record<string, string>;
-	nodeName: string;
+	/**
+	 * Attributes are the attributes of a node. The array is considered a
+	 * conditional `or`, the same for the values of an attribute.
+	 */
+	attributes: Record<string, Array<string>>;
+
+	/**
+	 * NodeNames is an array of node names. This array is considered as a
+	 * conditional `or`.
+	 */
+	nodeNames: Array<string>;
 };
 
 export interface A11yCheckerOptions {
@@ -382,7 +391,7 @@ export class A11yChecker {
 
 function hasValidMutation(record: MutationRecord, mutation: Mutation) {
 	const {addedNodes, removedNodes, target} = record;
-	const {attributes, nodeName} = mutation;
+	const {attributes, nodeNames} = mutation;
 
 	// Is a removal or added mutation with type childList
 
@@ -390,7 +399,7 @@ function hasValidMutation(record: MutationRecord, mutation: Mutation) {
 		const [node] = removedNodes.length > 0 ? removedNodes : addedNodes;
 
 		return (
-			node.nodeName === nodeName &&
+			nodeNames.includes(node.nodeName) &&
 			compareAttributes(node as Element, attributes)
 		);
 	}
@@ -399,10 +408,15 @@ function hasValidMutation(record: MutationRecord, mutation: Mutation) {
 	}
 }
 
-function compareAttributes(node: Element, attributes: Record<string, string>) {
+function compareAttributes(
+	node: Element,
+	attributes: Record<string, Array<string>>
+) {
 	const attributesNames = Object.keys(attributes);
 
-	return attributesNames.every((name) =>
-		node.getAttribute(name)?.includes(attributes[name])
-	);
+	return attributesNames.some((name) => {
+		const key = node.getAttribute(name);
+
+		return attributes[name].some((value) => key?.includes(value));
+	});
 }

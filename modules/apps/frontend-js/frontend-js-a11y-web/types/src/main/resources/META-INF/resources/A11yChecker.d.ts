@@ -20,8 +20,8 @@ declare global {
 	}
 }
 declare type Mutation = {
-	attributes: Record<string, string>;
-	nodeName: string;
+	attributes: Record<string, Array<string>>;
+	nodeNames: Array<string>;
 };
 export interface A11yCheckerOptions {
 

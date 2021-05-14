@@ -255,7 +255,9 @@ definition {
 				pageName = "Asset Publisher Page",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.configureAssetLinkBehaviorPG(disableConfiguration = "Show Add Content Button");
+			AssetPublisherPortlet.configureAssetLinkBehaviorPG(
+				assetLinkBehavior = "View in Context",
+				disableConfiguration = "Show Add Content Button");
 		}
 
 		task ("View the plus icon is hidden in Asset Publisher topper") {

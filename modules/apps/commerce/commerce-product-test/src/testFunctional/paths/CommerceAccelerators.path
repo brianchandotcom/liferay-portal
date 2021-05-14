@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_RESULT_OPTIONS</td>
+	<td>//section[contains(@id,'CPSearchResultsPortlet')]//div[@class='dropdown lfr-icon-menu portlet-options']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD</td>
 	<td>//p[@title='${key_productName}']//../..//input[(@class='form-control quantity-selector')]</td>
 	<td></td>

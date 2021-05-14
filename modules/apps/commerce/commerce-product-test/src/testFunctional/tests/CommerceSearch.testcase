@@ -628,12 +628,37 @@ definition {
 	}
 
 	@description = "COMMERCE-6146. As a buyer, I want to change the number of items to display for every page from Search Results widget configuration"
-	@ignore = "true"
 	@priority = "3"
 	test SearchResultsWidgetEditNumberOfItemsToDisplayFromConfiguration {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchResultsWidgetEditNumberOfItemsToDisplayFromConfiguration";
 
-		// TODO COMMERCE-6146 SearchResultsWidgetEditNumberOfItemsToDisplayFromConfiguration pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		MouseOver(locator1 = "CommerceEntry#PAGINATION_BAR");
+
+		Click.clickNoWaitForVisible(locator1 = "CommerceAccelerators#SEARCH_RESULT_OPTIONS");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Navigator.gotoNavTab(navTab = "Pagination");
+
+		Type(
+			key_fieldLabel = "Number of Items to Display",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = "4");
+
+		Button.clickSave();
+
+		IFrame.closeFrame();
+
+		AssertTextEquals(
+			locator1 = "Dropdown#ENTRIES",
+			value1 = "4 Entries Per Page");
 	}
 
 	@description = "COMMERCE-6663. I want to be able to use ADT to render Search Results widget and I want to be able to select a Display Template and see it applied to the widget"

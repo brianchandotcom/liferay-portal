@@ -352,13 +352,23 @@ definition {
 
 		Form.gotoElementSetsTab();
 
-		var key_fieldLocation = "${fieldPositionNumber}";
+		if (isSet(fieldPositionNumber)) {
+			var key_fieldPositionNumber = "${fieldPositionNumber}";
+		}
+		else {
+			var key_fieldPositionNumber = "0";
+		}
 
 		var key_fieldType = "${elementSetTitle}";
 
-		ScrollBy(value1 = "0, 320");
+		if (isSet(formPageNumber)) {
+			var key_formPageNumber = "${formPageNumber}";
+		}
+		else {
+			var key_formPageNumber = "0";
+		}
 
-		DragAndDrop.dragAndDropPortletToObject(
+		DragAndDrop.javaScriptDragAndDropToObject(
 			locator1 = "Form#ADD_FIELD_TYPE",
 			locator2 = "Form#ADD_FIELD_POSITION",
 			value1 = "${elementSetTitle}");

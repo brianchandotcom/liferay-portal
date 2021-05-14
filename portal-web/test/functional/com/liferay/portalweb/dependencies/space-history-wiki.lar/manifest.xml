@@ -5,7 +5,7 @@
 	<missing-references/>
 	<portlet portlet-id="com_liferay_wiki_web_portlet_WikiAdminPortlet" layout-id="1" path="/group/20125/portlet/com_liferay_wiki_web_portlet_WikiAdminPortlet/1/portlet.xml" portlet-data="true" schema-version="4.0.0" portlet-configuration="setup"/>
 	<manifest-summary>
-		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiPage" addition-count="9"/>
-		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiNode" addition-count="2"/>
+		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiPage" addition-count="8"/>
+		<staged-model manifest-summary-key="com.liferay.wiki.model.WikiNode" addition-count="1"/>
 	</manifest-summary>
 </root>

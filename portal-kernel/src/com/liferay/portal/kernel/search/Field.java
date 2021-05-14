@@ -231,6 +231,10 @@ public class Field implements Serializable {
 			return scoreFieldName;
 		}
 
+		if (fieldName.equals(Field.ENTRY_CLASS_PK)) {
+			return fieldName;
+		}
+
 		return getSortableFieldName(fieldName);
 	}
 

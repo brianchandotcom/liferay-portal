@@ -80,7 +80,7 @@ definition {
 
         Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
 
-        Click(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_TOGGLE");
+        Check.checkToggleSwitch(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_TOGGLE");
 
         Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 

@@ -894,12 +894,109 @@ definition {
 	}
 
 	@description = "COMMERCE-6342. As a buyer, I want to see the barred list price and the sale price on the mini-cart item and I want to be able to see tier price in the mini-cart summary"
-	@ignore = "true"
 	@priority = "3"
 	test ViewMiniCartItemWithTierPrice {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartItemWithTierPrice";
 
-		// TODO COMMERCE-6342 ViewMiniCartItemWithTierPrice pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		Type(
+			key_title = "Entries",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "ABS Sensor");
+
+		Button.clickSubmitButton();
+
+		var sku = "MIN93015";
+
+		CommerceNavigator.gotoEntry(entryName = "${sku}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			key_radioOption = "Tiered Pricing",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Button.clickSave();
+
+		Refresh();
+
+		Type(
+			key_title = "Entries",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "ABS Sensor");
+
+		Button.clickSubmitButton();
+
+		CommerceNavigator.gotoEntry(entryName = "${sku}");
+
+		CommercePriceLists.createPriceListPriceTiers(
+			key_pricingType = "Tiered Pricing",
+			key_quantity = "2",
+			key_value = "45");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertTextEquals(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ 50.00");
+
+		Type(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+			value1 = "2");
+
+		AssertTextEquals(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ 47.50");
+
+		AssertTextEquals(
+			key_summaryTableItem = "Quantity",
+			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+			value1 = "2");
+
+		AssertTextEquals(
+			key_summaryTableItem = "Subtotal",
+			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+			value1 = "$ 95.00");
+
+		AssertTextEquals(
+			key_summaryTableItem = "Order Discount",
+			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_ITEM",
+			value1 = "$ 0.00");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#MINI_CART_SUMMARY_TABLE_TOTAL",
+			value1 = "$ 95.00");
 	}
 
 }

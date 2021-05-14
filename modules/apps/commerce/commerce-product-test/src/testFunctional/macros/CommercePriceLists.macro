@@ -23,6 +23,40 @@ definition {
 		Button.click(button = "Submit");
 	}
 
+	macro createPriceListPriceTiers {
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			key_radioOption = "${key_pricingType}",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		if (isSet(key_quantity)) {
+			Type(
+				key_text = "Quantity",
+				locator1 = "TextInput#ANY",
+				value1 = "${key_quantity}");
+		}
+
+		if (isSet(key_value)) {
+			Type(
+				key_text = "Tier Price",
+				locator1 = "TextInput#ANY",
+				value1 = "${key_value}");
+		}
+
+		Click(locator1 = "Button#SUBMIT");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+	}
+
 	macro editPriceListEntryPrice {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

@@ -77,10 +77,10 @@ public class DLFileEntryLockListenerTest {
 			() -> testWithCancelCheckOutAsPolicy(
 				() -> {
 					FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-						TestPropsValues.getUserId(), _group.getGroupId(),
+						null, TestPropsValues.getUserId(), _group.getGroupId(),
 						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 						RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-						TestDataConstants.TEST_BYTE_ARRAY,
+						TestDataConstants.TEST_BYTE_ARRAY, null, null,
 						ServiceContextTestUtil.getServiceContext(
 							_group, TestPropsValues.getUserId()));
 
@@ -110,10 +110,10 @@ public class DLFileEntryLockListenerTest {
 			() -> testWithCheckInAsPolicy(
 				() -> {
 					FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-						TestPropsValues.getUserId(), _group.getGroupId(),
+						null, TestPropsValues.getUserId(), _group.getGroupId(),
 						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 						RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-						TestDataConstants.TEST_BYTE_ARRAY,
+						TestDataConstants.TEST_BYTE_ARRAY, null, null,
 						ServiceContextTestUtil.getServiceContext(
 							_group, TestPropsValues.getUserId()));
 

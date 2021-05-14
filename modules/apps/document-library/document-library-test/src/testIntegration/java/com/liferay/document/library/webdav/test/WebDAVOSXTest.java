@@ -226,10 +226,10 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 					TestPropsValues.getGroupId());
 
 			fileEntry = _dlAppLocalService.addFileEntry(
-				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 				folder.getFolderId(), _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_TITLE_2,
-				StringPool.BLANK, StringPool.BLANK, _testFileBytes,
+				StringPool.BLANK, StringPool.BLANK, _testFileBytes, null, null,
 				serviceContext);
 
 			lock(HttpServletResponse.SC_OK, _TEST_FILE_NAME_2);
@@ -377,11 +377,11 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				getFolderName());
 
 			fileEntry = _dlAppLocalService.addFileEntry(
-				TestPropsValues.getUserId(), group.getGroupId(),
+				null, TestPropsValues.getUserId(), group.getGroupId(),
 				folder.getFolderId(), _TEST_FILE_NAME_ILLEGAL_CHARACTERS,
 				ContentTypes.APPLICATION_MSWORD,
 				_TEST_FILE_NAME_ILLEGAL_CHARACTERS, StringPool.BLANK,
-				StringPool.BLANK, _testFileBytes,
+				StringPool.BLANK, _testFileBytes, null, null,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 			assertCode(
@@ -707,10 +707,10 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				expectedDDDMFormValues);
 
 			fileEntry = _dlAppLocalService.addFileEntry(
-				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 				folder.getFolderId(), _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_NAME_2,
-				StringPool.BLANK, StringPool.BLANK, _testFileBytes,
+				StringPool.BLANK, StringPool.BLANK, _testFileBytes, null, null,
 				serviceContext);
 
 			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);
@@ -794,10 +794,10 @@ public class WebDAVOSXTest extends BaseWebDAVTestCase {
 				expectedDDDMFormValues);
 
 			fileEntry = _dlAppLocalService.addFileEntry(
-				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+				null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 				folder.getFolderId(), _TEST_FILE_NAME_2,
 				ContentTypes.APPLICATION_TEXT, _TEST_FILE_NAME_2,
-				StringPool.BLANK, StringPool.BLANK, _testFileBytes,
+				StringPool.BLANK, StringPool.BLANK, _testFileBytes, null, null,
 				serviceContext);
 
 			servicePut(_TEST_FILE_NAME_2, _testDeltaBytes);

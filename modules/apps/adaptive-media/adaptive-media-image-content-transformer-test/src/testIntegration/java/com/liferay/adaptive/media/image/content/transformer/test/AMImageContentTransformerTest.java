@@ -112,11 +112,11 @@ public class AMImageContentTransformerTest {
 		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(AMImageContentTransformerTest.class, "image.jpg"),
-			serviceContext);
+			null, null, serviceContext);
 	}
 
 	private AMImageConfigurationEntry _amImageConfigurationEntry;

@@ -117,9 +117,10 @@ public class DLFileVersionTest {
 		_serviceContext = getServiceContext();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_group.getGroupId(), _parentFolder.getFolderId(), _SOURCE_FILE_NAME,
-			ContentTypes.APPLICATION_OCTET_STREAM, _TITLE, StringPool.BLANK,
-			StringPool.BLANK, _DATA_VERSION_1, _serviceContext);
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
+			_SOURCE_FILE_NAME, ContentTypes.APPLICATION_OCTET_STREAM, _TITLE,
+			StringPool.BLANK, StringPool.BLANK, _DATA_VERSION_1, null, null,
+			_serviceContext);
 
 		_fileVersion = DLFileVersionLocalServiceUtil.getFileVersion(
 			fileEntry.getFileEntryId(), DLFileEntryConstants.VERSION_DEFAULT);

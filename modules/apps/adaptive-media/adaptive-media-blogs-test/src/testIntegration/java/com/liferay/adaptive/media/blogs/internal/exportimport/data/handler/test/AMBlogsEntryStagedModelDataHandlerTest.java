@@ -209,10 +209,11 @@ public class AMBlogsEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(getClass(), "image.jpg"), serviceContext);
+			FileUtil.getBytes(getClass(), "image.jpg"), null, null,
+			serviceContext);
 	}
 
 	private String _getDynamicContent(FileEntry... fileEntries)

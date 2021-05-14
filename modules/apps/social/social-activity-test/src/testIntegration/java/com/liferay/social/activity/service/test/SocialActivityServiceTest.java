@@ -180,10 +180,10 @@ public class SocialActivityServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 	}
 
 	protected void deleteGuestPermission(FileEntry fileEntry) throws Exception {

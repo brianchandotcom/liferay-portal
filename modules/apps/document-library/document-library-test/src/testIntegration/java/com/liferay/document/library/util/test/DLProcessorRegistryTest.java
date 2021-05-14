@@ -138,11 +138,11 @@ public class DLProcessorRegistryTest {
 	@Test
 	public void testCleanUp() throws PortalException {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlProcessorRegistry.cleanUp(fileEntry);
@@ -153,11 +153,11 @@ public class DLProcessorRegistryTest {
 	@Test
 	public void testCleanUpFileVersion() throws PortalException {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlProcessorRegistry.cleanUp(fileEntry.getFileVersion());
@@ -168,11 +168,11 @@ public class DLProcessorRegistryTest {
 	@Test
 	public void testTrigger() throws PortalException {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		_dlProcessorRegistry.trigger(fileEntry, fileEntry.getFileVersion());
@@ -183,11 +183,11 @@ public class DLProcessorRegistryTest {
 	@Test
 	public void testTriggerAfterDeleteTheFile() throws PortalException {
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		FileVersion fileVersion = fileEntry.getFileVersion();

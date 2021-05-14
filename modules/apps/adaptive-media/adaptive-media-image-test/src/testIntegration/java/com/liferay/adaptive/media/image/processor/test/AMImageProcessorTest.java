@@ -192,21 +192,21 @@ public class AMImageProcessorTest {
 		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), serviceContext);
+			_getImageBytes(), null, null, serviceContext);
 	}
 
 	private FileEntry _addNonimageFileEntry(ServiceContext serviceContext)
 		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
-			ContentTypes.APPLICATION_OCTET_STREAM, _getNonimageBytes(),
-			serviceContext);
+			ContentTypes.APPLICATION_OCTET_STREAM, _getNonimageBytes(), null,
+			null, serviceContext);
 	}
 
 	private void _addTestVariant() throws Exception {

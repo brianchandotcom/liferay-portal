@@ -62,9 +62,9 @@ public class DLSubscriptionRootContainerModelTest
 			serviceContext, Constants.ADD);
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			userId, group.getGroupId(), containerModelId,
+			null, userId, group.getGroupId(), containerModelId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
 		return fileEntry.getFileEntryId();
 	}

@@ -93,11 +93,11 @@ public class FileEntryOpenNLPDocumentAssetAutoTaggerTest
 		byte[] bytes = text.getBytes();
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), mimeType,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(bytes), bytes.length,
+			new ByteArrayInputStream(bytes), bytes.length, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		return assetEntryLocalService.fetchEntry(

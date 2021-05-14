@@ -193,9 +193,9 @@ public class WebServerRangeTest extends BaseWebServerTestCase {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), fileName, ContentTypes.TEXT_PLAIN,
-			_SAMPLE_DATA.getBytes(), serviceContext);
+			_SAMPLE_DATA.getBytes(), null, null, serviceContext);
 
 		String path = StringBundler.concat(
 			fileEntry.getGroupId(), "/", fileEntry.getFolderId(), "/",

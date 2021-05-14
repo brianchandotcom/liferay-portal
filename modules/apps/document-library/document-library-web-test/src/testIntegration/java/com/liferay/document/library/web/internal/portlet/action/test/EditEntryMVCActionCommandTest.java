@@ -83,10 +83,10 @@ public class EditEntryMVCActionCommandTest {
 	@Test
 	public void testCheckIn() throws PortalException, PortletException {
 		FileEntry initialFileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null,
-			ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
+			null, ServiceContextTestUtil.getServiceContext());
 
 		_dlAppService.checkOutFileEntry(
 			initialFileEntry.getFileEntryId(),
@@ -135,10 +135,10 @@ public class EditEntryMVCActionCommandTest {
 	@Test
 	public void testCheckInAll() throws PortalException, PortletException {
 		FileEntry initialFileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null,
-			ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
+			null, ServiceContextTestUtil.getServiceContext());
 
 		_dlAppService.checkOutFileEntry(
 			initialFileEntry.getFileEntryId(),
@@ -184,10 +184,10 @@ public class EditEntryMVCActionCommandTest {
 	@Test
 	public void testCheckOut() throws PortalException, PortletException {
 		FileEntry initialFileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null,
-			ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
+			null, ServiceContextTestUtil.getServiceContext());
 
 		Map<String, String[]> parameters = Stream.of(
 			new AbstractMap.SimpleEntry<>(
@@ -225,10 +225,10 @@ public class EditEntryMVCActionCommandTest {
 	@Test
 	public void testCheckOutAll() throws PortalException, PortletException {
 		FileEntry initialFileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null,
-			ServiceContextTestUtil.getServiceContext());
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN, null, null,
+			null, ServiceContextTestUtil.getServiceContext());
 
 		Map<String, String[]> parameters = Stream.of(
 			new AbstractMap.SimpleEntry<>(

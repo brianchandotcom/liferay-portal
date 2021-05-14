@@ -464,9 +464,9 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), folderId,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 	}
 
 	protected Map<String, DDMFormValues> getDDMFormValuesMap(

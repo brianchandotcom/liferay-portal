@@ -380,8 +380,9 @@ public class DLFolderFinderTest {
 				groupId, TestPropsValues.getUserId());
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
-			mimeType, TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			null, TestPropsValues.getUserId(), groupId, folderId,
+			sourceFileName, mimeType, TestDataConstants.TEST_BYTE_ARRAY, null,
+			null, serviceContext);
 	}
 
 	private FileShortcut _fileShortcut;

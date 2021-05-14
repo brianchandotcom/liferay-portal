@@ -92,10 +92,10 @@ public class DLAMImageCounterTest {
 				_group1, _user1.getUserId());
 
 		_dlAppLocalService.addFileEntry(
-			_user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), serviceContext);
+			_getImageBytes(), null, null, serviceContext);
 
 		_portletFileRepository.addPortletFileEntry(
 			_group1.getGroupId(), _user1.getUserId(),
@@ -128,10 +128,10 @@ public class DLAMImageCounterTest {
 				_group1, _user1.getUserId());
 
 		_dlAppLocalService.addFileEntry(
-			_user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), serviceContext);
+			_getImageBytes(), null, null, serviceContext);
 
 		_portletFileRepository.addPortletFileEntry(
 			_group1.getGroupId(), _user1.getUserId(),
@@ -164,10 +164,10 @@ public class DLAMImageCounterTest {
 				_group1, _user1.getUserId());
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			_user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), serviceContext);
+			_getImageBytes(), null, null, serviceContext);
 
 		Assert.assertEquals(
 			1,
@@ -198,17 +198,17 @@ public class DLAMImageCounterTest {
 				_group1, _user1.getUserId());
 
 		_dlAppLocalService.addFileEntry(
-			_user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), serviceContext);
+			_getImageBytes(), null, null, serviceContext);
 
 		_dlAppLocalService.addFileEntry(
-			_user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
 		Assert.assertEquals(
 			1,

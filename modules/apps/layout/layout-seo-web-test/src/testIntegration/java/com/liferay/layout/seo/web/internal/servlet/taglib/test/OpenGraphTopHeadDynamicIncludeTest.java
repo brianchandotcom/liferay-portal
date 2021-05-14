@@ -916,11 +916,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		throws Exception {
 
 		return _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName),
-			serviceContext);
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
+			null, serviceContext);
 	}
 
 	private void _assertAlternateLinkTag(Document document, Set<Locale> locales)

@@ -239,10 +239,10 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 				group.getGroupId(), user.getUserId());
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			user.getUserId(), group.getGroupId(),
+			null, user.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
 		DLTrashLocalServiceUtil.moveFileEntryToTrash(
 			user.getUserId(), fileEntry.getRepositoryId(),

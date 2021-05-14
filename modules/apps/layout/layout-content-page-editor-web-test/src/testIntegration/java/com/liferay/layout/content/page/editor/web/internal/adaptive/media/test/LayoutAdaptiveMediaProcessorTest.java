@@ -245,10 +245,10 @@ public class LayoutAdaptiveMediaProcessorTest {
 				"BASIC_COMPONENT-image");
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			FileUtil.getBytes(getClass(), "dependencies/image.jpg"),
+			FileUtil.getBytes(getClass(), "dependencies/image.jpg"), null, null,
 			_serviceContext);
 
 		JSONObject editableValuesJSONObject = JSONUtil.put(

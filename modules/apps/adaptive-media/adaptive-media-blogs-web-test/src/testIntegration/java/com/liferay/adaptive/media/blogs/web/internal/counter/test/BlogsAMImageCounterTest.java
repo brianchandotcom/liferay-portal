@@ -86,10 +86,10 @@ public class BlogsAMImageCounterTest {
 				_group1, _user1.getUserId());
 
 		_dlAppLocalService.addFileEntry(
-			_user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), serviceContext);
+			_getImageBytes(), null, null, serviceContext);
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			_user1.getUserId(), RandomTestUtil.randomString(),
@@ -122,10 +122,10 @@ public class BlogsAMImageCounterTest {
 				_group1, _user1.getUserId());
 
 		_dlAppLocalService.addFileEntry(
-			_user1.getUserId(), _group1.getGroupId(),
+			null, _user1.getUserId(), _group1.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), serviceContext);
+			_getImageBytes(), null, null, serviceContext);
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			_user1.getUserId(), RandomTestUtil.randomString(),

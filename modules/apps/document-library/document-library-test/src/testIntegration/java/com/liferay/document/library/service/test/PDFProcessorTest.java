@@ -115,12 +115,12 @@ public class PDFProcessorTest {
 		AtomicBoolean cleanUp = registerCleanUpDLProcessor();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.checkOutFileEntry(
@@ -136,12 +136,12 @@ public class PDFProcessorTest {
 		AtomicBoolean cleanUp = registerCleanUpDLProcessor();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
@@ -154,12 +154,12 @@ public class PDFProcessorTest {
 		AtomicBoolean cleanUp = registerCleanUpDLProcessor();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.updateFileEntry(
@@ -181,12 +181,12 @@ public class PDFProcessorTest {
 		AtomicBoolean cleanUp = registerCleanUpDLProcessor();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		byte[] bytes = FileUtil.getBytes(getClass(), "dependencies/test.pdf");
@@ -209,12 +209,12 @@ public class PDFProcessorTest {
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.checkInFileEntry(
@@ -230,12 +230,12 @@ public class PDFProcessorTest {
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.checkOutFileEntry(
@@ -250,12 +250,12 @@ public class PDFProcessorTest {
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		String version = fileEntry.getVersion();
@@ -284,12 +284,12 @@ public class PDFProcessorTest {
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.updateFileEntryAndCheckIn(
@@ -309,12 +309,12 @@ public class PDFProcessorTest {
 			EventType.COPY_PREVIOUS);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.updateFileEntry(
@@ -332,12 +332,12 @@ public class PDFProcessorTest {
 			EventType.GENERATE_NEW);
 
 		DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		Assert.assertEquals(1, count.get());
@@ -349,12 +349,12 @@ public class PDFProcessorTest {
 			EventType.GENERATE_NEW);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.checkOutFileEntry(
@@ -374,12 +374,12 @@ public class PDFProcessorTest {
 			EventType.GENERATE_NEW);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		byte[] bytes = FileUtil.getBytes(getClass(), "dependencies/test.pdf");
@@ -404,12 +404,12 @@ public class PDFProcessorTest {
 			EventType.GENERATE_NEW);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_serviceContext.getScopeGroupId(),
+			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
 		DLAppServiceUtil.updateFileEntry(

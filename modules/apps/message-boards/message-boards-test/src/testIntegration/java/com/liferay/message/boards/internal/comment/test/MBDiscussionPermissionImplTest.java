@@ -79,10 +79,10 @@ public class MBDiscussionPermissionImplTest {
 		_siteUser2 = UserTestUtil.addUser(_group.getGroupId());
 
 		_fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			_user.getUserId(), _group.getGroupId(),
+			null, _user.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			null,
+			null, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 

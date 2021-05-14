@@ -137,10 +137,11 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, 0, serviceContext);
+			StringUtil.randomString(), null, 0, null, null, serviceContext);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

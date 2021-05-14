@@ -116,11 +116,11 @@ public class FileEntryStagedModelDataHandlerTest
 					liveGroup.getGroupId(), TestPropsValues.getUserId());
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), liveGroup.getGroupId(),
+				null, TestPropsValues.getUserId(), liveGroup.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 				ContentTypes.APPLICATION_PDF,
-				FileUtil.getBytes(getClass(), "dependencies/" + fileName),
-				serviceContext);
+				FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
+				null, serviceContext);
 
 			DLFileEntryLocalServiceUtil.checkOutFileEntry(
 				TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
@@ -148,11 +148,11 @@ public class FileEntryStagedModelDataHandlerTest
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.APPLICATION_PDF,
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName),
-			serviceContext);
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
+			null, serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -198,11 +198,11 @@ public class FileEntryStagedModelDataHandlerTest
 				"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), liveGroup.getGroupId(),
+				null, TestPropsValues.getUserId(), liveGroup.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 				ContentTypes.APPLICATION_PDF,
-				FileUtil.getBytes(getClass(), "dependencies/" + fileName),
-				serviceContext);
+				FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
+				null, serviceContext);
 
 			DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -295,9 +295,9 @@ public class FileEntryStagedModelDataHandlerTest
 			serviceContext);
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), repository.getRepositoryId(),
+			null, TestPropsValues.getUserId(), repository.getRepositoryId(),
 			folder.getFolderId(), "test.txt", "text/plain", new byte[] {0, 1},
-			serviceContext);
+			null, null, serviceContext);
 
 		exportImportStagedModel(fileEntry);
 
@@ -443,10 +443,10 @@ public class FileEntryStagedModelDataHandlerTest
 			serviceContext, dlFileEntryType.getFileEntryTypeId());
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-			serviceContext);
+			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
+			null, serviceContext);
 	}
 
 	@Override

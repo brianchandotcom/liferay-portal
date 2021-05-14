@@ -214,9 +214,9 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName,
+			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-			StringPool.BLANK, null, 0, serviceContext);
+			StringPool.BLANK, null, 0, null, null, serviceContext);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				DLAppServiceTestUtil.getConfigurationTemporarySwapper(

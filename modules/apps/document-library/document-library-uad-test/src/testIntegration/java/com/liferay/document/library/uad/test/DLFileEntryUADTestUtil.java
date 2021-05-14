@@ -69,10 +69,10 @@ public class DLFileEntryUADTestUtil {
 		InputStream inputStream = new ByteArrayInputStream(bytes);
 
 		FileEntry fileEntry = dlAppLocalService.addFileEntry(
-			userId, groupId, dlFolderId, RandomTestUtil.randomString(),
+			null, userId, groupId, dlFolderId, RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length,
-			serviceContext);
+			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
+			null, serviceContext);
 
 		return dlFileEntryLocalService.getFileEntry(fileEntry.getFileEntryId());
 	}

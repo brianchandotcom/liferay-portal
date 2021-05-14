@@ -63,11 +63,12 @@ public class FileEntryInfoItemFieldValuesProviderTest {
 	@Test
 	public void testGetInfoItemFieldValues() throws PortalException {
 		FileEntry fileEntry = _dlAppService.addFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(),
 			MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, (byte[])null,
+			StringPool.BLANK, (byte[])null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		InfoItemFieldValues infoItemFieldValues =

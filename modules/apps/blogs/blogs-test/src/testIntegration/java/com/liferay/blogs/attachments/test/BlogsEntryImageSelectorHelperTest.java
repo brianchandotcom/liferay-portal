@@ -123,10 +123,10 @@ public class BlogsEntryImageSelectorHelperTest {
 			byte[] bytes = FileUtil.getBytes(inputStream);
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _IMAGE_TITLE,
 				MimeTypesUtil.getContentType(_IMAGE_TITLE), "image",
-				StringPool.BLANK, StringPool.BLANK, bytes,
+				StringPool.BLANK, StringPool.BLANK, bytes, null, null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			Object blogsEntryImageSelectorHelper = _constructor.newInstance(
@@ -179,11 +179,11 @@ public class BlogsEntryImageSelectorHelperTest {
 
 		try (InputStream inputStream = getInputStream()) {
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _IMAGE_TITLE,
 				MimeTypesUtil.getContentType(_IMAGE_TITLE), "image",
 				StringPool.BLANK, StringPool.BLANK,
-				FileUtil.getBytes(inputStream),
+				FileUtil.getBytes(inputStream), null, null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 			Object blogsEntryImageSelectorHelper = _constructor.newInstance(

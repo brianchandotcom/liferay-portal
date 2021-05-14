@@ -253,9 +253,9 @@ public class BlogsAMImageOptimizerTest {
 			ServiceContextTestUtil.getServiceContext(groupId, userId);
 
 		_dlAppLocalService.addFileEntry(
-			userId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, userId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
-			_getImageBytes(), serviceContext);
+			_getImageBytes(), null, null, serviceContext);
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			userId, RandomTestUtil.randomString(),

@@ -729,12 +729,12 @@ public class AMImageDeleteConfigurationTest
 
 	private FileEntry _addFileEntry() throws Exception {
 		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
 				AMImageDeleteConfigurationTest.class, "image.jpg"),
-			new ServiceContext());
+			null, null, new ServiceContext());
 	}
 
 	@Inject

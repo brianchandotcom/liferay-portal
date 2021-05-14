@@ -200,8 +200,8 @@ public class DocumentLibraryConvertProcessTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		return _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
-			fileName, mimeType, bytes, serviceContext);
+			null, TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			fileName, mimeType, bytes, null, null, serviceContext);
 	}
 
 	protected Image addImage() throws Exception {

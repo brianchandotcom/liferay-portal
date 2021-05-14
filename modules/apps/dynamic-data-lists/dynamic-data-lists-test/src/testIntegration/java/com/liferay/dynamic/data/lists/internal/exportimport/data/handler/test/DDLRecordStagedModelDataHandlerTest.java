@@ -292,11 +292,11 @@ public class DDLRecordStagedModelDataHandlerTest
 				stagingGroup.getGroupId(), TestPropsValues.getUserId());
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_PLAIN,
-			FileUtil.getBytes(getClass(), "dependencies/" + fileName),
-			serviceContext);
+			FileUtil.getBytes(getClass(), "dependencies/" + fileName), null,
+			null, serviceContext);
 
 		DDMFormFieldValue ddmFormFieldValue =
 			createEmptyDocumentLibraryDDMFormFieldValue(locale, fieldName);

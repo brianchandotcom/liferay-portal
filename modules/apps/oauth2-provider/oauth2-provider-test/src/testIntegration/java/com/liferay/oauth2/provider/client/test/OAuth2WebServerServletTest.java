@@ -111,8 +111,9 @@ public class OAuth2WebServerServletTest extends BaseClientTestCase {
 					dlAppLocalServiceServiceReference);
 
 				FileEntry fileEntry = dlAppLocalService.addFileEntry(
-					user.getUserId(), user.getGroupId(), 0, "test-file.txt",
-					"text/plain", _TEST_FILE_CONTENT.getBytes(),
+					null, user.getUserId(), user.getGroupId(), 0,
+					"test-file.txt", "text/plain",
+					_TEST_FILE_CONTENT.getBytes(), null, null,
 					new ServiceContext());
 
 				autoCloseables.add(

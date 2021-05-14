@@ -1281,9 +1281,9 @@ public class DLFileEntryFinderTest {
 		DLAppTestUtil.populateServiceContext(serviceContext, fileEntryTypeId);
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			userId, repositoryId, folderId, fileName, contentType,
+			null, userId, repositoryId, folderId, fileName, contentType,
 			fileName.concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
-			(byte[])null, serviceContext);
+			(byte[])null, null, null, serviceContext);
 	}
 
 	protected int doCountBy_G_U_F_M(

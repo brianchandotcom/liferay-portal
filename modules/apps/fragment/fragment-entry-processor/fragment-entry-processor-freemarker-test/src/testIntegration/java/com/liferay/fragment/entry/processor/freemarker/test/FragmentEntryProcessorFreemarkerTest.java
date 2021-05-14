@@ -258,13 +258,13 @@ public class FragmentEntryProcessorFreemarkerTest {
 		String fileName = RandomTestUtil.randomString() + ".jpg";
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.IMAGE_JPEG,
 			FileUtil.getBytes(
 				FragmentEntryProcessorFreemarkerTest.class,
 				"dependencies/image.jpg"),
-			new ServiceContext());
+			null, null, new ServiceContext());
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
 			"fragment_entry_with_configuration_itemselector_file_entry.html",

@@ -236,9 +236,10 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			file = FileUtil.createTempFile(inputStream);
 
 			DLAppLocalServiceUtil.addFileEntry(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				null, serviceContext.getUserId(),
+				serviceContext.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
-				fileName, StringPool.BLANK, StringPool.BLANK, file,
+				fileName, StringPool.BLANK, StringPool.BLANK, file, null, null,
 				serviceContext);
 		}
 		finally {
@@ -252,11 +253,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Test
 	public void testSearchTreePath() throws Exception {
 		DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			"Document", StringUtil.randomString(), StringUtil.randomString(),
-			new byte[0],
+			new byte[0], null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
@@ -266,10 +267,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			null, TestPropsValues.getUserId(), group.getGroupId(),
 			folder.getFolderId(), StringUtil.randomString(),
 			ContentTypes.APPLICATION_OCTET_STREAM, "Document",
 			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
+			null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		SearchContext searchContext = SearchContextTestUtil.getSearchContext(
@@ -333,11 +335,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			ddmFormValues);
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			content.getBytes(), serviceContext);
+			content.getBytes(), null, null, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}

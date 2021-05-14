@@ -629,11 +629,11 @@ public class DepotPermissionCheckerWrapperTest {
 
 	private FileEntry _addFileEntry(DepotEntry depotEntry) throws Exception {
 		return _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), depotEntry.getGroupId(),
+			null, TestPropsValues.getUserId(), depotEntry.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), MimeTypes.OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0],
+			StringUtil.randomString(), new byte[0], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

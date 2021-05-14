@@ -191,10 +191,12 @@ public class DLVideoFFMPEGVideoConverterTest {
 
 	private FileEntry _createVideoFileEntry(String fileName) throws Exception {
 		return DLAppServiceUtil.addFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			fileName, MimeTypesUtil.getContentType(fileName), "video",
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			MimeTypesUtil.getContentType(fileName), "video",
 			StringUtil.randomString(), StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+			FileUtil.getBytes(getClass(), fileName), null, null,
+			_serviceContext);
 	}
 
 	private void _withDLVideoFFMPEGVideoConverterEnabled(

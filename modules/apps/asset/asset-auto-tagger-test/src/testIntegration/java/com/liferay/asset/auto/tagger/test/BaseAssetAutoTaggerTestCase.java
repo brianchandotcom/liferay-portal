@@ -84,10 +84,11 @@ public abstract class BaseAssetAutoTaggerTestCase {
 		throws PortalException {
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0], serviceContext);
+			StringUtil.randomString(), new byte[0], null, null, serviceContext);
 
 		return AssetEntryLocalServiceUtil.getEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());

@@ -105,10 +105,10 @@ public class DLFolderServiceTest {
 			new ArrayList<>();
 
 		FileEntry fileEntry1 = _dlAppService.addFileEntry(
-			_group.getGroupId(), _parentFolder.getFolderId(),
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
-			serviceContext);
+			null, null, serviceContext);
 
 		_viewCountManager.incrementViewCount(
 			fileEntry1.getCompanyId(),
@@ -116,10 +116,10 @@ public class DLFolderServiceTest {
 			fileEntry1.getFileEntryId(), 2);
 
 		FileEntry fileEntry2 = _dlAppService.addFileEntry(
-			_group.getGroupId(), _parentFolder.getFolderId(),
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
-			serviceContext);
+			null, null, serviceContext);
 
 		_viewCountManager.incrementViewCount(
 			fileEntry2.getCompanyId(),
@@ -127,10 +127,10 @@ public class DLFolderServiceTest {
 			fileEntry2.getFileEntryId(), 1);
 
 		FileEntry fileEntry3 = _dlAppService.addFileEntry(
-			_group.getGroupId(), _parentFolder.getFolderId(),
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
-			serviceContext);
+			null, null, serviceContext);
 
 		_viewCountManager.incrementViewCount(
 			fileEntry3.getCompanyId(),
@@ -144,10 +144,10 @@ public class DLFolderServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FileEntry fileEntry4 = _dlAppService.addFileEntry(
-			_group.getGroupId(), hiddenFolder.getFolderId(),
+			null, _group.getGroupId(), hiddenFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title4", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
-			serviceContext);
+			null, null, serviceContext);
 
 		_viewCountManager.incrementViewCount(
 			fileEntry4.getCompanyId(),
@@ -159,10 +159,10 @@ public class DLFolderServiceTest {
 			fileEntry4.getFileEntryId(), serviceContext);
 
 		FileEntry fileEntry5 = _dlAppService.addFileEntry(
-			_group.getGroupId(), hiddenFolder.getFolderId(),
+			null, _group.getGroupId(), hiddenFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title5", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
-			serviceContext);
+			null, null, serviceContext);
 
 		_viewCountManager.incrementViewCount(
 			fileEntry5.getCompanyId(),
@@ -232,22 +232,22 @@ public class DLFolderServiceTest {
 		List<FileEntry> expectedFileEntries = new ArrayList<>();
 
 		FileEntry fileEntry1 = _dlAppService.addFileEntry(
-			_group.getGroupId(), _parentFolder.getFolderId(),
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title2", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
-			serviceContext);
+			null, null, serviceContext);
 
 		FileEntry fileEntry2 = _dlAppService.addFileEntry(
-			_group.getGroupId(), _parentFolder.getFolderId(),
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title1", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
-			serviceContext);
+			null, null, serviceContext);
 
 		FileEntry fileEntry3 = _dlAppService.addFileEntry(
-			_group.getGroupId(), _parentFolder.getFolderId(),
+			null, _group.getGroupId(), _parentFolder.getFolderId(),
 			StringUtil.randomString(), MimeTypes.MIME_APPLICATION_OCTET_STREAM,
 			"title3", StringUtil.randomString(), StringPool.BLANK, (byte[])null,
-			serviceContext);
+			null, null, serviceContext);
 
 		expectedFileEntries.add(fileEntry2);
 		expectedFileEntries.add(fileEntry1);

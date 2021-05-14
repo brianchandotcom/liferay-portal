@@ -50,10 +50,10 @@ public class GroupModelListenerTest {
 			TestPropsValues.getUserId());
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			new byte[0], new ServiceContext());
+			new byte[0], null, null, new ServiceContext());
 
 		SubscriptionLocalServiceUtil.addSubscription(
 			TestPropsValues.getUserId(), _group.getGroupId(),

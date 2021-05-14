@@ -248,11 +248,11 @@ public class DLOpenerGoogleDriveManagerTest {
 			serviceContext);
 
 		return _dlAppLocalService.addFileEntry(
-			serviceContext.getUserId(), folder.getGroupId(),
+			null, serviceContext.getUserId(), folder.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			"liferay".getBytes(), serviceContext);
+			"liferay".getBytes(), null, null, serviceContext);
 	}
 
 	private String _getAuthorizationToken() throws Exception {

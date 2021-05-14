@@ -103,10 +103,11 @@ public class FileEntrySearchFixture {
 
 		try {
 			return dlAppLocalService.addFileEntry(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				null, serviceContext.getUserId(),
+				serviceContext.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 				MimeTypesUtil.getContentType(fileName), title, StringPool.BLANK,
-				StringPool.BLANK, file, serviceContext);
+				StringPool.BLANK, file, null, null, serviceContext);
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

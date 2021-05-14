@@ -67,21 +67,21 @@ public class DLAppDLStorageQuotaLocalServiceTest {
 		int size1 = RandomTestUtil.randomInt(1, 100);
 
 		_dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), MimeTypes.OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[size1],
+			StringUtil.randomString(), new byte[size1], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		int size2 = size1 + RandomTestUtil.randomInt(1, 100);
 
 		_dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), MimeTypes.OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[size2],
+			StringUtil.randomString(), new byte[size2], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		Assert.assertEquals(
@@ -95,20 +95,20 @@ public class DLAppDLStorageQuotaLocalServiceTest {
 		int size = RandomTestUtil.randomInt(1, 100);
 
 		_dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), MimeTypes.OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[size],
+			StringUtil.randomString(), new byte[size], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), MimeTypes.OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(),
-			new byte[size + RandomTestUtil.randomInt(1, 100)],
+			new byte[size + RandomTestUtil.randomInt(1, 100)], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());

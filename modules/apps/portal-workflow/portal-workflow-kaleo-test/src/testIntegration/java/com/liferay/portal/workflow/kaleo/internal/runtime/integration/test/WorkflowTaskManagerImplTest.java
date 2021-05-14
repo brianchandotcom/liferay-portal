@@ -1259,10 +1259,10 @@ public class WorkflowTaskManagerImplTest {
 		serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			_adminUser.getUserId(), _group.getGroupId(), folderId,
+			null, _adminUser.getUserId(), _group.getGroupId(), folderId,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
 		return fileEntry.getLatestFileVersion();
 	}

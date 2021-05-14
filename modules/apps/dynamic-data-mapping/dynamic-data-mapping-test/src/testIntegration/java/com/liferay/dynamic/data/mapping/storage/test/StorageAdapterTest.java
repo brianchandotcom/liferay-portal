@@ -341,10 +341,10 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		String file1Value = getDocLibraryFieldValue(file1);
 
 		FileEntry file2 = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 2.txt",
-			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-			serviceContext);
+			ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY, null,
+			null, serviceContext);
 
 		String file2Value = getDocLibraryFieldValue(file2);
 

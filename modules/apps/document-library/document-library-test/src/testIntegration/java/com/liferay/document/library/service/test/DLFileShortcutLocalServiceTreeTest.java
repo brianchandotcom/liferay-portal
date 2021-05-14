@@ -132,9 +132,9 @@ public class DLFileShortcutLocalServiceTreeTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			null, TestPropsValues.getUserId(), _group.getGroupId(), folderId,
 			sourceFileName, ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 	}
 
 	protected FileShortcut addFileShortcut(

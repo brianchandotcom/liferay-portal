@@ -71,10 +71,10 @@ public class DLFileVersionLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), null, ContentTypes.TEXT_PLAIN,

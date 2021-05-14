@@ -78,10 +78,11 @@ public class AssetAutoTaggerTest extends BaseAssetAutoTaggerTestCase {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0], serviceContext);
+			StringUtil.randomString(), new byte[0], null, null, serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 

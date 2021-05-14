@@ -379,10 +379,10 @@ public class DLFileEntryLocalServiceTest {
 				).build());
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-				serviceContext);
+				null, null, serviceContext);
 
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -453,10 +453,10 @@ public class DLFileEntryLocalServiceTest {
 
 		for (int i = 0; i < 20; i++) {
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-				serviceContext);
+				null, null, serviceContext);
 
 			LocalRepository localRepository =
 				RepositoryProviderUtil.getFileEntryLocalRepository(
@@ -469,10 +469,10 @@ public class DLFileEntryLocalServiceTest {
 
 		for (int i = 0; i < IntervalActionProcessor.INTERVAL_DEFAULT; i++) {
 			DLAppLocalServiceUtil.addFileEntry(
-				TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, TestDataConstants.TEST_BYTE_ARRAY,
-				serviceContext);
+				null, null, serviceContext);
 		}
 
 		DLFileEntryLocalServiceUtil.deleteFileEntries(
@@ -597,10 +597,11 @@ public class DLFileEntryLocalServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, StringPool.BLANK,
 			ContentTypes.TEXT_PLAIN, "FE1.exe", RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), (byte[])null, serviceContext);
+			RandomTestUtil.randomString(), (byte[])null, null, null,
+			serviceContext);
 
 		Assert.assertEquals("FE1.exe", fileEntry.getFileName());
 
@@ -633,20 +634,20 @@ public class DLFileEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(dlFolder.getGroupId());
 
 		FileEntry assetFileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
+			null, TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length,
-			serviceContext);
+			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
+			null, serviceContext);
 
 		inputStream = new ByteArrayInputStream(bytes);
 
 		FileEntry noAssetFileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
+			null, TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length,
-			serviceContext);
+			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
+			null, serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFileEntry.class.getName(), noAssetFileEntry.getFileEntryId());

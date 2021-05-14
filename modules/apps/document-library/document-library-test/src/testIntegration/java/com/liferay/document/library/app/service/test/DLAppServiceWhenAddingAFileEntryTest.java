@@ -351,9 +351,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName,
+			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.APPLICATION_OCTET_STREAM, fileName, StringPool.BLANK,
-			StringPool.BLANK, CONTENT.getBytes(),
+			StringPool.BLANK, CONTENT.getBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Assert.assertEquals(ContentTypes.TEXT_PLAIN, fileEntry.getMimeType());
@@ -430,9 +430,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName,
+			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-			StringPool.BLANK, (byte[])null,
+			StringPool.BLANK, (byte[])null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
@@ -441,9 +441,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName,
+			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-			StringPool.BLANK, (File)null,
+			StringPool.BLANK, (File)null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
@@ -452,9 +452,9 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 		String fileName = RandomTestUtil.randomString();
 
 		DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), fileName,
+			null, group.getGroupId(), parentFolder.getFolderId(), fileName,
 			ContentTypes.TEXT_PLAIN, fileName, StringPool.BLANK,
-			StringPool.BLANK, null, 0,
+			StringPool.BLANK, null, 0, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 

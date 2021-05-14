@@ -99,11 +99,11 @@ public class AMGIFImageScalerTest {
 
 	private FileEntry _addFileEntry() throws Exception {
 		return DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".gif", ContentTypes.IMAGE_GIF,
-			FileUtil.getBytes(AMGIFImageScalerTest.class, "image.gif"),
-			new ServiceContext());
+			FileUtil.getBytes(AMGIFImageScalerTest.class, "image.gif"), null,
+			null, new ServiceContext());
 	}
 
 	private AMImageConfigurationEntry _addTestVariant() throws Exception {

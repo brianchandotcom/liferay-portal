@@ -150,10 +150,11 @@ public class RepositoryTest {
 	@Test
 	public void testDeleteGroupRepository() throws Exception {
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), new byte[0],
+			StringUtil.randomString(), new byte[0], null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		DLFileShortcutLocalServiceUtil.addFileShortcut(

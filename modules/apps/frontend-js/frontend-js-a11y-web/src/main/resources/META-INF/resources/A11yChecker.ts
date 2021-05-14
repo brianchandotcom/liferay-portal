@@ -266,7 +266,7 @@ export class A11yChecker {
 	}>;
 	private mutations?: Record<MutationRecordType, Mutation>;
 	readonly axeOptions: RunOptions;
-	readonly denylist: A11yCheckerOptions['denylist'];
+	readonly denylist?: Array<Array<string>>;
 
 	constructor({
 		axeOptions,
@@ -283,7 +283,9 @@ export class A11yChecker {
 		this.axeOptions = axeOptions ? axeOptions : defaultOptions;
 
 		this.callback = callback;
-		this.denylist = denylist;
+		this.denylist = denylist
+			? denylist.map((selector) => [selector])
+			: denylist;
 
 		// Scheduler can be a singleton to allow multiple instances of
 		// A11yChecker to share the same queue to avoid bottlenecks and
@@ -307,7 +309,23 @@ export class A11yChecker {
 			return;
 		}
 
-		const results = await axe.run(target, this.axeOptions);
+		const context = this.denylist
+			? {
+					exclude: this.denylist,
+					include: target,
+			  }
+			: target;
+
+		const results = await axe.run(
+
+			// Disabling TypeScript here due to an axe-core typing error that a
+			// context's `include` does not accept a node but accept.
+			// https://github.com/dequelabs/axe-core/blob/4a01ffe1adf009745ea12a71f4a888843dc779da/doc/API.md#context-parameter-examples
+			// @ts-ignore
+
+			context,
+			this.axeOptions
+		);
 
 		this.callback(results);
 	}

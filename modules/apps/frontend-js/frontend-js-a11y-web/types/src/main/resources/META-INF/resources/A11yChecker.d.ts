@@ -59,7 +59,7 @@ export declare class A11yChecker {
 	private observers;
 	private mutations?;
 	readonly axeOptions: RunOptions;
-	readonly denylist: A11yCheckerOptions['denylist'];
+	readonly denylist?: Array<Array<string>>;
 	constructor({
 		axeOptions,
 		callback,

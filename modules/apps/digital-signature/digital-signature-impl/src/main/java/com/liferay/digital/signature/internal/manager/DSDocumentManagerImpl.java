@@ -14,9 +14,13 @@
 
 package com.liferay.digital.signature.internal.manager;
 
+import com.liferay.digital.signature.internal.http.DSHttp;
 import com.liferay.digital.signature.manager.DSDocumentManager;
+import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -25,13 +29,21 @@ import org.osgi.service.component.annotations.Component;
 public class DSDocumentManagerImpl implements DSDocumentManager {
 
 	@Override
-	public byte[] getDSDocumentsAsBytes(long dsEnvelopeId) {
-
-		// LPS-132123
-
-		// envelopes/{dsEnvelopeId}/documents/archive
-
-		return null;
+	public byte[] getDSDocumentsAsBytes(long groupId, String dsEnvelopeId) {
+		try {
+			return _dsHttp.getAsBytes(
+				groupId,
+				StringBundler.concat(
+					"envelopes/", dsEnvelopeId,
+					"/documents/archive?escape_non_ascii_filenames=true",
+					"&include=document,summary,voice_print&language=en"));
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
 	}
+
+	@Reference
+	private DSHttp _dsHttp;
 
 }

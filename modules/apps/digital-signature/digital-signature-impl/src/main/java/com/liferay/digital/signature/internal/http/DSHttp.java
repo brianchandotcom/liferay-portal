@@ -44,6 +44,15 @@ public class DSHttp {
 		}
 	}
 
+	public byte[] getAsBytes(long groupId, String location) {
+		try {
+			return _invokeAsBytes(groupId, location, Http.Method.GET, null);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
 	public JSONObject post(
 		long groupId, String location, JSONObject bodyJSONObject) {
 
@@ -101,6 +110,42 @@ public class DSHttp {
 		options.setMethod(method);
 
 		return _jsonFactory.createJSONObject(_http.URLtoString(options));
+	}
+
+	private byte[] _invokeAsBytes(
+			long groupId, String location, Http.Method method,
+			JSONObject bodyJSONObject)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		if (bodyJSONObject != null) {
+			options.addHeader(
+				HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+		}
+
+		DigitalSignatureConfiguration digitalSignatureConfiguration =
+			ConfigurationProviderUtil.getGroupConfiguration(
+				DigitalSignatureConfiguration.class, groupId);
+
+		options.addHeader(
+			"Authorization",
+			"Bearer " + _getDocuSignAccessToken(digitalSignatureConfiguration));
+
+		if (bodyJSONObject != null) {
+			options.setBody(
+				bodyJSONObject.toString(), ContentTypes.APPLICATION_JSON,
+				StringPool.UTF8);
+		}
+
+		options.setLocation(
+			StringBundler.concat(
+				digitalSignatureConfiguration.accountBaseURI(),
+				"/restapi/v2.1/accounts/",
+				digitalSignatureConfiguration.apiAccountId(), "/", location));
+		options.setMethod(method);
+
+		return _http.URLtoByteArray(options);
 	}
 
 	@Reference

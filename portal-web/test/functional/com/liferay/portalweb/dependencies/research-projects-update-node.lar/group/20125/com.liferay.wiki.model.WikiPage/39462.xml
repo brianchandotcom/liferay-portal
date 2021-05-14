@@ -1,0 +1,45 @@
+<WikiPage>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>2</__mvccVersion>
+  <__uuid>3b5c272e-9cb2-851d-c0c4-66f41e930f8e</__uuid>
+  <__externalReferenceCode>39462</__externalReferenceCode>
+  <__pageId>39462</__pageId>
+  <__resourcePrimKey>39460</__resourcePrimKey>
+  <__groupId>20125</__groupId>
+  <__companyId>20101</__companyId>
+  <__userId>20129</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2017-04-07 16:39:05.139</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-11-12 06:58:51.643</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__nodeId>39406</__nodeId>
+  <__title>FrontPage</__title>
+  <__version>1.1</__version>
+  <__minorEdit>false</__minorEdit>
+  <__content>&lt;h2&gt;Green Energy Options&lt;/h2&gt;
+&lt;p&gt;Student Names:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Giada Barelli&lt;/li&gt;
+  &lt;li&gt;Lila Martinez&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;Brainstorming:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Looking to colonize space doesn’t mean abandoning our own planet  &lt;ul&gt;
+      &lt;li&gt;Natural resources and ideal climate are here, so we should
+        take care of it&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+  &lt;li&gt;Pluses and minuses of wind energy &amp; others&lt;/li&gt;
+  &lt;li&gt;Difficulty of conversion practices  &lt;ul&gt;
+      &lt;li&gt;How to overcome them&lt;/li&gt;
+      &lt;li&gt;Alternate options&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</__content>
+  <__summary></__summary>
+  <__format>html</__format>
+  <__head>true</__head>
+  <__parentTitle></__parentTitle>
+  <__redirectTitle></__redirectTitle>
+  <__status>0</__status>
+  <__statusByUserId>20129</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2021-05-13 05:02:35.062</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__attachmentsFolderId>0</__attachmentsFolderId>
+</WikiPage>

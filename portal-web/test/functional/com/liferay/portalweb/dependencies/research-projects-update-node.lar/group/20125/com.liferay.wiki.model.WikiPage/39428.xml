@@ -1,0 +1,50 @@
+<WikiPage>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>2</__mvccVersion>
+  <__uuid>26346ada-8917-0f6c-73cb-f57121041ccc</__uuid>
+  <__externalReferenceCode>39428</__externalReferenceCode>
+  <__pageId>39428</__pageId>
+  <__resourcePrimKey>39429</__resourcePrimKey>
+  <__groupId>20125</__groupId>
+  <__companyId>20101</__companyId>
+  <__userId>20129</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2017-04-07 15:28:33.118</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-11-12 06:58:51.595</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__nodeId>39405</__nodeId>
+  <__title>Landfill Waste</__title>
+  <__version>1.0</__version>
+  <__minorEdit>false</__minorEdit>
+  <__content>==Landfill Waste==
+
+Student Names: 
+Tabitha Doolittle
+Jakob Miller
+Nolan Blackstone
+
+Brainstorming:
+*Problem of landfill waste, what to do with it?
+*Solution to reuse it as fuel and reduce number of landfills
+*Takes care of more than 3/4ths of waste (is this true? check facts with Nolan&apos;s uncle)
+*Obviously sustainable
+
+We need to:
+*Solve the problem of exhaust; how to make it not pollution!!!
+
+How to Present:
+*Can we rent the quad? Is that a thing?
+*Show how waste can be converted efficiently into energy with a conversion scale and repeatable tests and data</__content>
+  <__summary></__summary>
+  <__format>creole</__format>
+  <__head>false</__head>
+  <__parentTitle></__parentTitle>
+  <__redirectTitle></__redirectTitle>
+  <__status>0</__status>
+  <__statusByUserId>20129</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2021-05-13 05:02:34.869</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__attachmentsFolderId>0</__attachmentsFolderId>
+</WikiPage>

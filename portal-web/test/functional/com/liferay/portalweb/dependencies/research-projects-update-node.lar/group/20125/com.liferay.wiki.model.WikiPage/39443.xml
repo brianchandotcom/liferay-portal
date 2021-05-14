@@ -1,0 +1,58 @@
+<WikiPage>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>3</__mvccVersion>
+  <__uuid>7df45687-10a4-6c09-fc01-a999bcf6c5d5</__uuid>
+  <__externalReferenceCode>39443</__externalReferenceCode>
+  <__pageId>39443</__pageId>
+  <__resourcePrimKey>39416</__resourcePrimKey>
+  <__groupId>20125</__groupId>
+  <__companyId>20101</__companyId>
+  <__userId>20129</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2017-04-07 15:21:44.307</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-11-12 06:58:51.563</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__nodeId>39405</__nodeId>
+  <__title>FrontPage</__title>
+  <__version>1.5</__version>
+  <__minorEdit>false</__minorEdit>
+  <__content>&lt;h2&gt;Research Projects for Spacecraft Fuel Alternatives 327&lt;/h2&gt;
+&lt;p&gt;You can brainstorm, edit, and collaborate on your research projects
+  for this class here. Put your links to your project notes below so
+  they can be found easily.&lt;/p&gt;
+&lt;p&gt;This wiki isn’t meant to be the place for your final project. Just
+  use it as a jumping-off point to talk to your peers and generate
+  ideas. That being said, don’t put anything on here you don’t want me
+  to see.&lt;/p&gt;
+&lt;p&gt;
+  &lt;a href=&quot;@data_handler_private_group_servlet_mapping@/research-projects/-/wiki/Main/Sweet+Potatoes&quot;&gt;Sweet Potatoes&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+  &lt;a href=&quot;@data_handler_private_group_servlet_mapping@/research-projects/-/wiki/Main/Cranberries&quot;&gt;Cranberries&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    href=&quot;@data_handler_company_url@@data_handler_private_group_servlet_mapping@/research-projects/-/wiki/Main/Landfill+Waste&quot;&gt;Landfill Waste&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    href=&quot;@data_handler_private_group_servlet_mapping@/space-fuel-alternatives-327/research-projects/-/wiki/Electricity/FrontPage&quot;&gt;The
+    Decline and Fall of Electricity&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    href=&quot;@data_handler_private_group_servlet_mapping@/space-fuel-alternatives-327/research-projects/-/wiki/Reusable+Technology/FrontPage&quot;&gt;The
+    Necessity for Reusable Technology &lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    href=&quot;@data_handler_private_group_servlet_mapping@/space-fuel-alternatives-327/research-projects/-/wiki/Green+Energy/FrontPage&quot;&gt;Green
+    Energy Options&lt;/a&gt;&lt;/p&gt;</__content>
+  <__summary></__summary>
+  <__format>html</__format>
+  <__head>false</__head>
+  <__parentTitle></__parentTitle>
+  <__redirectTitle></__redirectTitle>
+  <__status>0</__status>
+  <__statusByUserId>20129</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2021-05-13 05:02:34.993</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__attachmentsFolderId>0</__attachmentsFolderId>
+</WikiPage>

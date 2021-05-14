@@ -1,0 +1,47 @@
+<WikiPage>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>2</__mvccVersion>
+  <__uuid>f5cc32b5-4205-6bf3-1924-e41020aa7cb1</__uuid>
+  <__externalReferenceCode>39422</__externalReferenceCode>
+  <__pageId>39422</__pageId>
+  <__resourcePrimKey>39423</__resourcePrimKey>
+  <__groupId>20125</__groupId>
+  <__companyId>20101</__companyId>
+  <__userId>20129</__userId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2017-04-07 15:27:50.492</__createDate>
+  <__modifiedDate class="sql-timestamp">2020-11-12 06:58:51.609</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__nodeId>39405</__nodeId>
+  <__title>Sweet Potatoes</__title>
+  <__version>1.0</__version>
+  <__minorEdit>false</__minorEdit>
+  <__content>==Sweet Potatoes==
+
+Student Names: 
+Clark Waterford
+Giada Barelli
+
+Ideas:
+*Sweet potatoes can produce up to four times more ethanol than corn
+*Current sustainability practices make sweet potatoes an ideal choice (no need for lots of water, hardy plants mean they can grow in a number of climates)
+*Large sweet potato varieties make for efficient growing
+*NEED MORE??!
+
+Demonstration Ideas:
+*Use specialized fast-growing techniques as an example
+*Conduct experiments for small-size rockets
+*</__content>
+  <__summary></__summary>
+  <__format>creole</__format>
+  <__head>false</__head>
+  <__parentTitle></__parentTitle>
+  <__redirectTitle></__redirectTitle>
+  <__status>0</__status>
+  <__statusByUserId>20129</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2021-05-13 05:02:34.838</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+  <__attachmentsFolderId>0</__attachmentsFolderId>
+</WikiPage>

@@ -580,12 +580,51 @@ definition {
 	}
 
 	@description = "COMMERCE-6147. As a buyer, I want to switch from one results page to another in Search Results"
-	@ignore = "true"
 	@priority = "3"
 	test SearchResultsWidgetChangeResultsPage {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchResultsWidgetChangeResultsPage";
 
-		// TODO COMMERCE-6147 SearchResultsWidgetChangeResultsPage pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		var productsNamePage1 = "";
+		var curr_productNamePage1 = "";
+
+		for (var iterator : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
+			Click(
+				key_index = "${iterator}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX");
+
+			WaitForElementPresent(locator1 = "CommerceFrontStore#FS_PRODUCT_NAME");
+
+			curr_productNamePage1 = selenium.getText("CommerceFrontStore#FS_PRODUCT_NAME");
+
+			if ("${iterator}" == "1") {
+				productsNamePage1 = "${curr_productNamePage1}";
+			}
+			else {
+				productsNamePage1 = "${productsNamePage1},${curr_productNamePage1}";
+			}
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+		}
+
+		Click(
+			key_pageNumber = "2",
+			locator1 = "Pagination#ANY_PAGE");
+
+		iterator = "1";
+
+		for (var curr_productNamePage1 : list "${productsNamePage1}") {
+			AssertTextNotEquals(
+				key_index = "${iterator}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+				value1 = "${curr_productNamePage1}");
+
+			var iterator = MathUtil.sum("${iterator}", "1");
+		}
 	}
 
 	@description = "COMMERCE-6146. As a buyer, I want to change the number of items to display for every page from Search Results widget configuration"

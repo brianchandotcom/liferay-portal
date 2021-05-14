@@ -145,6 +145,11 @@ export default function DataEngineLayoutBuilderHandler({namespace}) {
 		const dataLayoutBuilder = await getDataLayoutBuilder();
 
 		dataLayoutBuilder.current.dispatch({
+			payload: {languageId: editingLanguageId},
+			type: 'language_add',
+		});
+
+		dataLayoutBuilder.current.dispatch({
 			payload: {editingLanguageId},
 			type: 'language_change',
 		});

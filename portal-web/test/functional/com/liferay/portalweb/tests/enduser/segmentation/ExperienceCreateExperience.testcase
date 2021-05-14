@@ -163,13 +163,84 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130348."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceBasedOtherSegmentsSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130348 AddNewExperienceBasedOtherSegmentsSegment pending implementation
+		for (var num : list "1,2") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Last Name",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment With User${num}",
+				text = "userln${num}");
+		}
 
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.gotoSidebar(fieldType = "Segments");
+
+		Segmentation.addProperties(propertyOption = "Segment");
+
+		Segmentation.fillProperty(selectLink = "Segment With User1");
+
+		Segmentation.addProperties(propertyOption = "Segment");
+
+		Segmentation.fillProperty(
+			indexNumber = "2",
+			selectLink = "Segment With User2");
+
+		Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
+
+		Segmentation.fillTitle(titleField = "AddNewExperienceBasedOtherSegmentsSegment Test");
+
+		Button.clickSave();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "AddNewExperienceBasedOtherSegmentsSegment",
+			segmentName = "AddNewExperienceBasedOtherSegmentsSegment Test");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.changeExperience(newExperience = "AddNewExperienceBasedOtherSegmentsSegment");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "User1 and User2 will see this heading");
+
+		PageEditor.prioritizeExperience(experienceName = "AddNewExperienceBasedOtherSegmentsSegment");
+
+		PageEditor.clickPublish();
+
+		for (var num : list "1,2") {
+			User.logoutAndLoginPG(
+				freeLogin = "true",
+				userLoginEmailAddress = "userea${num}@liferay.com",
+				userLoginFullName = "userfn${num} userln${num}");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "User1 and User2 will see this heading");
+		}
 	}
 
 	@description = "This is a test for LPS-130309."
@@ -945,6 +1016,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130328 AddNewExperienceSessionCookiesSegment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130329."

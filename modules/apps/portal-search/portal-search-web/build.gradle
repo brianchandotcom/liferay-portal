@@ -40,3 +40,9 @@ dependencies {
 	testCompile project(":core:petra:petra-process")
 	testCompile project(":core:petra:petra-reflect")
 }
+
+test {
+	if (project.hasProperty('excludeTests')) {
+		exclude project.property('excludeTests')
+	}
+}

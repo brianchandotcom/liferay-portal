@@ -1814,21 +1814,21 @@ definition {
 	@description = "This is a test for LPS-130300."
 	@ignore = "true"
 	@priority = "5"
+	test AddNewExperienceUserSiteOrganizationRoleSegment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130290 AddNewExperienceUserSiteOrganizationRoleSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130300."
+	@ignore = "true"
+	@priority = "5"
 	test AddNewExperienceUserSiteSegment {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130290 AddNewExperienceUserSiteSegment pending implementation
 	}
 
-	@description = "This is a test for LPS-130300."
-	@ignore = "true"
-	@priority = "5"
-	test AddNewExperienceUserSiteOrganizationRoleSegment {
-		property portal.acceptance = "false";
-
-		// TODO LPS-130290 AddNewExperienceUserSiteOrganizationRoleSegment pending implementation
-	}
-	
 	@description = "This is a test for LPS-130300."
 	@ignore = "true"
 	@priority = "5"

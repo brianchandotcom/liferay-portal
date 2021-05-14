@@ -58,6 +58,5 @@ const Liferay = {
 };
 
 window.defaultFetch = fetch;
-
 window.Liferay = Liferay;
 window.themeDisplay = Liferay.ThemeDisplay;

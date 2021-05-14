@@ -32,3 +32,9 @@ dependencies {
 	testCompile project(":core:petra:petra-sql-dsl-api")
 	testCompile project(":core:registry-api")
 }
+
+test {
+	if (project.hasProperty('excludeTests')) {
+		exclude project.property('excludeTests')
+	}
+}

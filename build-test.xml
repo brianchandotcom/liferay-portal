@@ -5728,12 +5728,20 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<fail message="${patch.name} was not installed.">
 						<condition>
-							<not>
-								<resourcecontains
-									resource="@{patching.tool.dir}/logs/patching-tool.log"
-									substring="[*I] ${patch.name} :: Installed"
-								/>
-							</not>
+							<and>
+								<not>
+									<resourcecontains
+										resource="@{patching.tool.dir}/logs/patching-tool.log"
+										substring="[*I] ${patch.name} :: Already installed"
+									/>
+								</not>
+								<not>
+									<resourcecontains
+										resource="@{patching.tool.dir}/logs/patching-tool.log"
+										substring="[*I] ${patch.name} :: Installed"
+									/>
+								</not>
+							</and>
 						</condition>
 					</fail>
 				</sequential>

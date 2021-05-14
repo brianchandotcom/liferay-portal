@@ -10,11 +10,7 @@ definition {
 	property testray.main.component.name = "Upgrades Security";
 
 	setUp {
-		User.firstLoginUI();
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		AssertLocation(value1 = "${portalURL}/web/guest/home");
+		SignIn.signIn();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

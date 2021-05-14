@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -52,7 +51,6 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.comparator.UserIdComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -61,7 +59,6 @@ import com.liferay.portal.util.PropsValues;
 import java.lang.reflect.Field;
 
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
@@ -371,56 +368,6 @@ public class UserLocalServiceTest {
 		}
 		finally {
 			propsValuesField.set(null, propsValuesFieldValue);
-		}
-	}
-
-	@Test
-	public void testSearchWithGroupId() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
-		UserTestUtil.addUser(company);
-		UserTestUtil.addUser(company);
-
-		User adminUser = UserTestUtil.getAdminUser(company.getCompanyId());
-
-		Group group = GroupTestUtil.addGroup(
-			company.getCompanyId(), adminUser.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		User groupAdminUser = UserTestUtil.addGroupAdminUser(group);
-
-		List<User> companyUsers = _userLocalService.getCompanyUsers(
-			company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		PermissionChecker oldPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(groupAdminUser));
-
-		try {
-			LinkedHashMap<String, Object> userParams =
-				LinkedHashMapBuilder.<String, Object>put(
-					com.liferay.portal.kernel.search.Field.GROUP_ID,
-					group.getGroupId()
-				).build();
-
-			int count = _userLocalService.searchCount(
-				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-				userParams);
-
-			Assert.assertEquals(companyUsers.size(), count);
-
-			List<User> users = _userLocalService.search(
-				company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED,
-				userParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new UserIdComparator());
-
-			Assert.assertEquals(users.toString(), count, users.size());
-			Assert.assertTrue(users.containsAll(companyUsers));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(oldPermissionChecker);
 		}
 	}
 

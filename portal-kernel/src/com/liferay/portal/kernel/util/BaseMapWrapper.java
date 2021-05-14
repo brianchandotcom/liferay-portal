@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.Collection;
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.Map;
 
 /**
@@ -103,6 +105,20 @@ public abstract class BaseMapWrapper<K, V> {
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
+		}
+	}
+
+	protected void doPutAll(Dictionary<? extends K, ? extends V> dictionary) {
+		if (dictionary != null) {
+			Map<K, V> map = getMap();
+
+			for (Enumeration<? extends K> enumeration = dictionary.keys();
+				 enumeration.hasMoreElements();) {
+
+				K key = enumeration.nextElement();
+
+				map.put(key, dictionary.get(key));
+			}
 		}
 	}
 

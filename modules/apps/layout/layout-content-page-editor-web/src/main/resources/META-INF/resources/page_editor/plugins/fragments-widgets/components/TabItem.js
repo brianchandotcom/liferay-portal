@@ -12,12 +12,8 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
-import ClayPopover from '@clayui/popover';
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
@@ -27,11 +23,12 @@ import addFragment from '../../../app/thunks/addFragment';
 import addItem from '../../../app/thunks/addItem';
 import addWidget from '../../../app/thunks/addWidget';
 import {useDragSymbol} from '../../../app/utils/drag-and-drop/useDragAndDrop';
+import CardItem from './CardItem';
+import ListItem from './ListItem';
 
 export default function TabItem({displayStyle, item}) {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-	const [showPreview, setShowPreview] = useState(false);
 
 	const {sourceRef} = useDragSymbol(
 		{
@@ -65,42 +62,10 @@ export default function TabItem({displayStyle, item}) {
 		}
 	);
 
-	return (
-		<li
-			className={classNames('page-editor__fragments-widgets__tab-item', {
-				disabled: item.disabled,
-				'page-editor__fragments-widgets__tab-portlet-item':
-					item.data.portletItemId,
-			})}
-			ref={item.disabled ? null : sourceRef}
-		>
-			<div className="page-editor__fragments-widgets__tab-item-body">
-				<ClayIcon className="mr-3" symbol={item.icon} />
-				<div className="text-truncate title">{item.label}</div>
-			</div>
-
-			{item.preview && (
-				<div className="page-editor__fragments-widgets__tab-item-preview">
-					<ClayButton
-						className="btn-monospaced preview-icon"
-						displayType="unstyled"
-						onBlur={() => setShowPreview(false)}
-						onFocus={() => setShowPreview(true)}
-						onMouseLeave={() => setShowPreview(false)}
-						onMouseOver={() => setShowPreview(true)}
-						small
-					>
-						<ClayIcon symbol="info-circle-open" />
-						<span className="sr-only">{name}</span>
-					</ClayButton>
-					{showPreview && (
-						<ClayPopover disableScroll>
-							<img alt="thumbnail" src={item.preview} />
-						</ClayPopover>
-					)}
-				</div>
-			)}
-		</li>
+	return displayStyle === FRAGMENTS_DISPLAY_STYLES.CARDS ? (
+		<ListItem item={item} ref={sourceRef} />
+	) : (
+		<ListItem item={item} ref={sourceRef} />
 	);
 }
 

@@ -639,8 +639,10 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-pages",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Pages");
 
 		AssertAlertNotPresent();
 

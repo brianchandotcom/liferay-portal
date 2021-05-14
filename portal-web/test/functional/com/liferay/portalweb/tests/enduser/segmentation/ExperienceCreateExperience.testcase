@@ -1811,6 +1811,60 @@ definition {
 			value1 = "This is a new experience for you");
 	}
 
+	@description = "This is a test for LPS-130300."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserSiteSegment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130290 AddNewExperienceUserSiteSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130300."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserSiteOrganizationRoleSegment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130290 AddNewExperienceUserSiteOrganizationRoleSegment pending implementation
+	}
+	
+	@description = "This is a test for LPS-130300."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserTagSegment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130290 AddNewExperienceUserTagSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130300."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserTeamSegment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130290 AddNewExperienceUserTeamSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130300."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserUserGroupSegment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130290 AddNewExperienceUserUserGroupSegment pending implementation
+	}
+
+	@description = "This is a test for LPS-130300."
+	@ignore = "true"
+	@priority = "5"
+	test AddNewExperienceUserUserSegment {
+		property portal.acceptance = "false";
+
+		// TODO LPS-130290 AddNewExperienceUserUserSegment pending implementation
+	}
+
 	@description = "When the user opens the experiences selection modal and select a different locale for an experience, the experience version for that language is shown"
 	@priority = "5"
 	test AddNewExperienceWithLanguage {

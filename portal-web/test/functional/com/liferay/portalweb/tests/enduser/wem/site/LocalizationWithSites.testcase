@@ -713,7 +713,10 @@ definition {
 			locator1 = "Home#PAGE",
 			value1 = "Home");
 
-		User.loginPG(specificURL = "${portalURL}/fr");
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "${portalURL}/fr",
+			userEmailAddress = "test@liferay.com");
 
 		AssertLocation(value1 = "${portalURL}/web/guest");
 

@@ -12,7 +12,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		AssertLocation(value1 = "${portalURL}/web/guest/home");
+		AssertLocation(value1 = "${portalURL}/web/guest?SM_USER=user@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

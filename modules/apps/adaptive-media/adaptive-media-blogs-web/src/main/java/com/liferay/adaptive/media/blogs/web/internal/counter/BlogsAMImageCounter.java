@@ -17,12 +17,14 @@ package com.liferay.adaptive.media.blogs.web.internal.counter;
 import com.liferay.adaptive.media.image.counter.AMImageCounter;
 import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.size.AMImageSizeProvider;
+import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,7 +58,9 @@ public class BlogsAMImageCounter implements AMImageCounter {
 
 		dynamicQuery.add(
 			mimeTypeProperty.in(
-				_amImageMimeTypeProvider.getSupportedMimeTypes()));
+				ArrayUtil.filter(
+					_amImageMimeTypeProvider.getSupportedMimeTypes(),
+					_amImageValidator::isProcessingSupported)));
 
 		Property sizeProperty = PropertyFactoryUtil.forName("size");
 
@@ -71,6 +75,9 @@ public class BlogsAMImageCounter implements AMImageCounter {
 
 	@Reference
 	private AMImageSizeProvider _amImageSizeProvider;
+
+	@Reference
+	private AMImageValidator _amImageValidator;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

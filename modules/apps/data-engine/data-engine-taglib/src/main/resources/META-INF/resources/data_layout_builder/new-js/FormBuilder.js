@@ -43,6 +43,7 @@ export const FormBuilder = () => {
 	const {
 		allowFieldSets,
 		contentType,
+		dataDefinitionId,
 		groupId,
 		portletNamespace,
 	} = useConfig();
@@ -61,6 +62,9 @@ export const FormBuilder = () => {
 		[initialSidebarPanels, portletNamespace]
 	);
 
+	/**
+	 * Load fieldSets
+	 */
 	useEffect(() => {
 		if (allowFieldSets && contentType) {
 			let globalFieldSetsPromise = [];
@@ -84,11 +88,13 @@ export const FormBuilder = () => {
 						globalFieldSetsPromise,
 						groupFieldSetsPromise,
 					]);
+					const fieldSets = [
+						...globalFieldSets,
+						...groupFieldSets,
+					].filter(({id}) => id !== parseInt(dataDefinitionId, 10));
 
 					dispatch({
-						payload: {
-							fieldSets: [...globalFieldSets, ...groupFieldSets],
-						},
+						payload: {fieldSets},
 						type: EVENT_TYPES.FIELD_SET.UPDATE_LIST,
 					});
 				}
@@ -103,7 +109,7 @@ export const FormBuilder = () => {
 
 			fetchFieldSets();
 		}
-	}, [allowFieldSets, contentType, dispatch, groupId]);
+	}, [allowFieldSets, contentType, dataDefinitionId, dispatch, groupId]);
 
 	/**
 	 * Adjusts alert messages size according to sidebarOpen state

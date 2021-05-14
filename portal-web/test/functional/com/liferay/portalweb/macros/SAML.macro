@@ -173,7 +173,6 @@ definition {
 		else {
 			User.firstLoginUI(
 				password = "${password}",
-				samlEnabled = "true",
 				specificURL = "${idpInitiatedSSOURL}",
 				userEmailAddress = "${userEmailAddress}");
 		}

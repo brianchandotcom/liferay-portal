@@ -2,7 +2,7 @@ Bundle-Description: Creates a Liferay module project that customizes Liferay Por
 Bundle-Name: Liferay Project Templates Control Menu Entry
 Bundle-SymbolicName: com.liferay.project.templates.control.menu.entry
 Bundle-Version: 1.0.129
-Liferay-Versions: [7,7.5)
+Liferay-Versions: [7,8.0)
 -removeheaders:\
 	Import-Package,\
 	Private-Package,\

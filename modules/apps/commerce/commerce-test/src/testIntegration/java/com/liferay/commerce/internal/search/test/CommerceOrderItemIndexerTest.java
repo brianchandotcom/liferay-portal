@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -64,6 +66,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
@@ -103,8 +106,58 @@ public class CommerceOrderItemIndexerTest {
 		_assertSearch(StringPool.BLANK, commerceOrderItems);
 	}
 
+	@Test
+	public void testSkuPrefix() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		CommerceTestUtil.addCommerceChannel(
+			_group.getGroupId(), _commerceCurrency.getCode());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			user.getUserId(), _group.getGroupId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		CPInstance cpInstance = CPTestUtil.addCPInstance(
+			commerceOrder.getGroupId());
+
+		cpInstance.setPurchasable(true);
+
+		String sku = "Open4Life" + RandomTestUtil.randomString();
+
+		cpInstance.setSku(sku);
+
+		_cpInstanceLocalService.updateCPInstance(cpInstance);
+
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(
+			cpInstance.getCPDefinition());
+
+		CommerceOrderItem commerceOrderItem =
+			CommerceTestUtil.addCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(),
+				cpInstance.getCPInstanceId(), 1);
+
+		_assertSearch(
+			"open", commerceOrder.getCommerceOrderId(), commerceOrderItem);
+		_assertSearch(
+			"open4life", commerceOrder.getCommerceOrderId(), commerceOrderItem);
+		_assertSearch(
+			"OPE", commerceOrder.getCommerceOrderId(), commerceOrderItem);
+
+		_assertSearch("4lif", commerceOrder.getCommerceOrderId());
+	}
+
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
+
+	protected Hits search(String keywords, long commerceOrderId)
+		throws SearchException {
+
+		SearchContext searchContext = _getSearchContext(commerceOrderId);
+
+		searchContext.setKeywords(keywords);
+
+		return _indexer.search(searchContext);
+	}
 
 	private CommerceOrderItem[] _addCommerceOrderItems(int count)
 		throws Exception {
@@ -168,6 +221,16 @@ public class CommerceOrderItemIndexerTest {
 		searchContext.setKeywords(keywords);
 
 		Hits hits = _indexer.search(searchContext);
+
+		_assertSearch(hits, expectedCommerceOrderItems);
+	}
+
+	private void _assertSearch(
+			String keywords, long commerceOrderId,
+			CommerceOrderItem... expectedCommerceOrderItems)
+		throws Exception {
+
+		Hits hits = search(keywords, commerceOrderId);
 
 		_assertSearch(hits, expectedCommerceOrderItems);
 	}

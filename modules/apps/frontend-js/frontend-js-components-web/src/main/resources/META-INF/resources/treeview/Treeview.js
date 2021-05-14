@@ -240,8 +240,9 @@ function reducer(state, action) {
 
 	switch (action.type) {
 		case 'ACTIVATE': {
-			const focusedNodeId =
-				state.focusedNodeId || (nodes[0] && nodes[0].id);
+			const focusedNodeId = action.mouseNavigation
+				? state.focusedNodeId
+				: state.focusedNodeId || (nodes[0] && nodes[0].id);
 
 			return {
 				...state,
@@ -778,6 +779,23 @@ function Treeview({
 		}
 	};
 
+	const handleMouseDown = (event) => {
+		cancelTimer();
+
+		setHasFocus((hadFocus) => {
+			if (!hadFocus) {
+				dispatch({
+					mouseNavigation: true,
+					type: 'ACTIVATE',
+				});
+			}
+
+			return true;
+		});
+
+		event.preventDefault();
+	};
+
 	const handleFocus = () => {
 		cancelTimer();
 
@@ -816,6 +834,7 @@ function Treeview({
 				nodes={filteredNodes || nodes}
 				onBlur={handleBlur}
 				onFocus={handleFocus}
+				onMouseDown={handleMouseDown}
 				role="tree"
 				tabIndex={0}
 			/>

@@ -22,6 +22,7 @@ export default function NodeList({
 	nodes,
 	onBlur,
 	onFocus,
+	onMouseDown,
 	role = 'group',
 	tabIndex = -1,
 }) {
@@ -45,6 +46,11 @@ export default function NodeList({
 			onFocus={(event) => {
 				if (onFocus) {
 					onFocus(event);
+				}
+			}}
+			onMouseDown={(event) => {
+				if (onMouseDown) {
+					onMouseDown(event);
 				}
 			}}
 			role={role}
@@ -72,5 +78,6 @@ NodeList.propTypes = {
 	).isRequired,
 	onBlur: PropTypes.func,
 	onFocus: PropTypes.func,
+	onMouseDown: PropTypes.func,
 	tabIndex: PropTypes.number,
 };

@@ -16,7 +16,6 @@ import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
-import {CONTENT_TYPE_LABELS} from '../../../../../app/config/constants/contentTypeLabels';
 import SearchForm from '../../../../../common/components/SearchForm';
 
 export default function ContentFilter({
@@ -33,11 +32,10 @@ export default function ContentFilter({
 				{Liferay.Language.get('content-filtering-help')}
 			</p>
 
-			<SearchForm className="mb-2" onChange={onChangeInput} />
-
 			<ClayDropDown
 				active={active}
 				alignmentPosition={Align.BottomLeft}
+				className="mb-2"
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
@@ -53,9 +51,6 @@ export default function ContentFilter({
 				<ClayDropDown.ItemList>
 					{contentTypes?.map((type) => (
 						<React.Fragment key={type}>
-							{type === CONTENT_TYPE_LABELS.inlineText && (
-								<ClayDropDown.Divider />
-							)}
 							<ClayDropDown.Item
 								onClick={() => {
 									onChangeSelect(type);
@@ -67,14 +62,12 @@ export default function ContentFilter({
 							>
 								{type}
 							</ClayDropDown.Item>
-							{[
-								CONTENT_TYPE_LABELS.allContent,
-								CONTENT_TYPE_LABELS.collection,
-							].includes(type) && <ClayDropDown.Divider />}
 						</React.Fragment>
 					))}
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
+
+			<SearchForm onChange={onChangeInput} />
 		</div>
 	);
 }

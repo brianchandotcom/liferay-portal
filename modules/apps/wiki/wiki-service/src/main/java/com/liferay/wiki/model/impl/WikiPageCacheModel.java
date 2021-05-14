@@ -82,8 +82,6 @@ public class WikiPageCacheModel
 		sb.append(mvccVersion);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", externalReferenceCode=");
-		sb.append(externalReferenceCode);
 		sb.append(", pageId=");
 		sb.append(pageId);
 		sb.append(", resourcePrimKey=");
@@ -100,6 +98,8 @@ public class WikiPageCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", nodeId=");
 		sb.append(nodeId);
 		sb.append(", title=");
@@ -148,13 +148,6 @@ public class WikiPageCacheModel
 			wikiPageImpl.setUuid(uuid);
 		}
 
-		if (externalReferenceCode == null) {
-			wikiPageImpl.setExternalReferenceCode("");
-		}
-		else {
-			wikiPageImpl.setExternalReferenceCode(externalReferenceCode);
-		}
-
 		wikiPageImpl.setPageId(pageId);
 		wikiPageImpl.setResourcePrimKey(resourcePrimKey);
 		wikiPageImpl.setGroupId(groupId);
@@ -180,6 +173,13 @@ public class WikiPageCacheModel
 		}
 		else {
 			wikiPageImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
+		if (externalReferenceCode == null) {
+			wikiPageImpl.setExternalReferenceCode("");
+		}
+		else {
+			wikiPageImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		wikiPageImpl.setNodeId(nodeId);
@@ -266,7 +266,6 @@ public class WikiPageCacheModel
 
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
-		externalReferenceCode = objectInput.readUTF();
 
 		pageId = objectInput.readLong();
 
@@ -280,6 +279,7 @@ public class WikiPageCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		nodeId = objectInput.readLong();
 		title = objectInput.readUTF();
@@ -314,13 +314,6 @@ public class WikiPageCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
-		if (externalReferenceCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(externalReferenceCode);
-		}
-
 		objectOutput.writeLong(pageId);
 
 		objectOutput.writeLong(resourcePrimKey);
@@ -340,6 +333,13 @@ public class WikiPageCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
 
 		objectOutput.writeLong(nodeId);
 
@@ -409,7 +409,6 @@ public class WikiPageCacheModel
 
 	public long mvccVersion;
 	public String uuid;
-	public String externalReferenceCode;
 	public long pageId;
 	public long resourcePrimKey;
 	public long groupId;
@@ -418,6 +417,7 @@ public class WikiPageCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String externalReferenceCode;
 	public long nodeId;
 	public String title;
 	public double version;

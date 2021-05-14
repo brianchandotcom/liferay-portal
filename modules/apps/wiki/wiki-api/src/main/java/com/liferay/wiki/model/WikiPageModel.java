@@ -99,21 +99,6 @@ public interface WikiPageModel
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the external reference code of this wiki page.
-	 *
-	 * @return the external reference code of this wiki page
-	 */
-	@AutoEscape
-	public String getExternalReferenceCode();
-
-	/**
-	 * Sets the external reference code of this wiki page.
-	 *
-	 * @param externalReferenceCode the external reference code of this wiki page
-	 */
-	public void setExternalReferenceCode(String externalReferenceCode);
-
-	/**
 	 * Returns the page ID of this wiki page.
 	 *
 	 * @return the page ID of this wiki page
@@ -258,6 +243,21 @@ public interface WikiPageModel
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the external reference code of this wiki page.
+	 *
+	 * @return the external reference code of this wiki page
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this wiki page.
+	 *
+	 * @param externalReferenceCode the external reference code of this wiki page
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the node ID of this wiki page.

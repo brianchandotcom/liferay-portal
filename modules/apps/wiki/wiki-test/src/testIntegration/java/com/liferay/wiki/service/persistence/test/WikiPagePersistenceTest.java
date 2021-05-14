@@ -129,8 +129,6 @@ public class WikiPagePersistenceTest {
 
 		newWikiPage.setUuid(RandomTestUtil.randomString());
 
-		newWikiPage.setExternalReferenceCode(RandomTestUtil.randomString());
-
 		newWikiPage.setResourcePrimKey(RandomTestUtil.nextLong());
 
 		newWikiPage.setGroupId(RandomTestUtil.nextLong());
@@ -144,6 +142,8 @@ public class WikiPagePersistenceTest {
 		newWikiPage.setCreateDate(RandomTestUtil.nextDate());
 
 		newWikiPage.setModifiedDate(RandomTestUtil.nextDate());
+
+		newWikiPage.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		newWikiPage.setNodeId(RandomTestUtil.nextLong());
 
@@ -184,9 +184,6 @@ public class WikiPagePersistenceTest {
 			existingWikiPage.getMvccVersion(), newWikiPage.getMvccVersion());
 		Assert.assertEquals(existingWikiPage.getUuid(), newWikiPage.getUuid());
 		Assert.assertEquals(
-			existingWikiPage.getExternalReferenceCode(),
-			newWikiPage.getExternalReferenceCode());
-		Assert.assertEquals(
 			existingWikiPage.getPageId(), newWikiPage.getPageId());
 		Assert.assertEquals(
 			existingWikiPage.getResourcePrimKey(),
@@ -205,6 +202,9 @@ public class WikiPagePersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingWikiPage.getModifiedDate()),
 			Time.getShortTimestamp(newWikiPage.getModifiedDate()));
+		Assert.assertEquals(
+			existingWikiPage.getExternalReferenceCode(),
+			newWikiPage.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingWikiPage.getNodeId(), newWikiPage.getNodeId());
 		Assert.assertEquals(
@@ -315,6 +315,15 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_ERC(0L, "null");
+
+		_persistence.countByG_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByN_T() throws Exception {
 		_persistence.countByN_T(RandomTestUtil.nextLong(), "");
 
@@ -382,6 +391,16 @@ public class WikiPagePersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByR_N_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByG_ERC_V() throws Exception {
+		_persistence.countByG_ERC_V(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextDouble());
+
+		_persistence.countByG_ERC_V(0L, "null", 0D);
+
+		_persistence.countByG_ERC_V(0L, (String)null, 0D);
 	}
 
 	@Test
@@ -579,15 +598,6 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_ERC() throws Exception {
-		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByG_ERC(0L, "null");
-
-		_persistence.countByG_ERC(0L, (String)null);
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		WikiPage newWikiPage = addWikiPage();
 
@@ -612,15 +622,14 @@ public class WikiPagePersistenceTest {
 
 	protected OrderByComparator<WikiPage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"WikiPage", "mvccVersion", true, "uuid", true,
-			"externalReferenceCode", true, "pageId", true, "resourcePrimKey",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"nodeId", true, "title", true, "version", true, "minorEdit", true,
-			"summary", true, "format", true, "head", true, "parentTitle", true,
-			"redirectTitle", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"WikiPage", "mvccVersion", true, "uuid", true, "pageId", true,
+			"resourcePrimKey", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "externalReferenceCode", true, "nodeId", true,
+			"title", true, "version", true, "minorEdit", true, "summary", true,
+			"format", true, "head", true, "parentTitle", true, "redirectTitle",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -902,6 +911,22 @@ public class WikiPagePersistenceTest {
 				new Class<?>[] {String.class}, "version"));
 
 		Assert.assertEquals(
+			Long.valueOf(wikiPage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			wikiPage.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		AssertUtils.assertEquals(
+			wikiPage.getVersion(),
+			ReflectionTestUtil.<Double>invoke(
+				wikiPage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "version"));
+
+		Assert.assertEquals(
 			Long.valueOf(wikiPage.getNodeId()),
 			ReflectionTestUtil.<Long>invoke(
 				wikiPage, "getColumnOriginalValue",
@@ -916,17 +941,6 @@ public class WikiPagePersistenceTest {
 			ReflectionTestUtil.<Double>invoke(
 				wikiPage, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "version"));
-
-		Assert.assertEquals(
-			Long.valueOf(wikiPage.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				wikiPage, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
-			wikiPage.getExternalReferenceCode(),
-			ReflectionTestUtil.invoke(
-				wikiPage, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected WikiPage addWikiPage() throws Exception {
@@ -937,8 +951,6 @@ public class WikiPagePersistenceTest {
 		wikiPage.setMvccVersion(RandomTestUtil.nextLong());
 
 		wikiPage.setUuid(RandomTestUtil.randomString());
-
-		wikiPage.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		wikiPage.setResourcePrimKey(RandomTestUtil.nextLong());
 
@@ -953,6 +965,8 @@ public class WikiPagePersistenceTest {
 		wikiPage.setCreateDate(RandomTestUtil.nextDate());
 
 		wikiPage.setModifiedDate(RandomTestUtil.nextDate());
+
+		wikiPage.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		wikiPage.setNodeId(RandomTestUtil.nextLong());
 

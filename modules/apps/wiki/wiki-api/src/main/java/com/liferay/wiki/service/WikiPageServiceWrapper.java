@@ -182,6 +182,25 @@ public class WikiPageServiceWrapper
 		_wikiPageService.discardDraft(nodeId, title, version);
 	}
 
+	/**
+	 * Returns the latest wiki page matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the wiki page external reference code
+	 * @return the latest matching wiki page, or <code>null</code> if no
+	 matching wiki page could be found
+	 */
+	@Override
+	public com.liferay.wiki.model.WikiPage
+			fetchLatestPageByExternalReferenceCode(
+				long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiPageService.fetchLatestPageByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	@Override
 	public com.liferay.wiki.model.WikiPage fetchPage(
 			long nodeId, String title, double version)
@@ -204,6 +223,24 @@ public class WikiPageServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _wikiPageService.getDraftPage(nodeId, title);
+	}
+
+	/**
+	 * Returns the latest wiki page matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the wiki page external reference code
+	 * @return the latest matching wiki page
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public com.liferay.wiki.model.WikiPage getLatestPageByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _wikiPageService.getLatestPageByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	@Override

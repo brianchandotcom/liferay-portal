@@ -37,10 +37,6 @@ public class WikiPageTable extends BaseTable<WikiPageTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<WikiPageTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<WikiPageTable, String> externalReferenceCode =
-		createColumn(
-			"externalReferenceCode", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<WikiPageTable, Long> pageId = createColumn(
 		"pageId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<WikiPageTable, Long> resourcePrimKey = createColumn(
@@ -57,6 +53,10 @@ public class WikiPageTable extends BaseTable<WikiPageTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<WikiPageTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<WikiPageTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<WikiPageTable, Long> nodeId = createColumn(
 		"nodeId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<WikiPageTable, String> title = createColumn(

@@ -132,6 +132,20 @@ public interface WikiPageService extends BaseService {
 	public void discardDraft(long nodeId, String title, double version)
 		throws PortalException;
 
+	/**
+	 * Returns the latest wiki page matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the wiki page external reference code
+	 * @return the latest matching wiki page, or <code>null</code> if no
+	 matching wiki page could be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPage fetchLatestPageByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage fetchPage(long nodeId, String title, double version)
 		throws PortalException;
@@ -143,6 +157,20 @@ public interface WikiPageService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public WikiPage getDraftPage(long nodeId, String title)
+		throws PortalException;
+
+	/**
+	 * Returns the latest wiki page matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the wiki page external reference code
+	 * @return the latest matching wiki page
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public WikiPage getLatestPageByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

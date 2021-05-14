@@ -35,7 +35,6 @@ public class WikiPageSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setPageId(model.getPageId());
 		soapModel.setResourcePrimKey(model.getResourcePrimKey());
 		soapModel.setGroupId(model.getGroupId());
@@ -44,6 +43,7 @@ public class WikiPageSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
 		soapModel.setNodeId(model.getNodeId());
 		soapModel.setTitle(model.getTitle());
 		soapModel.setVersion(model.getVersion());
@@ -128,14 +128,6 @@ public class WikiPageSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public String getExternalReferenceCode() {
-		return _externalReferenceCode;
-	}
-
-	public void setExternalReferenceCode(String externalReferenceCode) {
-		_externalReferenceCode = externalReferenceCode;
-	}
-
 	public long getPageId() {
 		return _pageId;
 	}
@@ -198,6 +190,14 @@ public class WikiPageSoap implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+	}
+
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
 	}
 
 	public long getNodeId() {
@@ -330,7 +330,6 @@ public class WikiPageSoap implements Serializable {
 
 	private long _mvccVersion;
 	private String _uuid;
-	private String _externalReferenceCode;
 	private long _pageId;
 	private long _resourcePrimKey;
 	private long _groupId;
@@ -339,6 +338,7 @@ public class WikiPageSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _externalReferenceCode;
 	private long _nodeId;
 	private String _title;
 	private double _version;

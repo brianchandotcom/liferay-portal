@@ -178,6 +178,23 @@ public class WikiPageServiceUtil {
 		getService().discardDraft(nodeId, title, version);
 	}
 
+	/**
+	 * Returns the latest wiki page matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the wiki page external reference code
+	 * @return the latest matching wiki page, or <code>null</code> if no
+	 matching wiki page could be found
+	 */
+	public static WikiPage fetchLatestPageByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchLatestPageByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	public static WikiPage fetchPage(long nodeId, String title, double version)
 		throws PortalException {
 
@@ -195,6 +212,23 @@ public class WikiPageServiceUtil {
 		throws PortalException {
 
 		return getService().getDraftPage(nodeId, title);
+	}
+
+	/**
+	 * Returns the latest wiki page matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the wiki page external reference code
+	 * @return the latest matching wiki page
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static WikiPage getLatestPageByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getLatestPageByExternalReferenceCode(
+			groupId, externalReferenceCode);
 	}
 
 	public static List<WikiPage> getNodePages(long nodeId, int max)

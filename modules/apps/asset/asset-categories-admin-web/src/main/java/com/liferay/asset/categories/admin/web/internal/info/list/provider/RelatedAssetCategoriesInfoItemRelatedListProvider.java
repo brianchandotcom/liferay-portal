@@ -100,8 +100,10 @@ public class RelatedAssetCategoriesInfoItemRelatedListProvider
 
 		return InfoPage.of(
 			categories, pagination,
-			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsCount(assetEntry.getEntryId()));
+			() ->
+				_assetEntryAssetCategoryRelLocalService.
+					getAssetEntryAssetCategoryRelsCount(
+						assetEntry.getEntryId()));
 	}
 
 	@Reference

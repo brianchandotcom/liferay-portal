@@ -107,6 +107,18 @@ public interface AssetPublisherWebConfiguration {
 	public boolean manualExportEnabled();
 
 	/**
+	 * Set this to <code>true</code> to disable autoscroll when opening
+	 * an asset.
+	 *
+	 * @return <code>true</code> autoScroll is enabled.
+	 */
+	@Meta.AD(
+		deflt = "true", description = "enable-autoscroll-key-description",
+		name = "enable-autoscroll", required = false
+	)
+	public boolean enableAutoscroll();
+
+	/**
 	 * Set this to <code>true</code> to search assets in Asset Publisher from
 	 * the index. Set this to <code>false</code> to search assets in Asset
 	 * Publisher from the database.

@@ -529,29 +529,19 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
-		LexiconEntry.gotoAdd();
+		JSONSegmentsentry.addSegment(
+			fieldName = "Screen Name",
+			groupName = "Global",
+			operator = "equals",
+			segmentName = "Segment With User1",
+			text = "usersn1");
 
-		Segmentation.addProperties(propertyOption = "Screen Name");
-
-		Segmentation.fillTitle(titleField = "Segment With User1");
-
-		Segmentation.fillProperty(propertyField = "usersn1");
-
-		Button.clickSave();
-
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoAdd();
-
-		Segmentation.addProperties(propertyOption = "Screen Name");
-
-		Segmentation.fillTitle(titleField = "Segment With User2");
-
-		Segmentation.fillProperty(propertyField = "usersn2");
-
-		Button.clickSave();
-
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		JSONSegmentsentry.addSegment(
+			fieldName = "Screen Name",
+			groupName = "Global",
+			operator = "equals",
+			segmentName = "Segment With User2",
+			text = "usersn2");
 
 		LexiconEntry.gotoAdd();
 
@@ -619,29 +609,19 @@ definition {
 			userLastName = "userln2",
 			userScreenName = "usersn2");
 
-		LexiconEntry.gotoAdd();
+		JSONSegmentsentry.addSegment(
+			fieldName = "First Name",
+			groupName = "Global",
+			operator = "equals",
+			segmentName = "Segment With User1",
+			text = "userfn1");
 
-		Segmentation.addProperties(propertyOption = "First Name");
-
-		Segmentation.fillTitle(titleField = "Segment With User1");
-
-		Segmentation.fillProperty(propertyField = "userfn1");
-
-		Button.clickSave();
-
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoAdd();
-
-		Segmentation.addProperties(propertyOption = "Screen Name");
-
-		Segmentation.fillTitle(titleField = "Segment With User2");
-
-		Segmentation.fillProperty(propertyField = "userfn2");
-
-		Button.clickSave();
-
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		JSONSegmentsentry.addSegment(
+			fieldName = "First Name",
+			groupName = "Global",
+			operator = "equals",
+			segmentName = "Segment With User2",
+			text = "userfn2");
 
 		LexiconEntry.gotoAdd();
 

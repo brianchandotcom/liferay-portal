@@ -632,6 +632,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER_CONFIGURATION_FIXED_WIDTH</td>
+	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'max-xl')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTAINER_CONFIGURATION_JUSTIFY_CONTENT</td>
 	<td>xpath=(//div[contains(@class,'page-editor__topper__bar') and contains(.,'Container')]//following-sibling::div[contains(@class,'page-editor__topper__content')])[${key_position}]/div[contains(@class,'page-editor__container')][contains(@class,'justify-content-${key_justifyContent}')]</td>
 	<td></td>

@@ -61,6 +61,9 @@ definition {
 		else if ("${widgetName}" == "Documents and Media") {
 			var portletId = "com_liferay_document_library_web_portlet_DLPortlet";
 		}
+		else if ("${widgetName}" == "Form") {
+			var portletId = "com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet";
+		}
 		else if ("${widgetName}" == "Highest Rated Assets") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_HighestRatedAssetsPortlet";
 		}

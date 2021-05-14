@@ -29,6 +29,7 @@
 				"PortletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
 			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
 			"portletSetupCss": "",
 			"portletSetupPortletDecoratorId": "barebone",
 			"portletSetupUseCustomTitle": "false",

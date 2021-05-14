@@ -71,10 +71,14 @@ public class DLAudioFFMPEGAudioConverterTest {
 
 	@Test
 	public void testDoesNotGenerateAudioPreview() throws Exception {
-		FileEntry fileEntry = _createAudioFileEntry("audio.wav");
+		_withDLAudioFFMPEGAudioConverterConfiguration(
+			false,
+			() -> {
+				FileEntry fileEntry = _createAudioFileEntry("audio.wav");
 
-		Assert.assertFalse(
-			AudioProcessorUtil.hasAudio(fileEntry.getFileVersion()));
+				Assert.assertFalse(
+					AudioProcessorUtil.hasAudio(fileEntry.getFileVersion()));
+			});
 	}
 
 	@ExpectedLogs(
@@ -97,7 +101,8 @@ public class DLAudioFFMPEGAudioConverterTest {
 	public void testDoesNotGenerateAudioPreviewIfTheAudioIsCorrupt()
 		throws Exception {
 
-		_withDLAudioFFMPEGAudioConverterEnabled(
+		_withDLAudioFFMPEGAudioConverterConfiguration(
+			true,
 			() -> {
 				FileEntry fileEntry = _createAudioFileEntry(
 					"audio_corrupt.wav");
@@ -109,7 +114,8 @@ public class DLAudioFFMPEGAudioConverterTest {
 
 	@Test
 	public void testGeneratesAudioPreviewIfEnabled() throws Exception {
-		_withDLAudioFFMPEGAudioConverterEnabled(
+		_withDLAudioFFMPEGAudioConverterConfiguration(
+			true,
 			() -> {
 				FileEntry fileEntry = _createAudioFileEntry("audio.wav");
 
@@ -131,13 +137,13 @@ public class DLAudioFFMPEGAudioConverterTest {
 			FileUtil.getBytes(getClass(), fileName), _serviceContext);
 	}
 
-	private void _withDLAudioFFMPEGAudioConverterEnabled(
-			UnsafeRunnable<Exception> unsafeRunnable)
+	private void _withDLAudioFFMPEGAudioConverterConfiguration(
+			boolean enabled, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		Dictionary<String, Object> dictionary =
 			HashMapDictionaryBuilder.<String, Object>put(
-				"enabled", true
+				"enabled", enabled
 			).build();
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =

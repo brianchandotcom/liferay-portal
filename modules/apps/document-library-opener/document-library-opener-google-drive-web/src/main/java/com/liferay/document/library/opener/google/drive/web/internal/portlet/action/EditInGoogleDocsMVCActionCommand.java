@@ -101,8 +101,9 @@ public class EditInGoogleDocsMVCActionCommand extends BaseMVCActionCommand {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
-			repositoryId, folderId, null, contentType, title, StringPool.BLANK,
-			StringPool.BLANK, new byte[0], serviceContext);
+			null, repositoryId, folderId, null, contentType, title,
+			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null,
+			serviceContext);
 
 		_dlAppService.checkOutFileEntry(
 			fileEntry.getFileEntryId(), serviceContext);

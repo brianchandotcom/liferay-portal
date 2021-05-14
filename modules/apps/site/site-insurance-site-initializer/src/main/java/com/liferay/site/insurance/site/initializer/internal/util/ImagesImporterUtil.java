@@ -61,8 +61,9 @@ public class ImagesImporterUtil {
 			}
 
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-				userId, groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				fileName, MimeTypesUtil.getContentType(fileName), bytes,
+				null, userId, groupId,
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+				MimeTypesUtil.getContentType(fileName), bytes, null, null,
 				ServiceContextThreadLocal.getServiceContext());
 
 			fileEntries.add(fileEntry);

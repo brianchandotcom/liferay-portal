@@ -154,9 +154,10 @@ public class DLImporter {
 			File file = FileUtil.createTempFile(inputStream);
 
 			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-				userId, repository.getRepositoryId(), dlFolder.getFolderId(),
-				fileName, MimeTypesUtil.getContentType(file), title,
-				description, StringPool.BLANK, file, serviceContext);
+				null, userId, repository.getRepositoryId(),
+				dlFolder.getFolderId(), fileName,
+				MimeTypesUtil.getContentType(file), title, description,
+				StringPool.BLANK, file, null, null, serviceContext);
 
 			dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
 				fileEntry.getFileEntryId());

@@ -125,14 +125,15 @@ public class BlogPostingImageResourceImpl
 				"blogPostingImage", BlogPostingImage.class);
 
 		FileEntry fileEntry = _dlAppService.addFileEntry(
-			siteId, folder.getFolderId(), binaryFile.getFileName(),
+			null, siteId, folder.getFolderId(), binaryFile.getFileName(),
 			binaryFile.getContentType(),
 			blogPostingImageOptional.map(
 				BlogPostingImage::getTitle
 			).orElse(
 				binaryFile.getFileName()
 			),
-			null, null, binaryFile.getInputStream(), binaryFile.getSize(),
+			null, null, binaryFile.getInputStream(), binaryFile.getSize(), null,
+			null,
 			ServiceContextRequestUtil.createServiceContext(
 				siteId, contextHttpServletRequest,
 				blogPostingImageOptional.map(

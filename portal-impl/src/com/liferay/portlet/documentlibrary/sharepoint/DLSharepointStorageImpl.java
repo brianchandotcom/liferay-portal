@@ -394,8 +394,8 @@ public class DLSharepointStorageImpl extends BaseSharepointStorageImpl {
 				}
 
 				DLAppServiceUtil.addFileEntry(
-					groupId, parentFolderId, title, contentType, title,
-					description, changeLog, file, serviceContext);
+					null, groupId, parentFolderId, title, contentType, title,
+					description, changeLog, file, null, null, serviceContext);
 			}
 		}
 		finally {

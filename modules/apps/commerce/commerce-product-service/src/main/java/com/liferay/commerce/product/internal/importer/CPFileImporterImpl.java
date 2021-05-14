@@ -615,9 +615,9 @@ public class CPFileImporterImpl implements CPFileImporter {
 		byte[] byteArray = FileUtil.getBytes(inputStream);
 
 		return _dlAppLocalService.addFileEntry(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
-			fileName, StringPool.BLANK, StringPool.BLANK, byteArray,
+			fileName, StringPool.BLANK, StringPool.BLANK, byteArray, null, null,
 			serviceContext);
 	}
 

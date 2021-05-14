@@ -430,7 +430,7 @@ public class DocumentResourceImpl
 
 		return _toDocument(
 			_dlAppService.addFileEntry(
-				repositoryId, documentFolderId, binaryFile.getFileName(),
+				null, repositoryId, documentFolderId, binaryFile.getFileName(),
 				binaryFile.getContentType(),
 				documentOptional.map(
 					Document::getTitle
@@ -442,7 +442,8 @@ public class DocumentResourceImpl
 				).orElse(
 					null
 				),
-				null, binaryFile.getInputStream(), binaryFile.getSize(),
+				null, binaryFile.getInputStream(), binaryFile.getSize(), null,
+				null,
 				_getServiceContext(
 					() -> new Long[0], () -> new String[0], documentFolderId,
 					documentOptional, groupId)));

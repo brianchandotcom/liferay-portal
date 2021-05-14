@@ -70,10 +70,10 @@ public class DocumentLibraryDDMFormFieldValueTransformer
 			tempFileEntry.getFileName());
 
 		return DLAppServiceUtil.addFileEntry(
-			tempFileEntry.getGroupId(), 0, fileName,
+			null, tempFileEntry.getGroupId(), 0, fileName,
 			tempFileEntry.getMimeType(), fileName, StringPool.BLANK,
 			StringPool.BLANK, tempFileEntry.getContentStream(),
-			tempFileEntry.getSize(), new ServiceContext());
+			tempFileEntry.getSize(), null, null, new ServiceContext());
 	}
 
 	protected FileEntry fetchTempFileEntry(String value)

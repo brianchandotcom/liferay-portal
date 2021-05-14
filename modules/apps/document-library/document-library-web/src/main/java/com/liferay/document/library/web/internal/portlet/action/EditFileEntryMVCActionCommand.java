@@ -433,11 +433,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				tempFileEntry.getGroupId(), folderId, originalSelectedFileName);
 
 			FileEntry fileEntry = _dlAppService.addFileEntry(
-				repositoryId, folderId, uniqueFileName,
+				null, repositoryId, folderId, uniqueFileName,
 				tempFileEntry.getMimeType(),
 				FileUtil.stripExtension(uniqueFileName), description, changeLog,
-				tempFileEntry.getContentStream(), tempFileEntry.getSize(),
-				serviceContext);
+				tempFileEntry.getContentStream(), tempFileEntry.getSize(), null,
+				null, serviceContext);
 
 			_assetDisplayPageEntryFormProcessor.process(
 				FileEntry.class.getName(), fileEntry.getFileEntryId(),
@@ -1113,8 +1113,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 						uploadPortletRequest.getFileName("file")));
 
 				fileEntry = _dlAppService.addFileEntry(
-					repositoryId, folderId, sourceFileName, contentType, title,
-					description, changeLog, inputStream, size, serviceContext);
+					null, repositoryId, folderId, sourceFileName, contentType,
+					title, description, changeLog, inputStream, size, null,
+					null, serviceContext);
 			}
 			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
 
@@ -1124,9 +1125,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getScopeGroupId(), folderId, sourceFileName);
 
 				fileEntry = _dlAppService.addFileEntry(
-					repositoryId, folderId, uniqueFileName, contentType,
+					null, repositoryId, folderId, uniqueFileName, contentType,
 					FileUtil.stripExtension(uniqueFileName), description,
-					changeLog, inputStream, size, serviceContext);
+					changeLog, inputStream, size, null, null, serviceContext);
 
 				JSONObject jsonObject = JSONUtil.put(
 					"fileEntryId", fileEntry.getFileEntryId());

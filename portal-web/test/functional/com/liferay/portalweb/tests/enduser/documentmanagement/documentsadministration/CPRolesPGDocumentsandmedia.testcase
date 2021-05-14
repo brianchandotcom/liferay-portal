@@ -134,6 +134,12 @@ definition {
 			pageName = "Documents and Media Page",
 			siteName = "Site Name");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name");
+
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
@@ -294,6 +300,10 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
 		Permissions.addDMFolderLoginUserPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder Name",
@@ -420,6 +430,10 @@ definition {
 		Portlet.addPG(
 			pageName = "Documents and Media Page",
 			portletName = "Documents and Media");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		Permissions.addDMFolderLoginUserPG(
 			dmFolderDescription = "DM Folder Description",

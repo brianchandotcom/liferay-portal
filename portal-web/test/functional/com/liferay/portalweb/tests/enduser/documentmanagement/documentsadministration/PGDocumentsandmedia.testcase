@@ -1446,6 +1446,10 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
 		DMDocument.setRootFolder(dmRootFolderName = "Test Folder");
 
 		Navigator.openSiteURL(siteName = "Site Name");
@@ -1989,6 +1993,12 @@ definition {
 			groupName = "Site Name 2",
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
+
+		Navigator.gotoSitePage(
+			pageName = "Documents and Media Page",
+			siteName = "Site Name 2");
+
+		DMDocument.enableActionsMenuOnPortlet();
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.FieldArray;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.io.Serializable;
@@ -105,6 +106,10 @@ public class ObjectEntryModelDocumentContributor
 				objectEntry.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
+			if (!objectField.isIndexed()) {
+				continue;
+			}
+
 			String name = objectField.getName();
 
 			Object value = values.get(name);
@@ -114,13 +119,28 @@ public class ObjectEntryModelDocumentContributor
 					_log.debug(
 						StringBundler.concat(
 							"Object entry ", objectEntry.getObjectEntryId(),
-							" has name \"", name, "\" with a null value"));
+							" has field \"", name, "\" with a null value"));
 				}
 
 				continue;
 			}
 
 			boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
+			String locale = objectField.getLocale();
+			String type = objectField.getType();
+
+			if ((!type.equals("String") || indexedAsKeyword) &&
+				!Validator.isBlank(locale)) {
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Object entry ", objectEntry.getObjectEntryId(),
+							" has field \"", name,
+							"\" which is not indexed as full-text. Locale ",
+							locale, " will be ignored"));
+				}
+			}
 
 			if (indexedAsKeyword) {
 				_addNestedField(
@@ -152,7 +172,18 @@ public class ObjectEntryModelDocumentContributor
 					fieldArray, name, "value_long", String.valueOf(value));
 			}
 			else if (value instanceof String) {
-				_addNestedField(fieldArray, name, "value_text", (String)value);
+				if (Validator.isBlank(locale)) {
+					_addNestedField(
+						fieldArray, name, "value_text", (String)value);
+				}
+				else {
+					_addNestedField(
+						fieldArray, name, "value_" + locale, (String)value);
+
+					_addNestedField(
+						fieldArray, name, "value_" + locale + "_sortable",
+						(String)value);
+				}
 			}
 			else if (value instanceof byte[]) {
 				_addNestedField(
@@ -164,7 +195,7 @@ public class ObjectEntryModelDocumentContributor
 					_log.warn(
 						StringBundler.concat(
 							"Object entry ", objectEntry.getObjectEntryId(),
-							" has name \"", name, "\" with unsupported value ",
+							" has field \"", name, "\" with unsupported value ",
 							value));
 				}
 			}

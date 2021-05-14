@@ -1,104 +1,13 @@
 definition {
 
-    macro goToInstanceSettingsAC{
+	macro assertSuccessfulConnection {
+		AssertElementPresent(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE");
+	}
 
-   		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+	macro connectDXPtoAnalyticsCloud {
+		var siteName = "${siteName}";
 
-		Click(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_DXP_OPTION");
-    }
-
-    macro navToAnalyticsCloudConnectionMenu {
-
-        Click(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR");
-
-    }
-
-    macro navToSyncedSitesMenu {
-
-        Click(locator1 = "ACDXPSettings#SYNCED_SITES_NAV_SIDEBAR");
-    }
-
-    macro navToSyncedContactDataMenu {
-
-        Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_NAV_SIDEBAR");
-
-    }
-
-    macro selectAvailableProperties {
-
-        var key_AvailablePropertyName = "${availablePropertyName}";
-
-        Click(locator1 = "ACDXPSettings#AVAILABLE_PROPERTY_NAME");
-
-        Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
-    }
-
-    macro createCombinedProperties {
-
-        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-        Click(locator1 = "ACDXPSettings#COMBINATED_PROPERTY_OPTION");
-
-        if(isSet(siteName)){
-
-            Click(locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD");
-
-            Type(
-                locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
-                value1 = "${siteName}");
-
-            KeyPress(
-                locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
-                value1 = "\ENTER");
-        }
-
-        Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
-
-        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-    }
-
-    macro createMultipleProperties {
-
-        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-        Click(locator1 = "ACDXPSettings#MULTIPLE_PROPERTY_OPTION");
-
-        for (var propertyName : list "${propertyList}") {
-
-            key_propertyName = "${propertyName}";
-
-            Click(locator1 = "ACDXPSettings#PROPERTY_NAME_CHECKBOX");
-        }
-
-        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-    }
-
-    macro syncContactData {
-
-        Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
-
-        Check.checkToggleSwitch(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_TOGGLE");
-
-        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-        Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-    }
-
-    macro assertSuccessfulConnection {
-
-        AssertElementPresent(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_CONNECTED_CONFIRMATION_MESSAGE");
-
-    }
-        
-    macro connectDXPtoAnalyticsCloud {
-
-        var siteName = "${siteName}";
-
-        ACDXPSettings.goToInstanceSettingsAC();
+		ACDXPSettings.goToInstanceSettingsAC();
 
 		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
 
@@ -106,26 +15,98 @@ definition {
 
 		Click(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
 
-        ACDXPSettings.assertSuccessfulConnection();
+		ACDXPSettings.assertSuccessfulConnection();
 
 		ACDXPSettings.navToSyncedSitesMenu();
 
-        ACDXPSettings.createCombinedProperties();
+		ACDXPSettings.createCombinedProperties();
 
-        ACDXPSettings.navToSyncedContactDataMenu();
+		ACDXPSettings.navToSyncedContactDataMenu();
 
-        ACDXPSettings.syncContactData();
-
+		ACDXPSettings.syncContactData();
 	}
 
-    macro disconnectDXPFromAnalyticsCloud {
+	macro createCombinedProperties {
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
-        ACDXPSettings.goToInstanceSettingsAC();
+		Click(locator1 = "ACDXPSettings#COMBINATED_PROPERTY_OPTION");
 
-        ClickNoError(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+		if (isSet(siteName)) {
+			Click(locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD");
 
-        AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?");
+			Type(
+				locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
+				value1 = "${siteName}");
 
-    }
+			KeyPress(
+				locator1 = "ACDXPSettings#SYNCED_SITES_SEARCH_FIELD",
+				value1 = "\ENTER");
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+	}
+
+	macro createMultipleProperties {
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Click(locator1 = "ACDXPSettings#MULTIPLE_PROPERTY_OPTION");
+
+		for (var propertyName : list "${propertyList}") {
+			key_propertyName = "${propertyName}";
+
+			Click(locator1 = "ACDXPSettings#PROPERTY_NAME_CHECKBOX");
+		}
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+	}
+
+	macro disconnectDXPFromAnalyticsCloud {
+		ACDXPSettings.goToInstanceSettingsAC();
+
+		ClickNoError(locator1 = "ACDXPSettings#CONNECT_DISCONNECT_BUTTON");
+
+		AssertConfirm.assertConfirmationNoError(value1 = "Are you sure you want to disconnect your Analytics Cloud workspace from this DXP instance?");
+	}
+
+	macro goToInstanceSettingsAC {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		Click(locator1 = "ACDXPSettings#ANALYTICS_CLOUD_DXP_OPTION");
+	}
+
+	macro navToAnalyticsCloudConnectionMenu {
+		Click(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR");
+	}
+
+	macro navToSyncedContactDataMenu {
+		Click(locator1 = "ACDXPSettings#SYNCED_CONTACT_DATA_NAV_SIDEBAR");
+	}
+
+	macro navToSyncedSitesMenu {
+		Click(locator1 = "ACDXPSettings#SYNCED_SITES_NAV_SIDEBAR");
+	}
+
+	macro selectAvailableProperties {
+		var key_AvailablePropertyName = "${availablePropertyName}";
+
+		Click(locator1 = "ACDXPSettings#AVAILABLE_PROPERTY_NAME");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
+	}
+
+	macro syncContactData {
+		Click(locator1 = "ACDXPSettings#SYNC_CONTACTS_OPTION");
+
+		Check.checkToggleSwitch(locator1 = "ACDXPSettings#SYNC_ALL_CONTACTS_TOGGLE");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+
+		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+	}
 
 }

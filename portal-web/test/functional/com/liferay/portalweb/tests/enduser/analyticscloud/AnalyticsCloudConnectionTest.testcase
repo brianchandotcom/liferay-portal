@@ -18,9 +18,9 @@ definition {
 
 		ACLogin.loginAs();
 
-        ACWorkspace.openWorkspace();
+		ACWorkspace.openWorkspace();
 
-        ACSettings.takeTokenFromAnalyticsCloud();
+		ACSettings.takeTokenFromAnalyticsCloud();
 
 		// Go to DXP portal
 
@@ -30,8 +30,7 @@ definition {
 
 		Navigator.openURL();
 
-        ACDXPSettings.connectDXPtoAnalyticsCloud();
-
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 	tearDown {
@@ -49,9 +48,7 @@ definition {
 	@description = "Validate if the user can connect AC to DXP"
 	@priority = "5"
 	test ConnectACtoDXP {
-
-        ACDXPSettings.connectDXPtoAnalyticsCloud();
-		
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 }

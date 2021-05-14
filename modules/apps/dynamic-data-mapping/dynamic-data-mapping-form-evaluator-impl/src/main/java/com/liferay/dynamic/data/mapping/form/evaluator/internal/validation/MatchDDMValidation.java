@@ -25,15 +25,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true, property = "ddm.validation.name=match",
+	immediate = true, property = "ddm.validation.data.type=string",
 	service = DDMValidation.class
 )
 public class MatchDDMValidation implements DDMValidation {
-
-	@Override
-	public String getDataType() {
-		return "string";
-	}
 
 	@Override
 	public String getLabel(Locale locale) {

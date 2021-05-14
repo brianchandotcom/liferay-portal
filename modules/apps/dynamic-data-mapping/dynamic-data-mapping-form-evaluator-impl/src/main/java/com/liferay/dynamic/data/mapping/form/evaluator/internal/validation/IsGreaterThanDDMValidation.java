@@ -25,15 +25,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcela Cunha
  */
 @Component(
-	immediate = true, property = "ddm.validation.name=is-greater-than",
+	immediate = true, property = "ddm.validation.data.type=numeric",
 	service = DDMValidation.class
 )
 public class IsGreaterThanDDMValidation implements DDMValidation {
-
-	@Override
-	public String getDataType() {
-		return "numeric";
-	}
 
 	@Override
 	public String getLabel(Locale locale) {

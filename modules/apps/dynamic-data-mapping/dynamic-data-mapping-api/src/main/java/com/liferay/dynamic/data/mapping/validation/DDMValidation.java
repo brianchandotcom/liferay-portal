@@ -21,8 +21,6 @@ import java.util.Locale;
  */
 public interface DDMValidation {
 
-	public String getDataType();
-
 	public String getLabel(Locale locale);
 
 	public String getName();

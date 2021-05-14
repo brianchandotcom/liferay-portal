@@ -45,11 +45,13 @@ public class ObjectFieldLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectField addObjectField(
-			long userId, long objectDefinitionId, String name, String type)
+			long userId, long objectDefinitionId, String name, String type,
+			boolean indexed, boolean indexedAsKeyword, String locale)
 		throws PortalException {
 
 		return getService().addObjectField(
-			userId, objectDefinitionId, name, type);
+			userId, objectDefinitionId, name, type, indexed, indexedAsKeyword,
+			locale);
 	}
 
 	/**

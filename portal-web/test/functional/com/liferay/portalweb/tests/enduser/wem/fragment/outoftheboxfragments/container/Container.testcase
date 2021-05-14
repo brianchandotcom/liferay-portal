@@ -153,10 +153,8 @@ definition {
 
 			PageEditor.viewContainerStyle(
 				containerWidth = "Fluid",
-				paddingBottom = "0",
 				paddingLeft = "0",
 				paddingRight = "0",
-				paddingTop = "0",
 				position = "1");
 		}
 

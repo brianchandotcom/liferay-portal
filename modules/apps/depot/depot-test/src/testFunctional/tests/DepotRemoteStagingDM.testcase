@@ -651,8 +651,10 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -688,8 +690,10 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",
@@ -719,8 +723,10 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		AssertElementNotPresent(
 			key_imageName = "Document_2.jpg",
@@ -749,8 +755,10 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		AssertElementNotPresent(
 			key_imageName = "Document_2.jpg",
@@ -1859,8 +1867,10 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1896,8 +1906,10 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		AssertVisible(
 			key_imageName = "Document_1.jpg",
@@ -1911,8 +1923,10 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -1949,8 +1963,10 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-open-graph",
+			key_url = "site-configuration-google-pagespeed",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+
+		Navigator.gotoNavTab(navTab = "Open Graph");
 
 		AssertVisible(
 			key_imageName = "Document_2.jpg",

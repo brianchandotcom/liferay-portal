@@ -2156,17 +2156,18 @@ public class Order implements Serializable {
 
 	@DecimalMin("0")
 	@Schema
-	public Double getTaxAmount() {
+	@Valid
+	public BigDecimal getTaxAmount() {
 		return taxAmount;
 	}
 
-	public void setTaxAmount(Double taxAmount) {
+	public void setTaxAmount(BigDecimal taxAmount) {
 		this.taxAmount = taxAmount;
 	}
 
 	@JsonIgnore
 	public void setTaxAmount(
-		UnsafeSupplier<Double, Exception> taxAmountUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> taxAmountUnsafeSupplier) {
 
 		try {
 			taxAmount = taxAmountUnsafeSupplier.get();
@@ -2181,7 +2182,7 @@ public class Order implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Double taxAmount;
+	protected BigDecimal taxAmount;
 
 	@Schema
 	public String getTaxAmountFormatted() {
@@ -2210,6 +2211,35 @@ public class Order implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxAmountFormatted;
+
+	@DecimalMin("0")
+	@Schema
+	public Double getTaxAmountValue() {
+		return taxAmountValue;
+	}
+
+	public void setTaxAmountValue(Double taxAmountValue) {
+		this.taxAmountValue = taxAmountValue;
+	}
+
+	@JsonIgnore
+	public void setTaxAmountValue(
+		UnsafeSupplier<Double, Exception> taxAmountValueUnsafeSupplier) {
+
+		try {
+			taxAmountValue = taxAmountValueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Double taxAmountValue;
 
 	@DecimalMin("0")
 	@Schema
@@ -3682,6 +3712,16 @@ public class Order implements Serializable {
 			sb.append(_escape(taxAmountFormatted));
 
 			sb.append("\"");
+		}
+
+		if (taxAmountValue != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxAmountValue\": ");
+
+			sb.append(taxAmountValue);
 		}
 
 		if (total != null) {

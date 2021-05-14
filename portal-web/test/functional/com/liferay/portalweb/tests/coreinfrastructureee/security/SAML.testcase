@@ -1378,7 +1378,7 @@ definition {
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://www.able.com:9080",
-			userEmailAddress = "test@liferay.com");
+			userEmailAddress = "test@www.able.com");
 
 		User.openUsersAdmin(baseURL = "http://www.able.com:9080");
 

@@ -52,7 +52,9 @@ public class ObjectDefinitionTableClayDataSetDisplayView
 			clayTableSchemaField.setFieldName(objectField.getName());
 			clayTableSchemaField.setLabel(objectField.getName());
 
-			if (!Objects.equals(objectField.getType(), "Boolean")) {
+			if (!Objects.equals(objectField.getType(), "Blob") &&
+				objectField.isIndexed()) {
+
 				clayTableSchemaField.setSortable(true);
 			}
 

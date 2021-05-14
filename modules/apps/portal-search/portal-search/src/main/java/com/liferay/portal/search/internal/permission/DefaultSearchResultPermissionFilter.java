@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.FacetPostProcessor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -225,7 +226,20 @@ public class DefaultSearchResultPermissionFilter
 
 	private Boolean _hasCompanyScopeViewPermission(String className) {
 		try {
-			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
+			ResourcePermissionLocalService resourcePermissionLocalService =
+				ResourcePermissionLocalServiceUtil.getService();
+
+			if (resourcePermissionLocalService == null) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"The ResourcePermission service is not available. " +
+							"Skipping company resource check.");
+				}
+
+				return false;
+			}
+
+			if (resourcePermissionLocalService.hasResourcePermission(
 					_permissionChecker.getCompanyId(), className,
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(_permissionChecker.getCompanyId()),

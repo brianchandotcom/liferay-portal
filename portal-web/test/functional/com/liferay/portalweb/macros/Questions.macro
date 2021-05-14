@@ -589,7 +589,12 @@ definition {
 	}
 
 	macro openToQuestionDetails {
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}");
+		if (isSet(localization)) {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/-");
+		}
+		else {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}");
+		}
 	}
 
 	macro openToQuestionsTopic {

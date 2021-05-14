@@ -104,8 +104,8 @@ public class DLUploadFileEntryHandler implements UploadFileEntryHandler {
 			null, themeDisplay.getScopeGroupId(), folderId, uniqueFileName,
 			uploadPortletRequest.getContentType(parameterName), uniqueFileName,
 			_getDescription(uploadPortletRequest), StringPool.BLANK,
-			inputStream, uploadPortletRequest.getSize(parameterName),
-			null, null, _getServiceContext(uploadPortletRequest));
+			inputStream, uploadPortletRequest.getSize(parameterName), null,
+			null, _getServiceContext(uploadPortletRequest));
 	}
 
 	private FileEntry _editImageFileEntry(

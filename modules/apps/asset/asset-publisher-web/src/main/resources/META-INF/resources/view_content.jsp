@@ -58,12 +58,14 @@ if (Validator.isNotNull(assetPublisherViewContentDisplayContext.getReturnToFullP
 	</c:otherwise>
 </c:choose>
 
-<aui:script>
-	Liferay.once('allPortletsReady', () => {
-		document
-			.getElementById('p_p_id_<%= portletDisplay.getId() %>_')
-			.scrollIntoView();
-	});
-</aui:script>
+<c:if test="<%= assetPublisherDisplayContext.isEnabledAutoscroll() %>">
+	<aui:script>
+		Liferay.once('allPortletsReady', () => {
+			document
+				.getElementById('p_p_id_<%= portletDisplay.getId() %>_')
+				.scrollIntoView();
+		});
+	</aui:script>
+</c:if>
 
 <liferay-util:dynamic-include key="com.liferay.asset.publisher.web#/view_content.jsp#post" />

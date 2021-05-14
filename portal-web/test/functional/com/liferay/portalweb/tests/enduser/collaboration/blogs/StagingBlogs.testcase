@@ -89,7 +89,7 @@ definition {
 
 		Notifications.viewBadgeCount(
 			activePanel = "Notifications",
-			notificationCount = "3");
+			notificationCount = "2");
 
 		Notifications.gotoNotifications();
 

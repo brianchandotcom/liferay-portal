@@ -1,0 +1,128 @@
+@component-name = "portal-publications"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONPublications.enablePublications();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ApplicationsMenu.gotoPortlet(
+				category = "Publications",
+				panel = "Applications",
+				portlet = "Settings");
+
+			Publications.disablePublications();
+		}
+	}
+
+	@description = "Assert the conflict needs manually resovled on Forms within Publications."
+	@priority = "4"
+	test ConflictingPublicationsNeedManualResolution {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.editPageTitle(
+			formPageName = "Created Form Page Name",
+			formTitleNumber = "1");
+
+		Form.addTextField();
+
+		Form.editFieldLabelMetal(fieldValue = "Label");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
+		Form.editName(formName = "Created Form Name Edited");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Single Selection");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		Publications.gotoReviewChanges(publicationName = "Publication Name 1");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "Created Form Name Edited",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Form.deleteCP(formName = "Created Form Name");
+
+		Publications.gotoReviewChanges(publicationName = "Publication Name 2");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Guest",
+			changeTitle = "Created Form Name",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 2");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 2");
+
+		Publications.gotoPublish(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name 1");
+
+		Publications.discardChanges(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeTitle = "Created Form Name",
+			conflictingPublications = "true",
+			entryTitle = "Dynamic Data Mapping Structure");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name 1");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
+	}
+
+}

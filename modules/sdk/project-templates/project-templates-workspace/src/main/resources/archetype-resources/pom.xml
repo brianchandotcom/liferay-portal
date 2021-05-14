@@ -21,12 +21,8 @@
 #elseif (${liferayVersion.startsWith("7.2")})
 		<liferay.bom.version>7.2.1-1</liferay.bom.version>
 		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.2.1-ga2/liferay-ce-portal-tomcat-7.2.1-ga2-20191111141448326.tar.gz</liferay.workspace.bundle.url>
-#elseif (${liferayVersion.startsWith("7.3")})
-		<liferay.bom.version>7.3.6</liferay.bom.version>
-		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.3.6-ga7/liferay-ce-portal-tomcat-7.3.6-ga7-20210301155526191.tar.gz</liferay.workspace.bundle.url>
-#elseif (${liferayVersion.startsWith("7.4")})
-		<liferay.bom.version>7.4.0</liferay.bom.version>
-		<liferay.workspace.bundle.url>https://releases-cdn.liferay.com/portal/7.4.0-ga1/liferay-ce-portal-tomcat-7.4.0-ga1-20210419204607406.tar.gz</liferay.workspace.bundle.url>
+#else
+		<liferay.bom.version>${liferayVersion}</liferay.bom.version>
 #end
 		<liferay.repository.url>https://repository-cdn.liferay.com/nexus/content/groups/public/</liferay.repository.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

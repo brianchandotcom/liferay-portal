@@ -191,10 +191,7 @@ definition {
 		}
 		else {
 			User.firstLoginUI(
-				idpName = "${idpName}",
 				password = "test",
-				rememberMeChecked = "${rememberMeChecked}",
-				samlMultiIdPs = "${samlMultiIdPs}",
 				specificURL = "${spURL}",
 				userEmailAddress = "test@liferay.com");
 		}

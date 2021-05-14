@@ -407,11 +407,16 @@ components:
                     type: number
                 taxAmount:
                     example: 11
-                    format: double
+                    format: bigdecimal
                     minimum: 0
                     type: number
                 taxAmountFormatted:
                     type: string
+                taxAmountValue:
+                    example: 12
+                    format: double
+                    minimum: 0
+                    type: number
                 total:
                     example: 113
                     format: bigdecimal

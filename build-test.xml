@@ -5732,7 +5732,7 @@ war.path=${app.server.portal.dir}/</echo>
 								<not>
 									<resourcecontains
 										resource="@{patching.tool.dir}/logs/patching-tool.log"
-										substring="[*I] ${patch.name} :: Already installed"
+										substring="[*AI] ${patch.name} :: Already installed"
 									/>
 								</not>
 								<not>

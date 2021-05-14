@@ -27,3 +27,15 @@ dependencies {
 	testIntegrationCompile project(":apps:wiki:wiki-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }
+
+test {
+	if (project.hasProperty('excludeTests')) {
+		exclude project.property('excludeTests')
+	}
+}
+
+testIntegration {
+	if (project.hasProperty('excludeTests')) {
+		exclude project.property('excludeTests')
+	}
+}

@@ -96,8 +96,6 @@ definition {
 	@description = "This is a test for LPS-91000, LPS-95002, LPS-115224 and LPS-120693. Configure the Flex Column and Fixed Width Container styles."
 	@priority = "5"
 	test ConfigureFlexColumnAndFixedWidthContainerStyles {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "containerItemFlexEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a Container to page") {
@@ -232,9 +230,6 @@ definition {
 	@description = "This is a test for LPS-120693. Configure the Flex Column and Fluid Container styles."
 	@priority = "5"
 	test ConfigureFlexColumnAndFluidContainerStyles {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "containerItemFlexEnabled=&quot;true&quot;";
-
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
@@ -313,9 +308,6 @@ definition {
 	@description = "This is a test for LPS-120693. Configure the Flex Row and Fixed Width Container styles."
 	@priority = "5"
 	test ConfigureFlexRowAndFixedWidthContainerStyles {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "containerItemFlexEnabled=&quot;true&quot;";
-
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
@@ -394,8 +386,6 @@ definition {
 	@description = "This is a test for LPS-106776, LPS-111657 and LPS-120693. Configure the Flex Row and Fluid Container styles."
 	@priority = "5"
 	test ConfigureFlexRowAndFluidContainerStyles {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "containerItemFlexEnabled=&quot;true&quot;";
 		property portal.acceptance = "true";
 
 		task ("Add a Container to page") {

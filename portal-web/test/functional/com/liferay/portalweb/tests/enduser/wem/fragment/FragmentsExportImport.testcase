@@ -448,9 +448,6 @@ definition {
 	@description = "This is a use case for LPS-120198. Export and import fragment composition linked to page."
 	@priority = "4"
 	test ExportImportFragmentCompositionWithMappedPage {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "layoutMappingEnabled=&quot;true&quot;";
-
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

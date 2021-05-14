@@ -998,8 +998,6 @@ definition {
 	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {
-		property portal.acceptance = "true";
-
 		task ("Add two pages to root and add one child page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

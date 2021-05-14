@@ -41,8 +41,10 @@ import com.liferay.portal.security.ldap.util.LDAPUtil;
 import java.io.Serializable;
 
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 
 import javax.naming.Binding;
@@ -55,6 +57,8 @@ import javax.naming.ldap.LdapContext;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -453,8 +457,62 @@ public class LDAPUserExporterImpl implements UserExporter {
 		_userLocalService = userLocalService;
 	}
 
+	private User _getAnonymousUser(long companyId) throws Exception {
+		String filterString = String.format(
+			"(&(service.factoryPid=%s)(companyId=%s))",
+			"com.liferay.user.associated.data.web.internal.configuration." +
+				"AnonymousUserConfiguration",
+			companyId);
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filterString);
+
+		if (configurations == null) {
+			return null;
+		}
+
+		Optional<Configuration> configurationOptional = Optional.of(
+			configurations[0]);
+
+		if (!configurationOptional.isPresent()) {
+			return null;
+		}
+
+		Configuration configuration = configurationOptional.get();
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		long anonymousUserId = (long)properties.get("userId");
+
+		return _userLocalService.fetchUser(anonymousUserId);
+	}
+
+	private boolean _isAnonymousUser(User user) {
+		try {
+			User anonymousUser = _getAnonymousUser(user.getCompanyId());
+
+			if ((anonymousUser != null) &&
+				(user.getUserId() == anonymousUser.getUserId())) {
+
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+
+			return false;
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserExporterImpl.class);
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	private ConfigurationProvider<LDAPAuthConfiguration>
 		_ldapAuthConfigurationProvider;

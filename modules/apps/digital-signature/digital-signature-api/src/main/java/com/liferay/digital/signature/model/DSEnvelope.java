@@ -14,6 +14,8 @@
 
 package com.liferay.digital.signature.model;
 
+import java.time.LocalDateTime;
+
 import java.util.List;
 
 /**
@@ -21,6 +23,10 @@ import java.util.List;
  * @author José Abelenda
  */
 public class DSEnvelope {
+
+	public LocalDateTime getCreatedLocalDateTime() {
+		return createdDateTime;
+	}
 
 	public List<DSDocument> getDSDocuments() {
 		return dsDocuments;
@@ -44,6 +50,10 @@ public class DSEnvelope {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public void setCreatedLocalDateTime(LocalDateTime createdDateTime) {
+		this.createdDateTime = createdDateTime;
 	}
 
 	public void setDSDocuments(List<DSDocument> dsDocuments) {
@@ -70,6 +80,7 @@ public class DSEnvelope {
 		this.status = status;
 	}
 
+	protected LocalDateTime createdDateTime;
 	protected List<DSDocument> dsDocuments;
 	protected String dsEnvelopeId;
 	protected List<DSRecipient> dsRecipients;

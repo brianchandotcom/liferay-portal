@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -115,6 +118,17 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		}
 	}
 
+	private LocalDateTime _parseLocalDateTime(String localDateTimeString) {
+		try {
+			return LocalDateTime.parse(
+				localDateTimeString,
+				DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSX"));
+		}
+		catch (Exception exception) {
+			return null;
+		}
+	}
+
 	private DSEnvelope _toDSEnvelope(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return new DSEnvelope();
@@ -122,7 +136,10 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 		return new DSEnvelope() {
 			{
+				createdDateTime = _parseLocalDateTime(
+					jsonObject.getString("createdDateTime"));
 				dsEnvelopeId = jsonObject.getString("envelopeId");
+				emailBlurb = jsonObject.getString("emailBlurb");
 				emailSubject = jsonObject.getString("emailSubject");
 				status = jsonObject.getString("status");
 			}

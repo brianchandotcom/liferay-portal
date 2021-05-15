@@ -34,10 +34,6 @@ import org.openqa.selenium.Proxy;
  */
 public class ProxyUtil {
 
-	public static BrowserMobProxy getBrowserMobProxy() {
-		return _proxyUtil._getBrowserMobProxy();
-	}
-
 	public static String getHarRecording(String jsonPath) throws IOException {
 		BrowserMobProxy browserMobProxy = getBrowserMobProxy();
 
@@ -70,6 +66,10 @@ public class ProxyUtil {
 		BrowserMobProxy browserMobProxy = getBrowserMobProxy();
 
 		browserMobProxy.endHar();
+	}
+
+	protected static BrowserMobProxy getBrowserMobProxy() {
+		return _proxyUtil._getBrowserMobProxy();
 	}
 
 	private BrowserMobProxy _getBrowserMobProxy() {

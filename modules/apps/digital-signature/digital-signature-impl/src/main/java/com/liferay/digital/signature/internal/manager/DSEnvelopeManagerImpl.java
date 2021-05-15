@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -58,20 +59,19 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public DSEnvelope getDSEnvelope(long groupId, String dsEnvelopeId) {
-		DSEnvelope dsEnvelope = _toDSEnvelope(
-			_dsHttp.get(
-				groupId,
-				StringBundler.concat(
-					"envelopes/", dsEnvelopeId,
-					"?include=recipients,documents")));
+		List<DSEnvelope> dsEnvelopes = getDSEnvelopes(
+			groupId, Collections.singletonList(dsEnvelopeId));
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Retrieved digital signature envelope ID " +
-					dsEnvelope.getDSEnvelopeId());
+		if (ListUtil.isNotEmpty(dsEnvelopes)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Retrieved digital signature envelope ID " + dsEnvelopeId);
+			}
+
+			return dsEnvelopes.get(0);
 		}
 
-		return dsEnvelope;
+		return new DSEnvelope();
 	}
 
 	@Override

@@ -19,12 +19,10 @@ import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
 import com.liferay.portal.crypto.hash.spi.CryptoHashProviderFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.aries.component.dsl.CachingServiceReference;
@@ -109,8 +107,13 @@ public class CryptoHashTrackerRegistrator {
 
 						try {
 							Map<String, ?> cryptoHashProviderProperties =
-								_buildProperties(
-									cryptoHashProviderFactory, properties);
+								HashMapBuilder.putAll(
+									properties
+								).put(
+									"crypto.hash.provider.factory.name",
+									cryptoHashProviderFactory.
+										getCryptoHashProviderFactoryName()
+								).build();
 
 							CryptoHashGenerator cryptoHashGenerator =
 								new CryptoHashGeneratorImpl(
@@ -143,27 +146,6 @@ public class CryptoHashTrackerRegistrator {
 		_cryptoHashVerifierServiceRegistration.unregister();
 
 		_osgiResult.close();
-	}
-
-	private Map<String, ?> _buildProperties(
-		CryptoHashProviderFactory cryptoHashProviderFactory,
-		Dictionary<String, ?> properties) {
-
-		Map<String, Object> map = new HashMap<>();
-
-		Enumeration<String> enumeration = properties.keys();
-
-		while (enumeration.hasMoreElements()) {
-			String key = enumeration.nextElement();
-
-			map.put(key, properties.get(key));
-		}
-
-		map.put(
-			"crypto.hash.provider.factory.name",
-			cryptoHashProviderFactory.getCryptoHashProviderFactoryName());
-
-		return map;
 	}
 
 	private ServiceRegistration<CryptoHashVerifier>

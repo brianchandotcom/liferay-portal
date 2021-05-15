@@ -332,6 +332,8 @@ public class WebDriverUtil extends PropsValues {
 		new HashMap<String, Object>() {
 			{
 				if (PropsValues.PROXY_SERVER_ENABLED) {
+					put(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+					put(CapabilityType.ACCEPT_SSL_CERTS, true);
 					put(CapabilityType.PROXY, ProxyUtil.getSeleniumProxy());
 				}
 

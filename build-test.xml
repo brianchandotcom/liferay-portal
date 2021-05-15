@@ -10818,6 +10818,17 @@ tokenLocation="REQUEST"</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="proxy.server.enabled" />
+
+		<if>
+			<equals arg1="${proxy.server.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					proxy.server.enabled=true
+				</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="test.assert.javascript.errors" />
 
 		<if>

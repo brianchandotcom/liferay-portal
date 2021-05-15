@@ -15,7 +15,9 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -81,6 +83,30 @@ public class HashMapDictionaryBuilderTest {
 			).build();
 
 		Assert.assertEquals(dictionary1.toString(), dictionary2.toString());
+	}
+
+	@Test
+	public void testPutAllDictionary() {
+		Dictionary<String, Integer> dictionary1 = new Hashtable<>();
+
+		dictionary1.put("One", 1);
+		dictionary1.put("Three", 3);
+		dictionary1.put("Two", 2);
+
+		HashMapDictionary<String, Integer> dictionary2 =
+			HashMapDictionaryBuilder.putAll(
+				dictionary1
+			).build();
+
+		Assert.assertEquals(dictionary2.size(), dictionary1.size());
+
+		for (Enumeration<String> enumeration = dictionary1.keys();
+			 enumeration.hasMoreElements();) {
+
+			String key = enumeration.nextElement();
+
+			Assert.assertEquals(dictionary2.get(key), dictionary1.get(key));
+		}
 	}
 
 	@Test

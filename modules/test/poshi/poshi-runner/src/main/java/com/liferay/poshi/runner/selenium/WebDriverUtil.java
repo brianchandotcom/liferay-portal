@@ -342,6 +342,7 @@ public class WebDriverUtil extends PropsValues {
 					UnexpectedAlertBehaviour.IGNORE);
 			}
 		};
+
 	private static final WebDriverUtil _webDriverUtil = new WebDriverUtil();
 
 	static {

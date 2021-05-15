@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -150,15 +149,15 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"portraitURL", portraitURL
 				).put(
-					"roleId",
-					PublicationRoleConstants.getNameRole(role.getName())
-				).put(
 					"roleLabel",
 					_language.get(
 						httpServletRequest,
 						PublicationRoleConstants.getNameLabel(role.getName()))
 				).put(
-					"userId", Long.valueOf(user.getUserId())
+					"roleValue",
+					PublicationRoleConstants.getNameRole(role.getName())
+				).put(
+					"userId", user.getUserId()
 				));
 		}
 
@@ -184,7 +183,7 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"portraitURL", portraitURL
 				).put(
-					"userId", Long.valueOf(owner.getUserId())
+					"userId", owner.getUserId()
 				));
 		}
 
@@ -203,9 +202,6 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

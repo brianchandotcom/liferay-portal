@@ -71,14 +71,14 @@ public class PublicationInviteUserNotificationHandler
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
-		int roleId = jsonObject.getInt("roleId");
+		int roleValue = jsonObject.getInt("roleValue");
 
 		Role role = null;
 
 		if (ctCollection != null) {
 			role = _roleLocalService.fetchRole(
 				ctCollection.getCompanyId(),
-				PublicationRoleConstants.getRoleName(roleId));
+				PublicationRoleConstants.getRoleName(roleValue));
 		}
 
 		UserGroupRole userGroupRole = null;
@@ -106,7 +106,7 @@ public class PublicationInviteUserNotificationHandler
 			resourceBundle, "x-has-invited-you-to-work-on-x-as-a-x",
 			new Object[] {
 				userName, ctCollection.getName(),
-				PublicationRoleConstants.getRoleLabel(roleId)
+				PublicationRoleConstants.getRoleLabel(roleValue)
 			},
 			false);
 	}

@@ -153,7 +153,7 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"portraitURL", portraitURL
 				).put(
-					"userId", Long.valueOf(user.getUserId())
+					"userId", user.getUserId()
 				));
 		}
 

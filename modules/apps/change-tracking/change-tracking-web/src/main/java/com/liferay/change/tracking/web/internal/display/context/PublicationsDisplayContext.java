@@ -151,38 +151,38 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 			"roles",
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"id", PublicationRoleConstants.ROLE_EDITER
-				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_EDITOR)
+				).put(
+					"value", PublicationRoleConstants.ROLE_EDITER
 				),
 				JSONUtil.put(
-					"id", PublicationRoleConstants.ROLE_INVITER
-				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_INVITER)
+				).put(
+					"value", PublicationRoleConstants.ROLE_INVITER
 				),
 				JSONUtil.put(
-					"id", PublicationRoleConstants.ROLE_PUBLISHER
-				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_PUBLISHER)
+				).put(
+					"value", PublicationRoleConstants.ROLE_PUBLISHER
 				),
 				JSONUtil.put(
 					"default", true
-				).put(
-					"id", PublicationRoleConstants.ROLE_VIEWER
 				).put(
 					"label",
 					_language.get(
 						_httpServletRequest,
 						PublicationRoleConstants.LABEL_VIEWER)
+				).put(
+					"value", PublicationRoleConstants.ROLE_VIEWER
 				))
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"

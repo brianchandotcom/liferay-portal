@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -149,7 +148,7 @@ public class VerifyEmailAddressMVCResourceCommand
 				).put(
 					"fullName", user.getFullName()
 				).put(
-					"userId", Long.valueOf(user.getUserId())
+					"userId", user.getUserId()
 				)));
 	}
 
@@ -164,9 +163,6 @@ public class VerifyEmailAddressMVCResourceCommand
 
 	@Reference
 	private PortletPermission _portletPermission;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

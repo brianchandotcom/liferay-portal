@@ -36,7 +36,7 @@ public class PublicationInviteUserNotificationDefinition
 		super(
 			CTPortletKeys.PUBLICATIONS, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-			"receive-a-notification-when-someone-invites-you-to-a-publication");
+			"invites-you-to-work-on-a-publication");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

@@ -57,8 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = AopService.class
 )
 public class InviteUsersMVCResourceCommand
-	extends UpdateRolesMVCResourceCommand
-	implements AopService, MVCResourceCommand {
+	extends UpdateRolesMVCResourceCommand implements MVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
@@ -126,16 +125,16 @@ public class InviteUsersMVCResourceCommand
 			userGroupRoleLocalService.deleteUserGroupRoles(
 				userIds, group.getGroupId());
 
-			int roleId = ParamUtil.getInteger(resourceRequest, "roleId");
+			int roleValue = ParamUtil.getInteger(resourceRequest, "roleValue");
 
-			Role role = getRole(resourceRequest, roleId, themeDisplay);
+			Role role = getRole(roleValue, themeDisplay);
 
 			for (long userId : userIds) {
 				userGroupRoleLocalService.addUserGroupRole(
 					userId, group.getGroupId(), role.getRoleId());
 
 				sendNotificationEvent(
-					ctCollection, userId, roleId, themeDisplay);
+					ctCollection, userId, roleValue, themeDisplay);
 			}
 		}
 		catch (PortalException portalException) {

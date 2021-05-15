@@ -19,7 +19,6 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -40,9 +39,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -131,7 +128,8 @@ public class UpdateRolesMVCResourceCommand
 			return;
 		}
 
-		int[] roles = ParamUtil.getIntegerValues(resourceRequest, "roles");
+		int[] roleValues = ParamUtil.getIntegerValues(
+			resourceRequest, "roleValues");
 
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
 
@@ -139,17 +137,17 @@ public class UpdateRolesMVCResourceCommand
 			userIds, ctCollection.getGroupId());
 
 		for (int i = 0; i < userIds.length; i++) {
-			if (roles[i] < 0) {
+			if (roleValues[i] < 0) {
 				continue;
 			}
 
-			Role role = getRole(resourceRequest, roles[i], themeDisplay);
+			Role role = getRole(roleValues[i], themeDisplay);
 
 			userGroupRoleLocalService.addUserGroupRole(
 				userIds[i], ctCollection.getGroupId(), role.getRoleId());
 
 			sendNotificationEvent(
-				ctCollection, userIds[i], roles[i], themeDisplay);
+				ctCollection, userIds[i], roleValues[i], themeDisplay);
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -161,12 +159,10 @@ public class UpdateRolesMVCResourceCommand
 					"permissions-were-updated-successfully")));
 	}
 
-	protected Role getRole(
-			ResourceRequest resourceRequest, int roleId,
-			ThemeDisplay themeDisplay)
+	protected Role getRole(int roleValue, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String name = PublicationRoleConstants.getRoleName(roleId);
+		String name = PublicationRoleConstants.getRoleName(roleValue);
 
 		Role role = roleLocalService.fetchRole(
 			themeDisplay.getCompanyId(), name);
@@ -177,11 +173,11 @@ public class UpdateRolesMVCResourceCommand
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(), name
 				).build(),
-				null, RoleConstants.TYPE_PUBLICATION, StringPool.BLANK,
-				ServiceContextFactory.getInstance(resourceRequest));
+				null, RoleConstants.TYPE_PUBLICATION, null, null);
 
 			for (String actionId :
-					PublicationRoleConstants.getModelResourceActions(roleId)) {
+					PublicationRoleConstants.getModelResourceActions(
+						roleValue)) {
 
 				resourcePermissionLocalService.addResourcePermission(
 					themeDisplay.getCompanyId(), CTCollection.class.getName(),
@@ -195,7 +191,7 @@ public class UpdateRolesMVCResourceCommand
 	}
 
 	protected void sendNotificationEvent(
-			CTCollection ctCollection, long receiverUserId, int roleId,
+			CTCollection ctCollection, long receiverUserId, int roleValue,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -212,19 +208,18 @@ public class UpdateRolesMVCResourceCommand
 					JSONUtil.put(
 						"classPK", ctCollection.getCtCollectionId()
 					).put(
-						"roleId", roleId
+						"roleValue", roleValue
 					).put(
 						"userId", user.getUserId()
 					).put(
 						"userName", user.getFullName()
 					));
 
-			notificationEvent.setDeliveryRequired(0);
 			notificationEvent.setDeliveryType(
 				UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
 			userNotificationEventLocalService.addUserNotificationEvent(
-				receiverUserId, false, notificationEvent);
+				receiverUserId, notificationEvent);
 		}
 	}
 
@@ -249,8 +244,5 @@ public class UpdateRolesMVCResourceCommand
 	@Reference
 	protected UserNotificationEventLocalService
 		userNotificationEventLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

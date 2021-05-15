@@ -14,6 +14,9 @@
 
 package com.liferay.poshi.runner.util;
 
+import java.io.IOException;
+import java.io.StringWriter;
+
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -21,6 +24,7 @@ import java.net.UnknownHostException;
 import net.lightbody.bmp.BrowserMobProxy;
 import net.lightbody.bmp.BrowserMobProxyServer;
 import net.lightbody.bmp.client.ClientUtil;
+import net.lightbody.bmp.core.har.Har;
 import net.lightbody.bmp.proxy.CaptureType;
 
 import org.openqa.selenium.Proxy;
@@ -34,20 +38,38 @@ public class ProxyUtil {
 		return _proxyUtil._getBrowserMobProxy();
 	}
 
+	public static String getHarRecording(String jsonPath) throws IOException {
+		BrowserMobProxy browserMobProxy = getBrowserMobProxy();
+
+		Har har = browserMobProxy.getHar();
+
+		StringWriter stringWriter = new StringWriter();
+
+		har.writeTo(stringWriter);
+
+		String harString = stringWriter.toString();
+
+		return JSONUtil.getWithJSONPath(harString, jsonPath);
+	}
+
 	public static Proxy getSeleniumProxy() {
 		return _proxyUtil._getSeleniumProxy();
 	}
 
-	public static void setBrowserMobProxy(BrowserMobProxy browserMobProxy) {
-		_proxyUtil._setBrowserMobProxy(browserMobProxy);
-	}
+	public static void startHarRecording(String harName) {
+		BrowserMobProxy browserMobProxy = getBrowserMobProxy();
 
-	public static void startBrowserMobProxy() {
-		_proxyUtil._startBrowserMobProxy();
+		browserMobProxy.newHar(harName);
 	}
 
 	public static void stopBrowserMobProxy() {
 		_proxyUtil._stopBrowserMobProxy();
+	}
+
+	public static void stopHarRecording() {
+		BrowserMobProxy browserMobProxy = getBrowserMobProxy();
+
+		browserMobProxy.endHar();
 	}
 
 	private BrowserMobProxy _getBrowserMobProxy() {
@@ -80,10 +102,6 @@ public class ProxyUtil {
 		}
 
 		return seleniumProxy;
-	}
-
-	private void _setBrowserMobProxy(BrowserMobProxy browserMobProxy) {
-		_browserMobProxy = browserMobProxy;
 	}
 
 	private void _startBrowserMobProxy() {

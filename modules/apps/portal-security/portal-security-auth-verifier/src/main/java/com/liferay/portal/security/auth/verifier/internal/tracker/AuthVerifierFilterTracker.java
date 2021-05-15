@@ -23,14 +23,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.servlet.filters.authverifier.AuthVerifierFilter;
 
 import java.io.IOException;
 
 import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -217,14 +216,10 @@ public class AuthVerifierFilterTracker {
 			return new ServiceRegistrations(
 				_bundleContext.registerService(
 					Filter.class, new AuthVerifierFilter(),
-					new HashMapDictionary<>(
-						_buildPropertiesForAuthVerifierFilter(
-							serviceReference))),
+					_buildPropertiesForAuthVerifierFilter(serviceReference)),
 				_bundleContext.registerService(
 					Filter.class, new RemoteAccessFilter(),
-					new HashMapDictionary<>(
-						_buildPropertiesForRemoteAccessFilter(
-							serviceReference))));
+					_buildPropertiesForRemoteAccessFilter(serviceReference)));
 		}
 
 		@Override
@@ -236,15 +231,13 @@ public class AuthVerifierFilterTracker {
 				serviceRegistrations.getAuthVerifierFilterServiceRegistration();
 
 			authVerifierFilterServiceRegistration.setProperties(
-				new HashMapDictionary<>(
-					_buildPropertiesForAuthVerifierFilter(serviceReference)));
+				_buildPropertiesForAuthVerifierFilter(serviceReference));
 
 			ServiceRegistration<Filter> remoteAccessFilterServiceRegistration =
 				serviceRegistrations.getRemoteAccessFilterServiceRegistration();
 
 			remoteAccessFilterServiceRegistration.setProperties(
-				new HashMapDictionary<>(
-					_buildPropertiesForRemoteAccessFilter(serviceReference)));
+				_buildPropertiesForRemoteAccessFilter(serviceReference));
 		}
 
 		@Override
@@ -263,19 +256,13 @@ public class AuthVerifierFilterTracker {
 			remoteAccessFilterServiceRegistration.unregister();
 		}
 
-		private Map<String, Object> _buildPropertiesForAuthVerifierFilter(
-			ServiceReference<ServletContextHelper> serviceReference) {
+		private Dictionary<String, Object>
+			_buildPropertiesForAuthVerifierFilter(
+				ServiceReference<ServletContextHelper> serviceReference) {
 
-			Map<String, Object> properties = new HashMap<>();
-
-			Enumeration<String> enumeration =
-				_defaultRegistrationProperties.keys();
-
-			while (enumeration.hasMoreElements()) {
-				String key = enumeration.nextElement();
-
-				properties.put(key, _defaultRegistrationProperties.get(key));
-			}
+			HashMapDictionaryBuilder.HashMapDictionaryWrapper<String, Object>
+				properties = HashMapDictionaryBuilder.<String, Object>putAll(
+					_defaultRegistrationProperties);
 
 			for (String key : serviceReference.getPropertyKeys()) {
 				if (key.startsWith(AUTH_VERIFIER_PROPERTY_PREFIX)) {
@@ -286,39 +273,42 @@ public class AuthVerifierFilterTracker {
 				}
 			}
 
-			properties.putAll(_getWhiteboardProperties(serviceReference));
+			_putWhiteboardProperties(properties, serviceReference);
 
-			return properties;
+			return properties.build();
 		}
 
-		private Map<String, Object> _buildPropertiesForRemoteAccessFilter(
-			ServiceReference<ServletContextHelper> serviceReference) {
+		private Dictionary<String, Object>
+			_buildPropertiesForRemoteAccessFilter(
+				ServiceReference<ServletContextHelper> serviceReference) {
 
-			Map<String, Object> properties = new HashMap<>(
-				_getWhiteboardProperties(serviceReference));
+			HashMapDictionaryBuilder.HashMapDictionaryWrapper<String, Object>
+				properties =
+					new HashMapDictionaryBuilder.HashMapDictionaryWrapper<>();
 
-			properties.put(
-				"service.ranking",
-				MapUtil.getInteger(
-					properties, "remote.access.filter.service.ranking",
-					_defaultRemoteAccessFilterServiceRanking));
+			_putWhiteboardProperties(properties, serviceReference);
 
-			return properties;
-		}
+			Object serviceRanking = _defaultWhiteboardProperties.get(
+				"remote.access.filter.service.ranking");
 
-		private Map<String, Object> _getWhiteboardProperties(
-			ServiceReference<ServletContextHelper> serviceReference) {
-
-			Map<String, Object> properties = new HashMap<>();
-
-			Enumeration<String> enumeration =
-				_defaultWhiteboardProperties.keys();
-
-			while (enumeration.hasMoreElements()) {
-				String key = enumeration.nextElement();
-
-				properties.put(key, _defaultWhiteboardProperties.get(key));
+			if (serviceRanking != null) {
+				properties.put("service.ranking", serviceRanking);
 			}
+			else {
+				properties.put(
+					"service.ranking",
+					_defaultRemoteAccessFilterServiceRanking);
+			}
+
+			return properties.build();
+		}
+
+		private void _putWhiteboardProperties(
+			HashMapDictionaryBuilder.HashMapDictionaryWrapper<String, Object>
+				properties,
+			ServiceReference<ServletContextHelper> serviceReference) {
+
+			properties.putAll(_defaultWhiteboardProperties);
 
 			for (String key : serviceReference.getPropertyKeys()) {
 				if (key.startsWith("osgi.http.whiteboard")) {
@@ -335,8 +325,6 @@ public class AuthVerifierFilterTracker {
 				StringBundler.concat(
 					"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
 					"=", contextName, ")"));
-
-			return properties;
 		}
 
 	}

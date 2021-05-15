@@ -37,8 +37,6 @@ Import-Package:\
 	\
 	!org.jgroups.*,\
 	\
-	com.liferay.portal.kernel.search;version="[8.1.0,9.7.0)",\
-	\
 	*
 Liferay-Require-SchemaVersion: 2.2.0
 Liferay-Service: true

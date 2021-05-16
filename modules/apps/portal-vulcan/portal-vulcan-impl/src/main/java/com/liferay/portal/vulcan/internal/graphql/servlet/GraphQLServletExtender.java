@@ -1149,66 +1149,72 @@ public class GraphQLServletExtender {
 					instance,
 					_portal.getUser(httpServletRequestOptional.orElse(null)));
 			}
-			else if (Objects.equals(
-						field.getName(), "_aggregationBiFunction")) {
+			else {
+				Map<String, String[]> parameterMap = new HashMap<>(
+					httpServletRequest.getParameterMap());
 
-				field.setAccessible(true);
+				Map<String, Object> arguments =
+					dataFetchingEnvironment.getArguments();
 
-				BiFunction<Object, List<String>, Aggregation>
-					aggregationBiFunction = (resource, aggregations) -> {
-						try {
-							return _getAggregation(
-								acceptLanguage, aggregations,
-								_getEntityModel(
-									resource,
-									httpServletRequest.getParameterMap()));
-						}
-						catch (Exception exception) {
-							throw new BadRequestException(exception);
-						}
-					};
+				for (Map.Entry<String, Object> entry : arguments.entrySet()) {
+					parameterMap.put(
+						entry.getKey(),
+						new String[] {String.valueOf(entry.getValue())});
+				}
 
-				field.set(instance, aggregationBiFunction);
-			}
-			else if (Objects.equals(field.getName(), "_filterBiFunction")) {
-				field.setAccessible(true);
+				if (Objects.equals(field.getName(), "_aggregationBiFunction")) {
+					field.setAccessible(true);
 
-				BiFunction<Object, String, Filter> filterBiFunction =
-					(resource, filterString) -> {
-						try {
-							return _getFilter(
-								acceptLanguage,
-								_getEntityModel(
-									resource,
-									httpServletRequest.getParameterMap()),
-								filterString);
-						}
-						catch (Exception exception) {
-							throw new BadRequestException(exception);
-						}
-					};
+					BiFunction<Object, List<String>, Aggregation>
+						aggregationBiFunction = (resource, aggregations) -> {
+							try {
+								return _getAggregation(
+									acceptLanguage, aggregations,
+									_getEntityModel(resource, parameterMap));
+							}
+							catch (Exception exception) {
+								throw new BadRequestException(exception);
+							}
+						};
 
-				field.set(instance, filterBiFunction);
-			}
-			else if (Objects.equals(field.getName(), "_sortsBiFunction")) {
-				field.setAccessible(true);
+					field.set(instance, aggregationBiFunction);
+				}
+				else if (Objects.equals(field.getName(), "_filterBiFunction")) {
+					field.setAccessible(true);
 
-				BiFunction<Object, String, Sort[]> sortsBiFunction =
-					(resource, sortsString) -> {
-						try {
-							return _getSorts(
-								acceptLanguage,
-								_getEntityModel(
-									resource,
-									httpServletRequest.getParameterMap()),
-								sortsString);
-						}
-						catch (Exception exception) {
-							throw new BadRequestException(exception);
-						}
-					};
+					BiFunction<Object, String, Filter> filterBiFunction =
+						(resource, filterString) -> {
+							try {
+								return _getFilter(
+									acceptLanguage,
+									_getEntityModel(resource, parameterMap),
+									filterString);
+							}
+							catch (Exception exception) {
+								throw new BadRequestException(exception);
+							}
+						};
 
-				field.set(instance, sortsBiFunction);
+					field.set(instance, filterBiFunction);
+				}
+				else if (Objects.equals(field.getName(), "_sortsBiFunction")) {
+					field.setAccessible(true);
+
+					BiFunction<Object, String, Sort[]> sortsBiFunction =
+						(resource, sortsString) -> {
+							try {
+								return _getSorts(
+									acceptLanguage,
+									_getEntityModel(resource, parameterMap),
+									sortsString);
+							}
+							catch (Exception exception) {
+								throw new BadRequestException(exception);
+							}
+						};
+
+					field.set(instance, sortsBiFunction);
+				}
 			}
 		}
 

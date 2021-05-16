@@ -116,8 +116,6 @@ definition {
 		''';
 
 		var passwordPolicyId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == 'Default Password Policy')]['passwordPolicyId']");
-		var passwordPolicyId = StringUtil.replace("${passwordPolicyId}", "[&quot;", "");
-		var passwordPolicyId = StringUtil.replace("${passwordPolicyId}", "&quot;]", "");
 
 		var curl = '''
 			${portalURL}/api/jsonws/passwordpolicy/update-password-policy \

@@ -45,8 +45,6 @@ definition {
 		''';
 
 		var userGroupId = JSONCurlUtil.post("${curl}", "$.userGroupId");
-		var userGroupId = StringUtil.replace("${userGroupId}", "[&quot;", "");
-		var userGroupId = StringUtil.replace("${userGroupId}", "&quot;]", "");
 
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find user group.");

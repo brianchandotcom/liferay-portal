@@ -12,8 +12,6 @@ definition {
 			  -d value=${value}
 		''';
 		var classNameId = JSONCurlUtil.post("${curl}", "$.[?(@['value'] == '${value}')]['classNameId']");
-		var classNameId = StringUtil.replace("${classNameId}", "[&quot;", "");
-		var classNameId = StringUtil.replace("${classNameId}", "&quot;]", "");
 
 		if ("${classNameId}" == "[]") {
 			echo("The ${value} doesn't exist.");

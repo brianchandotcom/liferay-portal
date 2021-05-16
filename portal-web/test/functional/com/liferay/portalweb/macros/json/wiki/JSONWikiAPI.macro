@@ -183,8 +183,6 @@ definition {
 		''';
 
 		var nodeId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${name}')]['nodeId']");
-		var nodeId = StringUtil.replace("${nodeId}", "[&quot;", "");
-		var nodeId = StringUtil.replace("${nodeId}", "&quot;]", "");
 
 		if ("${nodeId}" == "[]") {
 			fail("FAIL. Cannot find node.");
@@ -211,8 +209,6 @@ definition {
 		''';
 
 		var pageId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['pageId']");
-		var pageId = StringUtil.replace("${pageId}", "[&quot;", "");
-		var pageId = StringUtil.replace("${pageId}", "&quot;]", "");
 
 		if ("${pageId}" == "[]") {
 			fail("FAIL. Cannot find wiki page.");

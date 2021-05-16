@@ -20,8 +20,6 @@ definition {
 		''';
 
 		var structureId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${structureName}')]['structureId']");
-		var structureId = StringUtil.replace("${structureId}", "[&quot;", "");
-		var structureId = StringUtil.replace("${structureId}", "&quot;]", "");
 
 		if ("${structureId}" == "[]") {
 			fail("FAIL. Cannot find structureId.");

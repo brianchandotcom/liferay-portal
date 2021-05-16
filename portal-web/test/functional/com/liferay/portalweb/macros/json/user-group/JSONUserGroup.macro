@@ -20,8 +20,6 @@ definition {
 		''';
 
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${userGroupId}')]['groupId']");
-		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
-		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 
 		var serviceContext = JSONLayoutSetter.setServiceContext(
 			assetCategoryIds = "${assetCategoryIds}",

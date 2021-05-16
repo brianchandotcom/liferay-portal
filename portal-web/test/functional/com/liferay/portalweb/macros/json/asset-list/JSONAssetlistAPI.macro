@@ -15,8 +15,6 @@ definition {
 		''';
 
 		var assetListEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['assetListEntryId']");
-		var assetListEntryId = StringUtil.replace("${assetListEntryId}", "[&quot;", "");
-		var assetListEntryId = StringUtil.replace("${assetListEntryId}", "&quot;]", "");
 
 		return "${assetListEntryId}";
 	}

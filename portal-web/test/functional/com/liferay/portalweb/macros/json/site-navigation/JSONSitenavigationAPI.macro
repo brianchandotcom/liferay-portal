@@ -46,8 +46,6 @@ definition {
 		''';
 
 		var siteNavigationMenuId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${siteNavigationMenuName}')]['siteNavigationMenuId']");
-		var siteNavigationMenuId = StringUtil.replace("${siteNavigationMenuId}", "[&quot;", "");
-		var siteNavigationMenuId = StringUtil.replace("${siteNavigationMenuId}", "&quot;]", "");
 
 		return "${siteNavigationMenuId}";
 	}
@@ -65,8 +63,6 @@ definition {
 		''';
 
 		var siteNavigationMenuItemId = JSONCurlUtil.post("${curl}", "$.[?(@['typeSettings'] contains '${siteNavigationMenuItemName}')]['siteNavigationMenuItemId']");
-		var siteNavigationMenuItemId = StringUtil.replace("${siteNavigationMenuItemId}", "[&quot;", "");
-		var siteNavigationMenuItemId = StringUtil.replace("${siteNavigationMenuItemId}", "&quot;]", "");
 
 		return "${siteNavigationMenuItemId}";
 	}

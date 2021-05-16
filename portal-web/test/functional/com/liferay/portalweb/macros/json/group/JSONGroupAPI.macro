@@ -120,8 +120,6 @@ definition {
 		''';
 
 		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}')]['classPK']");
-		var depotId = StringUtil.replace("${depotId}", "[&quot;", "");
-		var depotId = StringUtil.replace("${depotId}", "&quot;]", "");
 
 		if ("${depotId}" == "[]") {
 			fail("FAIL. Cannot find group.");
@@ -151,8 +149,6 @@ definition {
 		''';
 
 		var groupId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
-		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
-		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find group.");
@@ -177,8 +173,6 @@ definition {
 		''';
 
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${groupKey}')]['groupId']");
-		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
-		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find group.");
@@ -205,8 +199,6 @@ definition {
 		''';
 
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
-		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
-		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find group.");
@@ -251,8 +243,6 @@ definition {
 		''';
 
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
-		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
-		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find group.");
@@ -279,8 +269,6 @@ definition {
 		''';
 
 		var groupId = JSONCurlUtil.post("${curl}", "$.[?(@['groupKey'] == '${groupName}')]['groupId']");
-		var groupId = StringUtil.replace("${groupId}", "[&quot;", "");
-		var groupId = StringUtil.replace("${groupId}", "&quot;]", "");
 
 		if ("${groupId}" == "[]") {
 			fail("FAIL. Cannot find group.");

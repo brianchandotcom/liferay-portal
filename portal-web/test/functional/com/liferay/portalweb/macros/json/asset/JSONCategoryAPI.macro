@@ -19,8 +19,6 @@ definition {
 		''';
 
 		var categoryId = JSONCurlUtil.post("${curl}", "$.categoryId");
-		var categoryId = StringUtil.replace("${categoryId}", "[&quot;", "");
-		var categoryId = StringUtil.replace("${categoryId}", "&quot;]", "");
 
 		return "${categoryId}";
 	}
@@ -78,8 +76,6 @@ definition {
 		''';
 
 		var categoryId = JSONCurlUtil.post("${curl}", "$.[?(@['titleCurrentValue'] == '${categoryName}')]['categoryId']");
-		var categoryId = StringUtil.replace("${categoryId}", "[&quot;", "");
-		var categoryId = StringUtil.replace("${categoryId}", "&quot;]", "");
 
 		if ("${categoryId}" == "[]") {
 			fail("FAIL. Cannot find category.");
@@ -101,8 +97,6 @@ definition {
 		''';
 
 		var vocabularyId = JSONCurlUtil.post("${curl}", "$.[?(@['titleCurrentValue'] == '${vocabularyName}')]['vocabularyId']");
-		var vocabularyId = StringUtil.replace("${vocabularyId}", "[&quot;", "");
-		var vocabularyId = StringUtil.replace("${vocabularyId}", "&quot;]", "");
 
 		if ("${vocabularyId}" == "[]") {
 			fail("FAIL. Cannot find vocabulary.");

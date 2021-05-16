@@ -95,8 +95,6 @@ definition {
 		}
 
 		var entryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${entryTitle}')]['entryId']");
-		var entryId = StringUtil.replace("${entryId}", "[&quot;", "");
-		var entryId = StringUtil.replace("${entryId}", "&quot;]", "");
 
 		return "${entryId}";
 

@@ -81,8 +81,6 @@ definition {
 		''';
 
 		var collectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${collectionName}')]['fragmentCollectionId']");
-		var collectionId = StringUtil.replace("${collectionId}", "[&quot;", "");
-		var collectionId = StringUtil.replace("${collectionId}", "&quot;]", "");
 
 		if ("${collectionId}" == "[]") {
 			fail("FAIL. Cannot find collection.");

@@ -95,8 +95,6 @@ definition {
 		''';
 
 		var articleId = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['articleId']");
-		var articleId = StringUtil.replace("${articleId}", "[&quot;", "");
-		var articleId = StringUtil.replace("${articleId}", "&quot;]", "");
 
 		return "${articleId}";
 	}
@@ -114,8 +112,6 @@ definition {
 		''';
 
 		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['folderId']");
-		var folderId = StringUtil.replace("${folderId}", "[&quot;", "");
-		var folderId = StringUtil.replace("${folderId}", "&quot;]", "");
 
 		if ("${folderId}" == "[]") {
 			fail("FAIL. Cannot find folder.");
@@ -140,8 +136,6 @@ definition {
 		''';
 
 		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['urlTitle'] == '${urlTitle}')]['resourcePrimKey']");
-		var resourcePrimKey = StringUtil.replace("${resourcePrimKey}", "[&quot;", "");
-		var resourcePrimKey = StringUtil.replace("${resourcePrimKey}", "&quot;]", "");
 
 		return "${resourcePrimKey}";
 	}

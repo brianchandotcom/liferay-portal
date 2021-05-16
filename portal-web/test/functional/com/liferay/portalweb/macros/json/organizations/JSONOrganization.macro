@@ -107,8 +107,6 @@ definition {
 		''';
 
 		var organizationId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${organizationName}')]['organizationId']");
-		var organizationId = StringUtil.replace("${organizationId}", "[&quot;", "");
-		var organizationId = StringUtil.replace("${organizationId}", "&quot;]", "");
 
 		return "${organizationId}";
 	}

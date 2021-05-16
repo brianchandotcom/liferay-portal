@@ -10,8 +10,6 @@ definition {
 		''';
 
 		var recordId = JSONCurlUtil.post("${curl}","$.[?(@['recordSetId'] == '${recordSetId}')]['recordId']");
-		var recordId = StringUtil.replace("${recordId}", "[&quot;", "");
-		var recordId = StringUtil.replace("${recordId}", "&quot;]", "");
 
 		if ("${recordId}" == "[]") {
 			fail("FAIL. Cannot find recordId.");
@@ -34,8 +32,6 @@ definition {
 		''';
 
 		var recordSetId = JSONCurlUtil.post("${curl}","$.[?(@['nameCurrentValue'] == '${ddlListName}')]['recordSetId']");
-		var recordSetId = StringUtil.replace("${recordSetId}", "[&quot;", "");
-		var recordSetId = StringUtil.replace("${recordSetId}", "&quot;]", "");
 
 		if ("${recordSetId}" == "[]") {
 			fail("FAIL. Cannot find recordSetId.");

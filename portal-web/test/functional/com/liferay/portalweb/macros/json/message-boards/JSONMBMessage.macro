@@ -187,8 +187,6 @@ definition {
 		''';
 
 		var categoryId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${categoryName}')]['categoryId']");
-		var categoryId = StringUtil.replace("${categoryId}", "[&quot;", "");
-		var categoryId = StringUtil.replace("${categoryId}", "&quot;]", "");
 
 		if ("${categoryId}" == "[]") {
 			fail("FAIL. Cannot find category.");

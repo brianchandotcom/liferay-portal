@@ -13,8 +13,6 @@ definition {
 		''';
 
 		var fileEntryTypeId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${fileEntryTypeName}')]['fileEntryTypeId']");
-		var fileEntryTypeId = StringUtil.replace("${fileEntryTypeId}", "[&quot;", "");
-		var fileEntryTypeId = StringUtil.replace("${fileEntryTypeId}", "&quot;]", "");
 
 		if ("${fileEntryTypeId}" == "[]") {
 			echo("The ${fileEntryTypeName} doesn't exist.");

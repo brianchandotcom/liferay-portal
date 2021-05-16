@@ -193,9 +193,6 @@ definition {
 
 		var fileEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${dmDocumentTitle}')]['fileEntryId']");
 
-		var fileEntryId = StringUtil.replace("${fileEntryId}", "[&quot;", "");
-		var fileEntryId = StringUtil.replace("${fileEntryId}", "&quot;]", "");
-
 		return "${fileEntryId}";
 
 		echo("## * File Entry ID: ${fileEntryId}");

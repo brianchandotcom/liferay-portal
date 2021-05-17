@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +58,7 @@ public abstract class BaseCmisRepository extends BaseRepositoryImpl {
 	public abstract FileEntry updateFileEntry(
 			String objectId, String mimeType, Map<String, Object> properties,
 			InputStream inputStream, String sourceFileName, long size,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException;
 
 }

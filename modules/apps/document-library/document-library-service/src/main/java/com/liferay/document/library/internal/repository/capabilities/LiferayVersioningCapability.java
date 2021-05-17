@@ -35,6 +35,7 @@ import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 import org.osgi.framework.BundleContext;
@@ -85,6 +86,7 @@ public class LiferayVersioningCapability
 					String mimeType, String title, String description,
 					String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+					Date expirationDate, Date reviewDate,
 					ServiceContext serviceContext)
 				throws PortalException {
 
@@ -93,7 +95,7 @@ public class LiferayVersioningCapability
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						description, changeLog, dlVersionNumberIncrease, file,
-						serviceContext));
+						expirationDate, reviewDate, serviceContext));
 			}
 
 			@Override
@@ -102,8 +104,8 @@ public class LiferayVersioningCapability
 					String mimeType, String title, String description,
 					String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease,
-					InputStream inputStream, long size,
-					ServiceContext serviceContext)
+					InputStream inputStream, long size, Date expirationDate,
+					Date reviewDate, ServiceContext serviceContext)
 				throws PortalException {
 
 				return _purgeVersions(
@@ -111,7 +113,8 @@ public class LiferayVersioningCapability
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						description, changeLog, dlVersionNumberIncrease,
-						inputStream, size, serviceContext));
+						inputStream, size, expirationDate, reviewDate,
+						serviceContext));
 			}
 
 		};
@@ -145,6 +148,7 @@ public class LiferayVersioningCapability
 					String mimeType, String title, String description,
 					String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease, File file,
+					Date expirationDate, Date reviewDate,
 					ServiceContext serviceContext)
 				throws PortalException {
 
@@ -153,7 +157,7 @@ public class LiferayVersioningCapability
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						description, changeLog, dlVersionNumberIncrease, file,
-						serviceContext));
+						expirationDate, reviewDate, serviceContext));
 			}
 
 			@Override
@@ -162,8 +166,8 @@ public class LiferayVersioningCapability
 					String mimeType, String title, String description,
 					String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease,
-					InputStream inputStream, long size,
-					ServiceContext serviceContext)
+					InputStream inputStream, long size, Date expirationDate,
+					Date reviewDate, ServiceContext serviceContext)
 				throws PortalException {
 
 				return _purgeVersions(
@@ -171,7 +175,8 @@ public class LiferayVersioningCapability
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
 						description, changeLog, dlVersionNumberIncrease,
-						inputStream, size, serviceContext));
+						inputStream, size, expirationDate, reviewDate,
+						serviceContext));
 			}
 
 		};

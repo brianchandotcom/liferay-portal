@@ -26,6 +26,8 @@ import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
@@ -126,12 +128,13 @@ public class LiferayProcessorLocalRepositoryWrapper
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, dlVersionNumberIncrease, file, serviceContext);
+			changeLog, dlVersionNumberIncrease, file, expirationDate,
+			reviewDate, serviceContext);
 
 		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
 		_processorCapability.generateNew(fileEntry);
@@ -144,7 +147,8 @@ public class LiferayProcessorLocalRepositoryWrapper
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		FileVersion oldFileVersion = null;
@@ -158,7 +162,7 @@ public class LiferayProcessorLocalRepositoryWrapper
 		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, dlVersionNumberIncrease, inputStream, size,
-			serviceContext);
+			expirationDate, reviewDate, serviceContext);
 
 		if (inputStream == null) {
 			_processorCapability.copy(fileEntry, oldFileVersion);

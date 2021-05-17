@@ -80,6 +80,7 @@ import java.math.BigInteger;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1188,7 +1189,7 @@ public class CMISRepository extends BaseCmisRepository {
 				userId, fileEntryId, contentStream.getFileName(), mimeType,
 				title, StringPool.BLANK, changeLog,
 				DLVersionNumberIncrease.MAJOR, contentStream.getStream(),
-				contentStream.getLength(), serviceContext);
+				contentStream.getLength(), null, null, serviceContext);
 		}
 		catch (PortalException | SystemException exception) {
 			throw exception;
@@ -1296,7 +1297,8 @@ public class CMISRepository extends BaseCmisRepository {
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
-			InputStream inputStream, long size, ServiceContext serviceContext)
+			InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		Document document = null;
@@ -1400,7 +1402,7 @@ public class CMISRepository extends BaseCmisRepository {
 	public FileEntry updateFileEntry(
 			String objectId, String mimeType, Map<String, Object> properties,
 			InputStream inputStream, String sourceFileName, long size,
-			ServiceContext serviceContext)
+			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		try {

@@ -651,6 +651,12 @@ definition {
 		AssertElementPresent(locator1 = "Form#ALT_PAGINATION_SUCCESS_PAGE");
 	}
 
+	macro viewFormDescription {
+		AssertTextEquals(
+			locator1 = "Form#DESCRIPTION_FIELD",
+			value1 = "${formDescription}");
+	}
+
 	macro viewFormName {
 		AssertTextEquals(
 			locator1 = "Form#NAME_FIELD",

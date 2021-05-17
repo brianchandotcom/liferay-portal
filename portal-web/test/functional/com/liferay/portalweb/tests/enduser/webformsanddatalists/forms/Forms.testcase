@@ -706,13 +706,46 @@ definition {
 	}
 
 	@description = "Verify that a Form can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130508 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editDescription(formDescription = "Form Description");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		Form.duplicate(formName = "Form 1");
+
+		LexiconEntry.viewEntryName(rowEntry = "Copy of Form 1");
+
+		LexiconEntry.viewEntryName(rowEntry = "Form 1");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Copy of Form 1");
+
+		Form.viewFormName(formName = "Copy of Form 1");
+
+		Form.viewFormDescription(formDescription = "Form Description");
+
+		AssertElementPresent(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+
+			
+		
 	}
 
 	@description = "Verify that a Form can be edited"

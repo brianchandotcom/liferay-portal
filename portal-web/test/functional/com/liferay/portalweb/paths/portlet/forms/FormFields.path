@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_TARGET_LABEL</td>
+	<td>//div[contains(@class,'ddm-drag')]//div[contains(*,'${key_name}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

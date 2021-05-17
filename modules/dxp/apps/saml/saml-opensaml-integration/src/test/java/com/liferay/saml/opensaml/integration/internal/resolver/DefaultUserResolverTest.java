@@ -166,7 +166,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		User resolvedUser = _defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
-			"emailAddress", new UserResolverSAMLContextImpl(_messageContext),
+			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
 		Assert.assertNotNull(resolvedUser);
@@ -187,7 +187,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		User resolvedUser = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE, "screenName",
+			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
+			NameIDType.UNSPECIFIED,
 			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
@@ -212,7 +213,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		User existingUser = _defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
-			"emailAddress", new UserResolverSAMLContextImpl(_messageContext),
+			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
 		Assert.assertNotNull(existingUser);
@@ -237,7 +238,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		User existingUser = _defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME,
-			"screenName", new UserResolverSAMLContextImpl(_messageContext),
+			NameIDType.UNSPECIFIED,
+			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
 		Assert.assertNotNull(existingUser);
@@ -260,7 +262,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		_initMatchingUserHandling();
 
 		User existingUser = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE, "screenName",
+			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
+			NameIDType.UNSPECIFIED,
 			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
@@ -277,7 +280,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
-			"emailAddress", new UserResolverSAMLContextImpl(_messageContext),
+			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 	}
 
@@ -299,7 +302,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
-			"emailAddress", new UserResolverSAMLContextImpl(_messageContext),
+			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 	}
 

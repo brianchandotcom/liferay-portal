@@ -177,4 +177,22 @@ public interface SAMLCommands {
 				return nameID.getValue();
 			});
 
+	public Resolver.SAMLCommand<String, Resolver> subjectNameQualifier =
+		new SAMLCommandImpl<>(
+			messageContext -> {
+				SAMLSubjectNameIdentifierContext
+					samlSubjectNameIdentifierContext =
+						messageContext.getSubcontext(
+							SAMLSubjectNameIdentifierContext.class, false);
+
+				NameID nameID =
+					samlSubjectNameIdentifierContext.getSAML2SubjectNameID();
+
+				if (nameID == null) {
+					return null;
+				}
+
+				return nameID.getNameQualifier();
+			});
+
 }

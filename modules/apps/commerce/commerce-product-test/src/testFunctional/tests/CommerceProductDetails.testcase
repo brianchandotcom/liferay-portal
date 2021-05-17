@@ -138,13 +138,13 @@ definition {
 		// TODO COMMERCE-6370 SelectOptionValueAndAddProductToCart pending implementation
 	}
 
-	@description = "COMMERCE-6371. As a buyer, I want to be able to select an option value(SKU contributor) that changes the price of the product and I want to see product price updating"
+	@description = "COMMERCE-6371. As a buyer, I want to be able to select an option value(SKU contributor) and I want to see product details updating(Price, SKU and Availability)"
 	@ignore = "true"
 	@priority = "3"
 	test SelectOptionValueAndAssertProductPriceIsUpdated {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6371 SelectOptionValueAndAssertProductPriceIsUpdated pending implementation
+		// TODO COMMERCE-6371 SelectOptionValueAndAssertProductDetailsAreUpdated pending implementation
 	}
 
 	@description = "COMMERCE-6364. As a buyer, I want the first selectable quantity of a product in Product Details to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"

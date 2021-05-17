@@ -553,12 +553,42 @@ definition {
 	}
 
 	@description = "Verify that an Image can be uploaded to the Body Text"
-	@ignore = "true"
 	@priority = "5"
 	test CanSupportImages {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131233 CanSupportImages pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		Click(
+			key_titleName = "Image",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		Form.save();
+
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertElementPresent(
+			key_imageName = "Document_1",
+			locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_URL");
 	}
 
 	@description = "Verify that Numbered Lists can be added to the Body Text"

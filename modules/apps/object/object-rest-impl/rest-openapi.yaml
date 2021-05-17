@@ -36,7 +36,7 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
-    "/object-entries":
+    "":
         get:
             operationId: getObjectEntriesPage
             parameters:
@@ -90,7 +90,29 @@ paths:
                     description:
                         ""
             tags: ["ObjectEntry"]
-    "/object-entries/{objectEntryId}":
+        post:
+            operationId: postObjectEntry
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntry"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntry"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntry"
+                    description:
+                        ""
+            tags: [ "ObjectEntry" ]
+    "/{objectEntryId}":
         delete:
             operationId: deleteObjectEntry
             parameters:
@@ -134,36 +156,6 @@ paths:
             parameters:
                 - in: path
                   name: objectEntryId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/ObjectEntry"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/ObjectEntry"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ObjectEntry"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ObjectEntry"
-                    description:
-                        ""
-            tags: ["ObjectEntry"]
-    "/sites/{siteId}/object-entries":
-        post:
-            operationId: postSiteObjectEntry
-            parameters:
-                - in: path
-                  name: siteId
                   required: true
                   schema:
                       format: int64

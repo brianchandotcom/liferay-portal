@@ -96,13 +96,67 @@ definition {
 	}
 
 	@description = "COMMERCE-6346. As a buyer, I want to be able to select the quantity of a cart item by multiple value, if set"
-	@ignore = "true"
 	@priority = "3"
 	test AssertOnlyMultipleValuesAreSelectableQuantitiesInMiniCartItem {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceMiniCart#AssertOnlyMultipleValuesAreSelectableQuantitiesInMiniCartItem";
 
-		// TODO COMMERCE-6346 AssertOnlyMultipleValuesAreSelectableQuantitiesInMiniCartItem pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Type(
+			key_text = "Multiple Order Quantity",
+			locator1 = "TextInput#ANY",
+			value1 = "3");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		var sku = "MIN55861";
+
+		for (var quantity : list "1,2,3,4,6,9,12,15,18") {
+			Type(
+				key_cartItemSKU = "${sku}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "${quantity}");
+
+			if ("${quantity}" == "1" || "${quantity}" == "2" || "${quantity}" == "4") {
+				AssertTextEquals(
+					key_cartItemSKU = "${sku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+					value1 = "3");
+			}
+			else {
+				AssertTextEquals(
+					key_cartItemSKU = "${sku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+					value1 = "${quantity}");
+			}
+		}
 	}
 
 	@description = "COMMERCE-6345. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"

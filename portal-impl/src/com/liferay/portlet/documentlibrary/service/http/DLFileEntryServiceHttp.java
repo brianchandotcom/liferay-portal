@@ -1890,6 +1890,7 @@ public class DLFileEntryServiceHttp {
 					 com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
 						ddmFormValuesMap,
 				java.io.File file, java.io.InputStream inputStream, long size,
+				java.util.Date expirationDate, java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1897,6 +1898,62 @@ public class DLFileEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				DLFileEntryServiceUtil.class, "updateFileEntry",
 				_updateFileEntryParameterTypes44);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fileEntryId, sourceFileName, mimeType, title,
+				description, changeLog, dlVersionNumberIncrease,
+				fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
+				expirationDate, reviewDate, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.document.library.kernel.model.DLFileEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntry
+			updateFileEntry(
+				HttpPrincipal httpPrincipal, long fileEntryId,
+				String sourceFileName, String mimeType, String title,
+				String description, String changeLog,
+				com.liferay.document.library.kernel.model.
+					DLVersionNumberIncrease dlVersionNumberIncrease,
+				long fileEntryTypeId,
+				java.util.Map
+					<String,
+					 com.liferay.dynamic.data.mapping.kernel.DDMFormValues>
+						ddmFormValuesMap,
+				java.io.File file, java.io.InputStream inputStream, long size,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLFileEntryServiceUtil.class, "updateFileEntry",
+				_updateFileEntryParameterTypes45);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -1944,7 +2001,7 @@ public class DLFileEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileEntryServiceUtil.class, "updateStatus",
-				_updateStatusParameterTypes45);
+				_updateStatusParameterTypes46);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, fileVersionId, status, serviceContext,
@@ -1986,7 +2043,7 @@ public class DLFileEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileEntryServiceUtil.class, "verifyFileEntryCheckOut",
-				_verifyFileEntryCheckOutParameterTypes46);
+				_verifyFileEntryCheckOutParameterTypes47);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, lockUuid);
@@ -2026,7 +2083,7 @@ public class DLFileEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLFileEntryServiceUtil.class, "verifyFileEntryLock",
-				_verifyFileEntryLockParameterTypes47);
+				_verifyFileEntryLockParameterTypes48);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, lockUuid);
@@ -2227,18 +2284,29 @@ public class DLFileEntryServiceHttp {
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
 			long.class, java.util.Map.class, java.io.File.class,
+			java.io.InputStream.class, long.class, java.util.Date.class,
+			java.util.Date.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateFileEntryParameterTypes45 =
+		new Class[] {
+			long.class, String.class, String.class, String.class, String.class,
+			String.class,
+			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
+				class,
+			long.class, java.util.Map.class, java.io.File.class,
 			java.io.InputStream.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateStatusParameterTypes45 =
+	private static final Class<?>[] _updateStatusParameterTypes46 =
 		new Class[] {
 			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class,
 			java.util.Map.class
 		};
-	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes46 =
+	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes47 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _verifyFileEntryLockParameterTypes47 =
+	private static final Class<?>[] _verifyFileEntryLockParameterTypes48 =
 		new Class[] {long.class, String.class};
 
 }

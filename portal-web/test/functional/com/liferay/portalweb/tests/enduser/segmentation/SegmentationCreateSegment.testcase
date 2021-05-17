@@ -1440,13 +1440,42 @@ definition {
 		Segmentation.viewSegment(propertyField = "usersn");
 	}
 
-	@description = "This is a test for LPS-130290."
-	@ignore = "true"
+	@description = "This is a test for LPS-132107."
 	@priority = "5"
 	test AddSegmentByUserSite {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddSegmentByUserSite pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Site");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserSite Test");
+
+		Segmentation.fillProperty(selectLink = "Test Site Name");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserSite Test");
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "Test Site Name");
 	}
 
 	@description = "This is a test for LPS-130290."
@@ -1456,6 +1485,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130290 AddSegmentByUserSiteOrganizationRole pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130290."

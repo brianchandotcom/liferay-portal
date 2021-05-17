@@ -1,0 +1,6 @@
+{
+	"com.liferay.portal.security.antisamy.configuration.AntiSamyClassNameConfiguration~default": {
+		"className": "com.liferay.knowledge.base.model.KBArticle",
+		"configurationFileURL": "/META-INF/resources/knowledge-base-sanitizer-configuration.xml"
+	}
+}

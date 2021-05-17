@@ -1,0 +1,18 @@
+{
+	"com.liferay.portal.security.auth.verifier.internal.basic.auth.header.configuration.BasicAuthHeaderAuthVerifierConfiguration~default": {
+		"enabled": true,
+		"urlsExcludes": "/api/liferay*",
+		"urlsIncludes": "/api/*,/xmlrpc*"
+	},
+	"com.liferay.portal.security.auth.verifier.internal.portal.session.configuration.PortalSessionAuthVerifierConfiguration~default": {
+		"checkCSRFToken": false,
+		"enabled": true,
+		"urlsIncludes": "/api/json*,/api/jsonws*,/c/portal/json_service*"
+	},
+	"com.liferay.portal.security.auth.verifier.internal.tunnel.configuration.TunnelAuthVerifierConfiguration~default": {
+		"enabled": true,
+		"hostsAllowed": "127.0.0.1,SERVER_IP",
+		"serviceAccessPolicyName": "SYSTEM_USER_PASSWORD",
+		"urlsIncludes": "/api/liferay/do"
+	}
+}

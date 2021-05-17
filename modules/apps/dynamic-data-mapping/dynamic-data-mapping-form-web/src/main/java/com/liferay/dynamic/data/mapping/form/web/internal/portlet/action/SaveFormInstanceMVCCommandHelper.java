@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceSettingsRedirectURLException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
@@ -35,18 +36,16 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.redirect.RedirectURLSettings;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 
 import java.net.InetAddress;
 import java.net.URI;
@@ -308,32 +307,27 @@ public class SaveFormInstanceMVCCommandHelper {
 			URI uri = _getURI(valueString);
 
 			if (uri != null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append("the-external-redirect-url-x-is-not-allowed.-set-");
-				sb.append("it-in-the-portal-property-x-to-allow-it");
-
-				String securityMode = PropsValues.REDIRECT_URL_SECURITY_MODE;
+				String securityMode = _redirectURLSettings.getSecurityMode(
+					_portal.getCompanyId(httpServletRequest));
 
 				String host = uri.getHost();
 
 				if (securityMode.equals("domain")) {
 					List<String> allowedDomains = Arrays.asList(
-						PropsValues.REDIRECT_URL_DOMAINS_ALLOWED);
+						_redirectURLSettings.getAllowedDomains(
+							_portal.getCompanyId(httpServletRequest)));
 
 					if (!allowedDomains.contains(host)) {
 						throw new FormInstanceSettingsRedirectURLException(
-							LanguageUtil.format(
-								httpServletRequest, sb.toString(),
-								new String[] {
-									host, PropsKeys.REDIRECT_URL_DOMAINS_ALLOWED
-								}));
+							_getRedirectURLExceptionMessage(
+								httpServletRequest, "allowed-domains", host));
 					}
 				}
 				else if (securityMode.equals("ip")) {
 					try {
 						List<String> allowedIps = Arrays.asList(
-							PropsValues.REDIRECT_URL_IPS_ALLOWED);
+							_redirectURLSettings.getAllowedIPs(
+								_portal.getCompanyId(httpServletRequest)));
 
 						InetAddress inetAddress =
 							InetAddressUtil.getInetAddressByName(host);
@@ -342,12 +336,9 @@ public class SaveFormInstanceMVCCommandHelper {
 
 						if (!allowedIps.contains(hostAddress)) {
 							throw new FormInstanceSettingsRedirectURLException(
-								LanguageUtil.format(
-									httpServletRequest, sb.toString(),
-									new String[] {
-										hostAddress,
-										PropsKeys.REDIRECT_URL_IPS_ALLOWED
-									}));
+								_getRedirectURLExceptionMessage(
+									httpServletRequest, "allowed-ips",
+									hostAddress));
 						}
 					}
 					catch (UnknownHostException unknownHostException) {
@@ -394,6 +385,20 @@ public class SaveFormInstanceMVCCommandHelper {
 	@Reference
 	protected JSONFactory jsonFactory;
 
+	private String _getRedirectURLExceptionMessage(
+		HttpServletRequest httpServletRequest, String fieldName, String value) {
+
+		return LanguageUtil.format(
+			httpServletRequest,
+			"the-external-redirect-url-x-is-not-allowed.-set-it-in-the-x-" +
+				"field-of-the-x-configuration-in-x-to-allow-it",
+			new String[] {
+				value, fieldName, "redirect-url-configuration-name",
+				"javax.portlet.title." +
+					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS
+			});
+	}
+
 	private URI _getURI(String uriString) {
 		try {
 			return new URI(uriString.trim());
@@ -412,5 +417,8 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RedirectURLSettings _redirectURLSettings;
 
 }

@@ -2835,7 +2835,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #updateFileEntry(long, String, String, String, String,
+	 *             String, DLVersionNumberIncrease, byte[],
+	 *             Date, Date, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
@@ -2844,24 +2849,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		File file = null;
-
-		try {
-			if (ArrayUtil.isNotEmpty(bytes)) {
-				file = FileUtil.createTempFile(bytes);
-			}
-
-			return updateFileEntry(
-				fileEntryId, sourceFileName, mimeType, title, description,
-				changeLog, dlVersionNumberIncrease, file, serviceContext);
-		}
-		catch (IOException ioException) {
-			throw new SystemException(
-				"Unable to write temporary file", ioException);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, bytes, null, null,
+			serviceContext);
 	}
 
 	/**
@@ -2968,7 +2959,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #updateFileEntry(long, String, String, String, String,
+	 *             String, DLVersionNumberIncrease, File,
+	 *             Date, Date, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
@@ -2977,27 +2973,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((file == null) || !file.exists() || (file.length() == 0)) {
-			return updateFileEntry(
-				fileEntryId, sourceFileName, mimeType, title, description,
-				changeLog, dlVersionNumberIncrease, null, 0, serviceContext);
-		}
-
-		mimeType = DLAppUtil.getMimeType(sourceFileName, mimeType, title, file);
-
-		Repository repository = repositoryProvider.getFileEntryRepository(
-			fileEntryId);
-
-		FileEntry fileEntry = repository.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, dlVersionNumberIncrease, file, null, null,
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, file, null, null,
 			serviceContext);
-
-		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, null, fileEntry.getLatestFileVersion(),
-			serviceContext);
-
-		return fileEntry;
 	}
 
 	/**
@@ -3128,7 +3107,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         custom file entry type </li> </ul>
 	 * @return the file entry
 	 * @throws PortalException if a portal exception occurred
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #updateFileEntry(long, String, String, String, String,
+	 *             String, DLVersionNumberIncrease, InputStream, long,
+	 *             Date, Date, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
@@ -3137,49 +3121,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isNull(mimeType) ||
-			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
-
-			if (size == 0) {
-				String extension = DLAppUtil.getExtension(
-					title, sourceFileName);
-
-				mimeType = MimeTypesUtil.getExtensionContentType(extension);
-			}
-			else {
-				File file = null;
-
-				try {
-					file = FileUtil.createTempFile(inputStream);
-
-					return updateFileEntry(
-						fileEntryId, sourceFileName, mimeType, title,
-						description, changeLog, dlVersionNumberIncrease, file,
-						serviceContext);
-				}
-				catch (IOException ioException) {
-					throw new SystemException(
-						"Unable to write temporary file", ioException);
-				}
-				finally {
-					FileUtil.delete(file);
-				}
-			}
-		}
-
-		Repository repository = repositoryProvider.getFileEntryRepository(
-			fileEntryId);
-
-		FileEntry fileEntry = repository.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, dlVersionNumberIncrease, inputStream, size,
-			null, null, serviceContext);
-
-		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, null, fileEntry.getLatestFileVersion(),
+		return updateFileEntry(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, inputStream, size, null, null,
 			serviceContext);
-
-		return fileEntry;
 	}
 
 	@Override
@@ -3218,6 +3163,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return fileEntry;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #updateFileEntryAndCheckIn(long, String, String, String,
+	 *             String, String, DLVersionNumberIncrease, File,
+	 *             Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FileEntry updateFileEntryAndCheckIn(
 			long fileEntryId, String sourceFileName, String mimeType,
@@ -3226,31 +3178,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if ((file == null) || !file.exists() || (file.length() == 0)) {
-			return updateFileEntryAndCheckIn(
-				fileEntryId, sourceFileName, mimeType, title, description,
-				changeLog, dlVersionNumberIncrease, null, 0, serviceContext);
-		}
-
-		Repository repository = repositoryProvider.getFileEntryRepository(
-			fileEntryId);
-
-		repository.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, dlVersionNumberIncrease, file, null, null,
+		return updateFileEntryAndCheckIn(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, file, null, null,
 			serviceContext);
-
-		repository.checkInFileEntry(
-			getUserId(), fileEntryId, dlVersionNumberIncrease, changeLog,
-			serviceContext);
-
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
-			serviceContext);
-
-		return fileEntry;
 	}
 
 	@Override
@@ -3283,6 +3214,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return fileEntry;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #updateFileEntryAndCheckIn(long, String, String, String, String,
+	 *             String, DLVersionNumberIncrease, InputStream, long,
+	 *             Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FileEntry updateFileEntryAndCheckIn(
 			long fileEntryId, String sourceFileName, String mimeType,
@@ -3291,25 +3229,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			InputStream inputStream, long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		Repository repository = repositoryProvider.getFileEntryRepository(
-			fileEntryId);
-
-		repository.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, dlVersionNumberIncrease, inputStream, size,
-			null, null, serviceContext);
-
-		repository.checkInFileEntry(
-			getUserId(), fileEntryId, dlVersionNumberIncrease, changeLog,
+		return updateFileEntryAndCheckIn(
+			fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, inputStream, size, null, null,
 			serviceContext);
-
-		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
-
-		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
-			serviceContext);
-
-		return fileEntry;
 	}
 
 	/**

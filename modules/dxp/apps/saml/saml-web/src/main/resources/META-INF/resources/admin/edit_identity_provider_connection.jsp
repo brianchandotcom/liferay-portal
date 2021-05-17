@@ -115,10 +115,6 @@ if (samlSpIdpConnection != null) {
 
 	</aui:fieldset>
 
-	<aui:fieldset label="attributes">
-		<aui:input helpMessage="attribute-mapping-help" label="attribute-mapping" name="userAttributeMappings" />
-	</aui:fieldset>
-
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_identity_provider_connection.jsp#post" />
 
 	<aui:button-row>

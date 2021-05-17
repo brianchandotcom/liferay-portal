@@ -762,8 +762,8 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "Form 2");
 
 		LexiconEntry.viewEntryContent(
-				rowAny = "Form 2",
-				rowEntry = "Description 2");
+			rowAny = "Form 2",
+			rowEntry = "Description 2");
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 2");
 
@@ -778,13 +778,6 @@ definition {
 		AssertElementPresent(
 			key_name = "Numeric",
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
-
-
-
-		
-
-		
-		
 	}
 
 	@description = "Verify that a Form can be unpublished"

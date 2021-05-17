@@ -444,6 +444,46 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test VerifyFriendlyURLsInUnavailableLocalesReturn404 {
+		property custom.properties = "locales.enabled=en_US,zh_CN,es_ES,fr_FR${line.separator}locale.use.default.if.not.available=false";
+		property custom.system.properties = "user.country=US${line.separator}user.language=en";
+		property test.name.skip.portal.instance = "Locale#VerifyFriendlyURLsInUnavailableLocalesReturn404";
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Navigation Menu Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Navigation Menu Page",
+			widgetName = "Navigation Menu");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "fr/web/guest/navigation-menu-page");
+
+		task ("Assert preferred locale persists by asserting Widget name.") {
+			AssertElementPresent(
+				key_portletName = "Menu de Navigation",
+				locator1 = "Portlet#TITLE");
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "en/web/guest/navigation-menu-page");
+
+		task ("Assert preferred locale persists by asserting Widget name.") {
+			AssertElementPresent(
+				key_portletName = "Navigation Menu",
+				locator1 = "Portlet#TITLE");
+		}
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "de/web/guest/navigation-menu-page");
+
+		AssertTextEquals(
+			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
+			value1 = "Not Found");
+	}
+
 	@priority = "4"
 	test ViewDefaultAvailableTimeZonesForInstancesAndUsers {
 		property test.name.skip.portal.instance = "Locale#ViewDefaultAvailableTimeZonesForInstancesAndUsers";

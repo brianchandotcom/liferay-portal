@@ -50,10 +50,33 @@ const capitalize = (str) =>
 
 const toUppercase = (str) => (str && str.length ? str.toUpperCase() : str);
 
+const getSLAStatusIconInfo = (slaStatus) => {
+	const items = {
+		OnTime: {
+			bgColor: 'bg-success-light',
+			name: 'check-circle',
+			textColor: 'text-success',
+		},
+		Overdue: {
+			bgColor: 'bg-danger-light',
+			name: 'exclamation-circle',
+			textColor: 'text-danger',
+		},
+		Untracked: {
+			bgColor: 'bg-info-light',
+			name: 'hr',
+			textColor: 'text-info',
+		},
+	};
+
+	return items[slaStatus];
+};
+
 export {
 	capitalize,
 	getFormattedPercentage,
 	getPercentage,
+	getSLAStatusIconInfo,
 	isValidNumber,
 	toUppercase,
 };

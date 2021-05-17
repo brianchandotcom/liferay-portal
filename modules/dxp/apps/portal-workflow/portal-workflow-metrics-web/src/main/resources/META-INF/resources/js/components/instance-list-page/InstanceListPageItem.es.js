@@ -20,33 +20,10 @@ import useDebounceCallback from '../../hooks/useDebounceCallback.es';
 import QuickActionKebab from '../../shared/components/quick-action-kebab/QuickActionKebab.es';
 import {remainingTimeFormat} from '../../shared/util/duration.es';
 import moment from '../../shared/util/moment.es';
-import {capitalize} from '../../shared/util/util.es';
+import {capitalize, getSLAStatusIconInfo} from '../../shared/util/util.es';
 import {AppContext} from '../AppContext.es';
 import {InstanceListContext} from './InstanceListPageProvider.es';
 import {ModalContext} from './modal/ModalProvider.es';
-
-const getSLAStatusIconInfo = (slaStatus) => {
-	const items = {
-		OnTime: {
-			bgColor: 'bg-success-light',
-			name: 'check-circle',
-			textColor: 'text-success',
-		},
-		Overdue: {
-			bgColor: 'bg-danger-light',
-			name: 'exclamation-circle',
-			textColor: 'text-danger',
-		},
-		Untracked: {
-			bgColor: 'bg-info-light',
-			name: 'hr',
-			textColor: 'text-info',
-		},
-	};
-
-	return items[slaStatus] || items.Untracked;
-};
-
 function Item({totalCount, ...instance}) {
 	const {userId} = useContext(AppContext);
 	const {
@@ -108,12 +85,12 @@ function Item({totalCount, ...instance}) {
 					/>
 
 					<span
-						className={`ml-2 sticker sticker-sm ${slaStatusIconInfo.bgColor}`}
+						className={`ml-2 sticker sticker-sm ${slaStatusIconInfo?.bgColor}`}
 					>
 						<span className="inline-item">
 							<ClayIcon
-								className={slaStatusIconInfo.textColor}
-								symbol={slaStatusIconInfo.name}
+								className={slaStatusIconInfo?.textColor}
+								symbol={slaStatusIconInfo?.name}
 							/>
 						</span>
 					</span>
@@ -323,7 +300,7 @@ function DueDateSLAResults({slaResults, slaStatusIconInfo}) {
 		<div
 			className={`due-date ${
 				instanceSlaResults?.length
-					? slaStatusIconInfo.textColor
+					? slaStatusIconInfo?.textColor
 					: 'text-info'
 			}`}
 		>

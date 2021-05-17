@@ -1,0 +1,11 @@
+{
+	"com.liferay.organizations.internal.configuration.OrganizationTypeConfiguration~default": {
+		"childrenTypes:String[]": [
+			"organization"
+		],
+		"countryEnabled": true,
+		"countryRequired": false,
+		"name": "organization",
+		"rootable": true
+	}
+}

@@ -40,7 +40,7 @@ export default function TabCollection({
 					/>
 				))}
 
-			<ul className="list-unstyled">
+			<ul className="d-flex flex-wrap list-unstyled">
 				{collection.children.map((item) => (
 					<React.Fragment key={item.itemId}>
 						<TabItem
@@ -70,7 +70,7 @@ TabCollection.proptypes = {
 };
 
 const TabPortletItems = ({item}) => (
-	<ul className="list-unstyled">
+	<ul className="d-flex list-unstyled">
 		{item.portletItems.map((portlet, index) => (
 			<TabItem item={portlet} key={index} />
 		))}

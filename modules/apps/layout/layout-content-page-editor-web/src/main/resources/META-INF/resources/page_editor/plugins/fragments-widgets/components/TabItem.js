@@ -63,7 +63,7 @@ export default function TabItem({displayStyle, item}) {
 	);
 
 	return displayStyle === FRAGMENTS_DISPLAY_STYLES.CARDS ? (
-		<ListItem item={item} ref={sourceRef} />
+		<CardItem item={item} ref={sourceRef} />
 	) : (
 		<ListItem item={item} ref={sourceRef} />
 	);

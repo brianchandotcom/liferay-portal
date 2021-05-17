@@ -3,7 +3,63 @@
 @import '../../../app/components/variables';
 
 .page-editor__fragments-widgets__tab {
-	&-item {
+	&-card-item {
+		cursor: grab;
+		height: 112px;
+		transition: transform ease 0.3s;
+		width: calc(50% - 4px);
+
+		&:hover {
+			box-shadow: 0 4px 8px fade_out($gray-900, 0.9);
+			transform: translateY(-4px);
+		}
+
+		.file-card .card {
+			background-color: $light;
+		}
+		&:nth-child(even) {
+			margin-left: 8px;
+		}
+
+		& .card {
+			box-shadow: 0 0 0 1px $gray-300;
+			height: 112px;
+		}
+
+		& .card-item-first {
+			.card-type-asset-icon {
+				width: 32px;
+			}
+			
+			.lexicon-icon {
+				color: $secondary;
+			}
+
+			height: 70%;
+		}
+
+		& .card-body {
+			align-items: center;
+			background-color: $white;
+			border-bottom-left-radius: 4px;
+			border-bottom-right-radius: 4px;
+			display: flex;
+			height: 30%;
+			padding: 8px;
+
+			.card-title {
+				font-size: 0.75rem;
+				font-weight: 600;
+				width: 100%;
+
+				& .text-truncate,
+				& .text-truncate-inline {
+					width: 100%;
+				}
+			}
+		}
+	}
+
 	&-list-item {
 		align-items: center;
 		border-radius: 4px;
@@ -13,6 +69,7 @@
 		height: 32px;
 		margin-bottom: 4px;
 		padding: 0 4px 0 12px;
+		width: 100%;
 
 		&:hover {
 			background-color: $gray-100;

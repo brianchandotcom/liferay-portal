@@ -92,7 +92,7 @@ export default function PageContent(props) {
 						{props.title}
 					</strong>
 
-					<span className="small text-secondary">{props.name}</span>
+					<span className="small text-secondary">{props.type}</span>
 
 					<span className="small text-secondary">
 						{props.usagesCount === 1
@@ -178,13 +178,13 @@ export default function PageContent(props) {
 }
 
 PageContent.propTypes = {
-	actions: PropTypes.object,
-	name: PropTypes.string.isRequired,
+	classPK: PropTypes.string,
 	status: PropTypes.shape({
 		hasApprovedVersion: PropTypes.bool,
 		label: PropTypes.string,
 		style: PropTypes.string,
 	}),
 	title: PropTypes.string.isRequired,
+	type: PropTypes.string.isRequired,
 	usagesCount: PropTypes.number.isRequired,
 };

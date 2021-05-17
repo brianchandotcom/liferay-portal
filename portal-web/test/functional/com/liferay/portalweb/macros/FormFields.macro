@@ -84,7 +84,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Form#SIDEBAR_MENUITEM_DUPLICATE_FIELD",
-			value1 = "Duplicate Field");
+			value1 = "Duplicate");
 	}
 
 	macro editBlankMultiTextFieldWithEnterKey {

@@ -373,7 +373,7 @@
 </tr>
 <tr>
     <td>SIDEBAR_MENUITEM_DUPLICATE_FIELD</td>
-    <td>//a[@title='Duplicate Field'] | //button[text()='Duplicate Field']</td>
+    <td>//a[@title='Duplicate'] | //button[text()='Duplicate']</td>
     <td></td>
 </tr>
 <tr>

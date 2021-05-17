@@ -2474,12 +2474,24 @@ public class PropsValues {
 	public static final int RECENT_GROUPS_MAX_ELEMENTS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.RECENT_GROUPS_MAX_ELEMENTS));
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static final String[] REDIRECT_URL_DOMAINS_ALLOWED =
 		PropsUtil.getArray(PropsKeys.REDIRECT_URL_DOMAINS_ALLOWED);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static final String[] REDIRECT_URL_IPS_ALLOWED = PropsUtil.getArray(
 		PropsKeys.REDIRECT_URL_IPS_ALLOWED);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public static final String REDIRECT_URL_SECURITY_MODE = PropsUtil.get(
 		PropsKeys.REDIRECT_URL_SECURITY_MODE);
 

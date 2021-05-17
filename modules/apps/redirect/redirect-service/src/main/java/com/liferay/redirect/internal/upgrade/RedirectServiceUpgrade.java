@@ -14,9 +14,11 @@
 
 package com.liferay.redirect.internal.upgrade;
 
+import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -40,6 +42,16 @@ public class RedirectServiceUpgrade implements UpgradeStepRegistrator {
 			"2.0.1", "3.0.0",
 			new com.liferay.redirect.internal.upgrade.v3_0_0.
 				RedirectNotFoundEntryUpgradeProcess());
+
+		registry.register(
+			"3.0.0", "3.0.1",
+			new com.liferay.redirect.internal.upgrade.v3_0_1.
+				RedirectURLConfigurationUpgradeProcess(
+					_prefsPropsToConfigurationUpgradeHelper));
 	}
+
+	@Reference
+	private PrefsPropsToConfigurationUpgradeHelper
+		_prefsPropsToConfigurationUpgradeHelper;
 
 }

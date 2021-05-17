@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 
@@ -46,15 +47,23 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 
 	@Override
 	public void configurationEvent(ConfigurationEvent configurationEvent) {
-		if (Validator.isNull(configurationEvent.getFactoryPid()) ||
-			!_configurationProviders.containsKey(
-				configurationEvent.getFactoryPid())) {
+		String factoryPid = configurationEvent.getFactoryPid();
 
+		if (Validator.isNull(factoryPid)) {
+			return;
+		}
+
+		if (factoryPid.endsWith(".scoped")) {
+			factoryPid = StringUtil.replaceLast(
+				factoryPid, ".scoped", StringPool.BLANK);
+		}
+
+		if (!_configurationProviders.containsKey(factoryPid)) {
 			return;
 		}
 
 		ConfigurationProvider<?> configurationProvider =
-			_configurationProviders.get(configurationEvent.getFactoryPid());
+			_configurationProviders.get(factoryPid);
 
 		try {
 			if (configurationEvent.getType() == ConfigurationEvent.CM_DELETED) {

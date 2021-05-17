@@ -461,15 +461,6 @@ definition {
 			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_VALUE_FINAL");
 	}
 
-	@description = "COMMERCE-6159. As a buyer, I want to see the barred list price and the sale price of a product, if a price modifier is set"
-	@ignore = "true"
-	@priority = "3"
-	test ViewProductCardPriceWithPriceModifier {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6159 ViewProductCardPriceWithPriceModifier pending implementation
-	}
-
 	@description = "COMMERCE-6157. As a buyer, I want to see the barred list price and a sale price of a product, if a promotion is set"
 	@ignore = "true"
 	@priority = "3"

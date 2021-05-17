@@ -707,7 +707,7 @@ definition {
 			questionTabField = "Questions",
 			questionTitle = "Questions Title");
 
-		Questions.unSubscribeQuestionFromDetails();
+		Questions.unsubscribeFromQuestionViaDetails();
 
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
@@ -715,7 +715,7 @@ definition {
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
 
-		Questions.viewSubscribeAndUnsubscribeFromDetails(noSubscribedQuestion = "Questions Title");
+		Questions.viewSubscriptionStatusFromDetails(noSubscribedQuestion = "Questions Title");
 	}
 
 	@description = "Validate if the user can create the second answer to a question, it also covers LPS-125810."
@@ -1242,7 +1242,7 @@ definition {
 
 		Questions.viewSubscribedQuestion(subscribedQuestion = "Title AddQuestion");
 
-		Questions.unSubscribeQuestion(questionTitle = "Title AddQuestion");
+		Questions.unsubscribeFromQuestion(questionTitle = "Title AddQuestion");
 
 		Questions.gotoTab(questionTabField = "Questions");
 
@@ -1327,7 +1327,7 @@ definition {
 
 		Questions.viewSubscribedTopic(subscribedTopic = "Questions Test Category");
 
-		Questions.unSubscribeTopic(topicName = "Questions Test Category");
+		Questions.unsubscribeFromTopic(topicName = "Questions Test Category");
 
 		Questions.viewSubscribedTopic(noSubscribedTopic = "true");
 

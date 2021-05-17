@@ -692,7 +692,7 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_LIST");
 	}
 
-	macro unSubscribeQuestion {
+	macro unsubscribeFromQuestion {
 		Click.waitForMenuToggleJSClick(
 			key_questionTitle = "${questionTitle}",
 			locator1 = "Questions#QUESTIONS_ELLIPSIS_ICON");
@@ -700,13 +700,13 @@ definition {
 		MenuItem.clickNoError(menuItem = "Unsubscribe");
 	}
 
-	macro unSubscribeQuestionFromDetails {
+	macro unsubscribeFromQuestionViaDetails {
 		Click(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
 
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
 	}
 
-	macro unSubscribeTopic {
+	macro unsubscribeFromTopic {
 		LexiconCard.clickEllipsisItem(
 			card = "${topicName}",
 			item = "Unsubscribe");
@@ -883,12 +883,12 @@ definition {
 		}
 	}
 
-	macro viewSubscribeAndUnsubscribeFromDetails {
+	macro viewSubscriptionStatusFromDetails {
 		if (isSet(subscribedQuestion)) {
 			AssertElementPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
 		}
 
-		if (isSet(noSubscribedQuestion)) {
+		if (isSet(unsubscribedQuestion)) {
 			AssertElementPresent(locator1 = "Questions#QUESTIONS_SUBSCRIBE");
 		}
 	}

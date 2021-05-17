@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author	  Luis Miguel Barcos
+ * @author	  Brian Wing Shun Chan
  * @generated
  */
 public class WikiPageTable {
@@ -29,11 +29,11 @@ public class WikiPageTable {
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"externalReferenceCode", Types.VARCHAR}, {"pageId", Types.BIGINT},
-		{"resourcePrimKey", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"nodeId", Types.BIGINT},
+		{"pageId", Types.BIGINT}, {"resourcePrimKey", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"externalReferenceCode", Types.VARCHAR}, {"nodeId", Types.BIGINT},
 		{"title", Types.VARCHAR}, {"version", Types.DOUBLE},
 		{"minorEdit", Types.BOOLEAN}, {"content", Types.CLOB},
 		{"summary", Types.VARCHAR}, {"format", Types.VARCHAR},
@@ -51,8 +51,6 @@ TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 
-TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
-
 TABLE_COLUMNS_MAP.put("pageId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("resourcePrimKey", Types.BIGINT);
@@ -68,6 +66,8 @@ TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 
 TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+
+TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("nodeId", Types.BIGINT);
 
@@ -101,7 +101,7 @@ TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table WikiPage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,pageId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,nodeId LONG,title VARCHAR(255) null,version DOUBLE,minorEdit BOOLEAN,content TEXT null,summary STRING null,format VARCHAR(75) null,head BOOLEAN,parentTitle VARCHAR(255) null,redirectTitle VARCHAR(255) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+"create table WikiPage (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,pageId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,nodeId LONG,title VARCHAR(255) null,version DOUBLE,minorEdit BOOLEAN,content TEXT null,summary STRING null,format VARCHAR(75) null,head BOOLEAN,parentTitle VARCHAR(255) null,redirectTitle VARCHAR(255) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table WikiPage";
 

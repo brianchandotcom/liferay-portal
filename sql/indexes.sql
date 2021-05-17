@@ -256,6 +256,7 @@ create index IX_52D89564 on Layout (groupId, privateLayout, parentLayoutId, ctCo
 create index IX_1E4451FD on Layout (groupId, privateLayout, parentLayoutId, hidden_, ctCollectionId);
 create index IX_989E917C on Layout (groupId, privateLayout, parentLayoutId, priority, ctCollectionId);
 create index IX_18D0C537 on Layout (groupId, privateLayout, sourcePrototypeLayoutUuid[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_A73CEAE7 on Layout (groupId, privateLayout, status, ctCollectionId);
 create index IX_A1FC5430 on Layout (groupId, privateLayout, type_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_94E0E2D9 on Layout (groupId, type_[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_E7B06BDB on Layout (iconImageId, ctCollectionId);

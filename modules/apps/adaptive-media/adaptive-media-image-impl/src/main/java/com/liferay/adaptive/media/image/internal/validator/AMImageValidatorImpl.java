@@ -88,26 +88,6 @@ public class AMImageValidatorImpl implements AMImageValidator {
 		return true;
 	}
 
-	private boolean _checkDDMFormFieldsMapValue(
-		List<DDMFormFieldValue> ddmFormFieldValues,
-		long imageToolImageMaxValue) {
-
-		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
-
-		Value value = ddmFormFieldValue.getValue();
-
-		Long length = Long.valueOf(value.getString(value.getDefaultLocale()));
-
-		if (length <= 0) {
-			return true;
-		}
-		else if (length >= imageToolImageMaxValue) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private boolean _isFileVersionStoredMetadataSupported(
 		FileVersion fileVersion) {
 
@@ -138,14 +118,14 @@ public class AMImageValidatorImpl implements AMImageValidator {
 						if (Objects.equals(
 								entry.getKey(), "TIFF_IMAGE_LENGTH")) {
 
-							return _checkDDMFormFieldsMapValue(
+							return _isValidDimension(
 								entry.getValue(),
 								PropsValues.IMAGE_TOOL_IMAGE_MAX_HEIGHT);
 						}
 						else if (Objects.equals(
 									entry.getKey(), "TIFF_IMAGE_WIDTH")) {
 
-							return _checkDDMFormFieldsMapValue(
+							return _isValidDimension(
 								entry.getValue(),
 								PropsValues.IMAGE_TOOL_IMAGE_MAX_WIDTH);
 						}
@@ -163,6 +143,28 @@ public class AMImageValidatorImpl implements AMImageValidator {
 					}
 				}
 			}
+		}
+
+		return true;
+	}
+
+	private boolean _isValidDimension(
+		List<DDMFormFieldValue> ddmFormFieldValues,
+		long imageToolImageMaxValue) {
+
+		if (imageToolImageMaxValue <= 0) {
+			return true;
+		}
+
+		DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+		Value value = ddmFormFieldValue.getValue();
+
+		Long dimension = Long.valueOf(
+			value.getString(value.getDefaultLocale()));
+
+		if (dimension >= imageToolImageMaxValue) {
+			return false;
 		}
 
 		return true;

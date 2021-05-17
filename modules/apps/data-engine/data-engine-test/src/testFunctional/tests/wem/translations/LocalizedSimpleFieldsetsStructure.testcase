@@ -75,8 +75,14 @@ definition {
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Date",
+			fieldsetName = "Fieldset Name"
+		);
+
+		DataEngine.addTranslationToFieldset(
 			fieldsetName = "Fieldset Name",
-			localeList = "pt-BR");
+			localeList = "pt-BR",
+			fieldNameList = "Date"
+		);
 
 		DataEngine.addFieldsetToBuilder(
 			fieldsetName = "Fieldset Name"
@@ -1121,11 +1127,17 @@ definition {
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text",
-			fieldsetName = "Fieldset Name",
-			localeList = "pt-BR");
+			fieldsetName = "Fieldset Name"
+		);
 
 		DataEngine.addFieldsetToBuilder(
 			fieldsetName = "Fieldset Name"
+		);
+
+		DataEngine.addTranslationToFieldset(
+			fieldsetName = "Fieldset Name",
+			localeList = "pt-BR",
+			fieldNameList = "Text"
 		);
 
 		WebContentStructures.addLocalization(
@@ -1160,8 +1172,14 @@ definition {
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text",
+			fieldsetName = "New Fieldset"
+		);
+		
+		DataEngine.addTranslationToFieldset(
 			fieldsetName = "New Fieldset",
-			localeList = "pt-BR");
+			localeList = "pt-BR",
+			fieldNameList = "Text"
+		);
 
 		DataEngine.addFieldsetNested(
 			fieldsetName = "New Fieldset",

@@ -168,7 +168,6 @@ definition {
 	@description = "This test validates the fieldset translations are displayed on the Web Content."
 	@priority = "5"
 	test CheckStructureTranslationOnWebContent {
-		//setLocale
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
@@ -176,8 +175,15 @@ definition {
 		DataEngine.createNewFieldset(
 			fieldHelp = "true",
 			fieldNameList = "Text",
+			fieldsetName = "New Fieldset"
+		);
+		
+		DataEngine.addTranslationToFieldset(
 			fieldsetName = "New Fieldset",
-			localeList = "pt-BR");
+			localeList = "pt-BR",
+			fieldHelp = "true",
+			fieldNameList = "Text"
+		);
 
 		DataEngine.addFieldsetToBuilder(
 			fieldsetName = "New Fieldset"
@@ -241,11 +247,18 @@ definition {
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text,Color",
-			fieldsetName = "New Fieldset",
-			localeList = "pt-BR");
+			fieldsetName = "New Fieldset"
+		);
 
 		DataEngine.addFieldsetToBuilder(
 			fieldsetName = "New Fieldset"
+		);
+
+
+		DataEngine.addTranslationToFieldset(
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR",
+			fieldNameList = "Text,Color"
 		);
 
 		DataEngine.editFieldsetRepeatable(fieldsetLabel = "New Fieldset");

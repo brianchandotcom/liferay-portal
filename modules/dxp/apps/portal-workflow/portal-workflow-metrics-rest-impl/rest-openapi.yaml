@@ -438,7 +438,7 @@ components:
                     format: int64
                     type: integer
                 status:
-                    enum: [PAUSED, RUNNING, STOPPED]
+                    enum: [NEW, PAUSED, RUNNING, STOPPED]
                     type: string
             type: object
         Task:

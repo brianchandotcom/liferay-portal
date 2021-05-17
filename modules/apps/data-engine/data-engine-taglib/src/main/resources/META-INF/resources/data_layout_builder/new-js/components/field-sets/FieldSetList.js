@@ -15,12 +15,11 @@
 import ClayButton from '@clayui/button';
 import {
 	EVENT_TYPES,
-	PagesVisitor,
 	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import EmptyState from '../../../js/components/empty-state/EmptyState.es';
 import {useNewDeleteFieldSet} from '../../../js/components/field-sets/actions/useDeleteFieldSet.es';
@@ -54,8 +53,6 @@ export default function FieldSetList({searchTerm}) {
 	const [modalState, setModalState] = useState({
 		isVisible: false,
 	});
-	const [fieldSetsInUse, setFieldSetsInUse] = useState(new Set());
-
 	const {
 		activePage,
 		availableLanguageIds,
@@ -65,21 +62,21 @@ export default function FieldSetList({searchTerm}) {
 		pages,
 	} = useFormState();
 
+	const {dataDefinition} = useFormState({schema: ['dataDefinition']});
+
 	const {allowInvalidAvailableLocalesForProperty, fieldTypes} = useConfig();
 	const dispatch = useForm();
 
 	const filteredFieldsets = getFilteredFieldsets(fieldSets, searchTerm);
 
-	useEffect(() => {
-		const fieldsInuse = new Set();
-
-		new PagesVisitor(pages).mapFields((field) => {
-			if (field.type === 'fieldset') {
-				fieldsInuse.add(field.ddmStructureId);
+	const fieldSetsInUse = new Set();
+	dataDefinition.dataDefinitionFields.forEach(
+		({customProperties: {ddmStructureId}, fieldType}) => {
+			if (fieldType === 'fieldset') {
+				fieldSetsInUse.add(parseInt(ddmStructureId, 10));
 			}
-		});
-		setFieldSetsInUse(fieldsInuse);
-	}, [pages]);
+		}
+	);
 
 	const toggleFieldSet = (fieldSet) => {
 		setModalState(({isVisible}) => ({
@@ -132,57 +129,57 @@ export default function FieldSetList({searchTerm}) {
 
 					<div className="mt-3">
 						{filteredFieldsets.map((fieldSet) => {
-							const fieldSetName = getLocalizedValue(
+							const actions = [
+								{
+									action: () => toggleFieldSet(fieldSet),
+									name: Liferay.Language.get('edit'),
+								},
+								{
+									action: () =>
+										propagateFieldSet({
+											fieldSet,
+											isDeleteAction: true,
+											modal: {
+												actionMessage: Liferay.Language.get(
+													'delete'
+												),
+												fieldSetMessage: Liferay.Language.get(
+													'the-fieldset-will-be-deleted-permanently-from'
+												),
+												headerMessage: Liferay.Language.get(
+													'delete'
+												),
+												status: 'danger',
+												warningMessage: Liferay.Language.get(
+													'this-action-may-erase-data-permanently'
+												),
+											},
+											onPropagate: deleteFieldSet,
+										}),
+									name: Liferay.Language.get('delete'),
+								},
+							];
+							const description = getPluralMessage(
+								Liferay.Language.get('x-field'),
+								Liferay.Language.get('x-fields'),
+								fieldSet.dataDefinitionFields.length
+							);
+							const disabled = fieldSetsInUse.has(fieldSet.id);
+							const label = getLocalizedValue(
 								fieldSet.defaultLanguageId,
 								fieldSet.name
 							);
 
 							return (
 								<FieldType
-									actions={[
-										{
-											action: () =>
-												toggleFieldSet(fieldSet),
-											name: Liferay.Language.get('edit'),
-										},
-										{
-											action: () =>
-												propagateFieldSet({
-													fieldSet,
-													isDeleteAction: true,
-													modal: {
-														actionMessage: Liferay.Language.get(
-															'delete'
-														),
-														fieldSetMessage: Liferay.Language.get(
-															'the-fieldset-will-be-deleted-permanently-from'
-														),
-														headerMessage: Liferay.Language.get(
-															'delete'
-														),
-														status: 'danger',
-														warningMessage: Liferay.Language.get(
-															'this-action-may-erase-data-permanently'
-														),
-													},
-													onPropagate: deleteFieldSet,
-												}),
-											name: Liferay.Language.get(
-												'delete'
-											),
-										},
-									]}
-									description={getPluralMessage(
-										Liferay.Language.get('x-field'),
-										Liferay.Language.get('x-fields'),
-										fieldSet.dataDefinitionFields.length
-									)}
-									disabled={fieldSetsInUse.has(fieldSet.id)}
+									actions={actions}
+									description={description}
+									disabled={disabled}
 									dragType={DRAG_FIELDSET_ADD}
 									fieldSet={fieldSet}
 									icon="forms"
 									key={fieldSet.dataDefinitionKey}
-									label={fieldSetName}
+									label={label}
 									onDoubleClick={onDoubleClick}
 								/>
 							);

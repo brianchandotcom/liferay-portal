@@ -25,12 +25,17 @@ import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,7 +48,17 @@ public class RelatedAssetCategoriesInfoItemRelatedListProvider
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "related-categories");
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		ResourceBundleLoader resourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					bundle.getSymbolicName());
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
+
+		return LanguageUtil.get(resourceBundle, "related-categories");
 	}
 
 	@Override

@@ -45,9 +45,9 @@ definition {
 	}
 
 	macro selectPermissionsFrame {
-		while (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-		}
+		SelectFrame(
+			key_title = "Permissions",
+			locator1 = "IFrame#MODAL_ANY");
 	}
 
 	macro selectTagFrame {

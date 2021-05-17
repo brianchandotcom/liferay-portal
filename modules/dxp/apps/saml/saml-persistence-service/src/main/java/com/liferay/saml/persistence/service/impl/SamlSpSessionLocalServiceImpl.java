@@ -20,13 +20,19 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.persistence.exception.NoSuchSpSessionException;
+import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.base.SamlSpSessionLocalServiceBaseImpl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
@@ -53,22 +59,43 @@ public class SamlSpSessionLocalServiceImpl
 		long samlSpSessionId = counterLocalService.increment(
 			SamlSpSession.class.getName());
 
+		long companyId = serviceContext.getCompanyId();
+
+		SamlPeerBinding samlPeerBinding =
+			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+				companyId, false, nameIdFormat, nameIdNameQualifier,
+				nameIdValue, samlIdpEntityId, null);
+
+		long userId = user.getUserId();
+
+		if ((samlPeerBinding != null) &&
+			(userId != samlPeerBinding.getUserId())) {
+
+			samlPeerBinding.setDeleted(true);
+
+			samlPeerBindingPersistence.update(samlPeerBinding);
+			samlPeerBinding = null;
+		}
+
+		if (samlPeerBinding == null) {
+			samlPeerBinding = _samlPeerBindingLocalService.addSamlPeerBinding(
+				companyId, userId, nameIdFormat, nameIdNameQualifier,
+				nameIdSPNameQualifier, null, nameIdValue, samlIdpEntityId);
+		}
+
 		SamlSpSession samlSpSession = samlSpSessionPersistence.create(
 			samlSpSessionId);
 
-		samlSpSession.setCompanyId(serviceContext.getCompanyId());
-		samlSpSession.setUserId(user.getUserId());
+		samlSpSession.setCompanyId(companyId);
+		samlSpSession.setUserId(userId);
 		samlSpSession.setUserName(user.getFullName());
 		samlSpSession.setCreateDate(now);
 		samlSpSession.setModifiedDate(now);
-		samlSpSession.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
 		samlSpSession.setAssertionXml(assertionXml);
 		samlSpSession.setJSessionId(jSessionId);
-		samlSpSession.setNameIdFormat(nameIdFormat);
-		samlSpSession.setNameIdNameQualifier(nameIdNameQualifier);
-		samlSpSession.setNameIdSPNameQualifier(nameIdSPNameQualifier);
-		samlSpSession.setNameIdValue(nameIdValue);
+		samlSpSession.setSamlPeerBindingId(
+			samlPeerBinding.getSamlPeerBindingId());
 		samlSpSession.setSessionIndex(sessionIndex);
 		samlSpSession.setTerminated(false);
 
@@ -127,9 +154,43 @@ public class SamlSpSessionLocalServiceImpl
 		return samlSpSessionPersistence.findByC_SI(companyId, sessionIndex);
 	}
 
+	public List<SamlSpSession> getSamlSpSessions(
+		long companyId, String samlIdpEntityId, String nameIdFormat,
+		String nameIdNameQualifier, String nameIdSPNameQualifier,
+		String nameIdValue) {
+
+		List<SamlPeerBinding> samlPeerBindings = new ArrayList<>();
+
+		samlPeerBindings.addAll(
+			samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SIEI(
+				companyId, false, nameIdFormat, nameIdNameQualifier,
+				nameIdValue, samlIdpEntityId));
+
+		samlPeerBindings.addAll(
+			samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SIEI(
+				companyId, true, nameIdFormat, nameIdNameQualifier, nameIdValue,
+				samlIdpEntityId));
+
+		Stream<SamlPeerBinding> stream = samlPeerBindings.stream();
+
+		return stream.map(
+			SamlPeerBinding::getSamlPeerBindingId
+		).map(
+			samlSpSessionLocalService::fetchSamlSpSession
+		).filter(
+			Validator::isNotNull
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getSamlSpSessions(long, String, String, String, String, String)}
+	 */
+	@Deprecated
 	@Override
 	public List<SamlSpSession> getSamlSpSessions(String nameIdValue) {
-		return samlSpSessionPersistence.findByNameIdValue(nameIdValue);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -155,26 +216,41 @@ public class SamlSpSessionLocalServiceImpl
 			String sessionIndex, ServiceContext serviceContext)
 		throws PortalException {
 
+		long companyId = serviceContext.getCompanyId();
+
+		SamlPeerBinding samlPeerBinding =
+			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+				companyId, false, nameIdFormat, nameIdNameQualifier,
+				nameIdValue, samlIdpEntityId, null);
+
 		User user = userLocalService.getUserById(serviceContext.getUserId());
+
+		long userId = user.getUserId();
+
+		if (samlPeerBinding == null) {
+			samlPeerBinding = _samlPeerBindingLocalService.addSamlPeerBinding(
+				companyId, userId, nameIdFormat, nameIdNameQualifier,
+				nameIdSPNameQualifier, null, nameIdValue, samlIdpEntityId);
+		}
 
 		SamlSpSession samlSpSession = samlSpSessionPersistence.findByPrimaryKey(
 			samlSpSessionId);
 
-		samlSpSession.setCompanyId(serviceContext.getCompanyId());
-		samlSpSession.setUserId(user.getUserId());
+		samlSpSession.setCompanyId(companyId);
+		samlSpSession.setUserId(userId);
 		samlSpSession.setUserName(user.getFullName());
 		samlSpSession.setModifiedDate(new Date());
-		samlSpSession.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
 		samlSpSession.setAssertionXml(assertionXml);
 		samlSpSession.setJSessionId(jSessionId);
-		samlSpSession.setNameIdFormat(nameIdFormat);
-		samlSpSession.setNameIdNameQualifier(nameIdNameQualifier);
-		samlSpSession.setNameIdSPNameQualifier(nameIdSPNameQualifier);
-		samlSpSession.setNameIdValue(nameIdValue);
+		samlSpSession.setSamlPeerBindingId(
+			samlPeerBinding.getSamlPeerBindingId());
 		samlSpSession.setSessionIndex(sessionIndex);
 
 		return samlSpSessionPersistence.update(samlSpSession);
 	}
+
+	@Reference
+	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
 
 }

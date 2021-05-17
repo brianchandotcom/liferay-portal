@@ -14,6 +14,7 @@
 
 import ClayBadge from '@clayui/badge';
 import ClayLayout from '@clayui/layout';
+import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
 import React, {useContext, useMemo} from 'react';
 
@@ -97,7 +98,7 @@ const Section = ({section}) => {
 			showCollapseIcon={true}
 		>
 			<ClayPanel.Body>
-				{sectionTotal === '0' && (
+				{sectionTotal === '0' ? (
 					<div className="text-secondary">
 						{Liferay.Util.sub(
 							Liferay.Language.get(
@@ -106,8 +107,40 @@ const Section = ({section}) => {
 							section.title
 						)}
 					</div>
+				) : (
+					<ClayList>
+						{section.details.map((issue) => (
+							<Issue issue={issue} key={issue.key} />
+						))}
+					</ClayList>
 				)}
 			</ClayPanel.Body>
 		</ClayPanel>
+	);
+};
+
+const Issue = ({issue}) => {
+	let issueTotal = issue.total;
+
+	if (issueTotal > 100) {
+		issueTotal = '+100';
+	}
+
+	return (
+		issueTotal > 0 && (
+			<ClayList.Item action className="border-0 px-0 rounded-0" flex>
+				<ClayList.ItemField className="pl-0" expand>
+					{issue.title}
+				</ClayList.ItemField>
+
+				<ClayList.ItemField className="pr-0">
+					<ClayBadge
+						className="mr-0"
+						displayType={issueTotal === 0 ? 'success' : 'info'}
+						label={issueTotal}
+					/>
+				</ClayList.ItemField>
+			</ClayList.Item>
+		)
 	);
 };

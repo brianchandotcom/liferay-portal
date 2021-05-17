@@ -30,8 +30,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.addon.keep.alive.web.internal.constants.SamlKeepAliveConstants;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.model.SamlSpSession;
+import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlSpSessionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
@@ -116,10 +118,14 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			SamlPeerBinding samlPeerBinding =
+				_samlPeerBindingLocalService.getSamlPeerBinding(
+					samlSpSession.getSamlPeerBindingId());
+
 			SamlSpIdpConnection samlSpIdpConnection =
 				_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 					themeDisplay.getCompanyId(),
-					samlSpSession.getSamlIdpEntityId());
+					samlPeerBinding.getSamlPeerEntityId());
 
 			ExpandoBridge expandoBridge =
 				samlSpIdpConnection.getExpandoBridge();
@@ -210,6 +216,9 @@ public class KeepAliveSPPortalDynamicInclude extends BaseDynamicInclude {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

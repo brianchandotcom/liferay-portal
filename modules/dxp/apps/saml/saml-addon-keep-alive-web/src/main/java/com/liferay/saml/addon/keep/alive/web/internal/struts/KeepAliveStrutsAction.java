@@ -30,9 +30,11 @@ import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
+import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSsoSessionLocalService;
+import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
 import java.io.OutputStream;
@@ -146,14 +148,18 @@ public class KeepAliveStrutsAction implements StrutsAction {
 				samlIdpSsoSession.getSamlIdpSsoSessionId());
 
 		for (SamlIdpSpSession samlIdpSpSession : samlIdpSpSessions) {
-			if (entityId.equals(samlIdpSpSession.getSamlSpEntityId())) {
+			SamlPeerBinding samlPeerBinding =
+				_samlPeerBindingLocalService.getSamlPeerBinding(
+					samlIdpSpSession.getSamlPeerBindingId());
+
+			if (entityId.equals(samlPeerBinding.getSamlPeerEntityId())) {
 				continue;
 			}
 
 			SamlIdpSpConnection samlIdpSpConnection =
 				_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 					samlIdpSpSession.getCompanyId(),
-					samlIdpSpSession.getSamlSpEntityId());
+					samlPeerBinding.getSamlPeerEntityId());
 
 			ExpandoBridge expandoBridge =
 				samlIdpSpConnection.getExpandoBridge();
@@ -187,6 +193,9 @@ public class KeepAliveStrutsAction implements StrutsAction {
 
 	@Reference
 	private SamlIdpSsoSessionLocalService _samlIdpSsoSessionLocalService;
+
+	@Reference
+	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
 
 	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;

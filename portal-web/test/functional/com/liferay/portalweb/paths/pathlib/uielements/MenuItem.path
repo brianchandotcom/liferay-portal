@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_DIVIDER</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu show')]//li)[${index}][contains(@class,'dropdown-divider')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_MENU_ITEM</td>
 	<td>xpath=(//div | //li)[(contains(@class,'open') or contains(@class,'show')) and (contains(@class,'dropdown') or contains(.//*/@class,'dropdown'))]//*[self::a or self::span or self::button][normalize-space(text())='${key_menuItem}']</td>
 	<td></td>

@@ -128,7 +128,7 @@ const Condition = ({operands: [left, right], operator}) => (
 	<>
 		<Operand {...left} />
 		<b className="inline-item inline-item-after inline-item-before text-lowercase">
-			<em>{OPERATORS[operator]}</em>
+			<em>{OPERATORS[operator] || operator}</em>
 		</b>
 		{right && <Operand {...right} left={left} />}
 	</>

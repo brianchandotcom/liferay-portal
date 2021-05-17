@@ -3345,6 +3345,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setUserId(user.getUserId());
 		page.setUserName(user.getFullName());
 		page.setCreateDate(oldPage.getCreateDate());
+		page.setExternalReferenceCode(oldPage.getExternalReferenceCode());
 		page.setNodeId(nodeId);
 		page.setTitle(
 			Validator.isNull(newTitle) ? oldPage.getTitle() : newTitle);

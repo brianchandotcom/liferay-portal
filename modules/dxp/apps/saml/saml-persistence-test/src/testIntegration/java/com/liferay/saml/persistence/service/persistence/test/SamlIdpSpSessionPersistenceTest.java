@@ -136,11 +136,7 @@ public class SamlIdpSpSessionPersistenceTest {
 
 		newSamlIdpSpSession.setSamlIdpSsoSessionId(RandomTestUtil.nextLong());
 
-		newSamlIdpSpSession.setSamlSpEntityId(RandomTestUtil.randomString());
-
-		newSamlIdpSpSession.setNameIdFormat(RandomTestUtil.randomString());
-
-		newSamlIdpSpSession.setNameIdValue(RandomTestUtil.randomString());
+		newSamlIdpSpSession.setSamlPeerBindingId(RandomTestUtil.nextLong());
 
 		_samlIdpSpSessions.add(_persistence.update(newSamlIdpSpSession));
 
@@ -169,14 +165,8 @@ public class SamlIdpSpSessionPersistenceTest {
 			existingSamlIdpSpSession.getSamlIdpSsoSessionId(),
 			newSamlIdpSpSession.getSamlIdpSsoSessionId());
 		Assert.assertEquals(
-			existingSamlIdpSpSession.getSamlSpEntityId(),
-			newSamlIdpSpSession.getSamlSpEntityId());
-		Assert.assertEquals(
-			existingSamlIdpSpSession.getNameIdFormat(),
-			newSamlIdpSpSession.getNameIdFormat());
-		Assert.assertEquals(
-			existingSamlIdpSpSession.getNameIdValue(),
-			newSamlIdpSpSession.getNameIdValue());
+			existingSamlIdpSpSession.getSamlPeerBindingId(),
+			newSamlIdpSpSession.getSamlPeerBindingId());
 	}
 
 	@Test
@@ -194,12 +184,11 @@ public class SamlIdpSpSessionPersistenceTest {
 	}
 
 	@Test
-	public void testCountBySISSI_SSEI() throws Exception {
-		_persistence.countBySISSI_SSEI(RandomTestUtil.nextLong(), "");
+	public void testCountBySISSI_SPBI() throws Exception {
+		_persistence.countBySISSI_SPBI(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countBySISSI_SSEI(0L, "null");
-
-		_persistence.countBySISSI_SSEI(0L, (String)null);
+		_persistence.countBySISSI_SPBI(0L, 0L);
 	}
 
 	@Test
@@ -229,8 +218,8 @@ public class SamlIdpSpSessionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"SamlIdpSpSession", "samlIdpSpSessionId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "samlIdpSsoSessionId", true, "samlSpEntityId",
-			true, "nameIdFormat", true, "nameIdValue", true);
+			"modifiedDate", true, "samlIdpSsoSessionId", true,
+			"samlPeerBindingId", true);
 	}
 
 	@Test
@@ -508,10 +497,10 @@ public class SamlIdpSpSessionPersistenceTest {
 				samlIdpSpSession, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "samlIdpSsoSessionId"));
 		Assert.assertEquals(
-			samlIdpSpSession.getSamlSpEntityId(),
-			ReflectionTestUtil.invoke(
+			Long.valueOf(samlIdpSpSession.getSamlPeerBindingId()),
+			ReflectionTestUtil.<Long>invoke(
 				samlIdpSpSession, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "samlSpEntityId"));
+				new Class<?>[] {String.class}, "samlPeerBindingId"));
 	}
 
 	protected SamlIdpSpSession addSamlIdpSpSession() throws Exception {
@@ -531,11 +520,7 @@ public class SamlIdpSpSessionPersistenceTest {
 
 		samlIdpSpSession.setSamlIdpSsoSessionId(RandomTestUtil.nextLong());
 
-		samlIdpSpSession.setSamlSpEntityId(RandomTestUtil.randomString());
-
-		samlIdpSpSession.setNameIdFormat(RandomTestUtil.randomString());
-
-		samlIdpSpSession.setNameIdValue(RandomTestUtil.randomString());
+		samlIdpSpSession.setSamlPeerBindingId(RandomTestUtil.nextLong());
 
 		_samlIdpSpSessions.add(_persistence.update(samlIdpSpSession));
 

@@ -278,6 +278,16 @@ public interface SamlSpSessionLocalService
 	public List<SamlSpSession> getSamlSpSessions(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SamlSpSession> getSamlSpSessions(
+		long companyId, String samlIdpEntityId, String nameIdFormat,
+		String nameIdNameQualifier, String nameIdSPNameQualifier,
+		String nameIdValue);
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getSamlSpSessions(long, String, String, String, String, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SamlSpSession> getSamlSpSessions(String nameIdValue);
 
 	/**

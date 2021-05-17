@@ -46,10 +46,6 @@ public class SamlSpSessionTable extends BaseTable<SamlSpSessionTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<SamlSpSessionTable, String> samlIdpEntityId =
-		createColumn(
-			"samlIdpEntityId", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, String> samlSpSessionKey =
 		createColumn(
 			"samlSpSessionKey", String.class, Types.VARCHAR,
@@ -58,18 +54,9 @@ public class SamlSpSessionTable extends BaseTable<SamlSpSessionTable> {
 		"assertionXml", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, String> jSessionId = createColumn(
 		"jSessionId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SamlSpSessionTable, String> nameIdFormat = createColumn(
-		"nameIdFormat", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SamlSpSessionTable, String> nameIdNameQualifier =
+	public final Column<SamlSpSessionTable, Long> samlPeerBindingId =
 		createColumn(
-			"nameIdNameQualifier", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<SamlSpSessionTable, String> nameIdSPNameQualifier =
-		createColumn(
-			"nameIdSPNameQualifier", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
-	public final Column<SamlSpSessionTable, String> nameIdValue = createColumn(
-		"nameIdValue", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"samlPeerBindingId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, String> sessionIndex = createColumn(
 		"sessionIndex", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, Boolean> terminated = createColumn(

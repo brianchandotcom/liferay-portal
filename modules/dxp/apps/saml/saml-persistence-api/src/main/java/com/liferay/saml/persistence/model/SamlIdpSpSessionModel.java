@@ -184,48 +184,17 @@ public interface SamlIdpSpSessionModel
 	public void setSamlIdpSsoSessionId(long samlIdpSsoSessionId);
 
 	/**
-	 * Returns the saml sp entity ID of this saml idp sp session.
+	 * Returns the saml peer binding ID of this saml idp sp session.
 	 *
-	 * @return the saml sp entity ID of this saml idp sp session
+	 * @return the saml peer binding ID of this saml idp sp session
 	 */
-	@AutoEscape
-	public String getSamlSpEntityId();
+	public long getSamlPeerBindingId();
 
 	/**
-	 * Sets the saml sp entity ID of this saml idp sp session.
+	 * Sets the saml peer binding ID of this saml idp sp session.
 	 *
-	 * @param samlSpEntityId the saml sp entity ID of this saml idp sp session
+	 * @param samlPeerBindingId the saml peer binding ID of this saml idp sp session
 	 */
-	public void setSamlSpEntityId(String samlSpEntityId);
-
-	/**
-	 * Returns the name ID format of this saml idp sp session.
-	 *
-	 * @return the name ID format of this saml idp sp session
-	 */
-	@AutoEscape
-	public String getNameIdFormat();
-
-	/**
-	 * Sets the name ID format of this saml idp sp session.
-	 *
-	 * @param nameIdFormat the name ID format of this saml idp sp session
-	 */
-	public void setNameIdFormat(String nameIdFormat);
-
-	/**
-	 * Returns the name ID value of this saml idp sp session.
-	 *
-	 * @return the name ID value of this saml idp sp session
-	 */
-	@AutoEscape
-	public String getNameIdValue();
-
-	/**
-	 * Sets the name ID value of this saml idp sp session.
-	 *
-	 * @param nameIdValue the name ID value of this saml idp sp session
-	 */
-	public void setNameIdValue(String nameIdValue);
+	public void setSamlPeerBindingId(long samlPeerBindingId);
 
 }

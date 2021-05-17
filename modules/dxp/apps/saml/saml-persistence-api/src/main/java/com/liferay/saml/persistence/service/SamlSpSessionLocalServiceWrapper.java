@@ -360,6 +360,22 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.saml.persistence.model.SamlSpSession>
+		getSamlSpSessions(
+			long companyId, String samlIdpEntityId, String nameIdFormat,
+			String nameIdNameQualifier, String nameIdSPNameQualifier,
+			String nameIdValue) {
+
+		return _samlSpSessionLocalService.getSamlSpSessions(
+			companyId, samlIdpEntityId, nameIdFormat, nameIdNameQualifier,
+			nameIdSPNameQualifier, nameIdValue);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getSamlSpSessions(long, String, String, String, String, String)}
+	 */
+	@Deprecated
+	@Override
+	public java.util.List<com.liferay.saml.persistence.model.SamlSpSession>
 		getSamlSpSessions(String nameIdValue) {
 
 		return _samlSpSessionLocalService.getSamlSpSessions(nameIdValue);

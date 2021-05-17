@@ -55,7 +55,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -1146,24 +1145,24 @@ public class SamlIdpSpSessionPersistenceImpl
 		_FINDER_COLUMN_SAMLIDPSSOSESSIONID_SAMLIDPSSOSESSIONID_2 =
 			"samlIdpSpSession.samlIdpSsoSessionId = ?";
 
-	private FinderPath _finderPathFetchBySISSI_SSEI;
-	private FinderPath _finderPathCountBySISSI_SSEI;
+	private FinderPath _finderPathFetchBySISSI_SPBI;
+	private FinderPath _finderPathCountBySISSI_SPBI;
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or throws a <code>NoSuchIdpSpSessionException</code> if it could not be found.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or throws a <code>NoSuchIdpSpSessionException</code> if it could not be found.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the matching saml idp sp session
 	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
 	 */
 	@Override
-	public SamlIdpSpSession findBySISSI_SSEI(
-			long samlIdpSsoSessionId, String samlSpEntityId)
+	public SamlIdpSpSession findBySISSI_SPBI(
+			long samlIdpSsoSessionId, long samlPeerBindingId)
 		throws NoSuchIdpSpSessionException {
 
-		SamlIdpSpSession samlIdpSpSession = fetchBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId);
+		SamlIdpSpSession samlIdpSpSession = fetchBySISSI_SPBI(
+			samlIdpSsoSessionId, samlPeerBindingId);
 
 		if (samlIdpSpSession == null) {
 			StringBundler sb = new StringBundler(6);
@@ -1173,8 +1172,8 @@ public class SamlIdpSpSessionPersistenceImpl
 			sb.append("samlIdpSsoSessionId=");
 			sb.append(samlIdpSsoSessionId);
 
-			sb.append(", samlSpEntityId=");
-			sb.append(samlSpEntityId);
+			sb.append(", samlPeerBindingId=");
+			sb.append(samlPeerBindingId);
 
 			sb.append("}");
 
@@ -1189,45 +1188,43 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
 	@Override
-	public SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId) {
+	public SamlIdpSpSession fetchBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId) {
 
-		return fetchBySISSI_SSEI(samlIdpSsoSessionId, samlSpEntityId, true);
+		return fetchBySISSI_SPBI(samlIdpSsoSessionId, samlPeerBindingId, true);
 	}
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
 	@Override
-	public SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId,
+	public SamlIdpSpSession fetchBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId,
 		boolean useFinderCache) {
-
-		samlSpEntityId = Objects.toString(samlSpEntityId, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
-			finderArgs = new Object[] {samlIdpSsoSessionId, samlSpEntityId};
+			finderArgs = new Object[] {samlIdpSsoSessionId, samlPeerBindingId};
 		}
 
 		Object result = null;
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchBySISSI_SSEI, finderArgs);
+				_finderPathFetchBySISSI_SPBI, finderArgs);
 		}
 
 		if (result instanceof SamlIdpSpSession) {
@@ -1235,8 +1232,8 @@ public class SamlIdpSpSessionPersistenceImpl
 
 			if ((samlIdpSsoSessionId !=
 					samlIdpSpSession.getSamlIdpSsoSessionId()) ||
-				!Objects.equals(
-					samlSpEntityId, samlIdpSpSession.getSamlSpEntityId())) {
+				(samlPeerBindingId !=
+					samlIdpSpSession.getSamlPeerBindingId())) {
 
 				result = null;
 			}
@@ -1247,18 +1244,9 @@ public class SamlIdpSpSessionPersistenceImpl
 
 			sb.append(_SQL_SELECT_SAMLIDPSPSESSION_WHERE);
 
-			sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLIDPSSOSESSIONID_2);
+			sb.append(_FINDER_COLUMN_SISSI_SPBI_SAMLIDPSSOSESSIONID_2);
 
-			boolean bindSamlSpEntityId = false;
-
-			if (samlSpEntityId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_3);
-			}
-			else {
-				bindSamlSpEntityId = true;
-
-				sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_2);
-			}
+			sb.append(_FINDER_COLUMN_SISSI_SPBI_SAMLPEERBINDINGID_2);
 
 			String sql = sb.toString();
 
@@ -1273,16 +1261,14 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				queryPos.add(samlIdpSsoSessionId);
 
-				if (bindSamlSpEntityId) {
-					queryPos.add(samlSpEntityId);
-				}
+				queryPos.add(samlPeerBindingId);
 
 				List<SamlIdpSpSession> list = query.list();
 
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchBySISSI_SSEI, finderArgs, list);
+							_finderPathFetchBySISSI_SPBI, finderArgs, list);
 					}
 				}
 				else {
@@ -1292,12 +1278,12 @@ public class SamlIdpSpSessionPersistenceImpl
 						if (_log.isWarnEnabled()) {
 							if (!useFinderCache) {
 								finderArgs = new Object[] {
-									samlIdpSsoSessionId, samlSpEntityId
+									samlIdpSsoSessionId, samlPeerBindingId
 								};
 							}
 
 							_log.warn(
-								"SamlIdpSpSessionPersistenceImpl.fetchBySISSI_SSEI(long, String, boolean) with parameters (" +
+								"SamlIdpSpSessionPersistenceImpl.fetchBySISSI_SPBI(long, long, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -1327,40 +1313,38 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Removes the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; from the database.
+	 * Removes the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; from the database.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the saml idp sp session that was removed
 	 */
 	@Override
-	public SamlIdpSpSession removeBySISSI_SSEI(
-			long samlIdpSsoSessionId, String samlSpEntityId)
+	public SamlIdpSpSession removeBySISSI_SPBI(
+			long samlIdpSsoSessionId, long samlPeerBindingId)
 		throws NoSuchIdpSpSessionException {
 
-		SamlIdpSpSession samlIdpSpSession = findBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId);
+		SamlIdpSpSession samlIdpSpSession = findBySISSI_SPBI(
+			samlIdpSsoSessionId, samlPeerBindingId);
 
 		return remove(samlIdpSpSession);
 	}
 
 	/**
-	 * Returns the number of saml idp sp sessions where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63;.
+	 * Returns the number of saml idp sp sessions where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63;.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the number of matching saml idp sp sessions
 	 */
 	@Override
-	public int countBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId) {
+	public int countBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId) {
 
-		samlSpEntityId = Objects.toString(samlSpEntityId, "");
-
-		FinderPath finderPath = _finderPathCountBySISSI_SSEI;
+		FinderPath finderPath = _finderPathCountBySISSI_SPBI;
 
 		Object[] finderArgs = new Object[] {
-			samlIdpSsoSessionId, samlSpEntityId
+			samlIdpSsoSessionId, samlPeerBindingId
 		};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs);
@@ -1370,18 +1354,9 @@ public class SamlIdpSpSessionPersistenceImpl
 
 			sb.append(_SQL_COUNT_SAMLIDPSPSESSION_WHERE);
 
-			sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLIDPSSOSESSIONID_2);
+			sb.append(_FINDER_COLUMN_SISSI_SPBI_SAMLIDPSSOSESSIONID_2);
 
-			boolean bindSamlSpEntityId = false;
-
-			if (samlSpEntityId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_3);
-			}
-			else {
-				bindSamlSpEntityId = true;
-
-				sb.append(_FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_2);
-			}
+			sb.append(_FINDER_COLUMN_SISSI_SPBI_SAMLPEERBINDINGID_2);
 
 			String sql = sb.toString();
 
@@ -1396,9 +1371,7 @@ public class SamlIdpSpSessionPersistenceImpl
 
 				queryPos.add(samlIdpSsoSessionId);
 
-				if (bindSamlSpEntityId) {
-					queryPos.add(samlSpEntityId);
-				}
+				queryPos.add(samlPeerBindingId);
 
 				count = (Long)query.uniqueResult();
 
@@ -1416,14 +1389,11 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 	private static final String
-		_FINDER_COLUMN_SISSI_SSEI_SAMLIDPSSOSESSIONID_2 =
+		_FINDER_COLUMN_SISSI_SPBI_SAMLIDPSSOSESSIONID_2 =
 			"samlIdpSpSession.samlIdpSsoSessionId = ? AND ";
 
-	private static final String _FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_2 =
-		"samlIdpSpSession.samlSpEntityId = ?";
-
-	private static final String _FINDER_COLUMN_SISSI_SSEI_SAMLSPENTITYID_3 =
-		"(samlIdpSpSession.samlSpEntityId IS NULL OR samlIdpSpSession.samlSpEntityId = '')";
+	private static final String _FINDER_COLUMN_SISSI_SPBI_SAMLPEERBINDINGID_2 =
+		"samlIdpSpSession.samlPeerBindingId = ?";
 
 	public SamlIdpSpSessionPersistenceImpl() {
 		setModelClass(SamlIdpSpSession.class);
@@ -1446,10 +1416,10 @@ public class SamlIdpSpSessionPersistenceImpl
 			samlIdpSpSession);
 
 		finderCache.putResult(
-			_finderPathFetchBySISSI_SSEI,
+			_finderPathFetchBySISSI_SPBI,
 			new Object[] {
 				samlIdpSpSession.getSamlIdpSsoSessionId(),
-				samlIdpSpSession.getSamlSpEntityId()
+				samlIdpSpSession.getSamlPeerBindingId()
 			},
 			samlIdpSpSession);
 	}
@@ -1519,13 +1489,13 @@ public class SamlIdpSpSessionPersistenceImpl
 
 		Object[] args = new Object[] {
 			samlIdpSpSessionModelImpl.getSamlIdpSsoSessionId(),
-			samlIdpSpSessionModelImpl.getSamlSpEntityId()
+			samlIdpSpSessionModelImpl.getSamlPeerBindingId()
 		};
 
 		finderCache.putResult(
-			_finderPathCountBySISSI_SSEI, args, Long.valueOf(1));
+			_finderPathCountBySISSI_SPBI, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchBySISSI_SSEI, args, samlIdpSpSessionModelImpl);
+			_finderPathFetchBySISSI_SPBI, args, samlIdpSpSessionModelImpl);
 	}
 
 	/**
@@ -2021,15 +1991,15 @@ public class SamlIdpSpSessionPersistenceImpl
 			"countBySamlIdpSsoSessionId", new String[] {Long.class.getName()},
 			new String[] {"samlIdpSsoSessionId"}, false);
 
-		_finderPathFetchBySISSI_SSEI = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchBySISSI_SSEI",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"samlIdpSsoSessionId", "samlSpEntityId"}, true);
+		_finderPathFetchBySISSI_SPBI = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchBySISSI_SPBI",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"samlIdpSsoSessionId", "samlPeerBindingId"}, true);
 
-		_finderPathCountBySISSI_SSEI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySISSI_SSEI",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"samlIdpSsoSessionId", "samlSpEntityId"}, false);
+		_finderPathCountBySISSI_SPBI = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySISSI_SPBI",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"samlIdpSsoSessionId", "samlPeerBindingId"}, false);
 	}
 
 	@Deactivate

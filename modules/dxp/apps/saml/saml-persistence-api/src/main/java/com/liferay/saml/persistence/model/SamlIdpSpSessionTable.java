@@ -52,15 +52,9 @@ public class SamlIdpSpSessionTable extends BaseTable<SamlIdpSpSessionTable> {
 		createColumn(
 			"samlIdpSsoSessionId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<SamlIdpSpSessionTable, String> samlSpEntityId =
+	public final Column<SamlIdpSpSessionTable, Long> samlPeerBindingId =
 		createColumn(
-			"samlSpEntityId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SamlIdpSpSessionTable, String> nameIdFormat =
-		createColumn(
-			"nameIdFormat", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SamlIdpSpSessionTable, String> nameIdValue =
-		createColumn(
-			"nameIdValue", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"samlPeerBindingId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 
 	private SamlIdpSpSessionTable() {
 		super("SamlIdpSpSession", SamlIdpSpSessionTable::new);

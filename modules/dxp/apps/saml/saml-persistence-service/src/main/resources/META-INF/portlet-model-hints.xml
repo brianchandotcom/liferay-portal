@@ -45,15 +45,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="samlIdpSsoSessionId" type="long" />
-		<field name="samlSpEntityId" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
-		<field name="nameIdFormat" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
-		<field name="nameIdValue" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
+		<field name="samlPeerBindingId" type="long" />
 	</model>
 	<model name="com.liferay.saml.persistence.model.SamlIdpSsoSession">
 		<field name="samlIdpSsoSessionId" type="long" />
@@ -63,6 +55,20 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="samlIdpSsoSessionKey" type="String" />
+	</model>
+	<model name="com.liferay.saml.persistence.model.SamlPeerBinding">
+		<field name="samlPeerBindingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="deleted" type="boolean" />
+		<field name="samlNameIdFormat" type="String" />
+		<field name="samlNameIdNameQualifier" type="String" />
+		<field name="samlNameIdSpNameQualifier" type="String" />
+		<field name="samlNameIdSpProvidedId" type="String" />
+		<field name="samlNameIdValue" type="String" />
+		<field name="samlPeerEntityId" type="String" />
 	</model>
 	<model name="com.liferay.saml.persistence.model.SamlSpAuthRequest">
 		<field name="samlSpAuthnRequestId" type="long" />
@@ -125,9 +131,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="samlIdpEntityId" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
 		<field name="samlSpSessionKey" type="String" />
 		<field name="assertionXml" type="String">
 			<hint-collection name="CLOB" />
@@ -135,18 +138,7 @@
 		<field name="jSessionId" type="String">
 			<hint name="max-length">200</hint>
 		</field>
-		<field name="nameIdFormat" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
-		<field name="nameIdNameQualifier" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
-		<field name="nameIdSPNameQualifier" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
-		<field name="nameIdValue" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
+		<field name="samlPeerBindingId" type="long" />
 		<field name="sessionIndex" type="String" />
 		<field name="terminated" type="boolean" />
 	</model>

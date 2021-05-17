@@ -40,9 +40,7 @@ public class SamlIdpSpSessionSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setSamlIdpSsoSessionId(model.getSamlIdpSsoSessionId());
-		soapModel.setSamlSpEntityId(model.getSamlSpEntityId());
-		soapModel.setNameIdFormat(model.getNameIdFormat());
-		soapModel.setNameIdValue(model.getNameIdValue());
+		soapModel.setSamlPeerBindingId(model.getSamlPeerBindingId());
 
 		return soapModel;
 	}
@@ -160,28 +158,12 @@ public class SamlIdpSpSessionSoap implements Serializable {
 		_samlIdpSsoSessionId = samlIdpSsoSessionId;
 	}
 
-	public String getSamlSpEntityId() {
-		return _samlSpEntityId;
+	public long getSamlPeerBindingId() {
+		return _samlPeerBindingId;
 	}
 
-	public void setSamlSpEntityId(String samlSpEntityId) {
-		_samlSpEntityId = samlSpEntityId;
-	}
-
-	public String getNameIdFormat() {
-		return _nameIdFormat;
-	}
-
-	public void setNameIdFormat(String nameIdFormat) {
-		_nameIdFormat = nameIdFormat;
-	}
-
-	public String getNameIdValue() {
-		return _nameIdValue;
-	}
-
-	public void setNameIdValue(String nameIdValue) {
-		_nameIdValue = nameIdValue;
+	public void setSamlPeerBindingId(long samlPeerBindingId) {
+		_samlPeerBindingId = samlPeerBindingId;
 	}
 
 	private long _samlIdpSpSessionId;
@@ -191,8 +173,6 @@ public class SamlIdpSpSessionSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _samlIdpSsoSessionId;
-	private String _samlSpEntityId;
-	private String _nameIdFormat;
-	private String _nameIdValue;
+	private long _samlPeerBindingId;
 
 }

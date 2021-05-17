@@ -28,9 +28,7 @@ create table SamlIdpSpSession (
 	createDate DATE null,
 	modifiedDate DATE null,
 	samlIdpSsoSessionId LONG,
-	samlSpEntityId VARCHAR(1024) null,
-	nameIdFormat VARCHAR(1024) null,
-	nameIdValue VARCHAR(1024) null
+	samlPeerBindingId LONG
 );
 
 create table SamlIdpSsoSession (
@@ -41,6 +39,21 @@ create table SamlIdpSsoSession (
 	createDate DATE null,
 	modifiedDate DATE null,
 	samlIdpSsoSessionKey VARCHAR(75) null
+);
+
+create table SamlPeerBinding (
+	samlPeerBindingId LONG not null primary key,
+	companyId LONG,
+	createDate DATE null,
+	userId LONG,
+	userName VARCHAR(75) null,
+	deleted BOOLEAN,
+	samlNameIdFormat VARCHAR(75) null,
+	samlNameIdNameQualifier VARCHAR(75) null,
+	samlNameIdSpNameQualifier VARCHAR(75) null,
+	samlNameIdSpProvidedId VARCHAR(75) null,
+	samlNameIdValue VARCHAR(75) null,
+	samlPeerEntityId VARCHAR(75) null
 );
 
 create table SamlSpAuthRequest (
@@ -91,14 +104,10 @@ create table SamlSpSession (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	samlIdpEntityId VARCHAR(1024) null,
 	samlSpSessionKey VARCHAR(75) null,
 	assertionXml TEXT null,
 	jSessionId VARCHAR(200) null,
-	nameIdFormat VARCHAR(1024) null,
-	nameIdNameQualifier VARCHAR(1024) null,
-	nameIdSPNameQualifier VARCHAR(1024) null,
-	nameIdValue VARCHAR(1024) null,
+	samlPeerBindingId LONG,
 	sessionIndex VARCHAR(75) null,
 	terminated_ BOOLEAN
 );

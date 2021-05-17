@@ -331,59 +331,59 @@ public interface SamlIdpSpSessionPersistence
 	public int countBySamlIdpSsoSessionId(long samlIdpSsoSessionId);
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or throws a <code>NoSuchIdpSpSessionException</code> if it could not be found.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or throws a <code>NoSuchIdpSpSessionException</code> if it could not be found.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the matching saml idp sp session
 	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
 	 */
-	public SamlIdpSpSession findBySISSI_SSEI(
-			long samlIdpSsoSessionId, String samlSpEntityId)
+	public SamlIdpSpSession findBySISSI_SPBI(
+			long samlIdpSsoSessionId, long samlPeerBindingId)
 		throws NoSuchIdpSpSessionException;
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
-	public SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId);
+	public SamlIdpSpSession fetchBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId);
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
-	public SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId,
+	public SamlIdpSpSession fetchBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId,
 		boolean useFinderCache);
 
 	/**
-	 * Removes the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; from the database.
+	 * Removes the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; from the database.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the saml idp sp session that was removed
 	 */
-	public SamlIdpSpSession removeBySISSI_SSEI(
-			long samlIdpSsoSessionId, String samlSpEntityId)
+	public SamlIdpSpSession removeBySISSI_SPBI(
+			long samlIdpSsoSessionId, long samlPeerBindingId)
 		throws NoSuchIdpSpSessionException;
 
 	/**
-	 * Returns the number of saml idp sp sessions where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63;.
+	 * Returns the number of saml idp sp sessions where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63;.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the number of matching saml idp sp sessions
 	 */
-	public int countBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId);
+	public int countBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId);
 
 	/**
 	 * Caches the saml idp sp session in the entity cache if it is enabled.

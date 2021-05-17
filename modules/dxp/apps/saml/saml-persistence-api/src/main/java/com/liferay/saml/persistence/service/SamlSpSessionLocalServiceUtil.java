@@ -322,6 +322,20 @@ public class SamlSpSessionLocalServiceUtil {
 		return getService().getSamlSpSessions(start, end);
 	}
 
+	public static List<SamlSpSession> getSamlSpSessions(
+		long companyId, String samlIdpEntityId, String nameIdFormat,
+		String nameIdNameQualifier, String nameIdSPNameQualifier,
+		String nameIdValue) {
+
+		return getService().getSamlSpSessions(
+			companyId, samlIdpEntityId, nameIdFormat, nameIdNameQualifier,
+			nameIdSPNameQualifier, nameIdValue);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getSamlSpSessions(long, String, String, String, String, String)}
+	 */
+	@Deprecated
 	public static List<SamlSpSession> getSamlSpSessions(String nameIdValue) {
 		return getService().getSamlSpSessions(nameIdValue);
 	}

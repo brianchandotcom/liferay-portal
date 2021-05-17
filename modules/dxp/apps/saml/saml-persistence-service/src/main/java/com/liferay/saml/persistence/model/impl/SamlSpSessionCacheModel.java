@@ -62,7 +62,7 @@ public class SamlSpSessionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{samlSpSessionId=");
 		sb.append(samlSpSessionId);
@@ -76,22 +76,14 @@ public class SamlSpSessionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", samlIdpEntityId=");
-		sb.append(samlIdpEntityId);
 		sb.append(", samlSpSessionKey=");
 		sb.append(samlSpSessionKey);
 		sb.append(", assertionXml=");
 		sb.append(assertionXml);
 		sb.append(", jSessionId=");
 		sb.append(jSessionId);
-		sb.append(", nameIdFormat=");
-		sb.append(nameIdFormat);
-		sb.append(", nameIdNameQualifier=");
-		sb.append(nameIdNameQualifier);
-		sb.append(", nameIdSPNameQualifier=");
-		sb.append(nameIdSPNameQualifier);
-		sb.append(", nameIdValue=");
-		sb.append(nameIdValue);
+		sb.append(", samlPeerBindingId=");
+		sb.append(samlPeerBindingId);
 		sb.append(", sessionIndex=");
 		sb.append(sessionIndex);
 		sb.append(", terminated=");
@@ -130,13 +122,6 @@ public class SamlSpSessionCacheModel
 			samlSpSessionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (samlIdpEntityId == null) {
-			samlSpSessionImpl.setSamlIdpEntityId("");
-		}
-		else {
-			samlSpSessionImpl.setSamlIdpEntityId(samlIdpEntityId);
-		}
-
 		if (samlSpSessionKey == null) {
 			samlSpSessionImpl.setSamlSpSessionKey("");
 		}
@@ -158,33 +143,7 @@ public class SamlSpSessionCacheModel
 			samlSpSessionImpl.setJSessionId(jSessionId);
 		}
 
-		if (nameIdFormat == null) {
-			samlSpSessionImpl.setNameIdFormat("");
-		}
-		else {
-			samlSpSessionImpl.setNameIdFormat(nameIdFormat);
-		}
-
-		if (nameIdNameQualifier == null) {
-			samlSpSessionImpl.setNameIdNameQualifier("");
-		}
-		else {
-			samlSpSessionImpl.setNameIdNameQualifier(nameIdNameQualifier);
-		}
-
-		if (nameIdSPNameQualifier == null) {
-			samlSpSessionImpl.setNameIdSPNameQualifier("");
-		}
-		else {
-			samlSpSessionImpl.setNameIdSPNameQualifier(nameIdSPNameQualifier);
-		}
-
-		if (nameIdValue == null) {
-			samlSpSessionImpl.setNameIdValue("");
-		}
-		else {
-			samlSpSessionImpl.setNameIdValue(nameIdValue);
-		}
+		samlSpSessionImpl.setSamlPeerBindingId(samlPeerBindingId);
 
 		if (sessionIndex == null) {
 			samlSpSessionImpl.setSessionIndex("");
@@ -212,14 +171,11 @@ public class SamlSpSessionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		samlIdpEntityId = objectInput.readUTF();
 		samlSpSessionKey = objectInput.readUTF();
 		assertionXml = (String)objectInput.readObject();
 		jSessionId = objectInput.readUTF();
-		nameIdFormat = objectInput.readUTF();
-		nameIdNameQualifier = objectInput.readUTF();
-		nameIdSPNameQualifier = objectInput.readUTF();
-		nameIdValue = objectInput.readUTF();
+
+		samlPeerBindingId = objectInput.readLong();
 		sessionIndex = objectInput.readUTF();
 
 		terminated = objectInput.readBoolean();
@@ -243,13 +199,6 @@ public class SamlSpSessionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (samlIdpEntityId == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(samlIdpEntityId);
-		}
-
 		if (samlSpSessionKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -271,33 +220,7 @@ public class SamlSpSessionCacheModel
 			objectOutput.writeUTF(jSessionId);
 		}
 
-		if (nameIdFormat == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(nameIdFormat);
-		}
-
-		if (nameIdNameQualifier == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(nameIdNameQualifier);
-		}
-
-		if (nameIdSPNameQualifier == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(nameIdSPNameQualifier);
-		}
-
-		if (nameIdValue == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(nameIdValue);
-		}
+		objectOutput.writeLong(samlPeerBindingId);
 
 		if (sessionIndex == null) {
 			objectOutput.writeUTF("");
@@ -315,14 +238,10 @@ public class SamlSpSessionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String samlIdpEntityId;
 	public String samlSpSessionKey;
 	public String assertionXml;
 	public String jSessionId;
-	public String nameIdFormat;
-	public String nameIdNameQualifier;
-	public String nameIdSPNameQualifier;
-	public String nameIdValue;
+	public long samlPeerBindingId;
 	public String sessionIndex;
 	public boolean terminated;
 

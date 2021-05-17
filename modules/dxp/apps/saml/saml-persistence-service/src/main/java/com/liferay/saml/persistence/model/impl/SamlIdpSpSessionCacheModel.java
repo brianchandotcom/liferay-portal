@@ -64,7 +64,7 @@ public class SamlIdpSpSessionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{samlIdpSpSessionId=");
 		sb.append(samlIdpSpSessionId);
@@ -80,12 +80,8 @@ public class SamlIdpSpSessionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", samlIdpSsoSessionId=");
 		sb.append(samlIdpSsoSessionId);
-		sb.append(", samlSpEntityId=");
-		sb.append(samlSpEntityId);
-		sb.append(", nameIdFormat=");
-		sb.append(nameIdFormat);
-		sb.append(", nameIdValue=");
-		sb.append(nameIdValue);
+		sb.append(", samlPeerBindingId=");
+		sb.append(samlPeerBindingId);
 		sb.append("}");
 
 		return sb.toString();
@@ -121,27 +117,7 @@ public class SamlIdpSpSessionCacheModel
 		}
 
 		samlIdpSpSessionImpl.setSamlIdpSsoSessionId(samlIdpSsoSessionId);
-
-		if (samlSpEntityId == null) {
-			samlIdpSpSessionImpl.setSamlSpEntityId("");
-		}
-		else {
-			samlIdpSpSessionImpl.setSamlSpEntityId(samlSpEntityId);
-		}
-
-		if (nameIdFormat == null) {
-			samlIdpSpSessionImpl.setNameIdFormat("");
-		}
-		else {
-			samlIdpSpSessionImpl.setNameIdFormat(nameIdFormat);
-		}
-
-		if (nameIdValue == null) {
-			samlIdpSpSessionImpl.setNameIdValue("");
-		}
-		else {
-			samlIdpSpSessionImpl.setNameIdValue(nameIdValue);
-		}
+		samlIdpSpSessionImpl.setSamlPeerBindingId(samlPeerBindingId);
 
 		samlIdpSpSessionImpl.resetOriginalValues();
 
@@ -160,9 +136,8 @@ public class SamlIdpSpSessionCacheModel
 		modifiedDate = objectInput.readLong();
 
 		samlIdpSsoSessionId = objectInput.readLong();
-		samlSpEntityId = objectInput.readUTF();
-		nameIdFormat = objectInput.readUTF();
-		nameIdValue = objectInput.readUTF();
+
+		samlPeerBindingId = objectInput.readLong();
 	}
 
 	@Override
@@ -185,26 +160,7 @@ public class SamlIdpSpSessionCacheModel
 
 		objectOutput.writeLong(samlIdpSsoSessionId);
 
-		if (samlSpEntityId == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(samlSpEntityId);
-		}
-
-		if (nameIdFormat == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(nameIdFormat);
-		}
-
-		if (nameIdValue == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(nameIdValue);
-		}
+		objectOutput.writeLong(samlPeerBindingId);
 	}
 
 	public long samlIdpSpSessionId;
@@ -214,8 +170,6 @@ public class SamlIdpSpSessionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long samlIdpSsoSessionId;
-	public String samlSpEntityId;
-	public String nameIdFormat;
-	public String nameIdValue;
+	public long samlPeerBindingId;
 
 }

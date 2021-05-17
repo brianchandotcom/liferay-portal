@@ -480,80 +480,80 @@ public class SamlIdpSpSessionUtil {
 	}
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or throws a <code>NoSuchIdpSpSessionException</code> if it could not be found.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or throws a <code>NoSuchIdpSpSessionException</code> if it could not be found.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the matching saml idp sp session
 	 * @throws NoSuchIdpSpSessionException if a matching saml idp sp session could not be found
 	 */
-	public static SamlIdpSpSession findBySISSI_SSEI(
-			long samlIdpSsoSessionId, String samlSpEntityId)
+	public static SamlIdpSpSession findBySISSI_SPBI(
+			long samlIdpSsoSessionId, long samlPeerBindingId)
 		throws com.liferay.saml.persistence.exception.
 			NoSuchIdpSpSessionException {
 
-		return getPersistence().findBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId);
+		return getPersistence().findBySISSI_SPBI(
+			samlIdpSsoSessionId, samlPeerBindingId);
 	}
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
-	public static SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId) {
+	public static SamlIdpSpSession fetchBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId) {
 
-		return getPersistence().fetchBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId);
+		return getPersistence().fetchBySISSI_SPBI(
+			samlIdpSsoSessionId, samlPeerBindingId);
 	}
 
 	/**
-	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching saml idp sp session, or <code>null</code> if a matching saml idp sp session could not be found
 	 */
-	public static SamlIdpSpSession fetchBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId,
+	public static SamlIdpSpSession fetchBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId, useFinderCache);
+		return getPersistence().fetchBySISSI_SPBI(
+			samlIdpSsoSessionId, samlPeerBindingId, useFinderCache);
 	}
 
 	/**
-	 * Removes the saml idp sp session where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63; from the database.
+	 * Removes the saml idp sp session where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63; from the database.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the saml idp sp session that was removed
 	 */
-	public static SamlIdpSpSession removeBySISSI_SSEI(
-			long samlIdpSsoSessionId, String samlSpEntityId)
+	public static SamlIdpSpSession removeBySISSI_SPBI(
+			long samlIdpSsoSessionId, long samlPeerBindingId)
 		throws com.liferay.saml.persistence.exception.
 			NoSuchIdpSpSessionException {
 
-		return getPersistence().removeBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId);
+		return getPersistence().removeBySISSI_SPBI(
+			samlIdpSsoSessionId, samlPeerBindingId);
 	}
 
 	/**
-	 * Returns the number of saml idp sp sessions where samlIdpSsoSessionId = &#63; and samlSpEntityId = &#63;.
+	 * Returns the number of saml idp sp sessions where samlIdpSsoSessionId = &#63; and samlPeerBindingId = &#63;.
 	 *
 	 * @param samlIdpSsoSessionId the saml idp sso session ID
-	 * @param samlSpEntityId the saml sp entity ID
+	 * @param samlPeerBindingId the saml peer binding ID
 	 * @return the number of matching saml idp sp sessions
 	 */
-	public static int countBySISSI_SSEI(
-		long samlIdpSsoSessionId, String samlSpEntityId) {
+	public static int countBySISSI_SPBI(
+		long samlIdpSsoSessionId, long samlPeerBindingId) {
 
-		return getPersistence().countBySISSI_SSEI(
-			samlIdpSsoSessionId, samlSpEntityId);
+		return getPersistence().countBySISSI_SPBI(
+			samlIdpSsoSessionId, samlPeerBindingId);
 	}
 
 	/**

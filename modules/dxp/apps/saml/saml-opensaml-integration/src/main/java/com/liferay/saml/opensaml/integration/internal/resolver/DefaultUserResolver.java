@@ -112,6 +112,13 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	@Reference(unbind = "-")
+	public void setSamlPeerBindingLocalService(
+		SamlPeerBindingLocalService samlPeerBindingLocalService) {
+
+		_samlPeerBindingLocalService = samlPeerBindingLocalService;
+	}
+
+	@Reference(unbind = "-")
 	public void setSamlProviderConfigurationHelper(
 		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
 
@@ -126,6 +133,23 @@ public class DefaultUserResolver implements UserResolver {
 	}
 
 	@Reference(unbind = "-")
+	public void setUserFieldExpressionHandlerRegistry(
+		UserFieldExpressionHandlerRegistry userFieldExpressionHandlerRegistry) {
+
+		_userFieldExpressionHandlerRegistry =
+			userFieldExpressionHandlerRegistry;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserFieldExpressionResolverRegistry(
+		UserFieldExpressionResolverRegistry
+			userFieldExpressionResolverRegistry) {
+
+		_userFieldExpressionResolverRegistry =
+			userFieldExpressionResolverRegistry;
+	}
+
+	@Reference(unbind = "-")
 	public void setUserImporter(UserImporter userImporter) {
 		_userImporter = userImporter;
 	}
@@ -133,6 +157,13 @@ public class DefaultUserResolver implements UserResolver {
 	@Reference(unbind = "-")
 	public void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setUserProcessorFactory(
+		UserProcessorFactory userProcessorFactory) {
+
+		_userProcessorFactory = userProcessorFactory;
 	}
 
 	protected User addUser(
@@ -433,25 +464,15 @@ public class DefaultUserResolver implements UserResolver {
 
 	private CompanyLocalService _companyLocalService;
 	private MetadataManager _metadataManager;
-
-	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
-
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
-
-	@Reference
 	private UserFieldExpressionHandlerRegistry
 		_userFieldExpressionHandlerRegistry;
-
-	@Reference
 	private UserFieldExpressionResolverRegistry
 		_userFieldExpressionResolverRegistry;
-
 	private UserImporter _userImporter;
 	private UserLocalService _userLocalService;
-
-	@Reference
 	private UserProcessorFactory _userProcessorFactory;
 
 }

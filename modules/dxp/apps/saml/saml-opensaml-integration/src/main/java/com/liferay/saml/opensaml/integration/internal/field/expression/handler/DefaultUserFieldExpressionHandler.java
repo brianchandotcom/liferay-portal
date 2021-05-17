@@ -154,6 +154,11 @@ public class DefaultUserFieldExpressionHandler
 		return _validFieldExpressions;
 	}
 
+	@Reference(unbind = "-")
+	public void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_processingIndex = GetterUtil.getInteger(
@@ -271,9 +276,7 @@ public class DefaultUserFieldExpressionHandler
 	@Reference
 	private UserImporter _userImporter;
 
-	@Reference
 	private UserLocalService _userLocalService;
-
 	private final List<String> _validFieldExpressions =
 		Collections.unmodifiableList(
 			Arrays.asList(

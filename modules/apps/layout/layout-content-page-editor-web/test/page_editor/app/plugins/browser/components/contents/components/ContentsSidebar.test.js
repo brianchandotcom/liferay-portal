@@ -81,11 +81,13 @@ const renderPageContent = ({
 	fragmentEntryLinks = {},
 	pageContents = [],
 	segmentsExperienceId = '0',
+	languageId = 'en_US',
 }) =>
 	render(
 		<StoreContextProvider
 			initialState={{
 				fragmentEntryLinks,
+				languageId,
 				pageContents,
 				segmentsExperienceId,
 			}}
@@ -133,5 +135,30 @@ describe('ContentsSidebar', () => {
 		expect(
 			getByText('there-is-no-content-on-this-page')
 		).toBeInTheDocument();
+	});
+
+	it('shows only text content for inline text, without html', () => {
+		const {queryByText} = renderPageContent({
+			fragmentEntryLinks: {
+				...fragmentEntryLinks,
+				39685: {
+					editableTypes: {'element-text': 'rich-text'},
+					editableValues: {
+						[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+							'element-text': {
+								defaultValue: '\n\tA paragraph\n',
+								en_US:
+									'<span style="color: rgb(0, 0, 0);">Lorem ipsum dolor sit amet</span><br>',
+							},
+						},
+					},
+					fragmentEntryLinkId: '39685',
+					name: 'Paragraph',
+					segmentsExperienceId: '0',
+				},
+			},
+		});
+
+		expect(queryByText('Lorem ipsum dolor sit amet')).toBeInTheDocument();
 	});
 });

@@ -153,10 +153,12 @@ public class DLFileEntryModelDocumentContributor
 			document.addText(
 				"ddmContent",
 				extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
-			document.addTextSortable("extension", dlFileEntry.getExtension());
+			document.addKeyword("extension", dlFileEntry.getExtension());
 			document.addKeyword(
 				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
 			document.addText("fileName", dlFileEntry.getFileName());
+			document.addTextSortable(
+				"fileExtension", dlFileEntry.getExtension());
 			document.addTextSortable(
 				"mimeType",
 				StringUtil.replace(

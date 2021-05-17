@@ -367,12 +367,64 @@ definition {
 	}
 
 	@description = "COMMERCE-6349. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
-	@ignore = "true"
 	@priority = "3"
 	test ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceMiniCart#ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity";
 
-		// TODO COMMERCE-6349 ViewFirstSelectableQuantityInMiniCartItemWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Type(
+			key_text = "Minimum Order Quantity",
+			locator1 = "TextInput#ANY",
+			value1 = "4");
+
+		Type(
+			key_text = "Multiple Order Quantity",
+			locator1 = "TextInput#ANY",
+			value1 = "5");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "10");
+
+		CommerceNavigator.gotoMiniCart();
+
+		var sku = "MIN55861";
+
+		for (var quantity : list "1,3,5") {
+			Type(
+				key_cartItemSKU = "${sku}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "${quantity}");
+
+			AssertTextEquals(
+				key_cartItemSKU = "${sku}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "5");
+		}
 	}
 
 	@description = "COMMERCE-6334. As a buyer, I want to be able to view bundled product details in the mini-cart(Name, SKU, Bundled Items, Quantity, List Price, Image)"

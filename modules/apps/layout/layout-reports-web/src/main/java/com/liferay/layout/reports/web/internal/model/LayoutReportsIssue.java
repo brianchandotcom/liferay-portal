@@ -15,6 +15,7 @@
 package com.liferay.layout.reports.web.internal.model;
 
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -107,10 +108,31 @@ public class LayoutReportsIssue {
 
 	@Override
 	public String toString() {
-		JSONObject jsonObject = toJSONObject(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+		StringBundler sb = new StringBundler((7 * _details.size()) + 3);
 
-		return jsonObject.toString();
+		sb.append("{details={");
+
+		for (int i = 0; i < _details.size(); i++) {
+			Detail detail = _details.get(i);
+
+			if (detail.getTotal() > 0) {
+				sb.append(detail.getKey());
+				sb.append("=");
+				sb.append(detail.getTotal());
+
+				if (i < (_details.size() - 1)) {
+					sb.append(", ");
+				}
+			}
+		}
+
+		sb.append("}, key=");
+		sb.append(_key);
+		sb.append(", total=");
+		sb.append(_total);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public static class Detail {

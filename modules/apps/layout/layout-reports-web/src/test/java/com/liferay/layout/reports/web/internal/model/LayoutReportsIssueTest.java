@@ -165,14 +165,15 @@ public class LayoutReportsIssueTest {
 	@Test
 	public void testToString() {
 		LayoutReportsIssue layoutReportsIssue = new LayoutReportsIssue(
-			Collections.singletonList(
+			Arrays.asList(
+				new LayoutReportsIssue.Detail(
+					LayoutReportsIssue.Detail.Key.CANONICAL_LINK, 99),
 				new LayoutReportsIssue.Detail(
 					LayoutReportsIssue.Detail.Key.TITLE, 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertEquals(
-			"{\"total\":\"100\",\"details\":[{\"total\":\"100\"," +
-				"\"key\":\"title\"}],\"key\":\"seo\"}",
+			"{details={canonical-link=99, title=100}, key=seo, total=199}",
 			layoutReportsIssue.toString());
 	}
 

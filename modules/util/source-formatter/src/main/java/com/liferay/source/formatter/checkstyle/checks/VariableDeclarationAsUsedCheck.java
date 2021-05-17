@@ -75,7 +75,10 @@ public class VariableDeclarationAsUsedCheck extends BaseAsUsedCheck {
 		DetailAST firstDependentIdentDetailAST =
 			dependentIdentDetailASTList.get(0);
 
-		if (checkMoveStatement(variableDefinitionDetailAST)) {
+		if (checkMoveStatement(
+				variableDefinitionDetailAST,
+				firstDependentIdentDetailAST.getLineNo())) {
+
 			checkMoveAfterBranchingStatement(
 				detailAST, assignDetailAST, variableName,
 				firstDependentIdentDetailAST);

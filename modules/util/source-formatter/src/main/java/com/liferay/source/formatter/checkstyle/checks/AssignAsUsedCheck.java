@@ -104,7 +104,8 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 				return;
 			}
 
-			if (checkMoveStatement(assignDetailAST) &&
+			if (checkMoveStatement(
+					assignDetailAST, dependentIdentDetailAST.getLineNo()) &&
 				!hasParentWithTokenType(
 					assignDetailAST, TokenTypes.LITERAL_FOR,
 					TokenTypes.LITERAL_WHILE)) {

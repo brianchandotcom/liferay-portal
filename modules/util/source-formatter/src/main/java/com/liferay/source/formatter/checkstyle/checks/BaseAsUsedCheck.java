@@ -192,18 +192,50 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 		}
 	}
 
-	protected boolean checkMoveStatement(DetailAST detailAST) {
+	protected boolean checkMoveStatement(DetailAST detailAST, int lineNumber) {
+		String actionNameRegex = StringBundler.concat(
+			"_?(add|channel|close|copy|create|delete|execute|import|",
+			"increment|manage|next|open|post|put|read|register|",
+			"resolve|run|send|test|transform|unzip|update|upsert|zip)",
+			"([A-Z].*)?");
+
 		if (_containsMethodName(
-				detailAST,
-				StringBundler.concat(
-					"_?(add|channel|close|copy|create|delete|execute|import|",
-					"increment|manage|next|open|post|put|read|register|",
-					"resolve|run|send|test|transform|unzip|update|upsert|zip)",
-					"([A-Z].*)?"),
-				"currentTimeMillis", "nextVersion", "toString") ||
+				detailAST, actionNameRegex, "currentTimeMillis", "nextVersion",
+				"toString") ||
 			_containsVariableType(detailAST, "ActionQueue", "File")) {
 
 			return false;
+		}
+
+		if (detailAST.getType() != TokenTypes.VARIABLE_DEF) {
+			return true;
+		}
+
+		List<DetailAST> dependentIdentDetailASTList =
+			getDependentIdentDetailASTList(
+				detailAST, detailAST.getLineNo(), true);
+
+		for (DetailAST dependentIdentDetailAST : dependentIdentDetailASTList) {
+			if (dependentIdentDetailAST.getLineNo() > lineNumber) {
+				return true;
+			}
+
+			DetailAST elistDetailAST = getParentWithTokenType(
+				dependentIdentDetailAST, TokenTypes.ELIST);
+
+			if (elistDetailAST == null) {
+				continue;
+			}
+
+			DetailAST parentDetailAST = elistDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.METHOD_CALL) {
+				String methodName = getMethodName(parentDetailAST);
+
+				if (methodName.matches(actionNameRegex)) {
+					return false;
+				}
+			}
 		}
 
 		return true;

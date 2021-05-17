@@ -52,11 +52,11 @@ export default function LayoutReportsIssuesList() {
 			)}
 
 			<ClayPanel.Group className="panel-group-flush panel-group-sm">
-				{layoutReportsIssues?.map(({key, title, total}) => {
-					let displayValue = total;
+				{layoutReportsIssues?.map((section) => {
+					let sectionTotal = section.total;
 
-					if (total > 100) {
-						displayValue = '+100';
+					if (sectionTotal > 100) {
+						sectionTotal = '+100';
 					}
 
 					return (
@@ -71,16 +71,16 @@ export default function LayoutReportsIssuesList() {
 												className="align-self-center panel-title"
 												expand
 											>
-												{title}
+												{section.title}
 											</ClayLayout.ContentCol>
 											<ClayLayout.ContentCol>
 												<ClayBadge
 													displayType={
-														total === 0
+														sectionTotal === 0
 															? 'success'
 															: 'info'
 													}
-													label={displayValue}
+													label={sectionTotal}
 												/>
 											</ClayLayout.ContentCol>
 										</ClayLayout.ContentRow>
@@ -88,17 +88,17 @@ export default function LayoutReportsIssuesList() {
 								</span>
 							}
 							displayType="unstyled"
-							key={key}
+							key={section.key}
 							showCollapseIcon={true}
 						>
 							<ClayPanel.Body>
-								{displayValue === '0' && (
+								{sectionTotal === '0' && (
 									<div className="text-secondary">
 										{Liferay.Util.sub(
 											Liferay.Language.get(
 												'there-are-no-x-related-issues'
 											),
-											title
+											section.title
 										)}
 									</div>
 								)}

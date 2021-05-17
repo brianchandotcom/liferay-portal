@@ -318,7 +318,7 @@
 </tr>
 <tr>
     <td>SIDEBAR_AUTOCOMPLETE_TAB</td>
-    <td>//a[contains(@class,'tab') and .='Autocomplete'] | //a[contains(@aria-controls,'sidebarLightDetails')]//*[contains(text(),'Autocomplete')]</td>
+    <td>//span[contains(@class,'navbar-text-truncate') and .='Autocomplete']</td>
     <td></td>
 </tr>
 <tr>

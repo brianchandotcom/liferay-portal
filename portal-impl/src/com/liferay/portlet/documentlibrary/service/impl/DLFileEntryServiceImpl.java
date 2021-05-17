@@ -700,6 +700,13 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			start, end);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #updateFileEntry(long, String, String, String, String,
+	 *             String, DLVersionNumberIncrease, long, Map, File, InputStream, long,
+	 *             Date, Date, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
@@ -710,23 +717,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_fileEntryModelResourcePermission.check(
-			getPermissionChecker(), fileEntryId, ActionKeys.UPDATE);
-
-		if (LockManagerUtil.isLocked(
-				DLFileEntryConstants.getClassName(), fileEntryId)) {
-
-			boolean hasLock = LockManagerUtil.hasLock(
-				getUserId(), DLFileEntry.class.getName(), fileEntryId);
-
-			if (!hasLock) {
-				throw new FileEntryLockException.MustOwnLock();
-			}
-		}
-
-		return dlFileEntryLocalService.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
+		return updateFileEntry(
+			fileEntryId,  sourceFileName, mimeType, title, description,
+			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
 			ddmFormValuesMap, file, inputStream, size, null, null,
 			serviceContext);
 	}

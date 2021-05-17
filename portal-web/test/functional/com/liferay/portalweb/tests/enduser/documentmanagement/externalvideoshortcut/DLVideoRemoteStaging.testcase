@@ -39,11 +39,9 @@ definition {
 			layoutName = "Test Page",
 			widgetName = "Blogs");
 
-		Staging.remoteStagingSetUp(
-			enableXuggler = "true",
-			remotePort = "9080",
-			remoteStaging = "true",
-			siteName = "Site Name");
+		Staging.remoteStagingSetUpViaJson(
+			groupName = "Site Name",
+			remotePort = "9080");
 	}
 
 	tearDown {
@@ -65,12 +63,38 @@ definition {
 	test PublishBlogWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideoRemoteStaging#PublishBlogWithEmbeddedVideo";
 
-		JSONDocument.addFileWithUploadedFile(
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		User.loginPG(
+			nodePort = "8080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Video Title In Site",
-			groupName = "Site Name",
-			mimeType = "video/mp4",
-			sourceFileName = "Document_1.mp4");
+			dmDocumentFile = "Document_1.mp4",
+			dmDocumentTitle = "DM Video Title In Site");
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page",
@@ -93,9 +117,11 @@ definition {
 
 		Staging.publishToLive(remoteStaging = "true");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.logoutPG();
+
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
 		Navigator.gotoSitePage(

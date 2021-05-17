@@ -270,7 +270,7 @@ definition {
 			key_url = "site-configuration-default-user-associations",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
-		Button.click(button = "Change");
+		Click(locator1 = "SiteSettingsDefaultUserAssociations#TEAMS_SELECT");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

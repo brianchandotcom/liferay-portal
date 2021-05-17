@@ -1,0 +1,7 @@
+{
+	"org.apache.aries.jax.rs.whiteboard.default": {
+		"application.ready.service.filter": "(&(module.service.lifecycle=system.check)(objectClass=com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle))",
+		"default.application.base": "/rest",
+		"default.web": false
+	}
+}

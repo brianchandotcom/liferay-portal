@@ -92,7 +92,7 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 
 				for (AssetCategory assetCategory : assetCategories) {
 					visitLayout(
-						element, layout, assetCategory.getCategoryId(),
+						assetCategory.getCategoryId(), element, layout,
 						themeDisplay);
 				}
 			}
@@ -106,7 +106,7 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 	}
 
 	protected void visitLayout(
-			Element element, Layout layout, long assetCategoryId,
+			long assetCategoryId, Element element, Layout layout,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -135,13 +135,13 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
 				_portal.getClassNameId(AssetCategory.class), assetCategoryId);
 
-		String productFriendlyURL =
+		String assetCategoryFriendlyURL =
 			currentSiteURL + urlSeparator +
 				friendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId());
 
 		_sitemap.addURLElement(
-			element, productFriendlyURL, typeSettingsUnicodeProperties,
-			layout.getModifiedDate(), productFriendlyURL, null);
+			element, assetCategoryFriendlyURL, typeSettingsUnicodeProperties,
+			layout.getModifiedDate(), assetCategoryFriendlyURL, null);
 	}
 
 	@Reference

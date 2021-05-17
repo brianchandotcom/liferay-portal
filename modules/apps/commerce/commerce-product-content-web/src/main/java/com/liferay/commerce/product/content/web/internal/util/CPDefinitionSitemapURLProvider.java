@@ -115,7 +115,7 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 
 				if (layoutUuid.equals(layout.getUuid())) {
 					visitLayout(
-						element, layout, cpCatalogEntry.getCPDefinitionId(),
+						cpCatalogEntry.getCPDefinitionId(), element, layout,
 						themeDisplay);
 				}
 			}
@@ -129,7 +129,7 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 	}
 
 	protected void visitLayout(
-			Element element, Layout layout, long cpDefinitionId,
+			long cpDefinitionId, Element element, Layout layout,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -162,13 +162,13 @@ public class CPDefinitionSitemapURLProvider implements SitemapURLProvider {
 				_portal.getClassNameId(CProduct.class),
 				cpDefinition.getCProductId());
 
-		String productFriendlyURL =
+		String cpDefinitionFriendlyURL =
 			currentSiteURL + urlSeparator +
 				friendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId());
 
 		_sitemap.addURLElement(
-			element, productFriendlyURL, typeSettingsUnicodeProperties,
-			layout.getModifiedDate(), productFriendlyURL, null);
+			element, cpDefinitionFriendlyURL, typeSettingsUnicodeProperties,
+			layout.getModifiedDate(), cpDefinitionFriendlyURL, null);
 	}
 
 	@Reference

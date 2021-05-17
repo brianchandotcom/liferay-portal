@@ -37,52 +37,6 @@ definition {
 			folderName = "WC Folder Name");
 	}
 
-	@description = "Test for LPS-131787 that cover order of web content actions"
-	@priority = "4"
-	test ViewOrderWebContentActions {
-		property portal.acceptance = "true";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoWebContent();
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(webContentTitle = "WC WebContent LPS-131787");
-
-		PortletEntry.publish();
-
-		Click(
-			key_webContentTitle = "WC WebContent LPS-131787",
-			locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
-
-		MenuItem.viewPresent(menuItem = "Edit");
-
-		MenuItem.viewPresent(menuItem = "Translate");
-
-		MenuItem.viewPresent(menuItem = "Preview");
-
-		MenuItem.viewPresent(menuItem = "Expire");
-
-		MenuItem.viewPresent(menuItem = "Subscribe");
-
-		MenuItem.viewPresent(menuItem = "View History");
-
-		MenuItem.viewPresent(menuItem = "View Usages");
-
-		MenuItem.viewPresent(menuItem = "Copy");
-
-		MenuItem.viewPresent(menuItem = "Move");
-
-		MenuItem.viewPresent(menuItem = "Export for Translation");
-
-		MenuItem.viewPresent(menuItem = "Import Translation");
-
-		MenuItem.viewPresent(menuItem = "Permissions");
-
-		MenuItem.viewPresent(menuItem = "Move to Recycle Bin");
-	}
-
 	@description = "Test that the UI for adding a WC works."
 	@priority = "4"
 	test AddWebContent {
@@ -274,6 +228,27 @@ definition {
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 			WebContent.previewDisplayPageTemplate(webContentContent = "Web Content Content");
+		}
+	}
+
+	@description = "Test for LPS-131787. View the order of web content actions."
+	@priority = "4"
+	test ViewOrderOfWebContentActions {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Assert if the Web Content Actions are in the right order") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			Click(
+				key_webContentTitle = "WC WebContent Title",
+				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+			MenuItem.viewOrderMenuActionOnWebContent(listMenuItemNames = "Edit,Translate,Preview,-,Expire,Subscribe,View History,View Usages,-,Copy,Move,Export for Translation,Import Translation,-,Permissions,-,Move to Recycle Bin");
 		}
 	}
 

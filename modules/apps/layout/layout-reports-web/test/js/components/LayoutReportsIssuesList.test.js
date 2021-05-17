@@ -22,11 +22,24 @@ import {StoreContextProvider} from '../../../src/main/resources/META-INF/resourc
 
 const mockLayoutReportsIssues = [
 	{
+		details: [
+			{
+				key: 'missing-input-alt-attributes',
+				title: 'Missing Input ALT Attributes',
+				total: '4',
+			},
+			{
+				key: 'missing-video-caption',
+				title: 'Missing Video Caption',
+				total: '5',
+			},
+		],
 		key: 'accessibility',
 		title: 'Accessibility',
 		total: '17',
 	},
 	{
+		details: [],
 		key: 'seo',
 		title: 'SEO',
 		total: '123',
@@ -35,11 +48,13 @@ const mockLayoutReportsIssues = [
 
 const mockLayoutReportsIssuesNoSEO = [
 	{
+		details: [],
 		key: 'accessibility',
 		title: 'Accessibility',
 		total: '17',
 	},
 	{
+		details: [],
 		key: 'seo',
 		title: 'SEO',
 		total: '0',
@@ -121,5 +136,25 @@ describe('LayoutReportsIssuesList', () => {
 		expect(getByText('SEO')).toBeInTheDocument();
 		expect(getAllByText('0').length).toBe(2);
 		expect(getByText('your-page-has-no-issues')).toBeInTheDocument();
+	});
+
+	it('render list of accesibility issues with correct number of failing elements', () => {
+		const {getAllByText, getByText} = render(
+			<StoreContextProvider
+				value={{
+					data: {
+						imagesPath: 'imagesPath',
+						layoutReportsIssues: mockLayoutReportsIssues,
+					},
+				}}
+			>
+				<LayoutReportsIssuesList />
+			</StoreContextProvider>
+		);
+
+		expect(getByText('Missing Input ALT Attributes')).toBeInTheDocument();
+		expect(getByText('Missing Video Caption')).toBeInTheDocument();
+		expect(getAllByText('4').length).toBe(1);
+		expect(getAllByText('5').length).toBe(1);
 	});
 });

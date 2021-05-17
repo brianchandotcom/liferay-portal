@@ -40,6 +40,7 @@ import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.processor.UserProcessor;
 import com.liferay.saml.opensaml.integration.processor.factory.UserProcessorFactory;
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
+import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
@@ -230,6 +231,26 @@ public class DefaultUserResolver implements UserResolver {
 				userFieldExpressionResolver.resolveUserFieldExpression(
 					userResolverSAMLContext, attributesMap)));
 
+		if (Validator.isBlank(userFieldExpression)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No user field expression to use for matching could be " +
+						"resolved");
+			}
+
+			User user = _resolveByNameId(
+				companyId, nameIdFormat,
+				userResolverSAMLContext.resolveSubjectNameQualifier(),
+				subjectNameIdentifier,
+				userResolverSAMLContext.resolvePeerEntityId());
+
+			if (user != null) {
+				return updateUser(user, attributesMap, serviceContext);
+			}
+
+			return null;
+		}
+
 		String searchFieldValue = subjectNameIdentifier;
 
 		if (attributesMap.containsKey(userFieldExpression)) {
@@ -258,7 +279,7 @@ public class DefaultUserResolver implements UserResolver {
 			_userFieldExpressionHandlerRegistry.getFieldExpressionHandler(
 				prefix);
 
-		User user = null;
+		User user;
 
 		if (Validator.isNotNull(userFieldExpression) &&
 			_samlProviderConfigurationHelper.isLDAPImportEnabled()) {
@@ -275,6 +296,12 @@ public class DefaultUserResolver implements UserResolver {
 				return user;
 			}
 		}
+
+		user = _resolveByNameId(
+			companyId, nameIdFormat,
+			userResolverSAMLContext.resolveSubjectNameQualifier(),
+			subjectNameIdentifier,
+			userResolverSAMLContext.resolvePeerEntityId());
 
 		if (user == null) {
 			user = userFieldExpressionHandler.getUser(
@@ -374,6 +401,31 @@ public class DefaultUserResolver implements UserResolver {
 		}
 
 		return prefixedUserFieldExpression;
+	}
+
+	private User _resolveByNameId(
+		long companyId, String subjectNameFormat, String subjectNameQualifier,
+		String subjectNameIdentifier, String samlIdpEntityId) {
+
+		SamlPeerBinding samlPeerBinding =
+			_samlPeerBindingLocalService.fetchSamlPeerBinding(
+				companyId, subjectNameFormat, subjectNameQualifier,
+				subjectNameIdentifier, samlIdpEntityId);
+
+		if (samlPeerBinding != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Matched known Name Identifier ", subjectNameIdentifier,
+						" of type \"", subjectNameFormat,
+						"\", with qualifier \"", subjectNameQualifier,
+						"\", for \"", samlIdpEntityId, "\""));
+			}
+
+			return _userLocalService.fetchUserById(samlPeerBinding.getUserId());
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

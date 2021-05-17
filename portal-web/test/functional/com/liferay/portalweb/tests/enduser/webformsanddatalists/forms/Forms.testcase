@@ -2622,13 +2622,25 @@ definition {
 	}
 
 	@description = "Verify that a Form cannot be created without at least 1 field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ShouldHaveAtLeastOneField {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130503 ShouldHaveAtLeastOneField pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+		
+		FormsAdminNavigator.gotoAddForm();
+		
+		Click(locator1 = "Button#SAVE");
+		
+		Alert.viewErrorMessage(errorMessage = "Error:Please add at least one field.");
+		
+		Click(locator1 = "Form#PUBLISH_FORM_BUTTON");
+
+		Alert.viewErrorMessage(errorMessage = "Error:Please add at least one field.");
+		
 	}
 
 	@ignore = "true"

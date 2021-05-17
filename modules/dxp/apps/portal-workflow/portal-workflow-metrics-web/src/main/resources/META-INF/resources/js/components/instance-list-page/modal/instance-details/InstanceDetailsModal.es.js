@@ -16,33 +16,28 @@ import React, {useContext, useMemo, useState} from 'react';
 
 import PromisesResolver from '../../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../../shared/hooks/useFetch.es';
+import {getSLAStatusIconInfo} from '../../../../shared/util/util.es';
 import {InstanceListContext} from '../../InstanceListPageProvider.es';
 import {ModalContext} from '../ModalProvider.es';
 import Body from './InstanceDetailsModalBody.es';
 
 function Header({completed, id = '', slaResults = [], slaStatus}) {
-	const iconClasses = {
-		Empty: 'hr',
-		Overdue: 'exclamation-circle',
-	};
-
-	const iconColors = {
-		Empty: 'text-info',
-		Overdue: 'text-danger',
-	};
-
 	slaStatus = !slaResults.length ? 'Empty' : slaStatus;
-	slaStatus = completed ? 'Completed' : slaStatus;
 
-	const iconClass = iconClasses[slaStatus] || 'check-circle';
-	const iconColor = iconColors[slaStatus] || 'text-success';
+	const slaStatusIcon = getSLAStatusIconInfo(slaStatus);
 
 	return (
 		<ClayModal.Header>
 			<PromisesResolver.Resolved>
 				<div className="font-weight-medium">
-					<span className={`modal-title-indicator ${iconColor}`}>
-						<ClayIcon symbol={iconClass} />
+					<span
+						className={`modal-title-indicator ${
+							completed
+								? 'text-secondary'
+								: slaStatusIcon?.textColor
+						}`}
+					>
+						<ClayIcon symbol={slaStatusIcon?.name} />
 					</span>
 
 					{`${Liferay.Language.get('item')} #${id}`}

@@ -38,11 +38,14 @@ definition {
 
 		WebContentStructures.addCP(structureName = "${structureTitle}");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldNameList = "${key_fieldLabel}",
-			fieldsetLabel = "${fieldsetLabel}",
-			fieldsetName = "${fieldsetName}");
+		DataEngine.createNewFieldset(
+			fieldsetName = "${fieldsetName}",
+			fieldNameList = "${key_fieldLabel}"
+		);
+
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "${fieldsetName}"
+		);
 
 		Button.clickSave();
 
@@ -75,7 +78,9 @@ definition {
 			fieldsetName = "Fieldset Name",
 			localeList = "pt-BR");
 
-		DataEngine.addFieldsets(fieldsetName = "Fieldset Name");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "Fieldset Name"
+		);
 
 		WebContentStructures.saveCP();
 
@@ -154,7 +159,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsets(fieldsetName = "New Fieldset en-US");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset en-US"
+		);
 
 		DataEngine.viewFieldsetTranslation(
 			fieldNameList = "Text",
@@ -169,10 +176,14 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldNameList = "Text,Numeric",
-			fieldsetName = "${fieldsetNameEN}");
+		DataEngine.createNewFieldset(
+			fieldsetName = "${fieldsetNameEN}",
+			fieldNameList = "Text,Numeric"
+		);
+
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "${fieldsetNameEN}"
+		);
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -338,7 +349,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		WebContentStructures.saveCP();
 
@@ -602,7 +615,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsets(fieldsetName = "${fieldsetName}");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "${fieldsetName}"
+		);
 
 		WebContentStructures.saveCP();
 
@@ -938,7 +953,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		WebContentStructures.saveCP();
 
@@ -1107,7 +1124,9 @@ definition {
 			fieldsetName = "Fieldset Name",
 			localeList = "pt-BR");
 
-		DataEngine.addFieldsets(fieldsetName = "Fieldset Name");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "Fieldset Name"
+		);
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",

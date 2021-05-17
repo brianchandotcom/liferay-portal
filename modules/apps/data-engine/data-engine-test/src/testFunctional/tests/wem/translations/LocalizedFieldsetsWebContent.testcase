@@ -33,11 +33,14 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldNameList = "Text",
-			fieldsetLabel = "New Fieldset",
-			fieldsetName = "New Fieldset");
+		DataEngine.createNewFieldset(
+			fieldsetName = "New Fieldset",
+			fieldNameList = "Date"
+		);
+
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -91,10 +94,14 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
+		DataEngine.createNewFieldset(
+			fieldsetName = "New Fieldset",
+			fieldNameList = "Text"
+		);
+
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text",
@@ -161,6 +168,7 @@ definition {
 	@description = "This test validates the fieldset translations are displayed on the Web Content."
 	@priority = "5"
 	test CheckStructureTranslationOnWebContent {
+		//setLocale
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
@@ -171,7 +179,9 @@ definition {
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
-		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		WebContentStructures.saveCP();
 
@@ -234,7 +244,9 @@ definition {
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
-		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		DataEngine.editFieldsetRepeatable(fieldsetLabel = "New Fieldset");
 
@@ -293,11 +305,15 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
+		DataEngine.createNewFieldset(
+			fieldsetName = "New Fieldset",
 			fieldHelp = "true",
-			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
+			fieldNameList = "Text"
+		);
+
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -355,7 +371,9 @@ definition {
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
-		DataEngine.addFieldsets(fieldsetName = "Fieldset Default Title");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "Fieldset Default Title"
+		);
 
 		WebContentStructures.saveCP();
 
@@ -383,11 +401,15 @@ definition {
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldHelp = "true",
+		DataEngine.createNewFieldset(
+			fieldsetName = "New Fieldset",
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
+			fieldHelp = "True"
+		);
+
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		DataEngine.addTranslationToFieldset(
 			fieldHelp = "true",
@@ -488,7 +510,9 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		WebContentStructures.saveCP();
 
@@ -567,11 +591,15 @@ definition {
 
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addFieldsets(
-			createNewFieldset = "true",
-			fieldHelp = "true",
+		DataEngine.createNewFieldset(
+			fieldsetName = "New Fieldset",
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset");
+			fieldHelp = "True"
+		);
+
+		DataEngine.addFieldsetToBuilder(
+			fieldsetName = "New Fieldset"
+		);
 
 		DataEngine.addTranslationToFieldset(
 			fieldHelp = "true",

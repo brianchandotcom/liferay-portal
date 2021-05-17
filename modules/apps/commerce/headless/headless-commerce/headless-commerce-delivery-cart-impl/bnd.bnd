@@ -2,3 +2,7 @@ Bundle-Name: Liferay Headless Commerce Delivery Cart Implementation
 Bundle-SymbolicName: com.liferay.headless.commerce.delivery.cart.impl
 Bundle-Version: 4.0.3
 Liferay-Enterprise-App: product.id=9a473157-06a6-44b6-b017-a360ffaf5f38
+Require-Capability:\
+	osgi.extender;\
+		filter := "(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
+-includeresource: OSGI-INF/configurator=configurator

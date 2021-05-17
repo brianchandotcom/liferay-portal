@@ -1,0 +1,5 @@
+{
+	"com.liferay.headless.commerce.delivery.cart.internal.jaxrs.application.HeadlessCommerceDeliveryCartApplication~default": {
+		"oauth2.scopechecker.type": "none"
+	}
+}

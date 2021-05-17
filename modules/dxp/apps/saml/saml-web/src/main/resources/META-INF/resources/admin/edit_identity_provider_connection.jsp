@@ -20,8 +20,15 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)request.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTION);
+UserFieldExpressionResolverRegistry userFieldExpressionResolverRegistry = (UserFieldExpressionResolverRegistry)request.getAttribute(UserFieldExpressionResolverRegistry.class.getName());
 
 long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_SKEW), samlProviderConfiguration.clockSkew());
+
+String userIdentifierExpression = StringPool.BLANK;
+
+if (samlSpIdpConnection != null) {
+	userIdentifierExpression = samlSpIdpConnection.getUserIdentifierExpression();
+}
 %>
 
 <clay:container-fluid
@@ -90,6 +97,22 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 			<aui:option label="windows-domain-qualified-name" value="<%= nameIdTypeValues.getWinDomainQualified() %>" />
 			<aui:option label="x509-subject-name" value="<%= nameIdTypeValues.getX509Subject() %>" />
 		</aui:select>
+	</aui:fieldset>
+
+	<aui:fieldset helpMessage="user-resolution-help" label="user-resolution">
+
+		<%
+		for (Map.Entry<String, UserFieldExpressionResolver> entry : userFieldExpressionResolverRegistry.getOrderedUserFieldExpressionResolvers()) {
+			String key = entry.getKey();
+			UserFieldExpressionResolver userFieldExpressionResolver = entry.getValue();
+		%>
+
+			<aui:input checked="<%= Objects.equals(userIdentifierExpression, key) %>" cssClass="primary-ctrl" inlineField="<%= true %>" label="<%= userFieldExpressionResolver.getDescription(locale) %>" name="userIdentifierExpression" type="radio" value="<%= key %>" />
+
+		<%
+		}
+		%>
+
 	</aui:fieldset>
 
 	<aui:fieldset label="attributes">

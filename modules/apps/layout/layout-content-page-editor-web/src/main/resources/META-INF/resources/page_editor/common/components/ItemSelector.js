@@ -31,7 +31,7 @@ export default function ItemSelector({
 	onItemSelect,
 	quickMappedInfoItems = [],
 	modalProps,
-	selectedItemTitle,
+	selectedItem,
 	showAddButton = true,
 	showMappedItems = true,
 	transformValueCallback,
@@ -56,11 +56,11 @@ export default function ItemSelector({
 			transformValueCallback,
 		});
 
-	const selectContentIcon = selectedItemTitle ? 'change' : 'plus';
+	const selectContentIcon = selectedItem?.title ? 'change' : 'plus';
 
 	const getContentButtonName = (label) =>
 		Liferay.Util.sub(
-			selectedItemTitle
+			selectedItem?.title
 				? Liferay.Language.get('change-x')
 				: Liferay.Language.get('select-x'),
 			label
@@ -93,7 +93,7 @@ export default function ItemSelector({
 					readOnly
 					sizing="sm"
 					type="text"
-					value={selectedItemTitle || ''}
+					value={selectedItem?.title || ''}
 				/>
 
 				{showAddButton &&
@@ -149,7 +149,7 @@ export default function ItemSelector({
 						/>
 					))}
 
-				{selectedItemTitle && (
+				{selectedItem?.title && (
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get(
 							'clear-content-button'
@@ -172,6 +172,6 @@ ItemSelector.propTypes = {
 	itemSelectorURL: PropTypes.string,
 	label: PropTypes.string.isRequired,
 	onItemSelect: PropTypes.func.isRequired,
-	selectedItemTitle: PropTypes.string,
+	selectedItem: PropTypes.shape({title: PropTypes.string}),
 	transformValueCallback: PropTypes.func.isRequired,
 };

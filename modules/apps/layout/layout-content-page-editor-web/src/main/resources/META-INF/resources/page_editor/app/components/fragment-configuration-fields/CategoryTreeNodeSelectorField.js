@@ -36,7 +36,7 @@ export const CategoryTreeNodeSelectorField = ({
 			onItemSelect={(categoryTreeNode) => {
 				onValueSelect(field.name, categoryTreeNode);
 			}}
-			selectedItemTitle={value ? value.title : null}
+			selectedItem={value}
 			showMappedItems={false}
 			transformValueCallback={itemSelectorValueToCategoryTreeNode}
 		/>

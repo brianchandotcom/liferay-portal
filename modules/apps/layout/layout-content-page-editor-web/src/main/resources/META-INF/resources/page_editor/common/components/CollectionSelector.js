@@ -20,7 +20,7 @@ import itemSelectorValueToCollection from '../../app/utils/item-selector-value/i
 import ItemSelector from './ItemSelector';
 
 export default function CollectionSelector({
-	collectionTitle,
+	collectionItem,
 	itemSelectorURL,
 	label,
 	onCollectionSelect,
@@ -34,7 +34,7 @@ export default function CollectionSelector({
 			label={label}
 			onItemSelect={onCollectionSelect}
 			quickMappedInfoItems={config.selectedMappingTypes?.linkedCollection}
-			selectedItemTitle={collectionTitle}
+			selectedItem={collectionItem}
 			showMappedItems={!!config.selectedMappingTypes?.linkedCollection}
 			transformValueCallback={itemSelectorValueToCollection}
 		/>
@@ -42,7 +42,7 @@ export default function CollectionSelector({
 }
 
 CollectionSelector.propTypes = {
-	collectionTitle: PropTypes.string,
+	collectionItem: PropTypes.shape({title: PropTypes.string}),
 	label: PropTypes.string,
 	onCollectionSelect: PropTypes.func.isRequired,
 };

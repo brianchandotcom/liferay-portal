@@ -23,13 +23,13 @@ export const CollectionSelectorField = ({field, onValueSelect, value}) => {
 
 	return (
 		<CollectionSelector
-			collectionTitle={value.title}
+			collectionItem={value}
 			itemSelectorURL={typeOptions.infoListSelectorURL}
 			label={field.label}
 			onCollectionSelect={(collection) => {
 				onValueSelect(field.name, collection);
 			}}
-		></CollectionSelector>
+		/>
 	);
 };
 

@@ -396,7 +396,7 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 				<ItemSelector
 					label={Liferay.Language.get('content')}
 					onItemSelect={onInfoItemSelect}
-					selectedItemTitle={selectedItem.title}
+					selectedItem={selectedItem}
 					transformValueCallback={itemSelectorValueToInfoItem}
 				/>
 			)}

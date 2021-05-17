@@ -23,12 +23,16 @@ import itemSelectorValueToSiteNavigationMenuItem from '../../utils/item-selector
 export const NavigationMenuSelectorField = ({field, onValueSelect, value}) => {
 	const eventName = `${config.portletNamespace}selectSiteNavigationMenu`;
 
-	const title = value
-		? value.parentSiteNavigationMenuItemId &&
-		  value.parentSiteNavigationMenuItemId !== '0'
-			? `... / ${value.title}`
-			: value.title
-		: Liferay.Language.get('public-pages-hierarchy');
+	const selectedValue = value
+		? {
+				...value,
+				title:
+					value.parentSiteNavigationMenuItemId &&
+					value.parentSiteNavigationMenuItemId !== '0'
+						? `... / ${value.title}`
+						: value.title,
+		  }
+		: {title: Liferay.Language.get('public-pages-hierarchy')};
 
 	return (
 		<ItemSelector
@@ -39,7 +43,7 @@ export const NavigationMenuSelectorField = ({field, onValueSelect, value}) => {
 			onItemSelect={(navigationMenu) => {
 				onValueSelect(field.name, navigationMenu);
 			}}
-			selectedItemTitle={title}
+			selectedItem={selectedValue}
 			showMappedItems={false}
 			transformValueCallback={itemSelectorValueToSiteNavigationMenuItem}
 		/>

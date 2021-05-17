@@ -51,7 +51,9 @@ function renderItemSelector({mappedInfoItems = [], selectedItemTitle = ''}) {
 			<ItemSelector
 				label="itemSelectorLabel"
 				onItemSelect={() => {}}
-				selectedItemTitle={selectedItemTitle}
+				selectedItem={
+					selectedItemTitle ? {title: selectedItemTitle} : null
+				}
 				transformValueCallback={() => {}}
 			/>
 		</StoreAPIContextProvider>

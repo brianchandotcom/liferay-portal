@@ -30,7 +30,7 @@ export const VideoSelectorField = ({field, onValueSelect, value}) => {
 			label={field.label}
 			modalProps={{height: '60vh', size: 'lg'}}
 			onItemSelect={(video) => onValueSelect(field.name, video)}
-			selectedItemTitle={value?.title || ''}
+			selectedItemTitle={value}
 			showMappedItems={false}
 			transformValueCallback={itemSelectorValueToVideoItem}
 		/>

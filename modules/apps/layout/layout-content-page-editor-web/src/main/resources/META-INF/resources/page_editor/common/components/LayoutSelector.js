@@ -44,7 +44,7 @@ export const LayoutSelector = ({mappedLayout, onLayoutSelect}) => {
 				itemSelectorURL={itemSelectorURL}
 				label={Liferay.Language.get('page')}
 				onItemSelect={(layout) => onLayoutSelect(layout)}
-				selectedItemTitle={mappedLayout?.title || ''}
+				selectedItem={mappedLayout}
 				showMappedItems={false}
 				transformValueCallback={itemSelectorValueToLayout}
 			/>

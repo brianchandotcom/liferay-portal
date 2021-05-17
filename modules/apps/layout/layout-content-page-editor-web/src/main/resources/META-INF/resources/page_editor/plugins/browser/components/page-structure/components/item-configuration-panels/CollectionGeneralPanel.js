@@ -117,7 +117,7 @@ export const CollectionGeneralPanel = ({item}) => {
 	return (
 		<>
 			<CollectionSelector
-				collectionTitle={(item.config.collection || {}).title || ''}
+				collectionItem={item.config.collection}
 				itemSelectorURL={config.collectionSelectorURL}
 				label={Liferay.Language.get('collection')}
 				onCollectionSelect={(collection = {}) => {

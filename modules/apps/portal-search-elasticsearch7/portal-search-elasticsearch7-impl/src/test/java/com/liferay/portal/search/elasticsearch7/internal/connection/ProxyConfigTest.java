@@ -53,23 +53,6 @@ public class ProxyConfigTest {
 	}
 
 	@Test
-	public void testShouldApplyConfigIfHttpHasProxyConfig() {
-		Mockito.when(
-			_http.hasProxyConfig()
-		).thenReturn(
-			true
-		);
-
-		ProxyConfig.Builder builder = ProxyConfig.builder(_http);
-
-		ProxyConfig proxyConfig = builder.host(
-			"http://proxy"
-		).build();
-
-		Assert.assertTrue(proxyConfig.shouldApplyConfig());
-	}
-
-	@Test
 	public void testShouldApplyConfigWithHostAndPort() {
 		ProxyConfig.Builder builder = ProxyConfig.builder(_http);
 
@@ -92,6 +75,67 @@ public class ProxyConfigTest {
 		ProxyConfig proxyConfig = builder.build();
 
 		Assert.assertTrue(proxyConfig.shouldApplyConfig());
+	}
+
+	@Test
+	public void testShouldApplyConfigWithHostAndPortOfProxyHost() {
+		ProxyConfig.Builder builder = ProxyConfig.builder(_http);
+
+		String domain = "domain";
+		String networkAddress = "http://domain:9200";
+		String nonProxyHostDomain = "nonProxyHostDomain";
+
+		Mockito.when(
+			_http.getDomain(networkAddress)
+		).thenReturn(
+			domain
+		);
+
+		Mockito.when(
+			_http.isNonProxyHost(domain)
+		).thenReturn(
+			nonProxyHostDomain.equals(domain)
+		);
+
+		ProxyConfig proxyConfig = builder.host(
+			"http://proxy"
+		).networkAddresses(
+			new String[] {networkAddress}
+		).port(
+			32000
+		).build();
+
+		Assert.assertTrue(proxyConfig.shouldApplyConfig());
+	}
+
+	@Test
+	public void testShouldNotApplyConfigWithHostAndPortOfNonProxyHost() {
+		ProxyConfig.Builder builder = ProxyConfig.builder(_http);
+
+		String domain = "domain";
+		String networkAddress = "http://domain:9200";
+
+		Mockito.when(
+			_http.getDomain(networkAddress)
+		).thenReturn(
+			domain
+		);
+
+		Mockito.when(
+			_http.isNonProxyHost(domain)
+		).thenReturn(
+			true
+		);
+
+		ProxyConfig proxyConfig = builder.host(
+			"http://proxy"
+		).networkAddresses(
+			new String[] {networkAddress}
+		).port(
+			32000
+		).build();
+
+		Assert.assertFalse(proxyConfig.shouldApplyConfig());
 	}
 
 	@Test

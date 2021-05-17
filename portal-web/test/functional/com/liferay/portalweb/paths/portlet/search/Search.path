@@ -80,11 +80,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_SEARCH_BAR</td>
-	<td>//input[@ref='searchInput']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MODIFIED_FACET_CONFIG_EMPTY_FIELD</td>
 	<td>//div[contains(@class,'form-row')][2]//div[label[contains(.,'${key_fieldLabel}')]]//input[@type='text']</td>
 	<td></td>

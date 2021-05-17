@@ -234,9 +234,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		AssertElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
-
-
-		
 	}
 
 	@description = "Verify that inputs to the Body Text can be undone and redone"

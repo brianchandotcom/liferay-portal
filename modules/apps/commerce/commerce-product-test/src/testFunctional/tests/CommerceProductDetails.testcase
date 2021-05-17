@@ -156,15 +156,6 @@ definition {
 		// TODO COMMERCE-6371 SelectOptionValueAndAssertProductDetailsAreUpdated pending implementation
 	}
 
-	@description = "COMMERCE-6660. I want to be able to set a custom renderer for product type different than the default one(Simple/Grouped/Virtual)"
-	@ignore = "true"
-	@priority = "3"
-	test UseCustomRenderersInProductDetails {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-6660 UseCustomRenderersInProductDetails pending implementation
-	}
-
 	@description = "COMMERCE-6659. I want to be able to use ADT to render Product Details widget and I want to be able to select a Display Template and see it applied to the widget"
 	@ignore = "true"
 	@priority = "3"
@@ -172,6 +163,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6659 UseADTInProductDetailsWidget pending implementation
+	}
+
+	@description = "COMMERCE-6660. I want to be able to set a custom renderer for product type different than the default one(Simple/Grouped/Virtual)"
+	@ignore = "true"
+	@priority = "3"
+	test UseCustomRenderersInProductDetails {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6660 UseCustomRenderersInProductDetails pending implementation
 	}
 
 	@description = "COMMERCE-6364. As a buyer, I want the first selectable quantity of a product in Product Details to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"

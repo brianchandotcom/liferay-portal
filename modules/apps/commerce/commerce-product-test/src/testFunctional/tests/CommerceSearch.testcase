@@ -43,7 +43,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6323 GlobalSearchSearchEntryInAccounts pending implementation
-
 	}
 
 	@description = "COMMERCE-6326. As a buyer, I want to be able to search an entry in All Content using Global Search and the results should be visible on Search page"

@@ -34,13 +34,10 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
-			fieldNameList = "Date"
-		);
+			fieldNameList = "Date",
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -95,13 +92,10 @@ definition {
 			structureName = "Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
-			fieldNameList = "Text"
-		);
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		DataEngine.addTranslationToFieldset(
 			fieldNameList = "Text",
@@ -175,19 +169,15 @@ definition {
 		DataEngine.createNewFieldset(
 			fieldHelp = "true",
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset"
-		);
-		
-		DataEngine.addTranslationToFieldset(
-			fieldsetName = "New Fieldset",
-			localeList = "pt-BR",
-			fieldHelp = "true",
-			fieldNameList = "Text"
-		);
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addTranslationToFieldset(
+			fieldHelp = "true",
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP();
 
@@ -247,19 +237,14 @@ definition {
 
 		DataEngine.createNewFieldset(
 			fieldNameList = "Text,Color",
-			fieldsetName = "New Fieldset"
-		);
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
-
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		DataEngine.addTranslationToFieldset(
+			fieldNameList = "Text,Color",
 			fieldsetName = "New Fieldset",
-			localeList = "pt-BR",
-			fieldNameList = "Text,Color"
-		);
+			localeList = "pt-BR");
 
 		DataEngine.editFieldsetRepeatable(fieldsetLabel = "New Fieldset");
 
@@ -319,14 +304,11 @@ definition {
 			structureName = "Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
 			fieldHelp = "true",
-			fieldNameList = "Text"
-		);
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
@@ -384,9 +366,7 @@ definition {
 
 		Click(locator1 = "Modal#SAVE_BUTTON");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "Fieldset Default Title"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "Fieldset Default Title");
 
 		WebContentStructures.saveCP();
 
@@ -415,14 +395,11 @@ definition {
 			structureName = "Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
+			fieldHelp = "True",
 			fieldNameList = "Text",
-			fieldHelp = "True"
-		);
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		DataEngine.addTranslationToFieldset(
 			fieldHelp = "true",
@@ -523,9 +500,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP();
 
@@ -605,14 +580,11 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
+			fieldHelp = "True",
 			fieldNameList = "Text",
-			fieldHelp = "True"
-		);
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		DataEngine.addTranslationToFieldset(
 			fieldHelp = "true",

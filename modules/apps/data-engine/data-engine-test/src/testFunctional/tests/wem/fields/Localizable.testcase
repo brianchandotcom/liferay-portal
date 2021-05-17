@@ -35,15 +35,11 @@ definition {
 	@description = "This is a test for LRQA-66432. This test validates it is possible to edit the Localizable property of a field to Off and On on the Fieldset and the propagation of changes."
 	@priority = "4"
 	test EditLocalizableOnPublishedWCWithFieldset {
-
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
-			fieldNameList = "Text"
-		);
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		WebContentStructures.saveCP();
 

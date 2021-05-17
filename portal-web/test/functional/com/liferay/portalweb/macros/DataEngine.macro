@@ -692,37 +692,6 @@ definition {
 			}
 		}
 
-		if (isSet(localeList)) {
-			for (var locale : list "${localeList}") {
-				PortletEntry.changeLocale(
-					locale = "${locale}",
-					modal = "true");
-
-				Type(
-					locator1 = "FormViewBuilder#FIELD_SET_NAME",
-					value1 = "${fieldsetName} ${locale}");
-
-				for (var fieldName : list "${fieldNameList}") {
-					DataEngine.editFieldLabel(
-						fieldFieldLabel = "${fieldName}",
-						fieldFieldLabelEdit = "${fieldName} ${locale}",
-						fieldsetModal = "true");
-
-					if (isSet(fieldHelp)) {
-						DataEngine.editFieldTip(
-							fieldFieldLabel = "${fieldName} ${locale}",
-							fieldHelp = "${fieldName} Help Text ${locale}");
-					}
-
-					if (isSet(fieldPlaceholder)) {
-						DataEngine.editFieldTip(
-							fieldFieldLabel = "${fieldName} ${locale}",
-							fieldPlaceholder = "${fieldName} Placeholder ${locale}");
-					}
-				}
-			}
-		}
-
 		Modal.save();
 
 		Alert.viewSuccessMessage();

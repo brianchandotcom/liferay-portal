@@ -131,14 +131,16 @@ public class HashMapBuilder<K, V> extends BaseMapBuilder {
 		public HashMapWrapper<K, V> putAll(
 			Dictionary<? extends K, ? extends V> dictionary) {
 
-			if (dictionary != null) {
-				for (Enumeration<? extends K> enumeration = dictionary.keys();
-					 enumeration.hasMoreElements();) {
+			if (dictionary == null) {
+				return this;
+			}
 
-					K key = enumeration.nextElement();
+			Enumeration<? extends K> enumeration = dictionary.keys();
 
-					_hashMap.put(key, dictionary.get(key));
-				}
+			while (enumeration.hasMoreElements()) {
+				K key = enumeration.nextElement();
+
+				_hashMap.put(key, dictionary.get(key));
 			}
 
 			return this;

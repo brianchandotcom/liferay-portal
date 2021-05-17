@@ -58,9 +58,9 @@ public class HashMapDictionary<K, V> extends Dictionary<K, V> {
 	}
 
 	public void putAll(Dictionary<? extends K, ? extends V> dictionary) {
-		for (Enumeration<? extends K> enumeration = dictionary.keys();
-			 enumeration.hasMoreElements();) {
+		Enumeration<? extends K> enumeration = dictionary.keys();
 
+		while (enumeration.hasMoreElements()) {
 			K key = enumeration.nextElement();
 
 			_map.put(key, dictionary.get(key));

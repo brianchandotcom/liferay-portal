@@ -35,6 +35,15 @@ public interface UserImporter {
 			long companyId, String emailAddress, String screenName)
 		throws Exception;
 
+	public User importUserByExpando(
+			long ldapServerId, long companyId, String expandoFieldName,
+			String expandoValue)
+		throws Exception;
+
+	public User importUserByExpando(
+			long companyId, String expandoFieldName, String expandoFieldValue)
+		throws Exception;
+
 	public User importUserByScreenName(long companyId, String screenName)
 		throws Exception;
 

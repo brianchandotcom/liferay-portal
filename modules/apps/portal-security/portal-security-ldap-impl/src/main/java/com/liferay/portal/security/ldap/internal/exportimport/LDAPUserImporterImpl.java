@@ -356,6 +356,75 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	@Override
+	public User importUserByExpando(
+			long ldapServerId, long companyId, String expandoFieldName,
+			String expandoValue)
+		throws Exception {
+
+		Properties userExpandoMappings = _ldapSettings.getUserExpandoMappings(
+			ldapServerId, companyId);
+
+		String attributeName = GetterUtil.getString(
+			userExpandoMappings.getProperty(expandoFieldName));
+
+		if (Validator.isBlank(attributeName)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"User expando field ", expandoFieldName,
+						" is not mapped for LDAP server ", ldapServerId));
+			}
+
+			return null;
+		}
+
+		return importUserByLdapAttribute(
+			ldapServerId, companyId, attributeName, expandoValue);
+	}
+
+	@Override
+	public User importUserByExpando(
+			long companyId, String expandoFieldName, String expandoFieldValue)
+		throws Exception {
+
+		Collection<LDAPServerConfiguration> ldapServerConfigurations =
+			_ldapServerConfigurationProvider.getConfigurations(companyId);
+
+		for (LDAPServerConfiguration ldapServerConfiguration :
+				ldapServerConfigurations) {
+
+			String providerUrl = ldapServerConfiguration.baseProviderURL();
+
+			if (Validator.isNull(providerUrl)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No provider URL defined in " +
+							ldapServerConfiguration);
+				}
+
+				continue;
+			}
+
+			User user = importUserByExpando(
+				ldapServerConfiguration.ldapServerId(), companyId,
+				expandoFieldName, expandoFieldValue);
+
+			if (user != null) {
+				return user;
+			}
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"User with the expando field ", expandoFieldName, "=",
+					expandoFieldValue, " was not found in any LDAP servers"));
+		}
+
+		return null;
+	}
+
+	@Override
 	public User importUserByScreenName(long companyId, String screenName)
 		throws Exception {
 

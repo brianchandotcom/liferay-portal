@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.module.framework.ThrowableCollector;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -134,22 +131,6 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
-	@Override
-	public long addBundle(String location) throws PortalException {
-		Bundle bundle = _addBundle(location, null, true);
-
-		return bundle.getBundleId();
-	}
-
-	@Override
-	public long addBundle(String location, InputStream inputStream)
-		throws PortalException {
-
-		Bundle bundle = _addBundle(location, inputStream, true);
-
-		return bundle.getBundleId();
-	}
-
 	public Bundle getBundle(
 			BundleContext bundleContext, InputStream inputStream)
 		throws PortalException {
@@ -208,40 +189,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	@Override
 	public Framework getFramework() {
 		return _framework;
-	}
-
-	@Override
-	public String getState(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		int state = bundle.getState();
-
-		if (state == Bundle.ACTIVE) {
-			return "active";
-		}
-		else if (state == Bundle.INSTALLED) {
-			return "installed";
-		}
-		else if (state == Bundle.RESOLVED) {
-			return "resolved";
-		}
-		else if (state == Bundle.STARTING) {
-			return "starting";
-		}
-		else if (state == Bundle.STOPPING) {
-			return "stopping";
-		}
-		else if (state == Bundle.UNINSTALLED) {
-			return "uninstalled";
-		}
-
-		return StringPool.BLANK;
 	}
 
 	@Override
@@ -340,64 +287,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	@Override
-	public void setBundleStartLevel(long bundleId, int startLevel)
-		throws PortalException {
-
-		_checkPermission();
-
-		Bundle bundle = getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		BundleStartLevel bundleStartLevel = bundle.adapt(
-			BundleStartLevel.class);
-
-		bundleStartLevel.setStartLevel(startLevel);
-	}
-
-	public void startBundle(
-			Bundle bundle, int options, boolean checkPermissions)
-		throws PortalException {
-
-		if (checkPermissions) {
-			_checkPermission();
-		}
-
-		if (_isFragmentBundle(bundle) ||
-			((bundle.getState() & Bundle.ACTIVE) == Bundle.ACTIVE)) {
-
-			return;
-		}
-
-		try {
-			bundle.start(options);
-		}
-		catch (BundleException bundleException) {
-			_log.error(bundleException, bundleException);
-
-			throw new PortalException(bundleException);
-		}
-	}
-
-	@Override
-	public void startBundle(long bundleId) throws PortalException {
-		startBundle(bundleId, 0);
-	}
-
-	@Override
-	public void startBundle(long bundleId, int options) throws PortalException {
-		Bundle bundle = getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		startBundle(bundle, 0, true);
-	}
-
-	@Override
 	public void startFramework() throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Starting the OSGi framework");
@@ -440,31 +329,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Started the OSGi runtime");
-		}
-	}
-
-	@Override
-	public void stopBundle(long bundleId) throws PortalException {
-		stopBundle(bundleId, 0);
-	}
-
-	@Override
-	public void stopBundle(long bundleId, int options) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.stop(options);
-		}
-		catch (BundleException bundleException) {
-			_log.error(bundleException, bundleException);
-
-			throw new PortalException(bundleException);
 		}
 	}
 
@@ -539,26 +403,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	@Override
-	public void uninstallBundle(long bundleId) throws PortalException {
-		_checkPermission();
-
-		Bundle bundle = getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.uninstall();
-		}
-		catch (BundleException bundleException) {
-			_log.error(bundleException, bundleException);
-
-			throw new PortalException(bundleException);
-		}
-	}
-
-	@Override
 	public void unregisterContext(Object context) {
 		if (context == null) {
 			return;
@@ -576,33 +420,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Registered context " + context);
-		}
-	}
-
-	@Override
-	public void updateBundle(long bundleId) throws PortalException {
-		updateBundle(bundleId, null);
-	}
-
-	@Override
-	public void updateBundle(long bundleId, InputStream inputStream)
-		throws PortalException {
-
-		_checkPermission();
-
-		Bundle bundle = getBundle(bundleId);
-
-		if (bundle == null) {
-			throw new PortalException("No bundle with ID " + bundleId);
-		}
-
-		try {
-			bundle.update(inputStream);
-		}
-		catch (BundleException bundleException) {
-			_log.error(bundleException, bundleException);
-
-			throw new PortalException(bundleException);
 		}
 	}
 
@@ -808,19 +625,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			crc.update((int)(l & 0xFF));
 
 			l >>= 8;
-		}
-	}
-
-	private void _checkPermission() throws PrincipalException {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if (permissionChecker == null) {
-			throw new PrincipalException();
-		}
-
-		if (!permissionChecker.isOmniadmin()) {
-			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
 	}
 

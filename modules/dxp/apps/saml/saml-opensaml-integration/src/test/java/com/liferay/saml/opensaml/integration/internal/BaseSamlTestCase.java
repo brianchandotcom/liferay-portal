@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
@@ -51,6 +52,10 @@ import com.liferay.saml.opensaml.integration.internal.metadata.MetadataGenerator
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManagerImpl;
 import com.liferay.saml.opensaml.integration.internal.servlet.profile.IdentifierGenerationStrategyFactory;
 import com.liferay.saml.opensaml.integration.internal.velocity.VelocityEngineFactory;
+import com.liferay.saml.persistence.model.SamlPeerBinding;
+import com.liferay.saml.persistence.model.impl.SamlPeerBindingImpl;
+import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
+import com.liferay.saml.persistence.service.SamlPeerBindingLocalServiceUtil;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 import com.liferay.saml.runtime.metadata.LocalEntityManager;
@@ -62,6 +67,7 @@ import java.net.URLDecoder;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -121,6 +127,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		setupMetadata();
 
 		setupSamlBindings();
+
+		setupSamlPeerBindingsLocalServiceMock();
 	}
 
 	@After
@@ -303,6 +311,26 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		);
 	}
 
+	protected long prepareSamlPeerBinding(
+		String peerEntityId, String samlNameIdFormat,
+		String samlNameIdNameQualifier, String samlNameIdValue) {
+
+		SamlPeerBinding samlPeerBinding = new SamlPeerBindingImpl();
+
+		samlPeerBinding.setSamlPeerBindingId(_samlPeerBindings.size() + 1);
+		samlPeerBinding.setCompanyId(COMPANY_ID);
+		samlPeerBinding.setDeleted(false);
+		samlPeerBinding.setSamlNameIdFormat(samlNameIdFormat);
+		samlPeerBinding.setSamlNameIdNameQualifier(samlNameIdNameQualifier);
+		samlPeerBinding.setSamlNameIdValue(samlNameIdValue);
+		samlPeerBinding.setSamlPeerEntityId(peerEntityId);
+
+		_samlPeerBindings.put(
+			samlPeerBinding.getSamlPeerBindingId(), samlPeerBinding);
+
+		return samlPeerBinding.getSamlPeerBindingId();
+	}
+
 	protected void prepareServiceProvider(String entityId) {
 		when(
 			samlProviderConfiguration.entityId()
@@ -397,7 +425,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected void setupIdentifiers() {
 		SamlIdentifierGeneratorStrategyFactory
 			samlIdentifierGeneratorStrategyFactory =
-				new SamlIdentifierGeneratorStrategyFactory();
+			new SamlIdentifierGeneratorStrategyFactory();
 
 		samlIdentifierGenerator = samlIdentifierGeneratorStrategyFactory.create(
 			16);
@@ -470,7 +498,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			HashMapBuilder.<String, Object>put(
 				"saml.keystore.path",
 				"classpath:/com/liferay/saml/opensaml/integration/internal" +
-					"/credential/dependencies/keystore.jks"
+				"/credential/dependencies/keystore.jks"
 			).build());
 
 		credentialResolver = new KeyStoreCredentialResolver();
@@ -606,6 +634,20 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		samlBindings.add(new HttpSoap11Binding(parserPool, httpClient));
 	}
 
+	protected void setupSamlPeerBindingsLocalServiceMock()
+		throws PortalException {
+
+		samlPeerBindingLocalService = getMockPortletService(
+			SamlPeerBindingLocalServiceUtil.class,
+			SamlPeerBindingLocalService.class);
+
+		when(
+			samlPeerBindingLocalService.getSamlPeerBinding(Mockito.anyLong())
+		).thenAnswer(
+			answer -> _samlPeerBindings.get((long)answer.getArguments()[0])
+		);
+	}
+
 	protected static final String ACS_URL =
 		"http://localhost:8080/c/portal/saml/acs";
 
@@ -652,6 +694,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	protected Portal portal;
 	protected List<SamlBinding> samlBindings;
 	protected IdentifierGenerationStrategy samlIdentifierGenerator;
+	protected SamlPeerBindingLocalService samlPeerBindingLocalService;
 	protected SamlProviderConfiguration samlProviderConfiguration;
 	protected SamlProviderConfigurationHelper samlProviderConfigurationHelper;
 	protected List<Class<?>> serviceUtilClasses = new ArrayList<>();
@@ -710,7 +753,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 					idpSSODescriptor.getSingleLogoutServices();
 
 				for (SingleLogoutService singleLogoutService :
-						singleLogoutServices) {
+					singleLogoutServices) {
 
 					String binding = singleLogoutService.getBinding();
 
@@ -725,7 +768,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 					idpSSODescriptor.getSingleSignOnServices();
 
 				for (SingleSignOnService singleSignOnService :
-						singleSignOnServices) {
+					singleSignOnServices) {
 
 					String binding = singleSignOnService.getBinding();
 
@@ -749,5 +792,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		private boolean _idpNeedsSignature = true;
 
 	}
+
+	private final Map<Long, SamlPeerBinding> _samlPeerBindings =
+		new HashMap<>();
 
 }

@@ -94,6 +94,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		_singleLogoutProfileImpl.setMetadataManager(metadataManagerImpl);
 		_singleLogoutProfileImpl.setPortal(portal);
 		_singleLogoutProfileImpl.setSamlBindings(samlBindings);
+		_singleLogoutProfileImpl.setSamlPeerBindingLocalService(
+			samlPeerBindingLocalService);
 		_singleLogoutProfileImpl.setSamlProviderConfigurationHelper(
 			samlProviderConfigurationHelper);
 		_singleLogoutProfileImpl.setSamlSpSessionLocalService(
@@ -109,7 +111,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSloContext samlSloContext = new SamlSloContext(
 			null, _samlIdpSpConnectionLocalService,
-			_samlIdpSpSessionLocalService, userLocalService);
+			_samlIdpSpSessionLocalService, samlPeerBindingLocalService,
+			userLocalService);
 
 		_singleLogoutProfileImpl.performIdpSpLogout(
 			mockHttpServletRequest, new MockHttpServletResponse(),
@@ -142,7 +145,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 		SamlIdpSpSessionImpl samlIdpSpSessionImpl = new SamlIdpSpSessionImpl();
 
 		samlIdpSpSessionImpl.setCompanyId(COMPANY_ID);
-		samlIdpSpSessionImpl.setSamlSpEntityId(SP_ENTITY_ID);
+		samlIdpSpSessionImpl.setSamlPeerBindingId(
+			prepareSamlPeerBinding(SP_ENTITY_ID, null, null, null));
 
 		samlIdpSpSessions.add(samlIdpSpSessionImpl);
 
@@ -164,7 +168,8 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSloContext samlSloContext = new SamlSloContext(
 			samlIdpSsoSessionImpl, _samlIdpSpConnectionLocalService,
-			_samlIdpSpSessionLocalService, userLocalService);
+			_samlIdpSpSessionLocalService, samlPeerBindingLocalService,
+			userLocalService);
 
 		SamlSloRequestInfo samlSloRequestInfo =
 			samlSloContext.getSamlSloRequestInfo(SP_ENTITY_ID);
@@ -209,17 +214,21 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 		SamlSloContext samlSloContext = new SamlSloContext(
 			samlIdpSsoSessionImpl, _samlIdpSpConnectionLocalService,
-			_samlIdpSpSessionLocalService, userLocalService);
+			_samlIdpSpSessionLocalService, samlPeerBindingLocalService,
+			userLocalService);
 
 		SamlIdpSpSessionImpl samlIdpSpSessionImpl = new SamlIdpSpSessionImpl();
 
-		samlIdpSpSessionImpl.setNameIdFormat(NameID.EMAIL);
-		samlIdpSpSessionImpl.setNameIdValue("test@liferay.com");
-		samlIdpSpSessionImpl.setSamlSpEntityId(SP_ENTITY_ID);
+		samlIdpSpSessionImpl.setSamlPeerBindingId(
+			prepareSamlPeerBinding(
+				SP_ENTITY_ID, NameID.EMAIL, null, "test@liferay.com"));
 
 		SamlSloRequestInfo samlSloRequestInfo = new SamlSloRequestInfo();
 
 		samlSloRequestInfo.setSamlIdpSpSession(samlIdpSpSessionImpl);
+		samlSloRequestInfo.setSamlPeerBinding(
+			samlPeerBindingLocalService.getSamlPeerBinding(
+				samlIdpSpSessionImpl.getSamlPeerBindingId()));
 
 		_singleLogoutProfileImpl.sendIdpLogoutRequest(
 			mockHttpServletRequest, mockHttpServletResponse, samlSloContext,
@@ -272,9 +281,9 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 	public void testSendSpLogoutRequestValidSpSession() throws Exception {
 		SamlSpSession samlSpSession = new SamlSpSessionImpl();
 
-		samlSpSession.setSamlIdpEntityId(IDP_ENTITY_ID);
-		samlSpSession.setNameIdFormat(NameID.EMAIL);
-		samlSpSession.setNameIdValue("test@liferay.com");
+		samlSpSession.setSamlPeerBindingId(
+			prepareSamlPeerBinding(
+				IDP_ENTITY_ID, NameID.EMAIL, null, "test@liferay.com"));
 
 		when(
 			_samlSpSessionLocalService.fetchSamlSpSessionByJSessionId(

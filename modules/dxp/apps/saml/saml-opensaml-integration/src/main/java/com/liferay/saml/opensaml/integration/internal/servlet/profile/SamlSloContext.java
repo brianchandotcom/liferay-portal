@@ -26,8 +26,10 @@ import com.liferay.saml.persistence.exception.NoSuchIdpSpConnectionException;
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
+import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlIdpSpConnectionLocalService;
 import com.liferay.saml.persistence.service.SamlIdpSpSessionLocalService;
+import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 
 import java.io.Serializable;
 
@@ -49,6 +51,7 @@ public class SamlSloContext implements Serializable {
 		SamlIdpSsoSession samlIdpSsoSession, MessageContext<?> messageContext,
 		SamlIdpSpConnectionLocalService samlIdpSpConnectionLocalService,
 		SamlIdpSpSessionLocalService samlIdpSpSessionLocalService,
+		SamlPeerBindingLocalService samlPeerBindingLocalService,
 		UserLocalService userLocalService) {
 
 		_messageContext = messageContext;
@@ -69,7 +72,11 @@ public class SamlSloContext implements Serializable {
 				_samlIdpSpSessionLocalService.deleteSamlIdpSpSession(
 					samlIdpSpSession);
 
-				String samlSpEntityId = samlIdpSpSession.getSamlSpEntityId();
+				SamlPeerBinding samlPeerBinding =
+					samlPeerBindingLocalService.getSamlPeerBinding(
+						samlIdpSpSession.getSamlPeerBindingId());
+
+				String samlSpEntityId = samlPeerBinding.getSamlPeerEntityId();
 
 				if (messageContext != null) {
 					SAMLPeerEntityContext samlPeerEntityContext =
@@ -107,6 +114,7 @@ public class SamlSloContext implements Serializable {
 
 				samlSloRequestInfo.setName(name);
 				samlSloRequestInfo.setSamlIdpSpSession(samlIdpSpSession);
+				samlSloRequestInfo.setSamlPeerBinding(samlPeerBinding);
 
 				_samlRequestInfos.put(samlSpEntityId, samlSloRequestInfo);
 			}
@@ -125,11 +133,13 @@ public class SamlSloContext implements Serializable {
 		SamlIdpSsoSession samlIdpSsoSession,
 		SamlIdpSpConnectionLocalService samlIdpSpConnectionLocalService,
 		SamlIdpSpSessionLocalService samlIdpSpSessionLocalService,
+		SamlPeerBindingLocalService samlPeerBindingLocalService,
 		UserLocalService userLocalService) {
 
 		this(
 			samlIdpSsoSession, null, samlIdpSpConnectionLocalService,
-			samlIdpSpSessionLocalService, userLocalService);
+			samlIdpSpSessionLocalService, samlPeerBindingLocalService,
+			userLocalService);
 	}
 
 	public MessageContext<?> getMessageContext() {

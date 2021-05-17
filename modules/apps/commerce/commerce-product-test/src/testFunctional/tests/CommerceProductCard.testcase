@@ -45,6 +45,15 @@ definition {
 		// TODO COMMERCE-5859 AssertDefaultChannelCurrencyIsAppliedToProductCard pending implementation
 	}
 
+	@description = "COMMERCE-6657. As a buyer, I want to be unable to add a bundled product(Price Type Dynamic) to cart directly"
+	@ignore = "true"
+	@priority = "3"
+	test AssertDynamicPriceBundledProductCannotBeAddedToCartDirectly {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6657 AssertDynamicPriceBundledProductCannotBeAddedToCartDirectly pending implementation
+	}
+
 	@description = "COMMERCE-5907. As a buyer, I want to be unable to add multiple SKU product to the cart directly, I want to be unable to select the quantity of the product directly and I want to be unable to check the availability of the product directly"
 	@priority = "3"
 	test AssertMultipleSKUProductCannotBeDirectlyAddedToCart {
@@ -325,6 +334,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6161 AssertSelectableQuantitiesStartFromMinimumQuantitySet pending implementation
+	}
+
+	@description = "COMMERCE-6656. As a buyer, I want to be unable to add a bundled product(Price Type Static) to cart directly"
+	@ignore = "true"
+	@priority = "3"
+	test AssertStaticPriceBundledProductCannotBeAddedToCartDirectly {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6656 AssertStaticPriceBundledProductCannotBeAddedToCartDirectly pending implementation
 	}
 
 	@description = "COMMERCE-5873. As a buyer, I want to be able to navigate to the product detail page via primary CTA, to check its variants"

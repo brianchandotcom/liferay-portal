@@ -81,6 +81,24 @@ definition {
 		// TODO COMMERCE-6381 SearchOrderInPlacedOrdersPage pending implementation
 	}
 
+	@description = "COMMERCE-6665. I want to be able to select a Display Template in Pending Orders widget and see it applied to the widget"
+	@ignore = "true"
+	@priority = "3"
+	test UseADTInPendingOrdersWidget {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6665 UseADTInPendingOrdersWidget pending implementation
+	}
+
+	@description = "COMMERCE-6666. I want to be able to select a Display Template in Placed Orders widget and see it applied to the widget"
+	@ignore = "true"
+	@priority = "3"
+	test UseADTInPlacedOrdersWidget {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6666 UseADTInPlacedOrdersWidget pending implementation
+	}
+
 	@description = "COMMERCE-6382. As a buyer, I want to be able to see the list of shipments for an order item by clicking on 'Shipments'"
 	@ignore = "true"
 	@priority = "3"

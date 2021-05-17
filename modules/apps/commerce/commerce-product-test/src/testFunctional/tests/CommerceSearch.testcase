@@ -26,6 +26,16 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-6664. I want to be able to disable Search Results widget pagination"
+	@ignore = "true"
+	@priority = "3"
+	test DisableSearchResultsWidgetPagination {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6664 DisableSearchResultsWidgetPagination pending implementation
+
+	}
+
 	@description = "COMMERCE-6323. As a buyer, I want to be able to search an entry in Accounts using Global Search and I want the results to be visible in Account Management page"
 	@ignore = "true"
 	@priority = "3"
@@ -560,6 +570,15 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6146 SearchResultsWidgetEditNumberOfItemsToDisplayFromConfiguration pending implementation
+	}
+
+	@description = "COMMERCE-6663. I want to be able to use ADT to render Search Results widget and I want to be able to select a Display Template and see it applied to the widget"
+	@ignore = "true"
+	@priority = "3"
+	test UseADTInSearchResultsWidget {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6663 UseADTInSearchResultsWidget pending implementation
 	}
 
 }

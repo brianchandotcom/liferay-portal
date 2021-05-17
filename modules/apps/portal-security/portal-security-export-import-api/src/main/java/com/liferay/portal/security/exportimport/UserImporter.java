@@ -14,11 +14,14 @@
 
 package com.liferay.portal.security.exportimport;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.User;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface UserImporter {
 
 	public long getLastImportTime() throws Exception;
@@ -34,6 +37,11 @@ public interface UserImporter {
 
 	public User importUserByScreenName(long companyId, String screenName)
 		throws Exception;
+
+	public User importUserByUuid(long ldapServerId, long companyId, String uuid)
+		throws Exception;
+
+	public User importUserByUuid(long companyId, String uuid) throws Exception;
 
 	public void importUsers() throws Exception;
 

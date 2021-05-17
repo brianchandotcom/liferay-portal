@@ -1094,9 +1094,7 @@ definition {
 			key_url = "site-configuration-details",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
-		AssertClick(
-			locator1 = "SitesEditSite#PARENT_SITE_SELECT",
-			value1 = "Select");
+		Button.click(button = "Change");
 
 		var key_parentSiteName = "${parentSiteName}";
 

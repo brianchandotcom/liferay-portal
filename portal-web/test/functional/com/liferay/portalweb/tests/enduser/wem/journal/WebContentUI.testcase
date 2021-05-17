@@ -231,7 +231,7 @@ definition {
 		}
 	}
 
-	@description = "Test for LPS-131787. View the order of web content actions."
+	@description = "This is a test for LPS-131787. View the order of web content actions."
 	@priority = "4"
 	test ViewOrderOfWebContentActions {
 		task ("Add a web content based on Basic Web Content") {

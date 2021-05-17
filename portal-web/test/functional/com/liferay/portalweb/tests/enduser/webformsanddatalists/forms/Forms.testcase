@@ -742,10 +742,6 @@ definition {
 		AssertElementPresent(
 			key_name = "Text",
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
-
-
-			
-		
 	}
 
 	@description = "Verify that a Form can be edited"

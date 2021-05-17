@@ -59,8 +59,8 @@ definition {
 	@description = "Ensures that a hotfix can be reverted."
 	@priority = "5"
 	test RevertHotfix {
+		property portal.acceptance = "true";
 		property portal.hotfix.release = "true";
-		property portal.release = "true";
 		property skip.install-patch = "true";
 		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "PatchingTool#RevertHotfix";

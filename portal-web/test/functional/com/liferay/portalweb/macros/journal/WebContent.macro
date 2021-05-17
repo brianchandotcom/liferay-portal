@@ -1601,6 +1601,8 @@ definition {
 
 		Panel.expandPanel(panel = "Related Assets");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		AssertClick(
 			locator1 = "AssetRelatedAssets#RELATED_ASSETS_SELECT",
 			value1 = "Select");
@@ -1610,7 +1612,7 @@ definition {
 			locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
 			value1 = "${assetType}");
 
-		SelectFrame(locator1 = "AssetRelatedAssets#SELECT_ASSET_IFRAME");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",

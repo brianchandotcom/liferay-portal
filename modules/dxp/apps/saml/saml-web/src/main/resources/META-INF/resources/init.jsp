@@ -45,6 +45,8 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.saml.constants.SamlProviderConfigurationKeys" %><%@
 page import="com.liferay.saml.constants.SamlWebKeys" %><%@
+page import="com.liferay.saml.opensaml.integration.field.expression.resolver.UserFieldExpressionResolver" %><%@
+page import="com.liferay.saml.opensaml.integration.field.expression.resolver.registry.UserFieldExpressionResolverRegistry" %><%@
 page import="com.liferay.saml.persistence.exception.DuplicateSamlIdpSpConnectionSamlSpEntityIdException" %><%@
 page import="com.liferay.saml.persistence.exception.DuplicateSamlSpIdpConnectionSamlIdpEntityIdException" %><%@
 page import="com.liferay.saml.persistence.exception.SamlIdpSpConnectionMetadataUrlException" %><%@
@@ -78,7 +80,9 @@ page import="java.security.cert.X509Certificate" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.Enumeration" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

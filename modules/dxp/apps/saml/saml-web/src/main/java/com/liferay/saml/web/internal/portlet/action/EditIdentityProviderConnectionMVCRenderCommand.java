@@ -17,9 +17,9 @@ package com.liferay.saml.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.saml.constants.SamlPortletKeys;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.opensaml.integration.field.expression.resolver.registry.UserFieldExpressionResolverRegistry;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
@@ -58,6 +58,10 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 			SamlProviderConfigurationHelper.class.getName(),
 			_samlProviderConfigurationHelper);
 
+		renderRequest.setAttribute(
+			UserFieldExpressionResolverRegistry.class.getName(),
+			_userFieldExpressionResolverRegistry);
+
 		long clockSkew;
 
 		if (samlSpIdpConnectionId > 0) {
@@ -92,12 +96,13 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 	}
 
 	@Reference
-	private Portal _portal;
-
-	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	@Reference
+	private UserFieldExpressionResolverRegistry
+		_userFieldExpressionResolverRegistry;
 
 }

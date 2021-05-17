@@ -3097,9 +3097,9 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!commons-io.jar</file-name>
-				<version>2.6</version>
+				<version>2.8.0</version>
 				<project-name>Apache Commons IO</project-name>
-				<project-url>http://commons.apache.org/proper/commons-io/</project-url>
+				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
@@ -3587,13 +3587,13 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!commons-io.jar</file-name>
-				<version>1.3.1</version>
-				<project-name>Commons IO</project-name>
-				<project-url>http://jakarta.apache.org/commons/io/</project-url>
+				<version>2.8.0</version>
+				<project-name>Apache Commons IO</project-name>
+				<project-url>https://commons.apache.org/proper/commons-io/</project-url>
 				<licenses>
 					<license>
-						<license-name>The Apache Software License, Version 2.0</license-name>
-						<license-url>/LICENSE.txt</license-url>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -6710,7 +6710,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/commons-io.jar</file-name>
-				<version>2.5</version>
+				<version>2.8.0</version>
 				<project-name>Commons IO</project-name>
 				<project-url>http://commons.apache.org/io</project-url>
 				<licenses>

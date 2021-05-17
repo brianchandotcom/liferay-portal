@@ -10,7 +10,12 @@ definition {
 		}
 
 		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = "test@liferay.com";
+			if ("${authenticationMethod}" == "By Screen Name") {
+				var creatorEmailAddress = "test";
+			}
+			else {
+				var creatorEmailAddress = "test@liferay.com";
+			}
 		}
 
 		if (!(isSet(creatorPassword))) {

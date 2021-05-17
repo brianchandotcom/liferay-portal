@@ -91,9 +91,16 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if ("${authenticationMethod}" == "By Screen Name") {
+			var userName = "test";
+		}
+		else {
+			var userName = "test@liferay.com";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/delete-user \
-				-u test@liferay.com:test \
+				-u ${userName}:test \
 				-d userId=${userId}
 		''';
 
@@ -182,13 +189,20 @@ definition {
 	}
 
 	macro _getUserIds {
-		var companyId = JSONCompany.getCompanyId();
+		var companyId = JSONCompany.getCompanyId(authenticationMethod = "${authenticationMethod}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if ("${authenticationMethod}" == "By Screen Name") {
+			var userName = "test";
+		}
+		else {
+			var userName = "test@liferay.com";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-company-users \
-			-u test@liferay.com:test \
+			-u ${userName}:test \
 			-d companyId=${companyId} \
 			-d <CURL_DATA[start=-1]CURL_DATA> \
 			-d <CURL_DATA[end=-1]CURL_DATA>

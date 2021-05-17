@@ -1819,9 +1819,16 @@ definition {
 			}
 		}
 
-		Type.typePause(
-			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "${userEmailAddress}");
+		if ("${authenticationMethod}" == "By Screen Name") {
+			Type(
+				locator1 = "TextInput#SCREEN_NAME",
+				value1 = "${userScreenName}");
+		}
+		else {
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "${userEmailAddress}");
+		}
 
 		Type.typePause(
 			locator1 = "TextInput#PASSWORD",

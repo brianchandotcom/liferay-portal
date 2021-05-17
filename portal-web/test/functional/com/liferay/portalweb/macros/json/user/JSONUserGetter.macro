@@ -3,13 +3,20 @@ definition {
 	macro _getUserByIdCurl {
 		Variables.assertDefined(parameterList = "${userId}");
 
-		var companyId = JSONCompany.getCompanyId();
+		var companyId = JSONCompany.getCompanyId(authenticationMethod = "${authenticationMethod}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		if ("${authenticationMethod}" == "By Screen Name") {
+			var userName = "test";
+		}
+		else {
+			var userName = "test@liferay.com";
+		}
+
 		var curl = '''
 			${portalURL}/api/jsonws/user/get-user-by-id/user-id/${userId} \
-				-u test@liferay.com:test
+				-u ${userName}:test \
 		''';
 
 		return "${curl}";
@@ -18,7 +25,9 @@ definition {
 	macro getEmailAddress {
 		Variables.assertDefined(parameterList = "${userId}");
 
-		var curl = JSONUserGetter._getUserByIdCurl(userId = "${userId}");
+		var curl = JSONUserGetter._getUserByIdCurl(
+			authenticationMethod = "${authenticationMethod}",
+			userId = "${userId}");
 
 		var userEmailAddress = JSONCurlUtil.get("${curl}", "$['emailAddress']");
 

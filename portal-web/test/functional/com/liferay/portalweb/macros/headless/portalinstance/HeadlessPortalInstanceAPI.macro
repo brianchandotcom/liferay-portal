@@ -4,9 +4,16 @@ definition {
 	macro _getPortalInstances {
 		var portalURL = JSONCompany.getPortalURL();
 
+		if ("${authenticationMethod}" == "By Screen Name") {
+			var userName = "test";
+		}
+		else {
+			var userName = "test@liferay.com";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
-			-u test@liferay.com:test \
+			-u ${userName}:test \
 			-H Content-Type: application/json
 		''';
 
@@ -36,9 +43,16 @@ definition {
 			key = "portalInstanceId",
 			value = ""${portalInstanceId}"");
 
+		if ("${authenticationMethod}" == "By Screen Name") {
+			var userName = "test";
+		}
+		else {
+			var userName = "test@liferay.com";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
-			-u test@liferay.com:test \
+			-u ${userName}:test \
 			-d ${parameters} \
 			-H Content-Type: application/json
 		''';
@@ -48,7 +62,7 @@ definition {
 
 	@summary = "Clean up all Portal Instances that are not the default using Headless"
 	macro cleanAllPortalInstances {
-		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances();
+		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = "${authenticationMethod}");
 
 		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJSON}","$.items..portalInstanceId");
 
@@ -58,7 +72,9 @@ definition {
 
 		for (var portalInstanceId : list "${portalInstanceIds}") {
 			if ("${portalInstanceId}" != "liferay.com") {
-				HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = "${portalInstanceId}");
+				HeadlessPortalInstanceAPI.deletePortalInstance(
+					authenticationMethod = "${authenticationMethod}",
+					portalInstanceId = "${portalInstanceId}");
 			}
 		}
 	}
@@ -71,9 +87,16 @@ definition {
 
 		var portalInstanceId = StringUtil.replace("${portalInstanceId}", " ", "%20");
 
+		if ("${authenticationMethod}" == "By Screen Name") {
+			var userName = "test";
+		}
+		else {
+			var userName = "test@liferay.com";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-portal-instances/v1.0/portal-instances/${portalInstanceId} \
-			-u test@liferay.com:test \
+			-u ${userName}:test \
 			-H Content-Type: application/json
 		''';
 

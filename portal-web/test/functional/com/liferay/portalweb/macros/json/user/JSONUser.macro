@@ -182,7 +182,9 @@ definition {
 	macro deleteUserByUserId {
 		Variables.assertDefined(parameterList = "${userId}");
 
-		JSONUserAPI._deleteUser(userId = "${userId}");
+		JSONUserAPI._deleteUser(
+			authenticationMethod = "${authenticationMethod}",
+			userId = "${userId}");
 	}
 
 	macro removeUserFromUserGroup {
@@ -238,13 +240,17 @@ definition {
 	}
 
 	macro tearDownNonAdminUsers {
-		var userIds = JSONUserAPI._getUserIds();
+		var userIds = JSONUserAPI._getUserIds(authenticationMethod = "${authenticationMethod}");
 
 		for (var userId : list "${userIds}") {
-			var currentEmailAddress = JSONUserGetter.getEmailAddress(userId = "${userId}");
+			var currentEmailAddress = JSONUserGetter.getEmailAddress(
+				authenticationMethod = "${authenticationMethod}",
+				userId = "${userId}");
 
 			if ("${currentEmailAddress}" != "test@liferay.com") {
-				JSONUser.deleteUserByUserId(userId = "${userId}");
+				JSONUser.deleteUserByUserId(
+					authenticationMethod = "${authenticationMethod}",
+					userId = "${userId}");
 			}
 		}
 	}

@@ -1,0 +1,414 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-101333. Freemarker codes should not be executed in a HTML fragment."
+	@priority = "5"
+	test CannotExecuteFreemarkerCodeInHTMLFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a HTML fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+		}
+
+		task ("Add freemarker codes to inline content of HTML") {
+			PageEditor.editFragmentHTML(
+				editableId = "element-html",
+				fileName = "fragment_freemarker_basic.html",
+				fragmentName = "HTML");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the freemarker codes are not executed") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextNotEquals(
+				locator1 = "//div[contains(@class,'fragment-html-test')]",
+				value1 = "Basic Test");
+		}
+	}
+
+	@description = "This is a test for LPS-98553. Can edit contributed HTML type fragment."
+	@priority = "4"
+	test EditInlineContentOfHTMLFragment {
+		task ("Add a HTML fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+		}
+
+		task ("Edit the inline content of HTML fragment") {
+			var htmlSnippet = '''
+<h1>Edit HTML Title</h1>
+
+<p class="mb-0">
+	A paragraph is a <strong>self-contained</strong> unit of a discourse in
+	writing dealing with a particular point or <em>idea</em>. Paragraphs are
+	usually an expected part of formal writing, used to organize longer
+	prose.
+</p>
+		''';
+
+			PageEditor.editFragmentHTML(
+				content = "${htmlSnippet}",
+				editableId = "element-html",
+				fragmentName = "HTML");
+		}
+
+		task ("View edited inline content in edit mode") {
+			AssertTextEquals.assertPartialText(
+				id = "element-html",
+				key_fragmentName = "HTML",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				value1 = "Edit HTML Title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View edited inline content in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Edit HTML Title");
+		}
+	}
+
+	@description = "This is a test for LPS-98553. Can edit created HTML lfr-editable fragment."
+	@priority = "4"
+	test EditInlineContentOfHTMLFragmentWithOldTag {
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a new fragment with the following codes") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+	<lfr-editable class="component-html" id="element-html" type="html">
+
+		<h1>HTML Example</h1>
+
+		<p class="mb-0">
+			A paragraph is a <strong>self-contained</strong> unit of a discourse in
+			writing dealing with a particular point or <em>idea</em>. Paragraphs are
+			usually an expected part of formal writing, used to organize longer
+			prose.
+		</p>
+	</lfr-editable>
+</div>
+		''';
+
+			var cssSnippet = '''
+.component-html img {
+	max-width: 100%;
+}
+		''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.typeCssEditor(content = "${cssSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Edit the inline content of HTML fragment") {
+			var htmlSnippet = '''
+<h1>Edit HTML Title</h1>
+
+<p class="mb-0">
+	A paragraph is a <strong>self-contained</strong> unit of a discourse in
+	writing dealing with a particular point or <em>idea</em>. Paragraphs are
+	usually an expected part of formal writing, used to organize longer
+	prose.
+</p>
+		''';
+
+			PageEditor.editFragmentHTML(
+				content = "${htmlSnippet}",
+				contributed = "false",
+				editableId = "element-html",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("View edited inline content in edit mode") {
+			AssertTextEquals.assertPartialText(
+				id = "element-html",
+				key_fragmentName = "Fragment Name",
+				locator1 = "Fragment#EDITABLE_FIELD",
+				value1 = "Edit HTML Title");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View edited inline content in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals.assertPartialText(
+				key_fragmentName = "html",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Edit HTML Title");
+		}
+	}
+
+	@description = "This is a use case for LPS-85872. Edit the inline content of text fragment and view auto save message."
+	@priority = "5"
+	@uitest
+	test EditInlineContentOfTextFragment {
+		property portal.acceptance = "true";
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Edit the inline content of Heading and view auto save message") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
+
+		task ("View the edited inline content shown in Heading") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "New editable fragment text",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("View the edited inline content in view mode") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+		}
+	}
+
+	@description = "This is a test for LPS-95045. A user should be able to display an image from Documents and Media in Image fragment."
+	@priority = "5"
+	test ViewImageFromDocumentsAndMediaInImageFragment {
+		property portal.acceptance = "true";
+
+		task ("Add an Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Select an image from Documents and Media in Image fragment") {
+			PageEditor.editFragmentImage(
+				fileName = "Document_1.png",
+				fragmentName = "Image",
+				id = "image-square");
+		}
+
+		task ("View the selected image shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.png");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the selected image shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.png");
+		}
+	}
+
+	@description = "This is a test for LPS-100121. Given a fragment with an editable image when the page author selects an image specifying a URL in the item selector then the URL is shown in selector input."
+	@priority = "4"
+	test ViewImageFromURLInImageFragment {
+		task ("Add an Image fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+		}
+
+		task ("Select an image from URL") {
+			PageEditor.editFragmentImage(
+				fragmentName = "Image",
+				id = "image-square",
+				imageSourceURL = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg");
+		}
+
+		task ("Assert the selected image is shown in Image fragment") {
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
+		}
+
+		task ("Assert the URL is shown in selector input") {
+			AssertVisible(
+				key_contentName = "https://raw.githubusercontent.com/liferay/liferay-portal/master/portal-web/test/functional/com/liferay/portalweb/dependencies/Document_1.jpg",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the selected image in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentEditableImage(
+				id = "image-square",
+				imageDescription = "",
+				imageFileName = "Document_1.jpg");
+		}
+	}
+
+	@description = "This is a use case for LPS-111274. The light blue frame is shown when hover on unmapped editable field of selected fragments but the dark blue frame is shown when click on unmapped editable field of selected fragments."
+	@priority = "5"
+	test ViewVisualStyleOfEditableField {
+		property portal.acceptance = "true";
+
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Select the editable field of Heading") {
+			PageEditor.clickEditableField(
+				contributed = "true",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("View the visual style of editable field") {
+			Pause(locator1 = "1000");
+
+			AssertCssValue(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "boxShadow",
+				value1 = "rgb(11, 95, 255) 0px 0px 0px 1px inset");
+		}
+
+		task ("Deselect the editable field of Heading") {
+			PageEditor.clickManagementBar();
+		}
+
+		task ("Select the body of Heading") {
+			Click.clickNoWaitForVisible(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
+
+		task ("Mouse over the editable field of Heading") {
+			MouseOver.mouseOverNotVisible(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD");
+		}
+
+		task ("View the visual style of editable field") {
+			Pause(locator1 = "1000");
+
+			AssertCssValue(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "boxShadow",
+				value1 = "rgb(128, 172, 255) 0px 0px 0px 1px inset");
+		}
+	}
+
+}

@@ -451,6 +451,36 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-116989. Resize the configuration panel."
+	@priority = "4"
+	test ResizeConfigurationPanel {
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Resize the configuration panel") {
+			PageEditor.resizeConfigurationPanel(
+				fragmentName = "Button",
+				position = "0,-100");
+		}
+
+		task ("View the configuration panel is restored when access to it second time") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			PageEditor.gotoTab(tabName = "Selection");
+
+			AssertElementPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_HANDLE");
+
+			AssertElementNotPresent(locator1 = "PageEditor#CONFIGURATION_PANEL_RESIZE");
+		}
+	}
+
 	@description = "This is a test for LPS-109407. View the background color of nodes in the Page Structure when hover on them or they are selected."
 	@priority = "3"
 	test ViewBackgroundColorOfNodesInSelectionPanel {

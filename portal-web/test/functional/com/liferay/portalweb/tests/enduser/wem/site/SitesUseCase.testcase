@@ -1020,6 +1020,10 @@ definition {
 				teamName = "Site Team Name");
 		}
 
+		Navigator.gotoSitePage(
+			pageName = "Blog Page Template",
+			siteName = "Site Name");
+
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "userea1@liferay.com");

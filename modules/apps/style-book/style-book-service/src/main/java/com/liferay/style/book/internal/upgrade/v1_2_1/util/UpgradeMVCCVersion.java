@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.style.book.internal.upgrade.v1_2_0.util;
+package com.liferay.style.book.internal.upgrade.v1_2_1.util;
 
 /**
  * @author Víctor Galán

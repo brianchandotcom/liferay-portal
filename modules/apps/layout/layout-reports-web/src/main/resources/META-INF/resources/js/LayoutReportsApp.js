@@ -100,26 +100,29 @@ const SidebarHeader = () => {
 		<div className="d-flex justify-content-between sidebar-header">
 			<span>{Liferay.Language.get('page-audit')}</span>
 			<div>
-				<ClayButtonWithIcon
-					className="sidenav-relaunch"
-					disabled={loading}
-					displayType="unstyled"
-					onClick={() => {
-						const url = data.canonicalURLs.find(
-							(canonicalURL) =>
-								canonicalURL.languageId ===
-								(languageId || data.defaultLanguageId)
-						);
+				{data?.validConnection && (
+					<ClayButtonWithIcon
+						className="sidenav-relaunch"
+						disabled={loading}
+						displayType="unstyled"
+						onClick={() => {
+							const url = data.canonicalURLs.find(
+								(canonicalURL) =>
+									canonicalURL.languageId ===
+									(languageId || data.defaultLanguageId)
+							);
 
-						loadIssues({
-							dispatch,
-							portletNamespace,
-							url,
-						});
-					}}
-					symbol="reload"
-					title={Liferay.Language.get('relaunch')}
-				/>
+							loadIssues({
+								dispatch,
+								portletNamespace,
+								url,
+							});
+						}}
+						symbol="reload"
+						title={Liferay.Language.get('relaunch')}
+					/>
+				)}
+
 				<ClayButtonWithIcon
 					className="sidenav-close"
 					displayType="unstyled"

@@ -1,0 +1,6 @@
+{
+	"com.liferay.portal.remote.cors.configuration.PortalCORSConfiguration~default": {
+		"configuration.name": "Default Portal CORS Configuration",
+		"enabled": true
+	}
+}

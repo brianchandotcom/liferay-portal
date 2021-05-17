@@ -197,7 +197,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 			DLAppServiceTestUtil.updateFileEntry(
 				group.getGroupId(), fileEntry.getFileEntryId(),
-				RandomTestUtil.randomString(), true);
+				RandomTestUtil.randomString(), null, null, true);
 
 			Assert.assertEquals(
 				2,
@@ -243,7 +243,7 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 
 		DLAppServiceTestUtil.updateFileEntry(
 			fileEntry.getGroupId(), fileEntry.getFileEntryId(),
-			fileEntry.getTitle(), true);
+			fileEntry.getTitle(), null, null, true);
 
 		Assert.assertEquals(2, counter.get());
 	}
@@ -256,10 +256,12 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 			group.getGroupId(), parentFolder.getFolderId(), fileName);
 
 		fileEntry = DLAppServiceTestUtil.updateFileEntry(
-			group.getGroupId(), fileEntry.getFileEntryId(), fileName, true);
+			group.getGroupId(), fileEntry.getFileEntryId(), fileName, null,
+			null, true);
 
 		fileEntry = DLAppServiceTestUtil.updateFileEntry(
-			group.getGroupId(), fileEntry.getFileEntryId(), fileName, true);
+			group.getGroupId(), fileEntry.getFileEntryId(), fileName, null,
+			null, true);
 
 		Assert.assertEquals(
 			"Version label incorrect after major update", "3.0",
@@ -274,7 +276,8 @@ public class DLAppServiceWhenUpdatingAFileEntryTest extends BaseDLAppTestCase {
 			group.getGroupId(), parentFolder.getFolderId(), fileName);
 
 		fileEntry = DLAppServiceTestUtil.updateFileEntry(
-			group.getGroupId(), fileEntry.getFileEntryId(), fileName, false);
+			group.getGroupId(), fileEntry.getFileEntryId(), fileName, null,
+			null, false);
 
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,

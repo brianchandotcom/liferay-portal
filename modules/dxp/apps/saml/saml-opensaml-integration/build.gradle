@@ -52,6 +52,7 @@ dependencies {
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 	compileOnly project(":dxp:apps:saml:saml-api")
 	compileOnly project(":dxp:apps:saml:saml-persistence-api")
@@ -60,7 +61,6 @@ dependencies {
 	testCompile project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	testCompile project(":core:petra:petra-lang")
 	testCompile project(":dxp:apps:saml:saml-persistence-service")
-	testCompile project(":dxp:apps:saml:saml-web")
 }
 
 liferayOSGi {

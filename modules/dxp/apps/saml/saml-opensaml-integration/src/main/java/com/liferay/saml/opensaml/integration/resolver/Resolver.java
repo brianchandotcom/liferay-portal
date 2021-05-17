@@ -42,6 +42,10 @@ public interface Resolver {
 			return resolve(SAMLCommands.subjectNameIdentifier);
 		}
 
+		public default String resolveSubjectNameQualifier() {
+			return resolve(SAMLCommands.subjectNameQualifier);
+		}
+
 	}
 
 }

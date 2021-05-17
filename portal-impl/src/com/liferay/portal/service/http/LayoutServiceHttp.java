@@ -1013,6 +1013,53 @@ public class LayoutServiceHttp {
 	public static java.util.List<com.liferay.portal.kernel.model.Layout>
 			getLayouts(
 				HttpPrincipal httpPrincipal, long groupId,
+				boolean privateLayout, String keywords, int[] statuses,
+				String[] types, int start, int end,
+				com.liferay.portal.kernel.util.OrderByComparator
+					<com.liferay.portal.kernel.model.Layout> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutServiceUtil.class, "getLayouts",
+				_getLayoutsParameterTypes23);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, privateLayout, keywords, statuses, types,
+				start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List<com.liferay.portal.kernel.model.Layout>)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Layout>
+			getLayouts(
+				HttpPrincipal httpPrincipal, long groupId,
 				boolean privateLayout, String keywords, String[] types,
 				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
@@ -1022,7 +1069,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayouts",
-				_getLayoutsParameterTypes23);
+				_getLayoutsParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, keywords, types, start, end,
@@ -1063,7 +1110,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayouts",
-				_getLayoutsParameterTypes24);
+				_getLayoutsParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, type);
@@ -1098,7 +1145,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayouts",
-				_getLayoutsParameterTypes25);
+				_getLayoutsParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, type, start, end);
@@ -1131,7 +1178,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes26);
+				_getLayoutsCountParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout);
@@ -1164,7 +1211,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes27);
+				_getLayoutsCountParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parentLayoutId);
@@ -1197,7 +1244,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes28);
+				_getLayoutsCountParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parentLayoutId, priority);
@@ -1230,7 +1277,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes29);
+				_getLayoutsCountParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, type);
@@ -1258,13 +1305,54 @@ public class LayoutServiceHttp {
 
 	public static int getLayoutsCount(
 			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
+			String keywords, int[] statuses, String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutServiceUtil.class, "getLayoutsCount",
+				_getLayoutsCountParameterTypes31);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, privateLayout, keywords, statuses, types);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getLayoutsCount(
+			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
 			String keywords, String[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes30);
+				_getLayoutsCountParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, keywords, types);
@@ -1303,7 +1391,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getLayoutsCount",
-				_getLayoutsCountParameterTypes31);
+				_getLayoutsCountParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, type);
@@ -1336,7 +1424,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getTempFileNames",
-				_getTempFileNamesParameterTypes32);
+				_getTempFileNamesParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, folderName);
@@ -1377,7 +1465,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "hasLayout",
-				_hasLayoutParameterTypes33);
+				_hasLayoutParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, uuid, groupId, privateLayout);
@@ -1417,7 +1505,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "hasPortletId",
-				_hasPortletIdParameterTypes34);
+				_hasPortletIdParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, portletId);
@@ -1461,7 +1549,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "schedulePublishToLive",
-				_schedulePublishToLiveParameterTypes35);
+				_schedulePublishToLiveParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sourceGroupId, targetGroupId, privateLayout,
@@ -1506,7 +1594,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "schedulePublishToRemote",
-				_schedulePublishToRemoteParameterTypes36);
+				_schedulePublishToRemoteParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sourceGroupId, privateLayout, layoutIdMap,
@@ -1548,7 +1636,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "setLayouts",
-				_setLayoutsParameterTypes37);
+				_setLayoutsParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, parentLayoutId, layoutIds,
@@ -1586,7 +1674,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "unschedulePublishToLive",
-				_unschedulePublishToLiveParameterTypes38);
+				_unschedulePublishToLiveParameterTypes40);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, jobName, groupName);
@@ -1623,7 +1711,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "unschedulePublishToRemote",
-				_unschedulePublishToRemoteParameterTypes39);
+				_unschedulePublishToRemoteParameterTypes41);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, jobName, groupName);
@@ -1659,7 +1747,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateIconImage",
-				_updateIconImageParameterTypes40);
+				_updateIconImageParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, bytes);
@@ -1710,7 +1798,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateLayout",
-				_updateLayoutParameterTypes41);
+				_updateLayoutParameterTypes43);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, parentLayoutId,
@@ -1754,7 +1842,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateLayout",
-				_updateLayoutParameterTypes42);
+				_updateLayoutParameterTypes44);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, typeSettings);
@@ -1795,7 +1883,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateLookAndFeel",
-				_updateLookAndFeelParameterTypes43);
+				_updateLookAndFeelParameterTypes45);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, themeId,
@@ -1837,7 +1925,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateName",
-				_updateNameParameterTypes44);
+				_updateNameParameterTypes46);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, name, languageId);
@@ -1878,7 +1966,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateName",
-				_updateNameParameterTypes45);
+				_updateNameParameterTypes47);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, name, languageId);
@@ -1919,7 +2007,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateParentLayoutId",
-				_updateParentLayoutIdParameterTypes46);
+				_updateParentLayoutIdParameterTypes48);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, parentLayoutId);
@@ -1959,7 +2047,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateParentLayoutId",
-				_updateParentLayoutIdParameterTypes47);
+				_updateParentLayoutIdParameterTypes49);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, parentPlid);
@@ -2001,7 +2089,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateParentLayoutIdAndPriority",
-				_updateParentLayoutIdAndPriorityParameterTypes48);
+				_updateParentLayoutIdAndPriorityParameterTypes50);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, parentPlid, priority);
@@ -2042,7 +2130,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updatePriority",
-				_updatePriorityParameterTypes49);
+				_updatePriorityParameterTypes51);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, priority);
@@ -2083,7 +2171,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updatePriority",
-				_updatePriorityParameterTypes50);
+				_updatePriorityParameterTypes52);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, layoutId, nextLayoutId,
@@ -2124,7 +2212,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updatePriority",
-				_updatePriorityParameterTypes51);
+				_updatePriorityParameterTypes53);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, priority);
@@ -2164,7 +2252,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "updateType",
-				_updateTypeParameterTypes52);
+				_updateTypeParameterTypes54);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, plid, type);
@@ -2277,41 +2365,50 @@ public class LayoutServiceHttp {
 		long.class, boolean.class, String.class, int.class, int.class
 	};
 	private static final Class<?>[] _getLayoutsParameterTypes23 = new Class[] {
+		long.class, boolean.class, String.class, int[].class, String[].class,
+		int.class, int.class,
+		com.liferay.portal.kernel.util.OrderByComparator.class
+	};
+	private static final Class<?>[] _getLayoutsParameterTypes24 = new Class[] {
 		long.class, boolean.class, String.class, String[].class, int.class,
 		int.class, com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _getLayoutsParameterTypes24 = new Class[] {
+	private static final Class<?>[] _getLayoutsParameterTypes25 = new Class[] {
 		long.class, String.class
 	};
-	private static final Class<?>[] _getLayoutsParameterTypes25 = new Class[] {
+	private static final Class<?>[] _getLayoutsParameterTypes26 = new Class[] {
 		long.class, String.class, int.class, int.class
 	};
-	private static final Class<?>[] _getLayoutsCountParameterTypes26 =
-		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes27 =
-		new Class[] {long.class, boolean.class, long.class};
+		new Class[] {long.class, boolean.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes28 =
-		new Class[] {long.class, boolean.class, long.class, int.class};
+		new Class[] {long.class, boolean.class, long.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes29 =
-		new Class[] {long.class, boolean.class, String.class};
+		new Class[] {long.class, boolean.class, long.class, int.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes30 =
-		new Class[] {long.class, boolean.class, String.class, String[].class};
+		new Class[] {long.class, boolean.class, String.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes31 =
+		new Class[] {
+			long.class, boolean.class, String.class, int[].class, String[].class
+		};
+	private static final Class<?>[] _getLayoutsCountParameterTypes32 =
+		new Class[] {long.class, boolean.class, String.class, String[].class};
+	private static final Class<?>[] _getLayoutsCountParameterTypes33 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _getTempFileNamesParameterTypes32 =
+	private static final Class<?>[] _getTempFileNamesParameterTypes34 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _hasLayoutParameterTypes33 = new Class[] {
+	private static final Class<?>[] _hasLayoutParameterTypes35 = new Class[] {
 		String.class, long.class, boolean.class
 	};
-	private static final Class<?>[] _hasPortletIdParameterTypes34 =
+	private static final Class<?>[] _hasPortletIdParameterTypes36 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _schedulePublishToLiveParameterTypes35 =
+	private static final Class<?>[] _schedulePublishToLiveParameterTypes37 =
 		new Class[] {
 			long.class, long.class, boolean.class, long[].class,
 			java.util.Map.class, String.class, String.class,
 			java.util.Date.class, java.util.Date.class, String.class
 		};
-	private static final Class<?>[] _schedulePublishToRemoteParameterTypes36 =
+	private static final Class<?>[] _schedulePublishToRemoteParameterTypes38 =
 		new Class[] {
 			long.class, boolean.class, java.util.Map.class, java.util.Map.class,
 			String.class, int.class, String.class, boolean.class, long.class,
@@ -2319,17 +2416,17 @@ public class LayoutServiceHttp {
 			String.class, String.class, java.util.Date.class,
 			java.util.Date.class, String.class
 		};
-	private static final Class<?>[] _setLayoutsParameterTypes37 = new Class[] {
+	private static final Class<?>[] _setLayoutsParameterTypes39 = new Class[] {
 		long.class, boolean.class, long.class, long[].class,
 		com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _unschedulePublishToLiveParameterTypes38 =
+	private static final Class<?>[] _unschedulePublishToLiveParameterTypes40 =
 		new Class[] {long.class, String.class, String.class};
-	private static final Class<?>[] _unschedulePublishToRemoteParameterTypes39 =
+	private static final Class<?>[] _unschedulePublishToRemoteParameterTypes41 =
 		new Class[] {long.class, String.class, String.class};
-	private static final Class<?>[] _updateIconImageParameterTypes40 =
+	private static final Class<?>[] _updateIconImageParameterTypes42 =
 		new Class[] {long.class, byte[].class};
-	private static final Class<?>[] _updateLayoutParameterTypes41 =
+	private static final Class<?>[] _updateLayoutParameterTypes43 =
 		new Class[] {
 			long.class, boolean.class, long.class, long.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
@@ -2338,36 +2435,36 @@ public class LayoutServiceHttp {
 			long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateLayoutParameterTypes42 =
+	private static final Class<?>[] _updateLayoutParameterTypes44 =
 		new Class[] {long.class, boolean.class, long.class, String.class};
-	private static final Class<?>[] _updateLookAndFeelParameterTypes43 =
+	private static final Class<?>[] _updateLookAndFeelParameterTypes45 =
 		new Class[] {
 			long.class, boolean.class, long.class, String.class, String.class,
 			String.class
 		};
-	private static final Class<?>[] _updateNameParameterTypes44 = new Class[] {
+	private static final Class<?>[] _updateNameParameterTypes46 = new Class[] {
 		long.class, boolean.class, long.class, String.class, String.class
 	};
-	private static final Class<?>[] _updateNameParameterTypes45 = new Class[] {
+	private static final Class<?>[] _updateNameParameterTypes47 = new Class[] {
 		long.class, String.class, String.class
 	};
-	private static final Class<?>[] _updateParentLayoutIdParameterTypes46 =
+	private static final Class<?>[] _updateParentLayoutIdParameterTypes48 =
 		new Class[] {long.class, boolean.class, long.class, long.class};
-	private static final Class<?>[] _updateParentLayoutIdParameterTypes47 =
+	private static final Class<?>[] _updateParentLayoutIdParameterTypes49 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[]
-		_updateParentLayoutIdAndPriorityParameterTypes48 = new Class[] {
+		_updateParentLayoutIdAndPriorityParameterTypes50 = new Class[] {
 			long.class, long.class, int.class
 		};
-	private static final Class<?>[] _updatePriorityParameterTypes49 =
+	private static final Class<?>[] _updatePriorityParameterTypes51 =
 		new Class[] {long.class, boolean.class, long.class, int.class};
-	private static final Class<?>[] _updatePriorityParameterTypes50 =
+	private static final Class<?>[] _updatePriorityParameterTypes52 =
 		new Class[] {
 			long.class, boolean.class, long.class, long.class, long.class
 		};
-	private static final Class<?>[] _updatePriorityParameterTypes51 =
+	private static final Class<?>[] _updatePriorityParameterTypes53 =
 		new Class[] {long.class, int.class};
-	private static final Class<?>[] _updateTypeParameterTypes52 = new Class[] {
+	private static final Class<?>[] _updateTypeParameterTypes54 = new Class[] {
 		long.class, String.class
 	};
 

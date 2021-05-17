@@ -883,6 +883,28 @@ public class LayoutLocalServiceUtil {
 	}
 
 	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param statuses the layout's workflow status. For more information
+	 search the portal kernel's WorkflowConstants class for constants
+	 starting with the "STATUS_" prefix.
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 found
+	 */
+	public static List<Layout> getLayouts(
+		long groupId, boolean privateLayout, int[] statuses, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return getService().getLayouts(
+			groupId, privateLayout, statuses, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns all the layouts belonging to the group that are children of the
 	 * parent layout.
 	 *
@@ -1042,6 +1064,34 @@ public class LayoutLocalServiceUtil {
 	 * @param userId the primary key of the user
 	 * @param privateLayout whether the layout is private to the group
 	 * @param keywords keywords
+	 * @param statuses the layout's workflow status. For more information
+	 search the portal kernel's WorkflowConstants class for constants
+	 starting with the "STATUS_" prefix.
+	 * @param types layout types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 found
+	 */
+	public static List<Layout> getLayouts(
+			long groupId, long userId, boolean privateLayout, String keywords,
+			int[] statuses, String[] types, int start, int end,
+			OrderByComparator<Layout> orderByComparator)
+		throws PortalException {
+
+		return getService().getLayouts(
+			groupId, userId, privateLayout, keywords, statuses, types, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param userId the primary key of the user
+	 * @param privateLayout whether the layout is private to the group
+	 * @param keywords keywords
 	 * @param types layout types
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
@@ -1058,6 +1108,30 @@ public class LayoutLocalServiceUtil {
 		return getService().getLayouts(
 			groupId, userId, privateLayout, keywords, types, start, end,
 			orderByComparator);
+	}
+
+	/**
+	 * Returns a range of all the layouts belonging to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param keywords keywords
+	 * @param statuses the layout's workflow status. For more information
+	 search the portal kernel's WorkflowConstants class for constants
+	 starting with the "STATUS_" prefix.
+	 * @param types layout types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the layouts
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 found
+	 */
+	public static List<Layout> getLayouts(
+			long groupId, String keywords, int[] statuses, String[] types,
+			int start, int end, OrderByComparator<Layout> orderByComparator)
+		throws PortalException {
+
+		return getService().getLayouts(
+			groupId, keywords, statuses, types, start, end, orderByComparator);
 	}
 
 	/**
@@ -1203,11 +1277,27 @@ public class LayoutLocalServiceUtil {
 
 	public static int getLayoutsCount(
 			long groupId, long userId, boolean privateLayout, String keywords,
+			int[] statuses, String[] types)
+		throws PortalException {
+
+		return getService().getLayoutsCount(
+			groupId, userId, privateLayout, keywords, statuses, types);
+	}
+
+	public static int getLayoutsCount(
+			long groupId, long userId, boolean privateLayout, String keywords,
 			String[] types)
 		throws PortalException {
 
 		return getService().getLayoutsCount(
 			groupId, userId, privateLayout, keywords, types);
+	}
+
+	public static int getLayoutsCount(
+			long groupId, String keywords, int[] statuses, String[] types)
+		throws PortalException {
+
+		return getService().getLayoutsCount(groupId, keywords, statuses, types);
 	}
 
 	public static int getLayoutsCount(

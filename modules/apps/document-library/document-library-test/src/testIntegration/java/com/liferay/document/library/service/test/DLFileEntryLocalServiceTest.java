@@ -154,8 +154,7 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry.getTitle(), dlFileEntry.getTitle(), StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false),
 			dlFileEntry.getFileEntryTypeId(), new HashMap<>(), null,
-			new ByteArrayInputStream(content.getBytes()), 0,
-			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
+			new ByteArrayInputStream(content.getBytes()), 0, null, null,
 			serviceContext);
 
 		dlFileVersion = dlFileEntry.getFileVersion();

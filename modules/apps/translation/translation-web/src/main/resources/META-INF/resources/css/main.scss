@@ -106,7 +106,13 @@ $productMenuWidth: 320px;
 			}
 		}
 
-		.col-autotranslate-field {
+		.col-autotranslate-content {
+			@include media-breakpoint-up(md) {
+				max-width: calc(100% - 3.5rem);
+			}
+		}
+
+		.col-autotranslate-button {
 			margin-bottom: 1rem;
 			padding-left: 12px;
 			width: 100%;

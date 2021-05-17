@@ -45,8 +45,10 @@ const TranslateAutoTranslateRow = ({
 
 	return (
 		<ClayLayout.Row>
-			<ClayLayout.ContentCol expand>{children}</ClayLayout.ContentCol>
-			<ClayLayout.ContentCol className="align-self-top col-autotranslate-field">
+			<ClayLayout.ContentCol className="col-autotranslate-content" expand>
+				{children}
+			</ClayLayout.ContentCol>
+			<ClayLayout.ContentCol className="align-self-top col-autotranslate-button">
 				<ClayButton
 					className="lfr-portal-tooltip"
 					disabled={isLoading || !sourceContent}

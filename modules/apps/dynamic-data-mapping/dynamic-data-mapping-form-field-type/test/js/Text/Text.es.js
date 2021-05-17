@@ -322,7 +322,7 @@ describe('Field Text', () => {
 			render(<TextWithProvider {...defaultTextConfig} />);
 
 			const confirmationField = document.getElementById(
-				'textFieldconfirmationField'
+				'textFieldconfirmationField_fieldDetails'
 			);
 
 			expect(confirmationField).toBeNull();
@@ -338,7 +338,7 @@ describe('Field Text', () => {
 			);
 
 			const confirmationField = document.getElementById(
-				'textFieldconfirmationField'
+				'textFieldconfirmationField_fieldDetails'
 			);
 
 			expect(confirmationField).not.toBeNull();

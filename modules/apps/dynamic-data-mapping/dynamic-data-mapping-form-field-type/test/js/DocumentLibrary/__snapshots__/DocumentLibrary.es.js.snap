@@ -387,7 +387,7 @@ exports[`Field DocumentLibrary has a value 1`] = `
 exports[`Field DocumentLibrary has an id 1`] = `
 <div>
   <div
-    aria-labelledby="uploadField_fieldDetails"
+    aria-labelledby="ID_fieldDetails"
     class="form-group has-error hide"
     data-field-name="uploadField"
     tabindex="0"
@@ -451,7 +451,7 @@ exports[`Field DocumentLibrary has an id 1`] = `
     </span>
     <span
       class="sr-only"
-      id="uploadField_fieldDetails"
+      id="ID_fieldDetails"
     >
        you-need-to-be-signed-in-to-edit-this-field
     </span>

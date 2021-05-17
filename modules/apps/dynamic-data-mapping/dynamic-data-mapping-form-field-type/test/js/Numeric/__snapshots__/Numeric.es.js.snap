@@ -146,7 +146,7 @@ exports[`Field Numeric has a value 1`] = `
 exports[`Field Numeric has an id 1`] = `
 <div>
   <div
-    aria-labelledby="numericField_fieldDetails"
+    aria-labelledby="ID_fieldDetails"
     class="form-group hide"
     data-field-name="numericField"
     tabindex="0"

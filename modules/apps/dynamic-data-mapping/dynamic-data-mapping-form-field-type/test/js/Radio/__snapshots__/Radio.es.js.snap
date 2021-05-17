@@ -284,7 +284,7 @@ exports[`Field Radio has a value 1`] = `
 exports[`Field Radio has an id 1`] = `
 <div>
   <div
-    aria-labelledby="radioField_fieldDetails"
+    aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     data-field-name="radioField"
     tabindex="0"

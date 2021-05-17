@@ -46,8 +46,10 @@ exports[`Options shows the options 1`] = `
               tabindex="0"
             >
               <input
+                aria-labelledby="keyValueLabeloption0_fieldDetails"
                 class="form-control ddm-field-text"
                 dir="rtl"
+                id="keyValueLabeloption0_fieldDetails"
                 lang="en_US"
                 name="keyValueLabeloption0"
                 placeholder="enter-an-option"
@@ -150,8 +152,10 @@ exports[`Options shows the options 1`] = `
               tabindex="0"
             >
               <input
+                aria-labelledby="keyValueLabeloption1_fieldDetails"
                 class="form-control ddm-field-text"
                 dir="rtl"
+                id="keyValueLabeloption1_fieldDetails"
                 lang="en_US"
                 name="keyValueLabeloption1"
                 placeholder="enter-an-option"
@@ -254,8 +258,10 @@ exports[`Options shows the options 1`] = `
               tabindex="0"
             >
               <input
+                aria-labelledby="keyValueLabeloption2_fieldDetails"
                 class="form-control ddm-field-text"
                 dir="rtl"
+                id="keyValueLabeloption2_fieldDetails"
                 lang="en_US"
                 name="keyValueLabeloption2"
                 placeholder="enter-an-option"

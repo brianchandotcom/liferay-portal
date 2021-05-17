@@ -9,7 +9,9 @@ exports[`Field Text has a helptext 1`] = `
     tabindex="0"
   >
     <input
+      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
+      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -50,7 +52,9 @@ exports[`Field Text has a label 1`] = `
       label
     </label>
     <input
+      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
+      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -74,7 +78,9 @@ exports[`Field Text has a placeholder 1`] = `
     tabindex="0"
   >
     <input
+      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
+      id="textField_fieldDetails"
       name="textField"
       placeholder="Placeholder"
       type="text"
@@ -99,7 +105,9 @@ exports[`Field Text has a value 1`] = `
     tabindex="0"
   >
     <input
+      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
+      id="textField_fieldDetails"
       name="textField"
       type="text"
       value="value"
@@ -117,14 +125,15 @@ exports[`Field Text has a value 1`] = `
 exports[`Field Text has an id 1`] = `
 <div>
   <div
-    aria-labelledby="textField_fieldDetails"
+    aria-labelledby="Id_fieldDetails"
     class="form-group hide"
     data-field-name="textField"
     tabindex="0"
   >
     <input
+      aria-labelledby="Id_fieldDetails"
       class="form-control ddm-field-text"
-      id="Id"
+      id="Id_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -148,7 +157,9 @@ exports[`Field Text is not readOnly 1`] = `
     tabindex="0"
   >
     <input
+      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
+      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -172,7 +183,9 @@ exports[`Field Text is not required 1`] = `
     tabindex="0"
   >
     <input
+      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
+      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -196,8 +209,10 @@ exports[`Field Text is readOnly 1`] = `
     tabindex="0"
   >
     <input
+      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
       disabled=""
+      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""
@@ -226,7 +241,9 @@ exports[`Field Text renders Label if showLabel is true 1`] = `
       text
     </label>
     <input
+      aria-labelledby="textField_fieldDetails"
       class="form-control ddm-field-text"
+      id="textField_fieldDetails"
       name="textField"
       type="text"
       value=""

@@ -215,10 +215,11 @@ public class I18nServlet extends HttpServlet {
 			}
 		}
 
-		String decodePath = HttpUtil.decodePath(path);
+		String redirect = path;
 
-		String redirect =
-			decodePath.equals(path) ? HttpUtil.encodePath(path) : path;
+		if (path.equals(HttpUtil.decodePath(path))) {
+			redirect = HttpUtil.encodePath(path);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Redirect " + redirect);

@@ -831,6 +831,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 				(MessageContext<Response>)messageContext),
 			serviceContext);
 
+		if (user == null) {
+			throw new SubjectException(
+				"No user could not be matched or provisioned");
+		}
+
 		serviceContext.setUserId(user.getUserId());
 
 		SamlSpSession samlSpSession = getSamlSpSession(httpServletRequest);

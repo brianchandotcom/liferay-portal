@@ -198,10 +198,7 @@ definition {
 	@priority = "5"
 	test CanUndoAndRedo {
 		property forms.functional = "true";
-
 		property portal.acceptance = "false";
-
-
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -213,11 +210,9 @@ definition {
 
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
-
 			fieldType = "Paragraph");
 
 		FormFields.editParagraphBody(content = "Test");
-		
 
 		Form.save();
 

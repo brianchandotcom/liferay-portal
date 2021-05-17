@@ -119,7 +119,7 @@ public class LDAPConfigurationListener implements ConfigurationListener {
 		try {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
-					"(service.factoryPid=" + factoryPid + ")");
+					"(service.factoryPid=" + factoryPid + "*)");
 
 			if (configurations != null) {
 				for (Configuration configuration : configurations) {

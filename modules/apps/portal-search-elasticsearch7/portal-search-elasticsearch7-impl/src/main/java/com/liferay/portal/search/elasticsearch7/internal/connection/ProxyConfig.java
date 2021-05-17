@@ -127,18 +127,14 @@ public class ProxyConfig {
 
 		protected boolean shouldApplyConfig() {
 			if (hasHostAndPort()) {
-				return true;
+				return Stream.of(
+					_networkHostAddresses
+				).allMatch(
+					host -> !_http.isNonProxyHost(_http.getDomain(host))
+				);
 			}
 
-			if (!_http.hasProxyConfig()) {
-				return false;
-			}
-
-			return Stream.of(
-				_networkHostAddresses
-			).allMatch(
-				host -> !_http.isNonProxyHost(host)
-			);
+			return false;
 		}
 
 		protected boolean shouldApplyCredentials() {

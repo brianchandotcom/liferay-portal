@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_LAST</td>
+	<td>xpath=(//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASTERISK</td>
 	<td>//span[*[name()='svg'][contains(@class,'icon-asterisk')]] | //span[contains(@class,'icon-asterisk')] | //label[*[name()='svg'][contains(@class,'icon-asterisk')] and not(contains(@class,'required-warning'))]</td>
 	<td></td>

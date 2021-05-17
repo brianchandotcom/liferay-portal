@@ -1294,14 +1294,11 @@ definition {
 
 		RecycleBin.viewDefaultCP(assetName = "Document_1.jpg");
 
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "Document_1.jpg",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		AssertVisible(
-			key_dmDocumentFileName = "Document_1.jpg",
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+		AssertElementPresent(
+			key_text = "shortcut",
+			locator1 = "Icon#ANY_LAST");
 	}
 
 	@priority = "4"

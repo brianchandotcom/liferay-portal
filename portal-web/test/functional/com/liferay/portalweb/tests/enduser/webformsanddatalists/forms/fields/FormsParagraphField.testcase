@@ -186,12 +186,57 @@ definition {
 	}
 
 	@description = "Verify that a Video can be uploaded to the Body Text"
-	@ignore = "true"
 	@priority = "5"
 	test CanSupportVideos {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131234 CanSupportVideos pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		Click(
+			key_titleName = "Video",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		var key_navTab = "URL";
+
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+		AssertClick(
+			locator1 = "ItemSelector#NAVIGATION_SPECIFIC_TAB",
+			value1 = "URL");
+
+		AssertElementPresent(locator1 = "ItemSelector#URL_LABEL");
+
+		AssertElementNotPresent(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
+
+		Type(
+			locator1 = "TextInput#VIDEO_URL",
+			value1 = "https://www.youtube.com/watch?v=2EPZxIC5ogU");
+
+		Button.clickAdd();
+
+		Form.save();
+
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+
+
+		
 	}
 
 	@description = "Verify that inputs to the Body Text can be undone and redone"

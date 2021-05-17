@@ -219,7 +219,7 @@ public class SLAResult implements Cloneable, Serializable {
 
 	public static enum Status {
 
-		PAUSED("PAUSED"), RUNNING("RUNNING"), STOPPED("STOPPED");
+		NEW("NEW"), PAUSED("PAUSED"), RUNNING("RUNNING"), STOPPED("STOPPED");
 
 		public static Status create(String value) {
 			for (Status status : values()) {

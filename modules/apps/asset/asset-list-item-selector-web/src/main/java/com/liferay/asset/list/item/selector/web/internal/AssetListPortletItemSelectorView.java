@@ -330,15 +330,12 @@ public class AssetListPortletItemSelectorView
 			List<String> itemTypes =
 				_infoListItemSelectorCriterion.getItemTypes();
 
-			long[] groupIds = new long[1];
-
-			groupIds[0] = themeDisplay.getScopeGroupId();
-
 			if (ListUtil.isEmpty(itemTypes)) {
 				if (Validator.isNotNull(keywords)) {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							groupIds, keywords, searchContainer.getStart(),
+							themeDisplay.getScopeGroupId(), keywords,
+							searchContainer.getStart(),
 							searchContainer.getEnd(),
 							searchContainer.getOrderByComparator());
 
@@ -349,13 +346,14 @@ public class AssetListPortletItemSelectorView
 				else {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							groupIds, searchContainer.getStart(),
+							themeDisplay.getScopeGroupId(),
+							searchContainer.getStart(),
 							searchContainer.getEnd(),
 							searchContainer.getOrderByComparator());
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							groupIds);
+							themeDisplay.getScopeGroupId());
 				}
 			}
 			else if (Validator.isNull(
@@ -364,7 +362,21 @@ public class AssetListPortletItemSelectorView
 				if (Validator.isNotNull(keywords)) {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							groupIds, keywords,
+							new long[] {themeDisplay.getScopeGroupId()},
+							keywords, itemTypes.toArray(new String[0]),
+							searchContainer.getStart(),
+							searchContainer.getEnd(),
+							searchContainer.getOrderByComparator());
+
+					assetListEntriesCount =
+						_assetListEntryService.getAssetListEntriesCount(
+							new long[] {themeDisplay.getScopeGroupId()},
+							keywords, itemTypes.toArray(new String[0]));
+				}
+				else {
+					assetListEntries =
+						_assetListEntryService.getAssetListEntries(
+							new long[] {themeDisplay.getScopeGroupId()},
 							itemTypes.toArray(new String[0]),
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
@@ -372,27 +384,16 @@ public class AssetListPortletItemSelectorView
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							groupIds, keywords,
+							new long[] {themeDisplay.getScopeGroupId()},
 							itemTypes.toArray(new String[0]));
-				}
-				else {
-					assetListEntries =
-						_assetListEntryService.getAssetListEntries(
-							groupIds, itemTypes.toArray(new String[0]),
-							searchContainer.getStart(),
-							searchContainer.getEnd(),
-							searchContainer.getOrderByComparator());
-
-					assetListEntriesCount =
-						_assetListEntryService.getAssetListEntriesCount(
-							groupIds, itemTypes.toArray(new String[0]));
 				}
 			}
 			else {
 				if (Validator.isNotNull(keywords)) {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							groupIds, keywords,
+							new long[] {themeDisplay.getScopeGroupId()},
+							keywords,
 							_infoListItemSelectorCriterion.getItemSubtype(),
 							_infoListItemSelectorCriterion.getItemType(),
 							searchContainer.getStart(),
@@ -401,14 +402,15 @@ public class AssetListPortletItemSelectorView
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							groupIds, keywords,
+							new long[] {themeDisplay.getScopeGroupId()},
+							keywords,
 							_infoListItemSelectorCriterion.getItemSubtype(),
 							_infoListItemSelectorCriterion.getItemType());
 				}
 				else {
 					assetListEntries =
 						_assetListEntryService.getAssetListEntries(
-							groupIds,
+							new long[] {themeDisplay.getScopeGroupId()},
 							_infoListItemSelectorCriterion.getItemSubtype(),
 							_infoListItemSelectorCriterion.getItemType(),
 							searchContainer.getStart(),
@@ -417,7 +419,7 @@ public class AssetListPortletItemSelectorView
 
 					assetListEntriesCount =
 						_assetListEntryService.getAssetListEntriesCount(
-							groupIds,
+							new long[] {themeDisplay.getScopeGroupId()},
 							_infoListItemSelectorCriterion.getItemSubtype(),
 							_infoListItemSelectorCriterion.getItemType());
 				}

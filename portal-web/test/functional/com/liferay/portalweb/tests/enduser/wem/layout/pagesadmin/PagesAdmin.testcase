@@ -1266,9 +1266,7 @@ definition {
 				key_rowNumber = "${rowNumber}");
 		}
 
-		AssertElementNotPresent(
-			key_rowNumber = "5",
-			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER");
+		LexiconTable.viewTableEntryNotPresent(tableEntry = "Web Content Title 5");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 

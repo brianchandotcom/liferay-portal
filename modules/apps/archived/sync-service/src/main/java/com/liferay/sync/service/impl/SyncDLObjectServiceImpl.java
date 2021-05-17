@@ -1172,6 +1172,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 				fileEntryId, sourceFileName, mimeType, title, description,
 				changeLog,
 				DLVersionNumberIncrease.fromMajorVersion(majorVersion), file,
+				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 				serviceContext);
 
 			return toSyncDLObject(

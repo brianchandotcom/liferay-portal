@@ -701,7 +701,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 						destFileEntry.getFileName(),
 						destFileEntry.getMimeType(), destFileEntry.getTitle(),
 						destFileEntry.getDescription(), StringPool.BLANK,
-						DLVersionNumberIncrease.MINOR, file, serviceContext);
+						DLVersionNumberIncrease.MINOR, file,
+						destFileEntry.getExpirationDate(),
+						destFileEntry.getReviewDate(), serviceContext);
 
 					_dlAppService.deleteFileEntry(fileEntry.getFileEntryId());
 
@@ -721,6 +723,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				fileEntry.getFileEntryId(), fileName, fileEntry.getMimeType(),
 				fileEntry.getTitle(), fileEntry.getDescription(),
 				StringPool.BLANK, DLVersionNumberIncrease.MINOR, file,
+				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 				serviceContext);
 
 			if (fileEntry.getFolderId() != newParentFolderId) {
@@ -804,6 +807,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					fileEntry.getFileEntryId(), fileName, contentType,
 					fileEntry.getTitle(), fileEntry.getDescription(),
 					StringPool.BLANK, DLVersionNumberIncrease.MINOR, file,
+					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 					serviceContext);
 			}
 			catch (NoSuchFileEntryException noSuchFileEntryException) {

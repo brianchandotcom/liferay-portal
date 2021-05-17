@@ -798,6 +798,7 @@ public class FileSystemImporter extends BaseImporter {
 					mimeTypes.getContentType(fileName), fileName,
 					StringPool.BLANK, StringPool.BLANK,
 					DLVersionNumberIncrease.MAJOR, inputStream, length,
+					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 					serviceContext);
 
 				dlFileEntryLocalService.deleteFileVersion(

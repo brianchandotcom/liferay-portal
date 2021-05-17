@@ -288,6 +288,8 @@ public class DocumentResourceImpl
 				),
 				null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(),
+				existingFileEntry.getExpirationDate(),
+				existingFileEntry.getReviewDate(),
 				_getServiceContext(
 					() -> ArrayUtil.toArray(
 						_assetCategoryLocalService.getCategoryIds(
@@ -380,6 +382,8 @@ public class DocumentResourceImpl
 				),
 				null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(),
+				existingFileEntry.getExpirationDate(),
+				existingFileEntry.getReviewDate(),
 				_getServiceContext(
 					() -> new Long[0], () -> new String[0],
 					existingFileEntry.getFolderId(), documentOptional,

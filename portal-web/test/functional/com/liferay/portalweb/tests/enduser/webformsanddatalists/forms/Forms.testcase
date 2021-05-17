@@ -716,13 +716,75 @@ definition {
 	}
 
 	@description = "Verify that a Form can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130501 CanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editDescription(formDescription = "Form Description");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Form.viewFormName(formName = "Form 1");
+
+		Form.viewFormDescription(formDescription = "Form Description");
+
+		AssertElementPresent(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.editName(formName = "Form 2");
+
+		Form.editDescription(formDescription = "Form Description 2");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		LexiconEntry.viewEntryName(rowEntry = "Form 2");
+
+		LexiconEntry.viewEntryContent(
+				rowAny = "Form 2",
+				rowEntry = "Description 2");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 2");
+
+		Form.viewFormName(formName = "Form 2");
+
+		Form.viewFormDescription(formDescription = "Form Description 2");
+
+		AssertElementPresent(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		AssertElementPresent(
+			key_name = "Numeric",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+
+
+		
+
+		
+		
 	}
 
 	@description = "Verify that a Form can be unpublished"

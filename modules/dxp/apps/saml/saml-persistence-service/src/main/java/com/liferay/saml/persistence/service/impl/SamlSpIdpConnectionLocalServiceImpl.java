@@ -47,6 +47,13 @@ import org.osgi.service.component.annotations.Reference;
 public class SamlSpIdpConnectionLocalServiceImpl
 	extends SamlSpIdpConnectionLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addSamlSpIdpConnection(String, boolean, long, boolean,
+	 *             boolean, boolean, String, InputStream, String, String,
+	 *             boolean, boolean, String, String, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public SamlSpIdpConnection addSamlSpIdpConnection(
 			String samlIdpEntityId, boolean assertionSignatureRequired,
@@ -56,6 +63,24 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			String nameIdFormat, boolean signAuthnRequest,
 			boolean unknownUsersAreStrangers, String userAttributeMappings,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addSamlSpIdpConnection(
+			samlIdpEntityId, assertionSignatureRequired, clockSkew, enabled,
+			forceAuthn, ldapImportEnabled, metadataUrl, metadataXmlInputStream,
+			name, nameIdFormat, signAuthnRequest, false, userAttributeMappings,
+			"dynamic", serviceContext);
+	}
+
+	@Override
+	public SamlSpIdpConnection addSamlSpIdpConnection(
+			String samlIdpEntityId, boolean assertionSignatureRequired,
+			long clockSkew, boolean enabled, boolean forceAuthn,
+			boolean ldapImportEnabled, String metadataUrl,
+			InputStream metadataXmlInputStream, String name,
+			String nameIdFormat, boolean signAuthnRequest,
+			boolean unknownUsersAreStrangers, String userAttributeMappings,
+			String userIdentifierExpression, ServiceContext serviceContext)
 		throws PortalException {
 
 		Date now = new Date();
@@ -124,6 +149,8 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setNameIdFormat(nameIdFormat);
 		samlSpIdpConnection.setSignAuthnRequest(signAuthnRequest);
 		samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
+		samlSpIdpConnection.setUserIdentifierExpression(
+			userIdentifierExpression);
 
 		return samlSpIdpConnectionPersistence.update(samlSpIdpConnection);
 	}
@@ -236,6 +263,13 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnectionPersistence.update(samlSpIdpConnection);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateSamlSpIdpConnection(long, String, boolean, long,
+	 *             boolean, boolean, boolean, String, InputStream, String,
+	 *             String, boolean, boolean, String, String, boolean, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public SamlSpIdpConnection updateSamlSpIdpConnection(
 			long samlSpIdpConnectionId, String samlIdpEntityId,
@@ -245,6 +279,28 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			String nameIdFormat, boolean signAuthnRequest,
 			boolean unknownUsersAreStrangers, String userAttributeMappings,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		SamlSpIdpConnection samlSpIdpConnection = getSamlSpIdpConnection(
+			samlSpIdpConnectionId);
+
+		return updateSamlSpIdpConnection(
+			samlSpIdpConnectionId, samlIdpEntityId, assertionSignatureRequired,
+			clockSkew, enabled, forceAuthn, ldapImportEnabled, metadataUrl,
+			metadataXmlInputStream, name, nameIdFormat, signAuthnRequest,
+			unknownUsersAreStrangers, userAttributeMappings,
+			samlSpIdpConnection.getUserIdentifierExpression(), serviceContext);
+	}
+
+	@Override
+	public SamlSpIdpConnection updateSamlSpIdpConnection(
+			long samlSpIdpConnectionId, String samlIdpEntityId,
+			boolean assertionSignatureRequired, long clockSkew, boolean enabled,
+			boolean forceAuthn, boolean ldapImportEnabled, String metadataUrl,
+			InputStream metadataXmlInputStream, String name,
+			String nameIdFormat, boolean signAuthnRequest,
+			boolean unknownUsersAreStrangers, String userAttributeMappings,
+			String userIdentifierExpression, ServiceContext serviceContext)
 		throws PortalException {
 
 		Date now = new Date();
@@ -318,6 +374,8 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setNameIdFormat(nameIdFormat);
 		samlSpIdpConnection.setSignAuthnRequest(signAuthnRequest);
 		samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
+		samlSpIdpConnection.setUserIdentifierExpression(
+			userIdentifierExpression);
 
 		return samlSpIdpConnectionPersistence.update(samlSpIdpConnection);
 	}

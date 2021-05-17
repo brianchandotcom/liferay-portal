@@ -157,9 +157,6 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 		long commerceShippingFixedOptionId = ParamUtil.getLong(
 			actionRequest, "commerceShippingFixedOptionId");
 
-		long commerceShippingMethodId = ParamUtil.getLong(
-			actionRequest, "commerceShippingMethodId");
-
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
@@ -178,6 +175,9 @@ public class EditCommerceShippingFixedOptionMVCActionCommand
 						amount, priority);
 		}
 		else {
+			long commerceShippingMethodId = ParamUtil.getLong(
+				actionRequest, "commerceShippingMethodId");
+
 			CommerceShippingMethod commerceShippingMethod =
 				_commerceShippingMethodService.getCommerceShippingMethod(
 					commerceShippingMethodId);

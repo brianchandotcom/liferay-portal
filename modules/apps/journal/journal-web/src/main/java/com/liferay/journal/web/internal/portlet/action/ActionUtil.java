@@ -258,10 +258,6 @@ public class ActionUtil {
 		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
 		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
 		String articleId = ParamUtil.getString(httpServletRequest, "articleId");
-		long ddmStructureId = ParamUtil.getLong(
-			httpServletRequest, "ddmStructureId");
-		String ddmStructureKey = ParamUtil.getString(
-			httpServletRequest, "ddmStructureKey");
 		int status = ParamUtil.getInteger(
 			httpServletRequest, "status", WorkflowConstants.STATUS_ANY);
 
@@ -297,6 +293,11 @@ public class ActionUtil {
 			}
 		}
 		else {
+			long ddmStructureId = ParamUtil.getLong(
+				httpServletRequest, "ddmStructureId");
+			String ddmStructureKey = ParamUtil.getString(
+				httpServletRequest, "ddmStructureKey");
+
 			DDMStructure ddmStructure = null;
 
 			if (Validator.isNotNull(ddmStructureKey)) {
@@ -399,10 +400,6 @@ public class ActionUtil {
 	public static JournalFolder getFolder(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
 
 		JournalFolder folder = null;
@@ -413,6 +410,10 @@ public class ActionUtil {
 			folder = JournalFolderServiceUtil.fetchFolder(folderId);
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			JournalPermission.check(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup(), ActionKeys.VIEW);

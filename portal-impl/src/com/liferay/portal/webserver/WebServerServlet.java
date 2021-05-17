@@ -1036,8 +1036,6 @@ public class WebServerServlet extends HttpServlet {
 
 		boolean converted = false;
 
-		String targetExtension = ParamUtil.getString(
-			httpServletRequest, "targetExtension");
 		int imageThumbnail = ParamUtil.getInteger(
 			httpServletRequest, "imageThumbnail");
 		int documentThumbnail = ParamUtil.getInteger(
@@ -1145,6 +1143,9 @@ public class WebServerServlet extends HttpServlet {
 		else {
 			inputStream = fileVersion.getContentStream(true);
 			contentLength = fileVersion.getSize();
+
+			String targetExtension = ParamUtil.getString(
+				httpServletRequest, "targetExtension");
 
 			if (Validator.isNotNull(targetExtension)) {
 				File convertedFile = DocumentConversionUtil.convert(

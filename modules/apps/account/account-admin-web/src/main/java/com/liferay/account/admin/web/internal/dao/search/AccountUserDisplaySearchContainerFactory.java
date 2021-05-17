@@ -189,8 +189,6 @@ public class AccountUserDisplaySearchContainerFactory {
 
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);
-		String navigation = ParamUtil.getString(
-			liferayPortletRequest, "navigation", "active");
 
 		BaseModelSearchResult<User> baseModelSearchResult;
 
@@ -205,6 +203,9 @@ public class AccountUserDisplaySearchContainerFactory {
 				orderByType);
 		}
 		else {
+			String navigation = ParamUtil.getString(
+				liferayPortletRequest, "navigation", "active");
+
 			baseModelSearchResult = _getBaseModelSearchResult(
 				accountEntryIds, keywords, _getStatus(navigation),
 				accountUserDisplaySearchContainer.getStart(),

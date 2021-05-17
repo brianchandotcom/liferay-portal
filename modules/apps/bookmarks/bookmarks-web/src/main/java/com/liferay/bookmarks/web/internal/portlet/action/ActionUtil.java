@@ -90,10 +90,6 @@ public class ActionUtil {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		long folderId = ParamUtil.getLong(httpServletRequest, "folderId");
 
 		BookmarksFolder folder = null;
@@ -108,6 +104,10 @@ public class ActionUtil {
 			}
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			BookmarksResourcePermission.check(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);

@@ -265,9 +265,6 @@ public class CTCollectionLocalServiceImpl
 				ctAutoResolutionInfo.getModelClassNameId(),
 				key -> new ArrayList<>());
 
-			ClassName className = _classNameLocalService.getClassName(
-				ctAutoResolutionInfo.getModelClassNameId());
-
 			if (Objects.equals(
 					ctAutoResolutionInfo.getConflictIdentifier(),
 					ModificationConflictInfo.class.getName())) {
@@ -285,6 +282,9 @@ public class CTCollectionLocalServiceImpl
 				List<String> uniqueIndexes = StringUtil.split(
 					ctAutoResolutionInfo.getConflictIdentifier(),
 					CharPool.COMMA);
+
+				ClassName className = _classNameLocalService.getClassName(
+					ctAutoResolutionInfo.getModelClassNameId());
 
 				ConstraintResolver<?> constraintResolver =
 					_constraintResolverServiceTrackerMap.getService(

@@ -47,9 +47,6 @@ public class UpdateCTCommentMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		CTComment ctComment = null;
 
 		long ctCommentId = ParamUtil.getLong(resourceRequest, "ctCommentId");
@@ -61,6 +58,9 @@ public class UpdateCTCommentMVCResourceCommand
 				ctCommentId, value);
 		}
 		else {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 			long ctCollectionId = ParamUtil.getLong(
 				resourceRequest, "ctCollectionId");
 			long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");

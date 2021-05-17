@@ -324,14 +324,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		StructureSearchTerms searchTerms =
 			(StructureSearchTerms)structureSearch.getSearchTerms();
 
-		long[] groupIds = {
-			_portal.getScopeGroupId(
-				_dlRequestHelper.getRequest(), DLPortletKeys.DOCUMENT_LIBRARY,
-				true)
-		};
-
-		groupIds = _portal.getCurrentAndAncestorSiteGroupIds(groupIds);
-
 		List<DDMStructure> results = null;
 
 		if (searchTerms.isSearchRestriction()) {
@@ -341,6 +333,14 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 				structureSearch.getEnd());
 		}
 		else {
+			long[] groupIds = {
+				_portal.getScopeGroupId(
+					_dlRequestHelper.getRequest(),
+					DLPortletKeys.DOCUMENT_LIBRARY, true)
+			};
+
+			groupIds = _portal.getCurrentAndAncestorSiteGroupIds(groupIds);
+
 			results = _ddmStructureService.getStructures(
 				_dlRequestHelper.getCompanyId(), groupIds,
 				getStructureClassNameId(), searchTerms.getKeywords(),
@@ -358,14 +358,6 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 		StructureSearchTerms searchTerms =
 			(StructureSearchTerms)structureSearch.getSearchTerms();
 
-		long[] groupIds = {
-			_portal.getScopeGroupId(
-				_dlRequestHelper.getRequest(), DLPortletKeys.DOCUMENT_LIBRARY,
-				true)
-		};
-
-		groupIds = _portal.getCurrentAndAncestorSiteGroupIds(groupIds);
-
 		int total = 0;
 
 		if (searchTerms.isSearchRestriction()) {
@@ -374,6 +366,14 @@ public class DLViewFileEntryMetadataSetsDisplayContext {
 				getSearchRestrictionClassPK());
 		}
 		else {
+			long[] groupIds = {
+				_portal.getScopeGroupId(
+					_dlRequestHelper.getRequest(),
+					DLPortletKeys.DOCUMENT_LIBRARY, true)
+			};
+
+			groupIds = _portal.getCurrentAndAncestorSiteGroupIds(groupIds);
+
 			total = _ddmStructureService.getStructuresCount(
 				_dlRequestHelper.getCompanyId(), groupIds,
 				getStructureClassNameId(), searchTerms.getKeywords(),

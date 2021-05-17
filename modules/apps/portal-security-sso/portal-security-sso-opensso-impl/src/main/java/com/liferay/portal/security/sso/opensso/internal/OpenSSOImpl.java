@@ -193,11 +193,6 @@ public class OpenSSOImpl implements OpenSSO {
 
 			httpURLConnection = (HttpURLConnection)urlObj.openConnection();
 
-			inputStream = (InputStream)httpURLConnection.getContent();
-
-			unsyncBufferedReader = new UnsyncBufferedReader(
-				new InputStreamReader(inputStream));
-
 			if (httpURLConnection.getResponseCode() !=
 					HttpURLConnection.HTTP_OK) {
 
@@ -206,6 +201,11 @@ public class OpenSSOImpl implements OpenSSO {
 				}
 			}
 			else {
+				inputStream = (InputStream)httpURLConnection.getContent();
+
+				unsyncBufferedReader = new UnsyncBufferedReader(
+					new InputStreamReader(inputStream));
+
 				String line = null;
 
 				while ((line = unsyncBufferedReader.readLine()) != null) {

@@ -251,7 +251,6 @@ public class FragmentEntryFinderImpl
 				Object[] array = iterator.next();
 
 				long fragmentCompositionId = (Long)array[0];
-				long fragmentEntryId = (Long)array[1];
 
 				Object object = null;
 
@@ -260,6 +259,8 @@ public class FragmentEntryFinderImpl
 						fragmentCompositionId);
 				}
 				else {
+					long fragmentEntryId = (Long)array[1];
+
 					object = FragmentEntryUtil.findByPrimaryKey(
 						fragmentEntryId);
 				}
@@ -335,7 +336,6 @@ public class FragmentEntryFinderImpl
 				Object[] array = iterator.next();
 
 				long fragmentCompositionId = (Long)array[0];
-				long fragmentEntryId = (Long)array[1];
 
 				Object object = null;
 
@@ -344,6 +344,8 @@ public class FragmentEntryFinderImpl
 						fragmentCompositionId);
 				}
 				else {
+					long fragmentEntryId = (Long)array[1];
+
 					object = FragmentEntryUtil.findByPrimaryKey(
 						fragmentEntryId);
 				}

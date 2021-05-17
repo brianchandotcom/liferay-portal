@@ -151,14 +151,14 @@ public class EditCommerceWishListMVCActionCommand extends BaseMVCActionCommand {
 		boolean defaultWishList = ParamUtil.getBoolean(
 			actionRequest, "defaultWishList");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceWishList.class.getName(), actionRequest);
-
 		if (commerceWishListId > 0) {
 			_commerceWishListService.updateCommerceWishList(
 				commerceWishListId, name, defaultWishList);
 		}
 		else {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CommerceWishList.class.getName(), actionRequest);
+
 			_commerceWishListService.addCommerceWishList(
 				name, defaultWishList, serviceContext);
 		}

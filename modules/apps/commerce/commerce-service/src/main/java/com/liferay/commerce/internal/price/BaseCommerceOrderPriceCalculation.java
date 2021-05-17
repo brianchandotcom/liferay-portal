@@ -236,8 +236,6 @@ public abstract class BaseCommerceOrderPriceCalculation
 			CommerceOrder commerceOrder)
 		throws PortalException {
 
-		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
-
 		if (discountsTargetNetPrice) {
 			commerceOrderPriceImpl.setShippingDiscountValue(
 				orderShippingCommerceDiscountValue);
@@ -247,6 +245,9 @@ public abstract class BaseCommerceOrderPriceCalculation
 				orderTotalCommerceDiscountValue);
 		}
 		else {
+			CommerceCurrency commerceCurrency =
+				commerceOrder.getCommerceCurrency();
+
 			RoundingMode roundingMode = RoundingMode.valueOf(
 				commerceCurrency.getRoundingMode());
 

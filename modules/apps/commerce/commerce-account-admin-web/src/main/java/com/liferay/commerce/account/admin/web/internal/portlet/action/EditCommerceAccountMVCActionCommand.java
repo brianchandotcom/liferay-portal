@@ -197,7 +197,6 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "commerceAccountId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 		String email = ParamUtil.getString(actionRequest, "email");
 		String taxId = ParamUtil.getString(actionRequest, "taxId");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
@@ -227,6 +226,8 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 				StringPool.BLANK, serviceContext);
 		}
 		else {
+			boolean deleteLogo = ParamUtil.getBoolean(
+				actionRequest, "deleteLogo");
 			long defaultBillingAddressId = ParamUtil.getLong(
 				actionRequest, "defaultBillingAddressId");
 			long defaultShippingAddressId = ParamUtil.getLong(

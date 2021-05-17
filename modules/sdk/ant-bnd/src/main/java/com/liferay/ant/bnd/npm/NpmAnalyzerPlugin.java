@@ -88,7 +88,6 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 		major = matcher.group("major");
 		minor = matcher.group("minor");
 		micro = matcher.group("micro");
-		qualifier = matcher.group("qualifier");
 
 		if (minor == null) {
 			major = Integer.parseInt(major) + 1 + "";
@@ -106,6 +105,9 @@ public class NpmAnalyzerPlugin implements AnalyzerPlugin {
 		}
 		else {
 			sb.append(")(version<=");
+
+			qualifier = matcher.group("qualifier");
+
 			sb.append(toVersion(major, minor, micro, qualifier));
 		}
 

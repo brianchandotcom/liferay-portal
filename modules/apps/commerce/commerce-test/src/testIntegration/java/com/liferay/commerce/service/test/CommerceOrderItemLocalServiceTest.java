@@ -738,12 +738,13 @@ public class CommerceOrderItemLocalServiceTest {
 			commerceOrder.getCommerceOrderItems();
 
 		CommerceOrderItem commerceOrderItem1 = commerceOrderItems.get(0);
-		CommerceOrderItem commerceOrderItem2 = commerceOrderItems.get(1);
 
 		if (commerceOrderItem1.getParentCommerceOrderItemId() == 0) {
 			_assertDeleteOrderItem(commerceOrderItem1);
 		}
 		else {
+			CommerceOrderItem commerceOrderItem2 = commerceOrderItems.get(1);
+
 			_assertDeleteOrderItem(commerceOrderItem2);
 		}
 	}

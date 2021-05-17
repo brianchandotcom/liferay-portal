@@ -58,9 +58,6 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 			SamlProviderConfigurationHelper.class.getName(),
 			_samlProviderConfigurationHelper);
 
-		SamlProviderConfiguration samlProviderConfiguration =
-			_samlProviderConfigurationHelper.getSamlProviderConfiguration();
-
 		long clockSkew;
 
 		if (samlSpIdpConnectionId > 0) {
@@ -81,6 +78,9 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 			}
 		}
 		else {
+			SamlProviderConfiguration samlProviderConfiguration =
+				_samlProviderConfigurationHelper.getSamlProviderConfiguration();
+
 			clockSkew = ParamUtil.getLong(
 				renderRequest, "clockSkew",
 				samlProviderConfiguration.clockSkew());

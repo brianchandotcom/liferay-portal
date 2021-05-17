@@ -196,9 +196,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 
-		long cpDefinitionId = ParamUtil.getLong(
-			actionRequest, "cpDefinitionId");
-
 		String sku = ParamUtil.getString(actionRequest, "sku");
 		String gtin = ParamUtil.getString(actionRequest, "gtin");
 		String manufacturerPartNumber = ParamUtil.getString(
@@ -249,9 +246,6 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPInstance.class.getName(), actionRequest);
 
-		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
-			cpDefinitionId);
-
 		CPInstance cpInstance = null;
 
 		if (cpInstanceId > 0) {
@@ -263,6 +257,12 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				expirationDateMinute, neverExpire, unspsc, serviceContext);
 		}
 		else {
+			long cpDefinitionId = ParamUtil.getLong(
+				actionRequest, "cpDefinitionId");
+
+			CPDefinition cpDefinition =
+				_cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+
 			String ddmFormValues = ParamUtil.getString(
 				actionRequest, "ddmFormValues");
 

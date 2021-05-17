@@ -115,10 +115,6 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 		long commerceShippingFixedOptionRelId = ParamUtil.getLong(
 			actionRequest, "commerceShippingFixedOptionRelId");
 
-		long commerceShippingMethodId = ParamUtil.getLong(
-			actionRequest, "commerceShippingMethodId");
-		long commerceShippingFixedOptionId = ParamUtil.getLong(
-			actionRequest, "commerceShippingFixedOptionId");
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
 		long countryId = ParamUtil.getLong(actionRequest, "countryId");
@@ -142,6 +138,11 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 					ratePercentage);
 		}
 		else {
+			long commerceShippingMethodId = ParamUtil.getLong(
+				actionRequest, "commerceShippingMethodId");
+			long commerceShippingFixedOptionId = ParamUtil.getLong(
+				actionRequest, "commerceShippingFixedOptionId");
+
 			CommerceShippingMethod commerceShippingMethod =
 				_commerceShippingMethodService.getCommerceShippingMethod(
 					commerceShippingMethodId);

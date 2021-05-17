@@ -270,7 +270,7 @@ public class WikiPageResourceImpl
 		throws Exception {
 
 		com.liferay.wiki.model.WikiPage serviceBuilderWikiPage =
-			_wikiPageLocalService.fetchWikiPageByExternalReferenceCode(
+			_wikiPageLocalService.fetchLatestPageByExternalReferenceCode(
 				siteId, externalReferenceCode);
 
 		if (serviceBuilderWikiPage != null) {
@@ -366,7 +366,7 @@ public class WikiPageResourceImpl
 		throws Exception {
 
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.fetchWikiPageByExternalReferenceCode(
+			_wikiPageLocalService.fetchLatestPageByExternalReferenceCode(
 				siteId, externalReferenceCode);
 
 		if (wikiPage == null) {

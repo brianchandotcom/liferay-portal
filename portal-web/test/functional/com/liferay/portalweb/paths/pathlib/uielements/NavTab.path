@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ACTIVE_TAB_LINK</td>
-	<td>//*[contains(@class,'nav-link') and contains(@class,'active') and normalize-space()='${key_tab}'][not(contains(@id,'ProductMenu'))]</td>
+	<td>//*[contains(@class,'nav-link') and contains(@class,'active') and normalize-space()='${key_tab}'][not(contains(@id,'ProductMenu') or contains(@href,'site_administration'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>TAB_LINK</td>
-	<td>//*[contains(@class,'nav-link') and normalize-space()='${key_tab}'][not(contains(@id,'ProductMenu'))]</td>
+	<td>//*[contains(@class,'nav-link') and normalize-space()='${key_tab}'][not(contains(@id,'ProductMenu') or contains(@href,'site_administration'))]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -14,12 +14,8 @@
 
 package com.liferay.wiki.internal.upgrade.v2_2_0;
 
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.wiki.internal.upgrade.v2_2_0.util.WikiNodeTable;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Luis Miguel Barcos
@@ -34,32 +30,11 @@ public class WikiNodeExternalReferenceCodeUpgradeProcess
 				WikiNodeTable.class,
 				new AlterTableAddColumn(
 					"externalReferenceCode", "VARCHAR(75)"));
-		}
 
-		_populateExternalReferenceCode();
-	}
-
-	private void _populateExternalReferenceCode() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select nodeId from WikiNode where externalReferenceCode is " +
-					"null or externalReferenceCode = ''");
-			ResultSet resultSet = preparedStatement1.executeQuery();
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update WikiNode set externalReferenceCode = ? where " +
-							"nodeId = ?"))) {
-
-			while (resultSet.next()) {
-				long nodeId = resultSet.getLong(1);
-
-				preparedStatement2.setString(1, String.valueOf(nodeId));
-				preparedStatement2.setLong(2, nodeId);
-
-				preparedStatement2.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
+			runSQL(
+				"update WikiNode set externalReferenceCode = " +
+					"CAST_TEXT(nodeId) where externalReferenceCode is null " +
+						"or externalReferenceCode = ''");
 		}
 	}
 

@@ -14,12 +14,8 @@
 
 package com.liferay.wiki.internal.upgrade.v2_2_0;
 
-import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.wiki.internal.upgrade.v2_2_0.util.WikiPageTable;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 /**
  * @author Luis Miguel Barcos
@@ -34,32 +30,11 @@ public class WikiPageExternalReferenceCodeUpgradeProcess
 				WikiPageTable.class,
 				new AlterTableAddColumn(
 					"externalReferenceCode", "VARCHAR(75)"));
-		}
 
-		_populateExternalReferenceCode();
-	}
-
-	private void _populateExternalReferenceCode() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareCall(
-				"select pageId from WikiPage where externalReferenceCode is " +
-					"null or externalReferenceCode = ''");
-			ResultSet resultSet = preparedStatement1.executeQuery();
-			PreparedStatement preparedStatement2 =
-				AutoBatchPreparedStatementUtil.autoBatch(
-					connection.prepareStatement(
-						"update WikiPage set externalReferenceCode = ? where " +
-							"pageId = ?"))) {
-
-			while (resultSet.next()) {
-				long pageId = resultSet.getLong(1);
-
-				preparedStatement2.setString(1, String.valueOf(pageId));
-				preparedStatement2.setLong(2, pageId);
-
-				preparedStatement2.addBatch();
-			}
-
-			preparedStatement2.executeBatch();
+			runSQL(
+				"update WikiPage set externalReferenceCode = " +
+					"CAST_TEXT(resourcePrimKey) where externalReferenceCode " +
+						"is null or externalReferenceCode = ''");
 		}
 	}
 

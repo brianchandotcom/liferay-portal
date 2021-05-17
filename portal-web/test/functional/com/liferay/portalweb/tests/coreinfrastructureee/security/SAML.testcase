@@ -183,8 +183,8 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@liferay.com",
-			specificURL = "http://localhost:9080");
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1252,8 +1252,8 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@liferay.com",
-			specificURL = "http://localhost:9080");
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -1368,8 +1368,8 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@liferay.com",
-			specificURL = "http://localhost:9080");
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",

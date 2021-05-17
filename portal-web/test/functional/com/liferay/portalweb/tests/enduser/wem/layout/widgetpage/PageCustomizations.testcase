@@ -151,6 +151,10 @@ definition {
 
 		WikiPortlet.configureSharingAllowUsersToAddWikiToAnyWebsite(enabled = "true");
 
+		Navigator.gotoSitePage(
+			pageName = "Site Page Name",
+			siteName = "Site Name");
+
 		User.firstLoginPG(
 			password = "test",
 			userEmailAddress = "test@liferay.com");

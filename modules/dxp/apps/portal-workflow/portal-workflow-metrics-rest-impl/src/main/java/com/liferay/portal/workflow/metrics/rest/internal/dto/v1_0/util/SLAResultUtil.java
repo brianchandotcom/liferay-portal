@@ -92,6 +92,9 @@ public class SLAResultUtil {
 
 			return SLAResult.Status.STOPPED;
 		}
+		else if (Objects.equals(status, WorkflowMetricsSLAStatus.NEW.name())) {
+			return SLAResult.Status.NEW;
+		}
 		else if (Objects.equals(
 					status, WorkflowMetricsSLAStatus.PAUSED.name())) {
 

@@ -20,12 +20,12 @@ const TranslateHeader = ({sourceLanguageIdTitle, targetLanguageIdTitle}) => (
 	<ClayLayout.Row className="row-autotranslate-title">
 		<ClayLayout.Col md={6}>
 			<ClayIcon symbol={sourceLanguageIdTitle.toLowerCase()} />
-			<span className="ml-1">{sourceLanguageIdTitle}</span>
+			<span className="ml-2">{sourceLanguageIdTitle}</span>
 			<div className="separator" />
 		</ClayLayout.Col>
 		<ClayLayout.Col md={6}>
 			<ClayIcon symbol={targetLanguageIdTitle.toLowerCase()} />
-			<span className="ml-1">{targetLanguageIdTitle}</span>
+			<span className="ml-2">{targetLanguageIdTitle}</span>
 			<div className="separator" />
 		</ClayLayout.Col>
 	</ClayLayout.Row>

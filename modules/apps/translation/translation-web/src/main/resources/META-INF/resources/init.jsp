@@ -29,6 +29,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.info.field.InfoField" %><%@
 page import="com.liferay.info.field.InfoFieldSetEntry" %><%@
 page import="com.liferay.info.field.type.TextInfoFieldType" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@

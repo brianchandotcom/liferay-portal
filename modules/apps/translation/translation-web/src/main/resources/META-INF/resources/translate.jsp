@@ -62,7 +62,9 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 						/>
 					</c:when>
 					<c:otherwise>
-						<clay:row>
+						<clay:row
+							cssClass='<%= translateDisplayContext.isAutoTranslateEnabled() ? "row-autotranslate-title" : StringPool.BLANK %>'
+						>
 							<clay:col
 								md="6"
 							>
@@ -110,7 +112,9 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 						%>
 
 							<c:if test="<%= Validator.isNotNull(infoFieldSetLabel) %>">
-								<clay:row>
+								<clay:row
+									cssClass='<%= translateDisplayContext.isAutoTranslateEnabled() ? "row-autotranslate-title" : StringPool.BLANK %>'
+								>
 									<clay:col
 										md="6"
 									>
@@ -136,56 +140,90 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 								boolean multiline = translateDisplayContext.getBooleanValue(infoField, TextInfoFieldType.MULTILINE);
 							%>
 
-								<clay:row>
-									<clay:col
-										md="6"
-									>
+								<liferay-util:buffer
+									var="translationContent"
+								>
+									<clay:row>
+										<clay:col
+											md="6"
+										>
 
-										<%
-										String sourceContent = translateDisplayContext.getSourceStringValue(infoField, translateDisplayContext.getSourceLocale());
-										String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
-										%>
+											<%
+											String sourceContent = translateDisplayContext.getSourceStringValue(infoField, translateDisplayContext.getSourceLocale());
+											String sourceContentDir = LanguageUtil.get(translateDisplayContext.getSourceLocale(), "lang.dir");
+											%>
 
-										<c:choose>
-											<c:when test="<%= html %>">
-												<label class="control-label">
-													<%= label %>
-												</label>
+											<c:choose>
+												<c:when test="<%= html %>">
+													<label class="control-label">
+														<%= label %>
+													</label>
 
-												<div class="translation-editor-preview" dir="<%= sourceContentDir %>">
-													<%= sourceContent %>
-												</div>
-											</c:when>
-											<c:otherwise>
-												<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
-											</c:otherwise>
-										</c:choose>
-									</clay:col>
+													<div class="translation-editor-preview" dir="<%= sourceContentDir %>">
+														<%= sourceContent %>
+													</div>
+												</c:when>
+												<c:otherwise>
+													<aui:input dir="<%= sourceContentDir %>" label="<%= label %>" name="<%= label %>" readonly="true" tabIndex="-1" type='<%= multiline ? "textarea" : "text" %>' value="<%= sourceContent %>" />
+												</c:otherwise>
+											</c:choose>
+										</clay:col>
 
-									<clay:col
-										md="6"
-									>
+										<clay:col
+											md="6"
+										>
 
-										<%
-										String targetContent = translateDisplayContext.getTargetStringValue(infoField, translateDisplayContext.getTargetLocale());
-										%>
+											<%
+											String targetContent = translateDisplayContext.getTargetStringValue(infoField, translateDisplayContext.getTargetLocale());
+											%>
 
-										<c:choose>
-											<c:when test="<%= html %>">
-												<label class="control-label">
-													<%= label %>
-												</label>
+											<c:choose>
+												<c:when test="<%= html %>">
+													<label class="control-label">
+														<%= label %>
+													</label>
 
-												<div class="translation-editor-preview" dir="<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>">
-													<%= targetContent %>
-												</div>
-											</c:when>
-											<c:otherwise>
-												<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' disabled="<%= true %>" label="<%= label %>" name='<%= "infoField--" + infoField.getName() + "--" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
-											</c:otherwise>
-										</c:choose>
-									</clay:col>
-								</clay:row>
+													<div class="translation-editor-preview" dir="<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>">
+														<%= targetContent %>
+													</div>
+												</c:when>
+												<c:otherwise>
+													<aui:input dir='<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>' disabled="<%= true %>" label="<%= label %>" name='<%= "infoField--" + infoField.getName() + "--" %>' type='<%= multiline ? "textarea" : "text" %>' value="<%= targetContent %>" />
+												</c:otherwise>
+											</c:choose>
+										</clay:col>
+									</clay:row>
+								</liferay-util:buffer>
+
+								<c:choose>
+									<c:when test="<%= translateDisplayContext.isAutoTranslateEnabled() %>">
+										<clay:row>
+											<clay:content-col
+												cssClass="col-autotranslate-content"
+												expand="<%= true %>"
+											>
+												<%= translationContent %>
+											</clay:content-col>
+
+											<clay:content-col
+												cssClass="col-autotranslate-button"
+											>
+												<clay:button
+													disabled="<%= true %>"
+													displayType="secondary"
+													monospaced="<%= true %>"
+												>
+													<clay:icon
+														symbol="automatic-translate"
+													/>
+
+													<span class="sr-only"><liferay-ui:message key="location" /></span>
+												</clay:button>
+											</clay:content-col>
+										</clay:row>
+									</c:when>
+									<c:otherwise><%= translationContent %></c:otherwise>
+								</c:choose>
 
 						<%
 							}

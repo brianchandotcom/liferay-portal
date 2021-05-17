@@ -1478,14 +1478,51 @@ definition {
 			value = "Test Site Name");
 	}
 
-	@description = "This is a test for LPS-130290."
-	@ignore = "true"
+	@description = "This is a test for LPS-132108."
 	@priority = "5"
 	test AddSegmentByUserSiteOrganizationRole {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddSegmentByUserSiteOrganizationRole pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addSiteRole(
+			roleKey = "Site Role Name",
+			roleTitle = "Site Role Name");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Test Site Name",
+			roleTitle = "Site Role Name",
+			userEmailAddress = "userea@liferay.com");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Site and Organization Role");
+
+		Segmentation.fillProperty(selectCheckbox = "Site Role Name");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserSiteOrganizationRole Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserSiteOrganizationRole Test");
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "Site Role Name");
 	}
 
 	@description = "This is a test for LPS-130290."
@@ -1495,6 +1532,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130290 AddSegmentByUserTag pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130290."

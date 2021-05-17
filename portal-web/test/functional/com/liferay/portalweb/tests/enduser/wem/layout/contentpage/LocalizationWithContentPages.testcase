@@ -1,0 +1,92 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-106776. Add a translation to inline content."
+	@priority = "5"
+	test AddTranslationToInlineContent {
+		property portal.acceptance = "true";
+
+		task ("Add a Paragraph fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+		}
+
+		task ("Edit the inline content of Paragraph") {
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "New editable fragment en-US text");
+		}
+
+		task ("Add a translation to inline content") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "ca-ES");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Paragraph",
+				id = "element-text",
+				text = "New editable fragment ca-ES text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page in Edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("View inline content in en-US") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "New editable fragment en-US text",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+
+		task ("View localized inline content") {
+			PageEditor.changeLocale(
+				currentLocale = "en-US",
+				locale = "ca-ES");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "New editable fragment ca-ES text",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+	}
+
+}

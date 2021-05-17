@@ -277,7 +277,7 @@
 </tr>
 <tr>
     <td>FIELD_BODY_IN_SPECIFIC_POSITION</td>
-    <td>xpath=(//div[contains(@class,'form-group')]//label[contains(text(),'${key_fieldName}')])[${key_fieldPositionNumber}]</td>
+    <td>//div[(@data-ddm-field-page='${key_formPageNumber}') and (@data-ddm-field-row = '${key_fieldPositionNumber}')]//label[contains(text(),'${key_fieldName}')]</td>
     <td></td>
 </tr>
 <tr>
@@ -364,6 +364,11 @@
 <tr>
     <td>SIDEBAR_ELLIPSIS</td>
     <td>//div[contains(@class,'sidebar')]//a[*[contains(@class,'lexicon-icon-ellipsis-v')]] | //div[contains(@class,'sidebar')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_FIELDS_TAB</td>
+    <td>//*[contains(@class,'nav-link') and .='Fields']</td>
     <td></td>
 </tr>
 <tr>

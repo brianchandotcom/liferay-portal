@@ -196,6 +196,8 @@ definition {
 	}
 
 	macro editElementSetFieldLabel {
+		Form.openSidebar();
+
 		while (IsTextNotEqual(key_fieldName = "label", locator1 = "FormFields#TEXT_FIELD", value1 = "") && (maxIterations = "10")) {
 			FormFields.editTextWithBackspace(fieldName = "label");
 		}
@@ -368,6 +370,8 @@ definition {
 	macro gotoAddField {
 		Form.openSidebar();
 
+		Form.gotoFieldsTab();
+
 		if (isSet(fieldPositionNumber)) {
 			var key_fieldPositionNumber = "${fieldPositionNumber}";
 		}
@@ -445,6 +449,12 @@ definition {
 				locator1 = "Form#SIDEBAR_ELEMENTS_TAB",
 				value1 = "Elements");
 		}
+	}
+
+	macro gotoFieldsTab {
+		AssertClick(
+			locator1 = "Form#SIDEBAR_FIELDS_TAB",
+			value1 = "Fields");
 	}
 
 	macro gotoFormPage {

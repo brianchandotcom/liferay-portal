@@ -69,8 +69,17 @@ definition {
 	macro gotoEditField {
 		Form.openSidebar();
 
+		Form.gotoFieldsTab();
+
 		var key_fieldName = "${fieldName}";
 		var key_fieldPositionNumber = "${fieldPositionNumber}";
+
+		if (isSet(formPageNumber)) {
+			var key_formPageNumber = "${formPageNumber}";
+		}
+		else {
+			var key_formPageNumber = "0";
+		}
 
 		if (isSet(key_fieldPositionNumber)) {
 			ScrollWebElementIntoView(locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION");

@@ -39,11 +39,12 @@ public class StyleBookServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register("1.0.0", "1.1.0", new StyleBookEntryUpgradeProcess());
 
 		registry.register(
-			"1.1.0", "1.2.0", new UpgradeMVCCVersion(),
-			new StyleBookEntryVersionUpgradeProcess());
+			"1.1.0", "1.2.0", new StyleBookEntryVersionUpgradeProcess());
+
+		registry.register("1.2.0", "1.2.1", new UpgradeMVCCVersion());
 
 		registry.register(
-			"1.2.0", "1.3.0", new UpgradeCTModel("StyleBookEntry"));
+			"1.2.1", "1.3.0", new UpgradeCTModel("StyleBookEntry"));
 
 		registry.register(
 			"1.3.0", "1.4.0", new UpgradeCTModel("StyleBookEntryVersion"));

@@ -883,6 +883,23 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			nodeId, title, orderByComparator);
 	}
 
+	/**
+	 * Returns the latest wiki page matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the wiki page external reference code
+	 * @return the latest matching wiki page, or <code>null</code> if no
+	 *         matching wiki page could be found
+	 */
+	@Override
+	public WikiPage fetchLatestPageByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return wikiPagePersistence.fetchByG_ERC_First(
+			groupId, externalReferenceCode, new PageVersionComparator());
+	}
+
 	@Override
 	public WikiPage fetchPage(long resourcePrimKey) {
 		WikiPageResource pageResource =
@@ -1117,6 +1134,24 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		sb.append("}");
 
 		throw new NoSuchPageException(sb.toString());
+	}
+
+	/**
+	 * Returns the latest wiki page matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the wiki page external reference code
+	 * @return the latest matching wiki page
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public WikiPage getLatestPageByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return wikiPagePersistence.findByG_ERC_First(
+			groupId, externalReferenceCode, new PageVersionComparator());
 	}
 
 	@Override
@@ -3399,7 +3434,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		WikiPage wikiPage = wikiPagePersistence.fetchByG_ERC(
+		WikiPage wikiPage = fetchLatestPageByExternalReferenceCode(
 			groupId, externalReferenceCode);
 
 		if (wikiPage != null) {

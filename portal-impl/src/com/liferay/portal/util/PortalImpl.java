@@ -112,6 +112,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.UserAttributes;
+import com.liferay.portal.kernel.redirect.RedirectURLSettingsUtil;
 import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
@@ -979,10 +980,14 @@ public class PortalImpl implements Portal {
 			return url;
 		}
 
-		String securityMode = PropsValues.REDIRECT_URL_SECURITY_MODE;
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		String securityMode = RedirectURLSettingsUtil.getSecurityMode(
+			companyId);
 
 		if (securityMode.equals("domain")) {
-			String[] allowedDomains = PropsValues.REDIRECT_URL_DOMAINS_ALLOWED;
+			String[] allowedDomains = RedirectURLSettingsUtil.getAllowedDomains(
+				companyId);
 
 			if (allowedDomains.length == 0) {
 				return url;
@@ -1011,16 +1016,10 @@ public class PortalImpl implements Portal {
 			url = null;
 		}
 		else {
-			if (!securityMode.equals("ip") && _log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Property \"", PropsKeys.REDIRECT_URL_SECURITY_MODE,
-						"\" has invalid value: ", securityMode));
-			}
+			String[] allowedIPs = RedirectURLSettingsUtil.getAllowedIPs(
+				companyId);
 
-			String[] allowedIps = PropsValues.REDIRECT_URL_IPS_ALLOWED;
-
-			if (allowedIps.length == 0) {
+			if (allowedIPs.length == 0) {
 				return url;
 			}
 
@@ -1033,7 +1032,7 @@ public class PortalImpl implements Portal {
 				boolean serverIpIsHostAddress = _computerAddresses.contains(
 					hostAddress);
 
-				for (String ip : allowedIps) {
+				for (String ip : allowedIPs) {
 					if ((serverIpIsHostAddress && ip.equals("SERVER_IP")) ||
 						ip.equals(hostAddress)) {
 

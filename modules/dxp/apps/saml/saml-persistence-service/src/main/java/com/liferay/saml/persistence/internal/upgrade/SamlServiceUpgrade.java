@@ -106,6 +106,11 @@ public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 			"2.1.0", "2.2.0",
 			new com.liferay.saml.persistence.internal.upgrade.v2_2_0.
 				SamlSpIdpConnectionUpgradeProcess());
+
+		registry.register(
+			"2.2.0", "2.3.0",
+			new com.liferay.saml.persistence.internal.upgrade.v2_3_0.
+				SamlSpIdpConnectionUpgradeProcess());
 	}
 
 	@Reference

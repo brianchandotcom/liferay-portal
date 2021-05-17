@@ -601,7 +601,7 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}");
 	}
 
-	macro openToTagsTap {
+	macro openToTagsTab {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/tags");
 	}
 

@@ -55,7 +55,7 @@ definition {
 			tagField = "tag1",
 			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
 
-		Questions.openToTagsTap(
+		Questions.openToTagsTab(
 			layoutName = "questions-page",
 			siteURLKey = "guest");
 
@@ -73,7 +73,7 @@ definition {
 			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.openToTagsTap(
+		Questions.openToTagsTab(
 			layoutName = "questions-page",
 			siteURLKey = "guest");
 
@@ -93,7 +93,7 @@ definition {
 			tagField = "tag1",
 			titleField = "Title ListOfTagsAppearsInTheTagsTab");
 
-		Questions.openToTagsTap(
+		Questions.openToTagsTab(
 			layoutName = "questions-page",
 			siteURLKey = "guest");
 
@@ -186,7 +186,7 @@ definition {
 				titleField = "Question ${num}");
 		}
 
-		Questions.openToTagsTap(
+		Questions.openToTagsTab(
 			layoutName = "questions-page",
 			siteURLKey = "guest");
 
@@ -200,7 +200,7 @@ definition {
 			tagField = "tag1",
 			titleField = "Question 3");
 
-		Questions.openToTagsTap(
+		Questions.openToTagsTab(
 			layoutName = "questions-page",
 			siteURLKey = "guest");
 
@@ -226,7 +226,7 @@ definition {
 				titleField = "Question ${num}");
 		}
 
-		Questions.openToTagsTap(
+		Questions.openToTagsTab(
 			layoutName = "questions-page",
 			siteURLKey = "guest");
 

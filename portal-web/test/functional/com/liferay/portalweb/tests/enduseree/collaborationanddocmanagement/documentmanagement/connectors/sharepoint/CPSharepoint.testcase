@@ -11,7 +11,7 @@ definition {
 	property testray.main.component.name = "Sharepoint";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance(authenticationMethod = "By Screen Name");
 
 		var sharepointVMHostName = PropsUtil.get("cmis.repository.vm.host.name");
 
@@ -19,7 +19,7 @@ definition {
 			locator1 = "build-test-sharepoint.xml",
 			value1 = "clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}");
 
-		User.loginPG(
+		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
 			userScreenName = "test");
 
@@ -39,7 +39,7 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(
+		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
 			password = "password",
 			userScreenName = "administrator");
@@ -66,7 +66,7 @@ definition {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
 		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
+			PortalInstances.tearDownCP(authenticationMethod = "By Screen Name");
 		}
 		else {
 			DMRepository.tearDownCP();
@@ -89,7 +89,7 @@ definition {
 
 			User.logoutPG();
 
-			User.loginPG(
+			User.firstLoginUI(
 				authenticationMethod = "By Screen Name",
 				password = "test",
 				userScreenName = "test");

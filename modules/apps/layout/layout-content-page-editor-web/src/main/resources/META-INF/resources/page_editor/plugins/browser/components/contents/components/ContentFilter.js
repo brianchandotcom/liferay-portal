@@ -39,6 +39,7 @@ export default function ContentFilter({
 				active={active}
 				alignmentPosition={Align.BottomLeft}
 				onActiveChange={setActive}
+				role="listbox"
 				trigger={
 					<ClayButton
 						className="form-control form-control-select form-control-sm text-left"

@@ -2631,11 +2631,11 @@ definition {
 		// TODO LPS-130503 ShouldHaveAtLeastOneField pending implementation
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test SubmitFormAfterEditingFields {
+		property portal.acceptance = "true";
+		property portal.upstream = "true";
 		property test.name.skip.portal.instance = "Forms#SubmitFormAfterEditingFields";
-		property testray.component.names = "Training";
 
 		Navigator.openURL();
 

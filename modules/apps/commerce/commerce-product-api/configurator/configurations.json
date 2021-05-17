@@ -1,0 +1,17 @@
+{
+	"com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration~accessories": {
+		"type": "accessories"
+	},
+	"com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration~cross-sell": {
+		"type": "cross-sell"
+	},
+	"com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration~related": {
+		"type": "related"
+	},
+	"com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration~spare": {
+		"type": "spare"
+	},
+	"com.liferay.commerce.product.configuration.CPDefinitionLinkTypeConfiguration~up-sell": {
+		"type": "up-sell"
+	}
+}

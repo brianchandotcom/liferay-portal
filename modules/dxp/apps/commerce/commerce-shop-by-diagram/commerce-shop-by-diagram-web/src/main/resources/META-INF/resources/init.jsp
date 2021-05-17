@@ -24,7 +24,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %>
 <%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+page import="com.liferay.portal.kernel.json.JSONSerializer" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

@@ -32,6 +32,6 @@ Here's how to contribute to Liferay Talend job designs:
 1. In Talend Open Studio, apply changes to a job design.
 1. Test the job design.
 1. Copy all modified `*.item` files back to Liferay repository and commit them.
-1. Push your changes to your fork of <https://github.com/liferay/liferay-portal>. 
+1. Push your changes to your fork of <https://github.com/liferay/liferay-portal>.
 1. In GitHub, send a pull request to the `liferay-commerce` GitHub user's `master` branch.
 1. In [JIRA](https://issues.liferay.com/projects/COMMERCE/issues), notify the Data Intagration team about your contribution by creating a *Liferay Commerce (COMMERCE)* project ticket.

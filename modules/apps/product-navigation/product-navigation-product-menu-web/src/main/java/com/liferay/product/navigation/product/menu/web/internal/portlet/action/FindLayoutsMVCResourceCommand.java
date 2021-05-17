@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 
 import java.util.Collections;
@@ -92,6 +93,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			themeDisplay.getSiteGroupId(), keywords,
+			new int[] {WorkflowConstants.STATUS_ANY},
 			new String[] {
 				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,
@@ -119,6 +121,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		int totalCount = _layoutLocalService.getLayoutsCount(
 			themeDisplay.getSiteGroupId(), keywords,
+			new int[] {WorkflowConstants.STATUS_ANY},
 			new String[] {
 				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,

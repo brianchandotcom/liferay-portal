@@ -628,6 +628,7 @@ public class LayoutsAdminDisplayContext {
 
 		int layoutsCount = LayoutServiceUtil.getLayoutsCount(
 			getSelGroupId(), isPrivateLayout(), getKeywords(),
+			new int[] {WorkflowConstants.STATUS_ANY},
 			new String[] {
 				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
 				LayoutConstants.TYPE_EMBEDDED,
@@ -639,6 +640,7 @@ public class LayoutsAdminDisplayContext {
 
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
 			getSelGroupId(), isPrivateLayout(), getKeywords(),
+			new int[] {WorkflowConstants.STATUS_ANY},
 			new String[] {
 				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
 				LayoutConstants.TYPE_EMBEDDED,

@@ -237,15 +237,15 @@ definition {
 			key_title = "${portletName}",
 			locator1 = "IFrame#MODAL_ANY");
 
-		if (IsElementPresent(locator1 = "//button[contains(@class,'toolbar') and contains(.,'Add')]")) {
-			AssertClick(
-				locator1 = "//button[contains(@class,'toolbar') and contains(.,'Add')]",
-				value1 = "Add");
+		if (IsElementPresent(key_text = "Add", locator1 = "Modal#MODAL_FOOTER_BUTTON")) {
+			Click(
+				key_text = "Add",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
-		else if (IsElementPresent(locator1 = "Button#DONE")) {
-			AssertClick(
-				locator1 = "Button#DONE",
-				value1 = "Done");
+		else if (IsElementPresent(key_text = "Done", locator1 = "Modal#MODAL_FOOTER_BUTTON")) {
+			Click(
+				key_text = "Done",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		AssertTextEquals(

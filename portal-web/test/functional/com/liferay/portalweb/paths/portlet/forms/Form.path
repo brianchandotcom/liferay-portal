@@ -363,12 +363,12 @@
 </tr>
 <tr>
     <td>SIDEBAR_ELLIPSIS</td>
-    <td>//div[contains(@class,'sidebar')]//a[*[contains(@class,'lexicon-icon-ellipsis-v')]] | //div[contains(@class,'sidebar')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
+    <td>//div[contains(@class,'ddm-field-actions-container')]//button[contains(@class,'dropdown-toggle btn btn-monospaced btn-unstyled')]</td>
     <td></td>
 </tr>
 <tr>
     <td>SIDEBAR_MENUITEM_REMOVE_FIELD</td>
-    <td>//div[contains(@class,'dropdown-menu show')]//button[contains(@class,'dropdown-item')][contains(text(),'Delete')]</td>
+    <td>//a[@title='Remove Field'] | //button[text()='Delete']</td>
     <td></td>
 </tr>
 <tr>

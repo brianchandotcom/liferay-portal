@@ -174,7 +174,7 @@ public class TestrayS3Bucket {
 			return new URL(
 				JenkinsResultsParserUtil.combine(
 					"https://console.cloud.google.com/storage/browser/",
-					_bucket.getName()));
+					_bucket.getName(), "?authuser=0"));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

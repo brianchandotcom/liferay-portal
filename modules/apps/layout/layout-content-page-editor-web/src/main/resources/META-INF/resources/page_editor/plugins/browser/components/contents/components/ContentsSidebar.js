@@ -19,6 +19,7 @@ import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes'
 import {config} from '../../../../../app/config/index';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
+import {selectPageContents} from '../../../../../app/selectors/selectPageContents';
 import isMapped from '../../../../../app/utils/editable-value/isMapped';
 import SidebarPanelContent from '../../../../../common/components/SidebarPanelContent';
 import NoPageContents from './NoPageContents';
@@ -93,7 +94,7 @@ const normalizePageContents = (pageContents) =>
 export default function ContentsSidebar() {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const languageId = useSelector(selectLanguageId);
-	const pageContents = useSelector((state) => state.pageContents);
+	const pageContents = useSelector(selectPageContents);
 	const segmentsExperienceId = useSelector(
 		(state) => state.segmentsExperienceId
 	);

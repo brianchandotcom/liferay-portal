@@ -700,6 +700,37 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			start, end);
 	}
 
+	@Override
+	public DLFileEntry updateFileEntry(
+			long fileEntryId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog,
+			DLVersionNumberIncrease dlVersionNumberIncrease,
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			File file, InputStream inputStream, long size, Date expirationDate,
+			Date reviewDate, ServiceContext serviceContext)
+		throws PortalException {
+
+		_fileEntryModelResourcePermission.check(
+			getPermissionChecker(), fileEntryId, ActionKeys.UPDATE);
+
+		if (LockManagerUtil.isLocked(
+				DLFileEntryConstants.getClassName(), fileEntryId)) {
+
+			boolean hasLock = LockManagerUtil.hasLock(
+				getUserId(), DLFileEntry.class.getName(), fileEntryId);
+
+			if (!hasLock) {
+				throw new FileEntryLockException.MustOwnLock();
+			}
+		}
+
+		return dlFileEntryLocalService.updateFileEntry(
+			getUserId(), fileEntryId, sourceFileName, mimeType, title,
+			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
+			ddmFormValuesMap, file, inputStream, size, expirationDate,
+			reviewDate, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #updateFileEntry(long, String, String, String, String,
@@ -718,41 +749,10 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException {
 
 		return updateFileEntry(
-			fileEntryId,  sourceFileName, mimeType, title, description,
+			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
 			ddmFormValuesMap, file, inputStream, size, null, null,
 			serviceContext);
-	}
-
-	@Override
-	public DLFileEntry updateFileEntry(
-		long fileEntryId, String sourceFileName, String mimeType,
-		String title, String description, String changeLog,
-		DLVersionNumberIncrease dlVersionNumberIncrease,
-		long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
-		File file, InputStream inputStream, long size, Date expirationDate,
-		Date reviewDate, ServiceContext serviceContext)
-		throws PortalException {
-
-		_fileEntryModelResourcePermission.check(
-			getPermissionChecker(), fileEntryId, ActionKeys.UPDATE);
-
-		if (LockManagerUtil.isLocked(
-			DLFileEntryConstants.getClassName(), fileEntryId)) {
-
-			boolean hasLock = LockManagerUtil.hasLock(
-				getUserId(), DLFileEntry.class.getName(), fileEntryId);
-
-			if (!hasLock) {
-				throw new FileEntryLockException.MustOwnLock();
-			}
-		}
-
-		return dlFileEntryLocalService.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
-			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
-			ddmFormValuesMap, file, inputStream, size, expirationDate,
-			reviewDate, serviceContext);
 	}
 
 	@Override

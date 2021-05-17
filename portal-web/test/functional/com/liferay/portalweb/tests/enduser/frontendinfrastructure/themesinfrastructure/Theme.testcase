@@ -133,6 +133,7 @@ definition {
 
 	@priority = "5"
 	test StartPortalWithoutClassicTheme {
+		property portal.upstream = "quarantine";
 		property skip.start-app-server = "true";
 		property test.name.skip.portal.instance = "Theme#StartPortalWithoutClassicTheme";
 

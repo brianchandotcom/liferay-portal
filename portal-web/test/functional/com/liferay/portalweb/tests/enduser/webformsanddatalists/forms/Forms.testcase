@@ -2630,17 +2630,16 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
-		
+
 		FormsAdminNavigator.gotoAddForm();
-		
+
 		Click(locator1 = "Button#SAVE");
-		
+
 		Alert.viewErrorMessage(errorMessage = "Error:Please add at least one field.");
-		
+
 		Click(locator1 = "Form#PUBLISH_FORM_BUTTON");
 
 		Alert.viewErrorMessage(errorMessage = "Error:Please add at least one field.");
-		
 	}
 
 	@ignore = "true"

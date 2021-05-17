@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.asset.categories.admin.web.internal.constants;
+<%@ include file="/info/item/renderer/init.jsp" %>
 
-/**
- * @author Pavel Savinov
- */
-public class AssetCategoriesAdminWebKeys {
+<%
+AssetCategory assetCategory = (AssetCategory)request.getAttribute(AssetCategoriesAdminWebKeys.ASSET_CATEGORY);
+%>
 
-	public static final String ASSET_CATEGORIES_ADMIN_CONFIGURATION =
-		"ASSET_CATEGORIES_ADMIN_CONFIGURATION";
-
-	public static final String ASSET_CATEGORY = "ASSET_CATEGORY";
-
-	public static final String LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER =
-		"LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER";
-
-}
+<div class="asset-summary">
+	<%= assetCategory.getTitle(locale) %>
+</div>

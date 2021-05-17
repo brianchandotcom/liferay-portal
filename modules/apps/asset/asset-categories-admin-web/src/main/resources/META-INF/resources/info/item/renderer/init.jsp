@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.asset.categories.admin.web.internal.constants;
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-/**
- * @author Pavel Savinov
- */
-public class AssetCategoriesAdminWebKeys {
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-	public static final String ASSET_CATEGORIES_ADMIN_CONFIGURATION =
-		"ASSET_CATEGORIES_ADMIN_CONFIGURATION";
+<%@ page import="com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys" %><%@
+page import="com.liferay.asset.kernel.model.AssetCategory" %>
 
-	public static final String ASSET_CATEGORY = "ASSET_CATEGORY";
+<liferay-theme:defineObjects />
 
-	public static final String LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER =
-		"LAYOUT_DISPLAY_PAGE_PROVIDER_TRACKER";
-
-}
+<portlet:defineObjects />

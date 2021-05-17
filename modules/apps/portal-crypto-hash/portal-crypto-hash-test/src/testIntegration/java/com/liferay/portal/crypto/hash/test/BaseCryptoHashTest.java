@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.io.IOException;
 
@@ -124,9 +124,9 @@ public class BaseCryptoHashTest {
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		Dictionary<String, Object> registrationProperties =
-			new HashMapDictionary<>();
-
-		registrationProperties.put(Constants.SERVICE_PID, factoryPid);
+			HashMapDictionaryBuilder.<String, Object>put(
+				Constants.SERVICE_PID, factoryPid
+			).build();
 
 		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
 			bundleContext.registerService(
@@ -213,9 +213,9 @@ public class BaseCryptoHashTest {
 				CountDownLatch countDownLatch = new CountDownLatch(1);
 
 				Dictionary<String, Object> registrationProperties =
-					new HashMapDictionary<>();
-
-				registrationProperties.put(Constants.SERVICE_PID, factoryPid);
+					HashMapDictionaryBuilder.<String, Object>put(
+						Constants.SERVICE_PID, factoryPid
+					).build();
 
 				ServiceRegistration<ManagedServiceFactory> serviceRegistration =
 					bundleContext.registerService(

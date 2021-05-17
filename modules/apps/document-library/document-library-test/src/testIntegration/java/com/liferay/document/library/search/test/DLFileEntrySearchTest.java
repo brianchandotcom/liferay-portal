@@ -514,7 +514,9 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			dlFileEntry.getFileEntryId(), null, dlFileEntry.getMimeType(),
 			keywords, StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MAJOR, (byte[])null, serviceContext);
+			DLVersionNumberIncrease.MAJOR, (byte[])null,
+			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
+			serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}

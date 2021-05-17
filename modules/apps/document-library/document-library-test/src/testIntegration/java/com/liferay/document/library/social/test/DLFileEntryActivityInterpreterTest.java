@@ -106,7 +106,8 @@ public class DLFileEntryActivityInterpreterTest
 			_fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, _fileEntry.getExpirationDate(),
+			_fileEntry.getReviewDate(), serviceContext);
 	}
 
 	@Override

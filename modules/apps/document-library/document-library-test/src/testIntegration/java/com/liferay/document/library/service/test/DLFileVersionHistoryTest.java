@@ -160,7 +160,9 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
 				StringPool.BLANK, StringPool.BLANK,
-				DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
+				DLVersionNumberIncrease.MINOR, (byte[])null,
+				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+				serviceContext);
 		}
 
 		if (leaveCheckedOut) {
@@ -174,7 +176,9 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
 				StringPool.BLANK, StringPool.BLANK,
-				DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
+				DLVersionNumberIncrease.MINOR, (byte[])null,
+				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+				serviceContext);
 		}
 
 		if (versioned && leaveCheckedOut) {
@@ -276,7 +280,9 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
 				StringPool.BLANK, StringPool.BLANK,
-				DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
+				DLVersionNumberIncrease.MINOR, (byte[])null,
+				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+				serviceContext);
 		}
 
 		if (leaveCheckedOut) {
@@ -290,7 +296,9 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
 				StringPool.BLANK, StringPool.BLANK,
-				DLVersionNumberIncrease.MINOR, (byte[])null, serviceContext);
+				DLVersionNumberIncrease.MINOR, (byte[])null,
+				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+				serviceContext);
 		}
 
 		if (versioned && leaveCheckedOut) {

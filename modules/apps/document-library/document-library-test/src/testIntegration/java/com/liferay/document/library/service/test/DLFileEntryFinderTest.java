@@ -1517,6 +1517,7 @@ public class DLFileEntryFinderTest {
 			fileEntry.getFileEntryId(), "FE3.txt", ContentTypes.TEXT_PLAIN,
 			"FE3.txt".concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			serviceContext);
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(

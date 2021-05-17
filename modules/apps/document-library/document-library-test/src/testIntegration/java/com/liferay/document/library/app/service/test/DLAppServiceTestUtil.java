@@ -199,7 +199,7 @@ public class DLAppServiceTestUtil {
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName,
 			StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(majorVersion),
-			TestDataConstants.TEST_BYTE_ARRAY,
+			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 

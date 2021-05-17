@@ -168,6 +168,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
 
 		Assert.assertTrue(cleanUp.get());
@@ -198,6 +199,7 @@ public class PDFProcessorTest {
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			DLVersionNumberIncrease.MAJOR, inputStream, bytes.length,
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
 
 		Assert.assertTrue(cleanUp.get());
@@ -266,6 +268,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
 
 		Assert.assertNotEquals(version, fileEntry.getVersion());
@@ -296,7 +299,9 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR, null, 0, _serviceContext);
+			DLVersionNumberIncrease.MAJOR, null, 0,
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+			_serviceContext);
 
 		Assert.assertEquals(2, count.get());
 	}
@@ -321,7 +326,9 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR, new byte[0], _serviceContext);
+			DLVersionNumberIncrease.MAJOR, new byte[0],
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+			_serviceContext);
 
 		Assert.assertEquals(1, count.get());
 	}
@@ -391,6 +398,7 @@ public class PDFProcessorTest {
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			DLVersionNumberIncrease.MAJOR, inputStream, bytes.length,
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
 
 		Assert.assertEquals(2, count.get());
@@ -418,6 +426,7 @@ public class PDFProcessorTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
 
 		Assert.assertEquals(2, count.get());

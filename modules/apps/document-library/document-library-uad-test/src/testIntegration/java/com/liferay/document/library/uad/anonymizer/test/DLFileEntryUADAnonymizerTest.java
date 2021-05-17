@@ -262,7 +262,8 @@ public class DLFileEntryUADAnonymizerTest
 			userId, fileEntryId, sourceFileName, contentType, title,
 			description, changeLog,
 			DLVersionNumberIncrease.fromMajorVersion(majorVersion), inputStream,
-			dlFileEntry.getSize(), ServiceContextTestUtil.getServiceContext());
+			dlFileEntry.getSize(), null, null,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Inject

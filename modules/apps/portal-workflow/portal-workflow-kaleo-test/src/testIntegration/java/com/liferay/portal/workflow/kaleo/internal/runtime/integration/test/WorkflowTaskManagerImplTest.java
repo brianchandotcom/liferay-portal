@@ -1769,7 +1769,8 @@ public class WorkflowTaskManagerImplTest {
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
 			fileEntryId, StringPool.BLANK, ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, null,
-			DLVersionNumberIncrease.AUTOMATIC, null, 0, _serviceContext);
+			DLVersionNumberIncrease.AUTOMATIC, null, 0, null, null,
+			_serviceContext);
 
 		return fileEntry.getLatestFileVersion();
 	}

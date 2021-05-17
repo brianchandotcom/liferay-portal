@@ -93,7 +93,9 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), updateFileName, updateMimeType,
 			updateFileName, description, changeLog,
-			DLVersionNumberIncrease.MINOR, updateBytes, serviceContext);
+			DLVersionNumberIncrease.MINOR, updateBytes,
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+			serviceContext);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 

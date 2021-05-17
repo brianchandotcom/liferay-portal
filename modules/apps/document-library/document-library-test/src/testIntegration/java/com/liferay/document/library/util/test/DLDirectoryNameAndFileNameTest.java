@@ -273,7 +273,8 @@ public class DLDirectoryNameAndFileNameTest {
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
 			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), serviceContext);
 	}
 
 	@Test(expected = FolderNameException.class)

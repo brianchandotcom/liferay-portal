@@ -255,6 +255,7 @@ public class LiferayVersioningCapabilityTest {
 			fileEntry.getMimeType(), fileEntry.getTitle(),
 			fileEntry.getDescription(), RandomTestUtil.randomString(),
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			serviceContext);
 	}
 

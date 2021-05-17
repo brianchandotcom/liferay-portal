@@ -85,7 +85,7 @@ public class DLAppServiceWhenSearchingFileEntriesTest
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
 			fileName, description, changeLog, DLVersionNumberIncrease.MINOR,
-			bytes, serviceContext);
+			bytes, null, null, serviceContext);
 
 		DLAppServiceTestUtil.search(fileEntry, "hello", true);
 		DLAppServiceTestUtil.search(fileEntry, "world", true);

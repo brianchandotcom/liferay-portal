@@ -578,7 +578,7 @@ public class DLCheckInCheckOutTest {
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName, null,
 			null, DLVersionNumberIncrease.MINOR, inputStream, content.length(),
-			_serviceContext);
+			null, null, _serviceContext);
 	}
 
 	private static final String _FILE_NAME = "test1.txt";

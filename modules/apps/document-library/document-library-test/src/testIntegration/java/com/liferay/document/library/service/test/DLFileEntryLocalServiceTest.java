@@ -154,7 +154,8 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry.getTitle(), dlFileEntry.getTitle(), StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false),
 			dlFileEntry.getFileEntryTypeId(), new HashMap<>(), null,
-			new ByteArrayInputStream(content.getBytes()), 0, null, null,
+			new ByteArrayInputStream(content.getBytes()), 0,
+			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
 			serviceContext);
 
 		dlFileVersion = dlFileEntry.getFileVersion();
@@ -336,6 +337,7 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry.getFileEntryId(), "file.pdf", null, "file.txt",
 			StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
+			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
 			serviceContext);
 
 		Assert.assertEquals(
@@ -612,7 +614,8 @@ public class DLFileEntryLocalServiceTest {
 			TestPropsValues.getUserId(), fileEntry.getFileEntryId(), "FE2.txt",
 			ContentTypes.TEXT_PLAIN, "FE1.exe", fileEntry.getDescription(),
 			RandomTestUtil.randomString(), DLVersionNumberIncrease.MINOR,
-			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), serviceContext);
 
 		Assert.assertEquals("FE2.txt", fileEntry.getFileName());
 
@@ -684,6 +687,7 @@ public class DLFileEntryLocalServiceTest {
 			dlFileEntry.getFileEntryId(), "file.txt", null, "file.pdf",
 			StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
+			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
 			serviceContext);
 
 		Assert.assertEquals(
@@ -1059,7 +1063,9 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MAJOR,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, null, null, serviceContext);
+			ddmFormValuesMap, null, inputStream, 0,
+			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
+			serviceContext);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 

@@ -35,18 +35,17 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.redirect.RedirectURLSettings;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 
 import java.net.InetAddress;
 import java.net.URI;
@@ -311,30 +310,35 @@ public class SaveFormInstanceMVCCommandHelper {
 				StringBundler sb = new StringBundler(3);
 
 				sb.append("the-specified-redirect-url-is-not-allowed-due-to-");
-				sb.append("installation-settings.-add-x-into-the-property-x-");
-				sb.append("to-fix-it");
+				sb.append("installation-settings.-add-x-into-the-x-of-x-to-");
+				sb.append("fix-it");
 
-				String securityMode = PropsValues.REDIRECT_URL_SECURITY_MODE;
+				String securityMode =
+					_redirectURLSettings.redirectURLSecurityMode(
+						_portal.getCompanyId(httpServletRequest));
 
 				String host = uri.getHost();
 
 				if (securityMode.equals("domain")) {
 					List<String> allowedDomains = Arrays.asList(
-						PropsValues.REDIRECT_URL_DOMAINS_ALLOWED);
+						_redirectURLSettings.redirectURLDomainsAllowed(
+							_portal.getCompanyId(httpServletRequest)));
 
 					if (!allowedDomains.contains(host)) {
 						throw new FormInstanceSettingsRedirectURLException(
 							LanguageUtil.format(
 								httpServletRequest, sb.toString(),
 								new String[] {
-									host, PropsKeys.REDIRECT_URL_DOMAINS_ALLOWED
+									host, "redirect-url-domains-allowed",
+									"redirect-url-configuration-name"
 								}));
 					}
 				}
 				else if (securityMode.equals("ip")) {
 					try {
 						List<String> allowedIps = Arrays.asList(
-							PropsValues.REDIRECT_URL_IPS_ALLOWED);
+							_redirectURLSettings.redirectURLIPsAllowed(
+								_portal.getCompanyId(httpServletRequest)));
 
 						InetAddress inetAddress =
 							InetAddressUtil.getInetAddressByName(host);
@@ -346,8 +350,8 @@ public class SaveFormInstanceMVCCommandHelper {
 								LanguageUtil.format(
 									httpServletRequest, sb.toString(),
 									new String[] {
-										hostAddress,
-										PropsKeys.REDIRECT_URL_IPS_ALLOWED
+										hostAddress, "redirect-url-ips-allowed",
+										"redirect-url-configuration-name"
 									}));
 						}
 					}
@@ -413,5 +417,8 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RedirectURLSettings _redirectURLSettings;
 
 }

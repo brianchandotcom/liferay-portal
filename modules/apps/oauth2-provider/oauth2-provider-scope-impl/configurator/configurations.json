@@ -1,0 +1,15 @@
+{
+	"com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration~default": {
+		"include.bundle.symbolic.name": false,
+		"osgi.jaxrs.name": "Default",
+		"separator": "."
+	},
+	"com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default": {
+		"mapping:String[]": [
+			"DELETE,PATCH,POST,PUT=everything,everything.write",
+			"GET,HEAD,OPTIONS=everything.read",
+			"everything.write=everything,everything.write"
+		],
+		"osgi.jaxrs.name": "Default"
+	}
+}

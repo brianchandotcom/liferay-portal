@@ -306,132 +306,6 @@ definition {
 			webContentTitle = "WC Title Edited");
 	}
 
-	@description = "Validade if when Web Content is updated its being corectly displayed"
-	@priority = "3"
-	test ShouldExhibitUpdatedWebContent {
-		task ("Create WC via JSON"){
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content",
-				groupName = "Test Site Name",
-				title = "WC WebContent Title");
-		}
-
-		task ("Go to Content Dashboard and Edit WC"){
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			ContentDashboard.editWebContent(webContentTitle = "WC WebContent New Title");
-		}
-		
-		task ("Check if content is correct") {
-			AssertTextPresent(
-				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_MODIFIED_DATE",
-				value1 = "0 Seconds Ago");
-		}
-
-		task ("Delete WC") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.viewTitle(webContentTitle = "WC WebContent New Title");
-
-			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
-				webContentTitle = "WC WebContent New Title");
-		}
-	}
-
-	@description = "Validade if a Web Content not associated with a Display Page Template is shown"
-	@priority = "5"
-	test ShouldExhibitWebContentNotAssociatedWithDisplayPageTemplate {		
-		task ("Create WC via JSON"){
-			JSONWebcontent.addWebContent(
-				content = "WC Content",
-				groupName = "Test Site Name",
-				title = "WC Title");
-		}
-
-		task ("Check if WC is not associated in Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-
-			AssertElementNotPresent(locator1 = "//span[contains(@title, 'This content has a display page')]");
-		}
-
-		task ("Delete WC") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.viewTitle(webContentTitle = "WC Title");
-
-			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
-				webContentTitle = "WC Title");
-		}
-	}
-
-	@description = "Validade if a Web Content associated with a Display Page Template is shown"
-	@priority = "5"
-	test ShouldExhibitWebContentAssociatedWithDisplayPage {
-		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
-		}
-
-		task ("Create and Publish a Display Page Template with Fragment"){
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name",
-				subType = "Basic Web Content");
-			
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
-		}
-
-		task ("Create a Web Content and set a Display Page"){
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Webcontent Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
-		}
-
-		task ("Check in Content Dashboard if WC is assiciated with Display Page Template") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-			
-			AssertElementPresent(locator1 = "//span[contains(@title, 'This content has a display page')]");
-		}
-
-		task ("Delete WC") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.viewTitle(webContentTitle = "Webcontent Title");
-
-			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
-				webContentTitle = "Webcontent Title");
-		}
-	}
-
 	@description = "Validate if the user can access to the Content Dashboard after s/he has expired a Web Content"
 	@priority = "5"
 	test ContentDashboardExpiredWebContent {
@@ -1143,6 +1017,132 @@ definition {
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
 			title = "WC Title");
+	}
+
+	@description = "Validade if when Web Content is updated its being corectly displayed"
+	@priority = "3"
+	test ShouldExhibitUpdatedWebContent {
+		task ("Create WC via JSON") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to Content Dashboard and Edit WC") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			ContentDashboard.editWebContent(webContentTitle = "WC WebContent New Title");
+		}
+
+		task ("Check if content is correct") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_MODIFIED_DATE",
+				value1 = "0 Seconds Ago");
+		}
+
+		task ("Delete WC") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.viewTitle(webContentTitle = "WC WebContent New Title");
+
+			WebContent.deleteCP(
+				siteURLKey = "test-site-name",
+				webContentTitle = "WC WebContent New Title");
+		}
+	}
+
+	@description = "Validade if a Web Content associated with a Display Page Template is shown"
+	@priority = "5"
+	test ShouldExhibitWebContentAssociatedWithDisplayPage {
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Create and Publish a Display Page Template with Fragment") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+		}
+
+		task ("Create a Web Content and set a Display Page") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Check in Content Dashboard if WC is assiciated with Display Page Template") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			AssertElementPresent(locator1 = "//span[contains(@title, 'This content has a display page')]");
+		}
+
+		task ("Delete WC") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.viewTitle(webContentTitle = "Webcontent Title");
+
+			WebContent.deleteCP(
+				siteURLKey = "test-site-name",
+				webContentTitle = "Webcontent Title");
+		}
+	}
+
+	@description = "Validade if a Web Content not associated with a Display Page Template is shown"
+	@priority = "5"
+	test ShouldExhibitWebContentNotAssociatedWithDisplayPageTemplate {
+		task ("Create WC via JSON") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+
+		task ("Check if WC is not associated in Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			AssertElementNotPresent(locator1 = "//span[contains(@title, 'This content has a display page')]");
+		}
+
+		task ("Delete WC") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContent.viewTitle(webContentTitle = "WC Title");
+
+			WebContent.deleteCP(
+				siteURLKey = "test-site-name",
+				webContentTitle = "WC Title");
+		}
 	}
 
 }

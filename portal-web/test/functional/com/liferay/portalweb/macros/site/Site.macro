@@ -168,7 +168,7 @@ definition {
 		if (isSet(publicVirtualHosts)) {
 			AssertTextEquals(
 				locator1 = "SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PUBLIC_PAGES_LABEL",
-				value1 = "Public Pages");
+				value1 = "Public Pages Virtual Host");
 
 			Type(
 				locator1 = "TextInput#PUBLIC_VIRTUAL_HOST_URL",
@@ -178,7 +178,7 @@ definition {
 		if (isSet(privateVirtualHosts)) {
 			AssertTextEquals(
 				locator1 = "SiteSettingsSiteURL#SITE_URL_VIRTUAL_HOSTS_PRIVATE_PAGES_LABEL",
-				value1 = "Private Pages");
+				value1 = "Private Pages Virtual Host");
 
 			Type(
 				locator1 = "TextInput#PRIVATE_VIRTUAL_HOST_URL",

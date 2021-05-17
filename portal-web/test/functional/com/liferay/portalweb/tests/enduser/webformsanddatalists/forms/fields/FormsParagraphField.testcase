@@ -195,12 +195,53 @@ definition {
 	}
 
 	@description = "Verify that inputs to the Body Text can be undone and redone"
-	@ignore = "true"
 	@priority = "5"
 	test CanUndoAndRedo {
+		property forms.functional = "true";
+
 		property portal.acceptance = "false";
 
-		// TODO LPS-131245 CanUndoAndRedo pending implementation
+
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+
+			fieldType = "Paragraph");
+
+		FormFields.editParagraphBody(content = "Test");
+		
+
+		Form.save();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Paragraph");
+
+		FormFields.editParagraphBody(content = "Test Body Text");
+
+		Click(
+			key_titleName = "Undo",
+			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
+
+		AssertElementPresent(
+			key_fieldName = "Paragraph",
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
+			value1 = "Test");
+
+		Click(
+			key_titleName = "Redo",
+			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
+
+		AssertElementPresent(
+			key_fieldName = "Paragraph",
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
+			value1 = "Test Body Text");
 	}
 
 	@description = "Verify that a link in a Paragraph Field can be unlinked"

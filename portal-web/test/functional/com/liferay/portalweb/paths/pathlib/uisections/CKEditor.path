@@ -96,6 +96,11 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
+	<td>TOOLBAR_ANY_ITEM_BUTTON</td>
+	<td>//a[contains(@title,"${key_titleName}")]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_AUDIO_BUTTON</td>
 	<td>//a[contains(@class,'cke_button') and contains(@class,'audio')]</td>
 	<td></td>

@@ -15,6 +15,7 @@
 import './RuleEditor.scss';
 
 import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
 import {RuleEditor as DataEngineRuleEditor} from 'data-engine-taglib';
 import React, {useState} from 'react';
 
@@ -31,7 +32,10 @@ export const RuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 	const [disabled, setDisabled] = useState(true);
 
 	return (
-		<div className="form-rule-builder">
+		<ClayForm
+			className="form-rule-builder"
+			onSubmit={(event) => event.preventDefault()}
+		>
 			<div className="form-rule-builder-header">
 				<h2 className="text-default">{Liferay.Language.get('rule')}</h2>
 
@@ -75,6 +79,6 @@ export const RuleEditor = ({onCancel, onSave, rule, ...otherProps}) => {
 					</ClayButton>
 				</ClayButton.Group>
 			</div>
-		</div>
+		</ClayForm>
 	);
 };

@@ -60,4 +60,7 @@ public interface SamlSpIdpConnection
 
 			};
 
+	public java.util.Properties getNormalizedUserAttributeMappings()
+		throws java.io.IOException;
+
 }

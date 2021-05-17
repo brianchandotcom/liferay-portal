@@ -335,6 +335,13 @@ public class SamlSpIdpConnectionWrapper
 		return model.getNameIdFormat();
 	}
 
+	@Override
+	public java.util.Properties getNormalizedUserAttributeMappings()
+		throws java.io.IOException {
+
+		return model.getNormalizedUserAttributeMappings();
+	}
+
 	/**
 	 * Returns the primary key of this saml sp idp connection.
 	 *

@@ -61,6 +61,7 @@ public class UpdateCTCommentMVCResourceCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
+
 			long ctCollectionId = ParamUtil.getLong(
 				resourceRequest, "ctCollectionId");
 			long ctEntryId = ParamUtil.getLong(resourceRequest, "ctEntryId");

@@ -68,6 +68,7 @@ definition {
 			addGroupPermissions = "true",
 			addGuestPermissions = "${addGuestPermissions}",
 			assetTagNames = "${assetTagNames}",
+			assetCategoryIds = "${assetCategoryIds}",
 			workflowAction = "${workflowAction}");
 
 		if (!(isSet(categoryId))) {

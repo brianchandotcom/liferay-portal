@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Segments DXP Web
+Bundle-SymbolicName: com.liferay.segments.dxp.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /segments-dxp-web

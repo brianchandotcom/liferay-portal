@@ -1,0 +1,225 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Multiple Selection Field can be created"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCreated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132260 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that a Multiple Selection Field can be deleted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132262 CanBeDeleted pending implementation
+	}
+
+	@description = "Verify that a Multiple Selection Field can be duplicated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDuplicated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132264 CanBeDuplicated pending implementation
+	}
+
+	@description = "Verify that a Multiple Selection Field can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132261 CanBeEdited pending implementation
+	}
+
+	@description = "Verify that a Multiple Selection Field can be required"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeRequired {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132263 CanBeRequired pending implementation
+	}
+
+	@description = "Verify that a Multiple Selection Field can be set to repeatable"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSetToRepeatable {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132265 CanBeSetToRepeatable pending implementation
+	}
+
+	@description = "Verify that a Form can be submitted with the Multiple Selection Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSubmitted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132271 CanBeSubmitted pending implementation
+	}
+
+	@description = "Verify that edits to the Field can be canceled"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChangesCanBeCanceled {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132268 ChangesCanBeCanceled pending implementation
+	}
+
+	@description = "Verify that an option's Field References can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test FieldReferencesOfOptionsCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132276 FieldReferencesOfOptionsCanBeEdited pending implementation
+	}
+
+	@description = "Verify that a help text can be added"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132269 HelpTextCanBeAdded pending implementation
+	}
+
+	@description = "Verify that the Field Label can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132266 LabelCanBeEdited pending implementation
+	}
+
+	@description = "Verify that options can be added"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test OptionsCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132272 OptionsCanBeAdded pending implementation
+	}
+
+	@description = "Verify that option can be deleted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test OptionsCanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132273 OptionsCanBeDeleted pending implementation
+	}
+
+	@description = "Verify that options can be displayed both inline and as a list"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test OptionsCanBeDisplayedInlineAndAsList {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132275 OptionsCanBeDisplayedInlineAndAsList pending implementation
+	}
+
+	@description = "Verify that options can be rearranged"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test OptionsCanBeRearranged {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132274 OptionsCanBeRearranged pending implementation
+	}
+
+	@description = "Verify that an option can be selected as a Predefined Value"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PredefinedValueCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132277 PredefinedValueCanBeAdded pending implementation
+	}
+
+	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PredefinedValueIsResetWhenSelectedOptionIsDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132278 PredefinedValueIsResetWhenSelectedOptionIsDeleted pending implementation
+	}
+
+	@description = "Verify that the Field Reference can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132270 ReferenceCanBeEdited pending implementation
+	}
+
+	@description = "Verify that the Field Type can be changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TypeCanBeChanged {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132267 TypeCanBeChanged pending implementation
+	}
+
+}

@@ -43,6 +43,7 @@ import java.io.Serializable;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -131,8 +132,6 @@ public class ObjectEntryKeywordQueryContributor
 					objectField.getName()));
 		}
 
-		String type = objectField.getType();
-
 		BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
 
 		if (objectField.isIndexedAsKeyword()) {
@@ -151,17 +150,17 @@ public class ObjectEntryKeywordQueryContributor
 					lowerCaseKeywords),
 				BooleanClauseOccur.SHOULD);
 		}
-		else if (type.equals("BigDecimal")) {
+		else if (Objects.equals(objectField.getType(), "BigDecimal")) {
 			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
 				"nestedFieldArray.value_double");
 		}
-		else if (type.equals("Blob")) {
+		else if (Objects.equals(objectField.getType(), "Blob")) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Blob field " + objectField.getName() + " is not searchable");
 			}
 		}
-		else if (type.equals("Boolean")) {
+		else if (Objects.equals(objectField.getType(), "Boolean")) {
 			if (StringUtil.equalsIgnoreCase(fieldKeywords, "true") ||
 				StringUtil.equalsIgnoreCase(fieldKeywords, "false")) {
 
@@ -172,27 +171,27 @@ public class ObjectEntryKeywordQueryContributor
 					BooleanClauseOccur.MUST);
 			}
 		}
-		else if (type.equals("Date")) {
+		else if (Objects.equals(objectField.getType(), "Date")) {
 			_addDateRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
 				"nestedFieldArray.value_date");
 		}
-		else if (type.equals("Double")) {
+		else if (Objects.equals(objectField.getType(), "Double")) {
 			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
 				"nestedFieldArray.value_double");
 		}
-		else if (type.equals("Integer")) {
+		else if (Objects.equals(objectField.getType(), "Integer")) {
 			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
 				"nestedFieldArray.value_integer");
 		}
-		else if (type.equals("Long")) {
+		else if (Objects.equals(objectField.getType(), "Long")) {
 			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
 				"nestedFieldArray.value_long");
 		}
-		else if (type.equals("String")) {
+		else if (Objects.equals(objectField.getType(), "String")) {
 			String indexedLanguageId =
 				objectField.getIndexedLanguageId();
 

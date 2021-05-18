@@ -107,6 +107,55 @@ public class ObjectEntryKeywordQueryContributor
 		}
 	}
 
+	private void _addDateRangeQuery(
+			String keywords, BooleanQuery booleanQuery, String field)
+		throws ParseException {
+
+		if (Validator.isBlank(keywords)) {
+			return;
+		}
+
+		String[] range = RangeParserUtil.parserRange(keywords);
+
+		String lowerTerm = range[0];
+		String upperTerm = range[1];
+
+		if ((lowerTerm == null) || (upperTerm == null)) {
+			return;
+		}
+
+		Matcher lowerTermMatcher = _pattern.matcher(lowerTerm);
+		Matcher upperTermMatcher = _pattern.matcher(upperTerm);
+
+		if (!lowerTermMatcher.matches() || !upperTermMatcher.matches()) {
+			return;
+		}
+
+		booleanQuery.add(
+			new TermRangeQueryImpl(field, lowerTerm, upperTerm, true, true),
+			BooleanClauseOccur.MUST);
+	}
+
+	private void _addRangeQuery(
+			String keywords, BooleanQuery booleanQuery, String field)
+		throws ParseException {
+
+		if (Validator.isBlank(keywords)) {
+			return;
+		}
+
+		String[] range = RangeParserUtil.parserRange(keywords);
+
+		String lowerTerm = range[0];
+		String upperTerm = range[1];
+
+		if ((lowerTerm != null) && (upperTerm != null)) {
+			booleanQuery.add(
+				new TermRangeQueryImpl(field, lowerTerm, upperTerm, true, true),
+				BooleanClauseOccur.MUST);
+		}
+	}
+
 	private void _contribute(
 			String keywords, BooleanQuery booleanQuery,
 			KeywordQueryContributorHelper keywordQueryContributorHelper,
@@ -117,11 +166,11 @@ public class ObjectEntryKeywordQueryContributor
 			return;
 		}
 
-		SearchContext searchContext = keywordQueryContributorHelper.getSearchContext();
+		SearchContext searchContext =
+			keywordQueryContributorHelper.getSearchContext();
 
 		String fieldKeywords = _getKeywords(
-			keywords, searchContext,
-			objectField.getName());
+			keywords, searchContext, objectField.getName());
 
 		if (Validator.isNull(fieldKeywords)) {
 			return;
@@ -137,8 +186,7 @@ public class ObjectEntryKeywordQueryContributor
 		BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
 
 		if (objectField.isIndexedAsKeyword()) {
-			String lowerCaseKeywords = StringUtil.toLowerCase(
-				fieldKeywords);
+			String lowerCaseKeywords = StringUtil.toLowerCase(fieldKeywords);
 
 			nestedBooleanQuery.add(
 				new WildcardQueryImpl(
@@ -147,8 +195,7 @@ public class ObjectEntryKeywordQueryContributor
 				BooleanClauseOccur.MUST);
 			nestedBooleanQuery.add(
 				new TermQueryImpl(
-					"nestedFieldArray.value_keyword",
-					lowerCaseKeywords),
+					"nestedFieldArray.value_keyword", lowerCaseKeywords),
 				BooleanClauseOccur.SHOULD);
 		}
 		else if (Objects.equals(objectField.getType(), "BigDecimal")) {
@@ -215,56 +262,8 @@ public class ObjectEntryKeywordQueryContributor
 				new NestedQuery("nestedFieldArray", nestedBooleanQuery),
 				BooleanClauseOccur.SHOULD);
 			nestedBooleanQuery.add(
-				new TermQueryImpl("nestedFieldArray.fieldName", objectField.getName()),
-				BooleanClauseOccur.MUST);
-		}
-	}
-
-	private void _addDateRangeQuery(
-			String keywords, BooleanQuery booleanQuery, String field)
-		throws ParseException {
-
-		if (Validator.isBlank(keywords)) {
-			return;
-		}
-
-		String[] range = RangeParserUtil.parserRange(keywords);
-
-		String lowerTerm = range[0];
-		String upperTerm = range[1];
-
-		if ((lowerTerm == null) || (upperTerm == null)) {
-			return;
-		}
-
-		Matcher lowerTermMatcher = _pattern.matcher(lowerTerm);
-		Matcher upperTermMatcher = _pattern.matcher(upperTerm);
-
-		if (!lowerTermMatcher.matches() || !upperTermMatcher.matches()) {
-			return;
-		}
-
-		booleanQuery.add(
-			new TermRangeQueryImpl(field, lowerTerm, upperTerm, true, true),
-			BooleanClauseOccur.MUST);
-	}
-
-	private void _addRangeQuery(
-			String keywords, BooleanQuery booleanQuery, String field)
-		throws ParseException {
-
-		if (Validator.isBlank(keywords)) {
-			return;
-		}
-
-		String[] range = RangeParserUtil.parserRange(keywords);
-
-		String lowerTerm = range[0];
-		String upperTerm = range[1];
-
-		if ((lowerTerm != null) && (upperTerm != null)) {
-			booleanQuery.add(
-				new TermRangeQueryImpl(field, lowerTerm, upperTerm, true, true),
+				new TermQueryImpl(
+					"nestedFieldArray.fieldName", objectField.getName()),
 				BooleanClauseOccur.MUST);
 		}
 	}

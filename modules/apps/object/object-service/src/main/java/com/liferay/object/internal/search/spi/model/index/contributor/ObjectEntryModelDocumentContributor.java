@@ -112,11 +112,14 @@ public class ObjectEntryModelDocumentContributor
 				objectEntry.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
-			_contribute(document, fieldArray, objectEntry, objectField, values);
+			_contribute(fieldArray, objectEntry, objectField, values);
 		}
 	}
 
-	private void _contribute(Document document, FieldArray fieldArray, ObjectEntry objectEntry, ObjectField objectField, Map<String, Serializable> values) {
+	private void _contribute(
+		FieldArray fieldArray, ObjectEntry objectEntry, ObjectField objectField,
+		Map<String, Serializable> values) {
+
 		if (!objectField.isIndexed()) {
 			return;
 		}
@@ -146,7 +149,8 @@ public class ObjectEntryModelDocumentContributor
 						"Object entry ", objectEntry.getObjectEntryId(),
 						" has field \"", name,
 						"\" which is not indexed as full-text. Locale ",
-						objectField.getIndexedLanguageId(), " will be ignored"));
+						objectField.getIndexedLanguageId(),
+						" will be ignored"));
 			}
 		}
 
@@ -156,46 +160,41 @@ public class ObjectEntryModelDocumentContributor
 				StringUtil.lowerCase(String.valueOf(value)));
 		}
 		else if (value instanceof BigDecimal) {
-			_addField(
-				fieldArray, name, "value_double", String.valueOf(value));
+			_addField(fieldArray, name, "value_double", String.valueOf(value));
 		}
 		else if (value instanceof Boolean) {
-			_addField(
-				fieldArray, name, "value_boolean", String.valueOf(value));
+			_addField(fieldArray, name, "value_boolean", String.valueOf(value));
 		}
 		else if (value instanceof Date) {
-			_addField(
-				fieldArray, name, "value_date", _getDateString(value));
+			_addField(fieldArray, name, "value_date", _getDateString(value));
 		}
 		else if (value instanceof Double) {
-			_addField(
-				fieldArray, name, "value_double", String.valueOf(value));
+			_addField(fieldArray, name, "value_double", String.valueOf(value));
 		}
 		else if (value instanceof Integer) {
-			_addField(
-				fieldArray, name, "value_integer", String.valueOf(value));
+			_addField(fieldArray, name, "value_integer", String.valueOf(value));
 		}
 		else if (value instanceof Long) {
-			_addField(
-				fieldArray, name, "value_long", String.valueOf(value));
+			_addField(fieldArray, name, "value_long", String.valueOf(value));
 		}
 		else if (value instanceof String) {
 			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
-				_addField(
-					fieldArray, name, "value_text", (String)value);
+				_addField(fieldArray, name, "value_text", (String)value);
 			}
 			else {
 				_addField(
-					fieldArray, name, "value_" + objectField.getIndexedLanguageId(), (String)value);
+					fieldArray, name,
+					"value_" + objectField.getIndexedLanguageId(),
+					(String)value);
 				_addField(
-					fieldArray, name, "value_" + objectField.getIndexedLanguageId() + "_sortable",
+					fieldArray, name,
+					"value_" + objectField.getIndexedLanguageId() + "_sortable",
 					(String)value);
 			}
 		}
 		else if (value instanceof byte[]) {
 			_addField(
-				fieldArray, name, "value_binary",
-				Base64.encode((byte[])value));
+				fieldArray, name, "value_binary", Base64.encode((byte[])value));
 		}
 		else {
 			if (_log.isWarnEnabled()) {

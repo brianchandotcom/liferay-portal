@@ -130,10 +130,6 @@ public class ObjectDefinitionSampleGenerator {
 		}
 	}
 
-	private ObjectField _createObjectField(String name, String type) {
-		return _createObjectField(true, false, null, name, type);
-	}
-
 	private ObjectField _createObjectField(
 		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
 		String name, String type) {
@@ -147,6 +143,10 @@ public class ObjectDefinitionSampleGenerator {
 		objectField.setType(type);
 
 		return objectField;
+	}
+
+	private ObjectField _createObjectField(String name, String type) {
+		return _createObjectField(true, false, null, name, type);
 	}
 
 	@Reference

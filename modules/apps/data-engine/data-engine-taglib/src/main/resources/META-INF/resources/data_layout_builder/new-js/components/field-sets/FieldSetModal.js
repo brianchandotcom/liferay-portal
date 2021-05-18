@@ -45,6 +45,8 @@ import {INITIAL_STATE} from '../../config/initialState';
 import {EVENT_TYPES} from '../../eventTypes';
 import sidebarReducer from '../../reducers/sidebarReducer';
 
+import './FieldSetModal.scss';
+
 const ModalContent = ({
 	fieldSet: fieldSetProp,
 	onClose,

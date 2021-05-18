@@ -204,10 +204,10 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				payPalHttpClient.execute(ordersCreateRequest);
 
 			if (orderCreateHttpResponse.statusCode() == 201) {
-				Order result = orderCreateHttpResponse.result();
+				Order createOrder = orderCreateHttpResponse.result();
 
 				OrdersAuthorizeRequest ordersAuthorizeRequest =
-					new OrdersAuthorizeRequest(result.id());
+					new OrdersAuthorizeRequest(createOrder.id());
 
 				ordersAuthorizeRequest.requestBody(new OrderRequest());
 
@@ -215,21 +215,23 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 					payPalHttpClient.execute(ordersAuthorizeRequest);
 
 				if (authorizeHttpResponse.statusCode() == 201) {
-					Order authorizeResult = authorizeHttpResponse.result();
+					Order authorizeOrder = authorizeHttpResponse.result();
 
-					for (LinkDescription link : authorizeResult.links()) {
+					for (LinkDescription linkDescription :
+							authorizeOrder.links()) {
+
 						if (Objects.equals(
 								PayPalCommercePaymentMethodConstants.
 									APPROVE_URL,
-								link.rel())) {
+								linkDescription.rel())) {
 
-							url = link.href();
+							url = linkDescription.href();
 						}
 					}
 
 					success = true;
 					status = CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED;
-					transactionId = authorizeResult.id();
+					transactionId = authorizeOrder.id();
 				}
 			}
 
@@ -364,10 +366,11 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			if (orderCaptureHttpResponse.statusCode() == 201) {
 				success = true;
 
-				Order result = orderCaptureHttpResponse.result();
+				Order captureOrder = orderCaptureHttpResponse.result();
 
 				return new CommercePaymentResult(
-					result.id(), commercePaymentRequest.getCommerceOrderId(),
+					captureOrder.id(),
+					commercePaymentRequest.getCommerceOrderId(),
 					CommerceOrderConstants.PAYMENT_STATUS_PAID, false, null,
 					null, Collections.emptyList(), success);
 			}
@@ -647,14 +650,14 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				payPalHttpClient.execute(ordersCreateRequest);
 
 			if (orderCreateHttpResponse.statusCode() == 201) {
-				Order result = orderCreateHttpResponse.result();
+				Order createOrder = orderCreateHttpResponse.result();
 
-				for (LinkDescription link : result.links()) {
+				for (LinkDescription linkDescription : createOrder.links()) {
 					if (Objects.equals(
 							PayPalCommercePaymentMethodConstants.APPROVE_URL,
-							link.rel())) {
+							linkDescription.rel())) {
 
-						url = link.href();
+						url = linkDescription.href();
 					}
 				}
 
@@ -666,7 +669,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				success = true;
 				status = CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED;
 
-				transactionId = result.id();
+				transactionId = createOrder.id();
 			}
 
 			return new CommercePaymentResult(

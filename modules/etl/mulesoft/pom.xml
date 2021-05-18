@@ -15,11 +15,12 @@
 	<properties>
 		<munit.input.directory>src/test/munit</munit.input.directory>
 		<munit.output.directory>${basedir}/target/test-mule/munit</munit.output.directory>
-		<munit.extensions.maven.plugin.version>1.0.0</munit.extensions.maven.plugin.version>
+		<munit.extensions.maven.plugin.version>1.1.0</munit.extensions.maven.plugin.version>
 		<munit.version>2.2.3</munit.version>
 		<munit.runtime.version>4.2.2</munit.runtime.version>
 		<munit.mtftool.version>1.0.0</munit.mtftool.version>
-		<mavenResourcesVersion>3.0.2</mavenResourcesVersion>
+		<mavenResourcesVersion>3.2.0</mavenResourcesVersion>
+		<jacoco.version>0.8.6</jacoco.version>
 	</properties>
 
 	<dependencies>
@@ -119,6 +120,11 @@
 					</execution>
 				</executions>
 				<configuration>
+					<argLines>
+						<argLine>
+							-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${session.executionRootDirectory}/target/jacoco-munit.exec
+						</argLine>
+					</argLines>
 					<runtimeVersion>${munit.runtime.version}</runtimeVersion>
 					<runtimeConfiguration>
 						<discoverRuntimes>
@@ -141,12 +147,72 @@
 						<classifier>mule-plugin</classifier>
 					</dependency>
 					<dependency>
-						<groupId>com.mulesoft.munit</groupId>
-						<artifactId>mtf-tools</artifactId>
-						<version>${munit.mtftool.version}</version>
+						<groupId>org.mule.weave</groupId>
+						<artifactId>assertions</artifactId>
+						<version>1.0.2</version>
+					</dependency>
+					<dependency>
+						<groupId>org.mule.connectors</groupId>
+						<artifactId>mule-file-connector</artifactId>
+						<version>1.3.4</version>
 						<classifier>mule-plugin</classifier>
 					</dependency>
 				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco.version}</version>
+				<configuration>
+					<destFile>${session.executionRootDirectory}/target/jacoco-java.exec</destFile>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>merge</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>merge</goal>
+						</goals>
+						<configuration>
+							<destFile>${session.executionRootDirectory}/target/jacoco.exec</destFile>
+							<fileSets>
+								<fileSet>
+									<directory>${project.build.directory}</directory>
+									<includes>
+										<include>*.exec</include>
+									</includes>
+								</fileSet>
+							</fileSets>
+						</configuration>
+					</execution>
+					<execution>
+						<id>report</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Plugin included to add Integration Tests (IT) to the build lifecycle. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.20.1</version>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

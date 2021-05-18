@@ -100,10 +100,6 @@ public class LayoutReportsDataMVCResourceCommand
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
-				"canonicalURLs",
-				_getCanonicalURLsJSONArray(
-					resourceRequest, resourceResponse, layout)
-			).put(
 				"configureGooglePageSpeedURL",
 				_getConfigureGooglePageSpeedURL(resourceRequest)
 			).put(
@@ -112,6 +108,9 @@ public class LayoutReportsDataMVCResourceCommand
 			).put(
 				"imagesPath",
 				_portal.getPathContext(resourceRequest) + "/images/"
+			).put(
+				"pageURLs",
+				_getPageURLsJSONArray(resourceRequest, resourceResponse, layout)
 			).put(
 				"validConnection", layoutReportsDataProvider.isValidConnection()
 			));
@@ -161,67 +160,6 @@ public class LayoutReportsDataMVCResourceCommand
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private JSONArray _getCanonicalURLsJSONArray(
-		PortletRequest portletRequest, PortletResponse portletResponse,
-		Layout layout) {
-
-		Locale defaultLocale = _getDefaultLocale(layout);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String canonicalURL = _getCanonicalURL(
-			_getCompleteURL(portletRequest), layout, themeDisplay);
-
-		Map<Locale, String> alternateURLs = _getAlternateURLs(
-			canonicalURL, layout, themeDisplay);
-
-		return JSONUtil.putAll(
-			Optional.ofNullable(
-				_groupLocalService.fetchGroup(layout.getGroupId())
-			).map(
-				Group::getGroupId
-			).map(
-				_language::getAvailableLocales
-			).orElseGet(
-				Collections::emptySet
-			).stream(
-			).sorted(
-				(locale1, locale2) -> {
-					if (Objects.equals(locale1, defaultLocale)) {
-						return -1;
-					}
-
-					if (Objects.equals(locale2, defaultLocale)) {
-						return 1;
-					}
-
-					String languageId1 = LocaleUtil.toW3cLanguageId(locale1);
-					String languageId2 = LocaleUtil.toW3cLanguageId(locale2);
-
-					return languageId1.compareToIgnoreCase(languageId2);
-				}
-			).map(
-				locale -> {
-					String url = _getLocaleURL(
-						alternateURLs, canonicalURL, defaultLocale, layout,
-						locale);
-
-					return HashMapBuilder.<String, Object>put(
-						"canonicalURL", url
-					).put(
-						"languageId", LocaleUtil.toW3cLanguageId(locale)
-					).put(
-						"layoutReportsIssuesURL",
-						_getResourceURL(
-							layout.getGroupId(), url, portletResponse)
-					).put(
-						"title", _getTitle(portletRequest, layout, locale)
-					).build();
-				}
-			).toArray());
 	}
 
 	private String _getCompleteURL(PortletRequest portletRequest) {
@@ -326,8 +264,69 @@ public class LayoutReportsDataMVCResourceCommand
 		return alternateURLs.get(locale);
 	}
 
+	private JSONArray _getPageURLsJSONArray(
+		PortletRequest portletRequest, PortletResponse portletResponse,
+		Layout layout) {
+
+		Locale defaultLocale = _getDefaultLocale(layout);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String canonicalURL = _getCanonicalURL(
+			_getCompleteURL(portletRequest), layout, themeDisplay);
+
+		Map<Locale, String> alternateURLs = _getAlternateURLs(
+			canonicalURL, layout, themeDisplay);
+
+		return JSONUtil.putAll(
+			Optional.ofNullable(
+				_groupLocalService.fetchGroup(layout.getGroupId())
+			).map(
+				Group::getGroupId
+			).map(
+				_language::getAvailableLocales
+			).orElseGet(
+				Collections::emptySet
+			).stream(
+			).sorted(
+				(locale1, locale2) -> {
+					if (Objects.equals(locale1, defaultLocale)) {
+						return -1;
+					}
+
+					if (Objects.equals(locale2, defaultLocale)) {
+						return 1;
+					}
+
+					String languageId1 = LocaleUtil.toW3cLanguageId(locale1);
+					String languageId2 = LocaleUtil.toW3cLanguageId(locale2);
+
+					return languageId1.compareToIgnoreCase(languageId2);
+				}
+			).map(
+				locale -> {
+					String url = _getLocaleURL(
+						alternateURLs, canonicalURL, defaultLocale, layout,
+						locale);
+
+					return HashMapBuilder.<String, Object>put(
+						"languageId", LocaleUtil.toW3cLanguageId(locale)
+					).put(
+						"layoutReportsIssuesURL",
+						_getResourceURL(
+							layout.getGroupId(), url, portletResponse)
+					).put(
+						"title", _getTitle(portletRequest, layout, locale)
+					).put(
+						"url", url
+					).build();
+				}
+			).toArray());
+	}
+
 	private String _getResourceURL(
-		long groupId, String canonicalURL, PortletResponse portletResponse) {
+		long groupId, String url, PortletResponse portletResponse) {
 
 		LiferayPortletResponse liferayPortletResponse =
 			_portal.getLiferayPortletResponse(portletResponse);
@@ -335,7 +334,7 @@ public class LayoutReportsDataMVCResourceCommand
 		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
 
 		resourceURL.setParameter("groupId", String.valueOf(groupId));
-		resourceURL.setParameter("canonicalURL", canonicalURL);
+		resourceURL.setParameter("url", url);
 		resourceURL.setResourceID("/layout_reports/get_layout_reports_issues");
 
 		return resourceURL.toString();

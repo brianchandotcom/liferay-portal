@@ -106,9 +106,9 @@ const SidebarHeader = () => {
 						disabled={loading}
 						displayType="unstyled"
 						onClick={() => {
-							const url = data.canonicalURLs.find(
-								(canonicalURL) =>
-									canonicalURL.languageId ===
+							const url = data.pageURLs.find(
+								(pagelURL) =>
+									pagelURL.languageId ===
 									(languageId || data.defaultLanguageId)
 							);
 
@@ -122,7 +122,6 @@ const SidebarHeader = () => {
 						title={Liferay.Language.get('relaunch')}
 					/>
 				)}
-
 				<ClayButtonWithIcon
 					className="sidenav-close"
 					displayType="unstyled"

@@ -26,8 +26,8 @@ import {StoreDispatchContext} from '../context/StoreContext';
 import loadIssues from '../utils/loadIssues';
 
 export default function LanguagesDropdown({
-	canonicalURLs,
 	defaultLanguageId,
+	pageURLs,
 	selectedLanguageId,
 }) {
 	const [active, setActive] = useState(false);
@@ -39,9 +39,9 @@ export default function LanguagesDropdown({
 		dispatch({languageId, type: SET_LANGUAGE_ID});
 		setActive(false);
 
-		const url = canonicalURLs.find(
-			(canonicalURL) =>
-				canonicalURL.languageId === (languageId || defaultLanguageId)
+		const url = pageURLs.find(
+			(pageURL) =>
+				pageURL.languageId === (languageId || defaultLanguageId)
 		);
 
 		loadIssues({
@@ -76,7 +76,7 @@ export default function LanguagesDropdown({
 			}
 		>
 			<ClayDropDown.ItemList>
-				{Object.values(canonicalURLs).map(({languageId}, index) => (
+				{Object.values(pageURLs).map(({languageId}, index) => (
 					<ClayDropDown.Item
 						active={selectedLanguageId === languageId}
 						key={index}
@@ -103,13 +103,13 @@ export default function LanguagesDropdown({
 }
 
 LanguagesDropdown.propTypes = {
-	canonicalURLs: PropTypes.arrayOf(
+	defaultLanguageId: PropTypes.string.isRequired,
+	pageURLs: PropTypes.arrayOf(
 		PropTypes.shape({
-			canonicalURL: PropTypes.string.isRequired,
 			languageId: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
+			url: PropTypes.string.isRequired,
 		})
 	),
-	defaultLanguageId: PropTypes.string.isRequired,
 	selectedLanguageId: PropTypes.string.isRequired,
 };

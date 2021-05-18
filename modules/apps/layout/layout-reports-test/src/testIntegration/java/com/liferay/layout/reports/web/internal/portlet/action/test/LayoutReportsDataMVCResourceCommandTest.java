@@ -117,15 +117,13 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 			JSONObject jsonObject = _serveResource(layout);
 
-			JSONArray canonicalURLsJSONArray = jsonObject.getJSONArray(
-				"canonicalURLs");
+			JSONArray pageURLsJSONArray = jsonObject.getJSONArray("pageURLs");
 
 			Assert.assertEquals(
-				String.valueOf(canonicalURLsJSONArray), 2,
-				canonicalURLsJSONArray.length());
+				String.valueOf(pageURLsJSONArray), 2,
+				pageURLsJSONArray.length());
 
-			JSONObject canonicalURLJSONObject1 =
-				canonicalURLsJSONArray.getJSONObject(0);
+			JSONObject pageURLJSONObject1 = pageURLsJSONArray.getJSONObject(0);
 
 			String imagesPath = jsonObject.getString("imagesPath");
 
@@ -133,21 +131,20 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				canonicalURLJSONObject1.getString("languageId"));
+				pageURLJSONObject1.getString("languageId"));
 			Assert.assertEquals(
 				layout.getName(LocaleUtil.SPAIN),
-				canonicalURLJSONObject1.getString("title"));
+				pageURLJSONObject1.getString("title"));
 
-			JSONObject canonicalURLJSONObject2 =
-				canonicalURLsJSONArray.getJSONObject(1);
+			JSONObject pageURLJSONObject2 = pageURLsJSONArray.getJSONObject(1);
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
-				canonicalURLJSONObject2.getString("languageId"));
+				pageURLJSONObject2.getString("languageId"));
 
 			Assert.assertEquals(
 				layout.getName(LocaleUtil.BRAZIL),
-				canonicalURLJSONObject1.getString("title"));
+				pageURLJSONObject1.getString("title"));
 
 			String configureGooglePageSpeedURL = jsonObject.getString(
 				"configureGooglePageSpeedURL");
@@ -260,24 +257,21 @@ public class LayoutReportsDataMVCResourceCommandTest {
 						InfoDisplayWebKeys.INFO_ITEM, new MockObject())
 				});
 
-			JSONArray canonicalURLsJSONArray = jsonObject.getJSONArray(
-				"canonicalURLs");
+			JSONArray pageURLsJSONArray = jsonObject.getJSONArray("pageURLs");
 
 			Assert.assertEquals(
-				String.valueOf(canonicalURLsJSONArray), 2,
-				canonicalURLsJSONArray.length());
+				String.valueOf(pageURLsJSONArray), 2,
+				pageURLsJSONArray.length());
 
-			JSONObject canonicalURLJSONObject1 =
-				canonicalURLsJSONArray.getJSONObject(0);
+			JSONObject pageURLJSONObject1 = pageURLsJSONArray.getJSONObject(0);
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.SPAIN),
-				canonicalURLJSONObject1.get("languageId"));
+				pageURLJSONObject1.get("languageId"));
 			Assert.assertEquals(
-				"defaultMappedTitle", canonicalURLJSONObject1.get("title"));
+				"defaultMappedTitle", pageURLJSONObject1.get("title"));
 
-			JSONObject canonicalURLJSONObject2 =
-				canonicalURLsJSONArray.getJSONObject(1);
+			JSONObject pageURLJSONObject2 = pageURLsJSONArray.getJSONObject(1);
 
 			String imagesPath = jsonObject.getString("imagesPath");
 
@@ -285,10 +279,9 @@ public class LayoutReportsDataMVCResourceCommandTest {
 
 			Assert.assertEquals(
 				LocaleUtil.toW3cLanguageId(LocaleUtil.BRAZIL),
-				canonicalURLJSONObject2.getString("languageId"));
+				pageURLJSONObject2.getString("languageId"));
 			Assert.assertEquals(
-				"defaultMappedTitle",
-				canonicalURLJSONObject2.getString("title"));
+				"defaultMappedTitle", pageURLJSONObject2.getString("title"));
 
 			String configureGooglePageSpeedURL = jsonObject.getString(
 				"configureGooglePageSpeedURL");

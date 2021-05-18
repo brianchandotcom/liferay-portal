@@ -84,9 +84,9 @@ export default function LayoutReports({eventTriggered}) {
 						});
 
 						if (data.validConnection) {
-							const url = data.canonicalURLs.find(
-								(canonicalURL) =>
-									canonicalURL.languageId ===
+							const url = data.pageURLs.find(
+								(pageURL) =>
+									pageURL.languageId ===
 									(languageId || data.defaultLanguageId)
 							);
 
@@ -123,10 +123,9 @@ export default function LayoutReports({eventTriggered}) {
 	}, [eventTriggered, data, layoutReportsDataURL, getData]);
 
 	const onRelaunchButtonClick = () => {
-		const url = data.canonicalURLs.find(
-			(canonicalURL) =>
-				canonicalURL.languageId ===
-				(languageId || data.defaultLanguageId)
+		const url = data.pageURLs.find(
+			(pageURL) =>
+				pageURL.languageId === (languageId || data.defaultLanguageId)
 		);
 
 		loadIssues({
@@ -174,8 +173,8 @@ export default function LayoutReports({eventTriggered}) {
 					!error && (
 						<>
 							<BasicInformation
-								canonicalURLs={data.canonicalURLs}
 								defaultLanguageId={data.defaultLanguageId}
+								pageURLs={data.pageURLs}
 								selectedLanguageId={languageId}
 							/>
 

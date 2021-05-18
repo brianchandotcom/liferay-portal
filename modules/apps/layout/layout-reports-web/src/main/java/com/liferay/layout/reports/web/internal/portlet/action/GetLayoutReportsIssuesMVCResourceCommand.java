@@ -118,11 +118,10 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 					_layoutReportsGooglePageSpeedConfigurationProvider.
 						getApiKey(group));
 
-			String canonicalURL = ParamUtil.getString(
-				resourceRequest, "canonicalURL");
+			String url = ParamUtil.getString(resourceRequest, "url");
 
 			List<LayoutReportsIssue> layoutReportsIssues =
-				layoutReportsDataProvider.getLayoutReportsIssues(canonicalURL);
+				layoutReportsDataProvider.getLayoutReportsIssues(url);
 
 			Stream<LayoutReportsIssue> stream = layoutReportsIssues.stream();
 

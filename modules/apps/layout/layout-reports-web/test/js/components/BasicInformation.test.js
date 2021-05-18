@@ -20,32 +20,32 @@ import BasicInformation from '../../../src/main/resources/META-INF/resources/js/
 import '@testing-library/jest-dom/extend-expect';
 
 const testProps = {
-	canonicalURLs: [
-		{
-			canonicalURL: 'http://foo.com:8080/en/web/guest/home',
-			languageId: 'en-US',
-			title: 'Home',
-		},
-		{
-			canonicalURL: 'http://foo.com:8080/es/en/web/guest/inicio',
-			languageId: 'es-ES',
-			title: 'Inicio',
-		},
-	],
 	defaultLanguageId: 'en-US',
 	onLanguageChange: () => {},
+	pageURLs: [
+		{
+			languageId: 'en-US',
+			title: 'Home',
+			url: 'http://foo.com:8080/en/web/guest/home',
+		},
+		{
+			languageId: 'es-ES',
+			title: 'Inicio',
+			url: 'http://foo.com:8080/es/en/web/guest/inicio',
+		},
+	],
 	selectedLanguageId: 'es-ES',
 };
 
 describe('BasicInformation', () => {
 	afterEach(cleanup);
 
-	it('renders page title, canonicalURL and languages', () => {
+	it('renders page title, pageURL and languages', () => {
 		const {getByText} = render(
 			<BasicInformation
-				canonicalURLs={testProps.canonicalURLs}
 				defaultLanguageId={testProps.defaultLanguageId}
 				onLanguageChange={testProps.onLanguageChange}
+				pageURLs={testProps.pageURLs}
 			/>
 		);
 
@@ -55,12 +55,12 @@ describe('BasicInformation', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders corresponding page title and canonicalURL changed when getting a selected language id', () => {
+	it('renders corresponding page title and pageURL changed when getting a selected language id', () => {
 		const {getByText} = render(
 			<BasicInformation
-				canonicalURLs={testProps.canonicalURLs}
 				defaultLanguageId={testProps.defaultLanguageId}
 				onLanguageChange={testProps.onLanguageChange}
+				pageURLs={testProps.pageURLs}
 				selectedLanguageId={testProps.selectedLanguageId}
 			/>
 		);

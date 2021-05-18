@@ -26,27 +26,27 @@ describe('LanguageDropdown', () => {
 
 	it('renders all available languages', () => {
 		const testProps = {
-			canonicalURLs: [
+			defaultLanguageId: 'en-US',
+			pageURLs: [
 				{
-					canonicalURL: 'http://foo.com:8080/en/web/guest/home',
 					languageId: 'en-US',
 					title: 'Home',
+					url: 'http://foo.com:8080/en/web/guest/home',
 				},
 				{
-					canonicalURL: 'http://foo.com:8080/es/en/web/guest/inicio',
 					languageId: 'es-ES',
 					title: 'Inicio',
+					url: 'http://foo.com:8080/es/en/web/guest/inicio',
 				},
 			],
-			defaultLanguageId: 'en-US',
 			selectedLanguageId: 'en-US',
 		};
 
 		const {getAllByText, getByText} = render(
 			<LanguagesDropdown
-				canonicalURLs={testProps.canonicalURLs}
 				defaultLanguageId={testProps.defaultLanguageId}
 				onSelectedLanguageId={noop}
+				pageURLs={testProps.pageURLs}
 				selectedLanguageId={testProps.selectedLanguageId}
 			/>
 		);

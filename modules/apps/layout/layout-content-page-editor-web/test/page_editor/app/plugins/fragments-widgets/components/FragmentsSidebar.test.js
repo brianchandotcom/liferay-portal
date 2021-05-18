@@ -197,7 +197,10 @@ describe('FragmentsSidebar', () => {
 	it('normalizes fragments and widgets format', () => {
 		renderComponent(STATE);
 
-		expect(TabsPanel).toHaveBeenCalledWith({tabs: NORMALIZED_TABS}, {});
+		expect(TabsPanel).toHaveBeenCalledWith(
+			{displayStyle: 'list', tabs: NORMALIZED_TABS},
+			{}
+		);
 	});
 
 	it('filters fragments and widgets according to a input value', () => {
@@ -259,7 +262,10 @@ describe('FragmentsSidebar', () => {
 		};
 		renderComponent(state);
 
-		expect(TabsPanel).toHaveBeenCalledWith({tabs}, {});
+		expect(TabsPanel).toHaveBeenCalledWith(
+			{displayStyle: 'list', tabs},
+			{}
+		);
 	});
 
 	it('disables a widget when it is not instanceable and it is used', () => {
@@ -285,7 +291,10 @@ describe('FragmentsSidebar', () => {
 		};
 		renderComponent(state);
 
-		expect(TabsPanel).toHaveBeenCalledWith({tabs}, {});
+		expect(TabsPanel).toHaveBeenCalledWith(
+			{displayStyle: 'list', tabs},
+			{}
+		);
 	});
 
 	it('normalizes collection with portlets items', () => {
@@ -317,7 +326,10 @@ describe('FragmentsSidebar', () => {
 		];
 		renderComponent(state);
 
-		expect(TabsPanel).toHaveBeenCalledWith({tabs}, {});
+		expect(TabsPanel).toHaveBeenCalledWith(
+			{displayStyle: 'list', tabs},
+			{}
+		);
 	});
 
 	it('normalizes collection with more collections inside', () => {
@@ -380,58 +392,9 @@ describe('FragmentsSidebar', () => {
 
 		renderComponent(state);
 
-		expect(TabsPanel).toHaveBeenCalledWith({tabs}, {});
-	});
-
-	it('hides the fragment preview when it is basic component', () => {
-		const tabs = NORMALIZED_TABS;
-		tabs[0] = {
-			collections: [
-				{
-					children: [
-						{
-							data: {
-								fragmentEntryKey: 'fragment-1',
-								groupId: '0',
-								type: 1,
-							},
-							icon: 'fragment-1-icon',
-							itemId: 'fragment-1',
-							label: 'Fragment 1',
-							preview: null,
-							type: 'fragment',
-						},
-					],
-					collectionId: 'BASIC_COMPONENT',
-					label: 'Collection 1',
-				},
-			],
-			label: 'fragments',
-		};
-
-		const state = {
-			...STATE,
-			fragments: [
-				{
-					fragmentCollectionId: 'BASIC_COMPONENT',
-					fragmentEntries: [
-						{
-							fragmentEntryKey: 'fragment-1',
-							groupId: '0',
-							icon: 'fragment-1-icon',
-							imagePreviewURL: '/fragment-1-image.png',
-							label: 'Fragment 1',
-							name: 'Fragment 1',
-							type: 1,
-						},
-					],
-					name: 'Collection 1',
-				},
-			],
-		};
-
-		renderComponent(state);
-
-		expect(TabsPanel).toHaveBeenCalledWith({tabs}, {});
+		expect(TabsPanel).toHaveBeenCalledWith(
+			{displayStyle: 'list', tabs},
+			{}
+		);
 	});
 });

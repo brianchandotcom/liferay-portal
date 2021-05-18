@@ -238,14 +238,10 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
 			fieldType = "Paragraph");
-			
-
 
 		CKEditor.addSourceContent(content = "<p>Test A</p><p>Test B</p><p>Test C</p>");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
-
-
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

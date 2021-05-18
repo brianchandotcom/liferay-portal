@@ -30,8 +30,12 @@ function OrderButton() {
 	const {checkoutURL, orderDetailURL} = actionURLs;
 	const {cartItems = [], workflowStatusInfo = {}} = cartState;
 
-	const errors = hasErrors(cartItems);
-	const workflowStatus = workflowStatusInfo?.code || WORKFLOW_STATUS_APPROVED;
+	const {
+		code: workflowStatus = WORKFLOW_STATUS_APPROVED,
+	} = workflowStatusInfo;
+
+	const canSubmit =
+		!hasErrors(cartItems) && workflowStatus === WORKFLOW_STATUS_APPROVED;
 
 	return (
 		<div className="mini-cart-submit">
@@ -39,12 +43,10 @@ function OrderButton() {
 				block
 				disabled={!cartItems.length}
 				onClick={() => {
-					liferayNavigate(errors ? orderDetailURL : checkoutURL);
+					liferayNavigate(canSubmit ? checkoutURL : orderDetailURL);
 				}}
 			>
-				{!errors && workflowStatus === WORKFLOW_STATUS_APPROVED
-					? labels[SUBMIT_ORDER]
-					: labels[REVIEW_ORDER]}
+				{canSubmit ? labels[SUBMIT_ORDER] : labels[REVIEW_ORDER]}
 			</ClayButton>
 		</div>
 	);

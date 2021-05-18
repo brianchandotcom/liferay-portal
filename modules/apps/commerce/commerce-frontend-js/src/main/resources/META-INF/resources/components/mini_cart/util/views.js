@@ -43,15 +43,38 @@ export const DEFAULT_VIEWS = {
 	[SUMMARY]: {component: Summary},
 };
 
-function resolveView({component, contentRendererModuleUrl}) {
-	if (component) {
-		return Promise.resolve((props) => component(props));
-	}
+/**
+ * decorateWithName - for test purposes only
+ * @param componentFn: React [Function] component
+ * @param keyValuePairs: object
+ */
+function decorateWith(componentFn, keyValuePairs) {
+	const component = componentFn;
 
-	return getJsModule(contentRendererModuleUrl);
+	component.component = {...keyValuePairs};
+
+	return component;
 }
 
-export function resolveCartViews(views = DEFAULT_VIEWS) {
+function resolveView({component, contentRendererModuleUrl}) {
+	if (component) {
+		return Promise.resolve(
+			decorateWith((props) => component(props), {name: component.name})
+		);
+	}
+
+	return getJsModule(contentRendererModuleUrl).then((module) =>
+		Promise.resolve(
+			decorateWith(module, {
+				moduleURL: contentRendererModuleUrl,
+				name: module.name,
+			})
+		)
+	);
+}
+
+export function resolveCartViews(customViews = {}) {
+	const views = {...DEFAULT_VIEWS, ...customViews};
 	const [...viewTypes] = Object.keys(DEFAULT_VIEWS).sort();
 
 	return Promise.all(

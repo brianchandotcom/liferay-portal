@@ -33,7 +33,7 @@ function CartItemsList() {
 
 	return (
 		<div className="mini-cart-items-list">
-			<CartViews.ItemsListActions numberOfItems={cartItems.length} />
+			<CartViews.ItemsListActions />
 
 			{cartItems.length > 0 ? (
 				<>

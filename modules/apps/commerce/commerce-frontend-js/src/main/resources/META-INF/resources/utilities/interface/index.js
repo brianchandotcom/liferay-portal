@@ -13,8 +13,8 @@
  */
 
 import AJAX from '../AJAX/index';
-import * as Events from '../eventsDefinitions';
 import CommerceCookie from '../cookies';
+import * as Events from '../eventsDefinitions';
 import DDMFormHandler from '../forms/DDMFormHandler';
 import * as FormUtils from '../forms/index';
 import * as BaseUtils from '../index';

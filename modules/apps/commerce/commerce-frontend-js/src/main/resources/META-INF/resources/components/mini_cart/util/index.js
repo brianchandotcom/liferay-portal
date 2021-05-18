@@ -22,7 +22,7 @@ export function parseOptions(jsonString) {
 	let options;
 
 	try {
-		options = JSON.parse(jsonString);
+		options = JSON.parse(jsonString) || '';
 	}
 	catch (ignore) {
 		options = '';
@@ -34,6 +34,14 @@ export function parseOptions(jsonString) {
 }
 
 export function regenerateOrderDetailURL(orderUUID, siteDefaultURL) {
+	if (!orderUUID || !siteDefaultURL) {
+		throw new Error(
+			`Cannot generate a new Order Detail URL. Invalid "${
+				siteDefaultURL ? 'orderUUID' : 'siteDefaultURL'
+			}"`
+		);
+	}
+
 	const orderDetailURL = new URL(
 		`${siteDefaultURL}${ORDER_DETAILS_ENDPOINT}`
 	);

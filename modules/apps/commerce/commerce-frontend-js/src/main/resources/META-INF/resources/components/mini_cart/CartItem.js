@@ -23,19 +23,13 @@ import Price from '../price/Price';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 import ItemInfoView from './CartItemViews/ItemInfoView';
 import MiniCartContext from './MiniCartContext';
+import {
+	INITIAL_ITEM_STATE,
+	REMOVAL_CANCELING_TIMEOUT,
+	REMOVAL_ERRORS_TIMEOUT,
+	REMOVAL_TIMEOUT,
+} from './util/constants';
 import {parseOptions} from './util/index';
-
-const REMOVAL_TIMEOUT = 2000,
-	REMOVAL_CANCELING_TIMEOUT = 700,
-	REMOVAL_ERRORS_TIMEOUT = 4000,
-	INITIAL_ITEM_STATE = {
-		isGettingRemoved: false,
-		isRemovalCanceled: false,
-		isRemoved: false,
-		isShowingErrors: false,
-		previousQuantity: null,
-		removalTimeoutRef: null,
-	};
 
 function CartItem({item: cartItem}) {
 	const {
@@ -68,8 +62,6 @@ function CartItem({item: cartItem}) {
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const showErrors = () => {
-		setIsUpdating(false);
-
 		setItemState({
 			...INITIAL_ITEM_STATE,
 			isShowingErrors: true,
@@ -77,8 +69,6 @@ function CartItem({item: cartItem}) {
 				setItemState(INITIAL_ITEM_STATE);
 			}, REMOVAL_ERRORS_TIMEOUT),
 		});
-
-		return Promise.resolve();
 	};
 
 	const cancelRemoveItem = () => {
@@ -110,13 +100,12 @@ function CartItem({item: cartItem}) {
 						CartResource.deleteItemById(cartItemId)
 							.then(() => updateCartModel({id: orderId}))
 							.then(() => {
-								setIsUpdating(false);
-
 								Liferay.fire(PRODUCT_REMOVED_FROM_CART, {
 									skuId,
 								});
 							})
-							.catch(showErrors);
+							.catch(showErrors)
+							.finally(() => setIsUpdating(false));
 					}, REMOVAL_CANCELING_TIMEOUT),
 				});
 			}, REMOVAL_TIMEOUT),
@@ -132,7 +121,10 @@ function CartItem({item: cartItem}) {
 
 	return (
 		<div
-			className={classnames('mini-cart-item', isRemoved && 'is-removed')}
+			className={classnames({
+				'is-removed': isRemoved,
+				'mini-cart-item': true,
+			})}
 		>
 			{!!thumbnail && (
 				<div
@@ -142,10 +134,10 @@ function CartItem({item: cartItem}) {
 			)}
 
 			<div
-				className={classnames(
-					'mini-cart-item-info',
-					!!options && 'has-options'
-				)}
+				className={classnames({
+					'mini-cart-item-info': true,
+					options: !!options,
+				})}
 			>
 				<ItemInfoView
 					childItems={childItems}
@@ -166,8 +158,8 @@ function CartItem({item: cartItem}) {
 								quantity: freshQuantity,
 							})
 								.then(() => updateCartModel({id: orderId}))
-								.then(() => setIsUpdating(false))
-								.catch(showErrors);
+								.catch(showErrors)
+								.finally(() => setIsUpdating(false));
 						}
 					}}
 					quantity={quantity}
@@ -197,18 +189,7 @@ function CartItem({item: cartItem}) {
 				</button>
 			</div>
 
-			{errorMessages && (
-				<div className="mini-cart-item-errors">
-					<ClayIcon
-						spritemap={spritemap}
-						symbol="exclamation-circle"
-					/>
-
-					<span>{errorMessages}</span>
-				</div>
-			)}
-
-			{isShowingErrors && (
+			{(errorMessages || isShowingErrors) && (
 				<div className="mini-cart-item-errors">
 					<ClayIcon
 						spritemap={spritemap}
@@ -222,11 +203,11 @@ function CartItem({item: cartItem}) {
 			)}
 
 			<div
-				className={classnames(
-					'mini-cart-item-removing',
-					isGettingRemoved && 'active',
-					isRemovalCanceled && 'canceled'
-				)}
+				className={classnames({
+					active: isGettingRemoved,
+					canceled: isRemovalCanceled,
+					'mini-cart-item-removing': true,
+				})}
 			>
 				<span>{Liferay.Language.get('the-item-has-been-removed')}</span>
 				<span>

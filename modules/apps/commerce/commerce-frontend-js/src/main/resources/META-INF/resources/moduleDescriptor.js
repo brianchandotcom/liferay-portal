@@ -32,7 +32,7 @@ export default {
 		'BaseUtils',
 		'CommerceCookie',
 		'Events',
-		'FormUtils'
+		'FormUtils',
 	],
 	CommerceServiceProvider: [
 		'AdminAccountAPI',

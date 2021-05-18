@@ -36,7 +36,7 @@ definition {
 		}
 	}
 
-	@description = "Test for LPS-130922. This is a test for View the mapped visual style of editable field node in Selection panel of display page template."
+	@description = "This is a test for LPS-122142. View the visual style of mapped editable field items in Selection panel of display page template."
 	@priority = "4"
 	test ViewVisualStyleOfMappedEditableFieldItem {
 		task ("Add a display page") {

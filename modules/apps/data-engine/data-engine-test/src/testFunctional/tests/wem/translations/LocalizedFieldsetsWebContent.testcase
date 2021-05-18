@@ -236,7 +236,7 @@ definition {
 
 		DataEngine.addFieldsets(fieldsetName = "New Fieldset");
 
-		DataEngine.editFieldsetRepeatable(fieldsetLabel = "New Fieldset");
+		DataEngine.toggleFieldRepeatable(fieldsetLabel = "New Fieldset");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 

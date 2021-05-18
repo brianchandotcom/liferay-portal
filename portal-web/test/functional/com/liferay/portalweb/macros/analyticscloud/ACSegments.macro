@@ -1,17 +1,12 @@
 definition {
 
 	macro addSegmentField {
-		var key_Criterion = "${criterion}";
+		var key_SegmentField = "${segmentField}";
 
-		Click(locator1 = "ACSegments#CRITERION_TYPE_DROPDOWN");
-
-		AssertClick(
-			locator1 = "ACSegments#SELECT_CRITERION_TYPE",
-			value1 = "${criterion}");
-
-		ACSegments.searchSegment(findSegment = "${searchTerm}");
-
-		DragAndDrop.javaScriptDragAndDropToObject();
+		DragAndDrop.javaScriptDragAndDropToObject(
+			locator1 = "ACSegments#SEGMENT_CRITERION_ITEM",
+			locator2 = "ACSegments#SEGMENT_DROP_AREA",
+			value1 = "${segmentField}");
 	}
 
 	macro addStaticMember {
@@ -61,7 +56,11 @@ definition {
 	}
 
 	macro editDateCriterion {
-		echo("TODO");
+		var key_MonthInput = "${monthInput}";
+		var key_DayInput = "${dayInput}";
+		var key_YearInput = "${yearInput}";
+
+		Click(locator1 = "ACSegments#CALENDAR_INPUT");
 	}
 
 	macro editSegment {
@@ -78,6 +77,14 @@ definition {
 		echo("TODO");
 	}
 
+	macro editTextCriterion {
+		var key_TextInput = "${textInput}";
+
+		Type(
+			locator1 = "ACSegments#TEXT_INPUT",
+			value1 = "${textInput}");
+	}
+
 	macro editWebBehaviorCriterion {
 		var key_AtLeastMostOption = "${atLeastMost}";
 
@@ -92,6 +99,16 @@ definition {
 		Select(
 			locator1 = "ACSegments#OPTION_SELECT",
 			value1 = "${atLeastMost}");
+	}
+
+	macro goToSidebarAttrributes {
+		var key_Criterion = "${criterion}";
+
+		Click(locator1 = "ACSegments#CRITERION_TYPE_DROPDOWN");
+
+		Click(
+			value1 = "${criterion}",
+			locator1 = "ACSegments#SELECT_CRITERION_TYPE");
 	}
 
 	macro includeAnonymous {

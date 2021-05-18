@@ -113,6 +113,12 @@ public interface BasePersistence<T extends BaseModel<T>> {
 
 	public <R> R dslQuery(DSLQuery dslQuery);
 
+	public default int dslQueryCount(DSLQuery dslQuery) {
+		Long count = dslQuery(dslQuery);
+
+		return count.intValue();
+	}
+
 	/**
 	 * Returns the model instance with the primary key or returns
 	 * <code>null</code> if it could not be found.

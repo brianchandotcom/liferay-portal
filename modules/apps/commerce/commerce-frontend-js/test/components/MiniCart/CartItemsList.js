@@ -1,0 +1,180 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+import '@testing-library/jest-dom/extend-expect';
+import {cleanup, render} from '@testing-library/react';
+import React from 'react';
+
+import CartItemsList from '../../../src/main/resources/META-INF/resources/components/mini_cart/CartItemsList';
+import MiniCartContext from '../../../src/main/resources/META-INF/resources/components/mini_cart/MiniCartContext';
+import {
+	ADD_PRODUCT,
+	ITEM,
+	ITEMS_LIST,
+	ITEMS_LIST_ACTIONS,
+	SUMMARY,
+} from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/constants';
+import {DEFAULT_LABELS} from '../../../src/main/resources/META-INF/resources/components/mini_cart/util/labels';
+
+describe('MiniCart Items List', () => {
+	const BASE_CONTEXT_MOCK = {
+		CartViews: {
+			[ITEMS_LIST_ACTIONS]: () => <div>{ITEMS_LIST_ACTIONS}</div>,
+		},
+		cartState: {},
+		labels: DEFAULT_LABELS,
+		spritemap: 'someSpritemap.svg',
+	};
+
+	const COMPONENT_SELECTOR = '.mini-cart-items-list';
+
+	afterEach(() => {
+		jest.resetAllMocks();
+
+		cleanup();
+	});
+
+	describe('by default', () => {
+		it(
+			`renders the ${ITEMS_LIST} component w/ ` +
+				`the ${ITEMS_LIST_ACTIONS} and a div including ` +
+				`a shopping cart icon and the label "${ADD_PRODUCT}"`,
+			() => {
+				const EMPTY_CART_SELECTOR = '.empty-cart';
+
+				const {container, getByText} = render(
+					<MiniCartContext.Provider value={BASE_CONTEXT_MOCK}>
+						<CartItemsList />
+					</MiniCartContext.Provider>
+				);
+
+				expect(getByText(ITEMS_LIST_ACTIONS)).toBeInTheDocument();
+
+				const CartItemsListElement = container.querySelector(
+					COMPONENT_SELECTOR
+				);
+
+				const EmptyCartElement = CartItemsListElement.querySelector(
+					EMPTY_CART_SELECTOR
+				);
+
+				const iconElement = EmptyCartElement.querySelector('svg use');
+
+				const iconPath = iconElement.getAttribute('xlink:href');
+
+				expect(CartItemsListElement).toBeInTheDocument();
+				expect(EmptyCartElement).toBeInTheDocument();
+				expect(iconElement).toBeInTheDocument();
+
+				expect(iconPath).toEqual(
+					`${BASE_CONTEXT_MOCK.spritemap}#shopping-cart`
+				);
+
+				expect(
+					getByText(BASE_CONTEXT_MOCK.labels[ADD_PRODUCT])
+				).toBeInTheDocument();
+
+				expect(CartItemsListElement.innerHTML).toMatchSnapshot();
+			}
+		);
+	});
+
+	describe('by data flow', () => {
+		describe('if there are cart items', () => {
+			const WITH_ITEMS_CONTEXT_MOCK = {
+				...BASE_CONTEXT_MOCK,
+				CartViews: {
+					...BASE_CONTEXT_MOCK.CartViews,
+					[ITEM]: (props) => <div>{props.item.name}</div>,
+					[SUMMARY]: ({dataMapper, isLoading, summaryData}) => {
+						dataMapper();
+
+						return (
+							<div>
+								{isLoading
+									? `${SUMMARY} is loading`
+									: `${SUMMARY} ${summaryData.itemsQuantity}`}
+							</div>
+						);
+					},
+				},
+				cartState: {
+					cartItems: [
+						{
+							id: 1,
+							name: 'An Item',
+						},
+					],
+					summary: {
+						itemsQuantity: 1,
+					},
+				},
+				isUpdating: false,
+				labels: DEFAULT_LABELS,
+				spritemap: 'someSpritemap.svg',
+				summaryDataMapper: jest.fn(),
+			};
+
+			it(
+				`renders the ${ITEMS_LIST} component displaying ` +
+					`the ${ITEMS_LIST_ACTIONS}, a div including ` +
+					`the list of cart items and the order ${SUMMARY}`,
+				() => {
+					const {container, getByText} = render(
+						<MiniCartContext.Provider
+							value={WITH_ITEMS_CONTEXT_MOCK}
+						>
+							<CartItemsList />
+						</MiniCartContext.Provider>
+					);
+
+					expect(getByText(ITEMS_LIST_ACTIONS)).toBeInTheDocument();
+
+					const CartItemsListElement = container.querySelector(
+						COMPONENT_SELECTOR
+					);
+					const CartItemElements = CartItemsListElement.querySelectorAll(
+						'.mini-cart-cart-items div'
+					);
+
+					expect(CartItemElements.length).toEqual(1);
+					expect(CartItemElements[0].innerHTML).toEqual(
+						WITH_ITEMS_CONTEXT_MOCK.cartState.cartItems[0].name
+					);
+
+					expect(
+						getByText(
+							`${SUMMARY} ${WITH_ITEMS_CONTEXT_MOCK.cartState.summary.itemsQuantity}`
+						)
+					).toBeInTheDocument();
+				}
+			);
+
+			it(`if the cart is updating, the ${SUMMARY} will be informed`, () => {
+				const {getByText} = render(
+					<MiniCartContext.Provider
+						value={{
+							...WITH_ITEMS_CONTEXT_MOCK,
+							isUpdating: true,
+						}}
+					>
+						<CartItemsList />
+					</MiniCartContext.Provider>
+				);
+
+				expect(getByText(`${SUMMARY} is loading`)).toBeInTheDocument();
+			});
+		});
+	});
+});

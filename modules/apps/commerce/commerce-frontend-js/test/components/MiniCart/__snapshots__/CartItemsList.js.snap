@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniCart Items List by default renders the ItemsList component w/ the ItemsListActions and a div including a shopping cart icon and the label "Add a product to the cart" 1`] = `"<div>ItemsListActions</div><div class=\\"empty-cart\\"><div class=\\"empty-cart-icon mb-3\\"><svg class=\\"lexicon-icon lexicon-icon-shopping-cart\\" role=\\"presentation\\"><use xlink:href=\\"someSpritemap.svg#shopping-cart\\"></use></svg></div><p class=\\"empty-cart-label\\">add-a-product-to-the-cart</p></div>"`;

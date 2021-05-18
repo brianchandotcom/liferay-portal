@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniCart Opener by data flow if there are cart items if "displayTotalItemsQuantity" is set to true, renders a badge with the total items count from the cart summary 1`] = `
+<DocumentFragment>
+  <button
+    class="has-badge mini-cart-opener"
+    data-badge-count="8"
+  >
+    <svg
+      class="lexicon-icon lexicon-icon-shopping-cart"
+      role="presentation"
+    >
+      <use
+        xlink:href="someSpritemap.svg#shopping-cart"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`MiniCart Opener by data flow if there are cart items renders a badge with their total count by item type 1`] = `
+<DocumentFragment>
+  <button
+    class="has-badge mini-cart-opener"
+    data-badge-count="2"
+  >
+    <svg
+      class="lexicon-icon lexicon-icon-shopping-cart"
+      role="presentation"
+    >
+      <use
+        xlink:href="someSpritemap.svg#shopping-cart"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;
+
+exports[`MiniCart Opener by default renders a clickable button with a shopping cart icon to open the MiniCart 1`] = `"<svg class=\\"lexicon-icon lexicon-icon-shopping-cart\\" role=\\"presentation\\"><use xlink:href=\\"someSpritemap.svg#shopping-cart\\"></use></svg>"`;

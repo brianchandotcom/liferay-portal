@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniCart Header by data flow if MiniCart is not toggleable, will not render the close button 1`] = `
+<DocumentFragment>
+  <div
+    class="mini-cart-header"
+  >
+    <div
+      class="mini-cart-header-block"
+    >
+      <div
+        class="mini-cart-header-title"
+      >
+        <h3>
+          your-order-is-empty
+        </h3>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MiniCart Header by default renders the MiniCart header which includes a dynamic title and a button to close the cart 1`] = `
+<div
+  class="mini-cart-header"
+>
+  <div
+    class="mini-cart-header-block"
+  >
+    <div
+      class="mini-cart-header-title"
+    >
+      <h3>
+        your-order-is-empty
+      </h3>
+    </div>
+    <button
+      class="mini-cart-close"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-times"
+        role="presentation"
+      >
+        <use
+          xlink:href="someSpritemap.svg#times"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+`;

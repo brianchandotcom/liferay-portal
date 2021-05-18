@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniCart by data flow if the order ID is defined and > 0 if the request succeeds renders the MiniCart displaying the cart content correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="mini-cart"
+  >
+    <div
+      class="mini-cart-overlay"
+    />
+    <button
+      class="has-badge mini-cart-opener"
+      data-badge-count="2"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-shopping-cart"
+        role="presentation"
+      >
+        <use
+          xlink:href="someSpritemap.svg#shopping-cart"
+        />
+      </svg>
+    </button>
+    <div
+      class="mini-cart-wrapper"
+    >
+      <div
+        class="mini-cart-header"
+      >
+        <div
+          class="mini-cart-header-block"
+        >
+          <div
+            class="mini-cart-header-title"
+          >
+            <h3>
+              your-order
+            </h3>
+          </div>
+          <button
+            class="mini-cart-close"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-times"
+              role="presentation"
+            >
+              <use
+                xlink:href="someSpritemap.svg#times"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        class="mini-cart-wrapper-items"
+      />
+      <div
+        class="mini-cart-submit"
+      >
+        <button
+          class="btn btn-block btn-primary"
+          type="button"
+        >
+          submit
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MiniCart by default renders the MiniCart in closed state with the default view components and an overlay div 1`] = `
+<DocumentFragment>
+  <div
+    class="mini-cart"
+  >
+    <div
+      class="mini-cart-overlay"
+    />
+    <button
+      class="mini-cart-opener"
+      data-badge-count="0"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-shopping-cart"
+        role="presentation"
+      >
+        <use
+          xlink:href="someSpritemap.svg#shopping-cart"
+        />
+      </svg>
+    </button>
+    <div
+      class="mini-cart-wrapper"
+    >
+      <div
+        class="mini-cart-header"
+      >
+        <div
+          class="mini-cart-header-block"
+        >
+          <div
+            class="mini-cart-header-title"
+          >
+            <h3>
+              your-order-is-empty
+            </h3>
+          </div>
+          <button
+            class="mini-cart-close"
+          >
+            <svg
+              class="lexicon-icon lexicon-icon-times"
+              role="presentation"
+            >
+              <use
+                xlink:href="someSpritemap.svg#times"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        class="mini-cart-wrapper-items"
+      />
+      <div
+        class="mini-cart-submit"
+      >
+        <button
+          class="btn btn-block btn-primary"
+          disabled=""
+          type="button"
+        >
+          submit
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

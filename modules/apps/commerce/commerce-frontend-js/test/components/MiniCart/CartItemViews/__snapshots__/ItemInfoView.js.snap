@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items with their related quantities, plus its options 1`] = `"1 × Child Item 1"`;
+
+exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items with their related quantities, plus its options 2`] = `"3 × Child Item 2"`;
+
+exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items with their related quantities, plus its options 3`] = `"5 × Child Item 3"`;
+
+exports[`MiniCart Item Info View Base + Bundle + Options renders the name and the SKU of an item, plus its child items with their related quantities, plus its options 4`] = `
+<DocumentFragment>
+  <div
+    class="item-info-base"
+  >
+    <h5
+      class="item-name"
+    >
+      An Item
+    </h5>
+    <p
+      class="item-sku"
+    >
+      ITEM001
+    </p>
+  </div>
+  <div
+    class="child-items"
+  >
+    <div
+      class="child-item"
+    >
+      <span>
+        1 × Child Item 1
+      </span>
+    </div>
+    <div
+      class="child-item"
+    >
+      <span>
+        3 × Child Item 2
+      </span>
+    </div>
+    <div
+      class="child-item"
+    >
+      <span>
+        5 × Child Item 3
+      </span>
+    </div>
+  </div>
+  <div
+    class="item-info-extra mt-3"
+  >
+    <h6
+      class="options"
+    >
+      XL
+    </h6>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a bundle item, plus its child items with their related quantities 1`] = `"1 × Child Item 1"`;
+
+exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a bundle item, plus its child items with their related quantities 2`] = `"3 × Child Item 2"`;
+
+exports[`MiniCart Item Info View Base + Bundle renders the name and the SKU of a bundle item, plus its child items with their related quantities 3`] = `
+<DocumentFragment>
+  <div
+    class="item-info-base"
+  >
+    <h5
+      class="item-name"
+    >
+      An Item
+    </h5>
+    <p
+      class="item-sku"
+    >
+      ITEM001
+    </p>
+  </div>
+  <div
+    class="child-items"
+  >
+    <div
+      class="child-item"
+    >
+      <span>
+        1 × Child Item 1
+      </span>
+    </div>
+    <div
+      class="child-item"
+    >
+      <span>
+        3 × Child Item 2
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MiniCart Item Info View Base + Options renders the name and the SKU of an item, plus its options 1`] = `
+<DocumentFragment>
+  <div
+    class="item-info-base"
+  >
+    <h5
+      class="item-name"
+    >
+      An Item
+    </h5>
+    <p
+      class="item-sku"
+    >
+      ITEM001
+    </p>
+  </div>
+  <div
+    class="item-info-extra mt-3"
+  >
+    <h6
+      class="options"
+    >
+      XL
+    </h6>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MiniCart Item Info View Base renders the name and the SKU of an item 1`] = `"<h5 class=\\"item-name\\">An Item</h5><p class=\\"item-sku\\">ITEM001</p>"`;

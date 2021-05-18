@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniCart Wrapper by data flow if the cart is open, renders the MiniCart Wrapper component w/ Header, a DataSetDisplay component wrapping the ItemsList, and the OrderButton 1`] = `
+<DocumentFragment>
+  <div
+    class="mini-cart-wrapper"
+  >
+    <div>
+      Header
+    </div>
+    <div
+      class="mini-cart-wrapper-items"
+    >
+      <div
+        class="dataset-display-wrapper"
+      >
+        <div
+          class="dataset-display dataset-display-inline"
+        >
+          <form>
+            <div
+              class="dataset-display-content-wrapper"
+            >
+              <input
+                hidden=""
+                name="cart-items-list-dataset-display_id"
+                readonly=""
+                value=""
+              />
+              <div
+                id="ItemsList"
+              >
+                ItemsList
+              </div>
+              <div
+                class="border-0 pt-0 sheet taglib-empty-result-message"
+              >
+                <div
+                  class="taglib-empty-result-message-header"
+                />
+                <div
+                  class="sheet-text text-center"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div>
+      OrderButton
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MiniCart Wrapper by default renders the MiniCart Wrapper component w/ only Header, an empty div and the OrderButton 1`] = `
+<DocumentFragment>
+  <div
+    class="mini-cart-wrapper"
+  >
+    <div>
+      Header
+    </div>
+    <div
+      class="mini-cart-wrapper-items"
+    />
+    <div>
+      OrderButton
+    </div>
+  </div>
+</DocumentFragment>
+`;

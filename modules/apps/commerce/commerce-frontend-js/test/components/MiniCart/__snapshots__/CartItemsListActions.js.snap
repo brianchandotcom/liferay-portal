@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniCart Items List Actions by data flow if there are cart items by interaction if the "Remove all items" button is clicked, unhides the confirmation prompt with yes/no buttons 1`] = `
+<div
+  class="confirmation-prompt"
+>
+  <span>
+    are-you-sure
+  </span>
+  <span>
+    <button
+      class="btn btn-outline-success btn-sm"
+      type="button"
+    >
+      yes
+    </button>
+    <button
+      class="btn btn-outline-danger btn-sm"
+      type="button"
+    >
+      no
+    </button>
+  </span>
+</div>
+`;
+
+exports[`MiniCart Items List Actions by data flow if there are cart items renders the items count in plural noun form 1`] = `"<span class=\\"items\\">2</span> products"`;
+
+exports[`MiniCart Items List Actions by data flow if there are cart items renders the items count in singular noun form 1`] = `"<span class=\\"items\\">1</span> product"`;
+
+exports[`MiniCart Items List Actions by data flow if there are cart items the MiniCart items list action buttons are clickable 1`] = `"view-details"`;
+
+exports[`MiniCart Items List Actions by data flow if there are cart items the MiniCart items list action buttons are clickable 2`] = `"remove-all-items"`;
+
+exports[`MiniCart Items List Actions by default renders the MiniCart items list action buttons View details and Remove all items as disabled, plus the action confirmation prompt as hidden 1`] = `"view-details"`;
+
+exports[`MiniCart Items List Actions by default renders the MiniCart items list action buttons View details and Remove all items as disabled, plus the action confirmation prompt as hidden 2`] = `"remove-all-items"`;

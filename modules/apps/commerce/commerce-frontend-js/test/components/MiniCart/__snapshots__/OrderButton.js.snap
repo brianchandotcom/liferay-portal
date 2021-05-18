@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MiniCart Order Button by data flow if there are cart items renders a clickable button element to checkout the order 1`] = `"submit"`;
+
+exports[`MiniCart Order Button by default renders a block-styled button element 1`] = `"<button class=\\"btn btn-block btn-primary\\" type=\\"button\\" disabled=\\"\\">submit</button>"`;

@@ -427,6 +427,14 @@ gradle.beforeProject {
 				xmltask rootProject.files("../lib/development/xmltask.jar")
 			}
 
+			test {
+				filter {
+					if (project.hasProperty("excludeTestsMatching")) {
+						excludeTestsMatching project.property("excludeTestsMatching")
+					}
+				}
+			}
+
 			testIntegration {
 				doLast {
 					String databaseType = System.properties["database.type"]
@@ -449,6 +457,12 @@ gradle.beforeProject {
 						}
 
 						delete file
+					}
+				}
+
+				filter {
+					if (project.hasProperty("excludeTestsMatching")) {
+						excludeTestsMatching project.property("excludeTestsMatching")
 					}
 				}
 			}

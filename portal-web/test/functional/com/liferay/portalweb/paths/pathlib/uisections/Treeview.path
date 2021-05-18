@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_STRUCTURE_TREE_NODE_NAME</td>
+	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//div[contains(@class,'node__name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_POSITION</td>
 	<td>xpath=(//div[contains(@role,'treeitem')])[${key_position}]//div[contains(@class,'list-item__node')][contains(.,'${key_nodeName}')]</td>
 	<td></td>

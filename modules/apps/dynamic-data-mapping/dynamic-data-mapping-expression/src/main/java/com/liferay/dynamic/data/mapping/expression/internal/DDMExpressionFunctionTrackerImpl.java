@@ -67,7 +67,7 @@ public class DDMExpressionFunctionTrackerImpl
 		getDDMExpressionFunctionFactories(Set<String> functionNames) {
 
 		Map<String, DDMExpressionFunctionFactory>
-			ddmExpressionFunctionFactoriesMap = new HashMap<>();
+			ddmExpressionFunctionFactories = new HashMap<>();
 
 		ServiceTrackerMap<String, DDMExpressionFunctionFactory>
 			serviceTrackerMap = _getServiceTrackerMap();
@@ -77,12 +77,12 @@ public class DDMExpressionFunctionTrackerImpl
 				serviceTrackerMap.getService(functionName);
 
 			if (ddmExpressionFunctionFactory != null) {
-				ddmExpressionFunctionFactoriesMap.put(
+				ddmExpressionFunctionFactories.put(
 					functionName, ddmExpressionFunctionFactory);
 			}
 		}
 
-		return ddmExpressionFunctionFactoriesMap;
+		return ddmExpressionFunctionFactories;
 	}
 
 	/**

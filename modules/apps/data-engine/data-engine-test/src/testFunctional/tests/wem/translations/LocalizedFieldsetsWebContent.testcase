@@ -246,7 +246,7 @@ definition {
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
-		DataEngine.editFieldsetRepeatable(fieldsetLabel = "New Fieldset");
+		DataEngine.toggleFieldRepeatable(fieldsetLabel = "New Fieldset");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
 

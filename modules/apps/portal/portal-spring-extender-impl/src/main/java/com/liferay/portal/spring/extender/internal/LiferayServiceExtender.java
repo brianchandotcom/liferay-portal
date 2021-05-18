@@ -40,7 +40,7 @@ import java.util.concurrent.FutureTask;
 
 import javax.sql.DataSource;
 
-import org.hibernate.engine.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -154,9 +154,11 @@ public class LiferayServiceExtender
 			PortletHibernateConfiguration portletHibernateConfiguration =
 				new PortletHibernateConfiguration(classLoader, _dataSource);
 
+			portletHibernateConfiguration.afterPropertiesSet();
+
 			_sessionFactoryImplementor =
 				(SessionFactoryImplementor)
-					portletHibernateConfiguration.buildSessionFactory();
+					portletHibernateConfiguration.getObject();
 
 			SessionFactoryImpl sessionFactoryImpl = new SessionFactoryImpl();
 

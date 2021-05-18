@@ -143,7 +143,6 @@ public class ObjectEntryKeywordQueryContributor
 					"nestedFieldArray.value_keyword",
 					lowerCaseKeywords + StringPool.STAR),
 				BooleanClauseOccur.MUST);
-
 			nestedBooleanQuery.add(
 				new TermQueryImpl(
 					"nestedFieldArray.value_keyword",

@@ -27,7 +27,13 @@ export default {
 		'Summary',
 		'MiniCartContext',
 	],
-	CommerceFrontendUtils: ['AJAX', 'BaseUtils', 'Events', 'FormUtils'],
+	CommerceFrontendUtils: [
+		'AJAX',
+		'BaseUtils',
+		'CommerceCookie',
+		'Events',
+		'FormUtils'
+	],
 	CommerceServiceProvider: [
 		'AdminAccountAPI',
 		'AdminCatalogAPI',

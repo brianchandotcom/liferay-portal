@@ -253,7 +253,7 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertTextEquals(
-				key_fragmentName = "Heading",
+				key_fragmentName = "heading",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "New editable fragment text");
 		}

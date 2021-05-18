@@ -33,12 +33,8 @@ definition {
 	@description = "This is a test for COMMERCE-6030. AddAnAttachment"
 	@priority = "3"
 	test AddAnAttachment {
-		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnAttachment";
-
-		// TODO Review
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+		property portal.upstream = "quarantine";
+        property portal.acceptance = "false";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -68,12 +64,8 @@ definition {
 	@priority = "3"
 
 	test AddAnImage {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnImage";
-
-		// TODO Review
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -93,8 +85,8 @@ definition {
 	@description = "This is a test for COMMERCE-6028. AddAnImageToAnOption"
 	@priority = "3"
 	test AddAnImageToAnOption {
-		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnImageToAnOption";
+		property portal.upstream = "quarantine";
+        property portal.acceptance = "false";
 
 		// TODO Review
 
@@ -151,12 +143,8 @@ definition {
 	@description = "This is a test for COMMERCE-6031. EditAnAttachment"
 	@priority = "3"
 	test EditAnAttachment {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductMedia#EditAnAttachment";
-
-		// TODO Review
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -246,8 +234,8 @@ definition {
 	@description = "This is a test for COMMERCE-6033. RemoveAnAttachment"
 	@priority = "3"
 	test RemoveAnAttachment {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductMedia#RemoveAnAttachment";
 
 		// TODO Review
 
@@ -276,8 +264,8 @@ definition {
 	@description = "This is a test for COMMERCE-6026. RemoveAnImage"
 	@priority = "3"
 	test RemoveAnImage {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductMedia#RemoveAnImage";
 
 		// TODO Review
 

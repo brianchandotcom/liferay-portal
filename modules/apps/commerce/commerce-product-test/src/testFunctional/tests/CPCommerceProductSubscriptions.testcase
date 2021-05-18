@@ -33,8 +33,8 @@ definition {
 	@description = "This is a test for COMMERCE-6085. UseSubscriptions"
 	@priority = "3"
 	test UseSubscriptions {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductSubscriptions#UseSubscriptions";
 
 		// TODO Review
 

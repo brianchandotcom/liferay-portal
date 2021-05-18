@@ -76,7 +76,6 @@ definition {
 
 	test CreateNewCatalog {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceCatalogs#CreateNewCatalog";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -34,9 +34,6 @@ definition {
 	@priority = "3"
 	test AddASKU {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductSKUs#AddASKU";
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -73,8 +70,8 @@ definition {
 	@description = "This is a test for COMMERCE-6024. AddASKUWithSubscriptions"
 	@priority = "3"
 	test AddASKUWithSubscriptions {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductSKUs#AddASKUWithSubscriptions";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -140,11 +137,6 @@ definition {
 	@priority = "3"
 	test EditASKU {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductSKUs#EditASKU";
-
-		// TODO Review
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

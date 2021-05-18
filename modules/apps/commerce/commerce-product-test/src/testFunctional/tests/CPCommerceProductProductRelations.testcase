@@ -85,12 +85,8 @@ definition {
 	@description = "This is a test for COMMERCE-6064. EditAProductRelations"
 	@priority = "3"
 	test EditAProductRelations {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductProductRelations#EditAProductRelations";
-
-		// TODO Review
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -133,12 +129,8 @@ definition {
 	@description = "This is a test for COMMERCE-6063. RemoveAProductRelations"
 	@priority = "3"
 	test RemoveAProductRelations {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceProductProductRelations#RemoveAProductRelations";
-
-		// TODO Review
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

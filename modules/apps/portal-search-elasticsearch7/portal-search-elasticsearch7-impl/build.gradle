@@ -195,12 +195,6 @@ test {
 	}
 }
 
-test {
-	if (project.hasProperty('excludeTests')) {
-		exclude project.property('excludeTests')
-	}
-}
-
 _createPluginTasks(sidecarElasticsearchVersion, sidecarPluginURLs)
 
 private void _createPluginTasks(String sidecarElasticsearchVersion, List<String> sidecarPluginURLs) {

@@ -557,15 +557,15 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertKeywords("@ liferay.com", 0);
 		_assertKeywords("@-liferay.com", 0);
-		_assertKeywords("@liferay.com", 3);
-		_assertKeywords("@liferay", 3);
 		_assertKeywords("@life", 3);
-		_assertKeywords("liferay.com", 0);
-		_assertKeywords("liferay", 0);
-		_assertKeywords("life", 0);
+		_assertKeywords("@liferay", 3);
+		_assertKeywords("@liferay.com", 3);
 		_assertKeywords("Peter", 1);
 		_assertKeywords("j0hn", 0);
 		_assertKeywords("john", 1);
+		_assertKeywords("life", 0);
+		_assertKeywords("liferay", 0);
+		_assertKeywords("liferay.com", 0);
 		_assertKeywords("peter", 1);
 
 		// Irrelevant object definition

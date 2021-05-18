@@ -25,7 +25,7 @@ import com.liferay.portal.test.rule.Inject;
 /**
  * @author Igor Beslic
  */
-public abstract class BatchPlannerTestCase {
+public abstract class BaseBatchPlannerTestCase {
 
 	protected BatchPlannerPlan addBatchPlannerPlan(User user, int nameSeed)
 		throws PortalException {

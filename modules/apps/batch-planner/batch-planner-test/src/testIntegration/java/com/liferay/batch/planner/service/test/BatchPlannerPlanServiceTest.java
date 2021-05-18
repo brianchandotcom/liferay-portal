@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
-public class BatchPlannerPlanServiceTest extends BatchPlannerTestCase {
+public class BatchPlannerPlanServiceTest extends BaseBatchPlannerTestCase {
 
 	@ClassRule
 	@Rule

@@ -116,9 +116,9 @@ public class ObjectEntryKeywordQueryContributor
 			return;
 		}
 
-		String name = objectField.getName();
-
-		String fieldKeywords = _getKeywords(keywords, keywordQueryContributorHelper.getSearchContext(), name);
+		String fieldKeywords = _getKeywords(
+			keywords, keywordQueryContributorHelper.getSearchContext(),
+			objectField.getName());
 
 		if (Validator.isNull(fieldKeywords)) {
 			return;
@@ -128,7 +128,7 @@ public class ObjectEntryKeywordQueryContributor
 			_log.debug(
 				StringBundler.concat(
 					"Add search term ", fieldKeywords, " for object field ",
-					name));
+					objectField.getName()));
 		}
 
 		String type = objectField.getType();
@@ -158,7 +158,7 @@ public class ObjectEntryKeywordQueryContributor
 		}
 		else if (type.equals("Blob")) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Blob field " + name + " is not searchable");
+				_log.debug("Blob field " + objectField.getName() + " is not searchable");
 			}
 		}
 		else if (type.equals("Boolean")) {
@@ -215,7 +215,7 @@ public class ObjectEntryKeywordQueryContributor
 
 		if (nestedBooleanQuery.hasClauses()) {
 			nestedBooleanQuery.add(
-				new TermQueryImpl("nestedFieldArray.fieldName", name),
+				new TermQueryImpl("nestedFieldArray.fieldName", objectField.getName()),
 				BooleanClauseOccur.MUST);
 
 			NestedQuery nestedQuery = new NestedQuery(

@@ -29,8 +29,6 @@ definition {
 		User.firstLoginPG();
 
 		Navigator.openURL();
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud();
 	}
 
 	tearDown {

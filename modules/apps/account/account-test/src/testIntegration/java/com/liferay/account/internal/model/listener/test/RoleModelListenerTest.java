@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -111,9 +110,7 @@ public class RoleModelListenerTest {
 			);
 
 			Assert.assertEquals(
-				1,
-				GetterUtil.getInteger(
-					(long)_accountRoleLocalService.dslQuery(dslQuery)));
+				1, _accountRoleLocalService.dslQueryCount(dslQuery));
 		}
 	}
 

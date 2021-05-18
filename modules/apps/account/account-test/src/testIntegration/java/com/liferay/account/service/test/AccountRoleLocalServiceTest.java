@@ -108,8 +108,8 @@ public class AccountRoleLocalServiceTest {
 			_accountEntry1.getAccountEntryId(), name);
 
 		Assert.assertEquals(
-			1L,
-			(long)_accountRoleLocalService.dslQuery(
+			1,
+			_accountRoleLocalService.dslQueryCount(
 				DSLQueryFactoryUtil.countDistinct(
 					AccountRoleTable.INSTANCE.accountRoleId
 				).from(

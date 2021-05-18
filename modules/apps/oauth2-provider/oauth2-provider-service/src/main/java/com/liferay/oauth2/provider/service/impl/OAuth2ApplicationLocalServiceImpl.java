@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
@@ -374,6 +375,12 @@ public class OAuth2ApplicationLocalServiceImpl
 					oAuth2ApplicationScopeAliases.
 						getOAuth2ApplicationScopeAliasesId());
 		}
+
+		OAuth2Application oAuth2Application = fetchOAuth2Application(
+			oAuth2ApplicationId);
+
+		_resourceLocalService.deleteResource(
+			oAuth2Application, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		return oAuth2ApplicationPersistence.remove(oAuth2ApplicationId);
 	}

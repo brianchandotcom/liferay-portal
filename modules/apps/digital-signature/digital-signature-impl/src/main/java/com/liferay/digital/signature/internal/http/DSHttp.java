@@ -64,6 +64,17 @@ public class DSHttp {
 		}
 	}
 
+	public JSONObject put(
+		long groupId, String location, JSONObject bodyJSONObject) {
+
+		try {
+			return _invoke(groupId, location, Http.Method.PUT, bodyJSONObject);
+		}
+		catch (Exception exception) {
+			return ReflectionUtil.throwException(exception);
+		}
+	}
+
 	private String _getDocuSignAccessToken(
 			DigitalSignatureConfiguration digitalSignatureConfiguration)
 		throws Exception {

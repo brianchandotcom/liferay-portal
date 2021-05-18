@@ -84,8 +84,9 @@ public class DSEnvelopeManagerTest {
 
 		Assert.assertTrue(Validator.isNotNull(dsEnvelope.getDSEnvelopeId()));
 
-		// TODO Clean up
-
+		_dsEnvelopeManager.deleteDSEnvelopes(
+			TestPropsValues.getGroupId(),
+			Collections.singletonList(dsEnvelope.getDSEnvelopeId()));
 	}
 
 	@Test
@@ -106,8 +107,9 @@ public class DSEnvelopeManagerTest {
 
 		Assert.assertEquals(expectedEmailSubject, dsEnvelope.getEmailSubject());
 
-		// TODO Clean up
-
+		_dsEnvelopeManager.deleteDSEnvelopes(
+			TestPropsValues.getGroupId(),
+			Collections.singletonList(dsEnvelope.getDSEnvelopeId()));
 	}
 
 	@Test
@@ -144,8 +146,8 @@ public class DSEnvelopeManagerTest {
 
 		Assert.assertTrue(dsEnvelopes.size() == 2);
 
-		// TODO Clean up
-
+		_dsEnvelopeManager.deleteDSEnvelopes(
+			TestPropsValues.getGroupId(), dsEnvelopeIds);
 	}
 
 	@Inject

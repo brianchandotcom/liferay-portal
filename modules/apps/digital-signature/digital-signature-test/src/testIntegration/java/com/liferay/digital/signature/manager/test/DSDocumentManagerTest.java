@@ -86,8 +86,9 @@ public class DSDocumentManagerTest {
 
 		Assert.assertTrue(ArrayUtil.isNotEmpty(dsDocumentsAsBytes));
 
-		// TODO Clean up
-
+		_dsEnvelopeManager.deleteDSEnvelopes(
+			TestPropsValues.getGroupId(),
+			Collections.singletonList(dsEnvelope.getDSEnvelopeId()));
 	}
 
 	@Inject

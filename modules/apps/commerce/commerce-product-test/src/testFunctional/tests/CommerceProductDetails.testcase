@@ -69,12 +69,52 @@ definition {
 	}
 
 	@description = "COMMERCE-6359. As a buyer, I want to be able to select only the allowed quantities of a product in Product Details, if set"
-	@ignore = "true"
 	@priority = "3"
 	test AssertOnlyAllowedQuantitiesAreSelectableInProductDetails {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#AssertOnlyAllowedQuantitiesAreSelectableInProductDetails";
 
-		// TODO COMMERCE-6359 AssertOnlyAllowedQuantitiesAreSelectableInProductDetails pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Type(
+			key_text = "Allowed Order Quantities",
+			locator1 = "TextInput#ANY",
+			value1 = "1 4 5 7 11");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		var product = "U-Joint";
+
+		Click(
+			key_productName = "${product}",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		for (var quantity : list "1,4,5,7,11") {
+			AssertElementPresent(
+				key_optionValue = "${quantity}",
+				key_productName = "${product}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_OPTION");
+		}
 	}
 
 	@description = "COMMERCE-6363. As a buyer, I want to be able to select the quantity of a product in Product Details by multiple value, if set"

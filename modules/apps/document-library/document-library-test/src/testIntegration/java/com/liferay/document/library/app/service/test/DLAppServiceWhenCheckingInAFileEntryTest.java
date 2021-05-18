@@ -192,7 +192,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			RandomTestUtil.randomString(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(), null, null,
 			new String[] {"tag1", "tag2"});
 
 		ServiceContext serviceContext =

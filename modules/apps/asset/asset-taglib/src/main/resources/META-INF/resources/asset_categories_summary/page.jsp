@@ -32,7 +32,7 @@ if (ListUtil.isEmpty(categories)) {
 
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
 
-List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(PortalUtil.getCurrentAndAncestorSiteGroupIds((assetEntry != null) ? assetEntry.getGroupId() : scopeGroupId));
+List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(SiteConnectedGroupGroupProviderUtil.getCurrentAndAncestorSiteAndDepotGroupIds((assetEntry != null) ? assetEntry.getGroupId() : scopeGroupId));
 
 for (AssetVocabulary vocabulary : vocabularies) {
 	List<AssetCategory> curCategories = _filterCategories(categories, vocabulary, visibleTypes);

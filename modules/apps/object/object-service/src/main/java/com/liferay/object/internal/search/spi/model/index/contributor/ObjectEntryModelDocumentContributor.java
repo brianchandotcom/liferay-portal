@@ -70,7 +70,7 @@ public class ObjectEntryModelDocumentContributor
 		}
 	}
 
-	private void _addNestedField(
+	private void _addField(
 		FieldArray fieldArray, String fieldName, String valueFieldName,
 		String value) {
 
@@ -153,50 +153,50 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		if (indexedAsKeyword) {
-			_addNestedField(
+			_addField(
 				fieldArray, name, "value_keyword",
 				StringUtil.lowerCase(String.valueOf(value)));
 		}
 		else if (value instanceof BigDecimal) {
-			_addNestedField(
+			_addField(
 				fieldArray, name, "value_double", String.valueOf(value));
 		}
 		else if (value instanceof Boolean) {
-			_addNestedField(
+			_addField(
 				fieldArray, name, "value_boolean", String.valueOf(value));
 		}
 		else if (value instanceof Date) {
-			_addNestedField(
+			_addField(
 				fieldArray, name, "value_date", _getDateString(value));
 		}
 		else if (value instanceof Double) {
-			_addNestedField(
+			_addField(
 				fieldArray, name, "value_double", String.valueOf(value));
 		}
 		else if (value instanceof Integer) {
-			_addNestedField(
+			_addField(
 				fieldArray, name, "value_integer", String.valueOf(value));
 		}
 		else if (value instanceof Long) {
-			_addNestedField(
+			_addField(
 				fieldArray, name, "value_long", String.valueOf(value));
 		}
 		else if (value instanceof String) {
 			if (Validator.isBlank(indexedLanguageId)) {
-				_addNestedField(
+				_addField(
 					fieldArray, name, "value_text", (String)value);
 			}
 			else {
-				_addNestedField(
+				_addField(
 					fieldArray, name, "value_" + indexedLanguageId, (String)value);
 
-				_addNestedField(
+				_addField(
 					fieldArray, name, "value_" + indexedLanguageId + "_sortable",
 					(String)value);
 			}
 		}
 		else if (value instanceof byte[]) {
-			_addNestedField(
+			_addField(
 				fieldArray, name, "value_binary",
 				Base64.encode((byte[])value));
 		}

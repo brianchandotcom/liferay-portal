@@ -174,11 +174,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELDSET_CONTAINER</td>
-	<td>//label[normalize-space(text())='${key_fieldsetLabel}']/ancestor::div[contains(@class,'form-group')][position()=1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FORM_FIELD_CONTAINER_FIRST</td>
 	<td>xpath=(//div[contains(@class, 'ddm-field-container')])[1]</td>
 	<td></td>

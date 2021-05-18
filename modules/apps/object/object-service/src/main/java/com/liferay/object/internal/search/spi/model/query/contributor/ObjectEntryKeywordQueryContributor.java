@@ -117,8 +117,10 @@ public class ObjectEntryKeywordQueryContributor
 			return;
 		}
 
+		SearchContext searchContext = keywordQueryContributorHelper.getSearchContext();
+
 		String fieldKeywords = _getKeywords(
-			keywords, keywordQueryContributorHelper.getSearchContext(),
+			keywords, searchContext,
 			objectField.getName());
 
 		if (Validator.isNull(fieldKeywords)) {
@@ -200,8 +202,8 @@ public class ObjectEntryKeywordQueryContributor
 						"nestedFieldArray.value_text", fieldKeywords),
 					BooleanClauseOccur.MUST);
 			}
-			else if (indexedLanguageId.equals(
-						_getLanguageId(keywordQueryContributorHelper.getSearchContext()))) {
+			else if (Objects.equals(
+						indexedLanguageId, _getLanguageId(searchContext))) {
 
 				nestedBooleanQuery.add(
 					new MatchQuery(

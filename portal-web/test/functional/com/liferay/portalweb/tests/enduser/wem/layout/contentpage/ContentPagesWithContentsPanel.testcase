@@ -35,33 +35,120 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-102887. A user can access content in a web content display widget through content panel"
+	@description = "This is a test for LPS-102887. A user can edit displayed content in an Asset Publisher widget through Contents panel."
+	@priority = "4"
+	test EditDisplayedWebContentInAssetPublisher {
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Add an Asset Publisher") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Select the web content as manual selection in Asset Publisher") {
+			AssetPublisherPortlet.configureManualAssetSelectionPG(
+				assetTitle = "WC WebContent Title",
+				assetType = "Basic Web Content");
+		}
+
+		task ("Edit the displayed web content via Contents panel") {
+			Refresh();
+
+			WebContent.editViaContentPanel(
+				webContentContentEdit = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title Edit");
+		}
+
+		task ("View the edited web content shown in Asset Publisher") {
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title Edit",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC WebContent Title Edit");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "WC WebContent Title Edit",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "WC WebContent Content Edit");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the edited web content in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_assetTitle = "WC WebContent Title Edit",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE",
+				value1 = "WC WebContent Title Edit");
+
+			AssertTextEquals.assertPartialText(
+				key_assetTitle = "WC WebContent Title Edit",
+				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				value1 = "WC WebContent Content Edit");
+		}
+	}
+
+	@description = "This is a test for LPS-102887. A user can edit displayed content in a Web Content Display widget through Contents panel."
 	@priority = "5"
-	test AccessToWebContentEditorViaContentsPanel {
+	test EditDisplayedWebContentInWebContentDisplay {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
+		task ("Add a web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Web Content Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addWidget(portletName = "Web Content Display");
+			PageEditor.addWidget(portletName = "Web Content Display");
+		}
 
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+		task ("Select the web content in Web Content Display") {
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+		}
 
-		Refresh();
+		task ("Edit the displayed web content via Contents panel") {
+			Refresh();
 
-		PageEditor.gotoTab(tabName = "Contents");
+			WebContent.editViaContentPanel(
+				webContentContentEdit = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title Edit");
+		}
 
-		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
-			menuItem = "Edit",
-			rowEntry = "WC WebContent Title");
+		task ("View the edited web content in Web Content Display") {
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "WC WebContent Content Edit");
 
-		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+			PageEditor.clickPublish();
+		}
+
+		task ("View the edited web content in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				locator1 = "WCD#WEB_CONTENT_CONTENT",
+				value1 = "WC WebContent Content Edit");
+		}
 	}
 
 	@description = "This is a test for LPS-96794. Mapped Web Contents' state will appear in the sidebar in a Page Editor's edit mode."

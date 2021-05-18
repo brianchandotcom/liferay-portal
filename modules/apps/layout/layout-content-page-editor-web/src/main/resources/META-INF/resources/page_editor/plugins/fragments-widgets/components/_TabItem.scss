@@ -9,7 +9,7 @@
 		transition: transform ease 0.3s;
 		width: calc(50% - 4px);
 
-		&:hover {
+		&:hover:not(.disabled) {
 			box-shadow: 0 4px 8px fade_out($gray-900, 0.9);
 			transform: translateY(-4px);
 		}
@@ -30,7 +30,7 @@
 			.card-type-asset-icon {
 				width: 32px;
 			}
-			
+
 			.lexicon-icon {
 				color: $secondary;
 			}
@@ -58,6 +58,27 @@
 				}
 			}
 		}
+
+		&.disabled {
+			cursor: default;
+			pointer-events: none;
+
+			.image-card .card-item-first {
+				opacity: 0.5;
+			}
+
+			.card {
+				box-shadow: 0 0 0 1px $gray-300;
+
+				.lexicon-icon {
+					color: $secondary-l1;
+				}
+
+				.card-title {
+					color: $secondary-l1;
+				}
+			}
+		}
 	}
 
 	&-list-item {
@@ -82,6 +103,7 @@
 		&.disabled {
 			color: $secondary-l1;
 			cursor: default;
+			pointer-events: none;
 
 			&:hover {
 				background-color: transparent;

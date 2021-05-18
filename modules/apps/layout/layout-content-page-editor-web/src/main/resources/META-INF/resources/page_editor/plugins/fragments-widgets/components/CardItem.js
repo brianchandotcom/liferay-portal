@@ -14,12 +14,18 @@
 
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React from 'react';
 
-const CardItem = React.forwardRef(({item}, ref) => {
+const CardItem = React.forwardRef(({disabled, item}, ref) => {
 	return (
 		<li
-			className="mb-2 page-editor__fragments-widgets__tab-card-item"
+			className={classNames(
+				'mb-2 page-editor__fragments-widgets__tab-card-item',
+				{
+					disabled,
+				}
+			)}
 			ref={ref}
 		>
 			<ClayCard

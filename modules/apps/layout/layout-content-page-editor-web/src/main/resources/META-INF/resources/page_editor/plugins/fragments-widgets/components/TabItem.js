@@ -30,7 +30,7 @@ export default function TabItem({displayStyle, item}) {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const {sourceRef} = useDragSymbol(
+	const {isDraggingSource, sourceRef} = useDragSymbol(
 		{
 			icon: item.icon,
 			label: item.label,
@@ -63,9 +63,17 @@ export default function TabItem({displayStyle, item}) {
 	);
 
 	return displayStyle === FRAGMENTS_DISPLAY_STYLES.CARDS ? (
-		<CardItem item={item} ref={sourceRef} />
+		<CardItem
+			disabled={item.disabled || isDraggingSource}
+			item={item}
+			ref={sourceRef}
+		/>
 	) : (
-		<ListItem item={item} ref={sourceRef} />
+		<ListItem
+			disabled={item.disabled || isDraggingSource}
+			item={item}
+			ref={sourceRef}
+		/>
 	);
 }
 

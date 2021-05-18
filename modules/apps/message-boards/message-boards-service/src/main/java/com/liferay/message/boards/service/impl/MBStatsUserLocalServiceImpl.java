@@ -93,14 +93,6 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStatsUser(long statsUserId) throws PortalException {
-		MBStatsUser statsUser = mbStatsUserPersistence.findByPrimaryKey(
-			statsUserId);
-
-		deleteStatsUser(statsUser);
-	}
-
-	@Override
 	public void deleteStatsUser(MBStatsUser statsUser) {
 		mbStatsUserPersistence.remove(statsUser);
 	}

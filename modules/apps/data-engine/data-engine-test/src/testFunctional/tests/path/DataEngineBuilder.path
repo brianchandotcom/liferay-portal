@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_LABEL_IN_MODAL_INDEXED</td>
+	<td>xpath=(//div[contains(@class,'modal-dialog')]//label[normalize-space(text())='${key_fieldLabel}'] | //div[contains(@class,'modal-dialog')]//legend[normalize-space(text())='${key_fieldLabel}'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_LABEL_INDEXED</td>
 	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}'] | //legend[normalize-space(text())='${key_fieldLabel}'])[${index}]</td>
 	<td></td>

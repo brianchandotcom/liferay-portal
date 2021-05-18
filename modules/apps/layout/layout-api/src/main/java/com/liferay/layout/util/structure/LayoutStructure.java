@@ -509,6 +509,11 @@ public class LayoutStructure {
 				dropZoneItemId = layoutStructureItem.getItemId();
 			}
 
+			if (layoutStructureItem == null) {
+				throw new RuntimeException(
+					"Invalid layoutStructureItem with key: " + entry.getKey());
+			}
+
 			layoutStructureItemsJSONObject.put(
 				entry.getKey(), layoutStructureItem.toJSONObject());
 		}

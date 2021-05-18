@@ -113,8 +113,8 @@ public interface AssetPublisherWebConfiguration {
 	 * @return <code>true</code> autoScroll is enabled.
 	 */
 	@Meta.AD(
-		deflt = "true", description = "enable-autoscroll-key-description",
-		name = "enable-autoscroll", required = false
+		deflt = "true", description = "enable-asset-auto-scroll-description",
+		name = "enable-asset-auto-scroll", required = false
 	)
 	public boolean enableAutoscroll();
 

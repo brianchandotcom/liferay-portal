@@ -32,7 +32,7 @@ export default function FieldsSidebarBody({keywords, setKeywords}) {
 	if (allowFieldSets) {
 		sidebarTabs.push({
 			label: Liferay.Language.get('fieldsets'),
-			render: () => <FieldSetList serachTerm={keywords} />,
+			render: () => <FieldSetList searchTerm={keywords} />,
 		});
 	}
 

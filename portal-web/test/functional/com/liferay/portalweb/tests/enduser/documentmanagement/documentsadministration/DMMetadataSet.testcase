@@ -248,9 +248,7 @@ definition {
 			key_fieldFieldLabel = "Photo",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		AssertElementPresent(
-			key_fieldFieldLabel = "Photo",
-			locator1 = "Icon#ASTERISK_DATE_FIELD");
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Photo");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -334,9 +332,7 @@ definition {
 			key_fieldFieldLabel = "Company",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		AssertElementPresent(
-			key_fieldFieldLabel = "Company",
-			locator1 = "Icon#ASTERISK_DATE_FIELD");
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Company");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -427,9 +423,7 @@ definition {
 			key_fieldFieldLabel = "Resume",
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 
-		AssertElementPresent(
-			key_fieldFieldLabel = "Resume",
-			locator1 = "Icon#ASTERISK_DATE_FIELD");
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Resume");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

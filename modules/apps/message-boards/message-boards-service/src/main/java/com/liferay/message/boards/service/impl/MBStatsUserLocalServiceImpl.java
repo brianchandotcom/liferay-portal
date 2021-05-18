@@ -93,11 +93,6 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStatsUser(MBStatsUser statsUser) {
-		mbStatsUserPersistence.remove(statsUser);
-	}
-
-	@Override
 	public Date getLastPostDateByUserId(long groupId, long userId) {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			MBThread.class, MBStatsUserLocalServiceImpl.class.getClassLoader());

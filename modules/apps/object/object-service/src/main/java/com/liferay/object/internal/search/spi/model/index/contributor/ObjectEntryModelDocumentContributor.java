@@ -211,10 +211,10 @@ public class ObjectEntryModelDocumentContributor
 	}
 
 	private String _getDateString(Object value) {
-		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
 
-		return dateFormat.format(value);
+		return format.format(value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

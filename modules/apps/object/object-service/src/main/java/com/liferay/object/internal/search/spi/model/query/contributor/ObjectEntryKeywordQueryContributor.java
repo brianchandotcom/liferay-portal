@@ -248,7 +248,7 @@ public class ObjectEntryKeywordQueryContributor
 			}
 			else if (Objects.equals(
 						objectField.getIndexedLanguageId(),
-						_getLanguageId(searchContext))) {
+						LocaleUtil.toLanguageId(searchContext.getLocale()))) {
 
 				nestedBooleanQuery.add(
 					new MatchQuery(
@@ -307,10 +307,6 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		return value;
-	}
-
-	private String _getLanguageId(SearchContext searchContext) {
-		return LocaleUtil.toLanguageId(searchContext.getLocale());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

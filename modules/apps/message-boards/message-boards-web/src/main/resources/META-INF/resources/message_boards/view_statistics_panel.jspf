@@ -82,7 +82,53 @@
 			keyProperty="statsUserId"
 			modelVar="statsUser"
 		>
-			<%@ include file="/message_boards/top_posters_user_display.jspf" %>
+
+			<%
+			User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
+			%>
+
+			<c:if test="<%= topUser != null %>">
+				<liferay-ui:search-container-column-text>
+					<liferay-ui:user-portrait
+						userId="<%= statsUser.getUserId() %>"
+					/>
+				</liferay-ui:search-container-column-text>
+
+				<%
+				String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), statsUser.getUserId());
+				%>
+
+				<liferay-ui:search-container-column-text
+					colspan="<%= 2 %>"
+				>
+					<p class="list-group-title">
+						<%= HtmlUtil.escape(topUser.getFullName()) %>
+					</p>
+
+					<c:if test="<%= Validator.isNotNull(ranks[0]) %>">
+						<p class="list-group-subtitle"><liferay-ui:message key="rank" />: <%= HtmlUtil.escape(ranks[0]) %></p>
+					</c:if>
+
+					<p class="list-group-subtitle">
+						<c:choose>
+							<c:when test="<%= statsUser.getMessageCount() == 1 %>">
+								<liferay-ui:message key="post" />: <%= statsUser.getMessageCount() %>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="posts" />: <%= statsUser.getMessageCount() %>
+							</c:otherwise>
+						</c:choose>
+					</p>
+
+					<p class="list-group-subtitle">
+						<liferay-ui:message key="join-date" />: <%= dateFormatDate.format(topUser.getCreateDate()) %>
+					</p>
+
+					<p class="list-group-subtitle">
+						<liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
+					</p>
+				</liferay-ui:search-container-column-text>
+			</c:if>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

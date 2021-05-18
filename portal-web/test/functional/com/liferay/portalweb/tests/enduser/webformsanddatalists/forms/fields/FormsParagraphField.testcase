@@ -302,10 +302,13 @@ definition {
 
 		FormsAdminNavigator.gotoAddForm();
 
+
 		Form.editName(formName = "Form 1");
+
 
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
+
 			fieldType = "Paragraph");
 
 		FormFields.editParagraphBody(content = "Test");
@@ -313,12 +316,13 @@ definition {
 		Form.save();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Paragraph");
+		
 
 		FormFields.editParagraphBody(content = "Test Body Text");
 
 		Click(
 			key_titleName = "Undo",
-			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 
 		AssertElementPresent(
 			key_fieldName = "Paragraph",
@@ -327,7 +331,7 @@ definition {
 
 		Click(
 			key_titleName = "Redo",
-			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 
 		AssertElementPresent(
 			key_fieldName = "Paragraph",

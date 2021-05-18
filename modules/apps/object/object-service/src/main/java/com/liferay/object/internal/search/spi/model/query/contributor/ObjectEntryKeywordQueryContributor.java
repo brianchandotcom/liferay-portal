@@ -156,7 +156,7 @@ public class ObjectEntryKeywordQueryContributor
 		}
 		else if (Objects.equals(objectField.getType(), "Blob")) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Blob field " + objectField.getName() + " is not searchable");
+				_log.debug("Blob field " + objectField.getName() + " is not indexable");
 			}
 		}
 		else if (Objects.equals(objectField.getType(), "Boolean")) {

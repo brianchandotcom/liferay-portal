@@ -32,6 +32,7 @@ import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -107,6 +109,16 @@ public class GetPageContentMVCResourceCommandTest {
 
 	@Test
 	public void testCollectionMapping() throws Exception {
+		String pid =
+			"com.liferay.layout.content.page.editor.web.internal." +
+				"configuration.FFLayoutContentPageEditorConfiguration";
+
+		ConfigurationTestUtil.saveConfiguration(
+			pid,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"contentBrowsingEnabled", true
+			).build());
+
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addDynamicAssetListEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),

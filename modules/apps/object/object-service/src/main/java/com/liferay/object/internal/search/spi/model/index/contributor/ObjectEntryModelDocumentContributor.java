@@ -39,6 +39,7 @@ import java.text.Format;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -135,12 +136,9 @@ public class ObjectEntryModelDocumentContributor
 			return;
 		}
 
-		boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
-		String indexedLanguageId = objectField.getIndexedLanguageId();
-		String type = objectField.getType();
-
-		if ((!type.equals("String") || indexedAsKeyword) &&
-			!Validator.isBlank(indexedLanguageId)) {
+		if ((!Objects.equals(objectField.getType(), "String") ||
+			 objectField.isIndexedAsKeyword()) &&
+			!Validator.isBlank(objectField.getIndexedLanguageId())) {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
@@ -148,11 +146,11 @@ public class ObjectEntryModelDocumentContributor
 						"Object entry ", objectEntry.getObjectEntryId(),
 						" has field \"", name,
 						"\" which is not indexed as full-text. Locale ",
-						indexedLanguageId, " will be ignored"));
+						objectField.getIndexedLanguageId(), " will be ignored"));
 			}
 		}
 
-		if (indexedAsKeyword) {
+		if (objectField.isIndexedAsKeyword()) {
 			_addField(
 				fieldArray, name, "value_keyword",
 				StringUtil.lowerCase(String.valueOf(value)));
@@ -182,15 +180,15 @@ public class ObjectEntryModelDocumentContributor
 				fieldArray, name, "value_long", String.valueOf(value));
 		}
 		else if (value instanceof String) {
-			if (Validator.isBlank(indexedLanguageId)) {
+			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
 				_addField(
 					fieldArray, name, "value_text", (String)value);
 			}
 			else {
 				_addField(
-					fieldArray, name, "value_" + indexedLanguageId, (String)value);
+					fieldArray, name, "value_" + objectField.getIndexedLanguageId(), (String)value);
 				_addField(
-					fieldArray, name, "value_" + indexedLanguageId + "_sortable",
+					fieldArray, name, "value_" + objectField.getIndexedLanguageId() + "_sortable",
 					(String)value);
 			}
 		}

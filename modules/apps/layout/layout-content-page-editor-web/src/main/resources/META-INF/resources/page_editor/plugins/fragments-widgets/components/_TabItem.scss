@@ -61,7 +61,6 @@
 
 		&.disabled {
 			cursor: default;
-			pointer-events: none;
 
 			.image-card .card-item-first {
 				opacity: 0.5;
@@ -90,20 +89,18 @@
 		height: 32px;
 		margin-bottom: 4px;
 		padding: 0 4px 0 12px;
+		transition: transform ease 0.3s;
 		width: 100%;
 
-		&:hover {
-			background-color: $gray-100;
-
-			.preview-icon {
-				opacity: 1;
-			}
+		&:hover:not(.disabled) {
+			box-shadow: 0 0 0 2px $primary-l1,
+				0 4px 8px fade_out($gray-900, 0.9);
+			transform: translateX(-4px);
 		}
 
 		&.disabled {
 			color: $secondary-l1;
 			cursor: default;
-			pointer-events: none;
 
 			&:hover {
 				background-color: transparent;

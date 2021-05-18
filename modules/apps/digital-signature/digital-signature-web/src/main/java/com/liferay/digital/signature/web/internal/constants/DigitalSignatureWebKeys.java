@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<div id="digital-signature-root">
-	<h1>Digital Signature</h1>
-</div>
+package com.liferay.digital.signature.web.internal.constants;
+
+/**
+ * @author Keven Leone
+ */
+public class DigitalSignatureWebKeys {
+
+	public static final String DIGITAL_SIGNATURE_TITLE =
+		"DIGITAL_SIGNATURE_TITLE";
+
+}

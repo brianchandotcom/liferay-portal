@@ -186,8 +186,8 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	protected SPIDDMFormRuleCondition createDDMFormRuleCondition(
 		String functionName, List<SPIDDMFormRuleCondition.Operand> operands) {
 
-		String functionNameOperator = _functionNameOperatorMap.get(
-			functionName);
+		String functionNameOperator = _functionNameOperatorMap.getOrDefault(
+			functionName, functionName);
 
 		return new SPIDDMFormRuleCondition(functionNameOperator, operands);
 	}

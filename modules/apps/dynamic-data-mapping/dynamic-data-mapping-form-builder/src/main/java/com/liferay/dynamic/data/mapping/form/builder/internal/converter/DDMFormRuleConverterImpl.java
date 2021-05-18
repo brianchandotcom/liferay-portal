@@ -93,12 +93,10 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 
 		String operator = spiDDMFormRuleCondition.getOperator();
 
-		String functionName = _operatorFunctionNameMap.get(operator);
-
 		List<SPIDDMFormRuleCondition.Operand> operands =
 			spiDDMFormRuleCondition.getOperands();
 
-		if (functionName == null) {
+		if (_operatorMap.containsKey(operator)) {
 			if (operands.size() < 2) {
 				return StringPool.BLANK;
 			}
@@ -107,6 +105,9 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 				_COMPARISON_EXPRESSION_FORMAT, convertOperand(operands.get(0)),
 				_operatorMap.get(operator), convertOperand(operands.get(1)));
 		}
+
+		String functionName = _operatorFunctionNameMap.getOrDefault(
+			operator, operator);
 
 		String condition = createCondition(functionName, operands);
 

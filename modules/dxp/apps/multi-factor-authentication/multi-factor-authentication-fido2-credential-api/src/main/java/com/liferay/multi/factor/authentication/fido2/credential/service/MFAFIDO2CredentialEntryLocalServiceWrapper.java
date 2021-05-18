@@ -152,6 +152,13 @@ public class MFAFIDO2CredentialEntryLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _mfaFIDO2CredentialEntryLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _mfaFIDO2CredentialEntryLocalService.dynamicQuery();
 	}

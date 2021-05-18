@@ -216,6 +216,14 @@ public class CommerceNotificationQueueEntryLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceNotificationQueueEntryLocalService.dslQueryCount(
+			dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceNotificationQueueEntryLocalService.dynamicQuery();
 	}

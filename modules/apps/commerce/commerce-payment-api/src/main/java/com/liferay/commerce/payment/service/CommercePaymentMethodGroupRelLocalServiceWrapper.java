@@ -206,6 +206,14 @@ public class CommercePaymentMethodGroupRelLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commercePaymentMethodGroupRelLocalService.dslQueryCount(
+			dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commercePaymentMethodGroupRelLocalService.dynamicQuery();
 	}

@@ -165,6 +165,13 @@ public class CPDAvailabilityEstimateLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _cpdAvailabilityEstimateLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _cpdAvailabilityEstimateLocalService.dynamicQuery();
 	}

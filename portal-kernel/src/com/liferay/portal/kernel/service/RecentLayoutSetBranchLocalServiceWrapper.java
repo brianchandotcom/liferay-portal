@@ -157,6 +157,13 @@ public class RecentLayoutSetBranchLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _recentLayoutSetBranchLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _recentLayoutSetBranchLocalService.dynamicQuery();
 	}

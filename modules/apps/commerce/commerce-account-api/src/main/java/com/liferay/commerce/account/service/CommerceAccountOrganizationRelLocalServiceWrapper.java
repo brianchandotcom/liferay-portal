@@ -199,6 +199,14 @@ public class CommerceAccountOrganizationRelLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _commerceAccountOrganizationRelLocalService.dslQueryCount(
+			dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _commerceAccountOrganizationRelLocalService.dynamicQuery();
 	}

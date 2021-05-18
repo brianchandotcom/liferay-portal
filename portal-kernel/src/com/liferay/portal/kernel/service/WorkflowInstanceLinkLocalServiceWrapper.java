@@ -165,6 +165,13 @@ public class WorkflowInstanceLinkLocalServiceWrapper
 	}
 
 	@Override
+	public int dslQueryCount(
+		com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
+
+		return _workflowInstanceLinkLocalService.dslQueryCount(dslQuery);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _workflowInstanceLinkLocalService.dynamicQuery();
 	}

@@ -13,12 +13,14 @@
 	z-index: $dragPreviewLayer;
 
 	&__content {
-		background-color: $white;
+		align-items: center;
+		background-color: transparentize($white, 0.3);
+		border: 1px solid $gray-500;
 		border-radius: 4px;
 		box-shadow: 0 8px 16px rgba(39, 40, 51, 0.16);
 		color: $secondary-d2;
 		cursor: grabbing;
-		display: block;
+		display: flex;
 		font-family: $font-family-base;
 		font-size: 12px;
 		font-weight: 600;

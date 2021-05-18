@@ -71,7 +71,7 @@ export default function DragPreview() {
 					Liferay.Language.direction[languageId] === 'rtl'
 				)}
 			>
-				{item?.icon && <ClayIcon symbol={item.icon} />}
+				{item?.icon && <ClayIcon className="mt-0" symbol={item.icon} />}
 				{item?.name ? item.name : Liferay.Language.get('element')}
 			</div>
 		</div>

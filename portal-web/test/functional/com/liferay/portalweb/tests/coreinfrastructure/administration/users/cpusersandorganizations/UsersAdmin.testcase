@@ -1783,6 +1783,23 @@ definition {
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME");
 	}
 
+	@priority = "3"
+	test TestRequiredFields {
+		User.openUsersAdmin();
+
+		LexiconEntry.gotoAdd();
+
+		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
+			FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "${fieldFieldLabel}");
+		}
+
+		Button.clickSave();
+
+		for (var fieldFieldLabel : list "Screen Name,Email Address,First Name,Last Name") {
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "${fieldFieldLabel}");
+		}
+	}
+
 	@description = "This is a use case for LPS-104643."
 	@priority = "3"
 	test UpdateExistUserEmailAddressByScript {

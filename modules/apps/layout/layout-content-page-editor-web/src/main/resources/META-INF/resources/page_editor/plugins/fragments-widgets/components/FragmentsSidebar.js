@@ -24,6 +24,8 @@ import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import SearchResultsPanel from './SearchResultsPanel';
 import TabsPanel from './TabsPanel';
 
+const FRAGMENTS_DISPLAY_STYLE_KEY = 'FRAGMENTS_DISPLAY_STYLE_KEY';
+
 const collectionFilter = (collections, searchValue) => {
 	const searchValueLowerCase = searchValue.toLowerCase();
 
@@ -121,7 +123,8 @@ export default function FragmentsSidebar() {
 	const widgets = useSelector((state) => state.widgets);
 
 	const [displayStyle, setDisplayStyle] = useState(
-		FRAGMENTS_DISPLAY_STYLES.LIST
+		window.sessionStorage.getItem(FRAGMENTS_DISPLAY_STYLE_KEY) ||
+			FRAGMENTS_DISPLAY_STYLES.LIST
 	);
 
 	const [searchValue, setSearchValue] = useState('');
@@ -179,15 +182,21 @@ export default function FragmentsSidebar() {
 
 					<ClayButtonWithIcon
 						borderless
-						className="lfr-portal-tooltip ml-3 mt-0"
+						className="lfr-portal-tooltip ml-2 mt-0"
 						displayType="secondary"
-						onClick={() =>
-							setDisplayStyle(
+						onClick={() => {
+							const nextDisplayStyle =
 								displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
 									? FRAGMENTS_DISPLAY_STYLES.CARDS
-									: FRAGMENTS_DISPLAY_STYLES.LIST
-							)
-						}
+									: FRAGMENTS_DISPLAY_STYLES.LIST;
+
+							setDisplayStyle(nextDisplayStyle);
+
+							window.sessionStorage.setItem(
+								FRAGMENTS_DISPLAY_STYLE_KEY,
+								nextDisplayStyle
+							);
+						}}
 						small
 						symbol={
 							displayStyle === FRAGMENTS_DISPLAY_STYLES.CARDS

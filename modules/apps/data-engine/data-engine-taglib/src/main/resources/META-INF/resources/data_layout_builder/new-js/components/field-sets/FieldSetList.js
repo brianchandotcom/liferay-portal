@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import {
 	EVENT_TYPES,
-	useConfig,
 	useForm,
 	useFormState,
 } from 'data-engine-js-components-web';
@@ -26,7 +25,6 @@ import {useNewDeleteFieldSet} from '../../../js/components/field-sets/actions/us
 import usePropagateFieldSet from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
 import FieldType from '../../../js/components/field-types/FieldType.es';
 import {DRAG_FIELDSET_ADD} from '../../../js/drag-and-drop/dragTypes.es';
-import {getDataDefinitionFieldSet} from '../../../js/utils/dataConverter.es';
 import {getLocalizedValue, getPluralMessage} from '../../../js/utils/lang.es';
 import {getSearchRegex} from '../../../js/utils/search.es';
 import FieldSetModal from './FieldSetModal';
@@ -50,23 +48,12 @@ function getFilteredFieldsets(fieldsets, keywords) {
 }
 
 export default function FieldSetList({searchTerm}) {
-	const [modalState, setModalState] = useState({
-		isVisible: false,
-	});
-	const {
-		activePage,
-		availableLanguageIds,
-		defaultLanguageId,
-		editingLanguageId,
-		fieldSets,
-		pages,
-	} = useFormState();
-
+	const [modalState, setModalState] = useState({isVisible: false});
+	const {fieldSets} = useFormState();
 	const {dataDefinition} = useFormState({schema: ['dataDefinition']});
-
-	const {allowInvalidAvailableLocalesForProperty, fieldTypes} = useConfig();
 	const dispatch = useForm();
-
+	const deleteFieldSet = useNewDeleteFieldSet();
+	const propagateFieldSet = usePropagateFieldSet();
 	const filteredFieldsets = getFilteredFieldsets(fieldSets, searchTerm);
 
 	const fieldSetsInUse = new Set();
@@ -83,31 +70,6 @@ export default function FieldSetList({searchTerm}) {
 			fieldSet,
 			isVisible: !isVisible,
 		}));
-	};
-
-	const deleteFieldSet = useNewDeleteFieldSet();
-
-	const propagateFieldSet = usePropagateFieldSet();
-
-	const onDoubleClick = ({fieldSet}) => {
-		dispatch({
-			payload: {
-				indexes: {
-					columnIndex: 0,
-					pageIndex: activePage,
-					rowIndex: pages[activePage].rows.length,
-				},
-				...getDataDefinitionFieldSet({
-					allowInvalidAvailableLocalesForProperty,
-					availableLanguageIds,
-					defaultLanguageId,
-					editingLanguageId,
-					fieldSet,
-					fieldTypes,
-				}),
-			},
-			type: EVENT_TYPES.FIELD_SET.ADD,
-		});
 	};
 
 	const CreateNewFieldsetButton = () => (
@@ -169,6 +131,12 @@ export default function FieldSetList({searchTerm}) {
 								fieldSet.defaultLanguageId,
 								fieldSet.name
 							);
+							const onDoubleClick = () => {
+								dispatch({
+									payload: {fieldSet},
+									type: EVENT_TYPES.FIELD_SET.ADD,
+								});
+							};
 
 							return (
 								<FieldType

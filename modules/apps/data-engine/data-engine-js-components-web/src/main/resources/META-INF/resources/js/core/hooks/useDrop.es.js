@@ -131,7 +131,7 @@ export const useDrop = ({
 	rowIndex,
 }) => {
 	const {editingLanguageId} = useFormState();
-	const {allowInvalidAvailableLocalesForProperty, fieldTypes} = useConfig();
+	const {fieldTypes} = useConfig();
 
 	const dispatch = useForm();
 
@@ -260,25 +260,13 @@ export const useDrop = ({
 				case DRAG_FIELDSET_ADD: {
 					const {fieldSet, properties, useFieldName} = data;
 
-					const {availableLanguageIds, defaultLanguageId} = fieldSet;
-
 					dispatch({
 						payload: {
-							availableLanguageIds,
-							defaultLanguageId,
-							fieldName: field?.fieldName,
+							fieldSet,
 							indexes,
 							parentFieldName: parentField?.fieldName,
 							properties,
 							useFieldName,
-							...DataConverter.getDataDefinitionFieldSet({
-								allowInvalidAvailableLocalesForProperty,
-								availableLanguageIds,
-								defaultLanguageId,
-								editingLanguageId,
-								fieldSet,
-								fieldTypes,
-							}),
 						},
 						type: EVENT_TYPES.FIELD_SET.ADD,
 					});

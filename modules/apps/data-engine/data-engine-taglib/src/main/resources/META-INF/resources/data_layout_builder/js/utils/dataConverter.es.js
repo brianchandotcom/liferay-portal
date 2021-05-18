@@ -16,40 +16,7 @@ import {PagesVisitor} from 'data-engine-js-components-web';
 import {FieldSupport} from 'dynamic-data-mapping-form-builder';
 
 import {getDataDefinitionField as getDataDefinitionFieldUtils} from './dataDefinition.es';
-import {
-	normalizeDataDefinition,
-	normalizeDataLayout,
-	normalizeDataLayoutRows,
-} from './normalizers.es';
-
-export function getDataDefinitionFieldSet({
-	allowInvalidAvailableLocalesForProperty,
-	availableLanguageIds = [],
-	defaultLanguageId,
-	editingLanguageId,
-	fieldSet,
-	fieldTypes,
-}) {
-	if (!availableLanguageIds.includes(defaultLanguageId)) {
-		availableLanguageIds = [...availableLanguageIds, defaultLanguageId];
-	}
-
-	const {dataLayoutPages} =
-		fieldSet.defaultDataLayout || getDefaultDataLayout(fieldSet);
-
-	const fieldSetDDMForm = getFieldSetDDMForm({
-		allowInvalidAvailableLocalesForProperty,
-		availableLanguageIds,
-		editingLanguageId,
-		fieldSet,
-		fieldTypes,
-	});
-
-	return {
-		fieldSet: fieldSetDDMForm,
-		rows: fieldSet.id && normalizeDataLayoutRows(dataLayoutPages),
-	};
-}
+import {normalizeDataDefinition, normalizeDataLayout} from './normalizers.es';
 
 export function getDDMFormField({
 	dataDefinition,
@@ -117,7 +84,7 @@ export function getDDMFormField({
 export function getDDMFormFieldSettingsContext({
 	dataDefinitionField,
 	defaultLanguageId = themeDisplay.getDefaultLanguageId(),
-	editingLanguageId = themeDisplay.getDefaultLanguageId(),
+	editingLanguageId = defaultLanguageId,
 	fieldTypes,
 }) {
 	const {settingsContext} = fieldTypes.find(({name}) => {
@@ -365,22 +332,45 @@ export function getFieldSetDDMForm({
 }) {
 	const {defaultDataLayout, defaultLanguageId} = fieldSet;
 
-	const newDataDefinition = allowInvalidAvailableLocalesForProperty
-		? fieldSet
-		: normalizeDataDefinition(fieldSet, defaultLanguageId);
-
-	const fieldSetDataLayout = normalizeDataLayout(
+	const {dataLayoutPages} = normalizeDataLayout(
 		defaultDataLayout,
 		defaultLanguageId
 	);
 
-	return _getDDMForm({
-		dataDefinition: newDataDefinition,
-		dataLayout: fieldSetDataLayout,
-		defaultLanguageId,
-		editingLanguageId: editingLanguageId ?? defaultLanguageId,
-		fieldTypes,
-	});
+	const dataDefinition = allowInvalidAvailableLocalesForProperty
+		? fieldSet
+		: normalizeDataDefinition(fieldSet, defaultLanguageId);
+
+	const pages = dataLayoutPages.map((dataLayoutPage) => ({
+		rows: dataLayoutPage.dataLayoutRows.map((dataLayoutRow) => ({
+			columns: dataLayoutRow.dataLayoutColumns.map(
+				({columnSize, fieldNames}) => ({
+					fields: fieldNames.map((fieldName) =>
+						getDDMFormField({
+							dataDefinition,
+							defaultLanguageId,
+							editingLanguageId,
+							fieldName,
+							fieldTypes,
+						})
+					),
+					size: columnSize,
+				})
+			),
+		})),
+	}));
+
+	const {description, id, name} = dataDefinition;
+
+	return {
+		description:
+			description[editingLanguageId] ?? description[defaultLanguageId],
+		id,
+		localizedDescription: description,
+		localizedTitle: name,
+		pages,
+		title: name[editingLanguageId] ?? name[defaultLanguageId],
+	};
 }
 
 export function getFormData({
@@ -485,42 +475,6 @@ function _getDataDefinitionFieldPropertyValue(
 	}
 
 	return dataDefinitionField[propertyName];
-}
-
-function _getDDMForm({
-	dataDefinition,
-	dataLayout = getDefaultDataLayout(dataDefinition),
-	defaultLanguageId: fieldSetDefaultLanguageId,
-	editingLanguageId,
-	fieldTypes,
-}) {
-	const {defaultLanguageId, name} = dataDefinition;
-
-	return {
-		description: dataDefinition.description[editingLanguageId],
-		id: dataDefinition.id,
-		localizedDescription: dataDefinition.description,
-		localizedTitle: name,
-		pages: dataLayout.dataLayoutPages.map((dataLayoutPage) => ({
-			rows: dataLayoutPage.dataLayoutRows.map((dataLayoutRow) => ({
-				columns: dataLayoutRow.dataLayoutColumns.map(
-					({columnSize, fieldNames}) => ({
-						fields: fieldNames.map((fieldName) =>
-							getDDMFormField({
-								dataDefinition,
-								defaultLanguageId: fieldSetDefaultLanguageId,
-								editingLanguageId,
-								fieldName,
-								fieldTypes,
-							})
-						),
-						size: columnSize,
-					})
-				),
-			})),
-		})),
-		title: name[editingLanguageId] || name[defaultLanguageId],
-	};
 }
 
 function _isCustomProperty(name) {

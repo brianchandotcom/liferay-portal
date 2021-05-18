@@ -1182,6 +1182,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle.setCreateDate(oldKBArticle.getCreateDate());
 			kbArticle.setRootResourcePrimKey(
 				oldKBArticle.getRootResourcePrimKey());
+			kbArticle.setExternalReferenceCode(
+				oldKBArticle.getExternalReferenceCode());
 			kbArticle.setParentResourceClassNameId(
 				oldKBArticle.getParentResourceClassNameId());
 			kbArticle.setParentResourcePrimKey(

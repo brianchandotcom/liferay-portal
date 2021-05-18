@@ -153,6 +153,16 @@ definition {
 			value1 = "${templateName}");
 	}
 
+	macro openToAddBasicArticle {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_ddmStructureKey=BASIC-WEB-CONTENT");
+	}
+
 	macro openWebContentAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = "${baseURL}",

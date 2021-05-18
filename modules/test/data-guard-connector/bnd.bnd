@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Data Guard Connector
+Bundle-SymbolicName: com.liferay.data.guard.connector
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.portal.kernel.test,\
+	\
+	*
+-includeresource:\
+	@com.liferay.portal.test-*.jar!/com/liferay/portal/kernel/test/rule/DataGuardTestRuleUtil.class,\
+	@com.liferay.portal.test-*.jar!/com/liferay/portal/kernel/test/rule/DataGuardTestRuleUtil$DataBag.class,\
+	@com.liferay.portal.test-*.jar!/com/liferay/portal/kernel/test/rule/DataGuardTestRuleUtil$RecordingSessionCustomizer.class,\
+	@com.liferay.portal.test-*.jar!/com/liferay/portal/kernel/test/rule/DataGuardTestRuleUtil$RecordingSessionWrapper.class

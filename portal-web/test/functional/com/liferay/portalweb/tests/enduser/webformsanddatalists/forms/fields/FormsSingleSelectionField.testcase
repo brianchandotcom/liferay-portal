@@ -87,13 +87,45 @@ definition {
 	}
 
 	@description = "Verify that a Single Selection Field can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132190 CanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Click(
+			key_name = "Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.editFieldLabelMetal(fieldValue = "Test Single Selection");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertElementPresent(
+			key_name = "Test Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
 	}
 
 	@description = "Verify that a Single Selection Field can be required"

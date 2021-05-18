@@ -37,7 +37,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.wiki.constants.WikiConstants;
-import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiNodeService;
 
@@ -63,7 +62,8 @@ public class WikiNodeResourceImpl
 		throws Exception {
 
 		com.liferay.wiki.model.WikiNode wikiNode =
-			_getWikiNodeByExternalReferenceCode(siteId, externalReferenceCode);
+			_wikiNodeLocalService.getWikiNodeByExternalReferenceCode(
+				siteId, externalReferenceCode);
 
 		_wikiNodeService.deleteNode(wikiNode.getNodeId());
 	}
@@ -83,10 +83,9 @@ public class WikiNodeResourceImpl
 			Long siteId, String externalReferenceCode)
 		throws Exception {
 
-		com.liferay.wiki.model.WikiNode wikiNode =
-			_getWikiNodeByExternalReferenceCode(siteId, externalReferenceCode);
-
-		return _toWikiNode(wikiNode);
+		return _toWikiNode(
+			_wikiNodeLocalService.getWikiNodeByExternalReferenceCode(
+				siteId, externalReferenceCode));
 	}
 
 	@Override
@@ -197,23 +196,6 @@ public class WikiNodeResourceImpl
 	@Override
 	protected String getPermissionCheckerResourceName(Object id) {
 		return com.liferay.wiki.model.WikiNode.class.getName();
-	}
-
-	private com.liferay.wiki.model.WikiNode _getWikiNodeByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
-		throws Exception {
-
-		com.liferay.wiki.model.WikiNode wikiNode =
-			_wikiNodeLocalService.fetchWikiNodeByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		if (wikiNode == null) {
-			throw new NoSuchNodeException(
-				"No wiki node exists with external reference code " +
-					externalReferenceCode);
-		}
-
-		return wikiNode;
 	}
 
 	private WikiNode _toWikiNode(com.liferay.wiki.model.WikiNode wikiNode)

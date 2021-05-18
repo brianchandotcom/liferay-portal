@@ -55,7 +55,6 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPageConstants;
-import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -88,7 +87,8 @@ public class WikiPageResourceImpl
 		throws Exception {
 
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_getWikiPageByExternalReferenceCode(siteId, externalReferenceCode);
+			_wikiPageService.getLatestPageByExternalReferenceCode(
+				siteId, externalReferenceCode);
 
 		_wikiPageService.deletePage(wikiPage.getNodeId(), wikiPage.getTitle());
 	}
@@ -117,7 +117,8 @@ public class WikiPageResourceImpl
 		throws Exception {
 
 		return _toWikiPage(
-			_getWikiPageByExternalReferenceCode(siteId, externalReferenceCode));
+			_wikiPageService.getLatestPageByExternalReferenceCode(
+				siteId, externalReferenceCode));
 	}
 
 	@Override
@@ -359,23 +360,6 @@ public class WikiPageResourceImpl
 			com.liferay.wiki.model.WikiPage.class.getName(),
 			contextCompany.getCompanyId(), wikiPage.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private com.liferay.wiki.model.WikiPage _getWikiPageByExternalReferenceCode(
-			long siteId, String externalReferenceCode)
-		throws Exception {
-
-		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.fetchLatestPageByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		if (wikiPage == null) {
-			throw new NoSuchPageException(
-				"No wiki page exists with external reference code " +
-					externalReferenceCode);
-		}
-
-		return wikiPage;
 	}
 
 	private WikiPage _toWikiPage(com.liferay.wiki.model.WikiPage wikiPage)

@@ -234,21 +234,62 @@ definition {
 	@description = "This is a test for LPS-131787. View the order of web content actions."
 	@priority = "5"
 	test ViewOrderOfWebContentActions {
-		task ("Add a web content based on Basic Web Content") {
+		task ("Add a published web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Test Site Name",
-				title = "WC WebContent Title");
+				title = "Published WebContent Title");
 		}
 
-		task ("Assert if the Web Content Actions are in the right order") {
+		task ("Add a draft web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "Draft WebContent Title",
+				workflowAction = "DRAFT");
+		}
+
+		task ("Add an expired web content based on Basic Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "Expired WebContent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
+			WebContent.expireCP(webContentTitleList = "Expired WebContent Title");
+		}
+
+		task ("Assert the actions order of published web content") {
 			Click(
-				key_webContentTitle = "WC WebContent Title",
+				key_webContentTitle = "Published WebContent Title",
 				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
 
-			MenuItem.viewOrderMenuActionOnWebContent(listMenuItemNames = "Edit,Translate,Preview,-,Expire,Subscribe,View History,View Usages,-,Copy,Move,Export for Translation,Import Translation,-,Permissions,-,Move to Recycle Bin");
+			MenuItem.viewOrder(menuItemList = "Edit,Translate,Preview,-,Expire,Subscribe,View History,View Usages,-,Copy,Move,Export for Translation,Import Translation,-,Permissions,-,Move to Recycle Bin");
+
+			Click(
+				key_webContentTitle = "Published WebContent Title",
+				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+		}
+
+		task ("Assert the actions order of draft web content") {
+			Click(
+				key_webContentTitle = "Draft WebContent Title",
+				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+			MenuItem.viewOrder(menuItemList = "Edit,Translate,Preview Draft,-,Subscribe,View History,View Usages,-,Copy,Move,Export for Translation,Import Translation,-,Permissions,-,Move to Recycle Bin");
+
+			Click(
+				key_webContentTitle = "Draft WebContent Title",
+				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+		}
+
+		task ("Assert the actions order of expired web content") {
+			Click(
+				key_webContentTitle = "Expired WebContent Title",
+				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+			MenuItem.viewOrder(menuItemList = "Edit,Translate,Preview,-,Subscribe,View History,View Usages,-,Copy,Move,Export for Translation,Import Translation,-,Permissions,-,Move to Recycle Bin");
 		}
 	}
 

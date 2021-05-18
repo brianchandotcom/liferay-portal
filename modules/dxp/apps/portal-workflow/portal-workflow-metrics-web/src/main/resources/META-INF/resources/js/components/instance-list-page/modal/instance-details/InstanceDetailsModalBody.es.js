@@ -33,10 +33,26 @@ function Body({
 	slaResults = [],
 	taskNames = [],
 }) {
-	const SLAs = {open: [], resolved: []};
+	const SLAs = {notStarted: [], open: [], resolved: []};
 
 	slaResults.forEach((result) => {
-		SLAs[result.status === 'STOPPED' ? 'resolved' : 'open'].push(result);
+		let slaGroup = '';
+
+		switch (result.status) {
+			case 'NEW': {
+				slaGroup = 'notStarted';
+				break;
+			}
+			case 'STOPPED': {
+				slaGroup = 'resolved';
+				break;
+			}
+			default: {
+				slaGroup = 'open';
+			}
+		}
+
+		SLAs[slaGroup].push(result);
 	});
 
 	const statesProps = {
@@ -90,6 +106,18 @@ function Body({
 				)}
 
 				{SLAs.resolved.map((item) => (
+					<Body.SLAResultItem key={item.id} {...item} />
+				))}
+
+				{SLAs.notStarted.length > 0 && (
+					<Body.SectionSubTitle>
+						{`${Liferay.Language.get(
+							'not-started'
+						).toUpperCase()} (${SLAs.notStarted.length})`}
+					</Body.SectionSubTitle>
+				)}
+
+				{SLAs.notStarted.map((item) => (
 					<Body.SLAResultItem key={item.id} {...item} />
 				))}
 
@@ -204,12 +232,26 @@ function SectionAttribute({description, detail}) {
 	);
 }
 
+function getResultItemInfo({onTime, status}) {
+	if (status === 'NEW') {
+		return {bgColor: 'text-info', iconName: 'hr'};
+	}
+
+	if (onTime) {
+		return {bgColor: 'success', iconName: 'check-circle'};
+	}
+
+	return {bgColor: 'danger', iconName: 'exclamation-circle'};
+}
+
 function SLAResultItem({dateOverdue, name, onTime, remainingTime, status}) {
-	const bgColor = onTime ? 'success' : 'danger';
-	const iconName = onTime ? 'check-circle' : 'exclamation-circle';
+	const {bgColor, iconName} = getResultItemInfo({onTime, status});
 
 	const getStatusText = (status) => {
 		switch (status) {
+			case 'NEW': {
+				return `(${Liferay.Language.get('untracked')})`;
+			}
 			case 'PAUSED': {
 				return `(${Liferay.Language.get('sla-paused')})`;
 			}

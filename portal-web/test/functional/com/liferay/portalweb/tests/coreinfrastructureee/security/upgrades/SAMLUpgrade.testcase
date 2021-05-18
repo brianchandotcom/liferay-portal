@@ -32,6 +32,16 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewSAMLConfigurationAfterUpgrade70106 {
+		property data.archive.type = "data-archive-saml";
+		property portal.version = "7.0.10.6";
+
+		Upgrade.viewSAMLGeneralConfiguration(samlRoleType = "Identity Provider");
+
+		Upgrade.viewSAMLSPConnectionConfiguration();
+	}
+
+	@priority = "5"
 	test ViewSAMLConfigurationAfterUpgrade71103 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.1.10.3";

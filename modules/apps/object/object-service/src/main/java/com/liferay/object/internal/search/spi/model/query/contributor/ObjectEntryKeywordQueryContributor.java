@@ -218,10 +218,9 @@ public class ObjectEntryKeywordQueryContributor
 				new TermQueryImpl("nestedFieldArray.fieldName", objectField.getName()),
 				BooleanClauseOccur.MUST);
 
-			NestedQuery nestedQuery = new NestedQuery(
-				"nestedFieldArray", nestedBooleanQuery);
-
-			booleanQuery.add(nestedQuery, BooleanClauseOccur.SHOULD);
+			booleanQuery.add(
+				new NestedQuery("nestedFieldArray", nestedBooleanQuery),
+				BooleanClauseOccur.SHOULD);
 		}
 	}
 

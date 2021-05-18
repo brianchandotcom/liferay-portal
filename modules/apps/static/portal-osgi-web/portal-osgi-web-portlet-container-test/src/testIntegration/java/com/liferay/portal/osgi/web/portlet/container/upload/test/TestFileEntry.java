@@ -108,6 +108,11 @@ public class TestFileEntry implements FileEntry {
 	}
 
 	@Override
+	public Date getExpirationDate() {
+		return null;
+	}
+
+	@Override
 	public String getExtension() {
 		return RandomTestUtil.randomString(3);
 	}
@@ -260,6 +265,11 @@ public class TestFileEntry implements FileEntry {
 	@Override
 	public long getRepositoryId() {
 		return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+	}
+
+	@Override
+	public Date getReviewDate() {
+		return null;
 	}
 
 	@Override

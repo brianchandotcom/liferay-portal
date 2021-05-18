@@ -22,8 +22,6 @@ SegmentsDisplayContext segmentsDisplayContext = (SegmentsDisplayContext)request.
 String eventName = liferayPortletResponse.getNamespace() + "assignSiteRoles";
 
 request.setAttribute("view.jsp-eventName", eventName);
-
-String releaseInfo = ReleaseInfo.getReleaseInfo();
 %>
 
 <clay:management-toolbar
@@ -82,30 +80,17 @@ String releaseInfo = ReleaseInfo.getReleaseInfo();
 					cssClass="table-cell-expand-smallest table-cell-minw-150"
 					name="source"
 				>
-					<c:choose>
-						<c:when test="<%= Objects.equals(segmentsEntry.getSource(), SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND) %>">
-							<liferay-ui:icon
-								message="source.analytics-cloud"
-								src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
-							/>
-						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test='<%= releaseInfo.contains("CE") %>'>
-									<liferay-ui:icon
-										message="source.ce"
-										src='<%= PortalUtil.getPathContext(request) + "/assets/ce-icon.svg" %>'
-									/>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:icon
-										message="source.dxp"
-										src='<%= PortalUtil.getPathContext(request) + "/assets/dxp-icon.svg" %>'
-									/>
-								</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
+
+					<%
+					SegmentsSourceDetailsProvider segmentsSourceDetailsProvider = SegmentsSourceDetailsProviderUtil.getSegmentsSourceDetailsProvider(segmentsEntry);
+					%>
+
+					<c:if test="<%= segmentsSourceDetailsProvider != null %>">
+						<liferay-ui:icon
+							message="<%= segmentsSourceDetailsProvider.getLabel(locale) %>"
+							src="<%= segmentsSourceDetailsProvider.getIconSrc() %>"
+						/>
+					</c:if>
 				</liferay-ui:search-container-column-text>
 			</c:if>
 

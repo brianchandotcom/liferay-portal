@@ -8,4 +8,7 @@
 		<suppress checks="CamelCaseNameCheck" files="digital-signature-impl/src/main/java/com/liferay/digital/signature/internal/configuration/DigitalSignatureConfiguration\.java" />
 		<suppress checks="CamelCaseNameCheck" files="digital-signature-impl/src/main/java/com/liferay/digital/signature/internal/configuration/DigitalSignatureConfigurationForm\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="JavaMetaAnnotationsCheck" files="digital-signature-impl/src/main/java/com/liferay/digital/signature/internal/configuration/DigitalSignatureConfiguration\.java" />
+	</source-check>
 </suppressions>

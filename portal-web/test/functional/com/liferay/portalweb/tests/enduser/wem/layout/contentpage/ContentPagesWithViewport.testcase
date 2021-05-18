@@ -43,6 +43,7 @@ definition {
 
 	@description = "This is a test for LPS-119979. Customize the Layout of Grid in each viewport."
 	@priority = "4"
+	@uitest
 	test CustomizeLayoutOfGridInEachViewport {
 		task ("Add a Grid to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -206,6 +207,7 @@ definition {
 
 	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."
 	@priority = "4"
+	@uitest
 	test PropagateCommonFragmentStyleDefinedInDesktopToOtherViewports {
 		task ("Add a Paragraph to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -268,52 +270,60 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110707. Can resize the width of device viewport when edit content page."
+	@description = "This is a test for LPS-110707. Can resize the width of non-desktop viewports when edit content page."
 	@priority = "5"
-	test ResizeDeviceViewport {
+	@uitest
+	test ResizeWidthOfNonDesktopViewport {
 		property portal.acceptance = "true";
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("View the viewport resizer not shown in Desktop viewport") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		Click(
-			key_deviceType = "Desktop",
-			locator1 = "PageEditor#DEVICE_TYPE");
+			AssertElementNotPresent(locator1 = "PageEditor#VIEWPORT_HANDLE");
+		}
 
-		AssertElementNotPresent(locator1 = "PageEditor#VIEWPORT_HANDLE");
+		task ("Resize the width of Tablet viewport") {
+			Click(
+				key_deviceType = "Tablet",
+				locator1 = "PageEditor#DEVICE_TYPE");
 
-		Click(
-			key_deviceType = "Tablet",
-			locator1 = "PageEditor#DEVICE_TYPE");
+			AssertVisible(locator1 = "PageEditor#VIEWPORT_HANDLE");
 
-		AssertVisible(locator1 = "PageEditor#VIEWPORT_HANDLE");
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#VIEWPORT_HANDLE",
+				value1 = "200,0");
+		}
 
-		DragAndDrop.dragAndDrop(
-			locator1 = "PageEditor#VIEWPORT_HANDLE",
-			value1 = "200,0");
+		task ("View the Tablet viewport is resized") {
+			AssertElementPresent(
+				key_style = "992px",
+				locator1 = "PageEditor#VIEWPORT_RESIZER");
+		}
 
-		AssertElementPresent(
-			key_style = "992px",
-			locator1 = "PageEditor#VIEWPORT_RESIZER");
+		task ("Resize the width of Portrait Phone viewport") {
+			Click(
+				key_deviceType = "Portrait Phone",
+				locator1 = "PageEditor#DEVICE_TYPE");
 
-		Click(
-			key_deviceType = "Portrait Phone",
-			locator1 = "PageEditor#DEVICE_TYPE");
+			AssertVisible(locator1 = "PageEditor#VIEWPORT_HANDLE");
 
-		AssertVisible(locator1 = "PageEditor#VIEWPORT_HANDLE");
+			DragAndDrop.dragAndDrop(
+				locator1 = "PageEditor#VIEWPORT_HANDLE",
+				value1 = "200,0");
+		}
 
-		DragAndDrop.dragAndDrop(
-			locator1 = "PageEditor#VIEWPORT_HANDLE",
-			value1 = "200,0");
-
-		AssertElementPresent(
-			key_style = "576px",
-			locator1 = "PageEditor#VIEWPORT_RESIZER");
+		task ("View the Portrait Phone viewport is resized") {
+			AssertElementPresent(
+				key_style = "576px",
+				locator1 = "PageEditor#VIEWPORT_RESIZER");
+		}
 	}
 
 	@description = "This is a test for LPS-110723. When change to other viewports, there are only limited common fragment style categories available."
 	@priority = "5"
+	@uitest
 	test ViewCommonFragmentStyleFieldSets {
 		property portal.acceptance = "true";
 

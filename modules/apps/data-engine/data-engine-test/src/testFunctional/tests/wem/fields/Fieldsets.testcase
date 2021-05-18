@@ -202,7 +202,7 @@ definition {
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
-		DataEngine.editFieldsetsRepeatable(fieldsetLabel = "New Fieldset");
+		DataEngine.toggleFieldRepeatable(fieldsetLabel = "New Fieldset");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
@@ -256,7 +256,7 @@ definition {
 	test RepeatFieldsetWithoutDuplicatingContent {
 		DataEngine.addFieldsetToBuilder(fieldsetName = "Basic Web Content");
 
-		DataEngine.editFieldsetsRepeatable(fieldsetLabel = "Basic Web Content");
+		DataEngine.toggleFieldRepeatable(fieldsetLabel = "Basic Web Content");
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 

@@ -93,7 +93,7 @@ definition {
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "RepeatableTest");
 
-		DataEngine.editFieldsetsRepeatable(fieldsetLabel = "RepeatableTest");
+		DataEngine.toggleFieldRepeatable(fieldsetLabel = "RepeatableTest");
 
 		DDLDataDefinition.save();
 

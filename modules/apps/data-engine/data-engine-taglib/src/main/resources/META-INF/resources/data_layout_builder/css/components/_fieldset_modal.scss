@@ -1,69 +1,62 @@
-$modalSpacing: 293px;
-$sidebarBodySpacing: #{$modalSpacing} + 100px;
-
-body.has-control-menu .fieldset-modal {
-	.modal-body {
-		overflow-x: hidden;
+.fieldset-modal {
+	.data-engine-form-builder > .sheet {
+		background-color: transparent;
+		border: 0 none;
 	}
 
 	.data-engine-form-builder {
-		height: calc(100vh - #{$modalSpacing});
-		left: 0;
-		padding-bottom: 1.5rem;
-		padding-top: 1.5rem;
-		position: absolute;
-		top: 0;
-		width: 100%;
-	}
+		&.ddm-form-builder {
+			padding-right: 15px;
 
-	.data-layout-builder-sidebar {
-		.sidebar .sidebar-body {
-			height: calc(100vh - #{$sidebarBodySpacing}) !important;
-		}
+			&--sidebar-open {
+				padding-right: 355px;
+			}
 
-		&.display-settings .sidebar .sidebar-body {
-			height: calc(
-				100vh - (#{$sidebarBodySpacing} - #{$displaySettingsHeight})
-			) !important;
-		}
-	}
-
-	.multi-panel-sidebar {
-		height: calc(100vh - 112px) !important;
-
-		&,
-		&-content {
-			height: calc(100vh - #{$modalSpacing}) !important;
-			position: absolute;
-		}
-
-		&,
-		&.menu-indicator-enabled {
-			top: 0 !important;
-		}
-
-		.field-type .dropdown-action {
-			display: none;
-		}
-
-		.component-tbar {
-			.container-fluid {
-				margin-top: 4px;
+			.container {
+				max-width: none;
+				padding: 0;
 			}
 		}
 	}
 
-	.add-fieldset,
-	.tbar-item:not(.tbar-item--fields) {
-		display: none;
+	.data-layout-builder-sidebar {
+		&.display-settings .sidebar .sidebar-body {
+			height: calc(100vh - 349px);
+		}
+
+		.sidebar .sidebar-body {
+			height: calc(100vh - 397px);
+		}
 	}
 
-	.sheet {
-		margin: 0 auto;
-		max-width: 808px;
+	.ddm-form-builder > div:first-child {
+		height: calc(100vh - 293px);
+		overflow: auto;
 	}
-}
 
-.fieldset-message {
-	font-size: 14px;
+	.lfr-ddm-form-container:not(.ddm-user-view-content) {
+		background-color: white;
+		border-radius: 0.25rem;
+		border: 1px solid #e7e7ed;
+		margin: 1.5rem auto;
+		padding: 1rem;
+		width: 808px;
+	}
+
+	.multi-panel-sidebar {
+		height: calc(100vh - 293px) !important;
+		position: absolute;
+		top: 0 !important;
+
+		&-content {
+			height: calc(100vh - 293px);
+			position: absolute;
+			top: 0;
+		}
+	}
+
+	.modal-body {
+		overflow: hidden;
+		padding: 0;
+	}
 }

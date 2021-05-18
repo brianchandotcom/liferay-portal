@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,6 +54,8 @@ public class ObjectFieldLocalServiceImpl
 			boolean indexedAsKeyword, String indexedLanguageId, String name,
 			String type)
 		throws PortalException {
+
+		_validateIndexed(indexed, type);
 
 		name = StringUtil.trim(name);
 
@@ -83,6 +86,16 @@ public class ObjectFieldLocalServiceImpl
 	public List<ObjectField> getObjectFields(long objectDefinitionId) {
 		return objectFieldPersistence.findByObjectDefinitionId(
 			objectDefinitionId);
+	}
+
+	private void _validateIndexed(boolean indexed, String type)
+		throws PortalException {
+
+		// TODO Add a test for this
+
+		if (indexed && Objects.equals(type, "Blob")) {
+			throw new ObjectFieldTypeException("Blob type is not indexable");
+		}
 	}
 
 	private void _validateName(long objectDefinitionId, String name)

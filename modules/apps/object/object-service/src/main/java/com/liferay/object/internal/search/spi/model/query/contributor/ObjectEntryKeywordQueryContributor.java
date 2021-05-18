@@ -157,9 +157,7 @@ public class ObjectEntryKeywordQueryContributor
 				"nestedFieldArray.value_double");
 		}
 		else if (Objects.equals(objectField.getType(), "Blob")) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Blob field " + objectField.getName() + " is not indexable");
-			}
+			_log.error("Blob type is not indexable");
 		}
 		else if (Objects.equals(objectField.getType(), "Boolean")) {
 			if (StringUtil.equalsIgnoreCase(fieldKeywords, "true") ||

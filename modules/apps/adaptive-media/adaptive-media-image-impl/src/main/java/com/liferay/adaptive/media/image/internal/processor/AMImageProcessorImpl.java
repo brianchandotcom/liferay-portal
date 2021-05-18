@@ -77,7 +77,7 @@ public final class AMImageProcessorImpl implements AMImageProcessor {
 	public void process(FileVersion fileVersion, String configurationEntryUuid)
 		throws PortalException {
 
-		if(!_amImageValidator.isProcessingSupported(fileVersion)) {
+		if (!_amImageValidator.isProcessingSupported(fileVersion)) {
 			return;
 		}
 

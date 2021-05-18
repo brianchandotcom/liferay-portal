@@ -104,7 +104,7 @@ public class CryptoHashTest {
 
 	@Test
 	public void testCryptoHashGeneratorWithConfiguration() throws Exception {
-		_createFactoryConfiguration(
+		_addCryptoFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -136,7 +136,7 @@ public class CryptoHashTest {
 	public void testCryptoHashGeneratorWithMultipleConfigurations()
 		throws Exception {
 
-		_createFactoryConfiguration(
+		_addCryptoFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -147,7 +147,7 @@ public class CryptoHashTest {
 			).put(
 				"message.digest.salt.size", "32"
 			).build());
-		_createFactoryConfiguration(
+		_addCryptoFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.bcrypt.internal." +
 				"configuration.BCryptCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -200,7 +200,7 @@ public class CryptoHashTest {
 
 	@Test
 	public void testCryptoHashVerifierWithNoConfigurations() throws Exception {
-		_createFactoryConfiguration(
+		_addCryptoFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -215,7 +215,7 @@ public class CryptoHashTest {
 		AutoCloseable autoCloseable1 = _autoCloseables.remove(
 			_autoCloseables.size() - 1);
 
-		_createFactoryConfiguration(
+		_addCryptoFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.bcrypt.internal." +
 				"configuration.BCryptCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -324,6 +324,66 @@ public class CryptoHashTest {
 						"JDJhJDEwJHVxZVh5YjF1dUdHZjZ2UWtvalljU08="))));
 	}
 
+	private Configuration _addCryptoFactoryConfiguration(
+		String factoryPid, Dictionary<String, ?> properties) {
+
+		Configuration configuration = _registerFactoryConfiguration(
+			factoryPid, properties);
+
+		String configurationPid = configuration.getPid();
+
+		_autoCloseables.add(
+			() -> {
+				CountDownLatch countDownLatch = new CountDownLatch(1);
+
+				Dictionary<String, String> registrationProperties =
+					HashMapDictionaryBuilder.put(
+						Constants.SERVICE_PID, factoryPid
+					).build();
+
+				ServiceRegistration<ManagedServiceFactory> serviceRegistration =
+					_bundleContext.registerService(
+						ManagedServiceFactory.class,
+						new ManagedServiceFactory() {
+
+							@Override
+							public void deleted(String pid) {
+								if (configurationPid.equals(pid)) {
+									countDownLatch.countDown();
+								}
+							}
+
+							@Override
+							public String getName() {
+								return "Test managed service factory for PID " +
+									factoryPid;
+							}
+
+							@Override
+							public void updated(
+								String pid,
+								Dictionary<String, ?> updatedProperties) {
+							}
+
+						},
+						registrationProperties);
+
+				try {
+					configuration.delete();
+
+					countDownLatch.await(10, TimeUnit.SECONDS);
+				}
+				catch (Exception exception) {
+					_log.error(exception, exception);
+				}
+				finally {
+					serviceRegistration.unregister();
+				}
+			});
+
+		return configuration;
+	}
+
 	private <S, R, E extends Throwable> R _callService(
 		Class<S> serviceClass, String filterString,
 		UnsafeFunction<S, R, E> unsafeFunction) {
@@ -368,7 +428,29 @@ public class CryptoHashTest {
 		return null;
 	}
 
-	private Configuration _createFactoryConfiguration(
+	private boolean _isIncluded(
+		Dictionary<String, ?> properties1, Dictionary<String, ?> properties2) {
+
+		if (properties1.size() > properties2.size()) {
+			return false;
+		}
+
+		Enumeration<String> enumeration = properties1.keys();
+
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
+
+			if (!Objects.deepEquals(
+					properties1.get(key), properties2.get(key))) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private Configuration _registerFactoryConfiguration(
 		String factoryPid, Dictionary<String, ?> properties) {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -448,28 +530,6 @@ public class CryptoHashTest {
 		finally {
 			serviceRegistration.unregister();
 		}
-	}
-
-	private boolean _isIncluded(
-		Dictionary<String, ?> properties1, Dictionary<String, ?> properties2) {
-
-		if (properties1.size() > properties2.size()) {
-			return false;
-		}
-
-		Enumeration<String> enumeration = properties1.keys();
-
-		while (enumeration.hasMoreElements()) {
-			String key = enumeration.nextElement();
-
-			if (!Objects.deepEquals(
-					properties1.get(key), properties2.get(key))) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CryptoHashTest.class);

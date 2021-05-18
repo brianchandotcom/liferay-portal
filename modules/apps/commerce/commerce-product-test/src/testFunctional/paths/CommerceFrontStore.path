@@ -58,6 +58,11 @@
 	<td>//div[@class='product-gallery']//img[contains(@src, '${key_FSProductImage}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MAX_QUANTITY_SELECTOR_PRODUCT_DETAILS</td>
+	<td>//div[@class="add-to-cart-wrapper align-items-center d-flex"]//input[contains(@max, '${key_value}')]</td>
+	<td></td>
+</tr>
 <tr>	
 	<td>PRODUCT_DETAILS_QUANTITY_INPUT</td>
 	<td>//header//h2[text()="${key_productName}"]//..//following-sibling::div[4]//input</td>

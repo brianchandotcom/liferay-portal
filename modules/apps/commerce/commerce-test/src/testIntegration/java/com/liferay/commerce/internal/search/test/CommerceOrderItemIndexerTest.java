@@ -108,13 +108,11 @@ public class CommerceOrderItemIndexerTest {
 
 	@Test
 	public void testSkuPrefix() throws Exception {
-		User user = UserTestUtil.addUser();
-
 		CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _group.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(

@@ -52,7 +52,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -72,11 +71,6 @@ public class CPInstanceIndexerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() {
-		_indexer = _indexerRegistry.getIndexer(CPInstance.class);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_company = CompanyTestUtil.addCompany();
@@ -85,6 +79,8 @@ public class CPInstanceIndexerTest {
 
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(), 0);
+
+		_indexer = _indexerRegistry.getIndexer(CPInstance.class);
 	}
 
 	@Test

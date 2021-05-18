@@ -131,7 +131,7 @@ public class ObjectEntryModelDocumentContributor
 				_log.debug(
 					StringBundler.concat(
 						"Object entry ", objectEntry.getObjectEntryId(),
-						" has field \"", objectField.getName(),
+						" has object field \"", objectField.getName(),
 						"\" with a null value"));
 			}
 
@@ -146,7 +146,7 @@ public class ObjectEntryModelDocumentContributor
 				_log.warn(
 					StringBundler.concat(
 						"Object entry ", objectEntry.getObjectEntryId(),
-						" has field \"", objectField.getName(),
+						" has object field \"", objectField.getName(),
 						"\" which is not indexed as full-text. Locale ",
 						objectField.getIndexedLanguageId(),
 						" will be ignored"));
@@ -215,7 +215,7 @@ public class ObjectEntryModelDocumentContributor
 				_log.warn(
 					StringBundler.concat(
 						"Object entry ", objectEntry.getObjectEntryId(),
-						" has field \"", objectField.getName(),
+						" has object field \"", objectField.getName(),
 						"\" with unsupported value ", value));
 			}
 		}

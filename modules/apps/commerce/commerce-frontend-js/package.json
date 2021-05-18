@@ -34,7 +34,10 @@
 		"collectCoverageFrom": [
 			"!<rootDir>/node_modules/",
 			"<rootDir>/src/**/components/**/*.js",
-			"<rootDir>/src/**/utilities/**/*.js"
+			"<rootDir>/src/**/ServiceProvider/composeAPI.js",
+			"<rootDir>/src/**/utilities/**/*.js",
+			"!<rootDir>/src/**/constants.js",
+			"!<rootDir>/src/**/entry.js"
 		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/dev/",

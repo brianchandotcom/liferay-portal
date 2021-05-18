@@ -222,6 +222,7 @@ class Scheduler<T> {
 }
 
 type Mutation = {
+
 	/**
 	 * Attributes are the attributes of a node. The array is considered a
 	 * conditional `or`, the same for the values of an attribute.
@@ -255,7 +256,7 @@ export interface A11yCheckerOptions {
 
 	/**
 	 * Mutation is an optional list of criteria on which a new analysis will be
-	 * triggered.
+	 * ignored.
 	 */
 	mutations?: Record<MutationRecordType, Mutation>;
 
@@ -355,12 +356,11 @@ export class A11yChecker {
 				const condition = this.mutations[record.type];
 
 				if (condition && hasValidMutation(record, condition)) {
-					this.recordCallback(record.target);
+					return;
 				}
 			}
-			else {
-				this.recordCallback(record.target);
-			}
+
+			this.recordCallback(record.target);
 		});
 	}
 

@@ -88,19 +88,6 @@
 			}
 		}
 
-		.preview-icon {
-			font-size: 14px;
-			opacity: 0;
-
-			.lexicon-icon {
-				fill: $secondary-l1;
-			}
-
-			&:focus {
-				opacity: 1;
-			}
-		}
-
 		&-body {
 			align-items: center;
 			display: flex;
@@ -115,34 +102,6 @@
 			.title {
 				font-size: 12px;
 				font-weight: 600;
-			}
-		}
-
-		&-preview {
-			position: relative;
-
-			.popover {
-				border-radius: 4px;
-				bottom: 40px;
-				display: block;
-				left: auto;
-				right: -4px;
-				top: auto;
-				width: 208px;
-
-				.arrow {
-					display: none;
-				}
-
-				img {
-					border: 1px solid $gray-300;
-					border-radius: 4px;
-					width: 100%;
-				}
-
-				.popover-body {
-					padding: 8px;
-				}
 			}
 		}
 	}

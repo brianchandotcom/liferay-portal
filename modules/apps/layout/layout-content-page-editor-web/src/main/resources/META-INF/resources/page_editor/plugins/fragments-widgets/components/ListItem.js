@@ -12,21 +12,17 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React from 'react';
 
-const ListItem = React.forwardRef(({item}, ref) => {
-	const [showPreview, setShowPreview] = useState(false);
-
+const ListItem = React.forwardRef(({disabled, item}, ref) => {
 	return (
 		<li
 			className={classNames(
 				'page-editor__fragments-widgets__tab-list-item',
 				{
-					disabled: item.disabled,
+					disabled,
 					'page-editor__fragments-widgets__tab-portlet-item':
 						item.data.portletItemId,
 				}
@@ -37,28 +33,6 @@ const ListItem = React.forwardRef(({item}, ref) => {
 				<ClayIcon className="mr-3" symbol={item.icon} />
 				<div className="text-truncate title">{item.label}</div>
 			</div>
-
-			{item.preview && (
-				<div className="page-editor__fragments-widgets__tab-list-item-preview">
-					<ClayButton
-						className="btn-monospaced preview-icon"
-						displayType="unstyled"
-						onBlur={() => setShowPreview(false)}
-						onFocus={() => setShowPreview(true)}
-						onMouseLeave={() => setShowPreview(false)}
-						onMouseOver={() => setShowPreview(true)}
-						small
-					>
-						<ClayIcon symbol="info-circle-open" />
-						<span className="sr-only">{name}</span>
-					</ClayButton>
-					{showPreview && (
-						<ClayPopover disableScroll>
-							<img alt="thumbnail" src={item.preview} />
-						</ClayPopover>
-					)}
-				</div>
-			)}
 		</li>
 	);
 });

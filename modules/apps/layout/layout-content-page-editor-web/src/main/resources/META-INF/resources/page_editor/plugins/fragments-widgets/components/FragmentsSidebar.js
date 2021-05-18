@@ -24,8 +24,6 @@ import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import SearchResultsPanel from './SearchResultsPanel';
 import TabsPanel from './TabsPanel';
 
-const BASIC_COMPONENT_COLLECTION = 'BASIC_COMPONENT';
-
 const collectionFilter = (collections, searchValue) => {
 	const searchValueLowerCase = searchValue.toLowerCase();
 

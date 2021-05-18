@@ -1,0 +1,10 @@
+{
+	"com.liferay.module.configuration.configurator.internal.TestFactoryConfiguration~disabled": {
+		"enabled": false,
+		"type": "disabled"
+	},
+	"com.liferay.module.configuration.configurator.internal.TestFactoryConfiguration~enabled": {
+		"enabled": true,
+		"type": "enabled"
+	}
+}

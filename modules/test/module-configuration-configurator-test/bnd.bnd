@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Module Configuration Configurator Test
+Bundle-SymbolicName: com.liferay.module.configuration.configurator.test
+Bundle-Version: 1.0.0
+Require-Capability:\
+	osgi.extender;\
+		filter := "(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
+-includeresource: OSGI-INF/configurator=configurator

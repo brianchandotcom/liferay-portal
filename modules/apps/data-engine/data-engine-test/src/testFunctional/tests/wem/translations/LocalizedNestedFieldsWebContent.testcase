@@ -42,7 +42,7 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DataEngine.editFieldsGroupRepeatable();
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 

@@ -405,7 +405,7 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DataEngine.editFieldsGroupRepeatable();
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
 
 		Button.clickSave();
 

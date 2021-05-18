@@ -479,7 +479,7 @@ definition {
 			fieldsGroupLabel = "Fields Group",
 			fieldsGroupLabelEdit = "Fields Group 2");
 
-		DataEngine.editFieldsGroupRepeatable(fieldsGroupLabel = "Fields Group 2");
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group 2");
 
 		WebContentStructures.saveCP();
 
@@ -565,7 +565,7 @@ definition {
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
 
-		DataEngine.editFieldsGroupRepeatable(fieldsGroupLabel = "Fields Group 1");
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group 1");
 
 		WebContentStructures.saveCP();
 
@@ -800,7 +800,7 @@ definition {
 			fieldName = "Numeric",
 			targetFieldLabel = "Text");
 
-		DataEngine.editFieldsGroupRepeatable();
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
 
 		WebContentStructures.saveCP();
 

@@ -52,11 +52,11 @@ public class ObjectFieldWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
-		attributes.put("name", getName());
-		attributes.put("type", getType());
 		attributes.put("indexed", isIndexed());
 		attributes.put("indexedAsKeyword", isIndexedAsKeyword());
-		attributes.put("locale", getLocale());
+		attributes.put("indexedLanguageId", getIndexedLanguageId());
+		attributes.put("name", getName());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -117,18 +117,6 @@ public class ObjectFieldWrapper
 			setObjectDefinitionId(objectDefinitionId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String type = (String)attributes.get("type");
-
-		if (type != null) {
-			setType(type);
-		}
-
 		Boolean indexed = (Boolean)attributes.get("indexed");
 
 		if (indexed != null) {
@@ -141,10 +129,22 @@ public class ObjectFieldWrapper
 			setIndexedAsKeyword(indexedAsKeyword);
 		}
 
-		String locale = (String)attributes.get("locale");
+		String indexedLanguageId = (String)attributes.get("indexedLanguageId");
 
-		if (locale != null) {
-			setLocale(locale);
+		if (indexedLanguageId != null) {
+			setIndexedLanguageId(indexedLanguageId);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -194,13 +194,13 @@ public class ObjectFieldWrapper
 	}
 
 	/**
-	 * Returns the locale of this object field.
+	 * Returns the indexed language ID of this object field.
 	 *
-	 * @return the locale of this object field
+	 * @return the indexed language ID of this object field
 	 */
 	@Override
-	public String getLocale() {
-		return model.getLocale();
+	public String getIndexedLanguageId() {
+		return model.getIndexedLanguageId();
 	}
 
 	/**
@@ -379,13 +379,13 @@ public class ObjectFieldWrapper
 	}
 
 	/**
-	 * Sets the locale of this object field.
+	 * Sets the indexed language ID of this object field.
 	 *
-	 * @param locale the locale of this object field
+	 * @param indexedLanguageId the indexed language ID of this object field
 	 */
 	@Override
-	public void setLocale(String locale) {
-		model.setLocale(locale);
+	public void setIndexedLanguageId(String indexedLanguageId) {
+		model.setIndexedLanguageId(indexedLanguageId);
 	}
 
 	/**

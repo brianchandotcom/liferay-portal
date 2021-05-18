@@ -42,11 +42,11 @@ public class ObjectFieldSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setObjectDefinitionId(model.getObjectDefinitionId());
-		soapModel.setName(model.getName());
-		soapModel.setType(model.getType());
 		soapModel.setIndexed(model.isIndexed());
 		soapModel.setIndexedAsKeyword(model.isIndexedAsKeyword());
-		soapModel.setLocale(model.getLocale());
+		soapModel.setIndexedLanguageId(model.getIndexedLanguageId());
+		soapModel.setName(model.getName());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -172,22 +172,6 @@ public class ObjectFieldSoap implements Serializable {
 		_objectDefinitionId = objectDefinitionId;
 	}
 
-	public String getName() {
-		return _name;
-	}
-
-	public void setName(String name) {
-		_name = name;
-	}
-
-	public String getType() {
-		return _type;
-	}
-
-	public void setType(String type) {
-		_type = type;
-	}
-
 	public boolean getIndexed() {
 		return _indexed;
 	}
@@ -212,12 +196,28 @@ public class ObjectFieldSoap implements Serializable {
 		_indexedAsKeyword = indexedAsKeyword;
 	}
 
-	public String getLocale() {
-		return _locale;
+	public String getIndexedLanguageId() {
+		return _indexedLanguageId;
 	}
 
-	public void setLocale(String locale) {
-		_locale = locale;
+	public void setIndexedLanguageId(String indexedLanguageId) {
+		_indexedLanguageId = indexedLanguageId;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getType() {
+		return _type;
+	}
+
+	public void setType(String type) {
+		_type = type;
 	}
 
 	private long _mvccVersion;
@@ -229,10 +229,10 @@ public class ObjectFieldSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _objectDefinitionId;
-	private String _name;
-	private String _type;
 	private boolean _indexed;
 	private boolean _indexedAsKeyword;
-	private String _locale;
+	private String _indexedLanguageId;
+	private String _name;
+	private String _type;
 
 }

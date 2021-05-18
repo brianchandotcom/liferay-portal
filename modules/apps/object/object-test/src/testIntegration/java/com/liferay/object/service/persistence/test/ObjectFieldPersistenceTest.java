@@ -140,15 +140,15 @@ public class ObjectFieldPersistenceTest {
 
 		newObjectField.setObjectDefinitionId(RandomTestUtil.nextLong());
 
-		newObjectField.setName(RandomTestUtil.randomString());
-
-		newObjectField.setType(RandomTestUtil.randomString());
-
 		newObjectField.setIndexed(RandomTestUtil.randomBoolean());
 
 		newObjectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
 
-		newObjectField.setLocale(RandomTestUtil.randomString());
+		newObjectField.setIndexedLanguageId(RandomTestUtil.randomString());
+
+		newObjectField.setName(RandomTestUtil.randomString());
+
+		newObjectField.setType(RandomTestUtil.randomString());
 
 		_objectFields.add(_persistence.update(newObjectField));
 
@@ -179,16 +179,17 @@ public class ObjectFieldPersistenceTest {
 			existingObjectField.getObjectDefinitionId(),
 			newObjectField.getObjectDefinitionId());
 		Assert.assertEquals(
-			existingObjectField.getName(), newObjectField.getName());
-		Assert.assertEquals(
-			existingObjectField.getType(), newObjectField.getType());
-		Assert.assertEquals(
 			existingObjectField.isIndexed(), newObjectField.isIndexed());
 		Assert.assertEquals(
 			existingObjectField.isIndexedAsKeyword(),
 			newObjectField.isIndexedAsKeyword());
 		Assert.assertEquals(
-			existingObjectField.getLocale(), newObjectField.getLocale());
+			existingObjectField.getIndexedLanguageId(),
+			newObjectField.getIndexedLanguageId());
+		Assert.assertEquals(
+			existingObjectField.getName(), newObjectField.getName());
+		Assert.assertEquals(
+			existingObjectField.getType(), newObjectField.getType());
 	}
 
 	@Test
@@ -253,8 +254,8 @@ public class ObjectFieldPersistenceTest {
 			"ObjectField", "mvccVersion", true, "uuid", true, "objectFieldId",
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
-			true, "name", true, "type", true, "indexed", true,
-			"indexedAsKeyword", true, "locale", true);
+			true, "indexed", true, "indexedAsKeyword", true,
+			"indexedLanguageId", true, "name", true, "type", true);
 	}
 
 	@Test
@@ -550,15 +551,15 @@ public class ObjectFieldPersistenceTest {
 
 		objectField.setObjectDefinitionId(RandomTestUtil.nextLong());
 
-		objectField.setName(RandomTestUtil.randomString());
-
-		objectField.setType(RandomTestUtil.randomString());
-
 		objectField.setIndexed(RandomTestUtil.randomBoolean());
 
 		objectField.setIndexedAsKeyword(RandomTestUtil.randomBoolean());
 
-		objectField.setLocale(RandomTestUtil.randomString());
+		objectField.setIndexedLanguageId(RandomTestUtil.randomString());
+
+		objectField.setName(RandomTestUtil.randomString());
+
+		objectField.setType(RandomTestUtil.randomString());
 
 		_objectFields.add(_persistence.update(objectField));
 

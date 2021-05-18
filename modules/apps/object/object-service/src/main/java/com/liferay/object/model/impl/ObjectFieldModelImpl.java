@@ -74,9 +74,10 @@ public class ObjectFieldModelImpl
 		{"objectFieldId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"objectDefinitionId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"type_", Types.VARCHAR}, {"indexed", Types.BOOLEAN},
-		{"indexedAsKeyword", Types.BOOLEAN}, {"locale", Types.VARCHAR}
+		{"objectDefinitionId", Types.BIGINT}, {"indexed", Types.BOOLEAN},
+		{"indexedAsKeyword", Types.BOOLEAN},
+		{"indexedLanguageId", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -92,15 +93,15 @@ public class ObjectFieldModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("indexed", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("indexedAsKeyword", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("locale", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("indexedLanguageId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null,indexed BOOLEAN,indexedAsKeyword BOOLEAN,locale VARCHAR(75) null)";
+		"create table ObjectField (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,indexed BOOLEAN,indexedAsKeyword BOOLEAN,indexedLanguageId VARCHAR(75) null,name VARCHAR(75) null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectField";
 
@@ -314,12 +315,6 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"objectDefinitionId",
 			(BiConsumer<ObjectField, Long>)ObjectField::setObjectDefinitionId);
-		attributeGetterFunctions.put("name", ObjectField::getName);
-		attributeSetterBiConsumers.put(
-			"name", (BiConsumer<ObjectField, String>)ObjectField::setName);
-		attributeGetterFunctions.put("type", ObjectField::getType);
-		attributeSetterBiConsumers.put(
-			"type", (BiConsumer<ObjectField, String>)ObjectField::setType);
 		attributeGetterFunctions.put("indexed", ObjectField::getIndexed);
 		attributeSetterBiConsumers.put(
 			"indexed",
@@ -329,9 +324,17 @@ public class ObjectFieldModelImpl
 		attributeSetterBiConsumers.put(
 			"indexedAsKeyword",
 			(BiConsumer<ObjectField, Boolean>)ObjectField::setIndexedAsKeyword);
-		attributeGetterFunctions.put("locale", ObjectField::getLocale);
+		attributeGetterFunctions.put(
+			"indexedLanguageId", ObjectField::getIndexedLanguageId);
 		attributeSetterBiConsumers.put(
-			"locale", (BiConsumer<ObjectField, String>)ObjectField::setLocale);
+			"indexedLanguageId",
+			(BiConsumer<ObjectField, String>)ObjectField::setIndexedLanguageId);
+		attributeGetterFunctions.put("name", ObjectField::getName);
+		attributeSetterBiConsumers.put(
+			"name", (BiConsumer<ObjectField, String>)ObjectField::setName);
+		attributeGetterFunctions.put("type", ObjectField::getType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<ObjectField, String>)ObjectField::setType);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -527,6 +530,63 @@ public class ObjectFieldModelImpl
 	}
 
 	@Override
+	public boolean getIndexed() {
+		return _indexed;
+	}
+
+	@Override
+	public boolean isIndexed() {
+		return _indexed;
+	}
+
+	@Override
+	public void setIndexed(boolean indexed) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_indexed = indexed;
+	}
+
+	@Override
+	public boolean getIndexedAsKeyword() {
+		return _indexedAsKeyword;
+	}
+
+	@Override
+	public boolean isIndexedAsKeyword() {
+		return _indexedAsKeyword;
+	}
+
+	@Override
+	public void setIndexedAsKeyword(boolean indexedAsKeyword) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_indexedAsKeyword = indexedAsKeyword;
+	}
+
+	@Override
+	public String getIndexedLanguageId() {
+		if (_indexedLanguageId == null) {
+			return "";
+		}
+		else {
+			return _indexedLanguageId;
+		}
+	}
+
+	@Override
+	public void setIndexedLanguageId(String indexedLanguageId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_indexedLanguageId = indexedLanguageId;
+	}
+
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -571,63 +631,6 @@ public class ObjectFieldModelImpl
 		}
 
 		_type = type;
-	}
-
-	@Override
-	public boolean getIndexed() {
-		return _indexed;
-	}
-
-	@Override
-	public boolean isIndexed() {
-		return _indexed;
-	}
-
-	@Override
-	public void setIndexed(boolean indexed) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_indexed = indexed;
-	}
-
-	@Override
-	public boolean getIndexedAsKeyword() {
-		return _indexedAsKeyword;
-	}
-
-	@Override
-	public boolean isIndexedAsKeyword() {
-		return _indexedAsKeyword;
-	}
-
-	@Override
-	public void setIndexedAsKeyword(boolean indexedAsKeyword) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_indexedAsKeyword = indexedAsKeyword;
-	}
-
-	@Override
-	public String getLocale() {
-		if (_locale == null) {
-			return "";
-		}
-		else {
-			return _locale;
-		}
-	}
-
-	@Override
-	public void setLocale(String locale) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_locale = locale;
 	}
 
 	@Override
@@ -701,11 +704,11 @@ public class ObjectFieldModelImpl
 		objectFieldImpl.setCreateDate(getCreateDate());
 		objectFieldImpl.setModifiedDate(getModifiedDate());
 		objectFieldImpl.setObjectDefinitionId(getObjectDefinitionId());
-		objectFieldImpl.setName(getName());
-		objectFieldImpl.setType(getType());
 		objectFieldImpl.setIndexed(isIndexed());
 		objectFieldImpl.setIndexedAsKeyword(isIndexedAsKeyword());
-		objectFieldImpl.setLocale(getLocale());
+		objectFieldImpl.setIndexedLanguageId(getIndexedLanguageId());
+		objectFieldImpl.setName(getName());
+		objectFieldImpl.setType(getType());
 
 		objectFieldImpl.resetOriginalValues();
 
@@ -828,6 +831,18 @@ public class ObjectFieldModelImpl
 
 		objectFieldCacheModel.objectDefinitionId = getObjectDefinitionId();
 
+		objectFieldCacheModel.indexed = isIndexed();
+
+		objectFieldCacheModel.indexedAsKeyword = isIndexedAsKeyword();
+
+		objectFieldCacheModel.indexedLanguageId = getIndexedLanguageId();
+
+		String indexedLanguageId = objectFieldCacheModel.indexedLanguageId;
+
+		if ((indexedLanguageId != null) && (indexedLanguageId.length() == 0)) {
+			objectFieldCacheModel.indexedLanguageId = null;
+		}
+
 		objectFieldCacheModel.name = getName();
 
 		String name = objectFieldCacheModel.name;
@@ -842,18 +857,6 @@ public class ObjectFieldModelImpl
 
 		if ((type != null) && (type.length() == 0)) {
 			objectFieldCacheModel.type = null;
-		}
-
-		objectFieldCacheModel.indexed = isIndexed();
-
-		objectFieldCacheModel.indexedAsKeyword = isIndexedAsKeyword();
-
-		objectFieldCacheModel.locale = getLocale();
-
-		String locale = objectFieldCacheModel.locale;
-
-		if ((locale != null) && (locale.length() == 0)) {
-			objectFieldCacheModel.locale = null;
 		}
 
 		return objectFieldCacheModel;
@@ -939,11 +942,11 @@ public class ObjectFieldModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _objectDefinitionId;
-	private String _name;
-	private String _type;
 	private boolean _indexed;
 	private boolean _indexedAsKeyword;
-	private String _locale;
+	private String _indexedLanguageId;
+	private String _name;
+	private String _type;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -983,11 +986,11 @@ public class ObjectFieldModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
-		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("indexed", _indexed);
 		_columnOriginalValues.put("indexedAsKeyword", _indexedAsKeyword);
-		_columnOriginalValues.put("locale", _locale);
+		_columnOriginalValues.put("indexedLanguageId", _indexedLanguageId);
+		_columnOriginalValues.put("name", _name);
+		_columnOriginalValues.put("type_", _type);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1030,15 +1033,15 @@ public class ObjectFieldModelImpl
 
 		columnBitmasks.put("objectDefinitionId", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("indexed", 512L);
 
-		columnBitmasks.put("type_", 1024L);
+		columnBitmasks.put("indexedAsKeyword", 1024L);
 
-		columnBitmasks.put("indexed", 2048L);
+		columnBitmasks.put("indexedLanguageId", 2048L);
 
-		columnBitmasks.put("indexedAsKeyword", 4096L);
+		columnBitmasks.put("name", 4096L);
 
-		columnBitmasks.put("locale", 8192L);
+		columnBitmasks.put("type_", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

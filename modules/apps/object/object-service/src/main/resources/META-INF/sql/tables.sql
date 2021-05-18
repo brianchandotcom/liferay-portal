@@ -38,11 +38,11 @@ create table ObjectField (
 	createDate DATE null,
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
-	name VARCHAR(75) null,
-	type_ VARCHAR(75) null,
 	indexed BOOLEAN,
 	indexedAsKeyword BOOLEAN,
-	locale VARCHAR(75) null
+	indexedLanguageId VARCHAR(75) null,
+	name VARCHAR(75) null,
+	type_ VARCHAR(75) null
 );
 
 create table ObjectLayout (

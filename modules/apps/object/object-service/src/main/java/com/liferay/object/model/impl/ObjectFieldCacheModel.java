@@ -97,16 +97,16 @@ public class ObjectFieldCacheModel
 		sb.append(modifiedDate);
 		sb.append(", objectDefinitionId=");
 		sb.append(objectDefinitionId);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", type=");
-		sb.append(type);
 		sb.append(", indexed=");
 		sb.append(indexed);
 		sb.append(", indexedAsKeyword=");
 		sb.append(indexedAsKeyword);
-		sb.append(", locale=");
-		sb.append(locale);
+		sb.append(", indexedLanguageId=");
+		sb.append(indexedLanguageId);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append("}");
 
 		return sb.toString();
@@ -151,6 +151,15 @@ public class ObjectFieldCacheModel
 		}
 
 		objectFieldImpl.setObjectDefinitionId(objectDefinitionId);
+		objectFieldImpl.setIndexed(indexed);
+		objectFieldImpl.setIndexedAsKeyword(indexedAsKeyword);
+
+		if (indexedLanguageId == null) {
+			objectFieldImpl.setIndexedLanguageId("");
+		}
+		else {
+			objectFieldImpl.setIndexedLanguageId(indexedLanguageId);
+		}
 
 		if (name == null) {
 			objectFieldImpl.setName("");
@@ -164,16 +173,6 @@ public class ObjectFieldCacheModel
 		}
 		else {
 			objectFieldImpl.setType(type);
-		}
-
-		objectFieldImpl.setIndexed(indexed);
-		objectFieldImpl.setIndexedAsKeyword(indexedAsKeyword);
-
-		if (locale == null) {
-			objectFieldImpl.setLocale("");
-		}
-		else {
-			objectFieldImpl.setLocale(locale);
 		}
 
 		objectFieldImpl.resetOriginalValues();
@@ -196,13 +195,13 @@ public class ObjectFieldCacheModel
 		modifiedDate = objectInput.readLong();
 
 		objectDefinitionId = objectInput.readLong();
-		name = objectInput.readUTF();
-		type = objectInput.readUTF();
 
 		indexed = objectInput.readBoolean();
 
 		indexedAsKeyword = objectInput.readBoolean();
-		locale = objectInput.readUTF();
+		indexedLanguageId = objectInput.readUTF();
+		name = objectInput.readUTF();
+		type = objectInput.readUTF();
 	}
 
 	@Override
@@ -234,6 +233,17 @@ public class ObjectFieldCacheModel
 
 		objectOutput.writeLong(objectDefinitionId);
 
+		objectOutput.writeBoolean(indexed);
+
+		objectOutput.writeBoolean(indexedAsKeyword);
+
+		if (indexedLanguageId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(indexedLanguageId);
+		}
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -247,17 +257,6 @@ public class ObjectFieldCacheModel
 		else {
 			objectOutput.writeUTF(type);
 		}
-
-		objectOutput.writeBoolean(indexed);
-
-		objectOutput.writeBoolean(indexedAsKeyword);
-
-		if (locale == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(locale);
-		}
 	}
 
 	public long mvccVersion;
@@ -269,10 +268,10 @@ public class ObjectFieldCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long objectDefinitionId;
-	public String name;
-	public String type;
 	public boolean indexed;
 	public boolean indexedAsKeyword;
-	public String locale;
+	public String indexedLanguageId;
+	public String name;
+	public String type;
 
 }

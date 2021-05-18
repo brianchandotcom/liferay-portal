@@ -39,11 +39,11 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
-		<field name="name" type="String" />
-		<field name="type" type="String" />
 		<field name="indexed" type="boolean" />
 		<field name="indexedAsKeyword" type="boolean" />
-		<field name="locale" type="String" />
+		<field name="indexedLanguageId" type="String" />
+		<field name="name" type="String" />
+		<field name="type" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectLayout">
 		<field name="mvccVersion" type="long" />

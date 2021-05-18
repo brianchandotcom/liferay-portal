@@ -219,36 +219,6 @@ public interface ObjectFieldModel
 	public void setObjectDefinitionId(long objectDefinitionId);
 
 	/**
-	 * Returns the name of this object field.
-	 *
-	 * @return the name of this object field
-	 */
-	@AutoEscape
-	public String getName();
-
-	/**
-	 * Sets the name of this object field.
-	 *
-	 * @param name the name of this object field
-	 */
-	public void setName(String name);
-
-	/**
-	 * Returns the type of this object field.
-	 *
-	 * @return the type of this object field
-	 */
-	@AutoEscape
-	public String getType();
-
-	/**
-	 * Sets the type of this object field.
-	 *
-	 * @param type the type of this object field
-	 */
-	public void setType(String type);
-
-	/**
 	 * Returns the indexed of this object field.
 	 *
 	 * @return the indexed of this object field
@@ -291,18 +261,48 @@ public interface ObjectFieldModel
 	public void setIndexedAsKeyword(boolean indexedAsKeyword);
 
 	/**
-	 * Returns the locale of this object field.
+	 * Returns the indexed language ID of this object field.
 	 *
-	 * @return the locale of this object field
+	 * @return the indexed language ID of this object field
 	 */
 	@AutoEscape
-	public String getLocale();
+	public String getIndexedLanguageId();
 
 	/**
-	 * Sets the locale of this object field.
+	 * Sets the indexed language ID of this object field.
 	 *
-	 * @param locale the locale of this object field
+	 * @param indexedLanguageId the indexed language ID of this object field
 	 */
-	public void setLocale(String locale);
+	public void setIndexedLanguageId(String indexedLanguageId);
+
+	/**
+	 * Returns the name of this object field.
+	 *
+	 * @return the name of this object field
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this object field.
+	 *
+	 * @param name the name of this object field
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the type of this object field.
+	 *
+	 * @return the type of this object field
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this object field.
+	 *
+	 * @param type the type of this object field
+	 */
+	public void setType(String type);
 
 }

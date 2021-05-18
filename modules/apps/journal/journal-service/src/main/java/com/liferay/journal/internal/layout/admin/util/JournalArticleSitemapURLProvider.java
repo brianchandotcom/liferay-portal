@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.journal.internal.util;
+package com.liferay.journal.internal.layout.admin.util;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntry;
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.internal.util.JournalUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.admin.kernel.util.Sitemap;

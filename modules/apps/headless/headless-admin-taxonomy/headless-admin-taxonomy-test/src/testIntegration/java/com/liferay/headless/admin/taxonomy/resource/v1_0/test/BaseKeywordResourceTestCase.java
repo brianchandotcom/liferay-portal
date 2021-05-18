@@ -794,62 +794,6 @@ public abstract class BaseKeywordResourceTestCase {
 	}
 
 	@Test
-	public void testGetKeywordPermissionsPage() throws Exception {
-		Keyword postKeyword = testGetKeywordPermissionsPage_addKeyword();
-
-		Page<Permission> page = keywordResource.getKeywordPermissionsPage(
-			postKeyword.getId(), RoleConstants.GUEST);
-
-		Assert.assertNotNull(page);
-	}
-
-	protected Keyword testGetKeywordPermissionsPage_addKeyword()
-		throws Exception {
-
-		return testPostSiteKeyword_addKeyword(randomKeyword());
-	}
-
-	@Test
-	public void testPutKeywordPermission() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Keyword keyword = testPutKeywordPermission_addKeyword();
-
-		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		assertHttpResponseStatusCode(
-			200,
-			keywordResource.putKeywordPermissionHttpResponse(
-				keyword.getId(),
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"VIEW"});
-							setRoleName(role.getName());
-						}
-					}
-				}));
-
-		assertHttpResponseStatusCode(
-			404,
-			keywordResource.putKeywordPermissionHttpResponse(
-				0L,
-				new Permission[] {
-					new Permission() {
-						{
-							setActionIds(new String[] {"-"});
-							setRoleName("-");
-						}
-					}
-				}));
-	}
-
-	protected Keyword testPutKeywordPermission_addKeyword() throws Exception {
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
-	}
-
-	@Test
 	public void testGetSiteKeywordsPage() throws Exception {
 		Page<Keyword> page = keywordResource.getSiteKeywordsPage(
 			testGetSiteKeywordsPage_getSiteId(), RandomTestUtil.randomString(),

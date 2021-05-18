@@ -177,26 +177,6 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
-	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
-			updateKeywordPermission(
-				@GraphQLName("keywordId") Long keywordId,
-				@GraphQLName("permissions")
-					com.liferay.portal.vulcan.permission.Permission[]
-						permissions)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> {
-				Page paginationPage = keywordResource.putKeywordPermission(
-					keywordId, permissions);
-
-				return paginationPage.getItems();
-			});
-	}
-
 	@GraphQLField(description = "Inserts a new keyword in a Site.")
 	public Keyword createSiteKeyword(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,

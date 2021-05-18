@@ -90,16 +90,6 @@ public interface KeywordResource {
 	public Response putKeywordBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getKeywordPermissionsPage(Long keywordId, String roleNames)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putKeywordPermission(
-				Long keywordId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
 	public Page<Keyword> getSiteKeywordsPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)

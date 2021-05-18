@@ -19,7 +19,6 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceAction;
-import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -215,7 +215,20 @@ public abstract class BaseKeywordResourceImpl
 			ActionKeys.PERMISSIONS, groupLocalService, portletName,
 			assetLibraryId, assetLibraryId);
 
-		return toPermissionPage(assetLibraryId, portletName, roleNames);
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"getAssetLibraryKeywordPermissionsPage", portletName,
+					assetLibraryId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, "putAssetLibraryKeywordPermission",
+					portletName, assetLibraryId)
+			).build(),
+			assetLibraryId, portletName, roleNames);
 	}
 
 	/**
@@ -252,7 +265,20 @@ public abstract class BaseKeywordResourceImpl
 				portletName, resourceActionLocalService,
 				resourcePermissionLocalService, roleLocalService));
 
-		return toPermissionPage(assetLibraryId, portletName, null);
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS,
+					"getAssetLibraryKeywordPermissionsPage", portletName,
+					assetLibraryId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, "putAssetLibraryKeywordPermission",
+					portletName, assetLibraryId)
+			).build(),
+			assetLibraryId, portletName, null);
 	}
 
 	/**
@@ -421,77 +447,6 @@ public abstract class BaseKeywordResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}/permissions'  -u 'test@liferay.com:test'
-	 */
-	@GET
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "keywordId"),
-			@Parameter(in = ParameterIn.QUERY, name = "roleNames")
-		}
-	)
-	@Path("/keywords/{keywordId}/permissions")
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "Keyword")})
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getKeywordPermissionsPage(
-				@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
-					keywordId,
-				@Parameter(hidden = true) @QueryParam("roleNames") String
-					roleNames)
-		throws Exception {
-
-		String resourceName = getPermissionCheckerResourceName(keywordId);
-		Long resourceId = getPermissionCheckerResourceId(keywordId);
-
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(keywordId));
-
-		return toPermissionPage(resourceId, resourceName, roleNames);
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/keywords/{keywordId}/permissions'  -u 'test@liferay.com:test'
-	 */
-	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "keywordId")})
-	@Path("/keywords/{keywordId}/permissions")
-	@Produces({"application/json", "application/xml"})
-	@PUT
-	@Tags(value = {@Tag(name = "Keyword")})
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putKeywordPermission(
-				@NotNull @Parameter(hidden = true) @PathParam("keywordId") Long
-					keywordId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception {
-
-		String resourceName = getPermissionCheckerResourceName(keywordId);
-		Long resourceId = getPermissionCheckerResourceId(keywordId);
-
-		PermissionUtil.checkPermission(
-			ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId,
-			getPermissionCheckerGroupId(keywordId));
-
-		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(),
-			getPermissionCheckerGroupId(keywordId), resourceName,
-			String.valueOf(resourceId),
-			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions, resourceId,
-				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService));
-
-		return toPermissionPage(resourceId, resourceName, null);
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-taxonomy/v1.0/sites/{siteId}/keywords'  -u 'test@liferay.com:test'
 	 */
 	@GET
@@ -613,7 +568,19 @@ public abstract class BaseKeywordResourceImpl
 			ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId,
 			siteId);
 
-		return toPermissionPage(siteId, portletName, roleNames);
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS, "getSiteKeywordPermissionsPage",
+					portletName, siteId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, "putSiteKeywordPermission",
+					portletName, siteId)
+			).build(),
+			siteId, portletName, roleNames);
 	}
 
 	/**
@@ -648,7 +615,19 @@ public abstract class BaseKeywordResourceImpl
 				resourceActionLocalService, resourcePermissionLocalService,
 				roleLocalService));
 
-		return toPermissionPage(siteId, portletName, null);
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS, "getSiteKeywordPermissionsPage",
+					portletName, siteId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, "putSiteKeywordPermission",
+					portletName, siteId)
+			).build(),
+			siteId, portletName, null);
 	}
 
 	@Override
@@ -767,7 +746,9 @@ public abstract class BaseKeywordResourceImpl
 	}
 
 	protected Page<com.liferay.portal.vulcan.permission.Permission>
-			toPermissionPage(long id, String resourceName, String roleNames)
+			toPermissionPage(
+				Map<String, Map<String, String>> actions, long id,
+				String resourceName, String roleNames)
 		throws Exception {
 
 		List<ResourceAction> resourceActions =
@@ -775,6 +756,7 @@ public abstract class BaseKeywordResourceImpl
 
 		if (Validator.isNotNull(roleNames)) {
 			return Page.of(
+				actions,
 				transform(
 					PermissionUtil.getRoles(
 						contextCompany, roleLocalService,
@@ -785,10 +767,11 @@ public abstract class BaseKeywordResourceImpl
 		}
 
 		return Page.of(
+			actions,
 			transform(
-				resourcePermissionLocalService.getResourcePermissions(
-					contextCompany.getCompanyId(), resourceName,
-					ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(id)),
+				PermissionUtil.getResourcePermissions(
+					contextCompany.getCompanyId(), id, resourceName,
+					resourcePermissionLocalService),
 				resourcePermission -> PermissionUtil.toPermission(
 					resourceActions, resourcePermission,
 					roleLocalService.getRole(resourcePermission.getRoleId()))));

@@ -163,25 +163,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywordPermissions(keywordId: ___, roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public KeywordPage keywordPermissions(
-			@GraphQLName("keywordId") Long keywordId,
-			@GraphQLName("roleNames") String roleNames)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_keywordResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			keywordResource -> new KeywordPage(
-				keywordResource.getKeywordPermissionsPage(
-					keywordId, roleNames)));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywords(filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
@@ -210,10 +191,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteKeywordPermissions(roleNames: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {keywordPermissions(roleNames: ___, siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public KeywordPage siteKeywordPermissions(
+	public KeywordPage keywordPermissions(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("roleNames") String roleNames)
 		throws Exception {
@@ -505,30 +486,6 @@ public class Query {
 		}
 
 		private TaxonomyCategory _taxonomyCategory;
-
-	}
-
-	@GraphQLTypeExtension(Keyword.class)
-	public class GetKeywordPermissionsPageTypeExtension {
-
-		public GetKeywordPermissionsPageTypeExtension(Keyword keyword) {
-			_keyword = keyword;
-		}
-
-		@GraphQLField
-		public KeywordPage permissions(
-				@GraphQLName("roleNames") String roleNames)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_keywordResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				keywordResource -> new KeywordPage(
-					keywordResource.getKeywordPermissionsPage(
-						_keyword.getId(), roleNames)));
-		}
-
-		private Keyword _keyword;
 
 	}
 

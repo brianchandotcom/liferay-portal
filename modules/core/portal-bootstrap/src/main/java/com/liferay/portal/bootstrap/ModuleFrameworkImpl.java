@@ -722,10 +722,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(
 			FrameworkPropsKeys.OSGI_FRAMEWORK, codeSourceURL.toExternalForm());
 
-		File frameworkFile = new File(codeSourceURL.toURI());
-
 		properties.put(
-			FrameworkPropsKeys.OSGI_INSTALL_AREA, frameworkFile.getParent());
+			FrameworkPropsKeys.OSGI_INSTALL_AREA,
+			PropsValues.MODULE_FRAMEWORK_BASE_DIR);
 
 		// Overrides
 

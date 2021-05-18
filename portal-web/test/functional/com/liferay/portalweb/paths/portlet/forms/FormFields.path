@@ -360,6 +360,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PARAGRAPH_CONTENT_ORDERED_LIST</td>
+	<td>//legend[contains(text(),'${key_labelName}')]//..//ol//li[contains(.,'${key_itemName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

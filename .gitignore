@@ -145,10 +145,6 @@
 /support-tomcat/*.iws
 /support-tomcat/classes
 /support-tomcat/support-tomcat*.jar
-/support-websphere/*.ipr
-/support-websphere/*.iws
-/support-websphere/classes
-/support-websphere/support-websphere*.jar
 /svn-revision
 /test-coverage
 /test-results

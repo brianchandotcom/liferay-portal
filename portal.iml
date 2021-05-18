@@ -18,7 +18,6 @@
 			<excludeFolder url="file://$MODULE_DIR$/portal-test-integration" />
 			<excludeFolder url="file://$MODULE_DIR$/portal-web" />
 			<excludeFolder url="file://$MODULE_DIR$/support-tomcat" />
-			<excludeFolder url="file://$MODULE_DIR$/support-websphere" />
 			<excludeFolder url="file://$MODULE_DIR$/util-bridges" />
 			<excludeFolder url="file://$MODULE_DIR$/util-java" />
 			<excludeFolder url="file://$MODULE_DIR$/util-slf4j" />

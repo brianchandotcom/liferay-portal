@@ -529,13 +529,6 @@ message.
 				/>
 			</then>
 		</if>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="websphere" />
-			<then>
-				<ant dir="support-websphere" inheritAll="false" target="deploy" />
-			</then>
-		</if>
 	</target>
 
 	<target name="deploy-portal-license-enterprise-app">

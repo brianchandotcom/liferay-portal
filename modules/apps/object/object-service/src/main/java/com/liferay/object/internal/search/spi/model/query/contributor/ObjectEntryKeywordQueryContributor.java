@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -309,9 +310,7 @@ public class ObjectEntryKeywordQueryContributor
 	}
 
 	private String _getLanguageId(SearchContext searchContext) {
-		Locale locale = searchContext.getLocale();
-
-		return locale.toString();
+		return LocaleUtil.toLanguageId(searchContext.getLocale());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

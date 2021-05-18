@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.internal.util;
+package com.liferay.layout.internal.layout.admin.util;
 
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.admin.kernel.util.Sitemap;

@@ -264,16 +264,6 @@ public class MBStatsUserLocalServiceImpl
 
 	@Override
 	public MBStatsUser updateStatsUser(
-		long groupId, long userId, Date lastPostDate) {
-
-		int messageCount = _mbMessagePersistence.countByG_U_S(
-			groupId, userId, WorkflowConstants.STATUS_APPROVED);
-
-		return updateStatsUser(groupId, userId, messageCount, lastPostDate);
-	}
-
-	@Override
-	public MBStatsUser updateStatsUser(
 		long groupId, long userId, int messageCount, Date lastPostDate) {
 
 		MBStatsUser statsUser = getStatsUser(groupId, userId);

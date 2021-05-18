@@ -46,7 +46,6 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.model.impl.MBMessageDisplayImpl;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
-import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBMessageLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
@@ -87,7 +86,6 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -1823,13 +1821,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			indexer.delete(message);
 		}
 
-		// Statistics
-
-		if (!message.isDiscussion()) {
-			_mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), userId, modifiedDate);
-		}
-
 		return message;
 	}
 
@@ -2682,16 +2673,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		message = mbMessagePersistence.update(message);
 
-		// Statistics
-
-		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			!message.isDiscussion()) {
-
-			_mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), userId, message.getModifiedDate());
-		}
-
 		// Thread
 
 		if ((priority != MBThreadConstants.PRIORITY_NOT_GIVEN) &&
@@ -2822,16 +2803,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	private Http _http;
 
 	@Reference
-	private IndexerRegistry _indexerRegistry;
-
-	@Reference
 	private MBCategoryPersistence _mbCategoryPersistence;
 
 	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
-
-	@Reference
-	private MBStatsUserLocalService _mbStatsUserLocalService;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

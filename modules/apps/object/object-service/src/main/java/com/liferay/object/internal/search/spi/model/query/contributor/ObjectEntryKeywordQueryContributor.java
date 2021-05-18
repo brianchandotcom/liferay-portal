@@ -95,122 +95,133 @@ public class ObjectEntryKeywordQueryContributor
 			_objectFieldLocalService.getObjectFields(objectDefinitionId);
 
 		for (ObjectField objectField : objectFields) {
-			if (!objectField.isIndexed()) {
-				continue;
-			}
-
-			String name = objectField.getName();
-
-			String fieldKeywords = _getKeywords(keywords, searchContext, name);
-
-			if (Validator.isNull(fieldKeywords)) {
-				continue;
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Add search term ", fieldKeywords, " for object field ",
-						name));
-			}
-
-			String type = objectField.getType();
-
 			try {
-				BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
-
-				if (objectField.isIndexedAsKeyword()) {
-					String lowerCaseKeywords = StringUtil.toLowerCase(
-						fieldKeywords);
-
-					nestedBooleanQuery.add(
-						new WildcardQueryImpl(
-							"nestedFieldArray.value_keyword",
-							lowerCaseKeywords + StringPool.STAR),
-						BooleanClauseOccur.MUST);
-
-					nestedBooleanQuery.add(
-						new TermQueryImpl(
-							"nestedFieldArray.value_keyword",
-							lowerCaseKeywords),
-						BooleanClauseOccur.SHOULD);
-				}
-				else if (type.equals("BigDecimal")) {
-					_addRangeQuery(
-						fieldKeywords, nestedBooleanQuery,
-						"nestedFieldArray.value_double");
-				}
-				else if (type.equals("Blob")) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Blob field " + name + " is not searchable");
-					}
-				}
-				else if (type.equals("Boolean")) {
-					if (StringUtil.equalsIgnoreCase(fieldKeywords, "true") ||
-						StringUtil.equalsIgnoreCase(fieldKeywords, "false")) {
-
-						nestedBooleanQuery.add(
-							new TermQueryImpl(
-								"nestedFieldArray.value_boolean",
-								StringUtil.toLowerCase(fieldKeywords)),
-							BooleanClauseOccur.MUST);
-					}
-				}
-				else if (type.equals("Date")) {
-					_addDateRangeQuery(
-						fieldKeywords, nestedBooleanQuery,
-						"nestedFieldArray.value_date");
-				}
-				else if (type.equals("Double")) {
-					_addRangeQuery(
-						fieldKeywords, nestedBooleanQuery,
-						"nestedFieldArray.value_double");
-				}
-				else if (type.equals("Integer")) {
-					_addRangeQuery(
-						fieldKeywords, nestedBooleanQuery,
-						"nestedFieldArray.value_integer");
-				}
-				else if (type.equals("Long")) {
-					_addRangeQuery(
-						fieldKeywords, nestedBooleanQuery,
-						"nestedFieldArray.value_long");
-				}
-				else if (type.equals("String")) {
-					String indexedLanguageId =
-						objectField.getIndexedLanguageId();
-
-					if (Validator.isBlank(indexedLanguageId)) {
-						nestedBooleanQuery.add(
-							new MatchQuery(
-								"nestedFieldArray.value_text", fieldKeywords),
-							BooleanClauseOccur.MUST);
-					}
-					else if (indexedLanguageId.equals(
-								_getLanguageId(searchContext))) {
-
-						nestedBooleanQuery.add(
-							new MatchQuery(
-								"nestedFieldArray.value_" + indexedLanguageId,
-								fieldKeywords),
-							BooleanClauseOccur.MUST);
-					}
-				}
-
-				if (nestedBooleanQuery.hasClauses()) {
-					nestedBooleanQuery.add(
-						new TermQueryImpl("nestedFieldArray.fieldName", name),
-						BooleanClauseOccur.MUST);
-
-					NestedQuery nestedQuery = new NestedQuery(
-						"nestedFieldArray", nestedBooleanQuery);
-
-					booleanQuery.add(nestedQuery, BooleanClauseOccur.SHOULD);
-				}
+				_contribute(
+					keywords, booleanQuery, keywordQueryContributorHelper,
+					objectField);
 			}
 			catch (ParseException parseException) {
 				throw new SystemException(parseException);
 			}
+		}
+	}
+
+	private void _contribute(
+			String keywords, BooleanQuery booleanQuery,
+			KeywordQueryContributorHelper keywordQueryContributorHelper,
+			ObjectField objectField)
+		throws ParseException {
+
+		if (!objectField.isIndexed()) {
+			return;
+		}
+
+		String name = objectField.getName();
+
+		String fieldKeywords = _getKeywords(keywords, keywordQueryContributorHelper.getSearchContext(), name);
+
+		if (Validator.isNull(fieldKeywords)) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Add search term ", fieldKeywords, " for object field ",
+					name));
+		}
+
+		String type = objectField.getType();
+
+		BooleanQuery nestedBooleanQuery = new BooleanQueryImpl();
+
+		if (objectField.isIndexedAsKeyword()) {
+			String lowerCaseKeywords = StringUtil.toLowerCase(
+				fieldKeywords);
+
+			nestedBooleanQuery.add(
+				new WildcardQueryImpl(
+					"nestedFieldArray.value_keyword",
+					lowerCaseKeywords + StringPool.STAR),
+				BooleanClauseOccur.MUST);
+
+			nestedBooleanQuery.add(
+				new TermQueryImpl(
+					"nestedFieldArray.value_keyword",
+					lowerCaseKeywords),
+				BooleanClauseOccur.SHOULD);
+		}
+		else if (type.equals("BigDecimal")) {
+			_addRangeQuery(
+				fieldKeywords, nestedBooleanQuery,
+				"nestedFieldArray.value_double");
+		}
+		else if (type.equals("Blob")) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Blob field " + name + " is not searchable");
+			}
+		}
+		else if (type.equals("Boolean")) {
+			if (StringUtil.equalsIgnoreCase(fieldKeywords, "true") ||
+				StringUtil.equalsIgnoreCase(fieldKeywords, "false")) {
+
+				nestedBooleanQuery.add(
+					new TermQueryImpl(
+						"nestedFieldArray.value_boolean",
+						StringUtil.toLowerCase(fieldKeywords)),
+					BooleanClauseOccur.MUST);
+			}
+		}
+		else if (type.equals("Date")) {
+			_addDateRangeQuery(
+				fieldKeywords, nestedBooleanQuery,
+				"nestedFieldArray.value_date");
+		}
+		else if (type.equals("Double")) {
+			_addRangeQuery(
+				fieldKeywords, nestedBooleanQuery,
+				"nestedFieldArray.value_double");
+		}
+		else if (type.equals("Integer")) {
+			_addRangeQuery(
+				fieldKeywords, nestedBooleanQuery,
+				"nestedFieldArray.value_integer");
+		}
+		else if (type.equals("Long")) {
+			_addRangeQuery(
+				fieldKeywords, nestedBooleanQuery,
+				"nestedFieldArray.value_long");
+		}
+		else if (type.equals("String")) {
+			String indexedLanguageId =
+				objectField.getIndexedLanguageId();
+
+			if (Validator.isBlank(indexedLanguageId)) {
+				nestedBooleanQuery.add(
+					new MatchQuery(
+						"nestedFieldArray.value_text", fieldKeywords),
+					BooleanClauseOccur.MUST);
+			}
+			else if (indexedLanguageId.equals(
+						_getLanguageId(keywordQueryContributorHelper.getSearchContext()))) {
+
+				nestedBooleanQuery.add(
+					new MatchQuery(
+						"nestedFieldArray.value_" + indexedLanguageId,
+						fieldKeywords),
+					BooleanClauseOccur.MUST);
+			}
+		}
+
+		if (nestedBooleanQuery.hasClauses()) {
+			nestedBooleanQuery.add(
+				new TermQueryImpl("nestedFieldArray.fieldName", name),
+				BooleanClauseOccur.MUST);
+
+			NestedQuery nestedQuery = new NestedQuery(
+				"nestedFieldArray", nestedBooleanQuery);
+
+			booleanQuery.add(nestedQuery, BooleanClauseOccur.SHOULD);
 		}
 	}
 

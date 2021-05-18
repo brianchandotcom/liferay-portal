@@ -106,98 +106,102 @@ public class ObjectEntryModelDocumentContributor
 				objectEntry.getObjectDefinitionId());
 
 		for (ObjectField objectField : objectFields) {
-			if (!objectField.isIndexed()) {
-				continue;
+			_contribute(document, fieldArray, objectEntry, objectField, values);
+		}
+	}
+
+	private void _contribute(Document document, FieldArray fieldArray, ObjectEntry objectEntry, ObjectField objectField, Map<String, Serializable> values) {
+		if (!objectField.isIndexed()) {
+			return;
+		}
+
+		String name = objectField.getName();
+
+		Object value = values.get(name);
+
+		if (value == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Object entry ", objectEntry.getObjectEntryId(),
+						" has field \"", name, "\" with a null value"));
 			}
 
-			String name = objectField.getName();
+			return;
+		}
 
-			Object value = values.get(name);
+		boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
+		String indexedLanguageId = objectField.getIndexedLanguageId();
+		String type = objectField.getType();
 
-			if (value == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Object entry ", objectEntry.getObjectEntryId(),
-							" has field \"", name, "\" with a null value"));
-				}
+		if ((!type.equals("String") || indexedAsKeyword) &&
+			!Validator.isBlank(indexedLanguageId)) {
 
-				continue;
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Object entry ", objectEntry.getObjectEntryId(),
+						" has field \"", name,
+						"\" which is not indexed as full-text. Locale ",
+						indexedLanguageId, " will be ignored"));
 			}
+		}
 
-			boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
-			String indexedLanguageId = objectField.getIndexedLanguageId();
-			String type = objectField.getType();
-
-			if ((!type.equals("String") || indexedAsKeyword) &&
-				!Validator.isBlank(indexedLanguageId)) {
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Object entry ", objectEntry.getObjectEntryId(),
-							" has field \"", name,
-							"\" which is not indexed as full-text. Locale ",
-							indexedLanguageId, " will be ignored"));
-				}
-			}
-
-			if (indexedAsKeyword) {
+		if (indexedAsKeyword) {
+			_addNestedField(
+				fieldArray, name, "value_keyword",
+				StringUtil.lowerCase(String.valueOf(value)));
+		}
+		else if (value instanceof BigDecimal) {
+			_addNestedField(
+				fieldArray, name, "value_double", String.valueOf(value));
+		}
+		else if (value instanceof Boolean) {
+			_addNestedField(
+				fieldArray, name, "value_boolean", String.valueOf(value));
+		}
+		else if (value instanceof Date) {
+			_addNestedField(
+				fieldArray, name, "value_date", _getDateString(value));
+		}
+		else if (value instanceof Double) {
+			_addNestedField(
+				fieldArray, name, "value_double", String.valueOf(value));
+		}
+		else if (value instanceof Integer) {
+			_addNestedField(
+				fieldArray, name, "value_integer", String.valueOf(value));
+		}
+		else if (value instanceof Long) {
+			_addNestedField(
+				fieldArray, name, "value_long", String.valueOf(value));
+		}
+		else if (value instanceof String) {
+			if (Validator.isBlank(indexedLanguageId)) {
 				_addNestedField(
-					fieldArray, name, "value_keyword",
-					StringUtil.lowerCase(String.valueOf(value)));
-			}
-			else if (value instanceof BigDecimal) {
-				_addNestedField(
-					fieldArray, name, "value_double", String.valueOf(value));
-			}
-			else if (value instanceof Boolean) {
-				_addNestedField(
-					fieldArray, name, "value_boolean", String.valueOf(value));
-			}
-			else if (value instanceof Date) {
-				_addNestedField(
-					fieldArray, name, "value_date", _getDateString(value));
-			}
-			else if (value instanceof Double) {
-				_addNestedField(
-					fieldArray, name, "value_double", String.valueOf(value));
-			}
-			else if (value instanceof Integer) {
-				_addNestedField(
-					fieldArray, name, "value_integer", String.valueOf(value));
-			}
-			else if (value instanceof Long) {
-				_addNestedField(
-					fieldArray, name, "value_long", String.valueOf(value));
-			}
-			else if (value instanceof String) {
-				if (Validator.isBlank(indexedLanguageId)) {
-					_addNestedField(
-						fieldArray, name, "value_text", (String)value);
-				}
-				else {
-					_addNestedField(
-						fieldArray, name, "value_" + indexedLanguageId, (String)value);
-
-					_addNestedField(
-						fieldArray, name, "value_" + indexedLanguageId + "_sortable",
-						(String)value);
-				}
-			}
-			else if (value instanceof byte[]) {
-				_addNestedField(
-					fieldArray, name, "value_binary",
-					Base64.encode((byte[])value));
+					fieldArray, name, "value_text", (String)value);
 			}
 			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						StringBundler.concat(
-							"Object entry ", objectEntry.getObjectEntryId(),
-							" has field \"", name, "\" with unsupported value ",
-							value));
-				}
+				_addNestedField(
+					fieldArray, name, "value_" + indexedLanguageId, (String)value);
+
+				_addNestedField(
+					fieldArray, name, "value_" + indexedLanguageId + "_sortable",
+					(String)value);
+			}
+		}
+		else if (value instanceof byte[]) {
+			_addNestedField(
+				fieldArray, name, "value_binary",
+				Base64.encode((byte[])value));
+		}
+		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Object entry ", objectEntry.getObjectEntryId(),
+						" has field \"", name, "\" with unsupported value ",
+						value));
 			}
 		}
 	}

@@ -38,86 +38,77 @@ definition {
 
 	@description = "This is a test for LPS-122142. View the visual style of mapped editable field items in Selection panel of display page template."
 	@priority = "4"
-	test ViewVisualStyleOfMappedEditableFieldItem {
-		task ("Add a display page") {
+	test ViewVisualStyleOfMappedEditableFieldItems {
+		task ("Add a Heading fragment to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.addDisplayPage(
-				contentType = "Web Content Article",
-				displayPageName = "Display Page LPS-130922",
-				subType = "Basic Web Content");
-		}
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-		task ("Add Fragment Heading") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 		}
 
-		task ("Field edit Mapping and select Title to Field") {
+		task ("Map the Content field to editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
 				fragmentName = "Heading",
 				id = "element-text");
 
+			Pause(locator1 = "3000");
+
 			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Content");
 		}
 
-		task ("AssertElementPresent Field Title and AssertCssValue") {
-			AssertElementPresent(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Content");
-
+		task ("View the visual style of Content item in Selection panel") {
 			AssertCssValue(
-				id = "element-text",
-				key_fragmentName = "Heading",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-				locator2 = "boxShadow",
-				value1 = "rgb(175, 120, 255) 0px 0px 0px 1px inset");
+				key_nodeName = "Content",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_NAME",
+				locator2 = "color",
+				value1 = "rgba(149, 76, 255, 1)");
 		}
 
-		task ("Add Fragment Content Display") {
+		task ("Add a Collection Display fragment to page") {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				fragmentName = "Collection Display",
 				targetFragmentName = "Heading");
 		}
 
-		task ("Edit Collection Display adding Most Viewed Assets") {
+		task ("Select the Most Viewed Assets in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				infoListProviderName = "Most Viewed Assets");
 		}
 
-		task ("Add Button Fragment to Collection Display") {
+		task ("Add a Button fragment to Collection Display") {
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
 				entryTitle = "Title",
 				fragmentName = "Button");
 		}
 
-		task ("Edit Button Mapping Field and select Title to Field") {
+		task ("Map the Title field to editable field") {
 			PageEditorMapping.gotoEditableFieldMapping(
 				fragmentName = "Button",
 				id = "link");
 
+			Pause(locator1 = "3000");
+
 			Select(
-				locator1 = "PageEditorEditableLink#FIELD",
+				key_fieldLabel = "Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "Title");
 		}
 
-		task ("AssertElementPresent Field Title and AssertCssValue") {
-			AssertElementPresent(
-				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Title");
-
+		task ("View the visual style of Title item in Selection panel") {
 			AssertCssValue(
-				id = "link",
-				key_fragmentName = "Button",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-				locator2 = "boxShadow",
-				value1 = "rgb(175, 120, 255) 0px 0px 0px 1px inset");
+				key_nodeName = "Title",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_NAME",
+				locator2 = "color",
+				value1 = "rgba(149, 76, 255, 1)");
 		}
 	}
 

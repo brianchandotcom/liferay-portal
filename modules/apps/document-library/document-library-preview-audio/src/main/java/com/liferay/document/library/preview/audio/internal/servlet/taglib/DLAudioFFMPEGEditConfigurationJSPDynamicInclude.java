@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -54,8 +55,8 @@ public class DLAudioFFMPEGEditConfigurationJSPDynamicInclude
 		dynamicIncludeRegistry.register(
 			StringBundler.concat(
 				"com.liferay.configuration.admin.web#/edit_configuration.jsp#",
-				"com.liferay.document.library.audio.internal.configuration.",
-				"DLAudioFFMPEGAudioConverterConfiguration#pre"));
+				"com.liferay.document.library.preview.audio.internal.",
+				"configuration.DLAudioFFMPEGAudioConverterConfiguration#pre"));
 	}
 
 	@Override
@@ -67,6 +68,15 @@ public class DLAudioFFMPEGEditConfigurationJSPDynamicInclude
 	@Override
 	protected Log getLog() {
 		return _log;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.audio)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

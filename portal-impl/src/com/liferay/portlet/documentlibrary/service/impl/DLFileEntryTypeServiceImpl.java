@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -223,13 +222,12 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 		long companyId, long[] groupIds, String keywords,
 		boolean includeBasicFileEntryType, int scope) {
 
-		return GetterUtil.getInteger(
-			(Long)dlFileEntryTypeLocalService.dslQuery(
-				_getGroupByStep(
-					DSLQueryFactoryUtil.countDistinct(
-						DLFileEntryTypeTable.INSTANCE.fileEntryTypeId),
-					companyId, groupIds, keywords, includeBasicFileEntryType,
-					scope)));
+		return dlFileEntryTypePersistence.dslQueryCount(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.countDistinct(
+					DLFileEntryTypeTable.INSTANCE.fileEntryTypeId),
+				companyId, groupIds, keywords, includeBasicFileEntryType,
+				scope));
 	}
 
 	@Override

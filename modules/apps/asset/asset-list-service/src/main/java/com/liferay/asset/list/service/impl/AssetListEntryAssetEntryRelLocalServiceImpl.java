@@ -260,9 +260,7 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 			_getPredicate(assetListEntryId, segmentsEntryIds, assetCategoryIds)
 		);
 
-		Long count = assetListEntryAssetEntryRelPersistence.dslQuery(dslQuery);
-
-		return count.intValue();
+		return assetListEntryAssetEntryRelPersistence.dslQueryCount(dslQuery);
 	}
 
 	@Override

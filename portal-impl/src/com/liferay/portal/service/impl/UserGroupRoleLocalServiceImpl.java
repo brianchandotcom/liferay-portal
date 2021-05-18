@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.base.UserGroupRoleLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -270,28 +269,27 @@ public class UserGroupRoleLocalServiceImpl
 		}
 
 		if (inherit) {
-			count = GetterUtil.getInteger(
-				(Long)rolePersistence.dslQuery(
-					DSLQueryFactoryUtil.count(
-					).from(
-						RoleTable.INSTANCE
-					).innerJoinON(
-						UserGroupGroupRoleTable.INSTANCE,
-						UserGroupGroupRoleTable.INSTANCE.roleId.eq(
-							RoleTable.INSTANCE.roleId)
-					).innerJoinON(
-						Users_UserGroupsTable.INSTANCE,
-						Users_UserGroupsTable.INSTANCE.userGroupId.eq(
-							UserGroupGroupRoleTable.INSTANCE.userGroupId)
-					).where(
-						RoleTable.INSTANCE.roleId.eq(
-							roleId
-						).and(
-							UserGroupGroupRoleTable.INSTANCE.groupId.eq(groupId)
-						).and(
-							Users_UserGroupsTable.INSTANCE.userId.eq(userId)
-						)
-					)));
+			count = rolePersistence.dslQueryCount(
+				DSLQueryFactoryUtil.count(
+				).from(
+					RoleTable.INSTANCE
+				).innerJoinON(
+					UserGroupGroupRoleTable.INSTANCE,
+					UserGroupGroupRoleTable.INSTANCE.roleId.eq(
+						RoleTable.INSTANCE.roleId)
+				).innerJoinON(
+					Users_UserGroupsTable.INSTANCE,
+					Users_UserGroupsTable.INSTANCE.userGroupId.eq(
+						UserGroupGroupRoleTable.INSTANCE.userGroupId)
+				).where(
+					RoleTable.INSTANCE.roleId.eq(
+						roleId
+					).and(
+						UserGroupGroupRoleTable.INSTANCE.groupId.eq(groupId)
+					).and(
+						Users_UserGroupsTable.INSTANCE.userId.eq(userId)
+					)
+				));
 
 			if (count > 0) {
 				return true;

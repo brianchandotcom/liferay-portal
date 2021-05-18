@@ -78,16 +78,16 @@ public class DSLQueryEntryPersistenceImplTest {
 	@Test
 	public void testDSLQueryCount() {
 		Assert.assertEquals(
-			3L,
-			(long)_dslQueryStatusEntryPersistence.dslQuery(
+			3,
+			_dslQueryStatusEntryPersistence.dslQueryCount(
 				DSLQueryFactoryUtil.count(
 				).from(
 					DSLQueryStatusEntryTable.INSTANCE
 				)));
 
 		Assert.assertEquals(
-			2L,
-			(long)_dslQueryStatusEntryPersistence.dslQuery(
+			2,
+			_dslQueryStatusEntryPersistence.dslQueryCount(
 				DSLQueryFactoryUtil.countDistinct(
 					DSLQueryStatusEntryTable.INSTANCE.dslQueryEntryId
 				).from(
@@ -95,8 +95,8 @@ public class DSLQueryEntryPersistenceImplTest {
 				)));
 
 		Assert.assertEquals(
-			3L,
-			(long)_dslQueryStatusEntryPersistence.dslQuery(
+			3,
+			_dslQueryStatusEntryPersistence.dslQueryCount(
 				DSLQueryFactoryUtil.count(
 				).from(
 					DSLQueryStatusEntryTable.INSTANCE
@@ -113,8 +113,8 @@ public class DSLQueryEntryPersistenceImplTest {
 				)));
 
 		Assert.assertEquals(
-			2L,
-			(long)_dslQueryStatusEntryPersistence.dslQuery(
+			2,
+			_dslQueryStatusEntryPersistence.dslQueryCount(
 				DSLQueryFactoryUtil.count(
 				).from(
 					DSLQueryStatusEntryTable.INSTANCE

@@ -231,7 +231,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 		throws PortalException {
 
 		return new BaseModelSearchResult<>(
-			countryLocalService.dslQuery(
+			countryPersistence.dslQuery(
 				_getGroupByStep(
 					DSLQueryFactoryUtil.selectDistinct(CountryTable.INSTANCE),
 					companyId, active, keywords
@@ -240,7 +240,7 @@ public class CountryLocalServiceImpl extends CountryLocalServiceBaseImpl {
 				).limit(
 					start, end
 				)),
-			countryLocalService.dslQuery(
+			countryPersistence.dslQueryCount(
 				_getGroupByStep(
 					DSLQueryFactoryUtil.countDistinct(
 						CountryTable.INSTANCE.countryId),

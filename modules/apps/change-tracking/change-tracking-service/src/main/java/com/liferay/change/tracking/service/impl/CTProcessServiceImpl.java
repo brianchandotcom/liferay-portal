@@ -111,9 +111,7 @@ public class CTProcessServiceImpl extends CTProcessServiceBaseImpl {
 			_getPredicate(companyId, keywords, status, userId)
 		);
 
-		Long count = ctProcessPersistence.dslQuery(dslQuery);
-
-		return count.intValue();
+		return ctProcessPersistence.dslQueryCount(dslQuery);
 	}
 
 	private Predicate _getPredicate(

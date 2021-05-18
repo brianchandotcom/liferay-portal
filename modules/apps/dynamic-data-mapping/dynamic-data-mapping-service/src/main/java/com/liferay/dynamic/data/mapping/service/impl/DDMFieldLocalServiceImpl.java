@@ -234,7 +234,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 	@Override
 	public int getDDMFormValuesCount(long structureId) {
-		Long count = ddmFieldPersistence.dslQuery(
+		return ddmFieldPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
 				DDMFieldTable.INSTANCE
@@ -247,8 +247,6 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 						structureId)
 				)
 			));
-
-		return count.intValue();
 	}
 
 	@Override
@@ -319,15 +317,13 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			languageIdColumn = aliasDDMFieldAttributeTable.languageId;
 		}
 
-		Long count = ddmFieldPersistence.dslQuery(
+		return ddmFieldPersistence.dslQueryCount(
 			joinStep.where(
 				DDMFieldTable.INSTANCE.companyId.eq(
 					companyId
 				).and(
 					DDMFieldTable.INSTANCE.fieldType.eq(fieldType)
 				)));
-
-		return count.intValue();
 	}
 
 	@Override

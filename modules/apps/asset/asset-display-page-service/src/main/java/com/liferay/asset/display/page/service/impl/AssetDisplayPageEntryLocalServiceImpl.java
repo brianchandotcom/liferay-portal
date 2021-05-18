@@ -208,9 +208,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 				defaultTemplate)
 		);
 
-		Long count = assetDisplayPageEntryPersistence.dslQuery(dslQuery);
-
-		return count.intValue();
+		return assetDisplayPageEntryPersistence.dslQueryCount(dslQuery);
 	}
 
 	@Override

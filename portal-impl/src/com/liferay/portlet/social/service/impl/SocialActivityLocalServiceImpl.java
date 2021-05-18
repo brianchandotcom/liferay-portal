@@ -682,9 +682,7 @@ public class SocialActivityLocalServiceImpl
 			)
 		);
 
-		Long count = socialActivityPersistence.dslQuery(dslQuery);
-
-		return count.intValue();
+		return socialActivityPersistence.dslQueryCount(dslQuery);
 	}
 
 	/**

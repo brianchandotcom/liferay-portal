@@ -728,7 +728,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 					auditedModel.getCompanyId()
 				));
 
-			Long modelCount = dslQuery(groupByStep);
+			int modelCount = dslQueryCount(groupByStep);
 
 			if (modelCount >= _dataLimitModelMaxCount) {
 				throw new DataLimitExceededException(

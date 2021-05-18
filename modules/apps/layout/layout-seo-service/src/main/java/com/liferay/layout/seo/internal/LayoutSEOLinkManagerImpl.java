@@ -83,7 +83,7 @@ public class LayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			subtitleListMergeable, locale);
 		String siteAndCompanyName = _getPageTitleSuffix(layout, companyName);
 
-		return _html.escape(_merge(layoutTitle, siteAndCompanyName));
+		return _merge(layoutTitle, siteAndCompanyName);
 	}
 
 	@Override

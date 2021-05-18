@@ -1504,6 +1504,15 @@ definition {
 			roleTitle = "Site Role Name",
 			userEmailAddress = "userea@liferay.com");
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
 		LexiconEntry.gotoAdd();
 
 		Segmentation.addProperties(propertyOption = "Site and Organization Role");

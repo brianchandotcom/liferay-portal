@@ -307,6 +307,8 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 				Phone phone = phones.get(0);
 
 				phone.setNumber(phoneNumber);
+
+				_phoneLocalService.updatePhone(phone);
 			}
 		}
 

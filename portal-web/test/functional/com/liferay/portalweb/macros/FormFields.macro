@@ -811,6 +811,12 @@ definition {
 		AssertElementPresent.assertVisible(locator1 = "Icon#ASTERISK");
 	}
 
+	macro viewRequiredAsteriskDataField {
+		AssertElementPresent.assertVisible(
+			key_fieldFieldLabel = "${fieldFieldLabel}",
+			locator1 = "Icon#ASTERISK_DATE_FIELD");
+	}
+
 	macro viewRequiredAsteriskNotPresent {
 		AssertElementNotPresent(locator1 = "Icon#ASTERISK");
 	}

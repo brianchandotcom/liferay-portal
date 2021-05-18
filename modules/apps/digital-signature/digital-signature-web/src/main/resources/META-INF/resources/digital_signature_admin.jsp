@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.digital.signature.web.internal.constants;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Keven Leone
- */
-public class DigitalSignaturePortletKeys {
-
-	public static final String DIGITAL_SIGNATURE_ADMIN =
-		"com_liferay_digital_signature_web_internal_DigitalSignaturePortlet";
-
-}
+<div id="digital-signature-root">
+	<react:component
+		module="js/pages/DigitalSignatureList"
+	/>
+</div>

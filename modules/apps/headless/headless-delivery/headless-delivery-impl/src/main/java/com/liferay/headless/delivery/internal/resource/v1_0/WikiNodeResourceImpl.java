@@ -209,7 +209,7 @@ public class WikiNodeResourceImpl
 
 		if (wikiNode == null) {
 			throw new NoSuchNodeException(
-				"No wiki node exists with external reference code" +
+				"No wiki node exists with external reference code " +
 					externalReferenceCode);
 		}
 

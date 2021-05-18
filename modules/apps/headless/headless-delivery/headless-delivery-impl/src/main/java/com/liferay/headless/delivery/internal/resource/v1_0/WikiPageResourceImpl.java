@@ -96,7 +96,7 @@ public class WikiPageResourceImpl
 	@Override
 	public void deleteWikiPage(Long wikiPageId) throws Exception {
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPageByPageId(wikiPageId);
+			_wikiPageLocalService.getPage(wikiPageId);
 
 		_wikiPageService.deletePage(wikiPage.getNodeId(), wikiPage.getTitle());
 	}
@@ -172,7 +172,7 @@ public class WikiPageResourceImpl
 	@Override
 	public WikiPage getWikiPage(Long wikiPageId) throws Exception {
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPageByPageId(wikiPageId);
+			_wikiPageLocalService.getPage(wikiPageId);
 
 		_wikiPageModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), wikiPage,
@@ -186,7 +186,7 @@ public class WikiPageResourceImpl
 		throws Exception {
 
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPageByPageId(parentWikiPageId);
+			_wikiPageLocalService.getPage(parentWikiPageId);
 
 		_wikiPageModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(), wikiPage,
@@ -240,7 +240,7 @@ public class WikiPageResourceImpl
 		throws Exception {
 
 		com.liferay.wiki.model.WikiPage parentWikiPage =
-			_wikiPageLocalService.getPageByPageId(parentWikiPageId);
+			_wikiPageLocalService.getPage(parentWikiPageId);
 
 		_wikiNodeModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
@@ -299,7 +299,7 @@ public class WikiPageResourceImpl
 		throws Exception {
 
 		com.liferay.wiki.model.WikiPage serviceBuilderWikiPage =
-			_wikiPageLocalService.getPageByPageId(wikiPageId);
+			_wikiPageLocalService.getPage(wikiPageId);
 
 		_wikiPageModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
@@ -311,7 +311,7 @@ public class WikiPageResourceImpl
 	@Override
 	public void putWikiPageSubscribe(Long wikiPageId) throws Exception {
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPageByPageId(wikiPageId);
+			_wikiPageLocalService.getPage(wikiPageId);
 
 		_wikiPageService.subscribePage(
 			wikiPage.getNodeId(), wikiPage.getTitle());
@@ -320,7 +320,7 @@ public class WikiPageResourceImpl
 	@Override
 	public void putWikiPageUnsubscribe(Long wikiPageId) throws Exception {
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPageByPageId(wikiPageId);
+			_wikiPageLocalService.getPage(wikiPageId);
 
 		_wikiPageService.unsubscribePage(
 			wikiPage.getNodeId(), wikiPage.getTitle());
@@ -329,7 +329,7 @@ public class WikiPageResourceImpl
 	@Override
 	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPageByPageId((Long)id);
+			_wikiPageLocalService.getPage((Long)id);
 
 		return wikiPage.getGroupId();
 	}
@@ -342,7 +342,7 @@ public class WikiPageResourceImpl
 	@Override
 	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
 		com.liferay.wiki.model.WikiPage wikiPage =
-			_wikiPageLocalService.getPageByPageId((Long)id);
+			_wikiPageLocalService.getPage((Long)id);
 
 		return wikiPage.getResourcePrimKey();
 	}

@@ -95,7 +95,7 @@ public class WikiPageDTOConverter
 				encodingFormat = _getEncodingFormat(wikiPage);
 				externalReferenceCode = wikiPage.getExternalReferenceCode();
 				headline = wikiPage.getTitle();
-				id = wikiPage.getPageId();
+				id = wikiPage.getResourcePrimKey();
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(
 						BlogsEntry.class.getName(), wikiPage.getPageId()),
@@ -146,7 +146,7 @@ public class WikiPageDTOConverter
 							return null;
 						}
 
-						return parentWikiPage.getPageId();
+						return parentWikiPage.getResourcePrimKey();
 					});
 				wikiNodeId = wikiPage.getNodeId();
 			}

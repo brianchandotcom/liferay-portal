@@ -189,7 +189,6 @@ public class ObjectEntryModelDocumentContributor
 			else {
 				_addField(
 					fieldArray, name, "value_" + indexedLanguageId, (String)value);
-
 				_addField(
 					fieldArray, name, "value_" + indexedLanguageId + "_sortable",
 					(String)value);

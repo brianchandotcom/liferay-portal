@@ -349,6 +349,13 @@ import org.osgi.service.component.annotations.Reference;
 			public <T> T dslQuery(DSLQuery dslQuery) {
 				return ${entity.variableName}Persistence.dslQuery(dslQuery);
 			}
+
+			@Override
+			public int dslQueryCount(DSLQuery dslQuery) {
+				Long count = dslQuery(dslQuery);
+
+				return count.intValue();
+			}
 		</#if>
 
 		@Override

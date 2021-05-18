@@ -476,6 +476,21 @@ definition {
 		}
 	}
 
+	@priority = "3"
+	test VerifyFriendlyURLsAlwaysDisplayRequestedLocale {
+		property custom.properties = "locales.enabled=fr_FR,en_US,zh_CN,es_ES${line.separator}locale.prepend.friendly.url.style=2";
+		property custom.system.properties = "user.country=FR${line.separator}user.language=fr";
+		property test.name.skip.portal.instance = "Locale#VerifyFriendlyURLsAlwaysDisplayRequestedLocale";
+
+		User.firstLoginPG();
+
+		AssertLocation(value1 = "http://localhost:8080/fr/web/guest?SM_USER=test@liferay.com");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest");
+
+		AssertLocation(value1 = "http://localhost:8080/en/web/guest");
+	}
+
 	@priority = "4"
 	test ViewDefaultAvailableTimeZonesForInstancesAndUsers {
 		property test.name.skip.portal.instance = "Locale#ViewDefaultAvailableTimeZonesForInstancesAndUsers";

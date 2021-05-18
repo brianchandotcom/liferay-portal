@@ -156,10 +156,33 @@ describe('The InstanceDetailsModal component should', () => {
 					data: {
 						...data,
 						completed: false,
+						slaResults: [
+							{...data.slaResults[0]},
+							{
+								...data.slaResults[1],
+								onTime: true,
+								status: 'NEW',
+							},
+						],
+						slaStatus: 'Untracked',
 						taskNames: ['Review'],
 					},
 				}),
 			});
+		});
+
+		test('Render details with slaStatus Untracked', () => {
+			const untrackedIcons = document.querySelectorAll(
+				'.lexicon-icon-hr'
+			);
+			const slaNotStartedElement = renderResult.getByText(
+				'NOT-STARTED (1)'
+			);
+			const slaResultLabelElement = renderResult.getByText('(untracked)');
+
+			expect(untrackedIcons.length).toBe(2);
+			expect(slaNotStartedElement).toBeTruthy();
+			expect(slaResultLabelElement).toBeTruthy();
 		});
 
 		test('Render Process details with correct infos', () => {

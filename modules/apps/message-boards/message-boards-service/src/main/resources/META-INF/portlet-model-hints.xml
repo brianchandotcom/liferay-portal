@@ -137,16 +137,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.message.boards.model.MBStatsUser">
-		<field name="mvccVersion" type="long" />
-		<field name="ctCollectionId" type="long" />
-		<field name="statsUserId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="messageCount" type="int" />
-		<field name="lastPostDate" type="Date" />
-	</model>
 	<model name="com.liferay.message.boards.model.MBThread">
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />

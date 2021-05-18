@@ -60,11 +60,6 @@ create index IX_F6B01E4A on MBMessage (uuid_[$COLUMN_LENGTH:75$], companyId, ctC
 create index IX_DAB8F51A on MBMessage (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_EAF86BCC on MBMessage (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
-create index IX_D82661ED on MBStatsUser (groupId, ctCollectionId);
-create unique index IX_A22F0727 on MBStatsUser (groupId, userId, ctCollectionId);
-create index IX_2F4600A3 on MBStatsUser (groupId, userId, messageCount, ctCollectionId);
-create index IX_24A05F13 on MBStatsUser (userId, ctCollectionId);
-
 create index IX_A1BB5EE8 on MBThread (categoryId, priority, ctCollectionId);
 create index IX_93724410 on MBThread (groupId, categoryId, ctCollectionId);
 create index IX_C25692A8 on MBThread (groupId, categoryId, lastPostDate, ctCollectionId);

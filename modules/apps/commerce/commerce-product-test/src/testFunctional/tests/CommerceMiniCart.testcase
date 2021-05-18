@@ -27,13 +27,70 @@ definition {
 	}
 
 	@description = "COMMERCE-6343. As a buyer, I want to be able to select only the allowed quantities of a cart item, if set"
-	@ignore = "true"
 	@priority = "3"
 	test AssertOnlyAllowedQuantitiesAreSelectableInMiniCartItem {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceMiniCart#AssertOnlyAllowedQuantitiesAreSelectableInMiniCartItem";
 
-		// TODO COMMERCE-6343 AssertOnlyAllowedQuantitiesAreSelectableInMiniCartItem pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.searchProduct(search = "U-Joint");
+
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Type(
+			key_fieldLabel = "Allowed Order Quantities",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "1 4 5 7 11");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Select(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_SELECT_FIELD",
+			value1 = "1");
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertElementPresent(
+			key_dropdownOption = "1",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dropdownOption = "4",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dropdownOption = "5",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dropdownOption = "7",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
+
+		AssertElementPresent(
+			key_dropdownOption = "11",
+			locator1 = "AppBuilder#PRODUCT_MENU_PLACE_IT_DROPDOWN_OPTION");
 	}
 
 	@description = "COMMERCE-6346. As a buyer, I want to be able to select the quantity of a cart item by multiple value, if set"
@@ -43,6 +100,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6346 AssertOnlyMultipleValuesAreSelectableQuantitiesInMiniCartItem pending implementation
+
 	}
 
 	@description = "COMMERCE-6345. As a buyer, I want to be able to select the quantity of a cart item up to a maximum quantity, if set"

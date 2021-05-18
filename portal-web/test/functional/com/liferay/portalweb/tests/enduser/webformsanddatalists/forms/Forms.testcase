@@ -686,7 +686,7 @@ definition {
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
-		
+
 		Form.editName(formName = "Test");
 
 		Form.editDescription(formDescription = "Test");
@@ -694,7 +694,7 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
 			fieldType = "Text");
-		
+
 		Pause(locator1 = "60000");
 
 		Form.viewSaveNotification();
@@ -702,25 +702,24 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
-		
+
 		AppBuilderAdmin.openItem(itemName = "Test");
 
 		Click(locator1 = "Form#PUBLISH_FORM_BUTTON");
-		
+
 		FormsAdminNavigator.openPublishURL();
-		
+
 		AssertElementPresent(
 			key_formName = "Test",
 			locator1 = "Form#PUBLISH_FORM_NAME_FIELD");
 
 		AssertElementPresent(
 			key_formDescription = "Test",
-		 	locator1 = "Form#PUBLISH_FORM_DESCRIPTION_FIELD");
-		
+			locator1 = "Form#PUBLISH_FORM_DESCRIPTION_FIELD");
+
 		FormFields.viewTextLabel(
 			fieldLabel = "Text",
 			fieldName = "Text");
-		
 	}
 
 	@description = "Verify that a Form can be created with more than one page"

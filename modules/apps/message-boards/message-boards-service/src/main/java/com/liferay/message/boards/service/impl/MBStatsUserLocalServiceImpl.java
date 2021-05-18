@@ -14,14 +14,19 @@
 
 package com.liferay.message.boards.service.impl;
 
+import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.internal.util.MBThreadUtil;
 import com.liferay.message.boards.internal.util.MBUserRankUtil;
+import com.liferay.message.boards.model.MBMessageTable;
 import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
@@ -37,6 +42,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -203,7 +209,7 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public List<MBStatsUser> getStatsUsersByGroupId(
+	public List<Object[]> getStatsUsersByGroupId(
 			long groupId, int start, int end)
 		throws PortalException {
 
@@ -212,8 +218,40 @@ public class MBStatsUserLocalServiceImpl
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 
-		return mbStatsUserPersistence.findByG_NotU_NotM(
-			groupId, defaultUserId, 0, start, end);
+		Expression<Long> countExpression = DSLFunctionFactoryUtil.count(
+			MBMessageTable.INSTANCE.messageId
+		).as(
+			"messageCount"
+		);
+
+		return _mbMessagePersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				MBMessageTable.INSTANCE.userId, countExpression,
+				DSLFunctionFactoryUtil.max(
+					MBMessageTable.INSTANCE.modifiedDate
+				).as(
+					"lastPostDate"
+				)
+			).from(
+				MBMessageTable.INSTANCE
+			).where(
+				MBMessageTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					MBMessageTable.INSTANCE.userId.neq(defaultUserId)
+				).and(
+					MBMessageTable.INSTANCE.categoryId.neq(
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				)
+			).groupBy(
+				MBMessageTable.INSTANCE.userId
+			).having(
+				countExpression.gt(0L)
+			).orderBy(
+				countExpression.descending()
+			).limit(
+				start, end
+			));
 	}
 
 	@Override
@@ -225,8 +263,22 @@ public class MBStatsUserLocalServiceImpl
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 
-		return mbStatsUserPersistence.countByG_NotU_NotM(
-			groupId, defaultUserId, 0);
+		return GetterUtil.getInteger(
+			(Long)_mbMessagePersistence.dslQuery(
+				DSLQueryFactoryUtil.countDistinct(
+					MBMessageTable.INSTANCE.userId
+				).from(
+					MBMessageTable.INSTANCE
+				).where(
+					MBMessageTable.INSTANCE.groupId.eq(
+						groupId
+					).and(
+						MBMessageTable.INSTANCE.userId.neq(defaultUserId)
+					).and(
+						MBMessageTable.INSTANCE.categoryId.neq(
+							MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+					)
+				)));
 	}
 
 	@Override

@@ -78,24 +78,29 @@
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.message.boards.model.MBStatsUser"
-			keyProperty="statsUserId"
-			modelVar="statsUser"
+			className="Object"
+			modelVar="result"
 		>
 
 			<%
-			User topUser = UserLocalServiceUtil.fetchUserById(statsUser.getUserId());
+			Object[] array = (Object[])result;
+
+			long userId = (Long)array[0];
+			long messageCount = (Long)array[1];
+			Date lastPostDate = (Date)array[2];
+
+			User topUser = UserLocalServiceUtil.fetchUserById(userId);
 			%>
 
 			<c:if test="<%= topUser != null %>">
 				<liferay-ui:search-container-column-text>
 					<liferay-ui:user-portrait
-						userId="<%= statsUser.getUserId() %>"
+						userId="<%= userId %>"
 					/>
 				</liferay-ui:search-container-column-text>
 
 				<%
-				String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), statsUser.getUserId());
+				String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), userId);
 				%>
 
 				<liferay-ui:search-container-column-text
@@ -111,11 +116,11 @@
 
 					<p class="list-group-subtitle">
 						<c:choose>
-							<c:when test="<%= statsUser.getMessageCount() == 1 %>">
-								<liferay-ui:message key="post" />: <%= statsUser.getMessageCount() %>
+							<c:when test="<%= messageCount == 1 %>">
+								<liferay-ui:message key="post" />: <%= messageCount %>
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message key="posts" />: <%= statsUser.getMessageCount() %>
+								<liferay-ui:message key="posts" />: <%= messageCount %>
 							</c:otherwise>
 						</c:choose>
 					</p>
@@ -125,7 +130,7 @@
 					</p>
 
 					<p class="list-group-subtitle">
-						<liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
+						<liferay-ui:message key="last-post-date" />: <%= dateFormatDate.format(lastPostDate) %>
 					</p>
 				</liferay-ui:search-container-column-text>
 			</c:if>

@@ -74,8 +74,13 @@ public class ObjectEntryModelDocumentContributor
 		FieldArray fieldArray, String fieldName, String valueFieldName,
 		String value) {
 
-		fieldArray.addField(
-			_createNestedField(fieldName, valueFieldName, value));
+		Field field = new Field("");
+
+		field.addField(new Field("fieldName", fieldName));
+		field.addField(new Field("valueFieldName", valueFieldName));
+		field.addField(new Field(valueFieldName, value));
+
+		fieldArray.addField(field);
 	}
 
 	private void _contribute(Document document, ObjectEntry objectEntry)
@@ -204,18 +209,6 @@ public class ObjectEntryModelDocumentContributor
 						value));
 			}
 		}
-	}
-
-	private Field _createNestedField(
-		String fieldName, String valueFieldName, String value) {
-
-		Field field = new Field("");
-
-		field.addField(new Field("fieldName", fieldName));
-		field.addField(new Field("valueFieldName", valueFieldName));
-		field.addField(new Field(valueFieldName, value));
-
-		return field;
 	}
 
 	private String _getDateString(Object value) {

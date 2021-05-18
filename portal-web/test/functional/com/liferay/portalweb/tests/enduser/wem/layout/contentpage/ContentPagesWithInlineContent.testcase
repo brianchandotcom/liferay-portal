@@ -215,7 +215,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-85872. Edit the inline content of text fragment and view auto save message."
+	@description = "This is a use case for LPS-85872 and LPS-78726. Edit the inline content of text fragment."
 	@priority = "5"
 	@uitest
 	test EditInlineContentOfTextFragment {
@@ -257,9 +257,50 @@ definition {
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "New editable fragment text");
 		}
+
+		task ("Edit the inline text again") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "Edited Heading Example");
+		}
+
+		task ("View new inline content not shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+		}
+
+		task ("Publish the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View new inline content shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Edited Heading Example");
+		}
 	}
 
-	@description = "This is a test for LPS-95045. A user should be able to display an image from Documents and Media in Image fragment."
+	@description = "This is a test for LPS-95045 and LPS-101328. A user should be able to display an image from Documents and Media in Image fragment."
 	@priority = "5"
 	test ViewImageFromDocumentsAndMediaInImageFragment {
 		property portal.acceptance = "true";
@@ -286,6 +327,10 @@ definition {
 				id = "image-square",
 				imageDescription = "",
 				imageFileName = "Document_1.png");
+
+			AssertVisible(
+				key_contentName = "Document_1.png",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
 			PageEditor.clickPublish();
 		}

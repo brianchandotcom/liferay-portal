@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,15 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+import React from 'react';
 
-<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+function DigitalSignatureList() {
+	return <div>Digital Signature React</div>;
+}
 
-<%@ page import="com.liferay.digital.signature.web.internal.constants.DigitalSignatureWebKeys" %>
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />
+export default DigitalSignatureList;

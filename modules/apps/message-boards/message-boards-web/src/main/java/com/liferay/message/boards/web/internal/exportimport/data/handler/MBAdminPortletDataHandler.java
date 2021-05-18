@@ -34,8 +34,6 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.message.boards.service.MBCategoryLocalService;
-import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -140,9 +138,6 @@ public class MBAdminPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.getScopeGroupId());
 
 		_mbCategoryLocalService.deleteCategories(
-			portletDataContext.getScopeGroupId());
-
-		_mbStatsUserLocalService.deleteStatsUsersByGroupId(
 			portletDataContext.getScopeGroupId());
 
 		_mbThreadLocalService.deleteThreads(
@@ -338,20 +333,6 @@ public class MBAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Reference(unbind = "-")
-	protected void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setMBStatsUserLocalService(
-		MBStatsUserLocalService mbStatsUserLocalService) {
-
-		_mbStatsUserLocalService = mbStatsUserLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setMBThreadFlagLocalService(
 		MBThreadFlagLocalService mbThreadFlagLocalService) {
 
@@ -367,8 +348,6 @@ public class MBAdminPortletDataHandler extends BasePortletDataHandler {
 
 	private MBBanLocalService _mbBanLocalService;
 	private MBCategoryLocalService _mbCategoryLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
-	private MBStatsUserLocalService _mbStatsUserLocalService;
 	private MBThreadFlagLocalService _mbThreadFlagLocalService;
 	private MBThreadLocalService _mbThreadLocalService;
 

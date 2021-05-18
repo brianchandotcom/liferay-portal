@@ -98,16 +98,6 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public void deleteStatsUsersByGroupId(long groupId) {
-		List<MBStatsUser> statsUsers = mbStatsUserPersistence.findByGroupId(
-			groupId);
-
-		for (MBStatsUser statsUser : statsUsers) {
-			deleteStatsUser(statsUser);
-		}
-	}
-
-	@Override
 	public void deleteStatsUsersByUserId(long userId) {
 		List<MBStatsUser> statsUsers = mbStatsUserPersistence.findByUserId(
 			userId);

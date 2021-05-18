@@ -302,13 +302,10 @@ definition {
 
 		FormsAdminNavigator.gotoAddForm();
 
-
 		Form.editName(formName = "Form 1");
-
 
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
-
 			fieldType = "Paragraph");
 
 		FormFields.editParagraphBody(content = "Test");
@@ -316,7 +313,6 @@ definition {
 		Form.save();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Paragraph");
-		
 
 		FormFields.editParagraphBody(content = "Test Body Text");
 

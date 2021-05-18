@@ -262,21 +262,6 @@ public class MBStatsUserLocalServiceImpl
 			getStatsUser(groupId, userId));
 	}
 
-	@Override
-	public MBStatsUser updateStatsUser(
-		long groupId, long userId, int messageCount, Date lastPostDate) {
-
-		MBStatsUser statsUser = getStatsUser(groupId, userId);
-
-		statsUser.setMessageCount(messageCount);
-
-		if (lastPostDate != null) {
-			statsUser.setLastPostDate(lastPostDate);
-		}
-
-		return mbStatsUserPersistence.update(statsUser);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBStatsUserLocalServiceImpl.class);
 

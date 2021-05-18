@@ -190,7 +190,7 @@ public class CryptoHashTest {
 	public void testCryptoHashGeneratorWithNoConfigurations() throws Exception {
 		_callService(
 			CryptoHashGenerator.class,
-			"(crypto.hash.provider.configuration.name=test-message-digest)",
+			"(crypto.hash.provider.configuration.name=empty-message-digest)",
 			object -> {
 				Assert.assertNull(object);
 

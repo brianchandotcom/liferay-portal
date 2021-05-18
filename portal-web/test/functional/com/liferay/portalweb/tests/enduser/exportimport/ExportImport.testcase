@@ -1469,7 +1469,7 @@ definition {
 			fieldName = "Text",
 			targetFieldLabel = "Separator");
 
-		DataEngine.editFieldsGroupRepeatable();
+		DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
 
 		WebContentStructures.saveCP(structureName = "Exported Structure");
 

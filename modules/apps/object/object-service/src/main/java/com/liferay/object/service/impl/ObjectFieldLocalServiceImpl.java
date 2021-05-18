@@ -88,7 +88,9 @@ public class ObjectFieldLocalServiceImpl
 			objectDefinitionId);
 	}
 
-	private void _validateIndexed(boolean indexed, boolean indexedAsKeyword, String indexedLanguageId, String type)
+	private void _validateIndexed(
+			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+			String type)
 		throws PortalException {
 
 		// TODO Add a test for this

@@ -43,7 +43,6 @@ import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQuery
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

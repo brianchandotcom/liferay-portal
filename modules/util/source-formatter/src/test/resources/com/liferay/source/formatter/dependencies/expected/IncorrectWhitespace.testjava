@@ -72,15 +72,16 @@ public class IncorrectWhitespace {
 
 		String s2 = "hello ,world";
 		String s3 = "hello\" ,world";
-		String s4 = "hello\\\" ,world";
 
 		if (true) {
 			s2 = s1;
 		}
 		else {
 			try {
+				String s4 = "hello\\\" ,world";
+
 				while (true) {
-					s3 = s1;
+					s4 = s1;
 				}
 			}
 			catch (Exception exception) {

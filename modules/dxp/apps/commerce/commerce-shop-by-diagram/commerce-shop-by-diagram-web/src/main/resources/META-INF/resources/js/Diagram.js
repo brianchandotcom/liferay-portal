@@ -13,6 +13,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
+import '../style/diagram.scss';
 import DiagramFooter from './DiagramFooter';
 import DiagramHeader from './DiagramHeader';
 import ImagePins from './ImagePins';
@@ -40,7 +41,10 @@ const Diagram = ({
 	const [changedScale, setChangedScale] = useState(false);
 	const [scale, setScale] = useState(1);
 	const [selectedOption, setSelectedOption] = useState(1);
+<<<<<<< HEAD
 
+=======
+>>>>>>> COMMERCE-5483 diagram works in liferay
 	const [cPins, setCpins] = useState(pins);
 	const [showTooltip, setShowTooltip] = useState({
 		details: {
@@ -86,6 +90,7 @@ const Diagram = ({
 
 	return (
 		<div className="diagram mx-auto">
+<<<<<<< HEAD
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				<DiagramHeader
 					addNewPinState={addNewPinState}
@@ -138,12 +143,63 @@ const Diagram = ({
 					setZoomOutHandler={setZoomOutHandler}
 				/>
 			</ClayIconSpriteContext.Provider>
+=======
+			<DiagramHeader
+				addNewPinState={addNewPinState}
+				newPinSettings={newPinSettings}
+				setAddNewPinState={setAddNewPinState}
+				setAddPinHandler={setAddPinHandler}
+				setSelectedOption={setSelectedOption}
+			/>
+
+			<ImagePins
+				addNewPinState={addNewPinState}
+				addPinHandler={addPinHandler}
+				cPins={cPins}
+				changedScale={changedScale}
+				enablePanZoom={enablePanZoom}
+				enableResetZoom={enableResetZoom}
+				image={image}
+				imageSettings={imageSettings}
+				navigationController={navigationController}
+				removePinHandler={removePinHandler}
+				resetZoom={resetZoom}
+				scale={scale}
+				selectedOption={selectedOption}
+				setAddPinHandler={setAddPinHandler}
+				setChangedScale={setChangedScale}
+				setCpins={setCpins}
+				setRemovePinHandler={setRemovePinHandler}
+				setResetZoom={setResetZoom}
+				setScale={setScale}
+				setSelectedOption={setSelectedOption}
+				setShowTooltip={setShowTooltip}
+				setZoomInHandler={setZoomInHandler}
+				setZoomOutHandler={setZoomOutHandler}
+				showTooltip={showTooltip}
+				zoomController={zoomController}
+				zoomInHandler={zoomInHandler}
+				zoomOutHandler={zoomOutHandler}
+			/>
+
+			<DiagramFooter
+				changedScale={changedScale}
+				enableResetZoom={enableResetZoom}
+				selectedOption={selectedOption}
+				setAddPinHandler={setAddPinHandler}
+				setChangedScale={setChangedScale}
+				setResetZoom={setResetZoom}
+				setSelectedOption={setSelectedOption}
+				setZoomInHandler={setZoomInHandler}
+				setZoomOutHandler={setZoomOutHandler}
+				spritemap={spritemap}
+			/>
+>>>>>>> COMMERCE-5483 diagram works in liferay
 		</div>
 	);
 };
 
 Diagram.defaultProps = {
-	cPins: [],
 	enablePanZoom: true,
 	enableResetZoom: true,
 	imageSettings: {
@@ -182,6 +238,7 @@ Diagram.defaultProps = {
 		},
 		defaultRadius: 15,
 	},
+	pins: [],
 	zoomController: {
 		enable: true,
 		position: {

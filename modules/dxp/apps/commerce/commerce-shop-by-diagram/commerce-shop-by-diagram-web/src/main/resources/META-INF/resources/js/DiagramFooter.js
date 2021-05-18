@@ -31,6 +31,10 @@ const DiagramFooter = ({
 		setSelectedOption(event.target.value);
 		setChangedScale(true);
 	};
+<<<<<<< HEAD
+=======
+	const options = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
+>>>>>>> COMMERCE-5483 diagram works in liferay
 
 	return (
 		<div className="d-flex diagram-footer justify-content-end mt-3">

@@ -259,6 +259,7 @@ const ImagePins = ({
 				console.log(err);
 			}
 
+
 			const cont = container.current
 				.selectAll('g')
 				.data(cPins)

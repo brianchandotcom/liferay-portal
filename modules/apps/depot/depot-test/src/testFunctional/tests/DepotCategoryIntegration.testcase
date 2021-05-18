@@ -258,7 +258,10 @@ definition {
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 
-		WikiNavigator.openToAddPageFromMain(siteURLKey = "site-name");
+		WikiNavigator.openToAddPage(
+			groupName = "Site Name",
+			siteURLKey = "site-name",
+			wikiNodeName = "Main");
 
 		AssetCategorization.viewNoVocabularyField(vocabularyName = "Vocabulary Name");
 	}

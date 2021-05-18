@@ -88,9 +88,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 		String type = objectField.getType();
 
-		boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
-
-		if (indexedAsKeyword) {
+		if (objectField.isIndexedAsKeyword()) {
 			return Optional.of(
 				new StringEntityField(
 					entityFieldName,

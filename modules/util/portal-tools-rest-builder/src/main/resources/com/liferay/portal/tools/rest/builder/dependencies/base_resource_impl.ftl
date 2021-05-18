@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -190,7 +191,12 @@ public abstract class Base${schemaName}ResourceImpl
 
 					PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, resourceName, resourceId, getPermissionCheckerGroupId(${schemaVarName}Id));
 
-					return toPermissionPage(resourceId, resourceName, roleNames);
+					return toPermissionPage(
+						<@permissionActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source=schemaName />,
+						resourceId, resourceName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -201,7 +207,12 @@ public abstract class Base${schemaName}ResourceImpl
 
 				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, assetLibraryId, assetLibraryId);
 
-				return toPermissionPage(assetLibraryId, portletName, roleNames);
+				return toPermissionPage(
+					<@permissionActions
+						resourceId="assetLibraryId"
+						resourceName="portletName"
+						source="AssetLibrary" + schemaName />,
+					assetLibraryId, portletName, roleNames);
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "getSite" + schemaName + "PermissionsPage")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
@@ -209,7 +220,12 @@ public abstract class Base${schemaName}ResourceImpl
 
 				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId, siteId);
 
-				return toPermissionPage(siteId, portletName, roleNames);
+				return toPermissionPage(
+					<@permissionActions
+						resourceId="siteId"
+						resourceName="portletName"
+						source="Site" + schemaName />,
+					siteId, portletName, roleNames);
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Permission")>
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
 					<#assign generateGetPermissionCheckerMethods = true />
@@ -221,7 +237,12 @@ public abstract class Base${schemaName}ResourceImpl
 						groupId="getPermissionCheckerGroupId(${schemaVarName}Id)"
 						resourceId="resourceId"
 						resourceName="resourceName"
-					/>
+					>
+						<@permissionActions
+							resourceId="resourceId"
+							resourceName="resourceName"
+							source=schemaName />
+					</@updateResourcePermissions>
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
@@ -234,7 +255,12 @@ public abstract class Base${schemaName}ResourceImpl
 					groupId="assetLibraryId"
 					resourceId="assetLibraryId"
 					resourceName="portletName"
-				/>
+				>
+					<@permissionActions
+						resourceId="assetLibraryId"
+						resourceName="portletName"
+						source="AssetLibrary" + schemaName />
+				</@updateResourcePermissions>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "putSite" + schemaName + "Permission")>
 				<#assign generateGetPermissionCheckerMethods = true />
 
@@ -244,7 +270,12 @@ public abstract class Base${schemaName}ResourceImpl
 					groupId="siteId"
 					resourceId="siteId"
 					resourceName="portletName"
-				/>
+				>
+					<@permissionActions
+						resourceId="siteId"
+						resourceName="portletName"
+						source="Site" + schemaName />
+				</@updateResourcePermissions>
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
 				return false;
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||
@@ -464,17 +495,19 @@ public abstract class Base${schemaName}ResourceImpl
 			throw new UnsupportedOperationException("This method needs to be implemented");
 		}
 
-		protected Page<com.liferay.portal.vulcan.permission.Permission> toPermissionPage(long id, String resourceName, String roleNames) throws Exception {
+		protected Page<com.liferay.portal.vulcan.permission.Permission> toPermissionPage(Map<String, Map<String, String>> actions, long id, String resourceName, String roleNames) throws Exception {
 			List<ResourceAction> resourceActions = resourceActionLocalService.getResourceActions(resourceName);
 
 			if (Validator.isNotNull(roleNames)) {
 				return Page.of(
+					actions,
 					transform(
 						PermissionUtil.getRoles(contextCompany, roleLocalService, StringUtil.split(roleNames)),
 						role -> PermissionUtil.toPermission(contextCompany.getCompanyId(), id, resourceActions, resourceName, resourcePermissionLocalService, role)));
 			}
 
 			return Page.of(
+				actions,
 				transform(
 					PermissionUtil.getResourcePermissions(contextCompany.getCompanyId(), id, resourceName, resourcePermissionLocalService),
 					resourcePermission -> PermissionUtil.toPermission(resourceActions, resourcePermission, roleLocalService.getRole(resourcePermission.getRoleId()))));
@@ -570,6 +603,19 @@ public abstract class Base${schemaName}ResourceImpl
 
 }
 
+<#macro permissionActions
+	resourceId
+	resourceName
+	source
+>
+	HashMapBuilder
+		.put(
+			"get", addAction(ActionKeys.PERMISSIONS, "get${source}PermissionsPage", ${resourceName}, ${resourceId}))
+		.put(
+			"replace", addAction(ActionKeys.PERMISSIONS, "put${source}Permission", ${resourceName}, ${resourceId}))
+		.build()
+</#macro>
+
 <#macro castParameters
 	type
 	value
@@ -622,5 +668,6 @@ public abstract class Base${schemaName}ResourceImpl
 
 	resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), ${groupId}, ${resourceName}, String.valueOf(${resourceId}), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
 
-	return toPermissionPage(${resourceId}, ${resourceName}, null);
+	return toPermissionPage(
+		<#nested>, ${resourceId}, ${resourceName}, null);
 </#macro>

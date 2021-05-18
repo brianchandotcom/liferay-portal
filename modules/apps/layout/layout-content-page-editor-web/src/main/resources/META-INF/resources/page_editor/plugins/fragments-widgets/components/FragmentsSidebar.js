@@ -176,9 +176,11 @@ export default function FragmentsSidebar() {
 						className="flex-grow-1 mb-0"
 						onChange={setSearchValue}
 					/>
+
 					<ClayButtonWithIcon
-						className="ml-3 mt-0"
-						displayType="unstyled"
+						borderless
+						className="lfr-portal-tooltip ml-3 mt-0"
+						displayType="secondary"
 						onClick={() =>
 							setDisplayStyle(
 								displayStyle === FRAGMENTS_DISPLAY_STYLES.LIST
@@ -192,6 +194,7 @@ export default function FragmentsSidebar() {
 								? 'cards2'
 								: 'list'
 						}
+						title={Liferay.Language.get('change-view')}
 					/>
 				</div>
 				{searchValue ? (

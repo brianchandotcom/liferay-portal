@@ -12,6 +12,9 @@
  * details.
  */
 
+import ClayCard from '@clayui/card';
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -23,9 +26,6 @@ import addFragment from '../../../app/thunks/addFragment';
 import addItem from '../../../app/thunks/addItem';
 import addWidget from '../../../app/thunks/addWidget';
 import {useDragSymbol} from '../../../app/utils/drag-and-drop/useDragAndDrop';
-import CardItem from './CardItem';
-import ListItem from './ListItem';
-
 export default function TabItem({displayStyle, item}) {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -87,3 +87,74 @@ TabItem.propTypes = {
 		type: PropTypes.string.isRequired,
 	}).isRequired,
 };
+
+const ListItem = React.forwardRef(({disabled, item}, ref) => {
+	return (
+		<li
+			className={classNames(
+				'page-editor__fragments-widgets__tab-list-item',
+				{
+					disabled,
+					'page-editor__fragments-widgets__tab-portlet-item':
+						item.data.portletItemId,
+				}
+			)}
+			ref={ref}
+		>
+			<div className="page-editor__fragments-widgets__tab-list-item-body">
+				<ClayIcon className="mr-3" symbol={item.icon} />
+				<div className="text-truncate title">{item.label}</div>
+			</div>
+		</li>
+	);
+});
+
+const CardItem = React.forwardRef(({disabled, item}, ref) => {
+	return (
+		<li
+			className={classNames(
+				'mb-2 page-editor__fragments-widgets__tab-card-item',
+				{
+					disabled,
+				}
+			)}
+			ref={ref}
+		>
+			<ClayCard
+				aria-label={item.label}
+				displayType={item.preview ? 'image' : 'file'}
+				selectable
+			>
+				<ClayCard.AspectRatio className="card-item-first">
+					{item.preview ? (
+						<img
+							alt="thumbnail"
+							className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+							src={item.preview}
+						/>
+					) : (
+						<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+							<ClayIcon symbol={item.icon} />
+						</div>
+					)}
+				</ClayCard.AspectRatio>
+				<ClayCard.Body>
+					<ClayCard.Row>
+						<div className="autofit-col autofit-col-expand">
+							<section className="autofit-section">
+								<ClayCard.Description
+									className="lfr-portal-tooltip"
+									data-tooltip-align="center"
+									displayType="title"
+									title={item.label}
+								>
+									{item.label}
+								</ClayCard.Description>
+							</section>
+						</div>
+					</ClayCard.Row>
+				</ClayCard.Body>
+			</ClayCard>
+		</li>
+	);
+});

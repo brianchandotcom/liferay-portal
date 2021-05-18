@@ -388,12 +388,34 @@ definition {
 	}
 
 	@description = "COMMERCE-6358. As a buyer, I want to see the barred list price and a sale price of a product in Product Details, if a promotion is set"
-	@ignore = "true"
 	@priority = "3"
 	test ViewProductDetailsPriceWithPromotion {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#ViewProductDetailsPriceWithPromotion";
 
-		// TODO COMMERCE-6358 ViewProductDetailsPriceWithPromotion pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Test",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "Premium Brake Fluid");
+
+		Button.clickSubmitButton();
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Premium Brake Fluid");
+
+		AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE");
+
+		AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_PROMO");
 	}
 
 	@description = "COMMERCE-6353. As a buyer, I want to be able to see product details in Product Details page(Product Availability, Number of Items in Stock, Product Name, Product SKU, Product MPN, Product Description, List Price, Product Specifications, Product Images/Attachments(if set))"

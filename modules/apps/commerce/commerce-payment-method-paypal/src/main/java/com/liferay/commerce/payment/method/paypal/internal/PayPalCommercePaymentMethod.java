@@ -204,10 +204,10 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				payPalHttpClient.execute(ordersCreateRequest);
 
 			if (orderCreateHttpResponse.statusCode() == 201) {
-				Order result = orderCreateHttpResponse.result();
+				Order createOrder = orderCreateHttpResponse.result();
 
 				OrdersAuthorizeRequest ordersAuthorizeRequest =
-					new OrdersAuthorizeRequest(result.id());
+					new OrdersAuthorizeRequest(createOrder.id());
 
 				ordersAuthorizeRequest.requestBody(new OrderRequest());
 
@@ -215,21 +215,23 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 					payPalHttpClient.execute(ordersAuthorizeRequest);
 
 				if (authorizeHttpResponse.statusCode() == 201) {
-					Order authorizeResult = authorizeHttpResponse.result();
+					Order authorizeOrder = authorizeHttpResponse.result();
 
-					for (LinkDescription link : authorizeResult.links()) {
+					for (LinkDescription linkDescription :
+							authorizeOrder.links()) {
+
 						if (Objects.equals(
 								PayPalCommercePaymentMethodConstants.
 									APPROVE_URL,
-								link.rel())) {
+								linkDescription.rel())) {
 
-							url = link.href();
+							url = linkDescription.href();
 						}
 					}
 
 					success = true;
 					status = CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED;
-					transactionId = authorizeResult.id();
+					transactionId = authorizeOrder.id();
 				}
 			}
 
@@ -244,12 +246,12 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			JSONObject jsonObject = new JSONObject(httpException.getMessage());
 
-			List<String> resultMessages = _getErrorMessages(
+			List<String> errorMessages = _getErrorMessages(
 				jsonObject, StringPool.BLANK);
 
 			return new CommercePaymentResult(
 				null, commercePaymentRequest.getCommerceOrderId(), status, true,
-				null, null, resultMessages, success);
+				null, null, errorMessages, success);
 		}
 	}
 
@@ -325,11 +327,11 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			authorizationsCaptureRequest);
 
 		if (captureHttpResponse.statusCode() == 201) {
-			Capture result = captureHttpResponse.result();
+			Capture capture = captureHttpResponse.result();
 
 			success = true;
 			status = CommerceOrderConstants.PAYMENT_STATUS_PAID;
-			transactionId = result.id();
+			transactionId = capture.id();
 		}
 
 		return new CommercePaymentResult(
@@ -364,10 +366,11 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			if (orderCaptureHttpResponse.statusCode() == 201) {
 				success = true;
 
-				Order result = orderCaptureHttpResponse.result();
+				Order captureOrder = orderCaptureHttpResponse.result();
 
 				return new CommercePaymentResult(
-					result.id(), commercePaymentRequest.getCommerceOrderId(),
+					captureOrder.id(),
+					commercePaymentRequest.getCommerceOrderId(),
 					CommerceOrderConstants.PAYMENT_STATUS_PAID, false, null,
 					null, Collections.emptyList(), success);
 			}
@@ -384,13 +387,13 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			JSONObject jsonObject = new JSONObject(httpException.getMessage());
 
-			List<String> resultMessages = _getErrorMessages(
+			List<String> errorMessages = _getErrorMessages(
 				jsonObject, StringPool.BLANK);
 
 			return new CommercePaymentResult(
 				null, commercePaymentRequest.getCommerceOrderId(),
 				CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED, true, null,
-				null, resultMessages, false);
+				null, errorMessages, false);
 		}
 	}
 
@@ -591,12 +594,12 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			capturesRefundRequest);
 
 		if (refundHttpResponse.statusCode() == 201) {
-			Refund result = refundHttpResponse.result();
+			Refund refund = refundHttpResponse.result();
 
 			success = true;
 			status = CommerceOrderConstants.ORDER_STATUS_PARTIALLY_REFUNDED;
 
-			transactionId = result.id();
+			transactionId = refund.id();
 		}
 
 		return new CommercePaymentResult(
@@ -647,14 +650,14 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				payPalHttpClient.execute(ordersCreateRequest);
 
 			if (orderCreateHttpResponse.statusCode() == 201) {
-				Order result = orderCreateHttpResponse.result();
+				Order createOrder = orderCreateHttpResponse.result();
 
-				for (LinkDescription link : result.links()) {
+				for (LinkDescription linkDescription : createOrder.links()) {
 					if (Objects.equals(
 							PayPalCommercePaymentMethodConstants.APPROVE_URL,
-							link.rel())) {
+							linkDescription.rel())) {
 
-						url = link.href();
+						url = linkDescription.href();
 					}
 				}
 
@@ -666,7 +669,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				success = true;
 				status = CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED;
 
-				transactionId = result.id();
+				transactionId = createOrder.id();
 			}
 
 			return new CommercePaymentResult(
@@ -681,12 +684,12 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			JSONObject jsonObject = new JSONObject(httpException.getMessage());
 
-			List<String> resultMessages = _getErrorMessages(
+			List<String> errorMessages = _getErrorMessages(
 				jsonObject, StringPool.BLANK);
 
 			return new CommercePaymentResult(
 				null, commercePaymentRequest.getCommerceOrderId(), status, true,
-				null, null, resultMessages, success);
+				null, null, errorMessages, success);
 		}
 	}
 
@@ -790,12 +793,12 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			capturesRefundRequest);
 
 		if (refundHttpResponse.statusCode() == 201) {
-			Refund result = refundHttpResponse.result();
+			Refund refund = refundHttpResponse.result();
 
 			success = true;
 			status = CommerceOrderConstants.ORDER_STATUS_REFUNDED;
 
-			transactionId = result.id();
+			transactionId = refund.id();
 		}
 
 		return new CommercePaymentResult(
@@ -864,30 +867,30 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		AmountBreakdown amountBreakdown = new AmountBreakdown();
 
-		com.paypal.orders.Money shipping = new com.paypal.orders.Money();
+		com.paypal.orders.Money shippingMoney = new com.paypal.orders.Money();
 
-		shipping.currencyCode(commerceCurrency.getCode());
-		shipping.value(
+		shippingMoney.currencyCode(commerceCurrency.getCode());
+		shippingMoney.value(
 			_getAmountValue(
 				commerceOrder.getShippingAmount(), commerceCurrency));
 
-		amountBreakdown.shipping(shipping);
+		amountBreakdown.shipping(shippingMoney);
 
-		com.paypal.orders.Money itemTotal = new com.paypal.orders.Money();
+		com.paypal.orders.Money itemTotalMoney = new com.paypal.orders.Money();
 
-		itemTotal.currencyCode(commerceCurrency.getCode());
-		itemTotal.value(
+		itemTotalMoney.currencyCode(commerceCurrency.getCode());
+		itemTotalMoney.value(
 			_getAmountValue(commerceOrder.getSubtotal(), commerceCurrency));
 
-		amountBreakdown.itemTotal(itemTotal);
+		amountBreakdown.itemTotal(itemTotalMoney);
 
-		com.paypal.orders.Money taxTotal = new com.paypal.orders.Money();
+		com.paypal.orders.Money taxTotalMoney = new com.paypal.orders.Money();
 
-		taxTotal.currencyCode(commerceCurrency.getCode());
-		taxTotal.value(
+		taxTotalMoney.currencyCode(commerceCurrency.getCode());
+		taxTotalMoney.value(
 			_getAmountValue(commerceOrder.getTaxAmount(), commerceCurrency));
 
-		amountBreakdown.taxTotal(taxTotal);
+		amountBreakdown.taxTotal(taxTotalMoney);
 
 		amountWithBreakdown.amountBreakdown(amountBreakdown);
 
@@ -895,32 +898,33 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
 
-		CommerceAddress shippingAddress = commerceOrder.getShippingAddress();
+		CommerceAddress shippingCommerceAddress =
+			commerceOrder.getShippingAddress();
 
-		if (shippingAddress != null) {
+		if (shippingCommerceAddress != null) {
 			ShippingDetail shippingDetail = new ShippingDetail();
 
 			Name name = new Name();
 
-			name.fullName(shippingAddress.getName());
+			name.fullName(shippingCommerceAddress.getName());
 
 			shippingDetail.name(name);
 
 			AddressPortable addressPortable = new AddressPortable();
 
-			addressPortable.addressLine1(shippingAddress.getStreet1());
-			addressPortable.addressLine2(shippingAddress.getStreet2());
-			addressPortable.postalCode(shippingAddress.getZip());
+			addressPortable.addressLine1(shippingCommerceAddress.getStreet1());
+			addressPortable.addressLine2(shippingCommerceAddress.getStreet2());
+			addressPortable.postalCode(shippingCommerceAddress.getZip());
 
-			Country country = shippingAddress.getCountry();
+			Country country = shippingCommerceAddress.getCountry();
 
 			addressPortable.countryCode(country.getA2());
 
-			Region region = shippingAddress.getRegion();
+			Region region = shippingCommerceAddress.getRegion();
 
 			addressPortable.adminArea1(region.getRegionCode());
 
-			addressPortable.adminArea2(shippingAddress.getCity());
+			addressPortable.adminArea2(shippingCommerceAddress.getCity());
 
 			shippingDetail.addressPortable(addressPortable);
 
@@ -938,14 +942,15 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			item.quantity(String.valueOf(commerceOrderItem.getQuantity()));
 			item.sku(commerceOrderItem.getSku());
 
-			com.paypal.orders.Money unitAmount = new com.paypal.orders.Money();
+			com.paypal.orders.Money unitAmountMoney =
+				new com.paypal.orders.Money();
 
-			unitAmount.currencyCode(commerceCurrency.getCode());
-			unitAmount.value(
+			unitAmountMoney.currencyCode(commerceCurrency.getCode());
+			unitAmountMoney.value(
 				_getAmountValue(
 					commerceOrderItem.getUnitPrice(), commerceCurrency));
 
-			item.unitAmount(unitAmount);
+			item.unitAmount(unitAmountMoney);
 
 			items.add(item);
 		}
@@ -972,10 +977,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			amountWithBreakdown.currencyCode(commerceCurrency.getCode());
 
-			BigDecimal round = commerceCurrency.round(
-				commerceOrderItem.getFinalPrice());
-
-			amountWithBreakdown.value(round.toPlainString());
+			amountWithBreakdown.value(
+				_getAmountValue(
+					commerceOrderItem.getFinalPrice(), commerceCurrency));
 
 			PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
@@ -990,14 +994,14 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 	private RefundRequest _buildRefundRequestBody(
 		String amount, String currencyCode) {
 
-		Money money = new Money();
+		Money amountMoney = new Money();
 
-		money.currencyCode(currencyCode);
-		money.value(amount);
+		amountMoney.currencyCode(currencyCode);
+		amountMoney.value(amount);
 
 		RefundRequest refundRequest = new RefundRequest();
 
-		refundRequest.amount(money);
+		refundRequest.amount(amountMoney);
 
 		return refundRequest;
 	}
@@ -1102,40 +1106,44 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			payPalGroupServiceConfiguration.mode());
 	}
 
-	private List<String> _getErrorMessages(JSONObject jsonObject, String pre) {
-		List<String> resultMessages = new ArrayList<>();
+	private List<String> _getErrorMessages(
+		JSONObject jsonObject, String prefix) {
+
+		List<String> errorMessages = new ArrayList<>();
 
 		Iterator<?> keysIterator = jsonObject.keys();
-		StringBuilder pretty = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 
 		while (keysIterator.hasNext()) {
 			String key = (String)keysIterator.next();
 
-			pretty.append(
-				String.format("%s%s: ", pre, StringUtils.capitalize(key)));
+			stringBuilder.append(
+				String.format("%s%s: ", prefix, StringUtils.capitalize(key)));
 
 			if (jsonObject.get(key) instanceof JSONObject) {
-				pretty.append(
+				stringBuilder.append(
 					_getErrorMessages(
-						jsonObject.getJSONObject(key), pre + "\t"));
+						jsonObject.getJSONObject(key), prefix + "\t"));
 			}
 			else if (jsonObject.get(key) instanceof JSONArray) {
-				int sno = 1;
+				int counter = 1;
 
 				for (Object object : jsonObject.getJSONArray(key)) {
-					pretty.append(String.format("\n%s\t%d:\n", pre, sno++));
-					pretty.append(
-						_getErrorMessages((JSONObject)object, pre + "\t\t"));
+					stringBuilder.append(
+						String.format("\n%s\t%d:\n", prefix, counter++));
+					stringBuilder.append(
+						_getErrorMessages((JSONObject)object, prefix + "\t\t"));
 				}
 			}
 			else {
-				pretty.append(String.format("%s\n", jsonObject.getString(key)));
+				stringBuilder.append(
+					String.format("%s\n", jsonObject.getString(key)));
 			}
 		}
 
-		resultMessages.add(pretty.toString());
+		errorMessages.add(stringBuilder.toString());
 
-		return resultMessages;
+		return errorMessages;
 	}
 
 	private PayPalGroupServiceConfiguration _getPayPalGroupServiceConfiguration(
@@ -1203,7 +1211,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
 
-		Currency amount = new Currency(
+		Currency amountCurrency = new Currency(
 			commerceCurrency.getCode(),
 			_payPalDecimalFormat.format(commerceOrderItem.getFinalPrice()));
 
@@ -1213,7 +1221,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			String.valueOf(commerceOrderItem.getSubscriptionLength()),
 			subscriptionType,
 			String.valueOf(commerceOrderItem.getMaxSubscriptionCycles()),
-			amount);
+			amountCurrency);
 
 		paymentDefinitions.add(paymentDefinition);
 
@@ -1296,12 +1304,14 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 			Country country = commerceAddress.getCountry();
 
-			shippingAddress.setCountryCode(country.getA2());
+			if (country != null) {
+				shippingAddress.setCountryCode(country.getA2());
 
-			shippingAddress.setLine1(commerceAddress.getStreet1());
-			shippingAddress.setLine2(commerceAddress.getStreet2());
-			shippingAddress.setPostalCode(commerceAddress.getZip());
-			shippingAddress.setRecipientName(commerceAddress.getName());
+				shippingAddress.setLine1(commerceAddress.getStreet1());
+				shippingAddress.setLine2(commerceAddress.getStreet2());
+				shippingAddress.setPostalCode(commerceAddress.getZip());
+				shippingAddress.setRecipientName(commerceAddress.getName());
+			}
 
 			Region region = commerceAddress.getRegion();
 

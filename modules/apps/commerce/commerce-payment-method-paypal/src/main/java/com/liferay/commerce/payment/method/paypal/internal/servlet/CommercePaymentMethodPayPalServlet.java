@@ -65,9 +65,6 @@ public class CommercePaymentMethodPayPalServlet extends HttpServlet {
 			CommerceOrder commerceOrder =
 				_commercePaymentHttpHelper.getCommerceOrder(httpServletRequest);
 
-			String orderType = ParamUtil.getString(
-				httpServletRequest, "orderType");
-
 			boolean cancel = ParamUtil.getBoolean(httpServletRequest, "cancel");
 
 			if (cancel) {
@@ -76,15 +73,17 @@ public class CommercePaymentMethodPayPalServlet extends HttpServlet {
 					httpServletRequest);
 			}
 			else {
+				String orderType = ParamUtil.getString(
+					httpServletRequest, "orderType");
 				String token = ParamUtil.getString(httpServletRequest, "token");
 
-				if (orderType.equals("subscription")) {
-					_commerceSubscriptionEngine.completeRecurringPayment(
+				if (orderType.equals("normal")) {
+					_commercePaymentEngine.completePayment(
 						commerceOrder.getCommerceOrderId(), token,
 						httpServletRequest);
 				}
-				else if (orderType.equals("normal")) {
-					_commercePaymentEngine.completePayment(
+				else if (orderType.equals("subscription")) {
+					_commerceSubscriptionEngine.completeRecurringPayment(
 						commerceOrder.getCommerceOrderId(), token,
 						httpServletRequest);
 				}

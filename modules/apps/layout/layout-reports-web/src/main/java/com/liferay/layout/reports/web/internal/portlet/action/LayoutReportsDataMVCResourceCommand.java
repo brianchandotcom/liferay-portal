@@ -132,6 +132,24 @@ public class LayoutReportsDataMVCResourceCommand
 	}
 
 	private String _getCanonicalURL(
+		Map<Locale, String> alternateURLs, String canonicalURL, Layout layout,
+		Locale locale) {
+
+		try {
+			LayoutSEOLink layoutSEOLink =
+				_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+					layout, locale, canonicalURL, alternateURLs);
+
+			return layoutSEOLink.getHref();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return canonicalURL;
+		}
+	}
+
+	private String _getCanonicalURL(
 		String currentCompleteURL, Layout layout, ThemeDisplay themeDisplay) {
 
 		try {
@@ -186,24 +204,23 @@ public class LayoutReportsDataMVCResourceCommand
 					return languageId1.compareToIgnoreCase(languageId2);
 				}
 			).map(
-				locale -> HashMapBuilder.<String, Object>put(
-					"canonicalURL",
-					() -> {
-						LayoutSEOLink layoutSEOLink =
-							_layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-								layout, locale, canonicalURL, alternateURLs);
+				locale -> {
+					String url = _getLocaleURL(
+						alternateURLs, canonicalURL, defaultLocale, layout,
+						locale);
 
-						return layoutSEOLink.getHref();
-					}
-				).put(
-					"languageId", LocaleUtil.toW3cLanguageId(locale)
-				).put(
-					"layoutReportsIssuesURL",
-					_getResourceURL(
-						layout.getGroupId(), canonicalURL, portletResponse)
-				).put(
-					"title", _getTitle(portletRequest, layout, locale)
-				).build()
+					return HashMapBuilder.<String, Object>put(
+						"canonicalURL", url
+					).put(
+						"languageId", LocaleUtil.toW3cLanguageId(locale)
+					).put(
+						"layoutReportsIssuesURL",
+						_getResourceURL(
+							layout.getGroupId(), url, portletResponse)
+					).put(
+						"title", _getTitle(portletRequest, layout, locale)
+					).build();
+				}
 			).toArray());
 	}
 
@@ -295,6 +312,18 @@ public class LayoutReportsDataMVCResourceCommand
 
 			return LocaleUtil.getSiteDefault();
 		}
+	}
+
+	private String _getLocaleURL(
+		Map<Locale, String> alternateURLs, String canonicalURL,
+		Locale defaultLocale, Layout layout, Locale locale) {
+
+		if (defaultLocale.equals(locale)) {
+			return _getCanonicalURL(
+				alternateURLs, canonicalURL, layout, locale);
+		}
+
+		return alternateURLs.get(locale);
 	}
 
 	private String _getResourceURL(

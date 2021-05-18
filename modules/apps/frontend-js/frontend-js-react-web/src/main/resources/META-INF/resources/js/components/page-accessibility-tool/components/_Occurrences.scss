@@ -1,0 +1,21 @@
+@import 'atlas-variables';
+
+.page-accessibility-tool__sidebar {
+	&--occurrences-panel-wrapper {
+		padding: 0 1rem;
+	}
+
+	&--occurrences-description-wrapper {
+		padding: 0.1875rem 1rem;
+	}
+
+	&--occurrences-panel-code-block {
+		background: #393a4a;
+		border-radius: 4px;
+	}
+
+	&--occurrences-panel-code-text {
+		color: white;
+		word-wrap: break-word;
+	}
+}

@@ -1013,19 +1013,6 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
-	macro editFieldsetRepeatable {
-		AssertClick.assertPartialTextClickAt(
-			key_fieldsetLabel = "${fieldsetLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELDSET_CONTAINER",
-			value1 = "${fieldsetLabel}");
-
-		Check.checkToggleSwitch(
-			checkboxName = "Repeatable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		Click(locator1 = "Sidebar#BACK");
-	}
-
 	macro editFieldsetsCollapsible {
 		Click(
 			key_fieldsetLabel = "${fieldsetLabel}",

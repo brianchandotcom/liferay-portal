@@ -1045,16 +1045,6 @@ definition {
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_MODIFIED_DATE",
 				value1 = "0 Seconds Ago");
 		}
-
-		task ("Delete WC") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.viewTitle(webContentTitle = "WC WebContent New Title");
-
-			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
-				webContentTitle = "WC WebContent New Title");
-		}
 	}
 
 	@description = "Validade if a Web Content associated with a Display Page Template is shown"
@@ -1076,6 +1066,10 @@ definition {
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Create a Web Content and set a Display Page") {
@@ -1083,16 +1077,6 @@ definition {
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
 				title = "Webcontent Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
 		}
 
 		task ("Check in Content Dashboard if WC is assiciated with Display Page Template") {
@@ -1101,17 +1085,7 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			AssertElementPresent(locator1 = "//span[contains(@title, 'This content has a display page')]");
-		}
-
-		task ("Delete WC") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.viewTitle(webContentTitle = "Webcontent Title");
-
-			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
-				webContentTitle = "Webcontent Title");
+			AssertElementPresent(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_DISPLAY_PAGE");
 		}
 	}
 
@@ -1131,17 +1105,11 @@ definition {
 				panel = "Applications",
 				portlet = "Content Dashboard");
 
-			AssertElementNotPresent(locator1 = "//span[contains(@title, 'This content has a display page')]");
-		}
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title");
 
-		task ("Delete WC") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.viewTitle(webContentTitle = "WC Title");
-
-			WebContent.deleteCP(
-				siteURLKey = "test-site-name",
-				webContentTitle = "WC Title");
+			AssertElementNotPresent(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_DISPLAY_PAGE");
 		}
 	}
 

@@ -138,6 +138,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIRST_ELEMENT_LISTED_DISPLAY_PAGE</td>
+	<td>//span[contains(@title, 'This content has a display page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIRST_ELEMENT_LISTED_LINK</td>
 	<td>((//*[contains(@class, 'lfr-portal-tooltip')])[4]</td>
 	<td></td>

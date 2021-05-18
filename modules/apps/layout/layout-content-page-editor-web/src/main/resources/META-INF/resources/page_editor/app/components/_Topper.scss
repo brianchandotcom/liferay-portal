@@ -2,6 +2,8 @@
 
 @import './variables';
 
+$dragOverWidth: 6px;
+
 .page-editor__topper {
 	$borderWidth: 2px;
 	$color: $white;
@@ -87,24 +89,24 @@
 	}
 
 	&.drag-over-bottom:after {
-		border-bottom: 4px solid $primary-l1;
+		border-bottom: $dragOverWidth solid $primary-l1;
 	}
 
 	// For left and right, we use box-shadow instead of border because border is
 	// automatically inverted in rtl, and we don't want that behavior here
 
 	&.drag-over-left:after {
-		box-shadow: inset 4px 0 0 0 $primary-l1;
+		box-shadow: inset $dragOverWidth 0 0 0 $primary-l1;
 		transition: none;
 	}
 
 	&.drag-over-right:after {
-		box-shadow: inset -4px 0 0 0 $primary-l1;
+		box-shadow: inset (-$dragOverWidth) 0 0 0 $primary-l1;
 		transition: none;
 	}
 
 	&.drag-over-top:after {
-		border-top: 4px solid $primary-l1;
+		border-top: $dragOverWidth solid $primary-l1;
 	}
 
 	&.drag-over-bottom.page-editor__col {
@@ -113,7 +115,7 @@
 		}
 
 		&:before {
-			border-bottom: 4px solid $primary-l1;
+			border-bottom: $dragOverWidth solid $primary-l1;
 		}
 	}
 
@@ -123,7 +125,7 @@
 		}
 
 		&:before {
-			border-top: 4px solid $primary-l1;
+			border-top: $dragOverWidth solid $primary-l1;
 		}
 	}
 
@@ -132,21 +134,21 @@
 		> .page-editor__container.empty,
 	&.drag-over-middle.page-editor__col.empty:before,
 	&.drag-over-middle.page-editor__collection-item:before {
-		box-shadow: inset 0 0 0 4px $primary-l1;
+		box-shadow: inset 0 0 0 $dragOverWidth $primary-l1;
 	}
 
 	&.drag-over-middle
 		> .page-editor__topper__content
 		> .page-editor__container
 		> :last-child:after {
-		box-shadow: inset -4px 0 0 0 $primary-l1;
+		box-shadow: inset $dragOverWidth 0 0 0 $primary-l1;
 		transition: none;
 	}
 
 	&.drag-over-middle.page-editor__col
 		> .page-editor__col__border
 		> :last-child:after {
-		border-bottom: 4px solid $primary-l1;
+		border-bottom: $dragOverWidth solid $primary-l1;
 	}
 
 	&.drag-over-middle .page-editor__no-fragments-message {

@@ -114,7 +114,8 @@ const Email = ({
 									sourceItems={
 										resource
 											? formatAutocompleteUsersFromRequest(
-													resource
+													resource,
+													multiSelectValue
 											  )
 											: []
 									}

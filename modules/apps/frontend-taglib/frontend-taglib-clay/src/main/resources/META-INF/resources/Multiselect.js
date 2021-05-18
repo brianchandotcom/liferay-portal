@@ -38,7 +38,7 @@ export default function Multiselect({
 	sourceItems,
 	...otherProps
 }) {
-	const [inputValue, setInputValue] = useState(_inputValue);
+	const [inputValue, setInputValue] = useState(_inputValue ?? '');
 
 	const [selectedItems, setSelectedItems] = useState(_selectedItems);
 
@@ -67,7 +67,8 @@ export default function Multiselect({
 							onItemsChange={setSelectedItems}
 							sourceItems={itemLabelFilter(
 								sourceItems,
-								inputValue
+								inputValue,
+								multiselectLocator?.label ?? 'label'
 							)}
 							{...otherProps}
 						/>

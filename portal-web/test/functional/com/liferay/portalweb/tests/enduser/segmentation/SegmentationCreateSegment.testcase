@@ -1535,14 +1535,37 @@ definition {
 			value = "Site Role Name");
 	}
 
-	@description = "This is a test for LPS-130290."
-	@ignore = "true"
+	@description = "This is a test for LPS-132109."
 	@priority = "5"
 	test AddSegmentByUserTag {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddSegmentByUserTag pending implementation
+		JSONUser.addUser(
+			assetTagNames = "tagname",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Tag");
+
+		Segmentation.fillProperty(selectLink = "tagname");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserSiteOrganizationRole Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserSiteOrganizationRole Test");
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "tagname");
 	}
 
 	@description = "This is a test for LPS-130290."
@@ -1552,6 +1575,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130290 AddSegmentByUserTeam pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130290."

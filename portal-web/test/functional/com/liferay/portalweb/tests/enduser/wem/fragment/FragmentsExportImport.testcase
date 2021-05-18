@@ -1581,4 +1581,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-101255. View the actions of saved composition in Page Fragments admin."
+	@priority = "5"
+	test ViewActionsOfFragmentComposition {
+		property portal.acceptance = "true";
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+		}
+
+		task ("Add a Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Add a Heading fragment into Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				navTab = "Fragments");
+		}
+
+		task ("Save composition") {
+			PageEditor.gotoSaveAsFragment(fragmentName = "Container");
+
+			PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
+		}
+
+		task ("View the actions of fragment composition") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
+
+			LexiconEntry.openEntryMenu(rowEntry = "New Fragment Name");
+
+			for (var menuItem : list "Rename,Move,Change Thumbnail,Export,Delete") {
+				MenuItem.viewPresent(menuItem = "${menuItem}");
+			}
+		}
+	}
+
 }

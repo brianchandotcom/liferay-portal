@@ -19,6 +19,7 @@ import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes'
 import {config} from '../../../../../app/config/index';
 import {useSelector} from '../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../app/selectors/selectLanguageId';
+import isMapped from '../../../../../app/utils/editable-value/isMapped';
 import SidebarPanelContent from '../../../../../common/components/SidebarPanelContent';
 import NoPageContents from './NoPageContents';
 import PageContents from './PageContents';
@@ -52,11 +53,12 @@ const getEditableValues = (fragmentEntryLinks, segmentsExperienceId) =>
 
 			return editableValues
 				.filter(
-					([key]) =>
-						fragmentEntryLink.editableTypes[key] ===
+					([key, value]) =>
+						(fragmentEntryLink.editableTypes[key] ===
 							EDITABLE_TYPES.text ||
-						fragmentEntryLink.editableTypes[key] ===
-							EDITABLE_TYPES['rich-text']
+							fragmentEntryLink.editableTypes[key] ===
+								EDITABLE_TYPES['rich-text']) &&
+						!isMapped(value)
 				)
 				.map(([key, value]) => ({
 					...value,

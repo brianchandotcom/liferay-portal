@@ -730,4 +730,109 @@ definition {
 		}
 	}
 
+	@description = "Test for LPS-130922. This is a test for View the mapped visual style of editable field node in Selection panel of content page."
+	@priority = "4"
+	test ViewVisualStyleOfMappedEditableFieldItem {
+		task ("Add WebContent with basic web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentTitle = "WC WebContent LPS-130922");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add Public Page with Blank") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Page LPS-130922",
+				type = "content");
+		}
+
+		task ("Edit page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Page LPS-130922",
+				siteName = "Test Site Name");
+		}
+
+		task ("Add button Fragment") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
+
+		task ("Edit Field Mapping and select Content to Field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC WebContent LPS-130922",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Content");
+		}
+
+		task ("AssertElementPresent on Content and AssertCssValue") {
+			AssertElementPresent(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Content");
+
+			AssertCssValue(
+				id = "link",
+				key_fragmentName = "Button",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "boxShadow",
+				value1 = "rgb(175, 120, 255) 0px 0px 0px 1px inset");
+		}
+
+		task ("Add Fragment Content Display") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				targetFragmentName = "Button");
+		}
+
+		task ("Edit Collection Display adding Highest Rated Assets") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+		}
+
+		task ("Add Heading Fragment to Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "WC WebContent LPS-130922",
+				fragmentName = "Heading");
+		}
+
+		task ("Field edit Mapping and select Title to Field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+		}
+
+		task ("AssertElementPresent Field Title and AssertCssValue") {
+			AssertElementPresent(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+
+			AssertCssValue(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				locator2 = "boxShadow",
+				value1 = "rgb(175, 120, 255) 0px 0px 0px 1px inset");
+		}
+	}
+
 }

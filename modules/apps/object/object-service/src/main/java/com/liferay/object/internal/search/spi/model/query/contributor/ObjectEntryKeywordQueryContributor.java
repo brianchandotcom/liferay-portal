@@ -212,13 +212,12 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		if (nestedBooleanQuery.hasClauses()) {
-			nestedBooleanQuery.add(
-				new TermQueryImpl("nestedFieldArray.fieldName", objectField.getName()),
-				BooleanClauseOccur.MUST);
-
 			booleanQuery.add(
 				new NestedQuery("nestedFieldArray", nestedBooleanQuery),
 				BooleanClauseOccur.SHOULD);
+			nestedBooleanQuery.add(
+				new TermQueryImpl("nestedFieldArray.fieldName", objectField.getName()),
+				BooleanClauseOccur.MUST);
 		}
 	}
 

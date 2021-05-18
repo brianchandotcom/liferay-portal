@@ -191,21 +191,20 @@ public class ObjectEntryKeywordQueryContributor
 				"nestedFieldArray.value_long");
 		}
 		else if (Objects.equals(objectField.getType(), "String")) {
-			String indexedLanguageId =
-				objectField.getIndexedLanguageId();
-
-			if (Validator.isBlank(indexedLanguageId)) {
+			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
 				nestedBooleanQuery.add(
 					new MatchQuery(
 						"nestedFieldArray.value_text", fieldKeywords),
 					BooleanClauseOccur.MUST);
 			}
 			else if (Objects.equals(
-						indexedLanguageId, _getLanguageId(searchContext))) {
+						objectField.getIndexedLanguageId(),
+						_getLanguageId(searchContext))) {
 
 				nestedBooleanQuery.add(
 					new MatchQuery(
-						"nestedFieldArray.value_" + indexedLanguageId,
+						"nestedFieldArray.value_" +
+							objectField.getIndexedLanguageId(),
 						fieldKeywords),
 					BooleanClauseOccur.MUST);
 			}

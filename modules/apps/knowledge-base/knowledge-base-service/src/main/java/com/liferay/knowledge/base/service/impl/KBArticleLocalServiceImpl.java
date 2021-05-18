@@ -208,13 +208,13 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBArticle kbArticle = kbArticlePersistence.create(kbArticleId);
 
 		kbArticle.setUuid(serviceContext.getUuid());
-		kbArticle.setExternalReferenceCode(externalReferenceCode);
 		kbArticle.setResourcePrimKey(resourcePrimKey);
 		kbArticle.setGroupId(groupId);
 		kbArticle.setCompanyId(user.getCompanyId());
 		kbArticle.setUserId(user.getUserId());
 		kbArticle.setUserName(user.getFullName());
 		kbArticle.setRootResourcePrimKey(rootResourcePrimKey);
+		kbArticle.setExternalReferenceCode(externalReferenceCode);
 		kbArticle.setParentResourceClassNameId(parentResourceClassNameId);
 		kbArticle.setParentResourcePrimKey(parentResourcePrimKey);
 		kbArticle.setKbFolderId(kbFolderId);
@@ -553,6 +553,23 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			resourcePrimKey, groupId, true, null);
 	}
 
+	/**
+	 * Returns the latest kb article matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article external reference code
+	 * @return the latest matching kb article, or <code>null</code> if no
+	 *         matching kb article could be found
+	 */
+	@Override
+	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return kbArticlePersistence.fetchByG_E_Last(
+			groupId, externalReferenceCode, new KBArticleVersionComparator());
+	}
+
 	@Override
 	public KBArticle fetchLatestKBArticleByUrlTitle(
 		long groupId, long kbFolderId, String urlTitle, int status) {
@@ -837,6 +854,24 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		return kbArticlePersistence.findByR_S_First(
 			resourcePrimKey, status, new KBArticleVersionComparator());
+	}
+
+	/**
+	 * Returns the latest kb article matching the group and the external
+	 * reference code
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the kb article external reference code
+	 * @return the latest matching kb article
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public KBArticle getLatestKBArticleByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return kbArticlePersistence.findByG_E_First(
+			groupId, externalReferenceCode, new KBArticleVersionComparator());
 	}
 
 	@Override
@@ -2052,7 +2087,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		KBArticle kbArticle = kbArticlePersistence.fetchByG_ERC(
+		KBArticle kbArticle = fetchLatestKBArticleByExternalReferenceCode(
 			groupId, externalReferenceCode);
 
 		if (kbArticle != null) {

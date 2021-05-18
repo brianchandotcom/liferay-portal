@@ -1482,6 +1482,7 @@ definition {
 	@priority = "5"
 	test AddSegmentByUserSiteOrganizationRole {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentByUserSiteOrganizationRole";
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",

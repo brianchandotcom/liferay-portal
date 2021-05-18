@@ -108,7 +108,7 @@ public class ObjectEntryKeywordQueryContributor
 	}
 
 	private void _addDateRangeQuery(
-			String keywords, BooleanQuery booleanQuery, String field)
+			String keywords, BooleanQuery booleanQuery, String fieldName)
 		throws ParseException {
 
 		if (Validator.isBlank(keywords)) {
@@ -132,12 +132,12 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		booleanQuery.add(
-			new TermRangeQueryImpl(field, lowerTerm, upperTerm, true, true),
+			new TermRangeQueryImpl(fieldName, lowerTerm, upperTerm, true, true),
 			BooleanClauseOccur.MUST);
 	}
 
 	private void _addRangeQuery(
-			String keywords, BooleanQuery booleanQuery, String field)
+			String keywords, BooleanQuery booleanQuery, String fieldName)
 		throws ParseException {
 
 		if (Validator.isBlank(keywords)) {
@@ -151,7 +151,7 @@ public class ObjectEntryKeywordQueryContributor
 
 		if ((lowerTerm != null) && (upperTerm != null)) {
 			booleanQuery.add(
-				new TermRangeQueryImpl(field, lowerTerm, upperTerm, true, true),
+				new TermRangeQueryImpl(fieldName, lowerTerm, upperTerm, true, true),
 				BooleanClauseOccur.MUST);
 		}
 	}
@@ -269,7 +269,7 @@ public class ObjectEntryKeywordQueryContributor
 	}
 
 	private String _getKeywords(
-		String keywords, SearchContext searchContext, String field) {
+		String keywords, SearchContext searchContext, String fieldName) {
 
 		if (Validator.isNotNull(keywords)) {
 			return keywords;
@@ -277,7 +277,7 @@ public class ObjectEntryKeywordQueryContributor
 
 		String value = StringPool.BLANK;
 
-		Serializable serializable = searchContext.getAttribute(field);
+		Serializable serializable = searchContext.getAttribute(fieldName);
 
 		if (serializable != null) {
 			Class<?> clazz = serializable.getClass();
@@ -291,7 +291,7 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		if (!Validator.isBlank(value) &&
-			(searchContext.getFacet(field) != null)) {
+			(searchContext.getFacet(fieldName) != null)) {
 
 			return null;
 		}

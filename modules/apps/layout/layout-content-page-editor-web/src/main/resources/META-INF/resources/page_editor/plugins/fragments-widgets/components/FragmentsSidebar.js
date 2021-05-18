@@ -99,7 +99,7 @@ const normalizeCollections = (collection) => {
 	return normalizedElement;
 };
 
-const normalizeFragmentEntry = (fragmentEntry, collectionId) => {
+const normalizeFragmentEntry = (fragmentEntry) => {
 	if (!fragmentEntry.fragmentEntryKey) {
 		return fragmentEntry;
 	}
@@ -113,10 +113,7 @@ const normalizeFragmentEntry = (fragmentEntry, collectionId) => {
 		icon: fragmentEntry.icon,
 		itemId: fragmentEntry.fragmentEntryKey,
 		label: fragmentEntry.name,
-		preview:
-			collectionId !== BASIC_COMPONENT_COLLECTION
-				? fragmentEntry.imagePreviewURL
-				: null,
+		preview: fragmentEntry.imagePreviewURL,
 		type: LAYOUT_DATA_ITEM_TYPES.fragment,
 	};
 };
@@ -136,10 +133,7 @@ export default function FragmentsSidebar() {
 			{
 				collections: fragments.map((collection) => ({
 					children: collection.fragmentEntries.map((fragmentEntry) =>
-						normalizeFragmentEntry(
-							fragmentEntry,
-							collection.fragmentCollectionId
-						)
+						normalizeFragmentEntry(fragmentEntry)
 					),
 					collectionId: collection.fragmentCollectionId,
 					label: collection.name,

@@ -37,24 +37,23 @@ public class JavaMetaAnnotationsCheck extends JavaAnnotationsCheck {
 			String fileContent)
 		throws IOException {
 
-		return formatAnnotations(fileName, absolutePath, (JavaClass)javaTerm);
+		return formatAnnotations(
+			fileName, absolutePath, (JavaClass)javaTerm, fileContent);
 	}
 
 	@Override
 	protected String formatAnnotation(
 		String fileName, String absolutePath, JavaClass javaClass,
-		String annotation, String indent) {
+		String fileContent, String annotation, String indent) {
 
 		if (!annotation.contains("@Meta.")) {
 			return annotation;
 		}
 
-		String content = javaClass.getContent();
-
-		_checkDelimeters(fileName, content, annotation);
+		_checkDelimeters(fileName, fileContent, annotation);
 
 		if (isAttributeValue(_CHECK_CONFIGURATION_NAME_KEY, absolutePath)) {
-			_checkConfigurationNameValue(fileName, content, annotation);
+			_checkConfigurationNameValue(fileName, fileContent, annotation);
 		}
 
 		annotation = _fixOCDId(

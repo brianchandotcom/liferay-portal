@@ -47,16 +47,19 @@ import java.util.regex.Pattern;
 
 import javassist.util.proxy.ProxyFactory;
 
+import javax.sql.DataSource;
+
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
-import org.hibernate.engine.SessionFactoryImplementor;
-import org.hibernate.engine.query.QueryPlanCache;
+import org.hibernate.engine.query.spi.QueryPlanCache;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 
 /**
  * @author Brian Wing Shun Chan
@@ -66,16 +69,42 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
  */
 public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
-	public PortalHibernateConfiguration() {
-		Properties properties = new Properties();
+	@Override
+	public void afterPropertiesSet() throws IOException {
+		Dialect dialect = DialectDetector.getDialect(_dataSource);
+
+		if (DBManagerUtil.getDBType(dialect) == DBType.ORACLE) {
+
+			// This must be done before the instantiating Configuration to
+			// ensure that org.hibernate.cfg.Environment's static init block can
+			// see it
+
+			System.setProperty(
+				PropsKeys.HIBERNATE_JDBC_USE_STREAMS_FOR_BINARY, "true");
+		}
+
+		Properties properties = PropsUtil.getProperties();
+
+		if (DBManagerUtil.getDBType(dialect) == DBType.SYBASE) {
+			properties.setProperty(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
+		}
 
 		properties.put("javax.persistence.validation.mode", "none");
 
-		setHibernateProperties(properties);
-	}
+		if (Validator.isNull(PropsValues.HIBERNATE_DIALECT)) {
+			Class<?> clazz = dialect.getClass();
 
-	@Override
-	public void afterPropertiesSet() throws IOException {
+			properties.setProperty("hibernate.dialect", clazz.getName());
+		}
+
+		properties.setProperty("hibernate.cache.use_query_cache", "false");
+		properties.setProperty(
+			"hibernate.cache.use_second_level_cache", "false");
+
+		properties.remove("hibernate.cache.region.factory_class");
+
+		setHibernateProperties(properties);
+
 		BootstrapServiceRegistryBuilder bootstrapServiceRegistryBuilder =
 			new BootstrapServiceRegistryBuilder();
 
@@ -90,12 +119,20 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				new CTModelIntegrator());
 			bootstrapServiceRegistryBuilder.applyIntegrator(
 				MVCCEventListenerIntegrator.INSTANCE);
+
+			setEntityInterceptor(new CTSQLInterceptor());
 		}
 
 		setMetadataSources(
 			new MetadataSources(bootstrapServiceRegistryBuilder.build()));
 
 		super.afterPropertiesSet();
+	}
+
+	public void setDataSource(DataSource dataSource) {
+		super.setDataSource(dataSource);
+
+		_dataSource = dataSource;
 	}
 
 	public void setMvccEnabled(boolean mvccEnabled) {
@@ -122,67 +159,17 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		}
 	}
 
-	protected ClassLoader getConfigurationClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
-	protected String[] getConfigurationResources() {
-		return PropsUtil.getArray(PropsKeys.HIBERNATE_CONFIGS);
-	}
-
 	@Override
-	protected Configuration newConfiguration() {
-		Dialect dialect = DialectDetector.getDialect(getDataSource());
-
-		if (DBManagerUtil.getDBType(dialect) == DBType.ORACLE) {
-
-			// This must be done before the instantiating Configuration to
-			// ensure that org.hibernate.cfg.Environment's static init block can
-			// see it
-
-			System.setProperty(
-				PropsKeys.HIBERNATE_JDBC_USE_STREAMS_FOR_BINARY, "true");
-		}
-
-		Configuration configuration = new Configuration();
-
-		Properties properties = PropsUtil.getProperties();
-
-		Properties hibernateProperties = getHibernateProperties();
-
-		for (Map.Entry<Object, Object> entry : hibernateProperties.entrySet()) {
-			String key = (String)entry.getKey();
-			String value = (String)entry.getValue();
-
-			properties.setProperty(key, value);
-		}
-
-		if (DBManagerUtil.getDBType(dialect) == DBType.SYBASE) {
-			properties.setProperty(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE, "0");
-		}
-
-		if (Validator.isNull(PropsValues.HIBERNATE_DIALECT)) {
-			Class<?> clazz = dialect.getClass();
-
-			properties.setProperty("hibernate.dialect", clazz.getName());
-		}
-
-		properties.setProperty("hibernate.cache.use_query_cache", "false");
-		properties.setProperty(
-			"hibernate.cache.use_second_level_cache", "false");
-
-		properties.remove("hibernate.cache.region.factory_class");
-
-		configuration.setProperties(properties);
+	protected SessionFactory buildSessionFactory(
+			LocalSessionFactoryBuilder localSessionFactoryBuilder)
+		throws HibernateException {
 
 		try {
 			String[] resources = getConfigurationResources();
 
 			for (String resource : resources) {
 				try {
-					readResource(configuration, resource);
+					readResource(localSessionFactoryBuilder, resource);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -190,23 +177,13 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 					}
 				}
 			}
-
-			if (_mvccEnabled) {
-				configuration.setInterceptor(new CTSQLInterceptor());
-			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
 
-		return configuration;
-	}
-
-	@Override
-	protected SessionFactory newSessionFactory(Configuration configuration)
-		throws HibernateException {
-
-		SessionFactory sessionFactory = super.newSessionFactory(configuration);
+		SessionFactory sessionFactory = super.buildSessionFactory(
+			localSessionFactoryBuilder);
 
 		if (Objects.equals(
 				PropsValues.
@@ -232,7 +209,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				queryPlanCache,
 				_wrapSessionFactoryImplementor(
 					(SessionFactoryImplementor)sessionFactory,
-					configuration.getImports()));
+					localSessionFactoryBuilder.getImports()));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -242,6 +219,16 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		}
 
 		return sessionFactory;
+	}
+
+	protected ClassLoader getConfigurationClassLoader() {
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
+	}
+
+	protected String[] getConfigurationResources() {
+		return PropsUtil.getArray(PropsKeys.HIBERNATE_CONFIGS);
 	}
 
 	protected void readResource(
@@ -354,6 +341,7 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 			};
 	}
 
+	private DataSource _dataSource;
 	private boolean _mvccEnabled = true;
 
 	private static class NoPatternSessionFactoryDelegate {

@@ -2,5 +2,7 @@ Bundle-Name: Liferay Digital Signature API
 Bundle-SymbolicName: com.liferay.digital.signature.api
 Bundle-Version: 3.0.0
 Export-Package:\
+	com.liferay.digital.signature.configuration,\
+	com.liferay.digital.signature.constants,\
 	com.liferay.digital.signature.manager,\
 	com.liferay.digital.signature.model

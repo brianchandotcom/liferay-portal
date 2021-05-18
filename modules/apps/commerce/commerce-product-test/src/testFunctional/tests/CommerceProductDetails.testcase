@@ -118,12 +118,65 @@ definition {
 	}
 
 	@description = "COMMERCE-6363. As a buyer, I want to be able to select the quantity of a product in Product Details by multiple value, if set"
-	@ignore = "true"
 	@priority = "3"
 	test AssertOnlyMultipleValuesAreSelectableQuantitiesInProductDetails {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#AssertOnlyMultipleValuesAreSelectableQuantitiesInProductDetails";
 
-		// TODO COMMERCE-6363 AssertOnlyMultipleValuesAreSelectableQuantitiesInProductDetails pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Type(
+			key_text = "Multiple Order Quantity",
+			locator1 = "TextInput#ANY",
+			value1 = "3");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		var product = "U-Joint";
+
+		Click(
+			key_productName = "${product}",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		for (var quantity : list "1,3,4,6,9,12,15,18") {
+			Type(
+				key_productName = "${product}",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_INPUT",
+				value1 = "${quantity}");
+
+			if ("${quantity}" == "1" || "${quantity}" == "4") {
+				AssertTextEquals(
+					key_productName = "${product}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_INPUT",
+					value1 = "3");
+			}
+			else {
+				AssertTextEquals(
+					key_productName = "${product}",
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_INPUT",
+					value1 = "${quantity}");
+			}
+		}
 	}
 
 	@description = "COMMERCE-6369. As a buyer, I want to be able to add a product to the cart in Product Details regardless of the availability, if back ordererabilty of that product is enabled"

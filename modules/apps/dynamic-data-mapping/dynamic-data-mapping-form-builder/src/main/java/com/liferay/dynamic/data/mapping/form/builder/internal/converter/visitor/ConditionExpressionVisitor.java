@@ -79,7 +79,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 
 		SPIDDMFormRuleCondition spiDDMFormRuleCondition =
 			new SPIDDMFormRuleCondition(
-				_operatorMap.get(comparisonExpression.getOperator()),
+				_operators.get(comparisonExpression.getOperator()),
 				Arrays.asList(leftOperand, rightOperand));
 
 		_spiDDMFormRuleConditions.push(spiDDMFormRuleCondition);
@@ -186,7 +186,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 	protected SPIDDMFormRuleCondition createDDMFormRuleCondition(
 		String functionName, List<SPIDDMFormRuleCondition.Operand> operands) {
 
-		String functionNameOperator = _functionNameOperatorMap.getOrDefault(
+		String functionNameOperator = _functionNameOperators.getOrDefault(
 			functionName, functionName);
 
 		return new SPIDDMFormRuleCondition(functionNameOperator, operands);
@@ -213,7 +213,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		return _spiDDMFormRuleConditions;
 	}
 
-	private static final Map<String, String> _functionNameOperatorMap =
+	private static final Map<String, String> _functionNameOperators =
 		HashMapBuilder.put(
 			"belongsTo", "belongs-to"
 		).put(
@@ -223,7 +223,7 @@ public class ConditionExpressionVisitor extends ExpressionVisitor<Object> {
 		).put(
 			"isEmpty", "is-empty"
 		).build();
-	private static final Map<String, String> _operatorMap = HashMapBuilder.put(
+	private static final Map<String, String> _operators = HashMapBuilder.put(
 		"<", "less-than"
 	).put(
 		"<=", "less-than-equals"

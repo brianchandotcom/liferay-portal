@@ -39,7 +39,6 @@ import java.text.Format;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -136,21 +135,6 @@ public class ObjectEntryModelDocumentContributor
 			}
 
 			return;
-		}
-
-		if ((!Objects.equals(objectField.getType(), "String") ||
-			 objectField.isIndexedAsKeyword()) &&
-			!Validator.isBlank(objectField.getIndexedLanguageId())) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Object entry ", objectEntry.getObjectEntryId(),
-						" has object field \"", objectField.getName(),
-						"\" which is not indexed as full-text. Locale ",
-						objectField.getIndexedLanguageId(),
-						" will be ignored"));
-			}
 		}
 
 		if (objectField.isIndexedAsKeyword()) {

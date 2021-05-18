@@ -55,7 +55,7 @@ public class ObjectFieldLocalServiceImpl
 			String type)
 		throws PortalException {
 
-		_validateIndexed(indexed, type);
+		_validateIndexed(indexed, indexedAsKeyword, indexedLanguageId, type);
 
 		name = StringUtil.trim(name);
 
@@ -88,13 +88,21 @@ public class ObjectFieldLocalServiceImpl
 			objectDefinitionId);
 	}
 
-	private void _validateIndexed(boolean indexed, String type)
+	private void _validateIndexed(boolean indexed, boolean indexedAsKeyword, String indexedLanguageId, String type)
 		throws PortalException {
 
 		// TODO Add a test for this
 
 		if (indexed && Objects.equals(type, "Blob")) {
 			throw new ObjectFieldTypeException("Blob type is not indexable");
+		}
+
+		if ((!Objects.equals(type, "String") || indexedAsKeyword) &&
+			!Validator.isBlank(indexedLanguageId)) {
+
+			throw new ObjectFieldTypeException(
+				"Indexed language ID can only be applied with type " +
+					"\"String\" that is not indexed as a keyword");
 		}
 	}
 

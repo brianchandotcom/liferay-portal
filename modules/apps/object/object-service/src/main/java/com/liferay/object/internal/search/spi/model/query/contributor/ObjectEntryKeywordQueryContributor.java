@@ -151,7 +151,8 @@ public class ObjectEntryKeywordQueryContributor
 
 		if ((lowerTerm != null) && (upperTerm != null)) {
 			booleanQuery.add(
-				new TermRangeQueryImpl(fieldName, lowerTerm, upperTerm, true, true),
+				new TermRangeQueryImpl(
+					fieldName, lowerTerm, upperTerm, true, true),
 				BooleanClauseOccur.MUST);
 		}
 	}

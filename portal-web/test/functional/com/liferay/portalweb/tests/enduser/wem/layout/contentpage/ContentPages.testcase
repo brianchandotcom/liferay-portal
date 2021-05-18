@@ -24,12 +24,6 @@ definition {
 				layoutName = "Test Content Page Name",
 				type = "content");
 		}
-
-		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
-		}
 	}
 
 	tearDown {
@@ -40,180 +34,6 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
-	@description = "This is a test for LPS-108339. Add a content page with fragments. Can add fragments directly without Section to page."
-	@priority = "5"
-	test AddContentPage {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		task ("Add a Title fragment to the content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title");
-		}
-
-		task ("Assert Title fragment is not nested inside Section element") {
-			AssertElementNotPresent(
-				key_elementType = "Container",
-				key_position = "1",
-				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-		}
-
-		task ("Add a Rich Text fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Rich Text",
-				targetFragmentName = "Title");
-		}
-
-		task ("Add a Button fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Button",
-				targetFragmentName = "Rich Text");
-		}
-
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
-		}
-
-		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Assert the Title fragment is present") {
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Rich Text fragment is present") {
-			AssertVisible(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Button fragment is present") {
-			AssertVisible(
-				key_content = "Submit",
-				key_fragmentClass = "footer",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Cancel",
-				key_fragmentClass = "footer",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Submit and Cancel buttons in the Button fragment is present") {
-			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
-			}
-		}
-	}
-
-	@description = "Create a content page from a page template with fragments."
-	@priority = "5"
-	test AddContentPageFromPageTemplate {
-		property portal.acceptance = "true";
-
-		task ("Add a page template collection") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection");
-		}
-
-		task ("Add a page template with a Button fragment") {
-			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
-				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection",
-				layoutPageTemplateEntryName = "Page Template Name",
-				layoutPageTemplateStatus = "Draft",
-				layoutPageTemplateType = "Content Page Template");
-
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
-
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
-
-			PageEditor.assertFragmentSidebarLoaded();
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Button");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(
-				collectionName = "Page Template Collection",
-				pageName = "Test Page Name",
-				pageTemplateName = "Page Template Name");
-		}
-
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
-		}
-
-		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Assert the Button fragment is present and the buttons work") {
-			for (var button : list "Submit,Cancel") {
-				Button.viewPresent(button = "${button}");
-			}
-
-			Button.clickNoError(button = "Submit");
-
-			AssertConfirm(value1 = "Form submitted");
-		}
-	}
-
-	@description = "This is a test for LPS-95042. Liferay should come out of the box with fragments."
-	@priority = "5"
-	test AddContentPageWithOOTBFragment {
-		property portal.acceptance = "true";
-
-		task ("Add a Title fragment to the content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				fragmentName = "Banner Center");
-		}
-
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
-		}
-
-		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Assert the Banner Center fragment is on the page") {
-			AssertVisible(locator1 = "//section//div[contains(@class,'banner')]");
 		}
 	}
 
@@ -274,14 +94,14 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 
-		task ("Add a Title fragment to the content page") {
+		task ("Add a Heading fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
 		task ("Discard the draft") {
@@ -296,9 +116,8 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertElementNotPresent(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		task ("Assert the Discard Draft button is not shown but Publish button still is enabled") {
@@ -317,14 +136,14 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 
-		task ("Add a Title fragment to the content page") {
+		task ("Add a Heading fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
 		task ("Assert the Discard Draft is shown and Publish button is now enabled") {
@@ -373,15 +192,14 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 
-		task ("Edit the Title fragment's editable text") {
+		task ("Edit inline content of Heading") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.editFragmentText(
-				contributed = "false",
-				fragmentName = "Title",
-				id = "title",
+				fragmentName = "Heading",
+				id = "element-text",
 				text = "New editable fragment text");
 		}
 
@@ -409,15 +227,15 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the Title fragment's text has reverted back to what it was before") {
+		task ("Assert the inline content is back to default") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+			PageEditor.viewFragmentEditableText(
+				editableText = "Heading Example",
+				fragmentName = "Heading",
+				id = "element-text");
 		}
 
 		task ("Assert the Discard Draft button is not shown but Publish button still is enabled") {
@@ -436,15 +254,15 @@ definition {
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 
-		task ("Add a Rich Text fragment to the content page") {
+		task ("Add a Paragraph fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Rich Text",
-				targetFragmentName = "Title");
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph",
+				targetFragmentName = "Heading");
 		}
 
 		task ("Assert the Discard Draft is shown and Publish button is now enabled") {
@@ -471,15 +289,14 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the Rich Text fragment has been removed") {
+		task ("Assert the Paragraph fragment has been removed") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			AssertElementNotPresent(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+				key_fragmentName = "Paragraph",
+				locator1 = "Fragment#FRAGMENT_HEADER");
 		}
 
 		task ("Assert the Discard Draft button is not shown but Publish button still is enabled") {
@@ -497,290 +314,11 @@ definition {
 
 			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
-	}
-
-	@description = "This is a test for LPS-101258. Can create a fragment with a Drop Zone area."
-	@priority = "5"
-	test DropButtonFragmentToFrgamentWithOneDropZone {
-		property portal.acceptance = "true";
-
-		JSONFragment.addFragmentCollection(
-			groupName = "Test Site Name",
-			name = "Collection Name 2");
-
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name 2");
-
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
-
-		FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
-
-		PortletEntry.publish();
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Collection Name 2",
-			fragmentName = "Fragment Name");
-
-		AssertVisible(
-			key_content = "Place fragments here.",
-			key_fragmentClass = "content",
-			key_position = "1",
-			locator1 = "Fragment#PAGE_EDITOR_NO_FRAGMENTS_MESSAGE");
-
-		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "Basic Components",
-			key_fragmentName = "Button",
-			key_index = "2",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
-			value1 = "");
-
-		AssertElementPresent(
-			key_fragmentName = "Button",
-			key_inFragmentName = "Fragment Name",
-			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
-	}
-
-	@description = "Edit an existing content page that has fragments. This testcase covers the bug found in LPS-85872. This test has been extended to cover LPS-78726. Changes to content pages only appear after they are published."
-	@priority = "5"
-	test EditContentPage {
-		property portal.acceptance = "true";
-		property testray.component.names = "Training";
-
-		task ("Add a Title fragment to the content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title");
-		}
-
-		task ("Add a Rich Text fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Rich Text",
-				targetFragmentName = "Title");
-		}
-
-		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Assert the Title fragment is not present because it has not been published yet") {
-			AssertElementNotPresent(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Rich Text fragment is not present because it has not been published yet") {
-			AssertElementNotPresent(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
-		}
-
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
-		}
-
-		task ("Assert the Title fragment is present") {
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Rich Text fragment is present") {
-			AssertVisible(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
-		}
-
-		task ("Add a Content fragment to the content page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Content",
-				targetFragmentName = "Rich Text");
-		}
-
-		task ("Edit the Rich Text fragment's editable text") {
-			PageEditor.editFragmentText(
-				contributed = "false",
-				fragmentName = "Rich Text",
-				id = "rich-text",
-				text = "New editable fragment text");
-		}
-
-		task ("View the content page") {
-			PageEditor.clickBack();
-		}
-
-		task ("Assert the Title fragment is present") {
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Rich Text fragment is still has its original text because the edit has not been published yet") {
-			AssertVisible(
-				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Content fragment is not present because the adding of the fragment has not been published yet") {
-			AssertElementNotPresent(
-				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
-				key_fragmentClass = "body",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Navigate to the content page's edit mode") {
-			ContentPages.clickPencil();
-		}
-
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
-		}
-
-		task ("Assert the Title Fragment is present") {
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Rich Text fragment with updated editable text is present") {
-			AssertVisible(
-				key_content = "New editable fragment text",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the Content fragment is present") {
-			AssertVisible(
-				key_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",
-				key_fragmentClass = "body",
-				locator1 = "Fragment#FRAGMENT");
-		}
-	}
-
-	@description = "This is a test for LPS-102887. A user can edit content in a web content display widget through content panel"
-	@priority = "4"
-	test EditWebContentInAPViaContentPanel {
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addWidget(portletName = "Asset Publisher");
-
-		AssetPublisherPortlet.configureManualAssetSelectionPG(
-			assetTitle = "WC WebContent Title",
-			assetType = "Basic Web Content");
-
-		Refresh();
-
-		WebContent.editViaContentPanel(
-			webContentContentEdit = "WC WebContent Content Edit",
-			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title Edit");
-
-		PageEditor.clickPublish();
-
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		AssertTextEquals(
-			key_assetTitle = "WC WebContent Title Edit",
-			locator1 = "AP#ASSET_ABSTRACT_TITLE",
-			value1 = "WC WebContent Title Edit");
-
-		AssertTextEquals.assertPartialText(
-			key_assetTitle = "WC WebContent Title Edit",
-			locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-			value1 = "WC WebContent Content Edit");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content Edit",
-			webContentTitle = "WC WebContent Title Edit");
-	}
-
-	@description = "This is a test for LPS-102887. A user can edit content in a web content display widget through content panel"
-	@priority = "4"
-	test EditWebContentInWCDViaContentPanel {
-		JSONWebcontent.addWebContent(
-			content = "Web Content Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addWidget(portletName = "Web Content Display");
-
-		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
-
-		Refresh();
-
-		WebContent.editViaContentPanel(
-			webContentContentEdit = "WC WebContent Content Edit",
-			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title Edit");
-
-		PageEditor.clickPublish();
-
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		AssertElementPresent(
-			key_portletName = "WC WebContent Content Edit",
-			locator1 = "Portlet#BODY");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title Edit");
-
-		WebContent.viewCP(
-			webContentContent = "WC WebContent Content Edit",
-			webContentTitle = "WC WebContent Title Edit");
 	}
 
 	@description = "This is a test for LPS-109169. Topper only visible when the element is selected but not hover."
 	@priority = "5"
+	@uitest
 	test HeaderOnlyShownWhenElementSelected {
 		property portal.acceptance = "true";
 
@@ -845,9 +383,10 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-106778. Add a content page with fragments. Can reorganize them."
+	@description = "This is a test for LPS-106778. Reorganize fragments in page editor."
 	@priority = "5"
-	test ReorganizeFragmentsInContentPage {
+	@uitest
+	test ReorganizeFragmentsInPageEditor {
 		property portal.acceptance = "true";
 
 		task ("Add a Heading fragment to the content page") {
@@ -914,9 +453,9 @@ definition {
 
 	@description = "This is a test for LPS-81870. In edit mode the page should still show the elements of the page that are not from the page itself, like the header, footer, or elements defined by the theme."
 	@priority = "5"
+	@uitest
 	test ViewEditModeHeaderFooterTheme {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPages#ViewEditModeHeaderFooterTheme";
 
 		task ("Add a widget page to the site") {
 			JSONLayout.addPublicLayout(
@@ -993,6 +532,7 @@ definition {
 
 	@description = "This is a test for LPS-104629. The header of fragment selected can reach the border of the management toolbar."
 	@priority = "5"
+	@uitest
 	test ViewHeaderOfFragmentMoveInsideBodyWhenReachTheManagementToolbar {
 		property portal.acceptance = "true";
 
@@ -1048,6 +588,7 @@ definition {
 
 	@description = "This is a test for LPS-104629. The header of widget selected can reach the border of the management toolbar."
 	@priority = "4"
+	@uitest
 	test ViewHeaderOfWidgetMoveInsideBodyWhenReachTheManagementToolbar {
 		task ("Add My Sites, Documents and Media, Blogs and Asset Publisher widgets to page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -1097,77 +638,6 @@ definition {
 			AssertElementPresent(
 				key_fragmentName = "Blogs",
 				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
-		}
-	}
-
-	@description = "This is a test for LPS-101255. The saved composition entry is available in Page Fragments admin with specific actions."
-	@priority = "5"
-	test ViewSavedCompositionMenuItem {
-		property portal.acceptance = "true";
-
-		task ("Add a new site") {
-			JSONGroup.addGroup(groupName = "Site Name");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Site Name",
-				layoutName = "Content Page Name",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Content Page Name",
-				siteName = "Site Name");
-		}
-
-		task ("Add a Container to page") {
-			PageEditor.addFragment(
-				collectionName = "Layout Elements",
-				fragmentName = "Container");
-		}
-
-		task ("Add a Heading fragment into Container") {
-			PageEditor.addElementToContainer(
-				collectionName = "Basic Components",
-				fragmentName = "Heading",
-				navTab = "Fragments");
-		}
-
-		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
-
-		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
-
-		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "site-name");
-
-		FragmentsAdminNavigator.gotoCollection(collectionName = "Saved Fragments");
-
-		LexiconEntry.openEntryMenu(rowEntry = "New Fragment Name");
-
-		for (var menuItem : list "Rename,Move,Change Thumbnail,Export,Delete") {
-			MenuItem.viewPresent(menuItem = "${menuItem}");
-		}
-	}
-
-	@description = "This is a test for LPS-101328. Editable image name should be visible in the floating toolbar."
-	@priority = "5"
-	test ViewSelectedImageName {
-		property portal.acceptance = "true";
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Image");
-
-		PageEditor.editFragmentImage(
-			fileName = "Document_1.png",
-			fragmentName = "Image",
-			id = "image");
-
-		task ("Assert the image field contains the image name.") {
-			AssertVisible(locator1 = "//input[@value='Document_1.png']");
 		}
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceSettingsRedirectURLException;
 import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
@@ -307,12 +308,6 @@ public class SaveFormInstanceMVCCommandHelper {
 			URI uri = _getURI(valueString);
 
 			if (uri != null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append("the-specified-redirect-url-is-not-allowed-due-to-");
-				sb.append("installation-settings.-add-x-into-the-x-of-x-to-");
-				sb.append("fix-it");
-
 				String securityMode =
 					_redirectURLSettings.redirectURLSecurityMode(
 						_portal.getCompanyId(httpServletRequest));
@@ -326,12 +321,9 @@ public class SaveFormInstanceMVCCommandHelper {
 
 					if (!allowedDomains.contains(host)) {
 						throw new FormInstanceSettingsRedirectURLException(
-							LanguageUtil.format(
-								httpServletRequest, sb.toString(),
-								new String[] {
-									host, "redirect-url-domains-allowed",
-									"redirect-url-configuration-name"
-								}));
+							_getRedirectURLExceptionMessage(
+								httpServletRequest,
+								"redirect-url-domains-allowed", host));
 					}
 				}
 				else if (securityMode.equals("ip")) {
@@ -347,12 +339,9 @@ public class SaveFormInstanceMVCCommandHelper {
 
 						if (!allowedIps.contains(hostAddress)) {
 							throw new FormInstanceSettingsRedirectURLException(
-								LanguageUtil.format(
-									httpServletRequest, sb.toString(),
-									new String[] {
-										hostAddress, "redirect-url-ips-allowed",
-										"redirect-url-configuration-name"
-									}));
+								_getRedirectURLExceptionMessage(
+									httpServletRequest,
+									"redirect-url-ips-allowed", hostAddress));
 						}
 					}
 					catch (UnknownHostException unknownHostException) {
@@ -398,6 +387,22 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	private String _getRedirectURLExceptionMessage(
+		HttpServletRequest httpServletRequest, String fieldName, String value) {
+
+		return LanguageUtil.format(
+			httpServletRequest,
+			StringBundler.concat(
+				"the-specified-redirect-url-is-not-allowed-due-to-",
+				"installation-settings.-add-x-to-the-x-field-of-the-x-",
+				"configuration-in-x-to-fix-it"),
+			new String[] {
+				value, fieldName, "redirect-url-configuration-name",
+				"javax.portlet.title." +
+					ConfigurationAdminPortletKeys.INSTANCE_SETTINGS
+			});
+	}
 
 	private URI _getURI(String uriString) {
 		try {

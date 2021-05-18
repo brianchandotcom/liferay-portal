@@ -181,9 +181,6 @@ definition {
 	@priority = "3"
 	test AddShippingOptionFlatRate {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#AddShippingOptionFlatRate";
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -258,10 +255,7 @@ definition {
 	@description = "This is a test for COMMERCE-6110. AddShippingOptionVariableRate"
 	@priority = "3"
 	test AddShippingOptionVariableRate {
-		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#AddShippingOptionVariableRate";
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
+        property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -335,7 +329,6 @@ definition {
 
 	test CreateNewChannel {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewChannel";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
@@ -486,7 +479,6 @@ definition {
 
 	test CreateNewNotificationTemplate {
 		property portal.acceptance = "quarantine";
-		property test.name.skip.portal.instance = "CPCommerceChannels#CreateNewNotificationTemplate";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
@@ -528,9 +520,6 @@ definition {
 	@priority = "3"
 	test EditAuthorizePaymentMethod {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#EditAuthorizePaymentMethod";
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -611,9 +600,6 @@ definition {
 	@priority = "3"
 	test EditMercanetPaymentMethod {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#EditMercanetPaymentMethod";
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -662,9 +648,6 @@ definition {
 	@priority = "3"
 	test EditMoneyOrderPaymentMethod {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#EditMoneyOrderPaymentMethod";
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -893,9 +876,6 @@ definition {
 	@priority = "3"
 	test UseSearchBar {
 		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "CPCommerceChannels#UseSearchBar";
-
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

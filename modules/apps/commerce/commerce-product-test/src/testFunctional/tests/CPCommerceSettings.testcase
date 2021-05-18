@@ -26,7 +26,6 @@ definition {
 
 	test CreateNewAvailabilityEstimate {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewAvailabilityEstimate";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
@@ -44,7 +43,6 @@ definition {
 	test CreateNewCountry {
 		property portal.acceptance = "false";
 		property portal.upstream = "false";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewCountry";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
@@ -81,7 +79,6 @@ definition {
 
 	test CreateNewMeasurementUnits {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceSettings#CreateNewMeasurementUnits";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
@@ -109,7 +106,6 @@ definition {
 	test ViewInstanceCurrenciesAvailable {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CommerceSmoke#ViewAvailableCurrencies";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

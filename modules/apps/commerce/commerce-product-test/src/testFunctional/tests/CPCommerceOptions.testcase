@@ -30,7 +30,6 @@ definition {
 
 	test CreateAnOption {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "CPCommerceOptions#CreateAnOption";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -1366,6 +1366,50 @@ definition {
 		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
 	}
 
+	macro toggleFieldRepeatable {
+		if (!(isSet(index))) {
+			var index = "1";
+		}
+
+		if (isSet(fieldFieldLabel)) {
+			var fieldLabel = "${fieldFieldLabel}";
+			var tab = "Advanced";
+		}
+		else if (isSet(fieldsetLabel)) {
+			var fieldLabel = "${fieldsetLabel}";
+			var tab = "Basic";
+		}
+		else if (isSet(fieldsGroupLabel)) {
+			var fieldLabel = "${fieldsGroupLabel}";
+			var tab = "Basic";
+		}
+
+		if (IsElementPresent(locator1 = "Modal#MODAL")) {
+			AssertClick.assertPartialTextClickAt(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineBuilder#FIELD_LABEL_IN_MODAL_INDEXED",
+				value1 = "${fieldLabel}");
+		}
+		else {
+			AssertClick.assertPartialTextClickAt(
+				index = "${index}",
+				key_fieldLabel = "${fieldLabel}",
+				locator1 = "DataEngineBuilder#FIELD_LABEL_INDEXED",
+				value1 = "${fieldLabel}");
+		}
+
+		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "${tab}")) {
+			Navigator.gotoNavTab(navTab = "${tab}");
+		}
+
+		Check.checkToggleSwitch(
+			checkboxName = "Repeatable",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Click(locator1 = "Sidebar#BACK");
+	}
+
 	macro viewField {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_text = "${fieldName}";

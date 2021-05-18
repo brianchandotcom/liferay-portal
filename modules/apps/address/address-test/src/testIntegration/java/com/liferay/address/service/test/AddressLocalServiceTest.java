@@ -202,14 +202,16 @@ public class AddressLocalServiceTest {
 
 	@Test
 	public void testUpdateAddress() throws Exception {
-		Address address = _addAddress("1234567890");
+		Address address = _addAddress(RandomTestUtil.randomString());
+
+		String newPhoneNumber = RandomTestUtil.randomString();
 
 		Address updatedAddress = _addressLocalService.updateAddress(
 			address.getAddressId(), address.getName(), address.getDescription(),
 			address.getStreet1(), address.getStreet2(), address.getStreet3(),
 			address.getCity(), address.getZip(), address.getRegionId(),
 			address.getCountryId(), address.getTypeId(), address.isMailing(),
-			address.isPrimary(), "1112223333");
+			address.isPrimary(), newPhoneNumber);
 
 		List<Phone> phones = _phoneLocalService.getPhones(
 			address.getCompanyId(), Address.class.getName(),
@@ -217,9 +219,7 @@ public class AddressLocalServiceTest {
 
 		Assert.assertEquals(phones.toString(), 1, phones.size());
 
-		Phone phone = phones.get(0);
-
-		Assert.assertEquals(updatedAddress.getPhoneNumber(), phone.getNumber());
+		Assert.assertEquals(updatedAddress.getPhoneNumber(), newPhoneNumber);
 	}
 
 	private Address _addAddress(String phoneNumber) throws Exception {

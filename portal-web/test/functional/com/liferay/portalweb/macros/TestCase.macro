@@ -77,10 +77,12 @@ definition {
 		var testNameSkipPortalInstance = PropsUtil.get("test.name.skip.portal.instance");
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = "${authenticationMethod}");
+		if (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}"))) {
+			HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = "${authenticationMethod}");
 
-		if (("${testPortalInstance}" == "true") && (!(IsTestName(locator1 = "", value1 = "${testNameSkipPortalInstance}")))) {
-			SignIn.signInPortalInstanceSetUp();
+			if ("${testPortalInstance}" == "true") {
+				SignIn.signInPortalInstanceSetUp();
+			}
 		}
 	}
 

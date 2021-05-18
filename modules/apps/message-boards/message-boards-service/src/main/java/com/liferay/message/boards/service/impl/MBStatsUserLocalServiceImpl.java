@@ -263,12 +263,6 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public MBStatsUser updateStatsUser(long groupId, long userId) {
-		return updateStatsUser(
-			groupId, userId, getLastPostDateByUserId(groupId, userId));
-	}
-
-	@Override
 	public MBStatsUser updateStatsUser(
 		long groupId, long userId, Date lastPostDate) {
 

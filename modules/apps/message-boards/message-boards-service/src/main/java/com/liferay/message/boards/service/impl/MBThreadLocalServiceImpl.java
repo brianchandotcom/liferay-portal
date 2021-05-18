@@ -30,7 +30,6 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBTreeWalker;
 import com.liferay.message.boards.model.impl.MBTreeWalkerImpl;
-import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBCategoryPersistence;
 import com.liferay.message.boards.util.comparator.MessageThreadComparator;
@@ -229,13 +228,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			// Indexer
 
 			messageIndexer.delete(message);
-
-			// Statistics
-
-			if (!message.isDiscussion()) {
-				mbStatsUserLocalService.updateStatsUser(
-					message.getGroupId(), message.getUserId());
-			}
 
 			// Workflow
 
@@ -591,12 +583,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 					MBMessage.class.getName(), message.getMessageId());
 			}
 		}
-
-		// Statistics
-
-		for (long userId : userIds) {
-			mbStatsUserLocalService.updateStatsUser(groupId, userId);
-		}
 	}
 
 	@Override
@@ -827,12 +813,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				MBMessage.class);
 
 			indexer.reindex(message);
-		}
-
-		// Statistics
-
-		for (long userId : userIds) {
-			mbStatsUserLocalService.updateStatsUser(groupId, userId);
 		}
 	}
 
@@ -1186,9 +1166,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 	@Reference
 	protected ExpandoRowLocalService expandoRowLocalService;
-
-	@Reference
-	protected MBStatsUserLocalService mbStatsUserLocalService;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

@@ -873,13 +873,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		mbMessagePersistence.remove(message);
 
-		// Statistics
-
-		if (!message.isDiscussion()) {
-			_mbStatsUserLocalService.updateStatsUser(
-				message.getGroupId(), message.getUserId());
-		}
-
 		// Workflow
 
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(

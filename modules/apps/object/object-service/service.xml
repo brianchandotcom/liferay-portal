@@ -94,11 +94,11 @@
 		<!-- Other fields -->
 
 		<column name="objectDefinitionId" type="long" />
-		<column name="name" type="String" />
-		<column name="type" type="String" />
 		<column name="indexed" type="boolean" />
 		<column name="indexedAsKeyword" type="boolean" />
-		<column name="languageId" type="String" />
+		<column name="ianguageId" type="String" />
+		<column name="name" type="String" />
+		<column name="type" type="String" />
 
 		<!-- Finder methods -->
 

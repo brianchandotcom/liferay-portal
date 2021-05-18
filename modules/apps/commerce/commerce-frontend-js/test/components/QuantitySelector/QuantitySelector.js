@@ -26,6 +26,7 @@ describe('QuantitySelector', () => {
 
 		beforeEach(() => {
 			jest.resetAllMocks();
+			jest.useFakeTimers();
 
 			onUpdateSpy = jest.fn();
 			Component = render(<QuantitySelector onUpdate={onUpdateSpy} />);
@@ -36,6 +37,10 @@ describe('QuantitySelector', () => {
 
 			Component = null;
 			onUpdateSpy.mockReset();
+		});
+
+		afterAll(() => {
+			jest.useRealTimers();
 		});
 
 		it('renders as an Input element with default attributes', () => {
@@ -68,6 +73,8 @@ describe('QuantitySelector', () => {
 			});
 
 			await wait(() => {
+				jest.advanceTimersByTime(UPDATE_AFTER * 2);
+
 				expect(element.value).not.toEqual(updatedValue);
 				expect(element.value).toEqual('1');
 			});
@@ -82,6 +89,8 @@ describe('QuantitySelector', () => {
 			});
 
 			await wait(() => {
+				jest.advanceTimersByTime(UPDATE_AFTER * 2);
+
 				expect(element.value).toEqual(updatedValue);
 			});
 		});
@@ -95,13 +104,13 @@ describe('QuantitySelector', () => {
 			});
 
 			await wait(() => {
+				jest.advanceTimersByTime(UPDATE_AFTER * 2);
+
 				expect(element.value).toEqual('1');
 			});
 		});
 
 		it('calls the onUpdate callback on input value change after 500ms', async () => {
-			jest.useFakeTimers();
-
 			const element = Component.container.querySelector('input');
 			const updatedValue = 2;
 
@@ -111,25 +120,16 @@ describe('QuantitySelector', () => {
 				});
 			});
 
-			await wait(
-				() => {
-					jest.advanceTimersByTime(UPDATE_AFTER);
+			await wait(() => {
+				jest.advanceTimersByTime(UPDATE_AFTER * 2);
 
-					expect(onUpdateSpy).toHaveBeenCalledTimes(1);
-					expect(onUpdateSpy).toHaveBeenCalledWith(updatedValue);
-
-					jest.clearAllTimers();
-				},
-				{
-					timeout: UPDATE_AFTER,
-				}
-			);
+				expect(onUpdateSpy).toHaveBeenCalledTimes(1);
+				expect(onUpdateSpy).toHaveBeenCalledWith(updatedValue);
+			});
 		});
 
 		it('calls the onUpdate callback only once if typed value did not change within 500ms', async () => {
-			jest.useFakeTimers();
-
-			const TIMES = 4;
+			const TIMES = 3;
 			const TYPING_THRESHOLD = 25;
 
 			const TIMEOUT_AT_MS = TIMES * TYPING_THRESHOLD + UPDATE_AFTER;
@@ -153,19 +153,12 @@ describe('QuantitySelector', () => {
 				}, TYPING_THRESHOLD);
 			});
 
-			await wait(
-				() => {
-					jest.advanceTimersByTime(TIMEOUT_AT_MS);
+			await wait(() => {
+				jest.advanceTimersByTime(TIMEOUT_AT_MS);
 
-					expect(onUpdateSpy).toHaveBeenCalledTimes(1);
-					expect(onUpdateSpy).toHaveBeenCalledWith(1000);
-
-					jest.clearAllTimers();
-				},
-				{
-					timeout: TIMEOUT_AT_MS,
-				}
-			);
+				expect(onUpdateSpy).toHaveBeenCalledTimes(1);
+				expect(onUpdateSpy).toHaveBeenCalledWith(1000);
+			});
 		});
 	});
 

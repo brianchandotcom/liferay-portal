@@ -540,9 +540,6 @@ describe('Price', () => {
 
 			expect(singleDiscountPercentage).not.toBeInTheDocument();
 		});
-
-		// jest.mock('../../../src/main/resources/META-INF/resources/components/price/util/index');
-
 	});
 
 	describe('by event update', () => {

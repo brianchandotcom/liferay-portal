@@ -85,11 +85,11 @@ public class ObjectDefinitionSampleGenerator {
 					_createObjectField("baker", "Boolean"),
 					_createObjectField("dog", "Date"),
 					_createObjectField("easy", "String"),
-					_createObjectField("easykey", "String", true, true, null),
+					_createObjectField(true, true, null, "easykey", "String"),
 					_createObjectField(
-						"easyen", "String", true, false, "en_US"),
+						true, false, "en_US", "easyen", "String"),
 					_createObjectField(
-						"notindexed", "String", false, false, null),
+						false, false, null, "notindexed", "String"),
 					_createObjectField("height", "Double"),
 					_createObjectField("numberOfBooksWritten", "Integer"),
 					_createObjectField("portrait", "Blob"),
@@ -131,20 +131,20 @@ public class ObjectDefinitionSampleGenerator {
 	}
 
 	private ObjectField _createObjectField(String name, String type) {
-		return _createObjectField(name, type, true, false, null);
+		return _createObjectField(true, false, null, name, type);
 	}
 
 	private ObjectField _createObjectField(
-		String name, String type, boolean indexed, boolean indexedAsKeyword,
-		String locale) {
+		boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
+		String name, String type) {
 
 		ObjectField objectField = _objectFieldLocalService.createObjectField(0);
 
-		objectField.setName(name);
-		objectField.setType(type);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
-		objectField.setLocale(locale);
+		objectField.setIndexedLanguageId(indexedLanguageId);
+		objectField.setName(name);
+		objectField.setType(type);
 
 		return objectField;
 	}

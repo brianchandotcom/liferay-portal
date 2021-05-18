@@ -88,9 +88,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectField objectField : objectFields) {
 			_objectFieldLocalService.addObjectField(
-				userId, objectDefinitionId, objectField.getName(),
-				objectField.getType(), objectField.getIndexed(),
-				objectField.getIndexedAsKeyword(), objectField.getLocale());
+				userId, objectDefinitionId, objectField.getIndexed(),
+				objectField.getIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(), objectField.getName(),
+				objectField.getType());
 		}
 
 		objectFields = _objectFieldPersistence.findByObjectDefinitionId(

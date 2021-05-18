@@ -134,9 +134,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 						"nestedFieldArray.value_long#" + entityFieldName));
 		}
 		else if (type.equals("String")) {
-			String localeString = objectField.getLocale();
-
-			if (Validator.isBlank(localeString)) {
+			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
 				return Optional.of(
 					new StringEntityField(
 						entityFieldName,
@@ -149,7 +147,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 				new StringEntityField(
 					entityFieldName,
 					locale -> StringBundler.concat(
-						"nestedFieldArray.value_", localeString, "_sortable#",
+						"nestedFieldArray.value_",
+						objectField.getIndexedLanguageId(), "_sortable#",
 						entityFieldName)));
 		}
 

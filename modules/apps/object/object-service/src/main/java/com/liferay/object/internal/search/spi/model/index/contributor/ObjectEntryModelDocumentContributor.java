@@ -126,11 +126,11 @@ public class ObjectEntryModelDocumentContributor
 			}
 
 			boolean indexedAsKeyword = objectField.isIndexedAsKeyword();
-			String locale = objectField.getLocale();
+			String indexedLanguageId = objectField.getIndexedLanguageId();
 			String type = objectField.getType();
 
 			if ((!type.equals("String") || indexedAsKeyword) &&
-				!Validator.isBlank(locale)) {
+				!Validator.isBlank(indexedLanguageId)) {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
@@ -138,7 +138,7 @@ public class ObjectEntryModelDocumentContributor
 							"Object entry ", objectEntry.getObjectEntryId(),
 							" has field \"", name,
 							"\" which is not indexed as full-text. Locale ",
-							locale, " will be ignored"));
+							indexedLanguageId, " will be ignored"));
 				}
 			}
 
@@ -172,16 +172,16 @@ public class ObjectEntryModelDocumentContributor
 					fieldArray, name, "value_long", String.valueOf(value));
 			}
 			else if (value instanceof String) {
-				if (Validator.isBlank(locale)) {
+				if (Validator.isBlank(indexedLanguageId)) {
 					_addNestedField(
 						fieldArray, name, "value_text", (String)value);
 				}
 				else {
 					_addNestedField(
-						fieldArray, name, "value_" + locale, (String)value);
+						fieldArray, name, "value_" + indexedLanguageId, (String)value);
 
 					_addNestedField(
-						fieldArray, name, "value_" + locale + "_sortable",
+						fieldArray, name, "value_" + indexedLanguageId + "_sortable",
 						(String)value);
 				}
 			}

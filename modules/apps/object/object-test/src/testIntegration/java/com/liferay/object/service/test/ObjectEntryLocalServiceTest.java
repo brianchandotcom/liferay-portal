@@ -92,19 +92,20 @@ public class ObjectEntryLocalServiceTest {
 			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
 				TestPropsValues.getUserId(), "Test",
 				Arrays.asList(
-					_createObjectField("ageOfDeath", "Long"),
-					_createObjectField("authorOfGospel", "Boolean"),
-					_createObjectField("birthday", "Date"),
-					_createObjectField("emailAddress", "String", true),
-					_createObjectField("emailAddressDomain", "String", true),
-					_createObjectField("firstName", "String"),
-					_createObjectField("height", "Double"),
-					_createObjectField("lastName", "String"),
-					_createObjectField("middleName", "String"),
-					_createObjectField("numberOfBooksWritten", "Integer"),
-					_createObjectField("portrait", "Blob"),
-					_createObjectField("speed", "BigDecimal"),
-					_createObjectField("weight", "Double")));
+					_createObjectField(false, "ageOfDeath", "Long"),
+					_createObjectField(false, "authorOfGospel", "Boolean"),
+					_createObjectField(false, "birthday", "Date"),
+					_createObjectField(true, "emailAddress", "String"),
+					_createObjectField(true, "emailAddressDomain", "String"),
+					_createObjectField(false, "firstName", "String"),
+					_createObjectField(false, "height", "Double"),
+					_createObjectField(false, "lastName", "String"),
+					_createObjectField(false, "middleName", "String"),
+					_createObjectField(
+						false, "numberOfBooksWritten", "Integer"),
+					_createObjectField(false, "portrait", "Blob"),
+					_createObjectField(false, "speed", "BigDecimal"),
+					_createObjectField(false, "weight", "Double")));
 	}
 
 	@Test
@@ -796,28 +797,16 @@ public class ObjectEntryLocalServiceTest {
 		}
 	}
 
-	private ObjectField _createObjectField(String name, String type) {
-		return _createObjectField(name, type, false);
-	}
-
 	private ObjectField _createObjectField(
-		String name, String type, boolean indexedAsKeyword) {
-
-		return _createObjectField(name, type, true, indexedAsKeyword, null);
-	}
-
-	private ObjectField _createObjectField(
-		String name, String type, boolean indexed, boolean indexedAsKeyword,
-		String locale) {
+		boolean indexedAsKeyword, String name, String type) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
+		objectField.setIndexed(true);
+		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setName(name);
 		objectField.setType(type);
-		objectField.setIndexed(indexed);
-		objectField.setIndexedAsKeyword(indexedAsKeyword);
-		objectField.setLocale(locale);
 
 		return objectField;
 	}

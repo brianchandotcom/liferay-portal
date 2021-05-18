@@ -177,18 +177,21 @@ public class ObjectEntryKeywordQueryContributor
 						"nestedFieldArray.value_long");
 				}
 				else if (type.equals("String")) {
-					String locale = objectField.getLocale();
+					String indexedLanguageId =
+						objectField.getIndexedLanguageId();
 
-					if (Validator.isBlank(locale)) {
+					if (Validator.isBlank(indexedLanguageId)) {
 						nestedBooleanQuery.add(
 							new MatchQuery(
 								"nestedFieldArray.value_text", fieldKeywords),
 							BooleanClauseOccur.MUST);
 					}
-					else if (locale.equals(_getLocaleString(searchContext))) {
+					else if (indexedLanguageId.equals(
+								_getLanguageId(searchContext))) {
+
 						nestedBooleanQuery.add(
 							new MatchQuery(
-								"nestedFieldArray.value_" + locale,
+								"nestedFieldArray.value_" + indexedLanguageId,
 								fieldKeywords),
 							BooleanClauseOccur.MUST);
 					}
@@ -299,7 +302,7 @@ public class ObjectEntryKeywordQueryContributor
 		return value;
 	}
 
-	private String _getLocaleString(SearchContext searchContext) {
+	private String _getLanguageId(SearchContext searchContext) {
 		Locale locale = searchContext.getLocale();
 
 		return locale.toString();

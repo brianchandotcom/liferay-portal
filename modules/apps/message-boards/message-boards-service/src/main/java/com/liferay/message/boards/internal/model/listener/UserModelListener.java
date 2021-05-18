@@ -15,7 +15,6 @@
 package com.liferay.message.boards.internal.model.listener;
 
 import com.liferay.message.boards.service.MBBanLocalService;
-import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -33,15 +32,11 @@ public class UserModelListener extends BaseModelListener<User> {
 	@Override
 	public void onBeforeRemove(User user) {
 		_mbBanLocalService.deleteBansByBanUserId(user.getUserId());
-		_mbStatsUserLocalService.deleteStatsUsersByUserId(user.getUserId());
 		_mbThreadFlagLocalService.deleteThreadFlagsByUserId(user.getUserId());
 	}
 
 	@Reference
 	private MBBanLocalService _mbBanLocalService;
-
-	@Reference
-	private MBStatsUserLocalService _mbStatsUserLocalService;
 
 	@Reference
 	private MBThreadFlagLocalService _mbThreadFlagLocalService;

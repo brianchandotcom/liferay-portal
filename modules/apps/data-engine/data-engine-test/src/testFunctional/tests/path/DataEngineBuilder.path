@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_LABEL_INDEXED</td>
+	<td>xpath=(//label[normalize-space(text())='${key_fieldLabel}'] | //legend[normalize-space(text())='${key_fieldLabel}'])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_NESTED</td>
 	<td>//label[normalize-space(text())='${key_fieldsGroupLabel}']/following::div//label[normalize-space(text())='${key_fieldFieldLabel}'] | //label[normalize-space(text())='${key_fieldsGroupLabel}']/following::div//legend[normalize-space(text())='${key_fieldFieldLabel}']</td>
 	<td></td>

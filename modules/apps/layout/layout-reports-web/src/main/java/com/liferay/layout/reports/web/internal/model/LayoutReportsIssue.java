@@ -137,7 +137,9 @@ public class LayoutReportsIssue {
 
 	public static class Detail {
 
-		public Detail(Detail.Key key, long total) {
+		public Detail(String description, Detail.Key key, long total) {
+			_description = description;
+
 			if (key == null) {
 				throw new IllegalArgumentException("Key is null");
 			}
@@ -174,6 +176,8 @@ public class LayoutReportsIssue {
 
 		public JSONObject toJSONObject(ResourceBundle resourceBundle) {
 			return JSONUtil.put(
+				"description", _description
+			).put(
 				"key", _key.toString()
 			).put(
 				"title", _key.getTitle(resourceBundle)
@@ -319,6 +323,7 @@ public class LayoutReportsIssue {
 
 		}
 
+		private final String _description;
 		private final Detail.Key _key;
 		private final long _total;
 

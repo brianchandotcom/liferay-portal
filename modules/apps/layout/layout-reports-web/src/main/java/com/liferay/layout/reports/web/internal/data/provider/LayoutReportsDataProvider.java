@@ -107,7 +107,8 @@ public class LayoutReportsDataProvider {
 		LighthouseAuditResultV5 lighthouseAuditResultV5) {
 
 		return new LayoutReportsIssue.Detail(
-			key, _getCount(lighthouseAuditResultV5));
+			lighthouseAuditResultV5.getDescription(), key,
+			_getCount(lighthouseAuditResultV5));
 	}
 
 	private List<LayoutReportsIssue> _getLayoutReportsIssues(String url)

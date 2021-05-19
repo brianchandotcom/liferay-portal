@@ -11,7 +11,7 @@
 
 import {ClayIconSpriteContext} from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import '../style/diagram.scss';
 import DiagramFooter from './DiagramFooter';
@@ -30,21 +30,12 @@ const Diagram = ({
 	spritemap,
 	zoomController,
 }) => {
-	const [addPinHandler, setAddPinHandler] = useState(false);
-	const [removePinHandler, setRemovePinHandler] = useState({
-		handler: false,
-		pin: null,
-	});
 	const [resetZoom, setResetZoom] = useState(false);
 	const [zoomInHandler, setZoomInHandler] = useState(false);
 	const [zoomOutHandler, setZoomOutHandler] = useState(false);
 	const [changedScale, setChangedScale] = useState(false);
 	const [scale, setScale] = useState(1);
 	const [selectedOption, setSelectedOption] = useState(1);
-<<<<<<< HEAD
-
-=======
->>>>>>> COMMERCE-5483 diagram works in liferay
 	const [cPins, setCpins] = useState(pins);
 	const [showTooltip, setShowTooltip] = useState({
 		details: {
@@ -90,7 +81,6 @@ const Diagram = ({
 
 	return (
 		<div className="diagram mx-auto">
-<<<<<<< HEAD
 			<ClayIconSpriteContext.Provider value={spritemap}>
 				<DiagramHeader
 					addNewPinState={addNewPinState}
@@ -143,58 +133,7 @@ const Diagram = ({
 					setZoomOutHandler={setZoomOutHandler}
 				/>
 			</ClayIconSpriteContext.Provider>
-=======
-			<DiagramHeader
-				addNewPinState={addNewPinState}
-				newPinSettings={newPinSettings}
-				setAddNewPinState={setAddNewPinState}
-				setAddPinHandler={setAddPinHandler}
-				setSelectedOption={setSelectedOption}
-			/>
 
-			<ImagePins
-				addNewPinState={addNewPinState}
-				addPinHandler={addPinHandler}
-				cPins={cPins}
-				changedScale={changedScale}
-				enablePanZoom={enablePanZoom}
-				enableResetZoom={enableResetZoom}
-				image={image}
-				imageSettings={imageSettings}
-				navigationController={navigationController}
-				removePinHandler={removePinHandler}
-				resetZoom={resetZoom}
-				scale={scale}
-				selectedOption={selectedOption}
-				setAddPinHandler={setAddPinHandler}
-				setChangedScale={setChangedScale}
-				setCpins={setCpins}
-				setRemovePinHandler={setRemovePinHandler}
-				setResetZoom={setResetZoom}
-				setScale={setScale}
-				setSelectedOption={setSelectedOption}
-				setShowTooltip={setShowTooltip}
-				setZoomInHandler={setZoomInHandler}
-				setZoomOutHandler={setZoomOutHandler}
-				showTooltip={showTooltip}
-				zoomController={zoomController}
-				zoomInHandler={zoomInHandler}
-				zoomOutHandler={zoomOutHandler}
-			/>
-
-			<DiagramFooter
-				changedScale={changedScale}
-				enableResetZoom={enableResetZoom}
-				selectedOption={selectedOption}
-				setAddPinHandler={setAddPinHandler}
-				setChangedScale={setChangedScale}
-				setResetZoom={setResetZoom}
-				setSelectedOption={setSelectedOption}
-				setZoomInHandler={setZoomInHandler}
-				setZoomOutHandler={setZoomOutHandler}
-				spritemap={spritemap}
-			/>
->>>>>>> COMMERCE-5483 diagram works in liferay
 		</div>
 	);
 };
@@ -217,28 +156,8 @@ Diagram.defaultProps = {
 			top: '',
 		},
 	},
-	newPinSettings: {
-		colorPicker: {
-			defaultColors: [
-				'AC68D7',
-				'96D470',
-				'F2EE8F',
-				'F4C4A9',
-				'F1A3BB',
-				'67DC19',
-				'959FEF',
-				'A6C198',
-				'FED998',
-				'#38F95',
-				'FD9945',
-				'1A588B',
-			],
-			selectedColor: '0B5FFF',
-			useNative: true,
-		},
-		defaultRadius: 15,
-	},
 	pins: [],
+	spritemap: './assets/clay/icons.svg',
 	zoomController: {
 		enable: true,
 		position: {
@@ -251,20 +170,6 @@ Diagram.defaultProps = {
 };
 
 Diagram.propTypes = {
-	cPins: PropTypes.arrayOf(
-		PropTypes.shape({
-			cx: PropTypes.double,
-			cy: PropTypes.double,
-			draggable: PropTypes.bool,
-			fill: PropTypes.string,
-			id: PropTypes.number,
-			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
-			quantity: PropTypes.number,
-			r: PropTypes.number,
-			sku: PropTypes.string,
-		})
-	),
 	enablePanZoom: PropTypes.bool,
 	enableResetZoom: PropTypes.bool,
 	imageSettings: PropTypes.shape({
@@ -283,27 +188,6 @@ Diagram.propTypes = {
 			right: PropTypes.string,
 			top: PropTypes.string,
 		}),
-	}),
-	newPinSettings: PropTypes.shape({
-		colorPicker: PropTypes.shape({
-			defaultColors: PropTypes.array,
-			selectedColor: PropTypes.string,
-			useNative: PropTypes.bool,
-		}),
-		defaultRadius: PropTypes.number,
-	}),
-	setPins: PropTypes.func,
-	showTooltip: PropTypes.shape({
-		details: PropTypes.shape({
-			cx: PropTypes.double,
-			cy: PropTypes.double,
-			id: PropTypes.number,
-			label: PropTypes.string,
-			linked_to_sku: PropTypes.oneOf(['sku', 'diagram']),
-			quantity: PropTypes.number,
-			sku: PropTypes.string,
-		}),
-		tooltip: PropTypes.bool,
 	}),
 	spritemap: PropTypes.string,
 	zoomController: PropTypes.shape({

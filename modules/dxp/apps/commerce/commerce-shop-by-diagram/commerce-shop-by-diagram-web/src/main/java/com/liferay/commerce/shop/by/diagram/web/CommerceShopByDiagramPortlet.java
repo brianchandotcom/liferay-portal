@@ -16,13 +16,13 @@ package com.liferay.commerce.shop.by.diagram.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import java.io.IOException;
+
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
-import java.io.IOException;
 import javax.portlet.RenderResponse;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -59,4 +59,5 @@ public class CommerceShopByDiagramPortlet extends MVCPortlet {
 
 		super.render(renderRequest, renderResponse);
 	}
+
 }

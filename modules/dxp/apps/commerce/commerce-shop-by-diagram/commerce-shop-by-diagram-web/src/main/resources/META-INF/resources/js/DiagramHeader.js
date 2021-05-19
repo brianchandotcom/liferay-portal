@@ -162,26 +162,4 @@ DiagramHeader.defaultProps = {
 	],
 };
 
-DiagramHeader.propTypes = {
-	addNewPinState: PropTypes.shape({
-		fill: PropTypes.string,
-		radius: PropTypes.number,
-	}),
-	newPinSettings: PropTypes.shape({
-		colorPicker: PropTypes.shape({
-			defaultColors: PropTypes.array,
-			selectedColor: PropTypes.string,
-			useNative: PropTypes.bool,
-		}),
-		defautlRadius: PropTypes.number,
-	}),
-	radiusChoice: PropTypes.arrayOf(
-		PropTypes.shape({
-			label: PropTypes.string,
-			value: PropTypes.number,
-		})
-	),
-	setAddNewPinState: PropTypes.func,
-};
-
 export default DiagramHeader;

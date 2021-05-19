@@ -67,7 +67,7 @@ const CollectDigitalSignature = ({portletId, portletNamespace}) => {
 
 			if (success) {
 				openToast({
-					message: 'your-envelope-was-successfully-sent',
+					message: 'your-envelope-was-created-successfully',
 					title: Liferay.Language.get('success'),
 					type: 'success',
 				});
@@ -142,7 +142,9 @@ const CollectDigitalSignature = ({portletId, portletNamespace}) => {
 		<ClayLayout.Container className="collect-digital-signature">
 			<ClayCard>
 				<div className="header">
-					<h1>{Liferay.Language.get('new-e-signature-envelope')}</h1>
+					<h1>
+						{Liferay.Language.get('new-digital-signature-envelope')}
+					</h1>
 				</div>
 				<hr />
 				<ClayCard.Body className="m-2">

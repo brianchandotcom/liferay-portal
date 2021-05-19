@@ -65,16 +65,13 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 	}
 
 	public JSONArray getCategoriesJSONArray() throws Exception {
-		JSONArray vocabulariesJSONArray = _getVocabulariesJSONArray();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		if (vocabulariesJSONArray.length() == 1) {
-			jsonObject = vocabulariesJSONArray.getJSONObject(0);
-		}
-		else {
-			jsonObject.put(
-				"children", vocabulariesJSONArray
+		return JSONUtil.put(
+			JSONUtil.put(
+				"children", _getVocabulariesJSONArray()
+			).put(
+				"disabled", true
+			).put(
+				"expanded", true
 			).put(
 				"icon", "folder"
 			).put(
@@ -82,18 +79,9 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 			).put(
 				"name",
 				LanguageUtil.get(_themeDisplay.getLocale(), "vocabularies")
-			);
-		}
-
-		jsonObject.put(
-			"disabled", true
-		).put(
-			"expanded", true
-		).put(
-			"vocabulary", true
-		);
-
-		return JSONUtil.put(jsonObject);
+			).put(
+				"vocabulary", true
+			));
 	}
 
 	public Map<String, Object> getData() throws Exception {

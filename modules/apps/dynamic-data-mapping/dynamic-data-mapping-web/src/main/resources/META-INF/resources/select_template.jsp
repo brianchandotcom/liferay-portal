@@ -21,7 +21,6 @@ long templateId = ParamUtil.getLong(request, "templateId");
 
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
-String eventName = ParamUtil.getString(request, "eventName", "selectTemplate");
 
 DDMStructure structure = null;
 
@@ -113,10 +112,3 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 		</liferay-ui:search-container>
 	</clay:container-fluid>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.selectEntityHandler(
-		'#<portlet:namespace />selectTemplateFm',
-		'<%= HtmlUtil.escapeJS(eventName) %>'
-	);
-</aui:script>

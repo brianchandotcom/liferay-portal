@@ -65,8 +65,8 @@ public interface DigitalSignatureConfigurationForm {
 	@DDMFormField(label = "%api-username")
 	public String apiUsername();
 
-	@DDMFormField(label = "%enable", properties = "showAsSwitcher=true")
-	public boolean enable();
+	@DDMFormField(label = "%enabled", properties = "showAsSwitcher=true")
+	public boolean enabled();
 
 	@DDMFormField(label = "%integration-key", required = false)
 	public String integrationKey();

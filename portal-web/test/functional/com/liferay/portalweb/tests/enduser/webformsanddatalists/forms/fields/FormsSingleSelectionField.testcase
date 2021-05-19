@@ -133,13 +133,43 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132197 LabelCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection",
+			formPageNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Test Single Selection");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}");
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		FormFields.viewRadioLabel(
+			fieldLabel = "Test Single Selection",
+			fieldName = "Test Single Selection");
+
+
+
 	}
 
 	@description = "Verify that the Field Label can be hidden"

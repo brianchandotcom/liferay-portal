@@ -33,6 +33,7 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -44,11 +45,13 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -63,7 +66,7 @@ import com.liferay.wiki.service.WikiPageLocalService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -117,6 +120,7 @@ public class IndexerScoreDistortionTest {
 	@Test
 	public void testTitleIndexedInTriplicateDistortsScores() throws Exception {
 		Locale locale = LocaleUtil.US;
+
 		String title = "collision";
 
 		addBlogsEntry(title);
@@ -126,49 +130,46 @@ public class IndexerScoreDistortionTest {
 		addWikiPage(title);
 
 		Class<?>[] classes = new Class<?>[] {
-			BlogsEntry.class, WikiPage.class, MBMessage.class,
-			DLFileEntry.class, JournalArticle.class
+			BlogsEntry.class, DLFileEntry.class, JournalArticle.class,
+			MBMessage.class, WikiPage.class
 		};
 
-		SearchResponse searchResponse = searcher.search(
-			searchRequestBuilderFactory.builder(
-			).companyId(
-				_group.getCompanyId()
-			).fields(
-				StringPool.STAR
-			).groupIds(
-				_group.getGroupId()
-			).locale(
-				locale
-			).modelIndexerClasses(
-				classes
-			).queryString(
-				title
-			).build());
+		SearchResponse searchResponse1 = search(title, locale, classes);
 
-		Map<String, String> map = HashMapBuilder.put(
+		assertValuesIgnoreRelevance(
 			Field.ENTRY_CLASS_NAME,
 			getClassNamesAsString(
+				BlogsEntry.class, MBMessage.class, WikiPage.class),
+			_limit(searchResponse1.getDocumentsStream(), 3), searchResponse1);
+		assertValuesIgnoreRelevance(
+			Field.ENTRY_CLASS_NAME,
+			getClassNamesAsString(DLFileEntry.class, JournalArticle.class),
+			_skip(searchResponse1.getDocumentsStream(), 3), searchResponse1);
 
-				// Order is important (scores higher to lower)
+		SearchResponse searchResponse2 = search(
+			title, locale, classes,
+			searchRequestBuilder -> searchRequestBuilder.sorts(
+				sorts.field(Field.ENTRY_CLASS_NAME)));
 
-				BlogsEntry.class, WikiPage.class, MBMessage.class,
-				DLFileEntry.class, JournalArticle.class)
-		).put(
-			Field.TITLE, "[collision, collision, , collision, ]"
-		).put(
+		assertValues(
+			Field.ENTRY_CLASS_NAME,
+			getClassNamesAsString(
+				BlogsEntry.class, DLFileEntry.class, JournalArticle.class,
+				MBMessage.class, WikiPage.class),
+			searchResponse2);
+		assertValues("fileName", "[, collision, , , ]", searchResponse2);
+		assertValues(
+			Field.TITLE, "[collision, collision, , , collision]",
+			searchResponse2);
+		assertValues(
 			Field.TITLE + "_en_US",
-			"[collision, collision, collision, , collision]"
-		).put(
-			Field.TITLE + "_hu_HU", "[collision, collision, collision, , ]"
-		).put(
-			Field.TITLE + "_ja_JP", "[collision, collision, collision, , ]"
-		).build();
-
-		map.forEach(
-			(fieldName, values) -> DocumentsAssert.assertValues(
-				searchResponse.getRequestString(),
-				searchResponse.getDocumentsStream(), fieldName, values));
+			"[collision, , collision, collision, collision]", searchResponse2);
+		assertValues(
+			Field.TITLE + "_hu_HU", "[collision, , , collision, collision]",
+			searchResponse2);
+		assertValues(
+			Field.TITLE + "_ja_JP", "[collision, , , collision, collision]",
+			searchResponse2);
 	}
 
 	@Rule
@@ -248,7 +249,23 @@ public class IndexerScoreDistortionTest {
 		return wikiPage;
 	}
 
-	protected String getClassNamesAsString(Class<?>... classes) {
+	protected void assertValues(
+		String fieldName, String expected, SearchResponse searchResponse) {
+
+		DocumentsAssert.assertValues(
+			getMessage(fieldName, searchResponse),
+			searchResponse.getDocumentsStream(), fieldName, expected);
+	}
+
+	protected void assertValuesIgnoreRelevance(
+		String fieldName, String expected, Stream<Document> stream,
+		SearchResponse searchResponse) {
+
+		DocumentsAssert.assertValuesIgnoreRelevance(
+			getMessage(fieldName, searchResponse), stream, fieldName, expected);
+	}
+
+	protected String getClassNamesAsString(Class... classes) {
 		return Stream.of(
 			classes
 		).map(
@@ -256,6 +273,42 @@ public class IndexerScoreDistortionTest {
 		).collect(
 			Collectors.toList()
 		).toString();
+	}
+
+	protected String getMessage(
+		String fieldName, SearchResponse searchResponse) {
+
+		return StringBundler.concat(
+			fieldName, StringPool.EIGHT_STARS,
+			searchResponse.getRequestString(), StringPool.EIGHT_STARS,
+			searchResponse.getResponseString());
+	}
+
+	protected SearchResponse search(
+		String title, Locale locale, Class<?>[] classes,
+		Consumer<SearchRequestBuilder>... searchRequestBuilderConsumers) {
+
+		return searcher.search(
+			searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).explain(
+				true
+			).fields(
+				StringPool.STAR
+			).groupIds(
+				_group.getGroupId()
+			).includeResponseString(
+				true
+			).locale(
+				locale
+			).modelIndexerClasses(
+				classes
+			).queryString(
+				title
+			).withSearchRequestBuilder(
+				searchRequestBuilderConsumers
+			).build());
 	}
 
 	@Inject
@@ -277,6 +330,9 @@ public class IndexerScoreDistortionTest {
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	@Inject
+	protected Sorts sorts;
+
+	@Inject
 	protected WikiNodeLocalService wikiNodeLocalService;
 
 	@Inject
@@ -285,6 +341,14 @@ public class IndexerScoreDistortionTest {
 	private ServiceContext _createServiceContext() throws Exception {
 		return ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), _user.getUserId());
+	}
+
+	private Stream<Document> _limit(Stream<Document> stream, long maxSize) {
+		return stream.limit(maxSize);
+	}
+
+	private Stream<Document> _skip(Stream<Document> stream, long n) {
+		return stream.skip(n);
 	}
 
 	@DeleteAfterTestRun

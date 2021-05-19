@@ -16,6 +16,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.jaxrs.context,\
 	com.liferay.portal.vulcan.jaxrs.exception.mapper,\
 	com.liferay.portal.vulcan.multipart,\
+	com.liferay.portal.vulcan.openapi,\
 	com.liferay.portal.vulcan.pagination,\
 	com.liferay.portal.vulcan.permission,\
 	com.liferay.portal.vulcan.resource,\

@@ -15,9 +15,14 @@
 package com.liferay.portal.vulcan.internal.resource;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.openapi.DTOProperty;
+import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
+import io.swagger.v3.core.filter.AbstractSpecFilter;
+import io.swagger.v3.core.filter.OpenAPISpecFilter;
+import io.swagger.v3.core.filter.SpecFilter;
 import io.swagger.v3.core.util.Yaml;
 import io.swagger.v3.jaxrs2.integration.JaxrsOpenApiContextBuilder;
 import io.swagger.v3.oas.integration.GenericOpenApiContext;
@@ -25,11 +30,15 @@ import io.swagger.v3.oas.integration.api.OpenAPIConfiguration;
 import io.swagger.v3.oas.integration.api.OpenApiContext;
 import io.swagger.v3.oas.integration.api.OpenApiScanner;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.servers.Server;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.ws.rs.core.MediaType;
@@ -54,6 +63,14 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 	@Override
 	public Response getOpenAPI(
 			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo)
+		throws Exception {
+
+		return getOpenAPI(resourceClasses, type, uriInfo, null);
+	}
+
+	public Response getOpenAPI(
+			Set<Class<?>> resourceClasses, String type, UriInfo uriInfo,
+			OpenAPISchemaFilter openAPISchemaFilter)
 		throws Exception {
 
 		JaxrsOpenApiContextBuilder jaxrsOpenApiContextBuilder =
@@ -88,6 +105,14 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 
 		OpenAPI openAPI = openApiContext.read();
 
+		if (openAPISchemaFilter != null) {
+			SpecFilter specFilter = new SpecFilter();
+
+			openAPI = specFilter.filter(
+				openAPI, _toOpenAPISpecFilter(openAPISchemaFilter),
+				uriInfo.getQueryParameters(), null, null);
+		}
+
 		if (openAPI == null) {
 			return Response.status(
 				404
@@ -119,6 +144,53 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 		).type(
 			MediaType.APPLICATION_JSON_TYPE
 		).build();
+	}
+
+	private OpenAPISpecFilter _toOpenAPISpecFilter(
+		OpenAPISchemaFilter openAPISchemaFilter) {
+
+		return new AbstractSpecFilter() {
+
+			@Override
+			public Optional<Schema> filterSchema(
+				Schema schema, Map<String, List<String>> params,
+				Map<String, String> cookies,
+				Map<String, List<String>> headers) {
+
+				DTOProperty dtoProperty = openAPISchemaFilter.getDtoProperty();
+
+				if (Objects.equals(dtoProperty.getName(), schema.getName())) {
+					for (DTOProperty curVariableName :
+							dtoProperty.getDtoProperties()) {
+
+						schema.addProperties(
+							curVariableName.getName(),
+							_addSchema(curVariableName));
+					}
+
+					return Optional.of(schema);
+				}
+
+				return super.filterSchema(schema, params, cookies, headers);
+			}
+
+			private Schema<Object> _addSchema(DTOProperty dtoProperty) {
+				Schema<Object> schema = new Schema<>();
+
+				schema.setName(dtoProperty.getName());
+				schema.setType(dtoProperty.getType());
+
+				for (DTOProperty curVariableName :
+						dtoProperty.getDtoProperties()) {
+
+					schema.addProperties(
+						curVariableName.getName(), _addSchema(curVariableName));
+				}
+
+				return schema;
+			}
+
+		};
 	}
 
 }

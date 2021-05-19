@@ -50,11 +50,11 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 	@Override
 	public SamlIdpSpConnection addSamlIdpSpConnection(
-			String samlSpEntityId, int assertionLifetime, String attributeNames,
+			int assertionLifetime, String attributeNames,
 			boolean attributesEnabled, boolean attributesNamespaceEnabled,
 			boolean enabled, boolean encryptionForced, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
-			String nameIdAttribute, String nameIdFormat,
+			String nameIdAttribute, String nameIdFormat, String samlSpEntityId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -126,6 +126,30 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setNameIdFormat(nameIdFormat);
 
 		return samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addSamlIdpSpConnection(int, String, boolean, boolean,
+	 *             boolean, boolean, String, InputStream, String, String, String,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public SamlIdpSpConnection addSamlIdpSpConnection(
+			String samlSpEntityId, int assertionLifetime, String attributeNames,
+			boolean attributesEnabled, boolean attributesNamespaceEnabled,
+			boolean enabled, boolean encryptionForced, String metadataUrl,
+			InputStream metadataXmlInputStream, String name,
+			String nameIdAttribute, String nameIdFormat,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addSamlIdpSpConnection(
+			assertionLifetime, attributeNames, attributesEnabled,
+			attributesNamespaceEnabled, enabled, encryptionForced, metadataUrl,
+			metadataXmlInputStream, name, nameIdAttribute, nameIdFormat,
+			samlSpEntityId, serviceContext);
 	}
 
 	@Override
@@ -211,12 +235,12 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 	@Override
 	public SamlIdpSpConnection updateSamlIdpSpConnection(
-			long samlIdpSpConnectionId, String samlSpEntityId,
-			int assertionLifetime, String attributeNames,
-			boolean attributesEnabled, boolean attributesNamespaceEnabled,
-			boolean enabled, boolean encryptionForced, String metadataUrl,
+			long samlIdpSpConnectionId, int assertionLifetime,
+			String attributeNames, boolean attributesEnabled,
+			boolean attributesNamespaceEnabled, boolean enabled,
+			boolean encryptionForced, String metadataUrl,
 			InputStream metadataXmlInputStream, String name,
-			String nameIdAttribute, String nameIdFormat,
+			String nameIdAttribute, String nameIdFormat, String samlSpEntityId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -287,6 +311,31 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setNameIdFormat(nameIdFormat);
 
 		return samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by { @link
+	 *             {@link #updateSamlIdpSpConnection(long, int, String, boolean,
+	 *             boolean, boolean, boolean, String, InputStream, String,
+	 *             String, String, String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public SamlIdpSpConnection updateSamlIdpSpConnection(
+			long samlIdpSpConnectionId, String samlSpEntityId,
+			int assertionLifetime, String attributeNames,
+			boolean attributesEnabled, boolean attributesNamespaceEnabled,
+			boolean enabled, boolean encryptionForced, String metadataUrl,
+			InputStream metadataXmlInputStream, String name,
+			String nameIdAttribute, String nameIdFormat,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateSamlIdpSpConnection(
+			samlIdpSpConnectionId, assertionLifetime, attributeNames,
+			attributesEnabled, attributesNamespaceEnabled, enabled,
+			encryptionForced, metadataUrl, metadataXmlInputStream, name,
+			nameIdAttribute, nameIdFormat, samlSpEntityId, serviceContext);
 	}
 
 	protected String getMetadataXml(

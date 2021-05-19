@@ -16,6 +16,7 @@ package com.liferay.info.list.provider.item.selector.web.internal.layout.list.re
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -106,9 +108,16 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 			(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
+		String className = infoItemReference.getClassName();
+
+		// LPS-111037
+
+		if (Objects.equals(className, FileEntry.class.getName())) {
+			className = DLFileEntry.class.getName();
+		}
+
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			infoItemReference.getClassName(),
-			classPKInfoItemIdentifier.getClassPK());
+			className, classPKInfoItemIdentifier.getClassPK());
 
 		return Optional.ofNullable(assetEntry);
 	}

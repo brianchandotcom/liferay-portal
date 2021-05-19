@@ -292,7 +292,7 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 	private void _testGetProcessInstancesPage(
 			Long[] assigneeIds, Long[] classPKs, Date dateEnd, Date dateStart,
-			String[] processStatuses,
+			String[] statuses,
 			UnsafeTriConsumer<Instance, Instance, List<Instance>, Exception>
 				unsafeTriConsumer)
 		throws Exception {
@@ -327,8 +327,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
-			_process.getId(), assigneeIds, classPKs, dateEnd, dateStart,
-			processStatuses, null, null, Pagination.of(1, 2), null);
+			_process.getId(), assigneeIds, classPKs, dateEnd, dateStart, null,
+			statuses, null, Pagination.of(1, 2), null);
 
 		unsafeTriConsumer.accept(
 			instance1, instance2, (List<Instance>)page.getItems());

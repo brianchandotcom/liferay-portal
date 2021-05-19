@@ -20,6 +20,7 @@ import com.liferay.dispatch.repository.DispatchFileRepository;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
 import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParserUtil;
+import com.liferay.dispatch.talend.web.internal.archive.exception.TalendArchiveException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -44,6 +45,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.Properties;
+import java.util.zip.ZipException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -68,7 +70,7 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
+		throws Exception {
 
 		try {
 			_checkPermission(actionRequest);
@@ -101,7 +103,15 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		catch (Exception exception) {
 			_log.error(exception, exception);
 
-			SessionErrors.add(actionRequest, exception.getClass());
+			if (!_isArchiveException(exception)) {
+				return;
+			}
+
+			SessionErrors.add(actionRequest, TalendArchiveException.class);
+
+			sendRedirect(
+				actionRequest, actionResponse,
+				ParamUtil.getString(actionRequest, "redirect"));
 		}
 	}
 
@@ -137,6 +147,17 @@ public class EditDispatchTalendJobArchiveMVCActionCommand
 		sb.append(oldJVMOptions);
 
 		return sb.toString();
+	}
+
+	private boolean _isArchiveException(Exception exception) {
+		if (exception instanceof TalendArchiveException ||
+			exception instanceof ZipException ||
+			(exception.getCause() instanceof ZipException)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _updateDispatchTaskSettings(

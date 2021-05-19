@@ -97,6 +97,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			httpServletRequest, infoItemServiceTracker, itemSelector,
 			pageEditorConfiguration, portletRequest, renderResponse);
 
+		_ffLayoutContentPageEditorConfiguration =
+			ffLayoutContentPageEditorConfiguration;
 		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;
 		_renderResponse = renderResponse;
@@ -150,7 +152,10 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		List<ItemSelectorCriterion> collectionItemSelectorCriterions =
 			super.getCollectionItemSelectorCriterions();
 
-		if (!_pageIsDisplayPage) {
+		if (!_pageIsDisplayPage ||
+			!_ffLayoutContentPageEditorConfiguration.
+				relatedItemCollectionProvidersEnabled()) {
+
 			return collectionItemSelectorCriterions;
 		}
 
@@ -377,6 +382,8 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		).build();
 	}
 
+	private final FFLayoutContentPageEditorConfiguration
+		_ffLayoutContentPageEditorConfiguration;
 	private final ItemSelector _itemSelector;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _pageIsDisplayPage;

@@ -255,11 +255,6 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public List<MBStatsUser> getStatsUsersByUserId(long userId) {
-		return mbStatsUserPersistence.findByUserId(userId);
-	}
-
-	@Override
 	public String[] getUserRank(long groupId, String languageId, long userId)
 		throws PortalException {
 

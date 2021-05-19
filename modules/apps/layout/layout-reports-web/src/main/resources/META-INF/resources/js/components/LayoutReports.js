@@ -142,8 +142,16 @@ export default function LayoutReports({eventTriggered}) {
 			)}
 
 			<div className="c-p-3">
+				{data && !error && (
+					<BasicInformation
+						defaultLanguageId={data.defaultLanguageId}
+						pageURLs={data.pageURLs}
+						selectedLanguageId={languageId}
+					/>
+				)}
+
 				{loading ? (
-					<div className="text-secondary">
+					<div className="c-my-4 text-secondary">
 						{Liferay.Language.get(
 							'connecting-with-google-pagespeed'
 						)}
@@ -151,22 +159,12 @@ export default function LayoutReports({eventTriggered}) {
 					</div>
 				) : (
 					data &&
-					!error && (
-						<>
-							<BasicInformation
-								defaultLanguageId={data.defaultLanguageId}
-								pageURLs={data.pageURLs}
-								selectedLanguageId={languageId}
-							/>
-
-							{data.validConnection &&
-							data?.layoutReportsIssues ? (
-								<LayoutReportsIssuesList />
-							) : (
-								<EmptyLayoutReports />
-							)}
-						</>
-					)
+					!error &&
+					(data.validConnection && data?.layoutReportsIssues ? (
+						<LayoutReportsIssuesList />
+					) : (
+						<EmptyLayoutReports />
+					))
 				)}
 			</div>
 		</>

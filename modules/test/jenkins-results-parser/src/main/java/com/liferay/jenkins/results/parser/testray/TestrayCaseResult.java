@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -188,6 +189,11 @@ public class TestrayCaseResult {
 
 		public static Status get(Integer id) {
 			return _statuses.get(id);
+		}
+
+		public static List<Status> getFailedStatuses() {
+			return Arrays.asList(
+				BLOCKED, DID_NOT_RUN, FAILED, IN_PROGRESS, TEST_FIX, UNTESTED);
 		}
 
 		public Integer getID() {

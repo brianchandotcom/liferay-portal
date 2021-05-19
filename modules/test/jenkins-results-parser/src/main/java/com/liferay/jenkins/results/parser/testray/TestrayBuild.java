@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -52,6 +53,47 @@ public class TestrayBuild {
 
 	public String getName() {
 		return _jsonObject.getString("name");
+	}
+
+	public String getResult() {
+		JSONObject buildResultJSONObject = _getBuildResultJSONObject();
+
+		if ((buildResultJSONObject != null) &&
+			buildResultJSONObject.has("result")) {
+
+			return buildResultJSONObject.getString("result");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		String urlString = String.valueOf(getURL());
+
+		sb.append(urlString.replace("runs", "case_results.json"));
+
+		sb.append("&statuses=");
+
+		for (TestrayCaseResult.Status failedStatus :
+				TestrayCaseResult.Status.getFailedStatuses()) {
+
+			sb.append(failedStatus.getID());
+			sb.append(",");
+		}
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				sb.toString());
+
+			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
+
+			if ((dataJSONArray != null) && (dataJSONArray.length() > 0)) {
+				return "FAILURE";
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return "SUCCESS";
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults() {
@@ -87,7 +129,60 @@ public class TestrayBuild {
 		}
 	}
 
+	private JSONObject _getBuildResultJSONObject() {
+		if (_buildResultJSONObject != null) {
+			return _buildResultJSONObject;
+		}
+
+		URL buildResultURL = _getBuildResultURL();
+
+		if (buildResultURL == null) {
+			return null;
+		}
+
+		try {
+			_buildResultJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				String.valueOf(buildResultURL));
+
+			_buildResultJSONObject.put("name", getName());
+
+			return _buildResultJSONObject;
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private URL _getBuildResultURL() {
+		if (_buildResultURL != null) {
+			return _buildResultURL;
+		}
+
+		List<TestrayCaseResult> testrayCaseResults = getTestrayCaseResults();
+
+		if (testrayCaseResults.isEmpty()) {
+			return null;
+		}
+
+		TestrayCaseResult testrayCaseResult = testrayCaseResults.get(0);
+
+		TestrayAttachment buildResultTestrayAttachment =
+			testrayCaseResult.getBuildResultTestrayAttachment();
+
+		if (buildResultTestrayAttachment == null) {
+			return null;
+		}
+
+		_buildResultURL = buildResultTestrayAttachment.getURL();
+
+		return _buildResultURL;
+	}
+
 	private void _initTestrayCaseResults() {
+		_testrayCaseResults = new ArrayList<>();
+
 		String urlString = String.valueOf(getURL());
 
 		String caseResultsAPIURLString = urlString.replace(
@@ -113,6 +208,8 @@ public class TestrayBuild {
 		}
 	}
 
+	private JSONObject _buildResultJSONObject;
+	private URL _buildResultURL;
 	private final JSONObject _jsonObject;
 	private List<TestrayCaseResult> _testrayCaseResults;
 	private final TestrayProductVersion _testrayProductVersion;

@@ -147,13 +147,7 @@ public class CommerceMediaServlet extends HttpServlet {
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
 				GetterUtil.getLong(cpAttachmentFileEntryIdParam));
 
-		long fileEntryId = cpAttachmentFileEntry.getFileEntryId();
-
-		if (cpAttachmentFileEntry.isCdn()) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _getFileEntry(fileEntryId);
+		return _getFileEntry(cpAttachmentFileEntry.getFileEntryId());
 	}
 
 	protected long getGroupId(

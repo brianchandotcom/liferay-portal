@@ -105,83 +105,6 @@ public class CommerceMediaResolverTest {
 	}
 
 	@Test
-	public void testGetCdnUrl() throws Exception {
-		frutillaRule.scenario(
-			"Test commerce media resolver url"
-		).given(
-			"A commerce product attachment file entry"
-		).when(
-			"I invoke getUrl method"
-		).then(
-			"I expect the URL to be formatted as cdnUrl"
-		);
-
-		CommerceCatalog commerceCatalog =
-			_commerceCatalogLocalService.addCommerceCatalog(
-				null, RandomTestUtil.randomString(),
-				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
-				_serviceContext);
-
-		CPDefinition cpDefinition = CPTestUtil.addCPDefinition(
-			commerceCatalog.getGroupId());
-
-		long now = System.currentTimeMillis();
-
-		Date displayDate = new Date(now - Time.HOUR);
-		Date expirationDate = new Date(now + Time.DAY);
-
-		Calendar displayCal = CalendarFactoryUtil.getCalendar(
-			_user.getTimeZone());
-
-		displayCal.setTime(displayDate);
-
-		int displayDateMonth = displayCal.get(Calendar.MONTH);
-		int displayDateDay = displayCal.get(Calendar.DATE);
-		int displayDateYear = displayCal.get(Calendar.YEAR);
-		int displayDateHour = displayCal.get(Calendar.HOUR);
-		int displayDateMinute = displayCal.get(Calendar.MINUTE);
-
-		if (displayCal.get(Calendar.AM_PM) == Calendar.PM) {
-			displayDateHour += 12;
-		}
-
-		Calendar expirationCal = CalendarFactoryUtil.getCalendar(
-			_user.getTimeZone());
-
-		expirationCal.setTime(expirationDate);
-
-		int expirationDateMonth = expirationCal.get(Calendar.MONTH);
-		int expirationDateDay = expirationCal.get(Calendar.DATE);
-		int expirationDateYear = expirationCal.get(Calendar.YEAR);
-		int expirationDateHour = expirationCal.get(Calendar.HOUR);
-		int expirationDateMinute = expirationCal.get(Calendar.MINUTE);
-
-		if (expirationCal.get(Calendar.AM_PM) == Calendar.PM) {
-			expirationDateHour += 12;
-		}
-
-		String cdnUrl = "http://www.liferay.com/";
-
-		CPAttachmentFileEntry cpAttachmentFileEntry =
-			_cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(
-				null, _user.getUserId(), _group.getGroupId(),
-				PortalUtil.getClassNameId(CPDefinition.class.getName()),
-				cpDefinition.getCPDefinitionId(), 0, cdnUrl, true,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, true,
-				RandomTestUtil.randomLocaleStringMap(), null, 0D,
-				CPAttachmentFileEntryConstants.TYPE_IMAGE, _serviceContext);
-
-		String url = _commerceMediaResolver.getUrl(
-			_commerceAccount.getCommerceAccountId(),
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-
-		Assert.assertEquals(cdnUrl, url);
-	}
-
-	@Test
 	public void testGetUrl() throws Exception {
 		frutillaRule.scenario(
 			"Test commerce media resolver url"
@@ -248,7 +171,7 @@ public class CommerceMediaResolverTest {
 				null, _user.getUserId(), _group.getGroupId(),
 				PortalUtil.getClassNameId(CPDefinition.class.getName()),
 				cpDefinition.getCPDefinitionId(), dlFileEntry.getFileEntryId(),
-				null, false, displayDateMonth, displayDateDay, displayDateYear,
+				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, true,

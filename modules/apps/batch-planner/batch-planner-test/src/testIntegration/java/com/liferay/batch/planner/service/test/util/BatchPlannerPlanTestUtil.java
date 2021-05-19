@@ -14,8 +14,8 @@
 
 package com.liferay.batch.planner.service.test.util;
 
+import com.liferay.batch.planner.constants.BatchPlannerConstants;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.plan.PlanExternalType;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanUtil;
 import com.liferay.portal.kernel.model.User;
@@ -35,11 +35,9 @@ public class BatchPlannerPlanTestUtil {
 	public static BatchPlannerPlan randomBatchPlannerPlan(
 		User user, String name) {
 
-		PlanExternalType planExternalType = _randomPlanExternalType();
-
 		return _randomBatchPlannerPlan(
 			RandomTestUtil.randomBoolean(), user.getCompanyId(),
-			RandomTestUtil.randomBoolean(), planExternalType.name(),
+			RandomTestUtil.randomBoolean(), _randomExternalType(),
 			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
 			name, user.getUserId());
 	}
@@ -55,16 +53,23 @@ public class BatchPlannerPlanTestUtil {
 		BatchPlannerPlan batchPlannerPlan = batchPlannerPlanPersistence.create(
 			RandomTestUtil.nextLong());
 
-		batchPlannerPlan.setActive(active);
 		batchPlannerPlan.setCompanyId(companyId);
-		batchPlannerPlan.setExport(export);
+		batchPlannerPlan.setUserId(userId);
+		batchPlannerPlan.setActive(active);
 		batchPlannerPlan.setExternalType(externalType);
 		batchPlannerPlan.setExternalURL(externalURL);
 		batchPlannerPlan.setInternalClassName(internalClassName);
 		batchPlannerPlan.setName(name);
-		batchPlannerPlan.setUserId(userId);
+		batchPlannerPlan.setExport(export);
 
 		return batchPlannerPlan;
+	}
+
+	private static String _randomExternalType() {
+		String[] externalTypes = BatchPlannerConstants.EXTERNAL_TYPES;
+
+		return externalTypes
+			[RandomTestUtil.randomInt(0, externalTypes.length - 1)];
 	}
 
 	private static String _randomName(int nameSalt) {
@@ -75,13 +80,6 @@ public class BatchPlannerPlanTestUtil {
 		return String.format(
 			"TEST-PLAN-%06d-%s", nameSalt % 999999,
 			RandomTestUtil.randomString(RandomTestUtil.randomInt(20, 57)));
-	}
-
-	private static PlanExternalType _randomPlanExternalType() {
-		final PlanExternalType[] planExternalTypes = PlanExternalType.values();
-
-		return planExternalTypes
-			[RandomTestUtil.randomInt(0, planExternalTypes.length - 1)];
 	}
 
 }

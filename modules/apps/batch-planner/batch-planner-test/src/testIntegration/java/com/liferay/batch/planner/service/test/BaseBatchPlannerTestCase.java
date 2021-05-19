@@ -15,7 +15,6 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.plan.PlanExternalType;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.test.util.BatchPlannerPlanTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,8 +33,7 @@ public abstract class BaseBatchPlannerTestCase {
 			BatchPlannerPlanTestUtil.randomBatchPlannerPlan(user, nameSeed);
 
 		return _batchPlannerPlanService.addBatchPlannerPlan(
-			batchPlannerPlan.getName(),
-			PlanExternalType.valueOf(batchPlannerPlan.getExternalType()));
+			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
 	}
 
 	protected BatchPlannerPlan addBatchPlannerPlan(User user, String name)
@@ -45,8 +43,7 @@ public abstract class BaseBatchPlannerTestCase {
 			BatchPlannerPlanTestUtil.randomBatchPlannerPlan(user, name);
 
 		return _batchPlannerPlanService.addBatchPlannerPlan(
-			batchPlannerPlan.getName(),
-			PlanExternalType.valueOf(batchPlannerPlan.getExternalType()));
+			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
 	}
 
 	@Inject

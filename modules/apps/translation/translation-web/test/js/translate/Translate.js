@@ -12,8 +12,8 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import Translate from '../../../src/main/resources/META-INF/resources/js/translate/Translate';
@@ -150,6 +150,75 @@ describe('Translate', () => {
 					baseProps.infoFieldSetEntries[1].fields[0].label
 			).closest('button')
 		).toBeDisabled();
+	});
+
+	describe('when there is a valid server response', () => {
+		beforeEach(() => {
+			fetch.mockResponseOnce(
+				JSON.stringify({
+					fields: {
+						'infoField--content--': '<p>simulacro de contenido</p>',
+						'infoField--description--': '<p>resumen simulado</p>',
+						'infoField--title--': 'título simulado',
+					},
+					sourceLanguageId: 'en_US',
+					targetLanguageId: 'es_ES',
+				})
+			);
+		});
+
+		afterEach(() => {
+			fetch.resetMocks();
+		});
+
+		describe('click in the field auto-translate button', () => {
+			let infoFieldContent;
+			let result;
+
+			beforeEach(async () => {
+				infoFieldContent = baseProps.infoFieldSetEntries[0].fields[0];
+				result = renderComponent(baseProps);
+
+				const {getByText} = result;
+				const autoTranslateFieldButton = getByText(
+					'auto-translate-x-field-' + infoFieldContent.label
+				).closest('button');
+
+				await act(async () => {
+					fireEvent.click(autoTranslateFieldButton);
+				});
+			});
+
+			it('sends a POST request to the server', async () => {
+				const [url, {body}] = fetch.mock.calls[0];
+				const response = JSON.parse(body);
+
+				expect(url).toBe(baseProps.getAutoTranslateURL);
+				expect(response.fields[infoFieldContent.id]).toBe(
+					infoFieldContent.sourceContent
+				);
+				expect(response.sourceLanguageId).toBe(
+					baseProps.sourceLanguageId
+				);
+				expect(response.targetLanguageId).toBe(
+					baseProps.targetLanguageId
+				);
+			});
+
+			it('updates the input with the translated message', () => {
+				const {getByDisplayValue} = result;
+
+				expect(
+					getByDisplayValue('título simulado')
+				).toBeInTheDocument();
+			});
+
+			it('renders a success message', () => {
+				const {getByText} = result;
+
+				expect(getByText('field-translated')).toBeInTheDocument();
+			});
+		});
 	});
 
 	it('renders with auto-translate disabled', () => {

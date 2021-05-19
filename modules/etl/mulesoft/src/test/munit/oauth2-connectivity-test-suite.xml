@@ -12,7 +12,7 @@
 	     http://www.mulesoft.org/schema/mule/mtf http://www.mulesoft.org/schema/mule/mtf/current/mule-mtf.xsd
 	     http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/liferay/current/mule-liferay.xsd ">
 
-	<munit:config name="oauth2-connectivity-test-suite.xml"/>
+	<munit:config name="oauth2-connectivity-test-suite.xml" minMuleVersion="4.2.0"/>
 
 	<configuration-properties file="automation-credentials.properties"/>
 

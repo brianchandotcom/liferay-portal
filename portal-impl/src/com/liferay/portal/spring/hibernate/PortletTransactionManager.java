@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.util.Date;
 
 import org.hibernate.Session;
+import org.hibernate.SessionBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.jdbc.Work;
 
@@ -114,8 +115,11 @@ public class PortletTransactionManager implements PlatformTransactionManager {
 			portalSession.flush();
 		}
 
-		Session portletSession = _portletSessionFactory.openSession(
-			portalConnection);
+		SessionBuilder<?> sessionBuilder = _portletSessionFactory.withOptions();
+
+		Session portletSession = sessionBuilder.connection(
+			portalConnection
+		).openSession();
 
 		SpringHibernateThreadLocalUtil.setResource(
 			_portletSessionFactory,

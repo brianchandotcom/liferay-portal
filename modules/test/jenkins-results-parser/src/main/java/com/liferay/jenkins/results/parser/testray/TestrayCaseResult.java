@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,6 +47,12 @@ public class TestrayCaseResult {
 		_testrayBuild = testrayBuild;
 		_topLevelBuild = topLevelBuild;
 		jsonObject = new JSONObject();
+	}
+
+	public TestrayAttachment getBuildResultTestrayAttachment() {
+		_initTestrayAttachments();
+
+		return _testrayAttachments.get("Build Result (Top Level)");
 	}
 
 	public String getCaseID() {
@@ -93,22 +100,9 @@ public class TestrayCaseResult {
 	}
 
 	public List<TestrayAttachment> getTestrayAttachments() {
-		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
+		_initTestrayAttachments();
 
-		if (jsonObject.optJSONObject("attachments") == null) {
-			return testrayAttachments;
-		}
-
-		JSONObject attachmentsJSONObject = jsonObject.optJSONObject(
-			"attachments");
-
-		for (String name : attachmentsJSONObject.keySet()) {
-			testrayAttachments.add(
-				TestrayFactory.newTestrayAttachment(
-					this, name, attachmentsJSONObject.getString(name)));
-		}
-
-		return testrayAttachments;
+		return new ArrayList<>(_testrayAttachments.values());
 	}
 
 	public TestrayBuild getTestrayBuild() {
@@ -224,6 +218,27 @@ public class TestrayCaseResult {
 
 	protected final JSONObject jsonObject;
 
+	private void _initTestrayAttachments() {
+		if (_testrayAttachments != null) {
+			return;
+		}
+
+		_testrayAttachments = new TreeMap<>();
+
+		JSONObject attachmentsJSONObject = jsonObject.optJSONObject(
+			"attachments");
+
+		for (String name : attachmentsJSONObject.keySet()) {
+			TestrayAttachment testrayAttachment =
+				TestrayFactory.newTestrayAttachment(
+					this, name, attachmentsJSONObject.getString(name));
+
+			_testrayAttachments.put(
+				testrayAttachment.getName(), testrayAttachment);
+		}
+	}
+
+	private Map<String, TestrayAttachment> _testrayAttachments;
 	private final TestrayBuild _testrayBuild;
 	private TestrayCase _testrayCase;
 	private TopLevelBuild _topLevelBuild;

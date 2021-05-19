@@ -16,6 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
+// TODO One name please
+
 <div id="digital-signature-root">
 	<react:component
 		module="js/pages/DigitalSignatureList"

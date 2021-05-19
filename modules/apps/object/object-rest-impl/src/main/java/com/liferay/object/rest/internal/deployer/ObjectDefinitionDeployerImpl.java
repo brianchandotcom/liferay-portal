@@ -73,6 +73,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"batch.engine.task.item.delegate", "true"
 					).put(
+						"batch.engine.task.item.delegate.name",
+						objectDefinition.getName()
+					).put(
 						"osgi.jaxrs.resource", "true"
 					).put(
 						"osgi.jaxrs.application.select",
@@ -88,9 +91,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					"(osgi.jaxrs.name=" + objectDefinition.getName() + ")"
 				).put(
 					"osgi.jaxrs.extension", "true"
-				).put(
-					"batch.engine.task.item.delegate.name",
-					objectDefinition.getName()
 				).put(
 					"enabled", "false"
 				).put(

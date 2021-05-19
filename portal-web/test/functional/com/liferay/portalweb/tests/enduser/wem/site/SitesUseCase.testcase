@@ -451,10 +451,6 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
 
 		AssertLocation(value1 = "http://www.able.com:8080/test-private-page");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
 	}
 
 	@priority = "3"
@@ -1019,10 +1015,6 @@ definition {
 				permissionDefinitionKey = "${permissionsInLineCheckListsCount}",
 				teamName = "Site Team Name");
 		}
-
-		Navigator.gotoSitePage(
-			pageName = "Blog Page Template",
-			siteName = "Site Name");
 
 		User.firstLoginPG(
 			password = "test",

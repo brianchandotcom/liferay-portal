@@ -32,9 +32,9 @@ public interface DSEnvelopeManager {
 
 	public DSEnvelope getDSEnvelope(long groupId, String dsEnvelopeId);
 
+	public List<DSEnvelope> getDSEnvelopes(long groupId, String fromDateString);
+
 	public List<DSEnvelope> getDSEnvelopes(
 		long groupId, String... dsEnvelopeIds);
-
-	public List<DSEnvelope> getDSEnvelopes(long groupId, String fromDateString);
 
 }

@@ -1495,7 +1495,7 @@ definition {
 				fieldFieldLabel = "Rich Text",
 				fieldName = "Rich Text");
 
-			DataEngine.editFieldRepeatable(fieldFieldLabel = "Rich Text");
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Rich Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}

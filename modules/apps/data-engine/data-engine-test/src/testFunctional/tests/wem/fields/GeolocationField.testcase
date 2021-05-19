@@ -178,7 +178,7 @@ definition {
 	test VerifyDuplicatedGeolocationOnWebContent {
 		var key_fieldName = "Geolocation";
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "${key_fieldName}");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "${key_fieldName}");
 
 		WebContentStructures.saveCP();
 

@@ -165,7 +165,7 @@ definition {
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document Type Name");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Separator");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Separator");
 
 		Button.clickSave();
 

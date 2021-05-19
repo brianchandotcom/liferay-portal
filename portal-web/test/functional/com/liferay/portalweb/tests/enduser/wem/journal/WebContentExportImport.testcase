@@ -71,7 +71,7 @@ definition {
 			fieldFieldLabel = "Web Content",
 			fieldHelp = "Choose as many content pieces as you would like to feature.");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Web Content");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Web Content");
 
 		WebContentStructures.saveCP(structureName = "Content List");
 

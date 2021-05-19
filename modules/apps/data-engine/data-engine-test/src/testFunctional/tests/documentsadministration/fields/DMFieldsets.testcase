@@ -135,7 +135,7 @@ definition {
 			dmDocumentTypeFieldNames = "${fieldName}",
 			dmDocumentTypeName = "${documentType}");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "${fieldName}");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "${fieldName}");
 
 		Button.clickSave();
 

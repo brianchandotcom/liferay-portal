@@ -35,6 +35,7 @@ import com.liferay.document.library.web.internal.display.context.logic.UIItemsBu
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.document.library.web.internal.display.context.util.JSPRenderer;
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
+import com.liferay.document.library.web.internal.util.FFDigitalSignatureConfigurationUtil;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -393,6 +394,12 @@ public class DefaultDLViewFileVersionDisplayContext
 			_uiItemsBuilder.addCancelCheckoutMenuItem(menuItems);
 
 			_uiItemsBuilder.addCheckinMenuItem(menuItems);
+
+			if (FFDigitalSignatureConfigurationUtil.
+					collectDigitalSignatureMenuItemEnabled()) {
+
+				_uiItemsBuilder.addCollectDigitalSignatureMenuItem(menuItems);
+			}
 
 			_uiItemsBuilder.addMoveMenuItem(menuItems);
 

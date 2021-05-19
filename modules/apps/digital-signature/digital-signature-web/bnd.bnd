@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Digital Signature Web
+Bundle-SymbolicName: com.liferay.digital.signature.web
+Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.resource.bundle;\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.digital.signature.lang)";\
+		resource.bundle.base.name="content.Language"
+Web-ContextPath: /digital-signature-web

@@ -53,7 +53,7 @@ public interface InstanceResource {
 
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Long[] classPKs, Date dateEnd,
-			Date dateStart, String[] processStatuses, String[] slaStatuses,
+			Date dateStart, String[] slaStatuses, String[] statuses,
 			String[] taskNames, Pagination pagination, Sort[] sorts)
 		throws Exception;
 

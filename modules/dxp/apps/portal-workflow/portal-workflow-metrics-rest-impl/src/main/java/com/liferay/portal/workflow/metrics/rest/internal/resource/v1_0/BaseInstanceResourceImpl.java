@@ -95,8 +95,8 @@ public abstract class BaseInstanceResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "classPKs"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateEnd"),
 			@Parameter(in = ParameterIn.QUERY, name = "dateStart"),
-			@Parameter(in = ParameterIn.QUERY, name = "processStatuses"),
 			@Parameter(in = ParameterIn.QUERY, name = "slaStatuses"),
+			@Parameter(in = ParameterIn.QUERY, name = "statuses"),
 			@Parameter(in = ParameterIn.QUERY, name = "taskNames"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
@@ -116,10 +116,9 @@ public abstract class BaseInstanceResourceImpl
 				dateEnd,
 			@Parameter(hidden = true) @QueryParam("dateStart") java.util.Date
 				dateStart,
-			@Parameter(hidden = true) @QueryParam("processStatuses") String[]
-				processStatuses,
 			@Parameter(hidden = true) @QueryParam("slaStatuses") String[]
 				slaStatuses,
+			@Parameter(hidden = true) @QueryParam("statuses") String[] statuses,
 			@Parameter(hidden = true) @QueryParam("taskNames") String[]
 				taskNames,
 			@Context Pagination pagination, @Context Sort[] sorts)
@@ -339,8 +338,8 @@ public abstract class BaseInstanceResourceImpl
 			(Long[])parameters.get("classPKs"),
 			new java.util.Date((String)parameters.get("dateEnd")),
 			new java.util.Date((String)parameters.get("dateStart")),
-			(String[])parameters.get("processStatuses"),
 			(String[])parameters.get("slaStatuses"),
+			(String[])parameters.get("statuses"),
 			(String[])parameters.get("taskNames"), pagination, sorts);
 	}
 

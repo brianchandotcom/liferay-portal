@@ -46,14 +46,14 @@ public interface InstanceResource {
 	public Page<Instance> getProcessInstancesPage(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
 			java.util.Date dateEnd, java.util.Date dateStart,
-			String[] processStatuses, String[] slaStatuses, String[] taskNames,
+			String[] slaStatuses, String[] statuses, String[] taskNames,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
 			Long processId, Long[] assigneeIds, Long[] classPKs,
 			java.util.Date dateEnd, java.util.Date dateStart,
-			String[] processStatuses, String[] slaStatuses, String[] taskNames,
+			String[] slaStatuses, String[] statuses, String[] taskNames,
 			Pagination pagination, String sortString)
 		throws Exception;
 
@@ -176,15 +176,14 @@ public interface InstanceResource {
 		public Page<Instance> getProcessInstancesPage(
 				Long processId, Long[] assigneeIds, Long[] classPKs,
 				java.util.Date dateEnd, java.util.Date dateStart,
-				String[] processStatuses, String[] slaStatuses,
-				String[] taskNames, Pagination pagination, String sortString)
+				String[] slaStatuses, String[] statuses, String[] taskNames,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getProcessInstancesPageHttpResponse(
 					processId, assigneeIds, classPKs, dateEnd, dateStart,
-					processStatuses, slaStatuses, taskNames, pagination,
-					sortString);
+					slaStatuses, statuses, taskNames, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -226,8 +225,8 @@ public interface InstanceResource {
 		public HttpInvoker.HttpResponse getProcessInstancesPageHttpResponse(
 				Long processId, Long[] assigneeIds, Long[] classPKs,
 				java.util.Date dateEnd, java.util.Date dateStart,
-				String[] processStatuses, String[] slaStatuses,
-				String[] taskNames, Pagination pagination, String sortString)
+				String[] slaStatuses, String[] statuses, String[] taskNames,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -278,17 +277,17 @@ public interface InstanceResource {
 					"dateStart", liferayToJSONDateFormat.format(dateStart));
 			}
 
-			if (processStatuses != null) {
-				for (int i = 0; i < processStatuses.length; i++) {
-					httpInvoker.parameter(
-						"processStatuses", String.valueOf(processStatuses[i]));
-				}
-			}
-
 			if (slaStatuses != null) {
 				for (int i = 0; i < slaStatuses.length; i++) {
 					httpInvoker.parameter(
 						"slaStatuses", String.valueOf(slaStatuses[i]));
+				}
+			}
+
+			if (statuses != null) {
+				for (int i = 0; i < statuses.length; i++) {
+					httpInvoker.parameter(
+						"statuses", String.valueOf(statuses[i]));
 				}
 			}
 

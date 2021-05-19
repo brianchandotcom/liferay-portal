@@ -239,7 +239,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeIds: ___, classPKs: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, processStatuses: ___, slaStatuses: ___, sorts: ___, taskNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {processInstances(assigneeIds: ___, classPKs: ___, dateEnd: ___, dateStart: ___, page: ___, pageSize: ___, processId: ___, slaStatuses: ___, sorts: ___, statuses: ___, taskNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public InstancePage processInstances(
@@ -248,8 +248,8 @@ public class Query {
 			@GraphQLName("classPKs") Long[] classPKs,
 			@GraphQLName("dateEnd") Date dateEnd,
 			@GraphQLName("dateStart") Date dateStart,
-			@GraphQLName("processStatuses") String[] processStatuses,
 			@GraphQLName("slaStatuses") String[] slaStatuses,
+			@GraphQLName("statuses") String[] statuses,
 			@GraphQLName("taskNames") String[] taskNames,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
@@ -262,7 +262,7 @@ public class Query {
 			instanceResource -> new InstancePage(
 				instanceResource.getProcessInstancesPage(
 					processId, assigneeIds, classPKs, dateEnd, dateStart,
-					processStatuses, slaStatuses, taskNames,
+					slaStatuses, statuses, taskNames,
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(instanceResource, sortsString))));
 	}
@@ -798,8 +798,8 @@ public class Query {
 				@GraphQLName("classPKs") Long[] classPKs,
 				@GraphQLName("dateEnd") Date dateEnd,
 				@GraphQLName("dateStart") Date dateStart,
-				@GraphQLName("processStatuses") String[] processStatuses,
 				@GraphQLName("slaStatuses") String[] slaStatuses,
+				@GraphQLName("statuses") String[] statuses,
 				@GraphQLName("taskNames") String[] taskNames,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page,
@@ -812,7 +812,7 @@ public class Query {
 				instanceResource -> new InstancePage(
 					instanceResource.getProcessInstancesPage(
 						_process.getId(), assigneeIds, classPKs, dateEnd,
-						dateStart, processStatuses, slaStatuses, taskNames,
+						dateStart, slaStatuses, statuses, taskNames,
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(
 							instanceResource, sortsString))));

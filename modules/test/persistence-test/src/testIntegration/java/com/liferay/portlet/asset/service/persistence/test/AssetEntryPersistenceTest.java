@@ -363,8 +363,8 @@ public class AssetEntryPersistenceTest {
 			"classNameId", true, "classPK", true, "classUuid", true,
 			"classTypeId", true, "listable", true, "visible", true, "startDate",
 			true, "endDate", true, "publishDate", true, "expirationDate", true,
-			"mimeType", true, "title", true, "url", true, "layoutUuid", true,
-			"height", true, "width", true, "priority", true);
+			"mimeType", true, "url", true, "layoutUuid", true, "height", true,
+			"width", true, "priority", true);
 	}
 
 	@Test

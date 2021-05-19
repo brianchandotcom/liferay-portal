@@ -299,7 +299,7 @@ public class AssetEntryCacheModel
 		publishDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		mimeType = objectInput.readUTF();
-		title = objectInput.readUTF();
+		title = (String)objectInput.readObject();
 		description = (String)objectInput.readObject();
 		summary = (String)objectInput.readObject();
 		url = objectInput.readUTF();
@@ -365,10 +365,10 @@ public class AssetEntryCacheModel
 		}
 
 		if (title == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(title);
+			objectOutput.writeObject(title);
 		}
 
 		if (description == null) {

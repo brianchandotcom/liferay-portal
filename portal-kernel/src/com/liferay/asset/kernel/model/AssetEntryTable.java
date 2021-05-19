@@ -73,8 +73,8 @@ public class AssetEntryTable extends BaseTable<AssetEntryTable> {
 		"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<AssetEntryTable, String> mimeType = createColumn(
 		"mimeType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<AssetEntryTable, String> title = createColumn(
-		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AssetEntryTable, Clob> title = createColumn(
+		"title", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<AssetEntryTable, Clob> description = createColumn(
 		"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<AssetEntryTable, Clob> summary = createColumn(

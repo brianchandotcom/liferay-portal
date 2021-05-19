@@ -137,28 +137,9 @@ export default function LayoutReports({eventTriggered}) {
 
 	return (
 		<>
-			{data?.validConnection &&
-				error &&
-				(error?.message ? (
-					<ClayAlert displayType="danger" variant="stripe">
-						{error.message}
-
-						<ClayAlert.Footer>
-							<ClayButton.Group>
-								<ClayButton
-									alert
-									onClick={onRelaunchButtonClick}
-								>
-									{error.buttonTitle}
-								</ClayButton>
-							</ClayButton.Group>
-						</ClayAlert.Footer>
-					</ClayAlert>
-				) : (
-					<ClayAlert displayType="danger" variant="stripe">
-						{error}
-					</ClayAlert>
-				))}
+			{data?.validConnection && error && (
+				<ErrorAlert error={error} onRelaunch={onRelaunchButtonClick} />
+			)}
 
 			<div className="c-p-3">
 				{loading ? (
@@ -194,4 +175,28 @@ export default function LayoutReports({eventTriggered}) {
 
 LayoutReports.propTypes = {
 	eventTriggered: PropTypes.bool.isRequired,
+};
+
+const ErrorAlert = ({error, onRelaunch}) =>
+	error?.message ? (
+		<ClayAlert displayType="danger" variant="stripe">
+			{error.message}
+
+			<ClayAlert.Footer>
+				<ClayButton.Group>
+					<ClayButton alert onClick={onRelaunch}>
+						{error.buttonTitle}
+					</ClayButton>
+				</ClayButton.Group>
+			</ClayAlert.Footer>
+		</ClayAlert>
+	) : (
+		<ClayAlert displayType="danger" variant="stripe">
+			{error}
+		</ClayAlert>
+	);
+
+ErrorAlert.propTypes = {
+	error: PropTypes.object.isRequired,
+	onRelaunch: PropTypes.func.isRequired,
 };

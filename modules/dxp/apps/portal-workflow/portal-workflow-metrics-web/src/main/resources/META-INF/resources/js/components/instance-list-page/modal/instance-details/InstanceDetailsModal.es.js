@@ -21,9 +21,7 @@ import {InstanceListContext} from '../../InstanceListPageProvider.es';
 import {ModalContext} from '../ModalProvider.es';
 import Body from './InstanceDetailsModalBody.es';
 
-function Header({completed, id = '', slaResults = [], slaStatus}) {
-	slaStatus = !slaResults.length ? 'Empty' : slaStatus;
-
+function Header({completed, id = '', slaStatus}) {
 	const slaStatusIcon = getSLAStatusIconInfo(slaStatus);
 
 	return (
@@ -31,13 +29,15 @@ function Header({completed, id = '', slaResults = [], slaStatus}) {
 			<PromisesResolver.Resolved>
 				<div className="font-weight-medium">
 					<span
-						className={`modal-title-indicator ${
+						className={`mr-2 sticker ${
 							completed
-								? 'text-secondary'
-								: slaStatusIcon?.textColor
+								? 'text-secondary bg-muted'
+								: `${slaStatusIcon?.textColor} ${slaStatusIcon?.bgColor}`
 						}`}
 					>
-						<ClayIcon symbol={slaStatusIcon?.name} />
+						<span className="inline-item">
+							<ClayIcon symbol={slaStatusIcon?.name} />
+						</span>
 					</span>
 
 					{`${Liferay.Language.get('item')} #${id}`}

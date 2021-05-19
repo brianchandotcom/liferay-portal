@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -57,6 +59,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -172,11 +175,19 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry();
 
-		sourceItemTypes.add(layoutPageTemplateEntry.getClassName());
+		String className = layoutPageTemplateEntry.getClassName();
+
+		sourceItemTypes.add(className);
+
+		// LPS-111037
+
+		if (Objects.equals(className, FileEntry.class.getName())) {
+			className = DLFileEntry.class.getName();
+		}
 
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				layoutPageTemplateEntry.getClassName());
+				className);
 
 		if (assetRendererFactory != null) {
 			sourceItemTypes.add(AssetEntry.class.getName());

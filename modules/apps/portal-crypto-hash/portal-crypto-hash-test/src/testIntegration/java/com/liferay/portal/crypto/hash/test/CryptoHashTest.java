@@ -298,11 +298,7 @@ public class CryptoHashTest {
 			_cryptoHashVerifier.verify(
 				_PASSWORD, _EXPECTED_HASH_BCRYPT,
 				new CryptoHashVerificationContext(
-					"BCrypt",
-					HashMapBuilder.<String, Object>put(
-						"bcrypt.rounds", "15"
-					).build(),
-					_SALT_BCRYPT)));
+					"BCrypt", Collections.emptyMap(), _SALT_BCRYPT)));
 	}
 
 	private Configuration _addCryptoFactoryConfiguration(

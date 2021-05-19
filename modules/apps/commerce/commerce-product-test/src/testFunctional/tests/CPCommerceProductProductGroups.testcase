@@ -70,8 +70,8 @@ definition {
 	@description = "This is a test for COMMERCE-6065. AddAPreExistingProductGroup"
 	@priority = "3"
 	test AddAPreExistingProductGroup {
-		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		// TODO Review
 

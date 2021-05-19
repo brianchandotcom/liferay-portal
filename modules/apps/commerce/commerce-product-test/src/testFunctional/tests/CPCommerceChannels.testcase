@@ -350,7 +350,7 @@ definition {
 	@description = "This is a test for COMMERCE-6110. AddShippingOptionVariableRate"
 	@priority = "3"
 	test AddShippingOptionVariableRate {
-        property portal.acceptance = "false";
+		property portal.acceptance = "false";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

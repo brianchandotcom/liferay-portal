@@ -85,8 +85,8 @@ definition {
 	@description = "This is a test for COMMERCE-6064. EditAProductRelations"
 	@priority = "3"
 	test EditAProductRelations {
-		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -129,8 +129,8 @@ definition {
 	@description = "This is a test for COMMERCE-6063. RemoveAProductRelations"
 	@priority = "3"
 	test RemoveAProductRelations {
-		property portal.upstream = "quarantine";
 		property portal.acceptance = "false";
+		property portal.upstream = "quarantine";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

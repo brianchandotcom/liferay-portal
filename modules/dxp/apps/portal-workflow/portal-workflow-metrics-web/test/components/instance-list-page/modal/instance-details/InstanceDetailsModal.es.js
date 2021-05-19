@@ -114,12 +114,12 @@ describe('The InstanceDetailsModal component should', () => {
 			expect(resultStatus[0]).toHaveTextContent(
 				'Jan 24, 2020, 10:08 AM (0d 03h 43min overdue)'
 			);
-			expect(resultIcons[0].children[0].classList).toContain(
+			expect(resultIcons[1].children[0].classList).toContain(
 				'lexicon-icon-exclamation-circle'
 			);
 			expect(getByText('RESOLVED (1)')).toBeTruthy();
 			expect(resultStatus[1]).toHaveTextContent('(resolved-on-time)');
-			expect(resultIcons[1].children[0].classList).toContain(
+			expect(resultIcons[2].children[0].classList).toContain(
 				'lexicon-icon-check-circle'
 			);
 		});

@@ -58,7 +58,7 @@ public class RelatedAssetCategoriesInfoItemRelatedListProvider
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
 
-		return LanguageUtil.get(resourceBundle, "related-categories");
+		return LanguageUtil.get(resourceBundle, "categories-for-this-item");
 	}
 
 	@Override

@@ -87,6 +87,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -2525,9 +2526,9 @@ public class JenkinsResultsParserUtil {
 		return _userHomeDir;
 	}
 
-	public static void gzip(File sourceFile, File targetFile) {
+	public static void gzip(File sourceFile, File targetGzipFile) {
 		try (FileOutputStream fileOutputStream = new FileOutputStream(
-				targetFile);
+				targetGzipFile);
 			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(
 				fileOutputStream);
 			FileInputStream fileInputStream = new FileInputStream(sourceFile)) {
@@ -3714,6 +3715,26 @@ public class JenkinsResultsParserUtil {
 			url, false, _RETRIES_SIZE_MAX_DEFAULT, null, postContent,
 			_SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
 			httpAuthorization, false);
+	}
+
+	public static void unGzip(File sourceGzipFile, File targetFile) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(
+				targetFile);
+			FileInputStream fileInputStream = new FileInputStream(
+				sourceGzipFile);
+			GZIPInputStream gzipInputStream = new GZIPInputStream(
+				fileInputStream)) {
+
+			byte[] bytes = new byte[1024];
+			int length = 0;
+
+			while ((length = gzipInputStream.read(bytes)) > 0) {
+				fileOutputStream.write(bytes, 0, length);
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public static void unzip(File zipFile, File destDir) {

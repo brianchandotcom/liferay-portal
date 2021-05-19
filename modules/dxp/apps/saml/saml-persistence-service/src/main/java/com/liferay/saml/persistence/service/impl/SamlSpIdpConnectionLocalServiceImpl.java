@@ -108,11 +108,11 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setCompanyId(serviceContext.getCompanyId());
 		samlSpIdpConnection.setCreateDate(now);
 		samlSpIdpConnection.setModifiedDate(now);
-		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setAssertionSignatureRequired(
 			assertionSignatureRequired);
 		samlSpIdpConnection.setClockSkew(clockSkew);
 		samlSpIdpConnection.setEnabled(enabled);
+		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 		samlSpIdpConnection.setForceAuthn(forceAuthn);
 		samlSpIdpConnection.setLdapImportEnabled(ldapImportEnabled);
@@ -142,11 +142,11 @@ public class SamlSpIdpConnectionLocalServiceImpl
 				"Unable to get metadata from " + metadataUrl);
 		}
 
-		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setMetadataXml(
 			getMetadataXml(metadataXmlInputStream, samlIdpEntityId));
 		samlSpIdpConnection.setName(name);
 		samlSpIdpConnection.setNameIdFormat(nameIdFormat);
+		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setSignAuthnRequest(signAuthnRequest);
 		samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
 		samlSpIdpConnection.setUserIdentifierExpression(
@@ -328,11 +328,11 @@ public class SamlSpIdpConnectionLocalServiceImpl
 		samlSpIdpConnection.setCompanyId(serviceContext.getCompanyId());
 		samlSpIdpConnection.setCreateDate(now);
 		samlSpIdpConnection.setModifiedDate(now);
-		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setAssertionSignatureRequired(
 			assertionSignatureRequired);
 		samlSpIdpConnection.setClockSkew(clockSkew);
 		samlSpIdpConnection.setEnabled(enabled);
+		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setExpandoBridgeAttributes(serviceContext);
 		samlSpIdpConnection.setForceAuthn(forceAuthn);
 		samlSpIdpConnection.setLdapImportEnabled(ldapImportEnabled);
@@ -369,9 +369,9 @@ public class SamlSpIdpConnectionLocalServiceImpl
 			samlSpIdpConnection.setMetadataXml(metadataXml);
 		}
 
-		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setName(name);
 		samlSpIdpConnection.setNameIdFormat(nameIdFormat);
+		samlSpIdpConnection.setSamlIdpEntityId(samlIdpEntityId);
 		samlSpIdpConnection.setSignAuthnRequest(signAuthnRequest);
 		samlSpIdpConnection.setUserAttributeMappings(userAttributeMappings);
 		samlSpIdpConnection.setUserIdentifierExpression(

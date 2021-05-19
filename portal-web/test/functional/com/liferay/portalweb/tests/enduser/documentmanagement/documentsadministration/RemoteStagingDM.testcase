@@ -86,11 +86,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openToEntryInAdmin(
+		DMNavigator.openDocumentsAndMediaAdmin(
 			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Remote Site",
 			siteURLKey = "remote-site");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
@@ -280,11 +280,11 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		DMNavigator.openToEntryInAdmin(
+		DMNavigator.openDocumentsAndMediaAdmin(
 			baseURL = "http://localhost:9080",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Remote Site",
 			siteURLKey = "remote-site");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description",

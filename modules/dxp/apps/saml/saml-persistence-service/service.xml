@@ -179,7 +179,6 @@
 
 		<!-- Other fields -->
 
-		<column name="samlIdpEntityId" type="String" />
 		<column name="assertionSignatureRequired" type="boolean" />
 		<column name="clockSkew" type="long" />
 		<column name="enabled" type="boolean" />

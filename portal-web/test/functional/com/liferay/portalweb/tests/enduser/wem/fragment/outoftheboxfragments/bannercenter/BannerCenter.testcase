@@ -1,0 +1,84 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages,Fragments";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-95042 and LPS-108339. View the Banner Center in content page. Can add fragments directly without Container to page."
+	@priority = "4"
+	test ViewBannerCenterInContentPage {
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("View the Banner Center is not inside of Container element") {
+			AssertElementNotPresent(
+				key_elementType = "Container",
+				key_position = "1",
+				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+
+		task ("View the Banner Center shown in page editor") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "Banner Title Example",
+				fragmentName = "Banner Center",
+				id = "01-title");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
+				fragmentName = "Banner Center",
+				id = "02-subtitle");
+
+			PageEditor.viewFragmentEditableText(
+				editableText = "Go Somewhere",
+				fragmentName = "Banner Center",
+				id = "03-link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the Banner Center shown in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			for (var content : list "Banner Title Example,This is a simple banner component that you can use when you need extra attention to featured content or information.,Go Somewhere") {
+				AssertVisible(
+					key_text = "${content}",
+					locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+			}
+		}
+	}
+
+}

@@ -1448,13 +1448,123 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6221. Price List expiration management"
-	@ignore = "true"
 	@priority = "3"
 	test ViewExpiredPL {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#ViewExpiredPL";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		Click(
+			key_text = "Pricing",
+			locator1 = "Link#ANY");
+
+		Click(
+			key_text = "Price Lists",
+			locator1 = "Link#ANY");
+
+		Type(
+			key_text = "Check Interval",
+			locator1 = "TextInput#ANY",
+			value1 = "1");
+
+		Button.clickSave();
+
+		Pause(locator1 = "1000");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Pricing",
+			panel = "Commerce",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Minium",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		var timeString = selenium.getElementValue( locator1 = "TextInput#DATE_TIME_PRICE_LISTS");
+
+		var ampm = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "3");
+		var hours = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "1");
+		var minutes = RegexUtil.replace("${timeString}", "([0-9]*):([0-9]*) ([A-Z]*)", "2");
+
+		if ("${minutes}" == "58") {
+			var minutes = "00";
 
 		// TODO COMMERCE-6221 ViewExpiredPL Pending Implementation
 
+			if ("${hours}" == "12") {
+				var hours = "01";
+
+				if ("${ampm}" == "PM") {
+					var ampm = "AM"
+				}
+				else {
+					var ampm = "PM"
+				}
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+		else if ( "${minutes}" == "59") {
+			var minutes = "01";
+
+			if ("${hours}" == "12") {
+				var hours = "01";
+
+				if ("${ampm}" == "PM") {
+					var ampm = "AM"
+				}
+				else {
+					var ampm = "PM"
+				}
+			}
+			else {
+				var hours = ${hours} + 1;
+			}
+		}
+		else {
+			var minutes = ${minutes} + 2;
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			checkboxName = "Never Expire",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Type(
+			key_value = "expirationDateTime",
+			locator1 = "TextInput#ANY_ID",
+			value1 = "${hours}:${minutes} ${ampm}");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Pricing",
+			panel = "Commerce",
+			portlet = "Price Lists");
+
+		Pause(locator1 = "180000");
+
+		Refresh();
+
+		AssertTextEquals(
+			key_name = "Test Price List",
+			locator1 = "CommerceEntry#ASSERT_PRICE_LIST_STATUS",
+			value1 = "EXPIRED");
 	}
 
 	@description = "This is a test for COMMERCE-6222. Price Entry expiration management"

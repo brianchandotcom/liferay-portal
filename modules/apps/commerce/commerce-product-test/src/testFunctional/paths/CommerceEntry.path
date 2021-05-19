@@ -538,6 +538,11 @@
 	<td>//div/label[contains(.,'Price') and not(contains(.,'Promo'))]/..//input</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSERT_PRICE_LIST_STATUS</td>
+	<td>//a[text()='${key_name}']//..//..//..//span[@class='workflow-status']//*[contains(.,'')]</td>
+	<td></td>
+</tr>
 <!--IMAGES-->
 <tr>
 	<td>IMAGES_PLUS_BUTTON</td>

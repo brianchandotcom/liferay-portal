@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_ID</td>
+	<td>//input[contains(@id,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_PRIORITY</td>
 	<td>//input[contains(@id,'assetPriority')]</td>
 	<td></td>
@@ -116,6 +121,11 @@
 <tr>
 	<td>DATA_DEFINITION</td>
 	<td>//div[label[contains(.,'Data Definition')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_TIME_PRICE_LISTS</td>
+	<td>//input[contains(@id,'displayDateTime')]</td>
 	<td></td>
 </tr>
 <tr>

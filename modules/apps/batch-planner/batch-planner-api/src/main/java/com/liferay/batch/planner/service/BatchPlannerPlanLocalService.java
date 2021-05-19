@@ -15,7 +15,6 @@
 package com.liferay.batch.planner.service;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.plan.PlanExternalType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -78,7 +77,7 @@ public interface BatchPlannerPlanLocalService
 		BatchPlannerPlan batchPlannerPlan);
 
 	public BatchPlannerPlan addBatchPlannerPlan(
-			long userId, String name, PlanExternalType planExternalType)
+			long userId, String name, String externalType)
 		throws PortalException;
 
 	/**

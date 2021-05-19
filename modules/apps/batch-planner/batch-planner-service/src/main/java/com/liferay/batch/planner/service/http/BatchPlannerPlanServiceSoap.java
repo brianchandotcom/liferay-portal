@@ -64,16 +64,13 @@ import java.rmi.RemoteException;
 public class BatchPlannerPlanServiceSoap {
 
 	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
-			addBatchPlannerPlan(
-				String name,
-				com.liferay.batch.planner.plan.PlanExternalType
-					planExternalType)
+			addBatchPlannerPlan(String name, String externalType)
 		throws RemoteException {
 
 		try {
 			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
 				BatchPlannerPlanServiceUtil.addBatchPlannerPlan(
-					name, planExternalType);
+					name, externalType);
 
 			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
 				toSoapModel(returnValue);

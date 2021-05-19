@@ -46,11 +46,10 @@ public class SamlSpSessionLocalServiceImpl
 
 	@Override
 	public SamlSpSession addSamlSpSession(
-			String samlIdpEntityId, String samlSpSessionKey,
 			String assertionXml, String jSessionId, String nameIdFormat,
 			String nameIdNameQualifier, String nameIdSPNameQualifier,
-			String nameIdValue, String sessionIndex,
-			ServiceContext serviceContext)
+			String nameIdValue, String samlIdpEntityId, String samlSpSessionKey,
+			String sessionIndex, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUserById(serviceContext.getUserId());
@@ -155,9 +154,9 @@ public class SamlSpSessionLocalServiceImpl
 	}
 
 	public List<SamlSpSession> getSamlSpSessions(
-		long companyId, String samlIdpEntityId, String nameIdFormat,
-		String nameIdNameQualifier, String nameIdSPNameQualifier,
-		String nameIdValue) {
+		long companyId, String nameIdFormat, String nameIdNameQualifier,
+		String nameIdSPNameQualifier, String nameIdValue,
+		String samlIdpEntityId) {
 
 		List<SamlPeerBinding> samlPeerBindings = new ArrayList<>();
 
@@ -185,7 +184,9 @@ public class SamlSpSessionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getSamlSpSessions(long, String, String, String, String, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getSamlSpSessions(long, String, String, String, String,
+	 *             String)}
 	 */
 	@Deprecated
 	@Override
@@ -209,10 +210,10 @@ public class SamlSpSessionLocalServiceImpl
 
 	@Override
 	public SamlSpSession updateSamlSpSession(
-			long samlSpSessionId, String samlIdpEntityId,
-			String samlSpSessionKey, String assertionXml, String jSessionId,
+			long samlSpSessionId, String assertionXml, String jSessionId,
 			String nameIdFormat, String nameIdNameQualifier,
 			String nameIdSPNameQualifier, String nameIdValue,
+			String samlIdpEntityId, String samlSpSessionKey,
 			String sessionIndex, ServiceContext serviceContext)
 		throws PortalException {
 

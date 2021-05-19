@@ -162,7 +162,7 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 					new GraphQLField(
 						"dataLayoutByContentTypeByDataLayoutKey",
 						HashMapBuilder.<String, Object>put(
-							"contentType", "\"native-object\""
+							"contentType", "\"document-library\""
 						).put(
 							"dataLayoutKey",
 							"\"" + RandomTestUtil.randomString() + "\""

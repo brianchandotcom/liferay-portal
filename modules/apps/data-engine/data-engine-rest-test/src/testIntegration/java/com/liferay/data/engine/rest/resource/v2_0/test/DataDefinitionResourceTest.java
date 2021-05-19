@@ -279,7 +279,7 @@ public class DataDefinitionResourceTest
 					new GraphQLField(
 						"dataDefinitionByContentTypeByDataDefinitionKey",
 						HashMapBuilder.<String, Object>put(
-							"contentType", "\"native-object\""
+							"contentType", "\"" + _CONTENT_TYPE + "\""
 						).put(
 							"dataDefinitionKey",
 							"\"" + RandomTestUtil.randomString() + "\""
@@ -795,7 +795,7 @@ public class DataDefinitionResourceTest
 		Page<DataDefinition> dataDefinitionPage =
 			dataDefinitionResource.
 				getDataDefinitionByContentTypeContentTypePage(
-					"native-object", null, Pagination.of(1, 2), null);
+					_CONTENT_TYPE, null, Pagination.of(1, 2), null);
 
 		Collection<DataDefinition> dataDefinitions =
 			dataDefinitionPage.getItems();

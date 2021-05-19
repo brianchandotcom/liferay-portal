@@ -282,7 +282,7 @@ definition {
 	test SetImageFieldAsRepeatable {
 		DMDocument.addImageField();
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Image");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
 
 		DDLDataDefinition.save();
 

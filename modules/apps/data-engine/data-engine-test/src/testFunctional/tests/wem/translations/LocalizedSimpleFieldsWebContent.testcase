@@ -73,7 +73,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldHelp = "Text Field Help Text");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Text");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 

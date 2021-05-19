@@ -42,7 +42,7 @@ definition {
 			fieldFieldLabel = "Numeric",
 			fieldName = "Numeric");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Numeric");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
 
 		DDLDataDefinition.save();
 
@@ -983,7 +983,7 @@ definition {
 			fieldFieldLabel = "Image",
 			fieldName = "Image");
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Image");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Image");
 
 		DDLDataDefinition.save();
 

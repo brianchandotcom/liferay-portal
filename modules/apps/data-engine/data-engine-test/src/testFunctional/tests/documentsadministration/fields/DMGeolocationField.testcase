@@ -112,7 +112,7 @@ definition {
 	test RepeatableGeolocationOnRenderer {
 		property portal.acceptance = "false";
 
-		DataEngine.editFieldRepeatable(fieldFieldLabel = "Geolocation");
+		DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Geolocation");
 
 		DDLDataDefinition.save();
 

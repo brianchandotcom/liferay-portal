@@ -141,7 +141,7 @@ $dragOverWidth: 6px;
 		> .page-editor__topper__content
 		> .page-editor__container
 		> :last-child:after {
-		box-shadow: inset $dragOverWidth 0 0 0 $primary-l1;
+		box-shadow: inset (-$dragOverWidth) 0 0 0 $primary-l1;
 		transition: none;
 	}
 

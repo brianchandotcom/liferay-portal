@@ -849,21 +849,21 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		if (samlSpSession != null) {
 			samlSpSessionLocalService.updateSamlSpSession(
-				samlSpSession.getSamlSpSessionId(), issuer.getValue(),
-				samlSpSession.getSamlSpSessionKey(),
+				samlSpSession.getSamlSpSessionId(),
 				OpenSamlUtil.marshall(assertion), httpSession.getId(),
 				nameID.getFormat(), nameID.getNameQualifier(),
-				nameID.getSPNameQualifier(), nameID.getValue(), sessionIndex,
-				serviceContext);
+				nameID.getSPNameQualifier(), nameID.getValue(),
+				issuer.getValue(), samlSpSession.getSamlSpSessionKey(),
+				sessionIndex, serviceContext);
 		}
 		else {
 			String samlSpSessionKey = generateIdentifier(30);
 
 			samlSpSession = samlSpSessionLocalService.addSamlSpSession(
-				issuer.getValue(), samlSpSessionKey,
 				OpenSamlUtil.marshall(assertion), httpSession.getId(),
 				nameID.getFormat(), nameID.getNameQualifier(),
-				nameID.getSPNameQualifier(), nameID.getValue(), sessionIndex,
+				nameID.getSPNameQualifier(), nameID.getValue(),
+				issuer.getValue(), samlSpSessionKey, sessionIndex,
 				serviceContext);
 		}
 

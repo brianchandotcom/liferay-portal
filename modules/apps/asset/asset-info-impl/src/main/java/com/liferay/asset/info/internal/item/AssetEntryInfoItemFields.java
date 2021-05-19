@@ -44,6 +44,16 @@ public interface AssetEntryInfoItemFields {
 			InfoLocalizedValue.localize(
 				AssetEntryInfoItemFields.class, "description")
 		).build();
+	public static final InfoField<TextInfoFieldType> displayPageURLInfoField =
+		InfoField.builder(
+		).infoFieldType(
+			TextInfoFieldType.INSTANCE
+		).name(
+			"displayPageURL"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(
+				AssetEntryInfoItemFields.class, "display-page-url")
+		).build();
 	public static final InfoField<TextInfoFieldType> expirationDateInfoField =
 		InfoField.builder(
 		).infoFieldType(

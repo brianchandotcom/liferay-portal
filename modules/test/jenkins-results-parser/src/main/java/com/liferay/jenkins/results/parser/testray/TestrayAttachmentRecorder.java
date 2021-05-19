@@ -252,7 +252,8 @@ public class TestrayAttachmentRecorder {
 		JSONObject jsonObject = topLevelBuild.getBuildResultsJSONObject(
 			null, null,
 			new String[] {
-				"buildURL", "duration", "errorDetails", "name", "status"
+				"buildResults", "buildURL", "duration", "errorDetails", "name",
+				"stopWatchRecords", "status"
 			});
 
 		File buildResultsJSONObjectFile = new File(

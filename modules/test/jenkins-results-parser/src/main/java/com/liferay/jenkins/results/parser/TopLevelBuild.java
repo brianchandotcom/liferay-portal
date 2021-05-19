@@ -207,6 +207,12 @@ public abstract class TopLevelBuild extends BaseBuild {
 	public JSONObject getBuildResultsJSONObject(
 		String[] buildResults, String[] testStatuses, String[] dataTypes) {
 
+		if (dataTypes == null) {
+			dataTypes = new String[] {"name", "status"};
+		}
+
+		List<String> dataTypesList = Arrays.asList(dataTypes);
+
 		JSONObject buildResultsJSONObject = new JSONObject();
 
 		JSONArray downstreamBuildJSONArray = new JSONArray();
@@ -229,19 +235,26 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		buildResultsJSONObject.put("batchResults", downstreamBuildJSONArray);
 		buildResultsJSONObject.put("buildNumber", getBuildNumber());
-		buildResultsJSONObject.put("duration", getDuration());
+
+		if (dataTypesList.contains("duration")) {
+			buildResultsJSONObject.put("duration", getDuration());
+		}
+
 		buildResultsJSONObject.put("jobURL", getJobURL());
+		buildResultsJSONObject.put("result", getResult());
 		buildResultsJSONObject.put("startTime", getStartTime());
 
-		StopWatchRecordsGroup stopWatchRecordsGroup =
-			getStopWatchRecordsGroup();
+		if (dataTypesList.contains("stopWatchRecords")) {
+			StopWatchRecordsGroup stopWatchRecordsGroup =
+				getStopWatchRecordsGroup();
 
-		JSONArray stopWatchRecordsGroupJSONArray =
-			stopWatchRecordsGroup.getJSONArray();
+			JSONArray stopWatchRecordsGroupJSONArray =
+				stopWatchRecordsGroup.getJSONArray();
 
-		if (stopWatchRecordsGroupJSONArray.length() > 0) {
-			buildResultsJSONObject.put(
-				"stopWatchRecords", stopWatchRecordsGroupJSONArray);
+			if (stopWatchRecordsGroupJSONArray.length() > 0) {
+				buildResultsJSONObject.put(
+					"stopWatchRecords", stopWatchRecordsGroupJSONArray);
+			}
 		}
 
 		buildResultsJSONObject.put("upstreamBranchSHA", getUpstreamBranchSHA());

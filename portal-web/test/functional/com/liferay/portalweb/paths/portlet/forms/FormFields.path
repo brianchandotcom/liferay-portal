@@ -185,6 +185,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_PREDEFINED_SELECTOR</td>
+	<td>//label[contains(text(),'Predefined')]/..//div[contains(@class,'input-group-container') and //div[contains(text(),'${key_definedEntry}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD</td>
 	<td>//div[contains(@class,'ddm-field-options-container')]//div[contains(@class,'ddm-field-options')][${key_rowNumber}]//input | //div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//input</td>
 	<td></td>
@@ -577,3 +582,4 @@
 </table>
 </body>
 </html>
+

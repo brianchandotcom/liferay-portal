@@ -33,7 +33,10 @@ import javax.ws.rs.ext.Provider;
 public class ObjectDefinitionIdContainerRequestFilter
 	implements ContainerRequestFilter {
 
-	public ObjectDefinitionIdContainerRequestFilter(Long objectDefinitionId) {
+	public ObjectDefinitionIdContainerRequestFilter(
+		String applicationName, Long objectDefinitionId) {
+
+		_applicationName = applicationName;
 		_objectDefinitionId = objectDefinitionId;
 	}
 
@@ -55,9 +58,12 @@ public class ObjectDefinitionIdContainerRequestFilter
 			uriBuilder.queryParam(entry.getKey(), entry.getValue());
 		}
 
+		uriBuilder.queryParam("taskItemDelegateName", _applicationName);
+
 		containerRequestContext.setRequestUri(uriBuilder.build());
 	}
 
+	private final String _applicationName;
 	private final Long _objectDefinitionId;
 
 }

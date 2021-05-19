@@ -22,6 +22,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.vulcan.openapi.DTOProperty;
 import com.liferay.portal.vulcan.openapi.OpenAPISchemaFilter;
+import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +33,6 @@ import java.util.stream.Stream;
 
 import javax.ws.rs.core.Application;
 
-import com.liferay.portal.vulcan.resource.OpenAPIResource;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,10 +51,11 @@ public class ObjectEntryApplication extends Application {
 		Set<Object> objects = new HashSet<>();
 
 		objects.add(
-			new ObjectDefinitionIdContainerRequestFilter(_objectDefinitionId));
+			new ObjectDefinitionIdContainerRequestFilter(
+				_applicationName, _objectDefinitionId));
 		objects.add(
 			new OpenAPIResourceImpl(
-				(OpenAPIResource) _openAPIResourceImpl, _getOpenAPISchemaFilter(),
+				_openAPIResource, _getOpenAPISchemaFilter(),
 				new HashSet<Class<?>>() {
 					{
 						add(ObjectEntryResourceImpl.class);
@@ -67,6 +68,8 @@ public class ObjectEntryApplication extends Application {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		_applicationName = (String)properties.get("osgi.jaxrs.name");
+
 		_objectDefinitionId = (Long)properties.get("objectDefinitionId");
 
 		_objectFields = _objectFieldLocalService.getObjectFields(
@@ -93,6 +96,7 @@ public class ObjectEntryApplication extends Application {
 		return openAPISchemaFilter;
 	}
 
+	private String _applicationName;
 	private Long _objectDefinitionId;
 
 	@Reference
@@ -104,6 +108,6 @@ public class ObjectEntryApplication extends Application {
 	private List<ObjectField> _objectFields;
 
 	@Reference
-	private OpenAPIResourceImpl _openAPIResourceImpl;
+	private OpenAPIResource _openAPIResource;
 
 }

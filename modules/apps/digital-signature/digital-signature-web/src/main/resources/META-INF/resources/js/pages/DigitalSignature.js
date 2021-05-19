@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import React from 'react';
 
-// TODO One name please
+function DigitalSignature() {
+	return <div>Digital Signature</div>;
+}
 
-<div id="digital-signature-root">
-	<react:component
-		module="js/pages/DigitalSignatureList"
-	/>
-</div>
+export default DigitalSignature;

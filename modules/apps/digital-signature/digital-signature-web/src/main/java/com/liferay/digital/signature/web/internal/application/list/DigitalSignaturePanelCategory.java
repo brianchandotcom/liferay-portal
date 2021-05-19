@@ -41,7 +41,8 @@ public class DigitalSignaturePanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return DigitalSignaturePanelCategoryKeys.CONTROL_PANEL_CATEGORY;
+		return DigitalSignaturePanelCategoryKeys.
+			SITE_ADMINISTRATION_CONTENT_DIGITAL_SIGNATURE;
 	}
 
 	@Override

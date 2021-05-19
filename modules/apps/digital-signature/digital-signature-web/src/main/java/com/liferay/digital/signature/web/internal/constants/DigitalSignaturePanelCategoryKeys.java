@@ -19,8 +19,7 @@ package com.liferay.digital.signature.web.internal.constants;
  */
 public class DigitalSignaturePanelCategoryKeys {
 
-	// TODO git ls-files **PanelCategoryKeys**
-
-	public static final String CONTROL_PANEL_CATEGORY = "THIS IS WRONG, type ";
+	public static final String SITE_ADMINISTRATION_CONTENT_DIGITAL_SIGNATURE =
+		"site_administration.content.digital_signature";
 
 }

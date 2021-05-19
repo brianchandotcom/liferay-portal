@@ -48,7 +48,6 @@ public class SamlSpIdpConnectionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
 		attributes.put(
 			"assertionSignatureRequired", isAssertionSignatureRequired());
 		attributes.put("clockSkew", getClockSkew());
@@ -108,12 +107,6 @@ public class SamlSpIdpConnectionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		String samlIdpEntityId = (String)attributes.get("samlIdpEntityId");
-
-		if (samlIdpEntityId != null) {
-			setSamlIdpEntityId(samlIdpEntityId);
 		}
 
 		Boolean assertionSignatureRequired = (Boolean)attributes.get(

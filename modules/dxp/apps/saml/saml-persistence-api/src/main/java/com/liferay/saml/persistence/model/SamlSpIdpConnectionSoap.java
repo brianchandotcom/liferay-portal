@@ -41,7 +41,6 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setSamlIdpEntityId(model.getSamlIdpEntityId());
 		soapModel.setAssertionSignatureRequired(
 			model.isAssertionSignatureRequired());
 		soapModel.setClockSkew(model.getClockSkew());
@@ -168,14 +167,6 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	public String getSamlIdpEntityId() {
-		return _samlIdpEntityId;
-	}
-
-	public void setSamlIdpEntityId(String samlIdpEntityId) {
-		_samlIdpEntityId = samlIdpEntityId;
 	}
 
 	public boolean getAssertionSignatureRequired() {
@@ -330,7 +321,6 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _samlIdpEntityId;
 	private boolean _assertionSignatureRequired;
 	private long _clockSkew;
 	private boolean _enabled;

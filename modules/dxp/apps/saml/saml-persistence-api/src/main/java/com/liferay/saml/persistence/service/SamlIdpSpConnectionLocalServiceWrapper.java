@@ -33,6 +33,25 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 		_samlIdpSpConnectionLocalService = samlIdpSpConnectionLocalService;
 	}
 
+	@Override
+	public com.liferay.saml.persistence.model.SamlIdpSpConnection
+			addSamlIdpSpConnection(
+				int assertionLifetime, String attributeNames,
+				boolean attributesEnabled, boolean attributesNamespaceEnabled,
+				boolean enabled, boolean encryptionForced, String metadataUrl,
+				java.io.InputStream metadataXmlInputStream, String name,
+				String nameIdAttribute, String nameIdFormat,
+				String samlSpEntityId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _samlIdpSpConnectionLocalService.addSamlIdpSpConnection(
+			assertionLifetime, attributeNames, attributesEnabled,
+			attributesNamespaceEnabled, enabled, encryptionForced, metadataUrl,
+			metadataXmlInputStream, name, nameIdAttribute, nameIdFormat,
+			samlSpEntityId, serviceContext);
+	}
+
 	/**
 	 * Adds the saml idp sp connection to the database. Also notifies the appropriate model listeners.
 	 *
@@ -53,6 +72,13 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 			samlIdpSpConnection);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addSamlIdpSpConnection(int, String, boolean, boolean,
+	 boolean, boolean, String, InputStream, String, String, String,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpConnection
 			addSamlIdpSpConnection(
@@ -390,6 +416,32 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 		_samlIdpSpConnectionLocalService.updateMetadata(samlIdpSpConnectionId);
 	}
 
+	@Override
+	public com.liferay.saml.persistence.model.SamlIdpSpConnection
+			updateSamlIdpSpConnection(
+				long samlIdpSpConnectionId, int assertionLifetime,
+				String attributeNames, boolean attributesEnabled,
+				boolean attributesNamespaceEnabled, boolean enabled,
+				boolean encryptionForced, String metadataUrl,
+				java.io.InputStream metadataXmlInputStream, String name,
+				String nameIdAttribute, String nameIdFormat,
+				String samlSpEntityId,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _samlIdpSpConnectionLocalService.updateSamlIdpSpConnection(
+			samlIdpSpConnectionId, assertionLifetime, attributeNames,
+			attributesEnabled, attributesNamespaceEnabled, enabled,
+			encryptionForced, metadataUrl, metadataXmlInputStream, name,
+			nameIdAttribute, nameIdFormat, samlSpEntityId, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by { @link
+	 #updateSamlIdpSpConnection(long, int, String, boolean,
+	 boolean, boolean, boolean, String, InputStream, String,
+	 String, String, String, ServiceContext)}
+	 */
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpConnection
 			updateSamlIdpSpConnection(

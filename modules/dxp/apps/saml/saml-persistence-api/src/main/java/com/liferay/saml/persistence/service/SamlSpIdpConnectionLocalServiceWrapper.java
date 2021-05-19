@@ -33,6 +33,26 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 		_samlSpIdpConnectionLocalService = samlSpIdpConnectionLocalService;
 	}
 
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpIdpConnection
+			addSamlSpIdpConnection(
+				boolean assertionSignatureRequired, long clockSkew,
+				boolean enabled, boolean forceAuthn, boolean ldapImportEnabled,
+				String metadataUrl, java.io.InputStream metadataXmlInputStream,
+				String name, String nameIdFormat, String samlIdpEntityId,
+				boolean signAuthnRequest, boolean unknownUsersAreStrangers,
+				String userAttributeMappings, String userIdentifierExpression,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _samlSpIdpConnectionLocalService.addSamlSpIdpConnection(
+			assertionSignatureRequired, clockSkew, enabled, forceAuthn,
+			ldapImportEnabled, metadataUrl, metadataXmlInputStream, name,
+			nameIdFormat, samlIdpEntityId, signAuthnRequest,
+			unknownUsersAreStrangers, userAttributeMappings,
+			userIdentifierExpression, serviceContext);
+	}
+
 	/**
 	 * Adds the saml sp idp connection to the database. Also notifies the appropriate model listeners.
 	 *
@@ -55,9 +75,9 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addSamlSpIdpConnection(String, boolean, long, boolean,
-	 boolean, boolean, String, InputStream, String, String,
-	 boolean, boolean, String, String, boolean, ServiceContext)}
+	 #addSamlSpIdpConnection(boolean, long, boolean, boolean,
+	 boolean, String, InputStream, String, String, String,
+	 boolean, boolean, String, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -77,26 +97,6 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 			forceAuthn, ldapImportEnabled, metadataUrl, metadataXmlInputStream,
 			name, nameIdFormat, signAuthnRequest, unknownUsersAreStrangers,
 			userAttributeMappings, serviceContext);
-	}
-
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpIdpConnection
-			addSamlSpIdpConnection(
-				String samlIdpEntityId, boolean assertionSignatureRequired,
-				long clockSkew, boolean enabled, boolean forceAuthn,
-				boolean ldapImportEnabled, String metadataUrl,
-				java.io.InputStream metadataXmlInputStream, String name,
-				String nameIdFormat, boolean signAuthnRequest,
-				boolean unknownUsersAreStrangers, String userAttributeMappings,
-				String userIdentifierExpression,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _samlSpIdpConnectionLocalService.addSamlSpIdpConnection(
-			samlIdpEntityId, assertionSignatureRequired, clockSkew, enabled,
-			forceAuthn, ldapImportEnabled, metadataUrl, metadataXmlInputStream,
-			name, nameIdFormat, signAuthnRequest, unknownUsersAreStrangers,
-			userAttributeMappings, userIdentifierExpression, serviceContext);
 	}
 
 	/**
@@ -443,11 +443,32 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 		_samlSpIdpConnectionLocalService.updateMetadata(samlSpIdpConnectionId);
 	}
 
+	@Override
+	public com.liferay.saml.persistence.model.SamlSpIdpConnection
+			updateSamlSpIdpConnection(
+				long samlSpIdpConnectionId, boolean assertionSignatureRequired,
+				long clockSkew, boolean enabled, boolean forceAuthn,
+				boolean ldapImportEnabled, String metadataUrl,
+				java.io.InputStream metadataXmlInputStream, String name,
+				String nameIdFormat, String samlIdpEntityId,
+				boolean signAuthnRequest, boolean unknownUsersAreStrangers,
+				String userAttributeMappings, String userIdentifierExpression,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _samlSpIdpConnectionLocalService.updateSamlSpIdpConnection(
+			samlSpIdpConnectionId, assertionSignatureRequired, clockSkew,
+			enabled, forceAuthn, ldapImportEnabled, metadataUrl,
+			metadataXmlInputStream, name, nameIdFormat, samlIdpEntityId,
+			signAuthnRequest, unknownUsersAreStrangers, userAttributeMappings,
+			userIdentifierExpression, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #updateSamlSpIdpConnection(long, String, boolean, long,
-	 boolean, boolean, boolean, String, InputStream, String,
-	 String, boolean, boolean, String, String, boolean, ServiceContext)}
+	 #updateSamlSpIdpConnection(long, boolean, long, boolean,
+	 boolean, boolean, String, InputStream, String, String,
+	 String, boolean, boolean, String, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -467,27 +488,6 @@ public class SamlSpIdpConnectionLocalServiceWrapper
 			clockSkew, enabled, forceAuthn, ldapImportEnabled, metadataUrl,
 			metadataXmlInputStream, name, nameIdFormat, signAuthnRequest,
 			unknownUsersAreStrangers, userAttributeMappings, serviceContext);
-	}
-
-	@Override
-	public com.liferay.saml.persistence.model.SamlSpIdpConnection
-			updateSamlSpIdpConnection(
-				long samlSpIdpConnectionId, String samlIdpEntityId,
-				boolean assertionSignatureRequired, long clockSkew,
-				boolean enabled, boolean forceAuthn, boolean ldapImportEnabled,
-				String metadataUrl, java.io.InputStream metadataXmlInputStream,
-				String name, String nameIdFormat, boolean signAuthnRequest,
-				boolean unknownUsersAreStrangers, String userAttributeMappings,
-				String userIdentifierExpression,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _samlSpIdpConnectionLocalService.updateSamlSpIdpConnection(
-			samlSpIdpConnectionId, samlIdpEntityId, assertionSignatureRequired,
-			clockSkew, enabled, forceAuthn, ldapImportEnabled, metadataUrl,
-			metadataXmlInputStream, name, nameIdFormat, signAuthnRequest,
-			unknownUsersAreStrangers, userAttributeMappings,
-			userIdentifierExpression, serviceContext);
 	}
 
 	/**

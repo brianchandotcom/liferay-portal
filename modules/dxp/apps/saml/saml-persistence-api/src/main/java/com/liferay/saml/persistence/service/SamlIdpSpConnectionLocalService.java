@@ -63,6 +63,14 @@ public interface SamlIdpSpConnectionLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.saml.persistence.service.impl.SamlIdpSpConnectionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the saml idp sp connection local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SamlIdpSpConnectionLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public SamlIdpSpConnection addSamlIdpSpConnection(
+			int assertionLifetime, String attributeNames,
+			boolean attributesEnabled, boolean attributesNamespaceEnabled,
+			boolean enabled, boolean encryptionForced, String metadataUrl,
+			InputStream metadataXmlInputStream, String name,
+			String nameIdAttribute, String nameIdFormat, String samlSpEntityId,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the saml idp sp connection to the database. Also notifies the appropriate model listeners.
@@ -78,6 +86,13 @@ public interface SamlIdpSpConnectionLocalService
 	public SamlIdpSpConnection addSamlIdpSpConnection(
 		SamlIdpSpConnection samlIdpSpConnection);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addSamlIdpSpConnection(int, String, boolean, boolean,
+	 boolean, boolean, String, InputStream, String, String, String,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
 	public SamlIdpSpConnection addSamlIdpSpConnection(
 			String samlSpEntityId, int assertionLifetime, String attributeNames,
 			boolean attributesEnabled, boolean attributesNamespaceEnabled,
@@ -292,6 +307,22 @@ public interface SamlIdpSpConnectionLocalService
 	public void updateMetadata(long samlIdpSpConnectionId)
 		throws PortalException;
 
+	public SamlIdpSpConnection updateSamlIdpSpConnection(
+			long samlIdpSpConnectionId, int assertionLifetime,
+			String attributeNames, boolean attributesEnabled,
+			boolean attributesNamespaceEnabled, boolean enabled,
+			boolean encryptionForced, String metadataUrl,
+			InputStream metadataXmlInputStream, String name,
+			String nameIdAttribute, String nameIdFormat, String samlSpEntityId,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by { @link
+	 #updateSamlIdpSpConnection(long, int, String, boolean,
+	 boolean, boolean, boolean, String, InputStream, String,
+	 String, String, String, ServiceContext)}
+	 */
 	public SamlIdpSpConnection updateSamlIdpSpConnection(
 			long samlIdpSpConnectionId, String samlSpEntityId,
 			int assertionLifetime, String attributeNames,

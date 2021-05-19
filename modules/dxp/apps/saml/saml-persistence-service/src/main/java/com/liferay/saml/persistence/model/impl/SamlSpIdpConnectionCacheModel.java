@@ -64,7 +64,7 @@ public class SamlSpIdpConnectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{samlSpIdpConnectionId=");
 		sb.append(samlSpIdpConnectionId);
@@ -78,8 +78,6 @@ public class SamlSpIdpConnectionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", samlIdpEntityId=");
-		sb.append(samlIdpEntityId);
 		sb.append(", assertionSignatureRequired=");
 		sb.append(assertionSignatureRequired);
 		sb.append(", clockSkew=");
@@ -143,13 +141,6 @@ public class SamlSpIdpConnectionCacheModel
 		}
 		else {
 			samlSpIdpConnectionImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
-		if (samlIdpEntityId == null) {
-			samlSpIdpConnectionImpl.setSamlIdpEntityId("");
-		}
-		else {
-			samlSpIdpConnectionImpl.setSamlIdpEntityId(samlIdpEntityId);
 		}
 
 		samlSpIdpConnectionImpl.setAssertionSignatureRequired(
@@ -239,7 +230,6 @@ public class SamlSpIdpConnectionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		samlIdpEntityId = objectInput.readUTF();
 
 		assertionSignatureRequired = objectInput.readBoolean();
 
@@ -281,13 +271,6 @@ public class SamlSpIdpConnectionCacheModel
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-
-		if (samlIdpEntityId == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(samlIdpEntityId);
-		}
 
 		objectOutput.writeBoolean(assertionSignatureRequired);
 
@@ -360,7 +343,6 @@ public class SamlSpIdpConnectionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String samlIdpEntityId;
 	public boolean assertionSignatureRequired;
 	public long clockSkew;
 	public boolean enabled;

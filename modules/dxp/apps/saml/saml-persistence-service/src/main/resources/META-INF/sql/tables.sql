@@ -71,7 +71,6 @@ create table SamlSpIdpConnection (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	samlIdpEntityId VARCHAR(1024) null,
 	assertionSignatureRequired BOOLEAN,
 	clockSkew LONG,
 	enabled BOOLEAN,

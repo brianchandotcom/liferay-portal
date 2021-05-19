@@ -136,9 +136,6 @@ public class SamlSpIdpConnectionPersistenceTest {
 
 		newSamlSpIdpConnection.setModifiedDate(RandomTestUtil.nextDate());
 
-		newSamlSpIdpConnection.setSamlIdpEntityId(
-			RandomTestUtil.randomString());
-
 		newSamlSpIdpConnection.setAssertionSignatureRequired(
 			RandomTestUtil.randomBoolean());
 
@@ -202,9 +199,6 @@ public class SamlSpIdpConnectionPersistenceTest {
 			Time.getShortTimestamp(
 				existingSamlSpIdpConnection.getModifiedDate()),
 			Time.getShortTimestamp(newSamlSpIdpConnection.getModifiedDate()));
-		Assert.assertEquals(
-			existingSamlSpIdpConnection.getSamlIdpEntityId(),
-			newSamlSpIdpConnection.getSamlIdpEntityId());
 		Assert.assertEquals(
 			existingSamlSpIdpConnection.isAssertionSignatureRequired(),
 			newSamlSpIdpConnection.isAssertionSignatureRequired());
@@ -299,13 +293,13 @@ public class SamlSpIdpConnectionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"SamlSpIdpConnection", "samlSpIdpConnectionId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "samlIdpEntityId", true,
-			"assertionSignatureRequired", true, "clockSkew", true, "enabled",
-			true, "forceAuthn", true, "ldapImportEnabled", true,
-			"metadataUpdatedDate", true, "metadataUrl", true, "name", true,
-			"nameIdFormat", true, "samlIdpEntityId", true, "signAuthnRequest",
-			true, "unknownUsersAreStrangers", true, "userAttributeMappings",
-			true, "userIdentifierExpression", true);
+			"modifiedDate", true, "assertionSignatureRequired", true,
+			"clockSkew", true, "enabled", true, "forceAuthn", true,
+			"ldapImportEnabled", true, "metadataUpdatedDate", true,
+			"metadataUrl", true, "name", true, "nameIdFormat", true,
+			"samlIdpEntityId", true, "signAuthnRequest", true,
+			"unknownUsersAreStrangers", true, "userAttributeMappings", true,
+			"userIdentifierExpression", true);
 	}
 
 	@Test
@@ -614,8 +608,6 @@ public class SamlSpIdpConnectionPersistenceTest {
 		samlSpIdpConnection.setCreateDate(RandomTestUtil.nextDate());
 
 		samlSpIdpConnection.setModifiedDate(RandomTestUtil.nextDate());
-
-		samlSpIdpConnection.setSamlIdpEntityId(RandomTestUtil.randomString());
 
 		samlSpIdpConnection.setAssertionSignatureRequired(
 			RandomTestUtil.randomBoolean());

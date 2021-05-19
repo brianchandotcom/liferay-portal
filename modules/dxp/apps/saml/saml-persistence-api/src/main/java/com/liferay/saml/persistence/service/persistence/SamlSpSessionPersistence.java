@@ -42,51 +42,6 @@ public interface SamlSpSessionPersistence
 	 */
 
 	/**
-	 * Returns the saml sp session where samlSpSessionKey = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
-	 *
-	 * @param samlSpSessionKey the saml sp session key
-	 * @return the matching saml sp session
-	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
-	 */
-	public SamlSpSession findBySamlSpSessionKey(String samlSpSessionKey)
-		throws NoSuchSpSessionException;
-
-	/**
-	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlSpSessionKey the saml sp session key
-	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
-	 */
-	public SamlSpSession fetchBySamlSpSessionKey(String samlSpSessionKey);
-
-	/**
-	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param samlSpSessionKey the saml sp session key
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
-	 */
-	public SamlSpSession fetchBySamlSpSessionKey(
-		String samlSpSessionKey, boolean useFinderCache);
-
-	/**
-	 * Removes the saml sp session where samlSpSessionKey = &#63; from the database.
-	 *
-	 * @param samlSpSessionKey the saml sp session key
-	 * @return the saml sp session that was removed
-	 */
-	public SamlSpSession removeBySamlSpSessionKey(String samlSpSessionKey)
-		throws NoSuchSpSessionException;
-
-	/**
-	 * Returns the number of saml sp sessions where samlSpSessionKey = &#63;.
-	 *
-	 * @param samlSpSessionKey the saml sp session key
-	 * @return the number of matching saml sp sessions
-	 */
-	public int countBySamlSpSessionKey(String samlSpSessionKey);
-
-	/**
 	 * Returns the saml sp session where jSessionId = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
 	 *
 	 * @param jSessionId the j session ID
@@ -130,6 +85,51 @@ public interface SamlSpSessionPersistence
 	 * @return the number of matching saml sp sessions
 	 */
 	public int countByJSessionId(String jSessionId);
+
+	/**
+	 * Returns the saml sp session where samlSpSessionKey = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
+	 *
+	 * @param samlSpSessionKey the saml sp session key
+	 * @return the matching saml sp session
+	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
+	 */
+	public SamlSpSession findBySamlSpSessionKey(String samlSpSessionKey)
+		throws NoSuchSpSessionException;
+
+	/**
+	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param samlSpSessionKey the saml sp session key
+	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 */
+	public SamlSpSession fetchBySamlSpSessionKey(String samlSpSessionKey);
+
+	/**
+	 * Returns the saml sp session where samlSpSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param samlSpSessionKey the saml sp session key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 */
+	public SamlSpSession fetchBySamlSpSessionKey(
+		String samlSpSessionKey, boolean useFinderCache);
+
+	/**
+	 * Removes the saml sp session where samlSpSessionKey = &#63; from the database.
+	 *
+	 * @param samlSpSessionKey the saml sp session key
+	 * @return the saml sp session that was removed
+	 */
+	public SamlSpSession removeBySamlSpSessionKey(String samlSpSessionKey)
+		throws NoSuchSpSessionException;
+
+	/**
+	 * Returns the number of saml sp sessions where samlSpSessionKey = &#63;.
+	 *
+	 * @param samlSpSessionKey the saml sp session key
+	 * @return the number of matching saml sp sessions
+	 */
+	public int countBySamlSpSessionKey(String samlSpSessionKey);
 
 	/**
 	 * Returns the saml sp session where companyId = &#63; and sessionIndex = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.

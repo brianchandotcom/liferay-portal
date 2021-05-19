@@ -48,7 +48,6 @@ public class SamlIdpSpConnectionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("samlSpEntityId", getSamlSpEntityId());
 		attributes.put("assertionLifetime", getAssertionLifetime());
 		attributes.put("attributeNames", getAttributeNames());
 		attributes.put("attributesEnabled", isAttributesEnabled());
@@ -62,6 +61,7 @@ public class SamlIdpSpConnectionWrapper
 		attributes.put("name", getName());
 		attributes.put("nameIdAttribute", getNameIdAttribute());
 		attributes.put("nameIdFormat", getNameIdFormat());
+		attributes.put("samlSpEntityId", getSamlSpEntityId());
 
 		return attributes;
 	}
@@ -103,12 +103,6 @@ public class SamlIdpSpConnectionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
-		}
-
-		String samlSpEntityId = (String)attributes.get("samlSpEntityId");
-
-		if (samlSpEntityId != null) {
-			setSamlSpEntityId(samlSpEntityId);
 		}
 
 		Integer assertionLifetime = (Integer)attributes.get(
@@ -184,6 +178,12 @@ public class SamlIdpSpConnectionWrapper
 
 		if (nameIdFormat != null) {
 			setNameIdFormat(nameIdFormat);
+		}
+
+		String samlSpEntityId = (String)attributes.get("samlSpEntityId");
+
+		if (samlSpEntityId != null) {
+			setSamlSpEntityId(samlSpEntityId);
 		}
 	}
 

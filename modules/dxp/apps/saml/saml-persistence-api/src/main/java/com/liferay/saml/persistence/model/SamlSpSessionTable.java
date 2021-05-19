@@ -46,17 +46,17 @@ public class SamlSpSessionTable extends BaseTable<SamlSpSessionTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<SamlSpSessionTable, String> samlSpSessionKey =
+	public final Column<SamlSpSessionTable, Long> samlPeerBindingId =
 		createColumn(
-			"samlSpSessionKey", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
+			"samlPeerBindingId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, Clob> assertionXml = createColumn(
 		"assertionXml", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, String> jSessionId = createColumn(
 		"jSessionId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<SamlSpSessionTable, Long> samlPeerBindingId =
+	public final Column<SamlSpSessionTable, String> samlSpSessionKey =
 		createColumn(
-			"samlPeerBindingId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+			"samlSpSessionKey", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, String> sessionIndex = createColumn(
 		"sessionIndex", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SamlSpSessionTable, Boolean> terminated = createColumn(

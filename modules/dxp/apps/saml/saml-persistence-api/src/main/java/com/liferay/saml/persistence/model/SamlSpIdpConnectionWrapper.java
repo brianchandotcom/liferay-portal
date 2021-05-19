@@ -60,6 +60,7 @@ public class SamlSpIdpConnectionWrapper
 		attributes.put("metadataXml", getMetadataXml());
 		attributes.put("name", getName());
 		attributes.put("nameIdFormat", getNameIdFormat());
+		attributes.put("samlIdpEntityId", getSamlIdpEntityId());
 		attributes.put("signAuthnRequest", isSignAuthnRequest());
 		attributes.put(
 			"unknownUsersAreStrangers", isUnknownUsersAreStrangers());
@@ -175,6 +176,12 @@ public class SamlSpIdpConnectionWrapper
 
 		if (nameIdFormat != null) {
 			setNameIdFormat(nameIdFormat);
+		}
+
+		String samlIdpEntityId = (String)attributes.get("samlIdpEntityId");
+
+		if (samlIdpEntityId != null) {
+			setSamlIdpEntityId(samlIdpEntityId);
 		}
 
 		Boolean signAuthnRequest = (Boolean)attributes.get("signAuthnRequest");

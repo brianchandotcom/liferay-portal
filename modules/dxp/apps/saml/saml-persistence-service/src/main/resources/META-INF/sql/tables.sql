@@ -5,7 +5,6 @@ create table SamlIdpSpConnection (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	samlSpEntityId VARCHAR(1024) null,
 	assertionLifetime INTEGER,
 	attributeNames STRING null,
 	attributesEnabled BOOLEAN,
@@ -17,7 +16,8 @@ create table SamlIdpSpConnection (
 	metadataUpdatedDate DATE null,
 	name VARCHAR(75) null,
 	nameIdAttribute VARCHAR(1024) null,
-	nameIdFormat VARCHAR(1024) null
+	nameIdFormat VARCHAR(1024) null,
+	samlSpEntityId VARCHAR(1024) null
 );
 
 create table SamlIdpSpSession (
@@ -82,6 +82,7 @@ create table SamlSpIdpConnection (
 	metadataXml TEXT null,
 	name VARCHAR(75) null,
 	nameIdFormat VARCHAR(1024) null,
+	samlIdpEntityId VARCHAR(1024) null,
 	signAuthnRequest BOOLEAN,
 	unknownUsersAreStrangers BOOLEAN,
 	userAttributeMappings STRING null,
@@ -104,10 +105,10 @@ create table SamlSpSession (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	samlSpSessionKey VARCHAR(75) null,
+	samlPeerBindingId LONG,
 	assertionXml TEXT null,
 	jSessionId VARCHAR(200) null,
-	samlPeerBindingId LONG,
+	samlSpSessionKey VARCHAR(75) null,
 	sessionIndex VARCHAR(75) null,
 	terminated_ BOOLEAN
 );

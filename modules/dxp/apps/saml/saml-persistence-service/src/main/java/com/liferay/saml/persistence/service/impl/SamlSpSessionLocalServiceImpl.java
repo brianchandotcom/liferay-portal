@@ -91,11 +91,11 @@ public class SamlSpSessionLocalServiceImpl
 		samlSpSession.setUserName(user.getFullName());
 		samlSpSession.setCreateDate(now);
 		samlSpSession.setModifiedDate(now);
-		samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
-		samlSpSession.setAssertionXml(assertionXml);
-		samlSpSession.setJSessionId(jSessionId);
 		samlSpSession.setSamlPeerBindingId(
 			samlPeerBinding.getSamlPeerBindingId());
+		samlSpSession.setAssertionXml(assertionXml);
+		samlSpSession.setJSessionId(jSessionId);
+		samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
 		samlSpSession.setSessionIndex(sessionIndex);
 		samlSpSession.setTerminated(false);
 
@@ -240,11 +240,11 @@ public class SamlSpSessionLocalServiceImpl
 		samlSpSession.setUserId(userId);
 		samlSpSession.setUserName(user.getFullName());
 		samlSpSession.setModifiedDate(new Date());
-		samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
-		samlSpSession.setAssertionXml(assertionXml);
-		samlSpSession.setJSessionId(jSessionId);
 		samlSpSession.setSamlPeerBindingId(
 			samlPeerBinding.getSamlPeerBindingId());
+		samlSpSession.setAssertionXml(assertionXml);
+		samlSpSession.setJSessionId(jSessionId);
+		samlSpSession.setSamlSpSessionKey(samlSpSessionKey);
 		samlSpSession.setSessionIndex(sessionIndex);
 
 		return samlSpSessionPersistence.update(samlSpSession);

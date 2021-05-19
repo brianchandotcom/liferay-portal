@@ -53,6 +53,7 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 		soapModel.setMetadataXml(model.getMetadataXml());
 		soapModel.setName(model.getName());
 		soapModel.setNameIdFormat(model.getNameIdFormat());
+		soapModel.setSamlIdpEntityId(model.getSamlIdpEntityId());
 		soapModel.setSignAuthnRequest(model.isSignAuthnRequest());
 		soapModel.setUnknownUsersAreStrangers(
 			model.isUnknownUsersAreStrangers());
@@ -275,6 +276,14 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 		_nameIdFormat = nameIdFormat;
 	}
 
+	public String getSamlIdpEntityId() {
+		return _samlIdpEntityId;
+	}
+
+	public void setSamlIdpEntityId(String samlIdpEntityId) {
+		_samlIdpEntityId = samlIdpEntityId;
+	}
+
 	public boolean getSignAuthnRequest() {
 		return _signAuthnRequest;
 	}
@@ -332,6 +341,7 @@ public class SamlSpIdpConnectionSoap implements Serializable {
 	private String _metadataXml;
 	private String _name;
 	private String _nameIdFormat;
+	private String _samlIdpEntityId;
 	private boolean _signAuthnRequest;
 	private boolean _unknownUsersAreStrangers;
 	private String _userAttributeMappings;

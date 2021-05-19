@@ -76,14 +76,14 @@ public class SamlSpSessionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", samlSpSessionKey=");
-		sb.append(samlSpSessionKey);
+		sb.append(", samlPeerBindingId=");
+		sb.append(samlPeerBindingId);
 		sb.append(", assertionXml=");
 		sb.append(assertionXml);
 		sb.append(", jSessionId=");
 		sb.append(jSessionId);
-		sb.append(", samlPeerBindingId=");
-		sb.append(samlPeerBindingId);
+		sb.append(", samlSpSessionKey=");
+		sb.append(samlSpSessionKey);
 		sb.append(", sessionIndex=");
 		sb.append(sessionIndex);
 		sb.append(", terminated=");
@@ -122,12 +122,7 @@ public class SamlSpSessionCacheModel
 			samlSpSessionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		if (samlSpSessionKey == null) {
-			samlSpSessionImpl.setSamlSpSessionKey("");
-		}
-		else {
-			samlSpSessionImpl.setSamlSpSessionKey(samlSpSessionKey);
-		}
+		samlSpSessionImpl.setSamlPeerBindingId(samlPeerBindingId);
 
 		if (assertionXml == null) {
 			samlSpSessionImpl.setAssertionXml("");
@@ -143,7 +138,12 @@ public class SamlSpSessionCacheModel
 			samlSpSessionImpl.setJSessionId(jSessionId);
 		}
 
-		samlSpSessionImpl.setSamlPeerBindingId(samlPeerBindingId);
+		if (samlSpSessionKey == null) {
+			samlSpSessionImpl.setSamlSpSessionKey("");
+		}
+		else {
+			samlSpSessionImpl.setSamlSpSessionKey(samlSpSessionKey);
+		}
 
 		if (sessionIndex == null) {
 			samlSpSessionImpl.setSessionIndex("");
@@ -171,11 +171,11 @@ public class SamlSpSessionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		samlSpSessionKey = objectInput.readUTF();
-		assertionXml = (String)objectInput.readObject();
-		jSessionId = objectInput.readUTF();
 
 		samlPeerBindingId = objectInput.readLong();
+		assertionXml = (String)objectInput.readObject();
+		jSessionId = objectInput.readUTF();
+		samlSpSessionKey = objectInput.readUTF();
 		sessionIndex = objectInput.readUTF();
 
 		terminated = objectInput.readBoolean();
@@ -199,12 +199,7 @@ public class SamlSpSessionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		if (samlSpSessionKey == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(samlSpSessionKey);
-		}
+		objectOutput.writeLong(samlPeerBindingId);
 
 		if (assertionXml == null) {
 			objectOutput.writeObject("");
@@ -220,7 +215,12 @@ public class SamlSpSessionCacheModel
 			objectOutput.writeUTF(jSessionId);
 		}
 
-		objectOutput.writeLong(samlPeerBindingId);
+		if (samlSpSessionKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(samlSpSessionKey);
+		}
 
 		if (sessionIndex == null) {
 			objectOutput.writeUTF("");
@@ -238,10 +238,10 @@ public class SamlSpSessionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public String samlSpSessionKey;
+	public long samlPeerBindingId;
 	public String assertionXml;
 	public String jSessionId;
-	public long samlPeerBindingId;
+	public String samlSpSessionKey;
 	public String sessionIndex;
 	public boolean terminated;
 

@@ -53,9 +53,6 @@ public class SamlIdpSpConnectionTable
 	public final Column<SamlIdpSpConnectionTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<SamlIdpSpConnectionTable, String> samlSpEntityId =
-		createColumn(
-			"samlSpEntityId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SamlIdpSpConnectionTable, Integer> assertionLifetime =
 		createColumn(
 			"assertionLifetime", Integer.class, Types.INTEGER,
@@ -97,6 +94,9 @@ public class SamlIdpSpConnectionTable
 	public final Column<SamlIdpSpConnectionTable, String> nameIdFormat =
 		createColumn(
 			"nameIdFormat", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SamlIdpSpConnectionTable, String> samlSpEntityId =
+		createColumn(
+			"samlSpEntityId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private SamlIdpSpConnectionTable() {
 		super("SamlIdpSpConnection", SamlIdpSpConnectionTable::new);

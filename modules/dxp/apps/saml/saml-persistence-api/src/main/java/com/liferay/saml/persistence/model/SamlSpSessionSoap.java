@@ -39,10 +39,10 @@ public class SamlSpSessionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setSamlSpSessionKey(model.getSamlSpSessionKey());
+		soapModel.setSamlPeerBindingId(model.getSamlPeerBindingId());
 		soapModel.setAssertionXml(model.getAssertionXml());
 		soapModel.setJSessionId(model.getJSessionId());
-		soapModel.setSamlPeerBindingId(model.getSamlPeerBindingId());
+		soapModel.setSamlSpSessionKey(model.getSamlSpSessionKey());
 		soapModel.setSessionIndex(model.getSessionIndex());
 		soapModel.setTerminated(model.isTerminated());
 
@@ -146,12 +146,12 @@ public class SamlSpSessionSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getSamlSpSessionKey() {
-		return _samlSpSessionKey;
+	public long getSamlPeerBindingId() {
+		return _samlPeerBindingId;
 	}
 
-	public void setSamlSpSessionKey(String samlSpSessionKey) {
-		_samlSpSessionKey = samlSpSessionKey;
+	public void setSamlPeerBindingId(long samlPeerBindingId) {
+		_samlPeerBindingId = samlPeerBindingId;
 	}
 
 	public String getAssertionXml() {
@@ -170,12 +170,12 @@ public class SamlSpSessionSoap implements Serializable {
 		_jSessionId = jSessionId;
 	}
 
-	public long getSamlPeerBindingId() {
-		return _samlPeerBindingId;
+	public String getSamlSpSessionKey() {
+		return _samlSpSessionKey;
 	}
 
-	public void setSamlPeerBindingId(long samlPeerBindingId) {
-		_samlPeerBindingId = samlPeerBindingId;
+	public void setSamlSpSessionKey(String samlSpSessionKey) {
+		_samlSpSessionKey = samlSpSessionKey;
 	}
 
 	public String getSessionIndex() {
@@ -204,10 +204,10 @@ public class SamlSpSessionSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _samlSpSessionKey;
+	private long _samlPeerBindingId;
 	private String _assertionXml;
 	private String _jSessionId;
-	private long _samlPeerBindingId;
+	private String _samlSpSessionKey;
 	private String _sessionIndex;
 	private boolean _terminated;
 

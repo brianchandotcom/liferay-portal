@@ -48,10 +48,10 @@ public class SamlSpSessionWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("samlSpSessionKey", getSamlSpSessionKey());
+		attributes.put("samlPeerBindingId", getSamlPeerBindingId());
 		attributes.put("assertionXml", getAssertionXml());
 		attributes.put("jSessionId", getJSessionId());
-		attributes.put("samlPeerBindingId", getSamlPeerBindingId());
+		attributes.put("samlSpSessionKey", getSamlSpSessionKey());
 		attributes.put("sessionIndex", getSessionIndex());
 		attributes.put("terminated", isTerminated());
 
@@ -96,10 +96,10 @@ public class SamlSpSessionWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		String samlSpSessionKey = (String)attributes.get("samlSpSessionKey");
+		Long samlPeerBindingId = (Long)attributes.get("samlPeerBindingId");
 
-		if (samlSpSessionKey != null) {
-			setSamlSpSessionKey(samlSpSessionKey);
+		if (samlPeerBindingId != null) {
+			setSamlPeerBindingId(samlPeerBindingId);
 		}
 
 		String assertionXml = (String)attributes.get("assertionXml");
@@ -114,10 +114,10 @@ public class SamlSpSessionWrapper
 			setJSessionId(jSessionId);
 		}
 
-		Long samlPeerBindingId = (Long)attributes.get("samlPeerBindingId");
+		String samlSpSessionKey = (String)attributes.get("samlSpSessionKey");
 
-		if (samlPeerBindingId != null) {
-			setSamlPeerBindingId(samlPeerBindingId);
+		if (samlSpSessionKey != null) {
+			setSamlSpSessionKey(samlSpSessionKey);
 		}
 
 		String sessionIndex = (String)attributes.get("sessionIndex");

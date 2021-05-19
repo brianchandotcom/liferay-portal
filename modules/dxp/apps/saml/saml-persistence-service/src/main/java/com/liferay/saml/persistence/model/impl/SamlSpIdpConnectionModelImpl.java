@@ -79,7 +79,7 @@ public class SamlSpIdpConnectionModelImpl
 		{"metadataUpdatedDate", Types.TIMESTAMP},
 		{"metadataUrl", Types.VARCHAR}, {"metadataXml", Types.CLOB},
 		{"name", Types.VARCHAR}, {"nameIdFormat", Types.VARCHAR},
-		{"signAuthnRequest", Types.BOOLEAN},
+		{"samlIdpEntityId", Types.VARCHAR}, {"signAuthnRequest", Types.BOOLEAN},
 		{"unknownUsersAreStrangers", Types.BOOLEAN},
 		{"userAttributeMappings", Types.VARCHAR},
 		{"userIdentifierExpression", Types.VARCHAR}
@@ -106,6 +106,7 @@ public class SamlSpIdpConnectionModelImpl
 		TABLE_COLUMNS_MAP.put("metadataXml", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("nameIdFormat", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("samlIdpEntityId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("signAuthnRequest", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("unknownUsersAreStrangers", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("userAttributeMappings", Types.VARCHAR);
@@ -113,7 +114,7 @@ public class SamlSpIdpConnectionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlSpIdpConnection (samlSpIdpConnectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlIdpEntityId VARCHAR(1024) null,assertionSignatureRequired BOOLEAN,clockSkew LONG,enabled BOOLEAN,forceAuthn BOOLEAN,ldapImportEnabled BOOLEAN,metadataUpdatedDate DATE null,metadataUrl VARCHAR(1024) null,metadataXml TEXT null,name VARCHAR(75) null,nameIdFormat VARCHAR(1024) null,signAuthnRequest BOOLEAN,unknownUsersAreStrangers BOOLEAN,userAttributeMappings STRING null,userIdentifierExpression VARCHAR(200) null)";
+		"create table SamlSpIdpConnection (samlSpIdpConnectionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,samlIdpEntityId VARCHAR(1024) null,assertionSignatureRequired BOOLEAN,clockSkew LONG,enabled BOOLEAN,forceAuthn BOOLEAN,ldapImportEnabled BOOLEAN,metadataUpdatedDate DATE null,metadataUrl VARCHAR(1024) null,metadataXml TEXT null,name VARCHAR(75) null,nameIdFormat VARCHAR(1024) null,samlIdpEntityId VARCHAR(1024) null,signAuthnRequest BOOLEAN,unknownUsersAreStrangers BOOLEAN,userAttributeMappings STRING null,userIdentifierExpression VARCHAR(200) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SamlSpIdpConnection";
@@ -392,6 +393,12 @@ public class SamlSpIdpConnectionModelImpl
 			"nameIdFormat",
 			(BiConsumer<SamlSpIdpConnection, String>)
 				SamlSpIdpConnection::setNameIdFormat);
+		attributeGetterFunctions.put(
+			"samlIdpEntityId", SamlSpIdpConnection::getSamlIdpEntityId);
+		attributeSetterBiConsumers.put(
+			"samlIdpEntityId",
+			(BiConsumer<SamlSpIdpConnection, String>)
+				SamlSpIdpConnection::setSamlIdpEntityId);
 		attributeGetterFunctions.put(
 			"signAuthnRequest", SamlSpIdpConnection::getSignAuthnRequest);
 		attributeSetterBiConsumers.put(
@@ -758,6 +765,25 @@ public class SamlSpIdpConnectionModelImpl
 	}
 
 	@Override
+	public String getSamlIdpEntityId() {
+		if (_samlIdpEntityId == null) {
+			return "";
+		}
+		else {
+			return _samlIdpEntityId;
+		}
+	}
+
+	@Override
+	public void setSamlIdpEntityId(String samlIdpEntityId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_samlIdpEntityId = samlIdpEntityId;
+	}
+
+	@Override
 	public boolean getSignAuthnRequest() {
 		return _signAuthnRequest;
 	}
@@ -911,6 +937,7 @@ public class SamlSpIdpConnectionModelImpl
 		samlSpIdpConnectionImpl.setMetadataXml(getMetadataXml());
 		samlSpIdpConnectionImpl.setName(getName());
 		samlSpIdpConnectionImpl.setNameIdFormat(getNameIdFormat());
+		samlSpIdpConnectionImpl.setSamlIdpEntityId(getSamlIdpEntityId());
 		samlSpIdpConnectionImpl.setSignAuthnRequest(isSignAuthnRequest());
 		samlSpIdpConnectionImpl.setUnknownUsersAreStrangers(
 			isUnknownUsersAreStrangers());
@@ -1092,6 +1119,14 @@ public class SamlSpIdpConnectionModelImpl
 			samlSpIdpConnectionCacheModel.nameIdFormat = null;
 		}
 
+		samlSpIdpConnectionCacheModel.samlIdpEntityId = getSamlIdpEntityId();
+
+		String samlIdpEntityId = samlSpIdpConnectionCacheModel.samlIdpEntityId;
+
+		if ((samlIdpEntityId != null) && (samlIdpEntityId.length() == 0)) {
+			samlSpIdpConnectionCacheModel.samlIdpEntityId = null;
+		}
+
 		samlSpIdpConnectionCacheModel.signAuthnRequest = isSignAuthnRequest();
 
 		samlSpIdpConnectionCacheModel.unknownUsersAreStrangers =
@@ -1212,6 +1247,7 @@ public class SamlSpIdpConnectionModelImpl
 	private String _metadataXml;
 	private String _name;
 	private String _nameIdFormat;
+	private String _samlIdpEntityId;
 	private boolean _signAuthnRequest;
 	private boolean _unknownUsersAreStrangers;
 	private String _userAttributeMappings;
@@ -1263,6 +1299,7 @@ public class SamlSpIdpConnectionModelImpl
 		_columnOriginalValues.put("metadataXml", _metadataXml);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("nameIdFormat", _nameIdFormat);
+		_columnOriginalValues.put("samlIdpEntityId", _samlIdpEntityId);
 		_columnOriginalValues.put("signAuthnRequest", _signAuthnRequest);
 		_columnOriginalValues.put(
 			"unknownUsersAreStrangers", _unknownUsersAreStrangers);
@@ -1317,13 +1354,15 @@ public class SamlSpIdpConnectionModelImpl
 
 		columnBitmasks.put("nameIdFormat", 65536L);
 
-		columnBitmasks.put("signAuthnRequest", 131072L);
+		columnBitmasks.put("samlIdpEntityId", 131072L);
 
-		columnBitmasks.put("unknownUsersAreStrangers", 262144L);
+		columnBitmasks.put("signAuthnRequest", 262144L);
 
-		columnBitmasks.put("userAttributeMappings", 524288L);
+		columnBitmasks.put("unknownUsersAreStrangers", 524288L);
 
-		columnBitmasks.put("userIdentifierExpression", 1048576L);
+		columnBitmasks.put("userAttributeMappings", 1048576L);
+
+		columnBitmasks.put("userIdentifierExpression", 2097152L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

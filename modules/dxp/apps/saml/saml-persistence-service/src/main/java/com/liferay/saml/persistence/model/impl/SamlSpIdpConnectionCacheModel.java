@@ -64,7 +64,7 @@ public class SamlSpIdpConnectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{samlSpIdpConnectionId=");
 		sb.append(samlSpIdpConnectionId);
@@ -100,6 +100,8 @@ public class SamlSpIdpConnectionCacheModel
 		sb.append(name);
 		sb.append(", nameIdFormat=");
 		sb.append(nameIdFormat);
+		sb.append(", samlIdpEntityId=");
+		sb.append(samlIdpEntityId);
 		sb.append(", signAuthnRequest=");
 		sb.append(signAuthnRequest);
 		sb.append(", unknownUsersAreStrangers=");
@@ -193,6 +195,13 @@ public class SamlSpIdpConnectionCacheModel
 			samlSpIdpConnectionImpl.setNameIdFormat(nameIdFormat);
 		}
 
+		if (samlIdpEntityId == null) {
+			samlSpIdpConnectionImpl.setSamlIdpEntityId("");
+		}
+		else {
+			samlSpIdpConnectionImpl.setSamlIdpEntityId(samlIdpEntityId);
+		}
+
 		samlSpIdpConnectionImpl.setSignAuthnRequest(signAuthnRequest);
 		samlSpIdpConnectionImpl.setUnknownUsersAreStrangers(
 			unknownUsersAreStrangers);
@@ -246,6 +255,7 @@ public class SamlSpIdpConnectionCacheModel
 		metadataXml = (String)objectInput.readObject();
 		name = objectInput.readUTF();
 		nameIdFormat = objectInput.readUTF();
+		samlIdpEntityId = objectInput.readUTF();
 
 		signAuthnRequest = objectInput.readBoolean();
 
@@ -318,6 +328,13 @@ public class SamlSpIdpConnectionCacheModel
 			objectOutput.writeUTF(nameIdFormat);
 		}
 
+		if (samlIdpEntityId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(samlIdpEntityId);
+		}
+
 		objectOutput.writeBoolean(signAuthnRequest);
 
 		objectOutput.writeBoolean(unknownUsersAreStrangers);
@@ -354,6 +371,7 @@ public class SamlSpIdpConnectionCacheModel
 	public String metadataXml;
 	public String name;
 	public String nameIdFormat;
+	public String samlIdpEntityId;
 	public boolean signAuthnRequest;
 	public boolean unknownUsersAreStrangers;
 	public String userAttributeMappings;

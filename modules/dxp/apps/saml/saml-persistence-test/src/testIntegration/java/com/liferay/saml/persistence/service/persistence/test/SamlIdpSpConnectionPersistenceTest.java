@@ -136,8 +136,6 @@ public class SamlIdpSpConnectionPersistenceTest {
 
 		newSamlIdpSpConnection.setModifiedDate(RandomTestUtil.nextDate());
 
-		newSamlIdpSpConnection.setSamlSpEntityId(RandomTestUtil.randomString());
-
 		newSamlIdpSpConnection.setAssertionLifetime(RandomTestUtil.nextInt());
 
 		newSamlIdpSpConnection.setAttributeNames(RandomTestUtil.randomString());
@@ -167,6 +165,8 @@ public class SamlIdpSpConnectionPersistenceTest {
 
 		newSamlIdpSpConnection.setNameIdFormat(RandomTestUtil.randomString());
 
+		newSamlIdpSpConnection.setSamlSpEntityId(RandomTestUtil.randomString());
+
 		_samlIdpSpConnections.add(_persistence.update(newSamlIdpSpConnection));
 
 		SamlIdpSpConnection existingSamlIdpSpConnection =
@@ -192,9 +192,6 @@ public class SamlIdpSpConnectionPersistenceTest {
 			Time.getShortTimestamp(
 				existingSamlIdpSpConnection.getModifiedDate()),
 			Time.getShortTimestamp(newSamlIdpSpConnection.getModifiedDate()));
-		Assert.assertEquals(
-			existingSamlIdpSpConnection.getSamlSpEntityId(),
-			newSamlIdpSpConnection.getSamlSpEntityId());
 		Assert.assertEquals(
 			existingSamlIdpSpConnection.getAssertionLifetime(),
 			newSamlIdpSpConnection.getAssertionLifetime());
@@ -233,6 +230,9 @@ public class SamlIdpSpConnectionPersistenceTest {
 		Assert.assertEquals(
 			existingSamlIdpSpConnection.getNameIdFormat(),
 			newSamlIdpSpConnection.getNameIdFormat());
+		Assert.assertEquals(
+			existingSamlIdpSpConnection.getSamlSpEntityId(),
+			newSamlIdpSpConnection.getSamlSpEntityId());
 	}
 
 	@Test
@@ -280,12 +280,11 @@ public class SamlIdpSpConnectionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"SamlIdpSpConnection", "samlIdpSpConnectionId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "samlSpEntityId", true, "assertionLifetime",
-			true, "attributeNames", true, "attributesEnabled", true,
-			"attributesNamespaceEnabled", true, "enabled", true,
-			"encryptionForced", true, "metadataUrl", true,
+			"modifiedDate", true, "assertionLifetime", true, "attributeNames",
+			true, "attributesEnabled", true, "attributesNamespaceEnabled", true,
+			"enabled", true, "encryptionForced", true, "metadataUrl", true,
 			"metadataUpdatedDate", true, "name", true, "nameIdAttribute", true,
-			"nameIdFormat", true);
+			"nameIdFormat", true, "samlSpEntityId", true);
 	}
 
 	@Test
@@ -595,8 +594,6 @@ public class SamlIdpSpConnectionPersistenceTest {
 
 		samlIdpSpConnection.setModifiedDate(RandomTestUtil.nextDate());
 
-		samlIdpSpConnection.setSamlSpEntityId(RandomTestUtil.randomString());
-
 		samlIdpSpConnection.setAssertionLifetime(RandomTestUtil.nextInt());
 
 		samlIdpSpConnection.setAttributeNames(RandomTestUtil.randomString());
@@ -622,6 +619,8 @@ public class SamlIdpSpConnectionPersistenceTest {
 		samlIdpSpConnection.setNameIdAttribute(RandomTestUtil.randomString());
 
 		samlIdpSpConnection.setNameIdFormat(RandomTestUtil.randomString());
+
+		samlIdpSpConnection.setSamlSpEntityId(RandomTestUtil.randomString());
 
 		_samlIdpSpConnections.add(_persistence.update(samlIdpSpConnection));
 

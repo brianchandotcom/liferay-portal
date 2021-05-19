@@ -41,7 +41,6 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setSamlSpEntityId(model.getSamlSpEntityId());
 		soapModel.setAssertionLifetime(model.getAssertionLifetime());
 		soapModel.setAttributeNames(model.getAttributeNames());
 		soapModel.setAttributesEnabled(model.isAttributesEnabled());
@@ -55,6 +54,7 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setNameIdAttribute(model.getNameIdAttribute());
 		soapModel.setNameIdFormat(model.getNameIdFormat());
+		soapModel.setSamlSpEntityId(model.getSamlSpEntityId());
 
 		return soapModel;
 	}
@@ -163,14 +163,6 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
-	}
-
-	public String getSamlSpEntityId() {
-		return _samlSpEntityId;
-	}
-
-	public void setSamlSpEntityId(String samlSpEntityId) {
-		_samlSpEntityId = samlSpEntityId;
 	}
 
 	public int getAssertionLifetime() {
@@ -287,13 +279,20 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 		_nameIdFormat = nameIdFormat;
 	}
 
+	public String getSamlSpEntityId() {
+		return _samlSpEntityId;
+	}
+
+	public void setSamlSpEntityId(String samlSpEntityId) {
+		_samlSpEntityId = samlSpEntityId;
+	}
+
 	private long _samlIdpSpConnectionId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _samlSpEntityId;
 	private int _assertionLifetime;
 	private String _attributeNames;
 	private boolean _attributesEnabled;
@@ -306,5 +305,6 @@ public class SamlIdpSpConnectionSoap implements Serializable {
 	private String _name;
 	private String _nameIdAttribute;
 	private String _nameIdFormat;
+	private String _samlSpEntityId;
 
 }

@@ -11,9 +11,6 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="samlSpEntityId" type="String">
-			<hint-collection name="ENTITY-ID" />
-		</field>
 		<field name="assertionLifetime" type="int" />
 		<field name="attributeNames" type="String">
 			<hint-collection name="TEXTAREA" />
@@ -34,6 +31,9 @@
 			<hint-collection name="ENTITY-ID" />
 		</field>
 		<field name="nameIdFormat" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="samlSpEntityId" type="String">
 			<hint-collection name="ENTITY-ID" />
 		</field>
 	</model>
@@ -105,6 +105,9 @@
 		<field name="nameIdFormat" type="String">
 			<hint-collection name="ENTITY-ID" />
 		</field>
+		<field name="samlIdpEntityId" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
 		<field name="signAuthnRequest" type="boolean" />
 		<field name="unknownUsersAreStrangers" type="boolean" />
 		<field name="userAttributeMappings" type="String">
@@ -131,14 +134,14 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="samlSpSessionKey" type="String" />
+		<field name="samlPeerBindingId" type="long" />
 		<field name="assertionXml" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="jSessionId" type="String">
 			<hint name="max-length">200</hint>
 		</field>
-		<field name="samlPeerBindingId" type="long" />
+		<field name="samlSpSessionKey" type="String" />
 		<field name="sessionIndex" type="String" />
 		<field name="terminated" type="boolean" />
 	</model>

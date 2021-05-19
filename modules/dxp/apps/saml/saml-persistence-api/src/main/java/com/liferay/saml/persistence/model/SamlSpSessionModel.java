@@ -170,19 +170,18 @@ public interface SamlSpSessionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the saml sp session key of this saml sp session.
+	 * Returns the saml peer binding ID of this saml sp session.
 	 *
-	 * @return the saml sp session key of this saml sp session
+	 * @return the saml peer binding ID of this saml sp session
 	 */
-	@AutoEscape
-	public String getSamlSpSessionKey();
+	public long getSamlPeerBindingId();
 
 	/**
-	 * Sets the saml sp session key of this saml sp session.
+	 * Sets the saml peer binding ID of this saml sp session.
 	 *
-	 * @param samlSpSessionKey the saml sp session key of this saml sp session
+	 * @param samlPeerBindingId the saml peer binding ID of this saml sp session
 	 */
-	public void setSamlSpSessionKey(String samlSpSessionKey);
+	public void setSamlPeerBindingId(long samlPeerBindingId);
 
 	/**
 	 * Returns the assertion xml of this saml sp session.
@@ -215,18 +214,19 @@ public interface SamlSpSessionModel
 	public void setJSessionId(String jSessionId);
 
 	/**
-	 * Returns the saml peer binding ID of this saml sp session.
+	 * Returns the saml sp session key of this saml sp session.
 	 *
-	 * @return the saml peer binding ID of this saml sp session
+	 * @return the saml sp session key of this saml sp session
 	 */
-	public long getSamlPeerBindingId();
+	@AutoEscape
+	public String getSamlSpSessionKey();
 
 	/**
-	 * Sets the saml peer binding ID of this saml sp session.
+	 * Sets the saml sp session key of this saml sp session.
 	 *
-	 * @param samlPeerBindingId the saml peer binding ID of this saml sp session
+	 * @param samlSpSessionKey the saml sp session key of this saml sp session
 	 */
-	public void setSamlPeerBindingId(long samlPeerBindingId);
+	public void setSamlSpSessionKey(String samlSpSessionKey);
 
 	/**
 	 * Returns the session index of this saml sp session.

@@ -89,6 +89,10 @@ public class SamlSpIdpConnectionTable
 	public final Column<SamlSpIdpConnectionTable, String> nameIdFormat =
 		createColumn(
 			"nameIdFormat", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<SamlSpIdpConnectionTable, String> samlIdpEntityId =
+		createColumn(
+			"samlIdpEntityId", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<SamlSpIdpConnectionTable, Boolean> signAuthnRequest =
 		createColumn(
 			"signAuthnRequest", Boolean.class, Types.BOOLEAN,

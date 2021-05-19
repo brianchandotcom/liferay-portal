@@ -162,6 +162,9 @@ public class SamlSpIdpConnectionPersistenceTest {
 
 		newSamlSpIdpConnection.setNameIdFormat(RandomTestUtil.randomString());
 
+		newSamlSpIdpConnection.setSamlIdpEntityId(
+			RandomTestUtil.randomString());
+
 		newSamlSpIdpConnection.setSignAuthnRequest(
 			RandomTestUtil.randomBoolean());
 
@@ -235,6 +238,9 @@ public class SamlSpIdpConnectionPersistenceTest {
 			existingSamlSpIdpConnection.getNameIdFormat(),
 			newSamlSpIdpConnection.getNameIdFormat());
 		Assert.assertEquals(
+			existingSamlSpIdpConnection.getSamlIdpEntityId(),
+			newSamlSpIdpConnection.getSamlIdpEntityId());
+		Assert.assertEquals(
 			existingSamlSpIdpConnection.isSignAuthnRequest(),
 			newSamlSpIdpConnection.isSignAuthnRequest());
 		Assert.assertEquals(
@@ -297,9 +303,9 @@ public class SamlSpIdpConnectionPersistenceTest {
 			"assertionSignatureRequired", true, "clockSkew", true, "enabled",
 			true, "forceAuthn", true, "ldapImportEnabled", true,
 			"metadataUpdatedDate", true, "metadataUrl", true, "name", true,
-			"nameIdFormat", true, "signAuthnRequest", true,
-			"unknownUsersAreStrangers", true, "userAttributeMappings", true,
-			"userIdentifierExpression", true);
+			"nameIdFormat", true, "samlIdpEntityId", true, "signAuthnRequest",
+			true, "unknownUsersAreStrangers", true, "userAttributeMappings",
+			true, "userIdentifierExpression", true);
 	}
 
 	@Test
@@ -632,6 +638,8 @@ public class SamlSpIdpConnectionPersistenceTest {
 		samlSpIdpConnection.setName(RandomTestUtil.randomString());
 
 		samlSpIdpConnection.setNameIdFormat(RandomTestUtil.randomString());
+
+		samlSpIdpConnection.setSamlIdpEntityId(RandomTestUtil.randomString());
 
 		samlSpIdpConnection.setSignAuthnRequest(RandomTestUtil.randomBoolean());
 

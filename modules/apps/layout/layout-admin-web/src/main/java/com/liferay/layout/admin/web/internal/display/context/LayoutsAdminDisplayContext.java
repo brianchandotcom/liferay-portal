@@ -626,9 +626,16 @@ public class LayoutsAdminDisplayContext {
 
 		layoutsSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
+		String keywords = getKeywords();
+
+		int[] statuses = null;
+
+		if (Validator.isNotNull(keywords)) {
+			statuses = new int[] {WorkflowConstants.STATUS_ANY};
+		}
+
 		int layoutsCount = LayoutServiceUtil.getLayoutsCount(
-			getSelGroupId(), isPrivateLayout(), getKeywords(),
-			new int[] {WorkflowConstants.STATUS_ANY},
+			getSelGroupId(), isPrivateLayout(), keywords, statuses,
 			new String[] {
 				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
 				LayoutConstants.TYPE_EMBEDDED,
@@ -639,8 +646,7 @@ public class LayoutsAdminDisplayContext {
 			});
 
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
-			getSelGroupId(), isPrivateLayout(), getKeywords(),
-			new int[] {WorkflowConstants.STATUS_ANY},
+			getSelGroupId(), isPrivateLayout(), keywords, statuses,
 			new String[] {
 				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
 				LayoutConstants.TYPE_EMBEDDED,

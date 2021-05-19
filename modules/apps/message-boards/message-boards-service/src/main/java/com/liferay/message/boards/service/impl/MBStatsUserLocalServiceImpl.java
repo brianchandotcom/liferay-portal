@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -58,37 +56,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class MBStatsUserLocalServiceImpl
 	extends MBStatsUserLocalServiceBaseImpl {
-
-	@Override
-	public MBStatsUser addStatsUser(long groupId, long userId) {
-		long statsUserId = counterLocalService.increment();
-
-		MBStatsUser statsUser = mbStatsUserPersistence.create(statsUserId);
-
-		statsUser.setGroupId(groupId);
-		statsUser.setUserId(userId);
-
-		try {
-			statsUser = mbStatsUserPersistence.update(statsUser);
-		}
-		catch (SystemException systemException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Add failed, fetch {groupId=", groupId, ", userId=",
-						userId, "}"));
-			}
-
-			statsUser = mbStatsUserPersistence.fetchByG_U(
-				groupId, userId, false);
-
-			if (statsUser == null) {
-				throw systemException;
-			}
-		}
-
-		return statsUser;
-	}
 
 	@Override
 	public Date getLastPostDateByUserId(long groupId, long userId) {
@@ -287,9 +254,6 @@ public class MBStatsUserLocalServiceImpl
 			MBGroupServiceSettings.getInstance(groupId), languageId,
 			getStatsUser(groupId, userId));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MBStatsUserLocalServiceImpl.class);
 
 	@Reference
 	private MBMessagePersistence _mbMessagePersistence;

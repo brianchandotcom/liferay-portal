@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -115,11 +114,6 @@ public class MBStatsUserLocalServiceImpl
 
 	@Override
 	public long getMessageCountByUserId(long userId) throws PortalException {
-		User user = userLocalService.getUser(userId);
-
-		long defaultUserId = userLocalService.getDefaultUserId(
-			user.getCompanyId());
-
 		return _mbMessagePersistence.dslQuery(
 			DSLQueryFactoryUtil.count(
 			).from(
@@ -127,8 +121,6 @@ public class MBStatsUserLocalServiceImpl
 			).where(
 				MBMessageTable.INSTANCE.userId.eq(
 					userId
-				).and(
-					MBMessageTable.INSTANCE.userId.neq(defaultUserId)
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
@@ -139,11 +131,6 @@ public class MBStatsUserLocalServiceImpl
 	@Override
 	public Object[] getStatsUser(long groupId, long userId)
 		throws PortalException {
-
-		Group group = groupLocalService.getGroup(groupId);
-
-		long defaultUserId = userLocalService.getDefaultUserId(
-			group.getCompanyId());
 
 		Expression<Long> countExpression = DSLFunctionFactoryUtil.count(
 			MBMessageTable.INSTANCE.messageId
@@ -164,8 +151,6 @@ public class MBStatsUserLocalServiceImpl
 			).where(
 				MBMessageTable.INSTANCE.userId.eq(
 					userId
-				).and(
-					MBMessageTable.INSTANCE.userId.neq(defaultUserId)
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)

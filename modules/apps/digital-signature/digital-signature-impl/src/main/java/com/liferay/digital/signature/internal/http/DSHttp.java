@@ -14,7 +14,7 @@
 
 package com.liferay.digital.signature.internal.http;
 
-import com.liferay.digital.signature.internal.configuration.DigitalSignatureConfiguration;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.digital.signature.internal.web.cache.DSAccessTokenWebCacheItem;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;

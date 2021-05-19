@@ -59,41 +59,6 @@ public class DDMExpressionFunctionMetadataHelper {
 		return ddmExpressionFunctionMetadatasMap;
 	}
 
-	public static class DDMExpressionFunctionMetadata {
-
-		public DDMExpressionFunctionMetadata(
-			String name, String label, String returnClassName,
-			String[] parameterClassNames) {
-
-			_name = name;
-			_label = label;
-			_returnClassName = returnClassName;
-			_parameterClassNames = parameterClassNames;
-		}
-
-		public String getLabel() {
-			return _label;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public String[] getParameterClassNames() {
-			return _parameterClassNames;
-		}
-
-		public String getReturnClassName() {
-			return _returnClassName;
-		}
-
-		private final String _label;
-		private final String _name;
-		private final String[] _parameterClassNames;
-		private final String _returnClassName;
-
-	}
-
 	protected void addDDMExpressionFunctionMetadata(
 		Map<String, List<DDMExpressionFunctionMetadata>>
 			ddmExpressionFunctionMetadatasMap,

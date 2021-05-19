@@ -43,7 +43,7 @@ definition {
 				site = "${site}");
 
 			Click(
-				key_url = "site-configuration-asset-auto-tagger",
+				key_itemName = "Assets",
 				locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");
@@ -103,7 +103,7 @@ definition {
 				site = "${site}");
 
 			Click(
-				key_url = "site-configuration-asset-auto-tagger",
+				key_itemName = "Assets",
 				locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 			Navigator.gotoNavTab(navTab = "Asset Auto Tagging");

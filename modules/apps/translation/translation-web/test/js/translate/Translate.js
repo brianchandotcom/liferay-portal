@@ -115,6 +115,10 @@ const baseProps = {
 const renderComponent = (props) => render(<Translate {...props} />);
 
 describe('Translate', () => {
+	Liferay.Util.sub.mockImplementation((langKey, ...args) =>
+		[langKey, ...args].join('-')
+	);
+
 	afterEach(cleanup);
 
 	it('renders with auto-translate enabled', () => {

@@ -17,17 +17,72 @@ package com.liferay.portal.dao.orm.hibernate.jmx;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PropsValues;
 
+import javax.management.Attribute;
+import javax.management.AttributeList;
+import javax.management.AttributeNotFoundException;
+import javax.management.DynamicMBean;
+import javax.management.InvalidAttributeValueException;
+import javax.management.MBeanException;
+import javax.management.MBeanInfo;
+import javax.management.NotCompliantMBeanException;
+import javax.management.ReflectionException;
+import javax.management.StandardMBean;
+
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.jmx.StatisticsService;
+import org.hibernate.jmx.StatisticsServiceMBean;
 
 /**
  * @author Shuyang Zhou
  */
-@OSGiBeanProperties(property = "jmx.objectname=Hibernate:name=statistics")
-public class HibernateStatisticsService extends StatisticsService {
+@OSGiBeanProperties(
+	property = "jmx.objectname=Hibernate:name=statistics",
+	service = DynamicMBean.class
+)
+public class HibernateStatisticsService
+	extends StatisticsService implements DynamicMBean {
 
-	public HibernateStatisticsService() {
+	public HibernateStatisticsService() throws NotCompliantMBeanException {
 		setStatisticsEnabled(PropsValues.HIBERNATE_GENERATE_STATISTICS);
+
+		_standardMBean = new StandardMBean(this, StatisticsServiceMBean.class);
+	}
+
+	@Override
+	public Object getAttribute(String attribute)
+		throws AttributeNotFoundException, MBeanException, ReflectionException {
+
+		return _standardMBean.getAttribute(attribute);
+	}
+
+	@Override
+	public AttributeList getAttributes(String[] attributes) {
+		return _standardMBean.getAttributes(attributes);
+	}
+
+	@Override
+	public MBeanInfo getMBeanInfo() {
+		return _standardMBean.getMBeanInfo();
+	}
+
+	@Override
+	public Object invoke(String actionName, Object[] params, String[] signature)
+		throws MBeanException, ReflectionException {
+
+		return _standardMBean.invoke(actionName, params, signature);
+	}
+
+	@Override
+	public void setAttribute(Attribute attribute)
+		throws AttributeNotFoundException, InvalidAttributeValueException,
+			   MBeanException, ReflectionException {
+
+		_standardMBean.setAttribute(attribute);
+	}
+
+	@Override
+	public AttributeList setAttributes(AttributeList attributes) {
+		return _standardMBean.setAttributes(attributes);
 	}
 
 	public void setSessionFactoryImplementor(
@@ -35,5 +90,7 @@ public class HibernateStatisticsService extends StatisticsService {
 
 		super.setSessionFactory(sessionFactoryImplementor);
 	}
+
+	private final StandardMBean _standardMBean;
 
 }

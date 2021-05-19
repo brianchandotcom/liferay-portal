@@ -87,15 +87,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals(
-				key_assetTitle = "WC WebContent Title Edit",
-				locator1 = "AP#ASSET_ABSTRACT_TITLE",
-				value1 = "WC WebContent Title Edit");
-
-			AssertTextEquals.assertPartialText(
-				key_assetTitle = "WC WebContent Title Edit",
-				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-				value1 = "WC WebContent Content Edit");
+			WebContent.viewPGViaAP(
+				webContentContent = "WC WebContent Content Edit",
+				webContentTitle = "WC WebContent Title Edit");
 		}
 	}
 
@@ -145,9 +139,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssertTextEquals(
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "WC WebContent Content Edit");
+			WebContent.viewPGViaWCD(webContentContent = "WC WebContent Content Edit");
 		}
 	}
 

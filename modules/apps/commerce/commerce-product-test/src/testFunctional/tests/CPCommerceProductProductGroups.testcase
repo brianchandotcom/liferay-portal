@@ -35,6 +35,8 @@ definition {
 	test AddANewProductGroup {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -70,6 +72,8 @@ definition {
 	test AddAPreExistingProductGroup {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductProductGroups#AddAPreExistingProductGroup";
+
+		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Pricing",
@@ -122,6 +126,8 @@ definition {
 	@priority = "3"
 	test RemoveAProductGroup {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

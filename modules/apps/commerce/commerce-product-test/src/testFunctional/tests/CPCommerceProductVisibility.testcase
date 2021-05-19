@@ -55,6 +55,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductVisibility#RemoveAccountGroupFilter";
 
+		// TODO Review
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

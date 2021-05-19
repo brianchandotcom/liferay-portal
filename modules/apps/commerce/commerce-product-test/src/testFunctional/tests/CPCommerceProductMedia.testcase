@@ -36,6 +36,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnAttachment";
 
+		// TODO Review
+
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
@@ -69,6 +71,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnImage";
 
+		// TODO Review
+
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
@@ -91,6 +95,8 @@ definition {
 	test AddAnImageToAnOption {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductMedia#AddAnImageToAnOption";
+
+		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -147,6 +153,8 @@ definition {
 	test EditAnAttachment {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductMedia#EditAnAttachment";
+
+		// TODO Review
 
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
@@ -210,6 +218,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductMedia#RemoveAnAttachment";
 
+		// TODO Review
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -237,6 +247,8 @@ definition {
 	test RemoveAnImage {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductMedia#RemoveAnImage";
+
+		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

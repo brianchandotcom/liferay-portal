@@ -32,6 +32,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductDetails#AddProductToCartFromProductDetails";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -206,6 +208,8 @@ definition {
 	test ViewProductDetailsWidget {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductDetails#ViewProductDetailsWidget";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

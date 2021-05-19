@@ -42,6 +42,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "AddEditAndDeletePriceModifier";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -544,6 +546,8 @@ definition {
 	test AddPriceListQualifier {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AddPriceListQualifier";
+
+		// TODO Review
 
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 

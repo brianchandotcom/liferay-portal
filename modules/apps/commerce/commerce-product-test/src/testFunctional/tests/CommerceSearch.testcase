@@ -50,6 +50,8 @@ definition {
 	test GlobalSearchSearchEntryInAllContent {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -85,6 +87,8 @@ definition {
 	@priority = "3"
 	test GlobalSearchSearchEntryInCatalog {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -126,6 +130,8 @@ definition {
 	@priority = "3"
 	test GlobalSearchSearchProductsByCategories {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -183,6 +189,8 @@ definition {
 	test GlobalSearchSearchProductsBySKUs {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -220,6 +228,8 @@ definition {
 	@priority = "3"
 	test GlobalSearchSearchProductsBySpecificationValues {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -296,6 +306,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductByNameDoubleQuotes";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -305,8 +317,6 @@ definition {
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
 			value1 = "${product}");
-
-		Button.clickSubmitButton();
 
 		AssertElementPresent(
 			key_value = "1",
@@ -326,6 +336,8 @@ definition {
 	test SearchBarWidgetSearchProductByNameSingleQuotes {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductByNameSingleQuotes";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -357,6 +369,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductBySKU";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
@@ -381,6 +395,8 @@ definition {
 	test SearchBarWidgetSearchProductsByCategory {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsByCategory";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -408,6 +424,8 @@ definition {
 	test SearchBarWidgetSearchProductsByDifferentCategories {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsByDifferentCategories";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -438,6 +456,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsByDifferentSKUs";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -467,6 +487,8 @@ definition {
 	test SearchBarWidgetSearchProductsByDifferentSpecificationValues {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsByDifferentSpecificationValues";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -513,6 +535,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductsBySpecificationValue";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -541,6 +565,8 @@ definition {
 	test SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#SearchResultsWidgetChangeNumberOfItemsToDisplayFromPaginationBar";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

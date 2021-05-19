@@ -59,6 +59,8 @@ definition {
 	test AssertMultipleSKUProductCannotBeDirectlyAddedToCart {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -86,6 +88,8 @@ definition {
 	@priority = "3"
 	test AssertOnlyAllowedQuantitiesAreSelectable {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -145,6 +149,8 @@ definition {
 	@priority = "3"
 	test AssertProductCanBeAddedToCartIfBackOrderIsEnabled {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -215,6 +221,8 @@ definition {
 	@priority = "3"
 	test AssertProductCannotBeAddedToCartIfProductIsNotPurchasable {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -303,6 +311,8 @@ definition {
 	test AssertProductCardShowsCustomImageIfSet {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -351,6 +361,8 @@ definition {
 	test AssertProductNameIsTranslated {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -396,6 +408,8 @@ definition {
 	@priority = "3"
 	test AssertQuantityCanBeSelectedUpToAMaximumQuantitySet {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -462,6 +476,8 @@ definition {
 	test AssertViewAllVariantsButtonRedirectsToProductDetailsPage {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -490,6 +506,8 @@ definition {
 	@priority = "3"
 	test RemoveProductFromComparisonItems {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -536,6 +554,8 @@ definition {
 	@priority = "3"
 	test ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsLowerThanMultipleOrderQuantity {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -591,6 +611,8 @@ definition {
 	test ViewProductCardPriceWithDiscount {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -631,6 +653,8 @@ definition {
 	@priority = "3"
 	test ViewProductCardPriceWithPromotion {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

@@ -36,6 +36,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductSubscriptions#UseSubscriptions";
 
+		// TODO Review
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");

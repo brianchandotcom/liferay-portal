@@ -106,6 +106,8 @@ definition {
 	test GetSKUStockQuantity {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -156,6 +158,8 @@ definition {
 	test GetWarehouseNameGivenChannel {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		// TODO COMMERCE-6205 GetWarehouseNameGivenChannel Pending Implementation
 	}
 
@@ -181,6 +185,8 @@ definition {
 	@priority = "3"
 	test UpdateInventorySKUQuantity {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		var key_inventoryName = "test new warehouse";
 

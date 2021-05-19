@@ -68,6 +68,8 @@ definition {
 	test EditBundledProductQuantityFromMiniCart {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -234,6 +236,8 @@ definition {
 	test EditCartItemQuantityFromMiniCart {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -327,6 +331,8 @@ definition {
 	test ViewMiniCartItemDetails {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -392,6 +398,8 @@ definition {
 	test ViewMiniCartItemWithDiscount {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartItemWithDiscount";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -463,6 +471,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartItemWithDiscountToTotal";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -524,6 +534,8 @@ definition {
 	@priority = "3"
 	test ViewMiniCartItemWithPromotion {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

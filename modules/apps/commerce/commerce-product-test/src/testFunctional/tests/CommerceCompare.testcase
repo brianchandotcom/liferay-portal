@@ -31,6 +31,8 @@ definition {
 	test AddComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -48,6 +50,8 @@ definition {
 	@priority = "3"
 	test AssertComparisonItemsAreVisibleOnMiniCompare {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -134,6 +138,8 @@ definition {
 	@priority = "3"
 	test RemoveComparisonItemFromProductDetailsPage {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

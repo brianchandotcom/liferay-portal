@@ -36,6 +36,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductProductRelations#AddAProductRelations";
 
+		// TODO Review
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Products");
@@ -86,6 +88,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductProductRelations#EditAProductRelations";
 
+		// TODO Review
+
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceNavigator.gotoPortlet(
@@ -131,6 +135,8 @@ definition {
 	test RemoveAProductRelations {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceProductProductRelations#RemoveAProductRelations";
+
+		// TODO Review
 
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 

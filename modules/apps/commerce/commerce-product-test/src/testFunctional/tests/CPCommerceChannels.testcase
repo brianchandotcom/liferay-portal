@@ -36,6 +36,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#ActiveAllTaxCalculations";
 
+		// TODO Review
+
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586; COMMERCE-6588
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -182,6 +184,8 @@ definition {
 	test AddShippingOptionFlatRate {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#AddShippingOptionFlatRate";
+
+		// TODO Review
 
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
@@ -368,6 +372,8 @@ definition {
 	test CreateNewChannelCompileAll {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -530,6 +536,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#EditAuthorizePaymentMethod";
 
+		// TODO Review
+
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -613,6 +621,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#EditMercanetPaymentMethod";
 
+		// TODO Review
+
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -663,6 +673,8 @@ definition {
 	test EditMoneyOrderPaymentMethod {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#EditMoneyOrderPaymentMethod";
+
+		// TODO Review
 
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
@@ -763,6 +775,8 @@ definition {
 	test RemoveShippingOptionFlatRate {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#RemoveShippingOptionFlatRate";
+
+		// TODO Review
 
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 
@@ -894,6 +908,8 @@ definition {
 	test UseSearchBar {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#UseSearchBar";
+
+		// TODO Review
 
 		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586
 

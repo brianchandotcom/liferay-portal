@@ -149,33 +149,31 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-            category = "Content &amp; Data",
-            portlet = "Forms");
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
-        FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoAddForm();
 
-        Form.editName(formName = "Form 1");
+		Form.editName(formName = "Form 1");
 
-        Form.gotoAddField(
-            fieldPositionNumber = "0",
-            fieldType = "Single Selection");
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
 
-        Form.gotoAdvancedTab();
-		
+		Form.gotoAdvancedTab();
 
-        FormViewBuilder.clickShowLabel();
+		FormViewBuilder.clickShowLabel();
 
-        Form.save();
+		Form.save();
 
-        Form.publishForm();
+		Form.publishForm();
 
-        FormsAdminNavigator.gotoPreviewForm();
+		FormsAdminNavigator.gotoPreviewForm();
 
-        AssertElementNotPresent(
-            key_fieldName = "Single Selection",
-            key_fieldValue = "",
-            locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION");
-		
+		AssertElementNotPresent(
+			key_fieldName = "Single Selection",
+			key_fieldValue = "",
+			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION");
 	}
 
 	@description = "Verify that options can be added"

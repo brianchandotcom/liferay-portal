@@ -71,6 +71,14 @@ public class FVSActiveEntryLocalServiceUtil {
 		return getService().createFVSActiveEntry(fvsActiveEntryId);
 	}
 
+	public static FVSActiveEntry createFVSActiveEntry(
+		long userId, long fvsEntryId, String clayDataSetDisplayId, long plid,
+		String portletId) {
+
+		return getService().createFVSActiveEntry(
+			userId, fvsEntryId, clayDataSetDisplayId, plid, portletId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -207,6 +215,13 @@ public class FVSActiveEntryLocalServiceUtil {
 
 	public static FVSActiveEntry fetchFVSActiveEntry(long fvsActiveEntryId) {
 		return getService().fetchFVSActiveEntry(fvsActiveEntryId);
+	}
+
+	public static FVSActiveEntry fetchFVSActiveEntry(
+		long userId, String clayDatasetDisplayId, long plid, String portletId) {
+
+		return getService().fetchFVSActiveEntry(
+			userId, clayDatasetDisplayId, plid, portletId);
 	}
 
 	/**

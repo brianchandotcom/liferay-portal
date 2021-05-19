@@ -86,6 +86,10 @@ public interface FVSActiveEntryLocalService
 	@Transactional(enabled = false)
 	public FVSActiveEntry createFVSActiveEntry(long fvsActiveEntryId);
 
+	public FVSActiveEntry createFVSActiveEntry(
+		long userId, long fvsEntryId, String clayDataSetDisplayId, long plid,
+		String portletId);
+
 	/**
 	 * @throws PortalException
 	 */
@@ -198,6 +202,10 @@ public interface FVSActiveEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FVSActiveEntry fetchFVSActiveEntry(long fvsActiveEntryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FVSActiveEntry fetchFVSActiveEntry(
+		long userId, String clayDatasetDisplayId, long plid, String portletId);
 
 	/**
 	 * Returns the fvs active entry with the matching UUID and company.

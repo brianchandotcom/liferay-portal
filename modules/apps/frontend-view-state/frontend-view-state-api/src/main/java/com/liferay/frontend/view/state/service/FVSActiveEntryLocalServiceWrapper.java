@@ -66,6 +66,16 @@ public class FVSActiveEntryLocalServiceWrapper
 			fvsActiveEntryId);
 	}
 
+	@Override
+	public com.liferay.frontend.view.state.model.FVSActiveEntry
+		createFVSActiveEntry(
+			long userId, long fvsEntryId, String clayDataSetDisplayId,
+			long plid, String portletId) {
+
+		return _fvsActiveEntryLocalService.createFVSActiveEntry(
+			userId, fvsEntryId, clayDataSetDisplayId, plid, portletId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -229,6 +239,16 @@ public class FVSActiveEntryLocalServiceWrapper
 
 		return _fvsActiveEntryLocalService.fetchFVSActiveEntry(
 			fvsActiveEntryId);
+	}
+
+	@Override
+	public com.liferay.frontend.view.state.model.FVSActiveEntry
+		fetchFVSActiveEntry(
+			long userId, String clayDatasetDisplayId, long plid,
+			String portletId) {
+
+		return _fvsActiveEntryLocalService.fetchFVSActiveEntry(
+			userId, clayDatasetDisplayId, plid, portletId);
 	}
 
 	/**

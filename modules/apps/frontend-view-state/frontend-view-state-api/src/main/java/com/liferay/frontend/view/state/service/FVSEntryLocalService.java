@@ -86,6 +86,8 @@ public interface FVSEntryLocalService
 	@Transactional(enabled = false)
 	public FVSEntry createFVSEntry(long fvsEntryId);
 
+	public FVSEntry createFVSEntry(String viewState);
+
 	/**
 	 * @throws PortalException
 	 */

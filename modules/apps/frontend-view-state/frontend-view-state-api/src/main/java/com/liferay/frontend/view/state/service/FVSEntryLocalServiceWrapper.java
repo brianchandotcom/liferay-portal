@@ -62,6 +62,13 @@ public class FVSEntryLocalServiceWrapper
 		return _fvsEntryLocalService.createFVSEntry(fvsEntryId);
 	}
 
+	@Override
+	public com.liferay.frontend.view.state.model.FVSEntry createFVSEntry(
+		String viewState) {
+
+		return _fvsEntryLocalService.createFVSEntry(viewState);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

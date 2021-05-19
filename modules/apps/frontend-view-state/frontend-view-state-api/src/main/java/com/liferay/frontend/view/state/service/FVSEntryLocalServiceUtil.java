@@ -69,6 +69,10 @@ public class FVSEntryLocalServiceUtil {
 		return getService().createFVSEntry(fvsEntryId);
 	}
 
+	public static FVSEntry createFVSEntry(String viewState) {
+		return getService().createFVSEntry(viewState);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

@@ -76,7 +76,7 @@ import org.junit.runner.RunWith;
  * @author Alessio Antonio Rendina
  * @author Igor Beslic
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
+@DataGuard(scope = DataGuard.Scope.CLASS)
 @RunWith(Arquillian.class)
 public class CPDefinitionOptionValueRelLocalServiceTest {
 

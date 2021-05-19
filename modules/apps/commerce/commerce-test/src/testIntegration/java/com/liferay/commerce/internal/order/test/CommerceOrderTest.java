@@ -105,7 +105,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Alec Sloan
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
+@DataGuard(scope = DataGuard.Scope.CLASS)
 @RunWith(Arquillian.class)
 public class CommerceOrderTest {
 

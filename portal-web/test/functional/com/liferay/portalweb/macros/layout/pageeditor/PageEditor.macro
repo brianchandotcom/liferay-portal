@@ -1246,6 +1246,15 @@ definition {
 					key_contentName = "${infoListProviderName}",
 					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 			}
+			else if (isSet(infoItemRelatedListProviderName)) {
+				NavItem.click(navItem = "Related Items Collection Providers");
+
+				LexiconCard.clickCard(card = "${infoItemRelatedListProviderName}");
+
+				AssertElementPresent(
+					key_contentName = "${infoItemRelatedListProviderName}",
+					locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+			}
 		}
 
 		if (isSet(layout)) {

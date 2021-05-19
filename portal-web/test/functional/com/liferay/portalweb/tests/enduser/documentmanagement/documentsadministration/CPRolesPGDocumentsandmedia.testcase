@@ -389,15 +389,17 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test ViewDMDocumentNoGuestRole {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
 
-		SitePages.addPublicPage(pageName = "Documents and Media Page");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		Portlet.addPG(portletName = "Documents and Media");
 
 		DMDocument.enableActionsMenuOnPortlet();
 
@@ -406,6 +408,8 @@ definition {
 		DMDocument.addPG(
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "Document_1.doc");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		PermissionsInline.gotoDocumentsAndMediaDocumentPG(
 			dmDocumentTitle = "Document_1.doc",

@@ -18,7 +18,6 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.internal.util.MBThreadUtil;
 import com.liferay.message.boards.internal.util.MBUserRankUtil;
 import com.liferay.message.boards.model.MBMessageTable;
-import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
@@ -27,7 +26,6 @@ import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -38,10 +36,10 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -126,41 +124,49 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public long getMessageCountByGroupId(long groupId) {
-		DynamicQuery dynamicQuery = mbStatsUserLocalService.dynamicQuery();
+	public long getMessageCountByGroupId(long groupId) throws PortalException {
+		Group group = groupLocalService.getGroup(groupId);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.sum("messageCount"));
+		long defaultUserId = userLocalService.getDefaultUserId(
+			group.getCompanyId());
 
-		Property property = PropertyFactoryUtil.forName("groupId");
-
-		dynamicQuery.add(property.eq(groupId));
-
-		List<Long> results = mbStatsUserLocalService.dynamicQuery(dynamicQuery);
-
-		if (results.get(0) == null) {
-			return 0;
-		}
-
-		return results.get(0);
+		return _mbMessagePersistence.dslQuery(
+			DSLQueryFactoryUtil.count(
+			).from(
+				MBMessageTable.INSTANCE
+			).where(
+				MBMessageTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					MBMessageTable.INSTANCE.userId.neq(defaultUserId)
+				).and(
+					MBMessageTable.INSTANCE.categoryId.neq(
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				)
+			));
 	}
 
 	@Override
-	public long getMessageCountByUserId(long userId) {
-		DynamicQuery dynamicQuery = mbStatsUserLocalService.dynamicQuery();
+	public long getMessageCountByUserId(long userId) throws PortalException {
+		User user = userLocalService.getUser(userId);
 
-		dynamicQuery.setProjection(ProjectionFactoryUtil.sum("messageCount"));
+		long defaultUserId = userLocalService.getDefaultUserId(
+			user.getCompanyId());
 
-		Property property = PropertyFactoryUtil.forName("userId");
-
-		dynamicQuery.add(property.eq(userId));
-
-		List<Long> results = mbStatsUserLocalService.dynamicQuery(dynamicQuery);
-
-		if (results.get(0) == null) {
-			return 0;
-		}
-
-		return results.get(0);
+		return _mbMessagePersistence.dslQuery(
+			DSLQueryFactoryUtil.count(
+			).from(
+				MBMessageTable.INSTANCE
+			).where(
+				MBMessageTable.INSTANCE.userId.eq(
+					userId
+				).and(
+					MBMessageTable.INSTANCE.userId.neq(defaultUserId)
+				).and(
+					MBMessageTable.INSTANCE.categoryId.neq(
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				)
+			));
 	}
 
 	@Override

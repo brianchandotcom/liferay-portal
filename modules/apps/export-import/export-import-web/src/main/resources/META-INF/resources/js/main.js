@@ -1128,7 +1128,7 @@ AUI.add(
 											controlCheckbox.disabled &&
 											controlCheckbox.checked
 										) {
-											portletURL.setParameter(
+											portletURL.searchParams.set(
 												controlCheckbox.name.replace(
 													instance.NS,
 													''

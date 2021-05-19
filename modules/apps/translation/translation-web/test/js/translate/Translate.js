@@ -219,6 +219,37 @@ describe('Translate', () => {
 				expect(getByText('field-translated')).toBeInTheDocument();
 			});
 		});
+
+		describe('click in the general auto-translate button', () => {
+			let result;
+
+			beforeEach(async () => {
+				result = renderComponent(baseProps);
+
+				const {getByText} = result;
+				const autoTranslateButton = getByText('auto-translate');
+
+				await act(async () => {
+					fireEvent.click(autoTranslateButton);
+				});
+			});
+
+			it('updates the input with the translated message', () => {
+				const {getByDisplayValue} = result;
+
+				expect(
+					getByDisplayValue('título simulado')
+				).toBeInTheDocument();
+			});
+
+			it('renders a success message', () => {
+				const {getByText} = result;
+
+				expect(
+					getByText('successfully-received-translations')
+				).toBeInTheDocument();
+			});
+		});
 	});
 
 	it('renders with auto-translate disabled', () => {

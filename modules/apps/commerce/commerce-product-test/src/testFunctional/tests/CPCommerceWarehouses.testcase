@@ -238,12 +238,39 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6202. It should be possible to limit the warehouse stock quantity by channel"
-	@ignore = "true"
 	@priority = "3"
 	test LimitWarehouseStockQuantityByChannel {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceWarehouses#LimitWarehouseStockQuantityByChannel";
 
-		// TODO COMMERCE-6202 LimitWarehouseStockQuantityByChannel Pending Implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
+
+		Click(
+			key_itemName = "Italy",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		if (!(IsElementPresent( specifiedCollapse = "Channels",
+					locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+			Click(
+				key_contentType = "Channels",
+				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+
+			Pause(locator1 = "1000");
+		}
+
+		Button.clickSave();
+
+		Click(
+			key_itemName = "Italy",
+			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
+
+		AssertChecked(
+			checkboxName = "Minium Portal",
+			locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
 	}
 
 	@description = "This is a test for COMMERCE-6208. Concurrency management for inventory entities"

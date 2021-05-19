@@ -700,6 +700,11 @@
     <td>//a[contains(text(),'${key_itemName}')]//..//..//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
     <td></td>
 </tr>
+<tr>
+	<td>CHECK_WAREHOUSE_COLLAPSE_OPEN</td> 
+	<td>//a[contains(.,'${specifiedCollapse}')]/../../..//div[contains(@class,'show')]</td> 
+	<td></td> 
+</tr>
 </tbody>
 </table>
 </body>

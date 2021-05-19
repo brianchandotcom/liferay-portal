@@ -603,6 +603,9 @@ public interface PropsKeys {
 	public static final String COMPANY_SECURITY_STRANGERS_WITH_MX =
 		"company.security.strangers.with.mx";
 
+	public static final String COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED =
+		"company.security.update.password.required";
+
 	public static final String COMPANY_SETTINGS_FORM_AUTHENTICATION =
 		"company.settings.form.authentication";
 

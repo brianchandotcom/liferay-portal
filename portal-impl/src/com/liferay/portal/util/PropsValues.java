@@ -583,6 +583,10 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX));
 
+	public static final boolean COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED));
+
 	public static String[] COMPANY_SETTINGS_FORM_AUTHENTICATION =
 		PropsUtil.getArray(PropsKeys.COMPANY_SETTINGS_FORM_AUTHENTICATION);
 

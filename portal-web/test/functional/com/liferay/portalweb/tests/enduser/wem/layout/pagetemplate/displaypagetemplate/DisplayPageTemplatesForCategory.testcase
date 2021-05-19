@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-110247 and LPS-112578. The user can create a display page template for Category and mark it as default. The new non-subcategory will be associated to the Default."
 	@priority = "5"
 	test AddDisplayPageTemplateAndMarkItAsDefault {
+		property portal.acceptance = "true";
+
 		task ("Navigate to Display Page Template admin") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
@@ -97,6 +99,8 @@ definition {
 	@description = "This is a test for LPS-110247. The user can select the specific display page template in category editor."
 	@priority = "5"
 	test SelectSpecificDisplayPageTemplateInCategoryEditor {
+		property portal.acceptance = "true";
+
 		task ("Add the first display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
@@ -179,6 +183,8 @@ definition {
 	@description = "This is a test for LPS-112578. The user can define associated display page template in subcategory and it will be inherited by its subcategory."
 	@priority = "5"
 	test SelectSpecificDisplayPageTemplateInSubcategoryEditor {
+		property portal.acceptance = "true";
+
 		task ("Add the first display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
@@ -434,6 +440,8 @@ definition {
 	@description = "This is a test for LPS-112578. The new subcategory will inherit associated display page template from parent category."
 	@priority = "5"
 	test ViewInheritedAssociatedDisplayPageTemplateFromParentCategory {
+		property portal.acceptance = "true";
+
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
@@ -501,6 +509,8 @@ definition {
 	@description = "This is a test for LPS-110247. The user can navigate to associated display page template via View Display Page of category."
 	@priority = "5"
 	test ViewMappedContentInDisplayPageTemplate {
+		property portal.acceptance = "true";
+
 		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",

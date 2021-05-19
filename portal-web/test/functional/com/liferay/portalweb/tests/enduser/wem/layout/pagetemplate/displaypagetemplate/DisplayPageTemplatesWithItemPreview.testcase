@@ -177,6 +177,8 @@ definition {
 	@description = "This is a test for LPS-128904. View mapped content in page editor when select preview items."
 	@priority = "5"
 	test ViewMappedContentOfPreviewItem {
+		property portal.acceptance = "true";
+
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",

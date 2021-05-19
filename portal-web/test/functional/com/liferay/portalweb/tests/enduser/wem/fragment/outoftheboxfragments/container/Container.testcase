@@ -230,6 +230,8 @@ definition {
 	@description = "This is a test for LPS-120693. Configure the Flex Column and Fluid Container styles."
 	@priority = "5"
 	test ConfigureFlexColumnAndFluidContainerStyles {
+		property portal.acceptance = "true";
+
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
@@ -308,6 +310,8 @@ definition {
 	@description = "This is a test for LPS-120693. Configure the Flex Row and Fixed Width Container styles."
 	@priority = "5"
 	test ConfigureFlexRowAndFixedWidthContainerStyles {
+		property portal.acceptance = "true";
+
 		task ("Add a Container to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",

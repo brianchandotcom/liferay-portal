@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.digital.signature.internal.configuration;
+package com.liferay.digital.signature.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.digital.signature.internal.configuration.DigitalSignatureConfiguration",
+	id = "com.liferay.digital.signature.configuration.DigitalSignatureConfiguration",
 	localization = "content/Language",
 	name = "digital-signature-configuration-name"
 )

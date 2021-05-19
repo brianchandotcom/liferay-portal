@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "configurationPid=com.liferay.digital.signature.internal.configuration.DigitalSignatureConfiguration",
+	property = "configurationPid=com.liferay.digital.signature.configuration.DigitalSignatureConfiguration",
 	service = ConfigurationDDMFormDeclaration.class
 )
 public class DigitalSignatureConfigurationDDMFormDeclaration

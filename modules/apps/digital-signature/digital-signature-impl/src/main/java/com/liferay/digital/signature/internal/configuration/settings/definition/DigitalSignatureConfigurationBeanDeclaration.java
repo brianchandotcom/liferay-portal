@@ -14,7 +14,7 @@
 
 package com.liferay.digital.signature.internal.configuration.settings.definition;
 
-import com.liferay.digital.signature.internal.configuration.DigitalSignatureConfiguration;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;

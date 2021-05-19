@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.view.state.service.impl;
 
+import com.liferay.frontend.view.state.model.FVSEntry;
 import com.liferay.frontend.view.state.service.base.FVSEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 
@@ -27,4 +28,14 @@ import org.osgi.service.component.annotations.Component;
 	service = AopService.class
 )
 public class FVSEntryLocalServiceImpl extends FVSEntryLocalServiceBaseImpl {
+
+	public FVSEntry createFVSEntry(String viewState) {
+		FVSEntry fvsEntry = fvsEntryLocalService.createFVSEntry(
+			counterLocalService.increment());
+
+		fvsEntry.setViewState(viewState);
+
+		return fvsEntry;
+	}
+
 }

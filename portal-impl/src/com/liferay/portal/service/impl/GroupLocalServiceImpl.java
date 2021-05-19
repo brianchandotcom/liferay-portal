@@ -3846,6 +3846,18 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		typeSettingsUnicodeProperties.fastLoad(typeSettings);
 
+		if (GetterUtil.getBoolean(
+				typeSettingsUnicodeProperties.getProperty(
+					GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES),
+				true)) {
+
+			typeSettingsUnicodeProperties.setProperty(
+				PropsKeys.LOCALES,
+				StringUtil.merge(
+					LocaleUtil.toLanguageIds(
+						LanguageUtil.getAvailableLocales(groupId))));
+		}
+
 		String newLanguageIds = typeSettingsUnicodeProperties.getProperty(
 			PropsKeys.LOCALES);
 
@@ -3890,7 +3902,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		group.setTypeSettings(typeSettings);
+		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
 
 		return groupPersistence.update(group);
 	}

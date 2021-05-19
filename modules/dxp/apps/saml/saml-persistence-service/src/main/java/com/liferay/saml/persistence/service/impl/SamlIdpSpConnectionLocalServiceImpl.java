@@ -86,7 +86,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setCompanyId(serviceContext.getCompanyId());
 		samlIdpSpConnection.setCreateDate(now);
 		samlIdpSpConnection.setModifiedDate(now);
-		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 		samlIdpSpConnection.setAssertionLifetime(assertionLifetime);
 		samlIdpSpConnection.setAttributeNames(attributeNames);
 		samlIdpSpConnection.setAttributesEnabled(attributesEnabled);
@@ -124,6 +123,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setName(name);
 		samlIdpSpConnection.setNameIdAttribute(nameIdAttribute);
 		samlIdpSpConnection.setNameIdFormat(nameIdFormat);
+		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 
 		return samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
 	}
@@ -267,7 +267,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		}
 
 		samlIdpSpConnection.setModifiedDate(now);
-		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 		samlIdpSpConnection.setAssertionLifetime(assertionLifetime);
 		samlIdpSpConnection.setAttributeNames(attributeNames);
 		samlIdpSpConnection.setAttributesEnabled(attributesEnabled);
@@ -309,6 +308,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 		samlIdpSpConnection.setName(name);
 		samlIdpSpConnection.setNameIdAttribute(nameIdAttribute);
 		samlIdpSpConnection.setNameIdFormat(nameIdFormat);
+		samlIdpSpConnection.setSamlSpEntityId(samlSpEntityId);
 
 		return samlIdpSpConnectionPersistence.update(samlIdpSpConnection);
 	}

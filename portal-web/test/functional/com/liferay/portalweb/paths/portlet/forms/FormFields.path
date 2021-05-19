@@ -390,6 +390,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSERT_PARAGRAPH_TEXT_STYLE</td>
+	<td>//div[(@class='liferay-ddm-form-field-paragraph-text')]//${key_formattingStyle}[contains(text(),'Test')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IFRAME_FORMATTING_STYLES</td>
+	<td>//iframe[@class='cke_panel_frame']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

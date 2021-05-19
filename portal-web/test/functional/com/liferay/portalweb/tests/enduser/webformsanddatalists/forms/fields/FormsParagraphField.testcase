@@ -249,12 +249,76 @@ definition {
 	}
 
 	@description = "Verify that the Formatting Style can be changed using the predefined style options"
-	@ignore = "true"
 	@priority = "4"
 	test CanEditFormattingStyle {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131235 CanEditFormattingStyle pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		FormFields.editParagraphBody(content = "Test");
+
+		Click(
+			key_titleName = "Formatting Styles",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "FormFields#IFRAME_FORMATTING_STYLES");
+
+		Click.clickAt(
+			key_titleName = "Heading 2",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON",
+			value1 = "Heading 2");
+
+		SelectFrame.selectSecondFrame();
+
+		Form.save();
+
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+		AssertElementPresent(
+			key_formattingStyle = "h2",
+			locator1 = "FormFields#ASSERT_PARAGRAPH_TEXT_STYLE");
+
+		Click(
+			key_fieldName = "Paragraph",
+			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT");
+
+		FormFields.editParagraphBody(content = "Test");
+
+		Click(
+			key_titleName = "Formatting Styles",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "FormFields#IFRAME_FORMATTING_STYLES");
+
+		Click.clickAt(
+			key_titleName = "Preformatted Text",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON",
+			value1 = "Preformatted Text");
+
+		SelectFrame.selectSecondFrame();
+
+		Form.save();
+
+		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertElementPresent(
+			key_formattingStyle = "pre",
+			locator1 = "FormFields#ASSERT_PARAGRAPH_TEXT_STYLE");
 	}
 
 	@description = "Verify that a Form cannot be saved or published without adding anything in the Body Text"

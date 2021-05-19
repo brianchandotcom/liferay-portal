@@ -462,14 +462,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 	}
 
 	private User _getAnonymousUser(long companyId) throws Exception {
-		String filterString = String.format(
-			"(&(service.factoryPid=%s)(companyId=%s))",
-			"com.liferay.user.associated.data.web.internal.configuration." +
-				"AnonymousUserConfiguration",
-			companyId);
-
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filterString);
+			String.format(
+				"(&(service.factoryPid=%s)(companyId=%s))",
+				"com.liferay.user.associated.data.web.internal.configuration." +
+					"AnonymousUserConfiguration",
+				companyId));
 
 		if (configurations == null) {
 			return null;

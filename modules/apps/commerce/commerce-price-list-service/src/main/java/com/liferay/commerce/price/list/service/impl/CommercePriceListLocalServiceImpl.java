@@ -570,7 +570,11 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public void cleanPriceListCache(long companyId) {
-		_multiVMPool.removePortalCache("PRICE_LISTS_" + companyId);
+		PortalCache<String, Serializable> portalCache =
+			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
+				"PRICE_LISTS_" + companyId);
+
+		portalCache.removeAll();
 	}
 
 	@Indexable(type = IndexableType.DELETE)

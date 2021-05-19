@@ -1,8 +1,6 @@
 @component-name = "portal-wcm"
 definition {
 
-	property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.ContentsContentPageEditorSidebarPanelConfiguration.config";
-	property osgi.module.configurations = "enabled=B&quot;true&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Content Pages";
@@ -66,6 +64,66 @@ definition {
 
 		task ("Assert the page cannot be edited by asserting the fragments side bar is not present") {
 			AssertElementNotPresent(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BODY");
+		}
+	}
+
+	@description = "This is for LPS-106813. Can set permissions for widgets in content page."
+	@priority = "5"
+	test ConfigurePermissionsOfAssetPublisher {
+		property portal.acceptance = "true";
+
+		task ("Add an Asset Publisher widget to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Configure permissions of Asset Publisher") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			AssertVisible(
+				key_menuItem = "Permissions",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Uncheck(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			IFrame.closeFrame();
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the ellipsis button of Asset Publisher is unavailable in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			AssertElementNotPresent(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 		}
 	}
 
@@ -638,6 +696,194 @@ definition {
 			AssertElementPresent(
 				key_fragmentName = "Blogs",
 				locator1 = "Fragment#FRAGMENT_HEADER_INSET_STYLE");
+		}
+	}
+
+	@description = "This is for LPS-106813. Widgets inherited from content page template will inherit permissions set in content page template."
+	@priority = "4"
+	test ViewPermissionsOfAssetPublisherInheritedFromContentPageTemplate {
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Add an Asset Publisher widget to the content page template") {
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Configure permissions of Asset Publisher") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Uncheck(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a page based on content page template") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			ContentPages.addPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Page Template Name");
+		}
+
+		task ("View inherited permissions of Asset Publisher") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertNotChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+		}
+	}
+
+	@description = "This is for LPS-106813. Widgets inherited from custom master will inherit permissions set in custom master."
+	@priority = "4"
+	test ViewPermissionsOfAssetPublisherInheritedFromMasterPageTemplate {
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Add a custom master") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Add an Asset Publisher widget to the master page template") {
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addWidget(
+				dropTarget = "Header",
+				portletName = "Asset Publisher",
+				scope = "Master");
+		}
+
+		task ("Configure the permissions of Asset Publisher") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Asset Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			AssertVisible(
+				key_menuItem = "Permissions",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Uncheck(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			AssertNotChecked(
+				key_roleTitle = "guest",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Apply the master page template to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoTab(tabName = "Page Design Options");
+
+			Navigator.gotoNavTab(navTab = "Master");
+
+			MastersPageTemplates.selectMasterViaPageDesignOptions(masterLayoutName = "Custom Masters Page Template");
+
+			AssertVisible(
+				key_assetTitle = "WC WebContent Title",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert the Asset Publisher is invisible to Guest") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			User.logoutPG();
+
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			AssertElementNotPresent(
+				key_assetTitle = "WC WebContent Title",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+			Alert.viewErrorMessage(errorMessage = "You do not have the roles required to access this portlet.");
 		}
 	}
 

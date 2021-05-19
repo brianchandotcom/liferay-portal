@@ -122,7 +122,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertElementNotPresent(
@@ -437,7 +437,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");

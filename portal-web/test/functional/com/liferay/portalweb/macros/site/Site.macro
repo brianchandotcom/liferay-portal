@@ -64,7 +64,7 @@ definition {
 		if ("${siteType}" == "Site Template") {
 			if ("${uncheckPropagation}" == "true") {
 				Click(
-					key_url = "site-configuration-google-pagespeed",
+					key_itemName = "Pages",
 					locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 				Navigator.gotoNavTab(navTab = "Pages");
@@ -1066,7 +1066,7 @@ definition {
 
 	macro selectPageType {
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Pages");

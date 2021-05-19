@@ -673,7 +673,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -714,7 +714,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -747,7 +747,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -781,7 +781,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -1933,7 +1933,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -1974,7 +1974,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -1991,7 +1991,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
@@ -2033,7 +2033,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-google-pagespeed",
+			key_itemName = "Pages",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Open Graph");

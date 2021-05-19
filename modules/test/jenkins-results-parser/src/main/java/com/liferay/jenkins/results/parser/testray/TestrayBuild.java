@@ -56,12 +56,18 @@ public class TestrayBuild {
 	}
 
 	public String getResult() {
+		if (_result != null) {
+			return _result;
+		}
+
 		JSONObject buildResultJSONObject = _getBuildResultJSONObject();
 
 		if ((buildResultJSONObject != null) &&
 			buildResultJSONObject.has("result")) {
 
-			return buildResultJSONObject.getString("result");
+			_result = buildResultJSONObject.getString("result");
+
+			return _result;
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -86,14 +92,18 @@ public class TestrayBuild {
 			JSONArray dataJSONArray = jsonObject.getJSONArray("data");
 
 			if ((dataJSONArray != null) && (dataJSONArray.length() > 0)) {
-				return "FAILURE";
+				_result = "FAILURE";
+
+				return _result;
 			}
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 
-		return "SUCCESS";
+		_result = "SUCCESS";
+
+		return _result;
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResults() {
@@ -211,6 +221,7 @@ public class TestrayBuild {
 	private JSONObject _buildResultJSONObject;
 	private URL _buildResultURL;
 	private final JSONObject _jsonObject;
+	private String _result;
 	private List<TestrayCaseResult> _testrayCaseResults;
 	private final TestrayProductVersion _testrayProductVersion;
 	private final TestrayProject _testrayProject;

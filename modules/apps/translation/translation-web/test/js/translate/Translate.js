@@ -13,6 +13,7 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 
 import Translate from '../../../src/main/resources/META-INF/resources/js/translate/Translate';
@@ -125,6 +126,30 @@ describe('Translate', () => {
 		const {asFragment} = renderComponent(baseProps);
 
 		expect(asFragment()).toMatchSnapshot();
+	});
+
+	it('renders auto-translate field button disabled when the sourceContent is empty', () => {
+		const {getByText} = renderComponent({
+			...baseProps,
+			infoFieldSetEntries: [
+				{
+					...baseProps.infoFieldSetEntries[1],
+					fields: [
+						{
+							...baseProps.infoFieldSetEntries[1].fields[0],
+							sourceContent: '',
+						},
+					],
+				},
+			],
+		});
+
+		expect(
+			getByText(
+				'auto-translate-x-field-' +
+					baseProps.infoFieldSetEntries[1].fields[0].label
+			).closest('button')
+		).toBeDisabled();
 	});
 
 	it('renders with auto-translate disabled', () => {

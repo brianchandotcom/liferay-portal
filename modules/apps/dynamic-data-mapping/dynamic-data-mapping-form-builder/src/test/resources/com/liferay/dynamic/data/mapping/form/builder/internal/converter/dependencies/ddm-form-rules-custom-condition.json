@@ -1,0 +1,25 @@
+[
+	{
+		"actions": [
+			{
+				"action": "require",
+				"target": "Field1"
+			}
+		],
+		"conditions": [
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field0"
+					},
+					{
+						"type": "string",
+						"value": "test"
+					}
+				],
+				"operator": "custom"
+			}
+		]
+	}
+]

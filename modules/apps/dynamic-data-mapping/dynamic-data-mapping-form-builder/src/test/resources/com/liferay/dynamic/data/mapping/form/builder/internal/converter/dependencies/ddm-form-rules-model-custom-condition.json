@@ -1,0 +1,8 @@
+[
+	{
+		"actions": [
+			"setRequired('Field1', true)"
+		],
+		"condition": "custom(getValue('Field0'), 'test')"
+	}
+]

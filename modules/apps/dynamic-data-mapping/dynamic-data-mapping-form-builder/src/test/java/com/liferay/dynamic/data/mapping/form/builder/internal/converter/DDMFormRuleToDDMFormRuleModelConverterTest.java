@@ -241,6 +241,20 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 	}
 
 	@Test
+	public void testCustomCondition1() throws Exception {
+		assertConversionToModel(
+			"ddm-form-rules-custom-condition.json",
+			"ddm-form-rules-model-custom-condition.json");
+	}
+
+	@Test
+	public void testCustomCondition2() throws Exception {
+		assertConversionToConvertModel(
+			"ddm-form-rules-model-custom-condition.json",
+			"ddm-form-rules-custom-condition.json");
+	}
+
+	@Test
 	public void testIsEmptyCondition1() throws Exception {
 		assertConversionToModel(
 			"ddm-form-rules-is-empty-condition.json",

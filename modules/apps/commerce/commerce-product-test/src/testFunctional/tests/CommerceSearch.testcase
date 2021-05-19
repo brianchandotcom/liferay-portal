@@ -283,12 +283,91 @@ definition {
 	}
 
 	@description = "COMMERCE-6321. As a buyer, I want to be able to search an Orders entry using Global Search and I want to be able to click on a suggested entry and get redirected to that order details page"
-	@ignore = "true"
 	@priority = "3"
 	test GlobalSearchSuggestedOrdersEntries {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6321 GlobalSearchSuggestedOrdersEntries pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Account Users");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "buyer");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Click(
+			key_text = "Add Order",
+			locator1 = "Button#ANY");
+
+		SelectFrameTop();
+
+		var orderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+		Type(
+			key_text = "Search",
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+			value1 = "${orderId}");
+
+		AssertElementPresent(
+			key_value = "${orderId}",
+			locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+		Click(locator1 = "Button#SEARCH_CLOSE");
+
+		Type(
+			key_text = "Search",
+			locator1 = "TextInput#CUSTOM_CANONICAL_URL_ENABLED",
+			value1 = "buyer@liferay.com");
+
+		AssertElementPresent(
+			key_value = "${orderId}",
+			locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+		Click(
+			key_value = "${orderId}",
+			locator1 = "CommerceEntry#SUGGESTION_ACTIVE_ORDER_KEY");
+
+		AssertElementPresent(
+			key_value = "${orderId}",
+			locator1 = "CommerceEntry#ORDER_BY_KEY");
 	}
 
 	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"

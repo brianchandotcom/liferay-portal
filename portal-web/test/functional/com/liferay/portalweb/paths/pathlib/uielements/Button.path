@@ -674,6 +674,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_CLOSE</td>
+	<td>//button[contains(@class,'commerce-search__button ')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT</td>
 	<td>//a[contains(.,'Select') and contains(@class,'btn')] | //button[contains(.,'Select')]</td>
 	<td></td>

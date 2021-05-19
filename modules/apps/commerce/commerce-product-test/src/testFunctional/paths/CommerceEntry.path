@@ -567,6 +567,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUGGESTION_ACTIVE_ORDER_KEY</td>
+	<td>//div[contains(@class,'commerce-item__content') and contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_BY_KEY</td>
+	<td>//dl[contains(@class,'commerce-list') and contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_ORDER_ID_RESULT</td>
 	<td>//p[@class='table-list-title' and contains(.,'${key_entryName}')]/a</td>
 	<td></td>    

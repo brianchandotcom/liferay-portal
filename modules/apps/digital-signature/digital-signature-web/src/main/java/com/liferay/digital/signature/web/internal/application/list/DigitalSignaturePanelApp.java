@@ -38,12 +38,12 @@ public class DigitalSignaturePanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return DigitalSignaturePortletKeys.DIGITAL_SIGNATURE_ADMIN;
+		return DigitalSignaturePortletKeys.DIGITAL_SIGNATURE;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + DigitalSignaturePortletKeys.DIGITAL_SIGNATURE_ADMIN + ")",
+		target = "(javax.portlet.name=" + DigitalSignaturePortletKeys.DIGITAL_SIGNATURE + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

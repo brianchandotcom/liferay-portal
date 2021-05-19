@@ -124,9 +124,10 @@ public class LayoutSetBranchLocalServiceImpl
 			long layoutSetBranchLogoId = counterLocalService.increment();
 
 			imageLocalService.updateImage(
-				layoutSetBranchLogoId, logoImage.getTextObj(),
-				logoImage.getType(), logoImage.getHeight(),
-				logoImage.getWidth(), logoImage.getSize());
+				layoutSetBranch.getCompanyId(), layoutSetBranchLogoId,
+				logoImage.getTextObj(), logoImage.getType(),
+				logoImage.getHeight(), logoImage.getWidth(),
+				logoImage.getSize());
 
 			layoutSetBranch.setLogoId(layoutSetBranchLogoId);
 		}

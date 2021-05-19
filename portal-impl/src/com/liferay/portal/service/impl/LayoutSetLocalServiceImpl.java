@@ -532,9 +532,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				long logoId = counterLocalService.increment();
 
 				imageLocalService.updateImage(
-					logoId, logoImage.getTextObj(), logoImage.getType(),
-					logoImage.getHeight(), logoImage.getWidth(),
-					logoImage.getSize());
+					layoutSet.getCompanyId(), logoId, logoImage.getTextObj(),
+					logoImage.getType(), logoImage.getHeight(),
+					logoImage.getWidth(), logoImage.getSize());
 
 				layoutSet.setLogoId(logoId);
 			}

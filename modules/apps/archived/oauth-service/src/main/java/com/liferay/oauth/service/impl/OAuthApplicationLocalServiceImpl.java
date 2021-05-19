@@ -285,7 +285,8 @@ public class OAuthApplicationLocalServiceImpl
 				oAuthApplication);
 		}
 
-		imageLocalService.updateImage(logoId, inputStream);
+		imageLocalService.updateImage(
+			oAuthApplication.getCompanyId(), logoId, inputStream);
 
 		return oAuthApplication;
 	}

@@ -65,8 +65,9 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 
 				try {
 					transferFile(
-						sourceStore, targetStore, 0L, 0L, fileName,
-						Store.VERSION_DEFAULT, delete);
+						sourceStore, targetStore, image.getCompanyId(),
+						_DEFAULT_REPOSITORY_ID, fileName, Store.VERSION_DEFAULT,
+						delete);
 				}
 				catch (Exception exception) {
 					_log.error("Unable to migrate " + fileName, exception);
@@ -75,6 +76,8 @@ public class ImageDLStoreConvertProcess implements DLStoreConvertProcess {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static final long _DEFAULT_REPOSITORY_ID = 0L;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImageDLStoreConvertProcess.class);

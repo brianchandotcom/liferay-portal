@@ -620,8 +620,8 @@ public class JournalArticleLocalServiceImpl
 		// Small image
 
 		saveImages(
-			smallImage, article.getSmallImageId(), smallImageFile,
-			smallImageBytes);
+			article.getCompanyId(), smallImage, article.getSmallImageId(),
+			smallImageFile, smallImageBytes);
 
 		// Asset
 
@@ -811,8 +811,8 @@ public class JournalArticleLocalServiceImpl
 		// Small image
 
 		saveImages(
-			smallImage, article.getSmallImageId(), smallImageFile,
-			smallImageBytes);
+			article.getCompanyId(), smallImage, article.getSmallImageId(),
+			smallImageFile, smallImageBytes);
 
 		// Asset
 
@@ -1122,7 +1122,8 @@ public class JournalArticleLocalServiceImpl
 				byte[] smallImageBytes = image.getTextObj();
 
 				imageLocalService.updateImage(
-					newArticle.getSmallImageId(), smallImageBytes);
+					newArticle.getCompanyId(), newArticle.getSmallImageId(),
+					smallImageBytes);
 			}
 		}
 
@@ -5770,8 +5771,8 @@ public class JournalArticleLocalServiceImpl
 		// Small image
 
 		saveImages(
-			smallImage, article.getSmallImageId(), smallImageFile,
-			smallImageBytes);
+			article.getCompanyId(), smallImage, article.getSmallImageId(),
+			smallImageFile, smallImageBytes);
 
 		// Email and workflow
 
@@ -6229,8 +6230,8 @@ public class JournalArticleLocalServiceImpl
 		// Small image
 
 		saveImages(
-			smallImage, article.getSmallImageId(), smallImageFile,
-			smallImageBytes);
+			article.getCompanyId(), smallImage, article.getSmallImageId(),
+			smallImageFile, smallImageBytes);
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
 	}
@@ -8199,13 +8200,14 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void saveImages(
-			boolean smallImage, long smallImageId, File smallImageFile,
-			byte[] smallImageBytes)
+			long companyId, boolean smallImage, long smallImageId,
+			File smallImageFile, byte[] smallImageBytes)
 		throws PortalException {
 
 		if (smallImage) {
 			if ((smallImageFile != null) && (smallImageBytes != null)) {
-				imageLocalService.updateImage(smallImageId, smallImageBytes);
+				imageLocalService.updateImage(
+					companyId, smallImageId, smallImageBytes);
 			}
 		}
 		else {

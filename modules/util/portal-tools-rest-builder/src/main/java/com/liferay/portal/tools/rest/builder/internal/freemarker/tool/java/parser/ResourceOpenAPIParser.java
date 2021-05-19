@@ -682,11 +682,23 @@ public class ResourceOpenAPIParser {
 		String[] pathSegments = path.split("/");
 		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
 
+		boolean collection = StringUtil.startsWith(
+			returnType, Page.class.getName() + "<");
+
 		for (int i = 0; i < pathSegments.length; i++) {
 			String pathSegment = pathSegments[i];
 
 			if (pathSegment.isEmpty()) {
-				continue;
+				if (pathSegments.length != 1) {
+					continue;
+				}
+
+				if (collection) {
+					pathSegment = pluralSchemaName;
+				}
+				else {
+					pathSegment = schemaName;
+				}
 			}
 
 			String pathName = CamelCaseUtil.toCamelCase(
@@ -702,9 +714,7 @@ public class ResourceOpenAPIParser {
 				pathName = StringUtil.upperCaseFirstLetter(pathName);
 			}
 
-			if ((i == (pathSegments.length - 1)) &&
-				StringUtil.startsWith(returnType, Page.class.getName() + "<")) {
-
+			if ((i == (pathSegments.length - 1)) && collection) {
 				String previousMethodNameSegment = methodNameSegments.get(
 					methodNameSegments.size() - 1);
 
@@ -850,7 +860,13 @@ public class ResourceOpenAPIParser {
 	private static String _getParentSchema(
 		String path, Map<String, PathItem> pathItems, String schemaName) {
 
-		String basePath = path.substring(0, path.lastIndexOf("/"));
+		int lastIndexOfSlash = path.lastIndexOf("/");
+
+		if (lastIndexOfSlash < 1) {
+			return null;
+		}
+
+		String basePath = path.substring(0, lastIndexOfSlash);
 
 		if (basePath.equals("/asset-libraries/{assetLibraryId}")) {
 			return "AssetLibrary";

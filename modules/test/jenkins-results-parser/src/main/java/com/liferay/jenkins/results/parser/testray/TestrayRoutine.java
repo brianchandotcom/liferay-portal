@@ -177,19 +177,28 @@ public class TestrayRoutine {
 		}
 	}
 
-	public TestrayBuild getTestrayBuildByName(String buildName) {
+	public TestrayBuild getTestrayBuildByName(
+		String buildName, String... nameFilters) {
+
 		if (_testrayBuildsByName.containsKey(buildName)) {
 			return _testrayBuildsByName.get(buildName);
 		}
 
 		int current = 1;
 
+		StringBuilder sb = new StringBuilder();
+
+		for (String nameFilter : nameFilters) {
+			sb.append("&name=");
+			sb.append(JenkinsResultsParserUtil.fixURL(nameFilter));
+		}
+
 		while (true) {
 			try {
 				String buildAPIURL = JenkinsResultsParserUtil.combine(
 					String.valueOf(_testrayServer.getURL()),
 					"/home/-/testray/builds.json?cur=", String.valueOf(current),
-					"&delta=", String.valueOf(_DELTA),
+					"&delta=", String.valueOf(_DELTA), sb.toString(),
 					"&orderByCol=testrayBuildId&testrayRoutineId=",
 					String.valueOf(getID()));
 
@@ -229,15 +238,24 @@ public class TestrayRoutine {
 		return getTestrayBuilds(_DELTA);
 	}
 
-	public List<TestrayBuild> getTestrayBuilds(int maxSize) {
+	public List<TestrayBuild> getTestrayBuilds(
+		int maxSize, String... nameFilters) {
+
 		int current = 1;
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String nameFilter : nameFilters) {
+			sb.append("&name=");
+			sb.append(JenkinsResultsParserUtil.fixURL(nameFilter));
+		}
 
 		while ((current * _DELTA) <= maxSize) {
 			try {
 				String buildAPIURL = JenkinsResultsParserUtil.combine(
 					String.valueOf(_testrayServer.getURL()),
 					"/home/-/testray/builds.json?cur=", String.valueOf(current),
-					"&delta=", String.valueOf(_DELTA),
+					"&delta=", String.valueOf(_DELTA), sb.toString(),
 					"&orderByCol=testrayBuildId&testrayRoutineId=",
 					String.valueOf(getID()));
 

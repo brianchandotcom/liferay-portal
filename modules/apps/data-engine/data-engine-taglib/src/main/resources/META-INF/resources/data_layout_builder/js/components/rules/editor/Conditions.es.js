@@ -48,7 +48,7 @@ function FieldOperator({
 	const isBinaryOperator = (operator) => {
 		const option = options?.find(({value}) => value === operator);
 
-		return option?.parameterTypes?.length === 2;
+		return option?.parameterClassNames?.length === 2;
 	};
 
 	return (

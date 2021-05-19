@@ -85,12 +85,10 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 			return Optional.empty();
 		}
 
-		ClassedModel classedModel = (ClassedModel)contextObject;
-
 		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFieldValuesProvider.class,
-				classedModel.getModelClassName());
+				_getModelClassName(contextObject));
 
 		InfoItemFieldValues infoItemFieldValues =
 			infoItemFieldValuesProvider.getInfoItemFieldValues(contextObject);
@@ -126,6 +124,16 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 			PrincipalThreadLocal.getUserId());
 
 		return new DefaultInfoListProviderContext(group, user);
+	}
+
+	private String _getModelClassName(Object contextObject) {
+		if (contextObject instanceof FileEntry) {
+			return FileEntry.class.getName();
+		}
+
+		ClassedModel classedModel = (ClassedModel)contextObject;
+
+		return classedModel.getModelClassName();
 	}
 
 	private InfoPage<Object> _getRelatedItemInfoPage(

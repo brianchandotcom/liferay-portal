@@ -266,62 +266,43 @@ public class CryptoHashTest {
 		throws Exception {
 
 		_cryptoHashVerifier.verify(
-			"This is a test".getBytes(StandardCharsets.UTF_8),
-			Base64.decode(
-				"83XLsWN2CdnxOOMcjYZ82PqSlQxrD6/9VhZ33Rp+V6uBZPzzzJhe0aMx" +
-					"ZtOX4fwaiTytq6REBAKyej5/UVmoLw=="),
+			_PASSWORD, _EXPECTED_HASH_MD,
 			new CryptoHashVerificationContext(
 				RandomTestUtil.randomString(), Collections.emptyMap(),
-				Base64.decode(
-					"PZ0KUrMwjvcAaJdiYuRuxgUA6EQu3GzhWtduzJXwzX+4NfqWwl94" +
-						"XxpjABA1gLeXMpfsjc4PmXhNIlKZpU1k6Q==")));
+				_SALT_GENERIC));
 	}
 
 	@Test
 	public void testCryptoHashVerifierWithStaticInput() throws Exception {
 		Assert.assertTrue(
 			_cryptoHashVerifier.verify(
-				"This is a test".getBytes(StandardCharsets.UTF_8),
-				Base64.decode(
-					"83XLsWN2CdnxOOMcjYZ82PqSlQxrD6/9VhZ33Rp+V6uBZPzzzJhe0aMx" +
-						"ZtOX4fwaiTytq6REBAKyej5/UVmoLw=="),
+				_PASSWORD, _EXPECTED_HASH_MD,
 				new CryptoHashVerificationContext(
 					"MessageDigest",
 					HashMapBuilder.<String, Object>put(
 						"message.digest.algorithm", "SHA-512"
 					).build(),
-					Base64.decode(
-						"PZ0KUrMwjvcAaJdiYuRuxgUA6EQu3GzhWtduzJXwzX+4NfqWwl94" +
-							"XxpjABA1gLeXMpfsjc4PmXhNIlKZpU1k6Q=="))));
+					_SALT_GENERIC)));
 
 		Assert.assertFalse(
 			_cryptoHashVerifier.verify(
-				"This is a test".getBytes(StandardCharsets.UTF_8),
-				Base64.decode(
-					"83XLsWN2CdnxOOMcjYZ82PqSlQxrD6/9VhZ33Rp+V6uBZPzzzJhe0aMx" +
-						"ZtOX4fwaiTytq6REBAKyej5/UVmoLw=="),
+				_PASSWORD, _EXPECTED_HASH_MD,
 				new CryptoHashVerificationContext(
 					"MessageDigest",
 					HashMapBuilder.<String, Object>put(
 						"message.digest.algorithm", "SHA-256"
 					).build(),
-					Base64.decode(
-						"PZ0KUrMwjvcAaJdiYuRuxgUA6EQu3GzhWtduzJXwzX+4NfqWwl94" +
-							"XxpjABA1gLeXMpfsjc4PmXhNIlKZpU1k6Q=="))));
+					_SALT_GENERIC)));
 
 		Assert.assertTrue(
 			_cryptoHashVerifier.verify(
-				"This is a test".getBytes(StandardCharsets.UTF_8),
-				Base64.decode(
-					"JDJhJDEwJHVxZVh5YjF1dUdHZjZ2UWtvalljU09lbjdaUjVaTEE0Lmxi" +
-						"S3IzUFpCWDRaNk1XVTlrYnJD"),
+				_PASSWORD, _EXPECTED_HASH_BCRYPT,
 				new CryptoHashVerificationContext(
 					"BCrypt",
 					HashMapBuilder.<String, Object>put(
 						"bcrypt.rounds", "15"
 					).build(),
-					Base64.decode(
-						"JDJhJDEwJHVxZVh5YjF1dUdHZjZ2UWtvalljU08="))));
+					_SALT_BCRYPT)));
 	}
 
 	private Configuration _addCryptoFactoryConfiguration(
@@ -531,6 +512,24 @@ public class CryptoHashTest {
 			serviceRegistration.unregister();
 		}
 	}
+
+	private static final byte[] _EXPECTED_HASH_BCRYPT =
+		Base64.decode("JDJhJDEwJHVxZVh5YjF1dUdHZjZ2UWtvalljU09lbjda" +
+			"UjVaTEE0LmxiS3IzUFpCWDRaNk1XVTlrYnJD");
+
+	private static final byte[] _EXPECTED_HASH_MD = Base64.decode(
+		"83XLsWN2CdnxOOMcjYZ82PqSlQxrD6/9VhZ33Rp+V6uB" +
+			"ZPzzzJhe0aMxZtOX4fwaiTytq6REBAKyej5/UVmoLw==");
+
+	private static final byte[] _PASSWORD = "This is a test".getBytes(
+		StandardCharsets.UTF_8);
+
+	private static final byte[] _SALT_BCRYPT =
+		Base64.decode("JDJhJDEwJHVxZVh5YjF1dUdHZjZ2UWtvalljU08=");
+
+	private static final byte[] _SALT_GENERIC = Base64.decode(
+		"PZ0KUrMwjvcAaJdiYuRuxgUA6EQu3GzhWtduzJXwzX+4" +
+			"NfqWwl94XxpjABA1gLeXMpfsjc4PmXhNIlKZpU1k6Q==");
 
 	private static final Log _log = LogFactoryUtil.getLog(CryptoHashTest.class);
 

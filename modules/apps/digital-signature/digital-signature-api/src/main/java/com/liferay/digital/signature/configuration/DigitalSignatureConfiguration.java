@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DigitalSignatureConfiguration {
 
-	public boolean enable();
+	public boolean enabled();
 
 	public String apiUsername();
 

@@ -26,9 +26,9 @@ definition {
 
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
-
 		Navigator.openURL();
+
+		User.firstLoginPG();
 	}
 
 	tearDown {

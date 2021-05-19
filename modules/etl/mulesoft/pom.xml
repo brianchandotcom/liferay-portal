@@ -83,6 +83,7 @@
 					<fileName>demo/liferay-connector-demo/src/test/resources/log4j2-test.xml</fileName>
 					<fileName>src/test/munit/batch-test-suite.xml</fileName>
 					<fileName>src/test/munit/crud-operations-test-suite.xml</fileName>
+					<fileName>src/test/munit/oauth2-connectivity-test-suite.xml</fileName>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -28,24 +28,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
  */
 public class CPMediaImpl implements CPMedia {
 
-	public CPMediaImpl(
-			CPAttachmentFileEntry cpAttachmentFileEntry,
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
-
-		_downloadUrl = CommerceMediaResolverUtil.getDownloadUrl(
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-		_id = cpAttachmentFileEntry.getCPAttachmentFileEntryId();
-		_mimeType = fileEntry.getMimeType();
-		_url = CommerceMediaResolverUtil.getUrl(
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-		_title = cpAttachmentFileEntry.getTitle(themeDisplay.getLanguageId());
-		_thumbnailUrl = CommerceMediaResolverUtil.getThumbnailUrl(
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-	}
-
 	public CPMediaImpl(FileEntry fileEntry, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -72,6 +54,34 @@ public class CPMediaImpl implements CPMedia {
 		_thumbnailUrl = defaultUrl;
 		_title = null;
 		_url = defaultUrl;
+	}
+
+	public CPMediaImpl(
+			long commerceAccountId, CPAttachmentFileEntry cpAttachmentFileEntry,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		FileEntry fileEntry = cpAttachmentFileEntry.getFileEntry();
+
+		_downloadUrl = CommerceMediaResolverUtil.getDownloadUrl(
+			commerceAccountId,
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+		_id = cpAttachmentFileEntry.getCPAttachmentFileEntryId();
+
+		if (fileEntry == null) {
+			_mimeType = StringPool.BLANK;
+		}
+		else {
+			_mimeType = fileEntry.getMimeType();
+		}
+
+		_url = CommerceMediaResolverUtil.getUrl(
+			commerceAccountId,
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+		_title = cpAttachmentFileEntry.getTitle(themeDisplay.getLanguageId());
+		_thumbnailUrl = CommerceMediaResolverUtil.getThumbnailUrl(
+			commerceAccountId,
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 	}
 
 	@Override

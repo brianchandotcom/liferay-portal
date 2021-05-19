@@ -14,13 +14,8 @@
 
 package com.liferay.saml.persistence.internal.upgrade.v2_0_0;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.saml.persistence.internal.upgrade.v2_0_0.util.SamlSpSessionTable;
-
-import java.sql.SQLException;
 
 /**
  * @author Stian Sigvartsen
@@ -29,25 +24,9 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			alter(
-				SamlSpSessionTable.class,
-				new AlterTableAddColumn(
-					"samlIdpEntityId", "VARCHAR(1024) null"));
-		}
-		catch (SQLException sqlException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException, sqlException);
-			}
-
-			upgradeTable(
-				SamlSpSessionTable.TABLE_NAME, SamlSpSessionTable.TABLE_COLUMNS,
-				SamlSpSessionTable.TABLE_SQL_CREATE,
-				SamlSpSessionTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			SamlSpSessionTable.class,
+			new AlterTableAddColumn("samlIdpEntityId", "VARCHAR(1024) null"));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SamlSpSessionUpgradeProcess.class);
 
 }

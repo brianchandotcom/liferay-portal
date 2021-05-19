@@ -22,6 +22,7 @@ import com.liferay.portal.crypto.hash.CryptoHashGenerator;
 import com.liferay.portal.crypto.hash.CryptoHashResponse;
 import com.liferay.portal.crypto.hash.CryptoHashVerificationContext;
 import com.liferay.portal.crypto.hash.CryptoHashVerifier;
+import com.liferay.portal.crypto.hash.exception.CryptoHashException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -260,21 +261,20 @@ public class CryptoHashTest {
 					cryptoHashResponse2.getCryptoHashVerificationContext())));
 	}
 
-	@Test(expected = Exception.class)
+	@Test(expected = CryptoHashException.class)
 	public void testCryptoHashVerifierWithNonexistingCryptoHashFactory()
 		throws Exception {
 
-		Assert.assertTrue(
-			_cryptoHashVerifier.verify(
-				"This is a test".getBytes(StandardCharsets.UTF_8),
+		_cryptoHashVerifier.verify(
+			"This is a test".getBytes(StandardCharsets.UTF_8),
+			Base64.decode(
+				"83XLsWN2CdnxOOMcjYZ82PqSlQxrD6/9VhZ33Rp+V6uBZPzzzJhe0aMx" +
+					"ZtOX4fwaiTytq6REBAKyej5/UVmoLw=="),
+			new CryptoHashVerificationContext(
+				RandomTestUtil.randomString(), Collections.emptyMap(),
 				Base64.decode(
-					"83XLsWN2CdnxOOMcjYZ82PqSlQxrD6/9VhZ33Rp+V6uBZPzzzJhe0aMx" +
-						"ZtOX4fwaiTytq6REBAKyej5/UVmoLw=="),
-				new CryptoHashVerificationContext(
-					RandomTestUtil.randomString(), Collections.emptyMap(),
-					Base64.decode(
-						"PZ0KUrMwjvcAaJdiYuRuxgUA6EQu3GzhWtduzJXwzX+4NfqWwl94" +
-							"XxpjABA1gLeXMpfsjc4PmXhNIlKZpU1k6Q=="))));
+					"PZ0KUrMwjvcAaJdiYuRuxgUA6EQu3GzhWtduzJXwzX+4NfqWwl94" +
+						"XxpjABA1gLeXMpfsjc4PmXhNIlKZpU1k6Q==")));
 	}
 
 	@Test

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.redirect;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -22,15 +23,19 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class RedirectURLSettingsUtil {
 
 	public static String[] redirectURLDomainsAllowed(long companyId) {
-		return _redirectURLSettings.redirectURLDomainsAllowed(companyId);
+		return GetterUtil.getStringValues(
+			_redirectURLSettings.redirectURLDomainsAllowed(companyId));
 	}
 
 	public static String[] redirectURLIPsAllowed(long companyId) {
-		return _redirectURLSettings.redirectURLIPsAllowed(companyId);
+		return GetterUtil.getStringValues(
+			_redirectURLSettings.redirectURLIPsAllowed(companyId),
+			new String[] {"127.0.0.1", "SERVER_IP"});
 	}
 
 	public static String redirectURLSecurityMode(long companyId) {
-		return _redirectURLSettings.redirectURLSecurityMode(companyId);
+		return GetterUtil.getString(
+			_redirectURLSettings.redirectURLSecurityMode(companyId), "ip");
 	}
 
 	private static volatile RedirectURLSettings _redirectURLSettings =

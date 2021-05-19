@@ -38,13 +38,9 @@ definition {
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "true",
-			settingFieldName = "Enabled");
-
-		SystemSettings.editTextAreaSetting(
+			settingFieldName = "Enabled",
 			settingName = "Service Account Private Key",
 			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
-
-		SystemSettings.saveConfiguration();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -88,13 +84,9 @@ definition {
 
 		SystemSettings.configureSystemSetting(
 			enableSetting = "true",
-			settingFieldName = "Enabled");
-
-		SystemSettings.editTextAreaSetting(
+			settingFieldName = "Enabled",
 			settingName = "Service Account Private Key",
 			settingValue = PropsUtil.get("google.cloud.translation.service.key"));
-
-		SystemSettings.saveConfiguration();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 

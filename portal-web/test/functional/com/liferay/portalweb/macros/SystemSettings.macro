@@ -26,6 +26,12 @@ definition {
 		if ("${enableSetting}" == "true") {
 			Check.toggleSwitch(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
+			if (isSet(settingValue)) {
+				SystemSettings.editTextAreaSetting(
+					settingName = "${settingName}",
+					settingValue = "${settingValue}");
+			}
+
 			SystemSettings.saveConfiguration();
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");

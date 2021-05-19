@@ -15,6 +15,7 @@
 package com.liferay.portal.search.web.internal.layout.prototype;
 
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
@@ -39,37 +40,73 @@ public class DefaultSearchLayoutPrototypeCustomizer
 
 	@Override
 	public void customize(Layout layout) throws Exception {
-		addBorderlessPortlet(
-			layout, SearchBarPortletKeys.SEARCH_BAR, "column-1");
+		String portletInstanceId = PortletIdCodec.generateInstanceId();
 
 		addBorderlessPortlet(
-			layout, SuggestionsPortletKeys.SUGGESTIONS, "column-1");
+			layout,
+			PortletIdCodec.encode(
+				SearchBarPortletKeys.SEARCH_BAR, portletInstanceId),
+			"column-1");
 
 		addBorderlessPortlet(
-			layout, SearchResultsPortletKeys.SEARCH_RESULTS, "column-3");
+			layout,
+			PortletIdCodec.encode(
+				SuggestionsPortletKeys.SUGGESTIONS, portletInstanceId),
+			"column-1");
 
 		addBorderlessPortlet(
-			layout, SearchOptionsPortletKeys.SEARCH_OPTIONS, "column-3");
+			layout,
+			PortletIdCodec.encode(
+				SearchResultsPortletKeys.SEARCH_RESULTS, portletInstanceId),
+			"column-3");
 
 		addBorderlessPortlet(
-			layout, SiteFacetPortletKeys.SITE_FACET, "column-2");
+			layout,
+			PortletIdCodec.encode(
+				SearchOptionsPortletKeys.SEARCH_OPTIONS, portletInstanceId),
+			"column-3");
 
 		addBorderlessPortlet(
-			layout, TypeFacetPortletKeys.TYPE_FACET, "column-2");
-
-		addBorderlessPortlet(layout, TagFacetPortletKeys.TAG_FACET, "column-2");
-
-		addBorderlessPortlet(
-			layout, CategoryFacetPortletKeys.CATEGORY_FACET, "column-2");
+			layout,
+			PortletIdCodec.encode(
+				SiteFacetPortletKeys.SITE_FACET, portletInstanceId),
+			"column-2");
 
 		addBorderlessPortlet(
-			layout, FolderFacetPortletKeys.FOLDER_FACET, "column-2");
+			layout,
+			PortletIdCodec.encode(
+				TypeFacetPortletKeys.TYPE_FACET, portletInstanceId),
+			"column-2");
 
 		addBorderlessPortlet(
-			layout, UserFacetPortletKeys.USER_FACET, "column-2");
+			layout,
+			PortletIdCodec.encode(
+				TagFacetPortletKeys.TAG_FACET, portletInstanceId),
+			"column-2");
 
 		addBorderlessPortlet(
-			layout, ModifiedFacetPortletKeys.MODIFIED_FACET, "column-2");
+			layout,
+			PortletIdCodec.encode(
+				CategoryFacetPortletKeys.CATEGORY_FACET, portletInstanceId),
+			"column-2");
+
+		addBorderlessPortlet(
+			layout,
+			PortletIdCodec.encode(
+				FolderFacetPortletKeys.FOLDER_FACET, portletInstanceId),
+			"column-2");
+
+		addBorderlessPortlet(
+			layout,
+			PortletIdCodec.encode(
+				UserFacetPortletKeys.USER_FACET, portletInstanceId),
+			"column-2");
+
+		addBorderlessPortlet(
+			layout,
+			PortletIdCodec.encode(
+				ModifiedFacetPortletKeys.MODIFIED_FACET, portletInstanceId),
+			"column-2");
 	}
 
 	@Override

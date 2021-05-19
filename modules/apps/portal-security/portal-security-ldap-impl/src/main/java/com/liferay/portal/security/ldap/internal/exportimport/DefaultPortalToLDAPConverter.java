@@ -594,9 +594,11 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			try {
 				Object attributeValue = _getAttributeValue(object, fieldName);
 
-				addModificationItem(
-					ldapAttributeName, attributeValue.toString(),
-					modifications);
+				if (attributeValue != null) {
+					addModificationItem(
+						ldapAttributeName, attributeValue.toString(),
+						modifications);
+				}
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

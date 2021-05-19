@@ -13017,11 +13017,11 @@ public class LayoutPersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2_SQL);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2_SQL);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_STATUS_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_STATUS_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -13157,11 +13157,11 @@ public class LayoutPersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2_SQL);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2_SQL);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_STATUS_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_STATUS_2_SQL);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -13374,14 +13374,14 @@ public class LayoutPersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2_SQL);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2_SQL);
 
 		if (statuses.length > 0) {
 			sb.append("(");
 
-			sb.append(_FINDER_COLUMN_G_P_ST_STATUS_7);
+			sb.append(_FINDER_COLUMN_G_P_ST_STATUS_7_SQL);
 
 			sb.append(StringUtil.merge(statuses));
 
@@ -13392,6 +13392,8 @@ public class LayoutPersistenceImpl
 
 		sb.setStringAt(
 			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		sb.append(" AND layout.system_ = [$FALSE$]");
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -13618,6 +13620,8 @@ public class LayoutPersistenceImpl
 			sb.setStringAt(
 				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
 
+			sb.append(" AND layout.system = [$FALSE$]");
+
 			if (orderByComparator != null) {
 				appendOrderByComparator(
 					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
@@ -13813,6 +13817,8 @@ public class LayoutPersistenceImpl
 			sb.setStringAt(
 				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
 
+			sb.append(" AND layout.system = [$FALSE$]");
+
 			String sql = sb.toString();
 
 			Session session = null;
@@ -13867,11 +13873,11 @@ public class LayoutPersistenceImpl
 
 		sb.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2_SQL);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2_SQL);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_STATUS_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_STATUS_2_SQL);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			sb.toString(), Layout.class.getName(),
@@ -13934,14 +13940,14 @@ public class LayoutPersistenceImpl
 
 		sb.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_GROUPID_2_SQL);
 
-		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2);
+		sb.append(_FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2_SQL);
 
 		if (statuses.length > 0) {
 			sb.append("(");
 
-			sb.append(_FINDER_COLUMN_G_P_ST_STATUS_7);
+			sb.append(_FINDER_COLUMN_G_P_ST_STATUS_7_SQL);
 
 			sb.append(StringUtil.merge(statuses));
 
@@ -13952,6 +13958,8 @@ public class LayoutPersistenceImpl
 
 		sb.setStringAt(
 			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		sb.append(" AND layout.system_ = [$FALSE$]");
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			sb.toString(), Layout.class.getName(),
@@ -13988,13 +13996,25 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_ST_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
+	private static final String _FINDER_COLUMN_G_P_ST_GROUPID_2_SQL =
+		"layout.groupId = ? AND ";
+
 	private static final String _FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2 =
 		"layout.privateLayout = ? AND ";
 
+	private static final String _FINDER_COLUMN_G_P_ST_PRIVATELAYOUT_2_SQL =
+		"layout.privateLayout = ? AND ";
+
 	private static final String _FINDER_COLUMN_G_P_ST_STATUS_2 =
-		"layout.status = ?";
+		"layout.status = ? AND layout.system = [$FALSE$]";
 
 	private static final String _FINDER_COLUMN_G_P_ST_STATUS_7 =
+		"layout.status IN (";
+
+	private static final String _FINDER_COLUMN_G_P_ST_STATUS_2_SQL =
+		"layout.status = ? AND layout.system_ = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_G_P_ST_STATUS_7_SQL =
 		"layout.status IN (";
 
 	private FinderPath _finderPathWithPaginationFindByG_P_P_H;

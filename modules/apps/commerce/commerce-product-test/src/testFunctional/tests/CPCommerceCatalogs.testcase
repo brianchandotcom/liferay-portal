@@ -34,6 +34,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceCatalogs#CreateNewCatalog";
 
+		// TODO Review
+
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
 			portlet = "Catalogs");
@@ -120,6 +122,8 @@ definition {
 	test EditAPermissionOnACatalog {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceCatalogs#EditAPermissionOnACatalog";
+
+		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

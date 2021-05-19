@@ -157,6 +157,8 @@ definition {
 	test GetWarehouseNameGivenChannel {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceNavigator.gotoPortlet(
 			category = "Inventory Management",
 			portlet = "Warehouses");

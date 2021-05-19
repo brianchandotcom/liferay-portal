@@ -31,6 +31,8 @@ definition {
 	test ActivateByAddressTaxEngine {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
 			portlet = "Channels");
@@ -118,6 +120,8 @@ definition {
 	@priority = "3"
 	test ActivateFixedTaxEngine {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

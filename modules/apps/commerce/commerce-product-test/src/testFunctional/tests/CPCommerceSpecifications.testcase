@@ -36,6 +36,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceSpecifications#EditSpecificationGroup";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -75,6 +77,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceSpecifications#EditSpecificationLabel";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -113,6 +117,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6282 RemoveSpecificationGroup
+
 	}
 
 	@description = "This is a test for COMMERCE-6281. RemoveSpecificationLabel"
@@ -120,6 +125,8 @@ definition {
 	test RemoveSpecificationLabel {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceSpecifications#RemoveSpecificationLabel";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

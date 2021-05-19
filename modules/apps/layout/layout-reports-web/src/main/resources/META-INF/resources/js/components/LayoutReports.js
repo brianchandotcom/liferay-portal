@@ -111,10 +111,10 @@ export default function LayoutReports({eventTriggered}) {
 	);
 
 	useEffect(() => {
-		if (isPanelStateOpen) {
+		if (isPanelStateOpen && !data && !loading) {
 			getData(layoutReportsDataURL);
 		}
-	}, [isPanelStateOpen, layoutReportsDataURL, getData]);
+	}, [data, isPanelStateOpen, layoutReportsDataURL, loading, getData]);
 
 	useEffect(() => {
 		if (eventTriggered && !data) {

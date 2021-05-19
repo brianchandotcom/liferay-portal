@@ -16,17 +16,25 @@ package com.liferay.dynamic.data.mapping.expression.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunction;
+import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionFactory;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFunctionTracker;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +52,26 @@ public class DDMExpressionFunctionTrackerTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		setUpDDMExpressionFunctionFactory();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_serviceRegistration.unregister();
+	}
+
+	@Test
+	public void testGetCustomDDMExpressionFunctions() {
+		Map<String, DDMExpressionFunction> customDDMExpressionFunctions =
+			_ddmExpressionFunctionTracker.getCustomDDMExpressionFunctions();
+
+		Assert.assertNotNull(
+			customDDMExpressionFunctions.get("binaryFunction"));
+		Assert.assertNull(customDDMExpressionFunctions.get("setRequired"));
+	}
 
 	@Test
 	public void testGetDDMExpressionFunctionsShouldReturnNewInstances() {
@@ -72,7 +100,50 @@ public class DDMExpressionFunctionTrackerTest {
 			ddmExpressionFunctions2);
 	}
 
+	protected static void setUpDDMExpressionFunctionFactory() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			DDMExpressionFunctionFactory.class, new BinaryFunctionFactory(),
+			HashMapBuilder.<String, Object>put(
+				"name", "binaryFunction"
+			).build());
+	}
+
+	private static ServiceRegistration<DDMExpressionFunctionFactory>
+		_serviceRegistration;
+
 	@Inject(type = DDMExpressionFunctionTracker.class)
 	private DDMExpressionFunctionTracker _ddmExpressionFunctionTracker;
+
+	private static class BinaryFunction
+		implements DDMExpressionFunction.Function2<Object, Object, Boolean> {
+
+		@Override
+		public Boolean apply(Object object1, Object object2) {
+			return Objects.equals(object1, object2);
+		}
+
+		@Override
+		public String getName() {
+			return "binaryFunction";
+		}
+
+		@Override
+		public boolean isCustomDDMExpressionFunction() {
+			return true;
+		}
+
+	}
+
+	private static class BinaryFunctionFactory
+		implements DDMExpressionFunctionFactory {
+
+		@Override
+		public DDMExpressionFunction create() {
+			return new BinaryFunction();
+		}
+
+	}
 
 }

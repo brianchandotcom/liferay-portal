@@ -167,9 +167,6 @@ definition {
 		FormFields.viewRadioLabel(
 			fieldLabel = "Test Single Selection",
 			fieldName = "Test Single Selection");
-
-
-
 	}
 
 	@description = "Verify that the Field Label can be hidden"

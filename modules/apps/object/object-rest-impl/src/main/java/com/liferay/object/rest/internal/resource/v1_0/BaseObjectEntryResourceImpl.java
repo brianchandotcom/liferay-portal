@@ -76,7 +76,6 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/v1.0")
 public abstract class BaseObjectEntryResourceImpl
 	implements EntityModelResource, ObjectEntryResource,
 			   VulcanBatchEngineTaskItemDelegate<ObjectEntry> {
@@ -93,7 +92,7 @@ public abstract class BaseObjectEntryResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
 		}
 	)
-	@Path("/object-entries")
+	@Path("")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectEntry")})
 	public Page<ObjectEntry> getObjectEntriesPage(
@@ -108,12 +107,55 @@ public abstract class BaseObjectEntryResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	@Consumes({"application/json", "application/xml"})
+	@Override
+	@Path("")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "ObjectEntry")})
+	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
+		throws Exception {
+
+		return new ObjectEntry();
+	}
+
+	@Consumes("application/json")
+	@Override
+	@Parameters(
+		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
+	)
+	@Path("/batch")
+	@POST
+	@Produces("application/json")
+	@Tags(value = {@Tag(name = "ObjectEntry")})
+	public Response postObjectEntryBatch(
+			@Parameter(hidden = true) @QueryParam("callbackURL") String
+				callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.postImportTask(
+				ObjectEntry.class.getName(), callbackURL, null, object)
+		).build();
+	}
+
 	@DELETE
 	@Override
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "objectEntryId")}
 	)
-	@Path("/object-entries/{objectEntryId}")
+	@Path("/{objectEntryId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectEntry")})
 	public void deleteObjectEntry(
@@ -128,7 +170,7 @@ public abstract class BaseObjectEntryResourceImpl
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
-	@Path("/object-entries/batch")
+	@Path("/batch")
 	@Produces("application/json")
 	@Tags(value = {@Tag(name = "ObjectEntry")})
 	public Response deleteObjectEntryBatch(
@@ -158,7 +200,7 @@ public abstract class BaseObjectEntryResourceImpl
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "objectEntryId")}
 	)
-	@Path("/object-entries/{objectEntryId}")
+	@Path("/{objectEntryId}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "ObjectEntry")})
 	public ObjectEntry getObjectEntry(
@@ -174,7 +216,7 @@ public abstract class BaseObjectEntryResourceImpl
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.PATH, name = "objectEntryId")}
 	)
-	@Path("/object-entries/{objectEntryId}")
+	@Path("/{objectEntryId}")
 	@Produces({"application/json", "application/xml"})
 	@PUT
 	@Tags(value = {@Tag(name = "ObjectEntry")})
@@ -192,7 +234,7 @@ public abstract class BaseObjectEntryResourceImpl
 	@Parameters(
 		value = {@Parameter(in = ParameterIn.QUERY, name = "callbackURL")}
 	)
-	@Path("/object-entries/batch")
+	@Path("/batch")
 	@Produces("application/json")
 	@PUT
 	@Tags(value = {@Tag(name = "ObjectEntry")})
@@ -218,56 +260,6 @@ public abstract class BaseObjectEntryResourceImpl
 		).build();
 	}
 
-	@Consumes({"application/json", "application/xml"})
-	@Override
-	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "siteId")})
-	@Path("/sites/{siteId}/object-entries")
-	@POST
-	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public ObjectEntry postSiteObjectEntry(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			ObjectEntry objectEntry)
-		throws Exception {
-
-		return new ObjectEntry();
-	}
-
-	@Consumes("application/json")
-	@Override
-	@Parameters(
-		value = {
-			@Parameter(in = ParameterIn.PATH, name = "siteId"),
-			@Parameter(in = ParameterIn.QUERY, name = "callbackURL")
-		}
-	)
-	@Path("/sites/{siteId}/object-entries/batch")
-	@POST
-	@Produces("application/json")
-	@Tags(value = {@Tag(name = "ObjectEntry")})
-	public Response postSiteObjectEntryBatch(
-			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
-			@Parameter(hidden = true) @QueryParam("callbackURL") String
-				callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.postImportTask(
-				ObjectEntry.class.getName(), callbackURL, null, object)
-		).build();
-	}
-
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -276,8 +268,7 @@ public abstract class BaseObjectEntryResourceImpl
 		throws Exception {
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			postSiteObjectEntry(
-				Long.parseLong((String)parameters.get("siteId")), objectEntry);
+			postObjectEntry(objectEntry);
 		}
 	}
 

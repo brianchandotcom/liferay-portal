@@ -53,6 +53,12 @@ public interface ObjectEntryResource {
 			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
+		throws Exception;
+
+	public Response postObjectEntryBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public void deleteObjectEntry(Long objectEntryId) throws Exception;
 
 	public Response deleteObjectEntryBatch(String callbackURL, Object object)
@@ -65,13 +71,6 @@ public interface ObjectEntryResource {
 		throws Exception;
 
 	public Response putObjectEntryBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public ObjectEntry postSiteObjectEntry(Long siteId, ObjectEntry objectEntry)
-		throws Exception;
-
-	public Response postSiteObjectEntryBatch(
-			Long siteId, String callbackURL, Object object)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

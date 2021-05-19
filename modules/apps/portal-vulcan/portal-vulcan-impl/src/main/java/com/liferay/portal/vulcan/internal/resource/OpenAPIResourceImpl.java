@@ -178,7 +178,34 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 				Schema<Object> schema = new Schema<>();
 
 				schema.setName(dtoProperty.getName());
-				schema.setType(dtoProperty.getType());
+
+				String type = dtoProperty.getType();
+
+				if (type.equals("Boolean")) {
+					schema.setType("boolean");
+				}
+				else if (type.equals("Date")) {
+					schema.setFormat("date");
+					schema.setType("string");
+				}
+				else if (type.equals("Double")) {
+					schema.setFormat("double");
+					schema.setType("number");
+				}
+				else if (type.equals("Integer")) {
+					schema.setFormat("int32");
+					schema.setType("integer");
+				}
+				else if (type.equals("Long")) {
+					schema.setFormat("int64");
+					schema.setType("integer");
+				}
+				else if (type.equals("String")) {
+					schema.setType("string");
+				}
+				else {
+					schema.setType("object");
+				}
 
 				for (DTOProperty curVariableName :
 						dtoProperty.getDtoProperties()) {

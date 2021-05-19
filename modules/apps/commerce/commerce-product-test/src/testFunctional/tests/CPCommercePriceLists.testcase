@@ -755,13 +755,74 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6235. Product Group Lifecycle"
-	@ignore = "true"
 	@priority = "3"
 	test AddEditAndRemoveProductGroupFromPL {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#AddEditAndRemoveProductGroupFromPL";
 
-		// TODO COMMERCE-6235 AddEditAndRemoveProductGroupFromPL Pending Implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Product Groups");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "test1");
+
+		Type(
+			key_text = "description",
+			locator1 = "TextArea#ANY",
+			value1 = "test1 product group");
+
+		Button.click(button = "Submit");
+
+		Navigator.gotoNavTab(navTab = "Products");
+
+		for ( var product : list "U-Joint,Mount,Shock Absorber") {
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "${product}",
+				title = "Add Products");
+		}
+
+		Navigator.gotoBack();
+
+		AssertElementPresent(
+			key_name = "test1",
+			locator1 = "CommerceEntry#PRODUCT_GROUPS_COLUMN_VALUE",
+			value1 = "3");
+
+		CommerceNavigator.gotoEntry(entryName = "test1");
+
+		Navigator.gotoNavTab(navTab = "Products");
+
+		Click(
+			key_value = "U-Joint",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Remove");
+
+		Navigator.gotoBack();
+
+		AssertElementPresent(
+			key_name = "test1",
+			locator1 = "CommerceEntry#PRODUCT_GROUPS_COLUMN_VALUE",
+			value1 = "2");
+
+		Click(
+			key_value = "test1",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+
+		AssertElementNotPresent(
+			key_tableEntryName = "test1",
+			locator1 = "RemoteApps#TABLE_ENTRY_NAME_REMOTE_TABLE");
 	}
 
 	@description = "This is a test for COMMERCE-6069. Price List Qualifier"

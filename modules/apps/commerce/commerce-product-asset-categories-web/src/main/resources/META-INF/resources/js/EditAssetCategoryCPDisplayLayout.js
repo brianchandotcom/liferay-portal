@@ -179,7 +179,7 @@ export default function ({
 							}
 						}
 
-						delete selectedItems.key;
+						delete selectedItems[key];
 
 						const categoryNode = createLabel(
 							`category-${item.categoryId}`,

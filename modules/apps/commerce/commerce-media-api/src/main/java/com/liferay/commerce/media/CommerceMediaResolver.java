@@ -32,31 +32,89 @@ public interface CommerceMediaResolver {
 
 	public String getDefaultUrl(long groupId);
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getDownloadUrl(long, long)}}
+	 */
+	@Deprecated
 	public String getDownloadUrl(long cpAttachmentFileEntryId)
 		throws PortalException;
 
+	public String getDownloadUrl(
+			long commerceAccountId, long cpAttachmentFileEntryId)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public byte[] getMediaBytes(HttpServletRequest httpServletRequest)
 		throws IOException, PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getThumbnailUrl(long, long)}}
+	 */
+	@Deprecated
 	public String getThumbnailUrl(long cpAttachmentFileEntryId)
 		throws PortalException;
 
+	public String getThumbnailUrl(
+			long commerceAccountId, long cpAttachmentFileEntryId)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getUrl(long, long)}}
+	 */
+	@Deprecated
 	public String getUrl(long cpAttachmentFileEntryId) throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getUrl(long, long, boolean, boolean)}}
+	 */
+	@Deprecated
 	public String getUrl(
 			long cpAttachmentFileEntryId, boolean download, boolean thumbnail)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getUrl(long, long, boolean, boolean, boolean)}}
+	 */
+	@Deprecated
 	public String getUrl(
 			long cpAttachmentFileEntryId, boolean download, boolean thumbnail,
 			boolean secure)
 		throws PortalException;
 
+	public String getUrl(long commerceAccountId, long cpAttachmentFileEntryId)
+		throws PortalException;
+
+	public String getUrl(
+			long commerceAccountId, long cpAttachmentFileEntryId,
+			boolean download, boolean thumbnail)
+		throws PortalException;
+
+	public String getUrl(
+			long commerceAccountId, long cpAttachmentFileEntryId,
+			boolean download, boolean thumbnail, boolean secure)
+		throws PortalException;
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void sendMediaBytes(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void sendMediaBytes(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String download)

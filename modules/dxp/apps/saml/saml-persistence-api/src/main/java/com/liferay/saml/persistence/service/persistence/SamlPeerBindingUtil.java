@@ -134,12 +134,12 @@ public class SamlPeerBindingUtil {
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @return the matching saml peer bindings
 	 */
-	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId) {
 
-		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId);
 	}
@@ -161,12 +161,12 @@ public class SamlPeerBindingUtil {
 	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
 	 * @return the range of matching saml peer bindings
 	 */
-	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId, int start, int end) {
 
-		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, start, end);
 	}
@@ -189,13 +189,13 @@ public class SamlPeerBindingUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching saml peer bindings
 	 */
-	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId, int start, int end,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, start, end, orderByComparator);
 	}
@@ -219,14 +219,14 @@ public class SamlPeerBindingUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching saml peer bindings
 	 */
-	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public static List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId, int start, int end,
 		OrderByComparator<SamlPeerBinding> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, start, end, orderByComparator,
 			useFinderCache);
@@ -245,7 +245,7 @@ public class SamlPeerBindingUtil {
 	 * @return the first matching saml peer binding
 	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
 	 */
-	public static SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+	public static SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 			long companyId, boolean deleted, String samlNameIdFormat,
 			String samlNameIdNameQualifier, String samlNameIdValue,
 			String samlPeerEntityId,
@@ -253,7 +253,7 @@ public class SamlPeerBindingUtil {
 		throws com.liferay.saml.persistence.exception.
 			NoSuchPeerBindingException {
 
-		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, orderByComparator);
 	}
@@ -270,13 +270,13 @@ public class SamlPeerBindingUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
-	public static SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+	public static SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		return getPersistence().fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+		return getPersistence().fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, orderByComparator);
 	}
@@ -294,7 +294,7 @@ public class SamlPeerBindingUtil {
 	 * @return the last matching saml peer binding
 	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
 	 */
-	public static SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SIEI_Last(
+	public static SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
 			long companyId, boolean deleted, String samlNameIdFormat,
 			String samlNameIdNameQualifier, String samlNameIdValue,
 			String samlPeerEntityId,
@@ -302,7 +302,7 @@ public class SamlPeerBindingUtil {
 		throws com.liferay.saml.persistence.exception.
 			NoSuchPeerBindingException {
 
-		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SIEI_Last(
+		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, orderByComparator);
 	}
@@ -319,13 +319,13 @@ public class SamlPeerBindingUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
-	public static SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SIEI_Last(
+	public static SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		return getPersistence().fetchByC_D_SNIF_SNINQ_SNIV_SIEI_Last(
+		return getPersistence().fetchByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, orderByComparator);
 	}
@@ -344,7 +344,7 @@ public class SamlPeerBindingUtil {
 	 * @return the previous, current, and next saml peer binding
 	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
 	 */
-	public static SamlPeerBinding[] findByC_D_SNIF_SNINQ_SNIV_SIEI_PrevAndNext(
+	public static SamlPeerBinding[] findByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
 			long samlPeerBindingId, long companyId, boolean deleted,
 			String samlNameIdFormat, String samlNameIdNameQualifier,
 			String samlNameIdValue, String samlPeerEntityId,
@@ -352,7 +352,7 @@ public class SamlPeerBindingUtil {
 		throws com.liferay.saml.persistence.exception.
 			NoSuchPeerBindingException {
 
-		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SIEI_PrevAndNext(
+		return getPersistence().findByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
 			samlPeerBindingId, companyId, deleted, samlNameIdFormat,
 			samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId,
 			orderByComparator);
@@ -368,12 +368,12 @@ public class SamlPeerBindingUtil {
 	 * @param samlNameIdValue the saml name ID value
 	 * @param samlPeerEntityId the saml peer entity ID
 	 */
-	public static void removeByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public static void removeByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId) {
 
-		getPersistence().removeByC_D_SNIF_SNINQ_SNIV_SIEI(
+		getPersistence().removeByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId);
 	}
@@ -389,12 +389,12 @@ public class SamlPeerBindingUtil {
 	 * @param samlPeerEntityId the saml peer entity ID
 	 * @return the number of matching saml peer bindings
 	 */
-	public static int countByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public static int countByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId) {
 
-		return getPersistence().countByC_D_SNIF_SNINQ_SNIV_SIEI(
+		return getPersistence().countByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId);
 	}

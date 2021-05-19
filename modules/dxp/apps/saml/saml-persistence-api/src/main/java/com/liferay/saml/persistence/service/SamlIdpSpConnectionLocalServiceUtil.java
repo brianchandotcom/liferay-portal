@@ -380,10 +380,11 @@ public class SamlIdpSpConnectionLocalServiceUtil {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by { @link
-	 #updateSamlIdpSpConnection(long, int, String, boolean,
+	 {@link #updateSamlIdpSpConnection(long, int, String, boolean,
 	 boolean, boolean, boolean, String, InputStream, String,
 	 String, String, String, ServiceContext)}
 	 */
+	@Deprecated
 	public static SamlIdpSpConnection updateSamlIdpSpConnection(
 			long samlIdpSpConnectionId, String samlSpEntityId,
 			int assertionLifetime, String attributeNames,

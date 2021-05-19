@@ -211,7 +211,7 @@ public interface SamlPeerBindingLocalService
 	public SamlPeerBinding fetchSamlPeerBinding(long samlPeerBindingId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlPeerBinding fetchSamlPeerBindingByIDPIdentifier(
+	public SamlPeerBinding fetchSamlPeerBinding(
 		long companyId, String samlNameIdFormat, String samlNameIdNameQualifier,
 		String samlNameIdValue, String samlSpEntityId);
 

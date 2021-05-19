@@ -255,12 +255,12 @@ public class SamlPeerBindingLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlPeerBinding
-		fetchSamlPeerBindingByIDPIdentifier(
+		fetchSamlPeerBinding(
 			long companyId, String samlNameIdFormat,
 			String samlNameIdNameQualifier, String samlNameIdValue,
 			String samlSpEntityId) {
 
-		return _samlPeerBindingLocalService.fetchSamlPeerBindingByIDPIdentifier(
+		return _samlPeerBindingLocalService.fetchSamlPeerBinding(
 			companyId, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlSpEntityId);
 	}

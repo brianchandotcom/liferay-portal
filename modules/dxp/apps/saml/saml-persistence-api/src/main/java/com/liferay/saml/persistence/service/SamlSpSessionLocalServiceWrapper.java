@@ -52,17 +52,17 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession addSamlSpSession(
-			String samlIdpEntityId, String samlSpSessionKey,
 			String assertionXml, String jSessionId, String nameIdFormat,
 			String nameIdNameQualifier, String nameIdSPNameQualifier,
-			String nameIdValue, String sessionIndex,
+			String nameIdValue, String samlIdpEntityId, String samlSpSessionKey,
+			String sessionIndex,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _samlSpSessionLocalService.addSamlSpSession(
-			samlIdpEntityId, samlSpSessionKey, assertionXml, jSessionId,
-			nameIdFormat, nameIdNameQualifier, nameIdSPNameQualifier,
-			nameIdValue, sessionIndex, serviceContext);
+			assertionXml, jSessionId, nameIdFormat, nameIdNameQualifier,
+			nameIdSPNameQualifier, nameIdValue, samlIdpEntityId,
+			samlSpSessionKey, sessionIndex, serviceContext);
 	}
 
 	/**
@@ -361,17 +361,19 @@ public class SamlSpSessionLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.saml.persistence.model.SamlSpSession>
 		getSamlSpSessions(
-			long companyId, String samlIdpEntityId, String nameIdFormat,
-			String nameIdNameQualifier, String nameIdSPNameQualifier,
-			String nameIdValue) {
+			long companyId, String nameIdFormat, String nameIdNameQualifier,
+			String nameIdSPNameQualifier, String nameIdValue,
+			String samlIdpEntityId) {
 
 		return _samlSpSessionLocalService.getSamlSpSessions(
-			companyId, samlIdpEntityId, nameIdFormat, nameIdNameQualifier,
-			nameIdSPNameQualifier, nameIdValue);
+			companyId, nameIdFormat, nameIdNameQualifier, nameIdSPNameQualifier,
+			nameIdValue, samlIdpEntityId);
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getSamlSpSessions(long, String, String, String, String, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getSamlSpSessions(long, String, String, String, String,
+	 String)}
 	 */
 	@Deprecated
 	@Override
@@ -402,18 +404,18 @@ public class SamlSpSessionLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlSpSession updateSamlSpSession(
-			long samlSpSessionId, String samlIdpEntityId,
-			String samlSpSessionKey, String assertionXml, String jSessionId,
+			long samlSpSessionId, String assertionXml, String jSessionId,
 			String nameIdFormat, String nameIdNameQualifier,
 			String nameIdSPNameQualifier, String nameIdValue,
+			String samlIdpEntityId, String samlSpSessionKey,
 			String sessionIndex,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _samlSpSessionLocalService.updateSamlSpSession(
-			samlSpSessionId, samlIdpEntityId, samlSpSessionKey, assertionXml,
-			jSessionId, nameIdFormat, nameIdNameQualifier,
-			nameIdSPNameQualifier, nameIdValue, sessionIndex, serviceContext);
+			samlSpSessionId, assertionXml, jSessionId, nameIdFormat,
+			nameIdNameQualifier, nameIdSPNameQualifier, nameIdValue,
+			samlIdpEntityId, samlSpSessionKey, sessionIndex, serviceContext);
 	}
 
 	/**

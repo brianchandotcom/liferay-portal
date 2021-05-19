@@ -77,11 +77,10 @@ public interface SamlSpSessionLocalService
 	public SamlSpSession addSamlSpSession(SamlSpSession samlSpSession);
 
 	public SamlSpSession addSamlSpSession(
-			String samlIdpEntityId, String samlSpSessionKey,
 			String assertionXml, String jSessionId, String nameIdFormat,
 			String nameIdNameQualifier, String nameIdSPNameQualifier,
-			String nameIdValue, String sessionIndex,
-			ServiceContext serviceContext)
+			String nameIdValue, String samlIdpEntityId, String samlSpSessionKey,
+			String sessionIndex, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -279,12 +278,14 @@ public interface SamlSpSessionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<SamlSpSession> getSamlSpSessions(
-		long companyId, String samlIdpEntityId, String nameIdFormat,
-		String nameIdNameQualifier, String nameIdSPNameQualifier,
-		String nameIdValue);
+		long companyId, String nameIdFormat, String nameIdNameQualifier,
+		String nameIdSPNameQualifier, String nameIdValue,
+		String samlIdpEntityId);
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getSamlSpSessions(long, String, String, String, String, String)}
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getSamlSpSessions(long, String, String, String, String,
+	 String)}
 	 */
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -303,10 +304,10 @@ public interface SamlSpSessionLocalService
 		throws PortalException;
 
 	public SamlSpSession updateSamlSpSession(
-			long samlSpSessionId, String samlIdpEntityId,
-			String samlSpSessionKey, String assertionXml, String jSessionId,
+			long samlSpSessionId, String assertionXml, String jSessionId,
 			String nameIdFormat, String nameIdNameQualifier,
 			String nameIdSPNameQualifier, String nameIdValue,
+			String samlIdpEntityId, String samlSpSessionKey,
 			String sessionIndex, ServiceContext serviceContext)
 		throws PortalException;
 

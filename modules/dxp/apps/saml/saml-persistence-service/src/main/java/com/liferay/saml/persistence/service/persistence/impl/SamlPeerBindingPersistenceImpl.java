@@ -93,10 +93,10 @@ public class SamlPeerBindingPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SIEI;
+	private FinderPath _finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
 	private FinderPath
-		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SIEI;
-	private FinderPath _finderPathCountByC_D_SNIF_SNINQ_SNIV_SIEI;
+		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
+	private FinderPath _finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI;
 
 	/**
 	 * Returns all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdFormat = &#63; and samlNameIdNameQualifier = &#63; and samlNameIdValue = &#63; and samlPeerEntityId = &#63;.
@@ -110,12 +110,12 @@ public class SamlPeerBindingPersistenceImpl
 	 * @return the matching saml peer bindings
 	 */
 	@Override
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId) {
 
-		return findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		return findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
@@ -139,12 +139,12 @@ public class SamlPeerBindingPersistenceImpl
 	 * @return the range of matching saml peer bindings
 	 */
 	@Override
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId, int start, int end) {
 
-		return findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		return findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, start, end, null);
 	}
@@ -168,13 +168,13 @@ public class SamlPeerBindingPersistenceImpl
 	 * @return the ordered range of matching saml peer bindings
 	 */
 	@Override
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId, int start, int end,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		return findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		return findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, start, end, orderByComparator,
 			true);
@@ -200,7 +200,7 @@ public class SamlPeerBindingPersistenceImpl
 	 * @return the ordered range of matching saml peer bindings
 	 */
 	@Override
-	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public List<SamlPeerBinding> findByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId, int start, int end,
@@ -220,7 +220,7 @@ public class SamlPeerBindingPersistenceImpl
 
 			if (useFinderCache) {
 				finderPath =
-					_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SIEI;
+					_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
 				finderArgs = new Object[] {
 					companyId, deleted, samlNameIdFormat,
 					samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId
@@ -229,7 +229,7 @@ public class SamlPeerBindingPersistenceImpl
 		}
 		else if (useFinderCache) {
 			finderPath =
-				_finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SIEI;
+				_finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI;
 			finderArgs = new Object[] {
 				companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 				samlNameIdValue, samlPeerEntityId, start, end, orderByComparator
@@ -276,60 +276,60 @@ public class SamlPeerBindingPersistenceImpl
 
 			sb.append(_SQL_SELECT_SAMLPEERBINDING_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_DELETED_2);
+			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_DELETED_2);
 
 			boolean bindSamlNameIdFormat = false;
 
 			if (samlNameIdFormat.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDFORMAT_3);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_3);
 			}
 			else {
 				bindSamlNameIdFormat = true;
 
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDFORMAT_2);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_2);
 			}
 
 			boolean bindSamlNameIdNameQualifier = false;
 
 			if (samlNameIdNameQualifier.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDNAMEQUALIFIER_3);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
 			}
 			else {
 				bindSamlNameIdNameQualifier = true;
 
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDNAMEQUALIFIER_2);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
 			}
 
 			boolean bindSamlNameIdValue = false;
 
 			if (samlNameIdValue.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDVALUE_3);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_3);
 			}
 			else {
 				bindSamlNameIdValue = true;
 
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDVALUE_2);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_2);
 			}
 
 			boolean bindSamlPeerEntityId = false;
 
 			if (samlPeerEntityId.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLPEERENTITYID_3);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_3);
 			}
 			else {
 				bindSamlPeerEntityId = true;
 
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLPEERENTITYID_2);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -405,14 +405,14 @@ public class SamlPeerBindingPersistenceImpl
 	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
 	 */
 	@Override
-	public SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+	public SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 			long companyId, boolean deleted, String samlNameIdFormat,
 			String samlNameIdNameQualifier, String samlNameIdValue,
 			String samlPeerEntityId,
 			OrderByComparator<SamlPeerBinding> orderByComparator)
 		throws NoSuchPeerBindingException {
 
-		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, orderByComparator);
 
@@ -460,13 +460,13 @@ public class SamlPeerBindingPersistenceImpl
 	 * @return the first matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
 	@Override
-	public SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+	public SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		List<SamlPeerBinding> list = findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		List<SamlPeerBinding> list = findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, 0, 1, orderByComparator);
 
@@ -491,14 +491,14 @@ public class SamlPeerBindingPersistenceImpl
 	 * @throws NoSuchPeerBindingException if a matching saml peer binding could not be found
 	 */
 	@Override
-	public SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SIEI_Last(
+	public SamlPeerBinding findByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
 			long companyId, boolean deleted, String samlNameIdFormat,
 			String samlNameIdNameQualifier, String samlNameIdValue,
 			String samlPeerEntityId,
 			OrderByComparator<SamlPeerBinding> orderByComparator)
 		throws NoSuchPeerBindingException {
 
-		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIF_SNINQ_SNIV_SIEI_Last(
+		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, orderByComparator);
 
@@ -546,13 +546,13 @@ public class SamlPeerBindingPersistenceImpl
 	 * @return the last matching saml peer binding, or <code>null</code> if a matching saml peer binding could not be found
 	 */
 	@Override
-	public SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SIEI_Last(
+	public SamlPeerBinding fetchByC_D_SNIF_SNINQ_SNIV_SPEI_Last(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId,
 		OrderByComparator<SamlPeerBinding> orderByComparator) {
 
-		int count = countByC_D_SNIF_SNINQ_SNIV_SIEI(
+		int count = countByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId);
 
@@ -560,7 +560,7 @@ public class SamlPeerBindingPersistenceImpl
 			return null;
 		}
 
-		List<SamlPeerBinding> list = findByC_D_SNIF_SNINQ_SNIV_SIEI(
+		List<SamlPeerBinding> list = findByC_D_SNIF_SNINQ_SNIV_SPEI(
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlPeerEntityId, count - 1, count,
 			orderByComparator);
@@ -587,7 +587,7 @@ public class SamlPeerBindingPersistenceImpl
 	 * @throws NoSuchPeerBindingException if a saml peer binding with the primary key could not be found
 	 */
 	@Override
-	public SamlPeerBinding[] findByC_D_SNIF_SNINQ_SNIV_SIEI_PrevAndNext(
+	public SamlPeerBinding[] findByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
 			long samlPeerBindingId, long companyId, boolean deleted,
 			String samlNameIdFormat, String samlNameIdNameQualifier,
 			String samlNameIdValue, String samlPeerEntityId,
@@ -608,14 +608,14 @@ public class SamlPeerBindingPersistenceImpl
 
 			SamlPeerBinding[] array = new SamlPeerBindingImpl[3];
 
-			array[0] = getByC_D_SNIF_SNINQ_SNIV_SIEI_PrevAndNext(
+			array[0] = getByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
 				session, samlPeerBinding, companyId, deleted, samlNameIdFormat,
 				samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId,
 				orderByComparator, true);
 
 			array[1] = samlPeerBinding;
 
-			array[2] = getByC_D_SNIF_SNINQ_SNIV_SIEI_PrevAndNext(
+			array[2] = getByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
 				session, samlPeerBinding, companyId, deleted, samlNameIdFormat,
 				samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId,
 				orderByComparator, false);
@@ -630,7 +630,7 @@ public class SamlPeerBindingPersistenceImpl
 		}
 	}
 
-	protected SamlPeerBinding getByC_D_SNIF_SNINQ_SNIV_SIEI_PrevAndNext(
+	protected SamlPeerBinding getByC_D_SNIF_SNINQ_SNIV_SPEI_PrevAndNext(
 		Session session, SamlPeerBinding samlPeerBinding, long companyId,
 		boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
@@ -651,60 +651,60 @@ public class SamlPeerBindingPersistenceImpl
 
 		sb.append(_SQL_SELECT_SAMLPEERBINDING_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_DELETED_2);
+		sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_DELETED_2);
 
 		boolean bindSamlNameIdFormat = false;
 
 		if (samlNameIdFormat.isEmpty()) {
 			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDFORMAT_3);
+				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_3);
 		}
 		else {
 			bindSamlNameIdFormat = true;
 
 			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDFORMAT_2);
+				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_2);
 		}
 
 		boolean bindSamlNameIdNameQualifier = false;
 
 		if (samlNameIdNameQualifier.isEmpty()) {
 			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDNAMEQUALIFIER_3);
+				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
 		}
 		else {
 			bindSamlNameIdNameQualifier = true;
 
 			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDNAMEQUALIFIER_2);
+				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
 		}
 
 		boolean bindSamlNameIdValue = false;
 
 		if (samlNameIdValue.isEmpty()) {
 			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDVALUE_3);
+				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_3);
 		}
 		else {
 			bindSamlNameIdValue = true;
 
 			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDVALUE_2);
+				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_2);
 		}
 
 		boolean bindSamlPeerEntityId = false;
 
 		if (samlPeerEntityId.isEmpty()) {
 			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLPEERENTITYID_3);
+				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_3);
 		}
 		else {
 			bindSamlPeerEntityId = true;
 
 			sb.append(
-				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLPEERENTITYID_2);
+				_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -826,13 +826,13 @@ public class SamlPeerBindingPersistenceImpl
 	 * @param samlPeerEntityId the saml peer entity ID
 	 */
 	@Override
-	public void removeByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public void removeByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId) {
 
 		for (SamlPeerBinding samlPeerBinding :
-				findByC_D_SNIF_SNINQ_SNIV_SIEI(
+				findByC_D_SNIF_SNINQ_SNIV_SPEI(
 					companyId, deleted, samlNameIdFormat,
 					samlNameIdNameQualifier, samlNameIdValue, samlPeerEntityId,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
@@ -853,7 +853,7 @@ public class SamlPeerBindingPersistenceImpl
 	 * @return the number of matching saml peer bindings
 	 */
 	@Override
-	public int countByC_D_SNIF_SNINQ_SNIV_SIEI(
+	public int countByC_D_SNIF_SNINQ_SNIV_SPEI(
 		long companyId, boolean deleted, String samlNameIdFormat,
 		String samlNameIdNameQualifier, String samlNameIdValue,
 		String samlPeerEntityId) {
@@ -863,7 +863,7 @@ public class SamlPeerBindingPersistenceImpl
 		samlNameIdValue = Objects.toString(samlNameIdValue, "");
 		samlPeerEntityId = Objects.toString(samlPeerEntityId, "");
 
-		FinderPath finderPath = _finderPathCountByC_D_SNIF_SNINQ_SNIV_SIEI;
+		FinderPath finderPath = _finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI;
 
 		Object[] finderArgs = new Object[] {
 			companyId, deleted, samlNameIdFormat, samlNameIdNameQualifier,
@@ -877,60 +877,60 @@ public class SamlPeerBindingPersistenceImpl
 
 			sb.append(_SQL_COUNT_SAMLPEERBINDING_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_DELETED_2);
+			sb.append(_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_DELETED_2);
 
 			boolean bindSamlNameIdFormat = false;
 
 			if (samlNameIdFormat.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDFORMAT_3);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_3);
 			}
 			else {
 				bindSamlNameIdFormat = true;
 
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDFORMAT_2);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_2);
 			}
 
 			boolean bindSamlNameIdNameQualifier = false;
 
 			if (samlNameIdNameQualifier.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDNAMEQUALIFIER_3);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_3);
 			}
 			else {
 				bindSamlNameIdNameQualifier = true;
 
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDNAMEQUALIFIER_2);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_2);
 			}
 
 			boolean bindSamlNameIdValue = false;
 
 			if (samlNameIdValue.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDVALUE_3);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_3);
 			}
 			else {
 				bindSamlNameIdValue = true;
 
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDVALUE_2);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_2);
 			}
 
 			boolean bindSamlPeerEntityId = false;
 
 			if (samlPeerEntityId.isEmpty()) {
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLPEERENTITYID_3);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_3);
 			}
 			else {
 				bindSamlPeerEntityId = true;
 
 				sb.append(
-					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLPEERENTITYID_2);
+					_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_2);
 			}
 
 			String sql = sb.toString();
@@ -980,43 +980,43 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_COMPANYID_2 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_COMPANYID_2 =
 			"samlPeerBinding.companyId = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_DELETED_2 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_DELETED_2 =
 			"samlPeerBinding.deleted = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDFORMAT_2 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_2 =
 			"samlPeerBinding.samlNameIdFormat = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDFORMAT_3 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDFORMAT_3 =
 			"(samlPeerBinding.samlNameIdFormat IS NULL OR samlPeerBinding.samlNameIdFormat = '') AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDNAMEQUALIFIER_2 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_2 =
 			"samlPeerBinding.samlNameIdNameQualifier = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDNAMEQUALIFIER_3 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDNAMEQUALIFIER_3 =
 			"(samlPeerBinding.samlNameIdNameQualifier IS NULL OR samlPeerBinding.samlNameIdNameQualifier = '') AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDVALUE_2 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_2 =
 			"samlPeerBinding.samlNameIdValue = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLNAMEIDVALUE_3 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLNAMEIDVALUE_3 =
 			"(samlPeerBinding.samlNameIdValue IS NULL OR samlPeerBinding.samlNameIdValue = '') AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLPEERENTITYID_2 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_2 =
 			"samlPeerBinding.samlPeerEntityId = ?";
 
 	private static final String
-		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SIEI_SAMLPEERENTITYID_3 =
+		_FINDER_COLUMN_C_D_SNIF_SNINQ_SNIV_SPEI_SAMLPEERENTITYID_3 =
 			"(samlPeerBinding.samlPeerEntityId IS NULL OR samlPeerBinding.samlPeerEntityId = '')";
 
 	public SamlPeerBindingPersistenceImpl() {
@@ -1535,10 +1535,10 @@ public class SamlPeerBindingPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
-		_finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SIEI =
+		_finderPathWithPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByC_D_SNIF_SNINQ_SNIV_SIEI",
+				"findByC_D_SNIF_SNINQ_SNIV_SPEI",
 				new String[] {
 					Long.class.getName(), Boolean.class.getName(),
 					String.class.getName(), String.class.getName(),
@@ -1553,10 +1553,10 @@ public class SamlPeerBindingPersistenceImpl
 				},
 				true);
 
-		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SIEI =
+		_finderPathWithoutPaginationFindByC_D_SNIF_SNINQ_SNIV_SPEI =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByC_D_SNIF_SNINQ_SNIV_SIEI",
+				"findByC_D_SNIF_SNINQ_SNIV_SPEI",
 				new String[] {
 					Long.class.getName(), Boolean.class.getName(),
 					String.class.getName(), String.class.getName(),
@@ -1569,9 +1569,9 @@ public class SamlPeerBindingPersistenceImpl
 				},
 				true);
 
-		_finderPathCountByC_D_SNIF_SNINQ_SNIV_SIEI = new FinderPath(
+		_finderPathCountByC_D_SNIF_SNINQ_SNIV_SPEI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByC_D_SNIF_SNINQ_SNIV_SIEI",
+			"countByC_D_SNIF_SNINQ_SNIV_SPEI",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName(), String.class.getName(),

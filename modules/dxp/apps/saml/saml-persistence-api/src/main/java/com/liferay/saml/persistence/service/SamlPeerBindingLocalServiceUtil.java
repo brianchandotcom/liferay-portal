@@ -229,11 +229,11 @@ public class SamlPeerBindingLocalServiceUtil {
 		return getService().fetchSamlPeerBinding(samlPeerBindingId);
 	}
 
-	public static SamlPeerBinding fetchSamlPeerBindingByIDPIdentifier(
+	public static SamlPeerBinding fetchSamlPeerBinding(
 		long companyId, String samlNameIdFormat, String samlNameIdNameQualifier,
 		String samlNameIdValue, String samlSpEntityId) {
 
-		return getService().fetchSamlPeerBindingByIDPIdentifier(
+		return getService().fetchSamlPeerBinding(
 			companyId, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlSpEntityId);
 	}

@@ -438,10 +438,11 @@ public class SamlIdpSpConnectionLocalServiceWrapper
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by { @link
-	 #updateSamlIdpSpConnection(long, int, String, boolean,
+	 {@link #updateSamlIdpSpConnection(long, int, String, boolean,
 	 boolean, boolean, boolean, String, InputStream, String,
 	 String, String, String, ServiceContext)}
 	 */
+	@Deprecated
 	@Override
 	public com.liferay.saml.persistence.model.SamlIdpSpConnection
 			updateSamlIdpSpConnection(

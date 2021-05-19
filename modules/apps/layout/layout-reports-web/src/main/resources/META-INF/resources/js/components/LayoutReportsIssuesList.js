@@ -128,14 +128,11 @@ const Issue = ({issue}) => {
 
 	return (
 		issueTotal > 0 && (
-			<ClayList.Item action className="border-0 px-0 rounded-0" flex>
-				<ClayList.ItemField className="pl-0" expand>
-					{issue.title}
-				</ClayList.ItemField>
+			<ClayList.Item action className="border-0 rounded-0" flex>
+				<ClayList.ItemField expand>{issue.title}</ClayList.ItemField>
 
-				<ClayList.ItemField className="pr-0">
+				<ClayList.ItemField>
 					<ClayBadge
-						className="mr-0"
 						displayType={issueTotal === 0 ? 'success' : 'info'}
 						label={issueTotal}
 					/>

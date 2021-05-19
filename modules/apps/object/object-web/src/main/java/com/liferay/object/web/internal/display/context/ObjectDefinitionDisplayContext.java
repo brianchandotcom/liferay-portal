@@ -31,7 +31,7 @@ public class ObjectDefinitionDisplayContext {
 	public ObjectDefinitionDisplayContext(
 		HttpServletRequest httpServletRequest, String restContextPath) {
 
-		_apiURL = "/o/" + restContextPath + "/v1.0/object-entries";
+		_apiURL = "/o/" + restContextPath;
 		_objectDefinitionRequestHelper = new ObjectDefinitionRequestHelper(
 			httpServletRequest);
 	}

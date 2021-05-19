@@ -100,8 +100,6 @@ public class ObjectDefinitionGraphQLTest {
 						_objectDefinitionName,
 						StringBundler.concat(
 							"{", _objectFieldName, ": \"", value, "\"}")
-					).put(
-						"siteId", TestPropsValues.getGroupId()
 					).build(),
 					new GraphQLField(_objectFieldName))));
 
@@ -198,8 +196,6 @@ public class ObjectDefinitionGraphQLTest {
 						_objectDefinitionName,
 						StringBundler.concat(
 							"{", _objectFieldName, ": \"", value, "\"}")
-					).put(
-						"siteId", TestPropsValues.getGroupId()
 					).build(),
 					new GraphQLField(_objectFieldName),
 					new GraphQLField(

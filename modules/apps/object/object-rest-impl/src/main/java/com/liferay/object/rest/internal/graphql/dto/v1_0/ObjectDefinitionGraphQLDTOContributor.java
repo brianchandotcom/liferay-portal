@@ -81,7 +81,6 @@ public class ObjectDefinitionGraphQLDTOContributor
 		return _toMap(
 			_objectEntryManager.addObjectEntry(
 				dtoConverterContext, dtoConverterContext.getUserId(),
-				(Long)dtoConverterContext.getAttribute("siteId"),
 				_objectDefinitionId, _toObjectEntry(dto)));
 	}
 

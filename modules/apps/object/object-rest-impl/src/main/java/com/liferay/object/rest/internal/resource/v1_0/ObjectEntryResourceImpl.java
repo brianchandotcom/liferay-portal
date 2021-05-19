@@ -112,11 +112,11 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	@Override
-	public ObjectEntry postSiteObjectEntry(Long siteId, ObjectEntry objectEntry)
+	public ObjectEntry postObjectEntry(ObjectEntry objectEntry)
 		throws Exception {
 
 		return _objectEntryManager.addObjectEntry(
-			_getDTOConverterContext(null), contextUser.getUserId(), siteId,
+			_getDTOConverterContext(null), contextUser.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), objectEntry);
 	}
 

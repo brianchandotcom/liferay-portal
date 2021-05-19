@@ -1737,8 +1737,7 @@ public class GraphQLServletExtender {
 		mutationBuilder.field(
 			_addField(
 				graphQLObjectType, createName,
-				_addArgument(graphQLInputType, resourceName),
-				_addArgument(Scalars.GraphQLLong, "siteId")));
+				_addArgument(graphQLInputType, resourceName)));
 
 		GraphQLCodeRegistry.Builder graphQLCodeRegistryBuilder =
 			processingElementsContainer.getCodeRegistryBuilder();
@@ -1749,13 +1748,7 @@ public class GraphQLServletExtender {
 				(DataFetcher<Object>)
 					dataFetchingEnvironment -> graphQLDTOContributor.createDTO(
 						dataFetchingEnvironment.getArgument(resourceName),
-						_getDTOConverterContext(
-							dataFetchingEnvironment,
-							HashMapBuilder.<String, Serializable>put(
-								"siteId",
-								(Long)dataFetchingEnvironment.getArgument(
-									"siteId")
-							).build()))
+						_getDTOConverterContext(dataFetchingEnvironment, null))
 			).build());
 
 		// Delete

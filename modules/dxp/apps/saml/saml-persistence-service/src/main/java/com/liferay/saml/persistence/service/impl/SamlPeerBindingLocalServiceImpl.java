@@ -75,7 +75,7 @@ public class SamlPeerBindingLocalServiceImpl
 		return samlPeerBindingPersistence.update(samlPeerBinding);
 	}
 
-	public SamlPeerBinding fetchSamlPeerBindingByIDPIdentifier(
+	public SamlPeerBinding fetchSamlPeerBinding(
 		long companyId, String samlNameIdFormat, String samlNameIdNameQualifier,
 		String samlNameIdValue, String samlSpEntityId) {
 

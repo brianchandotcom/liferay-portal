@@ -89,7 +89,9 @@ import javax.ws.rs.core.UriInfo;
  * @generated
  */
 @Generated("")
-@Path("/${openAPIYAML.info.version}")
+<#if configYAML.application??>
+	@Path("/${openAPIYAML.info.version}")
+</#if>
 public abstract class Base${schemaName}ResourceImpl
 	implements ${schemaName}Resource
 

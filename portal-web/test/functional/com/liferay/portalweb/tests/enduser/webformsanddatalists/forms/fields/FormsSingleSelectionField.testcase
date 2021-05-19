@@ -196,8 +196,6 @@ definition {
 
 		Form.save();
 
-		
-
 		FormsAdminNavigator.gotoBack();
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
@@ -211,8 +209,6 @@ definition {
 			key_optionLabel = "Option 2",
 			key_position = "2",
 			locator1 = "FormFields#SELECT_ASSERT_RADIO_OPTION_ORDER");
-
-
 	}
 
 	@description = "Verify that options can be displayed both Inline and as a list"

@@ -135,13 +135,13 @@ public class AssetCategorySitemapURLProvider implements SitemapURLProvider {
 			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
 				_portal.getClassNameId(AssetCategory.class), assetCategoryId);
 
-		String productFriendlyURL =
+		String categoryFriendlyURL =
 			currentSiteURL + urlSeparator +
 				friendlyURLEntry.getUrlTitle(themeDisplay.getLanguageId());
 
 		_sitemap.addURLElement(
-			element, productFriendlyURL, typeSettingsUnicodeProperties,
-			layout.getModifiedDate(), productFriendlyURL, null);
+			element, categoryFriendlyURL, typeSettingsUnicodeProperties,
+			layout.getModifiedDate(), categoryFriendlyURL, null);
 	}
 
 	@Reference

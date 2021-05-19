@@ -27,14 +27,12 @@ const PanelHeaderWithOptions = ({
 				<ClayLayout.ContentRow className="flex-row" expand="true">
 					<span className="mr-2">{title}</span>
 
-					<span>
-						<span
-							className="workflow-tooltip"
-							data-tooltip-align={tooltipPosition}
-							title={description}
-						>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
+					<span
+						className="workflow-tooltip"
+						data-tooltip-align={tooltipPosition}
+						title={description}
+					>
+						<ClayIcon symbol="question-circle-full" />
 					</span>
 				</ClayLayout.ContentRow>
 

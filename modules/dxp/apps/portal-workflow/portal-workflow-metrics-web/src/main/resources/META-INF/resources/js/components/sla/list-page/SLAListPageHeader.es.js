@@ -20,19 +20,16 @@ export default function Header({processId}) {
 		<ClayManagementToolbar>
 			<ClayManagementToolbar.ItemList expand>
 				<ClayManagementToolbar.Item className="autofit-col-expand autofit-float-end">
-					<span>
-						<span
-							className="workflow-tooltip"
-							data-tooltip-align="bottom"
-							title={Liferay.Language.get('new-sla')}
+					<span
+						data-tooltip-align="bottom"
+						title={Liferay.Language.get('new-sla')}
+					>
+						<ChildLink
+							className="btn btn-primary nav-btn nav-btn-monospaced"
+							to={`/sla/${processId}/new`}
 						>
-							<ChildLink
-								className="btn btn-primary nav-btn nav-btn-monospaced"
-								to={`/sla/${processId}/new`}
-							>
-								<ClayIcon symbol="plus" />
-							</ChildLink>
-						</span>
+							<ClayIcon symbol="plus" />
+						</ChildLink>
 					</span>
 				</ClayManagementToolbar.Item>
 			</ClayManagementToolbar.ItemList>

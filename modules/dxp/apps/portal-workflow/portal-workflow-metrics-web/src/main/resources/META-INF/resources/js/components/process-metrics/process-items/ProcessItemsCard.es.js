@@ -118,14 +118,12 @@ const Header = ({children, data, description, title}) => (
 			<ClayLayout.ContentCol className="flex-row" expand>
 				<span className="mr-2">{title}</span>
 
-				<span>
-					<span
-						className="workflow-tooltip"
-						data-tooltip-align="right"
-						title={description}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
+				<span
+					className="workflow-tooltip"
+					data-tooltip-align="right"
+					title={description}
+				>
+					<ClayIcon symbol="question-circle-full" />
 				</span>
 			</ClayLayout.ContentCol>
 

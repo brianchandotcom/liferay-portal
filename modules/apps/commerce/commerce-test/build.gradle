@@ -16,10 +16,12 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-price-list-api")
 	testIntegrationCompile project(":apps:commerce:commerce-pricing-api")
 	testIntegrationCompile project(":apps:commerce:commerce-product-api")
+	testIntegrationCompile project(":apps:commerce:commerce-product-service")
 	testIntegrationCompile project(":apps:commerce:commerce-product-test-util")
 	testIntegrationCompile project(":apps:commerce:commerce-product-type-simple")
 	testIntegrationCompile project(":apps:commerce:commerce-service")
 	testIntegrationCompile project(":apps:commerce:commerce-tax-api")
 	testIntegrationCompile project(":apps:commerce:commerce-test-util")
+	testIntegrationCompile project(":apps:friendly-url:friendly-url-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

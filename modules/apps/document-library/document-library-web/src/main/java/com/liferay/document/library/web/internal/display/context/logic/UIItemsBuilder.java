@@ -261,20 +261,18 @@ public class UIItemsBuilder {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
 
-		String portletURLString = PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createActionURL(
-				DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE)
-		).setBackURL(
-			_getCurrentURL()
-		).setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId())
-		).buildString();
-
 		_addURLUIItem(
 			new URLMenuItem(), menuItems,
 			DLUIItemKeys.COLLECT_DIGITAL_SIGNATURE,
 			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
-			portletURLString);
+			PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createActionURL(
+					DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE)
+			).setBackURL(
+				_getCurrentURL()
+			).setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId())
+			).buildString());
 	}
 
 	public void addCompareToMenuItem(List<MenuItem> menuItems)

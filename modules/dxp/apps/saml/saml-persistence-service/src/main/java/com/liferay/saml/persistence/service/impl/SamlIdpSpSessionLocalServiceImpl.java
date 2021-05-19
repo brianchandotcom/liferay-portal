@@ -67,7 +67,7 @@ public class SamlIdpSpSessionLocalServiceImpl
 		long companyId = serviceContext.getCompanyId();
 
 		SamlPeerBinding samlPeerBinding =
-			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				companyId, false, nameIdFormat, null, nameIdValue,
 				samlSpEntityId, null);
 

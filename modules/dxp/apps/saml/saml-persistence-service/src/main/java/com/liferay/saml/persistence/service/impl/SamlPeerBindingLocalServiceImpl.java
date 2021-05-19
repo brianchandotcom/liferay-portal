@@ -79,7 +79,7 @@ public class SamlPeerBindingLocalServiceImpl
 		long companyId, String samlNameIdFormat, String samlNameIdNameQualifier,
 		String samlNameIdValue, String samlSpEntityId) {
 
-		return samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+		return samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 			companyId, false, samlNameIdFormat, samlNameIdNameQualifier,
 			samlNameIdValue, samlSpEntityId, null);
 	}

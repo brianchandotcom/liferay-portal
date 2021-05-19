@@ -62,7 +62,7 @@ public class SamlSpSessionLocalServiceImpl
 		long companyId = serviceContext.getCompanyId();
 
 		SamlPeerBinding samlPeerBinding =
-			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				companyId, false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId, null);
 
@@ -162,12 +162,12 @@ public class SamlSpSessionLocalServiceImpl
 		List<SamlPeerBinding> samlPeerBindings = new ArrayList<>();
 
 		samlPeerBindings.addAll(
-			samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SIEI(
+			samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SPEI(
 				companyId, false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId));
 
 		samlPeerBindings.addAll(
-			samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SIEI(
+			samlPeerBindingPersistence.findByC_D_SNIF_SNINQ_SNIV_SPEI(
 				companyId, true, nameIdFormat, nameIdNameQualifier, nameIdValue,
 				samlIdpEntityId));
 
@@ -219,7 +219,7 @@ public class SamlSpSessionLocalServiceImpl
 		long companyId = serviceContext.getCompanyId();
 
 		SamlPeerBinding samlPeerBinding =
-			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SIEI_First(
+			samlPeerBindingPersistence.fetchByC_D_SNIF_SNINQ_SNIV_SPEI_First(
 				companyId, false, nameIdFormat, nameIdNameQualifier,
 				nameIdValue, samlIdpEntityId, null);
 

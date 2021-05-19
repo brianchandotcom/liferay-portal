@@ -88,24 +88,24 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(), "Irrelevant",
 				Collections.<ObjectField>emptyList());
 
+		List<ObjectField> objectFields = Arrays.asList(
+			_createObjectField(true, false, "ageOfDeath", "Long"),
+			_createObjectField(true, false, "authorOfGospel", "Boolean"),
+			_createObjectField(true, false, "birthday", "Date"),
+			_createObjectField(true, true, "emailAddress", "String"),
+			_createObjectField(true, true, "emailAddressDomain", "String"),
+			_createObjectField(true, false, "firstName", "String"),
+			_createObjectField(true, false, "height", "Double"),
+			_createObjectField(true, false, "lastName", "String"),
+			_createObjectField(true, false, "middleName", "String"),
+			_createObjectField(true, false, "numberOfBooksWritten", "Integer"),
+			_createObjectField(false, false, "portrait", "Blob"),
+			_createObjectField(true, false, "speed", "BigDecimal"),
+			_createObjectField(true, false, "weight", "Double"));
+
 		_objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addObjectDefinition(
-				TestPropsValues.getUserId(), "Test",
-				Arrays.asList(
-					_createObjectField(false, "ageOfDeath", "Long"),
-					_createObjectField(false, "authorOfGospel", "Boolean"),
-					_createObjectField(false, "birthday", "Date"),
-					_createObjectField(true, "emailAddress", "String"),
-					_createObjectField(true, "emailAddressDomain", "String"),
-					_createObjectField(false, "firstName", "String"),
-					_createObjectField(false, "height", "Double"),
-					_createObjectField(false, "lastName", "String"),
-					_createObjectField(false, "middleName", "String"),
-					_createObjectField(
-						false, "numberOfBooksWritten", "Integer"),
-					_createObjectField(false, "portrait", "Blob"),
-					_createObjectField(false, "speed", "BigDecimal"),
-					_createObjectField(false, "weight", "Double")));
+				TestPropsValues.getUserId(), "Test", objectFields);
 	}
 
 	@Test
@@ -798,12 +798,12 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	private ObjectField _createObjectField(
-		boolean indexedAsKeyword, String name, String type) {
+		boolean indexed, boolean indexedAsKeyword, String name, String type) {
 
 		ObjectField objectField = ObjectFieldLocalServiceUtil.createObjectField(
 			0);
 
-		objectField.setIndexed(true);
+		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);
 		objectField.setName(name);
 		objectField.setType(type);

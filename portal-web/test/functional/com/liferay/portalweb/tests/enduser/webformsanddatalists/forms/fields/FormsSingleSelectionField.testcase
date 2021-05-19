@@ -213,7 +213,7 @@ definition {
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
-		
+
 		Form.editName(formName = "Form 1");
 
 		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
@@ -225,7 +225,7 @@ definition {
 		FormFields.editOptionsRow(
 			optionName = "Option2",
 			optionValue = "Option 2",
-			rowNumber = "2");	
+			rowNumber = "2");
 
 		Form.gotoAdvancedTab();
 
@@ -234,17 +234,15 @@ definition {
 			selectOption = "Option 1");
 
 		Form.gotoBasicTab();
-		
+
 		FormFields.deleteOptionsRow(rowNumber = "1");
 
 		Form.gotoAdvancedTab();
 
 		AssertTextEquals(
 			key_definedEntry = "Choose an Option",
-			value1 = "Choose an Option",
-			locator1 = "FormFields#OPTIONS_PREDEFINED_SELECTOR");
-
-
+			locator1 = "FormFields#OPTIONS_PREDEFINED_SELECTOR",
+			value1 = "Choose an Option");
 	}
 
 	@description = "Verify that the Field Reference can be Edited"

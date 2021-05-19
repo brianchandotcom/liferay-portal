@@ -20,9 +20,11 @@ package com.liferay.digital.signature.constants;
 public class DigitalSignaturePortletKeys {
 
 	public static final String COLLECT_DIGITAL_SIGNATURE =
-		"com_liferay_digital_signature_web_internal_CollectDigitalSignature";
+		"com_liferay_digital_signature_web_internal_portlet_" +
+			"CollectDigitalSignaturePortlet";
 
-	public static final String DIGITAL_SIGNATURE_ADMIN =
-		"com_liferay_digital_signature_web_internal_DigitalSignatureAdmin";
+	public static final String DIGITAL_SIGNATURE =
+		"com_liferay_digital_signature_web_internal_portlet_" +
+			"DigitalSignaturePortlet";
 
 }

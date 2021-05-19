@@ -709,6 +709,8 @@ definition {
 	test EditPaypalPaymentMethod {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -887,6 +889,8 @@ definition {
 	@priority = "3"
 	test RemoveShippingOptionVariableRate {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

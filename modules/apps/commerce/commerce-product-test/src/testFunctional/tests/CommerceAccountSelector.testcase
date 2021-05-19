@@ -41,6 +41,8 @@ definition {
 	test AssertAccountSelectorIsClosedAfterMiniCartIsOpened {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -75,6 +77,8 @@ definition {
 	@priority = "3"
 	test AssertActiveAccountIsVisibleOnAccountSelectorDropdown {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -124,6 +128,8 @@ definition {
 	@priority = "3"
 	test SearchForAnAccountAndSelectItAsActive {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -218,6 +224,8 @@ definition {
 	@priority = "3"
 	test ViewAccountSelectorDropdownAccountsList {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

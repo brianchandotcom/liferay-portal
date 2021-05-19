@@ -31,6 +31,10 @@ String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_ENTRY_N
 
 			<aui:model-context bean="<%= dispatchTrigger %>" model="<%= DispatchTrigger.class %>" />
 
+			<liferay-ui:error exception="<%= TalendArchiveException.class %>">
+				<liferay-ui:message key="the-file-must-be-a-valid-talend-job-archive" />
+			</liferay-ui:error>
+
 			<p class="<%= Objects.equals(fileEntryName, StringPool.BLANK) ? "hide" : StringPool.BLANK %> text-default" id="<portlet:namespace />fileEntryName">
 				<span id="<portlet:namespace />fileEntryRemove">
 					<liferay-ui:icon
@@ -46,7 +50,7 @@ String fileEntryName = (String)request.getAttribute(DispatchWebKeys.FILE_ENTRY_N
 
 			<c:if test="<%= (dispatchTrigger == null) || !dispatchTrigger.isSystem() %>">
 				<div class="<%= Objects.equals(fileEntryName, StringPool.BLANK) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />fileEntry">
-					<aui:input name="jobArchive" required="<%= true %>" type="file" />
+					<aui:input label="upload-your-talend-job-file" name="jobArchive" required="<%= true %>" type="file" />
 				</div>
 			</c:if>
 

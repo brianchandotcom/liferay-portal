@@ -1019,7 +1019,7 @@ definition {
 			title = "WC Title");
 	}
 
-	@description = "Validade if when Web Content is updated its being corectly displayed"
+	@description = "LPS-131886 Validade if when Web Content is updated its being corectly displayed"
 	@priority = "3"
 	test ShouldExhibitUpdatedWebContent {
 		task ("Create WC via JSON") {
@@ -1047,13 +1047,9 @@ definition {
 		}
 	}
 
-	@description = "Validade if a Web Content associated with a Display Page Template is shown"
+	@description = "LPS-131886 Validade if a Web Content associated with a Display Page Template is shown"
 	@priority = "5"
 	test ShouldExhibitWebContentAssociatedWithDisplayPage {
-		task ("Add a site via JSON") {
-			JSONGroup.addGroup(groupName = "Test Site Name");
-		}
-
 		task ("Create and Publish a Display Page Template with Fragment") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -1084,12 +1080,17 @@ definition {
 				category = "Content",
 				panel = "Applications",
 				portlet = "Content Dashboard");
+			
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "Webcontent Title");
 
-			AssertElementPresent(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_DISPLAY_PAGE");
+			AssertElementPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_DISPLAY_PAGE");
 		}
 	}
 
-	@description = "Validade if a Web Content not associated with a Display Page Template is shown"
+	@description = "LPS-131886 Validade if a Web Content not associated with a Display Page Template is shown"
 	@priority = "5"
 	test ShouldExhibitWebContentNotAssociatedWithDisplayPageTemplate {
 		task ("Create WC via JSON") {

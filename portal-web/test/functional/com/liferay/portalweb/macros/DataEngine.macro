@@ -1105,27 +1105,6 @@ definition {
 		Click(locator1 = "Sidebar#BACK");
 	}
 
-	macro editFieldsGroupRepeatable {
-		if (!(isSet(fieldsGroupLabel))) {
-			var fieldsGroupLabel = "Fields Group";
-		}
-
-		AssertClick.assertPartialTextClickAt(
-			key_fieldFieldLabel = "${fieldsGroupLabel}",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
-			value1 = "${fieldsGroupLabel}");
-
-		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK", key_tab = "Basic")) {
-			Navigator.gotoNavTab(navTab = "Basic");
-		}
-
-		Check.checkToggleSwitch(
-			checkboxName = "Repeatable",
-			locator1 = "Checkbox#ANY_CHECKBOX");
-
-		Click(locator1 = "Sidebar#BACK");
-	}
-
 	macro editFieldShowLabel {
 		AssertClick.assertPartialTextClickAt(
 			key_fieldFieldLabel = "${fieldFieldLabel}",

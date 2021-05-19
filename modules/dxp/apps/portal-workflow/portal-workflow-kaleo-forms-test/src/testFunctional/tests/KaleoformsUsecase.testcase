@@ -1589,8 +1589,6 @@ definition {
 
 	@priority = "3"
 	test CompleteProcessAndAssertFieldOrder {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1607,14 +1605,14 @@ definition {
 			fieldName = "Select");
 
 		DynamicDataMapping.addField(
-			field = "Text Box",
-			fieldFieldLabel = "Text Box",
-			fieldName = "TextBox");
+			field = "Text",
+			fieldFieldLabel = "Text1",
+			fieldName = "Text1");
 
 		DynamicDataMapping.addField(
 			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldFieldLabel = "Text2",
+			fieldName = "Text2");
 
 		KaleoFormsAdmin.saveFieldSet();
 
@@ -1654,7 +1652,7 @@ definition {
 
 		KaleoFormsAdmin.addForm(kfFormName = "Review Task Form");
 
-		DynamicDataMapping.deleteField(fieldFieldLabel = "Text Box");
+		DynamicDataMapping.deleteField(fieldFieldLabel = "Text1");
 
 		KaleoFormsAdmin.saveForm();
 
@@ -1682,13 +1680,13 @@ definition {
 			fieldName = "Select",
 			kfProcessFieldData = "option 2");
 
-		KaleoFormsAdmin.populateFieldTextBox(
-			fieldName = "TextBox",
-			kfProcessFieldData = "Test Box Description");
+		KaleoFormsAdmin.populateFieldText(
+			fieldName = "Text1",
+			kfProcessFieldData = "Test 1 Description");
 
 		KaleoFormsAdmin.populateFieldText(
-			fieldName = "Text",
-			kfProcessFieldData = "Test Description");
+			fieldName = "Text2",
+			kfProcessFieldData = "Test 2 Description");
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][1]//label",
@@ -1696,11 +1694,11 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][2]//label",
-			value1 = "Text Box");
+			value1 = "Text1");
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][3]//label",
-			value1 = "Text");
+			value1 = "Text2");
 
 		KaleoFormsAdmin.saveProcessRecord();
 
@@ -1725,10 +1723,10 @@ definition {
 			fieldValue = "option 2");
 
 		WorkflowAsset.previewViewContent(
-			fieldLabel = "Text",
-			fieldValue = "Test Description");
+			fieldLabel = "Text2",
+			fieldValue = "Test 2 Description");
 
-		WorkflowAsset.previewViewContentFieldNotPresent(fieldLabel = "Text Box");
+		WorkflowAsset.previewViewContentFieldNotPresent(fieldLabel = "Text1");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -1751,10 +1749,10 @@ definition {
 			fieldValue = "option 2");
 
 		WorkflowAsset.previewViewContent(
-			fieldLabel = "Text",
-			fieldValue = "Test Description");
+			fieldLabel = "Text2",
+			fieldValue = "Test 2 Description");
 
-		WorkflowAsset.previewViewContentFieldNotPresent(fieldLabel = "Text Box");
+		WorkflowAsset.previewViewContentFieldNotPresent(fieldLabel = "Text1");
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][1]//label",
@@ -1762,7 +1760,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "//div[contains(@class,'field-wrapper')][2]//label",
-			value1 = "Text");
+			value1 = "Text2");
 	}
 
 	@priority = "5"

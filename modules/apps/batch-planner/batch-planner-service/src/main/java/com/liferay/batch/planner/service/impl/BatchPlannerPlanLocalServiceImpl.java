@@ -14,12 +14,15 @@
 
 package com.liferay.batch.planner.service.impl;
 
+import com.liferay.batch.planner.constants.BatchPlannerConstants;
+import com.liferay.batch.planner.exception.BatchPlannerPlanExternalTypeException;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.plan.PlanExternalType;
 import com.liferay.batch.planner.service.base.BatchPlannerPlanLocalServiceBaseImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -42,12 +45,14 @@ public class BatchPlannerPlanLocalServiceImpl
 
 	@Override
 	public BatchPlannerPlan addBatchPlannerPlan(
-			long userId, String name, PlanExternalType planExternalType)
+			long userId, String name, String externalType)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
-		_validate(0, user.getCompanyId(), name);
+		_validateExternalType(externalType);
+
+		_validateName(0, user.getCompanyId(), name);
 
 		BatchPlannerPlan batchPlannerPlan = batchPlannerPlanPersistence.create(
 			counterLocalService.increment());
@@ -57,7 +62,7 @@ public class BatchPlannerPlanLocalServiceImpl
 		batchPlannerPlan.setUserName(user.getFullName());
 		batchPlannerPlan.setCreateDate(new Date());
 		batchPlannerPlan.setModifiedDate(batchPlannerPlan.getCreateDate());
-		batchPlannerPlan.setExternalType(planExternalType.name());
+		batchPlannerPlan.setExternalType(externalType);
 		batchPlannerPlan.setName(name);
 
 		return batchPlannerPlanPersistence.update(batchPlannerPlan);
@@ -73,7 +78,7 @@ public class BatchPlannerPlanLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		_validate(batchPlannerPlanId, user.getCompanyId(), name);
+		_validateName(batchPlannerPlanId, user.getCompanyId(), name);
 
 		if (userId != batchPlannerPlan.getUserId()) {
 			batchPlannerPlan.setUserId(userId);
@@ -86,7 +91,22 @@ public class BatchPlannerPlanLocalServiceImpl
 		return batchPlannerPlanPersistence.update(batchPlannerPlan);
 	}
 
-	private void _validate(long batchPlannerPlanId, long companyId, String name)
+	private void _validateExternalType(String externalType)
+		throws PortalException {
+
+		if (BatchPlannerConstants.isExternalType(externalType)) {
+			return;
+		}
+
+		throw new BatchPlannerPlanExternalTypeException(
+			String.format(
+				"Batch planner plan external type must be one of %s",
+				StringUtil.merge(
+					BatchPlannerConstants.EXTERNAL_TYPES, StringPool.COMMA)));
+	}
+
+	private void _validateName(
+			long batchPlannerPlanId, long companyId, String name)
 		throws PortalException {
 
 		int maxLength = ModelHintsUtil.getMaxLength(

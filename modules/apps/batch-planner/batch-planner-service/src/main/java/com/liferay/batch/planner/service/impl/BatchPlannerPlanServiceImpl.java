@@ -15,7 +15,6 @@
 package com.liferay.batch.planner.service.impl;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.plan.PlanExternalType;
 import com.liferay.batch.planner.service.base.BatchPlannerPlanServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,13 +37,13 @@ public class BatchPlannerPlanServiceImpl
 
 	@Override
 	public BatchPlannerPlan addBatchPlannerPlan(
-			String name, PlanExternalType planExternalType)
+			String name, String externalType)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		return batchPlannerPlanLocalService.addBatchPlannerPlan(
-			permissionChecker.getUserId(), name, planExternalType);
+			permissionChecker.getUserId(), name, externalType);
 	}
 
 	@Override

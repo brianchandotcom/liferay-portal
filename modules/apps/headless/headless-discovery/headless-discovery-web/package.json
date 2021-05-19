@@ -16,7 +16,7 @@
 		"graphql": "^15.0.0",
 		"react": "16.12.0",
 		"react-dom": "16.12.0",
-		"swagger-ui-react": "^3.28.0"
+		"swagger-ui-react": "^3.48.0"
 	},
 	"name": "headless-discovery-web",
 	"scripts": {

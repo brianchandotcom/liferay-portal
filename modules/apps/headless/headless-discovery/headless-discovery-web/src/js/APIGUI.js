@@ -298,6 +298,7 @@ const APIGUI = () => {
 							'delete',
 							'patch',
 						]}
+						tryItOutEnabled={true}
 						url={
 							endpoint ||
 							endpoints.find((url) => url.includes('delivery'))

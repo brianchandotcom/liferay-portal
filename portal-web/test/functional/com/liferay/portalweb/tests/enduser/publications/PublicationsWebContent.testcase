@@ -135,6 +135,7 @@ definition {
 			searchAssetType = "Web Content");
 	}
 
+	@ignore = "true"
 	@priority = "4"
 	test PublishWebContentWithDMAndImageFields {
 		property test.assert.warning.exceptions = "true";

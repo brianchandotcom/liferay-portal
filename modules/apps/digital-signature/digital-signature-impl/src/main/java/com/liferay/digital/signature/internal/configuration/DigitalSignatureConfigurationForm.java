@@ -31,7 +31,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 		@DDMFormLayoutPage(
 			{
 				@DDMFormLayoutRow(
-					{@DDMFormLayoutColumn(size = 12, value = "enable")}
+					{@DDMFormLayoutColumn(size = 12, value = "enabled")}
 				),
 				@DDMFormLayoutRow(
 					{

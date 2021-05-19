@@ -1650,14 +1650,54 @@ definition {
 			value = "userfn userln");
 	}
 
-	@description = "This is a test for LPS-130290."
-	@ignore = "true"
+	@description = "This is a test for LPS-132112."
 	@priority = "5"
 	test AddSegmentByUserUserGroup {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentByUserUserGroup";
 
-		// TODO LPS-130290 AddSegmentByUserUserGroup pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Name Description",
+			userGroupName = "UG UserGroup Name");
+
+		JSONUser.addUserToUserGroup(
+			userEmailAddress = "userea@liferay.com",
+			userGroupName = "UG UserGroup Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "User Group");
+
+		Segmentation.fillProperty(chooseItem = "UG UserGroup Name");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserUserGroup Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserUserGroup Test");
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "UG UserGroup Name");
 	}
 
 	@description = "Validate if the members are assigned correctly depending on the criteria selected"

@@ -172,6 +172,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>BatchPlannerPlanExternalType</exception>
 		<exception>BatchPlannerPlanName</exception>
 		<exception>DuplicateBatchPlannerPlan</exception>
 	</exceptions>

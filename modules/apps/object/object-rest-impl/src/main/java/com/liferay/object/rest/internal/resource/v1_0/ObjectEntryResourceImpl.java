@@ -44,14 +44,14 @@ import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
+	factory = "com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResource",
 	properties = "OSGI-INF/liferay/rest/v1_0/object-entry.properties",
-	scope = ServiceScope.PROTOTYPE, service = ObjectEntryResource.class
+	service = ObjectEntryResource.class
 )
 public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 

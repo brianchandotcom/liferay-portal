@@ -43,12 +43,7 @@ public class ObjectEntryApplication extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> objects = new HashSet<>();
 
-		objects.add(_objectEntryResource);
 		objects.add(_openAPIResourceImpl);
-		objects.add(
-			new ObjectDefinitionContextProvider(
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					_objectDefinitionId)));
 		objects.add(
 			new ObjectDefinitionIdContainerRequestFilter(_objectDefinitionId));
 

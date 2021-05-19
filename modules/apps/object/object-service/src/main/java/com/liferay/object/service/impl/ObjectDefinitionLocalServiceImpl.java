@@ -258,6 +258,12 @@ public class ObjectDefinitionLocalServiceImpl
 	@Clusterable
 	@Override
 	public void undeployObjectDefinition(long objectDefinitionId) {
+		for (ObjectDefinitionDeployer objectDefinitionDeployer :
+				_serviceRegistrationsMaps.keySet()) {
+
+			objectDefinitionDeployer.undeploy(objectDefinitionId);
+		}
+
 		for (Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap :
 				_serviceRegistrationsMaps.values()) {
 

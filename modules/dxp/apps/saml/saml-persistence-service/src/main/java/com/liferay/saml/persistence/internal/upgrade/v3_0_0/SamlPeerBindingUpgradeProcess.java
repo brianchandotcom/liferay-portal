@@ -27,7 +27,6 @@ public class SamlPeerBindingUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(SamlPeerBindingTable.TABLE_SQL_CREATE);
-			runSQL(SamlPeerBindingTable.TABLE_SQL_ADD_INDEXES);
 		}
 	}
 

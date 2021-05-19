@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.web.constants.SearchBarPortletKeys;
@@ -87,9 +88,21 @@ public class SearchBarPrecedenceHelper {
 			return false;
 		}
 
+		SearchBarPortletPreferences searchBarPortletPreferences1 =
+			getSearchBarPortletPreferences(portlet, themeDisplay);
+
 		if (!SearchBarPortletDestinationUtil.isSameDestination(
-				getSearchBarPortletPreferences(portlet, themeDisplay),
-				themeDisplay)) {
+				searchBarPortletPreferences1, themeDisplay)) {
+
+			return false;
+		}
+
+		SearchBarPortletPreferences searchBarPortletPreferences2 =
+			getSearchBarPortletPreferences(portletId, themeDisplay);
+
+		if (!Objects.equals(
+				searchBarPortletPreferences1.getFederatedSearchKeyString(),
+				searchBarPortletPreferences2.getFederatedSearchKeyString())) {
 
 			return false;
 		}
@@ -121,8 +134,21 @@ public class SearchBarPrecedenceHelper {
 	protected SearchBarPortletPreferences getSearchBarPortletPreferences(
 		Portlet portlet, ThemeDisplay themeDisplay) {
 
+		if (portlet == null) {
+			return new SearchBarPortletPreferencesImpl(Optional.empty());
+		}
+
 		return new SearchBarPortletPreferencesImpl(
-			portletPreferencesLookup.fetchPreferences(portlet, themeDisplay));
+			_portletPreferencesLookup.fetchPreferences(portlet, themeDisplay));
+	}
+
+	protected SearchBarPortletPreferences getSearchBarPortletPreferences(
+		String portletId, ThemeDisplay themeDisplay) {
+
+		return getSearchBarPortletPreferences(
+			_portletLocalService.getPortletById(
+				themeDisplay.getCompanyId(), portletId),
+			themeDisplay);
 	}
 
 	protected boolean isHeaderSearchBar(Portlet portlet) {
@@ -144,7 +170,24 @@ public class SearchBarPrecedenceHelper {
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletPreferencesLookup(
+		PortletPreferencesLookup portletPreferencesLookup) {
+
+		_portletPreferencesLookup = portletPreferencesLookup;
+	}
+
 	@Reference
-	protected PortletPreferencesLookup portletPreferencesLookup;
+	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletPreferencesLookup _portletPreferencesLookup;
 
 }

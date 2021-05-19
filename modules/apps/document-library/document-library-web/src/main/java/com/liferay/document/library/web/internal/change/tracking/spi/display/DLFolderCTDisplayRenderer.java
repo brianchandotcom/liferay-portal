@@ -25,13 +25,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepository;
 import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.util.Locale;
@@ -89,6 +92,31 @@ public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 		}
 
 		return dlFolder.getName();
+	}
+
+	@Override
+	public boolean isHideable(DLFolder dlFolder) {
+		Repository repository = null;
+
+		try {
+			repository = _repositoryLocalService.getRepository(
+				dlFolder.getRepositoryId());
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+
+			return false;
+		}
+
+		if (repository.getClassNameId() == _portal.getClassNameId(
+				TemporaryFileEntryRepository.class)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -171,5 +199,8 @@ public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RepositoryLocalService _repositoryLocalService;
 
 }

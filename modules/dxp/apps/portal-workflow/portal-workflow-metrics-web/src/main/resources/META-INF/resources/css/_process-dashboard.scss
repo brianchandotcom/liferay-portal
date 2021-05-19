@@ -10,17 +10,6 @@ $c: '.workflow-process-dashboard';
 		font-size: 18px;
 		font-weight: 700;
 		margin-top: 10px;
-
-		.workflow-tooltip {
-			svg {
-				color: #a7a9bc;
-				font-size: 16px;
-			}
-
-			&:hover svg {
-				color: #272833;
-			}
-		}
 	}
 
 	.panel {

@@ -218,6 +218,17 @@ $font-weight-semi-bold: 600;
 	}
 }
 
+.workflow-tooltip {
+	svg {
+		color: #a7a9bc;
+		font-size: 16px;
+	}
+
+	&:hover svg {
+		color: #272833;
+	}
+}
+
 @media screen and (max-width: 530px) {
 	.panel .dashboard-panel-header .autofit-row .management-bar {
 		.navbar-nav {

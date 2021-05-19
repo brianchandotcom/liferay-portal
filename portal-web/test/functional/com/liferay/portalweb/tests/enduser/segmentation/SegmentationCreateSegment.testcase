@@ -1618,14 +1618,36 @@ definition {
 			value = "Site Team Name");
 	}
 
-	@description = "This is a test for LPS-130290."
-	@ignore = "true"
+	@description = "This is a test for LPS-132111."
 	@priority = "5"
 	test AddSegmentByUserUser {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddSegmentByUserUser pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "User");
+
+		Segmentation.fillProperty(selectCheckbox = "userfn userln");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserUser Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserUser Test");
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "userfn userln");
 	}
 
 	@description = "This is a test for LPS-130290."
@@ -1635,6 +1657,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130290 AddSegmentByUserUserGroup pending implementation
+
 	}
 
 	@description = "Validate if the members are assigned correctly depending on the criteria selected"

@@ -23,8 +23,8 @@ import org.hibernate.SessionBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.jdbc.Work;
 
-import org.springframework.orm.hibernate3.HibernateTransactionManager;
-import org.springframework.orm.hibernate3.SessionHolder;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.SessionHolder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionException;

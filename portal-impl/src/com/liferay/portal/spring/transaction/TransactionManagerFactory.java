@@ -26,7 +26,7 @@ import jodd.bean.BeanUtil;
 
 import org.hibernate.SessionFactory;
 
-import org.springframework.orm.hibernate3.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 /**

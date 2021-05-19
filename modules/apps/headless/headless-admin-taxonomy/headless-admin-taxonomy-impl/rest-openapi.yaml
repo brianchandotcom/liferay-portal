@@ -662,45 +662,6 @@ paths:
                     description:
                         ""
             tags: ["Keyword"]
-    "/keywords/{keywordId}/permissions":
-        get:
-            operationId: getKeywordPermissionsPage
-            parameters:
-                - in: path
-                  name: keywordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-                - in: query
-                  name: roleNames
-                  schema:
-                      type: string
-            responses:
-                204:
-                    content:
-                        application/json: { }
-                        application/xml: { }
-                    description:
-                        ""
-            tags: ["Keyword"]
-        put:
-            operationId: putKeywordPermission
-            parameters:
-                - in: path
-                  name: keywordId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-            responses:
-                204:
-                    content:
-                        application/json: { }
-                        application/xml: { }
-                    description:
-                        ""
-            tags: ["Keyword"]
     "/sites/{siteId}/keywords":
         get:
             description:

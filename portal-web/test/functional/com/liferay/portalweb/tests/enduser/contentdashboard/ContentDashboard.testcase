@@ -1080,13 +1080,12 @@ definition {
 				category = "Content",
 				panel = "Applications",
 				portlet = "Content Dashboard");
-			
+
 			AssertTextPresent(
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "Webcontent Title");
 
-			AssertElementPresent(
-				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_DISPLAY_PAGE");
+			AssertElementPresent(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_DISPLAY_PAGE");
 		}
 	}
 

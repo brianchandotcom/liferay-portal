@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.sql.Connection;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
@@ -39,7 +38,9 @@ import javax.sql.DataSource;
 import org.hibernate.dialect.DB2400Dialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.Oracle10gDialect;
-import org.hibernate.dialect.resolver.DialectFactory;
+import org.hibernate.engine.jdbc.dialect.internal.StandardDialectResolver;
+import org.hibernate.engine.jdbc.dialect.spi.DatabaseMetaDataDialectResolutionInfoAdapter;
+import org.hibernate.engine.jdbc.dialect.spi.DialectResolver;
 
 /**
  * @author Brian Wing Shun Chan
@@ -115,8 +116,12 @@ public class DialectDetector {
 			}
 			else {
 				try (Connection connection = dataSource.getConnection()) {
-					dialect = DialectFactory.buildDialect(
-						new Properties(), connection);
+					DialectResolver dialectResolver =
+						new StandardDialectResolver();
+
+					dialect = dialectResolver.resolveDialect(
+						new DatabaseMetaDataDialectResolutionInfoAdapter(
+							connection.getMetaData()));
 				}
 			}
 		}

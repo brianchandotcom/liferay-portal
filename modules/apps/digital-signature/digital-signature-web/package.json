@@ -16,7 +16,7 @@
 	},
 	"description": "",
 	"main": "js/index.js",
-	"name": "digital-signature-web",
+	"name": "@liferay/digital-signature-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",

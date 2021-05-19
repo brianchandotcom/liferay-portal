@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeServiceModuleRelease;
+import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.SamlSpAuthRequestUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.SamlSpMessageUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v2_1_0.SamlIdpSpConnectionUpgradeProcess;
+import com.liferay.saml.persistence.internal.upgrade.v3_0_0.util.SamlIdpSpSessionTable;
+import com.liferay.saml.persistence.internal.upgrade.v3_0_0.util.SamlSpSessionTable;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -126,10 +129,22 @@ public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"2.5.0", "3.0.0",
-			new com.liferay.saml.persistence.internal.upgrade.v3_0_0.
-				SamlIdpSpSessionUpgradeProcess2(),
-			new com.liferay.saml.persistence.internal.upgrade.v3_0_0.
-				SamlSpSessionUpgradeProcess2());
+			UpgradeStepFactory.dropColumns(
+				SamlIdpSpSessionTable.class, "nameIdFormat"),
+			UpgradeStepFactory.dropColumns(
+				SamlIdpSpSessionTable.class, "nameIdValue"),
+			UpgradeStepFactory.dropColumns(
+				SamlIdpSpSessionTable.class, "samlSpEntityId"),
+			UpgradeStepFactory.dropColumns(
+				SamlSpSessionTable.class, "nameIdFormat"),
+			UpgradeStepFactory.dropColumns(
+				SamlSpSessionTable.class, "nameIdNameQualifier"),
+			UpgradeStepFactory.dropColumns(
+				SamlSpSessionTable.class, "nameIdSPNameQualifier"),
+			UpgradeStepFactory.dropColumns(
+				SamlSpSessionTable.class, "nameIdValue"),
+			UpgradeStepFactory.dropColumns(
+				SamlSpSessionTable.class, "samlIdpEntityId"));
 	}
 
 	@Reference

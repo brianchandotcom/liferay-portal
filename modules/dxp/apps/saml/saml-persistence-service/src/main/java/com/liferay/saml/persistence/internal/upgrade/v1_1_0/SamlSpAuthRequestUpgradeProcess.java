@@ -14,12 +14,8 @@
 
 package com.liferay.saml.persistence.internal.upgrade.v1_1_0;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.util.SamlSpAuthRequestTable;
-
-import java.sql.SQLException;
 
 /**
  * @author Mika Koivisto
@@ -29,25 +25,9 @@ public class SamlSpAuthRequestUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter_column_type SamlSpAuthRequest samlIdpEntityId " +
-					"VARCHAR(1024) null");
-		}
-		catch (SQLException sqlException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException, sqlException);
-			}
-
-			upgradeTable(
-				SamlSpAuthRequestTable.TABLE_NAME,
-				SamlSpAuthRequestTable.TABLE_COLUMNS,
-				SamlSpAuthRequestTable.TABLE_SQL_CREATE,
-				SamlSpAuthRequestTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			SamlSpAuthRequestTable.class,
+			new AlterColumnType("samlIdpEntityId", "VARCHAR(1024) null"));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SamlSpAuthRequestUpgradeProcess.class);
 
 }

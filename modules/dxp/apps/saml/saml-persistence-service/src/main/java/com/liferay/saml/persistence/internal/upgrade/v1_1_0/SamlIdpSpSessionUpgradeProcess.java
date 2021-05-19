@@ -14,12 +14,8 @@
 
 package com.liferay.saml.persistence.internal.upgrade.v1_1_0;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.util.SamlIdpSpSessionTable;
-
-import java.sql.SQLException;
 
 /**
  * @author Mika Koivisto
@@ -29,31 +25,17 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try {
-			runSQL(
-				"alter_column_type SamlIdpSpSession samlSpEntityId " +
-					"VARCHAR(1024) null");
-			runSQL(
-				"alter_column_type SamlIdpSpSession nameIdFormat " +
-					"VARCHAR(1024) null");
-			runSQL(
-				"alter_column_type SamlIdpSpSession nameIdValue " +
-					"VARCHAR(1024) null");
-		}
-		catch (SQLException sqlException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(sqlException, sqlException);
-			}
+		alter(
+			SamlIdpSpSessionTable.class,
+			new AlterColumnType("nameIdFormat", "VARCHAR(1024) null"));
 
-			upgradeTable(
-				SamlIdpSpSessionTable.TABLE_NAME,
-				SamlIdpSpSessionTable.TABLE_COLUMNS,
-				SamlIdpSpSessionTable.TABLE_SQL_CREATE,
-				SamlIdpSpSessionTable.TABLE_SQL_ADD_INDEXES);
-		}
+		alter(
+			SamlIdpSpSessionTable.class,
+			new AlterColumnType("nameIdValue", "VARCHAR(1024) null"));
+
+		alter(
+			SamlIdpSpSessionTable.class,
+			new AlterColumnType("samlSpEntityId", "VARCHAR(1024) null"));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SamlIdpSpSessionUpgradeProcess.class);
 
 }

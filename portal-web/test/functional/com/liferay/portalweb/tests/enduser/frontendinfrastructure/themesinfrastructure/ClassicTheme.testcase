@@ -21,6 +21,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ConfigureLookAndFeelSettingsSinglePage {
 		property portal.acceptance = "true";
 

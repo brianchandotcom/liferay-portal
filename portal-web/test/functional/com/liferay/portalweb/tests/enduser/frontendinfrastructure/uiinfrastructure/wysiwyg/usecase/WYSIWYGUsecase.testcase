@@ -28,6 +28,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddBlogsEntryWithImageViaBlogsImages {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -77,6 +78,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddWebContentArticleCopyPasteContent {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -173,6 +175,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test AddWebContentArticleWithImageViaURL {
 		Navigator.openURL();
 
@@ -200,6 +203,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test CanAddHyperlinkToExistingText {
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -227,6 +231,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test PreviewSourceContent {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -260,6 +265,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test PreviewSourceContentEditContent {
 		property portal.upstream = "quarantine";
 
@@ -305,6 +311,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewSourceCodeFormattedInTextView {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -330,6 +337,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWikiFrontPageLeftToRight {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -354,6 +362,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ViewWikiFrontPageRightToLeft {
 		property test.name.skip.portal.instance = "WYSIWIGUsecase#ViewWikiFrontPageRightToLeft";
 

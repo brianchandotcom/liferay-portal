@@ -21,6 +21,7 @@ definition {
 	}
 
 	@priority = "4"
+	@refactorneeded
 	test ToastMessageAutoClose {
 		property test.name.skip.portal.instance = "ClayAlert#ToastMessageAutoClose";
 
@@ -47,6 +48,7 @@ definition {
 	}
 
 	@priority = "3"
+	@refactorneeded
 	test ToastMessageManualClose {
 		property test.name.skip.portal.instance = "ClayAlert#ToastMessageManualClose";
 

@@ -26,6 +26,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test CheckAUIPreloadConfiguration {
 		property test.name.skip.portal.instance = "UIInfrastructureUsecase#CheckAUIPreloadConfiguration";
 
@@ -62,6 +63,7 @@ definition {
 
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on guest page level after page refresh."
 	@priority = "5"
+	@refactorneeded
 	test RefreshHomePage {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -105,6 +107,7 @@ definition {
 
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on admin page level after page refresh."
 	@priority = "5"
+	@refactorneeded
 	test RefreshWebContent {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -131,6 +134,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test RightToLeftSmoke {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -182,6 +186,7 @@ definition {
 
 	@description = "Ensure that a user can access portlet options and drag and drop portlets."
 	@priority = "5"
+	@refactorneeded
 	test Smoke {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -252,6 +257,7 @@ definition {
 
 	@description = "This is a use case for LPS-70390."
 	@priority = "4"
+	@refactorneeded
 	test ViewNonASCIICharactersWithSPADisabled {
 		property custom.properties = "javascript.single.page.application.enabled=false";
 
@@ -280,6 +286,7 @@ definition {
 
 	@description = "Checks for each portlet having defined boundaries."
 	@priority = "5"
+	@refactorneeded
 	test ViewPortletBoundaries {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -355,6 +362,7 @@ definition {
 	@description = "This test validates sign in and sign out UI"
 	@ignore = "true"
 	@priority = "5"
+	@refactorneeded
 	test ViewSignInSignOutUI {
 		property portal.acceptance = "false";
 

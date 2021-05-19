@@ -29,6 +29,7 @@ definition {
 
 	@description = "This test validates that a theme can be applied to a single page."
 	@priority = "5"
+	@refactorneeded
 	test ApplyThemeToSinglePage {
 		property test.name.skip.portal.instance = "Theme#ApplyThemeToSinglePage";
 
@@ -57,6 +58,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test DeactivateAndReactivateTheme {
 		property test.name.skip.portal.instance = "Theme#DeactivateAndReactivateTheme";
 
@@ -132,6 +134,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test StartPortalWithoutClassicTheme {
 		property portal.upstream = "quarantine";
 		property skip.start-app-server = "true";
@@ -159,6 +162,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test UninstallAndRedeployTheme {
 		property test.name.skip.portal.instance = "Theme#UninstallAndRedeployTheme";
 

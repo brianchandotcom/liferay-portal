@@ -20,6 +20,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test CheckAMDLoaderLogLevel {
 		property test.name.skip.portal.instance = "AMDLoader#CheckAMDLoaderLogLevel";
 

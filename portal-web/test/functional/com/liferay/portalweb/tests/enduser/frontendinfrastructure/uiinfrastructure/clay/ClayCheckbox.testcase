@@ -37,6 +37,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test SmokeAPI {
 		Navigator.gotoNavTab(navTab = "Form Elements");
 
@@ -76,6 +77,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test ValidateDefaultCheckboxUI {
 		Navigator.gotoNavTab(navTab = "Form Elements");
 

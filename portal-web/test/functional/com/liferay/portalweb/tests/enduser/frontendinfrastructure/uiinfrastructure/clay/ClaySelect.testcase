@@ -37,6 +37,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test SmokeMultipleSelect {
 		Navigator.gotoNavTab(navTab = "Form Elements");
 
@@ -66,6 +67,7 @@ definition {
 	}
 
 	@priority = "5"
+	@refactorneeded
 	test SmokeRegularSelect {
 		Navigator.gotoNavTab(navTab = "Form Elements");
 

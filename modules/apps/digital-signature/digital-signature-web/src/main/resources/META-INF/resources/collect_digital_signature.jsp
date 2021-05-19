@@ -17,10 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String fileName = (String)request.getAttribute(DigitalSignatureWebKeys.DIGITAL_SIGNATURE_TITLE);
+String digitalSignatureTitle = (String)request.getAttribute(DigitalSignatureWebKeys.DIGITAL_SIGNATURE_TITLE);
 
-if (fileName != null) {
-	renderResponse.setTitle(fileName);
+if (digitalSignatureTitle != null) {
+	renderResponse.setTitle(digitalSignatureTitle);
 }
 %>
 

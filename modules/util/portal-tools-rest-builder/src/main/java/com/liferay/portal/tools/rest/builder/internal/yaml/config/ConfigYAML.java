@@ -87,6 +87,10 @@ public class ConfigYAML {
 		return _generateGraphQL;
 	}
 
+	public boolean isGenerateOpenAPI() {
+		return _generateOpenAPI;
+	}
+
 	public boolean isGenerateREST() {
 		return _generateREST;
 	}
@@ -153,6 +157,10 @@ public class ConfigYAML {
 		_generateGraphQL = generateGraphQL;
 	}
 
+	public void setGenerateOpenAPI(boolean generateOpenAPI) {
+		_generateOpenAPI = generateOpenAPI;
+	}
+
 	public void setGenerateREST(boolean generateREST) {
 		_generateREST = generateREST;
 	}
@@ -193,6 +201,7 @@ public class ConfigYAML {
 	private boolean _forcePredictableSchemaPropertyName = true;
 	private boolean _generateBatch = true;
 	private boolean _generateGraphQL = true;
+	private boolean _generateOpenAPI = true;
 	private boolean _generateREST = true;
 	private String _graphQLNamespace;
 	private String _implDir = "src/main/java";

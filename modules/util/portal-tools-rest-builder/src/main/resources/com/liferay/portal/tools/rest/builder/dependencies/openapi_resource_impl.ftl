@@ -45,7 +45,9 @@ import org.osgi.service.component.annotations.Reference;
 		version = "${openAPIYAML.info.version}"
 	)
 )
-@Path("/${openAPIYAML.info.version}")
+<#if configYAML.application??>
+	@Path("/${openAPIYAML.info.version}")
+</#if>
 public class OpenAPIResourceImpl {
 
 	@GET

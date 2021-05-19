@@ -251,8 +251,10 @@ public class RESTBuilder {
 
 			context.put("schemaName", "openapi");
 
-			_createOpenAPIResourceFile(context, escapedVersion);
-			_createPropertiesFile(context, escapedVersion, "openapi");
+			if (_configYAML.isGenerateOpenAPI()) {
+				_createOpenAPIResourceFile(context, escapedVersion);
+				_createPropertiesFile(context, escapedVersion, "openapi");
+			}
 
 			Map<String, Schema> schemas = freeMarkerTool.getSchemas(
 				openAPIYAML);
@@ -317,8 +319,12 @@ public class RESTBuilder {
 				_createPropertiesFile(
 					context, escapedVersion,
 					String.valueOf(context.get("schemaPath")));
-				_createResourceFactoryImplFile(
-					context, escapedVersion, schemaName);
+
+				if (_configYAML.getApplication() != null) {
+					_createResourceFactoryImplFile(
+						context, escapedVersion, schemaName);
+				}
+
 				_createResourceFile(context, escapedVersion, schemaName);
 				_createResourceImplFile(context, escapedVersion, schemaName);
 

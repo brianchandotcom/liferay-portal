@@ -128,7 +128,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="C_D_SNIF_SNINQ_SNIV_SIEI" return-type="Collection">
+		<finder name="C_D_SNIF_SNINQ_SNIV_SPEI" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="deleted" />
 			<finder-column name="samlNameIdFormat" />

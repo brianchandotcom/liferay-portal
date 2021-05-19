@@ -29,7 +29,6 @@ page import="com.liferay.akismet.internal.util.ModerationUtil" %><%@
 page import="com.liferay.message.boards.exception.NoSuchMessageException" %><%@
 page import="com.liferay.message.boards.exception.RequiredMessageException" %><%@
 page import="com.liferay.message.boards.model.MBMessage" %><%@
-page import="com.liferay.message.boards.model.MBStatsUser" %><%@
 page import="com.liferay.message.boards.service.MBMessageLocalServiceUtil" %><%@
 page import="com.liferay.message.boards.service.MBStatsUserLocalServiceUtil" %><%@
 page import="com.liferay.message.boards.settings.MBGroupServiceSettings" %><%@

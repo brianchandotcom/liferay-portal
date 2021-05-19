@@ -17,7 +17,6 @@ package com.liferay.message.boards.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBStatsUserLocalServiceUtil;
 import com.liferay.message.boards.test.util.MBTestUtil;
@@ -171,10 +170,10 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	protected int getStatsUserMessageCount() throws Exception {
-		MBStatsUser statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
+		Object[] statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
-		return statsUser.getMessageCount();
+		return (Integer)statsUser[1];
 	}
 
 	protected void updateMessage(int workflowAction) throws Exception {

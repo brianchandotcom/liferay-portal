@@ -170,15 +170,40 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public MBStatsUser getStatsUser(long groupId, long userId) {
-		MBStatsUser statsUser = mbStatsUserPersistence.fetchByG_U(
-			groupId, userId);
+	public Object[] getStatsUser(long groupId, long userId)
+		throws PortalException {
 
-		if (statsUser == null) {
-			statsUser = mbStatsUserLocalService.addStatsUser(groupId, userId);
-		}
+		Group group = groupLocalService.getGroup(groupId);
 
-		return statsUser;
+		long defaultUserId = userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		Expression<Long> countExpression = DSLFunctionFactoryUtil.count(
+			MBMessageTable.INSTANCE.messageId
+		).as(
+			"messageCount"
+		);
+
+		return _mbMessagePersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				MBMessageTable.INSTANCE.userId, countExpression,
+				DSLFunctionFactoryUtil.max(
+					MBMessageTable.INSTANCE.modifiedDate
+				).as(
+					"lastPostDate"
+				)
+			).from(
+				MBMessageTable.INSTANCE
+			).where(
+				MBMessageTable.INSTANCE.userId.eq(
+					userId
+				).and(
+					MBMessageTable.INSTANCE.userId.neq(defaultUserId)
+				).and(
+					MBMessageTable.INSTANCE.categoryId.neq(
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				)
+			));
 	}
 
 	@Override

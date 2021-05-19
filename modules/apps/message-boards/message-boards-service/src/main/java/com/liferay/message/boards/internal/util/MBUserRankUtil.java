@@ -14,18 +14,16 @@
 
 package com.liferay.message.boards.internal.util;
 
-import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
@@ -41,18 +39,22 @@ public class MBUserRankUtil {
 
 	public static String[] getUserRank(
 			MBGroupServiceSettings mbGroupServiceSettings, String languageId,
-			MBStatsUser statsUser)
+			Object[] statsUser)
 		throws PortalException {
 
 		String[] rank = {StringPool.BLANK, StringPool.BLANK};
 
 		int maxPosts = 0;
 
-		Group group = GroupLocalServiceUtil.getGroup(statsUser.getGroupId());
+		long userId = (Long)statsUser[0];
 
-		long companyId = group.getCompanyId();
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		long companyId = user.getCompanyId();
 
 		String[] ranks = mbGroupServiceSettings.getRanks(languageId);
+
+		long messageCount = (Long)statsUser[1];
 
 		for (String curRank : ranks) {
 			String[] kvp = StringUtil.split(curRank, CharPool.EQUAL);
@@ -65,9 +67,7 @@ public class MBUserRankUtil {
 			if (curRankValueKvp.length <= 1) {
 				int posts = GetterUtil.getInteger(kvpPosts);
 
-				if ((posts <= statsUser.getMessageCount()) &&
-					(posts >= maxPosts)) {
-
+				if ((posts <= messageCount) && (posts >= maxPosts)) {
 					rank[0] = kvp[0];
 					maxPosts = posts;
 				}
@@ -78,7 +78,7 @@ public class MBUserRankUtil {
 
 				try {
 					if (_isEntityRank(
-							companyId, statsUser, entityType, entityValue)) {
+							companyId, user, entityType, entityValue)) {
 
 						rank[1] = curRank;
 
@@ -97,7 +97,7 @@ public class MBUserRankUtil {
 	}
 
 	private static boolean _isEntityRank(
-			long companyId, MBStatsUser statsUser, String entityType,
+			long companyId, User statsUser, String entityType,
 			String entityValue)
 		throws Exception {
 

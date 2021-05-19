@@ -83,7 +83,6 @@ page import="com.liferay.message.boards.model.MBCategory" %><%@
 page import="com.liferay.message.boards.model.MBMailingList" %><%@
 page import="com.liferay.message.boards.model.MBMessage" %><%@
 page import="com.liferay.message.boards.model.MBMessageDisplay" %><%@
-page import="com.liferay.message.boards.model.MBStatsUser" %><%@
 page import="com.liferay.message.boards.model.MBThread" %><%@
 page import="com.liferay.message.boards.model.MBThreadFlag" %><%@
 page import="com.liferay.message.boards.model.MBTreeWalker" %><%@

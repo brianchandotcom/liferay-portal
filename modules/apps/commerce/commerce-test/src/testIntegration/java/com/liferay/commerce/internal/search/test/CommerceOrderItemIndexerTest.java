@@ -24,6 +24,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -59,6 +60,7 @@ import java.util.List;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,7 +74,7 @@ import org.junit.runner.RunWith;
  * @author Andrea Di Giorgi
  * @author Alessio Antonio Rendina
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
+@DataGuard(scope = DataGuard.Scope.CLASS)
 @RunWith(Arquillian.class)
 @Sync
 public class CommerceOrderItemIndexerTest {
@@ -106,6 +108,11 @@ public class CommerceOrderItemIndexerTest {
 			_group.getCompanyId());
 
 		_indexer = _indexerRegistry.getIndexer(CommerceOrderItem.class);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_commerceOrderLocalService.deleteCommerceOrders(_group.getGroupId());
 	}
 
 	@Test
@@ -310,6 +317,9 @@ public class CommerceOrderItemIndexerTest {
 
 	@DeleteAfterTestRun
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Inject
 	private CPInstanceLocalService _cpInstanceLocalService;

@@ -65,7 +65,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Igor Beslic
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
+@DataGuard(scope = DataGuard.Scope.CLASS)
 @RunWith(Arquillian.class)
 public class CommerceOptionValueHelperTest {
 
@@ -88,8 +88,6 @@ public class CommerceOptionValueHelperTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			LocaleUtil.US.getDisplayLanguage(),

@@ -15,8 +15,10 @@
 package com.liferay.commerce.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.exception.CommerceAccountTypeException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
@@ -156,10 +158,17 @@ public class CommerceOrderItemLocalServiceTest {
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 
-		_commerceAccount =
-			_commerceAccountLocalService.addPersonalCommerceAccount(
-				_user.getUserId(), StringPool.BLANK, StringPool.BLANK,
-				_serviceContext);
+		try {
+			_commerceAccount =
+				CommerceAccountLocalServiceUtil.addPersonalCommerceAccount(
+					_user.getUserId(), StringPool.BLANK, StringPool.BLANK,
+					_serviceContext);
+		}
+		catch (CommerceAccountTypeException commerceAccountTypeException) {
+			_commerceAccount =
+				CommerceAccountLocalServiceUtil.getPersonalCommerceAccount(
+					_user.getUserId());
+		}
 
 		_commerceCatalog = CommerceCatalogLocalServiceUtil.addCommerceCatalog(
 			null, RandomTestUtil.randomString(), _commerceCurrency.getCode(),
@@ -1569,7 +1578,6 @@ public class CommerceOrderItemLocalServiceTest {
 	private static Company _company;
 	private static User _user;
 
-	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;
 
 	@Inject

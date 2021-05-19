@@ -63,6 +63,7 @@ import java.util.Set;
 
 import org.frutilla.FrutillaRule;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -75,7 +76,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Luca Pellizzon
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
+@DataGuard(scope = DataGuard.Scope.CLASS)
 @RunWith(Arquillian.class)
 public class CommerceInventoryEngineTest {
 
@@ -116,6 +117,20 @@ public class CommerceInventoryEngineTest {
 			_group.getGroupId());
 		_cpInstance2 = CommerceInventoryTestUtil.addRandomCPInstanceSku(
 			_group.getGroupId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		List<CommerceInventoryWarehouse> commerceInventoryWarehouses =
+			_commerceInventoryWarehouseLocalService.
+				getCommerceInventoryWarehouses(_company.getCompanyId());
+
+		for (CommerceInventoryWarehouse commerceInventoryWarehouse :
+				commerceInventoryWarehouses) {
+
+			_commerceInventoryWarehouseLocalService.
+				deleteCommerceInventoryWarehouse(commerceInventoryWarehouse);
+		}
 	}
 
 	@Test(expected = DuplicateCommerceInventoryWarehouseItemException.class)

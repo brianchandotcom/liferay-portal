@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.test.util;
 
+import com.liferay.commerce.account.exception.CommerceAccountTypeException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil;
 import com.liferay.commerce.constants.CommerceShipmentConstants;
@@ -131,9 +132,18 @@ public class CommerceTestUtil {
 			userId = serviceContext.getUserId();
 		}
 
-		CommerceAccount commerceAccount =
-			CommerceAccountLocalServiceUtil.addPersonalCommerceAccount(
-				userId, StringPool.BLANK, StringPool.BLANK, serviceContext);
+		CommerceAccount commerceAccount;
+
+		try {
+			commerceAccount =
+				CommerceAccountLocalServiceUtil.addPersonalCommerceAccount(
+					userId, StringPool.BLANK, StringPool.BLANK, serviceContext);
+		}
+		catch (CommerceAccountTypeException commerceAccountTypeException) {
+			commerceAccount =
+				CommerceAccountLocalServiceUtil.getPersonalCommerceAccount(
+					userId);
+		}
 
 		return CommerceOrderLocalServiceUtil.addCommerceOrder(
 			userId, groupId, commerceAccount.getCommerceAccountId(),

@@ -69,32 +69,28 @@ const TranslateAutoTranslateRow = ({
 	);
 };
 
-const TranslateFieldFeedback = ({message = '', status = ''}) => {
-	return (
-		status === FETCH_STATUS.ERROR ||
-		(status === FETCH_STATUS.SUCCESS && (
-			<div
-				className={classNames({
-					'has-error': status === FETCH_STATUS.ERROR,
-					'has-success': status === FETCH_STATUS.SUCCESS,
-				})}
-			>
-				<div className="form-feedback-item">
-					<span className="form-feedback-indicator mr-1">
-						<ClayIcon
-							symbol={
-								status === FETCH_STATUS.SUCCESS
-									? 'check-circle-full'
-									: 'exclamation-full'
-							}
-						/>
-					</span>
-					{message}
-				</div>
+const TranslateFieldFeedback = ({message = '', status = ''}) =>
+	(status === FETCH_STATUS.ERROR || status === FETCH_STATUS.SUCCESS) && (
+		<div
+			className={classNames({
+				'has-error': status === FETCH_STATUS.ERROR,
+				'has-success': status === FETCH_STATUS.SUCCESS,
+			})}
+		>
+			<div className="form-feedback-item">
+				<span className="form-feedback-indicator mr-1">
+					<ClayIcon
+						symbol={
+							status === FETCH_STATUS.SUCCESS
+								? 'check-circle-full'
+								: 'exclamation-full'
+						}
+					/>
+				</span>
+				{message}
 			</div>
-		))
+		</div>
 	);
-};
 
 const TranslateFieldEditor = ({
 	editorConfiguration,

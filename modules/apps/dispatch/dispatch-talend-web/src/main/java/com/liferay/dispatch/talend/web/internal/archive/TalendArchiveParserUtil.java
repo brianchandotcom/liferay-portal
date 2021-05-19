@@ -14,10 +14,10 @@
 
 package com.liferay.dispatch.talend.web.internal.archive;
 
+import com.liferay.dispatch.talend.web.internal.archive.exception.TalendArchiveException;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,15 +48,16 @@ import java.util.zip.ZipFile;
  */
 public class TalendArchiveParserUtil {
 
-	public static TalendArchive parse(InputStream jobArchiveInputStream) {
+	public static TalendArchive parse(InputStream jobArchiveInputStream)
+		throws PortalException {
+
 		try {
 			return _parse(jobArchiveInputStream);
 		}
 		catch (IOException ioException) {
-			_log.error("Unable to parse Talend archive", ioException);
+			throw new TalendArchiveException(
+				"Unable to parse Talend archive", ioException);
 		}
-
-		return null;
 	}
 
 	private static void _addJVMOptionsList(
@@ -346,8 +347,5 @@ public class TalendArchiveParserUtil {
 
 		return talendArchiveBuilder.build();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TalendArchiveParserUtil.class);
 
 }

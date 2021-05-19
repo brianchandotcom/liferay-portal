@@ -20,8 +20,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +47,7 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.deleteImportTask(
-			name, callbackURL, null, object);
+			name, callbackURL, _getTaskItemDelegateName(), object);
 	}
 
 	@Override
@@ -53,7 +58,7 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.postImportTask(
-			name, callbackURL, fields, null, object);
+			name, callbackURL, fields, _getTaskItemDelegateName(), object);
 	}
 
 	@Override
@@ -63,7 +68,7 @@ public class VulcanBatchEngineImportTaskResourceImpl
 		_initializeContext();
 
 		return _importTaskResource.putImportTask(
-			name, callbackURL, null, object);
+			name, callbackURL, _getTaskItemDelegateName(), object);
 	}
 
 	@Override
@@ -91,6 +96,25 @@ public class VulcanBatchEngineImportTaskResourceImpl
 	@Override
 	public void setContextUser(User contextUser) {
 		_contextUser = contextUser;
+	}
+
+	private String _getTaskItemDelegateName() {
+		MultivaluedMap<String, String> queryParameters =
+			_contextUriInfo.getQueryParameters();
+
+		for (Map.Entry<String, List<String>> entry :
+				queryParameters.entrySet()) {
+
+			if (Objects.equals(entry.getKey(), "taskItemDelegateName")) {
+				List<String> values = entry.getValue();
+
+				if (!values.isEmpty()) {
+					return values.get(0);
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private void _initializeContext() {

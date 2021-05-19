@@ -40,4 +40,24 @@ public class SimpleURLPatternMapperPerformanceTest
 		return new SimpleURLPatternMapper<>(values);
 	}
 
+	@Override
+	protected int testConsumeValuesExpectedTime() {
+		return 3600;
+	}
+
+	@Override
+	protected int testConsumeValuesOrderedExpectedTime() {
+		return 4300;
+	}
+
+	@Override
+	protected int testGetValueExpectedTime() {
+		return 1400;
+	}
+
+	@Override
+	protected int testGetValuesExpectedTime() {
+		return 3900;
+	}
+
 }

@@ -49,7 +49,8 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 		System.out.println("Iterated 100 thousand times in " + delta + " ms");
 
-		Assert.assertTrue(delta < 10000);
+		Assert.assertTrue(
+			delta < (_CI_MULTIPLIER * testConsumeValuesExpectedTime()));
 	}
 
 	@Test
@@ -80,7 +81,8 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 		System.out.println("Iterated 100 thousand times in " + delta + " ms");
 
-		Assert.assertTrue(delta < 11000);
+		Assert.assertTrue(
+			delta < (_CI_MULTIPLIER * testConsumeValuesOrderedExpectedTime()));
 	}
 
 	@Test
@@ -102,7 +104,8 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 		System.out.println("Iterated 100 thousand times in " + delta + " ms");
 
-		Assert.assertTrue(delta < 4000);
+		Assert.assertTrue(
+			delta < (_CI_MULTIPLIER * testGetValueExpectedTime()));
 	}
 
 	@Test
@@ -124,7 +127,35 @@ public abstract class BaseURLPatternMapperPerformanceTestCase
 
 		System.out.println("Iterated 100 thousand times in " + delta + " ms");
 
-		Assert.assertTrue(delta < 10000);
+		Assert.assertTrue(
+			delta < (_CI_MULTIPLIER * testGetValuesExpectedTime()));
 	}
+
+	/**
+	 * @return the expected running time of testConsumeValues on a local
+	 * machine
+	 */
+	protected abstract int testConsumeValuesExpectedTime();
+
+	/**
+	 * @return the expected running time of testConsumeValuesOrdered on a local
+	 * machine
+	 */
+	protected abstract int testConsumeValuesOrderedExpectedTime();
+
+	/**
+	 * @return the expected running time of testGetValue on a local machine
+	 */
+	protected abstract int testGetValueExpectedTime();
+
+	/**
+	 * @return the expected running time of testGetValues on a local machine
+	 */
+	protected abstract int testGetValuesExpectedTime();
+
+	/**
+	 * To avoid random heavy CI load
+	 */
+	private static final int _CI_MULTIPLIER = 3;
 
 }

@@ -40,4 +40,24 @@ public class DynamicSizeTrieURLPatternMapperPerformanceTest
 		return new DynamicSizeTrieURLPatternMapper<>(values);
 	}
 
+	@Override
+	protected int testConsumeValuesExpectedTime() {
+		return 710;
+	}
+
+	@Override
+	protected int testConsumeValuesOrderedExpectedTime() {
+		return 1200;
+	}
+
+	@Override
+	protected int testGetValueExpectedTime() {
+		return 680;
+	}
+
+	@Override
+	protected int testGetValuesExpectedTime() {
+		return 1300;
+	}
+
 }

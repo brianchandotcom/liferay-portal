@@ -40,4 +40,24 @@ public class StaticSizeTrieURLPatternMapperPerformanceTest
 		return new StaticSizeTrieURLPatternMapper<>(values);
 	}
 
+	@Override
+	protected int testConsumeValuesExpectedTime() {
+		return 400;
+	}
+
+	@Override
+	protected int testConsumeValuesOrderedExpectedTime() {
+		return 800;
+	}
+
+	@Override
+	protected int testGetValueExpectedTime() {
+		return 350;
+	}
+
+	@Override
+	protected int testGetValuesExpectedTime() {
+		return 780;
+	}
+
 }

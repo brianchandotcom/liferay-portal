@@ -1568,14 +1568,54 @@ definition {
 			value = "tagname");
 	}
 
-	@description = "This is a test for LPS-130290."
-	@ignore = "true"
+	@description = "This is a test for LPS-132110."
 	@priority = "5"
 	test AddSegmentByUserTeam {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddSegmentByUserTeam pending implementation
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
 
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONGroup.assignUserToGroup(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
+
+		Team.addCP(
+			teamDescription = "Site Team Description",
+			teamName = "Site Team Name");
+
+		Team.assignMembersCP(
+			teamName = "Site Team Name",
+			userScreenName = "usersn");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Team");
+
+		Segmentation.fillProperty(selectLink = "Site Team Name");
+
+		Segmentation.fillTitle(titleField = "AddSegmentByUserTeam Test");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Segmentation.editSegment(entry = "AddSegmentByUserTeam Test");
+
+		Segmentation.viewSegment(
+			criterion = "select-input",
+			value = "Site Team Name");
 	}
 
 	@description = "This is a test for LPS-130290."
@@ -1585,6 +1625,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130290 AddSegmentByUserUser pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130290."

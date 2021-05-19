@@ -407,6 +407,11 @@ public class CompanyWrapper
 	}
 
 	@Override
+	public boolean isUpdatePasswordRequired() {
+		return model.isUpdatePasswordRequired();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

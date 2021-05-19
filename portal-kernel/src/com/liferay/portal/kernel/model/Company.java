@@ -124,6 +124,8 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public boolean isStrangersWithMx();
 
+	public boolean isUpdatePasswordRequired();
+
 	public void setKey(String key);
 
 	public void setKeyObj(java.security.Key keyObj);

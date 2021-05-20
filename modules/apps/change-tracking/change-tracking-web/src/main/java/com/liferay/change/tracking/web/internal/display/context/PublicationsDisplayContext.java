@@ -187,20 +187,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
 		).put(
-			"updateRolesURL",
-			() -> {
-				ResourceURL updateRolesURL =
-					_renderResponse.createResourceURL();
-
-				updateRolesURL.setResourceID("/change_tracking/update_roles");
-
-				updateRolesURL.setParameter(
-					"ctCollectionId",
-					String.valueOf(ctCollection.getCtCollectionId()));
-
-				return updateRolesURL.toString();
-			}
-		).put(
 			"verifyEmailAddressURL",
 			() -> {
 				ResourceURL sharingVerifyEmailAddressURL =

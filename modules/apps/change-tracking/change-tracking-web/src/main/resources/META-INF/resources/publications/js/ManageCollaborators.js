@@ -251,7 +251,6 @@ export default ({
 	namespace,
 	roles,
 	spritemap,
-	updateRolesURL,
 	verifyEmailAddressURL,
 }) => {
 	const [emailAddressErrorMessages, setEmailAddressErrorMessages] = useState(
@@ -465,51 +464,27 @@ export default ({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		if (navigation === NAVIGATION_EDIT_ROLES) {
-			const roleValues = [];
-			const userIds = [];
+		let roleValues = [];
+		let userIds = [];
 
+		if (navigation === NAVIGATION_EDIT_ROLES) {
 			const keys = Object.keys(updatedRoles);
 
 			for (let i = 0; i < keys.length; i++) {
 				roleValues.push(updatedRoles[keys[i]].value);
 				userIds.push(keys[i]);
 			}
-
-			const data = {
-				[`${namespace}roleValues`]: roleValues.join(','),
-				[`${namespace}userIds`]: userIds.join(','),
-			};
-
-			const formData = objectToFormData(data);
-
-			fetch(updateRolesURL, {
-				body: formData,
-				method: 'POST',
-			})
-				.then((response) => response.json())
-				.then(({errorMessage, successMessage}) => {
-					if (errorMessage) {
-						showNotification(errorMessage, true);
-
-						return;
-					}
-
-					showNotification(successMessage);
-				})
-				.catch((error) => {
-					showNotification(error.message, true);
-				});
-
-			return;
+		}
+		else {
+			roleValues = Array(selectedItems.length).fill(selectedRole.value);
+			userIds = selectedItems.map(({id}) => id);
 		}
 
-		const data = {
-			[`${namespace}roleValue`]: selectedRole.value,
-			[`${namespace}userIds`]: selectedItems.map(({id}) => id).join(','),
-		};
-
-		const formData = objectToFormData(data);
+		const formData = objectToFormData({
+			[`${namespace}roleValues`]: roleValues.join(','),
+			[`${namespace}update`]: navigation === NAVIGATION_EDIT_ROLES,
+			[`${namespace}userIds`]: userIds.join(','),
+		});
 
 		fetch(inviteUsersURL, {
 			body: formData,

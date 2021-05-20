@@ -476,9 +476,16 @@ definition {
 	}
 
 	macro configureCurrentLanguagesCP {
-		Click(
-			key_itemName = "Localization",
-			locator1 = "ListGroupItem#ITEM_TEXT");
+		if (isSet(category)) {
+			Click(
+				key_itemName = "${category}",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+		else {
+			Click(
+				key_itemName = "Localization",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
 
 		Check.checkNotVisible(
 			index = "2",

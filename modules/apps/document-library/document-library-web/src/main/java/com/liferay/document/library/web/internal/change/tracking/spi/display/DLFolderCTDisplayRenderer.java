@@ -96,17 +96,10 @@ public class DLFolderCTDisplayRenderer extends BaseCTDisplayRenderer<DLFolder> {
 
 	@Override
 	public boolean isHideable(DLFolder dlFolder) {
-		Repository repository = null;
+		Repository repository = _repositoryLocalService.fetchRepository(
+			dlFolder.getRepositoryId());
 
-		try {
-			repository = _repositoryLocalService.getRepository(
-				dlFolder.getRepositoryId());
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException, portalException);
-			}
-
+		if (repository == null) {
 			return false;
 		}
 

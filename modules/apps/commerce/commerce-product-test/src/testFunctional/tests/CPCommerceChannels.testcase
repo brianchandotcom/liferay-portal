@@ -170,13 +170,52 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6116. AddShippingOptionFedEx"
-	@ignore = "true"
 	@priority = "3"
 	test AddShippingOptionFedEx {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6116 AddShippingOptionFedEx
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		Click(
+			key_entryName = "FedEx",
+			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
+
+		for (var labels : list "URL,Key,Password,Account Number,Meter Number") {
+			Type(
+				key_fieldLabel = "${labels}",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Test");
+		}
+
+		for (var key_value : list "FedEx Europe First International Priority,FedEx 1Day Freight,FedEx 2Day,FedEx 2Day AM,FedEx 2Day Freight,FedEx 3Day Freight,FedEx Distance Deferred,FedEx Express Saver,FedEx First Freight,FedEx Freight Economy,FedEx Freight Priority,FedEx Ground,FedEx Next Day Afternoon,FedEx Next Day Early Morning,FedEx Next Day End of Day,FedEx Next Day Freight,FedEx Next Day Mid-Morning,FedEx First Overnight,FedEx Ground Home Delivery,FedEx International Economy,FedEx International Economy Freight,FedEx International First,FedEx International Priority,FedEx International Priority Express,FedEx International Priority Freight,FedEx Priority Overnight,FedEx Same Day,FedEx Same Day City,FedEx Smart Post,FedEx Standard Overnight") {
+			Check.checkToggleSwitch(
+				checkboxName = "${key_value}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6111. AddShippingOptionFlatRate"
@@ -257,6 +296,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6113 AddShippingOptionSettingVariableRate
+
 	}
 
 	@description = "This is a test for COMMERCE-6110. AddShippingOptionVariableRate"

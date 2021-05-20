@@ -17,6 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -88,14 +89,22 @@ export default function LanguagesDropdown({
 					>
 						<ClayLayout.ContentRow>
 							<ClayLayout.ContentCol expand>
-								<span>{languageId}</span>
+								<ClayTooltipProvider>
+									<span
+										className="text-truncate-inline"
+										data-tooltip-align="top"
+										title={languageId}
+									>
+										<span className="text-truncate">
+											{languageId}
+										</span>
+									</span>
+								</ClayTooltipProvider>
 							</ClayLayout.ContentCol>
 							{defaultLanguageId === languageId && (
-								<ClayLayout.ContentCol>
-									<ClayLabel displayType="primary">
-										{Liferay.Language.get('default')}
-									</ClayLabel>
-								</ClayLayout.ContentCol>
+								<ClayLabel displayType="primary">
+									{Liferay.Language.get('default')}
+								</ClayLabel>
 							)}
 						</ClayLayout.ContentRow>
 					</ClayDropDown.Item>

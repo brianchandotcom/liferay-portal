@@ -45,7 +45,7 @@ const CollectDigitalSignature = ({
 	portletNamespace,
 }) => {
 	const urlParams = new URLSearchParams(window.location.href);
-	const backURL = urlParams.get(`_${portletId}_backURL`);
+	const backURL = urlParams.get(`${portletNamespace}backURL`);
 
 	const onCancel = () => {
 		return Liferay.Util.navigate(backURL);

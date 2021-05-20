@@ -257,6 +257,21 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	@Override
+	public void deleteAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress)
+		throws PortalException {
+
+		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		User user = userLocalService.getUserByEmailAddress(
+			accountEntry.getCompanyId(), emailAddress);
+
+		accountEntryUserRelPersistence.removeByAEI_AUI(
+			accountEntry.getAccountEntryId(), user.getUserId());
+	}
+
+	@Override
 	public void deleteAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws PortalException {

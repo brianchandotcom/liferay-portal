@@ -173,7 +173,7 @@ $dashedBorderWidth: 2px;
 			outline-offset: -$dashedBorderWidth;
 
 			&.page-editor__editable--active {
-				box-shadow: none;
+				outline: 0;
 			}
 		}
 

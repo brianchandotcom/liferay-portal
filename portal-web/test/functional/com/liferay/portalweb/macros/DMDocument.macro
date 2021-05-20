@@ -2042,6 +2042,31 @@ definition {
 		DMDocument.viewDocumentDetailsCmdPG();
 	}
 
+	macro viewAudioPreview {
+		AssertElementPresent(
+			key_audioName = "${audioName}",
+			locator1 = "DocumentsAndMediaDocument#AUDIO_PREVIEW");
+	}
+
+	macro viewAudioPreviewGeneratingInfo {
+		if (isSet(disabled)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_EMPTY_STATE_PREVIEW",
+				value1 = "No preview available");
+		}
+		else {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#INFO",
+				value1 = "Generating preview will take a few minutes.");
+
+			while (IsElementPresent(locator1 = "Message#INFO")) {
+				Pause(locator1 = "1000");
+
+				Refresh();
+			}
+		}
+	}
+
 	macro viewCannotAddRepository {
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 

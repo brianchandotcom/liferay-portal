@@ -132,7 +132,7 @@ const DigitalSignatureForm = ({
 			<Input
 				error={errors.emailMessage}
 				feedbackMessage={Liferay.Util.sub(
-					Liferay.Language.get('characters-remaining-x'),
+					Liferay.Language.get('x-characters-remaining'),
 					MAX_LENGTH.EMAIL_MESSAGE - values.emailMessage.length
 				)}
 				label={Liferay.Language.get('email-message')}

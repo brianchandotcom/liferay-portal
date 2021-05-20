@@ -469,14 +469,6 @@ definition {
 				locator1 = "Portlet#TITLE");
 		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "en/web/guest/navigation-menu-page");
-
-		task ("Assert preferred locale persists by asserting Widget name.") {
-			AssertElementPresent(
-				key_portletName = "Navigation Menu",
-				locator1 = "Portlet#TITLE");
-		}
-
 		Navigator.openWithAppendToBaseURL(urlAppend = "de/web/guest/navigation-menu-page");
 
 		AssertTextEquals(

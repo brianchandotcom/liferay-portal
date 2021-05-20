@@ -524,12 +524,141 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6234. Price List Qualifier Lifecycle"
-	@ignore = "true"
 	@priority = "3"
 	test AddEditAndRemovePLQualifier {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6234 AddEditAndRemovePLQualifier Pending Implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Applications",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is an Account added for Account Group.",
+			accountName = "Account1");
+
+		Navigator.gotoBack();
+
+		Accounts.addCP(
+			accountDescription = "This is an Account added for Account Group.",
+			accountName = "Account2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Account Groups");
+
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			locator1 = "CommerceEntry#NAME_FIELD",
+			value1 = "AccountGroup1");
+
+		Button.clickSave();
+
+		CommerceEntry.gotoNestedMenu(nestedMenu = "Accounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceItemSelector.selectEntry(entryName = "Account1");
+
+		Button.clickAdd();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Pricing",
+			panel = "Commerce",
+			portlet = "Discounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDiscountsEntry(
+			channelsEligibility = "Minium Portal",
+			discountAmount = "25",
+			discountName = "Test Discount",
+			discountTarget = "Products",
+			discountType = "Percentage");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		CommerceEntry.setEntryEligibility(accountGroupsEligibility = "AccountGroup1");
+
+		AssertElementPresent(
+			key_entryName = "AccountGroup1",
+			locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
+
+		CommerceNavigator.gotoEntry(entryName = "Test Discount");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		Type(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "AccountGroup1");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+		AssertElementPresent(
+			key_entryName = "AccountGroup1",
+			locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+		ClickNoError(locator1 = "Button#MOVE_TO_RECYCLE_BIN");
+
+		Button.clickPublish();
+
+		CommerceEntry.setEntryEligibility(accountsEligibility = "Account1");
+
+		CommerceEntry.viewEntryEligibility(accountsEligibility = "Account1");
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
+
+		CommerceNavigator.gotoEntry(entryName = "Test Discount");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		Type(
+			locator1 = "CommerceNavigation#SEARCH_FIELD",
+			value1 = "Account1");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+		CommerceEntry.viewEntryEligibility(accountsEligibility = "Account1");
+
+		Click(
+			key_value = "Account1",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Remove");
+
+		Button.clickPublish();
+
+		CommerceEntry.setEntryEligibility(channelsEligibility = "Minium Portal");
+
+		CommerceEntry.viewEntryEligibility(channelsEligibility = "Minium Portal");
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
+
+		CommerceNavigator.gotoEntry(entryName = "Test Discount");
+
+		Navigator.gotoNavTab(navTab = "Eligibility");
+
+		CommerceEntry.viewEntryEligibility(channelsEligibility = "Minium Portal");
+
+		Click(
+			key_value = "Minium Portal",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Remove");
+
+		Button.clickPublish();
 	}
 
 	@description = "This is a test for COMMERCE-6235. Product Group Lifecycle"

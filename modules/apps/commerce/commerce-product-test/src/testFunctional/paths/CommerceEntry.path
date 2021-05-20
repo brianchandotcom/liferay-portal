@@ -464,6 +464,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ELIGIBILITY_ACCOUNT_GROUPS</td>
+	<td>//div[@class='dnd-td' and contains(text(),'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_ENTRY_EDIT_BUTTON</td>
 	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//../div/a[contains(.,'Edit')]</td>
 	<td></td>

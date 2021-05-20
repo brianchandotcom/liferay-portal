@@ -6,6 +6,10 @@
 		width: 330px;
 	}
 
+	&__issue {
+		cursor: pointer;
+	}
+
 	.sidebar-header {
 		background-color: $dark;
 		color: $white;

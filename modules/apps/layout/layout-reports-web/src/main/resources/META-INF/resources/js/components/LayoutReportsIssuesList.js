@@ -18,7 +18,8 @@ import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
 import React, {useContext, useMemo} from 'react';
 
-import {StoreStateContext} from '../context/StoreContext';
+import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
+import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 
 export default function LayoutReportsIssuesList() {
 	const {data} = useContext(StoreStateContext);
@@ -126,9 +127,16 @@ const Issue = ({issue}) => {
 		issueTotal = '+100';
 	}
 
+	const dispatch = useContext(StoreDispatchContext);
+
 	return (
 		issueTotal > 0 && (
-			<ClayList.Item action className="border-0 rounded-0" flex>
+			<ClayList.Item
+				action
+				className="border-0 lfr-layout-reports-panel__issue rounded-0"
+				flex
+				onClick={() => dispatch({issue, type: SET_SELECTED_ISSUE})}
+			>
 				<ClayList.ItemField expand>{issue.title}</ClayList.ItemField>
 
 				<ClayList.ItemField>

@@ -153,18 +153,22 @@ public class DDMExpressionFunctionMetadataHelper {
 
 			Method method = optional.get();
 
+			int parameterCount = method.getParameterCount();
+
+			if (parameterCount > 2) {
+				continue;
+			}
+
 			addDDMExpressionFunctionMetadata(
 				ddmExpressionFunctionMetadatasMap,
 				new DDMExpressionFunctionMetadata(
 					entry.getKey(), entry.getKey(), _TYPE_BOOLEAN,
-					_getParameterClassNames(
-						method.getParameterCount(), _TYPE_NUMBER)));
+					_getParameterClassNames(parameterCount, _TYPE_NUMBER)));
 			addDDMExpressionFunctionMetadata(
 				ddmExpressionFunctionMetadatasMap,
 				new DDMExpressionFunctionMetadata(
 					entry.getKey(), entry.getKey(), _TYPE_BOOLEAN,
-					_getParameterClassNames(
-						method.getParameterCount(), _TYPE_TEXT)));
+					_getParameterClassNames(parameterCount, _TYPE_TEXT)));
 		}
 	}
 

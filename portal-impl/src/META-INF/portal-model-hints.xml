@@ -262,8 +262,12 @@
 		<field name="custom1ImageId" type="long" />
 		<field name="custom2ImageId" type="long" />
 		<field name="manualCheckInRequired" type="boolean" />
-		<field name="expirationDate" type="Date" />
-		<field name="reviewDate" type="Date" />
+		<field name="expirationDate" type="Date">
+			<hint name="default-year-delta">1</hint>
+		</field>
+		<field name="reviewDate" type="Date">
+			<hint name="default-month-delta">9</hint>
+		</field>
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.document.library.kernel.model.DLFileEntryMetadata">
@@ -361,8 +365,12 @@
 		<field name="version" type="String" />
 		<field name="size" type="long" />
 		<field name="checksum" type="String" />
-		<field name="expirationDate" type="Date" />
-		<field name="reviewDate" type="Date" />
+		<field name="expirationDate" type="Date">
+			<hint name="default-year-delta">1</hint>
+		</field>
+		<field name="reviewDate" type="Date">
+			<hint name="default-month-delta">9</hint>
+		</field>
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

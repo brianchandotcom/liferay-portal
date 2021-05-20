@@ -208,12 +208,104 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6237. Create a shipment from an order"
-	@ignore = "true"
 	@priority = "3"
 	test CreateOrderShipment {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceShipments#CreateOrderShipment";
 
-		// TODO COMMERCE-6237 CreateOrderShipment Pending Implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		Click(
+			key_value = "Commerce Account",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "View");
+
+		Click(
+			key_text = "Accept Order",
+			locator1 = "Link#ANY");
+
+		Click(
+			key_text = "Create Shipment",
+			locator1 = "Link#ANY");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Check.checkToggleSwitch(
+			key_productSKU = "MIN55861",
+			locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+
+		Button.clickSubmitButton();
+
+		CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_warehouseName = "Italy",
+			locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+			value1 = "1");
+
+		Button.clickSave();
+
+		Refresh();
+
+		Click(
+			key_index = "Finish Processing",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Shipments");
+
+		AssertTextEquals(
+			locator1 = "CommerceOrders#ASSERT_FIRST_SHIPMENT_STATUS",
+			value1 = "Ready to Ship");
 
 	}
 

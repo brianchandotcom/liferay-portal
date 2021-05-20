@@ -81,6 +81,11 @@
 <tr>
     <td>ORDER_GENERAL_DETAILS_DESCRIPTION</td>
     <td>//h5[contains(text(), "${key_titleName}")]//..//following-sibling::div[@class="description"]</td>
+	<td></td>
+</tr>
+<tr>
+    <td>ASSERT_FIRST_SHIPMENT_STATUS</td>
+    <td>//div[contains(@class,'dnd-td')]/following-sibling::div//span[@class="label label-warning"]//span</td>
     <td></td>
 </tr>
 </tbody>

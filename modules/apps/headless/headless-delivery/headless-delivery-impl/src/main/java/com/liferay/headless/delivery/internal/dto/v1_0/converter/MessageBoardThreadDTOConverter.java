@@ -138,6 +138,7 @@ public class MessageBoardThreadDTOConverter
 					dtoConverterContext.getUserId(), mbThread);
 				showAsQuestion = mbThread.isQuestion();
 				siteId = mbThread.getGroupId();
+				status = WorkflowConstants.getStatusLabel(mbThread.getStatus());
 				subscribed = _subscriptionLocalService.isSubscribed(
 					mbMessage.getCompanyId(), dtoConverterContext.getUserId(),
 					MBThread.class.getName(), mbMessage.getThreadId());

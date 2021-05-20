@@ -108,6 +108,8 @@ public class MessageBoardMessageDTOConverter
 					dtoConverterContext.getLocale());
 				showAsAnswer = mbMessage.isAnswer();
 				siteId = mbMessage.getGroupId();
+				status = WorkflowConstants.getStatusLabel(
+					mbMessage.getStatus());
 				subscribed = _subscriptionLocalService.isSubscribed(
 					mbMessage.getCompanyId(), dtoConverterContext.getUserId(),
 					MBThread.class.getName(), mbMessage.getThreadId());

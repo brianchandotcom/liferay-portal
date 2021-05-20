@@ -169,15 +169,13 @@ definition {
 		DataEngine.createNewFieldset(
 			fieldHelp = "true",
 			fieldNameList = "Text",
-			fieldsetName = "New Fieldset"
-		);
-		
+			fieldsetName = "New Fieldset");
+
 		DataEngine.addTranslationToFieldset(
-			fieldsetName = "New Fieldset",
-			localeList = "pt-BR",
 			fieldHelp = "true",
-			fieldNameList = "Text"
-		);
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset",
+			localeList = "pt-BR");
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -296,6 +294,153 @@ definition {
 		}
 	}
 
+	@description = "This test ensures add fields, translate, edit fieldset, check propagation, translate from different language."
+	@priority = "5"
+	test CreateEditAndDeleteLocalizedFieldset {
+		property portal.acceptance = "true";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.createNewFieldset(
+			fieldNameList = "Text,Numeric",
+			fieldsetName = "New Fieldset Test");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset Test");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset Test");
+
+		DataEngine.addFields(fieldNameList = "Date");
+
+		Modal.save();
+
+		DataEngine.addTranslationToFieldset(
+			fieldsetName = "Text,Numeric,Date",
+			localeList = "pt-BR");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContentStructures.addName(structureName = "WC Structure Name pt-BR");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "Text,Numeric,Date",
+			fieldsetName = "New Fieldset Test");
+
+		DataEngine.viewFieldsetTranslation(
+			fieldNameList = "Text,Numeric,Date",
+			fieldsetName = "New Fieldset Test",
+			localeList = "pt-BR");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "02/22/2021",
+			webContentDateFieldLabel = "Date",
+			webContentNumeric = "1",
+			webContentNumericFieldLabel = "Numeric",
+			webContentText = "Text",
+			webContentTextFieldLabel = "Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "23/02/2021",
+			webContentDateFieldLabel = "Date pt-BR",
+			webContentNumeric = "2",
+			webContentNumericFieldLabel = "Numeric pt-BR",
+			webContentText = "Text - pt-BR",
+			webContentTextFieldLabel = "Text pt-BR",
+			webContentTitle = "Web Content Title pt-BR");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "02/22/2021",
+			webContentDateFieldLabel = "Date",
+			webContentNumeric = "1",
+			webContentNumericFieldLabel = "Numeric",
+			webContentText = "Text",
+			webContentTextFieldLabel = "Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "22/02/2021",
+			webContentDateFieldLabel = "Date pt-BR",
+			webContentLocaleFieldLabel = "pt-BR",
+			webContentNumeric = "2",
+			webContentNumericFieldLabel = "Numeric pt-BR",
+			webContentText = "Text - pt-BR",
+			webContentTextFieldLabel = "Text pt-BR",
+			webContentTitle = "Web Content Title",
+			webContentTitleTranslated = "Web Content Title pt-BR");
+
+		PortletEntry.publish();
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.delete(fieldsetLabel = "New Fieldset Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP();
+
+		DataEngine.deleteFieldsetFromSideBar(fieldsetName = "New Fieldset Test");
+
+		Button.clickCancel();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		AssertElementNotPresent(
+			key_fieldsetName = "New Fieldset Test",
+			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+		for (var fieldName : list "Text,Numeric,Date") {
+			AssertElementNotPresent(
+				key_fieldsetName = "${fieldName}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+		}
+
+		AssertElementNotPresent(
+			key_fieldsetName = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+	}
+
 	@description = "This is a test for LPS-123539. As Content Creator, I want to leverage the structures’ translations with fieldset when creating a new Web Content"
 	@priority = "4"
 	test DefaultTitleIsDisplayedUponLocaleChange {
@@ -306,14 +451,11 @@ definition {
 			structureName = "Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
 			fieldHelp = "true",
-			fieldNameList = "Text"
-		);
+			fieldNameList = "Text",
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -402,14 +544,11 @@ definition {
 			structureName = "Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
+			fieldHelp = "True",
 			fieldNameList = "Text",
-			fieldHelp = "True"
-		);
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -444,6 +583,180 @@ definition {
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
 			value1 = "WC Titulo");
+	}
+
+	@description = "This test ensures create, translate and edit with different instance language."
+	@priority = "5"
+	test LocalizedFieldsetWithDifferentInstanceLanguage {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Portuguese (Brazil)");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(structureName = "WC Structure Name");
+
+		DataEngine.createNewFieldset(
+			fieldNameList = "Text,Numeric",
+			fieldsetName = "New Fieldset Test");
+
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset Test");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
+
+		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset Test");
+
+		DataEngine.addFields(fieldNameList = "Date");
+
+		Modal.save();
+
+		DataEngine.addTranslationToFieldset(
+			fieldsetName = "Text,Numeric,Date",
+			localeList = "en-US");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		WebContentStructures.addName(structureName = "WC Structure Name en-US");
+
+		WebContentStructures.saveCP();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name en-US");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "WC Structure Name");
+
+		DataEngine.viewFieldset(
+			fieldNameList = "Text,Numeric,Date",
+			fieldsetName = "New Fieldset Test");
+
+		DataEngine.viewFieldsetTranslation(
+			fieldNameList = "Text,Numeric,Date",
+			fieldsetName = "New Fieldset Test",
+			localeList = "en-US");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name en-US");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "02/02/2021",
+			webContentDateFieldLabel = "Date",
+			webContentNumeric = "1",
+			webContentNumericFieldLabel = "Numeric",
+			webContentText = "Text",
+			webContentTextFieldLabel = "Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.changeLocale(locale = "en-US");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "02/03/2021",
+			webContentDateFieldLabel = "Date en-US",
+			webContentNumeric = "2",
+			webContentNumericFieldLabel = "Numeric en-US",
+			webContentText = "Text - en-US",
+			webContentTextFieldLabel = "Text en-US",
+			webContentTitle = "Web Content Title en-US");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "02/02/2021",
+			webContentDateFieldLabel = "Date",
+			webContentNumeric = "1",
+			webContentNumericFieldLabel = "Numeric",
+			webContentText = "Text",
+			webContentTextFieldLabel = "Text",
+			webContentTitle = "Web Content Title");
+
+		PortletEntry.publish();
+
+		WebContent.viewWithStructureCP(
+			webContentDate = "02/03/2021",
+			webContentDateFieldLabel = "Date en-US",
+			webContentLocaleFieldLabel = "en-US",
+			webContentNumeric = "2",
+			webContentNumericFieldLabel = "Numeric en-US",
+			webContentText = "Text - en-US",
+			webContentTextFieldLabel = "Text en-US",
+			webContentTitle = "Web Content Title",
+			webContentTitleTranslated = "Web Content Title en-US");
+
+		PortletEntry.publish();
+
+		NavItem.gotoStructures();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name en-US");
+
+		DataEngine.delete(fieldsetLabel = "New Fieldset Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+		WebContentStructures.saveCP();
+
+		DataEngine.deleteFieldsetFromSideBar(fieldsetName = "New Fieldset Test");
+
+		Button.clickCancel();
+
+		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name en-US");
+
+		AssertElementNotPresent(
+			key_fieldsetName = "New Fieldset Test",
+			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title en-US");
+
+		for (var fieldName : list "Text,Numeric,Date") {
+			AssertElementNotPresent(
+				key_fieldsetName = "${fieldName}",
+				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+		}
+
+		AssertElementNotPresent(
+			key_fieldsetName = "New Fieldset",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		AssertVisible(
+			key_fieldFieldLabel = "Text",
+			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
 	}
 
 	@description = "This test ensures is possible to translate a web content from a structure with a fieldset with a field group."
@@ -592,14 +905,11 @@ definition {
 		WebContentStructures.addCP(structureName = "WC Structure Name");
 
 		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset",
+			fieldHelp = "True",
 			fieldNameList = "Text",
-			fieldHelp = "True"
-		);
+			fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(
-			fieldsetName = "New Fieldset"
-		);
+		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
@@ -669,155 +979,6 @@ definition {
 			key_fieldLabel = "Text",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "This is a text in ES");
-	}
-
-	@description = "This test ensures add fields, translate, edit fieldset, check propagation, translate from different language."
-	@priority = "5"
-	test CreateEditAndDeleteLocalizedFieldset {
-		property portal.acceptance = "true";
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
-		WebContentStructures.addCP(structureName = "WC Structure Name");
-
-		DataEngine.createNewFieldset(
-			fieldsetName = "New Fieldset Test",
-			fieldNameList = "Text,Numeric"
-		);
-
-		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset Test");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		DataEngine.gotoEditFieldset(fieldsetName = "New Fieldset Test");
-
-		DataEngine.addFields(fieldNameList = "Date");
-
-		Modal.save();
-		
-		DataEngine.addTranslationToFieldset(
-			fieldsetName = "Text,Numeric,Date",
-			localeList = "pt-BR"
-		);
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		WebContentStructures.addName(structureName = "WC Structure Name pt-BR");
-
-		WebContentStructures.saveCP();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		AssertTextEquals(
-			locator1 = "TextInput#NAME",
-			value1 = "WC Structure Name");
-
-		DataEngine.viewFieldset(
-			fieldNameList = "Text,Numeric,Date",
-			fieldsetName = "New Fieldset Test");
-
-		DataEngine.viewFieldsetTranslation(
-			fieldNameList = "Text,Numeric,Date",
-			fieldsetName = "New Fieldset Test",
-			localeList = "pt-BR");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
-
-		WebContent.addWithStructureCP(
-			webContentDate = "02/22/2021",
-			webContentDateFieldLabel = "Date",
-			webContentNumeric = "1",
-			webContentNumericFieldLabel = "Numeric",
-			webContentText = "Text",
-			webContentTextFieldLabel = "Text",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.changeLocale(locale = "pt-BR");
-
-		WebContent.addWithStructureCP(
-			webContentDate = "23/02/2021",
-			webContentDateFieldLabel = "Date pt-BR",
-			webContentNumeric = "2",
-			webContentNumericFieldLabel = "Numeric pt-BR",
-			webContentText = "Text - pt-BR",
-			webContentTextFieldLabel = "Text pt-BR",
-			webContentTitle = "Web Content Title pt-BR");
-
-		PortletEntry.publish();
-
-		WebContent.viewWithStructureCP(
-			webContentDate = "02/22/2021",
-			webContentDateFieldLabel = "Date",
-			webContentNumeric = "1",
-			webContentNumericFieldLabel = "Numeric",
-			webContentText = "Text",
-			webContentTextFieldLabel = "Text",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		WebContent.viewWithStructureCP(
-			webContentDate = "22/02/2021",
-			webContentDateFieldLabel = "Date pt-BR",
-			webContentLocaleFieldLabel = "pt-BR",
-			webContentNumeric = "2",
-			webContentNumericFieldLabel = "Numeric pt-BR",
-			webContentText = "Text - pt-BR",
-			webContentTextFieldLabel = "Text pt-BR",
-			webContentTitle = "Web Content Title",
-			webContentTitleTranslated = "Web Content Title pt-BR");
-
-		PortletEntry.publish();
-
-		NavItem.gotoStructures();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		DataEngine.delete(fieldsetLabel = "New Fieldset Test");
-
-		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
-
-		WebContentStructures.saveCP();
-
-		DataEngine.deleteFieldsetFromSideBar(fieldsetName = "New Fieldset Test");
-
-		Button.clickCancel();
-
-		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
-
-		AssertElementNotPresent(
-			key_fieldsetName = "New Fieldset Test",
-			locator1 = "Sidebar#FIELDSET_ITEM_ELLIPSIS");
-
-		WebContentStructures.saveCP();
-
-		NavItem.click(navItem = "Web Content");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
-
-		for (var fieldName : list "Text,Numeric,Date") {
-			AssertElementNotPresent(
-				key_fieldsetName = "${fieldName}",
-				locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
-		}
-
-		AssertElementNotPresent(
-			key_fieldsetName = "New Fieldset",
-			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
-
-		AssertVisible(
-			key_fieldFieldLabel = "Text",
-			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
 }

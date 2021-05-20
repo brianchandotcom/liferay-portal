@@ -8,4 +8,11 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-module.exports = {};
+
+import React from 'react';
+
+const FrontTooltip = () => {
+	return <div>Shopping Experience Tooltip</div>;
+};
+
+export default FrontTooltip;

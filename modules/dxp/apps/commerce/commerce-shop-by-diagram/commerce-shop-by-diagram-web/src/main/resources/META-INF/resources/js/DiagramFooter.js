@@ -20,6 +20,7 @@ const OPTIONS = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
 const DiagramFooter = ({
 	enableResetZoom,
 	selectedOption,
+	setAddPinHandler,
 	setChangedScale,
 	setResetZoom,
 	setSelectedOption,
@@ -30,12 +31,10 @@ const DiagramFooter = ({
 		setSelectedOption(event.target.value);
 		setChangedScale(true);
 	};
-
 	const options = [2, 1.75, 1.5, 1.25, 1, 0.75, 0.5];
 
 	return (
 		<div className="d-flex diagram-footer justify-content-end mt-3">
-
 			<ClayButton className="mr-3" onClick={() => setAddPinHandler(true)}>
 				<span className="inline-item inline-item-before">
 					<ClayIcon spritemap={spritemap} symbol="pin" />

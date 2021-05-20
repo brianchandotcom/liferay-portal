@@ -21,7 +21,7 @@ import React, {useContext, useMemo} from 'react';
 import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 
-export default function LayoutReportsIssuesList() {
+export default function IssuesList() {
 	const {data} = useContext(StoreStateContext);
 
 	const {imagesPath, layoutReportsIssues} = data;

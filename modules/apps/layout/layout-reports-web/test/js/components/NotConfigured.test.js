@@ -15,13 +15,13 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import EmptyLayoutReports from '../../../src/main/resources/META-INF/resources/js/components/EmptyLayoutReports';
+import NotConfigured from '../../../src/main/resources/META-INF/resources/js/components/NotConfigured';
 
 import '@testing-library/jest-dom/extend-expect';
 
 import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
-describe('EmptyLayoutReports', () => {
+describe('NotConfigured', () => {
 	afterEach(cleanup);
 
 	it('renders empty view with information', () => {
@@ -34,7 +34,7 @@ describe('EmptyLayoutReports', () => {
 					},
 				}}
 			>
-				<EmptyLayoutReports />
+				<NotConfigured />
 			</StoreContextProvider>
 		);
 
@@ -60,7 +60,7 @@ describe('EmptyLayoutReports', () => {
 					},
 				}}
 			>
-				<EmptyLayoutReports />
+				<NotConfigured />
 			</StoreContextProvider>
 		);
 

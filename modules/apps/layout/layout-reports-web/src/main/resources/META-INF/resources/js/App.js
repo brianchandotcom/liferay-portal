@@ -32,7 +32,7 @@ import {
 } from './context/ConstantsContext';
 import loadIssues from './utils/loadIssues';
 
-export default function (props) {
+export default function App(props) {
 	const {portletNamespace} = props;
 
 	const layoutReportsPanelToggle = document.getElementById(
@@ -82,14 +82,22 @@ export default function (props) {
 	return (
 		<ConstantsContextProvider constants={props}>
 			<StoreContextProvider>
-				<SidebarHeader />
-				<SidebarBody>
-					<LayoutReports eventTriggered={eventTriggered} />
-				</SidebarBody>
+				<LayoutReportsWrapper eventTriggered={eventTriggered} />
 			</StoreContextProvider>
 		</ConstantsContextProvider>
 	);
 }
+
+const LayoutReportsWrapper = ({eventTriggered}) => {
+	return (
+		<>
+			<SidebarHeader />
+			<SidebarBody>
+				<LayoutReports eventTriggered={eventTriggered} />
+			</SidebarBody>
+		</>
+	);
+};
 
 const SidebarHeader = () => {
 	const {data, languageId, loading} = useContext(StoreStateContext);

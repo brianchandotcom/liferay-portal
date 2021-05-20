@@ -17,7 +17,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import LanguagesDropdown from './LanguagesDropdown';
+import Translation from './Translation';
 
 export default function BasicInformation({
 	defaultLanguageId,
@@ -35,7 +35,7 @@ export default function BasicInformation({
 				<div className="inline-item-before">
 					<ClayLayout.ContentRow>
 						<ClayLayout.ContentCol>
-							<LanguagesDropdown
+							<Translation
 								defaultLanguageId={defaultLanguageId}
 								pageURLs={pageURLs}
 								selectedLanguageId={selectedPageURL.languageId}

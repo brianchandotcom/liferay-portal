@@ -17,7 +17,7 @@ import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import LayoutReportsIssuesList from '../../../src/main/resources/META-INF/resources/js/components/LayoutReportsIssuesList';
+import IssuesList from '../../../src/main/resources/META-INF/resources/js/components/IssuesList';
 import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/StoreContext';
 
 const mockLayoutReportsIssues = [
@@ -74,7 +74,7 @@ const mockLayoutReportsIssuesNoAccessibilityNoSEO = [
 	},
 ];
 
-describe('LayoutReportsIssuesList', () => {
+describe('IssuesList', () => {
 	afterEach(cleanup);
 
 	it('renders accessibility and seo sections with issues count', () => {
@@ -87,7 +87,7 @@ describe('LayoutReportsIssuesList', () => {
 					},
 				}}
 			>
-				<LayoutReportsIssuesList />
+				<IssuesList />
 			</StoreContextProvider>
 		);
 
@@ -107,7 +107,7 @@ describe('LayoutReportsIssuesList', () => {
 					},
 				}}
 			>
-				<LayoutReportsIssuesList />
+				<IssuesList />
 			</StoreContextProvider>
 		);
 
@@ -128,7 +128,7 @@ describe('LayoutReportsIssuesList', () => {
 					},
 				}}
 			>
-				<LayoutReportsIssuesList />
+				<IssuesList />
 			</StoreContextProvider>
 		);
 
@@ -148,7 +148,7 @@ describe('LayoutReportsIssuesList', () => {
 					},
 				}}
 			>
-				<LayoutReportsIssuesList />
+				<IssuesList />
 			</StoreContextProvider>
 		);
 

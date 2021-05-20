@@ -26,8 +26,8 @@ import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import getPageSpeedProgress from '../utils/getPageSpeedProgress';
 import loadIssues from '../utils/loadIssues';
 import BasicInformation from './BasicInformation';
-import EmptyLayoutReports from './EmptyLayoutReports';
-import LayoutReportsIssuesList from './LayoutReportsIssuesList';
+import IssuesList from './IssuesList';
+import NotConfigured from './NotConfigured';
 
 export default function LayoutReports({eventTriggered}) {
 	const isMounted = useIsMounted();
@@ -161,9 +161,9 @@ export default function LayoutReports({eventTriggered}) {
 					data &&
 					!error &&
 					(data.validConnection && data?.layoutReportsIssues ? (
-						<LayoutReportsIssuesList />
+						<IssuesList />
 					) : (
-						<EmptyLayoutReports />
+						<NotConfigured />
 					))
 				)}
 			</div>

@@ -26,7 +26,7 @@ import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import loadIssues from '../utils/loadIssues';
 
-export default function LanguagesDropdown({
+export default function Translation({
 	defaultLanguageId,
 	pageURLs,
 	selectedLanguageId,
@@ -116,7 +116,7 @@ export default function LanguagesDropdown({
 	);
 }
 
-LanguagesDropdown.propTypes = {
+Translation.propTypes = {
 	defaultLanguageId: PropTypes.string.isRequired,
 	pageURLs: PropTypes.arrayOf(
 		PropTypes.shape({

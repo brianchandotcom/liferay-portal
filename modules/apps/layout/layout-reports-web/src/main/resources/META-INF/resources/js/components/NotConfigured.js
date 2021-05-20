@@ -17,7 +17,7 @@ import React, {useContext} from 'react';
 
 import {StoreStateContext} from '../context/StoreContext';
 
-export default function EmptyLayoutReports() {
+export default function NotConfigured() {
 	const {data} = useContext(StoreStateContext);
 
 	const {configureGooglePageSpeedURL, imagesPath} = data;

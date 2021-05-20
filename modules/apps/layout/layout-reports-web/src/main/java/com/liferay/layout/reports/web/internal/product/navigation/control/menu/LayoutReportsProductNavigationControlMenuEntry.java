@@ -384,7 +384,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
 					_npmResolver.resolveModuleName("layout-reports-web") +
-						"/js/LayoutReportsApp"),
+						"/js/App"),
 				HashMapBuilder.<String, Object>put(
 					"isPanelStateOpen", _isPanelStateOpen(httpServletRequest)
 				).put(

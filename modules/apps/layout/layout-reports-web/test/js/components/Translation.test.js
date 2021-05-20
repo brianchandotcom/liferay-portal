@@ -15,13 +15,13 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import LanguagesDropdown from '../../../src/main/resources/META-INF/resources/js/components/LanguagesDropdown';
+import Translation from '../../../src/main/resources/META-INF/resources/js/components/Translation';
 
 import '@testing-library/jest-dom/extend-expect';
 
 const noop = () => {};
 
-describe('LanguageDropdown', () => {
+describe('Translation', () => {
 	afterEach(cleanup);
 
 	it('renders all available languages', () => {
@@ -45,7 +45,7 @@ describe('LanguageDropdown', () => {
 		};
 
 		const {getAllByText, getByText} = render(
-			<LanguagesDropdown
+			<Translation
 				defaultLanguageId={testProps.defaultLanguageId}
 				onSelectedLanguageId={noop}
 				pageURLs={testProps.pageURLs}

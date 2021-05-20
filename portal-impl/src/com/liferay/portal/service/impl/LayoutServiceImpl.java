@@ -1421,14 +1421,14 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 	@Override
 	public Layout updateStatus(
-		long userId, long plid, int status, ServiceContext serviceContext)
+		long plid, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), plid, ActionKeys.UPDATE);
 
 		return layoutLocalService.updateStatus(
-			userId, plid, status, serviceContext);
+			getUserId(), plid, status, serviceContext);
 	}
 
 	@Override

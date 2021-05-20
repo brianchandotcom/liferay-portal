@@ -710,8 +710,6 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "${text}");
 
-
-
 		AssertTextEquals(
 			locator1 = "Form#NAME_FIELD",
 			value1 = "${text}");
@@ -732,8 +730,6 @@ definition {
 		AssertElementPresent(
 			key_fieldName = "Text",
 			locator1 = "Form#PAGE_FIELD_LABEL");
-
-
 	}
 
 	@description = "Verify that a Form can be published from an autosaved draft"

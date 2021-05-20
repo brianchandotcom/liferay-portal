@@ -537,6 +537,16 @@ renderResponse.setTitle(headerTitle);
 						/>
 					</aui:fieldset>
 
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="expiration-date">
+						<p class="mb-5 text-secondary">
+							<liferay-ui:message key="including-an-expiration-date-will-allow-your-documents-or-media-to-expire-automatically-and-become-unpublished" />
+						</p>
+
+						<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= dlEditFileEntryDisplayContext.isNeverExpire() %>" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
+
+						<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= dlEditFileEntryDisplayContext.isNeverReview() %>" name="reviewDate" wrapperCssClass="mb-3 review-date" />
+					</aui:fieldset>
+
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="related-assets">
 						<liferay-asset:input-asset-links
 							className="<%= DLFileEntry.class.getName() %>"

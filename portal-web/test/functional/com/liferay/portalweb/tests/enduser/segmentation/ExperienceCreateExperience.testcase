@@ -1887,6 +1887,7 @@ definition {
 	@priority = "5"
 	test AddNewExperienceUserSiteOrganizationRoleSegment {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceUserSiteOrganizationRoleSegment";
 
 		JSONGroup.assignUserToGroup(
 			groupName = "Test Site Name",

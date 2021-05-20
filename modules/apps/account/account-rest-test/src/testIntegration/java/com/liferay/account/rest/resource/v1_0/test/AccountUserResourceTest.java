@@ -18,12 +18,15 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.rest.client.dto.v1_0.AccountUser;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 
@@ -55,6 +58,50 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteAccountUserByEmailAddress() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId(), user.getUserId());
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+
+		accountUserResource.deleteAccountUserByEmailAddress(
+			_accountEntry.getAccountEntryId(), user.getEmailAddress());
+
+		Assert.assertNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+	}
+
+	@Override
+	@Test
+	public void testDeleteAccountUserByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId(), user.getUserId());
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+
+		accountUserResource.
+			deleteAccountUserByExternalReferenceCodeByEmailAddress(
+				user.getEmailAddress(),
+				_accountEntry.getExternalReferenceCode());
+
+		Assert.assertNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+	}
+
+	@Override
+	@Test
 	public void testPostAccountUser() throws Exception {
 		super.testPostAccountUser();
 
@@ -71,6 +118,44 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 			_userLocalService.fetchUserByReferenceCode(
 				TestPropsValues.getCompanyId(),
 				randomAccountUser.getExternalReferenceCode()));
+	}
+
+	@Override
+	@Test
+	public void testPostAccountUserByEmailAddress() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		Assert.assertNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+
+		accountUserResource.postAccountUserByEmailAddress(
+			_accountEntry.getAccountEntryId(), user.getEmailAddress());
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+	}
+
+	@Override
+	@Test
+	public void testPostAccountUserByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		Assert.assertNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+
+		accountUserResource.
+			postAccountUserByExternalReferenceCodeByEmailAddress(
+				user.getEmailAddress(),
+				_accountEntry.getExternalReferenceCode());
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
 	}
 
 	@Override
@@ -164,6 +249,9 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

@@ -10,17 +10,9 @@ definition {
 			groupName = "${groupName}",
 			layoutName = "private 1");
 
-		JSONLayout.addPrivateLayoutByGroupName(
-			groupName = "${groupName}",
-			layoutName = "private 2");
-
 		JSONLayout.addPublicLayout(
 			groupName = "${groupName}",
 			layoutName = "public 1");
-
-		JSONLayout.addPublicLayoutByGroupName(
-			groupName = "${groupName}",
-			layoutName = "public 2");
 
 		// Widget
 

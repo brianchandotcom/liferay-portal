@@ -642,6 +642,30 @@ definition {
 			remoteStaging = "true");
 	}
 
+	macro remoteStagingSetUpViaJson {
+		if (!(isSet(remotePort))) {
+			var remotePort = "8080";
+		}
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a remote depot",
+			depotName = "Remote Depot",
+			portalURL = "http://localhost:${remotePort}");
+
+		var remoteGroupId = JSONGroupSetter.setGroupId(
+			groupName = "Remote Depot",
+			portalURL = "http://localhost:${remotePort}",
+			site = "${site}");
+
+		JSONStaging.enableRemoteStaging(
+			branchingPrivate = "${branchingPrivate}",
+			branchingPublic = "${branchingPublic}",
+			groupName = "${groupName}",
+			remoteGroupId = "${remoteGroupId}",
+			remotePort = "${remotePort}",
+			site = "${site}");
+	}
+
 	macro removeMember {
 		var key_cardText = "${userScreenName}";
 

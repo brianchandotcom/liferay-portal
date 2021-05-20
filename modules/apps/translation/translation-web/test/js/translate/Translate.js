@@ -252,6 +252,53 @@ describe('Translate', () => {
 		});
 	});
 
+	describe('when there is an error server response', () => {
+		beforeEach(() => {
+			fetch.mockResponseOnce(
+				JSON.stringify({
+					error: {
+						message: 'mock error',
+					},
+				})
+			);
+		});
+
+		afterEach(() => {
+			fetch.resetMocks();
+		});
+
+		describe('click in the field auto-translate button', () => {
+			it('renders an error message', async () => {
+				const {getByText} = renderComponent(baseProps);
+
+				const autoTranslateFieldButton = getByText(
+					'auto-translate-x-field-' +
+						baseProps.infoFieldSetEntries[0].fields[0].label
+				).closest('button');
+
+				await act(async () => {
+					fireEvent.click(autoTranslateFieldButton);
+				});
+
+				expect(getByText('mock error')).toBeInTheDocument();
+			});
+		});
+
+		describe('click in the general auto-translate button', () => {
+			it('renders an error message', async () => {
+				const {getByText} = renderComponent(baseProps);
+
+				const autoTranslateFieldButton = getByText('auto-translate');
+
+				await act(async () => {
+					fireEvent.click(autoTranslateFieldButton);
+				});
+
+				expect(getByText('mock error')).toBeInTheDocument();
+			});
+		});
+	});
+
 	it('renders with auto-translate disabled', () => {
 		const {asFragment} = renderComponent({
 			...baseProps,

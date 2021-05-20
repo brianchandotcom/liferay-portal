@@ -3564,6 +3564,24 @@ definition {
 			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 	}
 
+	macro viewWebContentWithNoDisplayPageTemplate {
+		task ("View the View Content action not shown in dropdown list and the None is selected in Display Page Template field") {
+			for (var n : list "1,2") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				Click(
+					key_webContentTitle = "Web Content Title ${n} Edit",
+					locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+				MenuItem.viewNotPresent(menuItem = "View Content");
+
+				MenuItem.click(menuItem = "Edit");
+
+				WebContent.viewSelectedDisplayPageTemplateCP(displayPageTemplateType = "None");
+			}
+		}
+	}
+
 	macro viewWebContentWithPredefinedValueInWebContentField {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

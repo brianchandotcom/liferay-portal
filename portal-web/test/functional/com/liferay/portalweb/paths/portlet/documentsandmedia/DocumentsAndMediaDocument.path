@@ -342,6 +342,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--AUDIO_GENERATION-->
+<tr>
+	<td>AUDIO_PREVIEW</td>
+	<td>//audio[contains(@class,'preview-file-audio')]//source[contains(@src,'${key_audioName}')]</td>
+	<td></td>
+</tr>
 <!--VIDEO_GENERATION-->
 <tr>
 	<td>VIDEO_GENERATION_INFO</td>

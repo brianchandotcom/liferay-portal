@@ -320,6 +320,10 @@ public class LayoutsTreeDisplayContext {
 				LayoutConstants.DEFAULT_PLID);
 		}
 
+		if (layout.isSystem() && layout.isTypeContent()) {
+			return layout.getClassPK();
+		}
+
 		return layout.getPlid();
 	}
 

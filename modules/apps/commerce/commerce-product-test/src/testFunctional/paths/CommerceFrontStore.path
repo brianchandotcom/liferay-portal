@@ -69,11 +69,6 @@
 	<td></td>
 </tr>
 <tr>	
-	<td>PRODUCT_DETAILS_QUANTITY_INPUT</td>
-	<td>//header//h2[text()="${key_productName}"]//..//following-sibling::div[4]//input</td>
-	<td></td>
-</tr>
-<tr>	
 	<td>PRODUCT_DETAILS_PRICE_VALUE_INACTIVE</td>
 	<td>//p[@title='${key_productName}']/following-sibling::p//span[contains(@class, 'price-value price-value-inactive')]</td>
 	<td></td>

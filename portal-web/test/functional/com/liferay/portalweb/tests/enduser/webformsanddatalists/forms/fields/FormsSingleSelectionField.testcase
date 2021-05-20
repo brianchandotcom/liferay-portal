@@ -45,7 +45,7 @@ definition {
 		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName(formName = "Form 1");
-		
+
 		Form.gotoAddField(
 			fieldPositionNumber = "0",
 			fieldType = "Single Selection");
@@ -63,8 +63,6 @@ definition {
 		FormFields.viewRadioLabel(
 			fieldLabel = "Single Selection",
 			fieldName = "${fieldName}");
-
-			
 	}
 
 	@description = "Verify that a Single Selection Field can be deleted"
@@ -75,6 +73,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132191 CanBeDeleted pending implementation
+
 	}
 
 	@description = "Verify that a Single Selection Field can be duplicated"

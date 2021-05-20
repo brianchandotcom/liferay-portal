@@ -365,11 +365,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TOOLBAR_ANY_ITEM_BUTTON</td>
-	<td>//a[contains(@title,"${key_titleName}")]</td>
-<td></td>
-</tr>
-<tr>
 	<td>PARAGRAPH_CONTENT_UNORDERED_LIST</td>
 	<td>//legend[contains(text(),'${key_labelName}')]//..//ul//li[contains(.,'${key_itemName}')]</td>
 	<td></td>
@@ -377,6 +372,21 @@
 <tr>
 	<td>PARAGRAPH_SPECIFIC_FIELD_BY_BODY</td>
 	<td>//div[@class='liferay-ddm-form-field-paragraph-text']/p[contains(.,'${key_bodyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_LINK_SELECTOR</td>
+	<td>//div//label[text()='${fieldLabel}']//..//select//option[@value='${optionValue}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_LINK_TEXT_BODY</td>
+	<td>//p//a[@href='${key_url}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_LINK_TEXT_INPUT</td>
+	<td>//div[@class='cke_dialog_body']//label[text()='${fieldLabel}']//..//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -455,6 +465,12 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--TOOLBAR-->
+<tr>
+	<td>TOOLBAR_ANY_ITEM_BUTTON</td>
+	<td>//a[contains(@class,'cke_button') and contains(@title,'${key_titleName}')]</td>
 	<td></td>
 </tr>
 <!--VALIDATION-->

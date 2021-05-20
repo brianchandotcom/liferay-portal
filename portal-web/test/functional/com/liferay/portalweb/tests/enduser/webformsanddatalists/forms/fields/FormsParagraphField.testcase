@@ -348,12 +348,56 @@ definition {
 	}
 
 	@description = "Verify that a link to a URL can be added to the Body Text"
-	@ignore = "true"
 	@priority = "5"
 	test CanSupportALinkToAURL {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131240 CanSupportALinkToAURL pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		Click(
+			key_titleName = "Link",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		Click(
+			fieldLabel = "Link Type",
+			locator1 = "FormFields#PARAGRAPH_LINK_SELECTOR",
+			optionValue = "url");
+
+		Click(
+			fieldLabel = "Protocol",
+			locator1 = "FormFields#PARAGRAPH_LINK_SELECTOR",
+			optionValue = "http://");
+
+		Type(
+			fieldLabel = "URL",
+			locator1 = "FormFields#PARAGRAPH_LINK_TEXT_INPUT",
+			value1 = "www.liferay.com");
+
+		Click(locator1 = "CKEditor#OK_BUTTON");
+
+		Click(locator1 = "Button#SAVE");
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#BACK");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewParagraphField(
+			fieldTitle = "Paragraph",
+			url = "http://www.liferay.com");
+			
 	}
 
 	@description = "Verify that Bulleted Lists can be added to the Body Text"

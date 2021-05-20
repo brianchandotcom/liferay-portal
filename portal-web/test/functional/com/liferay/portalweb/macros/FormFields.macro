@@ -729,9 +729,16 @@ definition {
 				value1 = "${fieldTitle}");
 		}
 
-		AssertTextEquals(
-			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
-			value1 = "${fieldValue}");
+		if (isSet(url)) {
+			AssertElementPresent(
+				key_url = "${url}",
+				locator1 = "FormFields#PARAGRAPH_LINK_TEXT_BODY");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT",
+				value1 = "${fieldValue}");
+		}
 	}
 
 	macro viewRadioLabel {

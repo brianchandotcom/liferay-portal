@@ -34,7 +34,7 @@ definition {
 
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		PortletEntry.inputLocalizedName(
 			language = "es_ES",
@@ -370,7 +370,7 @@ definition {
 
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		PortletEntry.inputLocalizedName(
 			language = "es_ES",

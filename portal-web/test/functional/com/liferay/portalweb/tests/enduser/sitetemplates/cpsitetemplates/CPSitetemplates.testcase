@@ -640,7 +640,7 @@ definition {
 
 		Click(
 			key_itemName = "Pages",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Navigator.gotoNavTab(navTab = "Pages");
 

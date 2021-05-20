@@ -111,7 +111,7 @@ definition {
 
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		PortletEntry.inputName(name = "France Site Name");
 
@@ -125,7 +125,7 @@ definition {
 
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		PortletEntry.inputName(name = "Canada Site Name");
 

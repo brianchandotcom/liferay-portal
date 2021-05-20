@@ -489,7 +489,7 @@ definition {
 
 		Click(
 			key_itemName = "Localization",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		task ("Assert the default language options radio box is checked") {
 			AssertChecked.assertCheckedNotVisible(

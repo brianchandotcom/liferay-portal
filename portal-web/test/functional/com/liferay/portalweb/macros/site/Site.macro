@@ -65,7 +65,7 @@ definition {
 			if ("${uncheckPropagation}" == "true") {
 				Click(
 					key_itemName = "Pages",
-					locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+					locator1 = "ListGroupItem#ITEM_TEXT");
 
 				Navigator.gotoNavTab(navTab = "Pages");
 
@@ -79,7 +79,7 @@ definition {
 
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		if ("${membershipType}" == "Private") {
 			Select(
@@ -141,7 +141,7 @@ definition {
 
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		AssertTextEquals(
 			locator1 = "SitesEditSite#DETAILS_NAME",
@@ -161,7 +161,7 @@ definition {
 	macro addVirtualHostsURLCP {
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Navigator.gotoNavTab(navTab = "Site URL");
 
@@ -268,7 +268,7 @@ definition {
 	macro assignDefaultSiteTeam {
 		Click(
 			key_itemName = "Users",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Click(locator1 = "SiteSettingsDefaultUserAssociations#TEAMS_SELECT");
 
@@ -478,7 +478,7 @@ definition {
 	macro configureCurrentLanguagesCP {
 		Click(
 			key_itemName = "Localization",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Check.checkNotVisible(
 			index = "2",
@@ -634,7 +634,7 @@ definition {
 	macro disableRecycleBinCP {
 		Click(
 			key_itemName = "Recycle Bin",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Uncheck.uncheckToggleSwitchNoErrorNoAssert(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");
 
@@ -648,7 +648,7 @@ definition {
 	macro editCP {
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -666,7 +666,7 @@ definition {
 	macro editFriendlyURLCP {
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Navigator.gotoNavTab(navTab = "Site URL");
 
@@ -701,7 +701,7 @@ definition {
 	macro editGoogleAnalyticsIDCP {
 		Click(
 			key_itemName = "Analytics",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Type(
 			locator1 = "TextInput#GOOGLE_ANALYTICS_ID",
@@ -713,7 +713,7 @@ definition {
 	macro editPiwikCP {
 		Click(
 			key_itemName = "Analytics",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Type(
 			locator1 = "TextInput#PIWIK",
@@ -729,7 +729,7 @@ definition {
 
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		AssertElementPresent(locator1 = "SitesEditSite#SITE_ID");
 
@@ -767,7 +767,7 @@ definition {
 	macro inactivateCP {
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
@@ -892,7 +892,7 @@ definition {
 	macro limitMembership {
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		if ("${siteLimitMembership}" == "Yes") {
 			Check.checkToggleSwitch(locator1 = "SitesEditSite#PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX");
@@ -907,7 +907,7 @@ definition {
 	macro manageMembershipOptions {
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Pause(locator1 = "5000");
 
@@ -1067,7 +1067,7 @@ definition {
 	macro selectPageType {
 		Click(
 			key_itemName = "Pages",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Navigator.gotoNavTab(navTab = "Pages");
 
@@ -1092,7 +1092,7 @@ definition {
 	macro selectParentSite {
 		Click(
 			key_itemName = "Site Configuration",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Button.click(button = "Change");
 
@@ -1462,7 +1462,7 @@ definition {
 	macro viewSiteClonedFromSiteTemplateCP {
 		Click(
 			key_itemName = "Other",
-			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
+			locator1 = "ListGroupItem#ITEM_TEXT");
 
 		Navigator.gotoNavTab(navTab = "Site Template");
 

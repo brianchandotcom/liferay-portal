@@ -65,8 +65,8 @@ public class UserProcessorFactoryImpl implements UserProcessorFactory {
 				ProcessorContext.UpdateFunction<T> updateFunction) {
 
 				super(
-					processorContext, publicIdentifier, modelGetter,
-					processingIndex, updateFunction);
+					modelGetter, processingIndex, processorContext,
+					publicIdentifier, updateFunction);
 			}
 
 		}

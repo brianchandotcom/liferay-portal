@@ -87,8 +87,8 @@ public abstract class ProcessorImpl
 		implements ProcessorContext.Bind<T> {
 
 		public BindImpl(
-			ProcessorContext processorContext, String publicIdentifier,
 			Function<M, T> modelGetter, int processingIndex,
+			ProcessorContext processorContext, String publicIdentifier,
 			ProcessorContext.UpdateFunction<T> updateFunction) {
 
 			_processorContext = processorContext;
@@ -238,7 +238,7 @@ public abstract class ProcessorImpl
 			int processingIndex, UpdateFunction<M> updateFunction) {
 
 			return new BindImpl<>(
-				this, null, Function.identity(), processingIndex,
+				Function.identity(), processingIndex, this, null,
 				updateFunction);
 		}
 
@@ -248,7 +248,7 @@ public abstract class ProcessorImpl
 			int processingIndex, UpdateFunction<T> updateFunction) {
 
 			return new BindImpl<>(
-				this, publicIdentifier, modelGetter, processingIndex,
+				modelGetter, processingIndex, this, publicIdentifier,
 				updateFunction);
 		}
 

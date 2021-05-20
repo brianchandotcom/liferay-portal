@@ -36,7 +36,9 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
  * @author Raymond Augé
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class ServiceLoader {
 
 	public static <S> List<S> load(Class<S> clazz) throws Exception {

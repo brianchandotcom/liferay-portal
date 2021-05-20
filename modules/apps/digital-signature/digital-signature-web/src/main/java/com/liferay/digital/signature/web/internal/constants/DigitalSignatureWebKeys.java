@@ -19,6 +19,9 @@ package com.liferay.digital.signature.web.internal.constants;
  */
 public class DigitalSignatureWebKeys {
 
+	public static final String DIGITAL_SIGNATURE_FILE_ENTRY_ID =
+		"DIGITAL_SIGNATURE_FILE_ENTRY_ID";
+
 	public static final String DIGITAL_SIGNATURE_TITLE =
 		"DIGITAL_SIGNATURE_TITLE";
 

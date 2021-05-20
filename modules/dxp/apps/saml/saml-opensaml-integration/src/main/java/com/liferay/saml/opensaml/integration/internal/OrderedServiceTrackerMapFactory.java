@@ -12,25 +12,19 @@
  *
  */
 
-package com.liferay.saml.opensaml.integration;
+package com.liferay.saml.opensaml.integration.internal;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.function.Supplier;
+
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Stian Sigvartsen
  */
-public interface OrderedServiceTrackerMap<T> {
+public interface OrderedServiceTrackerMapFactory {
 
-	public void close();
-
-	public List<Map.Entry<String, T>> getOrderedServices();
-
-	public List<String> getOrderedServicesKeys();
-
-	public T getService(String key);
-
-	public Set<String> getServicesKeys();
+	public <T> OrderedServiceTrackerMap<T> create(
+		BundleContext bundleContext, Class<T> clazz, String propertyKey,
+		Supplier<T> defaultServiceSupplier);
 
 }

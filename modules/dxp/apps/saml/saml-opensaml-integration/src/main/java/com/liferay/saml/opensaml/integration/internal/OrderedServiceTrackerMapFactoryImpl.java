@@ -20,8 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.saml.opensaml.integration.OrderedServiceTrackerMap;
-import com.liferay.saml.opensaml.integration.OrderedServiceTrackerMapFactory;
 
 import java.util.AbstractMap;
 import java.util.Comparator;

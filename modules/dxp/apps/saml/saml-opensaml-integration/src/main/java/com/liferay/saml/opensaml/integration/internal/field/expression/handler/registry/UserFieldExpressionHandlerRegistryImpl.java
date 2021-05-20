@@ -14,10 +14,10 @@
 
 package com.liferay.saml.opensaml.integration.internal.field.expression.handler.registry;
 
-import com.liferay.saml.opensaml.integration.OrderedServiceTrackerMap;
-import com.liferay.saml.opensaml.integration.OrderedServiceTrackerMapFactory;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.field.expression.handler.registry.UserFieldExpressionHandlerRegistry;
+import com.liferay.saml.opensaml.integration.internal.OrderedServiceTrackerMap;
+import com.liferay.saml.opensaml.integration.internal.OrderedServiceTrackerMapFactory;
 
 import java.util.List;
 import java.util.Map;

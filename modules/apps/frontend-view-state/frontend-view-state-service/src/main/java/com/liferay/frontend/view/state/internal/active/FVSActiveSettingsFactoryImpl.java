@@ -57,7 +57,7 @@ public class FVSActiveSettingsFactoryImpl implements FVSActiveSettingsFactory {
 			fvsEntry = _fvsEntryLocalService.addFVSEntry(
 				themeDisplay.getUserId(), "{}");
 
-			fvsActiveEntry = _fvsActiveEntryLocalService.addFVSActiveEntry(
+			_fvsActiveEntryLocalService.addFVSActiveEntry(
 				themeDisplay.getUserId(), fvsEntry.getFvsEntryId(),
 				clayDataSetDisplayId, themeDisplay.getPlid(),
 				portletDisplay.getId());

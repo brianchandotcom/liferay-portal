@@ -255,12 +255,15 @@ definition {
 				groupName = "Test Site Name",
 				title = "Expired WebContent Title");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.expireCP(webContentTitleList = "Expired WebContent Title");
+			JSONWebcontent.updateStatus(
+				groupName = "Test Site Name",
+				statusKey = "EXPIRE",
+				title = "Expired WebContent Title");
 		}
 
 		task ("Assert the actions order of published web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
 			Click(
 				key_webContentTitle = "Published WebContent Title",
 				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");

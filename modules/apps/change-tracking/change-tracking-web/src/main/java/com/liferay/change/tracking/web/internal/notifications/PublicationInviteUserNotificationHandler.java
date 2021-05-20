@@ -106,7 +106,9 @@ public class PublicationInviteUserNotificationHandler
 			resourceBundle, "x-has-invited-you-to-work-on-x-as-a-x",
 			new Object[] {
 				userName, ctCollection.getName(),
-				PublicationRoleConstants.getRoleLabel(roleValue)
+				_language.get(
+					resourceBundle,
+					PublicationRoleConstants.getRoleLabel(roleValue))
 			},
 			false);
 	}

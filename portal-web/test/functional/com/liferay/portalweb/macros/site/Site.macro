@@ -633,7 +633,7 @@ definition {
 
 	macro disableRecycleBinCP {
 		Click(
-			key_url = "site-configuration-recycle-bin",
+			key_itemName = "Recycle Bin",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Uncheck.uncheckToggleSwitchNoErrorNoAssert(locator1 = "Checkbox#ENABLE_RECYCLE_BIN");

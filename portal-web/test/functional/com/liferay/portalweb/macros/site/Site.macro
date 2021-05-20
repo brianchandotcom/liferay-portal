@@ -78,7 +78,7 @@ definition {
 		}
 
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		if ("${membershipType}" == "Private") {
@@ -140,7 +140,7 @@ definition {
 		Modal.save();
 
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertTextEquals(
@@ -160,7 +160,7 @@ definition {
 
 	macro addVirtualHostsURLCP {
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Site URL");
@@ -647,7 +647,7 @@ definition {
 
 	macro editCP {
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertTextEquals(
@@ -665,7 +665,7 @@ definition {
 
 	macro editFriendlyURLCP {
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Navigator.gotoNavTab(navTab = "Site URL");
@@ -728,7 +728,7 @@ definition {
 			portlet = "Site Settings");
 
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertElementPresent(locator1 = "SitesEditSite#SITE_ID");
@@ -766,7 +766,7 @@ definition {
 
 	macro inactivateCP {
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		AssertTextEquals(
@@ -891,7 +891,7 @@ definition {
 
 	macro limitMembership {
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		if ("${siteLimitMembership}" == "Yes") {
@@ -906,7 +906,7 @@ definition {
 
 	macro manageMembershipOptions {
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Pause(locator1 = "5000");
@@ -1091,7 +1091,7 @@ definition {
 
 	macro selectParentSite {
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Button.click(button = "Change");

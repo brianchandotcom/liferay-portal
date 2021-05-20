@@ -33,7 +33,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		PortletEntry.inputLocalizedName(
@@ -369,7 +369,7 @@ definition {
 		Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		PortletEntry.inputLocalizedName(

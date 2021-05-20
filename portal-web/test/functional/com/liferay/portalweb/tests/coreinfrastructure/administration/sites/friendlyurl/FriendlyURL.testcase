@@ -110,7 +110,7 @@ definition {
 		Navigator.gotoBack();
 
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		PortletEntry.inputName(name = "France Site Name");
@@ -124,7 +124,7 @@ definition {
 		Navigator.gotoBack();
 
 		Click(
-			key_url = "site-configuration-details",
+			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		PortletEntry.inputName(name = "Canada Site Name");

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.module.framework.ModuleFramework;
@@ -62,7 +61,6 @@ import java.lang.reflect.Method;
 
 import java.net.URI;
 import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
@@ -91,6 +89,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Queue;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -257,11 +256,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Thread currentThread = Thread.currentThread();
 
-		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
-			new URLClassLoader(_getClassPathURLs(), null),
-			currentThread.getContextClassLoader(), FrameworkFactory.class);
+		ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
+			FrameworkFactory.class, currentThread.getContextClassLoader());
 
-		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
+		Iterator<FrameworkFactory> iterator = serviceLoader.iterator();
+
+		FrameworkFactory frameworkFactory = iterator.next();
 
 		if (_log.isDebugEnabled()) {
 			Class<?> clazz = frameworkFactory.getClass();
@@ -992,27 +992,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		int beginIndex = string.lastIndexOf(CharPool.SLASH, endIndex) + 1;
 
 		return string.substring(beginIndex, endIndex);
-	}
-
-	private URL[] _getClassPathURLs() throws Exception {
-		File coreDir = new File(PropsValues.MODULE_FRAMEWORK_BASE_DIR, "core");
-
-		File[] files = coreDir.listFiles();
-
-		if (files == null) {
-			throw new IllegalStateException(
-				"Missing " + coreDir.getCanonicalPath());
-		}
-
-		URL[] urls = new URL[files.length];
-
-		for (int i = 0; i < urls.length; i++) {
-			URI uri = files[i].toURI();
-
-			urls[i] = uri.toURL();
-		}
-
-		return urls;
 	}
 
 	private Attributes _getExtraManifestAttributes() {

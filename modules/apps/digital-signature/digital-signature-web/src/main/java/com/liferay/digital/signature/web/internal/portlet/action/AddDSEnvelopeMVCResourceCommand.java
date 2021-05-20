@@ -20,9 +20,9 @@ import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
+import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -60,52 +61,24 @@ public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-			ParamUtil.getLong(resourceRequest, "fileEntryId"));
-
-		JSONArray recipientsJSONArray = JSONFactoryUtil.createJSONArray(
-			ParamUtil.getString(resourceRequest, "recipients"));
-
-		IntegerWrapper integerWrapper = new IntegerWrapper();
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
 
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
 			themeDisplay.getSiteGroupId(),
 			new DSEnvelope() {
 				{
-					dsDocuments = Collections.singletonList(
-						new DSDocument() {
-							{
-								data = Base64.encode(
-									FileUtil.getBytes(
-										fileEntry.getContentStream()));
-								dsDocumentId = String.valueOf(
-									fileEntry.getFileEntryId());
-								name = fileEntry.getFileName();
-							}
-						});
-					dsRecipients = JSONUtil.toList(
-						recipientsJSONArray,
-						recipientJSONObject -> new DSRecipient() {
-							{
-								dsRecipientId = String.valueOf(
-									integerWrapper.increment());
-								emailAddress = recipientJSONObject.getString(
-									"email");
-								name = recipientJSONObject.getString(
-									"fullName");
-							}
-						});
+					dsDocuments = _getDSDocuments(resourceRequest);
+					dsRecipients = _getDSRecipients(resourceRequest);
 					emailBlurb = ParamUtil.getString(
 						resourceRequest, "_emailMessage");
 					emailSubject = ParamUtil.getString(
 						resourceRequest, "_emailSubject");
 					name = ParamUtil.getString(
 						resourceRequest, "_envelopeName");
-					senderEmailAddress = themeDisplay.getUser(
-					).getDisplayEmailAddress();
+					senderEmailAddress = user.getDisplayEmailAddress();
 					status = "sent";
 				}
 			});
@@ -113,6 +86,40 @@ public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put("dsEnvelopeId", dsEnvelope.getDSEnvelopeId()));
+	}
+
+	private List<DSDocument> _getDSDocuments(ResourceRequest resourceRequest)
+		throws Exception {
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+			ParamUtil.getLong(resourceRequest, "fileEntryId"));
+
+		return Collections.singletonList(
+			new DSDocument() {
+				{
+					data = Base64.encode(
+						FileUtil.getBytes(fileEntry.getContentStream()));
+					dsDocumentId = String.valueOf(fileEntry.getFileEntryId());
+					name = fileEntry.getFileName();
+				}
+			});
+	}
+
+	private List<DSRecipient> _getDSRecipients(ResourceRequest resourceRequest)
+		throws Exception {
+
+		IntegerWrapper integerWrapper = new IntegerWrapper();
+
+		return JSONUtil.toList(
+			JSONFactoryUtil.createJSONArray(
+				ParamUtil.getString(resourceRequest, "recipients")),
+			recipientJSONObject -> new DSRecipient() {
+				{
+					dsRecipientId = String.valueOf(integerWrapper.increment());
+					emailAddress = recipientJSONObject.getString("email");
+					name = recipientJSONObject.getString("fullName");
+				}
+			});
 	}
 
 	@Reference

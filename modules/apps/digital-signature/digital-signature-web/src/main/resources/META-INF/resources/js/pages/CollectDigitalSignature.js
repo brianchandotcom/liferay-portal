@@ -53,11 +53,11 @@ const CollectDigitalSignature = ({
 
 	const onSubmit = async (values) => {
 		const formDataValues = {
-			[`${portletNamespace}_emailMessage`]: values.emailMessage,
-			[`${portletNamespace}_emailSubject`]: values.emailSubject,
-			[`${portletNamespace}_envelopeName`]: values.envelopeName,
-			[`${portletNamespace}_fileEntryId`]: fileEntryId,
-			[`${portletNamespace}_recipients`]: JSON.stringify(
+			[`${portletNamespace}emailMessage`]: values.emailMessage,
+			[`${portletNamespace}emailSubject`]: values.emailSubject,
+			[`${portletNamespace}envelopeName`]: values.envelopeName,
+			[`${portletNamespace}fileEntryId`]: fileEntryId,
+			[`${portletNamespace}recipients`]: JSON.stringify(
 				values.recipients
 			),
 		};

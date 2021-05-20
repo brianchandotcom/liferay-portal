@@ -78,7 +78,7 @@ public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 						resourceRequest, "_emailSubject");
 					name = ParamUtil.getString(
 						resourceRequest, "_envelopeName");
-					senderEmailAddress = user.getDisplayEmailAddress();
+					senderEmailAddress = user.getEmailAddress();
 					status = "sent";
 				}
 			});

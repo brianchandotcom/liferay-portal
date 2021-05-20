@@ -3570,7 +3570,8 @@ definition {
 	@description = "This is a use case for LPS-127023. The related assets should be in Collection Display when select Related Assets as Related Items Collection Provider."
 	@priority = "5"
 	test ViewRelatedAssetsInCollectionDisplayWithNewRelatedAssets {
-		property portal.acceptance = "true";
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
 		property testray.main.component.name = "Display Pages,Fragments";
 
 		task ("Add a display page template for Web Content Article and Basic Web Content") {

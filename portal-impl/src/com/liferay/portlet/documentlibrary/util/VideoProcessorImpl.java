@@ -519,10 +519,6 @@ public class VideoProcessorImpl
 	}
 
 	private boolean _hasVideo(FileVersion fileVersion) throws Exception {
-		if (!isSupported(fileVersion)) {
-			return false;
-		}
-
 		if (hasPreviews(fileVersion) && hasThumbnails(fileVersion)) {
 			return true;
 		}

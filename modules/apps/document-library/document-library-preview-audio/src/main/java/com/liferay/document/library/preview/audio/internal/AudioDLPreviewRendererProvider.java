@@ -63,7 +63,9 @@ public class AudioDLPreviewRendererProvider
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		if (!_audioProcessor.isAudioSupported(fileVersion)) {
+		if (!_audioProcessor.hasAudio(fileVersion) &&
+			!_audioProcessor.isAudioSupported(fileVersion)) {
+
 			return null;
 		}
 

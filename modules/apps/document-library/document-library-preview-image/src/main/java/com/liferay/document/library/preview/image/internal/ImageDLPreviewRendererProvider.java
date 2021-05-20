@@ -60,7 +60,9 @@ public class ImageDLPreviewRendererProvider
 			};
 		}
 
-		if (!_imageProcessor.isImageSupported(fileVersion)) {
+		if (!_imageProcessor.hasImages(fileVersion) &&
+			!_imageProcessor.isImageSupported(fileVersion)) {
+
 			return null;
 		}
 

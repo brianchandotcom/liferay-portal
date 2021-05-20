@@ -122,7 +122,7 @@ public class AudioProcessorImpl
 		boolean hasAudio = false;
 
 		try {
-			hasAudio = _hasAudio(fileVersion);
+			hasAudio = hasPreviews(fileVersion);
 
 			if (!hasAudio && isSupported(fileVersion)) {
 				_queueGeneration(null, fileVersion);
@@ -324,7 +324,7 @@ public class AudioProcessorImpl
 			}
 
 			if (!_audioConverter.isEnabled() ||
-				_hasAudio(destinationFileVersion)) {
+				hasPreviews(destinationFileVersion)) {
 
 				return;
 			}
@@ -383,14 +383,6 @@ public class AudioProcessorImpl
 
 			FileUtil.delete(audioTempFile);
 		}
-	}
-
-	private boolean _hasAudio(FileVersion fileVersion) throws Exception {
-		if (!isSupported(fileVersion)) {
-			return false;
-		}
-
-		return hasPreviews(fileVersion);
 	}
 
 	private void _queueGeneration(

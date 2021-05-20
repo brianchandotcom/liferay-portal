@@ -128,7 +128,7 @@ describe('Translate', () => {
 		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it('renders auto-translate field button disabled when the sourceContent is empty', () => {
+	it('renders auto-translate field button disabled when the field sourceContent is empty', () => {
 		const {getByText} = renderComponent({
 			...baseProps,
 			infoFieldSetEntries: [
@@ -152,7 +152,7 @@ describe('Translate', () => {
 		).toBeDisabled();
 	});
 
-	describe('when there is a valid server response', () => {
+	describe('given a valid server response', () => {
 		beforeEach(() => {
 			fetch.mockResponseOnce(
 				JSON.stringify({
@@ -171,7 +171,7 @@ describe('Translate', () => {
 			fetch.resetMocks();
 		});
 
-		describe('click in the field auto-translate button', () => {
+		describe('when the user clicks on the auto-translate field button', () => {
 			let infoFieldContent;
 			let result;
 
@@ -191,16 +191,16 @@ describe('Translate', () => {
 
 			it('sends a POST request to the server', async () => {
 				const [url, {body}] = fetch.mock.calls[0];
-				const response = JSON.parse(body);
+				const request = JSON.parse(body);
 
 				expect(url).toBe(baseProps.getAutoTranslateURL);
-				expect(response.fields[infoFieldContent.id]).toBe(
+				expect(request.fields[infoFieldContent.id]).toBe(
 					infoFieldContent.sourceContent
 				);
-				expect(response.sourceLanguageId).toBe(
+				expect(request.sourceLanguageId).toBe(
 					baseProps.sourceLanguageId
 				);
-				expect(response.targetLanguageId).toBe(
+				expect(request.targetLanguageId).toBe(
 					baseProps.targetLanguageId
 				);
 			});
@@ -220,7 +220,7 @@ describe('Translate', () => {
 			});
 		});
 
-		describe('click in the general auto-translate button', () => {
+		describe('when the user clicks on the auto-translate general button', () => {
 			let result;
 
 			beforeEach(async () => {
@@ -252,12 +252,12 @@ describe('Translate', () => {
 		});
 	});
 
-	describe('when there is an error server response', () => {
+	describe('given an error server response', () => {
 		beforeEach(() => {
 			fetch.mockResponseOnce(
 				JSON.stringify({
 					error: {
-						message: 'mock error',
+						message: 'mocked error',
 					},
 				})
 			);
@@ -267,7 +267,7 @@ describe('Translate', () => {
 			fetch.resetMocks();
 		});
 
-		describe('click in the field auto-translate button', () => {
+		describe('when the user clicks on the auto-translate field button', () => {
 			it('renders an error message', async () => {
 				const {getByText} = renderComponent(baseProps);
 
@@ -280,11 +280,11 @@ describe('Translate', () => {
 					fireEvent.click(autoTranslateFieldButton);
 				});
 
-				expect(getByText('mock error')).toBeInTheDocument();
+				expect(getByText('mocked error')).toBeInTheDocument();
 			});
 		});
 
-		describe('click in the general auto-translate button', () => {
+		describe('when the user clicks on the auto-translate general button', () => {
 			it('renders an error message', async () => {
 				const {getByText} = renderComponent(baseProps);
 
@@ -294,7 +294,7 @@ describe('Translate', () => {
 					fireEvent.click(autoTranslateFieldButton);
 				});
 
-				expect(getByText('mock error')).toBeInTheDocument();
+				expect(getByText('mocked error')).toBeInTheDocument();
 			});
 		});
 	});

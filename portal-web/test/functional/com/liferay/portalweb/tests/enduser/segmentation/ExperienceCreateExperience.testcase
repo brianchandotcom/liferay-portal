@@ -2024,13 +2024,70 @@ definition {
 			value1 = "This is a new experience for you");
 	}
 
-	@description = "This is a test for LPS-130300."
-	@ignore = "true"
+	@description = "This is a test for LPS-132101."
 	@priority = "5"
 	test AddNewExperienceUserTagSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddNewExperienceUserTagSegment pending implementation
+		JSONUser.addUser(
+			assetTagNames = "tagname",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Tag");
+
+		Segmentation.fillProperty(selectLink = "tagname");
+
+		Segmentation.fillTitle(titleField = "UserTagSegment Name");
+
+		Segmentation.viewMembers(memberName = "userfn userln");
+
+		Button.clickSave();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "New Experience",
+			segmentName = "UserTagSegment Name");
+
+		Button.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.changeExperience(newExperience = "New Experience");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "This is a new experience for you");
+
+		PageEditor.prioritizeExperience(experienceName = "New Experience");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "This is a new experience for you");	
 	}
 
 	@description = "This is a test for LPS-130300."

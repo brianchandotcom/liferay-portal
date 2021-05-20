@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 	},
 	service = MVCResourceCommand.class
 )
-public class AddEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
+public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(

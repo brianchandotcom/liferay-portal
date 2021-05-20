@@ -195,12 +195,49 @@ definition {
 	}
 
 	@description = "COMMERCE-5919. As a buyer, when comparing items in Compare page, I want to view product options and specifications, if set"
-	@ignore = "true"
 	@priority = "3"
 	test ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5919 ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		Check.checkToggleSwitch(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+		Check.checkToggleSwitch(
+			key_productName = "Brake Fluid",
+			locator1 = "CommerceEntry#PRODUCT_CARD_COMPARE_CHECKBOX");
+
+		Button.click(button = "Compare");
+
+		AssertElementPresent(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementPresent(
+			key_productName = "Brake Fluid",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
 }

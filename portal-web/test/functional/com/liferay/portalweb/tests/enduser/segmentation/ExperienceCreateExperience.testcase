@@ -1016,7 +1016,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130328 AddNewExperienceSessionCookiesSegment pending implementation
-
 	}
 
 	@description = "This is a test for LPS-130329."
@@ -1892,13 +1891,67 @@ definition {
 		// TODO LPS-130290 AddNewExperienceUserSiteOrganizationRoleSegment pending implementation
 	}
 
-	@description = "This is a test for LPS-130300."
-	@ignore = "true"
+	@description = "This is a test for LPS-132100."
 	@priority = "5"
 	test AddNewExperienceUserSiteSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddNewExperienceUserSiteSegment pending implementation
+		JSONGroup.assignUserToGroup(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea2@liferay.com");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Site");
+
+		Segmentation.fillTitle(titleField = "UserSiteSegment Name");
+
+		Segmentation.fillProperty(selectLink = "Test Site Name");
+
+		Segmentation.viewMembers(memberName = "userfn2 userln2");
+
+		Button.clickSave();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "New Experience",
+			segmentName = "UserSiteSegment Name");
+
+		Button.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.changeExperience(newExperience = "New Experience");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "This is a new experience for you");
+
+		PageEditor.prioritizeExperience(experienceName = "New Experience");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "This is a new experience for you");
 	}
 
 	@description = "This is a test for LPS-130300."

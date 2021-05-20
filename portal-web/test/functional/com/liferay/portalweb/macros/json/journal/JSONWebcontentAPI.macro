@@ -140,4 +140,23 @@ definition {
 		return "${resourcePrimKey}";
 	}
 
+	@summary = "Helper function to update status of WC Article via JSON"
+	macro _updateStatus {
+		Variables.assertDefined(parameterList = "${articleId},${groupId},${status},${version}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/journal.journalarticle/update-status \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d articleId=${articleId} \
+				-d version=${version} \
+				-d status=${status} \
+				-d articleURL=
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

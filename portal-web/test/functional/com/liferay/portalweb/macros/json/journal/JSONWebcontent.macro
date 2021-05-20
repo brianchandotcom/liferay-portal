@@ -118,4 +118,27 @@ definition {
 		return "${folderId}";
 	}
 
+	@summary = "Update status of a WC Article under an existing site via article title"
+	macro updateStatus {
+		Variables.assertDefined(parameterList = "${groupName},${statusKey},${title}");
+
+		var articleId = JSONWebcontentSetter.setArticleId(
+			groupName = "${groupName}",
+			title = "${title}");
+
+		var groupId = JSONWebcontentSetter.setGroupId(groupName = "${groupName}");
+
+		var status = JSONWebcontentSetter.setStatus(statusKey = "${statusKey}");
+
+		if (!(isSet(version))) {
+			var version = "1.0";
+		}
+
+		JSONWebcontentAPI._updateStatus(
+			articleId = "${articleId}",
+			groupId = "${groupId}",
+			status = "${status}",
+			version = "${version}");
+	}
+
 }

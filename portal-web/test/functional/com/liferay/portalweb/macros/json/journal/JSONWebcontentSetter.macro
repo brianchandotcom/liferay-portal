@@ -83,21 +83,21 @@ definition {
 	}
 
 	macro setStatus {
-		Variables.assertDefined(parameterList = "${status}");
+		Variables.assertDefined(parameterList = "${statusKey}");
 
-		if ("${status}" == "APPROVE") {
-			var statusInt = "0";
+		if ("${statusKey}" == "APPROVE") {
+			var status = "0";
 		}
 
-		if ("${status}" == "DRAFT") {
-			var statusInt = "2";
+		if ("${statusKey}" == "DRAFT") {
+			var status = "2";
 		}
 
-		if ("${status}" == "EXPIRE") {
-			var statusInt = "3";
+		if ("${statusKey}" == "EXPIRE") {
+			var status = "3";
 		}
 
-		return "${statusInt}";
+		return "${status}";
 	}
 
 	macro setTitleMap {

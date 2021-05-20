@@ -74,15 +74,15 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 
 		WikiPage putWikiPage =
 			wikiPageResource.putSiteWikiPageByExternalReferenceCode(
-				randomWikiPage.getExternalReferenceCode(),
-				testGroup.getGroupId(), randomWikiPage);
+				testGroup.getGroupId(),
+				randomWikiPage.getExternalReferenceCode(), randomWikiPage);
 
 		assertEquals(randomWikiPage, putWikiPage);
 		assertValid(putWikiPage);
 
 		WikiPage getWikiPage =
 			wikiPageResource.getSiteWikiPageByExternalReferenceCode(
-				putWikiPage.getExternalReferenceCode(), testGroup.getGroupId());
+				testGroup.getGroupId(), putWikiPage.getExternalReferenceCode());
 
 		assertEquals(randomWikiPage, getWikiPage);
 		assertValid(getWikiPage);
@@ -107,8 +107,9 @@ public class WikiPageResourceTest extends BaseWikiPageResourceTestCase {
 				400,
 				wikiPageResource.
 					putSiteWikiPageByExternalReferenceCodeHttpResponse(
+						testGroup.getGroupId(),
 						randomWikiPage.getExternalReferenceCode(),
-						testGroup.getGroupId(), randomWikiPage));
+						randomWikiPage));
 		}
 	}
 

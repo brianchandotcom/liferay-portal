@@ -2509,6 +2509,12 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                status:
+                    # @review
+                    description:
+                        The message's status.
+                    readOnly: true
+                    type: string
                 subscribed:
                     # @review
                     description:
@@ -2741,6 +2747,12 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                status:
+                    # @review
+                    description:
+                        The thread's status.
+                    readOnly: true
+                    type: string
                 subscribed:
                     # @review
                     description:

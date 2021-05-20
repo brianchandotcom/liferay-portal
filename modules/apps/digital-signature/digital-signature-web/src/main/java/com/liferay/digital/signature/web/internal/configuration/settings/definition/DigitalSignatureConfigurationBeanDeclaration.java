@@ -11,8 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-
-package com.liferay.digital.signature.internal.configuration.settings.definition;
+package com.liferay.digital.signature.web.internal.configuration.settings.definition;
 
 import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;

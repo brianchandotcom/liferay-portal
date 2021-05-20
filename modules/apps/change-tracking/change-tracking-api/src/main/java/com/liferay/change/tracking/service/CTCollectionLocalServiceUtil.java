@@ -290,6 +290,13 @@ public class CTCollectionLocalServiceUtil {
 		return getService().getCTCollectionsCount();
 	}
 
+	public static List<com.liferay.change.tracking.mapping.CTMappingTableInfo>
+			getCTMappingTableInfos(long ctCollectionId)
+		throws java.sql.SQLException {
+
+		return getService().getCTMappingTableInfos(ctCollectionId);
+	}
+
 	public static List<com.liferay.change.tracking.model.CTEntry>
 		getDiscardCTEntries(
 			long ctCollectionId, long modelClassNameId, long modelClassPK) {

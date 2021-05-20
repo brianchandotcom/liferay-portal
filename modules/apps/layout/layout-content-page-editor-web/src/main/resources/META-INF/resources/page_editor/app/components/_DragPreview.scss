@@ -22,22 +22,13 @@
 		cursor: grabbing;
 		display: flex;
 		font-family: $font-family-base;
-		font-size: 12px;
+		font-size: 0.75rem;
 		font-weight: 600;
 		height: 32px;
 		overflow: hidden;
 		padding: 8px;
 		position: absolute;
-		text-align: left;
-		text-overflow: ellipsis;
-		white-space: nowrap;
 		width: 120px;
-		word-wrap: break-word;
-
-		.lexicon-icon {
-			font-size: 14px;
-			margin-right: 16px;
-		}
 
 		&__treeview {
 			align-items: center;

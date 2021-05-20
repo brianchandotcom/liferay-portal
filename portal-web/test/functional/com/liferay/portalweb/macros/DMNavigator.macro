@@ -273,6 +273,10 @@ definition {
 	macro openToConfigInSystemSettings {
 		var baseURL = PropsUtil.get("portal.url");
 
+		if ("${portlet}" == "FFMPEG Audio Converter") {
+			var portletId = "com.liferay.document.library.preview.audio.internal.configuration.DLAudioFFMPEGAudioConverterConfiguration";
+		}
+
 		if ("${portlet}" == "FFMPEG Video Converter") {
 			var portletId = "com.liferay.document.library.video.internal.configuration.DLVideoFFMPEGVideoConverterConfiguration";
 		}

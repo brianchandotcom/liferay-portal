@@ -19,6 +19,7 @@ import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -27,11 +28,14 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -40,8 +44,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -106,12 +110,35 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			userIds.add(userGroupRole.getUserId());
 		}
 
-		Map<Serializable, Role> roleMap =
-			_basePersistenceRegistry.fetchBaseModelMap(
-				_portal.getClassNameId(Role.class.getName()), roleIds);
-		Map<Serializable, User> userMap =
-			_basePersistenceRegistry.fetchBaseModelMap(
-				_portal.getClassNameId(User.class.getName()), userIds);
+		Map<Long, Role> roleMap = new HashMap<>();
+
+		List<Role> roles = _roleLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				RoleTable.INSTANCE
+			).from(
+				RoleTable.INSTANCE
+			).where(
+				RoleTable.INSTANCE.roleId.in(roleIds.toArray(new Long[0]))
+			));
+
+		for (Role role : roles) {
+			roleMap.put(role.getRoleId(), role);
+		}
+
+		Map<Long, User> userMap = new HashMap<>();
+
+		List<User> users = _userLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				UserTable.INSTANCE
+			).from(
+				UserTable.INSTANCE
+			).where(
+				UserTable.INSTANCE.userId.in(userIds.toArray(new Long[0]))
+			));
+
+		for (User user : users) {
+			userMap.put(user.getUserId(), user);
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -202,6 +229,9 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

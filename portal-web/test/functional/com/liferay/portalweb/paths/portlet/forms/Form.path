@@ -54,6 +54,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>PLACEHOLDER_TEXT_FIELD</td>
+    <td>//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_value}')]</td>
+    <td></td>
+</tr> 
+<tr>
     <td>PREVIEW_FORM_BUTTON</td>
     <td>//button[contains(.,'Preview') and not (contains(@class,'disabled'))]</td>
     <td></td>
@@ -452,7 +457,7 @@
     <td></td>
     <td></td>
 </tr>
-<!--DATA_PROVIDER_PERMISSIONS_PARAMETER-->
+<!--DATA_PROVIDER_PERMISSIONS_PARAMETER-->  
 <tr>
     <td>DATA_PROVIDER_PERMISSIONS_PARAMETER_PANEL</td>
     <td>//div[contains(@id,'dataProviderPermissions')]//a[contains(@class,'collapse-icon')]</td>

@@ -679,6 +679,12 @@ definition {
 			value1 = "This form is not available or it was not published.");
 	}
 
+	macro viewFormPlaceholderText {
+        AssertElementPresent(
+            locator1 = "Form#PLACEHOLDER_TEXT_FIELD",
+            key_value = "${fieldPlaceholderText}");
+    }
+
 	macro viewFormPublish {
 		FormsAdminNavigator.openPublishURL();
 

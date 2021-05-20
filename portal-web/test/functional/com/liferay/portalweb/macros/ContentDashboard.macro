@@ -319,6 +319,10 @@ definition {
 		Click(locator1 = "ContentDashboard#FLIP_AXES_BUTTON");
 	}
 
+	macro moveToPage {
+		Click(locator1 = "ContentDashboard#PAGINATION_MOVE_TO_PAGE");
+	}
+
 	macro openInfoPanelByDropdownMenu {
 		Click(locator1 = "ContentDashboard#WEB_CONTENT_MENU_DROPDOWN_BUTTON");
 

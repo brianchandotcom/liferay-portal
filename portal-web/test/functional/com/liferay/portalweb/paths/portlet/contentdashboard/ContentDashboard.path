@@ -193,6 +193,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGINATION_MOVE_TO_PAGE</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'${pageNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REVERSE_SORT_DIRECTION_BUTTON</td>
 	<td>//*[contains(@class, 'lexicon-icon lexicon-icon-order')]</td>
 	<td></td>

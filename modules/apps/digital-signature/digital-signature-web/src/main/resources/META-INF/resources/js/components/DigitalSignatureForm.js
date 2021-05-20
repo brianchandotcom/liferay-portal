@@ -124,9 +124,7 @@ const DigitalSignatureForm = ({
 				label={Liferay.Language.get('email-subject')}
 				name="emailSubject"
 				onChange={handleChange}
-				placeholder={Liferay.Language.get(
-					'please-sign-this-document-docusign'
-				)}
+				placeholder={Liferay.Language.get('please-sign-this-document')}
 				required
 				value={values.emailSubject}
 			/>

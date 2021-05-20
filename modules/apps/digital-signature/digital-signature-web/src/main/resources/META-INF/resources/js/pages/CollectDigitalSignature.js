@@ -17,7 +17,12 @@ import ClayCard from '@clayui/card';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
-import {fetch, objectToFormData, openToast} from 'frontend-js-web';
+import {
+	createResourceURL,
+	fetch,
+	objectToFormData,
+	openToast,
+} from 'frontend-js-web';
 import React from 'react';
 
 import DigitalSignatureForm from '../components/DigitalSignatureForm';
@@ -33,7 +38,12 @@ const defaultRecipient = {
 	fullName: '',
 };
 
-const CollectDigitalSignature = ({portletId, portletNamespace}) => {
+const CollectDigitalSignature = ({
+	baseResourceURL,
+	fileEntryId,
+	portletId,
+	portletNamespace,
+}) => {
 	const urlParams = new URLSearchParams(window.location.href);
 	const backURL = urlParams.get(`_${portletId}_backURL`);
 
@@ -46,28 +56,28 @@ const CollectDigitalSignature = ({portletId, portletNamespace}) => {
 			[`${portletNamespace}_emailMessage`]: values.emailMessage,
 			[`${portletNamespace}_emailSubject`]: values.emailSubject,
 			[`${portletNamespace}_envelopeName`]: values.envelopeName,
-			[`${portletNamespace}_recipients`]: values.recipients.map(
-				({email, fullName}) => ({
-					[`${portletNamespace}_email`]: email,
-					[`${portletNamespace}_fullName`]: fullName,
-				})
+			[`${portletNamespace}_fileEntryId`]: fileEntryId,
+			[`${portletNamespace}_recipients`]: JSON.stringify(
+				values.recipients
 			),
 		};
 
 		try {
 			const response = await fetch(
-				'/o/digital-signature/v1.0/collect-esignature/',
+				createResourceURL(baseResourceURL, {
+					p_p_resource_id: '/digital_signature/add_envelope',
+				}),
 				{
 					body: objectToFormData(formDataValues),
 					method: 'POST',
 				}
 			);
 
-			const {success} = await response.json();
+			const {dsEnvelopeId} = await response.json();
 
-			if (success) {
+			if (dsEnvelopeId) {
 				openToast({
-					message: 'your-envelope-was-created-successfully',
+					message: Liferay.Language.get('your-envelope-was-created-successfully'),
 					title: Liferay.Language.get('success'),
 					type: 'success',
 				});

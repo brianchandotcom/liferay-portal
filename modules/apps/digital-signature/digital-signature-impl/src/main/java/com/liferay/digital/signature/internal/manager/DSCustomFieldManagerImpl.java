@@ -36,7 +36,7 @@ public class DSCustomFieldManagerImpl implements DSCustomFieldManager {
 
 	@Override
 	public List<DSCustomField> addDSCustomFields(
-		long groupId, String dsEnvelopeId, List<DSCustomField> dsCustomFields) {
+		long groupId, String dsEnvelopeId, DSCustomField... dsCustomFields) {
 
 		return _toDSCustomFields(
 			_dsHttp.post(

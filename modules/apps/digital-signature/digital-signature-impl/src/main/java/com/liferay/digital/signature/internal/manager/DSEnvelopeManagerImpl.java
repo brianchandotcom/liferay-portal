@@ -43,15 +43,29 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public DSEnvelope addDSEnvelope(long groupId, DSEnvelope dsEnvelope) {
-		List<DSCustomField> dsCustomFields = dsEnvelope.getDSCustomFields();
-
 		dsEnvelope = _toDSEnvelope(
 			_dsHttp.post(groupId, "envelopes", _toJSONObject(dsEnvelope)));
 
-		dsCustomFields = _dsCustomFieldManager.addDSCustomFields(
-			groupId, dsEnvelope.getDSEnvelopeId(), dsCustomFields);
+		String dsEnvelopeName = dsEnvelope.getName();
+		String dsEnvelopeSenderEmailAddress =
+			dsEnvelope.getSenderEmailAddress();
 
-		dsEnvelope.setDSCustomFields(dsCustomFields);
+		_dsCustomFieldManager.addDSCustomFields(
+			groupId, dsEnvelope.getDSEnvelopeId(),
+			new DSCustomField() {
+				{
+					name = "envelopeName";
+					show = true;
+					value = dsEnvelopeName;
+				}
+			},
+			new DSCustomField() {
+				{
+					name = "envelopeSenderEmail";
+					show = true;
+					value = dsEnvelopeSenderEmailAddress;
+				}
+			});
 
 		return dsEnvelope;
 	}

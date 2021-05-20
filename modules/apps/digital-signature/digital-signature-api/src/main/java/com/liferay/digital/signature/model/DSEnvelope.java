@@ -28,10 +28,6 @@ public class DSEnvelope {
 		return createdLocalDateTime;
 	}
 
-	public List<DSCustomField> getDSCustomFields() {
-		return dsCustomFields;
-	}
-
 	public List<DSDocument> getDSDocuments() {
 		return dsDocuments;
 	}
@@ -52,16 +48,20 @@ public class DSEnvelope {
 		return emailSubject;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public String getSenderEmailAddress() {
+		return senderEmailAddress;
+	}
+
 	public String getStatus() {
 		return status;
 	}
 
 	public void setCreatedLocalDateTime(LocalDateTime createdLocalDateTime) {
 		this.createdLocalDateTime = createdLocalDateTime;
-	}
-
-	public void setDSCustomFields(List<DSCustomField> dsCustomFields) {
-		this.dsCustomFields = dsCustomFields;
 	}
 
 	public void setDSDocuments(List<DSDocument> dsDocuments) {
@@ -84,17 +84,26 @@ public class DSEnvelope {
 		this.emailSubject = emailSubject;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSenderEmailAddress(String senderEmailAddress) {
+		this.senderEmailAddress = senderEmailAddress;
+	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
 	protected LocalDateTime createdLocalDateTime;
-	protected List<DSCustomField> dsCustomFields;
 	protected List<DSDocument> dsDocuments;
 	protected String dsEnvelopeId;
 	protected List<DSRecipient> dsRecipients;
 	protected String emailBlurb;
 	protected String emailSubject;
+	protected String name;
+	protected String senderEmailAddress;
 	protected String status;
 
 }

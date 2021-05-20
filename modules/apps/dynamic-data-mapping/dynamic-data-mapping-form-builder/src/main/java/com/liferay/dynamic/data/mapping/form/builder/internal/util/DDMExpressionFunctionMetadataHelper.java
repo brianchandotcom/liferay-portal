@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
@@ -53,7 +54,7 @@ public class DDMExpressionFunctionMetadataHelper {
 			ddmExpressionFunctionMetadatasMap = new HashMap<>();
 
 		populateCustomDDMExpressionFunctionsMetadata(
-			ddmExpressionFunctionMetadatasMap);
+			ddmExpressionFunctionMetadatasMap, locale);
 		populateDDMExpressionFunctionsMetadata(
 			ddmExpressionFunctionMetadatasMap, getResourceBundle(locale));
 
@@ -93,7 +94,8 @@ public class DDMExpressionFunctionMetadataHelper {
 
 	protected void populateCustomDDMExpressionFunctionsMetadata(
 		Map<String, List<DDMExpressionFunctionMetadata>>
-			ddmExpressionFunctionMetadatasMap) {
+			ddmExpressionFunctionMetadatasMap,
+		Locale locale) {
 
 		Map<String, DDMExpressionFunction> customDDMExpressionFunctions =
 			_ddmExpressionFunctionTracker.getCustomDDMExpressionFunctions();
@@ -125,15 +127,21 @@ public class DDMExpressionFunctionMetadataHelper {
 				continue;
 			}
 
+			String label = ddmExpressionFunction.getLabel(locale);
+
+			if (Validator.isNull(label)) {
+				label = entry.getKey();
+			}
+
 			addDDMExpressionFunctionMetadata(
 				ddmExpressionFunctionMetadatasMap,
 				new DDMExpressionFunctionMetadata(
-					entry.getKey(), entry.getKey(), _TYPE_BOOLEAN,
+					entry.getKey(), label, _TYPE_BOOLEAN,
 					_getParameterClassNames(parameterCount, _TYPE_NUMBER)));
 			addDDMExpressionFunctionMetadata(
 				ddmExpressionFunctionMetadatasMap,
 				new DDMExpressionFunctionMetadata(
-					entry.getKey(), entry.getKey(), _TYPE_BOOLEAN,
+					entry.getKey(), label, _TYPE_BOOLEAN,
 					_getParameterClassNames(parameterCount, _TYPE_TEXT)));
 		}
 	}

@@ -65,7 +65,7 @@ const CollectDigitalSignature = ({
 		try {
 			const response = await fetch(
 				createResourceURL(baseResourceURL, {
-					p_p_resource_id: '/digital_signature/add_envelope',
+					p_p_resource_id: '/digital_signature/add_ds_envelope',
 				}),
 				{
 					body: objectToFormData(formDataValues),

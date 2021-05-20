@@ -538,16 +538,6 @@ definition {
 			fieldValueInPublication = "3/30/21",
 			publicationName = "Publication Name");
 
-		// Workaround LPS-129885
-
-		/*PublicationsChanges.viewChangesViaChangesStyle(
-			changeCategory = "Asset",
-			changeSite = "Guest",
-			changeTitle = "New Data Definition for List: List Name",
-			changeType = "Modified",
-			changeUser = "Test Test",
-			showAllItems = "true");*/
-
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Dynamic Data Lists Record Set",
 			changeSite = "Guest",

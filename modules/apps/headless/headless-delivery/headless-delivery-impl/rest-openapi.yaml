@@ -2042,6 +2042,10 @@ components:
                         The article's media type (e.g., HTML, BBCode, etc.).
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    description:
+                        The article's external reference code.
+                    type: string
                 friendlyUrlPath:
                     description:
                         The article's relative URL.
@@ -2067,6 +2071,12 @@ components:
                     description:
                         The number of this article's child articles.
                     readOnly: true
+                    type: integer
+                parentKnowledgeBaseArticleId:
+                    # @review
+                    description:
+                        The ID of the article's parent, if it exists.
+                    format: int64
                     type: integer
                 parentKnowledgeBaseFolder:
                     description:
@@ -2226,6 +2236,10 @@ components:
                 description:
                     description:
                         The folder's description.
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The folder's external reference code.
                     type: string
                 id:
                     description:
@@ -10248,6 +10262,98 @@ paths:
                     description:
                         ""
             tags: ["KnowledgeBaseArticle"]
+    "/sites/{siteId}/knowledge-base-articles/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the knowledge base article by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["KnowledgeBaseArticle"]
+        get:
+            # @review
+            description:
+                Retrieves the site's knowledge base article by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description:
+                        ""
+            tags: ["KnowledgeBaseArticle"]
+        put:
+            # @review
+            description:
+                Updates the site's knowledge base article with the given external reference code, or creates it if it
+                not exists.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseArticle"
+                description:
+                    ""
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseArticle"
+                    description:
+                        ""
+            tags: ["KnowledgeBaseArticle"]
     "/sites/{siteId}/knowledge-base-articles/permissions":
         get:
             operationId: getSiteKnowledgeBaseArticlePermissionsPage
@@ -10378,6 +10484,98 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/KnowledgeBaseFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    description:
+                        ""
+            tags: ["KnowledgeBaseFolder"]
+    "/sites/{siteId}/knowledge-base-folders/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes the knowledge base folder by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["KnowledgeBaseFolder"]
+        get:
+            # @review
+            description:
+                Retrieves the site's knowledge base folder by external reference code.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    description:
+                        ""
+            tags: ["KnowledgeBaseFolder"]
+        put:
+            # @review
+            description:
+                Updates the site's knowledge base folder with the given external reference code, or creates it if it not
+                exists.
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/KnowledgeBaseFolder"
+                description:
+                    ""
             responses:
                 200:
                     content:

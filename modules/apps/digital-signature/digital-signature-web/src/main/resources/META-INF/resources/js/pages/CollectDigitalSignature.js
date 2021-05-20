@@ -77,7 +77,9 @@ const CollectDigitalSignature = ({
 
 			if (dsEnvelopeId) {
 				openToast({
-					message: Liferay.Language.get('your-envelope-was-created-successfully'),
+					message: Liferay.Language.get(
+						'your-envelope-was-created-successfully'
+					),
 					title: Liferay.Language.get('success'),
 					type: 'success',
 				});

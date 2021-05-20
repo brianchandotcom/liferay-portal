@@ -477,7 +477,7 @@ definition {
 
 	macro configureCurrentLanguagesCP {
 		Click(
-			key_url = "site-configuration-languages",
+			key_itemName = "Localization",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Check.checkNotVisible(

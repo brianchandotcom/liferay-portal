@@ -468,6 +468,7 @@ definition {
 			portlet = "Ajustes del sitio");
 
 		Site.configureCurrentLanguagesCP(
+			category = "Localización",
 			currentSiteLanguages = "español (España),alemán (Alemania)",
 			defaultSiteLanguage = "español (España)",
 			displaySettings = "Display Settings",
@@ -505,6 +506,7 @@ definition {
 			portlet = "Ajustes del sitio");
 
 		Site.configureCurrentLanguagesCP(
+			category = "Localización",
 			currentSiteLanguages = "español (España),alemán (Alemania),inglés (Estados Unidos)",
 			defaultSiteLanguage = "español (España)",
 			displaySettings = "Display Settings",

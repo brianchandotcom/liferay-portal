@@ -48,7 +48,7 @@ public class DSCustomFieldManagerImpl implements DSCustomFieldManager {
 					JSONUtil.toJSONArray(
 						dsCustomFields,
 						dsCustomField -> JSONUtil.put(
-							"fieldId", dsCustomField.getFieldId()
+							"fieldId", dsCustomField.getDSCustomFieldId()
 						).put(
 							"name", dsCustomField.getName()
 						).put(
@@ -72,7 +72,7 @@ public class DSCustomFieldManagerImpl implements DSCustomFieldManager {
 			jsonObject.getJSONArray("textCustomFields"),
 			customFieldJSONObject -> new DSCustomField() {
 				{
-					fieldId = customFieldJSONObject.getLong("fieldId");
+					dsCustomFieldId = customFieldJSONObject.getLong("fieldId");
 					name = customFieldJSONObject.getString("name");
 					required = customFieldJSONObject.getBoolean("required");
 					show = customFieldJSONObject.getBoolean("show");

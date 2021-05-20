@@ -15,6 +15,7 @@
 package com.liferay.digital.signature.web.internal.portlet.action;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 
 import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
+import com.liferay.digital.signature.model.DSCustomField;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -88,9 +91,29 @@ public class AddEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 			recipients.add(dsRecipient);
 		}
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		DSEnvelope dsEnvelope = new DSEnvelope() {
 			{
+				dsCustomFields = Arrays.asList(
+						new DSCustomField() {
+							{
+								name = "envelopeName";
+								show = true;
+								value = ParamUtil.getString(
+										resourceRequest, "_envelopeName");
+							}
+						},
+						new DSCustomField() {
+							{
+								name = "envelopeSenderEmail";
+								show = true;
+								value = themeDisplay.getUser().getDisplayEmailAddress();
+							}
+						});
+				
 				dsDocuments = Collections.singletonList(
 					new DSDocument() {
 						{
@@ -109,9 +132,6 @@ public class AddEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 				status = "sent";
 			}
 		};
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
 			themeDisplay.getSiteGroupId(), dsEnvelope);

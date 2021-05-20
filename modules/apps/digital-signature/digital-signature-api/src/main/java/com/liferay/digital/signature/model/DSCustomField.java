@@ -19,8 +19,8 @@ package com.liferay.digital.signature.model;
  */
 public class DSCustomField {
 
-	public long getFieldId() {
-		return fieldId;
+	public long getDSCustomFieldId() {
+		return dsCustomFieldId;
 	}
 
 	public String getName() {
@@ -39,8 +39,8 @@ public class DSCustomField {
 		return required;
 	}
 
-	public void setFieldId(long fieldId) {
-		this.fieldId = fieldId;
+	public void setDSCustomFieldId(long dsCustomFieldId) {
+		this.dsCustomFieldId = dsCustomFieldId;
 	}
 
 	public void setName(String name) {
@@ -59,7 +59,7 @@ public class DSCustomField {
 		this.value = value;
 	}
 
-	protected long fieldId;
+	protected long dsCustomFieldId;
 	protected String name;
 	protected boolean required;
 	protected boolean show;

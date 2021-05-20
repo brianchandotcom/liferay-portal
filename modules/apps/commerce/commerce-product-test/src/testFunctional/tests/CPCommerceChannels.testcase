@@ -1158,12 +1158,70 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6124. RemoveTaxRateSettingsFixedTaxRateTaxCalculation"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveTaxRateSettingsFixedTaxRateTaxCalculation {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6124 RemoveTaxRateSettingsFixedTaxRateTaxCalculation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "Fixed Tax Rate",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rates");
+
+		WaitForElementPresent(locator1 = "Button#PLUS");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		// TODO Update the path once COMMERCE-6121 is resolved, as there is an iframe that is only found with the path below
+
+		SelectFrame.selectFrameNoLoading(locator1 = "//body/div[25]/div[2]/div[1]/div[1]/div[1]/iframe[1]");
+
+		Select(
+			key_fieldLabel = "Tax Category",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Normal Product");
+
+		Type(
+			key_fieldLabel = "Amount",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "1");
+
+		Button.click(button = "Submit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			key_value = "Normal Product",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6267. UsePunchOut"

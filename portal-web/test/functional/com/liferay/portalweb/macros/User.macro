@@ -1987,8 +1987,8 @@ definition {
 			var loginAttempts = "1";
 		}
 
-		if (!(isSet(maxLoginAttempts))) {
-			var maxLoginAttempts = "0";
+		if (!(isSet(errorMessage))) {
+			var errorMessage = "This account is locked. Please contact an administrator to have this account unlocked.";
 		}
 
 		while ("${count}" != "${loginAttempts}") {
@@ -2001,7 +2001,7 @@ definition {
 			if ("${count}" == "${maximumFailure}") {
 				AssertTextEquals.assertPartialText(
 					locator1 = "Message#ERROR_1",
-					value1 = "This account is locked. Please contact an administrator to have this account unlocked.");
+					value1 = "${errorMessage}");
 			}
 			else {
 				AssertTextEquals.assertPartialText(

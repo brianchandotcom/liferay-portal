@@ -389,21 +389,14 @@ definition {
 
 		User.logoutPG();
 
-		var count = "0";
-
-		while ("${count}" != "3") {
-			User._login(
-				password = "INCORRECT",
-				userEmailAddress = "userea@liferay.com");
-
-			var count = ${count} + 1;
-		}
+		User.loginUserInvalidPG(
+			errorMessage = "This account is locked until",
+			loginAttempts = "3",
+			maximumFailure = "3",
+			password = "INVALID",
+			userEmailAddress = "userea@liferay.com");
 
 		task ("Assert Timezone is included with account lockout message.") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_1",
-				value1 = "This account is locked until");
-
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_1",
 				value1 = "CEST.");

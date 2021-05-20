@@ -440,12 +440,47 @@ definition {
 	}
 
 	@description = "Verify that a Table can be created in the Body Text"
-	@ignore = "true"
 	@priority = "4"
 	test CanSupportTables {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131236 CanSupportTables pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		Click(
+			key_titleName = "Table",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		Click(locator1 = "CKEditor#OK_BUTTON");
+
+		Form.save();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertElementPresent(
+			key_fieldLabel = "Paragraph",
+			locator1 = "FormFields#LABEL");
+
+		AssertElementPresent(
+			key_fieldName = "liferay-ddm-form-field-paragraph-text",
+			locator1 = "FormFields#PARAGRAPH_BODY_CONTENT_TABLE");
 	}
 
 	@description = "Verify that a Video can be uploaded to the Body Text"

@@ -38,8 +38,33 @@ definition {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132189 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+		
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		var fieldName = FormFields.getFieldName();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewRadioLabel(
+			fieldLabel = "Single Selection",
+			fieldName = "${fieldName}");
+
+			
 	}
 
 	@description = "Verify that a Single Selection Field can be deleted"

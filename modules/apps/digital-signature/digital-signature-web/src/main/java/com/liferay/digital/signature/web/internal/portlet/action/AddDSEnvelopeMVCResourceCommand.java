@@ -66,7 +66,7 @@ public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-			ParamUtil.getLong(resourceRequest, "_fileEntryId"));
+			ParamUtil.getLong(resourceRequest, "fileEntryId"));
 
 		String fileData = Base64.encode(
 			FileUtil.getBytes(fileEntry.getContentStream()));

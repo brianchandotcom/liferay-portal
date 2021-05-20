@@ -163,8 +163,6 @@ public class EditCommerceBOMDefinitionMVCActionCommand
 		long commerceBOMDefinitionId = ParamUtil.getLong(
 			actionRequest, "commerceBOMDefinitionId");
 
-		long commerceBOMFolderId = ParamUtil.getLong(
-			actionRequest, "commerceBOMFolderId");
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
 		String name = ParamUtil.getString(actionRequest, "name");
 
@@ -236,6 +234,9 @@ public class EditCommerceBOMDefinitionMVCActionCommand
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId(), name);
 		}
 		else {
+			long commerceBOMFolderId = ParamUtil.getLong(
+				actionRequest, "commerceBOMFolderId");
+
 			long cpAttachmentFileEntryId = 0;
 
 			if (fileEntryId > 0) {

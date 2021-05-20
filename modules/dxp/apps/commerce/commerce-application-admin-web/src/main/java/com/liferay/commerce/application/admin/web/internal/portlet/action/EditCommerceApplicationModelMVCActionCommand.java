@@ -117,13 +117,8 @@ public class EditCommerceApplicationModelMVCActionCommand
 		long commerceApplicationModelId = ParamUtil.getLong(
 			actionRequest, "commerceApplicationModelId");
 
-		long commerceApplicationBrandId = ParamUtil.getLong(
-			actionRequest, "commerceApplicationBrandId");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String year = ParamUtil.getString(actionRequest, "year");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceApplicationModel.class.getName(), actionRequest);
 
 		CommerceApplicationModel commerceApplicationModel;
 
@@ -133,6 +128,12 @@ public class EditCommerceApplicationModelMVCActionCommand
 					commerceApplicationModelId, name, year);
 		}
 		else {
+			long commerceApplicationBrandId = ParamUtil.getLong(
+				actionRequest, "commerceApplicationBrandId");
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				CommerceApplicationModel.class.getName(), actionRequest);
+
 			commerceApplicationModel =
 				_commerceApplicationModelService.addCommerceApplicationModel(
 					serviceContext.getUserId(), commerceApplicationBrandId,

@@ -48,12 +48,6 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		dsEnvelope = _toDSEnvelope(
 			_dsHttp.post(groupId, "envelopes", _toJSONObject(dsEnvelope)));
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Added digital signature envelope ID " +
-					dsEnvelope.getDSEnvelopeId());
-		}
-
 		dsCustomFields = _dsCustomFieldManager.addDSCustomFields(
 			groupId, dsEnvelope.getDSEnvelopeId(), dsCustomFields);
 

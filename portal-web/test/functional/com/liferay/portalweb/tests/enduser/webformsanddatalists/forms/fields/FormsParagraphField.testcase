@@ -680,12 +680,37 @@ definition {
 	}
 
 	@description = "Verify that the Field Title can be edited"
-	@ignore = "true"
 	@priority = "5"
 	test TitleCanBeEdited {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131226 TitleCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		FormFields.editParagraphBody(content = "Test");
+
+		Form.editFieldLabelMetal(fieldValue = "Test Paragraph");
+
+		Form.save();
+
+		Click(locator1 = "Icon#BACK");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewParagraphField(
+			fieldName = "Paragraph",
+			fieldTitle = "Test Paragraph",
+			fieldValue = "Test");
 	}
 
 	@description = "Verify that the Field Type can be changed"

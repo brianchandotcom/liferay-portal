@@ -22,6 +22,7 @@ import EmptyState from './components/empty-state/EmptyState.es';
 import FieldType from './components/field-types/FieldType.es';
 import FieldTypeList from './components/field-types/FieldTypeList.es';
 import {Editor as RuleEditor} from './components/rules/editor/Editor.es';
+import {OPERATOR_OPTIONS_TYPES} from './components/rules/editor/config.es';
 import SearchInput, {
 	SearchInputWithForm,
 } from './components/search-input/SearchInput.es';
@@ -56,6 +57,7 @@ export {
 	FieldTypeList,
 	LangUtil,
 	MultiPanelSidebar,
+	OPERATOR_OPTIONS_TYPES,
 	PluginComponent,
 	RuleEditor,
 	SearchInput,

@@ -154,6 +154,7 @@ export const RuleBuilder = ({history, location}) => {
 							});
 							navigate('/rules/editor');
 						}}
+						operatorsByType={functionsMetadata}
 						pages={pageOptions}
 						rules={rules}
 					/>

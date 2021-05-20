@@ -20,7 +20,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
-import {LangUtil} from 'data-engine-taglib';
+import {LangUtil, OPERATOR_OPTIONS_TYPES} from 'data-engine-taglib';
 import {RulesSupport} from 'dynamic-data-mapping-form-builder';
 import React, {useMemo} from 'react';
 
@@ -124,15 +124,31 @@ const Operand = ({field, left, type, value}) => {
 	);
 };
 
-const Condition = ({operands: [left, right], operator}) => (
-	<>
-		<Operand {...left} />
-		<b className="inline-item inline-item-after inline-item-before text-lowercase">
-			<em>{OPERATORS[operator] || operator}</em>
-		</b>
-		{right && <Operand {...right} left={left} />}
-	</>
-);
+const Condition = ({operands: [left, right], operator, operatorsByType}) => {
+	const operatorLabel = useMemo(() => {
+		if (!left.value) {
+			return '';
+		}
+
+		const dataType = left.field?.dataType ?? left.value;
+
+		const fieldType =
+			OPERATOR_OPTIONS_TYPES[dataType] ?? OPERATOR_OPTIONS_TYPES.text;
+
+		return operatorsByType[fieldType]?.find(({name}) => name === operator)
+			?.label;
+	}, [left, operator, operatorsByType]);
+
+	return (
+		<>
+			<Operand {...left} />
+			<b className="inline-item inline-item-after inline-item-before text-lowercase">
+				<em>{OPERATORS[operator] || operatorLabel}</em>
+			</b>
+			{right && <Operand {...right} left={left} />}
+		</>
+	);
+};
 
 const ActionAutoFill = ({
 	dataProvider,
@@ -274,9 +290,10 @@ const ConditionWithLogicalOperator = ({
 	condition,
 	hasLogicalOperator,
 	logicalOperator,
+	operatorsByType,
 }) => (
 	<>
-		<Condition {...condition} />
+		<Condition {...condition} operatorsByType={operatorsByType} />
 		{hasLogicalOperator && (
 			<LogicalOperator
 				logicalOperator={LOGICAL_OPERATOR[logicalOperator]}
@@ -313,7 +330,15 @@ const ActionWithLogicalOperator = ({
 	);
 };
 
-const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
+const ListItem = ({
+	dataProvider,
+	fields,
+	onDelete,
+	onEdit,
+	operatorsByType,
+	pages,
+	rule,
+}) => {
 	const {actions} = rule;
 
 	const conditions = useMemo(
@@ -354,6 +379,7 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 							hasLogicalOperator={conditions.length - 1 > index}
 							key={index}
 							logicalOperator={rule['logical-operator']}
+							operatorsByType={operatorsByType}
 						/>
 					))}
 					<br />
@@ -419,7 +445,13 @@ const ListItem = ({dataProvider, fields, onDelete, onEdit, pages, rule}) => {
 	);
 };
 
-export const RuleList = ({rules = [], onDelete, onEdit, ...otherProps}) => (
+export const RuleList = ({
+	rules = [],
+	onDelete,
+	onEdit,
+	operatorsByType = [],
+	...otherProps
+}) => (
 	<div className="form-rule-list">
 		<h1 className="text-default">{Liferay.Language.get('rule-builder')}</h1>
 
@@ -431,6 +463,7 @@ export const RuleList = ({rules = [], onDelete, onEdit, ...otherProps}) => (
 						key={index}
 						onDelete={() => onDelete(index)}
 						onEdit={() => onEdit(index)}
+						operatorsByType={operatorsByType}
 						rule={rule}
 						{...otherProps}
 					/>

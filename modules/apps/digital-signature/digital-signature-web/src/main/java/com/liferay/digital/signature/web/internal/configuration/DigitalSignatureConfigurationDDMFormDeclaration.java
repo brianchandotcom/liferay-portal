@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.digital.signature.internal.configuration;
+package com.liferay.digital.signature.web.internal.configuration;
 
 import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
 

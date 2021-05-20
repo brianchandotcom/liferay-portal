@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.digital.signature.internal.configuration;
+package com.liferay.digital.signature.web.internal.configuration;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;

@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.servlet.AxisServlet;
 import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
@@ -124,7 +124,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		ApplicationContext applicationContext =
 			ContextLoader.getCurrentWebApplicationContext();
 
-		ModuleFrameworkUtilAdapter.unregisterContext(applicationContext);
+		ModuleFrameworkUtil.unregisterContext(applicationContext);
 
 		ThreadLocalCacheManager.destroy();
 
@@ -162,21 +162,21 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		_cleanUpJDBCDrivers();
 
 		try {
-			ModuleFrameworkUtilAdapter.stopRuntime();
+			ModuleFrameworkUtil.stopRuntime();
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
 
 		try {
-			ModuleFrameworkUtilAdapter.stopFramework(
+			ModuleFrameworkUtil.stopFramework(
 				PropsValues.MODULE_FRAMEWORK_STOP_WAIT_TIMEOUT);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
 
-		ModuleFrameworkUtilAdapter.unregisterContext(_arrayApplicationContext);
+		ModuleFrameworkUtil.unregisterContext(_arrayApplicationContext);
 
 		_arrayApplicationContext.close();
 
@@ -258,7 +258,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		try {
-			ModuleFrameworkUtilAdapter.initFramework();
+			ModuleFrameworkUtil.initFramework();
 
 			DBInitUtil.init();
 
@@ -319,12 +319,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		try {
-			ModuleFrameworkUtilAdapter.registerContext(
-				_arrayApplicationContext);
+			ModuleFrameworkUtil.registerContext(_arrayApplicationContext);
 
-			ModuleFrameworkUtilAdapter.startFramework();
+			ModuleFrameworkUtil.startFramework();
 
-			ModuleFrameworkUtilAdapter.startRuntime();
+			ModuleFrameworkUtil.startRuntime();
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -377,7 +376,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 				StartupHelperUtil.setUpgrading(false);
 			}
 			else {
-				ModuleFrameworkUtilAdapter.registerContext(applicationContext);
+				ModuleFrameworkUtil.registerContext(applicationContext);
 			}
 		}
 		catch (Exception exception) {

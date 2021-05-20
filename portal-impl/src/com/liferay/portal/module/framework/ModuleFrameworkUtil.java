@@ -15,10 +15,21 @@
 package com.liferay.portal.module.framework;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.util.FileImpl;
+import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URI;
 import java.net.URL;
+
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
 /**
  * This class is a simple wrapper in order to make the framework module running
@@ -28,7 +39,7 @@ import java.net.URL;
  * @author Raymond Augé
  * @see    ModuleFrameworkClassLoader
  */
-public class ModuleFrameworkUtilAdapter {
+public class ModuleFrameworkUtil {
 
 	public static long addBundle(String location) throws PortalException {
 		return _moduleFramework.addBundle(location);
@@ -57,8 +68,7 @@ public class ModuleFrameworkUtilAdapter {
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
-		currentThread.setContextClassLoader(
-			ModuleFrameworkAdapterHelper.getClassLoader());
+		currentThread.setContextClassLoader(_classLoader);
 
 		try {
 			_moduleFramework.initFramework();
@@ -76,14 +86,6 @@ public class ModuleFrameworkUtilAdapter {
 		throws PortalException {
 
 		_moduleFramework.setBundleStartLevel(bundleId, startLevel);
-	}
-
-	public static void setModuleFramework(ModuleFramework moduleFramework) {
-		_moduleFramework = moduleFramework;
-
-		_moduleFrameworkAdapterHelper.exec(
-			"setModuleFramework", new Class<?>[] {ModuleFramework.class},
-			_moduleFramework);
 	}
 
 	public static void startBundle(long bundleId) throws PortalException {
@@ -140,14 +142,81 @@ public class ModuleFrameworkUtilAdapter {
 		_moduleFramework.updateBundle(bundleId, inputStream);
 	}
 
-	private static ModuleFramework _moduleFramework;
-	private static final ModuleFrameworkAdapterHelper
-		_moduleFrameworkAdapterHelper = new ModuleFrameworkAdapterHelper(
-			"com.liferay.portal.bootstrap.ModuleFrameworkUtil");
+	private static final ClassLoader _classLoader;
+	private static final ModuleFramework _moduleFramework;
 
 	static {
-		_moduleFramework = (ModuleFramework)_moduleFrameworkAdapterHelper.exec(
-			"getModuleFramework", new Class<?>[0]);
+		try {
+			if (FileUtil.getFile() == null) {
+				FileUtil fileUtil = new FileUtil();
+
+				fileUtil.setFile(new FileImpl());
+			}
+
+			File coreDir = new File(
+				PropsValues.MODULE_FRAMEWORK_BASE_DIR, "core");
+
+			File[] files = coreDir.listFiles();
+
+			if (files == null) {
+				throw new IllegalStateException(
+					"Missing " + coreDir.getCanonicalPath());
+			}
+
+			URL[] urls = new URL[files.length];
+			String[] packageNames = new String[files.length + 4];
+
+			for (int i = 0; i < urls.length; i++) {
+				File file = files[i];
+
+				URI uri = file.toURI();
+
+				urls[i] = uri.toURL();
+
+				String name = file.getName();
+
+				if (name.endsWith(".jar")) {
+					name = name.substring(0, name.length() - 3);
+				}
+
+				if (name.endsWith(".api.")) {
+					name = name.substring(0, name.length() - 4);
+				}
+
+				if (name.endsWith(".impl.")) {
+					name = name.substring(0, name.length() - 5);
+
+					name = name.concat("internal.");
+				}
+
+				packageNames[i] = name;
+			}
+
+			packageNames[files.length] = "org.apache.felix.resolver.";
+			packageNames[files.length + 1] = "org.eclipse.core.";
+			packageNames[files.length + 2] = "org.eclipse.equinox.";
+			packageNames[files.length + 3] = "org.osgi.";
+
+			Arrays.sort(packageNames);
+
+			_classLoader = new ModuleFrameworkClassLoader(
+				urls, PortalClassLoaderUtil.getClassLoader(), packageNames);
+		}
+		catch (IOException ioException) {
+			throw new ExceptionInInitializerError(ioException);
+		}
+
+		ServiceLoader<ModuleFramework> serviceLoader = ServiceLoader.load(
+			ModuleFramework.class, _classLoader);
+
+		Iterator<ModuleFramework> iterator = serviceLoader.iterator();
+
+		if (!iterator.hasNext()) {
+			throw new ExceptionInInitializerError(
+				"Unable to locate module framework implementation");
+		}
+
+		_moduleFramework = iterator.next();
 	}
 
 }

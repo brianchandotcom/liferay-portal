@@ -23,7 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 
 import java.io.IOException;
 
@@ -56,7 +56,7 @@ public class SplitPackagesTest {
 			_getAllowedSplitPackageNames();
 		Map<Bundle, Set<ExportPackage>> exportPackagesMap = new HashMap<>();
 
-		Bundle systemBundle = (Bundle)ModuleFrameworkUtilAdapter.getFramework();
+		Bundle systemBundle = (Bundle)ModuleFrameworkUtil.getFramework();
 
 		BundleContext bundleContext = systemBundle.getBundleContext();
 

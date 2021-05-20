@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
-import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.spring.bean.LiferayBeanFactory;
 import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcessor;
@@ -214,7 +214,7 @@ public class InitUtil {
 				PropsValues.LIFERAY_WEB_PORTAL_CONTEXT_TEMPDIR =
 					System.getProperty(SystemProperties.TMP_DIR);
 
-				ModuleFrameworkUtilAdapter.initFramework();
+				ModuleFrameworkUtil.initFramework();
 			}
 
 			DBInitUtil.init();
@@ -224,10 +224,10 @@ public class InitUtil {
 					PropsValues.SPRING_INFRASTRUCTURE_CONFIGS);
 
 			if (initModuleFramework) {
-				ModuleFrameworkUtilAdapter.registerContext(
+				ModuleFrameworkUtil.registerContext(
 					infrastructureApplicationContext);
 
-				ModuleFrameworkUtilAdapter.startFramework();
+				ModuleFrameworkUtil.startFramework();
 			}
 
 			ConfigurableApplicationContext configurableApplicationContext =
@@ -268,7 +268,7 @@ public class InitUtil {
 			PortalBeanLocatorUtil.setBeanLocator(beanLocator);
 
 			if (initModuleFramework) {
-				ModuleFrameworkUtilAdapter.startRuntime();
+				ModuleFrameworkUtil.startRuntime();
 			}
 
 			_appApplicationContext = configurableApplicationContext;
@@ -292,7 +292,7 @@ public class InitUtil {
 
 	public static void registerContext() {
 		if (_appApplicationContext != null) {
-			ModuleFrameworkUtilAdapter.registerContext(_appApplicationContext);
+			ModuleFrameworkUtil.registerContext(_appApplicationContext);
 		}
 	}
 
@@ -331,7 +331,7 @@ public class InitUtil {
 
 	public static synchronized void stopModuleFramework() {
 		try {
-			ModuleFrameworkUtilAdapter.stopFramework(0);
+			ModuleFrameworkUtil.stopFramework(0);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -340,7 +340,7 @@ public class InitUtil {
 
 	public static synchronized void stopRuntime() {
 		try {
-			ModuleFrameworkUtilAdapter.stopRuntime();
+			ModuleFrameworkUtil.stopRuntime();
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

@@ -64,14 +64,201 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-5706. As a system admin i want to be able to create / update and delete a new warehouse"
-	@ignore = "true"
 	@priority = "3"
 	test CreateAndUpdateNewWarehouse {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5706 CreateAndUpdateNewWarehouse Pending Implementation
-		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
-		// 2. Before any test related to warehouses, remember to create the countries via Health Check
+		var fieldDescription= "Test Warehouse Description";
+		var fieldLatitudeNumber = "12345";
+		var fieldLongitudeNumber = "12345";
+		var fieldName = "Test Warehouse";
+		var fieldCity = "Test City";
+		var fieldPostalCode = "12345";
+		var fieldStreet1 = "Test Address";
+		var fieldStreet2 = "Test Street";
+		var fieldStreet3 = "";
+		var selectorCountry = "United States";
+		var selectorRegion = "California";
+		var fieldLatitudeNumber = "12345.0";
+		var fieldLongitudeNumber = "12345.0";
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
+
+		Click(locator1 = "AnalyticsCloudConnection#ADD_NEW_PROPERTY_BUTTON");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldName}");
+
+		Type(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldDescription}");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		if (!(IsElementPresent(
+					key_specifiedCollapse = "Geolocation",
+					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+			Click(
+				key_contentType = "Geolocation",
+				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+
+			WaitForElementPresent(
+				key_specifiedCollapse = "Geolocation",
+				locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN");
+		}
+
+		Type(
+			key_fieldLabel = "Latitude",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldLatitudeNumber}");
+
+		Type(
+			key_fieldLabel = "Longitude",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldLongitudeNumber}");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
+
+		if (!(IsElementPresent(
+					key_specifiedCollapse = "Address",
+					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+			Click(
+				key_contentType = "Address",
+				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+
+			WaitForElementPresent(
+				key_specifiedCollapse = "Address",
+				locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN");
+		}
+
+		Type(
+			key_fieldLabel = "Street 1",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldStreet1}");
+
+		Type(
+			key_fieldLabel = "Street 2",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldStreet2}");
+
+		Type(
+			key_fieldLabel = "Street 3",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldStreet3}");
+
+		Select(
+			key_fieldLabel = "Country",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${selectorCountry}");
+
+		Select(
+			key_fieldLabel = "Region",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${selectorRegion}");
+
+		Type(
+			key_fieldLabel = "Postal Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldPostalCode}");
+
+		Type(
+			key_fieldLabel = "City",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldCity}");
+
+		Button.clickSave();
+
+		CommerceNavigator.gotoEntry(entryName = "Test Warehouse");
+
+		AssertTextEquals(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldName}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Description",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldDescription}");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		if (!(IsElementPresent(
+					key_specifiedCollapse = "Address",
+					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+			Click(
+				key_contentType = "Address",
+				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+
+			WaitForElementPresent(
+				key_specifiedCollapse = "Address",
+				locator1 = "CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN");
+		}
+
+		AssertTextEquals(
+			key_fieldLabel = "Street 1",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldStreet1}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Street 2",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldStreet2}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Street 3",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldStreet3}");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Country",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${selectorCountry}");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Region",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${selectorRegion}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Postal Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldPostalCode}");
+
+		AssertTextEquals(
+			key_fieldLabel = "City",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldCity}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Latitude",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldLatitudeNumber}");
+
+		AssertTextEquals(
+			key_fieldLabel = "Longitude",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${fieldLongitudeNumber}");
+
+		Button.clickSave();
+
+		Click(
+			key_text = "Test Warehouse",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
 	@description = "This is a test for COMMERCE-5707. As a product specialist i want to be able to deactivate a warehouse"

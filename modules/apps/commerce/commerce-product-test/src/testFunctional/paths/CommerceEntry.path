@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECK_WAREHOUSE_COLLAPSE_OPEN</td>
+	<td>//a[contains(.,'${key_specifiedCollapse}')]/../../..//div[contains(@class,'show')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DESCRIPTION_FIELD</td>
 	<td>//textarea[contains (@id,'description')]</td>
 	<td></td>

@@ -299,6 +299,21 @@ public class GitUtil {
 		return false;
 	}
 
+	public static void main(String[] args) {
+		ExecutionResult executionResult = executeBashCommands(
+			3, 1000 * 10, 1000 * 60, new File("."), args[0]);
+
+		System.out.println(executionResult.getStandardOut());
+
+		if (executionResult.getExitValue() == 0) {
+			return;
+		}
+
+		System.err.println(executionResult.getStandardError());
+
+		throw new RuntimeException("Unable to run command.\n     " + args[0]);
+	}
+
 	public static String toSlaveGitHubDevNodeRemoteURL(
 		String gitHubDevRemoteURL, String slaveGitHubDevNodeHostname) {
 

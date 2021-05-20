@@ -1420,6 +1420,18 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public Layout updateStatus(
+		long userId, long plid, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), plid, ActionKeys.UPDATE);
+
+		return layoutLocalService.updateStatus(
+			userId, plid, status, serviceContext);
+	}
+
+	@Override
 	public Layout updateType(long plid, String type) throws PortalException {
 		LayoutPermissionUtil.check(
 			getPermissionChecker(), layoutLocalService.getLayout(plid),

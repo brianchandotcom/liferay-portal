@@ -218,8 +218,6 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.create(
 			commerceOrderId);
 
-		Date now = new Date();
-
 		commerceOrder.setGroupId(groupId);
 		commerceOrder.setCompanyId(user.getCompanyId());
 		commerceOrder.setUserId(userId);
@@ -256,7 +254,7 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.setOrderDate(orderDate);
 		}
 		else {
-			commerceOrder.setOrderDate(now);
+			commerceOrder.setOrderDate(new Date());
 		}
 
 		commerceOrder.setOrderStatus(orderStatus);

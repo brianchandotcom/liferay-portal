@@ -299,6 +299,16 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a use case for LPS-130915."
+	@priority = "5"
+	test ViewWebContentWithNoDisplayPageTemplateArchive735 {
+		property data.archive.type = "data-archive-web-content-with-no-display-page-template";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.5";
+
+		Upgrade.viewWebContentWithNoDisplayPageTemplate();
+	}
+
 	@description = "This is a use case for LRQA-62830."
 	@priority = "4"
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive713 {

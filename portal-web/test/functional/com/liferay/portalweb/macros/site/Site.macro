@@ -267,7 +267,7 @@ definition {
 
 	macro assignDefaultSiteTeam {
 		Click(
-			key_url = "site-configuration-default-user-associations",
+			key_itemName = "Users",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Click(locator1 = "SiteSettingsDefaultUserAssociations#TEAMS_SELECT");

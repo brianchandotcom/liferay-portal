@@ -60,7 +60,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
-import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -133,14 +133,6 @@ public class CTCollectionLocalServiceImpl
 		ctCollection.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		ctCollection = ctCollectionPersistence.update(ctCollection);
-
-		_groupLocalService.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			CTCollection.class.getName(), ctCollectionId,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, getLocalizationMap(name),
-			null, GroupConstants.TYPE_SITE_PRIVATE, false,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
-			null);
 
 		_resourceLocalService.addResources(
 			ctCollection.getCompanyId(), 0, ctCollection.getUserId(),
@@ -429,7 +421,11 @@ public class CTCollectionLocalServiceImpl
 			_ctProcessLocalService.deleteCTProcess(ctProcess);
 		}
 
-		_groupLocalService.deleteGroup(ctCollection.getGroupId());
+		Group group = ctCollection.getGroup();
+
+		if (group != null) {
+			_groupLocalService.deleteGroup(group);
+		}
 
 		_resourceLocalService.deleteResource(
 			ctCollection.getCompanyId(), CTCollection.class.getName(),

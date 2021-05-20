@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Digital Signature",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/digital_signature.jsp",
+		"javax.portlet.init-param.view-template=/digital_signature/view.jsp",
 		"javax.portlet.name=" + DigitalSignaturePortletKeys.DIGITAL_SIGNATURE,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"

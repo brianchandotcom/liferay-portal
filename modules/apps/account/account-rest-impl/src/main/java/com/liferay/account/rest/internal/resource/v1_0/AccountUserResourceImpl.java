@@ -21,6 +21,7 @@ import com.liferay.account.rest.internal.dto.v1_0.converter.AccountUserResourceD
 import com.liferay.account.rest.internal.odata.entity.v1_0.AccountUserEntityModel;
 import com.liferay.account.rest.resource.v1_0.AccountUserResource;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryUserRelService;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.User;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -57,6 +59,26 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class AccountUserResourceImpl
 	extends BaseAccountUserResourceImpl implements EntityModelResource {
+
+	@Override
+	public void deleteAccountUserByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception {
+
+		_accountEntryUserRelService.deleteAccountEntryUserRelByEmailAddress(
+			accountId, emailAddress);
+	}
+
+	@Override
+	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			String emailAddress, String externalReferenceCode)
+		throws Exception {
+
+		deleteAccountUserByEmailAddress(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			emailAddress);
+	}
 
 	@Override
 	public Page<AccountUser> getAccountUsersByExternalReferenceCodePage(
@@ -132,6 +154,22 @@ public class AccountUserResourceImpl
 	}
 
 	@Override
+	public void postAccountUserByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(contextCompany.getCompanyId());
+		serviceContext.setUserId(contextUser.getUserId());
+		serviceContext.setLanguageId(
+			contextAcceptLanguage.getPreferredLanguageId());
+
+		_accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			accountId, emailAddress, new long[0], null, serviceContext);
+	}
+
+	@Override
 	public AccountUser postAccountUserByExternalReferenceCode(
 			String externalReferenceCode, AccountUser accountUser)
 		throws Exception {
@@ -140,6 +178,17 @@ public class AccountUserResourceImpl
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
 			accountUser);
+	}
+
+	@Override
+	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+			String emailAddress, String externalReferenceCode)
+		throws Exception {
+
+		postAccountUserByEmailAddress(
+			_accountResourceDTOConverter.getAccountEntryId(
+				externalReferenceCode),
+			emailAddress);
 	}
 
 	private long _getListTypeId(String value, String type) {
@@ -174,6 +223,9 @@ public class AccountUserResourceImpl
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
 	private AccountResourceDTOConverter _accountResourceDTOConverter;

@@ -193,16 +193,20 @@ public class AccountEntryUserRelLocalServiceImpl
 
 			Group group = accountEntry.getAccountEntryGroup();
 
+			long[] groupIds = {group.getGroupId()};
+
+			if (serviceContext.getScopeGroupId() > 0) {
+				groupIds = ArrayUtil.append(
+					groupIds, serviceContext.getScopeGroupId());
+			}
+
 			user = userLocalService.addUserWithWorkflow(
 				serviceContext.getUserId(), serviceContext.getCompanyId(), true,
 				StringPool.BLANK, StringPool.BLANK, true, StringPool.BLANK,
 				emailAddress, 0, StringPool.BLANK, serviceContext.getLocale(),
 				emailAddress, StringPool.BLANK, emailAddress, 0, 0, true, 1, 1,
-				1970, StringPool.BLANK,
-				new long[] {
-					group.getGroupId(), serviceContext.getScopeGroupId()
-				},
-				null, null, null, true, serviceContext);
+				1970, StringPool.BLANK, groupIds, null, null, null, true,
+				serviceContext);
 
 			user.setExternalReferenceCode(userExternalReferenceCode);
 

@@ -1348,7 +1348,7 @@ definition {
 			roleTitle = "Roles Orgrole Name",
 			userScreenName = "usersn2");
 
-		JSONLayout.addPublicLayoutByGroupName(
+		JSONLayout.addPublicLayout(
 			groupName = "Organization Name",
 			layoutName = "Blogs Page");
 

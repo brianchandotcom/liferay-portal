@@ -40,7 +40,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		JSONLayout.addPublicLayoutByGroupName(
+		JSONLayout.addPublicLayout(
 			groupName = "Organization Name",
 			layoutName = "Test Destination Page");
 
@@ -225,7 +225,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		JSONLayout.addPublicLayoutByGroupName(
+		JSONLayout.addPublicLayout(
 			groupName = "Organization Name",
 			layoutName = "Test Destination Page");
 
@@ -435,7 +435,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		JSONLayout.addPublicLayoutByGroupName(
+		JSONLayout.addPublicLayout(
 			groupName = "Organization Name",
 			layoutName = "Test Destination Page");
 
@@ -660,7 +660,7 @@ definition {
 			userLoginFullName = "Test Test",
 			userScreenName = "usersn");
 
-		JSONLayout.addPublicLayoutByGroupName(
+		JSONLayout.addPublicLayout(
 			groupName = "Organization Name",
 			layoutName = "Test Destination Page");
 

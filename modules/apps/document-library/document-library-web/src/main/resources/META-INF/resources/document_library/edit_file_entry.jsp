@@ -538,6 +538,8 @@ renderResponse.setTitle(headerTitle);
 					</aui:fieldset>
 
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="expiration-date">
+						<liferay-ui:error exception="<%= DLExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+
 						<p class="mb-5 text-secondary">
 							<liferay-ui:message key="including-an-expiration-date-will-allow-your-documents-or-media-to-expire-automatically-and-become-unpublished" />
 						</p>

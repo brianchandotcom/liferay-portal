@@ -59,12 +59,28 @@ public interface AccountUserResource {
 			String externalReferenceCode, AccountUser accountUser)
 		throws Exception;
 
+	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			String emailAddress, String externalReferenceCode)
+		throws Exception;
+
+	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+			String emailAddress, String externalReferenceCode)
+		throws Exception;
+
 	public Page<AccountUser> getAccountUsersPage(
 			Long accountId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception;
 
 	public AccountUser postAccountUser(Long accountId, AccountUser accountUser)
+		throws Exception;
+
+	public void deleteAccountUserByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception;
+
+	public void postAccountUserByEmailAddress(
+			Long accountId, String emailAddress)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

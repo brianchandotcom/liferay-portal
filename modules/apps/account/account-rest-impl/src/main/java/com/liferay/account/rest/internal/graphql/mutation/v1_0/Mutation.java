@@ -329,6 +329,44 @@ public class Mutation {
 	}
 
 	@GraphQLField(
+		description = "Removes a user from an account by external reference code by their email address"
+	)
+	public boolean deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			@GraphQLName("emailAddress") String emailAddress,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountUserResource ->
+				accountUserResource.
+					deleteAccountUserByExternalReferenceCodeByEmailAddress(
+						emailAddress, externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Assigns a user to an account by external reference code by their email address"
+	)
+	public boolean createAccountUserByExternalReferenceCodeByEmailAddress(
+			@GraphQLName("emailAddress") String emailAddress,
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountUserResource ->
+				accountUserResource.
+					postAccountUserByExternalReferenceCodeByEmailAddress(
+						emailAddress, externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField(
 		description = "Creates a user and assigns them to the account"
 	)
 	public AccountUser createAccountUser(
@@ -341,6 +379,42 @@ public class Mutation {
 			this::_populateResourceContext,
 			accountUserResource -> accountUserResource.postAccountUser(
 				accountId, accountUser));
+	}
+
+	@GraphQLField(
+		description = "Removes a user from an account by their email address"
+	)
+	public boolean deleteAccountUserByEmailAddress(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("emailAddress") String emailAddress)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountUserResource ->
+				accountUserResource.deleteAccountUserByEmailAddress(
+					accountId, emailAddress));
+
+		return true;
+	}
+
+	@GraphQLField(
+		description = "Assigns a user to an account by their email address"
+	)
+	public boolean createAccountUserByEmailAddress(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("emailAddress") String emailAddress)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_accountUserResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			accountUserResource ->
+				accountUserResource.postAccountUserByEmailAddress(
+					accountId, emailAddress));
+
+		return true;
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R

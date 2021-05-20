@@ -556,6 +556,61 @@ public abstract class BaseAccountUserResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAccountUserByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountUser accountUser =
+			testDeleteAccountUserByExternalReferenceCodeByEmailAddress_addAccountUser();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountUserResource.
+				deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+					accountUser.getEmailAddress(),
+					accountUser.getExternalReferenceCode()));
+	}
+
+	protected AccountUser
+			testDeleteAccountUserByExternalReferenceCodeByEmailAddress_addAccountUser()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountUserByExternalReferenceCodeByEmailAddress()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountUser accountUser =
+			testPostAccountUserByExternalReferenceCodeByEmailAddress_addAccountUser();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountUserResource.
+				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+					accountUser.getEmailAddress(),
+					accountUser.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountUserResource.
+				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
+					accountUser.getEmailAddress(),
+					accountUser.getExternalReferenceCode()));
+	}
+
+	protected AccountUser
+			testPostAccountUserByExternalReferenceCodeByEmailAddress_addAccountUser()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetAccountUsersPage() throws Exception {
 		Page<AccountUser> page = accountUserResource.getAccountUsersPage(
 			testGetAccountUsersPage_getAccountId(),
@@ -889,6 +944,49 @@ public abstract class BaseAccountUserResourceTestCase {
 
 	protected AccountUser testPostAccountUser_addAccountUser(
 			AccountUser accountUser)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAccountUserByEmailAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountUser accountUser =
+			testDeleteAccountUserByEmailAddress_addAccountUser();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountUserResource.deleteAccountUserByEmailAddressHttpResponse(
+				null, accountUser.getEmailAddress()));
+	}
+
+	protected AccountUser testDeleteAccountUserByEmailAddress_addAccountUser()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostAccountUserByEmailAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AccountUser accountUser =
+			testPostAccountUserByEmailAddress_addAccountUser();
+
+		assertHttpResponseStatusCode(
+			204,
+			accountUserResource.postAccountUserByEmailAddressHttpResponse(
+				null, accountUser.getEmailAddress()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountUserResource.postAccountUserByEmailAddressHttpResponse(
+				null, accountUser.getEmailAddress()));
+	}
+
+	protected AccountUser testPostAccountUserByEmailAddress_addAccountUser()
 		throws Exception {
 
 		throw new UnsupportedOperationException(

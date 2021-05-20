@@ -58,6 +58,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -146,6 +147,66 @@ public abstract class BaseAccountUserResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Operation(
+		description = "Removes a user from an account by external reference code by their email address"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}"
+	)
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountUser")})
+	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}'  -u 'test@liferay.com:test'
+	 */
+	@Operation(
+		description = "Assigns a user to an account by external reference code by their email address"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress"),
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+		}
+	)
+	@Path(
+		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}"
+	)
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountUser")})
+	public void postAccountUserByExternalReferenceCodeByEmailAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress,
+			@NotNull @Parameter(hidden = true)
+			@PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users'  -u 'test@liferay.com:test'
 	 */
 	@GET
@@ -195,6 +256,60 @@ public abstract class BaseAccountUserResourceImpl
 		throws Exception {
 
 		return new AccountUser();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}'  -u 'test@liferay.com:test'
+	 */
+	@DELETE
+	@Operation(
+		description = "Removes a user from an account by their email address"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
+		}
+	)
+	@Path("/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountUser")})
+	public void deleteAccountUserByEmailAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}'  -u 'test@liferay.com:test'
+	 */
+	@Operation(
+		description = "Assigns a user to an account by their email address"
+	)
+	@Override
+	@Parameters(
+		value = {
+			@Parameter(in = ParameterIn.PATH, name = "accountId"),
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
+		}
+	)
+	@Path("/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}")
+	@POST
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AccountUser")})
+	public void postAccountUserByEmailAddress(
+			@NotNull @Parameter(hidden = true) @PathParam("accountId") Long
+				accountId,
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress)
+		throws Exception {
 	}
 
 	@Override

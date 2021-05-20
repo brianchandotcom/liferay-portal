@@ -700,7 +700,7 @@ definition {
 
 	macro editGoogleAnalyticsIDCP {
 		Click(
-			key_url = "site-configuration-analytics",
+			key_itemName = "Analytics",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Type(
@@ -712,7 +712,7 @@ definition {
 
 	macro editPiwikCP {
 		Click(
-			key_url = "site-configuration-analytics",
+			key_itemName = "Analytics",
 			locator1 = "ListGroupItem#CONFIGURATION_ITEM_LINK");
 
 		Type(

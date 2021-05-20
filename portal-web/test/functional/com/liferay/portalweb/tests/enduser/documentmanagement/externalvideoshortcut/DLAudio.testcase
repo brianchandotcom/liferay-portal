@@ -1,0 +1,94 @@
+@component-name = "portal-document-management"
+definition {
+
+	property dummy.socket.proxy.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Documents Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Audio Title In Site",
+			groupName = "Site Name",
+			mimeType = "audio/mpeg",
+			sourceFileName = "Document_1.mp3");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This test ensures no preview will be generated for a newly added audio file once ffmpeg is disabled, "
+	@priority = "3"
+	test CanNotPreviewAfterDisablingFFmpeg {
+		property test.name.skip.portal.instance = "DLAudio#CanNotPreviewAfterDisablingFFmpeg";
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		PortletEntry.update();
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Audio Title In Site",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewAudioPreviewGeneratingInfo(disabled = "true");
+	}
+
+	@description = "This test ensures that the audio preview generated for a document remains intact after FFmpeg is disabled."
+	@priority = "4"
+	test PreviewRemainsAfterDisablingFFmpeg {
+		property test.name.skip.portal.instance = "DLAudio#PreviewRemainsAfterDisablingFFmpeg";
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Audio Title In Site",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewAudioPreviewGeneratingInfo();
+
+		DMDocument.viewAudioPreview(audioName = "Document_1.mp3");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Audio Converter");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		PortletEntry.update();
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Audio Title In Site",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewAudioPreview(audioName = "Document_1.mp3");
+	}
+
+}

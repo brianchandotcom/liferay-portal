@@ -67,11 +67,13 @@ export default function PageContent({
 
 	let editURL = null;
 	let permissionsURL = null;
+	let viewItemsURL = null;
 	let viewUsagesURL = null;
 
 	if (actions) {
 		editURL = actions.editURL;
 		permissionsURL = actions.permissionsURL;
+		viewItemsURL = actions.viewItemsURL;
 		viewUsagesURL = actions.viewUsagesURL;
 	}
 
@@ -189,7 +191,11 @@ export default function PageContent({
 					)}
 				</ClayLayout.ContentCol>
 
-				{editURL || permissionsURL || viewUsagesURL || type ? (
+				{editURL ||
+				permissionsURL ||
+				viewItemsURL ||
+				viewUsagesURL ||
+				type ? (
 					<ClayDropDown
 						active={active}
 						onActiveChange={setActive}
@@ -212,19 +218,19 @@ export default function PageContent({
 								</ClayDropDown.Item>
 							)}
 
-							{permissionsURL && (
+							{viewItemsURL && (
 								<ClayDropDown.Item
-									key="permissionsURL"
+									key="viewItemsURL"
 									onClick={() => {
 										openModal({
 											title: Liferay.Language.get(
-												'permissions'
+												'view-items'
 											),
-											url: permissionsURL,
+											url: viewItemsURL,
 										});
 									}}
 								>
-									{Liferay.Language.get('permissions')}
+									{Liferay.Language.get('view-items')}
 								</ClayDropDown.Item>
 							)}
 
@@ -241,6 +247,22 @@ export default function PageContent({
 									}}
 								>
 									{Liferay.Language.get('view-usages')}
+								</ClayDropDown.Item>
+							)}
+
+							{permissionsURL && (
+								<ClayDropDown.Item
+									key="permissionsURL"
+									onClick={() => {
+										openModal({
+											title: Liferay.Language.get(
+												'permissions'
+											),
+											url: permissionsURL,
+										});
+									}}
+								>
+									{Liferay.Language.get('permissions')}
 								</ClayDropDown.Item>
 							)}
 						</ClayDropDown.ItemList>

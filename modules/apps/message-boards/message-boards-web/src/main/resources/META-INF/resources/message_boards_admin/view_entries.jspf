@@ -271,7 +271,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 							</c:if>
 
 							<div>
-								<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
 
 								<c:if test="<%= thread.isLocked() %>">
 									<aui:icon image="lock" markupView="lexicon" />

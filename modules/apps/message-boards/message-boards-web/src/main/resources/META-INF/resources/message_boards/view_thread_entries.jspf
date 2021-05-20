@@ -136,7 +136,7 @@
 
 			<c:if test="<%= (message != null) && !message.isApproved() %>">
 				<span class="h6">
-					<aui:workflow-status bean="<%= message %>" markupView="lexicon" model="<%= MBMessage.class %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
+					<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= message.getStatus() %>" />
 				</span>
 			</c:if>
 

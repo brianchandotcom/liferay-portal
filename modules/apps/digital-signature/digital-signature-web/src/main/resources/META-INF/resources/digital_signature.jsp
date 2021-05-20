@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<div id="digital-signature-root">
+<div id="<portlet:namespace />digital-signature-root">
 	<react:component
 		module="js/pages/DigitalSignature"
 	/>

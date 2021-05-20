@@ -24,7 +24,6 @@ import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.Properties;
 
@@ -54,7 +53,7 @@ public class TalendArchiveParserUtilTest {
 	}
 
 	@Test
-	public void testParse() throws IOException {
+	public void testParse() throws Exception {
 		TalendArchive talendArchive = TalendArchiveParserUtil.parse(
 			TalendArchiveUtil.getInputStream());
 

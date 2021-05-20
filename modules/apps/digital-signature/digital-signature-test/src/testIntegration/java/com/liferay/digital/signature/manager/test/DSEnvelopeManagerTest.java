@@ -15,7 +15,9 @@
 package com.liferay.digital.signature.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.digital.signature.manager.DSCustomFieldManager;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
+import com.liferay.digital.signature.model.DSCustomField;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
@@ -24,10 +26,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,6 +60,21 @@ public class DSEnvelopeManagerTest {
 			TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
+					dsCustomFields = Arrays.asList(
+						new DSCustomField() {
+							{
+								name = "envelopeName";
+								show = true;
+								value = "envelope name";
+							}
+						},
+						new DSCustomField() {
+							{
+								name = "envelopeSenderEmail";
+								show = true;
+								value = "envelopesender@test.com";
+							}
+						});
 					dsDocuments = Collections.singletonList(
 						new DSDocument() {
 							{
@@ -81,7 +100,11 @@ public class DSEnvelopeManagerTest {
 				}
 			});
 
+		List<DSCustomField> dsCustomFields = dsEnvelope.getDSCustomFields();
+
 		Assert.assertTrue(Validator.isNotNull(dsEnvelope.getDSEnvelopeId()));
+
+		Assert.assertTrue(ListUtil.isNotEmpty(dsCustomFields));
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			TestPropsValues.getGroupId(), dsEnvelope.getDSEnvelopeId());
@@ -145,6 +168,9 @@ public class DSEnvelopeManagerTest {
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			TestPropsValues.getGroupId(), dsEnvelopeIds);
 	}
+
+	@Inject
+	private DSCustomFieldManager _dsCustomFieldManager;
 
 	@Inject
 	private DSEnvelopeManager _dsEnvelopeManager;

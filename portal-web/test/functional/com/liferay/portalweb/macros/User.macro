@@ -973,6 +973,30 @@ definition {
 		}
 	}
 
+	macro bulkDeactivateCP {
+		if (isSet(userFirstNameList)) {
+			for (var userFirstName : list "${userFirstNameList}") {
+				LexiconEntry.selectEntry(rowEntry = "${userFirstName}");
+			}
+		}
+		else {
+			PortletEntry.selectAll();
+		}
+
+		if ("${deactivateType}" == "Management Toolbar") {
+			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Deactivate");
+		}
+		else {
+			ClickNoError(locator1 = "Icon#DEACTIVATE");
+		}
+
+		AssertConfirm(value1 = "Are you sure you want to deactivate the selected users?");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro changePasswordCP {
 		UserNavigator.gotoPassword();
 
@@ -1178,27 +1202,13 @@ definition {
 	}
 
 	macro deactivateCP {
-		Search.searchCP(searchTerm = "${userFirstName}");
-
 		if ("${deactivateType}" == "Actions") {
-			LexiconEntry.gotoEntryMenuItemNoError(
-				menuItem = "Deactivate",
-				rowEntry = "${userFirstName}");
-
-			AssertConfirm(value1 = "Are you sure you want to deactivate this?");
-
-			Alert.viewSuccessMessage();
+			User.singleDeactivateCP(userFirstName = "${userFirstName}");
 		}
 		else {
-			PortletEntry.selectAll();
-
-			ClickNoError(locator1 = "Icon#DEACTIVATE");
-
-			AssertConfirm(value1 = "Are you sure you want to deactivate the selected users?");
-
-			Alert.viewSuccessMessage();
-
-			LexiconEntry.viewNoEntry(rowEntry = "${userFirstName}");
+			User.bulkDeactivateCP(
+				deactivateType = "${deactivateType}",
+				userFirstNameList = "${userFirstNameList}");
 		}
 	}
 
@@ -2388,6 +2398,16 @@ definition {
 
 			Button.clickSave();
 		}
+	}
+
+	macro singleDeactivateCP {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Deactivate",
+			rowEntry = "${userFirstName}");
+
+		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro tearDownCP {

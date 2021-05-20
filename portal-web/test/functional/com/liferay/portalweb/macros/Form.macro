@@ -680,10 +680,10 @@ definition {
 	}
 
 	macro viewFormPlaceholderText {
-        AssertElementPresent(
-            locator1 = "Form#PLACEHOLDER_TEXT_FIELD",
-            key_value = "${fieldPlaceholderText}");
-    }
+		AssertElementPresent(
+			key_value = "${fieldPlaceholderText}",
+			locator1 = "Form#PLACEHOLDER_TEXT_FIELD");
+	}
 
 	macro viewFormPublish {
 		FormsAdminNavigator.openPublishURL();

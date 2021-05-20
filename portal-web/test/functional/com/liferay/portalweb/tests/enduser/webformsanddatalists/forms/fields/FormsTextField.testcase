@@ -159,25 +159,24 @@ definition {
 		property portal.acceptance = "false";
 
 		ProductMenu.gotoPortlet(
-                category = "Content &amp; Data",
-                portlet = "Forms");
-        
-		FormsAdminNavigator.gotoAddForm();
-        
-		Form.editName(formName = "Form 1");
-        
-		Form.addTextField(fieldPositionNumber = "0");
-    	
-		FormViewBuilder.setPlaceholder(fieldValue = "Test Text");
-    	
-		Form.save();
-        
-		FormsAdminNavigator.gotoBack();
-        
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
-        
-		Form.viewFormPlaceholderText(fieldPlaceholderText = "Test Text");
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Test Text");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Form.viewFormPlaceholderText(fieldPlaceholderText = "Test Text");
 	}
 
 	@description = "Verify that a Predefined Value can be set"

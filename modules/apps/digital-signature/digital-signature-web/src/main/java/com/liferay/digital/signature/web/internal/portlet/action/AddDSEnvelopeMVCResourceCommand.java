@@ -54,7 +54,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE,
-		"mvc.command.name=/digital_signature/add_envelope"
+		"mvc.command.name=/digital_signature/add_ds_envelope"
 	},
 	service = MVCResourceCommand.class
 )

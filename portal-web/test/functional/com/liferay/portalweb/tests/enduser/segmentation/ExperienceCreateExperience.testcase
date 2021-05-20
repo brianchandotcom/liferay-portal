@@ -1882,13 +1882,83 @@ definition {
 			value1 = "This is a new experience for you");
 	}
 
-	@description = "This is a test for LPS-130300."
-	@ignore = "true"
+	@description = "This is a test for LPS-132101."
 	@priority = "5"
 	test AddNewExperienceUserSiteOrganizationRoleSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130290 AddNewExperienceUserSiteOrganizationRoleSegment pending implementation
+		JSONGroup.assignUserToGroup(
+			groupName = "Test Site Name",
+			userEmailAddress = "userea2@liferay.com");
+
+		JSONRole.addSiteRole(
+			roleKey = "Site Role Name",
+			roleTitle = "Site Role Name");
+
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "Test Site Name",
+			roleTitle = "Site Role Name",
+			userEmailAddress = "userea2@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
+
+		LexiconEntry.gotoAdd();
+
+		Segmentation.addProperties(propertyOption = "Site and Organization Role");
+
+		Segmentation.fillTitle(titleField = "UserSiteOrganizationRoleSegment Name");
+
+		Segmentation.fillProperty(selectCheckbox = "Site Role Name");
+
+		Segmentation.viewMembers(memberName = "userfn2 userln2");
+
+		Button.clickSave();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "New Experience",
+			segmentName = "UserSiteOrganizationRoleSegment Name");
+
+		Button.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.changeExperience(newExperience = "New Experience");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "This is a new experience for you");
+
+		PageEditor.prioritizeExperience(experienceName = "New Experience");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea2@liferay.com",
+			userLoginFullName = "userfn2 userln2");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "This is a new experience for you");
 	}
 
 	@description = "This is a test for LPS-132100."

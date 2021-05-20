@@ -683,7 +683,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132204 OptionsCanBeDisplayedInlineAndAsList pending implementation
-
 	}
 
 	@description = "Verify that options can be rearranged"
@@ -846,13 +845,12 @@ definition {
 
 		Form.save();
 
-
 		FormsAdminNavigator.gotoBack();
 
 		Click(
 			key_formName = "Form1",
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
-		
+
 		Click(
 			key_name = "Single Selection",
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
@@ -873,7 +871,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132195 TypeCanBeChanged pending implementation
-
 	}
 
 }

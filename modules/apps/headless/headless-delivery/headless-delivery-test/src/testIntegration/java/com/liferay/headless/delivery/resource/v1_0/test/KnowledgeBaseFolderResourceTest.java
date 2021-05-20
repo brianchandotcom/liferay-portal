@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -31,6 +33,44 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class KnowledgeBaseFolderResourceTest
 	extends BaseKnowledgeBaseFolderResourceTestCase {
+
+	@Override
+	@Test
+	public void testPutSiteKnowledgeBaseFolderByExternalReferenceCode()
+		throws Exception {
+
+		// Update
+
+		super.testPutSiteKnowledgeBaseFolderByExternalReferenceCode();
+
+		// Add
+
+		KnowledgeBaseFolder randomKnowledgeBaseFolder =
+			randomKnowledgeBaseFolder();
+
+		KnowledgeBaseFolder putKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.
+				putSiteKnowledgeBaseFolderByExternalReferenceCode(
+					testGroup.getGroupId(),
+					randomKnowledgeBaseFolder.getExternalReferenceCode(),
+					randomKnowledgeBaseFolder);
+
+		assertEquals(randomKnowledgeBaseFolder, putKnowledgeBaseFolder);
+		assertValid(putKnowledgeBaseFolder);
+
+		KnowledgeBaseFolder getKnowledgeBaseFolder =
+			knowledgeBaseFolderResource.
+				getSiteKnowledgeBaseFolderByExternalReferenceCode(
+					testGroup.getGroupId(),
+					putKnowledgeBaseFolder.getExternalReferenceCode());
+
+		assertEquals(randomKnowledgeBaseFolder, getKnowledgeBaseFolder);
+		assertValid(getKnowledgeBaseFolder);
+
+		Assert.assertEquals(
+			randomKnowledgeBaseFolder.getExternalReferenceCode(),
+			putKnowledgeBaseFolder.getExternalReferenceCode());
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {

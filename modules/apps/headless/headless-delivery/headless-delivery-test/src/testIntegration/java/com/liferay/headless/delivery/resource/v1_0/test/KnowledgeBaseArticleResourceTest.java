@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -56,6 +57,43 @@ public class KnowledgeBaseArticleResourceTest
 
 	@Override
 	@Test
+	public void testPutSiteKnowledgeBaseArticleByExternalReferenceCode()
+		throws Exception {
+
+		//Update
+
+		super.testPutSiteKnowledgeBaseArticleByExternalReferenceCode();
+
+		// Add
+
+		KnowledgeBaseArticle randomKnowledgeBaseArticle =
+			randomKnowledgeBaseArticle();
+
+		KnowledgeBaseArticle putKnowledgeBaseArticle =
+			knowledgeBaseArticleResource.
+				putSiteKnowledgeBaseArticleByExternalReferenceCode(
+					testGroup.getGroupId(),
+					randomKnowledgeBaseArticle.getExternalReferenceCode(),
+					randomKnowledgeBaseArticle);
+
+		assertEquals(randomKnowledgeBaseArticle, putKnowledgeBaseArticle);
+		assertValid(putKnowledgeBaseArticle);
+
+		KnowledgeBaseArticle getKnowledgeBaseArticle =
+			knowledgeBaseArticleResource.
+				getSiteKnowledgeBaseArticleByExternalReferenceCode(
+					testGroup.getGroupId(),
+					putKnowledgeBaseArticle.getExternalReferenceCode());
+
+		assertEquals(randomKnowledgeBaseArticle, getKnowledgeBaseArticle);
+
+		Assert.assertEquals(
+			randomKnowledgeBaseArticle.getExternalReferenceCode(),
+			putKnowledgeBaseArticle.getExternalReferenceCode());
+	}
+
+	@Override
+	@Test
 	public void testPutSiteKnowledgeBaseArticleSubscribe() throws Exception {
 		KnowledgeBaseArticle knowledgeBaseArticle =
 			testPutSiteKnowledgeBaseArticleSubscribe_addKnowledgeBaseArticle();
@@ -83,6 +121,18 @@ public class KnowledgeBaseArticleResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"articleBody", "description", "title"};
+	}
+
+	@Override
+	protected KnowledgeBaseArticle randomKnowledgeBaseArticle()
+		throws Exception {
+
+		KnowledgeBaseArticle knowledgeBaseArticle =
+			super.randomKnowledgeBaseArticle();
+
+		knowledgeBaseArticle.setParentKnowledgeBaseArticleId(0L);
+
+		return knowledgeBaseArticle;
 	}
 
 	@Override

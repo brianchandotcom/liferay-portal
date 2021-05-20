@@ -212,27 +212,6 @@ definition {
 			locator1 = "Card#CARD_TITLE");
 	}
 
-	@description = "This test ensures that no video preview will be shown after FFMPEG is disabled."
-	@priority = "4"
-	test CanDisableFFmpegAfterUploadingVideo {
-		property test.name.skip.portal.instance = "DLVideo#CanDisableFFmpegAfterUploadingVideo";
-
-		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
-
-		FormFields.disableCheckbox(fieldName = "enabled");
-
-		PortletEntry.update();
-
-		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Video Title In Site",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewVideoPreviewGeneratingInfo(disabled = "true");
-	}
-
 	@description = "This test ensures that users can preview a DM video once FFMPEG is enabled."
 	@priority = "5"
 	test CanPreviewVideoAfterEnablingFFmpeg {
@@ -407,6 +386,36 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
+	}
+
+	@description = "This test ensures that the video preview generated for a document remains intact after FFmpeg is disabled."
+	@priority = "4"
+	test PreviewRemainsAfterDisablingFFmpeg {
+		property test.name.skip.portal.instance = "DLVideo#PreviewRemainsAfterDisablingFFmpeg";
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Video Title In Site",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewVideoPreviewGeneratingInfo();
+
+		DMDocument.viewInternalVideoPreview(audioName = "Document_1.mp4");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
+
+		FormFields.disableCheckbox(fieldName = "enabled");
+
+		PortletEntry.update();
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enabled");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Video Title In Site",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewInternalVideoPreview(audioName = "Document_1.mp4");
 	}
 
 	@description = "This ensures that a depot internal video cannot be viewed from the disconnected site."

@@ -665,13 +665,74 @@ definition {
 	}
 
 	@description = "Verify that a Form can be created"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130500 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		var text = "Test";
+
+		Form.editName(formName = "${text}");
+
+		Form.editDescription(formDescription = "${text}");
+
+		Form.editPageTitle(
+			formPageName = "${text}",
+			formTitleNumber = "1");
+
+		Form.editPageDescription(
+			formDescriptionName = "${text}",
+			formTitleNumber = "1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Button.clickSave();
+
+		FormsAdminNavigator.gotoBack();
+
+		AssertTextEquals(
+			key_formViewName = "${text}",
+			locator1 = "FormViewBuilder#ASSERT_FORM",
+			value1 = "${text}");
+
+		AssertTextEquals(
+			key_formViewName = "${text}",
+			locator1 = "FormsAdmin#FORMS_TABLE_DESCRIPTION",
+			value1 = "${text}");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "${text}");
+
+
+
+		AssertTextEquals(
+			locator1 = "Form#NAME_FIELD",
+			value1 = "${text}");
+
+		AssertTextEquals(
+			locator1 = "Form#DESCRIPTION_FIELD",
+			value1 = "${text}");
+
+		AssertTextEquals(
+			key_titleNumber = "1",
+			locator1 = "Form#PAGE_TITLE_FIELD",
+			value1 = "${text}");
+
+		AssertTextEquals(
+			locator1 = "Form#PAGE_DESCRIPTION_FIELD",
+			value1 = "${text}");
+
+		AssertElementPresent(
+			key_fieldName = "Text",
+			locator1 = "Form#PAGE_FIELD_LABEL");
+
 
 	}
 
@@ -683,6 +744,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130511 CanBeCreatedFromAutosavedDraft pending implementation
+
 	}
 
 	@description = "Verify that a Form can be created with more than one page"

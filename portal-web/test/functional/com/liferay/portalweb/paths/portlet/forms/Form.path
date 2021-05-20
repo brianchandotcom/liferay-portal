@@ -54,6 +54,16 @@
     <td></td>
 </tr>
 <tr>
+    <td>PAGE_DESCRIPTION_FIELD</td>
+    <td>//div/input[contains(concat(' ',normalize-space(@class),' '),'form-builder-page-header-description')][@placeholder="Add a short description for this page."]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PAGE_FIELD_LABEL</td>
+    <td>//div[contains(concat(' ',normalize-space(@class),' '),' form-group')]/label[contains(text(),'${key_fieldName}')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>PREVIEW_FORM_BUTTON</td>
     <td>//button[contains(.,'Preview') and not (contains(@class,'disabled'))]</td>
     <td></td>

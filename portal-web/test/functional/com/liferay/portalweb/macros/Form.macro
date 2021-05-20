@@ -285,6 +285,20 @@ definition {
 			value1 = "${formName}");
 	}
 
+	macro editPageDescription {
+		var key_titleNumber = "${formTitleNumber}";
+
+		ScrollWebElementIntoView(locator1 = "Form#PAGE_DESCRIPTION_FIELD");
+
+		WaitForElementPresent(
+			locator1 = "Form#PAGE_DESCRIPTION_FIELD",
+			value1 = "${formDescriptionName}");
+
+		Type(
+			locator1 = "Form#PAGE_DESCRIPTION_FIELD",
+			value1 = "${formDescriptionName}");
+	}
+
 	macro editPageTitle {
 		var key_titleNumber = "${formTitleNumber}";
 

@@ -25,6 +25,8 @@ import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.list.provider.InfoItemRelatedListProvider;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
@@ -411,6 +413,22 @@ public class AssetListEntryUsagesUtil {
 				).put(
 					"title", infoListProvider.getLabel(themeDisplay.getLocale())
 				);
+			}
+			else {
+				InfoItemServiceTracker infoItemServiceTracker =
+					InfoItemServiceTrackerUtil.getInfoItemServiceTracker();
+
+				InfoItemRelatedListProvider infoItemRelatedListProvider =
+					infoItemServiceTracker.getInfoItemService(
+						InfoItemRelatedListProvider.class,
+						assetListEntryUsage.getKey());
+
+				if (infoItemRelatedListProvider != null) {
+					mappedContentJSONObject.put(
+						"title",
+						infoItemRelatedListProvider.getLabel(
+							themeDisplay.getLocale()));
+				}
 			}
 		}
 

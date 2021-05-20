@@ -35,6 +35,7 @@ page import="com.liferay.commerce.account.constants.CommerceAccountActionKeys" %
 page import="com.liferay.commerce.account.constants.CommerceAccountConstants" %><%@
 page import="com.liferay.commerce.account.exception.CommerceAccountNameException" %><%@
 page import="com.liferay.commerce.account.exception.CommerceAccountOrdersException" %><%@
+page import="com.liferay.commerce.account.exception.DuplicateCommerceAccountException" %><%@
 page import="com.liferay.commerce.account.exception.NoSuchAccountException" %><%@
 page import="com.liferay.commerce.account.model.CommerceAccount" %><%@
 page import="com.liferay.commerce.account.model.CommerceAccountOrganizationRel" %><%@

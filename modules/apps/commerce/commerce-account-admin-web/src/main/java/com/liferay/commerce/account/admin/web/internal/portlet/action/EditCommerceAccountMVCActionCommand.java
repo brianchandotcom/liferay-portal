@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountPortletKeys;
 import com.liferay.commerce.account.exception.CommerceAccountNameException;
 import com.liferay.commerce.account.exception.CommerceAccountOrdersException;
+import com.liferay.commerce.account.exception.DuplicateCommerceAccountException;
 import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
@@ -115,7 +116,9 @@ public class EditCommerceAccountMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof CommerceAccountNameException) {
+			if (exception instanceof CommerceAccountNameException ||
+				exception instanceof DuplicateCommerceAccountException) {
+
 				hideDefaultErrorMessage(actionRequest);
 
 				SessionErrors.add(actionRequest, exception.getClass());

@@ -33,6 +33,7 @@ long commerceAccountId = commerceAccountAdminDisplayContext.getCommerceAccountId
 	<aui:model-context bean="<%= commerceAccount %>" model="<%= CommerceAccount.class %>" />
 
 	<liferay-ui:error exception="<%= CommerceAccountNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= DuplicateCommerceAccountException.class %>" message="an-account-with-the-same-reference-already-exists" />
 
 	<div class="lfr-form-content">
 		<aui:fieldset-group markupView="lexicon">

@@ -10,6 +10,11 @@
 <tbody>
 <!-- Segments  -->
 <tr>
+    <td>ANONYMOUS_LABEL</td>
+    <td>//div[@class='card-header']/div/span[@class='label-item']</td>
+    <td></td>
+</tr>
+<tr>
     <td>CANCEL_SEGMENT</td>
     <td>//a[contains(@href,'segment') and contains(@class,'secondary')]</td>
     <td></td>
@@ -32,6 +37,21 @@
 <tr>
     <td>DELETE_SEGMENT</td>
     <td>//div[contains(@class,'dropdown')]/button[contains(@class,'item')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DELETED_CRITERIA</td>
+    <td>//div[@class='criteria-message']td>
+    <td></td>
+</tr>
+<tr>
+    <td>DUPLICATED_CRITERIA</td>
+    <td>(//div[@class='criteria-statement']//div[text()='${criteriaName}'])[${totalCriteriaCount}]td>
+    <td></td>
+</tr>
+<tr>
+    <td>EDITOR_LABEL</td>
+    <td>//div[contains(@class,'label-root')]</td>
     <td></td>
 </tr>
 <tr>
@@ -128,6 +148,11 @@
 <tr>
     <td>SEGMENT_DROP_AREA</td>
     <td>//div[@class='drop-zone-target p-5']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_MEMBERSHIP_BUTTON</td>
+    <td>//div[@class='total-members']/following-sibling::button</td>
     <td></td>
 </tr>
 <tr>

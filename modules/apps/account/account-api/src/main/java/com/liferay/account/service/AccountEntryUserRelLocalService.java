@@ -149,6 +149,10 @@ public interface AccountEntryUserRelLocalService
 			long accountEntryUserRelId)
 		throws PortalException;
 
+	public void deleteAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress)
+		throws PortalException;
+
 	public void deleteAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws PortalException;

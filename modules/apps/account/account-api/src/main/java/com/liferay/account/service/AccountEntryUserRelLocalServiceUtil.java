@@ -165,6 +165,14 @@ public class AccountEntryUserRelLocalServiceUtil {
 		return getService().deleteAccountEntryUserRel(accountEntryUserRelId);
 	}
 
+	public static void deleteAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress)
+		throws PortalException {
+
+		getService().deleteAccountEntryUserRelByEmailAddress(
+			accountEntryId, emailAddress);
+	}
+
 	public static void deleteAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws PortalException {

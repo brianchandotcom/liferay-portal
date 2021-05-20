@@ -14,6 +14,9 @@
 
 package com.liferay.account.service;
 
+import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * Provides the remote service utility for AccountEntryUserRel. This utility wraps
  * <code>com.liferay.account.service.impl.AccountEntryUserRelServiceImpl</code> and is an
@@ -33,13 +36,31 @@ public class AccountEntryUserRelServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.account.service.impl.AccountEntryUserRelServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static AccountEntryUserRel addAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress, long[] accountRoleIds,
+			String userExternalReferenceCode,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addAccountEntryUserRelByEmailAddress(
+			accountEntryId, emailAddress, accountRoleIds,
+			userExternalReferenceCode, serviceContext);
+	}
+
+	public static void deleteAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress)
+		throws PortalException {
+
+		getService().deleteAccountEntryUserRelByEmailAddress(
+			accountEntryId, emailAddress);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
 	}
 

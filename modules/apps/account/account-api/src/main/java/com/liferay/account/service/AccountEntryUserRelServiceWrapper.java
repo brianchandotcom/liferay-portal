@@ -33,6 +33,28 @@ public class AccountEntryUserRelServiceWrapper
 		_accountEntryUserRelService = accountEntryUserRelService;
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntryUserRel
+			addAccountEntryUserRelByEmailAddress(
+				long accountEntryId, String emailAddress, long[] accountRoleIds,
+				String userExternalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelService.addAccountEntryUserRelByEmailAddress(
+			accountEntryId, emailAddress, accountRoleIds,
+			userExternalReferenceCode, serviceContext);
+	}
+
+	@Override
+	public void deleteAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryUserRelService.deleteAccountEntryUserRelByEmailAddress(
+			accountEntryId, emailAddress);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

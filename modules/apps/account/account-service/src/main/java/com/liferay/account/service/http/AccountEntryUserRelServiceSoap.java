@@ -14,9 +14,15 @@
 
 package com.liferay.account.service.http;
 
+import com.liferay.account.service.AccountEntryUserRelServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.account.service.AccountEntryUserRelServiceUtil</code> service
+ * <code>AccountEntryUserRelServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,48 @@ package com.liferay.account.service.http;
  */
 @Deprecated
 public class AccountEntryUserRelServiceSoap {
+
+	public static com.liferay.account.model.AccountEntryUserRelSoap
+			addAccountEntryUserRelByEmailAddress(
+				long accountEntryId, String emailAddress, long[] accountRoleIds,
+				String userExternalReferenceCode,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+
+		try {
+			com.liferay.account.model.AccountEntryUserRel returnValue =
+				AccountEntryUserRelServiceUtil.
+					addAccountEntryUserRelByEmailAddress(
+						accountEntryId, emailAddress, accountRoleIds,
+						userExternalReferenceCode, serviceContext);
+
+			return com.liferay.account.model.AccountEntryUserRelSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress)
+		throws RemoteException {
+
+		try {
+			AccountEntryUserRelServiceUtil.
+				deleteAccountEntryUserRelByEmailAddress(
+					accountEntryId, emailAddress);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AccountEntryUserRelServiceSoap.class);
+
 }

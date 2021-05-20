@@ -14,8 +14,15 @@
 
 package com.liferay.account.service.impl;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.base.AccountEntryUserRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,4 +39,37 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AccountEntryUserRelServiceImpl
 	extends AccountEntryUserRelServiceBaseImpl {
+
+	@Override
+	public AccountEntryUserRel addAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress, long[] accountRoleIds,
+			String userExternalReferenceCode, ServiceContext serviceContext)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		return accountEntryUserRelLocalService.
+			addAccountEntryUserRelByEmailAddress(
+				accountEntryId, emailAddress, accountRoleIds,
+				userExternalReferenceCode, serviceContext);
+	}
+
+	@Override
+	public void deleteAccountEntryUserRelByEmailAddress(
+			long accountEntryId, String emailAddress)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId, ActionKeys.MANAGE_USERS);
+
+		accountEntryUserRelLocalService.deleteAccountEntryUserRelByEmailAddress(
+			accountEntryId, emailAddress);
+	}
+
+	private static volatile ModelResourcePermission<AccountEntry>
+		_modelResourcePermission = ModelResourcePermissionFactory.getInstance(
+			AccountEntryUserRelServiceImpl.class, "_modelResourcePermission",
+			AccountEntry.class);
+
 }

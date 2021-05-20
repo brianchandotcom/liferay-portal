@@ -152,7 +152,7 @@ public class DefaultUserFieldExpressionHandler
 
 	@Override
 	public List<String> getValidFieldExpressions() {
-		return Collections.unmodifiableList(_validExpressions);
+		return _validFieldExpressions;
 	}
 
 	@Activate
@@ -285,7 +285,9 @@ public class DefaultUserFieldExpressionHandler
 	@Reference
 	private UserLocalService _userLocalService;
 
-	private final List<String> _validExpressions = Arrays.asList(
-		"emailAddress", "firstName", "lastName", "screenName", "uuid");
+	private final List<String> _validFieldExpressions =
+		Collections.unmodifiableList(
+			Arrays.asList(
+				"emailAddress", "firstName", "lastName", "screenName", "uuid"));
 
 }

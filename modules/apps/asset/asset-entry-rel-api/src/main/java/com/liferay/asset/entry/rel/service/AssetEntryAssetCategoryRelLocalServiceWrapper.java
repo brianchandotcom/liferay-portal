@@ -414,6 +414,15 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 	}
 
 	@Override
+	public int getAssetEntryAssetCategoryRelsCountByAssetCategoryId(
+		long assetCategoryId) {
+
+		return _assetEntryAssetCategoryRelLocalService.
+			getAssetEntryAssetCategoryRelsCountByAssetCategoryId(
+				assetCategoryId);
+	}
+
+	@Override
 	public long[] getAssetEntryPrimaryKeys(long assetCategoryId) {
 		return _assetEntryAssetCategoryRelLocalService.getAssetEntryPrimaryKeys(
 			assetCategoryId);

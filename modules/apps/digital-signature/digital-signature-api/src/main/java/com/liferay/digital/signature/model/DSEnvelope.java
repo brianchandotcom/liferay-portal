@@ -28,6 +28,10 @@ public class DSEnvelope {
 		return createdLocalDateTime;
 	}
 
+	public List<DSCustomField> getDSCustomFields() {
+		return dsCustomFields;
+	}
+
 	public List<DSDocument> getDSDocuments() {
 		return dsDocuments;
 	}
@@ -56,6 +60,10 @@ public class DSEnvelope {
 		this.createdLocalDateTime = createdLocalDateTime;
 	}
 
+	public void setDSCustomFields(List<DSCustomField> dsCustomFields) {
+		this.dsCustomFields = dsCustomFields;
+	}
+
 	public void setDSDocuments(List<DSDocument> dsDocuments) {
 		this.dsDocuments = dsDocuments;
 	}
@@ -81,6 +89,7 @@ public class DSEnvelope {
 	}
 
 	protected LocalDateTime createdLocalDateTime;
+	protected List<DSCustomField> dsCustomFields;
 	protected List<DSDocument> dsDocuments;
 	protected String dsEnvelopeId;
 	protected List<DSRecipient> dsRecipients;

@@ -97,23 +97,6 @@ public class AddEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 		DSEnvelope dsEnvelope = new DSEnvelope() {
 			{
-				dsCustomFields = Arrays.asList(
-						new DSCustomField() {
-							{
-								name = "envelopeName";
-								show = true;
-								value = ParamUtil.getString(
-										resourceRequest, "_envelopeName");
-							}
-						},
-						new DSCustomField() {
-							{
-								name = "envelopeSenderEmail";
-								show = true;
-								value = themeDisplay.getUser().getDisplayEmailAddress();
-							}
-						});
-				
 				dsDocuments = Collections.singletonList(
 					new DSDocument() {
 						{
@@ -129,6 +112,9 @@ public class AddEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 					resourceRequest, "_emailMessage");
 				emailSubject = ParamUtil.getString(
 					resourceRequest, "_emailSubject");
+				name = ParamUtil.getString(
+					resourceRequest, "_envelopeName");
+				senderEmailAddress = themeDisplay.getUser().getDisplayEmailAddress();
 				status = "sent";
 			}
 		};

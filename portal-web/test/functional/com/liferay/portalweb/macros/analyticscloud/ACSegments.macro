@@ -129,6 +129,10 @@ definition {
 		Click(locator1 = "ACSegments#SEGMENT_LABEL");
 	}
 
+	macro previewSegmentMembership {
+		Click(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_BUTTON");
+	}
+
 	macro saveSegment {
 		Click(locator1 = "ACSegments#SAVE_SEGMENT");
 	}
@@ -145,6 +149,40 @@ definition {
 		var key_SegmentType = "${segmentType}";
 
 		Click(locator1 = "ACSegments#SELECT_SEGMENT_TYPE");
+	}
+
+	macro viewActivePageCreationModel {
+		AssertTextEquals(
+			locator1 = "ACSegments#ACTIVE_PAGE",
+			value1 = "${pageNumber}");
+	}
+
+	macro viewDeletedCriteria {
+		AssertTextPresent(
+			locator1 = "ACSegments#DELETED_CRITERIA",
+			value1 = "Drag and drop criterion from the right to add rules.");
+	}
+
+	macro viewDuplicatedCriteria {
+		var i = "1";
+
+		while ("${i}" != "${totalCriteriaCount}") {
+			var i = ${i} + 1;
+
+			AssertElementPresent(locator1 = "ACSegments#DUPLICATED_CRITERIA");
+		}
+	}
+
+	macro viewEditorLabel {
+		AssertTextPresent(
+			locator1 = "ACSegments#EDITOR_LABEL",
+			value1 = "${labelName}");
+	}
+
+	macro viewIncludeAnonymousLabel {
+		AssertTextPresent(
+			locator1 = "ACSegments#ANONYMOUS_LABEL",
+			value1 = "Include Anonymous");
 	}
 
 }

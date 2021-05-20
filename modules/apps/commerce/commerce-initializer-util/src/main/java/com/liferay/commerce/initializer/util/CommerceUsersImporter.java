@@ -80,8 +80,6 @@ public class CommerceUsersImporter {
 			String imageDependenciesPath, long scopeGroupId, long userId)
 		throws Exception {
 
-		ServiceContext serviceContext = getServiceContext(scopeGroupId, userId);
-
 		MappingJsonFactory mappingJsonFactory = new MappingJsonFactory();
 
 		JsonParser jsonFactoryParser = mappingJsonFactory.createParser(
@@ -92,6 +90,8 @@ public class CommerceUsersImporter {
 		if (jsonToken != JsonToken.START_ARRAY) {
 			throw new Exception("JSON Array Expected");
 		}
+
+		ServiceContext serviceContext = getServiceContext(scopeGroupId, userId);
 
 		int importCount = 0;
 

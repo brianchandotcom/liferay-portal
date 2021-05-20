@@ -107,9 +107,6 @@ public class TableReferenceDefinitionManager {
 				"{parentModelClassNameId=" + parentModelClassNameId + "}");
 		}
 
-		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap =
-			parentTableReferenceInfo.getChildTableJoinHoldersMap();
-
 		TableReferenceInfo<?> childTableReferenceInfo =
 			combinedTableReferenceInfos.get(childModelClassNameId);
 
@@ -117,6 +114,9 @@ public class TableReferenceDefinitionManager {
 			throw new IllegalArgumentException(
 				"{childModelClassNameId=" + childModelClassNameId + "}");
 		}
+
+		Map<Table<?>, List<TableJoinHolder>> childTableJoinHoldersMap =
+			parentTableReferenceInfo.getChildTableJoinHoldersMap();
 
 		TableReferenceDefinition<?> childTableReferenceDefinition =
 			childTableReferenceInfo.getTableReferenceDefinition();

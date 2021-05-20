@@ -1520,9 +1520,6 @@ public class CommerceOrderLocalServiceImpl
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
 		Date requestedDeliveryDate = PortalUtil.getDate(
 			requestedDeliveryDateMonth, requestedDeliveryDateDay,
 			requestedDeliveryDateYear, requestedDeliveryDateHour,
@@ -1532,6 +1529,9 @@ public class CommerceOrderLocalServiceImpl
 		if (requestedDeliveryDate.before(new Date())) {
 			throw new CommerceOrderRequestedDeliveryDateException();
 		}
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
 
 		commerceOrder.setPrintedNote(printedNote);
 		commerceOrder.setRequestedDeliveryDate(requestedDeliveryDate);

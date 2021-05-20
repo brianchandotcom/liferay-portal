@@ -267,13 +267,6 @@ public class OrderResourceImpl
 				commerceShippingMethod.getCommerceShippingMethodId();
 		}
 
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyService.getCommerceCurrency(
-				commerceChannel.getCompanyId(), order.getCurrencyCode());
-
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			commerceChannel.getGroupId());
-
 		CommerceAccount commerceAccount = null;
 
 		if (order.getAccountId() != null) {
@@ -293,6 +286,13 @@ public class OrderResourceImpl
 		if (commerceAccount == null) {
 			throw new NoSuchAccountException();
 		}
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyService.getCommerceCurrency(
+				commerceChannel.getCompanyId(), order.getCurrencyCode());
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commerceChannel.getGroupId());
 
 		CommerceOrder commerceOrder = _commerceOrderService.upsertCommerceOrder(
 			order.getExternalReferenceCode(), contextUser.getUserId(),

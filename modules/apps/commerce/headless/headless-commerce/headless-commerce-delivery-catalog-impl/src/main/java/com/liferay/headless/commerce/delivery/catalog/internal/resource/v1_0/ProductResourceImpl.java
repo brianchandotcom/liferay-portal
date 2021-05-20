@@ -81,15 +81,15 @@ public class ProductResourceImpl
 			Long channelId, Long productId, Long accountId)
 		throws Exception {
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(channelId);
-
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCProductException();
 		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		_commerceProductViewPermission.check(
 			PermissionThreadLocal.getPermissionChecker(),

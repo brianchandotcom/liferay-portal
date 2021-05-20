@@ -80,14 +80,14 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			(CommerceContext)actionRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
 		if (commerceAccount == null) {
 			throw new NoSuchAccountException();
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long commerceCurrencyId = 0;
 

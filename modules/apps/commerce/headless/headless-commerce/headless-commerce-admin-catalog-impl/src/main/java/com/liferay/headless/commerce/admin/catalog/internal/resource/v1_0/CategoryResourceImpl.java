@@ -145,9 +145,6 @@ public class CategoryResourceImpl
 
 		long[] assetCategoryIds = new long[0];
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			cpDefinition.getGroupId());
-
 		for (Category category : categories) {
 			AssetCategory assetCategory = _assetCategoryService.fetchCategory(
 				category.getId());
@@ -160,6 +157,9 @@ public class CategoryResourceImpl
 			assetCategoryIds = ArrayUtil.append(
 				assetCategoryIds, assetCategory.getCategoryId());
 		}
+
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			cpDefinition.getGroupId());
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 

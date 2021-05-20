@@ -326,8 +326,6 @@ public class IMAPMailbox extends BaseMailbox {
 	public void sendMessage(long accountId, long messageId)
 		throws PortalException {
 
-		Account account = AccountLocalServiceUtil.getAccount(accountId);
-
 		Message message = MessageLocalServiceUtil.getMessage(messageId);
 
 		Address[] toAddresses = parseAddresses(message.getTo());
@@ -339,6 +337,8 @@ public class IMAPMailbox extends BaseMailbox {
 
 			throw new MailException(MailException.MESSAGE_HAS_NO_RECIPIENTS);
 		}
+
+		Account account = AccountLocalServiceUtil.getAccount(accountId);
 
 		List<Attachment> attachments =
 			AttachmentLocalServiceUtil.getAttachments(messageId);

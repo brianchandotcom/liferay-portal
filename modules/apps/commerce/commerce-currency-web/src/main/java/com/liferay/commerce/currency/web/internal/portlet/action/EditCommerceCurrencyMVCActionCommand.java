@@ -165,16 +165,6 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest)
 		throws PortalException {
 
-		long commerceCurrencyId = ParamUtil.getLong(
-			actionRequest, "commerceCurrencyId");
-
-		String code = ParamUtil.getString(actionRequest, "code");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-		String rate = ParamUtil.getString(actionRequest, "rate");
-		Map<Locale, String> formatPatternMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "formatPattern");
-
 		int maxFractionDigits = ParamUtil.getInteger(
 			actionRequest, "maxFractionDigits");
 		int minFractionDigits = ParamUtil.getInteger(
@@ -185,6 +175,16 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 			throw new CommerceCurrencyFractionDigitsException();
 		}
+
+		long commerceCurrencyId = ParamUtil.getLong(
+			actionRequest, "commerceCurrencyId");
+
+		String code = ParamUtil.getString(actionRequest, "code");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		String rate = ParamUtil.getString(actionRequest, "rate");
+		Map<Locale, String> formatPatternMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "formatPattern");
 
 		String roundingMode = ParamUtil.getString(
 			actionRequest, "roundingMode");

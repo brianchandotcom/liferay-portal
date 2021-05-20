@@ -36,8 +36,6 @@ public class CommerceAccountGroupRelLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		CommerceAccountGroupRel commerceAccountGroupRel =
@@ -47,6 +45,8 @@ public class CommerceAccountGroupRelLocalServiceImpl
 		if (commerceAccountGroupRel != null) {
 			throw new DuplicateCommerceAccountGroupRelException();
 		}
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		long commerceAccountGroupRelId = counterLocalService.increment();
 

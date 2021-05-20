@@ -128,8 +128,6 @@ public class FedExCommerceShippingOptionHelper {
 		_cpMeasurementUnitLocalService = cpMeasurementUnitLocalService;
 		_resourceBundle = resourceBundle;
 
-		long groupId = _commerceOrder.getGroupId();
-
 		_commerceCurrency =
 			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
 				_commerceOrder.getCompanyId());
@@ -155,6 +153,8 @@ public class FedExCommerceShippingOptionHelper {
 		if (_shippingAddress == null) {
 			throw new CommerceShippingEngineException.MustSetShippingAddress();
 		}
+
+		long groupId = _commerceOrder.getGroupId();
 
 		_fedExCommerceShippingEngineGroupServiceConfiguration =
 			configurationProvider.getConfiguration(
@@ -716,8 +716,6 @@ public class FedExCommerceShippingOptionHelper {
 			CommerceAddress originAddress)
 		throws Exception {
 
-		RequestedShipment requestedShipment = new RequestedShipment();
-
 		RequestedPackageLineItem[] requestedPackageLineItems = null;
 
 		String packingType =
@@ -742,6 +740,8 @@ public class FedExCommerceShippingOptionHelper {
 			throw new IllegalArgumentException(
 				"Invalid packing type " + packingType);
 		}
+
+		RequestedShipment requestedShipment = new RequestedShipment();
 
 		requestedShipment.setDropoffType(
 			DropoffType.fromValue(

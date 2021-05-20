@@ -307,8 +307,6 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			return;
 		}
 
-		Long[] primaryKeysArray = primaryKeys.toArray(new Long[0]);
-
 		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos =
 			_tableReferenceDefinitionManager.getCombinedTableReferenceInfos();
 
@@ -320,6 +318,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				"No table reference definition for " +
 					ctPersistence.getModelClass());
 		}
+
+		Long[] primaryKeysArray = primaryKeys.toArray(new Long[0]);
 
 		DSLQuery dslQuery = null;
 

@@ -46,14 +46,14 @@ public class AssetCategoryPropertyLocalServiceImpl
 			long userId, long categoryId, String key, String value)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
-
 		validate(key, value);
 
 		if (hasCategoryProperty(categoryId, key)) {
 			throw new DuplicateCategoryPropertyException(
 				"A category property already exists with the key " + key);
 		}
+
+		User user = userLocalService.getUser(userId);
 
 		long categoryPropertyId = counterLocalService.increment();
 

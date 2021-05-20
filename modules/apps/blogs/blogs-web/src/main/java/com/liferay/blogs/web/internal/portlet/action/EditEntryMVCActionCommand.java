@@ -433,15 +433,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	private BlogsEntry _updateEntry(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
-
-		String title = ParamUtil.getString(actionRequest, "title");
-		String subtitle = ParamUtil.getString(actionRequest, "subtitle");
-		String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
-
 		String description = StringPool.BLANK;
 
 		boolean customAbstract = ParamUtil.getBoolean(
@@ -455,7 +446,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		String content = ParamUtil.getString(actionRequest, "content");
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		String subtitle = ParamUtil.getString(actionRequest, "subtitle");
+		String title = ParamUtil.getString(actionRequest, "title");
+		String urlTitle = ParamUtil.getString(actionRequest, "urlTitle");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");

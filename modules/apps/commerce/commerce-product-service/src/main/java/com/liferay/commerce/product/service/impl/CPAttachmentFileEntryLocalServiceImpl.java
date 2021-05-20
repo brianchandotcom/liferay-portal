@@ -123,7 +123,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		User user = userLocalService.getUser(userId);
 
 		Date expirationDate = null;
-		Date now = new Date();
 
 		Date displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -182,6 +181,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		if (existingCPAttachmentFileEntry != null) {
 			throw new DuplicateCPAttachmentFileEntryException();
 		}
+
+		Date now = new Date();
 
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
 
@@ -564,7 +565,6 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		}
 
 		Date expirationDate = null;
-		Date now = new Date();
 
 		Date displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -585,6 +585,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			throw new CPAttachmentFileEntryExpirationDateException(
 				"Expiration date " + expirationDate + " is in the past");
 		}
+
+		Date now = new Date();
 
 		FileEntry fileEntry = dlAppLocalService.getFileEntry(fileEntryId);
 

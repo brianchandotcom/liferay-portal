@@ -296,8 +296,6 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
-
 		long parentCategoryId = ParamUtil.getLong(
 			actionRequest, "parentCategoryId");
 		long vocabularyId = ParamUtil.getLong(actionRequest, "vocabularyId");
@@ -305,6 +303,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		if ((vocabularyId <= 0) && (parentCategoryId <= 0)) {
 			throw new NoSuchVocabularyException();
 		}
+
+		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
 		if (vocabularyId <= 0) {
 			AssetCategory parentCategory = _assetCategoryService.fetchCategory(
@@ -407,9 +407,6 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		AssetVocabularySettingsHelper vocabularySettingsHelper =
-			new AssetVocabularySettingsHelper();
-
 		int[] indexes = StringUtil.split(
 			ParamUtil.getString(actionRequest, "indexes"), 0);
 
@@ -449,6 +446,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			requireds[i] = ParamUtil.getBoolean(
 				actionRequest, "required" + index);
 		}
+
+		AssetVocabularySettingsHelper vocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
 
 		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, requireds);

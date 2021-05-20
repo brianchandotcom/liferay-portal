@@ -158,15 +158,15 @@ public class EditAssetCategoryCPDisplayLayoutMVCActionCommand
 				cpDisplayLayoutId, layoutUuid);
 		}
 		else {
+			if (classPKs.isEmpty()) {
+				throw new CPDisplayLayoutEntryException();
+			}
+
 			long commerceChannelId = ParamUtil.getLong(
 				actionRequest, "commerceChannelId");
 
 			CommerceChannel commerceChannel =
 				_commerceChannelService.getCommerceChannel(commerceChannelId);
-
-			if (classPKs.isEmpty()) {
-				throw new CPDisplayLayoutEntryException();
-			}
 
 			for (long curClassPK : classPKs) {
 				_cpDisplayLayoutService.addCPDisplayLayout(

@@ -577,14 +577,14 @@ public class CommerceOrderItemLocalServiceImpl
 			long commerceOrderItemId, Date requestedDeliveryDate)
 		throws PortalException {
 
-		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
-
 		if ((requestedDeliveryDate != null) &&
 			requestedDeliveryDate.before(new Date())) {
 
 			throw new CommerceOrderItemRequestedDeliveryDateException();
 		}
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
 		commerceOrderItem.setRequestedDeliveryDate(requestedDeliveryDate);
 
@@ -617,9 +617,6 @@ public class CommerceOrderItemLocalServiceImpl
 			int requestedDeliveryDateYear)
 		throws PortalException {
 
-		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
-
 		Date requestedDeliveryDate = PortalUtil.getDate(
 			requestedDeliveryDateMonth, requestedDeliveryDateDay,
 			requestedDeliveryDateYear);
@@ -629,6 +626,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 			throw new CommerceOrderItemRequestedDeliveryDateException();
 		}
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
 
 		commerceOrderItem.setShippingAddressId(shippingAddressId);
 		commerceOrderItem.setDeliveryGroup(deliveryGroup);

@@ -64,15 +64,15 @@ public class SkuResourceImpl
 			Long accountId, Pagination pagination)
 		throws Exception {
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(channelId);
-
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCProductException();
 		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		int countUserCommerceAccounts =
 			_commerceAccountHelper.countUserCommerceAccounts(
@@ -119,8 +119,6 @@ public class SkuResourceImpl
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannel(channelId);
 
-		List<Sku> skus = new ArrayList<>();
-
 		int countUserCommerceAccounts =
 			_commerceAccountHelper.countUserCommerceAccounts(
 				contextUser.getUserId(), commerceChannel.getGroupId());
@@ -145,6 +143,8 @@ public class SkuResourceImpl
 				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
 				contextUser.getUserId(), 0, commerceAccountIds[0]);
 		}
+
+		List<Sku> skus = new ArrayList<>();
 
 		for (CPInstance cpInstance : cpInstances) {
 			skus.add(

@@ -77,8 +77,6 @@ public class CaptchaConfigurationModelListener
 
 		String reCaptchaPublicKey = (String)properties.get(
 			"reCaptchaPublicKey");
-		String reCaptchaPrivateKey = (String)properties.get(
-			"reCaptchaPrivateKey");
 
 		if (Validator.isNull(reCaptchaPublicKey)) {
 			throw new CaptchaConfigurationException(
@@ -86,6 +84,9 @@ public class CaptchaConfigurationModelListener
 					getResourceBundle(),
 					"the-recaptcha-public-key-is-not-valid"));
 		}
+
+		String reCaptchaPrivateKey = (String)properties.get(
+			"reCaptchaPrivateKey");
 
 		if (Validator.isNull(reCaptchaPrivateKey)) {
 			throw new CaptchaConfigurationException(

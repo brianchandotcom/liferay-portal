@@ -49,8 +49,6 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 				String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
-
 		if (Validator.isBlank(externalReferenceCode)) {
 			externalReferenceCode = null;
 		}
@@ -64,6 +62,8 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceImpl
 			throw new DuplicateCommerceAccountGroupCommerceAccountRelException(
 				"Account already associated to AccountGroup");
 		}
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		long commerceAccountGroupCommerceAccountRelId =
 			counterLocalService.increment();

@@ -79,9 +79,6 @@ public class CommercePaymentServlet extends HttpServlet {
 					httpServletRequest.getSession());
 			}
 
-			CommerceOrder commerceOrder =
-				_commercePaymentHttpHelper.getCommerceOrder(httpServletRequest);
-
 			URL portalURL = new URL(_portal.getPortalURL(httpServletRequest));
 
 			_nextUrl = ParamUtil.getString(httpServletRequest, "nextStep");
@@ -91,6 +88,9 @@ public class CommercePaymentServlet extends HttpServlet {
 			if (!Objects.equals(portalURL.getHost(), nextURL.getHost())) {
 				throw new ServletException();
 			}
+
+			CommerceOrder commerceOrder =
+				_commercePaymentHttpHelper.getCommerceOrder(httpServletRequest);
 
 			_commerceOrderId = commerceOrder.getCommerceOrderId();
 

@@ -435,13 +435,11 @@ public class CommerceCurrencyLocalServiceImpl
 			Map<Locale, String> nameMap, boolean primary)
 		throws PortalException {
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
 		if (Validator.isNull(code)) {
 			throw new CommerceCurrencyCodeException();
 		}
 
-		String name = nameMap.get(locale);
+		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (Validator.isNull(name)) {
 			throw new CommerceCurrencyNameException();

@@ -60,12 +60,6 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 			CommerceCurrency secondaryCommerceCurrency)
 		throws Exception {
 
-		String primaryCurrencyCode = primaryCommerceCurrency.getCode();
-		String secondaryCurrencyCode = secondaryCommerceCurrency.getCode();
-
-		primaryCurrencyCode = StringUtil.toUpperCase(primaryCurrencyCode);
-		secondaryCurrencyCode = StringUtil.toUpperCase(secondaryCurrencyCode);
-
 		String xml = null;
 
 		int i = 0;
@@ -84,6 +78,12 @@ public class ECBExchangeRateProvider implements ExchangeRateProvider {
 				throw new PortalException("Impossible to load " + _url);
 			}
 		}
+
+		String primaryCurrencyCode = primaryCommerceCurrency.getCode();
+		String secondaryCurrencyCode = secondaryCommerceCurrency.getCode();
+
+		primaryCurrencyCode = StringUtil.toUpperCase(primaryCurrencyCode);
+		secondaryCurrencyCode = StringUtil.toUpperCase(secondaryCurrencyCode);
 
 		Document document = _saxReader.read(xml);
 

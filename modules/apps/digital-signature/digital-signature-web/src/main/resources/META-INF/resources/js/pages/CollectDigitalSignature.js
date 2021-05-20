@@ -41,7 +41,6 @@ const defaultRecipient = {
 const CollectDigitalSignature = ({
 	baseResourceURL,
 	fileEntryId,
-	portletId,
 	portletNamespace,
 }) => {
 	const urlParams = new URLSearchParams(window.location.href);

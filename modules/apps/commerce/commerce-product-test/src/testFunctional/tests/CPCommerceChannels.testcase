@@ -953,13 +953,56 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6122. EditConfigurationRemoteTaxCalculation"
-	@ignore = "true"
 	@priority = "3"
 	test EditConfigurationRemoteTaxCalculation {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6122 EditConfigurationRemoteTaxCalculation
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "Remote",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Type(
+			key_fieldName = "Tax Value Endpoint URL",
+			key_fieldValue = "",
+			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM",
+			value1 = "http://localhost:8080/web/test");
+
+		Type(
+			key_fieldName = "Tax Value Endpoint Authorization Token",
+			key_fieldValue = "",
+			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM",
+			value1 = "Test");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6107. EditMercanetPaymentMethod"

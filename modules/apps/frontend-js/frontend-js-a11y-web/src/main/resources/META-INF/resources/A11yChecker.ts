@@ -16,7 +16,7 @@ import axe, {AxeResults, RunOptions} from 'axe-core';
 
 declare global {
 	interface Window {
-		requestIdleCallback(callback: Function): number;
+		requestIdleCallback(callback: Function): any;
 		cancelIdleCallback(handle: number): void;
 	}
 }
@@ -90,7 +90,7 @@ class Queue<T> {
  * the host. The main callback will be rescheduled again until the queue is
  * empty.
  */
-class Scheduler<T> {
+export class Scheduler<T> {
 	private taskIdCounter = 0;
 	private readonly queue = new Queue<Task<T>>();
 	private currentTask: Task<T> | null = null;
@@ -111,7 +111,7 @@ class Scheduler<T> {
 	 * to maximize the chances of hitting 60 fps.
 	 */
 	private readonly yieldInterval = 100;
-	private deadline = 0;
+	public deadline = 0;
 
 	cancelHostCallback() {
 		window.cancelIdleCallback(this.scheduledHostHandle);

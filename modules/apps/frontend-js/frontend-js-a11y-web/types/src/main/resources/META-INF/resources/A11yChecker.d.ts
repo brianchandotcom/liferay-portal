@@ -15,12 +15,96 @@
 import {AxeResults, RunOptions} from 'axe-core';
 declare global {
 	interface Window {
-		requestIdleCallback(callback: Function): number;
+		requestIdleCallback(callback: Function): any;
 		cancelIdleCallback(handle: number): void;
 	}
 }
+declare type Task<T> = {
+	id: number;
+	callback: Function;
+	target: T;
+};
+declare type Selector<T> = (
+	this: void,
+	value: T,
+	index: number,
+	obj: Array<T>
+) => unknown;
+
+/**
+ * Scheduler deals with scheduling a callback to A11y that runs axe-core at the
+ * end, many of the logics and algorithms in the scheduler are restricted to
+ * A11y but partially generic.
+ *
+ * The implementation is based on Queue. Each new scheduled callback is added
+ * end of the queue, the scheduler works with the main callback which is
+ * responsible for emptying the queue and executing the queue callbacks in the
+ * work loop respecting the frame deadline.
+ *
+ * Main thread
+ * ------------------------------------------------------------------------->
+ *
+ * +------------+ ++ ++ ++ +--------+            +--------+    +------+
+ * |    Busy    | || || || |  Idle  |            |  Busy  |    | Idle |
+ * +------------+ ++ ++ ++ +--------+            +--------+    +------+
+ *
+ *                         +----------+ +---+                  +-----------+
+ *                         | Job Exec.| |   |   Yield to host  | Job Exec. |
+ *                         +----------+ +---+ <--------------> +-----------+
+ *                        |                  |
+ *                        +------------------+
+ *                              Deadline
+ *
+ * When the main thread is idle the main callback is called to empty the queue
+ * then a work loop is executed to ensure that we can execute more than one
+ * callback until the defined deadline but it is interrupted to avoid loss
+ * of frame and at the end of each execution it defines the next frame phase
+ * that avoids abusing cycles and yields up control of the main thread to
+ * the host. The main callback will be rescheduled again until the queue is
+ * empty.
+ */
+export declare class Scheduler<T> {
+	private taskIdCounter;
+	private readonly queue;
+	private currentTask;
+	private scheduledHostHandle;
+	private isCallbackScheduled;
+	private isPerformingWork;
+
+	/**
+	 * The frame phases can be recognized as lanes which are a space of time
+	 * where the scheduler yields up the main thread to the host in that time
+	 * interval before taking up again.
+	 */
+	private nextFramePhase;
+
+	/**
+	 * The yield interval is defined based on the RAIL model, this value is
+	 * static and means that we yield 100ms to the host and define the deadline
+	 * to maximize the chances of hitting 60 fps.
+	 */
+	private readonly yieldInterval;
+	deadline: number;
+	cancelHostCallback(): void;
+	hasCallback(selector: Selector<Task<T>>): Task<T> | undefined;
+	private flushWork;
+	private requestHostCallback;
+	private shouldYieldToHost;
+	private workLoop;
+	scheduleCallback(callback: Function, target: T): void;
+}
 declare type Mutation = {
+
+	/**
+	 * Attributes are the attributes of a node. The array is considered a
+	 * conditional `or`, the same for the values of an attribute.
+	 */
 	attributes: Record<string, Array<string>>;
+
+	/**
+	 * NodeNames is an array of node names. This array is considered as a
+	 * conditional `or`.
+	 */
 	nodeNames: Array<string>;
 };
 export interface A11yCheckerOptions {
@@ -43,7 +127,7 @@ export interface A11yCheckerOptions {
 
 	/**
 	 * Mutation is an optional list of criteria on which a new analysis will be
-	 * triggered.
+	 * ignored.
 	 */
 	mutations?: Record<MutationRecordType, Mutation>;
 

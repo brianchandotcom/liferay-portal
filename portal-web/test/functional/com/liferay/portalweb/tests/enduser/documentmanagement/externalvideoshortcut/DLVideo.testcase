@@ -212,21 +212,6 @@ definition {
 			locator1 = "Card#CARD_TITLE");
 	}
 
-	@description = "This test ensures that users can preview a DM video once FFMPEG is enabled."
-	@priority = "5"
-	test CanPreviewVideoAfterEnablingFFmpeg {
-		property test.name.skip.portal.instance = "DLVideo#CanPreviewVideoAfterEnablingFFmpeg";
-
-		DMNavigator.openToEntryInAdmin(
-			dmDocumentTitle = "DM Video Title In Site",
-			groupName = "Site Name",
-			siteURLKey = "site-name");
-
-		DMDocument.viewVideoPreviewGeneratingInfo();
-
-		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
-	}
-
 	@description = "This test ensures that a blog entry created with an internal video embedded in it can be exported and imported."
 	@priority = "5"
 	@refactorneeded

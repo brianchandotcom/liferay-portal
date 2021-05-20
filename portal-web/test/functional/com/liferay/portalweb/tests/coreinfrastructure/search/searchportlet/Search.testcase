@@ -229,7 +229,7 @@ definition {
 
 		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
 
-		SearchResultPortlet.addToContentPage(
+		PageEditor.addWidget(
 			portletName = "Search Results",
 			targetFragmentName = "Search Options");
 

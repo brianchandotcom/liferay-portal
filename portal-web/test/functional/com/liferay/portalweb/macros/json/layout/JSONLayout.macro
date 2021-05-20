@@ -31,37 +31,6 @@ definition {
 			type = "${type}");
 	}
 
-	@summary = "Add a private site page or private child site page to an existing site via groupName"
-	macro addPrivateLayoutByGroupName {
-		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
-
-		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
-
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
-
-		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
-			groupId = "${groupId}",
-			parentLayoutName = "${parentLayoutName}",
-			privateLayout = "true");
-
-		var serviceContext = JSONLayoutSetter.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
-
-		var type = JSONLayoutSetter.setType(type = "${type}");
-
-		JSONLayoutAPI._addLayout(
-			friendlyURL = "${friendlyURL}",
-			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			parentLayoutId = "${parentLayoutId}",
-			privateLayout = "true",
-			serviceContext = "${serviceContext}",
-			type = "${type}");
-	}
-
 	@summary = "Add a public site page  or public child site page to an existing site or child site via groupName"
 	macro addPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
@@ -69,37 +38,6 @@ definition {
 		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
 
 		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
-
-		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
-			groupId = "${groupId}",
-			parentLayoutName = "${parentLayoutName}",
-			privateLayout = "false");
-
-		var serviceContext = JSONLayoutSetter.setServiceContext(
-			assetCategoryIds = "${assetCategoryIds}",
-			assetTagNames = "${assetTagNames}",
-			serviceContext = "${serviceContext}",
-			workflowAction = "${workflowAction}");
-
-		var type = JSONLayoutSetter.setType(type = "${type}");
-
-		JSONLayoutAPI._addLayout(
-			friendlyURL = "${friendlyURL}",
-			groupId = "${groupId}",
-			layoutName = "${layoutName}",
-			parentLayoutId = "${parentLayoutId}",
-			privateLayout = "false",
-			serviceContext = "${serviceContext}",
-			type = "${type}");
-	}
-
-	@summary = "Add a public site page or public child site page to an existing site via groupName"
-	macro addPublicLayoutByGroupName {
-		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
-
-		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = "${friendlyURL}");
-
-		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
 
 		var parentLayoutId = JSONLayoutSetter.setParentLayoutId(
 			groupId = "${groupId}",

@@ -17,11 +17,8 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
-import ClayPanel from '@clayui/panel';
 import React, {useMemo, useState} from 'react';
 
-import Occurrences from './Occurrences';
-import PanelNavigator from './PanelNavigator';
 import Rule from './Rule';
 import {
 	TYPES,
@@ -124,7 +121,6 @@ function ViolationsFilter() {
 
 												return;
 											}
-
 											dispatch({
 												payload: item.value,
 												type: TYPES.CATEGORY_ADD,
@@ -159,70 +155,6 @@ function ViolationsPanelHeaderTitle() {
 	);
 }
 
-function PanelSection({children, title}) {
-	return (
-		<ClayPanel
-			displayTitle={title}
-			displayType="unstyled"
-			showCollapseIcon={false}
-		>
-			<ClayPanel.Body>{children}</ClayPanel.Body>
-		</ClayPanel>
-	);
-}
-
-function ViolationDescription({
-	description,
-	helpUrl,
-	id,
-	impact,
-	nodes,
-	onBack,
-}) {
-	const [occurrenceSelected, setOccurrenceSelected] = useState(null);
-
-	if (!occurrenceSelected) {
-		return (
-			<>
-				<PanelNavigator
-					helpUrl={helpUrl}
-					impact={impact}
-					onBack={onBack}
-					title={id}
-				/>
-				<div className="page-accessibility-tool__sidebar--occurrences-panel-wrapper">
-					<ClayPanel.Group flush small>
-						<PanelSection title={Liferay.Language.get('details')}>
-							{description}
-						</PanelSection>
-						<PanelSection
-							title={Liferay.Language.get('occurrences')}
-						>
-							<Occurrences.List
-								nodes={nodes}
-								onOccurrenceClicked={setOccurrenceSelected}
-							/>
-						</PanelSection>
-					</ClayPanel.Group>
-				</div>
-			</>
-		);
-	}
-
-	const {html, target, text} = occurrenceSelected;
-
-	return (
-		<Occurrences.Description
-			helpUrl={helpUrl}
-			html={html}
-			impact={impact}
-			onBack={() => setOccurrenceSelected(null)}
-			target={target}
-			title={text}
-		/>
-	);
-}
-
 function filterByCategories({receivedTags, selectedCategories}) {
 	return selectedCategories.some((category) =>
 		receivedTags.includes(category)
@@ -233,9 +165,8 @@ function filterByImpact({receivedImpact, selectedImpact}) {
 	return selectedImpact.includes(receivedImpact);
 }
 
-export default function Main({violations: initialViolations}) {
+export default function Violations({next, violations: initialViolations}) {
 	const {selectedCategories, selectedImpact} = useFilteredViolationsValues();
-	const [violationSelected, setViolationSelected] = useState(null);
 
 	const violations = useMemo(() => {
 		return initialViolations.filter(({impact, tags}) => {
@@ -261,58 +192,43 @@ export default function Main({violations: initialViolations}) {
 
 	const hasViolations = !!violations.length;
 
-	if (!violationSelected) {
-		return (
-			<>
-				<div className="sidebar-section">
-					<ViolationsPanelHeaderTitle />
-				</div>
-				<div className="page-accessibility-tool__sidebar--violations-panel-header-description">
-					{!hasViolations
-						? Liferay.Language.get(
-								'there-are-no-accessibility-violations-in-this-page'
-						  )
-						: Liferay.Language.get(
-								'set-of-rules-violated-by-the-highlighted-issues'
-						  )}
-				</div>
-				{hasViolations && (
-					<ClayList className="list-group-flush">
-						{violations.map((violation) => {
-							const {id, impact, nodes, ...props} = violation;
-
-							return (
-								<Rule
-									id={id}
-									impact={impact}
-									key={id}
-									nodes={nodes}
-									onListItemClick={(violation) =>
-										setViolationSelected(violation)
-									}
-									quantity={nodes.length}
-									subtext={impact}
-									title={id}
-									{...props}
-								/>
-							);
-						})}
-					</ClayList>
-				)}
-			</>
-		);
-	}
-
-	const {description, helpUrl, id, impact, nodes} = violationSelected;
-
 	return (
-		<ViolationDescription
-			description={description}
-			helpUrl={helpUrl}
-			id={id}
-			impact={impact}
-			nodes={nodes}
-			onBack={() => setViolationSelected(null)}
-		/>
+		<>
+			<div className="sidebar-section">
+				<ViolationsPanelHeaderTitle />
+			</div>
+			<div className="page-accessibility-tool__sidebar--violations-panel-header-description">
+				{!hasViolations
+					? Liferay.Language.get(
+							'there-are-no-accessibility-violations-in-this-page'
+					  )
+					: Liferay.Language.get(
+							'set-of-rules-violated-by-the-highlighted-issues'
+					  )}
+			</div>
+			{hasViolations && (
+				<ClayList className="list-group-flush">
+					{violations.map((violation, index) => {
+						const {id, impact, nodes, ...props} = violation;
+
+						return (
+							<Rule
+								id={id}
+								impact={impact}
+								key={id}
+								nodes={nodes}
+								onListItemClick={() =>
+									next({violationIndex: index})
+								}
+								quantity={nodes.length}
+								subtext={impact}
+								title={id}
+								{...props}
+							/>
+						);
+					})}
+				</ClayList>
+			)}
+		</>
 	);
 }

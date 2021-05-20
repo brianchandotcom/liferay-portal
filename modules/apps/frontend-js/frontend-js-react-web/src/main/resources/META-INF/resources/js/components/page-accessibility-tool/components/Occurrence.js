@@ -12,22 +12,36 @@
  * details.
  */
 
-import ClayList from '@clayui/list';
 import React from 'react';
 
 import PanelNavigator from './PanelNavigator';
-import Rule from './Rule';
 
-function Description({helpUrl, html, impact, onBack, target, title}) {
+function CodeBlock({children}) {
+	return (
+		<div className="page-accessibility-tool__sidebar--occurrence-panel-code-block">
+			<div className="p-2 page-accessibility-tool__sidebar--occurrence-panel-code-text">
+				{children}
+			</div>
+		</div>
+	);
+}
+
+function Occurrence({navigationState, previous, violations}) {
+	const {occurrenceIndex, occurrenceName, violationIndex} = navigationState;
+
+	const {helpUrl, html, impact, target} = violations[violationIndex].nodes[
+		occurrenceIndex
+	];
+
 	return (
 		<>
 			<PanelNavigator
 				helpUrl={helpUrl}
 				impact={impact}
-				onBack={onBack}
-				title={title}
+				onBack={() => previous()}
+				title={occurrenceName}
 			/>
-			<div className="page-accessibility-tool__sidebar--occurrences-description-wrapper">
+			<div className="page-accessibility-tool__sidebar--occurrence-description-wrapper">
 				<p className="text-secondary">
 					{Liferay.Language.get(
 						'please-open-the-devTools-in-the-browser-to-see-selected-occurrence'
@@ -46,36 +60,4 @@ function Description({helpUrl, html, impact, onBack, target, title}) {
 	);
 }
 
-function List({nodes, onOccurrenceClicked}) {
-	return (
-		<ClayList className="list-group-flush">
-			{nodes.map((occurrence, index) => (
-				<Rule
-					key={index}
-					onListItemClick={onOccurrenceClicked}
-					text={`${Liferay.Language.get('occurrence')} ${String(
-						index
-					)}`}
-					{...occurrence}
-				/>
-			))}
-		</ClayList>
-	);
-}
-
-function CodeBlock({children}) {
-	return (
-		<div className="page-accessibility-tool__sidebar--occurrences-panel-code-block">
-			<div className="p-2 page-accessibility-tool__sidebar--occurrences-panel-code-text">
-				{children}
-			</div>
-		</div>
-	);
-}
-
-const Occurrences = {
-	Description,
-	List,
-};
-
-export default Occurrences;
+export default Occurrence;

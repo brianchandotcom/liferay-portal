@@ -12,19 +12,88 @@
  * details.
  */
 
-import React from 'react';
+import React, {useState} from 'react';
 
+import Occurrence from './components/Occurrence';
+import Violation from './components/Violation';
 import Violations from './components/Violations';
 import {FilteredViolationsContextProvider} from './components/useFilteredViolations';
 
-export default function PageAccessibilityToolSidebar({
-	violations,
-}) {
+function isBetweenRange({childrenCount, newIndex}) {
+	return 0 <= newIndex && newIndex <= childrenCount;
+}
+
+function SidebarPanelsNavigator({children}) {
+	const [activePageIndex, setActivePageIndex] = useState(
+		PagesEnum.Violations
+	);
+
+	const [navigationState, setNavigationState] = useState({});
+
+	return (
+		<div className="page-accessibility-tool__sidebar sidebar sidebar-light">
+			{React.Children.map(children, (child, index) => {
+				const childrenCount = React.Children.count(children);
+
+				if (index === activePageIndex) {
+					return (
+						child &&
+						React.cloneElement(child, {
+							...child.props,
+							index: activePageIndex,
+							key: index,
+							navigationState,
+							next: (newPayload) => {
+								const newIndex = activePageIndex + 1;
+
+								if (
+									isBetweenRange({
+										childrenCount,
+										newIndex,
+									})
+								) {
+									setActivePageIndex(newIndex);
+									setNavigationState(newPayload);
+								}
+							},
+							previous: (newPayload) => {
+								const newIndex = activePageIndex - 1;
+
+								if (
+									isBetweenRange({
+										childrenCount,
+										newIndex,
+									})
+								) {
+									setActivePageIndex(newIndex);
+
+									if (newPayload) {
+										setNavigationState(newPayload);
+									}
+								}
+							},
+						})
+					);
+				}
+			})}
+		</div>
+	);
+}
+
+export const PagesEnum = {
+	Occurrence: 2,
+	Violation: 1,
+	Violations: 0,
+};
+
+export default function PageAccessibilityToolSidebar({violations}) {
 	return (
 		<FilteredViolationsContextProvider>
-			<div className="page-accessibility-tool__sidebar sidebar sidebar-light">
+			<SidebarPanelsNavigator>
 				<Violations violations={violations} />
-			</div>
+				<Violation violations={violations} />
+				<Occurrence violations={violations} />
+			</SidebarPanelsNavigator>
 		</FilteredViolationsContextProvider>
 	);
 }

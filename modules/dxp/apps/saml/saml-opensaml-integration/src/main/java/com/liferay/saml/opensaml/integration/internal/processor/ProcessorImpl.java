@@ -93,7 +93,7 @@ public abstract class ProcessorImpl
 
 			_processorContext = processorContext;
 
-			_bufferedSetters = getPatchingQueue(
+			_patchingQueue = getPatchingQueue(
 				publicIdentifier, modelGetter, processingIndex, updateFunction);
 		}
 
@@ -102,7 +102,7 @@ public abstract class ProcessorImpl
 			BiFunction<V, BiFunction<String, Class<Y>, Y>, U> mappingFunction,
 			UnsafeBiConsumer<T, U, ?> consumer) {
 
-			_bufferedSetters.add(
+			_patchingQueue.add(
 				object -> consumer.accept(
 					object,
 					mappingFunction.apply(
@@ -121,7 +121,7 @@ public abstract class ProcessorImpl
 				return;
 			}
 
-			_bufferedSetters.add(object -> consumer.accept(object, values));
+			_patchingQueue.add(object -> consumer.accept(object, values));
 		}
 
 		@Override
@@ -222,7 +222,7 @@ public abstract class ProcessorImpl
 				(obj, values) -> consumer.accept(obj, values[0]));
 		}
 
-		private final Queue<UnsafeConsumer<T, ?>> _bufferedSetters;
+		private final Queue<UnsafeConsumer<T, ?>> _patchingQueue;
 		private final ProcessorContext<M> _processorContext;
 
 	}

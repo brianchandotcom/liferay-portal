@@ -696,13 +696,34 @@ definition {
 	}
 
 	@description = "Verify that a Form can be deleted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130509 CanBeDeleted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+		
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		AssertElementPresent(
+			key_formName = "Form 1",
+			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
+
+		FormsAdmin.deleteForm(formName = "Form 1");
+
 	}
 
 	@description = "Verify that a Form can be duplicated"

@@ -392,4 +392,66 @@ definition {
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
 	}
 
+	@description = "Assert Shortcut can add within Publications and publish to production."
+	@priority = "4"
+	test PublishWithShortcut {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addDMShortcutCP(
+			dmDocumentTitle = "Document_1.jpg",
+			siteName = "Site Name");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		AssertVisible(
+			key_dmDocumentFileName = "Document_1.jpg",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+
+		Publications.gotoReviewChanges();
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Document",
+			changeSite = "Site Name",
+			changeTitle = "Document_1.jpg",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaChangesStyle(
+			changeCategory = "Shortcut",
+			changeSite = "Guest",
+			changeTitle = "Document_1.jpg",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesViaContextStyle(
+			changeCategory = "Shortcut",
+			changeDescription = "Test Test added a Shortcut in Guest",
+			changeTitle = "Document_1.jpg");
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");
+
+		DMDocument.viewCP(dmDocumentTitle = "Document_1.jpg");
+	}
+
 }

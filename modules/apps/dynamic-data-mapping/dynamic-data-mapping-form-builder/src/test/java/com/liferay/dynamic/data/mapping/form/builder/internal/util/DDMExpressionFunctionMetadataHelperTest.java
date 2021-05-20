@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -39,7 +40,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.api.support.membermodification.MemberMatcher;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -68,7 +68,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 
 		_ddmExpressionFunctionMetadataHelper.
 			populateCustomDDMExpressionFunctionsMetadata(
-				ddmExpressionFunctionMetadatasMap);
+				ddmExpressionFunctionMetadatasMap, LocaleUtil.US);
 
 		Assert.assertEquals(
 			ddmExpressionFunctionMetadatasMap.toString(), 2,
@@ -82,7 +82,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 			ddmExpressionFunctionMetadatas.size());
 		Assert.assertEquals(
 			new DDMExpressionFunctionMetadata(
-				"binaryFunction", "binaryFunction", "boolean",
+				"binaryFunction", "Binary Function", "boolean",
 				new String[] {"number", "number"}),
 			ddmExpressionFunctionMetadatas.get(0));
 
@@ -94,7 +94,7 @@ public class DDMExpressionFunctionMetadataHelperTest {
 			ddmExpressionFunctionMetadatas.size());
 		Assert.assertEquals(
 			new DDMExpressionFunctionMetadata(
-				"binaryFunction", "binaryFunction", "boolean",
+				"binaryFunction", "Binary Function", "boolean",
 				new String[] {"text", "text"}),
 			ddmExpressionFunctionMetadatas.get(0));
 	}
@@ -165,18 +165,18 @@ public class DDMExpressionFunctionMetadataHelperTest {
 	}
 
 	private void _setUpPortal() throws Exception {
-		Portal portal = PowerMockito.mock(Portal.class);
+		Portal portal = Mockito.mock(Portal.class);
 
-		MemberMatcher.field(
-			DDMExpressionFunctionMetadataHelper.class, "_portal"
-		).set(
-			_ddmExpressionFunctionMetadataHelper, portal
-		);
-
-		PowerMockito.when(
+		Mockito.when(
 			portal.getResourceBundle(Matchers.any(Locale.class))
 		).thenReturn(
 			_resourceBundle
+		);
+
+		PowerMockito.field(
+			DDMExpressionFunctionMetadataHelper.class, "_portal"
+		).set(
+			_ddmExpressionFunctionMetadataHelper, portal
 		);
 	}
 
@@ -205,6 +205,11 @@ public class DDMExpressionFunctionMetadataHelperTest {
 		@Override
 		public Boolean apply(Object object1, Object object2) {
 			return true;
+		}
+
+		@Override
+		public String getLabel(Locale locale) {
+			return "Binary Function";
 		}
 
 		@Override

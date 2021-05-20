@@ -126,27 +126,29 @@ public abstract class ProcessorImpl
 
 		@Override
 		public void handleUnsafeStringArray(
-			String fieldExpression, UnsafeBiConsumer<T, String[], ?> consumer) {
+			String fieldExpression,
+			UnsafeBiConsumer<T, String[], ?> unsafeBiConsumer) {
 
-			handleUnsafeObjectArray(fieldExpression, String.class, consumer);
+			handleUnsafeObjectArray(
+				fieldExpression, String.class, unsafeBiConsumer);
 		}
 
 		@Override
 		public void mapBoolean(
-			String fieldExpression, BiConsumer<T, Boolean> consumer) {
+			String fieldExpression, BiConsumer<T, Boolean> biConsumer) {
 
 			handleUnsafeStringArray(
 				fieldExpression,
 				(obj, values) -> {
 					for (String value : values) {
-						consumer.accept(obj, GetterUtil.getBoolean(value));
+						biConsumer.accept(obj, GetterUtil.getBoolean(value));
 					}
 				});
 		}
 
 		@Override
 		public void mapBooleanArray(
-			String fieldExpression, BiConsumer<T, boolean[]> consumer) {
+			String fieldExpression, BiConsumer<T, boolean[]> biConsumer) {
 
 			handleUnsafeStringArray(
 				fieldExpression,
@@ -157,20 +159,20 @@ public abstract class ProcessorImpl
 						booleanArray[i] = GetterUtil.getBoolean(value[i]);
 					}
 
-					consumer.accept(obj, booleanArray);
+					biConsumer.accept(obj, booleanArray);
 				});
 		}
 
 		@Override
 		public void mapLong(
-			String fieldExpression, BiConsumer<T, Long> consumer) {
+			String fieldExpression, BiConsumer<T, Long> biConsumer) {
 
 			handleUnsafeStringArray(
 				fieldExpression,
 				(obj, values) -> {
 					for (String value : values) {
 						try {
-							consumer.accept(obj, Long.parseLong(value));
+							biConsumer.accept(obj, Long.parseLong(value));
 						}
 						catch (NumberFormatException numberFormatException) {
 							throw numberFormatException;
@@ -181,14 +183,14 @@ public abstract class ProcessorImpl
 
 		@Override
 		public void mapLongArray(
-			String fieldExpression, BiConsumer<T, long[]> consumer) {
+			String fieldExpression, BiConsumer<T, long[]> biConsumer) {
 
 			handleUnsafeStringArray(
 				fieldExpression,
 				(obj, value) -> {
 					Stream<String> stream = Arrays.stream(value);
 
-					consumer.accept(
+					biConsumer.accept(
 						obj,
 						stream.mapToLong(
 							Long::parseLong
@@ -198,28 +200,30 @@ public abstract class ProcessorImpl
 
 		@Override
 		public void mapString(
-			String fieldExpression, BiConsumer<T, String> consumer) {
+			String fieldExpression, BiConsumer<T, String> biConsumer) {
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, values) -> consumer.accept(obj, values[0]));
+				(obj, values) -> biConsumer.accept(obj, values[0]));
 		}
 
 		@Override
 		public void mapStringArray(
-			String fieldExpression, BiConsumer<T, String[]> consumer) {
+			String fieldExpression, BiConsumer<T, String[]> biConsumer) {
 
 			handleUnsafeStringArray(
-				fieldExpression, (obj, values) -> consumer.accept(obj, values));
+				fieldExpression,
+				(obj, values) -> biConsumer.accept(obj, values));
 		}
 
 		@Override
 		public void mapUnsafeString(
-			String fieldExpression, UnsafeBiConsumer<T, String, ?> consumer) {
+			String fieldExpression,
+			UnsafeBiConsumer<T, String, ?> unsafeBiConsumer) {
 
 			handleUnsafeStringArray(
 				fieldExpression,
-				(obj, values) -> consumer.accept(obj, values[0]));
+				(obj, values) -> unsafeBiConsumer.accept(obj, values[0]));
 		}
 
 		private final Queue<UnsafeConsumer<T, ?>> _patchingQueue;

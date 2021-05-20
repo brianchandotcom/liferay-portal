@@ -40,28 +40,30 @@ public interface ProcessorContext<M extends BaseModel<M>> {
 	public interface Bind<T extends BaseModel<T>> {
 
 		public void handleUnsafeStringArray(
-			String fieldExpression, UnsafeBiConsumer<T, String[], ?> consumer);
+			String fieldExpression,
+			UnsafeBiConsumer<T, String[], ?> unsafeBiConsumer);
 
 		public void mapBoolean(
-			String fieldExpression, BiConsumer<T, Boolean> consumer);
+			String fieldExpression, BiConsumer<T, Boolean> biConsumer);
 
 		public void mapBooleanArray(
-			String fieldExpression, BiConsumer<T, boolean[]> consumer);
+			String fieldExpression, BiConsumer<T, boolean[]> biConsumer);
 
 		public void mapLong(
-			String fieldExpression, BiConsumer<T, Long> consumer);
+			String fieldExpression, BiConsumer<T, Long> biConsumer);
 
 		public void mapLongArray(
-			String fieldExpression, BiConsumer<T, long[]> consumer);
+			String fieldExpression, BiConsumer<T, long[]> biConsumer);
 
 		public void mapString(
-			String fieldExpression, BiConsumer<T, String> consumer);
+			String fieldExpression, BiConsumer<T, String> biConsumer);
 
 		public void mapStringArray(
-			String fieldExpression, BiConsumer<T, String[]> consumer);
+			String fieldExpression, BiConsumer<T, String[]> biConsumer);
 
 		public void mapUnsafeString(
-			String fieldExpression, UnsafeBiConsumer<T, String, ?> consumer);
+			String fieldExpression,
+			UnsafeBiConsumer<T, String, ?> unsafeBiConsumer);
 
 	}
 

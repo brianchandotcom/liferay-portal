@@ -336,10 +336,36 @@ public class OrderResourceImpl
 				orderDate.getMinute(), serviceContext);
 		}
 
-		// Printed note
+		// Requested Delivery Date
 
-		_commerceOrderService.updatePrintedNote(
-			commerceOrder.getCommerceOrderId(), order.getPrintedNote());
+		if (order.getRequestedDeliveryDate() != null) {
+			Calendar requestedDeliveryDateCalendar =
+				CalendarFactoryUtil.getCalendar(serviceContext.getTimeZone());
+
+			requestedDeliveryDateCalendar.setTime(
+				order.getRequestedDeliveryDate());
+
+			DateConfig requestedDeliveryDate = new DateConfig(
+				requestedDeliveryDateCalendar);
+
+			_commerceOrderService.updateInfo(
+				commerceOrder.getCommerceOrderId(),
+				GetterUtil.getString(
+					order.getPrintedNote(), commerceOrder.getPrintedNote()),
+				requestedDeliveryDate.getMonth(),
+				requestedDeliveryDate.getDay(), requestedDeliveryDate.getYear(),
+				requestedDeliveryDate.getHour(),
+				requestedDeliveryDate.getMinute(), serviceContext);
+		}
+		else {
+
+			// Printed note
+
+			_commerceOrderService.updatePrintedNote(
+				commerceOrder.getCommerceOrderId(),
+				GetterUtil.getString(
+					order.getPrintedNote(), commerceOrder.getPrintedNote()));
+		}
 
 		// Expando
 
@@ -540,6 +566,41 @@ public class OrderResourceImpl
 				GetterUtil.getLong(
 					order.getAccountId(),
 					commerceOrder.getCommerceAccountId())));
+
+		// Requested Delivery Date
+
+		if (order.getRequestedDeliveryDate() != null) {
+			ServiceContext serviceContext =
+				_serviceContextHelper.getServiceContext(
+					commerceOrder.getGroupId());
+
+			Calendar requestedDeliveryDateCalendar =
+				CalendarFactoryUtil.getCalendar(serviceContext.getTimeZone());
+
+			requestedDeliveryDateCalendar.setTime(
+				order.getRequestedDeliveryDate());
+
+			DateConfig requestedDeliveryDate = new DateConfig(
+				requestedDeliveryDateCalendar);
+
+			_commerceOrderService.updateInfo(
+				commerceOrder.getCommerceOrderId(),
+				GetterUtil.getString(
+					order.getPrintedNote(), commerceOrder.getPrintedNote()),
+				requestedDeliveryDate.getMonth(),
+				requestedDeliveryDate.getDay(), requestedDeliveryDate.getYear(),
+				requestedDeliveryDate.getHour(),
+				requestedDeliveryDate.getMinute(), serviceContext);
+		}
+		else {
+
+			// Printed note
+
+			_commerceOrderService.updatePrintedNote(
+				commerceOrder.getCommerceOrderId(),
+				GetterUtil.getString(
+					order.getPrintedNote(), commerceOrder.getPrintedNote()));
+		}
 
 		// Expando
 

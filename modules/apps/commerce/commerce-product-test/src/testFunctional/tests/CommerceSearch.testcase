@@ -267,13 +267,41 @@ definition {
 	}
 
 	@description = "COMMERCE-6320. As a buyer, I want to be able to search an Accounts entry using Global Search and I want to be able to click on a suggested entry and get redirected to that account page"
-	@ignore = "true"
 	@priority = "3"
 	test GlobalSearchSuggestedAccountsEntry {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6320 GlobalSearchSuggestedAccountsEntry pending implementation
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+		Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "Commerce Account");
+
+		AssertElementPresent(
+			key_entryName = "Commerce Account",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+
+		Click(
+			key_entryName = "Commerce Account",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+
+		AssertElementPresent(
+			key_accountName = "Commerce Account",
+			locator1 = "Account#ACCOUNT_MANAGEMENT_PAGE");
 	}
 
 	@description = "COMMERCE-6319. As a buyer, I want to be able to search a Catalog entry using Global Search(Product Name, Product Name with single quotes, Product Name with double quotes) and I want to be able to click on a suggested entry and get redirected to that product Details page"

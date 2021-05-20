@@ -80,8 +80,6 @@ definition {
 		AssertElementNotPresent(
 			key_fieldName = "Paragraph",
 			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT");
-
-			
 	}
 
 	@description = "Verify that a Paragraph Field can be duplicated"

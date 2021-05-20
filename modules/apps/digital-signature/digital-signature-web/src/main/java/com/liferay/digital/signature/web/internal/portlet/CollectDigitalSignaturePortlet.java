@@ -78,13 +78,13 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 			ParamUtil.getString(renderRequest, "backURL"));
 
 		try {
-			Long fileEntryId = ParamUtil.getLong(renderRequest, "fileEntryId");
-
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+			long fileEntryId = ParamUtil.getLong(renderRequest, "fileEntryId");
 
 			renderRequest.setAttribute(
 				DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRY_ID,
 				fileEntryId);
+
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 			if (fileEntry != null) {
 				renderRequest.setAttribute(

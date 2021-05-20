@@ -243,9 +243,9 @@ definition {
 			Navigator.openURL();
 		}
 
-		SignIn._signIn(
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+		User.firstLoginUI(
+			password = "${userPassword}",
+			userEmailAddress = "${userEmailAddress}");
 
 		AssertElementPresent(locator1 = "MultiFactorAuthentication#CUSTOM_MFA_TITLE");
 
@@ -286,15 +286,16 @@ definition {
 				subject = "${portalURL}: Your One-Time Password");
 
 			if (isSet(specificURL)) {
-				Navigator.openSpecificURL(url = "${specificURL}");
+				User.firstLoginUI(
+					password = "${userPassword}",
+					specificURL = "${specificURL}",
+					userEmailAddress = "${userEmailAddress}");
 			}
 			else {
-				Navigator.openURL();
+				User.firstLoginUI(
+					password = "${userPassword}",
+					userEmailAddress = "${userEmailAddress}");
 			}
-
-			SignIn._signIn(
-				userEmailAddress = "${userEmailAddress}",
-				userPassword = "${userPassword}");
 
 			Type(
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD",

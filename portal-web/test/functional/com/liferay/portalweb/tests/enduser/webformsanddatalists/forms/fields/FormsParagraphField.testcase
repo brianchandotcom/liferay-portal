@@ -449,7 +449,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Forms");
 
-
 		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName(formName = "Form 1");
@@ -468,9 +467,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
+		Click(locator1 = "Icon#BACK");
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 

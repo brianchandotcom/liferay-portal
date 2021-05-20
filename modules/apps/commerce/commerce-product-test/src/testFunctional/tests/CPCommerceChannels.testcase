@@ -691,12 +691,118 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6275. EditCategoryDisplayPage"
-	@ignore = "true"
 	@priority = "3"
 	test EditCategoryDisplayPage {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6275 EditCategoryDisplayPage
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Category Display Pages");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "Treeview#NODE_COLLAPSED");
+
+		Click(
+			key_card = "Brake System",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrame.selectFrameTop();
+
+		Button.click(button = "Add");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Choose");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_card = "Login",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrame.selectFrameTop();
+
+		Button.clickDone();
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		AssertElementPresent(
+			key_entryName = "Brake System",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		Click(
+			key_value = "Brake System",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		ClickNoError(
+			key_selectAction = "Edit",
+			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Choose");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_tabName = "Private+Pages",
+			locator1 = "AppBuilderAppAdmin#APP_TAB");
+
+		Click(
+			key_card = "Catalog",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrame.selectFrameTop();
+
+		Button.clickDone();
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrame.selectFrameTop();
+
+		AssertElementPresent(
+			key_productName = "",
+			key_Value = "Catalog",
+			locator1 = "CommerceEntry#VALUE_PRODUCT_RELATIONS");
 	}
 
 	@description = "This is a test for COMMERCE-6122. EditConfigurationRemoteTaxCalculation"

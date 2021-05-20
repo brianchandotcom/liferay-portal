@@ -17,47 +17,22 @@ package com.liferay.change.tracking.mapping;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Cheryl Tang
  */
-public final class CTMappingTableInfo {
+@ProviderType
+public interface CTMappingTableInfo {
 
-	public CTMappingTableInfo(
-		String tableName, String leftColumnName, String rightColumnName,
-		List<Map.Entry<Long, Long>> addedMappings,
-		List<Map.Entry<Long, Long>> removedMappings) {
+	public List<Map.Entry<Long, Long>> getAddedMappings();
 
-		_tableName = tableName;
-		_leftColumnName = leftColumnName;
-		_rightColumnName = rightColumnName;
-		_addedMappings = addedMappings;
-		_removedMappings = removedMappings;
-	}
+	public String getLeftColumnName();
 
-	public List<Map.Entry<Long, Long>> getAddedMappings() {
-		return _addedMappings;
-	}
+	public List<Map.Entry<Long, Long>> getRemovedMappings();
 
-	public String getLeftColumnName() {
-		return _leftColumnName;
-	}
+	public String getRightColumnName();
 
-	public List<Map.Entry<Long, Long>> getRemovedMappings() {
-		return _removedMappings;
-	}
-
-	public String getRightColumnName() {
-		return _rightColumnName;
-	}
-
-	public String getTableName() {
-		return _tableName;
-	}
-
-	private final List<Map.Entry<Long, Long>> _addedMappings;
-	private final String _leftColumnName;
-	private final List<Map.Entry<Long, Long>> _removedMappings;
-	private final String _rightColumnName;
-	private final String _tableName;
+	public String getTableName();
 
 }

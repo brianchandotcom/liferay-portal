@@ -15,6 +15,7 @@
 package com.liferay.change.tracking.internal.helper;
 
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.internal.mapping.CTMappingTableInfoImpl;
 import com.liferay.change.tracking.mapping.CTMappingTableInfo;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -69,7 +70,7 @@ public class CTTableMapperHelper {
 	public CTMappingTableInfo getCTMappingTableInfo(long ctCollectionId)
 		throws SQLException {
 
-		CTMappingTableInfo ctMappingTableInfo = new CTMappingTableInfo(
+		CTMappingTableInfo ctMappingTableInfo = new CTMappingTableInfoImpl(
 			_tableName, _leftColumnName, _rightColumnName,
 			_getCTMappingChangeList(
 				ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION),

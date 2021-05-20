@@ -38,7 +38,7 @@ public class DSCustomFieldManagerImpl implements DSCustomFieldManager {
 	public List<DSCustomField> addDSCustomFields(
 		long groupId, String dsEnvelopeId, List<DSCustomField> dsCustomFields) {
 
-		dsCustomFields = _toDSCustomFields(
+		return _toDSCustomFields(
 			_dsHttp.post(
 				groupId,
 				StringBundler.concat(
@@ -57,14 +57,6 @@ public class DSCustomFieldManagerImpl implements DSCustomFieldManager {
 							"value", dsCustomField.getValue()
 						),
 						_log))));
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Added digital signature custom fields in envelope ID " +
-					dsEnvelopeId);
-		}
-
-		return dsCustomFields;
 	}
 
 	private List<DSCustomField> _toDSCustomFields(JSONObject jsonObject) {

@@ -255,6 +255,21 @@ definition {
 		}
 	}
 
+	macro updateStatus {
+		Variables.assertDefined(parameterList = "${userEmailAddress}");
+
+		var userIds = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "${userEmailAddress}");
+
+		var status = JSONUserSetter.setStatus(
+			userStatus = "${userStatus}");
+
+		for (var userId : list "${userIds}") {
+			JSONUserAPI._updateStatus(
+				status = "${status}",
+				userId = "${userId}");
+		}
+	}
+
 	macro updateUser {
 		Variables.assertDefined(parameterList = "${userEmailAddress},${userEmailAddressUpdate},${userFirstName},${userLastName},${screenNameUpdate}");
 

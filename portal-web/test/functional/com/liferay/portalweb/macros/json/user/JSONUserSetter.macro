@@ -47,6 +47,24 @@ definition {
 		return "${requireReset}";
 	}
 
+	macro setStatus {
+		if (!(isSet(userStatus))) {
+			var userStatus = "Active";
+		}
+
+		if ("${userStatus}" == "Active") {
+			var status = "0";
+		}
+		else if ("${userStatus}" == "Inactive") {
+			var status = "5";
+		}
+		else {
+			fail("'userStatus' is either invalid or not yet set.");
+		}
+
+		return "${status}";
+	}
+
 	macro setUserFirstName {
 		Variables.assertDefined(parameterList = "${userFirstName}");
 

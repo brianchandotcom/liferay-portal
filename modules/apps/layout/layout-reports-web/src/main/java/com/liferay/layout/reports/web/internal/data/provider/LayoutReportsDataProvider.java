@@ -22,6 +22,7 @@ import com.google.api.services.pagespeedonline.v5.model.LighthouseResultV5;
 import com.google.api.services.pagespeedonline.v5.model.PagespeedApiPagespeedResponseV5;
 
 import com.liferay.layout.reports.web.internal.model.LayoutReportsIssue;
+import com.liferay.layout.reports.web.internal.util.MarkdownUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,8 +108,9 @@ public class LayoutReportsDataProvider {
 		LighthouseAuditResultV5 lighthouseAuditResultV5) {
 
 		return new LayoutReportsIssue.Detail(
-			lighthouseAuditResultV5.getDescription(), key,
-			_getCount(lighthouseAuditResultV5));
+			MarkdownUtil.markdownToHtml(
+				lighthouseAuditResultV5.getDescription()),
+			key, _getCount(lighthouseAuditResultV5));
 	}
 
 	private List<LayoutReportsIssue> _getLayoutReportsIssues(String url)

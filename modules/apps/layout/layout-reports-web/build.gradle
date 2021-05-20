@@ -35,6 +35,7 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.5"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.9"
 	compileInclude group: "org.codehaus.jackson", name: "jackson-core-asl", version: "1.9.11"
+	compileInclude group: "org.commonmark", name: "commonmark", version: "0.17.2"
 	compileInclude group: "org.threeten", name: "threetenbp", version: "1.5.0"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"

@@ -729,6 +729,43 @@ definition {
 	}
 
 	@priority = "4"
+	test BulkDeactivateUserSucceed {
+		for (var userNum : list "1,2,3,4,5") {
+			JSONUser.addUser(
+				userEmailAddress = "userea${userNum}@liferay.com",
+				userFirstName = "userfn${userNum}",
+				userLastName = "userln${userNum}",
+				userScreenName = "usersn${userNum}");
+		}
+
+		User.openUsersAdmin();
+
+		User.deactivateCP(
+			deactivateType = "Management Toolbar",
+			userFirstNameList = "userfn1,userfn3,userfn5");
+
+		User.openUsersAdmin();
+
+		for (var rowEntry : list "userfn1 userln1,userfn3 userln3,userfn5 userln5") {
+			LexiconEntry.viewNoEntry(rowEntry = "${rowEntry}");
+		}
+
+		for (var rowEntry : list "userfn2 userln2,userfn4 userln4") {
+			LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");
+		}
+
+		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+		for (var rowEntry : list "userfn1 userln1,userfn3 userln3,userfn5 userln5") {
+			LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");
+		}
+
+		for (var rowEntry : list "userfn2 userln2,userfn4 userln4") {
+			LexiconEntry.viewNoEntry(rowEntry = "${rowEntry}");
+		}
+	}
+
+	@priority = "4"
 	test CannotViewSiteSettingsInUserPersonalSite {
 		Navigator.gotoPersonalSite();
 

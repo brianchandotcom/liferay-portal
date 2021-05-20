@@ -148,7 +148,7 @@ definition {
 	test EditSegmentUserByUserTag {
 		property portal.acceptance = "true";
 
-		task("Add user with tag"){
+		task ("Add user with tag") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",

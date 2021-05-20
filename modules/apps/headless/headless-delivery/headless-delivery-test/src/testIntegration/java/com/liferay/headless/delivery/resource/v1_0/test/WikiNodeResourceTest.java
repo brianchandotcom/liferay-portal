@@ -59,15 +59,15 @@ public class WikiNodeResourceTest extends BaseWikiNodeResourceTestCase {
 
 		com.liferay.headless.delivery.client.dto.v1_0.WikiNode putWikiNode =
 			wikiNodeResource.putSiteWikiNodeByExternalReferenceCode(
-				randomWikiNode.getExternalReferenceCode(),
-				testGroup.getGroupId(), randomWikiNode);
+				testGroup.getGroupId(),
+				randomWikiNode.getExternalReferenceCode(), randomWikiNode);
 
 		assertEquals(randomWikiNode, putWikiNode);
 		assertValid(putWikiNode);
 
 		com.liferay.headless.delivery.client.dto.v1_0.WikiNode getWikiPage =
 			wikiNodeResource.getSiteWikiNodeByExternalReferenceCode(
-				putWikiNode.getExternalReferenceCode(), testGroup.getGroupId());
+				testGroup.getGroupId(), putWikiNode.getExternalReferenceCode());
 
 		assertEquals(randomWikiNode, getWikiPage);
 		assertValid(getWikiPage);

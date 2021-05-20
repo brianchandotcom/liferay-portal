@@ -7,7 +7,7 @@ definition {
 
 		WebContentStructures.addCP(structureName = "Structure Title");
 
-		DataEngine.addFieldsets(fieldsetName = "My structure with nested fields");
+		DataEngine.addFieldsetToBuilder(fieldsetName = "My structure with nested fields");
 
 		Button.clickSave();
 

@@ -50,9 +50,7 @@ definition {
 
 		PortletEntry.inputName(name = "CollapsibleTest1");
 
-		DataEngine.addFieldsets(
-			fieldsetLabel = "CollapsibleTest",
-			fieldsetName = "CollapsibleTest");
+		DataEngine.addFieldsetToBuilder(fieldsetName = "CollapsibleTest");
 
 		DataEngine.editFieldsetsCollapsible(fieldsetLabel = "CollapsibleTest");
 
@@ -93,9 +91,7 @@ definition {
 
 		PortletEntry.inputName(name = "RepeatableTest1");
 
-		DataEngine.addFieldsets(
-			fieldsetLabel = "RepeatableTest",
-			fieldsetName = "RepeatableTest");
+		DataEngine.addFieldsetToBuilder(fieldsetName = "RepeatableTest");
 
 		DataEngine.editFieldsetsRepeatable(fieldsetLabel = "RepeatableTest");
 
@@ -190,9 +186,7 @@ definition {
 
 		PortletEntry.inputName(name = "ShowAndHideTest1");
 
-		DataEngine.addFieldsets(
-			fieldsetLabel = "ShowAndHideTest",
-			fieldsetName = "ShowAndHideTest");
+		DataEngine.addFieldsetToBuilder(fieldsetName = "ShowAndHideTest");
 
 		DataEngine.configureFieldsetsShowOrHideLabel(
 			fieldFieldLabel = "Text",

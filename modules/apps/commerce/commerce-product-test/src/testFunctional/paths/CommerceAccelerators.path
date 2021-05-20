@@ -337,6 +337,11 @@
 </tr>
 <!--MINICART-->
 <tr>
+	<td>MINI_CART_EMPTY</td>
+	<td>//div[@class='empty-cart']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_CLOSE</td>
 	<td>//button[@class='mini-cart-close']</td>
 	<td></td>

@@ -109,13 +109,68 @@ definition {
 	}
 
 	@description = "COMMERCE-5929. As a buyer, I want to be able to select an order from the list (which is not the selected one), and have the selected order change to the newly selected order"
-	@ignore = "true"
 	@priority = "3"
 	test ChangeActiveOrderFromOrdersList {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5929 ChangeActiveOrderFromOrdersList pending implementation
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "test",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Click(
+			key_FilterOption = "Add Order",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Click(
+			key_FilterOption = "Add Order",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		var getFirstId= selenium.getText(locator1 = "CommerceEntry#ACTIVE_ORDER_ID");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Click(locator1 = "Button#ANGLE_DOWN");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
+
+		var getSecondId= selenium.getText(
+			locator1 = "CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
+
+		WaitForElementPresent(locator1 = "CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
+
+		Click(locator1 = "CommerceEntry#ORDER_ID_FROM_ACCOUNT_SELECTOR");
+
+		AssertElementNotPresent(
+			key_FilterOption = "${getFirstId}",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		AssertElementPresent(
+			key_FilterOption = "${getSecondId}",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		Click(locator1 = "CommerceAccelerators#MINI_CART_BUTTON");
+
+		AssertElementPresent(locator1 = "CommerceAccelerators#MINI_CART_EMPTY");
 	}
 
 	@description = "COMMERCE-5936. As a buyer, I want to be able to create a new order from the account selector dropdown's order list view, The created order should then be the selected order"

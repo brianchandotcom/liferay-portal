@@ -567,6 +567,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORDER_ID_FROM_ACCOUNT_SELECTOR</td>
+	<td>//table[contains(@class,'orders-table')]/tbody/tr[2]//a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_ORDER_ID</td>
 	<td>//input[@type='text'][contains(@class,'form-control')][contains(@placeholder,'Search Order')]</td>
 	<td></td>

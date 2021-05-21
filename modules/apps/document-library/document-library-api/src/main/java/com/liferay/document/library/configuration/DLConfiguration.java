@@ -34,6 +34,9 @@ public interface DLConfiguration {
 	@Meta.AD(deflt = "true", name = "add-default-structures", required = false)
 	public boolean addDefaultStructures();
 
+	@Meta.AD(deflt = "15", name = "check-interval", required = false)
+	public int checkInterval();
+
 	@Meta.AD(
 		deflt = "text/asp|text/css|text/ecmascript|text/html|text/javascript|text/x-c|text/x-fortran|text/x-java-source|text/x-pascal|text/x-script.perl|text/x-script.perl-module|text/xml",
 		name = "code-file-mime-types", required = false

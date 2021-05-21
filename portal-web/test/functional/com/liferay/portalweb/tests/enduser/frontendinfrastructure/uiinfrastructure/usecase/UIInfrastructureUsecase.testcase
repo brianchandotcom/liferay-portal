@@ -292,7 +292,6 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
-		property portal.upstream = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

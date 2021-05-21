@@ -76,9 +76,13 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SybaseDump;
@@ -786,6 +790,55 @@ public class CompanyLocalServiceTest {
 			CompanyLocalServiceUtil.getCompanyByVirtualHost("0:0:0:0:0:0:0:1"));
 
 		CompanyLocalServiceUtil.deleteCompany(company);
+	}
+
+	@Test
+	public void testUpdateCompanyLocalesUpdateGroupLocales() throws Exception {
+		Company company = addCompany();
+
+		String[] companyLanguageIds = PrefsPropsUtil.getStringArray(
+			company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA,
+			PropsValues.LOCALES_ENABLED);
+
+		User user = UserTestUtil.getAdminUser(company.getCompanyId());
+
+		Group group = GroupTestUtil.addGroup(
+			company.getCompanyId(), user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		group = GroupTestUtil.updateDisplaySettings(
+			group.getGroupId(),
+			ListUtil.fromArray(LocaleUtil.fromLanguageIds(companyLanguageIds)),
+			LocaleUtil.getDefault());
+
+		UnicodeProperties groupTypeSettingsUnicodeProperties =
+			group.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			StringUtil.merge(companyLanguageIds),
+			groupTypeSettingsUnicodeProperties.getProperty(PropsKeys.LOCALES));
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+		String languageIds = "ca_ES,en_US";
+
+		unicodeProperties.put(PropsKeys.LOCALES, languageIds);
+
+		CompanyLocalServiceUtil.updatePreferences(
+			company.getCompanyId(), unicodeProperties);
+
+		Assert.assertEquals(
+			languageIds,
+			PrefsPropsUtil.getString(
+				company.getCompanyId(), PropsKeys.LOCALES));
+
+		group = GroupLocalServiceUtil.getGroup(group.getGroupId());
+
+		groupTypeSettingsUnicodeProperties = group.getTypeSettingsProperties();
+
+		Assert.assertEquals(
+			languageIds,
+			groupTypeSettingsUnicodeProperties.getProperty(PropsKeys.LOCALES));
 	}
 
 	@Test

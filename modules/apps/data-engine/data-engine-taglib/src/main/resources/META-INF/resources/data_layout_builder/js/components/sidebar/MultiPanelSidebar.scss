@@ -1,8 +1,12 @@
 @import 'atlas-variables';
-
 @import '../../../css/variables';
 
-$multiPanelSidebarButtonHeight: $multiPanelSidebarButtonWidth;
+$controlMenuHeight: 48px;
+$defaultTransitionDuration: 0.5s;
+$desktopControlMenuHeight: 56px;
+$managementBarHeight: 64px;
+$toolbarHeight: 64px;
+$zIndexMultiPanelSidebar: 972;
 
 // z-indexes for children of page-editor-sidebar (which is a stacking context).
 

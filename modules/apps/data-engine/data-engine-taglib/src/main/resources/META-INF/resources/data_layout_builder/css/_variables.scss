@@ -1,6 +1,3 @@
-// Animations
-
-$defaultTransitionDuration: 0.5s;
 
 // Height for the sidebar when display setting is enabled
 
@@ -8,20 +5,8 @@ $displaySettingsHeight: 48px;
 
 // Layout
 
-$controlMenuHeight: 48px;
-$desktopControlMenuHeight: 56px;
-$managementBarHeight: 64px;
 $multiPanelSidebarButtonWidth: 40px;
-$multiPanelSidebarContentWidth: 340px;
-$toolbarHeight: 64px;
 
-// ---------- Regular sizes ----------
+// Animations
 
 $animation: cubic-bezier(0.25, 0.1, 0.25, 1);
-
-// z-indexes, ordered numerically.
-
-$zIndexMultiPanelSidebar: 972;
-$portletTopperZIndex: 990;
-$dragPreviewLayer: 991;
-$shimZIndex: 9999;

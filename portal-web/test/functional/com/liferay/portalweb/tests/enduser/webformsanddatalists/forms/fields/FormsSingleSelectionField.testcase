@@ -128,13 +128,51 @@ definition {
 	}
 
 	@description = "Verify that a Single Selection Field can be required"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeRequired {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132192 CanBeRequired pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection",
+			formPageNumber = "0");
+
+		var fieldSingleSelectionField = FormFields.getFieldName();
+
+		FormFields.enableSwitcher(fieldName = "Required Field");
+
+		Form.save();
+
+		Form.publishForm();
+		
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Single Selection");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is required.");
+
+		FormFields.viewRadioLabel(
+			fieldLabel = "Single Selection",
+			fieldName = "${fieldSingleSelectionField}");
+
+		FormFields.selectRadioOption(
+			fieldName = "${fieldSingleSelectionField}",
+			radioOption = "Option");
+
+		FormPortlet.submitSuccessfully();
+
+
 	}
 
 	@description = "Verify that a Single Selection Field can be set to repeatable"

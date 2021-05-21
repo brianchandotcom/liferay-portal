@@ -118,7 +118,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			String logString = StringPool.BLANK;
 
 			if (pid[1] != null) {
-				logString = StringPool.DASH + pid[1];
+				logString = StringPool.TILDE + pid[1];
 			}
 
 			if (old == null) {
@@ -151,7 +151,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		String logString = StringPool.BLANK;
 
 		if (pid[1] != null) {
-			logString = StringPool.DASH + pid[1];
+			logString = StringPool.TILDE + pid[1];
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -247,7 +247,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 	private String[] _parsePid(String path) {
 		String pid = path.substring(0, path.lastIndexOf(CharPool.PERIOD));
 
-		int index = pid.indexOf(CharPool.DASH);
+		int index = pid.indexOf(CharPool.TILDE);
 
 		if (index > 0) {
 			String factoryPid = pid.substring(index + 1);

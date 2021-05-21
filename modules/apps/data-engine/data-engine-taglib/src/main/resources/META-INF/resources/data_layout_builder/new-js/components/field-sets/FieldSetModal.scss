@@ -1,10 +1,11 @@
-.fieldset-modal {
-	.data-engine-form-builder > .sheet {
-		background-color: transparent;
-		border: 0 none;
-	}
 
+.fieldset-modal {
 	.data-engine-form-builder {
+		> .sheet {
+			background-color: transparent;
+			border: 0 none;
+		}
+
 		&.ddm-form-builder {
 			padding-right: 15px;
 

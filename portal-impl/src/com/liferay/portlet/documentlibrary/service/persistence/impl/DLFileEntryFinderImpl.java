@@ -16,7 +16,10 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryFinder;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -38,6 +41,7 @@ import com.liferay.portlet.documentlibrary.model.impl.DLFileVersionImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -400,6 +404,42 @@ public class DLFileEntryFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_ORPHANED_FILE_ENTRIES);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addEntity(
+				DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
+
+			return sqlQuery.list(true);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<DLFileEntry> findByReviewDate(
+		Date reviewDateLT, Date reviewDateGT) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
+				DLFileEntryTable.INSTANCE
+			).from(
+				DLFileEntryTable.INSTANCE
+			).where(
+				DLFileEntryTable.INSTANCE.reviewDate.gte(
+					reviewDateGT
+				).and(
+					DLFileEntryTable.INSTANCE.reviewDate.lte(reviewDateLT)
+				)
+			);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(dslQuery);
 
 			sqlQuery.addEntity(
 				DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);

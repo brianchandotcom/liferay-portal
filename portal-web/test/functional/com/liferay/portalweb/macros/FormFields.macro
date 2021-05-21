@@ -619,6 +619,14 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewDeletedFieldLabel {
+		key_fieldName = "${fieldName}";
+
+		AssertElementNotPresent(
+			key_name = "${fieldName}",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+	}
+
 	macro viewFieldHelpText {
 		AssertTextEquals(
 			key_fieldName = "${fieldName}",

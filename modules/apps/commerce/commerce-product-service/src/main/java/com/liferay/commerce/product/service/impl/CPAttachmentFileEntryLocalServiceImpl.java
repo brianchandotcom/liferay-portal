@@ -70,7 +70,13 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -157,7 +163,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 				fileEntry, userId, groupId, className.getClassName(), classPK);
 		}
 
-		_validate(classNameId, classPK, fileEntryId, cdnUrl, cdn, 0, null, false);
+		_validate(
+			classNameId, classPK, fileEntryId, cdnUrl, cdn, 0, null, false);
 
 		Date expirationDate = null;
 		Date now = new Date();
@@ -642,8 +649,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		_validate(
 			cpAttachmentFileEntry.getClassNameId(),
-			cpAttachmentFileEntry.getClassPK(),
-				fileEntryId, cdnUrl, cdn, cpAttachmentFileEntry.getFileEntryId(), cpAttachmentFileEntry.getCdnUrl(), true);
+			cpAttachmentFileEntry.getClassPK(), fileEntryId, cdnUrl, cdn,
+			cpAttachmentFileEntry.getFileEntryId(),
+			cpAttachmentFileEntry.getCdnUrl(), true);
 
 		Date expirationDate = null;
 		Date now = new Date();
@@ -1004,14 +1012,16 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			boolean cdn, long oldFileEntryId, String oldCdnUrl, boolean old)
 		throws PortalException {
 
-		if(old){
-			if(!cdn){
-				if((fileEntryId == oldFileEntryId)){
+		if (old) {
+			if (!cdn) {
+				if (fileEntryId == oldFileEntryId) {
 					return;
 				}
-			}else if(Validator.isNull(cdnUrl) && Validator.isNull(oldCdnUrl)){
+			}
+			else if (Validator.isNull(cdnUrl) && Validator.isNull(oldCdnUrl)) {
 				throw new CPAttachmentFileEntryCdnUrlException();
-			}else if (Objects.equals(cdnUrl, oldCdnUrl)){
+			}
+			else if (Objects.equals(cdnUrl, oldCdnUrl)) {
 				return;
 			}
 		}

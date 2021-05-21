@@ -198,8 +198,6 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
-
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Experience Content Page",
 			siteName = "Test Site Name");

@@ -127,34 +127,31 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			evenlopeJSONObject -> _toDSEnvelope(evenlopeJSONObject), _log);
 	}
 
-	private List<DSDocument> _getDSDocuments(JSONArray dsDocumentsJSONArray) {
+	private List<DSDocument> _getDSDocuments(JSONArray jsonArray) {
 		return JSONUtil.toList(
-			dsDocumentsJSONArray,
-			documentJSONObject -> new DSDocument() {
+			jsonArray,
+			jsonObject -> new DSDocument() {
 				{
-					dsDocumentId = documentJSONObject.getString("documentId");
-					name = documentJSONObject.getString("name");
-					uri = documentJSONObject.getString("uri");
+					dsDocumentId = jsonObject.getString("documentId");
+					name = jsonObject.getString("name");
+					uri = jsonObject.getString("uri");
 				}
 			},
 			_log);
 	}
 
-	private List<DSRecipient> _getDSRecipients(
-		JSONObject dsRecipientsJSONObject) {
-
-		if (dsRecipientsJSONObject == null) {
+	private List<DSRecipient> _getDSRecipients(JSONObject jsonObject) {
+		if (jsonObject == null) {
 			return Collections.emptyList();
 		}
 
 		return JSONUtil.toList(
-			dsRecipientsJSONObject.getJSONArray("signers"),
-			recipientJSONObject -> new DSRecipient() {
+			jsonObject.getJSONArray("signers"),
+			signerJSONObject -> new DSRecipient() {
 				{
-					dsRecipientId = recipientJSONObject.getString(
-						"recipientId");
-					emailAddress = recipientJSONObject.getString("email");
-					name = recipientJSONObject.getString("name");
+					dsRecipientId = signerJSONObject.getString("recipientId");
+					emailAddress = signerJSONObject.getString("email");
+					name = signerJSONObject.getString("name");
 				}
 			},
 			_log);

@@ -45,26 +45,6 @@ export function forEachDataDefinitionField(
 	return false;
 }
 
-export function containsFieldSet(dataDefinition, dataDefinitionId) {
-	let hasFieldSet = false;
-
-	forEachDataDefinitionField(dataDefinition, (dataDefinitionField) => {
-		const {customProperties, fieldType} = dataDefinitionField;
-
-		if (
-			fieldType === 'fieldset' &&
-			customProperties &&
-			customProperties.ddmStructureId == dataDefinitionId
-		) {
-			hasFieldSet = true;
-		}
-
-		return hasFieldSet;
-	});
-
-	return hasFieldSet;
-}
-
 export function getDataDefinitionField(
 	dataDefinition = {dataDefinitionFields: []},
 	fieldName
@@ -82,12 +62,6 @@ export function getDataDefinitionField(
 	});
 
 	return field;
-}
-
-export function getDataDefinitionFieldSet(dataDefinitionFields, fieldSetId) {
-	return dataDefinitionFields.find(
-		({customProperties: {ddmStructureId}}) => ddmStructureId == fieldSetId
-	);
 }
 
 export function getFieldLabel(dataDefinition, fieldName) {

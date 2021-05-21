@@ -41,12 +41,12 @@
 </tr>
 <tr>
     <td>DELETED_CRITERIA</td>
-    <td>//div[@class='criteria-message']td>
+    <td>//div[@class='criteria-message']</td>
     <td></td>
 </tr>
 <tr>
     <td>DUPLICATED_CRITERIA</td>
-    <td>(//div[@class='criteria-statement']//div[text()='${criteriaName}'])[${totalCriteriaCount}]td>
+    <td>(//div[@class='criteria-statement']//div[text()='${criteriaName}'])[${totalCriteriaCount}]</td>
     <td></td>
 </tr>
 <tr>
@@ -90,8 +90,48 @@
     <td></td>
 </tr>
 <tr>
+    <td>SEGMENT_COMPOSITION_COUNT</td>
+    <td>//span[text()='${individualsType}']/parent::div/following-sibling::div</td>
+    <td></td>
+</tr>
+<tr>
     <td>SEGMENT_CREATION_PAGE</td>
     <td>//h1/following-sibling::div</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_CRITERIA_ATTRIBUTE_VALUE</td>
+    <td>//div[@class='criteria-row']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_CRITERIA_CRITERIA_NAME</td>
+    <td>//div[@class='criteria-row']//self::b</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_CRITERIA_CRITERIA_DETAIL</td>
+    <td>//div[@class='criteria-row']//self::b//following-sibling::span</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_CRITERIA_CRITERIA_VALUE</td>
+    <td>//div[@class='criteria-row']//self::b//following-sibling::span//following-sibling::b</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_MEMBERSHIP_CARD</td>
+    <td>//div[@class='criteria-row']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_TOP_INTERESTS_CARD</td>
+    <td>//div[contains(@class,'interests-card')]//*[@class='card-header']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_BREAKDOWN_CARD</td>
+    <td>//div[contains(@class,'distribution-card')]//*[@class='description']/h4</td>
     <td></td>
 </tr>
 <tr>

@@ -143,13 +143,35 @@ definition {
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131337 LabelCanBeHidden pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+
+		FormFields.viewTextLabel(fieldLabel = "Text");
+		
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.clickShowLabel();
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
+
+		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Text");
 	}
 
 	@description = "Verify that Placeholder Text can be set"

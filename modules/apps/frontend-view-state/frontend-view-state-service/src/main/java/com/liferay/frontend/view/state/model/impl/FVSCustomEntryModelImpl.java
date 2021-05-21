@@ -96,7 +96,7 @@ public class FVSCustomEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FVSCustomEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fvsCustomEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,entityId VARCHAR(75) null,fvsEntryId LONG,name VARCHAR(75) null)";
+		"create table FVSCustomEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fvsCustomEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,entityId VARCHAR(200) null,fvsEntryId LONG,name VARCHAR(200) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FVSCustomEntry";
 

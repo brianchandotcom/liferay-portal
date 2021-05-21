@@ -374,6 +374,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		Entry entry = entryPersistence.findByPrimaryKey(entryId);
+		Date now = new Date();
 
 		if (entry.isScheduleRequest()) {
 			StringBundler sb = new StringBundler(4);
@@ -383,7 +384,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"MM_dd_yyyy_HH_mm");
 
-			sb.append(dateFormat.format(new Date()));
+			sb.append(dateFormat.format(now));
 
 			sb.append(StringPool.PERIOD);
 			sb.append(StringUtil.extractLast(reportName, StringPool.PERIOD));

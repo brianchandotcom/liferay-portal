@@ -107,6 +107,26 @@
 				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
+	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.countByParentMessageId">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				MBMessage
+			WHERE
+				(
+					(
+						(NOT ?) AND
+						(MBMessage.parentMessageId = ?)
+					) OR
+					(
+						(?) AND
+						(MBMessage.treePath LIKE ?)
+					)
+				) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
+		]]>
+	</sql>
 	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.countByC_T">
 		<![CDATA[
 			SELECT
@@ -154,6 +174,26 @@
 				(currentMessage.categoryId = ?) AND
 				(currentMessage.userId = ?) AND
 				(currentMessage.modifiedDate > ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.findByParentMessageId">
+		<![CDATA[
+			SELECT
+				{MBMessage.*}
+			FROM
+				MBMessage
+			WHERE
+				(
+					(
+						(NOT ?) AND
+						(MBMessage.parentMessageId = ?)
+					) OR
+					(
+						(?) AND
+						(MBMessage.treePath LIKE ?)
+					)
+				) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.findByThreadId">

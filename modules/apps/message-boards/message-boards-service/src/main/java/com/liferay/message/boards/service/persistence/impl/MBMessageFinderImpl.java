@@ -48,6 +48,9 @@ import org.osgi.service.component.annotations.Reference;
 public class MBMessageFinderImpl
 	extends MBMessageFinderBaseImpl implements MBMessageFinder {
 
+	public static final String COUNT_BY_PARENT_MESSAGE_ID =
+		MBMessageFinder.class.getName() + ".countByParentMessageId";
+
 	public static final String COUNT_BY_C_T =
 		MBMessageFinder.class.getName() + ".countByC_T";
 
@@ -60,6 +63,9 @@ public class MBMessageFinderImpl
 	public static final String COUNT_BY_G_U_MD_C_A_S =
 		MBMessageFinder.class.getName() + ".countByG_U_MD_C_A_S";
 
+	public static final String FIND_BY_PARENT_MESSAGE_ID =
+		MBMessageFinder.class.getName() + ".findByParentMessageId";
+
 	public static final String FIND_BY_THREAD_ID =
 		MBMessageFinder.class.getName() + ".findByThreadId";
 
@@ -71,6 +77,57 @@ public class MBMessageFinderImpl
 
 	public static final String FIND_BY_G_U_MD_C_A_S =
 		MBMessageFinder.class.getName() + ".findByG_U_MD_C_A_S";
+
+	@Override
+	public int countByParentMessageId(
+		long parentMessageId, boolean flatten,
+		QueryDefinition<MBMessage> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), COUNT_BY_PARENT_MESSAGE_ID, queryDefinition,
+				MBMessageImpl.TABLE_NAME);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(flatten);
+			queryPos.add(parentMessageId);
+			queryPos.add(flatten);
+			queryPos.add("%/" + parentMessageId + "/_%");
+			queryPos.add(queryDefinition.getStatus());
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				queryPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					queryPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
+			Iterator<Long> iterator = sqlQuery.iterate();
+
+			if (iterator.hasNext()) {
+				Long count = iterator.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public int countByC_T(Date createDate, long threadId) {
@@ -199,6 +256,49 @@ public class MBMessageFinderImpl
 		return doFindByG_U_MD_C_A_S(
 			groupId, userId, modifiedDate, categoryIds, anonymous, status,
 			start, end, true);
+	}
+
+	@Override
+	public List<MBMessage> findByParentMessageId(
+		long parentMessageId, boolean flatten,
+		QueryDefinition<MBMessage> queryDefinition) {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = _customSQL.get(
+				getClass(), FIND_BY_PARENT_MESSAGE_ID, queryDefinition,
+				MBMessageImpl.TABLE_NAME);
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addEntity(MBMessageImpl.TABLE_NAME, MBMessageImpl.class);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(flatten);
+			queryPos.add(parentMessageId);
+			queryPos.add(flatten);
+			queryPos.add("%/" + parentMessageId + "/_%");
+			queryPos.add(queryDefinition.getStatus());
+
+			if (queryDefinition.getOwnerUserId() > 0) {
+				queryPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					queryPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+
+			return (List<MBMessage>)QueryUtil.list(
+				sqlQuery, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override

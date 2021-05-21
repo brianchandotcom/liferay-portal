@@ -31,6 +31,7 @@ import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.LockManager;
@@ -489,6 +490,38 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		return exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
 			messages, themeDisplay);
+	}
+
+	@Override
+	public List<MBMessage> getChildMessages(
+			long parentMessageId, boolean flatten,
+			QueryDefinition<MBMessage> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
+		return mbMessageFinder.findByParentMessageId(
+			parentMessageId, flatten, queryDefinition);
+	}
+
+	@Override
+	public int getChildMessagesCount(
+			long parentMessageId, boolean flatten,
+			QueryDefinition<MBMessage> queryDefinition)
+		throws PortalException {
+
+		if (queryDefinition.isIncludeOwner() &&
+			(queryDefinition.getOwnerUserId() != 0)) {
+
+			queryDefinition.setOwnerUserId(getUserId());
+		}
+
+		return mbMessageFinder.countByParentMessageId(
+			parentMessageId, flatten, queryDefinition);
 	}
 
 	@Override

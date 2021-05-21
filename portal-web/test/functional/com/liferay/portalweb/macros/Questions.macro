@@ -12,53 +12,6 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/new");
 	}
 
-	macro addQuestionByAPI {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
-
-		MessageboardsCategory.gotoPG(categoryName = "${categoryName}");
-
-		Pause(locator = "3000");
-
-		var categoryId = JSONMBMessage.getCategoryId();
-
-		var rightCategoryId = StringUtil.extractLast("${categoryId}", "CategoryId=");
-		JSONQuestionsAPI._addQuestion(
-			bodyField = "${bodyField}",
-			categoryId = "${rightCategoryId}",
-			tagField = "${tagField}",
-			titleField = "${titleField}");
-	}
-
-	macro addQuestionWithoutTagByAPI {
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Message Boards");
-
-		MessageboardsCategory.gotoPG(categoryName = "${categoryName}");
-
-		if (isSet(subCategoryName)) {
-			MessageboardsCategory.gotoPG(categoryName = "${subCategoryName}");
-		}
-
-		Pause(locator = "3000");
-
-		var categoryId = JSONMBMessage.getCategoryId();
-
-		var rightCategoryId = StringUtil.extractLast("${categoryId}", "CategoryId=");
-
-		JSONQuestionsAPI._addQuestionWithoutTag(
-			bodyField = "${bodyField}",
-			categoryId = "${rightCategoryId}",
-			titleField = "${titleField}");
-	}
-
 	macro addRootTopic {
 		if (IsElementPresent(locator1 = "Button#ANY", key_text = "New Topic")) {
 			Click(

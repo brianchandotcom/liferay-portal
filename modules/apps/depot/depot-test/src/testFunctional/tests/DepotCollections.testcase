@@ -95,15 +95,9 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -199,15 +193,9 @@ definition {
 			groupName = "Site Name",
 			remotePort = "9080");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -373,13 +361,9 @@ definition {
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "site-name");
 
@@ -461,13 +445,9 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -676,13 +656,9 @@ definition {
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
@@ -756,13 +732,9 @@ definition {
 			layoutName = "Asset Publisher Page",
 			widgetName = "Asset Publisher");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",

@@ -41,15 +41,9 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(
-			connectSite = "true",
-			siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 

@@ -135,13 +135,9 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
@@ -663,13 +659,9 @@ definition {
 			siteName = "Site Name",
 			userScreenName = "usersn");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

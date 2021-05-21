@@ -724,13 +724,11 @@ definition {
 			connectedSiteNumber = "0",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name 1,Site Name 2,Site Name 3");
+		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "${siteName}");
+		}
 
 		DepotNavigator.openDepotAdmin();
 
@@ -789,13 +787,11 @@ definition {
 			depotName = "Test Depot Name",
 			tableView = "true");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name 1,Site Name 2,Site Name 3");
+		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "${siteName}");
+		}
 
 		DepotNavigator.openDepotAdmin();
 

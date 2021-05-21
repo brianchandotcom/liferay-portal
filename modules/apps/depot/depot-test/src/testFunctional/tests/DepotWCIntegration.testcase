@@ -62,13 +62,9 @@ definition {
 			title = "WC WebContent Title 2");
 
 		for (var depotName : list "Test Depot Name,Test Depot Name 2") {
-			DepotNavigator.openDepotAdmin();
-
-			DepotNavigator.gotoEdit(depotName = "${depotName}");
-
-			DepotNavigator.gotoSites(depotName = "${depotName}");
-
-			Depot.connectSite(siteList = "Site Name");
+			JSONDepot.connectSite(
+				depotName = "${depotName}",
+				groupName = "Site Name");
 		}
 
 		Navigator.gotoSitePage(
@@ -122,13 +118,9 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -199,13 +191,9 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Remove Customized WC Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Remove Customized WC Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Remove Customized WC Depot Name",
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -283,13 +271,9 @@ definition {
 			layoutPageTemplateStatus = "Approved",
 			layoutPageTemplateType = "Widget Page Template");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
 
@@ -331,13 +315,9 @@ definition {
 			site = "false",
 			title = "WC Depot WebContent");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -410,13 +390,9 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Fragment Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Fragment Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Fragment Depot Name",
+			groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
@@ -452,13 +428,9 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 
@@ -511,13 +483,9 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
@@ -550,13 +518,9 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
@@ -586,13 +550,9 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
 
@@ -617,13 +577,9 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test SelectStructureInDepotViaTemplateOnSite {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -697,13 +653,9 @@ definition {
 		}
 
 		for (var count : list "1,2") {
-			DepotNavigator.openDepotAdmin();
-
-			DepotNavigator.gotoEdit(depotName = "Test Depot Name${count}");
-
-			DepotNavigator.gotoSites(depotName = "Test Depot Name${count}");
-
-			Depot.connectSite(siteList = "Site Name");
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name${count}",
+				groupName = "Site Name");
 		}
 
 		for (var count : list "1,2") {
@@ -778,13 +730,9 @@ definition {
 			templateFieldNames = "Text",
 			templateName = "WC Template Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -868,13 +816,9 @@ definition {
 		}
 
 		for (var i : list "1,2,3") {
-			DepotNavigator.openDepotAdmin();
-
-			DepotNavigator.gotoEdit(depotName = "Test Depot Name${i}");
-
-			DepotNavigator.gotoSites(depotName = "Test Depot Name${i}");
-
-			Depot.connectSite(siteList = "Site Name");
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name${i}",
+				groupName = "Site Name");
 		}
 
 		for (var i : list "1,2,3") {

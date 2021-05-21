@@ -49,13 +49,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
@@ -101,13 +97,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpeg");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name");
 
@@ -144,13 +136,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpeg");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -228,13 +216,9 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Depot");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -302,13 +286,9 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Depot");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -358,13 +338,9 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Depot");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -430,13 +406,9 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 

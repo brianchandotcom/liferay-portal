@@ -20,15 +20,9 @@ definition {
 			groupName = "Site Name",
 			layoutName = "Test Page");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+			groupName = "Site Name");
 
 		JSONStaging.enableLocalStaging(
 			groupName = "Test Depot Name",
@@ -594,19 +588,15 @@ definition {
 			groupName = "Test Embedded Video Site Name",
 			layoutName = "Test Page");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONDepot.connectSite(
 			depotName = "Test Embedded Video Depot Name",
-			portlet = "Settings");
-
-		DepotNavigator.gotoSites(depotName = "Test Embedded Video Depot Name");
-
-		Depot.connectSite(siteList = "Test Embedded Video Site Name");
+			groupName = "Test Embedded Video Site Name");
 
 		JSONStaging.enableLocalStaging(
 			groupName = "Test Embedded Video Depot Name",
 			site = "false");
+
+		JSONStaging.enableLocalStaging(groupName = "Test Embedded Video Site Name");
 
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Embedded Video Depot Name");
 

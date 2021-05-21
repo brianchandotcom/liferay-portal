@@ -32,15 +32,9 @@ definition {
 			groupName = "Site Name",
 			remotePort = "9080");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+			groupName = "Site Name");
 	}
 
 	tearDown {

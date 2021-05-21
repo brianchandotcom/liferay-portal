@@ -369,16 +369,6 @@ definition {
 			key_titleName = "Link",
 			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 
-		Click(
-			fieldLabel = "Link Type",
-			locator1 = "FormFields#PARAGRAPH_LINK_SELECTOR",
-			optionValue = "url");
-
-		Click(
-			fieldLabel = "Protocol",
-			locator1 = "FormFields#PARAGRAPH_LINK_SELECTOR",
-			optionValue = "http://");
-
 		Type(
 			fieldLabel = "URL",
 			locator1 = "FormFields#PARAGRAPH_LINK_TEXT_INPUT",

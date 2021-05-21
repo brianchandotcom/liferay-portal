@@ -35,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -159,39 +160,32 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			_log);
 	}
 
-	private void _setDSEnvelopeCustomFields(
-		DSEnvelope dsEnvelope, JSONObject dsCustomFieldsJSONObject) {
+	private void _setDSEnvelopeCustomField(
+		DSEnvelope dsEnvelope, JSONObject jsonObject) {
 
-		if (dsCustomFieldsJSONObject == null) {
+		String name = jsonObject.getString("name");
+		String value = jsonObject.getString("value");
+
+		if (Objects.equals(name, "envelopeName")) {
+			dsEnvelope.setName(value);
+		}
+		else if (Objects.equals(name, "envelopeSenderEmailAddress")) {
+			dsEnvelope.setSenderEmailAddress(value);
+		}
+	}
+
+	private void _setDSEnvelopeCustomFields(
+		DSEnvelope dsEnvelope, JSONObject jsonObject) {
+
+		if (jsonObject == null) {
 			return;
 		}
 
-		JSONArray customFieldsJSONArray =
-			dsCustomFieldsJSONObject.getJSONArray("textCustomFields");
+		JSONArray jsonArray = jsonObject.getJSONArray("textCustomFields");
 
-		customFieldsJSONArray.forEach(
-			element -> {
-				JSONObject customFieldsJSONObject = (JSONObject)element;
-
-				if (customFieldsJSONObject.getString(
-						"name"
-					).equals(
-						"envelopeName"
-					)) {
-
-					dsEnvelope.setName(
-						customFieldsJSONObject.getString("value"));
-				}
-				else if (customFieldsJSONObject.getString(
-							"name"
-						).equals(
-							"envelopeSenderEmailAddress"
-						)) {
-
-					dsEnvelope.setSenderEmailAddress(
-						customFieldsJSONObject.getString("value"));
-				}
-			});
+		jsonArray.forEach(
+			element -> _setDSEnvelopeCustomField(
+				dsEnvelope, (JSONObject)element));
 	}
 
 	private DSEnvelope _toDSEnvelope(JSONObject jsonObject) {

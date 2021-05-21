@@ -224,13 +224,66 @@ definition {
 	}
 
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"
-	@ignore = "true"
 	@priority = "3"
 	test ReorderFromPlacedOrdersDetailsPage {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SFCommerceOrders#ReorderFromPlacedOrdersDetailsPage";
 
-		// TODO COMMERCE-6383 ReorderFromPlacedOrdersDetailsPage pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+
+		Click(
+			key_text = "Go to Order Details",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_text = "Reorder",
+			locator1 = "Button#ANY");
+
+		for (var iterator : list "1,2,3,4,5") {
+			if ("${iterator}" == "2") {
+				Click(
+					key_radioOption = "Standard",
+					locator1 = "CommerceEntry#RADIO_BUTTON");
+			}
+			else {
+				Click(locator1 = "Button#CONTINUE");
+			}
+		}
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#PAGINATION_RESULTS",
+			value1 = "Showing 1 to 2 of 2");
 	}
 
 	@description = "COMMERCE-6375. As a buyer, I want to be able to search for one pending order using the search bar"

@@ -38,6 +38,39 @@
 		<!-- References -->
 
 	</entity>
+	<entity local-service="true" name="FVSCustomEntry" remote-service="false" trash-enabled="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column container-model="true" name="fvsCustomEntryId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="entityId" type="String" />
+		<column name="fvsEntryId" type="long" />
+		<column name="name" type="String" />
+
+		<!-- Order -->
+
+		<!-- Finder methods -->
+
+		<finder name="U_EI_N" return-type="FVSCustomEntry" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="entityId" />
+			<finder-column name="name" />
+		</finder>
+
+		<!-- References -->
+
+	</entity>
 	<entity local-service="true" name="FVSEntry" remote-service="false" trash-enabled="false" uuid="true">
 
 		<!-- PK fields -->

@@ -3,6 +3,8 @@ Bundle-SymbolicName: com.liferay.portal.cache.ehcache.impl
 Bundle-Version: 4.0.2
 DynamicImport-Package: *
 Import-Package:\
+	!org.hibernate.*,\
+	\
 	!org.quartz,\
 	!org.quartz.impl,\
 	!org.quartz.impl.jdbcjobstore,\

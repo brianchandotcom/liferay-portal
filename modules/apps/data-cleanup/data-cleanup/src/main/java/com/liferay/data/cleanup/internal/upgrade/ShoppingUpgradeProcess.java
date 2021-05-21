@@ -114,14 +114,7 @@ public class ShoppingUpgradeProcess extends UpgradeProcess {
 		runSQL(
 			"delete from ServiceComponent where buildNamespace = 'Shopping'");
 
-		runSQL("drop table ShoppingCart");
-		runSQL("drop table ShoppingCategory");
-		runSQL("drop table ShoppingCoupon");
-		runSQL("drop table ShoppingItem");
-		runSQL("drop table ShoppingItemField");
-		runSQL("drop table ShoppingItemPrice");
-		runSQL("drop table ShoppingOrder");
-		runSQL("drop table ShoppingOrderItem");
+		_dropTables();
 	}
 
 	private void _deleteImages(String type) throws Exception {
@@ -137,6 +130,20 @@ public class ShoppingUpgradeProcess extends UpgradeProcess {
 			}
 		}
 	}
+
+	private void _dropTables() throws Exception {
+		for (String tableName : _SHOPPING_TABLES) {
+			if (hasTable(tableName)) {
+				runSQL("drop table " + tableName);
+			}
+		}
+	}
+
+	private static final String[] _SHOPPING_TABLES = {
+		"ShoppingCart", "ShoppingCategory", "ShoppingCoupon", "ShoppingItem",
+		"ShoppingItemField", "ShoppingItemPrice", "ShoppingOrder",
+		"ShoppingOrderItem"
+	};
 
 	private final ImageLocalService _imageLocalService;
 

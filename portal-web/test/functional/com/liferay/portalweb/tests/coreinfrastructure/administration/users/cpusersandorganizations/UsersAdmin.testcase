@@ -1690,6 +1690,56 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
+	@priority = "3"
+	test OnlyGlobalTagCanbeAssociatedToUser {
+		JSONAssettag.addTag(
+			groupName = "Guest",
+			tagName = "Default Site Tag Name");
+
+		JSONAssettag.addTag(
+			groupName = "Global",
+			tagName = "Global Tag Name 1");
+
+		JSONAssettag.addTag(
+			groupName = "Global",
+			tagName = "Global Tag Name 2");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.openUsersAdmin();
+
+		User.editUserTagCP(
+			addTagMethod = "Select",
+			tagNameList = "Global Tag Name 1,Global Tag Name 2",
+			userName = "userfn userln");
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		for (var tagName : list "Global Tag Name 1,Global Tag Name 2") {
+			var tagName = StringUtil.lowerCase("${tagName}");
+
+			AssetCategorization.viewTag(tagName = "${tagName}");
+		}
+
+		AssertElementPresent.assertVisible(
+			locator1 = "AssetCategorization#TAGS_SELECT_BUTTON",
+			value1 = "Select");
+
+		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+
+		IFrame.selectTagFrame();
+
+		var rowEntry = StringUtil.lowerCase("${rowEntry}");
+
+		LexiconEntry.viewNoEntry(rowEntry = StringUtil.lowerCase("Default Site Tag Name"));
+	}
+
 	@description = "This test disables the property that allows numeric values in the screen name field. It asserts that the specific error message displays when a user attempts to do so. It also covers LPS-12849."
 	@priority = "4"
 	test ScreenNameCannotBeNumeric {

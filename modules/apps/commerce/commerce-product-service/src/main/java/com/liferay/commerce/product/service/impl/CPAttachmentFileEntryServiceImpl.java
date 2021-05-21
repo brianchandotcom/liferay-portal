@@ -195,7 +195,6 @@ public class CPAttachmentFileEntryServiceImpl
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {
 
-
 			DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchDLFileEntry(
 				cpAttachmentFileEntry.getFileEntryId());
 
@@ -204,7 +203,8 @@ public class CPAttachmentFileEntryServiceImpl
 					getPermissionChecker(), dlFileEntry, ActionKeys.VIEW)) {
 
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
-			}else if(cpAttachmentFileEntry.isCdn()){
+			}
+			else if (cpAttachmentFileEntry.isCdn()) {
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
 		}
@@ -240,7 +240,8 @@ public class CPAttachmentFileEntryServiceImpl
 					getPermissionChecker(), dlFileEntry, ActionKeys.VIEW)) {
 
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
-			}else if(cpAttachmentFileEntry.isCdn()){
+			}
+			else if (cpAttachmentFileEntry.isCdn()) {
 				filteredCPAttachmentFileEntries.add(cpAttachmentFileEntry);
 			}
 		}

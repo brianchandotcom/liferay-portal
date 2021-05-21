@@ -7631,6 +7631,7 @@ virtualHostname="localhost"
 				<pathconvert pathsep="," property="osgi.modules.paths">
 					<dirset
 						dir="modules"
+						excludes="**/node_modules/**"
 						includes="${osgi.modules.includes.pattern}"
 					>
 						<or>

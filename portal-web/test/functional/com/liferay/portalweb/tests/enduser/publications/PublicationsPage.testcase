@@ -120,6 +120,8 @@ definition {
 
 	@priority = "4"
 	test DiscardConflictingChangesOnContentPage {
+		property test.assert.warning.exceptions = "true";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(
@@ -267,6 +269,8 @@ definition {
 
 	@priority = "4"
 	test PublishPrivateContentPageWithFragment {
+		property test.assert.warning.exceptions = "true";
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

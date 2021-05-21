@@ -57,10 +57,10 @@ definition {
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "DepotStaging#ViewOGImageTagOnLiveSite";
 
-		Depot.remoteStagingSetUp(
-			depotName = "Test Depot Name",
+		Depot.remoteStagingSetUpViaJson(
+			groupName = "Test Depot Name",
 			remotePort = "9080",
-			remoteStaging = "true");
+			site = "false");
 
 		Staging.remoteStagingSetUpViaJson(
 			groupName = "Site Name",

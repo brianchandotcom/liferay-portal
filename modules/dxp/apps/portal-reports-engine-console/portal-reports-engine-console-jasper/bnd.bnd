@@ -69,6 +69,8 @@ Import-Package:\
 	\
 	!org.fusesource.*,\
 	\
+	!org.hibernate.*,\
+	\
 	!org.jaxen.*,\
 	\
 	!org.junit.*,\

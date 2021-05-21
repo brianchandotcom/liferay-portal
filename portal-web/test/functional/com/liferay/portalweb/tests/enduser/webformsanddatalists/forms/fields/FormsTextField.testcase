@@ -103,13 +103,62 @@ definition {
 	}
 
 	@description = "Verify that the "Is Not URL" option can be used to validate a Text Field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanBeValidatedUsingTheIsNotURLOption {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
-		// TODO LPS-131346 CanBeValidatedUsingTheIsNotURLOption pending implementation
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.gotoAdvancedTab();
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Validation",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		FormFields.selectSelectOption(
+			fieldName = "If Input",
+			selectOption = "Is not URL");
+
+		FormFields.viewTextFieldNotPresent(
+			key_fieldLabel = "The Value",
+			key_fieldName = "The Value");
+
+		FormFields.editText(
+			fieldName = "errorMessage",
+			fieldValue = "Test Error");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Text");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
+	
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "https://www.liferay.com/");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
+
+		Button.clickSubmitButton();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
 	}
 
 	@description = "Verify that changes to a Field can be canceled"

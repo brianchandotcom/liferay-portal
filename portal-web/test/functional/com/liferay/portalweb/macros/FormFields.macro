@@ -11,6 +11,14 @@ definition {
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
 	}
 
+	macro addSingleSelectionOption {
+
+		Type(
+			key_rowNumber = "${optionValue}",
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionName}");
+	}
+
 	macro assertFieldsNotVisibleInFieldGroup {
 		for (var fieldFieldLabel : list "${fieldGroupLabelList}") {
 			AssertNotVisible(

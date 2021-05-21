@@ -313,13 +313,53 @@ definition {
 	}
 
 	@description = "Verify that an option can be selected as a Predefined Value"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132202 PredefinedValueCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection",
+			formPageNumber = "0");
+
+		FormFields.addSingleSelectionOption(			
+			optionName = "Option 1",			
+			optionValue = "1");
+
+		FormFields.addSingleSelectionOption(			
+			optionName = "Option 2",			
+			optionValue = "2");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.selectSelectOptionPredefined(selectOption = "Option 1");
+
+		FormViewBuilder.validatePredefinedSelectList(
+			fieldName = "Predefined Value",
+			fieldValue = "Option 1");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewSingleSelectionChecked(
+			fieldName = "Single Selection",
+			fieldValue = "Option 1");
+
+		FormPortlet.submitSuccessfully();
+
+
 	}
 
 	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""

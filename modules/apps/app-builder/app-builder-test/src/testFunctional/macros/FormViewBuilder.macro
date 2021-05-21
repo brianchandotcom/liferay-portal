@@ -1091,25 +1091,25 @@ definition {
 			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION");
 	}
 
-	macro viewSummaryEntryNumeric{
-        AssertElementPresent(
-			key_value = "${key_sumValue}",
+	macro viewSummaryEntryNumeric {
+		AssertElementPresent(
 			key_type = "Sum",
+			key_value = "${key_sumValue}",
 			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
 
 		AssertElementPresent(
-			key_value = "${key_averageValue}",
 			key_type = "Average",
+			key_value = "${key_averageValue}",
 			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
 
 		AssertElementPresent(
-			key_value = "${key_minValue}",
 			key_type = "Min",
+			key_value = "${key_minValue}",
 			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
 
 		AssertElementPresent(
-			key_value = "${key_maxValue}",
 			key_type = "Max",
+			key_value = "${key_maxValue}",
 			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
 	}
 

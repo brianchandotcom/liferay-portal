@@ -127,9 +127,9 @@ definition {
 		Form.editName(formName = "Form 1");
 
 		Form.gotoAddField(
-            fieldPositionNumber = "0",
-            fieldType = "Numeric",
-            formPageNumber = "0");
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
 
 		Form.save();
 
@@ -170,11 +170,10 @@ definition {
 		FormsAdminNavigator.gotoEntries();
 
 		FormViewBuilder.viewSummaryEntryNumeric(
-			key_sumValue = "16",
 			key_averageValue = "8",
+			key_maxValue = "11",
 			key_minValue = "5",
-			key_maxValue = "11");
-	
+			key_sumValue = "16");
 	}
 
 	@description = "Verify that with Single Approver Workflow enabled and after the form entry was approved, the entry will have an approved label"

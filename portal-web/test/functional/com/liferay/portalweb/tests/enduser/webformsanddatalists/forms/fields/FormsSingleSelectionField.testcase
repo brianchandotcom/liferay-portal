@@ -243,13 +243,58 @@ definition {
 	}
 
 	@description = "Verify that a Help Text can be added"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132199 HelpTextCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection",
+			formPageNumber = "0");
+
+		var fieldSingleSelectionField = FormFields.getFieldName();
+	
+		FormFields.editOptionsRow(			
+			optionName = "Option1",			
+			optionValue = "Option 1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Single Selection Help Text");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewRadioLabel(
+			fieldLabel = "Single Selection",
+			fieldName = "${fieldSingleSelectionField}");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "${fieldSingleSelectionField}",
+			fieldValue = "Single Selection Help Text");
+
+		FormFields.selectRadioOption(
+			fieldName = "${fieldSingleSelectionField}",
+			radioOption = "Option 1");
+
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that the Field Label can be edited"

@@ -220,12 +220,12 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.loginPG(
-			nodePort = "9080",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		Clustering.shutdownSpecificServer(nodePort = "8");
+		Clustering.shutdownSpecificServer(nodePort = "8080");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 

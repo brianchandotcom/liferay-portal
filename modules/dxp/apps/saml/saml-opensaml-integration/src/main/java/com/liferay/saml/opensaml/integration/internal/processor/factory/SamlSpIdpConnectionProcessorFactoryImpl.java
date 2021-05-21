@@ -99,8 +99,6 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 					fieldExpression, FileItem.class, consumer);
 			}
 
-			private Map<String, UnsafeConsumer<T, ?>> _bufferedSetters;
-
 		}
 
 		public class SamlSpIdpConnectionProcessorContextImpl

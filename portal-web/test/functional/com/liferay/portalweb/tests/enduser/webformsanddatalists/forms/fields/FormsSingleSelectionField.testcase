@@ -153,7 +153,7 @@ definition {
 		Form.save();
 
 		Form.publishForm();
-		
+
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Single Selection");
@@ -171,8 +171,6 @@ definition {
 			radioOption = "Option");
 
 		FormPortlet.submitSuccessfully();
-
-
 	}
 
 	@description = "Verify that a Single Selection Field can be set to repeatable"

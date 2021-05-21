@@ -21,6 +21,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -52,13 +53,22 @@ public class MBModerationGroupConfigurationModelListener
 				MBModerationGroupConfiguration.class,
 				new HashMapDictionary<>());
 
+		long companyId = GetterUtil.getLong(properties.get("companyId"));
+		boolean enableMessageBoardsModeration = GetterUtil.getBoolean(
+			properties.get("enableMessageBoardsModeration"),
+			mbModerationGroupConfiguration.enableMessageBoardsModeration());
+
 		try {
+			if (companyId == 0) {
+				_companyLocalService.forEachCompanyId(
+					curCompanyId -> _updateMBModerationWorkflow(
+						curCompanyId, enableMessageBoardsModeration));
+
+				return;
+			}
+
 			_updateMBModerationWorkflow(
-				GetterUtil.getLong(properties.get("companyId")),
-				GetterUtil.getBoolean(
-					properties.get("enableMessageBoardsModeration"),
-					mbModerationGroupConfiguration.
-						enableMessageBoardsModeration()));
+				companyId, enableMessageBoardsModeration);
 		}
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
@@ -94,6 +104,9 @@ public class MBModerationGroupConfigurationModelListener
 			MBModerationConstants.WORKFLOW_DEFINITION_NAME,
 			workflowDefinition.getVersion());
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

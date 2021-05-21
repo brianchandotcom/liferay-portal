@@ -16,7 +16,6 @@ package com.liferay.commerce.product.internal.upgrade.v3_3_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v3_3_0.util.CPAttachmentFileEntryTable;
-import com.liferay.commerce.product.model.impl.CPAttachmentFileEntryModelImpl;
 
 /**
  * @author Andrea Sbarra
@@ -31,9 +30,8 @@ public class CPAttachmentFileEntryCDNUpgradeProcess
 			CPAttachmentFileEntryTable.TABLE_NAME, "cdn", "BOOLEAN");
 
 		addColumn(
-				CPAttachmentFileEntryTable.class,
-				CPAttachmentFileEntryTable.TABLE_NAME, "cdnUrl",
-			"VARCHAR(255)");
+			CPAttachmentFileEntryTable.class,
+			CPAttachmentFileEntryTable.TABLE_NAME, "cdnUrl", "VARCHAR(255)");
 	}
 
 }

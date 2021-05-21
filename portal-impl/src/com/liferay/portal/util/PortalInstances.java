@@ -213,21 +213,19 @@ public class PortalInstances {
 		}
 
 		try {
-			List<Company> companies = CompanyLocalServiceUtil.getCompanies(
-				false);
+			List<String> webIdsList = new ArrayList<>();
 
-			List<String> webIdsList = new ArrayList<>(companies.size());
+			CompanyLocalServiceUtil.forEachCompany(
+				company -> {
+					String webId = company.getWebId();
 
-			for (Company company : companies) {
-				String webId = company.getWebId();
-
-				if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-					webIdsList.add(0, webId);
-				}
-				else {
-					webIdsList.add(webId);
-				}
-			}
+					if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+						webIdsList.add(0, webId);
+					}
+					else {
+						webIdsList.add(webId);
+					}
+				});
 
 			_webIds = webIdsList.toArray(new String[0]);
 		}

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -57,15 +56,14 @@ public class DBPartitionMessageBusInterceptorTest
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		List<Company> companies = _companyLocalService.getCompanies(false);
-
 		Set<Long> companyIds = new TreeSet<>();
 
-		for (Company company : companies) {
-			if (company.isActive()) {
-				companyIds.add(company.getCompanyId());
-			}
-		}
+		_companyLocalService.forEachCompany(
+			company -> {
+				if (company.isActive()) {
+					companyIds.add(company.getCompanyId());
+				}
+			});
 
 		_activeCompanyIds = companyIds.toArray(new Long[0]);
 

@@ -19,7 +19,6 @@ import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBase
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -131,22 +130,22 @@ public class PortalInstancesLocalServiceImpl
 			List<Long> removeableCompanyIds = ListUtil.fromArray(
 				initializedCompanyIds);
 
-			List<Company> companies = _companyLocalService.getCompanies();
+			_companyLocalService.forEachCompany(
+				company -> {
+					removeableCompanyIds.remove(company.getCompanyId());
 
-			for (Company company : companies) {
-				long companyId = company.getCompanyId();
+					if (ArrayUtil.contains(
+							initializedCompanyIds, company.getCompanyId())) {
 
-				removeableCompanyIds.remove(companyId);
+						return;
+					}
 
-				if (ArrayUtil.contains(initializedCompanyIds, companyId)) {
-					continue;
-				}
+					ServletContext portalContext = ServletContextPool.get(
+						_portal.getPathContext());
 
-				ServletContext portalContext = ServletContextPool.get(
-					_portal.getPathContext());
-
-				PortalInstances.initCompany(portalContext, company.getWebId());
-			}
+					PortalInstances.initCompany(
+						portalContext, company.getWebId());
+				});
 
 			_companyLocalService.forEachCompanyId(
 				companyId -> PortalInstances.removeCompany(companyId),

@@ -2172,9 +2172,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				registry.getService(serviceReference);
 
 			synchronized (_pendingCompanies) {
-				for (Company company : _pendingCompanies) {
-					portalInstanceLifecycleManager.registerCompany(company);
-				}
+				forEachCompany(
+					company -> portalInstanceLifecycleManager.registerCompany(
+						company),
+					new ArrayList<Company>(_pendingCompanies));
 
 				_pendingCompanies.clear();
 			}

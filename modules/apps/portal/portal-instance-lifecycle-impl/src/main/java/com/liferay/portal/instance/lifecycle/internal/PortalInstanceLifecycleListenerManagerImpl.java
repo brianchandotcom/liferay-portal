@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -86,9 +88,10 @@ public class PortalInstanceLifecycleListenerManagerImpl
 			return;
 		}
 
-		for (Company company : _companies) {
-			registerCompany(portalInstanceLifecycleListener, company);
-		}
+		_companyLocalService.forEachCompany(
+			company -> registerCompany(
+				portalInstanceLifecycleListener, company),
+			new ArrayList<Company>(_companies));
 	}
 
 	protected void preunregisterCompany(
@@ -203,6 +206,10 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListenerManagerImpl.class);
 
 	private final Set<Company> _companies = new CopyOnWriteArraySet<>();
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	private final Set<PortalInstanceLifecycleListener>
 		_portalInstanceLifecycleListeners = new CopyOnWriteArraySet<>();
 

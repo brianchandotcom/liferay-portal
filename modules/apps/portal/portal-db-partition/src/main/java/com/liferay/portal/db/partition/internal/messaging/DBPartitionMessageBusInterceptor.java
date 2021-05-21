@@ -19,7 +19,6 @@ import com.liferay.portal.db.partition.internal.configuration.DBPartitionConfigu
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -58,13 +57,14 @@ public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 
 			List<Long> companyIds = new ArrayList<>();
 
-			for (Company company : _companyLocalService.getCompanies(false)) {
-				if (!company.isActive()) {
-					continue;
-				}
+			_companyLocalService.forEachCompany(
+				company -> {
+					if (!company.isActive()) {
+						return;
+					}
 
-				companyIds.add(company.getCompanyId());
-			}
+					companyIds.add(company.getCompanyId());
+				});
 
 			message.remove("companyId");
 

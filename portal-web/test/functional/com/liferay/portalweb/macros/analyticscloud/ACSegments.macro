@@ -185,4 +185,49 @@ definition {
 			value1 = "Include Anonymous");
 	}
 
+	macro viewSegmentComposition {
+		if ("${individualsType}" == "Active") {
+			AssertTextEquals(
+				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
+				value1 = "${individualsNumber}");
+		}
+		else if ("${individualsType}" == "Known") {
+			AssertTextEquals(
+				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
+				value1 = "${individualsNumber}");
+		}
+	}
+
+	macro viewSegmentCriteria {
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_CRITERIA_ATTRIBUTE_VALUE",
+			value1 = "${attributeValue}");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_CRITERIA_CRITERIA_NAME",
+			value1 = "${criteriaName}");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_CRITERIA_CRITERIA_DETAIL",
+			value1 = "${criteriaDetail}");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_CRITERIA_CRITERIA_VALUE",
+			value1 = "${criteriaValue}");
+	}
+
+	macro viewSegmentProfileCards {
+		AssertTextPresent(
+			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CARD",
+			value1 = "Segment Membership");
+
+		AssertTextPresent(
+			locator1 = "ACSegments#SEGMENT_TOP_INTERESTS_CARD",
+			value1 = "Top Interests");
+
+		AssertTextPresent(
+			locator1 = "ACSegments#SEGMENT_BREAKDOWN_CARD",
+			value1 = "Add a Breakdown by Attribute");
+	}
+
 }

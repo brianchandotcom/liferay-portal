@@ -73,13 +73,68 @@ definition {
 	}
 
 	@description = "Verify that the "Contains" option can be used to validate a Text Field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanBeValidatedUsingTheContainsOption {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131344 CanBeValidatedUsingTheContainsOption pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+		
+		Form.gotoAdvancedTab();
+		
+		FormViewBuilder.checkSwitcher(propertyName="Validation");
+
+		FormFields.selectSelectOption(
+			fieldName = "If Input",
+			selectOption = "Contains");
+
+		FormFields.editText(
+			fieldName = "parameter",
+			fieldValue = "Test");
+
+
+		FormFields.editText(
+			fieldName = "errorMessage",
+			fieldValue = "Test Error");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
+		
+		FormPortlet.submit();
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Text");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+	
 	}
 
 	@description = "Verify that the "Does Not Match" option can be used to validate a Text Field"

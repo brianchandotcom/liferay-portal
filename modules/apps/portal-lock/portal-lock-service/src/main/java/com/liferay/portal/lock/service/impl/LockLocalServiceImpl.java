@@ -219,12 +219,12 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			return lock;
 		}
 
-		Date now = new Date();
-
 		if (expirationTime == 0) {
 			lock.setExpirationDate(null);
 		}
 		else {
+			Date now = new Date();
+
 			lock.setExpirationDate(new Date(now.getTime() + expirationTime));
 		}
 

@@ -26,7 +26,7 @@ dependencies {
 
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.10.3"
 	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.5.1"
-	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
+	testIntegrationCompile group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	testIntegrationCompile group: "org.springframework", name: "spring-web", version: "5.2.2.RELEASE"
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-form-builder")
 	testIntegrationCompile project(":apps:export-import:export-import-test-util")

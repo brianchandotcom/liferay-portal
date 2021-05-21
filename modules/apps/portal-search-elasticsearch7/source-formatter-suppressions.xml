@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <suppressions>
+	<checkstyle>
+		<suppress checks="CompanyIterationCheck" files=".*" />
+	</checkstyle>
 	<source-check>
 		<suppress checks="JavaComponentActivateCheck" files="portal-search-elasticsearch7-impl/src/main/java/com/liferay/portal/search/elasticsearch7/internal/index/IndexSynchronizationPortalInitializedListener\.java" />
 	</source-check>

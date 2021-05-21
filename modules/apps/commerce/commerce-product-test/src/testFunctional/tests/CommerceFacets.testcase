@@ -55,12 +55,42 @@ definition {
 	}
 
 	@description = "COMMERCE-6166. As a buyer, I want to filter products using Specification Facet widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductsAreFilteredBySpecificationFacet {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredBySpecificationFacet";
 
-		// TODO COMMERCE-6166 AssertProductsAreFilteredBySpecificationFacet pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Check.checkToggleSwitch(
+			key_fieldName = "3 Year Unlimited Mileage Warranty",
+			locator1 = "FormFields#CHECKBOX");
+
+		for (var i : list "Hub Bearing Assembly - Rear,Master Cylinder") {
+			AssertElementPresent(
+				key_productName = "${i}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		AssertElementNotPresent(
+			key_value = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Check.checkToggleSwitch(
+			key_fieldName = "Ceramic",
+			locator1 = "FormFields#CHECKBOX");
+
+		AssertElementPresent(
+			key_productName = "Premium Brake Pads",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementNotPresent(
+			key_value = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
 }

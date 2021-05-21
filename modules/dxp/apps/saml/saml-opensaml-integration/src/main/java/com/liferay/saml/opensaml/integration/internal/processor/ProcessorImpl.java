@@ -38,7 +38,6 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -108,7 +107,7 @@ public abstract class ProcessorImpl
 			UnsafeBiConsumer<T, V[], ?> unsafeBiConsumer) {
 
 			V[] values = _processorContext.getValueArray(
-				fieldExpression, clazz);
+				clazz, fieldExpression);
 
 			if ((values == null) || (values.length == 0)) {
 				return;
@@ -251,8 +250,8 @@ public abstract class ProcessorImpl
 		}
 
 		@Override
-		public <V> V getValue(String fieldExpression, Class<V> clazz) {
-			V[] values = getValueArray(fieldExpression, clazz);
+		public <V> V getValue(Class<V> clazz, String fieldExpression) {
+			V[] values = getValueArray(clazz, fieldExpression);
 
 			if ((values == null) || (values.length == 0)) {
 				return null;
@@ -262,7 +261,7 @@ public abstract class ProcessorImpl
 		}
 
 		@Override
-		public <V> V[] getValueArray(String fieldExpression, Class<V> clazz) {
+		public <V> V[] getValueArray(Class<V> clazz, String fieldExpression) {
 			if (!Validator.isBlank(_prefix)) {
 				fieldExpression = _prefix + ':' + fieldExpression;
 			}

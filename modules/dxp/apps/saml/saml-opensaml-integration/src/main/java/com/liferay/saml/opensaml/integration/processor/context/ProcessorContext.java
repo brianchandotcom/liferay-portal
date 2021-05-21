@@ -33,9 +33,9 @@ public interface ProcessorContext<M extends BaseModel<M>> {
 		String publicIdentifier, Function<M, T> modelGetterFunction,
 		int processingIndex, UpdateFunction<T> updateFunction);
 
-	public <V> V getValue(String fieldExpression, Class<V> clazz);
+	public <V> V getValue(Class<V> clazz, String fieldExpression);
 
-	public <V> V[] getValueArray(String fieldExpression, Class<V> clazz);
+	public <V> V[] getValueArray(Class<V> clazz, String fieldExpression);
 
 	public interface Bind<T extends BaseModel<T>> {
 

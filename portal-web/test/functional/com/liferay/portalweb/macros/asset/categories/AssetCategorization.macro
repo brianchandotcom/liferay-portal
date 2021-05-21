@@ -134,6 +134,15 @@ definition {
 			value1 = "${categoryName}");
 	}
 
+	macro viewTag {
+		var tagName = StringUtil.lowerCase("${tagName}");
+
+		AssertTextEquals(
+			key_tagName = "${tagName}",
+			locator1 = "AssetCategorization#TAG",
+			value1 = "${tagName}");
+	}
+
 	macro viewVocabulary {
 		AssertTextEquals(
 			key_vocabularyName = "${vocabularyName}",

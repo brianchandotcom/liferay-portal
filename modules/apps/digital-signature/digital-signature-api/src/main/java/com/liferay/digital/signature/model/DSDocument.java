@@ -31,6 +31,10 @@ public class DSDocument {
 		return name;
 	}
 
+	public String getURI() {
+		return uri;
+	}
+
 	public void setData(String data) {
 		this.data = data;
 	}
@@ -43,8 +47,13 @@ public class DSDocument {
 		this.name = name;
 	}
 
+	public void setURI(String uri) {
+		this.uri = uri;
+	}
+
 	protected String data;
 	protected String dsDocumentId;
 	protected String name;
+	protected String uri;
 
 }

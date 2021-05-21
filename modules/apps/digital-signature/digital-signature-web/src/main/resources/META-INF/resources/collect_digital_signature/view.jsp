@@ -26,7 +26,7 @@ if (digitalSignatureTitle != null) {
 
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
 
-<div id="digital-signature-root">
+<div class="digital-signature">
 	<react:component
 		module="js/pages/CollectDigitalSignature"
 		props='<%=

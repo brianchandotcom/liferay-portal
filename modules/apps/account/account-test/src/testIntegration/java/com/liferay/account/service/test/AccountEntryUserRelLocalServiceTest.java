@@ -434,6 +434,26 @@ public class AccountEntryUserRelLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteAccountEntryUserRelByEmailAddress() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_accountEntry.getAccountEntryId(), user.getUserId());
+
+		Assert.assertNotNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+
+		_accountEntryUserRelLocalService.
+			deleteAccountEntryUserRelByEmailAddress(
+				_accountEntry.getAccountEntryId(), user.getEmailAddress());
+
+		Assert.assertNull(
+			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId()));
+	}
+
+	@Test
 	public void testDeleteAccountEntryUserRels() throws Exception {
 		AccountEntryUserRel accountEntryUserRel = _addAccountEntryUserRel(
 			_accountEntry.getAccountEntryId());

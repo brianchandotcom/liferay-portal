@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.opensaml.integration.internal;
+package com.liferay.saml.opensaml.integration.internal.service.tracker.collections;
 
 import java.util.List;
 import java.util.Map;

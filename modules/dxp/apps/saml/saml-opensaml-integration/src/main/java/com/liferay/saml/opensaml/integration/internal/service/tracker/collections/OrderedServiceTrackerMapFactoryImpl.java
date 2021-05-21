@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.opensaml.integration.internal;
+package com.liferay.saml.opensaml.integration.internal.service.tracker.collections;
 
 import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;

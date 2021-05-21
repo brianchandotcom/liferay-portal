@@ -16,8 +16,8 @@ package com.liferay.saml.opensaml.integration.internal.field.expression.resolver
 
 import com.liferay.saml.opensaml.integration.field.expression.resolver.UserFieldExpressionResolver;
 import com.liferay.saml.opensaml.integration.field.expression.resolver.registry.UserFieldExpressionResolverRegistry;
-import com.liferay.saml.opensaml.integration.internal.OrderedServiceTrackerMap;
-import com.liferay.saml.opensaml.integration.internal.OrderedServiceTrackerMapFactory;
+import com.liferay.saml.opensaml.integration.internal.service.tracker.collections.OrderedServiceTrackerMap;
+import com.liferay.saml.opensaml.integration.internal.service.tracker.collections.OrderedServiceTrackerMapFactory;
 
 import java.util.List;
 import java.util.Map;

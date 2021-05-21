@@ -1,3 +1,4 @@
+@import '../../../css/variables';
 
 .fieldset-modal {
 	.data-engine-form-builder {
@@ -10,7 +11,7 @@
 			padding-right: 15px;
 
 			&--sidebar-open {
-				padding-right: 355px;
+				padding-right: $multiPanelSidebarContentWidth;
 			}
 
 			.container {

@@ -1790,6 +1790,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 					graphQLFields.add(new GraphQLField("id"));
 				</#if>
 
+				<#if properties?keys?seq_contains("externalReferenceCode")>
+					graphQLFields.add(new GraphQLField("externalReferenceCode"));
+				</#if>
+
 				return jsonDeserializer.deserialize(
 					JSONUtil.getValueAsString(
 						invokeGraphQLMutation(

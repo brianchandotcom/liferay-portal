@@ -26,6 +26,16 @@
     <td>//div[@class='channels-menu-label']</td>
     <td></td>
   </tr>
+  <tr>
+    <td>PROPERTY_SEARCH</td>
+    <td>//input[contains(@class,'input-group-inset')]</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PROPERTY_NAME</td>
+    <td>//span[contains(@class,'sites-dropdown-item')]//span[@class='text-truncate']</td>
+    <td></td>
+  </tr>
   </tbody>
 </table>
 </body>

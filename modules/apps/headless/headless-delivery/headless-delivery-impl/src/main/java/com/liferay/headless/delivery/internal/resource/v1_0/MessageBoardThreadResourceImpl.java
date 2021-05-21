@@ -45,6 +45,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassName;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -168,19 +170,34 @@ public class MessageBoardThreadResourceImpl
 			).build();
 
 		if ((search == null) && (filter == null) && (sorts == null)) {
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (permissionChecker.isContentReviewer(
+					contextCompany.getCompanyId(), mbCategory.getGroupId())) {
+
+				status = WorkflowConstants.STATUS_ANY;
+			}
+
 			return Page.of(
 				actions,
 				TransformUtil.transform(
 					_mbThreadService.getThreads(
 						mbCategory.getGroupId(), mbCategory.getCategoryId(),
-						WorkflowConstants.STATUS_APPROVED,
-						pagination.getStartPosition(),
-						pagination.getEndPosition()),
+						new QueryDefinition<>(
+							status, contextUser.getUserId(), true,
+							pagination.getStartPosition(),
+							pagination.getEndPosition(), null)),
 					this::_toMessageBoardThread),
 				pagination,
 				_mbThreadService.getThreadsCount(
 					mbCategory.getGroupId(), mbCategory.getCategoryId(),
-					WorkflowConstants.STATUS_APPROVED));
+					new QueryDefinition<>(
+						status, contextUser.getUserId(), true,
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), null)));
 		}
 
 		return _getSiteMessageBoardThreadsPage(

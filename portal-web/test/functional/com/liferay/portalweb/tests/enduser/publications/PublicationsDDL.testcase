@@ -132,7 +132,7 @@ definition {
 		Publications.discardChanges(
 			changeCategory = "Dynamic Data Lists Record",
 			changeTitle = "${changeTitle}",
-			conflictingPublications = "true",
+			conflictingChanges = "true",
 			entryTitle = "Dynamic Data Lists Record");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 1");

@@ -117,7 +117,7 @@ definition {
 		Publications.discardChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
 			changeTitle = "Created Form Name",
-			conflictingPublications = "true",
+			conflictingChanges = "true",
 			entryTitle = "Dynamic Data Mapping Structure");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name 1");

@@ -403,7 +403,7 @@ definition {
 		Publications.discardChanges(
 			changeCategory = "Asset",
 			changeTitle = "WC WebContent Title 2 Edit",
-			conflictingPublications = "true",
+			conflictingChanges = "true",
 			entryTitle = "WC WebContent Title 2 Edit");
 
 		Navigator.openURL();

@@ -199,13 +199,13 @@ definition {
 		Publications.discardChanges(
 			changeCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
 			changeTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
-			conflictingPublications = "true",
+			conflictingChanges = "true",
 			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
 
 		Publications.discardChanges(
 			changeCategory = "com.liferay.portal.kernel.model.PortletPreferenceValue",
 			changeTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue",
-			conflictingPublications = "true",
+			conflictingChanges = "true",
 			entryTitle = "com.liferay.portal.kernel.model.PortletPreferenceValue");
 
 		// Workaround LPS-124618

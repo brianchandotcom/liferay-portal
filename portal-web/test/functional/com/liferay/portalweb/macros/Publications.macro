@@ -125,7 +125,7 @@ definition {
 			var changeOrder = "1";
 		}
 
-		if ("${conflictingPublications}" == "true") {
+		if ("${conflictingChanges}" == "true") {
 			Click(
 				key_entryTitle = "${entryTitle}",
 				locator1 = "Publications#CONFLICTING_CHANGES_DISCARD_ELLIPSIS");

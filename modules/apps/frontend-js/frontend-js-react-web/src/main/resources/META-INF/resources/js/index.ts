@@ -15,6 +15,7 @@
 import process from 'process';
 
 export {default as render} from './render';
+export {default as ReactPortal} from './ReactPortal';
 export {default as useEventListener} from './hooks/useEventListener';
 export {default as useInterval} from './hooks/useInterval';
 export {default as useIsMounted} from './hooks/useIsMounted';

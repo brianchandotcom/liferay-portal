@@ -46,7 +46,7 @@ export default function render(
 		portletId?: string;
 		[key: string]: unknown;
 	},
-	container: Element | DocumentFragment
+	container: Element
 ) {
 	if (!(window.Liferay as any).SPA || (window.Liferay as any).SPA.app) {
 		const {portletId} = renderData;
@@ -66,6 +66,8 @@ export default function render(
 			componentId,
 			{
 				destroy: () => {
+					container.classList.remove('lfr-tooltip-scope');
+
 					ReactDOM.unmountComponentAtNode(container);
 				},
 			},
@@ -80,6 +82,8 @@ export default function render(
 			(renderable as any).$$typeof === Symbol.for('react.forward_ref')
 				? (renderable as any)
 				: null;
+
+		container.classList.add('lfr-tooltip-scope');
 
 		// eslint-disable-next-line @liferay/portal/no-react-dom-render
 		ReactDOM.render(

@@ -41,5 +41,5 @@ export default function render(
 		portletId?: string;
 		[key: string]: unknown;
 	},
-	container: Element | DocumentFragment
+	container: Element
 ): void;

@@ -12,13 +12,21 @@
  * details.
  */
 
-export {default as render} from './render';
-export {default as ReactPortal} from './ReactPortal';
-export {default as useEventListener} from './hooks/useEventListener';
-export {default as useInterval} from './hooks/useInterval';
-export {default as useIsMounted} from './hooks/useIsMounted';
-export {default as useLiferayState} from './hooks/useLiferayState';
-export {default as usePrevious} from './hooks/usePrevious';
-export {default as useStateSafe} from './hooks/useStateSafe';
-export {default as useThunk} from './hooks/useThunk';
-export {default as useTimeout} from './hooks/useTimeout';
+import React from 'react';
+declare const ReactPortal: React.FunctionComponent<
+	React.HTMLAttributes<HTMLDivElement> & {
+
+		/**
+		 * Ref of element to render portal into.
+		 */
+		containerRef?: React.RefObject<Element>;
+
+		/**
+		 * Ref of element to render nested portals into.
+		 * This is often used for portals that take up the entire
+		 * screen, such as a modal.
+		 */
+		subPortalRef?: React.RefObject<Element>;
+	}
+>;
+export default ReactPortal;

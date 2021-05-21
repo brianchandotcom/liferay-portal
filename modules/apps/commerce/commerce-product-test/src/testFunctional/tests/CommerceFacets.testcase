@@ -37,12 +37,28 @@ definition {
 	}
 
 	@description = "COMMERCE-6165. As a buyer, I want to filter products using Option Facet widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductsAreFilteredByOptionFacet {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredByOptionFacet";
 
-		// TODO COMMERCE-6165 AssertProductsAreFilteredByOptionFacet pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Check.checkToggleSwitch(
+			key_fieldName = "48",
+			locator1 = "FormFields#CHECKBOX");
+
+		for (var i : list "Hoses,Brake Fluid") {
+			AssertElementPresent(
+				key_productName = "${i}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		AssertElementNotPresent(
+			key_value = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
 	@description = "COMMERCE-6170. As a buyer, I want to filter products using Price Range Facet widget and the results should be visible on the Search Results widget"

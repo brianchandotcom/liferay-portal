@@ -23,4 +23,6 @@ public interface FVSActiveSettings {
 
 	public void setViewState(String viewState);
 
+	public void store();
+
 }

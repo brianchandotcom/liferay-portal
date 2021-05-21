@@ -16,14 +16,18 @@ package com.liferay.frontend.view.state.internal.active;
 
 import com.liferay.frontend.view.state.active.FVSActiveSettings;
 import com.liferay.frontend.view.state.model.FVSEntry;
+import com.liferay.frontend.view.state.service.FVSEntryLocalService;
 
 /**
  * @author Iván Zaera Avellón
  */
 public class FVSActiveSettingsImpl implements FVSActiveSettings {
 
-	public FVSActiveSettingsImpl(FVSEntry fvsEntry) {
+	public FVSActiveSettingsImpl(
+		FVSEntry fvsEntry, FVSEntryLocalService fvsEntryLocalService) {
+
 		_fvsEntry = fvsEntry;
+		_fvsEntryLocalService = fvsEntryLocalService;
 	}
 
 	public FVSEntry getFVSEntry() {
@@ -40,6 +44,12 @@ public class FVSActiveSettingsImpl implements FVSActiveSettings {
 		_fvsEntry.setViewState(viewState);
 	}
 
+	@Override
+	public void store() {
+		_fvsEntryLocalService.updateFVSEntry(_fvsEntry);
+	}
+
 	private final FVSEntry _fvsEntry;
+	private final FVSEntryLocalService _fvsEntryLocalService;
 
 }

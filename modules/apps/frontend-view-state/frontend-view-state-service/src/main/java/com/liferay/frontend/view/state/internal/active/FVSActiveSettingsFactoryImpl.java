@@ -67,7 +67,7 @@ public class FVSActiveSettingsFactoryImpl implements FVSActiveSettingsFactory {
 				fvsActiveEntry.getFvsEntryId());
 		}
 
-		return new FVSActiveSettingsImpl(fvsEntry);
+		return new FVSActiveSettingsImpl(fvsEntry, _fvsEntryLocalService);
 	}
 
 	@Reference

@@ -885,6 +885,54 @@ definition {
 			userPassword = "Invalid");
 	}
 
+	@description = "This test changes password through the Password Reset link sent in email."
+	@priority = "5"
+	test ChangingPasswordIsSuccessfulViaPasswordResetLink {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.smtp.server.enabled = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Sender",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
+
+		MockMock.openBodyLink(
+			asset = "${portalURL}: Reset Your Password",
+			content = "You can reset your password for ${portalURL}",
+			subject = "${portalURL}: Reset Your Password");
+
+		User.setPasswordByResetLink(
+			newPassword1 = "Password1",
+			newPassword2 = "Password1");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "Password1",
+			userEmailAddress = "userea@liferay.com");
+	}
+
 	@priority = "5"
 	test DeleteUser {
 		property portal.acceptance = "true";
@@ -1909,6 +1957,66 @@ definition {
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#USER_TABLE_NAME");
 
 		AssertElementNotPresent(locator1 = "UsersAndOrganizations#USER_TABLE_SCREEN_NAME");
+	}
+
+	@description = "This is a use case for LPS-60180. This test asserts that the proper error message displays when the passwords entered in the Password Reset link do not match."
+	@priority = "4"
+	test SpecificErrorMessageDisplaysWhenPasswordsDoNotMatch {
+		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.smtp.server.enabled = "true";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Sender",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "Password Policies");
+
+		PasswordPolicies.enableSyntaxChecking(passwordPolicyName = "Default Password Policy");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.logoutPG();
+
+		User.forgotPasswordSendResetLink(userEmailAddress = "userea@liferay.com");
+
+		MockMock.openBodyLink(
+			asset = "${portalURL}: Reset Your Password",
+			content = "You can reset your password for ${portalURL}",
+			subject = "${portalURL}: Reset Your Password");
+
+		User.setPasswordByResetLink(
+			newPassword1 = "Password1",
+			newPassword2 = "Password2");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "TextInput#ALERT",
+			value1 = "Please enter the same value again.");
 	}
 
 	@priority = "3"

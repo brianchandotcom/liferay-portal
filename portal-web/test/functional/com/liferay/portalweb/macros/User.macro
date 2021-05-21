@@ -2392,21 +2392,9 @@ definition {
 
 		Button.clickSave();
 
-		if ("${newPassword1}" != "${newPassword2}") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "TextInput#ALERT",
-				value1 = "Please enter the same value again.");
-		}
-		else if (!(isSet(invalidateLength))) {
-			User.acceptEndUserLicenseAgreement();
+		User.acceptEndUserLicenseAgreement();
 
-			User.answerPasswordReminder();
-		}
-		else if ("${invalidateLength}" == "Short") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR",
-				value1 = "That password is too short. Please make sure your password is at least 6 characters long.");
-		}
+		User.answerPasswordReminder();
 	}
 
 	macro signInPG {

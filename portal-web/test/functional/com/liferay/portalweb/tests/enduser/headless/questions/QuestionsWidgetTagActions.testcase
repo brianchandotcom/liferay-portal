@@ -49,9 +49,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestion(
 			bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
 			categoryName = "Questions Test Category",
+			groupName = "Guest",
 			tagField = "tag1",
 			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
 
@@ -87,9 +88,10 @@ definition {
 			groupName = "Guest",
 			tagName = "tag2");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestion(
 			bodyField = "Body ListOfTagsAppearsInTheTagsTab",
 			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
+			groupName = "Guest",
 			tagField = "tag1",
 			titleField = "Title ListOfTagsAppearsInTheTagsTab");
 
@@ -115,16 +117,18 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var num : list "1,2") {
-			Questions.addQuestionByAPI(
+			JSONQuestions.addQuestion(
 				bodyField = "Question Body ${num}",
 				categoryName = "Questions Test Category",
+				groupName = "Guest",
 				tagField = "tag1",
 				titleField = "Question ${num}");
 		}
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestion(
 			bodyField = "Question Body 3",
 			categoryName = "Questions Test Category",
+			groupName = "Guest",
 			tagField = "tag2",
 			titleField = "Question 3");
 
@@ -179,9 +183,10 @@ definition {
 		}
 
 		for (var num : list "1,2") {
-			Questions.addQuestionByAPI(
+			JSONQuestions.addQuestion(
 				bodyField = "Question Body ${num}",
 				categoryName = "Question ValidateTagsOccurrences1",
+				groupName = "Guest",
 				tagField = "tag1",
 				titleField = "Question ${num}");
 		}
@@ -194,9 +199,10 @@ definition {
 			amountOfUsedTimes = "2",
 			tagName = "tag1");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestion(
 			bodyField = "Question Body 3",
 			categoryName = "Question ValidateTagsOccurrences2",
+			groupName = "Guest",
 			tagField = "tag1",
 			titleField = "Question 3");
 
@@ -219,9 +225,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var num : list "1,2,3") {
-			Questions.addQuestionByAPI(
+			JSONQuestions.addQuestion(
 				bodyField = "Question Body ${num}",
 				categoryName = "Question ValidateSearchByQuestionTags",
+				groupName = "Guest",
 				tagField = "tag${num}",
 				titleField = "Question ${num}");
 		}

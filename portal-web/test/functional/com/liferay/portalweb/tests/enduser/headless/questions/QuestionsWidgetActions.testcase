@@ -338,10 +338,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
 		Questions.openToQuestionDetails(
@@ -376,10 +376,17 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.addAnswer(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyBody = "This is my answer",
+			threadSubject = "Title AddQuestion",
 			titleField = "Title AddQuestion");
 
 		Questions.openToQuestionDetails(
@@ -387,8 +394,6 @@ definition {
 			questionsTitle = "title-addquestion",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
-
-		Questions.answerQuestion(contentField = "This is my answer");
 
 		Questions.deleteAnswer(contentField = "This is my answer");
 	}
@@ -402,10 +407,17 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body Text",
+		JSONQuestions.addQuestionWithoutTag(
+			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.addAnswer(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyBody = "This is my answer",
+			threadSubject = "Title AddQuestion",
 			titleField = "Title AddQuestion");
 
 		Questions.openToQuestionDetails(
@@ -413,8 +425,6 @@ definition {
 			questionsTitle = "title-addquestion",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
-
-		Questions.answerQuestion(contentField = "This is my answer");
 
 		Questions.replyToComment(commentReply = "This is my reply");
 
@@ -430,10 +440,17 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body Text",
+		JSONQuestions.addQuestionWithoutTag(
+			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.addAnswer(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyBody = "This is my answer",
+			threadSubject = "Title AddQuestion",
 			titleField = "Title AddQuestion");
 
 		Questions.openToQuestionDetails(
@@ -441,8 +458,6 @@ definition {
 			questionsTitle = "title-addquestion",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
-
-		Questions.answerQuestion(contentField = "This is my answer");
 
 		Questions.deleteQuestion();
 	}
@@ -474,10 +489,17 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body Text",
+		JSONQuestions.addQuestionWithoutTag(
+			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.addAnswer(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyBody = "This is my answer",
+			threadSubject = "Title AddQuestion",
 			titleField = "Title AddQuestion");
 
 		Questions.openToQuestionDetails(
@@ -485,8 +507,6 @@ definition {
 			questionsTitle = "title-addquestion",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
-
-		Questions.answerQuestion(contentField = "This is my answer");
 
 		Questions.editAnswer(contentField = "This is my edited answer");
 	}
@@ -666,10 +686,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body Text",
+		JSONQuestions.addQuestionWithoutTag(
+			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
-			tagField = "Tag",
+			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
 		Questions.openToQuestionDetails(
@@ -727,10 +747,17 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
-			bodyField = "Question Body Test Text",
+		JSONQuestions.addQuestionWithoutTag(
+			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
+			titleField = "Questions AddQuestion");
+
+		JSONQuestions.addAnswer(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyBody = "This is my answer",
+			threadSubject = "Questions AddQuestion",
 			titleField = "Questions AddQuestion");
 
 		Questions.openToQuestionDetails(
@@ -738,8 +765,6 @@ definition {
 			questionsTitle = "questions-addquestion",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
-
-		Questions.answerQuestion(contentField = "This is my first answer");
 
 		Questions.replyToComment(commentReply = "This is my reply text");
 
@@ -899,9 +924,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
-			bodyField = "Content Question Text",
+		JSONQuestions.addQuestionWithoutTag(
+			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
+			groupName = "Guest",
 			titleField = "Question Title");
 
 		Questions.openToQuestionDetails(
@@ -1022,9 +1048,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
-			bodyField = "Content Question Text",
+		JSONQuestions.addQuestionWithoutTag(
+			bodyField = "Body AddQuestion",
 			categoryName = "Questions Test Category",
+			groupName = "Guest",
 			titleField = "Question Title");
 
 		Questions.editRootTopic(
@@ -1050,10 +1077,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var num : list "1,2,3,4,5,6,7,8,9,10") {
-			Questions.addQuestionByAPI(
-				bodyField = "Question Body ${num}",
+			JSONQuestions.addQuestionWithoutTag(
+				bodyField = "Body AddQuestion ${num}",
 				categoryName = "Questions Test Category",
-				tagField = "test tag",
+				groupName = "Guest",
 				titleField = "Question ${num}");
 		}
 
@@ -1087,10 +1114,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var title : list "What is your name,How about your experience") {
-			Questions.addQuestionByAPI(
+			JSONQuestions.addQuestionWithoutTag(
 				bodyField = "Question Body Text",
 				categoryName = "Questions Test Category",
-				tagField = "test tag",
+				groupName = "Guest",
 				titleField = "${title}");
 		}
 

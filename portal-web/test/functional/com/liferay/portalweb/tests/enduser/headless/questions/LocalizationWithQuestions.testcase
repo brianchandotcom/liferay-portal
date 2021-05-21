@@ -170,10 +170,11 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
-			titleField = "タイトル");
+			groupName = "Guest",
+			titleField = "あなたの好きな日本料理は何ですか");
 
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
@@ -195,7 +196,7 @@ definition {
 
 		Questions.deleteQuestion(
 			cancel = "true",
-			questionTitle = "タイトル");
+			questionTitle = "あなたの好きな日本料理は何ですか");
 	}
 
 	@description = "Validate if the user can delete a comment that contains non-Latin characters to an answer."
@@ -207,9 +208,17 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
+			groupName = "Guest",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		JSONQuestions.addAnswer(
+			categoryName = "質問トピック",
+			groupName = "Guest",
+			replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
+			threadSubject = "あなたの好きな日本料理は何ですか",
 			titleField = "あなたの好きな日本料理は何ですか");
 
 		Questions.openToQuestionDetails(
@@ -217,8 +226,6 @@ definition {
 			localization = "true",
 			siteURLKey = "guest",
 			topicName = "質問トピック");
-
-		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
 		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 
@@ -234,9 +241,17 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
+			groupName = "Guest",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		JSONQuestions.addAnswer(
+			categoryName = "質問トピック",
+			groupName = "Guest",
+			replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
+			threadSubject = "あなたの好きな日本料理は何ですか",
 			titleField = "あなたの好きな日本料理は何ですか");
 
 		Questions.openToQuestionDetails(
@@ -244,8 +259,6 @@ definition {
 			localization = "true",
 			siteURLKey = "guest",
 			topicName = "質問トピック");
-
-		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
 		Questions.editAnswer(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
 
@@ -261,9 +274,17 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
+			groupName = "Guest",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		JSONQuestions.addAnswer(
+			categoryName = "質問トピック",
+			groupName = "Guest",
+			replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
+			threadSubject = "あなたの好きな日本料理は何ですか",
 			titleField = "あなたの好きな日本料理は何ですか");
 
 		Questions.openToQuestionDetails(
@@ -271,8 +292,6 @@ definition {
 			localization = "true",
 			siteURLKey = "guest",
 			topicName = "質問トピック");
-
-		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
 		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 
@@ -306,9 +325,17 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
+			groupName = "Guest",
+			titleField = "あなたの好きな日本料理は何ですか");
+
+		JSONQuestions.addAnswer(
+			categoryName = "質問トピック",
+			groupName = "Guest",
+			replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
+			threadSubject = "あなたの好きな日本料理は何ですか",
 			titleField = "あなたの好きな日本料理は何ですか");
 
 		Questions.openToQuestionDetails(
@@ -316,8 +343,6 @@ definition {
 			localization = "true",
 			siteURLKey = "guest",
 			topicName = "質問トピック");
-
-		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
 		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 	}
@@ -332,16 +357,18 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var num : list "1,2") {
-			Questions.addQuestionByAPI(
+			JSONQuestions.addQuestion(
 				bodyField = "Question Body ${num}",
 				categoryName = "質問トピック",
+				groupName = "Guest",
 				tagField = "おおさか",
 				titleField = "Question ${num}");
 		}
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestion(
 			bodyField = "Question Body 3",
 			categoryName = "質問トピック",
+			groupName = "Guest",
 			tagField = "とうきょう",
 			titleField = "Question 3");
 
@@ -369,9 +396,10 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
+			groupName = "Guest",
 			titleField = "あなたの好きな日本料理は何ですか");
 
 		Questions.editRootTopic(

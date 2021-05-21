@@ -100,8 +100,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormFields.viewDeletedFieldLabel(fieldName = "Single Selection");
-
-
 	}
 
 	@description = "Verify that a Single Selection Field can be duplicated"
@@ -112,6 +110,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132193 CanBeDuplicated pending implementation
+
 	}
 
 	@description = "Verify that a Single Selection Field can be edited"

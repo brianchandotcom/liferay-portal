@@ -611,20 +611,20 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
-	macro viewDeletedSelectOptionsRowFieldValue {
-		var key_rowNumber = "${rowNumber}";
-
-		AssertTextNotPresent(
-			locator1 = "FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE",
-			value1 = "${fieldValue}");
-	}
-
 	macro viewDeletedFieldLabel {
 		key_fieldName = "${fieldName}";
 
 		AssertElementNotPresent(
 			key_name = "${fieldName}",
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
+	}
+
+	macro viewDeletedSelectOptionsRowFieldValue {
+		var key_rowNumber = "${rowNumber}";
+
+		AssertTextNotPresent(
+			locator1 = "FormFields#SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE",
+			value1 = "${fieldValue}");
 	}
 
 	macro viewFieldHelpText {

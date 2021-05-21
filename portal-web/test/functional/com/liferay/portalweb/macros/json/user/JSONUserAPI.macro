@@ -34,7 +34,8 @@ definition {
 				-d organizationIds= \
 				-d roleIds= \
 				-d userGroupIds= \
-				-d sendEmail=true
+				-d sendEmail=true \
+				-d serviceContext=${serviceContext}
 		''';
 
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");

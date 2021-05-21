@@ -1,0 +1,99 @@
+definition {
+
+	@summary = "Add an answer."
+	macro addAnswer {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
+
+		var messageId = JSONQuestions.getQuestionIdByName(
+			categoryName = "${categoryName}",
+			groupName = "${groupName}",
+			titleField = "${titleField}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbmessage/add-message \
+				-u test@liferay.com:test \
+				-d parentMessageId=${messageId} \
+				-d subject=RE: ${threadSubject} \
+				-d body=${replyBody} \
+				-d format='bbcode' \
+				-d inputStreamOVPs= \
+				-d anonymous=false \
+			 	-d priority=0 \
+				-d allowPingbacks=false
+		''';
+
+		echo("## Adding an 'Answer' with the following info using JSONWS:");
+
+		echo("## * Parent messageId: ${messageId}");
+
+		echo("## * Subject: ${threadSubject}");
+
+		echo("## * Body: ${replyBody}");
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Add a question with a tag."
+	macro addQuestion {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
+
+		var categoryId = JSONMBMessage.getCategoryIdByName(
+			groupName = "${groupName}",
+			categoryName = "${categoryName}");
+
+		JSONQuestionsAPI._addQuestion(
+			bodyField = "${bodyField}",
+			categoryId = "${categoryId}",
+			tagField = "${tagField}",
+			titleField = "${titleField}");
+	}
+
+	@summary = "Add a question without a tag."
+	macro addQuestionWithoutTag {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
+
+		var categoryId = JSONMBMessage.getCategoryIdByName(
+			groupName = "${groupName}",
+			categoryName = "${categoryName}");
+
+		JSONQuestionsAPI._addQuestionWithoutTag(
+			bodyField = "${bodyField}",
+			categoryId = "${categoryId}",
+			titleField = "${titleField}");
+	}
+
+	@summary = "Get the questionId by using categoryName and groupName"
+	macro getQuestionIdByName {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
+
+		var categoryId = JSONMBMessage.getCategoryIdByName(
+			groupName = "${groupName}",
+			categoryName = "${categoryName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbthread/get-threads \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d categoryId=${categoryId} \
+			-d status=0 \
+			-d "start=-1" \
+			-d "end=-1"
+
+		''';
+
+		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['rootMessageId']");
+
+		if ("${questionId}" == "[]") {
+			fail("FAIL. Cannot find category.");
+		}
+
+		return "${questionId}";
+	}
+
+}

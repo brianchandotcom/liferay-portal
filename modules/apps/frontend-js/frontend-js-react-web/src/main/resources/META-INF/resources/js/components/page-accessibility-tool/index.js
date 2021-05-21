@@ -80,19 +80,40 @@ function SidebarPanelsNavigator({children}) {
 	);
 }
 
-export const PagesEnum = {
+export const PagesEnum = Object.freeze({
 	Occurrence: 2,
 	Violation: 1,
 	Violations: 0,
+});
+
+const IMPACT_PRIORITY = {
+	critical: 4,
+	minor: 1,
+	moderate: 2,
+	serious: 3,
 };
 
+function getImpactPriority(impact) {
+	return IMPACT_PRIORITY[impact];
+}
+
+function sortByImpact(violations) {
+	return violations.sort(
+		(currentViolation, nextViolation) =>
+			getImpactPriority(nextViolation.impact) -
+			getImpactPriority(currentViolation.impact)
+	);
+}
+
 export default function PageAccessibilityToolSidebar({violations}) {
+	const sortedByImpactViolations = sortByImpact(violations);
+
 	return (
 		<FilteredViolationsContextProvider>
 			<SidebarPanelsNavigator>
-				<Violations violations={violations} />
-				<Violation violations={violations} />
-				<Occurrence violations={violations} />
+				<Violations violations={sortedByImpactViolations} />
+				<Violation violations={sortedByImpactViolations} />
+				<Occurrence violations={sortedByImpactViolations} />
 			</SidebarPanelsNavigator>
 		</FilteredViolationsContextProvider>
 	);

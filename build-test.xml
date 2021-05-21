@@ -3218,6 +3218,7 @@ tell application "Safari" to quit
 	</macrodef>
 
 	<macrodef name="print-file">
+		<attribute default="-1" name="file.line.count" />
 		<attribute name="file.name" />
 
 		<sequential>
@@ -3227,12 +3228,43 @@ tell application "Safari" to quit
 			<echo>##</echo>
 			<echo></echo>
 
-			<loadfile
-				property="file.content"
-				srcFile="@{file.name}"
-			/>
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-			<echo>${file.content}</echo>
+					public int getFileLineCount() {
+						String fileLineCount = "@{file.line.count}";
+
+						if (fileLineCount.matches("\\d+")) {
+							return Integer.parseInt(fileLineCount);
+						}
+
+						return -1;
+					}
+
+					File file = new File("@{file.name}");
+
+					if (!file.exists()) {
+						return;
+					}
+
+					String fileContent = JenkinsResultsParserUtil.read(file);
+
+					String[] fileLines = fileContent.split("\n");
+
+					int fileLineCount = getFileLineCount();
+
+					for (int i = 0; i < fileLines.length; i++) {
+						if (fileLineCount <= i) {
+							break;
+						}
+
+						System.out.println(fileLines[i]);
+					}
+
+					System.out.println();
+				]]>
+			</beanshell>
 
 			<var name="file.content" unset="true" />
 		</sequential>

@@ -124,8 +124,8 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 				int processingIndex, UpdateFunction<T> updateFunction) {
 
 				return new SamlSpIdpConnectionBindImpl<>(
-					modelGetterFunction, processingIndex, this, publicIdentifier,
-					updateFunction);
+					modelGetterFunction, processingIndex, this,
+					publicIdentifier, updateFunction);
 			}
 
 			@Override

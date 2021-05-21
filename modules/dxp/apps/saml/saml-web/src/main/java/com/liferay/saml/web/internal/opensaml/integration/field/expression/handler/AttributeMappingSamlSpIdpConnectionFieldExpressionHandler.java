@@ -69,25 +69,23 @@ public class AttributeMappingSamlSpIdpConnectionFieldExpressionHandler
 					List<String> indexesString = StringUtil.split(
 						processorContext.getValue(
 							String.class,
-							prefix + ":userAttributeMappingsIndexes"
-						));
+							prefix + ":userAttributeMappingsIndexes"));
 
 					Set<String> userFieldExpressions = new HashSet<>();
 
 					for (String index : indexesString.toArray(new String[0])) {
 						String fieldExpression = GetterUtil.getString(
 							processorContext.getValue(
-								String.class, prefix +
-											  ":userAttributeMappingFieldExpression-" +
-											  index
-							));
+								String.class,
+								prefix +
+									":userAttributeMappingFieldExpression-" +
+										index));
 
 						String attributeName = GetterUtil.getString(
 							processorContext.getValue(
 								String.class,
 								prefix + ":userAttributeMappingSamlAttribute-" +
-								index
-							));
+									index));
 
 						if (!userFieldExpressions.add(fieldExpression)) {
 							throw new UserAttributeMappingException(

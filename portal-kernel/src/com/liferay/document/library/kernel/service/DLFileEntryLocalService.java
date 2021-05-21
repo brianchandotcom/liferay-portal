@@ -123,6 +123,12 @@ public interface DLFileEntryLocalService
 	public DLFileVersion cancelCheckOut(long userId, long fileEntryId)
 		throws PortalException;
 
+	/**
+	 * Checks all file entries by handling their expirations and sending
+	 * review notifications based on their current workflow.
+	 */
+	public void checkFileEntries(long checkInterval) throws PortalException;
+
 	public void checkInFileEntry(
 			long userId, long fileEntryId,
 			DLVersionNumberIncrease dlVersionNumberIncrease, String changeLog,

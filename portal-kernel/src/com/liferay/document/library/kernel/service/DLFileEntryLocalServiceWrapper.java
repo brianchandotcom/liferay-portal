@@ -105,6 +105,17 @@ public class DLFileEntryLocalServiceWrapper
 		return _dlFileEntryLocalService.cancelCheckOut(userId, fileEntryId);
 	}
 
+	/**
+	 * Checks all file entries by handling their expirations and sending
+	 * review notifications based on their current workflow.
+	 */
+	@Override
+	public void checkFileEntries(long checkInterval)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_dlFileEntryLocalService.checkFileEntries(checkInterval);
+	}
+
 	@Override
 	public void checkInFileEntry(
 			long userId, long fileEntryId,

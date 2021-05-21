@@ -25,5 +25,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "org.mockito", name: "mockito-core", version: "1.10.8"
 }

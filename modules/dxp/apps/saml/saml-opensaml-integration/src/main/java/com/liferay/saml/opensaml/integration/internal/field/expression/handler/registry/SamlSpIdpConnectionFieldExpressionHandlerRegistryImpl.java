@@ -43,17 +43,17 @@ public class SamlSpIdpConnectionFieldExpressionHandlerRegistryImpl
 	public SamlSpIdpConnectionFieldExpressionHandler getFieldExpressionHandler(
 		String prefix) {
 
-		return _samlSpIdpConnectionFieldExpressionHandlers.getService(prefix);
+		return _orderedServiceTrackerMap.getService(prefix);
 	}
 
 	@Override
 	public Set<String> getFieldExpressionHandlerPrefixes() {
-		return _samlSpIdpConnectionFieldExpressionHandlers.getServicesKeys();
+		return _orderedServiceTrackerMap.getServicesKeys();
 	}
 
 	@Override
 	public List<String> getOrderedFieldExpressionHandlerPrefixes() {
-		return _samlSpIdpConnectionFieldExpressionHandlers.
+		return _orderedServiceTrackerMap.
 			getOrderedServicesKeys();
 	}
 
@@ -61,12 +61,12 @@ public class SamlSpIdpConnectionFieldExpressionHandlerRegistryImpl
 	public List<Map.Entry<String, SamlSpIdpConnectionFieldExpressionHandler>>
 		getOrderedFieldExpressionHandlers() {
 
-		return _samlSpIdpConnectionFieldExpressionHandlers.getOrderedServices();
+		return _orderedServiceTrackerMap.getOrderedServices();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_samlSpIdpConnectionFieldExpressionHandlers =
+		_orderedServiceTrackerMap =
 			_orderedServiceTrackerMapFactory.create(
 				bundleContext, SamlSpIdpConnectionFieldExpressionHandler.class,
 				"prefix",
@@ -75,7 +75,7 @@ public class SamlSpIdpConnectionFieldExpressionHandlerRegistryImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_samlSpIdpConnectionFieldExpressionHandlers.close();
+		_orderedServiceTrackerMap.close();
 	}
 
 	@Reference(
@@ -90,6 +90,6 @@ public class SamlSpIdpConnectionFieldExpressionHandlerRegistryImpl
 	private OrderedServiceTrackerMapFactory _orderedServiceTrackerMapFactory;
 
 	private OrderedServiceTrackerMap<SamlSpIdpConnectionFieldExpressionHandler>
-		_samlSpIdpConnectionFieldExpressionHandlers;
+		_orderedServiceTrackerMap;
 
 }

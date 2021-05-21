@@ -3329,20 +3329,32 @@ tell application "Safari" to quit
 	<macrodef name="print-gc-logs">
 		<attribute name="tomcat.gc.log" />
 		<attribute name="tsant.gc.log" />
+
 		<sequential>
 			<if>
 				<available file="/tmp/ant-gc.log" />
 				<then>
-					<loadfile
-						property="ant-gc-log"
-						srcFile="/tmp/ant-gc.log"
-					/>
+					<if>
+						<and>
+							<isset property="env.BUILD_DIR" />
+							<isset property="env.BUILD_USER_CONTENT_URL" />
+						</and>
+						<then>
+							<mkdir dir="${env.BUILD_DIR}/gc" />
 
-					<echo>
-Ant GC log:
+							<copy
+								file="/tmp/ant-gc.log"
+								todir="${env.BUILD_DIR}/gc"
+							/>
 
-${ant-gc-log}
-					</echo>
+							<echo>${env.BUILD_USER_CONTENT_URL}/gc/ant-gc.log</echo>
+
+							<print-file file.name="${env.BUILD_DIR}/gc/ant-gc.log" file.line.count="10" />
+						</then>
+						<else>
+							<print-file file.name="/tmp/ant-gc.log" />
+						</else>
+					</if>
 				</then>
 				<else>
 					<echo>Unable to read /tmp/ant-gc.log</echo>
@@ -3352,16 +3364,27 @@ ${ant-gc-log}
 			<if if:true="@{tomcat.gc.log}">
 				<available file="/tmp/tomcat-gc.log" />
 				<then>
-					<loadfile
-						property="tomcat-gc-log"
-						srcFile="/tmp/tomcat-gc.log"
-					/>
+					<if>
+						<and>
+							<isset property="env.BUILD_DIR" />
+							<isset property="env.BUILD_USER_CONTENT_URL" />
+						</and>
+						<then>
+							<mkdir dir="${env.BUILD_DIR}/gc" />
 
-					<echo>
-Tomcat GC log:
+							<copy
+								file="/tmp/tomcat-gc.log"
+								todir="${env.BUILD_DIR}/gc"
+							/>
 
-${tomcat-gc-log}
-					</echo>
+							<echo>${env.BUILD_USER_CONTENT_URL}/gc/tomcat-gc.log</echo>
+
+							<print-file file.name="${env.BUILD_DIR}/gc/tomcat-gc.log" file.line.count="10" />
+						</then>
+						<else>
+							<print-file file.name="/tmp/tomcat-gc.log" />
+						</else>
+					</if>
 				</then>
 				<else>
 					<echo>Unable to read /tmp/tomcat-gc.log</echo>
@@ -3371,15 +3394,27 @@ ${tomcat-gc-log}
 			<if if:true="@{tsant.gc.log}">
 				<available file="/tmp/tsant-gc.log" />
 				<then>
-					<loadfile
-						property="tsant-gc-log"
-						srcFile="/tmp/tsant-gc.log"
-					/>
+					<if>
+						<and>
+							<isset property="env.BUILD_DIR" />
+							<isset property="env.BUILD_USER_CONTENT_URL" />
+						</and>
+						<then>
+							<mkdir dir="${env.BUILD_DIR}/gc" />
 
-					<echo>
-	Tsant GC log:
+							<copy
+								file="/tmp/tsant-gc.log"
+								todir="${env.BUILD_DIR}/gc"
+							/>
 
-	${tsant-gc-log}</echo>
+							<echo>${env.BUILD_USER_CONTENT_URL}/gc/tsant-gc.log</echo>
+
+							<print-file file.name="${env.BUILD_DIR}/gc/tsant-gc.log" file.line.count="10" />
+						</then>
+						<else>
+							<print-file file.name="/tmp/tsant-gc.log" />
+						</else>
+					</if>
 				</then>
 				<else>
 					<echo>Unable to read /tmp/tsant-gc.log</echo>

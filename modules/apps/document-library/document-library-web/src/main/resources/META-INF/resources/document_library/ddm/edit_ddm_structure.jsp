@@ -110,7 +110,7 @@ renderResponse.setTitle(title);
 <liferay-frontend:component
 	componentId='<%= liferayPortletResponse.getNamespace() + "LocaleChangedHandlerComponent" %>'
 	context="<%= dlEditDDMStructureDisplayContext.getComponentContext() %>"
-	module="document_library/js/LocaleChangedHandler.es"
+	module="document_library/js/data-engine/DataEngineLayoutBuilderHandler.es"
 	servletContext="<%= application %>"
 />
 

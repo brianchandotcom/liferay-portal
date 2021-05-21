@@ -262,9 +262,9 @@ definition {
 			formPageNumber = "0");
 
 		var fieldSingleSelectionField = FormFields.getFieldName();
-	
-		FormFields.editOptionsRow(			
-			optionName = "Option1",			
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
 			optionValue = "Option 1");
 
 		FormFields.editOptionsRow(

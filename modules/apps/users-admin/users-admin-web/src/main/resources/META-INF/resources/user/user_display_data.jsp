@@ -180,7 +180,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	<portlet:param name="mvcPath" value="/user/password_verification.jsp" />
 </portlet:renderURL>
 
-<c:if test="<%= (selUser != null) && PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.COMPANY_SECURITY_UPDATE_PASSWORD_REQUIRED) %>">
+<c:if test="<%= (selUser != null) && company.isUpdatePasswordRequired() %>">
 	<aui:script use="liferay-form">
 		Liferay.once('<portlet:namespace />formReady', () => {
 			var form = Liferay.Form.get('<portlet:namespace />fm');

@@ -198,7 +198,7 @@ public class EditSegmentsEntryDisplayContext {
 
 	protected Map<String, Object> getContext() {
 		return HashMapBuilder.<String, Object>put(
-			"assetsPath", PortalUtil.getPathContext(_renderRequest) + "/assets"
+			"imagesPath", PortalUtil.getPathContext(_renderRequest) + "/images"
 		).put(
 			"namespace", _renderResponse.getNamespace()
 		).put(

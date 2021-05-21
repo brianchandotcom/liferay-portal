@@ -16,7 +16,7 @@ import SegmentsExperimentsContext from './context.es';
 import APIService from './util/APIService.es';
 
 export default function ({context, props}) {
-	const {assetsPath, endpoints, page} = context;
+	const {endpoints, imagesPath, page} = context;
 	const {
 		calculateSegmentsExperimentEstimatedDurationURL,
 		createSegmentsExperimentURL,
@@ -49,8 +49,8 @@ export default function ({context, props}) {
 					},
 					namespace: context.namespace,
 				}),
-				assetsPath,
 				editVariantLayoutURL: editSegmentsVariantLayoutURL,
+				imagesPath,
 				page,
 			}}
 		>

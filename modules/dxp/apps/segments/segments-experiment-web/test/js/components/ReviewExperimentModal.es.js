@@ -62,7 +62,7 @@ const variants = [
 ];
 const onRun = jest.fn();
 
-const assetsPath = 'path';
+const imagesPath = 'path';
 
 const experiment = {
 	confidenceLevel: 0,
@@ -110,7 +110,7 @@ const renderReviewExperimentModal = ({
 				APIService: {
 					getEstimatedTime: getEstimatedTimeMock,
 				},
-				assetsPath,
+				imagesPath,
 			}}
 		>
 			<StateContext.Provider

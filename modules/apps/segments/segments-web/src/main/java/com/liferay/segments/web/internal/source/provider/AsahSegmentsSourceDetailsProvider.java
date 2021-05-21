@@ -39,7 +39,7 @@ public class AsahSegmentsSourceDetailsProvider
 
 	@Override
 	public String getIconSrc() {
-		return _servletContext.getContextPath() + "/assets/ac-icon.svg";
+		return _servletContext.getContextPath() + "/images/ac_icon.svg";
 	}
 
 	@Override

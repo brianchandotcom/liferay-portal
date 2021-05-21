@@ -22,9 +22,9 @@ import {statusToLabelDisplayType} from '../util/statuses.es';
 const {useContext} = React;
 
 function ExperimentsHistory({experimentHistory, onDeleteSegmentsExperiment}) {
-	const {assetsPath} = useContext(SegmentsExperimentContext);
+	const {imagesPath} = useContext(SegmentsExperimentContext);
 
-	const noHistoryIllustration = `${assetsPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
+	const noHistoryIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
 
 	return experimentHistory.length === 0 ? (
 		<div className="text-center">

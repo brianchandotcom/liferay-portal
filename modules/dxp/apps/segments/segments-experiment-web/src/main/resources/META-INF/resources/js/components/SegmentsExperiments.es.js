@@ -60,13 +60,13 @@ function SegmentsExperiments({
 		selectedExperienceId,
 		variants,
 	} = useContext(StateContext);
-	const {APIService, assetsPath} = useContext(SegmentsExperimentsContext);
+	const {APIService, imagesPath} = useContext(SegmentsExperimentsContext);
 	const dispatch = useContext(DispatchContext);
 
 	const _selectedExperienceId = experiment
 		? experiment.segmentsExperienceId
 		: selectedExperienceId;
-	const noExperimentIllustration = `${assetsPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
+	const noExperimentIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
 	const winnerVariant = variants.find((variant) => variant.winner === true);
 	const goalTarget = experiment?.goal?.target?.substring(1);
 

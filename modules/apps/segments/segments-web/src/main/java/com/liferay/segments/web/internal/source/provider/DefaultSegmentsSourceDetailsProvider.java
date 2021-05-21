@@ -39,7 +39,7 @@ public class DefaultSegmentsSourceDetailsProvider
 
 	@Override
 	public String getIconSrc() {
-		return _servletContext.getContextPath() + "/assets/ce-icon.svg";
+		return _servletContext.getContextPath() + "/images/ce_icon.svg";
 	}
 
 	@Override

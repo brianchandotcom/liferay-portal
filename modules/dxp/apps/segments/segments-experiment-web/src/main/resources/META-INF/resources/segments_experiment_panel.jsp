@@ -37,7 +37,7 @@ SegmentsExperimentDisplayContext segmentsExperimentDisplayContext = (SegmentsExp
 		<div class="p-3 pt-5 text-center">
 			<liferay-ui:icon
 				alt="connect-to-liferay-analytics-cloud"
-				src='<%= PortalUtil.getPathContext(request) + "/assets/ac-icon.svg" %>'
+				src='<%= PortalUtil.getPathContext(request) + "/images/ac_icon.svg" %>'
 			/>
 
 			<c:choose>

@@ -65,7 +65,7 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 			return {...variant, split};
 		})
 	);
-	const {APIService, assetsPath} = useContext(SegmentsExperimentContext);
+	const {APIService, imagesPath} = useContext(SegmentsExperimentContext);
 	const {experiment} = useContext(StateContext);
 
 	const mounted = useRef();
@@ -78,7 +78,7 @@ function ReviewExperimentModal({modalObserver, onModalClose, onRun, variants}) {
 		};
 	});
 
-	const successAnimationPath = `${assetsPath}${SUCCESS_ANIMATION_FILE_NAME}`;
+	const successAnimationPath = `${imagesPath}${SUCCESS_ANIMATION_FILE_NAME}`;
 
 	const [getEstimation] = useDebounceCallback((body) => {
 		APIService.getEstimatedTime(body)

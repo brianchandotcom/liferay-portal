@@ -23,7 +23,7 @@ const SegmentsExperimentsContext = React.createContext({
 		editVariant: () => {},
 		runExperiment: () => {},
 	},
-	assetsPath: '',
+	imagesPath: '',
 	page: {
 		classNameId: '',
 		classPK: '',
@@ -43,8 +43,8 @@ SegmentsExperimentsContext.Provider.propTypes = {
 			editVariant: PropTypes.func,
 			runExperiment: PropTypes.func,
 		}),
-		assetsPath: PropTypes.string.isRequired,
 		editVariantLayoutURL: PropTypes.string,
+		imagesPath: PropTypes.string.isRequired,
 		page: PropTypes.shape({
 			classNameId: PropTypes.string.isRequired,
 			classPK: PropTypes.string.isRequired,

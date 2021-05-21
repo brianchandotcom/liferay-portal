@@ -42,7 +42,7 @@ public class DXPSegmentsSourceDetailsProvider
 
 	@Override
 	public String getIconSrc() {
-		return _servletContext.getContextPath() + "/assets/dxp-icon.svg";
+		return _servletContext.getContextPath() + "/images/dxp_icon.svg";
 	}
 
 	@Override

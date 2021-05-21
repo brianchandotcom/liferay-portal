@@ -1786,6 +1786,23 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro editUserTagCP {
+		LexiconEntry.gotoEntry(rowEntry = "${userName}");
+
+		if ("${addTagMethod}" == "Select") {
+			User.selectUserTagCP(tagNameList = "${tagNameList}");
+		}
+		else {
+			for (var tagName : list "${tagNameList}") {
+				var tagName = StringUtil.lowerCase("${tagName}");
+
+				AssetCategorization.addTag(tagName = "${tagName}");
+			}
+		}
+
+		PortletEntry.save();
+	}
+
 	macro exportPersonalDataCP {
 		Search.searchCP(searchTerm = "${userFirstName}");
 
@@ -2325,6 +2342,39 @@ definition {
 		Search.searchCP(searchTerm = "${searchTerm}");
 
 		AssertElementPresent(locator1 = "Search#SEARCH_INFO");
+	}
+
+	macro selectUserTagCP {
+		AssertElementPresent.assertVisible(
+			locator1 = "AssetCategorization#TAGS_SELECT_BUTTON",
+			value1 = "Select");
+
+		Click(locator1 = "AssetCategorization#TAGS_SELECT_BUTTON");
+
+		IFrame.selectTagFrame();
+
+		for (var tagName : list "${tagNameList}") {
+			var tagName = StringUtil.lowerCase("${tagName}");
+
+			Check(
+				key_rowEntry = "${tagName}",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
+		}
+
+		SelectFrameTop();
+
+		AssertClick(
+			locator1 = "Button#DONE",
+			value1 = "Done");
+
+		for (var tagName : list "${tagNameList}") {
+			var tagName = StringUtil.lowerCase("${tagName}");
+
+			AssertTextEquals(
+				key_tagName = "${tagName}",
+				locator1 = "AssetCategorization#TAG",
+				value1 = "${tagName}");
+		}
 	}
 
 	macro setPasswordByResetLink {

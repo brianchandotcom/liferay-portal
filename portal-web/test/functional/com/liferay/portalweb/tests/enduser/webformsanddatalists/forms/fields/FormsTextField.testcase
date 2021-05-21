@@ -158,9 +158,8 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "0");
 
-
 		FormFields.viewTextLabel(fieldLabel = "Text");
-		
+
 		Form.gotoAdvancedTab();
 
 		FormViewBuilder.clickShowLabel();

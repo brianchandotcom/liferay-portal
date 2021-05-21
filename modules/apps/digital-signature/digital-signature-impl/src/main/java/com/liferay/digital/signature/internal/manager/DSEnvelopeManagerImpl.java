@@ -162,34 +162,36 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	private void _setDSEnvelopeCustomFields(
 		DSEnvelope dsEnvelope, JSONObject dsCustomFieldsJSONObject) {
 
-		if (dsCustomFieldsJSONObject != null) {
-			JSONArray customFieldsJSONArray =
-				dsCustomFieldsJSONObject.getJSONArray("textCustomFields");
+		if (dsCustomFieldsJSONObject == null) {
+			return;
+		}
 
-			customFieldsJSONArray.forEach(
-				element -> {
-					JSONObject customFieldsJSONObject = (JSONObject)element;
+		JSONArray customFieldsJSONArray =
+			dsCustomFieldsJSONObject.getJSONArray("textCustomFields");
 
-					if (customFieldsJSONObject.getString(
+		customFieldsJSONArray.forEach(
+			element -> {
+				JSONObject customFieldsJSONObject = (JSONObject)element;
+
+				if (customFieldsJSONObject.getString(
+						"name"
+					).equals(
+						"envelopeName"
+					)) {
+
+					dsEnvelope.setName(
+						customFieldsJSONObject.getString("value"));
+				}
+				else if (customFieldsJSONObject.getString(
 							"name"
 						).equals(
-							"envelopeName"
+							"envelopeSenderEmailAddress"
 						)) {
 
-						dsEnvelope.setName(
-							customFieldsJSONObject.getString("value"));
-					}
-					else if (customFieldsJSONObject.getString(
-								"name"
-							).equals(
-								"envelopeSenderEmailAddress"
-							)) {
-
-						dsEnvelope.setSenderEmailAddress(
-							customFieldsJSONObject.getString("value"));
-					}
-				});
-		}
+					dsEnvelope.setSenderEmailAddress(
+						customFieldsJSONObject.getString("value"));
+				}
+			});
 	}
 
 	private DSEnvelope _toDSEnvelope(JSONObject jsonObject) {

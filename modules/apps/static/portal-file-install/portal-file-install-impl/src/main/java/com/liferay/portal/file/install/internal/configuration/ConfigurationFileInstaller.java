@@ -227,7 +227,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 	}
 
 	private Configuration _getConfiguration(
-			String fileName, String pid, String factoryPid)
+			String fileName, String pid, String name)
 		throws Exception {
 
 		Configuration configuration = _findExistingConfiguration(fileName);
@@ -236,9 +236,9 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			return configuration;
 		}
 
-		if (factoryPid != null) {
+		if (name != null) {
 			return _configurationAdmin.getFactoryConfiguration(
-				pid, factoryPid, StringPool.QUESTION);
+				pid, name, StringPool.QUESTION);
 		}
 
 		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
@@ -250,11 +250,11 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		int index = pid.indexOf(CharPool.TILDE);
 
 		if (index > 0) {
-			String factoryPid = pid.substring(index + 1);
+			String name = pid.substring(index + 1);
 
 			pid = pid.substring(0, index);
 
-			return new String[] {pid, factoryPid};
+			return new String[] {pid, name};
 		}
 
 		return new String[] {pid, null};

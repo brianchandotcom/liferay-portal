@@ -14,8 +14,8 @@
 
 package com.liferay.saml.web.internal.opensaml.integration.field.expression.handler;
 
-import com.liferay.saml.opensaml.integration.OrderedServiceTrackerMap;
-import com.liferay.saml.opensaml.integration.OrderedServiceTrackerMapFactory;
+import com.liferay.saml.opensaml.integration.internal.OrderedServiceTrackerMap;
+import com.liferay.saml.opensaml.integration.internal.OrderedServiceTrackerMapFactory;
 import com.liferay.saml.opensaml.integration.field.expression.handler.SamlSpIdpConnectionFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.field.expression.handler.registry.SamlSpIdpConnectionFieldExpressionHandlerRegistry;
 

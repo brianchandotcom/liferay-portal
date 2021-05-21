@@ -104,6 +104,7 @@ definition {
 	@description = "This ensures that a user can set the depot site connection via settings."
 	@priority = "4"
 	@refactorneeded
+	@uitest
 	test SearchForDocument {
 		property test.name.skip.portal.instance = "DepotSettings#SearchForDocument";
 

@@ -39,6 +39,7 @@ definition {
 	@description = "This ensures that a depot can be connected to different types of sites."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test AddMultipleSites {
 		Site.openSitesAdmin();
 
@@ -680,6 +681,7 @@ definition {
 	@description = "This ensures that a depot can be connected to the site."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test Smoke {
 		property portal.acceptance = "true";
 
@@ -733,6 +735,7 @@ definition {
 	@description = "This ensures that a connected child site can access the depot image."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test ViewImageFromChildSite {
 		JSONGroup.addChildSite(
 			groupName = "Child Site Name",

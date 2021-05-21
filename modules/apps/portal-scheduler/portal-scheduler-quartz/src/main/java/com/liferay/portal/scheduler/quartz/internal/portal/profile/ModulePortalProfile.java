@@ -35,9 +35,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -63,12 +65,12 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 
 			BundleContext bundleContext = componentContext.getBundleContext();
 
-			bundleContext.registerService(
+			_schedulerEngineServiceRegistration = bundleContext.registerService(
 				SchedulerEngine.class,
 				ProxyFactory.newDummyInstance(SchedulerEngine.class),
 				new HashMapDictionary<>());
 
-			bundleContext.registerService(
+			_triggerFactoryServiceRegistration = bundleContext.registerService(
 				TriggerFactory.class,
 				ProxyFactory.newDummyInstance(TriggerFactory.class),
 				new HashMapDictionary<>());
@@ -84,11 +86,26 @@ public class ModulePortalProfile extends BaseDSModulePortalProfile {
 			SchedulerLifecycleInitializer.class.getName());
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		if (_triggerFactoryServiceRegistration != null) {
+			_triggerFactoryServiceRegistration.unregister();
+		}
+
+		if (_schedulerEngineServiceRegistration != null) {
+			_schedulerEngineServiceRegistration.unregister();
+		}
+	}
+
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		_props = props;
 	}
 
 	private Props _props;
+	private ServiceRegistration<SchedulerEngine>
+		_schedulerEngineServiceRegistration;
+	private ServiceRegistration<TriggerFactory>
+		_triggerFactoryServiceRegistration;
 
 }

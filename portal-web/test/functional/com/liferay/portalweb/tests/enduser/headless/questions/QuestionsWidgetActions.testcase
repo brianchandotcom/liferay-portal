@@ -49,10 +49,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Question Body 1",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
 			titleField = "Question 1");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -951,10 +951,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Content1",
 			categoryName = "Questions Test Category",
-			tagField = "new",
+			groupName = "Guest",
 			titleField = "Question1");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1139,22 +1139,25 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestion(
 			bodyField = "Content1",
 			categoryName = "Questions Test Category",
+			groupName = "Guest",
 			tagField = "new",
 			titleField = "Question1");
 
 		for (var num : list "2,3,4") {
-			Questions.addQuestionWithoutTagByAPI(
+			JSONQuestions.addQuestionWithoutTag(
 				bodyField = "Content${num}",
 				categoryName = "Questions Test Category",
+				groupName = "Guest",
 				titleField = "Question${num}");
 		}
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Quesions Body 5",
 			categoryName = "Questions Test Category",
+			groupName = "Guest",
 			titleField = "Questions Title 5");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1244,9 +1247,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Content AddQuestion",
 			categoryName = "Questions Test Category",
+			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1396,10 +1400,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Body AddQuestionText",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1468,10 +1472,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Body AddQuestionText",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1524,10 +1528,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Body AddQuestionText",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1601,10 +1605,10 @@ definition {
 			parentCategoryId = "${parentCategoryId}",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Question Body 2",
-			categoryName = "Questions Test Category1",
-			subCategoryName = "Questions Test Category2",
+			categoryName = "Questions Test Category2",
+			groupName = "Guest",
 			titleField = "Question 2");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1661,10 +1665,10 @@ definition {
 			layoutName = "Test Questions Page");
 
 		for (var num : list "1,2,3") {
-			Questions.addQuestionByAPI(
+			JSONQuestions.addQuestionWithoutTag(
 				bodyField = "Question Body ${num}",
 				categoryName = "Questions Test Category",
-				tagField = "test tag",
+				groupName = "Guest",
 				titleField = "Question ${num}");
 		}
 
@@ -1747,9 +1751,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionWithoutTagByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Content Question3",
 			categoryName = "Questions Test Category",
+			groupName = "Guest",
 			titleField = "Question 3");
 
 		Navigator.gotoPage(pageName = "Questions Page");
@@ -1776,10 +1781,10 @@ definition {
 		}
 
 		for (var num : list "1,2") {
-			Questions.addQuestionWithoutTagByAPI(
+			JSONQuestions.addQuestionWithoutTag(
 				bodyField = "Question Body ${num}",
-				categoryName = "Questions Test Category",
-				subCategoryName = "Questions Subcategory${num}",
+				categoryName = "Questions Subcategory${num}",
+				groupName = "Guest",
 				titleField = "Question ${num}");
 		}
 
@@ -1820,10 +1825,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var num : list "1,2") {
-			Questions.addQuestionByAPI(
+			JSONQuestions.addQuestionWithoutTag(
 				bodyField = "Question Body ${num}",
 				categoryName = "Questions Test Category",
-				tagField = "test tag",
+				groupName = "Guest",
 				titleField = "Question ${num}");
 		}
 
@@ -1889,10 +1894,10 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
+		JSONQuestions.addQuestionWithoutTag(
 			bodyField = "Body AddQuestionWithTheTestBody",
 			categoryName = "Questions Test Category",
-			tagField = "test tag",
+			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
 		Navigator.gotoPage(pageName = "Questions Page");

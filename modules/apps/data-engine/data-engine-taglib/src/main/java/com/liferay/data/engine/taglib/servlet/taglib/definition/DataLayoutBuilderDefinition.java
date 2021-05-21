@@ -72,8 +72,9 @@ public interface DataLayoutBuilderDefinition {
 
 	public default String[] getUnimplementedProperties() {
 		return new String[] {
-			"allowGuestUsers", "fieldNamespace", "indexType", "readOnly",
-			"requireConfirmation", "validation", "visibilityExpression"
+			"allowGuestUsers", "fieldNamespace", "indexType", "inputMask",
+			"readOnly", "requireConfirmation", "validation",
+			"visibilityExpression"
 		};
 	}
 

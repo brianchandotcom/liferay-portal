@@ -263,14 +263,83 @@ definition {
 	}
 
 	@description = "Verify that Entries for the Color, Date and Text Fields display a Field List in the Summary Tab"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DisplayFieldListInSummaryTab {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131078 DisplayFieldListInSummaryTab pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Color",
+			formPageNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Date",
+			formPageNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		FormViewBuilder.editColor(
+			fieldName = "Color",
+			fieldValue = "5F5F5F");
+
+		FormViewBuilder.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/2001");
+
+		Click(
+			key_text = "Submit",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Text",
+			key_entryName = "Test Text",
+			key_entryNumber = "1 entry");
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Color",
+			key_entryName = "5F5F5F",
+			key_entryNumber = "1 entry");
+
+		FormViewBuilder.viewSummaryEntry(
+			key_card = "Date",
+			key_entryName = "01/01/2001",
+			key_entryNumber = "1 entry");
 	}
 
 	@description = "Verify that Entries for the Paragraph, Rich Text, Separator, Image, and Upload Fields do not display any metrics in the Summary Tab"

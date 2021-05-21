@@ -282,6 +282,11 @@
 	<td>//label[contains(text(),'${key_fieldName}')]/..//input[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COLOR_FIELD</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//input[@type!="hidden"]</td>
+	<td></td>
+</tr>
 
 <!--SELECT-->
 <tr>
@@ -725,6 +730,16 @@
 <tr>
 	<td>ENTRIES_TITLE_CONTENT</td>
 	<td>//span[contains(@class,'title') and contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_NAME</td>
+	<td>//*[contains(@class,'field-list')][contains(.,'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_NUMBER</td>
+	<td>//*[contains(@class,'card-text')][contains(.,'${key_entryNumber}')]</td>
 	<td></td>
 </tr>
 

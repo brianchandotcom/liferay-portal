@@ -380,6 +380,13 @@ definition {
 			fieldValue = "${key_optionValue}");
 	}
 
+	macro editColor {
+		Type(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormViewBuilder#COLOR_FIELD",
+			value1 = "${fieldValue}");
+	}
+
 	macro editDate {
 		Type(
 			key_fieldName = "${fieldName}",
@@ -1117,6 +1124,20 @@ definition {
 			key_fieldName = "${fieldName}",
 			key_fieldValue = "${fieldValue}",
 			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION");
+	}
+
+	macro viewSummaryEntry {
+		AssertElementPresent(
+			key_card = "${key_card}",
+			locator1 = "Card#CARD_TITLE");
+
+		AssertElementPresent(
+			key_entryNumber = "${key_entryNumber}",
+			locator1 = "FormViewBuilder#ENTRY_NUMBER");
+
+		AssertElementPresent(
+			key_entryName = "${key_entryName}",
+			locator1 = "FormViewBuilder#ENTRY_NAME");
 	}
 
 	macro viewSummaryEntryNumeric {

@@ -32,7 +32,8 @@ definition {
 
 		Click(locator1 = "ACSidebar#PROPERTY_SEARCH");
 
-		Type(locator1 = "ACSidebar#PROPERTY_SEARCH",
+		Type(
+			locator1 = "ACSidebar#PROPERTY_SEARCH",
 			value1 = "${propertyName}");
 
 		Click(locator1 = "ACSidebar#PROPERTY_NAME");

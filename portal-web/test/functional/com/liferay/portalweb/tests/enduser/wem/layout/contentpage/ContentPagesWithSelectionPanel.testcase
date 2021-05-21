@@ -640,7 +640,7 @@ definition {
 
 			var n = "1";
 
-			for (var nodeName : list "Slider,01-01-title,01-02-subtitle,01-03-image,02-01-title,02-02-subtitle,02-03-image,03-01-title,03-02-subtitle,03-03-image") {
+			for (var nodeName : list "Slider,01-01-image,01-02-title,01-03-subtitle,02-01-image,02-02-title,02-03-subtitle,03-01-image,03-02-title,03-03-subtitle") {
 				AssertElementPresent(
 					key_nodeName = "${nodeName}",
 					key_position = "${n}",

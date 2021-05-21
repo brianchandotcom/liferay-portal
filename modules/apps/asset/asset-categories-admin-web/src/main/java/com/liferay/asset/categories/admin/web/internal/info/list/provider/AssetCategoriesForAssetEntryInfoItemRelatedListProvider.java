@@ -86,7 +86,7 @@ public class AssetCategoriesForAssetEntryInfoItemRelatedListProvider
 								assetEntryAssetCategoryRel2.
 									getAssetCategoryId());
 
-							if (!sort.isReverse()) {
+							if (isAscending()) {
 								return value;
 							}
 
@@ -96,6 +96,19 @@ public class AssetCategoriesForAssetEntryInfoItemRelatedListProvider
 						@Override
 						public String[] getOrderByFields() {
 							return new String[] {"assetCategoryId"};
+						}
+
+						@Override
+						public boolean isAscending() {
+							if (sort == null) {
+								return true;
+							}
+
+							if (sort.isReverse()) {
+								return false;
+							}
+
+							return true;
 						}
 
 					});

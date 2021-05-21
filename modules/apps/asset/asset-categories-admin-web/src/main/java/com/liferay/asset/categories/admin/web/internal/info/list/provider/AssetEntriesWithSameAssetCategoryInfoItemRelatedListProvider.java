@@ -85,7 +85,7 @@ public class AssetEntriesWithSameAssetCategoryInfoItemRelatedListProvider
 								assetEntryAssetCategoryRel1.getAssetEntryId(),
 								assetEntryAssetCategoryRel2.getAssetEntryId());
 
-							if (!sort.isReverse()) {
+							if (isAscending()) {
 								return value;
 							}
 
@@ -95,6 +95,19 @@ public class AssetEntriesWithSameAssetCategoryInfoItemRelatedListProvider
 						@Override
 						public String[] getOrderByFields() {
 							return new String[] {"assetEntryId"};
+						}
+
+						@Override
+						public boolean isAscending() {
+							if (sort == null) {
+								return true;
+							}
+
+							if (sort.isReverse()) {
+								return false;
+							}
+
+							return true;
 						}
 
 					});

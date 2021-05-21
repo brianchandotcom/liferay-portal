@@ -52,8 +52,8 @@ public class DynamicUserFieldExpressionResolver
 
 	@Override
 	public String resolveUserFieldExpression(
-		UserResolver.UserResolverSAMLContext userResolverSAMLContext,
-		Map<String, List<Serializable>> incomingAttributeValues) {
+		Map<String, List<Serializable>> incomingAttributeValues,
+		UserResolver.UserResolverSAMLContext userResolverSAMLContext) {
 
 		String userIdentifierExpression = _resolverUserFieldExpression(
 			userResolverSAMLContext.resolveSubjectNameFormat());

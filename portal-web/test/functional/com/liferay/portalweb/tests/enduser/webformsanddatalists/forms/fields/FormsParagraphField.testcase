@@ -102,10 +102,8 @@ definition {
 		AssertElementNotPresent(
 			key_fieldName = "Paragraph",
 			locator1 = "FormFields#PARAGRAPH_BODY_TEXT_CONTENT");
-
-			
 	}
-			
+
 	@description = "Verify that a Paragraph Field can be duplicated"
 	@priority = "5"
 	test CanBeDuplicated {
@@ -279,6 +277,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131237 CanDeleteATable pending implementation
+
 	}
 
 	@description = "Verify that the Formatting Style can be changed using the predefined style options"

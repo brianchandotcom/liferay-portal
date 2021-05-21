@@ -199,6 +199,8 @@ definition {
 	test ViewProductOptionsAndSpecificationsWhenComparingItemsInComparePage {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");

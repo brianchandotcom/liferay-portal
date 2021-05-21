@@ -528,6 +528,8 @@ definition {
 	test AddEditAndRemovePLQualifier {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(

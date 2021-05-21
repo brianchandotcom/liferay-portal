@@ -12,12 +12,12 @@
  *
  */
 
-package com.liferay.saml.web.internal.opensaml.integration.field.expression.handler;
+package com.liferay.saml.opensaml.integration.internal.field.expression.handler.registry;
 
-import com.liferay.saml.opensaml.integration.internal.OrderedServiceTrackerMap;
-import com.liferay.saml.opensaml.integration.internal.OrderedServiceTrackerMapFactory;
 import com.liferay.saml.opensaml.integration.field.expression.handler.SamlSpIdpConnectionFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.field.expression.handler.registry.SamlSpIdpConnectionFieldExpressionHandlerRegistry;
+import com.liferay.saml.opensaml.integration.internal.service.tracker.collections.OrderedServiceTrackerMap;
+import com.liferay.saml.opensaml.integration.internal.service.tracker.collections.OrderedServiceTrackerMapFactory;
 
 import java.util.List;
 import java.util.Map;

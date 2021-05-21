@@ -86,8 +86,8 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 				ProcessorContext.UpdateFunction<T> updateFunction) {
 
 				super(
-					processorContext, publicIdentifier, modelGetter,
-					processingIndex, updateFunction);
+					modelGetter, processingIndex, processorContext,
+					publicIdentifier, updateFunction);
 			}
 
 			@Override

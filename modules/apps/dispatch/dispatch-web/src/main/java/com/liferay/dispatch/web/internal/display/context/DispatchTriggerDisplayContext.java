@@ -16,6 +16,8 @@ package com.liferay.dispatch.web.internal.display.context;
 
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
+import com.liferay.dispatch.metadata.DispatchTriggerMetadata;
+import com.liferay.dispatch.metadata.DispatchTriggerMetadataProvider;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.petra.string.StringPool;
@@ -50,12 +52,14 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 	public DispatchTriggerDisplayContext(
 		DispatchTaskExecutorRegistry dispatchTaskExecutorRegistry,
 		DispatchTriggerLocalService dispatchTriggerLocalService,
+		DispatchTriggerMetadataProvider dispatchTriggerMetadataProvider,
 		RenderRequest renderRequest) {
 
 		super(renderRequest);
 
 		_dispatchTaskExecutorRegistry = dispatchTaskExecutorRegistry;
 		_dispatchTriggerLocalService = dispatchTriggerLocalService;
+		_dispatchTriggerMetadataProvider = dispatchTriggerMetadataProvider;
 
 		_dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			dispatchRequestHelper.getLocale());
@@ -84,6 +88,13 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 
 	public DispatchTrigger getDispatchTrigger() {
 		return dispatchRequestHelper.getDispatchTrigger();
+	}
+
+	public DispatchTriggerMetadata getDispatchTriggerMetadata(
+		long dispatchTriggerId) {
+
+		return _dispatchTriggerMetadataProvider.getDispatchTriggerMetadata(
+			dispatchTriggerId);
 	}
 
 	public String getNextFireDateString(long dispatchTriggerId)
@@ -179,6 +190,8 @@ public class DispatchTriggerDisplayContext extends BaseDisplayContext {
 	private final Format _dateFormatDateTime;
 	private final DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
+	private final DispatchTriggerMetadataProvider
+		_dispatchTriggerMetadataProvider;
 	private RowChecker _rowChecker;
 	private SearchContainer<DispatchTrigger> _searchContainer;
 

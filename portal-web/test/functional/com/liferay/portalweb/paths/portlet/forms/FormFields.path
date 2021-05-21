@@ -345,6 +345,21 @@
 </tr>
 <!--PARAGRAPH-->
 <tr>
+	<td>PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD</td>
+	<td>//div[(@class='liferay-ddm-form-field-paragraph-text')]//p//strong[contains(text(),'${key_textName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC</td>
+	<td>//div[(@class='liferay-ddm-form-field-paragraph-text')]//p//em[contains(text(),'${key_textName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_UNDERLINE</td>
+	<td>//div[(@class='liferay-ddm-form-field-paragraph-text')]//p//u[contains(text(),'${key_textName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PARAGRAPH_BODY_TEXT_CONTENT</td>
 	<td>//div[(@class='form-group') and contains(@data-field-name,'${key_fieldName}')]//div</td>
 	<td></td>

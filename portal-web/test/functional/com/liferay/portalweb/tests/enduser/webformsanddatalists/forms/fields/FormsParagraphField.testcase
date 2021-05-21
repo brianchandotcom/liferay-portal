@@ -736,12 +736,63 @@ definition {
 	}
 
 	@description = "Verify that text in the Body Text can be Bolded, Italicized and Underlined"
-	@ignore = "true"
 	@priority = "5"
 	test TextCanBeBoldedItalicizedAndUnderlined {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131246 TextCanBeBoldedItalicizedAndUnderlined pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		Form.editFieldLabelMetal(fieldValue = "Paragraph");
+
+		FormFields.editTextBodyToolBar(
+			content = "Test",
+			optionTool = "Bold");
+
+		Form.save();
+
+		AssertElementPresent(
+			key_textName = "Test",
+			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD");
+
+		Click(
+			key_textName = "Test",
+			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_BOLD");
+
+		FormFields.editTextBodyToolBar(
+			content = "Test",
+			optionTool = "Italic");
+
+		Form.save();
+
+		AssertElementPresent(
+			key_textName = "Test",
+			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC");
+
+		Click(
+			key_textName = "Test",
+			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_ITALIC");
+
+		FormFields.editTextBodyToolBar(
+			content = "Test",
+			optionTool = "Underline");
+
+		Form.save();
+
+		AssertElementPresent(
+			key_textName = "Test",
+			locator1 = "FormFields#PARAGRAPH_ASSERT_BODY_TEXT_CONTENT_UNDERLINE");
+			
 	}
 
 	@description = "Verify that the Field Title can be edited"

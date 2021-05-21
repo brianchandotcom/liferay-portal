@@ -274,7 +274,8 @@ public class AttachmentUtil {
 		return cpAttachmentFileEntryService.addOrUpdateCPAttachmentFileEntry(
 			attachment.getExternalReferenceCode(), groupId, classNameId,
 			classPK, GetterUtil.getLong(attachment.getId()), fileEntryId,
-			GetterUtil.getString(attachment.getCdnUrl()),GetterUtil.get(attachment.getCdn(), false),
+			GetterUtil.getString(attachment.getCdnUrl()),
+			GetterUtil.get(attachment.getCdn(), false),
 			displayDateConfig.getMonth(), displayDateConfig.getDay(),
 			displayDateConfig.getYear(), displayDateConfig.getHour(),
 			displayDateConfig.getMinute(), expirationDateConfig.getMonth(),

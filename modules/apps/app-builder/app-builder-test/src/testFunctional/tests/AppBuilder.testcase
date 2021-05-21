@@ -3253,7 +3253,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
-		PasswordPolicies.togglePasswordChangeRequired(
+		PasswordPolicies.enableChangeable(
 			enableChangeRequired = "true",
 			passwordPolicyName = "Default Password Policy",
 			passwordPolicyPanel = "Password Changes");
@@ -3403,7 +3403,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
-		PasswordPolicies.togglePasswordChangeRequired(
+		PasswordPolicies.enableChangeable(
 			enableChangeRequired = "true",
 			passwordPolicyName = "Default Password Policy",
 			passwordPolicyPanel = "Password Changes");

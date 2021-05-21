@@ -295,7 +295,10 @@ definition {
 		}
 
 		task ("Expire the third web content") {
-			WebContent.expireCP(webContentTitleList = "WebContent Title 3");
+			JSONWebcontent.updateStatus(
+				groupName = "Test Site Name",
+				statusKey = "EXPIRE",
+				title = "WebContent Title 3");
 		}
 
 		task ("View status of web contents in Contents panel") {

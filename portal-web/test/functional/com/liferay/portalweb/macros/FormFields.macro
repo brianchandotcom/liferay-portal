@@ -12,7 +12,6 @@ definition {
 	}
 
 	macro addSingleSelectionOption {
-
 		Type(
 			key_rowNumber = "${optionValue}",
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",

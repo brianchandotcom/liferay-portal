@@ -331,12 +331,12 @@ definition {
 			fieldType = "Single Selection",
 			formPageNumber = "0");
 
-		FormFields.addSingleSelectionOption(			
-			optionName = "Option 1",			
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 1",
 			optionValue = "1");
 
-		FormFields.addSingleSelectionOption(			
-			optionName = "Option 2",			
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 2",
 			optionValue = "2");
 
 		Form.gotoAdvancedTab();
@@ -358,8 +358,6 @@ definition {
 			fieldValue = "Option 1");
 
 		FormPortlet.submitSuccessfully();
-
-
 	}
 
 	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""

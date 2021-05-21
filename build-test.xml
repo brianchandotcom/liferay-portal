@@ -762,8 +762,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		<attribute name="process.name" />
 
 		<sequential>
-			<var name="jstack.output" unset="true" />
-
 			<execute>
 				<![CDATA[
 					jps > jps_output
@@ -780,31 +778,57 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<if>
 				<contains string="${jps.output}" substring="@{process.name}" />
 				<then>
-					<local name="bootstrap.pid" />
+					<local name="process.pid" />
 
 					<propertyregex
 						input="${jps.output}"
 						override="true"
-						property="bootstrap.pid"
+						property="process.pid"
 						regexp="(|[\S\s]*\n)([0-9]+) @{process.name}[\S\s]*"
 						replace="\2"
 					/>
 
+					<local name="process.log.file" />
+
+					<property name="process.log.file" value="/tmp/@{process.name}__${process.pid}.log" />
+
 					<execute>
 						<![CDATA[
-							jstack -l ${bootstrap.pid} > jstack_output
+							jstack -l ${process.pid} > ${process.log.file}
 						]]>
 					</execute>
 
-					<loadfile
-						property="jstack.output"
-						srcfile="jstack_output"
-					/>
+					<if>
+						<and>
+							<isset property="env.BUILD_DIR" />
+							<isset property="env.BUILD_USER_CONTENT_URL" />
+						</and>
+						<then>
+							<mkdir dir="${env.BUILD_DIR}/jstacks" />
+
+							<local name="process.log.file.name" />
+
+							<basename file="${process.log.file}" property="process.log.file.name" />
+
+							<copy
+								file="${process.log.file}"
+								tofile="${env.BUILD_DIR}/jstacks/${process.log.file.name}"
+							/>
+
+							<echo>${env.BUILD_USER_CONTENT_URL}/jstacks/${process.log.file.name}</echo>
+
+							<print-file file.name="${env.BUILD_DIR}/jstacks/${process.log.file.name}" file.line.count="10" />
+						</then>
+						<else>
+							<print-file file.name="${process.log.file}" />
+						</else>
+					</if>
+
+					<delete file="${process.log.file}" />
 				</then>
 			</if>
 
 			<delete file="jps_output" />
-			<delete file="jstack_output" />
 		</sequential>
 	</macrodef>
 
@@ -5034,7 +5058,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 								</then>
 							</if>
 
-							<fail message="Server is still available at ${app.server.waiting.url}.${line.separator}${jstack.output}">
+							<fail message="Server is still available at ${app.server.waiting.url}.">
 								<condition>
 									<equals arg1="@{app.server.explicit.stop.count}" arg2="3" />
 								</condition>
@@ -5826,7 +5850,7 @@ war.path=${app.server.portal.dir}/</echo>
 
 					<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
 
-					<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}${line.separator}${jstack.output}" />
+					<fail if="app.server.waiting.timeout" message="No server is available at ${app.server.waiting.url}" />
 				</then>
 			</if>
 
@@ -5950,7 +5974,7 @@ war.path=${app.server.portal.dir}/</echo>
 						<then>
 							<get-jstack-output process.name="Bootstrap" />
 
-							<fail message="${wait.for.app.server.log.timed.out.message}${line.separator}${jstack.output}" />
+							<fail message="${wait.for.app.server.log.timed.out.message}" />
 						</then>
 					</if>
 				</then>
@@ -6037,7 +6061,7 @@ war.path=${app.server.portal.dir}/</echo>
 				<then>
 					<get-jstack-output process.name="Bootstrap" />
 
-					<fail message="${timed.out.message}${line.separator}${jstack.output}" />
+					<fail message="${timed.out.message}" />
 				</then>
 			</if>
 		</sequential>
@@ -14128,7 +14152,7 @@ url=${short.hostname}:8080</echo>
 			<catch>
 				<get-jstack-output process.name="DBUpgrader" />
 
-				<fail message="${upgrade.error}${line.separator}${jstack.output}" />
+				<fail message="${upgrade.error}" />
 			</catch>
 		</trycatch>
 	</target>

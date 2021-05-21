@@ -17,6 +17,9 @@ package com.liferay.dynamic.data.mapping.internal.io.exporter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriter;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordWriterResponse;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.ByteArrayOutputStream;
 
@@ -123,6 +126,24 @@ public class DDMFormInstanceRecordXLSWriter
 		int cellIndex = 0;
 
 		for (String value : values) {
+			if (value.length() > _CELL_MAX_LENGTH) {
+				value = value.substring(0, _CELL_MAX_LENGTH - 1);
+
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(7);
+
+					sb.append("Cell ");
+					sb.append(rowIndex);
+					sb.append(",");
+					sb.append(cellIndex);
+					sb.append(" value trimmed to ");
+					sb.append(_CELL_MAX_LENGTH);
+					sb.append(" characters");
+
+					_log.warn(sb.toString());
+				}
+			}
+
 			Cell cell = row.createCell(cellIndex++, CellType.STRING);
 
 			cell.setCellStyle(cellStyle);
@@ -133,5 +154,10 @@ public class DDMFormInstanceRecordXLSWriter
 	protected Workbook createWorkbook() {
 		return new HSSFWorkbook();
 	}
+
+	private static final int _CELL_MAX_LENGTH = 32767;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormInstanceRecordXLSWriter.class);
 
 }

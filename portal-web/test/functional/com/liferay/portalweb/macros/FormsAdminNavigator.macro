@@ -93,6 +93,18 @@ definition {
 			value1 = "${formName}");
 	}
 
+	macro gotoEntries {
+		var key_navigationBarItem = "Entries";
+
+		WaitForElementPresent(
+			locator1 = "FormsAdmin#FORMS_NAVIGATION_BAR_ITEM",
+			value1 = "Entries");
+
+		AssertClick(
+			locator1 = "FormsAdmin#FORMS_NAVIGATION_BAR_ITEM",
+			value1 = "Entries");
+	}
+
 	macro gotoFormBuilder {
 		var key_navigationBarItem = "Form";
 

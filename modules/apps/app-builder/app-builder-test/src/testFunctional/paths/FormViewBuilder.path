@@ -705,6 +705,12 @@
 	<td></td>
 </tr>
 
+<!--ENTRIES-->
+<tr>
+	<td>ENTRY_NUMERIC</td>
+	<td>//*[contains(@class,'summary-item')][contains(.,'${key_value}')]//div[contains(text(),'${key_type}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

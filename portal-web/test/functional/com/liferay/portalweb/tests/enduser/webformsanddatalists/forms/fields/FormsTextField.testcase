@@ -43,13 +43,31 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can be created"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131330 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
 	}
 
 	@description = "Verify that a Text Field can be deleted"

@@ -199,6 +199,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		messageBoardMessage.setExternalReferenceCode(regex);
 		messageBoardMessage.setFriendlyUrlPath(regex);
 		messageBoardMessage.setHeadline(regex);
+		messageBoardMessage.setStatus(regex);
 
 		String json = MessageBoardMessageSerDes.toJSON(messageBoardMessage);
 
@@ -212,6 +213,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			regex, messageBoardMessage.getExternalReferenceCode());
 		Assert.assertEquals(regex, messageBoardMessage.getFriendlyUrlPath());
 		Assert.assertEquals(regex, messageBoardMessage.getHeadline());
+		Assert.assertEquals(regex, messageBoardMessage.getStatus());
 	}
 
 	@Test
@@ -2353,6 +2355,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (messageBoardMessage.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subscribed", additionalAssertFieldName)) {
 				if (messageBoardMessage.getSubscribed() == null) {
 					valid = false;
@@ -2804,6 +2814,17 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						messageBoardMessage1.getStatus(),
+						messageBoardMessage2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("subscribed", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						messageBoardMessage1.getSubscribed(),
@@ -3205,6 +3226,14 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("status")) {
+			sb.append("'");
+			sb.append(String.valueOf(messageBoardMessage.getStatus()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("subscribed")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -3280,6 +3309,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 				parentMessageBoardMessageId = RandomTestUtil.randomLong();
 				showAsAnswer = RandomTestUtil.randomBoolean();
 				siteId = testGroup.getGroupId();
+				status = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				subscribed = RandomTestUtil.randomBoolean();
 			}
 		};

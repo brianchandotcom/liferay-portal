@@ -354,6 +354,20 @@ public class MessageBoardThreadSerDes {
 			sb.append(messageBoardThread.getSiteId());
 		}
 
+		if (messageBoardThread.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(messageBoardThread.getStatus()));
+
+			sb.append("\"");
+		}
+
 		if (messageBoardThread.getSubscribed() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -665,6 +679,13 @@ public class MessageBoardThreadSerDes {
 			map.put("siteId", String.valueOf(messageBoardThread.getSiteId()));
 		}
 
+		if (messageBoardThread.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(messageBoardThread.getStatus()));
+		}
+
 		if (messageBoardThread.getSubscribed() == null) {
 			map.put("subscribed", null);
 		}
@@ -889,6 +910,11 @@ public class MessageBoardThreadSerDes {
 				if (jsonParserFieldValue != null) {
 					messageBoardThread.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setStatus((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "subscribed")) {

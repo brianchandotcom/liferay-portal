@@ -434,6 +434,11 @@ public abstract class BaseMessageBoardThreadResourceImpl
 				messageBoardThread.getSiteId());
 		}
 
+		if (messageBoardThread.getStatus() != null) {
+			existingMessageBoardThread.setStatus(
+				messageBoardThread.getStatus());
+		}
+
 		if (messageBoardThread.getSubscribed() != null) {
 			existingMessageBoardThread.setSubscribed(
 				messageBoardThread.getSubscribed());

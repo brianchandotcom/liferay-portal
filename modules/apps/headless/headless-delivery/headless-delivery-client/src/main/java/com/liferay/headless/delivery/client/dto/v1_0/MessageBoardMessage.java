@@ -533,6 +533,27 @@ public class MessageBoardMessage implements Cloneable, Serializable {
 
 	protected Long siteId;
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public void setStatus(
+		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+
+		try {
+			status = statusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String status;
+
 	public Boolean getSubscribed() {
 		return subscribed;
 	}

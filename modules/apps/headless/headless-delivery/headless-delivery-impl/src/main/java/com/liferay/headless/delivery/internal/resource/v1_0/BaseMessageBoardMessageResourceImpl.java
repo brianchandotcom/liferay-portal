@@ -292,6 +292,11 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				messageBoardMessage.getSiteId());
 		}
 
+		if (messageBoardMessage.getStatus() != null) {
+			existingMessageBoardMessage.setStatus(
+				messageBoardMessage.getStatus());
+		}
+
 		if (messageBoardMessage.getSubscribed() != null) {
 			existingMessageBoardMessage.setSubscribed(
 				messageBoardMessage.getSubscribed());

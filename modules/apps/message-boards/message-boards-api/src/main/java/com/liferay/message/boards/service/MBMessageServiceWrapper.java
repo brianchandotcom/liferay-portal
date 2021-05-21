@@ -243,6 +243,28 @@ public class MBMessageServiceWrapper
 	}
 
 	@Override
+	public java.util.List<MBMessage> getChildMessages(
+			long parentMessageId, boolean flatten,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<MBMessage>
+				queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageService.getChildMessages(
+			parentMessageId, flatten, queryDefinition);
+	}
+
+	@Override
+	public int getChildMessagesCount(
+			long parentMessageId, boolean flatten,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<MBMessage>
+				queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageService.getChildMessagesCount(
+			parentMessageId, flatten, queryDefinition);
+	}
+
+	@Override
 	public String getCompanyMessagesRSS(
 			long companyId, int status, int max, String type, double version,
 			String displayStyle, String feedURL, String entryURL,

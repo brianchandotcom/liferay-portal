@@ -336,6 +336,48 @@ public class MBMessageServiceSoap {
 		}
 	}
 
+	public static com.liferay.message.boards.model.MBMessageSoap[]
+			getChildMessages(
+				long parentMessageId, boolean flatten,
+				com.liferay.portal.kernel.dao.orm.QueryDefinition
+					<com.liferay.message.boards.model.MBMessage>
+						queryDefinition)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.message.boards.model.MBMessage>
+				returnValue = MBMessageServiceUtil.getChildMessages(
+					parentMessageId, flatten, queryDefinition);
+
+			return com.liferay.message.boards.model.MBMessageSoap.toSoapModels(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static int getChildMessagesCount(
+			long parentMessageId, boolean flatten,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.message.boards.model.MBMessage> queryDefinition)
+		throws RemoteException {
+
+		try {
+			int returnValue = MBMessageServiceUtil.getChildMessagesCount(
+				parentMessageId, flatten, queryDefinition);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getGroupMessagesCount(long groupId, int status)
 		throws RemoteException {
 

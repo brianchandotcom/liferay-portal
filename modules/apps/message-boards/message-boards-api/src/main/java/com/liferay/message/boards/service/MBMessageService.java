@@ -17,6 +17,7 @@ package com.liferay.message.boards.service;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -169,6 +170,18 @@ public interface MBMessageService extends BaseService {
 			long groupId, long categoryId, int status, int max, String type,
 			double version, String displayStyle, String feedURL,
 			String entryURL, ThemeDisplay themeDisplay)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getChildMessages(
+			long parentMessageId, boolean flatten,
+			QueryDefinition<MBMessage> queryDefinition)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getChildMessagesCount(
+			long parentMessageId, boolean flatten,
+			QueryDefinition<MBMessage> queryDefinition)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

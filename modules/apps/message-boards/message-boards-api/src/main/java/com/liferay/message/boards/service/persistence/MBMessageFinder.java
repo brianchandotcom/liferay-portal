@@ -23,6 +23,11 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface MBMessageFinder {
 
+	public int countByParentMessageId(
+		long parentMessageId, boolean flatten,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition
+			<com.liferay.message.boards.model.MBMessage> queryDefinition);
+
 	public int countByC_T(java.util.Date createDate, long threadId);
 
 	public int countByG_U_C_S(
@@ -62,6 +67,12 @@ public interface MBMessageFinder {
 	public java.util.List<Long> filterFindByG_U_MD_C_A_S(
 		long groupId, long userId, java.util.Date modifiedDate,
 		long[] categoryIds, boolean anonymous, int status, int start, int end);
+
+	public java.util.List<com.liferay.message.boards.model.MBMessage>
+		findByParentMessageId(
+			long parentMessageId, boolean flatten,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition
+				<com.liferay.message.boards.model.MBMessage> queryDefinition);
 
 	public java.util.List<com.liferay.message.boards.model.MBMessage>
 		findByThreadId(

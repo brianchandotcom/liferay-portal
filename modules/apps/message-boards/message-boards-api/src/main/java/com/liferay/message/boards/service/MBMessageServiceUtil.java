@@ -228,6 +228,26 @@ public class MBMessageServiceUtil {
 			feedURL, entryURL, themeDisplay);
 	}
 
+	public static List<MBMessage> getChildMessages(
+			long parentMessageId, boolean flatten,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<MBMessage>
+				queryDefinition)
+		throws PortalException {
+
+		return getService().getChildMessages(
+			parentMessageId, flatten, queryDefinition);
+	}
+
+	public static int getChildMessagesCount(
+			long parentMessageId, boolean flatten,
+			com.liferay.portal.kernel.dao.orm.QueryDefinition<MBMessage>
+				queryDefinition)
+		throws PortalException {
+
+		return getService().getChildMessagesCount(
+			parentMessageId, flatten, queryDefinition);
+	}
+
 	public static String getCompanyMessagesRSS(
 			long companyId, int status, int max, String type, double version,
 			String displayStyle, String feedURL, String entryURL,

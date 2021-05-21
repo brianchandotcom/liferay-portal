@@ -390,8 +390,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSERT_PARAGRAPH_TEXT_STYLE</td>
-	<td>//div[(@class='liferay-ddm-form-field-paragraph-text')]//${key_formattingStyle}[contains(text(),'Test')]</td>
+	<td>PARAGRAPH_TEXT_VALUE_STYLE</td>
+	<td>//div[(@class='liferay-ddm-form-field-paragraph-text')]//${key_formattingStyle}[contains(text(),'${value}')]</td>
 	<td></td>
 </tr>
 <tr>

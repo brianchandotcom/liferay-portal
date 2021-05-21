@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
@@ -339,6 +340,24 @@ public class DLFileEntryLocalServiceImpl
 		removeFileVersion(dlFileEntry, dlFileVersion);
 
 		return dlFileVersion;
+	}
+
+	/**
+	 * Checks all file entries by handling their expirations and sending
+	 * review notifications based on their current workflow.
+	 */
+	@Override
+	public void checkFileEntries(long checkInterval) throws PortalException {
+		Date now = new Date();
+
+		if (_previousCheckDate == null) {
+			_previousCheckDate = new Date(
+				now.getTime() - (checkInterval * Time.MINUTE));
+		}
+
+		_checkFileEntriesByReviewDate(now);
+
+		_previousCheckDate = now;
 	}
 
 	@Override
@@ -2683,6 +2702,33 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
+	private void _checkFileEntriesByReviewDate(Date reviewDate)
+		throws PortalException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Sending review notification for File entries with ",
+					"reviewDate between ", _previousCheckDate, " and ",
+					reviewDate));
+		}
+
+		List<DLFileEntry> fileEntries = dlFileEntryFinder.findByReviewDate(
+			reviewDate, _previousCheckDate);
+
+		for (DLFileEntry fileEntry : fileEntries) {
+			if (fileEntry.isInTrash()) {
+				continue;
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Sending review notification for file entry " +
+						fileEntry.getFileEntryId());
+			}
+		}
+	}
+
 	private DLFileEntry _checkOutDLFileEntryModel(
 			long userId, long fileEntryId, long fileEntryTypeId,
 			ServiceContext serviceContext)
@@ -3009,5 +3055,7 @@ public class DLFileEntryLocalServiceImpl
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ViewCountManager.class, DLFileEntryLocalServiceImpl.class,
 			"_viewCountManager", false, true);
+
+	private Date _previousCheckDate;
 
 }

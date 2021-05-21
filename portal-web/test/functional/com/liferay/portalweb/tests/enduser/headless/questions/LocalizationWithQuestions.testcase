@@ -129,15 +129,9 @@ definition {
 			titleField = "あなたの好きな日本料理は何ですか",
 			topicName = "質問トピック");
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			localization = "true",
-			siteURLKey = "guest",
-			topicName = "質問トピック");
-
 		AssertTextEquals(
 			key_questionTitle = "あなたの好きな日本料理は何ですか",
-			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+			locator1 = "Questions#QUESTIONS_TITLE",
 			value1 = "あなたの好きな日本料理は何ですか");
 	}
 

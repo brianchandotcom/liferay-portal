@@ -356,16 +356,16 @@ public abstract class ProcessorImpl
 			Queue<Map.Entry<Integer, UnsafeConsumer<ServiceContext, ?>>>
 				processingQueue) {
 
-		Queue<UnsafeConsumer<T, ?>> bufferedSetters = new LinkedList<>();
+		Queue<UnsafeConsumer<T, ?>> queue = new LinkedList<>();
 
 		processingQueue.add(
 			new AbstractMap.SimpleEntry<>(
 				processingIndex,
 				serviceContext -> _patchModel(
-					publicIdentifier, model, bufferedSetters, updateFunction,
+					publicIdentifier, model, queue, updateFunction,
 					serviceContext)));
 
-		return bufferedSetters;
+		return queue;
 	}
 
 	private <T extends BaseModel<T>> T _patchModel(

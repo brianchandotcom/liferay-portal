@@ -69,6 +69,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
+		Date now = new Date();
 
 		long linkId1 = counterLocalService.increment();
 
@@ -77,6 +78,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 		link1.setCompanyId(user.getCompanyId());
 		link1.setUserId(user.getUserId());
 		link1.setUserName(user.getFullName());
+		link1.setCreateDate(now);
 		link1.setEntryId1(entryId1);
 		link1.setEntryId2(entryId2);
 		link1.setType(type);
@@ -92,6 +94,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 			link2.setCompanyId(user.getCompanyId());
 			link2.setUserId(user.getUserId());
 			link2.setUserName(user.getFullName());
+			link2.setCreateDate(now);
 			link2.setEntryId1(entryId2);
 			link2.setEntryId2(entryId1);
 			link2.setType(type);

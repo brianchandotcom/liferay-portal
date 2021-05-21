@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		// KB folder
 
 		User user = userLocalService.getUser(userId);
+		Date now = new Date();
 
 		validateName(groupId, parentResourcePrimKey, name);
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
@@ -75,6 +77,8 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 		kbFolder.setCompanyId(user.getCompanyId());
 		kbFolder.setUserId(userId);
 		kbFolder.setUserName(user.getFullName());
+		kbFolder.setCreateDate(now);
+		kbFolder.setModifiedDate(now);
 		kbFolder.setParentKBFolderId(parentResourcePrimKey);
 		kbFolder.setName(name);
 		kbFolder.setUrlTitle(
@@ -278,6 +282,7 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 			validateName(kbFolder.getGroupId(), parentResourcePrimKey, name);
 		}
 
+		kbFolder.setModifiedDate(new Date());
 		kbFolder.setParentKBFolderId(parentResourcePrimKey);
 		kbFolder.setName(name);
 		kbFolder.setDescription(description);

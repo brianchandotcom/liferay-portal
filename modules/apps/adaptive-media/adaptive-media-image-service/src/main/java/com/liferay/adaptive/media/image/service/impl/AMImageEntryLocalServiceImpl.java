@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import java.io.InputStream;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -102,6 +103,7 @@ public class AMImageEntryLocalServiceImpl
 
 		amImageEntry.setGroupId(fileVersion.getGroupId());
 		amImageEntry.setCompanyId(fileVersion.getCompanyId());
+		amImageEntry.setCreateDate(new Date());
 		amImageEntry.setConfigurationUuid(amImageConfigurationEntry.getUUID());
 		amImageEntry.setFileVersionId(fileVersion.getFileVersionId());
 		amImageEntry.setMimeType(fileVersion.getMimeType());

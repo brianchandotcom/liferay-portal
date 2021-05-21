@@ -26,6 +26,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskFormLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,6 +50,7 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 		// Kaleo task
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		Date now = new Date();
 
 		long kaleoTaskId = counterLocalService.increment();
 
@@ -57,6 +59,8 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 		kaleoTask.setCompanyId(user.getCompanyId());
 		kaleoTask.setUserId(user.getUserId());
 		kaleoTask.setUserName(user.getFullName());
+		kaleoTask.setCreateDate(now);
+		kaleoTask.setModifiedDate(now);
 		kaleoTask.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoTask.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoTask.setKaleoNodeId(kaleoNodeId);

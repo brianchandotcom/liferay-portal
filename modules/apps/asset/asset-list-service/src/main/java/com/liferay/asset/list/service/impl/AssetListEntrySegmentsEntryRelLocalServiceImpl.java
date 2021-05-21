@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,6 +60,8 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 		assetListEntrySegmentsEntryRel.setCompanyId(user.getCompanyId());
 		assetListEntrySegmentsEntryRel.setUserId(userId);
 		assetListEntrySegmentsEntryRel.setUserName(user.getFullName());
+		assetListEntrySegmentsEntryRel.setCreateDate(new Date());
+		assetListEntrySegmentsEntryRel.setModifiedDate(new Date());
 		assetListEntrySegmentsEntryRel.setAssetListEntryId(assetListEntryId);
 		assetListEntrySegmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
 		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
@@ -171,6 +174,7 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 			assetListEntrySegmentsEntryRelPersistence.fetchByA_S(
 				assetListEntryId, segmentsEntryId);
 
+		assetListEntrySegmentsEntryRel.setModifiedDate(new Date());
 		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
 
 		return assetListEntrySegmentsEntryRelPersistence.update(

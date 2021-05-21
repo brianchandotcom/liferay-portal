@@ -1049,6 +1049,8 @@ public class JournalArticleLocalServiceImpl
 			modifiedDate = serviceContext.getModifiedDate(modifiedDate);
 		}
 
+		newArticle.setModifiedDate(modifiedDate);
+
 		newArticle.setFolderId(oldArticle.getFolderId());
 		newArticle.setTreePath(oldArticle.getTreePath());
 		newArticle.setArticleId(newArticleId);

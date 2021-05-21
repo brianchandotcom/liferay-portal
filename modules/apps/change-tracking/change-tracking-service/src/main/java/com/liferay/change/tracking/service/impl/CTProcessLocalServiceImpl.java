@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -77,6 +78,7 @@ public class CTProcessLocalServiceImpl extends CTProcessLocalServiceBaseImpl {
 
 		ctProcess.setCompanyId(ctCollection.getCompanyId());
 		ctProcess.setUserId(userId);
+		ctProcess.setCreateDate(new Date());
 		ctProcess.setCtCollectionId(ctCollectionId);
 
 		Company company = companyLocalService.getCompany(

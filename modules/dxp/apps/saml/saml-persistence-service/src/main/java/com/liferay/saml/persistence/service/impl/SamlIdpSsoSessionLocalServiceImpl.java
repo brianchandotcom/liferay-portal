@@ -46,6 +46,7 @@ public class SamlIdpSsoSessionLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUserById(serviceContext.getUserId());
+		Date now = new Date();
 
 		SamlIdpSsoSession samlIdpSsoSession =
 			samlIdpSsoSessionPersistence.fetchBySamlIdpSsoSessionKey(
@@ -65,6 +66,8 @@ public class SamlIdpSsoSessionLocalServiceImpl
 		samlIdpSsoSession.setCompanyId(serviceContext.getCompanyId());
 		samlIdpSsoSession.setUserId(user.getUserId());
 		samlIdpSsoSession.setUserName(user.getFullName());
+		samlIdpSsoSession.setCreateDate(now);
+		samlIdpSsoSession.setModifiedDate(now);
 		samlIdpSsoSession.setSamlIdpSsoSessionKey(samlIdpSsoSessionKey);
 
 		return samlIdpSsoSessionPersistence.update(samlIdpSsoSession);
@@ -106,6 +109,8 @@ public class SamlIdpSsoSessionLocalServiceImpl
 		SamlIdpSsoSession samlIdpSsoSession =
 			samlIdpSsoSessionPersistence.findBySamlIdpSsoSessionKey(
 				samlIdpSsoSessionKey);
+
+		samlIdpSsoSession.setModifiedDate(new Date());
 
 		return samlIdpSsoSessionPersistence.update(samlIdpSsoSession);
 	}

@@ -317,6 +317,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			layoutPageTemplateStructurePersistence.findByG_C_C(
 				groupId, _portal.getClassNameId(Layout.class), plid);
 
+		layoutPageTemplateStructure.setModifiedDate(new Date());
+
 		layoutPageTemplateStructure =
 			layoutPageTemplateStructurePersistence.update(
 				layoutPageTemplateStructure);

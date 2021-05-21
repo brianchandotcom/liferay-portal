@@ -273,6 +273,7 @@ public class FragmentCompositionLocalServiceImpl
 			fragmentCompositionPersistence.findByPrimaryKey(
 				fragmentCompositionId);
 
+		fragmentComposition.setModifiedDate(new Date());
 		fragmentComposition.setPreviewFileEntryId(previewFileEntryId);
 
 		return fragmentCompositionPersistence.update(fragmentComposition);
@@ -293,6 +294,7 @@ public class FragmentCompositionLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
+		fragmentComposition.setModifiedDate(new Date());
 		fragmentComposition.setFragmentCollectionId(fragmentCollectionId);
 		fragmentComposition.setName(name);
 		fragmentComposition.setDescription(description);

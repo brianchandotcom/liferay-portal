@@ -30,6 +30,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTimerLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -55,6 +56,7 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 		// Kaleo timer
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		Date now = new Date();
 
 		long kaleoTimerId = counterLocalService.increment();
 
@@ -63,6 +65,8 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 		kaleoTimer.setCompanyId(user.getCompanyId());
 		kaleoTimer.setUserId(user.getUserId());
 		kaleoTimer.setUserName(user.getFullName());
+		kaleoTimer.setCreateDate(now);
+		kaleoTimer.setModifiedDate(now);
 		kaleoTimer.setKaleoClassName(kaleoClassName);
 		kaleoTimer.setKaleoClassPK(kaleoClassPK);
 		kaleoTimer.setKaleoDefinitionId(kaleoDefinitionId);

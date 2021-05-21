@@ -91,6 +91,8 @@ public class KaleoInstanceLocalServiceImpl
 				serviceContext.getCompanyId());
 		}
 
+		Date now = new Date();
+
 		long kaleoInstanceId = counterLocalService.increment();
 
 		KaleoInstance kaleoInstance = kaleoInstancePersistence.create(
@@ -104,6 +106,8 @@ public class KaleoInstanceLocalServiceImpl
 		kaleoInstance.setCompanyId(user.getCompanyId());
 		kaleoInstance.setUserId(user.getUserId());
 		kaleoInstance.setUserName(user.getFullName());
+		kaleoInstance.setCreateDate(now);
+		kaleoInstance.setModifiedDate(now);
 		kaleoInstance.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoInstance.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoInstance.setKaleoDefinitionName(kaleoDefinitionName);

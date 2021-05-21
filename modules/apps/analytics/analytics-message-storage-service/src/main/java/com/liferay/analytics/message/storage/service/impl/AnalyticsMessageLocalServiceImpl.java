@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.User;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,6 +54,7 @@ public class AnalyticsMessageLocalServiceImpl
 
 		analyticsMessage.setUserName(user.getFullName());
 
+		analyticsMessage.setCreateDate(new Date());
 		analyticsMessage.setBody(
 			new OutputBlob(new UnsyncByteArrayInputStream(body), body.length));
 

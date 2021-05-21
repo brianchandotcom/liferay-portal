@@ -61,6 +61,7 @@ public class AkismetEntryLocalServiceImpl
 			akismetEntry = akismetEntryPersistence.create(akismetEntryId);
 		}
 
+		akismetEntry.setModifiedDate(new Date());
 		akismetEntry.setClassNameId(classNameId);
 		akismetEntry.setClassPK(classPK);
 		akismetEntry.setType(type);

@@ -848,12 +848,14 @@ public class DLFileEntryLocalServiceImpl
 					long fileEntryTypeId = getValidFileEntryTypeId(
 						dlLatestFileVersion.getFileEntryTypeId(), dlFileEntry);
 
+					dlLatestFileVersion.setModifiedDate(new Date());
 					dlLatestFileVersion.setFileEntryTypeId(fileEntryTypeId);
 					dlLatestFileVersion.setStatusDate(new Date());
 
 					dlLatestFileVersion = dlFileVersionPersistence.update(
 						dlLatestFileVersion);
 
+					dlFileEntry.setModifiedDate(new Date());
 					dlFileEntry.setFileName(dlLatestFileVersion.getFileName());
 					dlFileEntry.setExtension(
 						dlLatestFileVersion.getExtension());

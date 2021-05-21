@@ -100,6 +100,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -272,6 +273,8 @@ public class DDMStructureLocalServiceImpl
 		structure.setUserName(user.getFullName());
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());
+		structure.setCreateDate(new Date());
+		structure.setModifiedDate(new Date());
 		structure.setParentStructureId(parentStructureId);
 		structure.setClassNameId(classNameId);
 		structure.setStructureKey(structureKey);
@@ -1525,6 +1528,7 @@ public class DDMStructureLocalServiceImpl
 			LocaleUtil.fromLanguageId(structure.getDefaultLanguageId()));
 		structure.setVersionUserId(user.getUserId());
 		structure.setVersionUserName(user.getFullName());
+		structure.setModifiedDate(new Date());
 		structure.setDescriptionMap(descriptionMap);
 		structure.setDefinition(definition);
 

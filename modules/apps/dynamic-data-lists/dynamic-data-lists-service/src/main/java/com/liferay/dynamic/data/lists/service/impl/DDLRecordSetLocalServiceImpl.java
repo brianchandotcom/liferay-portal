@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -658,11 +659,14 @@ public class DDLRecordSetLocalServiceImpl
 			long recordSetId, DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
+		Date now = new Date();
+
 		ddmFormValuesValidator.validate(settingsDDMFormValues);
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
+		recordSet.setModifiedDate(now);
 		recordSet.setSettings(serialize(settingsDDMFormValues));
 
 		return ddlRecordSetPersistence.update(recordSet);

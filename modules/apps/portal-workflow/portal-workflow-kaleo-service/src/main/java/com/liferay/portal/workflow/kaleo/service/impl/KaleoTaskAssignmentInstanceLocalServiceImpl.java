@@ -55,6 +55,7 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		Date now = new Date();
 
 		long kaleoTaskAssignmentInstanceId = counterLocalService.increment();
 
@@ -66,6 +67,8 @@ public class KaleoTaskAssignmentInstanceLocalServiceImpl
 		kaleoTaskAssignmentInstance.setCompanyId(user.getCompanyId());
 		kaleoTaskAssignmentInstance.setUserId(user.getUserId());
 		kaleoTaskAssignmentInstance.setUserName(user.getFullName());
+		kaleoTaskAssignmentInstance.setCreateDate(now);
+		kaleoTaskAssignmentInstance.setModifiedDate(now);
 		kaleoTaskAssignmentInstance.setKaleoDefinitionId(
 			kaleoTaskInstanceToken.getKaleoDefinitionId());
 		kaleoTaskAssignmentInstance.setKaleoDefinitionVersionId(

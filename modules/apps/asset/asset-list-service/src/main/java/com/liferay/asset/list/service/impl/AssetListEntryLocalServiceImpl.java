@@ -122,6 +122,8 @@ public class AssetListEntryLocalServiceImpl
 
 		// Asset list entry
 
+		assetListEntry.setModifiedDate(new Date());
+
 		if (Validator.isNull(assetListEntry.getAssetEntryType())) {
 			String assetEntryType = _getManualAssetEntryType(assetListEntryId);
 
@@ -257,6 +259,8 @@ public class AssetListEntryLocalServiceImpl
 
 		// Asset list entry
 
+		assetListEntry.setModifiedDate(new Date());
+
 		String assetEntryType = _getManualAssetEntryType(assetListEntryId);
 
 		assetListEntry.setAssetEntrySubtype(
@@ -310,6 +314,8 @@ public class AssetListEntryLocalServiceImpl
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
 
+		assetListEntry.setModifiedDate(new Date());
+
 		assetListEntry = assetListEntryPersistence.update(assetListEntry);
 
 		// Asset list segments entry rel
@@ -353,6 +359,8 @@ public class AssetListEntryLocalServiceImpl
 			throw new PortalException();
 		}
 
+		assetListEntry.setModifiedDate(new Date());
+
 		assetListEntryPersistence.update(assetListEntry);
 
 		// Asset list entry asset entry rel
@@ -372,6 +380,8 @@ public class AssetListEntryLocalServiceImpl
 
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
+
+		assetListEntry.setModifiedDate(new Date());
 
 		if (assetListEntry.getType() ==
 				AssetListEntryTypeConstants.TYPE_DYNAMIC) {
@@ -425,6 +435,7 @@ public class AssetListEntryLocalServiceImpl
 
 		_validateTitle(assetListEntry.getGroupId(), title);
 
+		assetListEntry.setModifiedDate(new Date());
 		assetListEntry.setTitle(title);
 
 		return assetListEntryPersistence.update(assetListEntry);
@@ -439,6 +450,8 @@ public class AssetListEntryLocalServiceImpl
 
 		AssetListEntry assetListEntry =
 			assetListEntryPersistence.findByPrimaryKey(assetListEntryId);
+
+		assetListEntry.setModifiedDate(new Date());
 
 		String assetEntryType = _getSegmentsAssetEntryType(
 			assetListEntryId, segmentsEntryId, typeSettings);

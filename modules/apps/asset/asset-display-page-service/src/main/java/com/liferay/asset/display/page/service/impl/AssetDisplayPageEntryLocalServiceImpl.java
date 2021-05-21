@@ -231,6 +231,7 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			assetDisplayPageEntryPersistence.findByPrimaryKey(
 				assetDisplayPageEntryId);
 
+		assetDisplayPageEntry.setModifiedDate(new Date());
 		assetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);

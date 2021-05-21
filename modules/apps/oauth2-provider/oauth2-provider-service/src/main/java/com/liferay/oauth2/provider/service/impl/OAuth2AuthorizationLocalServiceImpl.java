@@ -85,6 +85,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 		oAuth2Authorization.setCompanyId(companyId);
 		oAuth2Authorization.setUserId(userId);
 		oAuth2Authorization.setUserName(userName);
+		oAuth2Authorization.setCreateDate(new Date());
 		oAuth2Authorization.setOAuth2ApplicationId(oAuth2ApplicationId);
 		oAuth2Authorization.setOAuth2ApplicationScopeAliasesId(
 			oAuth2ApplicationScopeAliasesId);

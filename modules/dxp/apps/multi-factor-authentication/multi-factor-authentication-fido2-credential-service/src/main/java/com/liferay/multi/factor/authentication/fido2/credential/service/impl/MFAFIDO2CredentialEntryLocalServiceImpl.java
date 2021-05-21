@@ -23,6 +23,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -63,6 +64,7 @@ public class MFAFIDO2CredentialEntryLocalServiceImpl
 
 		mfaFIDO2CredentialEntry.setUserId(userId);
 		mfaFIDO2CredentialEntry.setUserName(user.getFullName());
+		mfaFIDO2CredentialEntry.setCreateDate(new Date());
 		mfaFIDO2CredentialEntry.setCredentialKey(credentialKey);
 		mfaFIDO2CredentialEntry.setCredentialKeyHash(credentialKey.hashCode());
 		mfaFIDO2CredentialEntry.setCredentialType(credentialType);

@@ -25,6 +25,7 @@ import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.base.SamlIdpSpSessionLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -130,6 +131,8 @@ public class SamlIdpSpSessionLocalServiceImpl
 
 		SamlIdpSpSession samlIdpSpSession = getSamlIdpSpSession(
 			samlIdpSsoSessionId, samlSpEntityId);
+
+		samlIdpSpSession.setModifiedDate(new Date());
 
 		return samlIdpSpSessionPersistence.update(samlIdpSpSession);
 	}

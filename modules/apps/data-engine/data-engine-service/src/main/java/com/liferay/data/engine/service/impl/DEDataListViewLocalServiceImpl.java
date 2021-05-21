@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,6 +60,8 @@ public class DEDataListViewLocalServiceImpl
 
 		deDataListView.setUserName(user.getFullName());
 
+		deDataListView.setCreateDate(new Date());
+		deDataListView.setModifiedDate(new Date());
 		deDataListView.setAppliedFilters(appliedFilters);
 		deDataListView.setDdmStructureId(ddmStructureId);
 		deDataListView.setFieldNames(fieldNames);
@@ -109,6 +112,7 @@ public class DEDataListViewLocalServiceImpl
 		DEDataListView deDataListView =
 			deDataListViewPersistence.findByPrimaryKey(deDataListViewId);
 
+		deDataListView.setModifiedDate(new Date());
 		deDataListView.setAppliedFilters(appliedFilters);
 		deDataListView.setFieldNames(fieldNames);
 		deDataListView.setNameMap(nameMap);

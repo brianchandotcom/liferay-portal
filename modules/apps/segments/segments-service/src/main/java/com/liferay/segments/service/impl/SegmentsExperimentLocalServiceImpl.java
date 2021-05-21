@@ -371,6 +371,7 @@ public class SegmentsExperimentLocalServiceImpl
 		_validateGoal(goal);
 		_validateName(name);
 
+		segmentsExperiment.setModifiedDate(new Date());
 		segmentsExperiment.setName(name);
 		segmentsExperiment.setDescription(description);
 
@@ -529,6 +530,7 @@ public class SegmentsExperimentLocalServiceImpl
 				segmentsExperiment, winnerSegmentsExperienceId, status);
 		}
 
+		segmentsExperiment.setModifiedDate(new Date());
 		segmentsExperiment.setStatus(status);
 
 		segmentsExperiment = segmentsExperimentPersistence.update(

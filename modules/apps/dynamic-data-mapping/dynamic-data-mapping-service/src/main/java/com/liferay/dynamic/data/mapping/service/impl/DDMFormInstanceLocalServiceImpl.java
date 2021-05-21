@@ -59,6 +59,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -393,11 +394,14 @@ public class DDMFormInstanceLocalServiceImpl
 			long formInstanceId, DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
+		Date now = new Date();
+
 		validateFormInstanceSettings(settingsDDMFormValues);
 
 		DDMFormInstance formInstance =
 			ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
 
+		formInstance.setModifiedDate(now);
 		formInstance.setSettings(serialize(settingsDDMFormValues));
 
 		return ddmFormInstancePersistence.update(formInstance);

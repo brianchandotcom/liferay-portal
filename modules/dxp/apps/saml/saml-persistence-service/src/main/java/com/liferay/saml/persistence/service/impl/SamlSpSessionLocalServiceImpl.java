@@ -26,6 +26,7 @@ import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.base.SamlSpSessionLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -183,6 +184,7 @@ public class SamlSpSessionLocalServiceImpl
 		SamlSpSession samlSpSession = samlSpSessionPersistence.findByPrimaryKey(
 			samlSpSessionId);
 
+		samlSpSession.setModifiedDate(new Date());
 		samlSpSession.setJSessionId(jSessionId);
 
 		return samlSpSessionPersistence.update(samlSpSession);
@@ -216,6 +218,7 @@ public class SamlSpSessionLocalServiceImpl
 		samlSpSession.setCompanyId(user.getCompanyId());
 		samlSpSession.setUserId(user.getUserId());
 		samlSpSession.setUserName(user.getFullName());
+		samlSpSession.setModifiedDate(new Date());
 		samlSpSession.setSamlPeerBindingId(
 			samlPeerBinding.getSamlPeerBindingId());
 		samlSpSession.setAssertionXml(assertionXml);

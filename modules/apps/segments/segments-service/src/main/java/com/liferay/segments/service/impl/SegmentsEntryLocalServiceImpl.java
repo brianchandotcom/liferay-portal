@@ -259,6 +259,8 @@ public class SegmentsEntryLocalServiceImpl
 			segmentsEntryId, _portal.getClassNameId(segmentsEntry.getType()),
 			classPKs);
 
+		segmentsEntry.setModifiedDate(new Date());
+
 		segmentsEntry = segmentsEntryPersistence.update(segmentsEntry);
 
 		reindexSegmentsEntryRels(segmentsEntry);

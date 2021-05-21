@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -72,6 +73,8 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 		action = updateMDRAction(action);
 
+		ruleGroupInstance.setModifiedDate(new Date());
+
 		mdrRuleGroupInstancePersistence.update(ruleGroupInstance);
 
 		return action;
@@ -109,6 +112,8 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 				action.getRuleGroupInstanceId());
 
 		if (ruleGroupInstance != null) {
+			ruleGroupInstance.setModifiedDate(new Date());
+
 			mdrRuleGroupInstancePersistence.update(ruleGroupInstance);
 		}
 	}

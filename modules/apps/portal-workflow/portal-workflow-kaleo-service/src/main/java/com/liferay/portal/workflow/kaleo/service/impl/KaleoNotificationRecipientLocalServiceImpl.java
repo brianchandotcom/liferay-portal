@@ -32,6 +32,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.util.RoleUtil;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoNotificationRecipientLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,6 +55,7 @@ public class KaleoNotificationRecipientLocalServiceImpl
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		Date now = new Date();
 
 		long kaleoNotificationRecipientId = counterLocalService.increment();
 
@@ -64,6 +66,8 @@ public class KaleoNotificationRecipientLocalServiceImpl
 		kaleoNotificationRecipient.setCompanyId(user.getCompanyId());
 		kaleoNotificationRecipient.setUserId(user.getUserId());
 		kaleoNotificationRecipient.setUserName(user.getFullName());
+		kaleoNotificationRecipient.setCreateDate(now);
+		kaleoNotificationRecipient.setModifiedDate(now);
 		kaleoNotificationRecipient.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoNotificationRecipient.setKaleoDefinitionVersionId(
 			kaleoDefinitionVersionId);

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Date;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -51,6 +53,8 @@ public class AppBuilderAppVersionLocalServiceImpl
 		appBuilderApp.setCompanyId(companyId);
 		appBuilderApp.setUserId(user.getUserId());
 		appBuilderApp.setUserName(user.getFullName());
+		appBuilderApp.setCreateDate(new Date());
+		appBuilderApp.setModifiedDate(new Date());
 		appBuilderApp.setAppBuilderAppId(appBuilderAppId);
 		appBuilderApp.setDdlRecordSetId(ddlRecordSetId);
 		appBuilderApp.setDdmStructureId(ddmStructureId);

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -79,6 +80,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 		oAuth2ApplicationScopeAliases.setCompanyId(companyId);
 		oAuth2ApplicationScopeAliases.setUserId(userId);
 		oAuth2ApplicationScopeAliases.setUserName(userName);
+		oAuth2ApplicationScopeAliases.setCreateDate(new Date());
 		oAuth2ApplicationScopeAliases.setOAuth2ApplicationId(
 			oAuth2ApplicationId);
 
@@ -373,6 +375,7 @@ public class OAuth2ApplicationScopeAliasesLocalServiceImpl
 		oAuth2ApplicationScopeAliases.setCompanyId(companyId);
 		oAuth2ApplicationScopeAliases.setUserId(userId);
 		oAuth2ApplicationScopeAliases.setUserName(userName);
+		oAuth2ApplicationScopeAliases.setCreateDate(new Date());
 		oAuth2ApplicationScopeAliases.setOAuth2ApplicationId(
 			oAuth2ApplicationId);
 

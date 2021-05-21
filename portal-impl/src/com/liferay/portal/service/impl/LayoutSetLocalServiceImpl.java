@@ -51,6 +51,7 @@ import java.io.InputStream;
 
 import java.net.IDN;
 
+import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
@@ -68,6 +69,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
+		Date now = new Date();
+
 		long layoutSetId = counterLocalService.increment(
 			LayoutSet.class.getName());
 
@@ -75,6 +78,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		layoutSet.setGroupId(groupId);
 		layoutSet.setCompanyId(group.getCompanyId());
+		layoutSet.setCreateDate(now);
+		layoutSet.setModifiedDate(now);
 		layoutSet.setPrivateLayout(privateLayout);
 
 		layoutSet = initLayoutSet(layoutSet);
@@ -294,11 +299,15 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
 
 		if (layoutSetBranch == null) {
+			layoutSet.setModifiedDate(new Date());
+
 			PortalUtil.updateImageId(
 				layoutSet, hasLogo, bytes, "logoId", 0, 0, 0);
 
 			return layoutSetPersistence.update(layoutSet);
 		}
+
+		layoutSetBranch.setModifiedDate(new Date());
 
 		PortalUtil.updateImageId(
 			layoutSetBranch, hasLogo, bytes, "logoId", 0, 0, 0);
@@ -374,6 +383,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
 
 		if (layoutSetBranch == null) {
+			layoutSet.setModifiedDate(new Date());
 			layoutSet.setThemeId(themeId);
 			layoutSet.setColorSchemeId(colorSchemeId);
 			layoutSet.setCss(css);
@@ -396,6 +406,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			return layoutSet;
 		}
 
+		layoutSetBranch.setModifiedDate(new Date());
 		layoutSetBranch.setThemeId(themeId);
 		layoutSetBranch.setColorSchemeId(colorSchemeId);
 		layoutSetBranch.setCss(css);
@@ -429,6 +440,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
 
 		if (layoutSetBranch == null) {
+			layoutSet.setModifiedDate(new Date());
+
 			validateSettings(
 				layoutSet.getSettingsProperties(), settingsUnicodeProperties);
 
@@ -436,6 +449,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 			return layoutSetPersistence.update(layoutSet);
 		}
+
+		layoutSetBranch.setModifiedDate(new Date());
 
 		validateSettings(
 			layoutSetBranch.getSettingsProperties(), settingsUnicodeProperties);

@@ -221,6 +221,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 		Date now = new Date();
 
+		lock.setCreateDate(now);
+
 		if (expirationTime == 0) {
 			lock.setExpirationDate(null);
 		}
@@ -265,6 +267,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 								lock = lockPersistence.create(lockId);
 
+								lock.setCreateDate(new Date());
 								lock.setClassName(className);
 								lock.setKey(key);
 								lock.setOwner(updatedOwner);
@@ -276,6 +279,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 							else if (Objects.equals(
 										lock.getOwner(), expectedOwner)) {
 
+								lock.setCreateDate(new Date());
 								lock.setClassName(className);
 								lock.setKey(key);
 								lock.setOwner(updatedOwner);
@@ -343,6 +347,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 
 		try {
+			lock.setCreateDate(now);
+
 			if (expirationTime == 0) {
 				lock.setExpirationDate(null);
 			}

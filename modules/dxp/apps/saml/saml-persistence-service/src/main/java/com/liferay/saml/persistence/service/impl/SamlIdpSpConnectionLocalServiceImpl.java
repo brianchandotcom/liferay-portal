@@ -84,6 +84,8 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			samlIdpSpConnectionPersistence.create(samlIdpSpConnectionId);
 
 		samlIdpSpConnection.setCompanyId(serviceContext.getCompanyId());
+		samlIdpSpConnection.setCreateDate(now);
+		samlIdpSpConnection.setModifiedDate(now);
 		samlIdpSpConnection.setAssertionLifetime(assertionLifetime);
 		samlIdpSpConnection.setAttributeNames(attributeNames);
 		samlIdpSpConnection.setAttributesEnabled(attributesEnabled);
@@ -240,6 +242,7 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			}
 		}
 
+		samlIdpSpConnection.setModifiedDate(now);
 		samlIdpSpConnection.setAssertionLifetime(assertionLifetime);
 		samlIdpSpConnection.setAttributeNames(attributeNames);
 		samlIdpSpConnection.setAttributesEnabled(attributesEnabled);

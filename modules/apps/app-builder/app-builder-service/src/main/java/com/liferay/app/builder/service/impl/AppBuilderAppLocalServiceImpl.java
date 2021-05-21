@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -65,6 +66,8 @@ public class AppBuilderAppLocalServiceImpl
 		appBuilderApp.setCompanyId(companyId);
 		appBuilderApp.setUserId(user.getUserId());
 		appBuilderApp.setUserName(user.getFullName());
+		appBuilderApp.setCreateDate(new Date());
+		appBuilderApp.setModifiedDate(new Date());
 		appBuilderApp.setActive(active);
 		appBuilderApp.setDdlRecordSetId(ddlRecordSetId);
 		appBuilderApp.setDdmStructureId(ddmStructureId);
@@ -287,6 +290,7 @@ public class AppBuilderAppLocalServiceImpl
 
 		appBuilderApp.setUserId(user.getUserId());
 		appBuilderApp.setUserName(user.getFullName());
+		appBuilderApp.setModifiedDate(new Date());
 		appBuilderApp.setActive(active);
 		appBuilderApp.setDdmStructureId(ddmStructureId);
 		appBuilderApp.setDdmStructureLayoutId(ddmStructureLayoutId);

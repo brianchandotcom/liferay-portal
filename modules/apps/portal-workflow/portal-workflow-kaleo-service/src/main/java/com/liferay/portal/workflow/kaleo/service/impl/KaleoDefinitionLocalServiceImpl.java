@@ -33,6 +33,7 @@ import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoDefinitionLocalServiceBaseImpl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,6 +60,7 @@ public class KaleoDefinitionLocalServiceImpl
 		KaleoDefinition kaleoDefinition =
 			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
 
+		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
 
 		kaleoDefinitionPersistence.update(kaleoDefinition);
@@ -69,6 +71,7 @@ public class KaleoDefinitionLocalServiceImpl
 			kaleoDefinitionVersionPersistence.findByPrimaryKey(
 				kaleoDefinitionVersionId);
 
+		kaleoDefinitionVersion.setModifiedDate(new Date());
 		kaleoDefinitionVersion.setStartKaleoNodeId(startKaleoNodeId);
 
 		kaleoDefinitionVersionPersistence.update(kaleoDefinitionVersion);
@@ -84,6 +87,7 @@ public class KaleoDefinitionLocalServiceImpl
 		KaleoDefinition kaleoDefinition =
 			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
 
+		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
 
 		kaleoDefinitionPersistence.update(kaleoDefinition);
@@ -100,6 +104,7 @@ public class KaleoDefinitionLocalServiceImpl
 			kaleoDefinitionPersistence.findByC_N_V(
 				serviceContext.getCompanyId(), name, version);
 
+		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(true);
 
 		kaleoDefinitionPersistence.update(kaleoDefinition);
@@ -131,6 +136,7 @@ public class KaleoDefinitionLocalServiceImpl
 		// Kaleo definition
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		Date now = new Date();
 
 		long kaleoDefinitionId = counterLocalService.increment();
 
@@ -145,6 +151,8 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setCompanyId(user.getCompanyId());
 		kaleoDefinition.setUserId(user.getUserId());
 		kaleoDefinition.setUserName(user.getFullName());
+		kaleoDefinition.setCreateDate(now);
+		kaleoDefinition.setModifiedDate(now);
 		kaleoDefinition.setName(name);
 		kaleoDefinition.setTitle(title);
 		kaleoDefinition.setDescription(description);
@@ -173,6 +181,7 @@ public class KaleoDefinitionLocalServiceImpl
 			kaleoDefinitionPersistence.findByC_N_V(
 				serviceContext.getCompanyId(), name, version);
 
+		kaleoDefinition.setModifiedDate(new Date());
 		kaleoDefinition.setActive(false);
 
 		kaleoDefinitionPersistence.update(kaleoDefinition);
@@ -349,6 +358,7 @@ public class KaleoDefinitionLocalServiceImpl
 		// Kaleo definition
 
 		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
+		Date now = new Date();
 
 		KaleoDefinition kaleoDefinition =
 			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
@@ -360,6 +370,8 @@ public class KaleoDefinitionLocalServiceImpl
 
 		kaleoDefinition.setUserId(user.getUserId());
 		kaleoDefinition.setUserName(user.getFullName());
+		kaleoDefinition.setCreateDate(now);
+		kaleoDefinition.setModifiedDate(now);
 		kaleoDefinition.setTitle(title);
 		kaleoDefinition.setDescription(description);
 		kaleoDefinition.setContent(content);

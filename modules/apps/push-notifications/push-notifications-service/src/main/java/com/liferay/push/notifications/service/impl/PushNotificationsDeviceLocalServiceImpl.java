@@ -31,6 +31,7 @@ import com.liferay.push.notifications.sender.PushNotificationsSender;
 import com.liferay.push.notifications.service.base.PushNotificationsDeviceLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -65,6 +66,7 @@ public class PushNotificationsDeviceLocalServiceImpl
 
 		pushNotificationsDevice.setCompanyId(user.getCompanyId());
 		pushNotificationsDevice.setUserId(user.getUserId());
+		pushNotificationsDevice.setCreateDate(new Date());
 		pushNotificationsDevice.setPlatform(platform);
 		pushNotificationsDevice.setToken(token);
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,6 +57,8 @@ public class AssetEntryUsageLocalServiceImpl
 
 		assetEntryUsage.setUuid(serviceContext.getUuid());
 		assetEntryUsage.setGroupId(groupId);
+		assetEntryUsage.setCreateDate(new Date());
+		assetEntryUsage.setModifiedDate(new Date());
 		assetEntryUsage.setAssetEntryId(assetEntryId);
 		assetEntryUsage.setContainerType(containerType);
 		assetEntryUsage.setContainerKey(containerKey);

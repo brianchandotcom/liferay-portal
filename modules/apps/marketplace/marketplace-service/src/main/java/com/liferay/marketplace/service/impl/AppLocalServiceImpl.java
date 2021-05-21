@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -357,6 +358,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		// App
 
 		User user = userLocalService.fetchUser(userId);
+		Date now = new Date();
 
 		validate(title, version);
 
@@ -374,6 +376,8 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			app.setUserName(user.getFullName());
 		}
 
+		app.setCreateDate(now);
+		app.setModifiedDate(now);
 		app.setRemoteAppId(remoteAppId);
 		app.setTitle(title);
 		app.setDescription(description);

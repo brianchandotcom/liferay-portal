@@ -103,19 +103,6 @@ public abstract class ProcessorImpl
 				updateFunction);
 		}
 
-		public <V, U, Y> void handleMappedUnsafeObject(
-			String fieldExpression, Class<V> clazz,
-			BiFunction<V, BiFunction<String, Class<Y>, Y>, U> mappingFunction,
-			UnsafeBiConsumer<T, U, ?> unsafeBiConsumer) {
-
-			_patchingQueue.add(
-				object -> unsafeBiConsumer.accept(
-					object,
-					mappingFunction.apply(
-						_processorContext.getValue(fieldExpression, clazz),
-						_processorContext::getValue)));
-		}
-
 		public <V> void handleUnsafeObjectArray(
 			String fieldExpression, Class<V> clazz,
 			UnsafeBiConsumer<T, V[], ?> unsafeBiConsumer) {

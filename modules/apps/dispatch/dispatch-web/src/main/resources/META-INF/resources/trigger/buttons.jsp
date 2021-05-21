@@ -21,12 +21,16 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 DispatchTrigger dispatchTrigger = (DispatchTrigger)row.getObject();
 
+DispatchTriggerDisplayContext dispatchTriggerDisplayContext = (DispatchTriggerDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+DispatchTriggerMetadata dispatchTriggerMetadata = dispatchTriggerDisplayContext.getDispatchTriggerMetadata(dispatchTrigger.getDispatchTriggerId());
+
 String runNowButton = "runNowButton" + row.getRowId();
 %>
 
 <span aria-hidden="true" class="<%= "hide icon-spinner icon-spin dispatch-check-row-icon-spinner" + row.getRowId() %>"></span>
 
-<c:if test="<%= DispatchTriggerPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.UPDATE) %>">
+<c:if test="<%= DispatchTriggerPermission.contains(permissionChecker, dispatchTrigger, ActionKeys.UPDATE) && (dispatchTriggerMetadata.isEmpty() || dispatchTriggerMetadata.isDispatchTaskExecutorReady()) %>">
 	<aui:button name="<%= runNowButton %>" value="run-now" />
 </c:if>
 

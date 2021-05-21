@@ -32,6 +32,7 @@ page import="com.liferay.dispatch.exception.NoSuchLogException" %><%@
 page import="com.liferay.dispatch.exception.NoSuchTriggerException" %><%@
 page import="com.liferay.dispatch.executor.DispatchTaskClusterMode" %><%@
 page import="com.liferay.dispatch.executor.DispatchTaskStatus" %><%@
+page import="com.liferay.dispatch.metadata.DispatchTriggerMetadata" %><%@
 page import="com.liferay.dispatch.model.DispatchLog" %><%@
 page import="com.liferay.dispatch.model.DispatchTrigger" %><%@
 page import="com.liferay.dispatch.web.internal.display.context.DispatchLogDisplayContext" %><%@

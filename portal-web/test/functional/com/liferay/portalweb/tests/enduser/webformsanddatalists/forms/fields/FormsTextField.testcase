@@ -107,6 +107,7 @@ definition {
 	test CanBeValidatedUsingTheIsNotURLOption {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
@@ -146,7 +147,7 @@ definition {
 			fieldValue = "Text");
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Test Error");
-	
+
 		FormFields.editText(
 			fieldName = "Text",
 			fieldValue = "https://www.liferay.com/");
@@ -158,7 +159,6 @@ definition {
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
-
 	}
 
 	@description = "Verify that changes to a Field can be canceled"

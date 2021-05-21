@@ -130,12 +130,12 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 
 			@Override
 			public FileItem[] getFileItemArray(String fieldExpression) {
-				return getValueArray(fieldExpression, FileItem.class);
+				return getValueArray(FileItem.class, fieldExpression);
 			}
 
 			@Override
 			public FileItem getFileItemValue(String fieldExpression) {
-				return getValue(fieldExpression, FileItem.class);
+				return getValue(FileItem.class, fieldExpression);
 			}
 
 		}

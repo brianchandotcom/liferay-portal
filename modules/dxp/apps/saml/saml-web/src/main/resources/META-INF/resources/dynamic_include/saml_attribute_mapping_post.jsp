@@ -82,9 +82,10 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 
 			<aui:script use="liferay-auto-fields">
 				new Liferay.AutoFields({
-				contentBox: '#<portlet:namespace /><%= userAttributeMappingsContentBox %>',
-				fieldIndexes: '<portlet:namespace />attribute:<%= prefix %>:userAttributeMappingsIndexes',
-				namespace: '<portlet:namespace />',
+					contentBox: '#<portlet:namespace /><%= userAttributeMappingsContentBox %>',
+					fieldIndexes:
+						'<portlet:namespace />attribute:<%= prefix %>:userAttributeMappingsIndexes',
+					namespace: '<portlet:namespace />',
 				}).render();
 			</aui:script>
 		</aui:field-wrapper>
@@ -97,18 +98,32 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 </aui:fieldset>
 
 <aui:script use="aui-base">
-
-	A.all('input[name="<portlet:namespace />userIdentifierExpression"]').on('change', function (event) {
-		if (event.currentTarget.val() != 'attribute') {
-			A.one('input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]').attr('value', '');
-			A.all('input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]').attr('checked', false);
+	A.all('input[name="<portlet:namespace />userIdentifierExpression"]').on(
+		'change',
+		(event) => {
+			if (event.currentTarget.val() != 'attribute') {
+				A.one(
+					'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
+				).attr('value', '');
+				A.all(
+					'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
+				).attr('checked', false);
+			}
 		}
-	});
+	);
 
-	A.all('input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]').on('change', function (event) {
-		A.one('input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]').attr('value', event.currentTarget.attr('data-prefix'));
-		A.all('input[name="<portlet:namespace />userIdentifierExpression"]').attr('checked', false);
-		A.all('input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]').attr('checked', true);
+	A.all(
+		'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
+	).on('change', (event) => {
+		A.one(
+			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
+		).attr('value', event.currentTarget.attr('data-prefix'));
+		A.all('input[name="<portlet:namespace />userIdentifierExpression"]').attr(
+			'checked',
+			false
+		);
+		A.all(
+			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
+		).attr('checked', true);
 	});
-
 </aui:script>

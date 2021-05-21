@@ -631,11 +631,22 @@ definition {
 			}
 		}
 		else if (isSet(targetFragmentName)) {
-			DragAndDrop.javaScriptDragAndDropToBottom(
-				key_targetFragmentName = "${targetFragmentName}",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-				locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
-				value1 = "${portletName}");
+			if (isSet(collectionName)) {
+				DragAndDrop.javaScriptDragAndDropToBottom(
+					key_collectionName = "${collectionName}",
+					key_fragmentName = "${portletName}",
+					key_targetFragmentName = "${targetFragmentName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+					value1 = "");
+			}
+			else {
+				DragAndDrop.javaScriptDragAndDropToBottom(
+					key_targetFragmentName = "${targetFragmentName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+					locator2 = "PageEditor#ANY_FRAGMENT_DROP_TARGET",
+					value1 = "${portletName}");
+			}
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(

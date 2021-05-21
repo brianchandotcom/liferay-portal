@@ -230,6 +230,7 @@ definition {
 		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
 
 		PageEditor.addWidget(
+			collectionName = "Search",
 			portletName = "Search Results",
 			targetFragmentName = "Search Options");
 
@@ -1096,6 +1097,7 @@ definition {
 		Refresh();
 
 		PageEditor.addWidget(
+			collectionName = "Search",
 			portletName = "Search Results",
 			targetFragmentName = "Search Bar");
 

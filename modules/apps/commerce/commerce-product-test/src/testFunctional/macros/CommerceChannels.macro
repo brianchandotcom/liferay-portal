@@ -45,4 +45,35 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
+	macro configurationPaypal {
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "PayPal",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
+
+		Type(
+			key_text = "Client ID",
+			locator1 = "TextInput#ANY",
+			value1 = "PayPal Client ID");
+
+		Type(
+			key_text = "Client Secret",
+			locator1 = "TextInput#ANY",
+			value1 = "PayPal Client Secret");
+
+		Select(
+			key_fieldLabel = "Mode",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${mode}");
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
 }

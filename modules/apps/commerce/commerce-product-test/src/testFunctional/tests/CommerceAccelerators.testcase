@@ -37,6 +37,116 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-5725. New functional test for COMMERCE-5485"
+	@priority = "3"
+	test AssertCheckoutMinicart {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccelerators#AssertCheckoutMinicart";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "buyer");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Store Management",
+			panel = "Commerce",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+
+		Refresh();
+
+		CommerceChannels.configurationPaypal(mode = "Sandbox");
+
+		Refresh();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Product Management",
+			panel = "Commerce",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		AssertTextEquals(
+			key_columnNumber = "4",
+			key_entryName = "default",
+			locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER",
+			value1 = "0");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Subscription");
+
+		Click(locator1 = "CommerceEntry#PAYMENT_SUBSCRIPTION_TOGGLE");
+
+		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		AssertChecked.assertCheckedNotVisible(
+			key_checkSetupName = "Allow Back Orders",
+			locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Simple T-Shirt",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "Simple T-Shirt",
+			productQuantity = "1",
+			productUnitPrice = "0");
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+			value1 = "Success! Your order has been processed.");
+	}
+
 	@description = "This is a test for COMMERCE-4958."
 	test CheckoutWithOneShippingOption {
 		property portal.acceptance = "true";

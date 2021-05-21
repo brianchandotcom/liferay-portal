@@ -218,3 +218,139 @@ Update methods to use the new corresponding method.
 This change was introduced to follow Liferay source formatting.
 
 ---------------------------------------
+
+### MiniCart Component Extensibility
+- **Date:** 2021-Feb-12
+- **JIRA Ticket:** [COMMERCE-4974](https://issues.liferay.com/browse/COMMERCE-4974)
+
+#### What changed?
+* The `MiniCart` Tag and FE React Component have been extended to support
+partial and total replacement of its component views and labels and have
+some of its features configurable, either via standard Tag attribute, or
+via direct import of the JS implementation.
+  * The exposed `MiniCartTag` attributes changed.
+  * The `commerce-frontend-js` module is now exposed with a proper interface
+  to allow a controlled access and exposure of its content (and in particular,
+  of the `MiniCartContext` which is needed for `MiniCart` integration).
+  * Usability and extensibility of the MiniCart component is documented
+  [here](https://issues.liferay.com/browse/LRDOCS-9462).
+
+#### Who is affected?
+
+Developers relying or extending the the old `MiniCartTag`.
+
+#### Why was this change made?
+
+Alignment with Liferay DXP standards to support component extensibility.
+
+---------------------------------------
+
+### Mini Compare Widget + Mini Compare Component
+- **Date:** 2021-Mar-26
+- **JIRA Ticket:** [COMMERCE-2909](https://issues.liferay.com/browse/COMMERCE-2909)
+
+#### What changed?
+* The `MiniCompare` FE implementation has been migrated from JSP/vanilla JS to
+React (in `commerce-frontend-js`). It's loaded directly from the same JSP source
+in `commerce-product-content-web`.
+* CP Definition ID's are now stored in and eventually read from a cookie,
+instead of using the session.
+* The `CompareCheckboxTag` has been refactored to render via JSP. The JSP in
+turn renders the `CompareCheckbox` React component.
+    * The old Soy/MetalJS implementation of the `CompareCheckbox` in the
+    `commerce-frontend-taglib` module has been **deprecated** and **removed**.
+
+#### Who is affected?
+
+Developers relying or extending the the old implementation of the
+MiniCompare component/widget.
+
+#### Why was this change made?
+
+Due to Soy/MetalJS deprecation, alignment with Liferay DXP to support
+Liferay Classic Theme in Commerce, paving the way for future DXP WEM
+integration.
+
+---------------------------------------
+
+### Revamped Account Selector
+- **Date:** 2021-Apr-27
+- **JIRA Ticket:** [COMMERCE-5888](https://issues.liferay.com/browse/COMMERCE-6315)
+
+#### What changed?
+The `AccountSelectorTag` has been refactored to render via JSP and now
+extends from the `IncludeTag`. The JSP
+in turn hydrates and renders the `AccountSelector` React component,
+which has been migrated from Soy/MetalJS.
+
+During the runtime lifecycle, the communication with the server happens via
+Commerce Headless API. Event names to notify other components about
+account/order change have been renamed.
+
+#### Who is affected?
+
+Developers who rely or extend the old Soy/MetalJS component with
+its related Tag.
+
+#### Why was this change made?
+
+Due to Soy/MetalJS deprecation, alignment with Liferay DXP to support
+Liferay Classic Theme in Commerce, paving the way for future DXP WEM
+integration.
+
+---------------------------------------
+
+### Product Card and Product Rendering Strategies in Storefront
+- **Date:** 2021-Apr-27
+- **JIRA Ticket:** [COMMERCE-5889](https://issues.liferay.com/browse/COMMERCE-5889)
+
+#### What changed?
+
+* The Product Card component is now ported to a JSP template to display
+ product information. It is hydrated and rendered via
+ CPContentListRenderer -> CPContentListEntryRenderer.
+  * The Product Publisher, Search Results, Compare widgets now use these
+  rendering strategies.
+  * Commerce Theme Minium Site Initializer is now configured to use
+  these rendering strategies.
+  * The implementation now resides in the `commerce-product-content-web` module
+  and is extensible through `CPContentRenderer` override, JSP override, or
+  Liferay Dynamic Include.
+  * The old Soy/MetalJS implementation of the Product Card in the
+`commerce-frontend-taglib` module has been **deprecated** and **removed**.
+  * The old Minium-specific `CPContentRenderer`'s in the
+  `commerce-theme-minium-impl` module have been **deprecated** and **removed**.
+
+* The `AddToCartTag` has been refactored to render via JSP  and now
+extends from the `IncludeTag`. The JSP in turn
+renders the `AddToCart` React component, including the `QuantitySelector`
+React component.
+  * The old Soy/MetalJS implementation of the `AddToCartButton` in the
+`commerce-frontend-taglib` module has been **deprecated** and **removed**.
+  * The old Soy/MetalJS implementation of the `QuantitySelector` in the
+`commerce-frontend-taglib` module has been **deprecated** and **removed**.
+  * The old `QuantitySelectorTag` in the `commerce-frontend-taglib` module
+  has been **deprecated** and **removed**.
+
+* The `PriceTag` has been refactored to render via JSP
+ and now extends from the `IncludeTag`. The JSP both renders
+the correctly structured template (for SEO purposes) and eventually
+renders the `Price` React component (for user page landing).
+  * The old Soy/MetalJS implementation of the `Price` in the
+  `commerce-frontend-taglib` module has been **deprecated** and **removed**.
+
+#### Who is affected?
+
+Developers relying on or extending:
+* the Minium-specific CP Content Renderers in `commerce-theme-minium-impl`
+* the Soy/MetalJS `AddToCartTag` and `AddToCartButton*`.
+* the Soy/MetalJS `QuantitySelectorTag` and `QuantitySelector*`.
+* the Soy/MetalJS `PriceTag` and `Price*`.
+
+#### Why was this change made?
+
+Due to Soy/MetalJS deprecation, alignment with Liferay DXP to support
+Liferay Classic Theme in Commerce, paving the way for future DXP WEM
+integration.
+
+---------------------------------------

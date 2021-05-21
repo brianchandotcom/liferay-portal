@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import {useMutation} from 'graphql-hooks';
 import React, {useEffect, useState} from 'react';
 
@@ -47,6 +48,13 @@ export default ({comment, commentChange, editable = true}) => {
 						dateModified,
 					])}
 				</span>
+				{comment.status && comment.status !== 'approved' && (
+					<span className="c-ml-2 text-secondary">
+						<ClayLabel displayType="info">
+							{comment.status}
+						</ClayLabel>
+					</span>
+				)}
 				<div className="c-mb-0">
 					<ArticleBodyRenderer
 						{...comment}

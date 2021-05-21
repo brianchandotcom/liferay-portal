@@ -15,6 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -117,6 +118,13 @@ export default ({currentSection, items, question, showSectionLabel}) => {
 					)}
 				>
 					{question.headline}
+					{question.status && question.status !== 'approved' && (
+						<span className="c-ml-2">
+							<ClayLabel displayType="info">
+								{question.status}
+							</ClayLabel>
+						</span>
+					)}
 
 					{!!question.locked && (
 						<span className="c-ml-2">

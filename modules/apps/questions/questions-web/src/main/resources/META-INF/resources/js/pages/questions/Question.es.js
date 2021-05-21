@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
 import {useMutation} from 'graphql-hooks';
@@ -246,6 +247,16 @@ export default withRouter(
 											)}
 										>
 											{question.headline}
+
+											{question.status &&
+												question.status !==
+													'approved' && (
+													<span className="c-ml-2">
+														<ClayLabel displayType="info">
+															{question.status}
+														</ClayLabel>
+													</span>
+												)}
 
 											{!!question.locked && (
 												<span className="c-ml-2">

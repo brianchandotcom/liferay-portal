@@ -328,6 +328,7 @@ export const getThreadQuery = `
 				ratingValue
 			}
 			seen
+			status
 			subscribed
 			viewCount
 		}
@@ -414,12 +415,14 @@ export const getMessagesQuery = `
 						encodingFormat
 						id
 						showAsAnswer
+						status
 					}
 				}
 				myRating {
 					ratingValue
 				}
 				showAsAnswer
+				status
 			}
 			pageSize
 			totalCount
@@ -472,6 +475,7 @@ export const getSectionThreadsQuery = `
 				}
 				numberOfMessageBoardMessages
 				seen
+				status
 				viewCount
 			}
 			page
@@ -525,6 +529,7 @@ export const getThreadsQuery = `
 				}
 				numberOfMessageBoardMessages
 				seen
+				status
 				viewCount
 			}
 			page
@@ -575,6 +580,7 @@ export const getRankedThreadsQuery = `
 				}
 				numberOfMessageBoardMessages
 				seen
+				status
 				viewCount
 			}
 			page
@@ -681,6 +687,7 @@ export const getRelatedThreadsQuery = `
 					title
 				}
 				seen
+				status
 			}
 			page
 			pageSize

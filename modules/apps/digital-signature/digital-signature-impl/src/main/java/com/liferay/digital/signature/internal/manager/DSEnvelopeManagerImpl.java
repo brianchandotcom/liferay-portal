@@ -104,7 +104,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			groupId,
 			StringBundler.concat(
 				"envelopes?from_date=", fromDateString,
-				"&include=recipients,documents&order=desc"));
+				"&include=custom_fields,documents,recipients&order=desc"));
 
 		return JSONUtil.toList(
 			jsonObject.getJSONArray("envelopes"),
@@ -120,7 +120,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			StringBundler.concat(
 				"envelopes/?envelope_ids=",
 				ArrayUtil.toString(dsEnvelopeIds, StringPool.BLANK),
-				"&include=documents,recipients"));
+				"&include=custom_fields,documents,recipients"));
 
 		return JSONUtil.toList(
 			jsonObject.getJSONArray("envelopes"),

@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.dispatch.constants,\
 	com.liferay.dispatch.exception,\
 	com.liferay.dispatch.executor,\
+	com.liferay.dispatch.metadata,\
 	com.liferay.dispatch.model,\
 	com.liferay.dispatch.repository,\
 	com.liferay.dispatch.repository.exception,\

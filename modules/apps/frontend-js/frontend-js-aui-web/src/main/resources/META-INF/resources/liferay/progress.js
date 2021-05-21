@@ -81,7 +81,9 @@ AUI.add(
 					var instance = this;
 
 					setTimeout(() => {
-						instance._frame.get('contentWindow.location').reload();
+						instance._frame
+							.get('contentWindow')
+							?.location?.reload();
 					}, instance.get(STR_UPDATE_PERIOD));
 				},
 

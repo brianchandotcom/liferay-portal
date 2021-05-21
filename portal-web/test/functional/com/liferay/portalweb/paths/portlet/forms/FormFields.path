@@ -480,7 +480,7 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ANY_ITEM_BUTTON</td>
-	<td>//a[contains(@class,'cke_button') and contains(@title,'${key_titleName}')]</td>
+	<td>//a[contains(@title,"${key_titleName}")]</td>
 	<td></td>
 </tr>
 <!--VALIDATION-->

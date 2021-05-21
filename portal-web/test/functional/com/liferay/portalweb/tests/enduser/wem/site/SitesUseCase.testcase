@@ -866,11 +866,14 @@ definition {
 			siteRoleName = "Site Administrator",
 			userScreenName = "usersn");
 
-		User.firstLoginPG(
+		User.logoutPG();
+
+		User.viewLoggedOutPG();
+
+		User.firstLoginUI(
 			password = "test",
-			samlEnabled = "true",
-			userEmailAddress = "userea@liferay.com",
-			virtualHostsURL = "www.baker.com:8080/group/russia2018");
+			specificURL = "www.baker.com:8080/group/russia2018",
+			userEmailAddress = "userea@liferay.com");
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080/group/russia2018");
 

@@ -127,10 +127,6 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	}
 
 	private List<DSDocument> _getDSDocuments(JSONArray dsDocumentsJSONArray) {
-		if (dsDocumentsJSONArray == null) {
-			return Collections.emptyList();
-		}
-
 		return JSONUtil.toList(
 			dsDocumentsJSONArray,
 			documentJSONObject -> new DSDocument() {

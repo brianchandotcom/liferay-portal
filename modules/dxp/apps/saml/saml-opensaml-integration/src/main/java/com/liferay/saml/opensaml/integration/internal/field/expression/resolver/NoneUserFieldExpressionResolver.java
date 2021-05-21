@@ -46,8 +46,8 @@ public class NoneUserFieldExpressionResolver
 
 	@Override
 	public String resolveUserFieldExpression(
-		UserResolver.UserResolverSAMLContext userResolverSAMLContext,
-		Map<String, List<Serializable>> incomingAttributeValues) {
+		Map<String, List<Serializable>> incomingAttributeValues,
+		UserResolver.UserResolverSAMLContext userResolverSAMLContext) {
 
 		return null;
 	}

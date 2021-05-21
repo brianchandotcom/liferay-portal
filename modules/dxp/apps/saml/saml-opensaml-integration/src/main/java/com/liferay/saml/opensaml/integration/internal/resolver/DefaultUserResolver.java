@@ -229,7 +229,7 @@ public class DefaultUserResolver implements UserResolver {
 			StringPool.BLANK,
 			GetterUtil.getString(
 				userFieldExpressionResolver.resolveUserFieldExpression(
-					userResolverSAMLContext, attributesMap)));
+					attributesMap, userResolverSAMLContext)));
 
 		if (Validator.isBlank(userFieldExpression)) {
 			if (_log.isDebugEnabled()) {

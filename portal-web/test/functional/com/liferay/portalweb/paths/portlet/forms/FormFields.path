@@ -360,8 +360,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PARAGRAPH_TITLE</td>
-	<td>//div[(@class='form-group') and contains(@data-field-name,'${key_fieldName}')]//legend</td>
+	<td>PARAGRAPH_FORMATTING_STYLES</td>
+	<td>//iframe[@class='cke_panel_frame']</td>
 	<td></td>
 </tr>
 <tr>
@@ -395,8 +395,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IFRAME_FORMATTING_STYLES</td>
-	<td>//iframe[@class='cke_panel_frame']</td>
+	<td>PARAGRAPH_TITLE</td>
+	<td>//div[(@class='form-group') and contains(@data-field-name,'${key_fieldName}')]//legend</td>
 	<td></td>
 </tr>
 <tr>

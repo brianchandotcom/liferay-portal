@@ -272,7 +272,7 @@ definition {
 			key_titleName = "Formatting Styles",
 			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "FormFields#IFRAME_FORMATTING_STYLES");
+		SelectFrame.selectFrameNoLoading(locator1 = "FormFields#PARAGRAPH_FORMATTING_STYLES");
 
 		Click.clickAt(
 			key_titleName = "Heading 2",
@@ -287,8 +287,8 @@ definition {
 
 		AssertElementPresent(
 			key_formattingStyle = "h2",
-			value = "Test",
-			locator1 = "FormFields#PARAGRAPH_TEXT_VALUE_STYLE");
+			locator1 = "FormFields#PARAGRAPH_TEXT_VALUE_STYLE",
+			value = "Test");
 
 		Click(
 			key_fieldName = "Paragraph",
@@ -300,7 +300,7 @@ definition {
 			key_titleName = "Formatting Styles",
 			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "FormFields#IFRAME_FORMATTING_STYLES");
+		SelectFrame.selectFrameNoLoading(locator1 = "FormFields#PARAGRAPH_FORMATTING_STYLES");
 
 		Click.clickAt(
 			key_titleName = "Preformatted Text",
@@ -319,8 +319,8 @@ definition {
 
 		AssertElementPresent(
 			key_formattingStyle = "pre",
-			value = "Test",
-			locator1 = "FormFields#PARAGRAPH_TEXT_VALUE_STYLE");
+			locator1 = "FormFields#PARAGRAPH_TEXT_VALUE_STYLE",
+			value = "Test");
 	}
 
 	@description = "Verify that a Form cannot be saved or published without adding anything in the Body Text"
@@ -453,7 +453,6 @@ definition {
 		FormFields.viewParagraphField(
 			fieldTitle = "Paragraph",
 			url = "http://www.liferay.com");
-			
 	}
 
 	@description = "Verify that Bulleted Lists can be added to the Body Text"

@@ -125,7 +125,6 @@ definition {
 		AssertElementPresent(
 			key_name = "Test Single Selection",
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
-
 	}
 
 	@description = "Verify that a Single Selection Field can be required"

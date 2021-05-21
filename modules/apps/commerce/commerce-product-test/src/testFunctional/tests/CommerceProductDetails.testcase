@@ -427,13 +427,44 @@ definition {
 	}
 
 	@description = "COMMERCE-6370. As a buyer, I want to be able to select an option value, and add the product to cart in Product Details"
-	@ignore = "true"
 	@priority = "3"
 	test SelectOptionValueAndAddProductToCart {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#SelectOptionValueAndAddProductToCart";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		Click(
+			key_productName = "brake-fluid",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
+
+		Click(locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PACKAGE_QUANTITY");
 
 		// TODO COMMERCE-6370 SelectOptionValueAndAddProductToCart pending implementation
 
+		Click(
+			key_selectValue = "48",
+			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+
+		Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertElementPresent(
+			key_cartItemSKU = "MIN93016B",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME");
 	}
 
 	@description = "COMMERCE-6658. As a buyer, I want to be able to select an option value(Bundled Product) and I want to see product details updating(Price, SKU and Availability)"

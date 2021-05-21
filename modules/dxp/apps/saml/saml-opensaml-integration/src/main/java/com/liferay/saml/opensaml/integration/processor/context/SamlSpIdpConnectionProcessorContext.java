@@ -34,7 +34,7 @@ public interface SamlSpIdpConnectionProcessorContext
 
 	@Override
 	public <T extends BaseModel<T>> SamlSpIdpConnectionBind<T> bind(
-		String publicIdentifier, Function<SamlSpIdpConnection, T> modelGetter,
+		String publicIdentifier, Function<SamlSpIdpConnection, T> modelGetterFunction,
 		int processingIndex, UpdateFunction<T> updateFunction);
 
 	public FileItem[] getFileItemArray(String fieldExpression);

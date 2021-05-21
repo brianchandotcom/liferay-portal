@@ -15,7 +15,6 @@
 package com.liferay.saml.opensaml.integration.internal.processor.factory;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -29,7 +28,6 @@ import com.liferay.saml.opensaml.integration.processor.context.SamlSpIdpConnecti
 import com.liferay.saml.opensaml.integration.processor.factory.SamlSpIdpConnectionProcessorFactory;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 
-import java.util.Map;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
@@ -80,13 +78,13 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 						   SamlSpIdpConnectionBind<T> {
 
 			public SamlSpIdpConnectionBindImpl(
-				ProcessorContext processorContext, String publicIdentifier,
-				Function<SamlSpIdpConnection, T> modelGetter,
-				int processingIndex,
+				Function<SamlSpIdpConnection, T> modelGetterFunction,
+				int processingIndex, ProcessorContext processorContext,
+				String publicIdentifier,
 				ProcessorContext.UpdateFunction<T> updateFunction) {
 
 				super(
-					modelGetter, processingIndex, processorContext,
+					modelGetterFunction, processingIndex, processorContext,
 					publicIdentifier, updateFunction);
 			}
 
@@ -115,18 +113,18 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 				UpdateFunction<SamlSpIdpConnection> updateFunction) {
 
 				return new SamlSpIdpConnectionBindImpl<>(
-					this, null, Function.identity(), processingIndex,
+					Function.identity(), processingIndex, this, null,
 					updateFunction);
 			}
 
 			@Override
 			public <T extends BaseModel<T>> SamlSpIdpConnectionBind<T> bind(
 				String publicIdentifier,
-				Function<SamlSpIdpConnection, T> modelGetter,
+				Function<SamlSpIdpConnection, T> modelGetterFunction,
 				int processingIndex, UpdateFunction<T> updateFunction) {
 
 				return new SamlSpIdpConnectionBindImpl<>(
-					this, publicIdentifier, modelGetter, processingIndex,
+					modelGetterFunction, processingIndex, this, publicIdentifier,
 					updateFunction);
 			}
 

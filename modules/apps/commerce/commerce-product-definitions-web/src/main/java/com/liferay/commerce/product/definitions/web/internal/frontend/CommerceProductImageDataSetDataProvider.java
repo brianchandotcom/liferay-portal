@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -90,7 +91,7 @@ public class CommerceProductImageDataSetDataProvider
 
 			FileEntry fileEntry = cpAttachmentFileEntry.fetchFileEntry();
 
-			if(fileEntry != null){
+			if (fileEntry != null) {
 				extension = HtmlUtil.escape(fileEntry.getExtension());
 			}
 
@@ -116,8 +117,7 @@ public class CommerceProductImageDataSetDataProvider
 						CommerceMediaResolverUtil.getThumbnailURL(
 							CommerceAccountConstants.ACCOUNT_ID_GUEST,
 							cpAttachmentFileEntryId)),
-					title, extension,
-					cpAttachmentFileEntry.getPriority(),
+					title, extension, cpAttachmentFileEntry.getPriority(),
 					LanguageUtil.format(
 						httpServletRequest, "x-ago", modifiedDateDescription,
 						false),

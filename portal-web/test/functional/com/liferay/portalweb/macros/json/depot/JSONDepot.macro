@@ -22,6 +22,34 @@ definition {
 		var messageId = JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "This calls the JSON WS API to connect the depot to a site"
+	macro connectSite {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/depot.depotentrygrouprel/add-depot-entry-group-rel \
+				-u test@liferay.com:test \
+				-d depotEntryId=${depotId}
+				-d toGroupId=${groupId}
+			''';
+
+		echo("## Connect a 'Depot' to a site with the following info using JSONWS:");
+
+		echo("## * ID: ${depotId}");
+
+		echo("## * ID: ${groupId}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to delete a Depot entry"
 	macro deleteDepot {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
@@ -39,6 +67,30 @@ definition {
 		echo("## * ID: ${depotId}");
 
 		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+	macro remoteStagingSetUp {
+		if (!(isSet(remotePort))) {
+			var remotePort = "8080";
+		}
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a remote depot",
+			depotName = "Remote Depot",
+			portalURL = "http://localhost:${remotePort}");
+
+		var remoteGroupId = JSONGroupSetter.setGroupId(
+			groupName = "Remote Depot",
+			portalURL = "http://localhost:${remotePort}",
+			site = "${site}");
+
+		JSONStaging.enableRemoteStaging(
+			branchingPrivate = "${branchingPrivate}",
+			branchingPublic = "${branchingPublic}",
+			groupName = "${groupName}",
+			remoteGroupId = "${remoteGroupId}",
+			remotePort = "${remotePort}",
+			site = "${site}");
 	}
 
 }

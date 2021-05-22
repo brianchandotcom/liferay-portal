@@ -99,6 +99,21 @@
     <td>//a[contains(@href, '${key_SegmentType}')]</td>
     <td></td>
 </tr>
+<tr>
+    <td>SELECT_SEGMENT</td>
+    <td>//a[@class='text-truncate' and text()='${key_segmentName}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SELECT_SEGMENT_PROFILE</td>
+    <td>//ul[contains(@class, 'nav-root page-subnav')]//span[text()='${key_segmentProfile}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_MEMBERS</td>
+    <td>//tbody//a[@class='text-truncate' and text()='${key_userName}']</td>
+    <td></td>
+</tr>
 <!-- Dynamic Segments  -->
 <tr>
     <td>ANONYMOUS_SWITCH</td>
@@ -149,21 +164,6 @@
 <tr>
     <td>ADD_MEMBERS_BUTTON</td>
     <td>//ul/li/button[contains(@class,'btn-primary')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>SELECT_SEGMENT</td>
-    <td>//a[@class='text-truncate' and text()='${key_segmentName}']</td>
-    <td></td>
-</tr>
-<tr>
-    <td>SELECT_SEGMENT_PROFILE</td>
-    <td>//ul[contains(@class, 'nav-root page-subnav')]//span[text()='${key_segmentProfile}']</td>
-    <td></td>
-</tr>
-<tr>
-    <td>SEGMENT_MEMBERS</td>
-    <td>//tbody//a[@class='text-truncate' and text()='${key_userName}']</td>
     <td></td>
 </tr>
 </tbody>

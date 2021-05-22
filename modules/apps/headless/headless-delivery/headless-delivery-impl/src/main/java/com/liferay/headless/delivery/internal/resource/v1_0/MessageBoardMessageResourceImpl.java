@@ -38,6 +38,8 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.message.boards.util.comparator.MBObjectsComparator;
+import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -52,6 +54,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -76,6 +79,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
@@ -171,6 +175,9 @@ public class MessageBoardMessageResourceImpl
 			).build();
 
 		if ((search == null) && (filter == null)) {
+			OrderByComparator<MBMessage> orderByComparator =
+				_getMBMessageOrderByComparator(sorts);
+
 			int status = WorkflowConstants.STATUS_APPROVED;
 
 			PermissionChecker permissionChecker =
@@ -195,7 +202,7 @@ public class MessageBoardMessageResourceImpl
 						new QueryDefinition<>(
 							status, contextUser.getUserId(), true,
 							pagination.getStartPosition(),
-							pagination.getEndPosition(), null)),
+							pagination.getEndPosition(), orderByComparator)),
 					this::_toMessageBoardMessage),
 				pagination,
 				_mbMessageService.getChildMessagesCount(
@@ -208,7 +215,7 @@ public class MessageBoardMessageResourceImpl
 					new QueryDefinition<>(
 						status, contextUser.getUserId(), true,
 						pagination.getStartPosition(),
-						pagination.getEndPosition(), null)));
+						pagination.getEndPosition(), orderByComparator)));
 		}
 
 		return _getMessageBoardMessagesPage(
@@ -254,6 +261,9 @@ public class MessageBoardMessageResourceImpl
 			).build();
 
 		if ((search == null) && (filter == null)) {
+			OrderByComparator<MBMessage> orderByComparator =
+				_getMBMessageOrderByComparator(sorts);
+
 			int status = WorkflowConstants.STATUS_APPROVED;
 
 			PermissionChecker permissionChecker =
@@ -273,7 +283,7 @@ public class MessageBoardMessageResourceImpl
 						new QueryDefinition<>(
 							status, contextUser.getUserId(), true,
 							pagination.getStartPosition(),
-							pagination.getEndPosition(), null)),
+							pagination.getEndPosition(), orderByComparator)),
 					this::_toMessageBoardMessage),
 				pagination,
 				_mbMessageService.getChildMessagesCount(
@@ -281,7 +291,7 @@ public class MessageBoardMessageResourceImpl
 					new QueryDefinition<>(
 						status, contextUser.getUserId(), true,
 						pagination.getStartPosition(),
-						pagination.getEndPosition(), null)));
+						pagination.getEndPosition(), orderByComparator)));
 		}
 
 		return _getMessageBoardMessagesPage(
@@ -490,6 +500,27 @@ public class MessageBoardMessageResourceImpl
 			MBMessage.class.getName(), contextCompany.getCompanyId(),
 			messageBoardMessage.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private OrderByComparator<MBMessage> _getMBMessageOrderByComparator(
+		Sort[] sorts) {
+
+		OrderByComparator<MBMessage> orderByComparator = null;
+
+		if ((sorts != null) && (sorts.length == 1)) {
+			Sort sort = sorts[0];
+
+			if (Objects.equals(sort.getFieldName(), "dateCreated")) {
+				orderByComparator = new MessageCreateDateComparator(
+					!sort.isReverse());
+			}
+			else {
+				orderByComparator = new MBObjectsComparator<>(
+					!sort.isReverse());
+			}
+		}
+
+		return orderByComparator;
 	}
 
 	private Page<MessageBoardMessage> _getMessageBoardMessagesPage(

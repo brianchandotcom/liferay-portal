@@ -91,12 +91,12 @@ public class BatchPlannerPlanLocalServiceImpl
 			return;
 		}
 
+		String merge = StringUtil.merge(
+			BatchPlannerPlanConstants.EXTERNAL_TYPES, StringPool.COMMA);
+
 		throw new BatchPlannerPlanExternalTypeException(
-			StringBundler.concat(
-				"Batch planner plan external type must be one of following: ",
-				StringUtil.merge(
-					BatchPlannerPlanConstants.EXTERNAL_TYPES,
-					StringPool.COMMA)));
+			"Batch planner plan external type must be one of following: " +
+				merge);
 	}
 
 	private void _validateName(

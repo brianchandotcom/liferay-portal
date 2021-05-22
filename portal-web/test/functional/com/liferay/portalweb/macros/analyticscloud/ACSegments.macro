@@ -5,8 +5,7 @@ definition {
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			locator1 = "ACSegments#SEGMENT_CRITERION_ITEM",
-			locator2 = "ACSegments#SEGMENT_DROP_AREA",
-			value1 = "${segmentField}");
+			locator2 = "ACSegments#SEGMENT_DROP_AREA");
 	}
 
 	macro addStaticMember {

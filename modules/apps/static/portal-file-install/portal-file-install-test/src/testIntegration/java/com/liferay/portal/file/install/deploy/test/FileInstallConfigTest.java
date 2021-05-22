@@ -307,7 +307,7 @@ public class FileInstallConfigTest {
 	@Test
 	public void testFactoryConfiguration() throws Exception {
 		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
-			".testFactoryConfiguration-default");
+			".testFactoryConfiguration~default");
 
 		_configurationPath = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
@@ -323,7 +323,7 @@ public class FileInstallConfigTest {
 		Assert.assertEquals(
 			_CONFIGURATION_PID_PREFIX.concat(".testFactoryConfiguration"),
 			_configuration.getFactoryPid());
-		Assert.assertNotEquals(configurationPid, _configuration.getPid());
+		Assert.assertEquals(configurationPid, _configuration.getPid());
 
 		Dictionary<String, Object> dictionary = _configuration.getProperties();
 
@@ -369,7 +369,7 @@ public class FileInstallConfigTest {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		int index = configurationPid.indexOf(CharPool.DASH);
+		int index = configurationPid.indexOf(CharPool.TILDE);
 
 		String factoryPid = configurationPid.substring(0, index);
 

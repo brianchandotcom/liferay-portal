@@ -196,7 +196,6 @@ import com.liferay.message.boards.model.MBDiscussionModel;
 import com.liferay.message.boards.model.MBMailingListModel;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBMessageModel;
-import com.liferay.message.boards.model.MBStatsUserModel;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.MBThreadFlagModel;
 import com.liferay.message.boards.model.MBThreadModel;
@@ -204,7 +203,6 @@ import com.liferay.message.boards.model.impl.MBCategoryModelImpl;
 import com.liferay.message.boards.model.impl.MBDiscussionModelImpl;
 import com.liferay.message.boards.model.impl.MBMailingListModelImpl;
 import com.liferay.message.boards.model.impl.MBMessageModelImpl;
-import com.liferay.message.boards.model.impl.MBStatsUserModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadFlagModelImpl;
 import com.liferay.message.boards.model.impl.MBThreadModelImpl;
 import com.liferay.message.boards.social.MBActivityKeys;
@@ -4611,32 +4609,6 @@ public class DataFactory {
 		}
 
 		return mbMessageModels;
-	}
-
-	public MBStatsUserModel newMBStatsUserModel(long groupId) {
-		MBStatsUserModel mbStatsUserModel = new MBStatsUserModelImpl();
-
-		// PK fields
-
-		mbStatsUserModel.setStatsUserId(_counter.get());
-
-		// Group instance
-
-		mbStatsUserModel.setGroupId(groupId);
-
-		// Audit fields
-
-		mbStatsUserModel.setUserId(_sampleUserId);
-
-		// Other fields
-
-		mbStatsUserModel.setMessageCount(
-			BenchmarksPropsValues.MAX_MB_CATEGORY_COUNT *
-				BenchmarksPropsValues.MAX_MB_THREAD_COUNT *
-					BenchmarksPropsValues.MAX_MB_MESSAGE_COUNT);
-		mbStatsUserModel.setLastPostDate(new Date());
-
-		return mbStatsUserModel;
 	}
 
 	public MBThreadFlagModel newMBThreadFlagModel(MBThreadModel mbThreadModel) {

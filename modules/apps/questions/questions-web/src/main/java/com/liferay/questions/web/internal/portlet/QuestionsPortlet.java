@@ -69,6 +69,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.single-page-application=false",
 		"javax.portlet.display-name=Questions",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",

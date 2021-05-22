@@ -15,6 +15,7 @@
 package com.liferay.portal.file.install.deploy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
@@ -54,6 +55,7 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ManagedService;
+import org.osgi.service.cm.ManagedServiceFactory;
 
 /**
  * @author Kyle Miho
@@ -302,6 +304,32 @@ public class FileInstallConfigTest {
 		Assert.assertNotEquals(special, dictionary.get("testKey"));
 	}
 
+	@Test
+	public void testFactoryConfiguration() throws Exception {
+		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
+			".testFactoryConfiguration-default");
+
+		_configurationPath = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			configurationPid.concat(".config"));
+
+		String testKey = "testKey";
+		String testValue = "\"testValue\"";
+
+		_configuration = _createFacotryConfiguration(
+			configurationPid,
+			StringBundler.concat(testKey, StringPool.EQUAL, testValue));
+
+		Assert.assertEquals(
+			_CONFIGURATION_PID_PREFIX.concat(".testFactoryConfiguration"),
+			_configuration.getFactoryPid());
+		Assert.assertNotEquals(configurationPid, _configuration.getPid());
+
+		Dictionary<String, Object> dictionary = _configuration.getProperties();
+
+		Assert.assertEquals("testValue", dictionary.get(testKey));
+	}
+
 	private Configuration _createConfiguration(
 			String configurationPid, String content)
 		throws Exception {
@@ -333,6 +361,60 @@ public class FileInstallConfigTest {
 
 		return _configurationAdmin.getConfiguration(
 			configurationPid, StringPool.QUESTION);
+	}
+
+	private Configuration _createFacotryConfiguration(
+			String configurationPid, String content)
+		throws Exception {
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		int index = configurationPid.indexOf(CharPool.DASH);
+
+		String factoryPid = configurationPid.substring(0, index);
+
+		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
+			_bundleContext.registerService(
+				ManagedServiceFactory.class,
+				new ManagedServiceFactory() {
+
+					@Override
+					public void deleted(String pid) {
+					}
+
+					@Override
+					public String getName() {
+						return "Test managed service factory for PID " +
+							factoryPid;
+					}
+
+					@Override
+					public void updated(
+						String pid, Dictionary<String, ?> dictionary) {
+
+						countDownLatch.countDown();
+					}
+
+				},
+				MapUtil.singletonDictionary(Constants.SERVICE_PID, factoryPid));
+
+		try {
+			Files.write(
+				_configurationPath, content.getBytes(Charset.defaultCharset()));
+
+			countDownLatch.await();
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			"(service.factoryPid=" + factoryPid + ")");
+
+		Assert.assertEquals(
+			configurations.toString(), 1, configurations.length);
+
+		return configurations[0];
 	}
 
 	private void _deleteConfiguration() throws Exception {

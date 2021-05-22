@@ -18,6 +18,16 @@ definition {
 			value1 = "${keyword}");
 	}
 
+	macro changeToAC {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+
+		ACLogin.loginAs();
+
+		ACWorkspace.openWorkspace();
+	}
+
 	macro deleteKeywordCheckbox {
 		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");

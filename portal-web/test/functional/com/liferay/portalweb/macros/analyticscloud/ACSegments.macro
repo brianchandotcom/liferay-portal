@@ -1,5 +1,11 @@
 definition {
 
+	macro accessSegment {
+		var key_segmentName = "${segmentName}";
+
+		Click(locator1 = "ACSegments#SELECT_SEGMENT");
+	}
+
 	macro addSegmentField {
 		var key_SegmentField = "${segmentField}";
 
@@ -140,20 +146,14 @@ definition {
 			value1 = "${searchTerm}");
 	}
 
+	macro selectSegmentProfile {
+		Click(locator1 = "ACSegments#SELECT_SEGMENT_PROFILE");
+	}
+
 	macro selectSegmentType {
 		var key_SegmentType = "${segmentType}";
 
 		Click(locator1 = "ACSegments#SELECT_SEGMENT_TYPE");
-	}
-
-	macro accessSegment {
-		var key_segmentName = "${segmentName}";
-
-		Click(locator1 = "ACSegments#SELECT_SEGMENT");
-	}
-
-	macro selectSegmentProfile {
-		Click(locator1 = "ACSegments#SELECT_SEGMENT_PROFILE");
 	}
 
 }

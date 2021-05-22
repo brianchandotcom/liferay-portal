@@ -435,6 +435,7 @@ export default withRouter(
 								</div>
 
 								{question &&
+									question.status !== 'pending' &&
 									question.actions &&
 									question.actions['reply-to-thread'] && (
 										<div className="c-mt-5">

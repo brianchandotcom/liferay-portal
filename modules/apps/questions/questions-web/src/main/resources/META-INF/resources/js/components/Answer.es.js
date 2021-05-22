@@ -129,19 +129,22 @@ export default withRouter(
 										>
 											{answer.actions[
 												'reply-to-message'
-											] && (
-												<ClayButton
-													className="text-reset"
-													displayType="unstyled"
-													onClick={() =>
-														setShowNewComment(true)
-													}
-												>
-													{Liferay.Language.get(
-														'reply'
-													)}
-												</ClayButton>
-											)}
+											] &&
+												answer.status !== 'pending' && (
+													<ClayButton
+														className="text-reset"
+														displayType="unstyled"
+														onClick={() =>
+															setShowNewComment(
+																true
+															)
+														}
+													>
+														{Liferay.Language.get(
+															'reply'
+														)}
+													</ClayButton>
+												)}
 
 											{answer.actions.delete && (
 												<>

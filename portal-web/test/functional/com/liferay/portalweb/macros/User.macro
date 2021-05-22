@@ -1872,6 +1872,10 @@ definition {
 			locator1 = "TextInput#PASSWORD",
 			value1 = "${password}");
 
+		if ((isSet(rememberMeChecked)) && ("${rememberMeChecked}" == "true")) {
+			Check(locator1 = "Checkbox#REMEMBER_ME");
+		}
+
 		Click(locator1 = "Button#SIGN_IN");
 
 		if (IsElementPresent(locator1 = "Button#I_AGREE")) {

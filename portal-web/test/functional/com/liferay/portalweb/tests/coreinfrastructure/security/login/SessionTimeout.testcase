@@ -76,7 +76,10 @@ definition {
 
 		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
 
-		User.loginPG(rememberMeChecked = "true");
+		User.firstLoginUI(
+			password = "test",
+			rememberMeChecked = "true",
+			userEmailAddress = "test@liferay.com");
 
 		Navigator.openURL();
 

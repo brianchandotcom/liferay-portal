@@ -68,6 +68,8 @@ definition {
 	test CreateAndUpdateNewWarehouse {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		var fieldDescription= "Test Warehouse Description";
 		var fieldLatitudeNumber = "12345";
 		var fieldLongitudeNumber = "12345";

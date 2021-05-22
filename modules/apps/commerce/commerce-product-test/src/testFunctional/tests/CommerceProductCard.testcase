@@ -51,6 +51,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductCard#AssertDynamicPriceBundledProductCannotBeAddedToCartDirectly";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -615,6 +617,8 @@ definition {
 	test AssertStaticPriceBundledProductCannotBeAddedToCartDirectly {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceProductCard#AssertStaticPriceBundledProductCannotBeAddedToCartDirectly";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

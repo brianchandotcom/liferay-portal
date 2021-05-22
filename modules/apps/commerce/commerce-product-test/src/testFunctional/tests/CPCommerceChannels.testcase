@@ -296,7 +296,7 @@ definition {
 	test AddShippingOptionSettingVariableRate {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6113 AddShippingOptionSettingVariableRate
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -410,6 +410,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6120 AddTaxRateSettingsByAddressTaxCalculation
+
 	}
 
 	@description = "This is a test for COMMERCE-6123. AddTaxRateSettingsFixedTaxRateTaxCalculation"
@@ -694,6 +695,8 @@ definition {
 	@priority = "3"
 	test EditCategoryDisplayPage {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -1318,6 +1321,8 @@ definition {
 	@priority = "3"
 	test RemoveTaxRateSettingsFixedTaxRateTaxCalculation {
 		property portal.acceptance = "false";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

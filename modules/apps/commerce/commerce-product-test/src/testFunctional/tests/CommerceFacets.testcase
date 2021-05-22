@@ -42,6 +42,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredByOptionFacet";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -75,6 +77,8 @@ definition {
 	test AssertProductsAreFilteredBySpecificationFacet {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredBySpecificationFacet";
+
+		// TODO
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

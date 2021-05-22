@@ -156,4 +156,12 @@ definition {
 		Click(locator1 = "ACSegments#SELECT_SEGMENT_TYPE");
 	}
 
+	macro selectDocument {
+		Click(locator1 = "ACSegments#SELECT_BUTTON");
+
+		Click(locator1 = "ACSegments#SELECT_DOCUMENT");
+
+		Click(locator1 = "ACSegments#ADD_BUTTON");
+	}
+
 }

@@ -135,6 +135,11 @@
     <td>//div[@class='criteria-statement']//div[@class='input-group-item']/input</td>
     <td></td>
 </tr>
+<tr>
+    <td>SELECT_DOCUMENT</td>
+    <td>//div[@class='table-title text-truncate' and text()='${key_titleName}']</td>
+    <td></td>
+</tr>
 <!-- Static Segments  -->
 <tr>
     <td>ADD_BUTTON</td>

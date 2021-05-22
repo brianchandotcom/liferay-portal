@@ -151,6 +151,11 @@
     <td>//a[@class='text-truncate' and text()='${key_segmentName}']</td>
     <td></td>
 </tr>
+<tr>
+    <td>SELECT_SEGMENT_PROFILE</td>
+    <td>//ul[contains(@class, 'nav-root page-subnav')]//span[text()='${key_segmentProfile}']</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

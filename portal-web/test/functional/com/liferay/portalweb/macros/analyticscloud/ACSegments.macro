@@ -152,4 +152,9 @@ definition {
 
 		Click(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
+
+	macro selectSegmentProfile {
+		Click(locator1 = "ACSegments#SELECT_SEGMENT_PROFILE");
+	}
+
 }

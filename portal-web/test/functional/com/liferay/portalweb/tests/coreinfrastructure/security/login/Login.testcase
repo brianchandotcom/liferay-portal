@@ -78,7 +78,7 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(
+		User.firstLoginUI(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
@@ -103,7 +103,7 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(
+		User.firstLoginUI(
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 

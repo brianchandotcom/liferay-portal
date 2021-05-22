@@ -237,8 +237,8 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		}
 
 		if (factoryPid != null) {
-			return _configurationAdmin.createFactoryConfiguration(
-				pid, StringPool.QUESTION);
+			return _configurationAdmin.getFactoryConfiguration(
+				pid, factoryPid, StringPool.QUESTION);
 		}
 
 		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);

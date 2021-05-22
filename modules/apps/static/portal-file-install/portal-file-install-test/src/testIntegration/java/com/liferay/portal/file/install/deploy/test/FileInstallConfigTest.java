@@ -369,9 +369,8 @@ public class FileInstallConfigTest {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		int index = configurationPid.indexOf(CharPool.TILDE);
-
-		String factoryPid = configurationPid.substring(0, index);
+		String factoryPid = configurationPid.substring(
+			0, configurationPid.indexOf(CharPool.TILDE));
 
 		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
 			_bundleContext.registerService(

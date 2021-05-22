@@ -147,4 +147,9 @@ definition {
 		Click(locator1 = "ACSegments#SELECT_SEGMENT_TYPE");
 	}
 
+	macro accessSegment {
+		var key_segmentName = "${segmentName}";
+
+		Click(locator1 = "ACSegments#SELECT_SEGMENT");
+	}
 }

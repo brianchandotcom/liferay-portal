@@ -146,6 +146,11 @@
     <td>//ul/li/button[contains(@class,'btn-primary')]</td>
     <td></td>
 </tr>
+<tr>
+    <td>SELECT_SEGMENT</td>
+    <td>//a[@class='text-truncate' and text()='${key_segmentName}']</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

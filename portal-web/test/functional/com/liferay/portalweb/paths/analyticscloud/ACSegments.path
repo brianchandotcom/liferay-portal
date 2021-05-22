@@ -86,7 +86,7 @@
 </tr>
 <tr>
     <td>SELECT_BUTTON</td>
-    <td>//div[@class='criteria-statement']//button[@type='button']</td>
+    <td>//div[@class='criterion'] [${indexField}] //div[@class='input-group-item input-group-item-shrink input-group-append']</td>
     <td></td>
 </tr>
 <tr>

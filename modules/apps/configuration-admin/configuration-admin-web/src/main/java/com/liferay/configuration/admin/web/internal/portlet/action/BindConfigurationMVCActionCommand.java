@@ -27,7 +27,6 @@ import com.liferay.configuration.admin.web.internal.util.ResourceBundleLoaderPro
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
@@ -45,17 +44,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-
-import java.net.URI;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -275,51 +266,6 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 			if (configurationModel.isFactory()) {
 				configuredProperties.put(
 					"configuration.cleaner.ignore", "true");
-
-				String pid = configuration.getPid();
-
-				int index = pid.lastIndexOf('.');
-
-				String factoryPid = pid.substring(index + 1);
-
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(configuration.getFactoryPid());
-				sb.append(StringPool.DASH);
-				sb.append(factoryPid);
-				sb.append(".config");
-
-				File file = new File(
-					PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, sb.toString());
-
-				file = file.getAbsoluteFile();
-
-				String fileName = String.valueOf(file.toURI());
-
-				String oldFileName = (String)configuredProperties.put(
-					"felix.fileinstall.filename", fileName);
-
-				if ((oldFileName != null) && !oldFileName.equals(fileName)) {
-					try {
-						Path oldFilePath = Paths.get(new URI(oldFileName));
-
-						Files.deleteIfExists(oldFilePath);
-
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Delete inconsistent factory configuration " +
-									oldFileName);
-						}
-					}
-					catch (Exception exception) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Unable to delete inconsistent factory " +
-									"configuration " + oldFileName,
-								exception);
-						}
-					}
-				}
 			}
 
 			configuration.update(configuredProperties);

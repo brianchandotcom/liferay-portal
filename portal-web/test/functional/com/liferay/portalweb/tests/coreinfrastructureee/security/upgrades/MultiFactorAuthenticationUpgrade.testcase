@@ -24,8 +24,9 @@ definition {
 		property data.archive.type = "data-archive-mfa-instance-level";
 		property portal.version = "7.3.10";
 
-		SignIn.signInSpecificURL(
-			url = "http://www.able.com:8080/",
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
 
 		MultiFactorAuthentication.sendOTPEmailPG();
@@ -54,7 +55,9 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		SignIn.signIn(userEmailAddress = "test@liferay.com");
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
 
 		MultiFactorAuthentication.sendOTPEmailPG();
 

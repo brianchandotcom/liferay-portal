@@ -705,15 +705,17 @@ export default withRouter(
 							</ClayInput.Group>
 						</div>
 					)}
-					<Helmet>
-						<title>{sectionTitle}</title>
-						<link
-							href={`${getFullPath('questions')}${
-								context.historyRouterBasePath ? '' : '#/'
-							}questions/${sectionTitle}`}
-							rel="canonical"
-						/>
-					</Helmet>
+					{section && (
+						<Helmet>
+							<title>{section.title}</title>
+							<link
+								href={`${getFullPath('questions')}${
+									context.historyRouterBasePath ? '' : '#/'
+								}questions/${sectionTitle}`}
+								rel="canonical"
+							/>
+						</Helmet>
+					)}
 				</div>
 			);
 		}

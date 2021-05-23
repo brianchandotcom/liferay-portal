@@ -140,8 +140,8 @@ export default withRouter(
 				  question.messageBoardSection.title;
 
 		useEffect(() => {
-			document.title = questionId;
-		}, [questionId]);
+			document.title = (question && question.title) || questionId;
+		}, [question, questionId]);
 
 		useEffect(() => {
 			fetchMessages();
@@ -524,15 +524,17 @@ export default withRouter(
 					)}
 				</div>
 
-				<Helmet>
-					<title>{questionId}</title>
-					<link
-						href={`${getFullPath('questions')}${
-							context.historyRouterBasePath ? '' : '#/'
-						}questions/${sectionTitle}/${questionId}`}
-						rel="canonical"
-					/>
-				</Helmet>
+				{question && (
+					<Helmet>
+						<title>{question.headline}</title>
+						<link
+							href={`${getFullPath('questions')}${
+								context.historyRouterBasePath ? '' : '#/'
+							}questions/${sectionTitle}/${questionId}`}
+							rel="canonical"
+						/>
+					</Helmet>
+				)}
 			</section>
 		);
 	}

@@ -705,6 +705,7 @@ export default withRouter(
 							</ClayInput.Group>
 						</div>
 					)}
+
 					{section && (
 						<Helmet>
 							<title>{section.title}</title>

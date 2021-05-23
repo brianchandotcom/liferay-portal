@@ -32,6 +32,8 @@
 			).put(
 				"historyRouterBasePath", questionsConfiguration.historyRouterBasePath()
 			).put(
+				"i18nPath", renderRequest.getAttribute(WebKeys.I18N_PATH)
+			).put(
 				"imageBrowseURL", renderRequest.getAttribute(QuestionsWebKeys.IMAGE_BROWSE_URL)
 			).put(
 				"includeContextPath", renderRequest.getAttribute("javax.servlet.include.context_path")

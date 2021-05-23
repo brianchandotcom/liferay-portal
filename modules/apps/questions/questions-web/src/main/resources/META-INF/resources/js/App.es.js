@@ -33,10 +33,16 @@ export default (props) => {
 
 	const packageName = props.npmResolvedPackageName;
 
+	let path = props.historyRouterBasePath;
+
+	if (path && props.i18nPath) {
+		path = props.i18nPath + path;
+	}
+
 	return (
 		<AppContextProvider {...props}>
 			<ClientContext.Provider value={client}>
-				<Router basename={props.historyRouterBasePath}>
+				<Router basename={path}>
 					<ErrorBoundary>
 						<div>
 							<NavigationBar />

@@ -43,6 +43,7 @@ import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.War;
 
 /**
@@ -65,6 +66,7 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
+		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 		GradleUtil.applyPlugin(project, WarPlugin.class);
 
 		_configureTaskProcessResources(project);
@@ -75,7 +77,7 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 			GradleUtil.addDefaultRepositories(project);
 		}
 
-		_addTaskDeploy(war, workspaceExtension);
+		_configureBaseTaskDeploy(war, workspaceExtension);
 
 		addTaskDockerDeploy(project, war, workspaceExtension);
 
@@ -130,28 +132,37 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 
 	protected static final String NAME = "wars";
 
-	private Copy _addTaskDeploy(
+	private void _configureBaseTaskDeploy(
 		War war, final WorkspaceExtension workspaceExtension) {
 
-		Copy copy = GradleUtil.addTask(
-			war.getProject(), LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class);
+		Project project = war.getProject();
 
-		copy.from(war);
+		project.afterEvaluate(
+			curProject -> {
+				TaskContainer taskContainer = curProject.getTasks();
 
-		copy.into(
-			new Callable<File>() {
+				taskContainer.named(
+					LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class,
+					deployCopy -> {
+						deployCopy.from(war);
 
-				@Override
-				public File call() throws Exception {
-					return new File(workspaceExtension.getHomeDir(), "deploy");
-				}
+						deployCopy.into(
+							new Callable<File>() {
 
+								@Override
+								public File call() throws Exception {
+									return new File(
+										workspaceExtension.getHomeDir(),
+										"deploy");
+								}
+
+							});
+
+						deployCopy.setDescription(
+							"Assembles the project and deploys it to Liferay.");
+						deployCopy.setGroup(BasePlugin.BUILD_GROUP);
+					});
 			});
-
-		copy.setDescription("Assembles the project and deploys it to Liferay.");
-		copy.setGroup(BasePlugin.BUILD_GROUP);
-
-		return copy;
 	}
 
 	@SuppressWarnings("serial")

@@ -1,0 +1,1202 @@
+[
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Backup Sizing 1"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Backup Sizing 4"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Non-Prod Sizing 4"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Non-Prod Sizing 2"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Non-Prod Sizing 3"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "DEPRECATED - Indemnification - 500K - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Backup Sizing 2"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Backup Sizing 3"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "DEPRECATED - Indemnification - 1M - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "DEPRECATED - Indemnification - 5M - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Portal EE 6.x License (Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Portal EE 6.x License (Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "DEPRECATED - Indemnification - 250K - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Portal EE 6.x License (Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Developing Government Solutions for the Liferay Platform 1 - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Developing Government Solutions for the Liferay Platform 2 - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Developing Government Solutions for the Liferay Platform 1 - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Developing Government Solutions for the Liferay Platform 2 - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - DXP User Experience Bootcamp - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Mastering Liferay Fundamentals for Government Solutions - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Managing Content for Government Solutions with Liferay - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Styling Liferay with Themes for Government Solutions - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Managing Content for Government Solutions with Liferay - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (TCAT Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (TCAT Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Mastering Liferay Fundamentals for Government Solutions - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Styling Liferay with Themes for Government Solutions - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - DXP User Experience Bootcamp - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (TCAT Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (TCAT Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (TCAT Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Non-Prod Sizing 3"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Subscription Portal EE - Gold (Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Non-Prod Sizing 4"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Backup Sizing 4"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Subscription Portal EE - Gold (Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Subscription Portal EE - Gold (Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Non-Prod Sizing 2"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Backup Sizing 3"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "DEPRECATED - Indemnification - 1M - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "DEPRECATED - Indemnification - 250K - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Backup Sizing 2"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Portal EE 6.x License (Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Portal EE 6.x License (Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Liferay DXP Subscription - Gold Backup Sizing 1"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "DEPRECATED - Indemnification - 5M - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Portal EE 6.x License (Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Developing Government Solutions for the Liferay Platform 1 - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "DEPRECATED - Indemnification - 500K - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Managing Content for Government Solutions with Liferay - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (TCAT Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Developing Government Solutions for the Liferay Platform 2 - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Developing Government Solutions for the Liferay Platform 1 - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Developing Government Solutions for the Liferay Platform 2 - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Mastering Liferay Fundamentals for Government Solutions - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Managing Content for Government Solutions with Liferay - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Styling Liferay with Themes for Government Solutions - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Mastering Liferay Fundamentals for Government Solutions - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - 6.2 Styling Liferay with Themes for Government Solutions - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Subscription Portal EE - Gold (Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (TCAT Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Gold (TCAT Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - DXP User Experience Bootcamp - Extra Seat"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Private Training - DXP User Experience Bootcamp - 5 Seats"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Subscription Portal EE - Gold (Backup) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (TCAT Non-Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (TCAT Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Subscription Portal EE - Gold (Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	},
+	{
+		"active": true,
+		"catalogId": -1,
+		"name": {
+			"en_US": "Maintenance - Portal - Platinum (Production) - Partner"
+		},
+		"productType": "simple",
+		"tags": [
+		],
+		"workflowStatusInfo": {
+			"code": 0,
+			"label": "approved",
+			"label_i18n": "Approved"
+		}
+	}
+]

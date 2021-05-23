@@ -706,7 +706,7 @@ export default withRouter(
 						</div>
 					)}
 					<Helmet>
-						<title>${sectionTitle}</title>
+						<title>{sectionTitle}</title>
 						<link
 							href={`${getFullPath('questions')}${
 								context.historyRouterBasePath ? '' : '#/'

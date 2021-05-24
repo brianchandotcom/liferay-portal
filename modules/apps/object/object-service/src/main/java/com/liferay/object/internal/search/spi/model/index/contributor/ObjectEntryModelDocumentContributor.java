@@ -183,11 +183,11 @@ public class ObjectEntryModelDocumentContributor
 					fieldArray, objectField.getName(),
 					"value_" + objectField.getIndexedLanguageId(),
 					(String)value);
-				_addField(
-					fieldArray, objectField.getName(),
-					"value_" + objectField.getIndexedLanguageId() + "_sortable",
-					(String)value);
 			}
+
+			_addField(
+				fieldArray, objectField.getName(), "value_keyword_lowercase",
+				_getSortableValue((String)value));
 		}
 		else if (value instanceof byte[]) {
 			_addField(
@@ -210,6 +210,14 @@ public class ObjectEntryModelDocumentContributor
 			"yyyyMMddHHmmss");
 
 		return format.format(value);
+	}
+
+	private String _getSortableValue(String value) {
+		if (value.length() > 256) {
+			return value.substring(0, 256);
+		}
+
+		return value;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -170,6 +170,20 @@ definition {
 			value1 = "${wikiPageTitle}");
 	}
 
+	macro openToAddPage {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var nodeId = JSONWikiSetter.setNodeId(
+			groupName = "${groupName}",
+			name = "${wikiNodeName}");
+
+		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_wiki_web_portlet_WikiAdminPortlet&_com_liferay_wiki_web_portlet_WikiAdminPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiAdminPortlet_redirect=&_com_liferay_wiki_web_portlet_WikiAdminPortlet_editTitle=1&_com_liferay_wiki_web_portlet_WikiAdminPortlet_nodeId=${nodeId}");
+	}
+
 	macro openWikiAdmin {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_wiki_web_portlet_WikiAdminPortlet");
 	}

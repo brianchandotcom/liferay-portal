@@ -16,21 +16,84 @@ import ClayBadge from '@clayui/badge';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayPanel from '@clayui/panel';
-import React, {useContext, useMemo} from 'react';
+import ClayProgressBar from '@clayui/progress-bar';
+import PropTypes from 'prop-types';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {SET_SELECTED_ISSUE} from '../constants/actionTypes';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
+import getPageSpeedProgress from '../utils/getPageSpeedProgress';
+import BasicInformation from './BasicInformation';
 
 export default function IssuesList() {
-	const {data} = useContext(StoreStateContext);
+	const {data, error, loading} = useContext(StoreStateContext);
 
-	const {imagesPath, layoutReportsIssues} = data;
+	const {
+		defaultLanguageId,
+		imagesPath,
+		languageId,
+		layoutReportsIssues,
+		pageURLs,
+	} = data;
 
+	const [percentage, setPercentage] = useState(0);
+
+	useEffect(() => {
+		if (loading && !error) {
+			const initial = Date.now();
+			const interval = setInterval(() => {
+				const elapsedTimeInSeconds = (Date.now() - initial) / 1000;
+				const progress = getPageSpeedProgress(elapsedTimeInSeconds);
+
+				setPercentage(Math.trunc(progress));
+			}, 500);
+
+			return () => {
+				clearInterval(interval);
+				setPercentage(0);
+			};
+		}
+	}, [error, loading]);
+
+	const successImage = `${imagesPath}/issues_success.gif`;
+
+	return (
+		<div className="c-p-3">
+			<BasicInformation
+				defaultLanguageId={defaultLanguageId}
+				pageURLs={pageURLs}
+				selectedLanguageId={languageId}
+			/>
+
+			{loading ? (
+				<LoadingProgressBar percentage={percentage} />
+			) : (
+				layoutReportsIssues && (
+					<Issues
+						layoutReportsIssues={layoutReportsIssues}
+						successImage={successImage}
+					/>
+				)
+			)}
+		</div>
+	);
+}
+
+const LoadingProgressBar = ({percentage}) => (
+	<div className="c-my-4 text-secondary">
+		{Liferay.Language.get('connecting-with-google-pagespeed')}
+		<ClayProgressBar value={percentage} />
+	</div>
+);
+
+LoadingProgressBar.propTypes = {
+	percentage: PropTypes.number.isRequired,
+};
+
+const Issues = ({layoutReportsIssues, successImage}) => {
 	const hasIssues = useMemo(() => {
-		return layoutReportsIssues.some(({total}) => total > 0);
+		return layoutReportsIssues?.some(({total}) => total > 0);
 	}, [layoutReportsIssues]);
-
-	const successIllustration = `${imagesPath}/issues_success.gif`;
 
 	return (
 		<div className="c-my-4">
@@ -41,7 +104,7 @@ export default function IssuesList() {
 							'success-page-audit-image-alt-description'
 						)}
 						className="c-my-4"
-						src={successIllustration}
+						src={successImage}
 						width="120px"
 					/>
 
@@ -60,7 +123,12 @@ export default function IssuesList() {
 			</ClayPanel.Group>
 		</div>
 	);
-}
+};
+
+Issues.propTypes = {
+	layoutReportsIssues: PropTypes.array.isRequired,
+	successImage: PropTypes.string.isRequired,
+};
 
 const Section = ({section}) => {
 	let sectionTotal = section.total;
@@ -120,6 +188,10 @@ const Section = ({section}) => {
 	);
 };
 
+Section.propTypes = {
+	section: PropTypes.object.isRequired,
+};
+
 const Issue = ({issue}) => {
 	let issueTotal = issue.total;
 
@@ -148,4 +220,8 @@ const Issue = ({issue}) => {
 			</ClayList.Item>
 		)
 	);
+};
+
+Issue.propTypes = {
+	issue: PropTypes.object.isRequired,
 };

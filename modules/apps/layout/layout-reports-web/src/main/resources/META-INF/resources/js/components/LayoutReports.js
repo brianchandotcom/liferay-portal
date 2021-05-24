@@ -14,18 +14,15 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayProgressBar from '@clayui/progress-bar';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 
 import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
 import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
-import getPageSpeedProgress from '../utils/getPageSpeedProgress';
 import loadIssues from '../utils/loadIssues';
-import BasicInformation from './BasicInformation';
 import IssuesList from './IssuesList';
 import NotConfigured from './NotConfigured';
 
@@ -50,25 +47,6 @@ export default function LayoutReports({eventTriggered}) {
 		},
 		[dispatch, isMounted]
 	);
-
-	const [percentage, setPercentage] = useState(0);
-
-	useEffect(() => {
-		if (loading && !error) {
-			const initial = Date.now();
-			const interval = setInterval(() => {
-				const elapsedTimeInSeconds = (Date.now() - initial) / 1000;
-				const progress = getPageSpeedProgress(elapsedTimeInSeconds);
-
-				setPercentage(progress.toFixed(0));
-			}, 500);
-
-			return () => {
-				clearInterval(interval);
-				setPercentage(0);
-			};
-		}
-	}, [error, loading]);
 
 	const getData = useCallback(
 		(fetchURL) => {
@@ -135,39 +113,19 @@ export default function LayoutReports({eventTriggered}) {
 		});
 	};
 
-	return (
-		<>
-			{data?.validConnection && error && (
-				<ErrorAlert error={error} onRelaunch={onRelaunchButtonClick} />
-			)}
+	if (!data) {
+		return null;
+	}
 
-			<div className="c-p-3">
-				{data && !error && (
-					<BasicInformation
-						defaultLanguageId={data.defaultLanguageId}
-						pageURLs={data.pageURLs}
-						selectedLanguageId={languageId}
-					/>
-				)}
+	const hasError = data.validConnection && error;
+	const notConfigured = !loading && !data.validConnection;
 
-				{loading ? (
-					<div className="c-my-4 text-secondary">
-						{Liferay.Language.get(
-							'connecting-with-google-pagespeed'
-						)}
-						<ClayProgressBar value={percentage} />
-					</div>
-				) : (
-					data &&
-					!error &&
-					(data.validConnection && data?.layoutReportsIssues ? (
-						<IssuesList />
-					) : (
-						<NotConfigured />
-					))
-				)}
-			</div>
-		</>
+	return hasError ? (
+		<ErrorAlert error={error} onRelaunch={onRelaunchButtonClick} />
+	) : notConfigured ? (
+		<NotConfigured />
+	) : (
+		<IssuesList />
 	);
 }
 

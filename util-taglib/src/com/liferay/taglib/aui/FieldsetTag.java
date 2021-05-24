@@ -104,15 +104,15 @@ public class FieldsetTag extends BaseFieldsetTag {
 
 		jspWriter.write(StringPool.GREATER_THAN);
 
-		String lable = getLabel();
+		String label = getLabel();
 
-		if (lable != null) {
+		if (label != null) {
 			jspWriter.write(
 				"<legend class=\"fieldset-legend\"><span class=\"legend\">");
 
 			MessageTag messageTag = new MessageTag();
 
-			messageTag.setKey(lable);
+			messageTag.setKey(label);
 			messageTag.setLocalizeKey(getLocalizeLabel());
 
 			messageTag.doTag(pageContext);

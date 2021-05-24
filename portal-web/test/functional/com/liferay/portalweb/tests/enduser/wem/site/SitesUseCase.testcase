@@ -877,7 +877,10 @@ definition {
 
 		Page.viewSpecificPG(pageNameList = "Accomodations,Maps");
 
-		Navigator.openSpecificURL(url = "${portalURL}/web/russia2018");
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "${portalURL}/web/russia2018",
+			userEmailAddress = "userea@liferay.com");
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",

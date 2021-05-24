@@ -101,6 +101,11 @@ operations. Operations *Create Records*, *Delete Records*, *Get Records*, and
 *Update Records* resources defined by your OpenAPI document. Each operation
 implements and exposes different parts of the specified OpenAPI document.
 
+If you're working with large data sets you probably don't want to handle every
+single record one at the time. This is where Liferay Batch operations come into
+play. They enable you to submit large amount of data to be processed in batch by
+the Liferay instance which results in much faster execution time.
+
 === Create Records Operation
 
 Create exposes all endpoints that are manipulated by HTTP POST.
@@ -146,12 +151,95 @@ web services and need not be used with every endpoint:
 |No
 |===
 
-To see list of all available operations and related input parameters check out
-link:liferay-connector-tech-ref.adoc[Liferay Connector Technical Reference].
-
 You should use
 https://app.swaggerhub.com/organizations/liferayinc as documentation for Liferay
 connector operations.
 You can also use the OpenAPI document from the endpoint you defined in
 connector configuration, in which case you lose the helpful UI offered by
 SwaggerHub editor.
+
+=== Batch Export Operation
+Batch Export operation allows you to get all records of the specified entity
+with a single request.
+
+image::anypoint_studio_products_export.png[Batch export operation example]
+
+Once you select desired entity from Class name dropdown list the connector
+dynamically generates related output Metadata.
+You can also specify which fields should exported entities contain using the
+Field names input. Field names should be specified as a comma separated
+list.
+After specifying site ID (optional) parameter, you have fully configured Batch
+export operation.
+
+[%header,cols=4*]
+|===
+| Parameter name
+| Type
+| Description
+| Required
+
+| Class name
+| String
+| Entity that will be exported
+| Yes
+
+| Site id
+| String
+| siteId query parameter
+| No
+
+| Field names
+| String
+| Comma separated list of entity fields that will be exported
+| No
+
+|===
+
+Running this flow will result in a JSON array of Products ready
+to be transformed and load into another system.
+
+=== Batch Import Operations
+Batch import operations consist of 3 types: Create, Delete and Update. With
+every operation you're importing a set of entities only difference is how they
+will be processed by the batch engine. The following example shows
+Batch Import Create operation.
+
+image::anypoint_studio_products_import.png[Batch import operation example]
+
+Similar to Batch export, import operations also let you select desired entity
+from Class name drop down list after which connector dynamically generates
+related input Metadata.
+
+Field name mappings input allow you to define field name mapping between
+related entities from different systems. If you used Transform Message module to
+map entity fields between source and destination systems you can leave this
+field empty. As Records you should submit JSON array of specified entity
+objects.
+
+[%header,cols=4*]
+|===
+| Parameter name
+| Type
+| Description
+| Required
+
+| Class name
+| String
+| Entity that will be imported
+| Yes
+
+| Field name mappings
+| Object
+| Map with field name mapping definitions
+| No
+
+| Records
+| Object
+| JSON array of entity objects
+| Yes
+|===
+
+To see list of all available operations and related input parameters check out
+link:liferay-connector-tech-ref.adoc[Liferay Connector Technical Reference].
+

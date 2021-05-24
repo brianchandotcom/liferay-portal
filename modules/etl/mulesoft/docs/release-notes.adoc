@@ -3,6 +3,26 @@
 The Anypoint Liferay Connector connects Liferay to platforms and services in
 the Mulesoft ecosystem.
 
+== Version 1.1.0
+
+=== Compatibility
+
+[%header%autowidth.spread]
+|===
+|Software |Version
+|Anypoint Studio |7.4 and later
+|Mule |4.1.1 and later
+|JDK |1.8
+|Liferay Portal |7.3 GA1
+|===
+
+=== Features
+* Added support for Liferay Batch endpoints (Create, Update, Delete and Export
+batch operations)
+* Updated demo project with Batch components usage examples
+
+=== Fixed Issues
+
 == Version 1.0.0
 
 === Compatibility

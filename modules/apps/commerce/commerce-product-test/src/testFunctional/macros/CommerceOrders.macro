@@ -2,8 +2,36 @@ definition {
 
 	macro createShipment {
 		Click(
-			key_index = "Create Shipment",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+			key_text = "Create Shipment",
+			locator1 = "Button#ANY");
+
+		if (isSet(carrierDetail)) {
+			Click(
+				key_text = "Carrier Details",
+				locator1 = "CommerceOrders#EDIT_SHIPMENT_DETAILS");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Type(
+				key_fieldLabel = "Carrier",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${carrierDetail}");
+
+			if (isSet(trackingNumber)) {
+				Type(
+					key_fieldLabel = "Tracking Number",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "${trackingNumber}");
+			}
+			else {
+				Type(
+					key_fieldLabel = "Tracking Number",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "Test Tracking Number");
+			}
+
+			Button.clickSubmitButton();
+		}
 
 		Click(locator1 = "Button#PLUS");
 
@@ -35,18 +63,21 @@ definition {
 		}
 
 		Click(
-			key_index = "Finish Processing",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+			key_text = "Finish Processing",
+			locator1 = "Button#ANY");
 
 		Click(
-			key_index = "Ship",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+			key_text = "Ship",
+			locator1 = "Button#ANY");
 
-		Click(
-			key_index = "Deliver",
-			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
-
-		Click(locator1 = "Icon#BACK");
+		if (isSet(complement)) {
+			Click(
+				key_text = "${complement}",
+				locator1 = "Button#ANY");
+		}
+		else {
+			Click(locator1 = "Icon#BACK");
+		}
 	}
 
 	macro editOrderItemDetails {

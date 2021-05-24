@@ -400,13 +400,88 @@ definition {
 	}
 
 	@description = "COMMERCE-6382. As a buyer, I want to be able to see the list of shipments for an order item by clicking on 'Shipments'"
-	@ignore = "true"
 	@priority = "3"
 	test ViewListOfShipmentsInPlacedOrdersDetailsPage {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SFCommerceOrders#ViewListOfShipmentsInPlacedOrdersDetailsPage";
 
-		// TODO COMMERCE-6382 ViewListOfShipmentsInPlacedOrdersDetailsPage pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+		Click(
+			key_text = "Accept Order",
+			locator1 = "Button#ANY");
+
+		CommerceOrders.createShipment(
+			carrierDetail = "Test Carrier",
+			complement = "Deliver",
+			productSKUList = "MIN55861",
+			warehouseName = "Italy");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+		Click(
+			key_orderAuthor = "Test Account",
+			locator1 = "CommerceAccelerators#ORDERS_ENTRY_VIEW_BUTTON");
+
+		Click(
+			key_text = "Shipments",
+			locator1 = "Button#ANY");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertVisible(
+			key_title = "Shipments",
+			locator1 = "Header#H2_TITLE");
+
+		for (var currentRow : list "status;Delivered,carrier;Test Carrier,tracking-number;Test Tracking Number") {
+			var currentColumn = StringUtil.extractFirst("${currentRow}",";");
+			var currentValue = StringUtil.extractLast("${currentRow}",";");
+
+			AssertTextEquals(
+				key_columnName = "${currentColumn}",
+				key_tableEntry = "",
+				locator1 = "LexiconTable#TABLE_ENTRY_INFO",
+				value1 = "${currentValue}");
+		}
 	}
 
 }

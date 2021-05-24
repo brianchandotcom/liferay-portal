@@ -36,7 +36,9 @@ import javax.servlet.jsp.tagext.BodyContent;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.kernel.servlet.PipingServletResponse} and {@link PipingServletResponseFactory}
  */
+@Deprecated
 public class PipingServletResponse extends HttpServletResponseWrapper {
 
 	public static HttpServletResponse createPipingServletResponse(

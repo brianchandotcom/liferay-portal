@@ -499,7 +499,7 @@ paths:
                     description:
                         ""
             tags: ["AccountUser"]
-    "/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}":
+    "/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}":
         delete:
             # @review
             description:
@@ -884,7 +884,7 @@ paths:
                     description:
                         ""
             tags: ["AccountUser"]
-    "/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}":
+    "/accounts/{accountId}/account-users/by-email-address/{emailAddress}":
         delete:
             description:
                 Removes a user from an account by their email address

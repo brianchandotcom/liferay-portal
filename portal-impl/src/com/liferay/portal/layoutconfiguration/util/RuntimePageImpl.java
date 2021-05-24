@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.layoutconfiguration.util.velocity.CustomizationSettingsProcessor;
 import com.liferay.portal.layoutconfiguration.util.velocity.TemplateProcessor;
 import com.liferay.portal.layoutconfiguration.util.xml.ActionURLLogic;
 import com.liferay.portal.layoutconfiguration.util.xml.PortletLogic;
@@ -45,8 +44,6 @@ import com.liferay.portal.layoutconfiguration.util.xml.RenderURLLogic;
 import com.liferay.portlet.internal.PortletBagUtil;
 import com.liferay.portlet.internal.PortletTypeUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
-import com.liferay.taglib.util.DummyVelocityTaglib;
-import com.liferay.taglib.util.VelocityTaglib;
 
 import java.util.HashMap;
 import java.util.List;
@@ -69,6 +66,47 @@ import org.apache.commons.lang.time.StopWatch;
 public class RuntimePageImpl implements RuntimePage {
 
 	@Override
+	public LayoutTemplate getLayoutTemplate(String velocityTemplateId) {
+		String separator = LayoutTemplateConstants.CUSTOM_SEPARATOR;
+		boolean standard = false;
+
+		if (velocityTemplateId.contains(
+				LayoutTemplateConstants.STANDARD_SEPARATOR)) {
+
+			separator = LayoutTemplateConstants.STANDARD_SEPARATOR;
+			standard = true;
+		}
+
+		String layoutTemplateId = null;
+
+		String themeId = null;
+
+		int pos = velocityTemplateId.indexOf(separator);
+
+		if (pos != -1) {
+			layoutTemplateId = velocityTemplateId.substring(
+				pos + separator.length());
+
+			themeId = velocityTemplateId.substring(0, pos);
+		}
+
+		pos = layoutTemplateId.indexOf(
+			LayoutTemplateConstants.INSTANCE_SEPARATOR);
+
+		if (pos != -1) {
+			layoutTemplateId = layoutTemplateId.substring(
+				pos + LayoutTemplateConstants.INSTANCE_SEPARATOR.length() + 1);
+
+			pos = layoutTemplateId.indexOf(StringPool.UNDERLINE);
+
+			layoutTemplateId = layoutTemplateId.substring(pos + 1);
+		}
+
+		return LayoutTemplateLocalServiceUtil.getLayoutTemplate(
+			layoutTemplateId, standard, themeId);
+	}
+
+	@Override
 	public StringBundler getProcessedTemplate(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId,
@@ -77,31 +115,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		return doDispatch(
 			httpServletRequest, httpServletResponse, portletId,
-			templateResource, TemplateConstants.LANG_TYPE_VM, true);
-	}
-
-	@Override
-	public void processCustomizationSettings(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource)
-		throws Exception {
-
-		processCustomizationSettings(
-			httpServletRequest, httpServletResponse, templateResource,
-			TemplateConstants.LANG_TYPE_VM);
-	}
-
-	@Override
-	public void processCustomizationSettings(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource, String langType)
-		throws Exception {
-
-		doDispatch(
-			httpServletRequest, httpServletResponse, null, templateResource,
-			langType, false);
+			templateResource, TemplateConstants.LANG_TYPE_VM);
 	}
 
 	@Override
@@ -113,7 +127,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		StringBundler sb = doDispatch(
 			httpServletRequest, httpServletResponse, portletId,
-			templateResource, TemplateConstants.LANG_TYPE_VM, true);
+			templateResource, TemplateConstants.LANG_TYPE_VM);
 
 		sb.writeTo(httpServletResponse.getWriter());
 	}
@@ -127,7 +141,7 @@ public class RuntimePageImpl implements RuntimePage {
 
 		StringBundler sb = doDispatch(
 			httpServletRequest, httpServletResponse, portletId,
-			templateResource, langType, true);
+			templateResource, langType);
 
 		sb.writeTo(httpServletResponse.getWriter());
 	}
@@ -289,8 +303,7 @@ public class RuntimePageImpl implements RuntimePage {
 	protected StringBundler doDispatch(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId,
-			TemplateResource templateResource, String langType,
-			boolean processTemplate)
+			TemplateResource templateResource, String langType)
 		throws Exception {
 
 		ClassLoader pluginClassLoader = null;
@@ -323,17 +336,9 @@ public class RuntimePageImpl implements RuntimePage {
 				currentThread.setContextClassLoader(pluginClassLoader);
 			}
 
-			if (processTemplate) {
-				return doProcessTemplate(
-					httpServletRequest, httpServletResponse, portletId,
-					templateResource, langType, false);
-			}
-
-			doProcessCustomizationSettings(
-				httpServletRequest, httpServletResponse, templateResource,
-				langType, false);
-
-			return null;
+			return doProcessTemplate(
+				httpServletRequest, httpServletResponse, portletId,
+				templateResource, langType, false);
 		}
 		finally {
 			if ((pluginClassLoader != null) &&
@@ -341,43 +346,6 @@ public class RuntimePageImpl implements RuntimePage {
 
 				currentThread.setContextClassLoader(contextClassLoader);
 			}
-		}
-	}
-
-	protected void doProcessCustomizationSettings(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource, String langType,
-			boolean restricted)
-		throws Exception {
-
-		CustomizationSettingsProcessor processor =
-			new CustomizationSettingsProcessor(
-				httpServletRequest, httpServletResponse);
-
-		Template template = TemplateManagerUtil.getTemplate(
-			langType, templateResource, restricted);
-
-		template.put("processor", processor);
-
-		// Velocity variables
-
-		template.prepare(httpServletRequest);
-
-		// liferay:include tag library
-
-		VelocityTaglib velocityTaglib = new DummyVelocityTaglib();
-
-		template.put("taglibLiferay", velocityTaglib);
-		template.put("theme", velocityTaglib);
-
-		try {
-			template.processTemplate(httpServletResponse.getWriter());
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			throw exception;
 		}
 	}
 
@@ -538,46 +506,6 @@ public class RuntimePageImpl implements RuntimePage {
 		return StringUtil.replaceWithStringBundler(
 			unsyncStringWriter.toString(), "[$TEMPLATE_PORTLET_", "$]",
 			contentsMap);
-	}
-
-	protected LayoutTemplate getLayoutTemplate(String velocityTemplateId) {
-		String separator = LayoutTemplateConstants.CUSTOM_SEPARATOR;
-		boolean standard = false;
-
-		if (velocityTemplateId.contains(
-				LayoutTemplateConstants.STANDARD_SEPARATOR)) {
-
-			separator = LayoutTemplateConstants.STANDARD_SEPARATOR;
-			standard = true;
-		}
-
-		String layoutTemplateId = null;
-
-		String themeId = null;
-
-		int pos = velocityTemplateId.indexOf(separator);
-
-		if (pos != -1) {
-			layoutTemplateId = velocityTemplateId.substring(
-				pos + separator.length());
-
-			themeId = velocityTemplateId.substring(0, pos);
-		}
-
-		pos = layoutTemplateId.indexOf(
-			LayoutTemplateConstants.INSTANCE_SEPARATOR);
-
-		if (pos != -1) {
-			layoutTemplateId = layoutTemplateId.substring(
-				pos + LayoutTemplateConstants.INSTANCE_SEPARATOR.length() + 1);
-
-			pos = layoutTemplateId.indexOf(StringPool.UNDERLINE);
-
-			layoutTemplateId = layoutTemplateId.substring(pos + 1);
-		}
-
-		return LayoutTemplateLocalServiceUtil.getLayoutTemplate(
-			layoutTemplateId, standard, themeId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

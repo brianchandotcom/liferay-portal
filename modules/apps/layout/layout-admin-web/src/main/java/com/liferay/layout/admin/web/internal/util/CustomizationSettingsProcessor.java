@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.layoutconfiguration.util.velocity;
+package com.liferay.layout.admin.web.internal.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.layoutconfiguration.util.velocity.ColumnProcessor;
 import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.taglib.aui.InputTag;
 

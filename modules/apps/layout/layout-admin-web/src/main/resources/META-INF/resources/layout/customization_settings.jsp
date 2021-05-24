@@ -76,7 +76,7 @@ if (selLayout != null) {
 
 			<%
 			if (Validator.isNotNull(templateId) && Validator.isNotNull(templateContent)) {
-				RuntimePageUtil.processCustomizationSettings(request, response, new StringTemplateResource(templateId, templateContent), langType);
+				CustomizationSettingsUtil.processCustomizationSettings(request, response, new StringTemplateResource(templateId, templateContent), langType);
 			}
 			%>
 

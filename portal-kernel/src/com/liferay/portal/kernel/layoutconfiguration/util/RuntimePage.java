@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
+import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -31,22 +32,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RuntimePage {
 
+	public LayoutTemplate getLayoutTemplate(String velocityTemplateId);
+
 	public StringBundler getProcessedTemplate(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String portletId,
 			TemplateResource templateResource)
-		throws Exception;
-
-	public void processCustomizationSettings(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource)
-		throws Exception;
-
-	public void processCustomizationSettings(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource, String langType)
 		throws Exception;
 
 	public void processTemplate(

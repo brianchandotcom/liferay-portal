@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.layoutconfiguration.util;
 
 import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
+import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
 
@@ -27,6 +28,10 @@ import javax.servlet.http.HttpServletResponse;
  * @author Shuyang Zhou
  */
 public class RuntimePageUtil {
+
+	public static LayoutTemplate getLayoutTemplate(String velocityTemplateId) {
+		return _runtimePage.getLayoutTemplate(velocityTemplateId);
+	}
 
 	public static StringBundler getProcessedTemplate(
 			HttpServletRequest httpServletRequest,
@@ -41,27 +46,6 @@ public class RuntimePageUtil {
 
 	public static RuntimePage getRuntimePage() {
 		return _runtimePage;
-	}
-
-	public static void processCustomizationSettings(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource)
-		throws Exception {
-
-		_runtimePage.processCustomizationSettings(
-			httpServletRequest, httpServletResponse, templateResource);
-	}
-
-	public static void processCustomizationSettings(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			TemplateResource templateResource, String langType)
-		throws Exception {
-
-		_runtimePage.processCustomizationSettings(
-			httpServletRequest, httpServletResponse, templateResource,
-			langType);
 	}
 
 	public static void processTemplate(

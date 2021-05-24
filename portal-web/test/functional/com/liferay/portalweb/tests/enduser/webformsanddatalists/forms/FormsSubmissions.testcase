@@ -29,6 +29,7 @@ definition {
 
 			Page.tearDownCP();
 		}
+
 	}
 
 	@description = "Verify that a Form with required fields can be partially filled out and submitted"
@@ -39,7 +40,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131023 CanBePartiallyFilledWithRequiredFields pending implementation
-
 	}
 
 	@description = "Verify that a Form can be submitted"
@@ -63,13 +63,43 @@ definition {
 	}
 
 	@description = "Verify that a Form that is partially filled out can be submitted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSubmittedWhilePartiallyFilled {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131020 CanBeSubmittedWhilePartiallyFilled pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.save();
+
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric",
+			fieldValue = "");
+
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that a Form with multiple pages can be submitted"

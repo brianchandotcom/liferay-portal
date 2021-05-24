@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -56,6 +55,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import org.frutilla.FrutillaRule;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -197,6 +198,9 @@ public class CommerceMediaResolverTest {
 
 		Assert.assertEquals(sb.toString(), url);
 	}
+
+	@Rule
+	public FrutillaRule frutillaRule = new FrutillaRule();
 
 	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;

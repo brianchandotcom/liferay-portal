@@ -385,7 +385,7 @@ definition {
 
 		DMDocument.viewVideoPreviewGeneratingInfo();
 
-		DMDocument.viewInternalVideoPreview(audioName = "Document_1.mp4");
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 
 		DMNavigator.openToConfigInSystemSettings(portlet = "FFMPEG Video Converter");
 
@@ -400,7 +400,7 @@ definition {
 			groupName = "Site Name",
 			siteURLKey = "site-name");
 
-		DMDocument.viewInternalVideoPreview(audioName = "Document_1.mp4");
+		DMDocument.viewInternalVideoPreview(videoName = "Document_1.mp4");
 	}
 
 	@description = "This ensures that a depot internal video cannot be viewed from the disconnected site."

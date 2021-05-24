@@ -76,8 +76,13 @@ public class JSassCompilerTest {
 					String expectedOutput = read(expectedOutputFile.toPath());
 
 					Assert.assertEquals(
-						"Testing: " + fileName, stripNewLines(expectedOutput),
-						stripNewLines(actualOutput));
+						"Testing: " + fileName,
+						stripNewLines(
+							expectedOutput.substring(
+								0, Math.min(expectedOutput.length(), 1000))),
+						stripNewLines(
+							actualOutput.substring(
+								0, Math.min(actualOutput.length(), 1000))));
 				}
 			}
 		}

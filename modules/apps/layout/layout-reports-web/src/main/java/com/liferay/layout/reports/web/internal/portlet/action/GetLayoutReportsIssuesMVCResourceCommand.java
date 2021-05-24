@@ -121,7 +121,8 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 			String url = ParamUtil.getString(resourceRequest, "url");
 
 			List<LayoutReportsIssue> layoutReportsIssues =
-				layoutReportsDataProvider.getLayoutReportsIssues(url);
+				layoutReportsDataProvider.getLayoutReportsIssues(
+					themeDisplay.getLocale(), url);
 
 			Stream<LayoutReportsIssue> stream = layoutReportsIssues.stream();
 

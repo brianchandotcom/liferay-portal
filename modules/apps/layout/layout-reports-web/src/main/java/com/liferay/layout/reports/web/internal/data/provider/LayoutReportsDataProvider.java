@@ -24,11 +24,13 @@ import com.google.api.services.pagespeedonline.v5.model.PagespeedApiPagespeedRes
 import com.liferay.layout.reports.web.internal.model.LayoutReportsIssue;
 import com.liferay.layout.reports.web.internal.util.MarkdownUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -41,11 +43,12 @@ public class LayoutReportsDataProvider {
 		_apiKey = apiKey;
 	}
 
-	public List<LayoutReportsIssue> getLayoutReportsIssues(String url)
+	public List<LayoutReportsIssue> getLayoutReportsIssues(
+			Locale locale, String url)
 		throws LayoutReportsDataProviderException {
 
 		try {
-			return _getLayoutReportsIssues(url);
+			return _getLayoutReportsIssues(locale, url);
 		}
 		catch (LayoutReportsDataProviderException
 					layoutReportsDataProviderException) {
@@ -113,7 +116,8 @@ public class LayoutReportsDataProvider {
 			key, _getCount(lighthouseAuditResultV5));
 	}
 
-	private List<LayoutReportsIssue> _getLayoutReportsIssues(String url)
+	private List<LayoutReportsIssue> _getLayoutReportsIssues(
+			Locale locale, String url)
 		throws Exception {
 
 		if (!isValidConnection()) {
@@ -138,6 +142,7 @@ public class LayoutReportsDataProvider {
 		runpagespeed.setCategory(
 			Arrays.asList("accessibility", "best-practices", "seo"));
 		runpagespeed.setKey(_apiKey);
+		runpagespeed.setLocale(LanguageUtil.getLanguageId(locale));
 
 		PagespeedApiPagespeedResponseV5 pagespeedApiPagespeedResponseV5 =
 			runpagespeed.execute();

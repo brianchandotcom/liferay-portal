@@ -35,6 +35,7 @@ import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.util.comparator.EntryIdComparator;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -292,11 +293,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long entryId = counterLocalService.increment();
 
 		if (Validator.isNotNull(urlTitle)) {
-			long classNameId = _classNameLocalService.getClassNameId(
-				BlogsEntry.class);
-
-			_friendlyURLEntryLocalService.validate(
-				groupId, user.getCompanyId(), classNameId, urlTitle);
+			urlTitle = _validateURLTitle(groupId, urlTitle, serviceContext);
 		}
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
@@ -1190,14 +1187,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		_validate(title, urlTitle, content, status);
 
-		if (Validator.isNotNull(urlTitle)) {
-			long classNameId = _classNameLocalService.getClassNameId(
-				BlogsEntry.class);
+		if (Validator.isNotNull(urlTitle) &&
+			!urlTitle.equals(entry.getUrlTitle())) {
 
-			_friendlyURLEntryLocalService.validate(
-				entry.getGroupId(), classNameId, entryId, urlTitle);
+			urlTitle = _validateURLTitle(
+				entry.getGroupId(), urlTitle, serviceContext);
 		}
-		else {
+
+		if (Validator.isNull(urlTitle)) {
 			urlTitle = _getUniqueUrlTitle(entry, title);
 		}
 
@@ -2332,6 +2329,32 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if (content.length() > contentMaxLength) {
 			throw new EntryContentException(
 				"Content has more than " + contentMaxLength + " characters");
+		}
+	}
+
+	private String _validateURLTitle(
+			long groupId, String urlTitle, ServiceContext serviceContext)
+		throws PortalException {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			BlogsEntry.class);
+
+		try {
+			_friendlyURLEntryLocalService.validate(
+				groupId, classNameId, urlTitle);
+
+			return urlTitle;
+		}
+		catch (DuplicateFriendlyURLEntryException
+					duplicateFriendlyURLEntryException) {
+
+			if (serviceContext.getWorkflowAction() ==
+					WorkflowConstants.ACTION_SAVE_DRAFT) {
+
+				return null;
+			}
+
+			throw duplicateFriendlyURLEntryException;
 		}
 	}
 

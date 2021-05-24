@@ -215,6 +215,30 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddDraftEntryWithDuplicateURLTitle() throws Exception {
+		String urlTitle = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new Date(), false, false, null, null, null, null, serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new Date(), false, false, null, null, null, null, serviceContext);
+
+		Assert.assertNotEquals(urlTitle, entry.getUrlTitle());
+	}
+
+	@Test
 	public void testAddDraftEntryWithNullTitle() throws Exception {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _statusAnyQueryDefinition);
@@ -965,6 +989,36 @@ public class BlogsEntryLocalServiceTest {
 				_user.getUserId());
 
 		Assert.assertEquals(initialCount, actualCount);
+	}
+
+	@Test
+	public void testUpdateDraftEntryWithDuplicateURLTitle() throws Exception {
+		String urlTitle = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new Date(), false, false, null, null, null, null, serviceContext);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), urlTitle,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new Date(), false, false, null, null, null, null, serviceContext);
+
+		entry = BlogsEntryLocalServiceUtil.updateEntry(
+			_user.getUserId(), entry.getEntryId(), entry.getTitle(),
+			entry.getSubtitle(), urlTitle, entry.getDescription(),
+			entry.getContent(), entry.getDisplayDate(), false, false, null,
+			null, null, null, serviceContext);
+
+		Assert.assertNotEquals(urlTitle, entry.getUrlTitle());
 	}
 
 	@Test

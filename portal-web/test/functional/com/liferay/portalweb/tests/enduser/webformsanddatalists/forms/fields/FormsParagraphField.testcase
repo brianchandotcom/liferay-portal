@@ -562,12 +562,61 @@ definition {
 	}
 
 	@description = "Verify that Numbered Lists can be added to the Body Text"
-	@ignore = "true"
 	@priority = "5"
 	test CanSupportNumberedLists {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131238 CanSupportNumberedLists pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			
+			fieldType = "Paragraph");
+
+		CKEditor.addSourceContent(content = "<p>Test A</p><p>Test B</p><p>Test C</p>");
+
+		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		SelectFieldText(locator1 = "CKEditor#BODY");
+
+		SelectFrame(value1 = "relative=top");
+
+		Click(
+			key_titleName = "Insert/Remove Numbered List",
+			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
+
+		Form.save();
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Click(
+			key_formName = "Form 1",
+			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
+
+		AssertElementPresent(
+			key_fieldLabel = "Paragraph",
+			locator1 = "FormFields#LABEL");
+
+		for (var liContent : list "Test A,Test B,Test C") {
+			AssertElementPresent(
+				key_itemName = "${liContent}",
+				key_labelName = "Paragraph",
+				locator1 = "FormFields#PARAGRAPH_CONTENT_ORDERED_LIST");
+		}
 	}
 
 	@description = "Verify that a Table can be created in the Body Text"

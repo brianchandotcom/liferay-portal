@@ -28,48 +28,41 @@ import javax.management.NotCompliantMBeanException;
 import javax.management.ReflectionException;
 import javax.management.StandardMBean;
 
-import org.hibernate.engine.SessionFactoryImplementor;
-import org.hibernate.jmx.StatisticsService;
-import org.hibernate.jmx.StatisticsServiceMBean;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.stat.Statistics;
 
 /**
  * @author Shuyang Zhou
  */
-@OSGiBeanProperties(
-	property = "jmx.objectname=Hibernate:name=statistics",
-	service = DynamicMBean.class
-)
-public class HibernateStatisticsService
-	extends StatisticsService implements DynamicMBean {
+@OSGiBeanProperties(property = "jmx.objectname=Hibernate:name=statistics")
+public class HibernateStatisticsService implements DynamicMBean {
 
-	public HibernateStatisticsService() throws NotCompliantMBeanException {
-		setStatisticsEnabled(PropsValues.HIBERNATE_GENERATE_STATISTICS);
-
-		_standardMBean = new StandardMBean(this, StatisticsServiceMBean.class);
+	public void afterPropertiesSet() throws NotCompliantMBeanException {
+		_dynamicMBean = new StandardMBean(_statistics, Statistics.class);
 	}
 
 	@Override
 	public Object getAttribute(String attribute)
 		throws AttributeNotFoundException, MBeanException, ReflectionException {
 
-		return _standardMBean.getAttribute(attribute);
+		return _dynamicMBean.getAttribute(attribute);
 	}
 
 	@Override
 	public AttributeList getAttributes(String[] attributes) {
-		return _standardMBean.getAttributes(attributes);
+		return _dynamicMBean.getAttributes(attributes);
 	}
 
 	@Override
 	public MBeanInfo getMBeanInfo() {
-		return _standardMBean.getMBeanInfo();
+		return _dynamicMBean.getMBeanInfo();
 	}
 
 	@Override
 	public Object invoke(String actionName, Object[] params, String[] signature)
 		throws MBeanException, ReflectionException {
 
-		return _standardMBean.invoke(actionName, params, signature);
+		return _dynamicMBean.invoke(actionName, params, signature);
 	}
 
 	@Override
@@ -77,20 +70,24 @@ public class HibernateStatisticsService
 		throws AttributeNotFoundException, InvalidAttributeValueException,
 			   MBeanException, ReflectionException {
 
-		_standardMBean.setAttribute(attribute);
+		_dynamicMBean.setAttribute(attribute);
 	}
 
 	@Override
 	public AttributeList setAttributes(AttributeList attributes) {
-		return _standardMBean.setAttributes(attributes);
+		return _dynamicMBean.setAttributes(attributes);
 	}
 
 	public void setSessionFactoryImplementor(
 		SessionFactoryImplementor sessionFactoryImplementor) {
 
-		super.setSessionFactory(sessionFactoryImplementor);
+		_statistics = sessionFactoryImplementor.getStatistics();
+
+		_statistics.setStatisticsEnabled(
+			PropsValues.HIBERNATE_GENERATE_STATISTICS);
 	}
 
-	private final StandardMBean _standardMBean;
+	private DynamicMBean _dynamicMBean;
+	private Statistics _statistics;
 
 }

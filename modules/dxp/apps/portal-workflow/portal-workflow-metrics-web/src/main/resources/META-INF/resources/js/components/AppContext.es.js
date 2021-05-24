@@ -18,12 +18,15 @@ const AppContext = React.createContext();
 const AppContextProvider = ({children, ...props}) => {
 	const [reindexStatuses, setReindexStatuses] = useState([]);
 	const [title, setTitle] = useState(Liferay.Language.get('metrics'));
+	const [shouldCalculateMetrics, setShouldCalculateMetrics] = useState(false);
 
 	const state = {
 		...props,
 		reindexStatuses,
 		setReindexStatuses,
+		setShouldCalculateMetrics,
 		setTitle,
+		shouldCalculateMetrics,
 		title,
 	};
 

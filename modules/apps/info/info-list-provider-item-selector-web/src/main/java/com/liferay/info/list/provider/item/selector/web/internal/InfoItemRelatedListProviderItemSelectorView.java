@@ -180,11 +180,11 @@ public class InfoItemRelatedListProviderItemSelectorView
 
 				@Override
 				public String getSubtitle(Locale locale) {
-					Class<?> sourceItemClass =
-						infoItemRelatedItemsProvider.getSourceItemClass();
+					Class<?> relatedItemClass =
+						infoItemRelatedItemsProvider.getRelatedItemClass();
 
 					return ResourceActionsUtil.getModelResource(
-						locale, sourceItemClass.getName());
+						locale, relatedItemClass.getName());
 				}
 
 				@Override

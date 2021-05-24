@@ -142,8 +142,9 @@ public class PortalImplEscapeRedirectTest {
 	@Test
 	public void testEscapeRedirectWithIPs() throws Exception {
 		ReflectionTestUtil.setFieldValue(
-			"DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS", 2);
-		ReflectionTestUtil.setFieldValue("DNS_SECURITY_THREAD_LIMIT", 10);
+			PropsValues.class, "DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS", 2);
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "DNS_SECURITY_THREAD_LIMIT", 10);
 
 		_redirectURLSettingsImpl.allowedIPs = new String[] {
 			"127.0.0.1", "SERVER_IP"
@@ -199,9 +200,10 @@ public class PortalImplEscapeRedirectTest {
 				_portalImpl.escapeRedirect("http://prefix.127.0.0.1"));
 		}
 		finally {
-			ReflectionTestUtil.setFieldValue("DNS_SECURITY_THREAD_LIMIT", 10);
 			ReflectionTestUtil.setFieldValue(
-				"DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS", 2);
+				PropsValues.class, "DNS_SECURITY_THREAD_LIMIT", 10);
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "DNS_SECURITY_ADDRESS_TIMEOUT_SECONDS", 2);
 		}
 	}
 

@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import ContentView from '../../../shared/components/content-view/ContentView.es';
@@ -35,18 +36,20 @@ export default function Body({items, page, pageSize, totalCount}) {
 	};
 
 	return (
-		<ContentView {...statesProps}>
-			{totalCount > 0 && (
-				<>
-					<Table items={items} />
+		<ClayLayout.ContainerFluid className="mt-4">
+			<ContentView {...statesProps}>
+				{totalCount > 0 && (
+					<>
+						<Table items={items} />
 
-					<PaginationBar
-						page={page}
-						pageSize={pageSize}
-						totalCount={totalCount}
-					/>
-				</>
-			)}
-		</ContentView>
+						<PaginationBar
+							page={page}
+							pageSize={pageSize}
+							totalCount={totalCount}
+						/>
+					</>
+				)}
+			</ContentView>
+		</ClayLayout.ContainerFluid>
 	);
 }

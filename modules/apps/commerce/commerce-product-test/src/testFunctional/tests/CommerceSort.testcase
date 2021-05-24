@@ -47,13 +47,32 @@ definition {
 	}
 
 	@description = "COMMERCE-6176. As a buyer, I want to sort products by New Items using Sort widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductsAreSortedByNewItems {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByNewItems";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Minium",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "New Items");
 
 		// TODO COMMERCE-6176 AssertProductsAreSortedByNewItems pending implementation
 
+		AssertTextEquals(
+			key_index = "1",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+			value1 = "Simple T-Shirt");
 	}
 
 	@description = "COMMERCE-6171. As a buyer, I want to sort products by Price High to Low using Sort widget and the results should be visible on the Search Results widget"

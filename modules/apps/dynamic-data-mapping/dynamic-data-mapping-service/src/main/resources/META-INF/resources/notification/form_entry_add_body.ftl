@@ -112,7 +112,7 @@
 
 								<#foreach field in page.fields>
 
-									<#if validator.isNotNull(field)>
+									<#if field??>
 										<p class="field-label">${field.label}</p>
 
 										<p class="field-value">${field.value}</p>

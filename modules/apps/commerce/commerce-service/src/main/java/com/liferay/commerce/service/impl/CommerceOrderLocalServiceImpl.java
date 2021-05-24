@@ -222,7 +222,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setCompanyId(user.getCompanyId());
 		commerceOrder.setUserId(userId);
 		commerceOrder.setUserName(user.getFullName());
-		commerceOrder.setCreateDate(now);
+		commerceOrder.setCreateDate(new Date());
 		commerceOrder.setCommerceAccountId(commerceAccountId);
 		commerceOrder.setCommerceCurrencyId(commerceCurrencyId);
 		commerceOrder.setBillingAddressId(billingAddressId);

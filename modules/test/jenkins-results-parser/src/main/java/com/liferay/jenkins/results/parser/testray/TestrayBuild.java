@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.net.MalformedURLException;
@@ -150,9 +151,16 @@ public class TestrayBuild {
 			return null;
 		}
 
+		File jsonFile = new File(getID() + ".json");
+		File jsonGzFile = new File(getID() + ".json.gz");
+
 		try {
-			_buildResultJSONObject = JenkinsResultsParserUtil.toJSONObject(
-				String.valueOf(buildResultURL));
+			JenkinsResultsParserUtil.toFile(buildResultURL, jsonGzFile);
+
+			JenkinsResultsParserUtil.unGzip(jsonGzFile, jsonFile);
+
+			_buildResultJSONObject = JenkinsResultsParserUtil.createJSONObject(
+				JenkinsResultsParserUtil.read(jsonFile));
 
 			_buildResultJSONObject.put("name", getName());
 
@@ -160,6 +168,10 @@ public class TestrayBuild {
 		}
 		catch (IOException ioException) {
 			ioException.printStackTrace();
+		}
+		finally {
+			JenkinsResultsParserUtil.delete(jsonFile);
+			JenkinsResultsParserUtil.delete(jsonGzFile);
 		}
 
 		return null;

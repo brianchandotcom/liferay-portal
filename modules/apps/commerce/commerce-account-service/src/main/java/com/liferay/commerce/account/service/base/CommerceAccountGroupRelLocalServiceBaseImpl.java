@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.account.service.base;
 
+import com.liferay.account.service.persistence.AccountGroupRelPersistence;
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelLocalServiceUtil;
@@ -676,6 +677,49 @@ public abstract class CommerceAccountGroupRelLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the account group rel local service.
+	 *
+	 * @return the account group rel local service
+	 */
+	public com.liferay.account.service.AccountGroupRelLocalService
+		getAccountGroupRelLocalService() {
+
+		return accountGroupRelLocalService;
+	}
+
+	/**
+	 * Sets the account group rel local service.
+	 *
+	 * @param accountGroupRelLocalService the account group rel local service
+	 */
+	public void setAccountGroupRelLocalService(
+		com.liferay.account.service.AccountGroupRelLocalService
+			accountGroupRelLocalService) {
+
+		this.accountGroupRelLocalService = accountGroupRelLocalService;
+	}
+
+	/**
+	 * Returns the account group rel persistence.
+	 *
+	 * @return the account group rel persistence
+	 */
+	public AccountGroupRelPersistence getAccountGroupRelPersistence() {
+		return accountGroupRelPersistence;
+	}
+
+	/**
+	 * Sets the account group rel persistence.
+	 *
+	 * @param accountGroupRelPersistence the account group rel persistence
+	 */
+	public void setAccountGroupRelPersistence(
+		AccountGroupRelPersistence accountGroupRelPersistence) {
+
+		this.accountGroupRelPersistence = accountGroupRelPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -938,6 +982,15 @@ public abstract class CommerceAccountGroupRelLocalServiceBaseImpl
 	@BeanReference(type = CommerceAccountUserRelPersistence.class)
 	protected CommerceAccountUserRelPersistence
 		commerceAccountUserRelPersistence;
+
+	@ServiceReference(
+		type = com.liferay.account.service.AccountGroupRelLocalService.class
+	)
+	protected com.liferay.account.service.AccountGroupRelLocalService
+		accountGroupRelLocalService;
+
+	@ServiceReference(type = AccountGroupRelPersistence.class)
+	protected AccountGroupRelPersistence accountGroupRelPersistence;
 
 	@ServiceReference(
 		type = com.liferay.counter.kernel.service.CounterLocalService.class

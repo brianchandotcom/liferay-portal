@@ -75,9 +75,9 @@
 				border-radius: 0 4px 4px;
 			}
 
-			&.hovered {
-				border-width: 2px;
-				margin: 0;
+			&.hovered:not(.selected) {
+				border-width: 1px;
+				margin: 1px;
 			}
 		}
 

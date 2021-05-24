@@ -52,6 +52,7 @@ const MockRouter = ({
 	const [reindexStatuses, setReindexStatuses] = useState(
 		initialReindexStatuses
 	);
+	const [shouldCalculateMetrics, setShouldCalculateMetrics] = useState(false);
 
 	const contextState = useMemo(
 		() => ({
@@ -64,7 +65,9 @@ const MockRouter = ({
 			portletNamespace: 'workflow',
 			reindexStatuses,
 			setReindexStatuses,
+			setShouldCalculateMetrics,
 			setTitle,
+			shouldCalculateMetrics,
 			title,
 			userId,
 			userName,

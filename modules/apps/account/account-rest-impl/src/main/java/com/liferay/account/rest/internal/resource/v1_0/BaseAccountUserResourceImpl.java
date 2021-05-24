@@ -147,7 +147,7 @@ public abstract class BaseAccountUserResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}'  -u 'test@liferay.com:test'
 	 */
 	@DELETE
 	@Operation(
@@ -156,28 +156,28 @@ public abstract class BaseAccountUserResourceImpl
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "emailAddress"),
-			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
 		}
 	)
 	@Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}"
 	)
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
-			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
-				emailAddress,
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode")
-			String externalReferenceCode)
+			String externalReferenceCode,
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}'  -u 'test@liferay.com:test'
 	 */
 	@Operation(
 		description = "Assigns a user to an account by external reference code by their email address"
@@ -185,22 +185,22 @@ public abstract class BaseAccountUserResourceImpl
 	@Override
 	@Parameters(
 		value = {
-			@Parameter(in = ParameterIn.PATH, name = "emailAddress"),
-			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode")
+			@Parameter(in = ParameterIn.PATH, name = "externalReferenceCode"),
+			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
 		}
 	)
 	@Path(
-		"/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}"
+		"/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}"
 	)
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public void postAccountUserByExternalReferenceCodeByEmailAddress(
-			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
-				emailAddress,
 			@NotNull @Parameter(hidden = true)
 			@PathParam("externalReferenceCode")
-			String externalReferenceCode)
+			String externalReferenceCode,
+			@NotNull @Parameter(hidden = true) @PathParam("emailAddress") String
+				emailAddress)
 		throws Exception {
 	}
 
@@ -261,7 +261,7 @@ public abstract class BaseAccountUserResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users/by-email-address/{emailAddress}'  -u 'test@liferay.com:test'
 	 */
 	@DELETE
 	@Operation(
@@ -274,7 +274,7 @@ public abstract class BaseAccountUserResourceImpl
 			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
 		}
 	)
-	@Path("/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}")
+	@Path("/accounts/{accountId}/account-users/by-email-address/{emailAddress}")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})
 	public void deleteAccountUserByEmailAddress(
@@ -288,7 +288,7 @@ public abstract class BaseAccountUserResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/account-rest/v1.0/accounts/{accountId}/account-users/by-email-address/{emailAddress}'  -u 'test@liferay.com:test'
 	 */
 	@Operation(
 		description = "Assigns a user to an account by their email address"
@@ -300,7 +300,7 @@ public abstract class BaseAccountUserResourceImpl
 			@Parameter(in = ParameterIn.PATH, name = "emailAddress")
 		}
 	)
-	@Path("/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}")
+	@Path("/accounts/{accountId}/account-users/by-email-address/{emailAddress}")
 	@POST
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "AccountUser")})

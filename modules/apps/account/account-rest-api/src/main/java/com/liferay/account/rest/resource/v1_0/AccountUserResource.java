@@ -60,11 +60,11 @@ public interface AccountUserResource {
 		throws Exception;
 
 	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
-			String emailAddress, String externalReferenceCode)
+			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public void postAccountUserByExternalReferenceCodeByEmailAddress(
-			String emailAddress, String externalReferenceCode)
+			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public Page<AccountUser> getAccountUsersPage(

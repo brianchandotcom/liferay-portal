@@ -332,8 +332,8 @@ public class Mutation {
 		description = "Removes a user from an account by external reference code by their email address"
 	)
 	public boolean deleteAccountUserByExternalReferenceCodeByEmailAddress(
-			@GraphQLName("emailAddress") String emailAddress,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -342,7 +342,7 @@ public class Mutation {
 			accountUserResource ->
 				accountUserResource.
 					deleteAccountUserByExternalReferenceCodeByEmailAddress(
-						emailAddress, externalReferenceCode));
+						externalReferenceCode, emailAddress));
 
 		return true;
 	}
@@ -351,8 +351,8 @@ public class Mutation {
 		description = "Assigns a user to an account by external reference code by their email address"
 	)
 	public boolean createAccountUserByExternalReferenceCodeByEmailAddress(
-			@GraphQLName("emailAddress") String emailAddress,
-			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("emailAddress") String emailAddress)
 		throws Exception {
 
 		_applyVoidComponentServiceObjects(
@@ -361,7 +361,7 @@ public class Mutation {
 			accountUserResource ->
 				accountUserResource.
 					postAccountUserByExternalReferenceCodeByEmailAddress(
-						emailAddress, externalReferenceCode));
+						externalReferenceCode, emailAddress));
 
 		return true;
 	}

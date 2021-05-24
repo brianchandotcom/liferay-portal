@@ -567,8 +567,8 @@ public abstract class BaseAccountUserResourceTestCase {
 			204,
 			accountUserResource.
 				deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					accountUser.getEmailAddress(),
-					accountUser.getExternalReferenceCode()));
+					accountUser.getExternalReferenceCode(),
+					accountUser.getEmailAddress()));
 	}
 
 	protected AccountUser
@@ -591,15 +591,15 @@ public abstract class BaseAccountUserResourceTestCase {
 			204,
 			accountUserResource.
 				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					accountUser.getEmailAddress(),
-					accountUser.getExternalReferenceCode()));
+					accountUser.getExternalReferenceCode(),
+					accountUser.getEmailAddress()));
 
 		assertHttpResponseStatusCode(
 			404,
 			accountUserResource.
 				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					accountUser.getEmailAddress(),
-					accountUser.getExternalReferenceCode()));
+					accountUser.getExternalReferenceCode(),
+					accountUser.getEmailAddress()));
 	}
 
 	protected AccountUser

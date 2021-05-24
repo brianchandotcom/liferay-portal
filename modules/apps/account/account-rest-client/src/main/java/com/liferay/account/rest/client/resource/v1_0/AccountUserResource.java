@@ -61,21 +61,21 @@ public interface AccountUserResource {
 		throws Exception;
 
 	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
-			String emailAddress, String externalReferenceCode)
+			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-				String emailAddress, String externalReferenceCode)
+				String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public void postAccountUserByExternalReferenceCodeByEmailAddress(
-			String emailAddress, String externalReferenceCode)
+			String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-				String emailAddress, String externalReferenceCode)
+				String externalReferenceCode, String emailAddress)
 		throws Exception;
 
 	public Page<AccountUser> getAccountUsersPage(
@@ -376,12 +376,12 @@ public interface AccountUserResource {
 		}
 
 		public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
-				String emailAddress, String externalReferenceCode)
+				String externalReferenceCode, String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					emailAddress, externalReferenceCode);
+					externalReferenceCode, emailAddress);
 
 			String content = httpResponse.getContent();
 
@@ -422,7 +422,7 @@ public interface AccountUserResource {
 
 		public HttpInvoker.HttpResponse
 				deleteAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					String emailAddress, String externalReferenceCode)
+					String externalReferenceCode, String emailAddress)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -449,10 +449,10 @@ public interface AccountUserResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/account-rest/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}");
+						"/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}");
 
-			httpInvoker.path("emailAddress", emailAddress);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("emailAddress", emailAddress);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -461,12 +461,12 @@ public interface AccountUserResource {
 		}
 
 		public void postAccountUserByExternalReferenceCodeByEmailAddress(
-				String emailAddress, String externalReferenceCode)
+				String externalReferenceCode, String emailAddress)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					emailAddress, externalReferenceCode);
+					externalReferenceCode, emailAddress);
 
 			String content = httpResponse.getContent();
 
@@ -507,13 +507,12 @@ public interface AccountUserResource {
 
 		public HttpInvoker.HttpResponse
 				postAccountUserByExternalReferenceCodeByEmailAddressHttpResponse(
-					String emailAddress, String externalReferenceCode)
+					String externalReferenceCode, String emailAddress)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				externalReferenceCode.toString(), "application/json");
+			httpInvoker.body(emailAddress.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -537,10 +536,10 @@ public interface AccountUserResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/account-rest/v1.0/accounts/by-externalReferenceCode/{externalReferenceCode}/account-users/by-emailAddress/{emailAddress}");
+						"/o/account-rest/v1.0/accounts/by-external-reference-code/{externalReferenceCode}/account-users/by-email-address/{emailAddress}");
 
-			httpInvoker.path("emailAddress", emailAddress);
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path("emailAddress", emailAddress);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);
@@ -810,7 +809,7 @@ public interface AccountUserResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/account-rest/v1.0/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}");
+						"/o/account-rest/v1.0/accounts/{accountId}/account-users/by-email-address/{emailAddress}");
 
 			httpInvoker.path("accountId", accountId);
 			httpInvoker.path("emailAddress", emailAddress);
@@ -897,7 +896,7 @@ public interface AccountUserResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/account-rest/v1.0/accounts/{accountId}/account-users/by-emailAddress/{emailAddress}");
+						"/o/account-rest/v1.0/accounts/{accountId}/account-users/by-email-address/{emailAddress}");
 
 			httpInvoker.path("accountId", accountId);
 			httpInvoker.path("emailAddress", emailAddress);

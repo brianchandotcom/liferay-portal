@@ -105,10 +105,10 @@ if (ddlDisplayContext.isAdminPortlet()) {
 					<aui:input label="data-definition" name="ddmStructureNameDisplay" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
 
 					<liferay-ui:icon
+						cssClass="btn btn-secondary open-record-set-modal"
 						label="<%= true %>"
 						linkCssClass="btn btn-secondary"
 						message="select"
-						url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "openDDMStructureSelector();" %>'
 					/>
 				</div>
 
@@ -165,43 +165,61 @@ if (ddlDisplayContext.isAdminPortlet()) {
 	</aui:form>
 </clay:container-fluid>
 
+<%
+Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+
+String itemSelectorURL = PortletURLBuilder.create(
+	PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+).setMVCPath(
+	"/select_structure.jsp"
+).setParameter(
+	"classNameId", PortalUtil.getClassNameId(DDMStructure.class)
+).setParameter(
+	"classPK", ddmStructureId
+).setParameter(
+	"groupId", groupId
+).setParameter(
+	"navigationStartsOn", DDMNavigationHelper.SELECT_STRUCTURE
+).setParameter(
+	"portletResourceNamespace", liferayPortletResponse.getNamespace()
+).setParameter(
+	"refererPortletName", portlet.getPortletName()
+).setParameter(
+	"refererWebDAVToken", WebDAVUtil.getStorageToken(portlet)
+).setParameter(
+	"showAncestorScopes", true
+).setParameter(
+	"showBackURL", false
+).setParameter(
+	"showHeader", false
+).setParameter(
+	"structureAvailableFields", liferayPortletResponse.getNamespace() + "getAvailableFields"
+).setWindowState(
+	LiferayWindowState.POP_UP
+).buildString();
+%>
+
 <aui:script>
-	var form = document.<portlet:namespace />fm;
-
-	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.openDDMPortlet(
-			{
-				basePortletURL:
-					'<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), PortletRequest.RENDER_PHASE) %>',
-				classPK: <%= ddmStructureId %>,
-				dialog: {
-					destroyOnHide: true,
-				},
-				eventName: '<portlet:namespace />selectDDMStructure',
-				groupId: <%= groupId %>,
-				mvcPath: '/select_structure.jsp',
-				navigationStartsOn: '<%= DDMNavigationHelper.SELECT_STRUCTURE %>',
-
-				<%
-				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-				%>
-
-				refererPortletName: '<%= portlet.getPortletName() %>',
-				refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
-				showAncestorScopes: true,
-				title:
-					'<%= UnicodeLanguageUtil.get(request, "data-definitions") %>',
-			},
-			(event) => {
-				Liferay.Util.setFormValues(form, {
-					ddmStructureId: event.ddmstructureid,
-					ddmStructureNameDisplay: Liferay.Util.unescape(event.name),
-				});
-			}
-		);
-	}
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"itemSelectorURL", itemSelectorURL
+			).put(
+				"portletNamespace", liferayPortletResponse.getNamespace()
+			).put(
+				"selectEventName", "<portlet:namespace />selectDDMStructure"
+			).build()
+		%>'
+		module="js/EditRecordSetStructureSelector"
+	/>
 
 	function <portlet:namespace />saveRecordSet() {
+		var form = document.<portlet:namespace />fm;
+
+		if (!form) {
+			return;
+		}
+
 		submitForm(form);
 	}
 </aui:script>

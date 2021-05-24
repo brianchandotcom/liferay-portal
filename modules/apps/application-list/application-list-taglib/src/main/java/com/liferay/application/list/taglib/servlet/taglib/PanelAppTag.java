@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.io.IOException;
 
@@ -53,7 +53,7 @@ public class PanelAppTag extends BasePanelTag {
 			try {
 				boolean include = _panelApp.include(
 					request,
-					PipingServletResponse.createPipingServletResponse(
+					PipingServletResponseFactory.createPipingServletResponse(
 						pageContext));
 
 				if (include) {

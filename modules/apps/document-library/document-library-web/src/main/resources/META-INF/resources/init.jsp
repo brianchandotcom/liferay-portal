@@ -211,7 +211,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.documentlibrary.DLGroupServiceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.constants.DLConstants" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %><%@
 page import="com.liferay.trash.model.TrashEntry" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %><%@

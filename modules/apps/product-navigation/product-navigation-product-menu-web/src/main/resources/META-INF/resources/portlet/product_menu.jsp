@@ -35,7 +35,7 @@
 					<div class="panel panel-secondary">
 						<div class="panel-header panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Heading" role="tab">
 							<div class="panel-title">
-								<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponse.createPipingServletResponse(pageContext)) %>">
+								<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>">
 
 									<%
 									Class<?> childPanelCategoryClass = childPanelCategory.getClass();
@@ -75,7 +75,7 @@
 				<div class="panel panel-secondary">
 					<div class="panel-header panel-heading" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>Heading" role="tab">
 						<div class="panel-title">
-							<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponse.createPipingServletResponse(pageContext)) %>">
+							<c:if test="<%= !childPanelCategory.includeHeader(request, PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>">
 
 								<%
 								Class<?> childPanelCategoryClass = childPanelCategory.getClass();

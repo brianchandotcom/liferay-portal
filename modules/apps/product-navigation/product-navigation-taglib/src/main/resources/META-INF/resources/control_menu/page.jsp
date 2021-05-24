@@ -60,7 +60,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 
 								<%
 								for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : entry.getValue()) {
-									if (productNavigationControlMenuEntry.includeIcon(request, PipingServletResponse.createPipingServletResponse(pageContext))) {
+									if (productNavigationControlMenuEntry.includeIcon(request, PipingServletResponseFactory.createPipingServletResponse(pageContext))) {
 										continue;
 									}
 								%>
@@ -100,7 +100,7 @@ for (ProductNavigationControlMenuCategory productNavigationControlMenuCategory :
 					List<ProductNavigationControlMenuEntry> productNavigationControlMenuEntries = productNavigationControlMenuEntriesMap.get(productNavigationControlMenuCategory);
 
 					for (ProductNavigationControlMenuEntry productNavigationControlMenuEntry : productNavigationControlMenuEntries) {
-						productNavigationControlMenuEntry.includeBody(request, PipingServletResponse.createPipingServletResponse(pageContext));
+						productNavigationControlMenuEntry.includeBody(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 					}
 				}
 				%>

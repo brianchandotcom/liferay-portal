@@ -79,7 +79,7 @@ page import="com.liferay.portal.search.web.internal.facet.AssetEntriesSearchFace
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultFieldDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.search.suggest.KeywordsSuggestionHolder" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Calendar" %><%@

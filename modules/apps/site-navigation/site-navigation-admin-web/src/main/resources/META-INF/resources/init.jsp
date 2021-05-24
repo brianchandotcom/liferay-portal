@@ -59,7 +59,7 @@ page import="com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServ
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemType" %><%@
 page import="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %><%@
 page import="com.liferay.taglib.util.CustomAttributesUtil" %>
 
 <%@ page import="java.util.Date" %><%@

@@ -23,6 +23,6 @@ CPContentListEntryRenderer cpContentListEntryRenderer = (CPContentListEntryRende
 request.setAttribute(CPWebKeys.CP_CATALOG_ENTRY, cpCatalogEntry);
 
 if (cpContentListEntryRenderer != null) {
-	cpContentListEntryRenderer.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
+	cpContentListEntryRenderer.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 }
 %>

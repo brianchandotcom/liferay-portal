@@ -57,7 +57,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 							<c:when test="<%= convertProcess.hasCustomView() %>">
 
 								<%
-								convertProcess.includeCustomView(request, PipingServletResponse.createPipingServletResponse(pageContext));
+								convertProcess.includeCustomView(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 								%>
 
 							</c:when>

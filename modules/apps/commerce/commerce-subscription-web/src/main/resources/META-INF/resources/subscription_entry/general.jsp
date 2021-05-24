@@ -234,7 +234,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 
 					<%
 					if (cpSubscriptionTypeJSPContributor != null) {
-						cpSubscriptionTypeJSPContributor.render(commerceSubscriptionEntry, request, PipingServletResponse.createPipingServletResponse(pageContext));
+						cpSubscriptionTypeJSPContributor.render(commerceSubscriptionEntry, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 					}
 					%>
 
@@ -359,7 +359,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 
 					<%
 					if (deliveryCPSubscriptionTypeJSPContributor != null) {
-						deliveryCPSubscriptionTypeJSPContributor.render(commerceSubscriptionEntry, request, PipingServletResponse.createPipingServletResponse(pageContext), false);
+						deliveryCPSubscriptionTypeJSPContributor.render(commerceSubscriptionEntry, request, PipingServletResponseFactory.createPipingServletResponse(pageContext), false);
 					}
 					%>
 

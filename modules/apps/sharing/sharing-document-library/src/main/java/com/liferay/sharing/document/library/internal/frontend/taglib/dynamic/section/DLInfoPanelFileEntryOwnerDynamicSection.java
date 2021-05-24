@@ -15,12 +15,12 @@
 package com.liferay.sharing.document.library.internal.frontend.taglib.dynamic.section;
 
 import com.liferay.frontend.taglib.dynamic.section.DynamicSection;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.sharing.configuration.SharingConfiguration;
 import com.liferay.sharing.configuration.SharingConfigurationFactory;
-import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.ByteArrayOutputStream;
 

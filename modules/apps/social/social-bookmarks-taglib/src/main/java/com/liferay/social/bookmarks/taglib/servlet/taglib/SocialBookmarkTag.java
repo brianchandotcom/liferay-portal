@@ -17,7 +17,7 @@ package com.liferay.social.bookmarks.taglib.servlet.taglib;
 import com.liferay.social.bookmarks.SocialBookmark;
 import com.liferay.social.bookmarks.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.social.bookmarks.taglib.internal.util.SocialBookmarksRegistryUtil;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 import com.liferay.taglib.util.AttributesTagSupport;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class SocialBookmarkTag extends AttributesTagSupport {
 
 				socialBookmark.render(
 					_target, _title, _url, request,
-					PipingServletResponse.createPipingServletResponse(
+					PipingServletResponseFactory.createPipingServletResponse(
 						pageContext));
 			}
 

@@ -18,10 +18,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 import com.liferay.taglib.util.ThemeUtil;
 
@@ -97,7 +98,8 @@ public class WrapPortletTag
 
 			ThemeUtil.include(
 				getServletContext(), httpServletRequest,
-				PipingServletResponse.createPipingServletResponse(pageContext),
+				PipingServletResponseFactory.createPipingServletResponse(
+					pageContext),
 				getPage(), theme);
 
 			return EVAL_PAGE;

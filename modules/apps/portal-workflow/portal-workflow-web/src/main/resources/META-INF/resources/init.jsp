@@ -29,7 +29,7 @@ page import="com.liferay.portal.workflow.constants.WorkflowPortletKeys" %><%@
 page import="com.liferay.portal.workflow.constants.WorkflowWebKeys" %><%@
 page import="com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowNavigationDisplayContext" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.List" %>
 

@@ -27,6 +27,6 @@ request.setAttribute(CPContentWebKeys.CP_CONTENT_LIST_ENTRY_RENDERER_KEYS, entry
 request.setAttribute(CPWebKeys.CP_DATA_SOURCE_RESULT, cpDataSourceResult);
 
 if (cpContentListRenderer != null) {
-	cpContentListRenderer.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
+	cpContentListRenderer.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 }
 %>

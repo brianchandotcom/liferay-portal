@@ -16,7 +16,7 @@ package com.liferay.taglib.util;
 
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.io.IOException;
 
@@ -42,7 +42,8 @@ public class PortalIncludeUtil {
 
 		htmlRenderer.renderHTML(
 			httpServletRequest,
-			PipingServletResponse.createPipingServletResponse(pageContext));
+			PipingServletResponseFactory.createPipingServletResponse(
+				pageContext));
 	}
 
 	public static void include(PageContext pageContext, String path)
@@ -60,7 +61,8 @@ public class PortalIncludeUtil {
 
 		requestDispatcher.include(
 			httpServletRequest,
-			PipingServletResponse.createPipingServletResponse(pageContext));
+			PipingServletResponseFactory.createPipingServletResponse(
+				pageContext));
 	}
 
 	public interface HTMLRenderer {

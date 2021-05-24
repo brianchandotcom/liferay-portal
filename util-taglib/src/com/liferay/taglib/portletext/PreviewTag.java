@@ -15,7 +15,7 @@
 package com.liferay.taglib.portletext;
 
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.RequestDispatcher;
@@ -69,7 +69,8 @@ public class PreviewTag extends IncludeTag {
 			doTag(
 				getPage(), _portletName, _queryString, _showBorders, _width,
 				getServletContext(), getRequest(),
-				PipingServletResponse.createPipingServletResponse(pageContext));
+				PipingServletResponseFactory.createPipingServletResponse(
+					pageContext));
 
 			return EVAL_PAGE;
 		}

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.Template;
@@ -43,7 +44,6 @@ import com.liferay.portal.layoutconfiguration.util.xml.PortletLogic;
 import com.liferay.portal.layoutconfiguration.util.xml.RenderURLLogic;
 import com.liferay.portlet.internal.PortletBagUtil;
 import com.liferay.portlet.internal.PortletTypeUtil;
-import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.HashMap;
 import java.util.List;

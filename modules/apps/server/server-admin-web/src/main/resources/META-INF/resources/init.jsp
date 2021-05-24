@@ -75,7 +75,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.ShutdownUtil" %><%@
 page import="com.liferay.server.admin.web.internal.constants.ServerAdminNavigationEntryConstants" %><%@
 page import="com.liferay.server.admin.web.internal.display.context.ServerDisplayContext" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.text.NumberFormat" %>
 

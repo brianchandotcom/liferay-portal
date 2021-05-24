@@ -230,7 +230,7 @@ renderResponse.setTitle(categoryDisplayName);
 					<%
 					ConfigurationFormRenderer configurationFormRenderer = (ConfigurationFormRenderer)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_FORM_RENDERER);
 
-					configurationFormRenderer.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
+					configurationFormRenderer.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 					%>
 
 					<liferay-util:dynamic-include key='<%= "com.liferay.configuration.admin.web#/edit_configuration.jsp#" + configurationModel.getFactoryPid() + "#post" %>' />

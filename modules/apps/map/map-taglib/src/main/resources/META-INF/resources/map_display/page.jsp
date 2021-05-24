@@ -21,7 +21,7 @@
 		<div class="lfr-map" id="<%= name %>Map">
 
 			<%
-			mapProvider.include(request, PipingServletResponse.createPipingServletResponse(pageContext));
+			mapProvider.include(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 			%>
 
 		</div>

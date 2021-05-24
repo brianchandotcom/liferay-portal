@@ -21,6 +21,6 @@ page import="com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory
 page import="com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayPortletResponse" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.Objects" %>

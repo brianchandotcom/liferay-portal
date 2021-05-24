@@ -71,7 +71,7 @@ renderResponse.setTitle(categoryDisplayName);
 		>
 
 			<%
-			configurationScreen.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
+			configurationScreen.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 			%>
 
 		</clay:col>

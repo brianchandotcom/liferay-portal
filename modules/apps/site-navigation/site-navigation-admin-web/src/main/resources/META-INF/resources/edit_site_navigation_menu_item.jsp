@@ -35,7 +35,7 @@ SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTy
 	<aui:input name="parentSiteNavigationMenuItemId" type="hidden" value="<%= siteNavigationMenuItem.getParentSiteNavigationMenuItemId() %>" />
 
 	<%
-	siteNavigationMenuItemType.renderEditPage(request, PipingServletResponse.createPipingServletResponse(pageContext), siteNavigationMenuItem);
+	siteNavigationMenuItemType.renderEditPage(request, PipingServletResponseFactory.createPipingServletResponse(pageContext), siteNavigationMenuItem);
 	%>
 
 	<c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), SiteNavigationMenuItem.class.getName(), siteNavigationMenuItemId, null) %>">

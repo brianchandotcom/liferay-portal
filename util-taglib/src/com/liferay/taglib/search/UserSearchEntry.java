@@ -16,7 +16,7 @@ package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.portal.kernel.servlet.PipingServletResponse;
 
 import java.io.Writer;
 

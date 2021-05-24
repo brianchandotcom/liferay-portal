@@ -29,5 +29,5 @@
 </liferay-util:include>
 
 <%
-selectedWorkflowPortletTab.include(request, PipingServletResponse.createPipingServletResponse(pageContext), null);
+selectedWorkflowPortletTab.include(request, PipingServletResponseFactory.createPipingServletResponse(pageContext), null);
 %>

@@ -18,7 +18,7 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.io.IOException;
 
@@ -38,7 +38,8 @@ public class PanelCategoryContentTag extends BasePanelTag {
 		try {
 			boolean include = _panelCategory.include(
 				request,
-				PipingServletResponse.createPipingServletResponse(pageContext));
+				PipingServletResponseFactory.createPipingServletResponse(
+					pageContext));
 
 			if (include) {
 				doClearTag();

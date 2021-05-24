@@ -117,7 +117,7 @@ PortletURLBuilder.create(
 		<div class="<%= (screenNavigationEntries.size() > 1) ? containerCssClass : fullContainerCssClass %>">
 
 			<%
-			selectedScreenNavigationEntry.render(request, PipingServletResponse.createPipingServletResponse(pageContext));
+			selectedScreenNavigationEntry.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 			%>
 
 		</div>

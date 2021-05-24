@@ -109,7 +109,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1195,7 +1195,8 @@ public class DDMFormAdminDisplayContext {
 		ddmFormRenderingContext.setHttpServletRequest(
 			_portal.getHttpServletRequest(renderRequest));
 		ddmFormRenderingContext.setHttpServletResponse(
-			PipingServletResponse.createPipingServletResponse(pageContext));
+			PipingServletResponseFactory.createPipingServletResponse(
+				pageContext));
 		ddmFormRenderingContext.setContainerId("settingsDDMForm");
 		ddmFormRenderingContext.setLocale(themeDisplay.getLocale());
 		ddmFormRenderingContext.setPortletNamespace(

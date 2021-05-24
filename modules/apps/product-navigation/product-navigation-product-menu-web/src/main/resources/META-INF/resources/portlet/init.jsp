@@ -43,7 +43,7 @@ page import="com.liferay.product.navigation.product.menu.display.context.Product
 page import="com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuWebKeys" %><%@
 page import="com.liferay.product.navigation.product.menu.web.internal.display.context.LayoutsTreeDisplayContext" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Objects" %>

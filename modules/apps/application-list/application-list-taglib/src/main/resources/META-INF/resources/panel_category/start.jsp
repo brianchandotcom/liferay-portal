@@ -18,7 +18,7 @@
 
 <c:if test="<%= !panelApps.isEmpty() && showHeader %>">
 	<a aria-expanded="<%= active %>" class="<%= headerActive ? "active" : "" %> collapse-icon collapse-icon-middle nav-link <%= active ? StringPool.BLANK : "collapsed" %> list-group-heading panel-header" data-qa-id="appGroup" data-toggle="liferay-collapse" href="#<%= id %>">
-		<c:if test="<%= !panelCategory.includeHeader(request, PipingServletResponse.createPipingServletResponse(pageContext)) %>">
+		<c:if test="<%= !panelCategory.includeHeader(request, PipingServletResponseFactory.createPipingServletResponse(pageContext)) %>">
 			<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
 
 			<c:if test="<%= notificationsCount > 0 %>">

@@ -72,7 +72,7 @@ String type = BeanParamUtil.getString(commerceDiscountRule, request, "type");
 			<c:if test="<%= commerceDiscountRuleTypeJSPContributor != null %>">
 
 				<%
-				commerceDiscountRuleTypeJSPContributor.render(commerceDiscountRule.getCommerceDiscountId(), commerceDiscountRule.getCommerceDiscountRuleId(), request, PipingServletResponse.createPipingServletResponse(pageContext));
+				commerceDiscountRuleTypeJSPContributor.render(commerceDiscountRule.getCommerceDiscountId(), commerceDiscountRule.getCommerceDiscountRuleId(), request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 				%>
 
 			</c:if>

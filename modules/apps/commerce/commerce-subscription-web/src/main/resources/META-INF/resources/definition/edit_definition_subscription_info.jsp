@@ -105,7 +105,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 
 		<%
 		if (cpSubscriptionTypeJSPContributor != null) {
-			cpSubscriptionTypeJSPContributor.render(cpDefinition, request, PipingServletResponse.createPipingServletResponse(pageContext));
+			cpSubscriptionTypeJSPContributor.render(cpDefinition, request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 		}
 		%>
 
@@ -167,7 +167,7 @@ if (deliveryMaxSubscriptionCycles > 0) {
 
 		<%
 		if (deliveryCPSubscriptionTypeJSPContributor != null) {
-			deliveryCPSubscriptionTypeJSPContributor.render(cpDefinition, request, PipingServletResponse.createPipingServletResponse(pageContext), false);
+			deliveryCPSubscriptionTypeJSPContributor.render(cpDefinition, request, PipingServletResponseFactory.createPipingServletResponse(pageContext), false);
 		}
 		%>
 

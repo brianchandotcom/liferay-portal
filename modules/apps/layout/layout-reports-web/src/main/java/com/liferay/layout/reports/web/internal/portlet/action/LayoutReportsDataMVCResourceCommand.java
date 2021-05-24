@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -312,6 +313,13 @@ public class LayoutReportsDataMVCResourceCommand
 
 					return HashMapBuilder.<String, Object>put(
 						"languageId", LocaleUtil.toW3cLanguageId(locale)
+					).put(
+						"languageLabel",
+						StringBundler.concat(
+							locale.getDisplayLanguage(themeDisplay.getLocale()),
+							StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+							locale.getDisplayCountry(themeDisplay.getLocale()),
+							StringPool.CLOSE_PARENTHESIS)
 					).put(
 						"layoutReportsIssuesURL",
 						_getResourceURL(

@@ -80,35 +80,37 @@ export default function LanguagesDropdown({
 			}
 		>
 			<ClayDropDown.ItemList>
-				{Object.values(pageURLs).map(({languageId}, index) => (
-					<ClayDropDown.Item
-						active={selectedLanguageId === languageId}
-						key={index}
-						onClick={() => onLanguageSelect(languageId)}
-						symbolLeft={languageId.toLowerCase()}
-					>
-						<ClayLayout.ContentRow>
-							<ClayLayout.ContentCol expand>
-								<ClayTooltipProvider>
-									<span
-										className="text-truncate-inline"
-										data-tooltip-align="top"
-										title={languageId}
-									>
-										<span className="text-truncate">
-											{languageId}
+				{Object.values(pageURLs).map(
+					({languageId, languageLabel}, index) => (
+						<ClayDropDown.Item
+							active={selectedLanguageId === languageId}
+							key={index}
+							onClick={() => onLanguageSelect(languageId)}
+							symbolLeft={languageId.toLowerCase()}
+						>
+							<ClayLayout.ContentRow>
+								<ClayLayout.ContentCol expand>
+									<ClayTooltipProvider>
+										<span
+											className="text-truncate-inline"
+											data-tooltip-align="top"
+											title={languageLabel}
+										>
+											<span className="text-truncate">
+												{languageLabel}
+											</span>
 										</span>
-									</span>
-								</ClayTooltipProvider>
-							</ClayLayout.ContentCol>
-							{defaultLanguageId === languageId && (
-								<ClayLabel displayType="primary">
-									{Liferay.Language.get('default')}
-								</ClayLabel>
-							)}
-						</ClayLayout.ContentRow>
-					</ClayDropDown.Item>
-				))}
+									</ClayTooltipProvider>
+								</ClayLayout.ContentCol>
+								{defaultLanguageId === languageId && (
+									<ClayLabel displayType="primary">
+										{Liferay.Language.get('default')}
+									</ClayLabel>
+								)}
+							</ClayLayout.ContentRow>
+						</ClayDropDown.Item>
+					)
+				)}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);

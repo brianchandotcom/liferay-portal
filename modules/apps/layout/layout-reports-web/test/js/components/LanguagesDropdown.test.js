@@ -30,11 +30,13 @@ describe('LanguageDropdown', () => {
 			pageURLs: [
 				{
 					languageId: 'en-US',
+					languageLabel: 'English',
 					title: 'Home',
 					url: 'http://foo.com:8080/en/web/guest/home',
 				},
 				{
 					languageId: 'es-ES',
+					languageLabel: 'Spanish',
 					title: 'Inicio',
 					url: 'http://foo.com:8080/es/en/web/guest/inicio',
 				},
@@ -51,10 +53,10 @@ describe('LanguageDropdown', () => {
 			/>
 		);
 
-		const defaultLanguageId = getAllByText('en-US');
+		const defaultLanguageId = getAllByText('English');
 		expect(defaultLanguageId.length === 2);
 		expect(defaultLanguageId[0]).toBeInTheDocument();
 
-		expect(getByText('es-ES')).toBeInTheDocument();
+		expect(getByText('Spanish')).toBeInTheDocument();
 	});
 });

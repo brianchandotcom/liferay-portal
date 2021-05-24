@@ -355,6 +355,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
+		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setRequest(
 			mockLiferayPortletRenderRequest.getHttpServletRequest());
 		themeDisplay.setScopeGroupId(layout.getGroupId());

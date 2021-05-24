@@ -159,7 +159,7 @@ export default function ProcessMetricsContainer({history, processId, query}) {
 	}
 
 	return (
-		<div className="workflow-process-dashboard">
+		<div className="workflow-process-tabs">
 			<HeaderKebab
 				kebabItems={[
 					{

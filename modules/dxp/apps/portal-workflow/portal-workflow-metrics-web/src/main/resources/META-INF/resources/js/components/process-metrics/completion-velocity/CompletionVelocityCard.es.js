@@ -93,7 +93,7 @@ function CompletionVelocityCard({routeParams}) {
 function Header({disableFilters, prefixKey, timeRange}) {
 	return (
 		<PanelHeaderWithOptions
-			className="dashboard-panel-header pb-0"
+			className="pb-0 tabs-panel-header"
 			description={Liferay.Language.get(
 				'completion-velocity-description'
 			)}

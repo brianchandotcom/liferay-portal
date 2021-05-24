@@ -111,9 +111,7 @@ const Body = ({completed = false, data, processId, timeRange}) => {
 };
 
 const Header = ({children, data, description, title}) => (
-	<ClayPanel.Header
-		className={['dashboard-panel-header', children && 'pb-0']}
-	>
+	<ClayPanel.Header className={['tabs-panel-header', children && 'pb-0']}>
 		<ClayLayout.ContentRow>
 			<ClayLayout.ContentCol className="flex-row" expand>
 				<span className="mr-2">{title}</span>

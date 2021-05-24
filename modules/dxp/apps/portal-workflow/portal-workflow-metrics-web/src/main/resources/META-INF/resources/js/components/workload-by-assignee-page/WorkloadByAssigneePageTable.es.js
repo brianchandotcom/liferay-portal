@@ -91,7 +91,7 @@ function Item({
 
 function Table({items, processId, taskNames}) {
 	return (
-		<div className="table-responsive workflow-process-dashboard">
+		<div className="table-responsive workflow-process-tabs">
 			<table className="table table-heading-nowrap table-hover table-list">
 				<thead>
 					<tr>

@@ -24,7 +24,7 @@ import {Body, Footer} from './PerformanceByStepCardBody.es';
 function Header({disableFilters, prefixKey, totalCount}) {
 	return (
 		<PanelHeaderWithOptions
-			className="dashboard-panel-header"
+			className="tabs-panel-header"
 			description={Liferay.Language.get(
 				'performance-by-step-description'
 			)}
@@ -82,7 +82,7 @@ function PerformanceByStepCard({routeParams}) {
 	}, [fetchData, filtersError, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
-		<ClayPanel className="dashboard-card mt-4">
+		<ClayPanel className="mt-4 tabs-card">
 			<PromisesResolver promises={promises}>
 				<PerformanceByStepCard.Header
 					disableFilters={filtersError}

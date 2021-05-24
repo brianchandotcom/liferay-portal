@@ -31,7 +31,7 @@ function Body({filtered, items, page, pageSize, totalCount}) {
 	};
 
 	return (
-		<ClayLayout.ContainerFluid className="mt-4 workflow-process-dashboard">
+		<ClayLayout.ContainerFluid className="mt-4 workflow-process-tabs">
 			<ContentView {...statesProps}>
 				{totalCount > 0 && (
 					<>

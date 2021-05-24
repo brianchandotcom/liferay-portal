@@ -24,7 +24,7 @@ function Header({processId}) {
 	return (
 		<>
 			<PanelHeaderWithOptions
-				className="dashboard-panel-header"
+				className="tabs-panel-header"
 				description={Liferay.Language.get(
 					'workload-by-assignee-description'
 				)}

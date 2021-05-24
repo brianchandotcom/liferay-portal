@@ -25,7 +25,7 @@ import {Body, Footer} from './PerformanceByAssigneeCardBody.es';
 function Header({disableFilters, prefixKey, processId}) {
 	return (
 		<PanelHeaderWithOptions
-			className="dashboard-panel-header"
+			className="tabs-panel-header"
 			description={Liferay.Language.get(
 				'performance-by-assignee-description'
 			)}
@@ -106,7 +106,7 @@ function PerformanceByAssigneeCard({routeParams}) {
 	}, [filtersError, postData, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
-		<ClayPanel className="dashboard-card mt-4">
+		<ClayPanel className="mt-4 tabs-card">
 			<PromisesResolver promises={promises}>
 				<PerformanceByAssigneeCard.Header
 					disableFilters={filtersError}

@@ -1,11 +1,11 @@
-$c: '.workflow-process-dashboard';
+$c: '.workflow-process-tabs';
 
 #{$c} {
 	.alert-dismissible {
 		margin-top: 1.5rem;
 	}
 
-	.dashboard-panel-header {
+	.tabs-panel-header {
 		color: #272833;
 		font-size: 18px;
 		font-weight: 700;
@@ -20,7 +20,6 @@ $c: '.workflow-process-dashboard';
 
 			.dropdown-toggle {
 				margin: 0 !important;
-				padding: 0.5rem !important;
 			}
 		}
 
@@ -32,7 +31,7 @@ $c: '.workflow-process-dashboard';
 			}
 		}
 
-		&.dashboard-card {
+		&.tabs-card {
 			height: 504px;
 		}
 	}
@@ -41,7 +40,7 @@ $c: '.workflow-process-dashboard';
 		flex-flow: wrap;
 	}
 
-	.process-dashboard-summary-card {
+	.process-tabs-summary-card {
 		border: 1px solid #e7e7ed;
 		border-radius: 0.25rem;
 		box-sizing: border-box;
@@ -96,7 +95,7 @@ $c: '.workflow-process-dashboard';
 	}
 
 	@media only screen and (min-width: 341px) and (max-width: 530px) {
-		.process-dashboard-summary-card {
+		.process-tabs-summary-card {
 			margin-right: 1.5rem;
 			width: 43%;
 		}
@@ -106,7 +105,7 @@ $c: '.workflow-process-dashboard';
 		.panel .d-flex {
 			flex-flow: nowrap;
 		}
-		.process-dashboard-summary-card {
+		.process-tabs-summary-card {
 			margin-right: 1.5rem;
 			width: 25%;
 		}

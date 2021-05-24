@@ -47,6 +47,7 @@ import com.liferay.document.library.web.internal.exception.DLExpirationDateExcep
 import com.liferay.document.library.web.internal.exception.DLReviewDateException;
 import com.liferay.document.library.web.internal.exception.FileNameExtensionException;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.document.library.web.internal.util.FFExpirationDateReviewDateConfigurationUtil;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -868,6 +869,12 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			UploadPortletRequest uploadPortletRequest, TimeZone timeZone)
 		throws PortalException {
 
+		if (!FFExpirationDateReviewDateConfigurationUtil.
+				expirationDateEnabled()) {
+
+			return null;
+		}
+
 		boolean neverExpire = ParamUtil.getBoolean(
 			uploadPortletRequest, "neverExpire");
 
@@ -901,6 +908,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private Date _getReviewDate(
 			UploadPortletRequest uploadPortletRequest, TimeZone timeZone)
 		throws PortalException {
+
+		if (!FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled()) {
+			return null;
+		}
 
 		boolean neverReview = ParamUtil.getBoolean(
 			uploadPortletRequest, "neverReview");

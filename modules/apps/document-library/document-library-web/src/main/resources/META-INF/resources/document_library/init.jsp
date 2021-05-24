@@ -39,6 +39,7 @@ page import="com.liferay.document.library.web.internal.search.DDMStructureRowChe
 page import="com.liferay.document.library.web.internal.util.DDMStructureUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLAssetHelperUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DataRecordValuesUtil" %><%@
+page import="com.liferay.document.library.web.internal.util.FFExpirationDateReviewDateConfigurationUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.RepositoryClassDefinitionUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.RequiredStructureException" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMFormValuesToMapConverter" %><%@

@@ -73,6 +73,16 @@
     <td>//dt[contains(text(),'Order ID')]/..//dd</td>
     <td></td>
 </tr>
+<tr>
+    <td>ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON</td>
+    <td>//h5[contains(text(), "${key_titleName}")]//following-sibling::a[contains(text(), "${key_buttonName}")]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ORDER_GENERAL_DETAILS_DESCRIPTION</td>
+    <td>//h5[contains(text(), "${key_titleName}")]//..//following-sibling::div[@class="description"]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

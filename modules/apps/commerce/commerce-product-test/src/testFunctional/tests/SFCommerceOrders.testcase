@@ -14,16 +14,16 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			Navigator.openURL();
+			if ("${testPortalInstance}" == "true") {
+				PortalInstances.tearDownCP();
+			}
+			else {
+				Navigator.openURL();
 
-			CommerceConfiguration.commerceAdminTearDown();
+				CommerceConfiguration.commerceAdminTearDown();
 
-			CommerceConfiguration.commerceInitializersTearDown();
-		}
+				CommerceConfiguration.commerceInitializersTearDown();
+			}
 	}
 
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
@@ -103,13 +103,130 @@ definition {
 	}
 
 	@description = "COMMERCE-6379. As a buyer, I want to be able to edit the order in Pending Order details page and I want to view the changes I made applied to order"
-	@ignore = "true"
 	@priority = "3"
 	test EditOrderFromPendingOrderDetailsPage {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SFCommerceOrders#EditOrderFromPendingOrderDetailsPage";
 
-		// TODO COMMERCE-6379 EditOrderFromPendingOrderDetailsPage pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Test",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Accounts");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Test");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Addresses");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputName(name = "Test");
+
+		SelectField.select(
+				selectFieldLabel = "Type",
+				selectFieldValue = "Billing and Shipping");
+
+		Type(
+			locator1 = "TextInput#STREET_1",
+			value1 = "Test Street");
+		
+		Select(
+			locator1 = "Select#COUNTRY",
+			value1 = "Italy");
+		
+		Type(
+			locator1 = "TextInput#CITY",
+			value1 = "Roma");
+		
+		Select(
+				locator1 = "Select#REGION",
+				value1 = "Roma");
+		
+		Type(
+			locator1 = "TextInput#POSTAL_CODE",
+			value1 = "00100");
+		
+		Type(
+				locator1 = "TextInput#NUMBER",
+				value1 = "1234");
+		
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+		
+		ApplicationsMenu.gotoPortlet(
+				category = "Order Management",
+				panel = "Commerce",
+				portlet = "Orders");
+		
+		Click(
+			key_orderStatus = "Open",
+			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+		CommerceEntry.clickNoError(menuItem = "View");
+
+		Click(
+			key_titleName = "Billing Address",
+			key_buttonName = "Add",
+			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON"
+		);
+
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+
+		Click.clickNoWaitForVisible(
+			key_radioOption = "",
+			locator1="CommerceEntry#RADIO_BUTTON"
+		);
+
+		Button.click(button = "Submit");
+
+		SelectFrameTop();
+
+		Click(
+			key_titleName = "Shipping Address",
+			key_buttonName = "Add",
+			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON"
+		);
+
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
+
+		Click.clickNoWaitForVisible(
+			key_radioOption = "",
+			locator1="CommerceEntry#RADIO_BUTTON"
+		);
+
+		Button.click(button = "Submit");
+		
+		SelectFrameTop();
+
+		Refresh();
+
+		AssertTextEquals.assertPartialText(
+			value1 = "Test Street, Roma",
+			key_titleName = "Billing Address",
+			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION"
+		);
+
+		AssertTextEquals.assertPartialText(
+			value1 = "Test Street, Roma",
+			key_titleName = "Shipping Address",
+			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION"
+		);
 	}
 
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"

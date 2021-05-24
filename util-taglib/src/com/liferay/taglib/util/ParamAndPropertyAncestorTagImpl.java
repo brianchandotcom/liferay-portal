@@ -47,7 +47,7 @@ public class ParamAndPropertyAncestorTagImpl
 		if (_dynamicServletRequest == null) {
 			_dynamicServletRequest = new DynamicServletRequest(getRequest());
 
-			request = _dynamicServletRequest;
+			_httpServletRequest = _dynamicServletRequest;
 		}
 
 		Map<String, String[]> params =
@@ -116,7 +116,8 @@ public class ParamAndPropertyAncestorTagImpl
 
 			params.clear();
 
-			request = (HttpServletRequest)_dynamicServletRequest.getRequest();
+			_httpServletRequest =
+				(HttpServletRequest)_dynamicServletRequest.getRequest();
 
 			_dynamicServletRequest = null;
 		}
@@ -154,6 +155,10 @@ public class ParamAndPropertyAncestorTagImpl
 			return _dynamicServletRequest;
 		}
 
+		if (_httpServletRequest != null) {
+			return _httpServletRequest;
+		}
+
 		return super.getRequest();
 	}
 
@@ -165,7 +170,7 @@ public class ParamAndPropertyAncestorTagImpl
 	public void release() {
 		super.release();
 
-		request = null;
+		_httpServletRequest = null;
 		servletContext = null;
 
 		_allowEmptyParam = false;
@@ -191,7 +196,7 @@ public class ParamAndPropertyAncestorTagImpl
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)pageContext.getRequest();
 
-		request = httpServletRequest;
+		_httpServletRequest = httpServletRequest;
 
 		servletContext = (ServletContext)httpServletRequest.getAttribute(
 			WebKeys.CTX);
@@ -216,12 +221,6 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #getRequest()}
-	 */
-	@Deprecated
-	protected volatile HttpServletRequest request;
-
-	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #getServletContext()}
 	 */
@@ -231,11 +230,12 @@ public class ParamAndPropertyAncestorTagImpl
 	private static final AtomicReferenceFieldUpdater
 		_atomicReferenceFieldUpdater = AtomicReferenceFieldUpdater.newUpdater(
 			ParamAndPropertyAncestorTagImpl.class, HttpServletRequest.class,
-			"request");
+			"_httpServletRequest");
 
 	private boolean _allowEmptyParam;
 	private boolean _copyCurrentRenderParameters = true;
 	private DynamicServletRequest _dynamicServletRequest;
+	private volatile HttpServletRequest _httpServletRequest;
 	private Map<String, String[]> _properties;
 	private Set<String> _removedParameterNames;
 

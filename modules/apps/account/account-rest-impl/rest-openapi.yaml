@@ -507,12 +507,12 @@ paths:
             operationId: deleteAccountUserByExternalReferenceCodeByEmailAddress
             parameters:
                 - in: path
-                  name: emailAddress
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
                 - in: path
-                  name: externalReferenceCode
+                  name: emailAddress
                   required: true
                   schema:
                       type: string
@@ -531,12 +531,12 @@ paths:
             operationId: postAccountUserByExternalReferenceCodeByEmailAddress
             parameters:
                 - in: path
-                  name: emailAddress
+                  name: externalReferenceCode
                   required: true
                   schema:
                       type: string
                 - in: path
-                  name: externalReferenceCode
+                  name: emailAddress
                   required: true
                   schema:
                       type: string

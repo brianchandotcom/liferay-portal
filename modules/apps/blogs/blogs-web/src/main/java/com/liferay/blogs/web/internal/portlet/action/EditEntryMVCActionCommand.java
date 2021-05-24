@@ -184,6 +184,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 						entry.getCoverImageFileEntryId()
 					).put(
 						"entryId", entry.getEntryId()
+					).put(
+						"urlTitle", entry.getUrlTitle()
 					));
 
 				return;

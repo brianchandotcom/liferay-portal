@@ -443,6 +443,9 @@ export default class Blogs {
 								);
 							}
 
+							this._getElementById('urlTitle').value =
+								message.urlTitle;
+
 							if (saveStatus) {
 								const saveText = entry?.pending
 									? strings.savedAtMessage

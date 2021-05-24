@@ -47,6 +47,8 @@ public class UserSearchRegistrar {
 					modelIndexWriterContributor);
 				modelSearchDefinition.setModelSummaryContributor(
 					modelSummaryContributor);
+				modelSearchDefinition.setSearchResultPermissionFilterSuppressed(
+					true);
 			});
 	}
 

@@ -211,7 +211,7 @@ export default ({
 							<ClayInput.Group>
 								<ClayInput.GroupItem prepend shrink>
 									<ClayInput.GroupText>
-										<ClayIcon symbol="transform" />
+										{Liferay.Language.get('ratio')}:
 									</ClayInput.GroupText>
 								</ClayInput.GroupItem>
 

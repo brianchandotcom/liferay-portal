@@ -117,23 +117,7 @@ public class DDMFormFieldValue implements Serializable {
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
 			new HashMap<>();
 
-		for (DDMFormFieldValue nestedDDMFormFieldValue :
-				_nestedDDMFormFieldValues) {
-
-			List<DDMFormFieldValue> nestedDDMFormFieldValues =
-				nestedDDMFormFieldValuesMap.get(
-					nestedDDMFormFieldValue.getName());
-
-			if (nestedDDMFormFieldValues == null) {
-				nestedDDMFormFieldValues = new ArrayList<>();
-
-				nestedDDMFormFieldValuesMap.put(
-					nestedDDMFormFieldValue.getName(),
-					nestedDDMFormFieldValues);
-			}
-
-			nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
-		}
+		populateNestedDDMFormFieldValuesMap(nestedDDMFormFieldValuesMap);
 
 		return nestedDDMFormFieldValuesMap;
 	}
@@ -144,23 +128,8 @@ public class DDMFormFieldValue implements Serializable {
 		Map<String, List<DDMFormFieldValue>>
 			nestedDDMFormFieldValuesReferencesMap = new HashMap<>();
 
-		for (DDMFormFieldValue nestedDDMFormFieldValue :
-				_nestedDDMFormFieldValues) {
-
-			List<DDMFormFieldValue> nestedDDMFormFieldValues =
-				nestedDDMFormFieldValuesReferencesMap.get(
-					nestedDDMFormFieldValue.getFieldReference());
-
-			if (nestedDDMFormFieldValues == null) {
-				nestedDDMFormFieldValues = new ArrayList<>();
-
-				nestedDDMFormFieldValuesReferencesMap.put(
-					nestedDDMFormFieldValue.getFieldReference(),
-					nestedDDMFormFieldValues);
-			}
-
-			nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
-		}
+		populateNestedDDMFormFieldValuesReferencesMap(
+			nestedDDMFormFieldValuesReferencesMap);
 
 		return nestedDDMFormFieldValuesReferencesMap;
 	}
@@ -183,6 +152,58 @@ public class DDMFormFieldValue implements Serializable {
 		hash = HashUtil.hash(hash, _nestedDDMFormFieldValues);
 
 		return HashUtil.hash(hash, _value);
+	}
+
+	public void populateNestedDDMFormFieldValuesMap(
+		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap) {
+
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				_nestedDDMFormFieldValues) {
+
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				nestedDDMFormFieldValuesMap.get(
+					nestedDDMFormFieldValue.getName());
+
+			if (nestedDDMFormFieldValues == null) {
+				nestedDDMFormFieldValues = new ArrayList<>();
+
+				nestedDDMFormFieldValuesMap.put(
+					nestedDDMFormFieldValue.getName(),
+					nestedDDMFormFieldValues);
+			}
+
+			nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
+
+			nestedDDMFormFieldValue.populateNestedDDMFormFieldValuesMap(
+				nestedDDMFormFieldValuesMap);
+		}
+	}
+
+	public void populateNestedDDMFormFieldValuesReferencesMap(
+		Map<String, List<DDMFormFieldValue>>
+			nestedDDMFormFieldValuesReferencesMap) {
+
+		for (DDMFormFieldValue nestedDDMFormFieldValue :
+				_nestedDDMFormFieldValues) {
+
+			List<DDMFormFieldValue> nestedDDMFormFieldValues =
+				nestedDDMFormFieldValuesReferencesMap.get(
+					nestedDDMFormFieldValue.getFieldReference());
+
+			if (nestedDDMFormFieldValues == null) {
+				nestedDDMFormFieldValues = new ArrayList<>();
+
+				nestedDDMFormFieldValuesReferencesMap.put(
+					nestedDDMFormFieldValue.getFieldReference(),
+					nestedDDMFormFieldValues);
+			}
+
+			nestedDDMFormFieldValues.add(nestedDDMFormFieldValue);
+
+			nestedDDMFormFieldValue.
+				populateNestedDDMFormFieldValuesReferencesMap(
+					nestedDDMFormFieldValuesReferencesMap);
+		}
 	}
 
 	public void setConfirmationValue(Object confirmationValue) {

@@ -112,26 +112,9 @@ public class DDMFormValues implements Serializable {
 
 			ddmFormFieldValues.add(ddmFormFieldValue);
 
-			if (!includeNestedDDMFormFieldValues) {
-				continue;
-			}
-
-			Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
-				ddmFormFieldValue.getNestedDDMFormFieldValuesMap();
-
-			for (Map.Entry<String, List<DDMFormFieldValue>> entry :
-					nestedDDMFormFieldValuesMap.entrySet()) {
-
-				List<DDMFormFieldValue> nestedDDMFormFieldValues =
-					ddmFormFieldValuesMap.get(entry.getKey());
-
-				if (nestedDDMFormFieldValues == null) {
-					nestedDDMFormFieldValues = new ArrayList<>();
-
-					ddmFormFieldValuesMap.put(entry.getKey(), entry.getValue());
-				}
-
-				nestedDDMFormFieldValues.addAll(entry.getValue());
+			if (includeNestedDDMFormFieldValues) {
+				ddmFormFieldValue.populateNestedDDMFormFieldValuesMap(
+					ddmFormFieldValuesMap);
 			}
 		}
 
@@ -159,29 +142,9 @@ public class DDMFormValues implements Serializable {
 
 			ddmFormFieldValues.add(ddmFormFieldValue);
 
-			if (!includeNestedDDMFormFieldValues) {
-				continue;
-			}
-
-			Map<String, List<DDMFormFieldValue>>
-				nestedDDMFormFieldValuesReferencesMap =
-					ddmFormFieldValue.
-						getNestedDDMFormFieldValuesReferencesMap();
-
-			for (Map.Entry<String, List<DDMFormFieldValue>> entry :
-					nestedDDMFormFieldValuesReferencesMap.entrySet()) {
-
-				List<DDMFormFieldValue> nestedDDMFormFieldValues =
-					ddmFormFieldValuesReferencesMap.get(entry.getKey());
-
-				if (nestedDDMFormFieldValues == null) {
-					nestedDDMFormFieldValues = new ArrayList<>();
-
-					ddmFormFieldValuesReferencesMap.put(
-						entry.getKey(), entry.getValue());
-				}
-
-				nestedDDMFormFieldValues.addAll(entry.getValue());
+			if (includeNestedDDMFormFieldValues) {
+				ddmFormFieldValue.populateNestedDDMFormFieldValuesReferencesMap(
+					ddmFormFieldValuesReferencesMap);
 			}
 		}
 

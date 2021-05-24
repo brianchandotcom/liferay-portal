@@ -78,8 +78,7 @@ public class DDMFormPagesTemplateContextFactory {
 			ListUtil.isEmpty(ddmFormValues.getDDMFormFieldValues())) {
 
 			DefaultDDMFormValuesFactory defaultDDMFormValuesFactory =
-				new DefaultDDMFormValuesFactory(
-					ddmForm, ddmFormRenderingContext.getLocale());
+				new DefaultDDMFormValuesFactory(ddmForm);
 
 			ddmFormValues = defaultDDMFormValuesFactory.create();
 		}

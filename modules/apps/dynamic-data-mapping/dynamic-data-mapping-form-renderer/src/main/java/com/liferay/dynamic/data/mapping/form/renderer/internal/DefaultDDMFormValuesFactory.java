@@ -23,25 +23,24 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Locale;
+import java.util.Optional;
 
 /**
  * @author Marcellus Tavares
  */
 public class DefaultDDMFormValuesFactory {
 
-	public DefaultDDMFormValuesFactory(DDMForm ddmForm, Locale locale) {
+	public DefaultDDMFormValuesFactory(DDMForm ddmForm) {
 		_ddmForm = ddmForm;
-		_locale = locale;
 	}
 
 	public DDMFormValues create() {
 		DDMFormValues ddmFormValues = new DDMFormValues(_ddmForm);
 
-		ddmFormValues.addAvailableLocale(_locale);
-		ddmFormValues.setDefaultLocale(_locale);
+		ddmFormValues.setAvailableLocales(_ddmForm.getAvailableLocales());
+		ddmFormValues.setDefaultLocale(_ddmForm.getDefaultLocale());
 
 		for (DDMFormField ddmFormField : _ddmForm.getDDMFormFields()) {
 			DDMFormFieldValue ddmFormFieldValue =
@@ -60,7 +59,6 @@ public class DefaultDDMFormValuesFactory {
 
 		ddmFormFieldValue.setFieldReference(ddmFormField.getFieldReference());
 		ddmFormFieldValue.setName(ddmFormField.getName());
-
 		ddmFormFieldValue.setValue(createDefaultValue(ddmFormField));
 
 		for (DDMFormField nestedDDMFormField :
@@ -73,10 +71,12 @@ public class DefaultDDMFormValuesFactory {
 		return ddmFormFieldValue;
 	}
 
-	protected Value createDefaultLocalizedValue(String defaultValueString) {
-		Value value = new LocalizedValue(_locale);
+	protected LocalizedValue createDefaultLocalizedValue(
+		String defaultValueString) {
 
-		value.addString(_locale, defaultValueString);
+		LocalizedValue value = new LocalizedValue(_ddmForm.getDefaultLocale());
+
+		value.addString(_ddmForm.getDefaultLocale(), defaultValueString);
 
 		return value;
 	}
@@ -106,6 +106,5 @@ public class DefaultDDMFormValuesFactory {
 	}
 
 	private final DDMForm _ddmForm;
-	private final Locale _locale;
 
 }

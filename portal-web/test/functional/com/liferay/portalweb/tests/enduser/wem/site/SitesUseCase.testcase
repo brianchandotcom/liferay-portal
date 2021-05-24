@@ -872,7 +872,7 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			specificURL = "www.baker.com:8080/group/russia2018",
+			specificURL = "http://www.baker.com:8080/group/russia2018",
 			userEmailAddress = "userea@liferay.com");
 
 		Page.viewSpecificPG(pageNameList = "Accomodations,Maps");

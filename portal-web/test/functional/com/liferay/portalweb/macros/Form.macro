@@ -705,4 +705,10 @@ definition {
 			value1 = "Draft");
 	}
 
+	macro viewSubmitButtonText {
+		AssertTextEquals(
+			locator1 = "FormPortlet#SUBMIT_BUTTON",
+			value1 = "${key_buttonText}");
+	}
+
 }

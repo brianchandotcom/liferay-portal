@@ -90,13 +90,61 @@ definition {
 	}
 
 	@description = "COMMERCE-6347. In Info tab, I want to be unable to add an organization that is already added to the account"
-	@ignore = "true"
 	@priority = "3"
 	test AssertOrganizationThatIsPartOfTheAccountCannotBeAddedAgain {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountManagement#AssertOrganizationThatIsPartOfTheAccountCannotBeAddedAgain";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Test Organization",
+			orgType = "Organization");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_text = "Add Organizations",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_userEmailAddress = "Test Organization",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON");
+
+		Click(
+			key_button = "Add Organization",
+			locator1 = "CommerceAccelerators#ANY_BUTTON");
+
+		AssertElementPresent(
+			key_addressType = "Test Organization",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
+
+		Click(
+			key_text = "Add Organizations",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_userEmailAddress = "Test Organization",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON");
+
+		Click(
+			key_button = "Add Organization",
+			locator1 = "CommerceAccelerators#ANY_BUTTON");
 
 		// TODO COMMERCE-6347 AssertOrganizationThatIsPartOfTheAccountCannotBeAddedAgain pending implementation
 
+		Alert.viewRequestFailedToComplete();
 	}
 
 	@description = "COMMERCE-6357. In Members tab, I want to be unable to add a user that is already a member of the account"

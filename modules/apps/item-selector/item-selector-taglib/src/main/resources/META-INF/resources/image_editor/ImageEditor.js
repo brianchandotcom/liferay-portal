@@ -14,7 +14,6 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayToolbar from '@clayui/toolbar';
 import Cropper from 'cropperjs';
 import {fetch} from 'frontend-js-web';

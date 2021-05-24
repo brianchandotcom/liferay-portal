@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.opensaml.integration.internal.field.expression.resolver;
+package com.liferay.saml.web.internal.opensaml.integration.field.expression.resolver;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +22,7 @@ import com.liferay.saml.opensaml.integration.field.expression.resolver.UserField
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
+import com.liferay.saml.web.internal.UserIdentifierExpressionException;
 
 import java.io.Serializable;
 
@@ -74,7 +75,7 @@ public class AttributeUserFieldExpressionResolver
 		}
 
 		if (!incomingAttributeValues.containsKey(userFieldExpression)) {
-			throw new Exception(
+			throw new UserIdentifierExpressionException(
 				"No SAML attribute value mapped for user field expression " +
 					userFieldExpression);
 		}

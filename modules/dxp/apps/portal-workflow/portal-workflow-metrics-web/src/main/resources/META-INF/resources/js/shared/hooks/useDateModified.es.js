@@ -18,6 +18,7 @@ const useDateModified = ({
 	callback = (data) => data,
 	params = {},
 	processId,
+	fetchDateModified = false,
 }) => {
 	const {getClient} = useContext(AppContext);
 	const [dateModified, setDateModified] = useState(null);
@@ -28,19 +29,27 @@ const useDateModified = ({
 	const url = `processes/${processId}/last-sla-result`;
 
 	const fetchData = useCallback(
-		() =>
-			client.get(url, {params}).then(({data, status}) => {
-				if (status === 200) {
-					setDateModified(data.dateModified);
+		() => {
+			if (fetchDateModified) {
+				return client.get(url, {params}).then(({data, status}) => {
+					if (status === 200) {
+						setDateModified(data.dateModified);
 
-					return callback(data.dateModified);
-				}
+						return callback(data.dateModified);
+					}
+					setDateModified(null);
+
+					return callback(null);
+				});
+			}
+			else {
 				setDateModified(null);
 
 				return callback(null);
-			}),
+			}
+		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[client, queryParamsStr, url]
+		[client, fetchDateModified, queryParamsStr, url]
 	);
 
 	return {

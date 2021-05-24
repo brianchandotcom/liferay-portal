@@ -37,7 +37,12 @@ import WorkloadByAssigneeCard from './workload-by-assignee-card/WorkloadByAssign
 import WorkloadByStepCard from './workload-by-step-card/WorkloadByStepCard.es';
 
 const DashboardTab = ({processId, routeParams}) => {
-	const {dateModified, fetchData} = useDateModified({processId});
+	const {fetchDateModified} = useContext(AppContext);
+
+	const {dateModified, fetchData} = useDateModified({
+		fetchDateModified,
+		processId,
+	});
 
 	const previousFetchData = usePrevious(fetchData);
 	const promises = useMemo(() => {
@@ -78,7 +83,12 @@ const DashboardTab = ({processId, routeParams}) => {
 };
 
 function PerformanceTab({processId, routeParams}) {
-	const {dateModified, fetchData} = useDateModified({processId});
+	const {fetchDateModified} = useContext(AppContext);
+
+	const {dateModified, fetchData} = useDateModified({
+		fetchDateModified,
+		processId,
+	});
 
 	const previousFetchData = usePrevious(fetchData);
 	const promises = useMemo(() => {

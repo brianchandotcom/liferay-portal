@@ -18,10 +18,13 @@ const AppContext = React.createContext();
 const AppContextProvider = ({children, ...props}) => {
 	const [reindexStatuses, setReindexStatuses] = useState([]);
 	const [title, setTitle] = useState(Liferay.Language.get('metrics'));
+	const [fetchDateModified, setFetchDateModified] = useState(false);
 
 	const state = {
 		...props,
+		fetchDateModified,
 		reindexStatuses,
+		setFetchDateModified,
 		setReindexStatuses,
 		setTitle,
 		title,

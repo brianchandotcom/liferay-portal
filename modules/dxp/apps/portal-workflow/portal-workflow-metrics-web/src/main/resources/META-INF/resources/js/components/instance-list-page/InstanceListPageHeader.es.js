@@ -41,7 +41,10 @@ export default function Header({
 	selectedFilters,
 	totalCount,
 }) {
-	const {dateModified, fetchData} = useDateModified({processId});
+	const {dateModified, fetchData} = useDateModified({
+		fetchDateModified: !!items?.length,
+		processId,
+	});
 
 	const {userId} = useContext(AppContext);
 	const {

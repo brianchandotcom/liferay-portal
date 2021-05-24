@@ -20,7 +20,7 @@ import {AppContext} from '../AppContext.es';
 
 function SLAInfo({processId}) {
 	const [alert, setAlert] = useState(null);
-	const {defaultDelta} = useContext(AppContext);
+	const {defaultDelta, setFetchDateModified} = useContext(AppContext);
 
 	const url = `/processes/${processId}/slas?page=1&pageSize=1`;
 
@@ -56,8 +56,11 @@ function SLAInfo({processId}) {
 					link: `/sla/${processId}/new`,
 					linkText: Liferay.Language.get('add-a-new-sla'),
 				});
+
+				setFetchDateModified(false);
 			}
 			else {
+				setFetchDateModified(true);
 				getSLABlockedCount();
 			}
 		});

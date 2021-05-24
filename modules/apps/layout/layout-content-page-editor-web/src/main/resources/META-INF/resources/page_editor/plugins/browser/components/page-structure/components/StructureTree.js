@@ -423,7 +423,7 @@ function getMappedFieldLabel(
 						editable.collectionFieldId)
 			);
 
-		return field.label;
+		return field?.label;
 	}
 
 	return null;

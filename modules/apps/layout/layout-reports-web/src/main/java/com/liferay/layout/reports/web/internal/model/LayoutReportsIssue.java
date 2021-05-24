@@ -194,35 +194,11 @@ public class LayoutReportsIssue {
 
 		public enum Key {
 
-			CANONICAL_LINK {
+			ILLEGIBLE_FONT_SIZES {
 
 				@Override
 				public String toString() {
-					return "canonical-link";
-				}
-
-			},
-			CRAWLABLE_ANCHORS {
-
-				@Override
-				public String toString() {
-					return "crawlable-anchors";
-				}
-
-			},
-			FONT_SIZES {
-
-				@Override
-				public String toString() {
-					return "font-sizes";
-				}
-
-			},
-			HREFLANG {
-
-				@Override
-				public String toString() {
-					return "hreflang";
+					return "illegible-font-sizes";
 				}
 
 			},
@@ -234,19 +210,27 @@ public class LayoutReportsIssue {
 				}
 
 			},
-			INDEXING {
+			INVALID_CANONICAL_URL {
 
 				@Override
 				public String toString() {
-					return "indexing";
+					return "invalid-canonical-url";
 				}
 
 			},
-			LINKS_DO_NOT_HAVE_DESCRIPTIVE_TEXT {
+			INVALID_HREFLANG {
 
 				@Override
 				public String toString() {
-					return "links-do-not-have-descriptive-text";
+					return "invalid-hreflang";
+				}
+
+			},
+			LINK_TEXTS {
+
+				@Override
+				public String toString() {
+					return "link-texts";
 				}
 
 			},
@@ -255,14 +239,6 @@ public class LayoutReportsIssue {
 				@Override
 				public String toString() {
 					return "low-contrast-ratio";
-				}
-
-			},
-			META_DESCRIPTION_IS_MISSING {
-
-				@Override
-				public String toString() {
-					return "meta-description-is-missing";
 				}
 
 			},
@@ -282,11 +258,43 @@ public class LayoutReportsIssue {
 				}
 
 			},
+			MISSING_META_DESCRIPTION {
+
+				@Override
+				public String toString() {
+					return "missing-meta-description";
+				}
+
+			},
+			MISSING_TITLE_ELEMENT {
+
+				@Override
+				public String toString() {
+					return "missing-title-element";
+				}
+
+			},
 			MISSING_VIDEO_CAPTION {
 
 				@Override
 				public String toString() {
 					return "missing-video-caption";
+				}
+
+			},
+			NOT_ALL_LINKS_ARE_CRAWLABLE {
+
+				@Override
+				public String toString() {
+					return "not-all-links-are-crawlable";
+				}
+
+			},
+			PAGE_BLOCKED_FROM_INDEXING {
+
+				@Override
+				public String toString() {
+					return "page-blocked-from-indexing";
 				}
 
 			},
@@ -298,14 +306,6 @@ public class LayoutReportsIssue {
 				}
 
 			},
-			TITLE {
-
-				@Override
-				public String toString() {
-					return "title";
-				}
-
-			}
 
 		}
 

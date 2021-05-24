@@ -163,20 +163,25 @@ public class LayoutReportsDataProvider {
 				Arrays.asList(
 					_getDetail(
 						"canonical",
-						LayoutReportsIssue.Detail.Key.CANONICAL_LINK,
+						LayoutReportsIssue.Detail.Key.INVALID_CANONICAL_URL,
 						lighthouseAuditResultV5s),
 					_getDetail(
 						"crawlable-anchors",
-						LayoutReportsIssue.Detail.Key.CRAWLABLE_ANCHORS,
+						LayoutReportsIssue.Detail.Key.
+							NOT_ALL_LINKS_ARE_CRAWLABLE,
 						lighthouseAuditResultV5s),
 					_getDetail(
-						"is-crawlable", LayoutReportsIssue.Detail.Key.INDEXING,
+						"is-crawlable",
+						LayoutReportsIssue.Detail.Key.
+							PAGE_BLOCKED_FROM_INDEXING,
 						lighthouseAuditResultV5s),
 					_getDetail(
-						"font-size", LayoutReportsIssue.Detail.Key.FONT_SIZES,
+						"font-size",
+						LayoutReportsIssue.Detail.Key.ILLEGIBLE_FONT_SIZES,
 						lighthouseAuditResultV5s),
 					_getDetail(
-						"hreflang", LayoutReportsIssue.Detail.Key.HREFLANG,
+						"hreflang",
+						LayoutReportsIssue.Detail.Key.INVALID_HREFLANG,
 						lighthouseAuditResultV5s),
 					_getDetail(
 						"image-aspect-ratio",
@@ -184,21 +189,19 @@ public class LayoutReportsDataProvider {
 							INCORRECT_IMAGE_ASPECT_RATIOS,
 						lighthouseAuditResultV5s),
 					_getDetail(
-						"link-text",
-						LayoutReportsIssue.Detail.Key.
-							LINKS_DO_NOT_HAVE_DESCRIPTIVE_TEXT,
+						"link-text", LayoutReportsIssue.Detail.Key.LINK_TEXTS,
 						lighthouseAuditResultV5s),
 					_getDetail(
 						"meta-description",
-						LayoutReportsIssue.Detail.Key.
-							META_DESCRIPTION_IS_MISSING,
+						LayoutReportsIssue.Detail.Key.MISSING_META_DESCRIPTION,
 						lighthouseAuditResultV5s),
 					_getDetail(
 						"tap-targets",
 						LayoutReportsIssue.Detail.Key.SMALL_TAP_TARGETS,
 						lighthouseAuditResultV5s),
 					_getDetail(
-						"document-title", LayoutReportsIssue.Detail.Key.TITLE,
+						"document-title",
+						LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
 						lighthouseAuditResultV5s)),
 				LayoutReportsIssue.Key.SEO));
 	}

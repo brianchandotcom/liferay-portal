@@ -43,12 +43,12 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue1 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.SEO);
 		LayoutReportsIssue layoutReportsIssue2 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertTrue(layoutReportsIssue1.equals(layoutReportsIssue2));
@@ -59,7 +59,7 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		List<LayoutReportsIssue.Detail> details =
@@ -70,7 +70,8 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue.Detail detail = details.get(0);
 
 		Assert.assertEquals(
-			LayoutReportsIssue.Detail.Key.TITLE, detail.getKey());
+			LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+			detail.getKey());
 		Assert.assertEquals(100, detail.getTotal());
 
 		Assert.assertEquals(
@@ -83,7 +84,7 @@ public class LayoutReportsIssueTest {
 		new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			null);
 	}
 
@@ -92,14 +93,14 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue1 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.SEO);
 		LayoutReportsIssue layoutReportsIssue2 = new LayoutReportsIssue(
 			Arrays.asList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.HREFLANG, 50),
+					LayoutReportsIssue.Detail.Key.INVALID_HREFLANG, 50),
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 50)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 50)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertFalse(layoutReportsIssue1.equals(layoutReportsIssue2));
@@ -110,12 +111,12 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue1 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.SEO);
 		LayoutReportsIssue layoutReportsIssue2 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.ACCESSIBILITY);
 
 		Assert.assertFalse(layoutReportsIssue1.equals(layoutReportsIssue2));
@@ -126,12 +127,12 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue1 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.SEO);
 		LayoutReportsIssue layoutReportsIssue2 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 200)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 200)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertFalse(layoutReportsIssue1.equals(layoutReportsIssue2));
@@ -142,7 +143,7 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		JSONObject jsonObject = layoutReportsIssue.toJSONObject(
@@ -154,7 +155,8 @@ public class LayoutReportsIssueTest {
 
 		JSONObject detailJSONObject = detailsJSONArray.getJSONObject(0);
 
-		Assert.assertEquals("title", detailJSONObject.getString("key"));
+		Assert.assertEquals(
+			"missing-title-element", detailJSONObject.getString("key"));
 		Assert.assertEquals(100, detailJSONObject.getLong("total"));
 
 		Assert.assertEquals(
@@ -167,13 +169,14 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue = new LayoutReportsIssue(
 			Arrays.asList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.CANONICAL_LINK, 99),
+					LayoutReportsIssue.Detail.Key.INVALID_CANONICAL_URL, 99),
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.TITLE, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertEquals(
-			"{details={canonical-link=99, title=100}, key=seo, total=199}",
+			"{details={invalid-canonical-url=99, missing-title-element=100}, " +
+				"key=seo, total=199}",
 			layoutReportsIssue.toString());
 	}
 

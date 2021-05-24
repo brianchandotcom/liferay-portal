@@ -92,12 +92,9 @@ public class ObjectDefinitionSampleGenerator {
 						false, false, null, "notindexed", "String"),
 					_createObjectField("height", "Double"),
 					_createObjectField("numberOfBooksWritten", "Integer"),
-					_createObjectField("portrait", "Blob"),
 					_createObjectField("speed", "BigDecimal")));
 
 		for (int i = 0; i < 100; i++) {
-			String blob = "In the beginning" + i;
-
 			_objectEntryLocalService.addObjectEntry(
 				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
@@ -121,8 +118,6 @@ public class ObjectDefinitionSampleGenerator {
 					"The unsearchable brown fox jumps over the lazy dog. " + i
 				).put(
 					"numberOfBooksWritten", 5 + i
-				).put(
-					"portrait", blob.getBytes()
 				).put(
 					"speed", BigDecimal.valueOf(45L + i)
 				).build(),

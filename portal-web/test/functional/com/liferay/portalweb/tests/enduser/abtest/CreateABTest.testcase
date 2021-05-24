@@ -8,7 +8,6 @@ definition {
 	property testray.main.component.name = "A/B Test";
 
 	setUp {
-		
 		task ("Open Analytics Cloud") {
 			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 

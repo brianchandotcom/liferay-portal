@@ -102,7 +102,8 @@ public class ViewCPAttachmentsMVCResourceCommand
 					"cpAttachmentFileEntryId",
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
-				String attachmentURL = _commerceMediaResolver.getDownloadUrl(
+				String attachmentURL = _commerceMediaResolver.getDownloadURL(
+					commerceAccountId,
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
 				jsonObject.put("url", attachmentURL);

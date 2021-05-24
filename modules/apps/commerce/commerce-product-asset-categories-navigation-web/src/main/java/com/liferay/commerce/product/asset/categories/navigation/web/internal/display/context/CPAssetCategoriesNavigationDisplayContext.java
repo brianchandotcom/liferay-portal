@@ -19,6 +19,9 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.asset.categories.navigation.web.internal.configuration.CPAssetCategoriesNavigationPortletInstanceConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
@@ -180,7 +183,20 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			return null;
 		}
 
-		return _commerceMediaResolver.getUrl(
+		CommerceContext commerceContext =
+			(CommerceContext)_httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		long commerceAccountId = 0;
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		if (commerceAccount != null) {
+			commerceAccountId = commerceAccount.getCommerceAccountId();
+		}
+
+		return _commerceMediaResolver.getURL(
+			commerceAccountId,
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 	}
 

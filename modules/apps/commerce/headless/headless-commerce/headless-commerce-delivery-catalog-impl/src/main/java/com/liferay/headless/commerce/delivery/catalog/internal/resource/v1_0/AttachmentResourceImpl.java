@@ -14,19 +14,25 @@
 
 package com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0;
 
+import com.liferay.commerce.account.exception.NoSuchAccountException;
+import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountLocalService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Attachment;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.AttachmentDTOConverter;
+import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.AttachmentDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.AttachmentResource;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.fields.NestedFieldSupport;
@@ -56,8 +62,11 @@ public class AttachmentResourceImpl
 	@Override
 	public Page<Attachment> getChannelProductAttachmentsPage(
 			Long channelId, @NestedFieldId("productId") Long productId,
-			Pagination pagination)
+			Long accountId, Pagination pagination)
 		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
@@ -68,16 +77,19 @@ public class AttachmentResourceImpl
 		}
 
 		return _getAttachmentPage(
-			cpDefinition, CPAttachmentFileEntryConstants.TYPE_OTHER,
-			pagination);
+			commerceChannel, cpDefinition, accountId,
+			CPAttachmentFileEntryConstants.TYPE_OTHER, pagination);
 	}
 
 	@NestedField(parentClass = Product.class, value = "images")
 	@Override
 	public Page<Attachment> getChannelProductImagesPage(
 			Long channelId, @NestedFieldId("productId") Long productId,
-			Pagination pagination)
+			Long accountId, Pagination pagination)
 		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
 
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
@@ -88,12 +100,48 @@ public class AttachmentResourceImpl
 		}
 
 		return _getAttachmentPage(
-			cpDefinition, CPAttachmentFileEntryConstants.TYPE_IMAGE,
-			pagination);
+			commerceChannel, cpDefinition, accountId,
+			CPAttachmentFileEntryConstants.TYPE_IMAGE, pagination);
+	}
+
+	private Long _getAccountId(
+			Long accountId, long commerceChannelGroupId,
+			CPAttachmentFileEntry cpAttachmentFileEntry)
+		throws Exception {
+
+		int countUserCommerceAccounts =
+			_commerceAccountHelper.countUserCommerceAccounts(
+				cpAttachmentFileEntry.getUserId(), commerceChannelGroupId);
+
+		if (countUserCommerceAccounts > 1) {
+			if (accountId == null) {
+				throw new NoSuchAccountException();
+			}
+		}
+		else {
+			long[] commerceAccountIds =
+				_commerceAccountHelper.getUserCommerceAccountIds(
+					cpAttachmentFileEntry.getUserId(), commerceChannelGroupId);
+
+			if (commerceAccountIds.length == 0) {
+				CommerceAccount commerceAccount =
+					_commerceAccountLocalService.getGuestCommerceAccount(
+						cpAttachmentFileEntry.getCompanyId());
+
+				commerceAccountIds = new long[] {
+					commerceAccount.getCommerceAccountId()
+				};
+			}
+
+			return commerceAccountIds[0];
+		}
+
+		return accountId;
 	}
 
 	private Page<Attachment> _getAttachmentPage(
-			CPDefinition cpDefinition, int type, Pagination pagination)
+			CommerceChannel commerceChannel, CPDefinition cpDefinition,
+			long accountId, int type, Pagination pagination)
 		throws Exception {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
@@ -112,11 +160,13 @@ public class AttachmentResourceImpl
 				WorkflowConstants.STATUS_APPROVED);
 
 		return Page.of(
-			_toAttachments(cpAttachmentFileEntries), pagination, totalItems);
+			_toAttachments(cpAttachmentFileEntries, commerceChannel, accountId),
+			pagination, totalItems);
 	}
 
 	private List<Attachment> _toAttachments(
-			List<CPAttachmentFileEntry> cpAttachmentFileEntries)
+			List<CPAttachmentFileEntry> cpAttachmentFileEntries,
+			CommerceChannel commerceChannel, Long accountId)
 		throws Exception {
 
 		List<Attachment> attachments = new ArrayList<>();
@@ -126,9 +176,12 @@ public class AttachmentResourceImpl
 
 			attachments.add(
 				_attachmentDTOConverter.toDTO(
-					new DefaultDTOConverterContext(
+					new AttachmentDTOConverterContext(
 						cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
-						contextAcceptLanguage.getPreferredLocale())));
+						contextAcceptLanguage.getPreferredLocale(),
+						_getAccountId(
+							accountId, commerceChannel.getGroupId(),
+							cpAttachmentFileEntry))));
 		}
 
 		return attachments;
@@ -139,6 +192,15 @@ public class AttachmentResourceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceAccountLocalService _commerceAccountLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CPAttachmentFileEntryLocalService

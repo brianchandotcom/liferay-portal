@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
@@ -75,7 +76,8 @@ public class AttachmentDTOConverter
 				options = _getAttachmentOptions(cpAttachmentFileEntry);
 				priority = cpAttachmentFileEntry.getPriority();
 
-				String downloadUrl = _commerceMediaResolver.getDownloadUrl(
+				String downloadUrl = _commerceMediaResolver.getDownloadURL(
+					CommerceAccountConstants.ACCOUNT_ID_GUEST,
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
 				src = portalURL + downloadUrl;

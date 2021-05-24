@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.model.impl;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.media.CommerceMediaResolverUtil;
 import com.liferay.commerce.product.exception.CPDefinitionMetaDescriptionException;
 import com.liferay.commerce.product.exception.CPDefinitionMetaKeywordsException;
@@ -228,7 +229,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			return CommerceMediaResolverUtil.getDefaultUrl(getGroupId());
 		}
 
-		return CommerceMediaResolverUtil.getUrl(
+		return CommerceMediaResolverUtil.getURL(
+			CommerceAccountConstants.ACCOUNT_ID_GUEST,
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 	}
 
@@ -241,7 +243,8 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			return CommerceMediaResolverUtil.getDefaultUrl(getGroupId());
 		}
 
-		return CommerceMediaResolverUtil.getThumbnailUrl(
+		return CommerceMediaResolverUtil.getThumbnailURL(
+			CommerceAccountConstants.ACCOUNT_ID_GUEST,
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.asset.categories.web.internal.info.display.contributor;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.media.CommerceMediaResolverUtil;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
@@ -87,7 +88,8 @@ public class AssetCategoryMainImageInfoItemFieldReader
 			CPAttachmentFileEntry cpAttachmentFileEntry =
 				cpAttachmentFileEntries.get(0);
 
-			return CommerceMediaResolverUtil.getUrl(
+			return CommerceMediaResolverUtil.getURL(
+				CommerceAccountConstants.ACCOUNT_ID_GUEST,
 				cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 		}
 		catch (PortalException portalException) {

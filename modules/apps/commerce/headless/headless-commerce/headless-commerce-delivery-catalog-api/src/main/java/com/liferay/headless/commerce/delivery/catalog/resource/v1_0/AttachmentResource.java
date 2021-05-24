@@ -49,11 +49,13 @@ public interface AttachmentResource {
 	}
 
 	public Page<Attachment> getChannelProductAttachmentsPage(
-			Long channelId, Long productId, Pagination pagination)
+			Long channelId, Long productId, Long accountId,
+			Pagination pagination)
 		throws Exception;
 
 	public Page<Attachment> getChannelProductImagesPage(
-			Long channelId, Long productId, Pagination pagination)
+			Long channelId, Long productId, Long accountId,
+			Pagination pagination)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

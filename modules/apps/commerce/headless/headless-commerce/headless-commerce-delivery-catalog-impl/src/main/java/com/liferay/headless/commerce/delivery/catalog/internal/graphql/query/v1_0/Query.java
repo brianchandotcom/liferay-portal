@@ -118,12 +118,13 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductAttachments(channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductAttachments(accountId: ___, channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AttachmentPage channelProductAttachments(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
+			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -133,18 +134,20 @@ public class Query {
 			this::_populateResourceContext,
 			attachmentResource -> new AttachmentPage(
 				attachmentResource.getChannelProductAttachmentsPage(
-					channelId, productId, Pagination.of(page, pageSize))));
+					channelId, productId, accountId,
+					Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductImages(channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductImages(accountId: ___, channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AttachmentPage channelProductImages(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
+			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -154,7 +157,8 @@ public class Query {
 			this::_populateResourceContext,
 			attachmentResource -> new AttachmentPage(
 				attachmentResource.getChannelProductImagesPage(
-					channelId, productId, Pagination.of(page, pageSize))));
+					channelId, productId, accountId,
+					Pagination.of(page, pageSize))));
 	}
 
 	/**

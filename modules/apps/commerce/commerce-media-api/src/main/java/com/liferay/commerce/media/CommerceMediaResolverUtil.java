@@ -46,6 +46,17 @@ public class CommerceMediaResolverUtil {
 		return commerceMediaResolver.getDownloadUrl(cpAttachmentFileEntryId);
 	}
 
+	public static String getDownloadURL(
+			long commerceAccountId, long cpAttachmentFileEntryId)
+		throws PortalException {
+
+		CommerceMediaResolver commerceMediaResolver =
+			_serviceTracker.getService();
+
+		return commerceMediaResolver.getDownloadURL(
+			commerceAccountId, cpAttachmentFileEntryId);
+	}
+
 	public static byte[] getMediaBytes(HttpServletRequest httpServletRequest)
 		throws IOException, PortalException {
 
@@ -64,6 +75,17 @@ public class CommerceMediaResolverUtil {
 		return commerceMediaResolver.getThumbnailUrl(cpAttachmentFileEntryId);
 	}
 
+	public static String getThumbnailURL(
+			long commerceAccountId, long cpAttachmentFileEntryId)
+		throws PortalException {
+
+		CommerceMediaResolver commerceMediaResolver =
+			_serviceTracker.getService();
+
+		return commerceMediaResolver.getThumbnailURL(
+			commerceAccountId, cpAttachmentFileEntryId);
+	}
+
 	public static String getUrl(long cpAttachmentFileEntryId)
 		throws PortalException {
 
@@ -71,6 +93,17 @@ public class CommerceMediaResolverUtil {
 			_serviceTracker.getService();
 
 		return commerceMediaResolver.getUrl(cpAttachmentFileEntryId);
+	}
+
+	public static String getURL(
+			long commerceAccountId, long cpAttachmentFileEntryId)
+		throws PortalException {
+
+		CommerceMediaResolver commerceMediaResolver =
+			_serviceTracker.getService();
+
+		return commerceMediaResolver.getURL(
+			commerceAccountId, cpAttachmentFileEntryId);
 	}
 
 	public static void sendMediaBytes(

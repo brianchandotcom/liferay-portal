@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.internal.util;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.media.CommerceMediaResolver;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
@@ -392,7 +393,8 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			cpAttachmentFileEntries.get(0);
 
-		return _commerceMediaResolver.getThumbnailUrl(
+		return _commerceMediaResolver.getThumbnailURL(
+			CommerceAccountConstants.ACCOUNT_ID_GUEST,
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 	}
 

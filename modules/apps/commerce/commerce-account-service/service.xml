@@ -137,7 +137,7 @@
 			<finder-column name="commerceAccountId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CommerceAccountGroupRel" remote-service="true">
+	<entity local-service="true" name="CommerceAccountGroupRel" persistence="false" remote-service="true">
 
 		<!-- PK fields -->
 

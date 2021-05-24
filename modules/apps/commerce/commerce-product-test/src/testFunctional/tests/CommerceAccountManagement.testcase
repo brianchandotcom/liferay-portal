@@ -140,13 +140,55 @@ definition {
 	}
 
 	@description = "COMMERCE-6351. In Info tab, I want to be able to remove an organization from the account by clicking 'Delete'"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveOrganizationFromAccount {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountManagement#RemoveOrganizationFromAccount";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Test Organization",
+			orgType = "Organization");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_text = "Add Organizations",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_userEmailAddress = "Test Organization",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADD_MODAL_PLUS_BUTTON");
+
+		Click(
+			key_button = "Add Organization",
+			locator1 = "CommerceAccelerators#ANY_BUTTON");
+
+		AssertElementPresent(
+			key_addressType = "Test Organization",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
+
+		Click(
+			key_index = "Delete",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 
 		// TODO COMMERCE-6351 RemoveOrganizationFromAccount pending implementation
 
+		AssertElementNotPresent(
+			key_addressType = "Test Organization",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
 	}
 
 	@description = "COMMERCE-6361. In Members tab, I want to be able to remove users from the account"

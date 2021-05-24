@@ -82,27 +82,25 @@ public class DefaultDDMFormValuesFactory {
 	}
 
 	protected Value createDefaultValue(DDMFormField ddmFormField) {
-		String defaultValueString = _getDefaultValueString(
-			ddmFormField.getPredefinedValue());
+		LocalizedValue defaultValue = ddmFormField.getPredefinedValue();
 
-		if (Validator.isNull(defaultValueString)) {
-			defaultValueString = _getDefaultValueString(
-				(LocalizedValue)ddmFormField.getProperty("initialValue"));
+		if ((defaultValue == null) ||
+			MapUtil.isEmpty(defaultValue.getValues())) {
+
+			defaultValue = Optional.ofNullable(
+				(LocalizedValue)ddmFormField.getProperty("initialValue")
+			).orElse(
+				createDefaultLocalizedValue(StringPool.BLANK)
+			);
 		}
 
 		if (ddmFormField.isLocalizable()) {
-			return createDefaultLocalizedValue(defaultValueString);
+			return defaultValue;
 		}
 
-		return new UnlocalizedValue(defaultValueString);
-	}
-
-	private String _getDefaultValueString(LocalizedValue localizedValue) {
-		if (localizedValue == null) {
-			return StringPool.BLANK;
-		}
-
-		return GetterUtil.getString(localizedValue.getString(_locale));
+		return new UnlocalizedValue(
+			GetterUtil.getString(
+				defaultValue.getString(_ddmForm.getDefaultLocale())));
 	}
 
 	private final DDMForm _ddmForm;

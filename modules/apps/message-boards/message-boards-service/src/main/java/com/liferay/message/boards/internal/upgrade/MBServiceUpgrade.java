@@ -32,6 +32,7 @@ import com.liferay.message.boards.internal.upgrade.v4_0_0.MBCategoryMessageCount
 import com.liferay.message.boards.internal.upgrade.v4_0_0.MBCategoryThreadCountUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v5_0_0.MBThreadMessageCountUpgradeProcess;
 import com.liferay.message.boards.internal.upgrade.v5_2_0.MBMessageExternalReferenceCodeUpgradeProcess;
+import com.liferay.message.boards.internal.upgrade.v6_0_0.MBStatsUserUpgradeProcess;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -110,6 +111,8 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"5.1.0", "5.2.0",
 			new MBMessageExternalReferenceCodeUpgradeProcess());
+
+		registry.register("5.2.0", "6.0.0", new MBStatsUserUpgradeProcess());
 	}
 
 	@Reference

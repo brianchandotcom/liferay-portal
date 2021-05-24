@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,11 @@ public class LayoutFixture {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			new UnicodeProperties();
+
+		typeSettingsUnicodeProperties.put("published", "true");
+
 		LocalizedValuesMap friendlyUrlMap = new LocalizedValuesMap() {
 			{
 				String randomString = FriendlyURLNormalizerUtil.normalize(
@@ -67,7 +73,8 @@ public class LayoutFixture {
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap.getValues(),
 			titleMap.getValues(), null, null, null,
-			LayoutConstants.TYPE_CONTENT, null, false,
+			LayoutConstants.TYPE_CONTENT,
+			typeSettingsUnicodeProperties.toString(), false,
 			friendlyUrlMap.getValues(), serviceContext);
 
 		_layouts.add(layout);
@@ -76,23 +83,13 @@ public class LayoutFixture {
 	}
 
 	public Layout createLayout(String name) throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
+		LocalizedValuesMap nameMap = new LocalizedValuesMap() {
+			{
+				put(LocaleUtil.getSiteDefault(), name);
+			}
+		};
 
-		String randomString = FriendlyURLNormalizerUtil.normalize(
-			RandomTestUtil.randomString());
-
-		String friendlyURL = StringPool.SLASH + randomString;
-
-		Layout layout = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, null,
-			RandomTestUtil.randomString(), LayoutConstants.TYPE_CONTENT, false,
-			friendlyURL, serviceContext);
-
-		_layouts.add(layout);
-
-		return layout;
+		return createLayout(nameMap, new LocalizedValuesMap());
 	}
 
 	public List<Layout> getLayouts() {

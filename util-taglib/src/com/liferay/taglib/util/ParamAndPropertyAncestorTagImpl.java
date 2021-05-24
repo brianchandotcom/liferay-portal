@@ -171,7 +171,7 @@ public class ParamAndPropertyAncestorTagImpl
 		super.release();
 
 		_httpServletRequest = null;
-		servletContext = null;
+		_servletContext = null;
 
 		_allowEmptyParam = false;
 		_copyCurrentRenderParameters = true;
@@ -198,11 +198,11 @@ public class ParamAndPropertyAncestorTagImpl
 
 		_httpServletRequest = httpServletRequest;
 
-		servletContext = (ServletContext)httpServletRequest.getAttribute(
+		_servletContext = (ServletContext)httpServletRequest.getAttribute(
 			WebKeys.CTX);
 
-		if (servletContext == null) {
-			servletContext = pageContext.getServletContext();
+		if (_servletContext == null) {
+			_servletContext = pageContext.getServletContext();
 		}
 
 		AutoClosePageContextRegistry.registerCloseCallback(
@@ -213,19 +213,12 @@ public class ParamAndPropertyAncestorTagImpl
 	}
 
 	public void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+		_servletContext = servletContext;
 	}
 
 	protected ServletContext getServletContext() {
-		return servletContext;
+		return _servletContext;
 	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getServletContext()}
-	 */
-	@Deprecated
-	protected ServletContext servletContext;
 
 	private static final AtomicReferenceFieldUpdater
 		_atomicReferenceFieldUpdater = AtomicReferenceFieldUpdater.newUpdater(
@@ -238,5 +231,6 @@ public class ParamAndPropertyAncestorTagImpl
 	private volatile HttpServletRequest _httpServletRequest;
 	private Map<String, String[]> _properties;
 	private Set<String> _removedParameterNames;
+	private ServletContext _servletContext;
 
 }

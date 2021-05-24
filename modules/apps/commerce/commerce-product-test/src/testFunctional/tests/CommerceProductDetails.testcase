@@ -59,13 +59,37 @@ definition {
 	}
 
 	@description = "COMMERCE-6354. As a buyer, I want to be able to add a product to wish list from Product Details and if I refresh the page, I want to be able to see that the product is already added to wishlist"
-	@ignore = "true"
 	@priority = "3"
 	test AddProductToWishListFromProductDetails {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#AddProductToWishListFromProductDetails";
 
-		// TODO COMMERCE-6354 AddProductToWishListFromProductDetails pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		Click(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_ADD_TO_WISH_LIST");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_localizationName = "heart-full",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
+
+		ClickNoError(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
+
+		Click(
+			key_menuItem = "My Lists",
+			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+
+		AssertElementPresent(
+			key_formViewName = "U-Joint",
+			locator1 = "FormViewBuilder#ASSERT_FORM");
+			
 	}
 
 	@description = "COMMERCE-6359. As a buyer, I want to be able to select only the allowed quantities of a product in Product Details, if set"

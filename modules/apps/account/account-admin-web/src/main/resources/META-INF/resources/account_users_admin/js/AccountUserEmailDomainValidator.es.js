@@ -17,33 +17,24 @@ import {Config} from 'metal-state';
 
 class AccountUserEmailDomainValidator extends PortletBase {
 	attached() {
-		Liferay.once(
-			this.ns('formReady'),
-			(event) => {
-				const form = Liferay.Form.get(event.formName);
+		const form = this.getForm_(this.ns('fm'));
 
-				const field = form.formValidator.getField(
-					this.ns('emailAddress')
-				);
+		if (form) {
+			this.decorateEmailAddressField_(form);
+		}
+		else {
+			Liferay.once(
+				this.ns('formReady'),
+				(event) => {
+					const form = this.getForm_(event.formName);
 
-				if (field) {
-					if (this.viewValidDomainsURL) {
-						this.addFieldMessage_(field);
+					if (form) {
+						this.decorateEmailAddressField_(form);
 					}
-
-					const emailDomainFieldRule = this.getEmailDomainFieldRule_();
-
-					this.addFormFieldRules_(form, [emailDomainFieldRule]);
-
-					this.setWarningValidationStyle_(
-						form,
-						field,
-						emailDomainFieldRule.validatorName
-					);
-				}
-			},
-			this
-		);
+				},
+				this
+			);
+		}
 	}
 
 	addFieldMessage_(field) {
@@ -69,6 +60,24 @@ class AccountUserEmailDomainValidator extends PortletBase {
 		const oldFieldRules = form.get('fieldRules');
 
 		form.set('fieldRules', oldFieldRules.concat(fieldRules));
+	}
+
+	decorateEmailAddressField_(form) {
+		const field = form.formValidator.getField(this.ns('emailAddress'));
+
+		if (this.viewValidDomainsURL) {
+			this.addFieldMessage_(field);
+		}
+
+		const emailDomainFieldRule = this.getEmailDomainFieldRule_();
+
+		this.addFormFieldRules_(form, [emailDomainFieldRule]);
+
+		this.setWarningValidationStyle_(
+			form,
+			field,
+			emailDomainFieldRule.validatorName
+		);
 	}
 
 	getEmailDomainFieldRule_() {
@@ -130,6 +139,10 @@ class AccountUserEmailDomainValidator extends PortletBase {
 			fieldName: this.ns('emailAddress'),
 			validatorName,
 		};
+	}
+
+	getForm_(formName) {
+		return Liferay.Form?.get(formName);
 	}
 
 	onSubmitError_(event, form, field, validatorName) {

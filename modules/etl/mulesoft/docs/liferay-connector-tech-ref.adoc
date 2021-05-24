@@ -187,6 +187,11 @@ value must be specified.
 * <<delete-operation, Delete Records>>
 * <<get-operation, Get Records>>
 * <<update-operation, Update Records>>
+* <<batch-export-operation, Batch Export Records>>
+* <<batch-import-operation, Batch Import Records>>
+    ** Batch Create
+    ** Batch Delete
+    ** Batch Update
 
 [[create-operation]]
 === Create Records
@@ -379,6 +384,183 @@ The Update operation exposes all endpoints that are manipulated by HTTP PATCH.
 
 ==== Throws
 * LIFERAY:BAD_REQUEST
+* LIFERAY:CONNECTION_TIMEOUT
+* LIFERAY:EXECUTION
+* LIFERAY:INVALID_OAS_DOCUMENT
+* LIFERAY:NOT_ACCEPTABLE
+* LIFERAY:NOT_ALLOWED
+* LIFERAY:NOT_FOUND
+* LIFERAY:NOT_IMPLEMENTED
+* LIFERAY:OAUTH2_ERROR
+* LIFERAY:SERVER_ERROR
+* LIFERAY:UNAUTHORIZED
+* LIFERAY:UNSUPPORTED_MEDIA_TYPE
+
+[[batch-export-operation]]
+=== Batch Export Records
+
+The Batch export operation exports all records of defined entity in a JSON
+format.
+
+==== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Class name
+| String
+| Entity that will be exported
+|
+| Yes
+
+| Site id
+| String
+| siteId query parameter
+|
+| No
+
+| Field names
+| String
+| Comma separated list of entity fields that will be exported
+|
+| No
+
+|===
+
+==== Throws
+* LIFERAY:BAD_REQUEST
+* LIFERAY:BATCH_EXPORT_FAILED
+* LIFERAY:CONNECTION_TIMEOUT
+* LIFERAY:EXECUTION
+* LIFERAY:INVALID_OAS_DOCUMENT
+* LIFERAY:NOT_ACCEPTABLE
+* LIFERAY:NOT_ALLOWED
+* LIFERAY:NOT_FOUND
+* LIFERAY:NOT_IMPLEMENTED
+* LIFERAY:OAUTH2_ERROR
+* LIFERAY:SERVER_ERROR
+* LIFERAY:UNAUTHORIZED
+* LIFERAY:UNSUPPORTED_MEDIA_TYPE
+
+[[batch-import-operation]]
+=== Batch Import Records
+
+=== Create
+==== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Class name
+| String
+| Entity that will be imported
+|
+| Yes
+
+| Field name mappings
+| Object
+| Map with field name mapping definitions
+|
+| No
+
+| Records
+| Object
+| JSON array of entity objects
+| #[payload]
+| Yes
+|===
+
+==== Throws
+* LIFERAY:BAD_REQUEST
+* LIFERAY:BATCH_IMPORT_FAILED
+* LIFERAY:CONNECTION_TIMEOUT
+* LIFERAY:EXECUTION
+* LIFERAY:INVALID_OAS_DOCUMENT
+* LIFERAY:NOT_ACCEPTABLE
+* LIFERAY:NOT_ALLOWED
+* LIFERAY:NOT_FOUND
+* LIFERAY:NOT_IMPLEMENTED
+* LIFERAY:OAUTH2_ERROR
+* LIFERAY:SERVER_ERROR
+* LIFERAY:UNAUTHORIZED
+* LIFERAY:UNSUPPORTED_MEDIA_TYPE
+
+=== Delete
+==== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Class name
+| String
+| Entity that will be deleted
+|
+| Yes
+
+| Records
+| Object
+| JSON array of entity objects
+| #[payload]
+| Yes
+|===
+
+==== Throws
+* LIFERAY:BAD_REQUEST
+* LIFERAY:BATCH_IMPORT_FAILED
+* LIFERAY:CONNECTION_TIMEOUT
+* LIFERAY:EXECUTION
+* LIFERAY:INVALID_OAS_DOCUMENT
+* LIFERAY:NOT_ACCEPTABLE
+* LIFERAY:NOT_ALLOWED
+* LIFERAY:NOT_FOUND
+* LIFERAY:NOT_IMPLEMENTED
+* LIFERAY:OAUTH2_ERROR
+* LIFERAY:SERVER_ERROR
+* LIFERAY:UNAUTHORIZED
+* LIFERAY:UNSUPPORTED_MEDIA_TYPE
+
+=== Update
+==== Parameters
+
+[cols=".^20%,.^20%,.^35%,.^20%,^.^5%", options="header"]
+|===
+| Parameter name
+| Type
+| Description
+| Default Value
+| Required
+
+| Class name
+| String
+| Entity that will be updated
+|
+| Yes
+
+| Records
+| Object
+| JSON array of entity objects
+| #[payload]
+| Yes
+|===
+
+==== Throws
+* LIFERAY:BAD_REQUEST
+* LIFERAY:BATCH_IMPORT_FAILED
 * LIFERAY:CONNECTION_TIMEOUT
 * LIFERAY:EXECUTION
 * LIFERAY:INVALID_OAS_DOCUMENT

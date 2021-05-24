@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Cristina González
@@ -83,6 +84,13 @@ public class LayoutReportsDataProvider {
 
 				return itemsList.size();
 			}
+		}
+
+		if (Objects.equals(
+				lighthouseAuditResultV5.getScoreDisplayMode(),
+				"notApplicable")) {
+
+			return 0;
 		}
 
 		float score = GetterUtil.getFloat(lighthouseAuditResultV5.getScore());

@@ -165,13 +165,65 @@ definition {
 	}
 
 	@description = "Verify that a Single Selection Field can be set to repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132194 CanBeSetToRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		var singleSelectionFieldName = FormFields.getFieldName();
+		
+		FormFields.editOptionsRow(
+			optionValue = "Option A",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option B",
+			rowNumber = "2");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.checkSwitcher(propertyName = "repeatable");
+
+		Form.save();
+
+		Form.publishForm();
+		
+		FormsAdminNavigator.gotoPublishedForm();
+		
+		FormFields.addRepeatableField(
+			key_fieldName = "${singleSelectionFieldName}",
+			key_repeatableFieldNumber = "1");
+
+		FormFields.editRepeatableSingleSelection(
+			optionValue = "Option A",
+			rowNumber = "1",
+			key_fieldName = "${singleSelectionFieldName}");
+
+		FormFields.editRepeatableSingleSelection(
+			optionValue = "Option B",
+			rowNumber = "2",
+			key_fieldName = "${singleSelectionFieldName}");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		
+			
 	}
 
 	@description = "Verify that a Form can be submitted with a Single Selection Field"

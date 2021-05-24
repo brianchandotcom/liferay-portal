@@ -224,6 +224,18 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editRepeatableSingleSelection {
+		var key_rowNumber = "${rowNumber}";
+		var key_optionValue = "${optionValue}";
+		var key_fieldName = "${fieldName}";
+
+		Click(
+			key_optionValue = "${optionValue}",
+			key_rowNumber = "${rowNumber}",
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#SELECT_SINGLE_SELECTION_ROW_OPTION");
+	}
+
 	macro editRepeatableTextMultiline {
 		Type(
 			key_fieldName = "${fieldName}",

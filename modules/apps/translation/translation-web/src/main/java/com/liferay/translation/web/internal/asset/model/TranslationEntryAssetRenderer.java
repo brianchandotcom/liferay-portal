@@ -117,9 +117,8 @@ public class TranslationEntryAssetRenderer
 				return LanguageUtil.get(locale, "translation");
 			}
 
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(
-					_translationEntry.getClassPK());
+			AssetRenderer<?> assetRenderer = _getAssetRenderer(
+				assetRendererFactory);
 
 			if (assetRenderer == null) {
 				return LanguageUtil.get(locale, "translation");
@@ -191,6 +190,23 @@ public class TranslationEntryAssetRenderer
 				_translationInfoFieldChecker, translationSnapshot));
 
 		return super.include(httpServletRequest, httpServletResponse, template);
+	}
+
+	private AssetRenderer<?> _getAssetRenderer(
+			AssetRendererFactory<?> assetRendererFactory)
+		throws PortalException {
+
+		try {
+			return assetRendererFactory.getAssetRenderer(
+				_translationEntry.getClassPK());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
+			return null;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

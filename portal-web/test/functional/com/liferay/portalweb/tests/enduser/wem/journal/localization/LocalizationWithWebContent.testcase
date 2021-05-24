@@ -137,11 +137,11 @@ definition {
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text1",
-				fieldName = "Text1");
+				fieldName = "Text");
 
 			DataEngine.addField(
 				fieldFieldLabel = "Text2",
-				fieldName = "Text2");
+				fieldName = "Text");
 
 			WebContentStructures.saveCP(structureName = "WC Structure Name");
 		}

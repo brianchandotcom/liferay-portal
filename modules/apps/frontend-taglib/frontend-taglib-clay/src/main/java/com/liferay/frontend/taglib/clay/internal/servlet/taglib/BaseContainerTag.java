@@ -349,8 +349,8 @@ public class BaseContainerTag extends AttributesTagSupport {
 			ReactRenderer reactRenderer = ServicesProvider.getReactRenderer();
 
 			reactRenderer.renderReact(
-				componentDescriptor, prepareProps(new HashMap<>()), request,
-				jspWriter);
+				componentDescriptor, prepareProps(new HashMap<>()),
+				getRequest(), jspWriter);
 
 			jspWriter.write("</");
 			jspWriter.write(_hydratedContainerElement);

@@ -16,6 +16,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.frontend.taglib.servlet.taglib.base.BaseBarTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
@@ -25,8 +26,12 @@ public class InfoBarTag extends BaseBarTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		request.setAttribute("liferay-frontend:info-bar:buttons", buttons);
-		request.setAttribute("liferay-frontend:info-bar:fixed", _fixed);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
+			"liferay-frontend:info-bar:buttons", buttons);
+		httpServletRequest.setAttribute(
+			"liferay-frontend:info-bar:fixed", _fixed);
 
 		return super.doEndTag();
 	}

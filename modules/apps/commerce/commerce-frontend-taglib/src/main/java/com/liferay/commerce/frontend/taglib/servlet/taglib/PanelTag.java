@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -41,41 +42,49 @@ public class PanelTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		if (Validator.isNull(_spritemap)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
 		}
 
 		String randomNamespace =
-			PortalUtil.generateRandomKey(request, "commerce_panel") +
+			PortalUtil.generateRandomKey(httpServletRequest, "commerce_panel") +
 				StringPool.UNDERLINE;
 
-		request.setAttribute("liferay-commerce:panel:actionIcon", _actionIcon);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:actionIcon", _actionIcon);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:actionLabel", _actionLabel);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:actionTargetId", _actionTargetId);
-		request.setAttribute("liferay-commerce:panel:actionUrl", _actionUrl);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:actionUrl", _actionUrl);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:bodyClasses", _bodyClasses);
-		request.setAttribute("liferay-commerce:panel:collapsed", _collapsed);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:collapsed", _collapsed);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:collapseLabel", _collapseLabel);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:collapseSwitchName", _collapseSwitchName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:collapsible", _collapsible);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:elementClasses", _elementClasses);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:randomNamespace", randomNamespace);
-		request.setAttribute("liferay-commerce:panel:showMoreId", _showMoreId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:showMoreId", _showMoreId);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:showMoreUrl", _showMoreUrl);
-		request.setAttribute("liferay-commerce:panel:spritemap", _spritemap);
-		request.setAttribute("liferay-commerce:panel:title", _title);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:panel:spritemap", _spritemap);
+		httpServletRequest.setAttribute("liferay-commerce:panel:title", _title);
 
 		super.doStartTag();
 

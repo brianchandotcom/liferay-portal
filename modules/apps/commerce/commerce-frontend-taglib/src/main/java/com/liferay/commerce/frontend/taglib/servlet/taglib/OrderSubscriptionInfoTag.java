@@ -162,21 +162,23 @@ public class OrderSubscriptionInfoTag extends IncludeTag {
 			return SKIP_BODY;
 		}
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		if (_showDuration && (_duration > 0)) {
 			_durationPeriod = LanguageUtil.format(
-				request, "duration-x-x",
+				httpServletRequest, "duration-x-x",
 				new Object[] {_duration, _durationPeriodKey});
 		}
 
 		if (_deliveryShowDuration && (_deliveryDuration > 0)) {
 			_deliveryDurationPeriod = LanguageUtil.format(
-				request, "duration-x-x",
+				httpServletRequest, "duration-x-x",
 				new Object[] {_deliveryDuration, _deliveryDurationPeriodKey});
 		}
 
 		if ((_length > 0) && Validator.isNotNull(_subscriptionPeriodKey)) {
 			_subscriptionPeriod = LanguageUtil.format(
-				request, "every-x-x",
+				httpServletRequest, "every-x-x",
 				new Object[] {_length, _subscriptionPeriodKey});
 		}
 
@@ -184,7 +186,7 @@ public class OrderSubscriptionInfoTag extends IncludeTag {
 			Validator.isNotNull(_deliverySubscriptionPeriodKey)) {
 
 			_deliverySubscriptionPeriod = LanguageUtil.format(
-				request, "every-x-x",
+				httpServletRequest, "every-x-x",
 				new Object[] {_deliveryLength, _deliverySubscriptionPeriodKey});
 		}
 
@@ -265,13 +267,15 @@ public class OrderSubscriptionInfoTag extends IncludeTag {
 	protected CPSubscriptionTypeRegistry cpSubscriptionTypeRegistry;
 
 	private String _getPeriodKey(String period, boolean plural) {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		if (plural) {
 			return LanguageUtil.get(
-				request,
+				httpServletRequest,
 				StringUtil.toLowerCase(period + CharPool.LOWER_CASE_S));
 		}
 
-		return LanguageUtil.get(request, period);
+		return LanguageUtil.get(httpServletRequest, period);
 	}
 
 	private static final String _PAGE = "/subscription_info/page.jsp";

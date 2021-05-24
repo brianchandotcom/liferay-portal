@@ -40,13 +40,16 @@ public class ImageSelectorTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		if (_fileEntryId != 0) {
 			try {
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 					_fileEntryId);
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				_imageURL = DLURLHelperUtil.getPreviewURL(
 					fileEntry, fileEntry.getFileVersion(), themeDisplay,
@@ -60,7 +63,7 @@ public class ImageSelectorTag extends IncludeTag {
 
 		if (Validator.isNotNull(_paramName)) {
 			_imageCropRegion = ParamUtil.getString(
-				request, _paramName + "CropRegion");
+				httpServletRequest, _paramName + "CropRegion");
 		}
 
 		return super.doStartTag();

@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Fabio Diego Mastrorilli
  */
@@ -31,14 +33,18 @@ public class UserInvitationModalTag extends ComponentRendererTag {
 	public int doStartTag() {
 		putValue("query", StringPool.BLANK);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
 		putValue(
 			"usersAPI",
-			PortalUtil.getPortalURL(request) + "/o/commerce-ui/search-users");
+			PortalUtil.getPortalURL(httpServletRequest) +
+				"/o/commerce-ui/search-users");
 
 		setTemplateNamespace("UserInvitationModal.render");
 

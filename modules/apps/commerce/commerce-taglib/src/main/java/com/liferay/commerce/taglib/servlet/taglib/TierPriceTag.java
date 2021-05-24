@@ -50,8 +50,10 @@ public class TierPriceTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
+			HttpServletRequest httpServletRequest = getRequest();
+
 			CommerceContext commerceContext =
-				(CommerceContext)request.getAttribute(
+				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			Optional<CommercePriceList> commercePriceListOptional =
@@ -153,18 +155,20 @@ public class TierPriceTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"liferay-commerce:tier-price:commerceCurrencyId",
 			_commerceCurrencyId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:tier-price:commercePriceFormatter",
 			commercePriceFormatter);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:tier-price:commerceTierPriceEntries",
 			_commerceTierPriceEntries);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:tier-price:cpInstanceId", _cpInstanceId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:tier-price:taglibQuantityInputId",
 			_taglibQuantityInputId);
 	}

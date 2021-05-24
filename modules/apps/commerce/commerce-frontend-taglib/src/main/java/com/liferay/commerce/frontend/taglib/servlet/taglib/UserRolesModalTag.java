@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Fabio Diego Mastrorilli
  */
@@ -45,8 +47,11 @@ public class UserRolesModalTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 
@@ -80,7 +85,7 @@ public class UserRolesModalTag extends ComponentRendererTag {
 			List<AccountRole> availableRoles = new ArrayList<>();
 
 			List<Role> roles = RoleServiceUtil.getRoles(
-				PortalUtil.getCompanyId(request),
+				PortalUtil.getCompanyId(httpServletRequest),
 				new int[] {RoleConstants.TYPE_SITE});
 
 			for (Role role : roles) {

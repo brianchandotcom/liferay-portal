@@ -145,8 +145,11 @@ public class MapDisplayTag extends IncludeTag {
 		String mapProviderKey = _mapProviderKey;
 
 		if (Validator.isNull(mapProviderKey)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			mapProviderKey = MapProviderHelperUtil.getMapProviderKey(
 				ServletContextUtil.getGroupLocalService(),

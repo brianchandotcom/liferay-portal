@@ -399,8 +399,11 @@ public class EditorTag extends BaseValidatorTagSupport {
 
 	private String _getContentsLanguageId() {
 		if (_contentsLanguageId == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_contentsLanguageId = themeDisplay.getLanguageId();
 		}
@@ -409,7 +412,10 @@ public class EditorTag extends BaseValidatorTagSupport {
 	}
 
 	private String _getCssClasses() {
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		Portlet portlet = (Portlet)httpServletRequest.getAttribute(
+			WebKeys.RENDER_PORTLET);
 
 		String cssClasses = "portlet ";
 
@@ -421,7 +427,10 @@ public class EditorTag extends BaseValidatorTagSupport {
 	}
 
 	private Map<String, Object> _getData() {
-		String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		String portletId = (String)httpServletRequest.getAttribute(
+			WebKeys.PORTLET_ID);
 
 		if (portletId == null) {
 			return _data;
@@ -429,21 +438,24 @@ public class EditorTag extends BaseValidatorTagSupport {
 
 		Map<String, Object> attributes = new HashMap<>();
 
-		Enumeration<String> enumeration = request.getAttributeNames();
+		Enumeration<String> enumeration =
+			httpServletRequest.getAttributeNames();
 
 		while (enumeration.hasMoreElements()) {
 			String attributeName = enumeration.nextElement();
 
 			if (attributeName.startsWith(getAttributeNamespace())) {
 				attributes.put(
-					attributeName, request.getAttribute(attributeName));
+					attributeName,
+					httpServletRequest.getAttribute(attributeName));
 			}
 		}
 
 		attributes.put(getAttributeNamespace() + "namespace", _getNamespace());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		EditorConfiguration editorConfiguration =
 			EditorConfigurationFactoryUtil.getEditorConfiguration(
@@ -471,13 +483,17 @@ public class EditorTag extends BaseValidatorTagSupport {
 	}
 
 	private String _getNamespace() {
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if ((portletRequest == null) || (portletResponse == null)) {
-			return AUIUtil.getNamespace(request);
+			return AUIUtil.getNamespace(httpServletRequest);
 		}
 
 		return AUIUtil.getNamespace(portletRequest, portletResponse);
@@ -486,18 +502,22 @@ public class EditorTag extends BaseValidatorTagSupport {
 	private RequestBackedPortletURLFactory
 		_getRequestBackedPortletURLFactory() {
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		if (portletRequest == null) {
-			return RequestBackedPortletURLFactoryUtil.create(request);
+			return RequestBackedPortletURLFactoryUtil.create(
+				httpServletRequest);
 		}
 
 		return RequestBackedPortletURLFactoryUtil.create(portletRequest);
 	}
 
 	private String _getResolvedEditorName() {
-		if (!BrowserSnifferUtil.isRtf(request)) {
+		if (!BrowserSnifferUtil.isRtf(getRequest())) {
 			return "simple";
 		}
 

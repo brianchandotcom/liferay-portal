@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Fabio Diego Mastrorilli
  */
@@ -29,14 +31,18 @@ public class AddOrganizationsModalTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		putValue(
 			"organizationsAPI",
-			PortalUtil.getPortalURL(request) +
+			PortalUtil.getPortalURL(httpServletRequest) +
 				"/o/commerce-ui/search-organizations");
+
 		putValue("query", StringPool.BLANK);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 

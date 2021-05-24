@@ -48,11 +48,14 @@ public class PanelAppTag extends BasePanelTag {
 	@Override
 	public int doEndTag() throws JspException {
 		if (_panelApp != null) {
-			request.setAttribute(ApplicationListWebKeys.PANEL_APP, _panelApp);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			httpServletRequest.setAttribute(
+				ApplicationListWebKeys.PANEL_APP, _panelApp);
 
 			try {
 				boolean include = _panelApp.include(
-					request,
+					httpServletRequest,
 					PipingServletResponseFactory.createPipingServletResponse(
 						pageContext));
 

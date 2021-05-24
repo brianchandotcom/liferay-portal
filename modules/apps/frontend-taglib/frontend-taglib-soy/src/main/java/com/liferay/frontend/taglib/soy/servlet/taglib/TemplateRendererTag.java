@@ -59,7 +59,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 				SoyComponentRendererProvider.getSoyComponentRenderer();
 
 			soyComponentRenderer.renderSoyComponent(
-				request, jspWriter, componentDescriptor, context);
+				getRequest(), jspWriter, componentDescriptor, context);
 		}
 		catch (Exception exception) {
 			throw new JspException(exception);
@@ -203,15 +203,18 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 	protected boolean isPositionInLine() {
 		Boolean positionInline = null;
 
-		String fragmentId = ParamUtil.getString(request, "p_f_id");
+		HttpServletRequest httpServletRequest = getRequest();
+
+		String fragmentId = ParamUtil.getString(httpServletRequest, "p_f_id");
 
 		if (Validator.isNotNull(fragmentId)) {
 			positionInline = true;
 		}
 
 		if (positionInline == null) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (themeDisplay.isIsolated() ||
 				themeDisplay.isLifecycleResource() ||

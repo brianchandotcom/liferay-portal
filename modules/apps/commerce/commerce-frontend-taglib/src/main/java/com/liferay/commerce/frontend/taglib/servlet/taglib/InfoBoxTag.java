@@ -17,6 +17,7 @@ package com.liferay.commerce.frontend.taglib.servlet.taglib;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -36,11 +37,15 @@ public class InfoBoxTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		setNamespacedAttribute(request, "actionLabel", _actionLabel);
-		setNamespacedAttribute(request, "actionTargetId", _actionTargetId);
-		setNamespacedAttribute(request, "actionUrl", _actionUrl);
-		setNamespacedAttribute(request, "elementClasses", _elementClasses);
-		setNamespacedAttribute(request, "title", _title);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		setNamespacedAttribute(httpServletRequest, "actionLabel", _actionLabel);
+		setNamespacedAttribute(
+			httpServletRequest, "actionTargetId", _actionTargetId);
+		setNamespacedAttribute(httpServletRequest, "actionUrl", _actionUrl);
+		setNamespacedAttribute(
+			httpServletRequest, "elementClasses", _elementClasses);
+		setNamespacedAttribute(httpServletRequest, "title", _title);
 
 		super.doStartTag();
 

@@ -48,8 +48,11 @@ public class OrderTransitionsTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_commerceOrder = CommerceOrderServiceUtil.fetchCommerceOrder(
 				_commerceOrderId);
@@ -123,14 +126,16 @@ public class OrderTransitionsTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"liferay-commerce:order-transitions:commerceOrder", _commerceOrder);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:order-transitions:commerceOrderTransitionOVPs",
 			_commerceOrderTransitionOVPs);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:order-transitions:cssClass", _cssClass);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:order-transitions:pathThemeImages",
 			_pathThemeImages);
 	}

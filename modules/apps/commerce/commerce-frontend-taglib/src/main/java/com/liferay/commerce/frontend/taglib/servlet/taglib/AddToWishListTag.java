@@ -39,8 +39,10 @@ public class AddToWishListTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
+			HttpServletRequest httpServletRequest = getRequest();
+
 			CommerceContext commerceContext =
-				(CommerceContext)request.getAttribute(
+				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			CommerceAccount commerceAccount =
@@ -52,8 +54,9 @@ public class AddToWishListTag extends IncludeTag {
 
 			CPSku cpSku = _cpContentHelper.getDefaultCPSku(_cpCatalogEntry);
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_inWishList = _cpContentHelper.isInWishList(
 				cpSku, _cpCatalogEntry, themeDisplay);

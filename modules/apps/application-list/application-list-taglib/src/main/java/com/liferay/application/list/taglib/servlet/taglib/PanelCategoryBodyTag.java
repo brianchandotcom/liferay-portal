@@ -58,12 +58,15 @@ public class PanelCategoryBodyTag extends BasePanelTag {
 	}
 
 	protected List<PanelApp> getPanelApps() {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		PanelAppRegistry panelAppRegistry =
-			(PanelAppRegistry)request.getAttribute(
+			(PanelAppRegistry)httpServletRequest.getAttribute(
 				ApplicationListWebKeys.PANEL_APP_REGISTRY);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return panelAppRegistry.getPanelApps(
 			_panelCategory, themeDisplay.getPermissionChecker(), getGroup());

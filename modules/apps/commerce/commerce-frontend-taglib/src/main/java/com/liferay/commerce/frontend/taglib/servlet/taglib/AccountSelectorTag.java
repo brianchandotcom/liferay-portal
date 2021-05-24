@@ -90,8 +90,10 @@ public class AccountSelectorTag extends IncludeTag {
 					themeDisplay.getPathThemeImages() + "/clay/icons.svg";
 			}
 
+			HttpServletRequest parentHttpServletRequest = getRequest();
+
 			CommerceContext commerceContext =
-				(CommerceContext)request.getAttribute(
+				(CommerceContext)parentHttpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			CommerceAccount commerceAccount =
@@ -154,7 +156,7 @@ public class AccountSelectorTag extends IncludeTag {
 				_getEditOrderURL(themeDisplay));
 
 			String setCurrentAccountURL =
-				PortalUtil.getPortalURL(request) +
+				PortalUtil.getPortalURL(parentHttpServletRequest) +
 					"/o/commerce-ui/set-current-account";
 
 			httpServletRequest.setAttribute(

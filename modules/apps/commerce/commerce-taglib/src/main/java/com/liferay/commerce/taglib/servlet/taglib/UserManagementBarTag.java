@@ -33,8 +33,11 @@ public class UserManagementBarTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		User user = themeDisplay.getUser();
 
@@ -94,12 +97,14 @@ public class UserManagementBarTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"liferay-commerce:user-management-bar:href", _href);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:user-management-bar:notificationsCount",
 			_notificationsCount);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:user-management-bar:showNotifications",
 			_showNotifications);
 	}

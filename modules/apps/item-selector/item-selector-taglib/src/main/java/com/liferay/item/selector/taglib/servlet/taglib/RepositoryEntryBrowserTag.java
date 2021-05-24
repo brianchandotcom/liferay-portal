@@ -234,10 +234,14 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	}
 
 	protected String getDisplayStyle() {
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+		HttpServletRequest httpServletRequest = getRequest();
 
-		String displayStyle = ParamUtil.getString(request, "displayStyle");
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				httpServletRequest);
+
+		String displayStyle = ParamUtil.getString(
+			httpServletRequest, "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			displayStyle = getSafeDisplayStyle(displayStyle);

@@ -19,6 +19,7 @@ import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -38,15 +39,20 @@ public class SidePanelContentTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		setNamespacedAttribute(request, "showCloseButton", _showCloseButton);
-		setNamespacedAttribute(request, "sidePanelId", _sidePanelId);
-		setNamespacedAttribute(request, "title", _title);
+		HttpServletRequest httpServletRequest = getRequest();
+
 		setNamespacedAttribute(
-			request, "screenNavigatorKey", _screenNavigatorKey);
+			httpServletRequest, "showCloseButton", _showCloseButton);
+		setNamespacedAttribute(httpServletRequest, "sidePanelId", _sidePanelId);
+		setNamespacedAttribute(httpServletRequest, "title", _title);
 		setNamespacedAttribute(
-			request, "screenNavigatorModelBean", _screenNavigatorModelBean);
+			httpServletRequest, "screenNavigatorKey", _screenNavigatorKey);
 		setNamespacedAttribute(
-			request, "screenNavigatorPortletURL", _screenNavigatorPortletURL);
+			httpServletRequest, "screenNavigatorModelBean",
+			_screenNavigatorModelBean);
+		setNamespacedAttribute(
+			httpServletRequest, "screenNavigatorPortletURL",
+			_screenNavigatorPortletURL);
 
 		super.doStartTag();
 

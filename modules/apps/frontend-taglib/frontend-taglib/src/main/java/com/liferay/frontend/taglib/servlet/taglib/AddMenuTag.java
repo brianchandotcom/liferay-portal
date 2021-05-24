@@ -34,8 +34,10 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		List<AddMenuItem> addMenuItems =
-			(List<AddMenuItem>)request.getAttribute(
+			(List<AddMenuItem>)httpServletRequest.getAttribute(
 				"liferay-frontend:add-menu:addMenuItems");
 
 		if (ListUtil.isEmpty(addMenuItems)) {
@@ -139,7 +141,9 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		request.setAttribute(
+		HttpServletRequest httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"liferay-frontend:add-menu:addMenuItems", _addMenuItems);
 
 		return EVAL_BODY_INCLUDE;
@@ -195,7 +199,9 @@ public class AddMenuTag extends IncludeTag {
 	}
 
 	protected List<AddMenuItem> getAddMenuItems() {
-		return (List<AddMenuItem>)request.getAttribute(
+		HttpServletRequest httpServletRequest = getRequest();
+
+		return (List<AddMenuItem>)httpServletRequest.getAttribute(
 			"liferay-frontend:add-menu:addMenuItems");
 	}
 

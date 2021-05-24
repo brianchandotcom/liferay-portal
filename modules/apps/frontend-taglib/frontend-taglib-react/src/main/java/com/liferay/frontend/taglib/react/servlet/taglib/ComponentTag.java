@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -54,7 +55,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 			ReactRenderer reactRenderer = ServicesProvider.getReactRenderer();
 
 			reactRenderer.renderReact(
-				componentDescriptor, props, request, jspWriter);
+				componentDescriptor, props, getRequest(), jspWriter);
 		}
 		catch (Exception exception) {
 			throw new JspException(exception);
@@ -151,14 +152,17 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 	}
 
 	protected boolean isPositionInLine() {
-		String fragmentId = ParamUtil.getString(request, "p_f_id");
+		HttpServletRequest httpServletRequest = getRequest();
+
+		String fragmentId = ParamUtil.getString(httpServletRequest, "p_f_id");
 
 		if (Validator.isNotNull(fragmentId)) {
 			return true;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isIsolated() || themeDisplay.isLifecycleResource() ||
 			themeDisplay.isStateExclusive()) {

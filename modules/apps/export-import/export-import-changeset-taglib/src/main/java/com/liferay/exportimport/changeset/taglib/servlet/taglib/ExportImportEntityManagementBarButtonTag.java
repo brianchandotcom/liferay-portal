@@ -30,8 +30,10 @@ public class ExportImportEntityManagementBarButtonTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		_searchContainerId = GetterUtil.getString(
-			request.getAttribute(
+			httpServletRequest.getAttribute(
 				"liferay-frontend:management-bar:searchContainerId"));
 
 		return super.doStartTag();

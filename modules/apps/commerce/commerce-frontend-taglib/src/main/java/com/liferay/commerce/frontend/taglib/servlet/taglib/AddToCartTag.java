@@ -52,8 +52,10 @@ public class AddToCartTag extends IncludeTag {
 	@Override
 	public int doStartTag() throws JspException {
 		try {
+			HttpServletRequest httpServletRequest = getRequest();
+
 			CommerceContext commerceContext =
-				(CommerceContext)request.getAttribute(
+				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			CommerceAccount commerceAccount =
@@ -104,8 +106,9 @@ public class AddToCartTag extends IncludeTag {
 				}
 			}
 
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			String pathThemeImages = themeDisplay.getPathThemeImages();
 
@@ -117,7 +120,7 @@ public class AddToCartTag extends IncludeTag {
 
 			if (sku != null) {
 				_stockQuantity = _commerceInventoryEngine.getStockQuantity(
-					PortalUtil.getCompanyId(request),
+					PortalUtil.getCompanyId(httpServletRequest),
 					commerceContext.getCommerceChannelGroupId(), sku);
 
 				_productSettingsModel = _productHelper.getProductSettingsModel(

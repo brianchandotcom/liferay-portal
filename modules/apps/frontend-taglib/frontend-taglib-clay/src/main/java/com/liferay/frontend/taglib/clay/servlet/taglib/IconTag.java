@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -38,8 +39,11 @@ public class IconTag extends BaseContainerTag {
 		setDynamicAttribute(StringPool.BLANK, "role", "presentation");
 		setDynamicAttribute(StringPool.BLANK, "viewBox", "0 0 512 512");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String pathThemeImages = themeDisplay.getPathThemeImages();
 

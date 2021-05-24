@@ -32,6 +32,8 @@ import java.util.Map;
 
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Chema Balsas
  */
@@ -44,8 +46,11 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		Map<String, Object> context = getContext();
 
 		if (Validator.isNull(context.get("spritemap"))) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			String pathThemeImages = themeDisplay.getPathThemeImages();
 
@@ -93,8 +98,11 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 			return _namespace;
 		}
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (portletResponse != null) {
 			_namespace = portletResponse.getNamespace();

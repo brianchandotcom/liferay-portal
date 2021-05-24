@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -30,19 +31,23 @@ import javax.servlet.jsp.PageContext;
 public class BasePanelTag extends IncludeTag {
 
 	public Group getGroup() {
-		GroupProvider groupProvider = (GroupProvider)request.getAttribute(
-			ApplicationListWebKeys.GROUP_PROVIDER);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		GroupProvider groupProvider =
+			(GroupProvider)httpServletRequest.getAttribute(
+				ApplicationListWebKeys.GROUP_PROVIDER);
 
 		if (groupProvider != null) {
-			Group group = groupProvider.getGroup(request);
+			Group group = groupProvider.getGroup(httpServletRequest);
 
 			if (group != null) {
 				return group;
 			}
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getScopeGroup();
 	}

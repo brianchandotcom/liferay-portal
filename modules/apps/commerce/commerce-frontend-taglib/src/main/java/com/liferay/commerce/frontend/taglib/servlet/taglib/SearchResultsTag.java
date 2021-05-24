@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Marco Leo
  */
@@ -37,8 +39,11 @@ public class SearchResultsTag extends ComponentRendererTag {
 	public int doStartTag() {
 		putValue("queryString", StringPool.BLANK);
 
-		CommerceContext commerceContext = (CommerceContext)request.getAttribute(
-			CommerceWebKeys.COMMERCE_CONTEXT);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		try {
 			CommerceAccount commerceAccount =
@@ -56,10 +61,12 @@ public class SearchResultsTag extends ComponentRendererTag {
 
 		putValue(
 			"searchAPI",
-			PortalUtil.getPortalURL(request) + "/o/commerce-ui/search/");
+			PortalUtil.getPortalURL(httpServletRequest) +
+				"/o/commerce-ui/search/");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 

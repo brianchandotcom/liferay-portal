@@ -29,6 +29,7 @@ import java.io.IOException;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTag;
@@ -80,8 +81,11 @@ public class AMImageImgTag extends AttributesTagSupport implements BodyTag {
 			sb.append("\" ");
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		String downloadURL = DLURLHelperUtil.getPreviewURL(
 			_fileVersion.getFileEntry(), _fileVersion, themeDisplay,

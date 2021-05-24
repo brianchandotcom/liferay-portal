@@ -21,6 +21,8 @@ import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.taglib.internal.servlet.SharingConfigurationFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Alejandro Tardín
  */
@@ -28,8 +30,11 @@ public abstract class BaseSharingTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		SharingConfigurationFactory sharingConfigurationFactory =
 			SharingConfigurationFactoryUtil.getSharingConfigurationFactory();

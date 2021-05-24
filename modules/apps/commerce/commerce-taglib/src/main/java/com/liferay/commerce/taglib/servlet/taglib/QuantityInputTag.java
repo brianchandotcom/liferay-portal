@@ -129,26 +129,30 @@ public class QuantityInputTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"liferay-commerce:quantity-input:allowedOrderQuantities",
 			_allowedOrderQuantities);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:quantity-input:cpDefinitionId", _cpDefinitionId);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:quantity-input:maxOrderQuantity",
 			_maxOrderQuantity);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:quantity-input:minOrderQuantity",
 			_minOrderQuantity);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:quantity-input:multipleOrderQuantity",
 			_multipleOrderQuantity);
-		request.setAttribute("liferay-commerce:quantity-input:name", _name);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:quantity-input:name", _name);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:quantity-input:showLabel", _showLabel);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:quantity-input:useSelect", _useSelect);
-		request.setAttribute("liferay-commerce:quantity-input:value", _value);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:quantity-input:value", _value);
 	}
 
 	private static final String _PAGE = "/quantity_input/page.jsp";

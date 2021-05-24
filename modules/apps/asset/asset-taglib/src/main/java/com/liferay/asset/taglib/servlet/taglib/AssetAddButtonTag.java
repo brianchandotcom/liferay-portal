@@ -34,7 +34,9 @@ public class AssetAddButtonTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		request.setAttribute(
+		HttpServletRequest httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			AssetWebKeys.ASSET_HELPER, ServletContextUtil.getAssetHelper());
 
 		return super.doStartTag();

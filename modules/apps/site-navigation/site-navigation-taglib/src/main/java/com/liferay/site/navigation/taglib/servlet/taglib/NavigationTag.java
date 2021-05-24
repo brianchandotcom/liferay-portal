@@ -100,11 +100,13 @@ public class NavigationTag extends IncludeTag {
 		List<NavItem> branchNavItems = null;
 		List<NavItem> navItems = null;
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		try {
-			branchNavItems = getBranchNavItems(request);
+			branchNavItems = getBranchNavItems(httpServletRequest);
 
 			navItems = NavItemUtil.getNavItems(
-				NavigationMenuMode.DEFAULT, request, _rootLayoutType,
+				NavigationMenuMode.DEFAULT, httpServletRequest, _rootLayoutType,
 				_rootLayoutLevel, _rootLayoutUuid, branchNavItems);
 		}
 		catch (Exception exception) {
@@ -115,7 +117,8 @@ public class NavigationTag extends IncludeTag {
 			(HttpServletResponse)pageContext.getResponse();
 
 		String result = portletDisplayTemplate.renderDDMTemplate(
-			request, httpServletResponse, portletDisplayDDMTemplate, navItems,
+			httpServletRequest, httpServletResponse, portletDisplayDDMTemplate,
+			navItems,
 			HashMapBuilder.<String, Object>put(
 				"branchNavItems", branchNavItems
 			).put(
@@ -211,8 +214,11 @@ public class NavigationTag extends IncludeTag {
 			return _ddmTemplateGroupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		return themeDisplay.getScopeGroupId();
 	}

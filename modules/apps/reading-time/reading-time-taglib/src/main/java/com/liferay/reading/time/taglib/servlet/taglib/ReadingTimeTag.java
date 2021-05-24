@@ -33,6 +33,7 @@ import java.util.Optional;
 
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.BodyTag;
@@ -104,8 +105,11 @@ public class ReadingTimeTag extends AttributesTagSupport implements BodyTag {
 	}
 
 	private String _getNamespace() {
-		RenderResponse renderResponse = (RenderResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		RenderResponse renderResponse =
+			(RenderResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		return renderResponse.getNamespace();
 	}
@@ -136,7 +140,7 @@ public class ReadingTimeTag extends AttributesTagSupport implements BodyTag {
 		}
 
 		return readingTimeMessageProvider.provide(
-			readingTimeDuration, PortalUtil.getLocale(request));
+			readingTimeDuration, PortalUtil.getLocale(getRequest()));
 	}
 
 	private String _displayStyle = "simple";

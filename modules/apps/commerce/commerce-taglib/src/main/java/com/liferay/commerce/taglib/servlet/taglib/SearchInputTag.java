@@ -83,10 +83,13 @@ public class SearchInputTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"liferay-commerce:search-input:actionURL", _actionURL);
-		request.setAttribute("liferay-commerce:search-input:data", _data);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:search-input:data", _data);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:search-input:formName", _formName);
 	}
 

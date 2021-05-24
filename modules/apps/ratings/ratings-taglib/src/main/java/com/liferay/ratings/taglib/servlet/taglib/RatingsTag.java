@@ -156,7 +156,7 @@ public class RatingsTag extends IncludeTag {
 			int positiveVotes = (int)Math.round(_getTotalScore(ratingsStats));
 
 			String randomNamespace = PortalUtil.generateRandomKey(
-				request, "taglib_ratings_ratings_");
+				getRequest(), "taglib_ratings_ratings_");
 
 			randomNamespace += StringPool.UNDERLINE;
 

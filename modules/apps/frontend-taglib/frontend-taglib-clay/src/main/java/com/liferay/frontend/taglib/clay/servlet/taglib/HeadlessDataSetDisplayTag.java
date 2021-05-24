@@ -55,7 +55,7 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		try {
 			_appURL =
-				PortalUtil.getPortalURL(request) +
+				PortalUtil.getPortalURL(getRequest()) +
 					"/o/frontend-taglib-clay/app";
 
 			if (_creationMenu == null) {
@@ -313,67 +313,75 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:actionParameterName",
 			_actionParameterName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:activeViewSettingsJSON",
 			_activeViewSettingsJSON);
-		request.setAttribute("clay:headless-data-set-display:apiURL", _apiURL);
-		request.setAttribute("clay:headless-data-set-display:appURL", _appURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:headless-data-set-display:apiURL", _apiURL);
+		httpServletRequest.setAttribute(
+			"clay:headless-data-set-display:appURL", _appURL);
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:bulkActionDropdownItems",
 			_bulkActionDropdownItems);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:clayDataSetActionDropdownItems",
 			_clayDataSetActionDropdownItems);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:clayDataSetDisplayViewsContext",
 			_clayDataSetDisplayViewsContext);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:clayDataSetFiltersContext",
 			_clayDataSetFiltersContext);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:clayPaginationEntries",
 			_clayPaginationEntries);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:creationMenu", _creationMenu);
-		request.setAttribute("clay:headless-data-set-display:formId", _formId);
-		request.setAttribute("clay:headless-data-set-display:id", _id);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:headless-data-set-display:formId", _formId);
+		httpServletRequest.setAttribute(
+			"clay:headless-data-set-display:id", _id);
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:itemsPerPage", _itemsPerPage);
-		request.setAttribute("clay:headless-data-set-display:module", _module);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:headless-data-set-display:module", _module);
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:namespace", _namespace);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:nestedItemsKey", _nestedItemsKey);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:nestedItemsReferenceKey",
 			_nestedItemsReferenceKey);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:pageNumber", _pageNumber);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:paginationSelectedEntry",
 			_paginationSelectedEntry);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:portletURL", _portletURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:selectedItems", _selectedItems);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:selectedItemsKey",
 			_selectedItemsKey);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:selectionType", _selectionType);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:showManagementBar",
 			_showManagementBar);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:showPagination", _showPagination);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:showSearch", _showSearch);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:sortItemList", _sortItemList);
-		request.setAttribute("clay:headless-data-set-display:style", _style);
+		httpServletRequest.setAttribute(
+			"clay:headless-data-set-display:style", _style);
 	}
 
 	private List<ClayPaginationEntry> _getClayPaginationEntries() {
@@ -391,12 +399,15 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	}
 
 	private void _setActiveViewSettingsJSON() {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				httpServletRequest);
 
 		String clayDataSetDisplaySettingsNamespace =
 			ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
-				request, _id);
+				httpServletRequest, _id);
 
 		_activeViewSettingsJSON = portalPreferences.getValue(
 			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
@@ -405,12 +416,12 @@ public class HeadlessDataSetDisplayTag extends IncludeTag {
 	private void _setClayDataSetDisplayViewsContext() {
 		_clayDataSetDisplayViewsContext =
 			_clayDataSetDisplayViewSerializer.serialize(
-				_id, PortalUtil.getLocale(request));
+				_id, PortalUtil.getLocale(getRequest()));
 	}
 
 	private void _setClayDataSetFiltersContext() {
 		_clayDataSetFiltersContext = _clayDataSetFilterSerializer.serialize(
-			_id, PortalUtil.getLocale(request));
+			_id, PortalUtil.getLocale(getRequest()));
 	}
 
 	private void _setClayPaginationEntries() {

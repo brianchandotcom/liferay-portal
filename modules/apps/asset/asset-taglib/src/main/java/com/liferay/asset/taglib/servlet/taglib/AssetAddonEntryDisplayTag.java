@@ -40,7 +40,9 @@ public class AssetAddonEntryDisplayTag extends IncludeTag {
 	public int doEndTag() throws JspException {
 		for (AssetAddonEntry assetAddonEntry : _assetAddonEntries) {
 			try {
-				assetAddonEntry.include(request, getResponse());
+				HttpServletRequest httpServletRequest = getRequest();
+
+				assetAddonEntry.include(httpServletRequest, getResponse());
 			}
 			catch (IOException ioException) {
 				_log.error(ioException, ioException);

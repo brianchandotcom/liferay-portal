@@ -52,8 +52,11 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		ScreenNavigationRegistry screenNavigationRegistry =
 			ServletContextUtil.getScreenNavigationRegistry();
@@ -302,8 +305,11 @@ public class ScreenNavigationTag extends IncludeTag {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		ScreenNavigationRegistry screenNavigationRegistry =
 			ServletContextUtil.getScreenNavigationRegistry();
@@ -315,7 +321,7 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	private ScreenNavigationCategory _getSelectedScreenNavigationCategory() {
 		String screenNavigationCategoryKey = ParamUtil.getString(
-			request, "screenNavigationCategoryKey",
+			getRequest(), "screenNavigationCategoryKey",
 			_getDefaultScreenNavigationCategoryKey());
 
 		for (ScreenNavigationCategory screenNavigationCategory :
@@ -334,7 +340,7 @@ public class ScreenNavigationTag extends IncludeTag {
 
 	private ScreenNavigationEntry<?> _getSelectedScreenNavigationEntry() {
 		String screenNavigationEntryKey = ParamUtil.getString(
-			request, "screenNavigationEntryKey");
+			getRequest(), "screenNavigationEntryKey");
 
 		if (Validator.isNull(screenNavigationEntryKey)) {
 			screenNavigationEntryKey = _getDefaultScreenNavigationEntryKey();

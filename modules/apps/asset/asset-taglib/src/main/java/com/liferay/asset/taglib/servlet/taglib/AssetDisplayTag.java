@@ -204,7 +204,7 @@ public class AssetDisplayTag extends IncludeTag {
 
 		try {
 			boolean include = _renderer.include(
-				request, httpServletResponse, _template);
+				getRequest(), httpServletResponse, _template);
 
 			if (include) {
 				return;

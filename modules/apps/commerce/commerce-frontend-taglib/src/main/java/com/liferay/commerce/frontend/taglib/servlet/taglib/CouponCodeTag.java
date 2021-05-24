@@ -78,7 +78,9 @@ public class CouponCodeTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		HttpServletRequest parentHttpServletRequest = getRequest();
+
+		parentHttpServletRequest.setAttribute(
 			"liferay-commerce:coupon-code:commerceOrder", _commerceOrder);
 	}
 

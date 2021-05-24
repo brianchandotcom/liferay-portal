@@ -51,8 +51,10 @@ public class CompareCheckboxTag extends IncludeTag {
 
 			long commerceAccountId = 0;
 
+			HttpServletRequest httpServletRequest = getRequest();
+
 			CommerceContext commerceContext =
-				(CommerceContext)request.getAttribute(
+				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			CommerceAccount commerceAccount =
@@ -65,7 +67,7 @@ public class CompareCheckboxTag extends IncludeTag {
 			List<Long> cpDefinitionIds = _getCPDefinitionIds(
 				commerceContext.getCommerceChannelGroupId(), commerceAccountId,
 				CookieKeys.getCookie(
-					request,
+					httpServletRequest,
 					_getCPDefinitionIdsCookieKey(
 						commerceContext.getCommerceChannelGroupId())));
 

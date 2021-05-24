@@ -77,7 +77,7 @@ public class HTMLTag extends BaseHTMLTag {
 
 	protected DDMFormValues getDDMFormValuesFromRequest() {
 		String serializedDDMFormValues = ParamUtil.getString(
-			request, getDDMFormValuesInputName());
+			getRequest(), getDDMFormValuesInputName());
 
 		if (Validator.isNotNull(serializedDDMFormValues)) {
 			DDMForm ddmForm = getDDMForm();

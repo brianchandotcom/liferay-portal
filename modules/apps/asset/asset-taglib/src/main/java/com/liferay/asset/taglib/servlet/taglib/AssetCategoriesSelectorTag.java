@@ -183,8 +183,11 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	}
 
 	protected List<String[]> getCategoryIdsTitles() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<String[]> categoryIdsTitles = new ArrayList<>();
 
@@ -196,7 +199,8 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 		if (Validator.isNull(_className)) {
 			if (!_ignoreRequestValue) {
-				String categoryIdsParam = request.getParameter(_hiddenInput);
+				String categoryIdsParam = httpServletRequest.getParameter(
+					_hiddenInput);
 
 				if (categoryIdsParam != null) {
 					categoryIds = categoryIdsParam;
@@ -227,9 +231,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				}
 
 				if (!_ignoreRequestValue) {
-					String[] categoryIdsParam = request.getParameterValues(
-						_hiddenInput + StringPool.UNDERLINE +
-							vocabulary.getVocabularyId());
+					String[] categoryIdsParam =
+						httpServletRequest.getParameterValues(
+							_hiddenInput + StringPool.UNDERLINE +
+								vocabulary.getVocabularyId());
 
 					if (categoryIdsParam != null) {
 						categoryIds = StringUtil.merge(
@@ -262,8 +267,11 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	}
 
 	protected long[] getGroupIds() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			if (ArrayUtil.isEmpty(_groupIds)) {
@@ -291,8 +299,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 	protected PortletURL getPortletURL() {
 		try {
+			HttpServletRequest httpServletRequest = getRequest();
+
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				request, AssetCategory.class.getName(),
+				httpServletRequest, AssetCategory.class.getName(),
 				PortletProvider.Action.BROWSE);
 
 			if (portletURL == null) {
@@ -319,8 +329,11 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	}
 
 	protected List<Map<String, Object>> getVocabularies() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<Map<String, Object>> vocabulariesList = new ArrayList<>();
 
@@ -443,7 +456,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		}
 
 		String randomKey = PortalUtil.generateRandomKey(
-			request, "taglib_ui_asset_categories_selector_page");
+			getRequest(), "taglib_ui_asset_categories_selector_page");
 
 		return randomKey + StringPool.UNDERLINE;
 	}
@@ -457,13 +470,17 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			return _namespace;
 		}
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if ((portletRequest == null) || (portletResponse == null)) {
-			_namespace = AUIUtil.getNamespace(request);
+			_namespace = AUIUtil.getNamespace(httpServletRequest);
 
 			return _namespace;
 		}
@@ -479,8 +496,11 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 		vocabularies.addAll(
 			AssetVocabularyServiceUtil.getGroupVocabularies(getGroupIds()));
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		vocabularies.sort(
 			new AssetVocabularyGroupLocalizedTitleComparator(

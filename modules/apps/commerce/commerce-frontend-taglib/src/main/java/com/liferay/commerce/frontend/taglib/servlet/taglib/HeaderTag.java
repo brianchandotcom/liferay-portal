@@ -213,42 +213,53 @@ public class HeaderTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest = getRequest();
+
 		if (Validator.isNull(_spritemap)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
 		}
 
-		request.setAttribute("liferay-commerce:header:actions", _actions);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:header:actions", _actions);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:assignerModalUrl", _assignerModalUrl);
-		request.setAttribute("liferay-commerce:header:bean", _bean);
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-commerce:header:bean", _bean);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:beanIdLabel", _beanIdLabel);
-		request.setAttribute("liferay-commerce:header:cssClasses", _cssClasses);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:header:cssClasses", _cssClasses);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:dropdownItems", _dropdownItems);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:externalReferenceCode",
 			_externalReferenceCode);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:externalReferenceCodeEditUrl",
 			_externalReferenceCodeEditUrl);
-		request.setAttribute("liferay-commerce:header:fullWidth", _fullWidth);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:header:fullWidth", _fullWidth);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:hasWorkflow", Boolean.FALSE);
-		request.setAttribute("liferay-commerce:header:model", _model);
-		request.setAttribute("liferay-commerce:header:previewUrl", _previewUrl);
-		request.setAttribute("liferay-commerce:header:spritemap", _spritemap);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:header:model", _model);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:header:previewUrl", _previewUrl);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:header:spritemap", _spritemap);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:thumbnailUrl", _thumbnailUrl);
-		request.setAttribute("liferay-commerce:header:title", _title);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:header:title", _title);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:transitionPortletURL",
 			_transitionPortletURL);
-		request.setAttribute("liferay-commerce:header:version", _version);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"liferay-commerce:header:version", _version);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:header:wrapperCssClasses", _wrapperCssClasses);
 	}
 

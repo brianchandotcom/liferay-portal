@@ -61,12 +61,16 @@ public class DiffVersionComparatorTag extends IncludeTag {
 
 		Date modifiedDate = diffVersion.getModifiedDate();
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		String timeDescription = LanguageUtil.getTimeDescription(
-			request, System.currentTimeMillis() - modifiedDate.getTime(), true);
+			httpServletRequest,
+			System.currentTimeMillis() - modifiedDate.getTime(), true);
 
 		JSONObject diffVersionJSONObject = JSONUtil.put(
 			"displayDate",
-			LanguageUtil.format(request, "x-ago", timeDescription, false)
+			LanguageUtil.format(
+				httpServletRequest, "x-ago", timeDescription, false)
 		).put(
 			"inRange",
 			(diffVersion.getVersion() > _sourceVersion) &&
@@ -77,7 +81,8 @@ public class DiffVersionComparatorTag extends IncludeTag {
 
 		diffVersionJSONObject.put(
 			"label",
-			LanguageUtil.format(request, "version-x", diffVersionString));
+			LanguageUtil.format(
+				httpServletRequest, "version-x", diffVersionString));
 
 		sourceURL.setParameter("sourceVersion", diffVersionString);
 
@@ -203,10 +208,13 @@ public class DiffVersionComparatorTag extends IncludeTag {
 
 		Map<String, Object> data = new HashMap<>();
 
+		HttpServletRequest parentHttpServletRequest = getRequest();
+
 		try {
 			if (_availableLocales != null) {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)parentHttpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				JSONArray availableLocalesJSONArray =
 					JSONFactoryUtil.createJSONArray();
@@ -229,7 +237,7 @@ public class DiffVersionComparatorTag extends IncludeTag {
 			data.put("diffHtmlResults", _diffHtmlResults);
 
 			RenderResponse renderResponse =
-				(RenderResponse)request.getAttribute(
+				(RenderResponse)parentHttpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 			PortletURL sourceURL = PortletURLBuilder.create(

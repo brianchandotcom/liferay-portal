@@ -41,6 +41,7 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -58,7 +59,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 		if ((searchValue == null) && (searchInputName != null)) {
 			String searchValueParamValue = ParamUtil.getString(
-				request, searchInputName);
+				getRequest(), searchInputName);
 
 			if (!searchValueParamValue.equals(StringPool.BLANK)) {
 				setSearchValue(searchValueParamValue);
@@ -180,8 +181,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			return _managementToolbarDisplayContext.getNamespace();
 		}
 
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if (portletResponse != null) {
 			_namespace = portletResponse.getNamespace();

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Fabio Diego Mastrorilli
  */
@@ -36,21 +38,24 @@ public class AddressModalTag extends ComponentRendererTag {
 
 	@Override
 	public int doStartTag() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		try {
 			CommerceContext commerceContext =
-				(CommerceContext)request.getAttribute(
+				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
 
 			putValue(
 				"countriesAPI",
 				StringBundler.concat(
-					PortalUtil.getPortalURL(request),
+					PortalUtil.getPortalURL(httpServletRequest),
 					"/o/commerce-ui/address/countries-by-channel-id?channelId=",
 					commerceContext.getCommerceChannelId(), "&p_auth=",
-					AuthTokenUtil.getToken(request)));
+					AuthTokenUtil.getToken(httpServletRequest)));
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException, portalException);
@@ -58,14 +63,14 @@ public class AddressModalTag extends ComponentRendererTag {
 			putValue(
 				"countriesAPI",
 				StringBundler.concat(
-					PortalUtil.getPortalURL(request),
+					PortalUtil.getPortalURL(httpServletRequest),
 					"/o/commerce-ui/address/countries/?p_auth=",
-					AuthTokenUtil.getToken(request)));
+					AuthTokenUtil.getToken(httpServletRequest)));
 		}
 
 		putValue(
 			"regionsAPI",
-			PortalUtil.getPortalURL(request) +
+			PortalUtil.getPortalURL(httpServletRequest) +
 				"/o/commerce-ui/address/regions/");
 		putValue("spritemap", themeDisplay.getPathThemeImages() + "/icons.svg");
 

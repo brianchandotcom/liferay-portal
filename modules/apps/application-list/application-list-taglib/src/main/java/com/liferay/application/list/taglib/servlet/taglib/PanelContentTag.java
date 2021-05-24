@@ -32,12 +32,14 @@ public class PanelContentTag extends BasePanelTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		request.setAttribute(
+		HttpServletRequest httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY, _panelCategory);
 
 		try {
 			boolean include = _panelCategory.include(
-				request,
+				httpServletRequest,
 				PipingServletResponseFactory.createPipingServletResponse(
 					pageContext));
 

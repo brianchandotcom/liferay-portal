@@ -103,20 +103,24 @@ public class ModalTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest = getRequest();
+
 		if (Validator.isNull(_spritemap)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			_spritemap = themeDisplay.getPathThemeImages() + "/clay/icons.svg";
 		}
 
-		request.setAttribute("liferay-commerce:modal:id", _id);
-		request.setAttribute(
+		httpServletRequest.setAttribute("liferay-commerce:modal:id", _id);
+		httpServletRequest.setAttribute(
 			"liferay-commerce:modal:refreshPageOnClose", _refreshPageOnClose);
-		request.setAttribute("liferay-commerce:modal:size", _size);
-		request.setAttribute("liferay-commerce:modal:spritemap", _spritemap);
-		request.setAttribute("liferay-commerce:modal:title", _title);
-		request.setAttribute("liferay-commerce:modal:url", _url);
+		httpServletRequest.setAttribute("liferay-commerce:modal:size", _size);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:modal:spritemap", _spritemap);
+		httpServletRequest.setAttribute("liferay-commerce:modal:title", _title);
+		httpServletRequest.setAttribute("liferay-commerce:modal:url", _url);
 	}
 
 	private static final String _PAGE = "/modal/page.jsp";

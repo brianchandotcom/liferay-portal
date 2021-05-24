@@ -34,10 +34,12 @@ public class LayoutClassedModelUsagesAdminTag extends IncludeTag {
 		LayoutClassedModelUsagesTaglibUtil.recordLayoutClassedModelUsage(
 			getClassName(), getClassPK());
 
-		request.setAttribute(
+		HttpServletRequest httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			ContentPageEditorWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
 			ServletContextUtil.getFragmentCollectionContributorTracker());
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			FragmentActionKeys.FRAGMENT_RENDERER_TRACKER,
 			ServletContextUtil.getFragmentRendererTracker());
 

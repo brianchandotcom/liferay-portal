@@ -242,7 +242,7 @@ public class LayoutsTreeTag extends IncludeTag {
 		String checkedLayoutIds = GetterUtil.getString(
 			_selectedLayoutIds,
 			SessionTreeJSClicks.getOpenNodes(
-				request, _treeId + "SelectedNode"));
+				getRequest(), _treeId + "SelectedNode"));
 
 		if (Validator.isNull(checkedLayoutIds)) {
 			return checkedNodesJSONArray.toString();

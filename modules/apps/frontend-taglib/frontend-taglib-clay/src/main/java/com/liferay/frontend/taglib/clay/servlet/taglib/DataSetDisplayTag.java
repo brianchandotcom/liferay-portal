@@ -59,8 +59,11 @@ public class DataSetDisplayTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Layout layout = themeDisplay.getLayout();
 
@@ -68,7 +71,7 @@ public class DataSetDisplayTag extends IncludeTag {
 
 		try {
 			_appURL =
-				PortalUtil.getPortalURL(request) +
+				PortalUtil.getPortalURL(httpServletRequest) +
 					"/o/frontend-taglib-clay/app";
 
 			StringBundler sb = new StringBundler(
@@ -352,56 +355,67 @@ public class DataSetDisplayTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:actionParameterName", _actionParameterName);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:activeViewSettingsJSON",
 			_activeViewSettingsJSON);
-		request.setAttribute("clay:data-set-display:apiURL", _apiURL);
-		request.setAttribute("clay:data-set-display:appURL", _appURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:apiURL", _apiURL);
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:appURL", _appURL);
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:bulkActionDropdownItems",
 			_bulkActionDropdownItems);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:clayDataSetDisplayViewsContext",
 			_clayDataSetDisplayViewsContext);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:clayPaginationEntries",
 			_clayPaginationEntries);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:creationMenu", _creationMenu);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:dataProviderKey", _dataProviderKey);
-		request.setAttribute("clay:data-set-display:deltaParam", _deltaParam);
-		request.setAttribute("clay:data-set-display:formId", _formId);
-		request.setAttribute("clay:data-set-display:id", _id);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:deltaParam", _deltaParam);
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:formId", _formId);
+		httpServletRequest.setAttribute("clay:data-set-display:id", _id);
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:itemsPerPage", _itemsPerPage);
-		request.setAttribute("clay:data-set-display:module", _module);
-		request.setAttribute("clay:data-set-display:namespace", _namespace);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:module", _module);
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:namespace", _namespace);
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:nestedItemsKey", _nestedItemsKey);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:nestedItemsReferenceKey",
 			_nestedItemsReferenceKey);
-		request.setAttribute("clay:data-set-display:pageNumber", _pageNumber);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:pageNumber", _pageNumber);
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:paginationSelectedEntry",
 			_paginationSelectedEntry);
-		request.setAttribute("clay:data-set-display:portletURL", _portletURL);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:portletURL", _portletURL);
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:selectedItems", _selectedItems);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:selectedItemsKey", _selectedItemsKey);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:selectionType", _selectionType);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:showManagementBar", _showManagementBar);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"clay:data-set-display:showPagination", _showPagination);
-		request.setAttribute("clay:data-set-display:showSearch", _showSearch);
-		request.setAttribute("clay:data-set-display:style", _style);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
+			"clay:data-set-display:showSearch", _showSearch);
+		httpServletRequest.setAttribute("clay:data-set-display:style", _style);
+		httpServletRequest.setAttribute(
 			"clay:headless-data-set-display:sortItemList", _sortItemList);
 	}
 
@@ -420,12 +434,15 @@ public class DataSetDisplayTag extends IncludeTag {
 	}
 
 	private void _setActiveViewSettingsJSON() {
+		HttpServletRequest httpServletRequest = getRequest();
+
 		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+			PortletPreferencesFactoryUtil.getPortalPreferences(
+				httpServletRequest);
 
 		String clayDataSetDisplaySettingsNamespace =
 			ServletContextUtil.getClayDataSetDisplaySettingsNamespace(
-				request, _id);
+				httpServletRequest, _id);
 
 		_activeViewSettingsJSON = portalPreferences.getValue(
 			clayDataSetDisplaySettingsNamespace, "activeViewSettingsJSON");
@@ -434,7 +451,7 @@ public class DataSetDisplayTag extends IncludeTag {
 	private void _setClayDataSetDisplayViewsContext() {
 		_clayDataSetDisplayViewsContext =
 			_clayDataSetDisplayViewSerializer.serialize(
-				_id, PortalUtil.getLocale(request));
+				_id, PortalUtil.getLocale(getRequest()));
 	}
 
 	private void _setClayPaginationEntries() {

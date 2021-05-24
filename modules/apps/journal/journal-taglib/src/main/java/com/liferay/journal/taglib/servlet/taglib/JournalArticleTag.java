@@ -46,13 +46,18 @@ public class JournalArticleTag extends IncludeTag {
 
 	@Override
 	public int doStartTag() throws JspException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		PortletRequestModel portletRequestModel = null;
 
@@ -70,7 +75,8 @@ public class JournalArticleTag extends IncludeTag {
 			_articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(
 				_article.getGroupId(), _article.getArticleId(),
 				_article.getVersion(), _ddmTemplateKey,
-				ParamUtil.getString(request, "p_l_mode", Constants.VIEW),
+				ParamUtil.getString(
+					httpServletRequest, "p_l_mode", Constants.VIEW),
 				getLanguageId(), 1, portletRequestModel, themeDisplay);
 		}
 		catch (PortalException portalException) {
@@ -167,7 +173,7 @@ public class JournalArticleTag extends IncludeTag {
 			return _languageId;
 		}
 
-		return LanguageUtil.getLanguageId(request);
+		return LanguageUtil.getLanguageId(getRequest());
 	}
 
 	@Override

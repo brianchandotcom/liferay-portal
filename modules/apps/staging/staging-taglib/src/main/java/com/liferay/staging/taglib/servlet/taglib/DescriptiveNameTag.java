@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
 /**
@@ -58,8 +59,11 @@ public class DescriptiveNameTag extends IncludeTag {
 	}
 
 	private String _getDescriptiveName() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -74,7 +78,7 @@ public class DescriptiveNameTag extends IncludeTag {
 
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(LanguageUtil.get(request, "staging"));
+				sb.append(LanguageUtil.get(httpServletRequest, "staging"));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 		}

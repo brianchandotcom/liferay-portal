@@ -110,9 +110,12 @@ public class PanelCategoryTag extends BasePanelTag {
 			return true;
 		}
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		if (isPersistState()) {
 			String state = SessionClicks.get(
-				request, PanelCategory.class.getName() + getId(), "closed");
+				httpServletRequest, PanelCategory.class.getName() + getId(),
+				"closed");
 
 			if (Objects.equals(state, "open")) {
 				return true;
@@ -123,7 +126,8 @@ public class PanelCategoryTag extends BasePanelTag {
 			return false;
 		}
 
-		return _panelCategory.isActive(request, panelCategoryHelper, group);
+		return _panelCategory.isActive(
+			httpServletRequest, panelCategoryHelper, group);
 	}
 
 	protected boolean isPersistState() {

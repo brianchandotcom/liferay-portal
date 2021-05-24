@@ -174,8 +174,11 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			return _groupIds;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		long[] groupIds = null;
 
@@ -202,7 +205,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		}
 
 		String randomKey = PortalUtil.generateRandomKey(
-			request, "taglib_ui_asset_tags_selector_page");
+			getRequest(), "taglib_ui_asset_tags_selector_page");
 
 		return randomKey + StringPool.UNDERLINE;
 	}
@@ -215,7 +218,7 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	protected PortletURL getPortletURL() {
 		try {
 			PortletURL portletURL = PortletProviderUtil.getPortletURL(
-				request, AssetTag.class.getName(),
+				getRequest(), AssetTag.class.getName(),
 				PortletProvider.Action.BROWSE);
 
 			if (portletURL == null) {
@@ -251,7 +254,10 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		}
 
 		if (!_ignoreRequestValue) {
-			String[] curTagsParam = request.getParameterValues(_hiddenInput);
+			HttpServletRequest httpServletRequest = getRequest();
+
+			String[] curTagsParam = httpServletRequest.getParameterValues(
+				_hiddenInput);
 
 			if (curTagsParam != null) {
 				return ListUtil.fromArray(curTagsParam);
@@ -331,13 +337,17 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			return _namespace;
 		}
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+		PortletResponse portletResponse =
+			(PortletResponse)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
 		if ((portletRequest == null) || (portletResponse == null)) {
-			_namespace = AUIUtil.getNamespace(request);
+			_namespace = AUIUtil.getNamespace(httpServletRequest);
 
 			return _namespace;
 		}

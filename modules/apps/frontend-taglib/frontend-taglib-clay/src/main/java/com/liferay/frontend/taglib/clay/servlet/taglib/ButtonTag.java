@@ -25,6 +25,7 @@ import com.liferay.taglib.util.TagResourceBundleUtil;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
@@ -233,8 +234,11 @@ public class ButtonTag extends BaseContainerTag {
 				jspWriter.write("\" role=\"presentation\" viewBox=\"0 0 512 ");
 				jspWriter.write("512\"><use xlink:href=\"");
 
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				HttpServletRequest httpServletRequest = getRequest();
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
 				String pathThemeImages = themeDisplay.getPathThemeImages();
 

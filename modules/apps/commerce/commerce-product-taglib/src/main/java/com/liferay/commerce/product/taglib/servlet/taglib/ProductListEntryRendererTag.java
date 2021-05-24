@@ -42,16 +42,19 @@ public class ProductListEntryRendererTag extends IncludeTag {
 			return SKIP_BODY;
 		}
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		if (Validator.isNull(_key)) {
 			Map<String, String> entryKeys =
-				(Map<String, String>)request.getAttribute(
+				(Map<String, String>)httpServletRequest.getAttribute(
 					CPContentWebKeys.CP_CONTENT_LIST_ENTRY_RENDERER_KEYS);
 
 			_key = entryKeys.get(_cpCatalogEntry.getProductTypeName());
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -112,11 +115,13 @@ public class ProductListEntryRendererTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
-		request.setAttribute(
+		httpServletRequest = getRequest();
+
+		httpServletRequest.setAttribute(
 			"liferay-commerce-product:product-list-entry-renderer:" +
 				"cpCatalogEntry",
 			_cpCatalogEntry);
-		request.setAttribute(
+		httpServletRequest.setAttribute(
 			"liferay-commerce-product:product-list-entry-renderer:" +
 				"cpContentListEntryRenderer",
 			_cpContentListEntryRenderer);

@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 
@@ -29,9 +30,11 @@ public class SidebarPanelTag extends IncludeTag {
 	public int doEndTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
+		HttpServletRequest httpServletRequest = getRequest();
+
 		setNamespacedAttribute(
-			request, "searchContainerId", _searchContainerId);
-		setNamespacedAttribute(request, "resourceURL", _resourceURL);
+			httpServletRequest, "searchContainerId", _searchContainerId);
+		setNamespacedAttribute(httpServletRequest, "resourceURL", _resourceURL);
 
 		return super.doEndTag();
 	}
@@ -40,7 +43,7 @@ public class SidebarPanelTag extends IncludeTag {
 	public int doStartTag() throws JspException {
 		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
 
-		setNamespacedAttribute(request, "closeButton", _closeButton);
+		setNamespacedAttribute(getRequest(), "closeButton", _closeButton);
 
 		super.doStartTag();
 

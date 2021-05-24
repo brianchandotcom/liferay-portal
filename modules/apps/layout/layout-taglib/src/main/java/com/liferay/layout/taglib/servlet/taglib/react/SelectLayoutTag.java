@@ -199,7 +199,7 @@ public class SelectLayoutTag extends IncludeTag {
 
 	private Map<String, Object> _getData() throws Exception {
 		String[] selectedLayoutIds = ParamUtil.getStringValues(
-			request, "layoutUuid");
+			getRequest(), "layoutUuid");
 
 		return HashMapBuilder.<String, Object>put(
 			"followURLOnTitleClick", _followURLOnTitleClick
@@ -217,8 +217,11 @@ public class SelectLayoutTag extends IncludeTag {
 	}
 
 	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Locale locale = themeDisplay.getLocale();
 
@@ -227,10 +230,10 @@ public class SelectLayoutTag extends IncludeTag {
 		StringBundler sb = new StringBundler((4 * ancestors.size()) + 5);
 
 		if (layout.isPrivateLayout()) {
-			sb.append(LanguageUtil.get(request, "private-pages"));
+			sb.append(LanguageUtil.get(httpServletRequest, "private-pages"));
 		}
 		else {
-			sb.append(LanguageUtil.get(request, "public-pages"));
+			sb.append(LanguageUtil.get(httpServletRequest, "public-pages"));
 		}
 
 		sb.append(StringPool.SPACE);
@@ -256,8 +259,11 @@ public class SelectLayoutTag extends IncludeTag {
 			String[] selectedLayoutUuid)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -319,8 +325,11 @@ public class SelectLayoutTag extends IncludeTag {
 	private JSONArray _getLayoutsJSONArray(String[] selectedLayoutIds)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Group group = themeDisplay.getScopeGroup();
 
@@ -351,7 +360,7 @@ public class SelectLayoutTag extends IncludeTag {
 
 	private long _getSelPlid() {
 		return ParamUtil.getLong(
-			request, "selPlid", LayoutConstants.DEFAULT_PLID);
+			getRequest(), "selPlid", LayoutConstants.DEFAULT_PLID);
 	}
 
 	private boolean _isContentLayoutDraft(Layout layout) {

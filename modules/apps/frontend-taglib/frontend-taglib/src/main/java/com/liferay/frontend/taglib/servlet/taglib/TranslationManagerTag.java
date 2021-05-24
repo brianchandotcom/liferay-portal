@@ -147,8 +147,11 @@ public class TranslationManagerTag extends IncludeTag {
 		JSONArray availableLocalesJSONArray = JSONFactoryUtil.createJSONArray();
 		JSONArray localesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest parentHttpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)parentHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		Set<Locale> locales = LanguageUtil.getAvailableLocales(
 			themeDisplay.getSiteGroupId());

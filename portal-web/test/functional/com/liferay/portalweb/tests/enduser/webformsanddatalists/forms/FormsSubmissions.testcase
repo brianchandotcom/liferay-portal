@@ -237,13 +237,25 @@ definition {
 	}
 
 	@description = "Verify that a Form's Success Page can be deleted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SuccessPageCanBeDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
+<<<<<<< HEAD
 		// TODO LPS-131034 SuccessPageCanBeDeleted pending implementation
+=======
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+		
+		Form.deleteSuccessPage(formPageNumber = "2");
+		
+		AssertElementPresent(
+			locator1 = "Form#SUCCESS_PAGE_ADD");
+>>>>>>> e0b8d80 (LPS-131034 Adding SuccessPageCanBeDeleted Test)
 
 	}
 

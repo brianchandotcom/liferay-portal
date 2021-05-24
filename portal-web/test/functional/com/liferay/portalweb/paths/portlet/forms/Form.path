@@ -196,6 +196,11 @@
 </tr>
 <!--SUCCESS_PAGE-->
 <tr>
+    <td>SUCCESS_PAGE_ADD</td>
+    <td>//div[contains(@class,'add-page-button-container')]//button[contains(text(), 'Add Success Page')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>SUCCESS_PAGE_TITLE_FIELD</td>
     <td>//div[contains(@class,'form-builder-success-page')]//input[contains(@class,'form-builder-page-header-title')]</td>
     <td></td>

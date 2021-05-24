@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeTriConsumer;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -90,41 +90,72 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	public void testGetProcessInstancesPage() throws Exception {
 		super.testGetProcessInstancesPage();
 
-		_testGetProcessInstancesPage(
-			null, null, DateUtils.truncate(new Date(), Calendar.SECOND),
-			DateUtils.truncate(new Date(), Calendar.SECOND),
-			new String[] {"Completed", "Pending"},
-			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
-				Arrays.asList(instance1, instance2), instances));
-		_testGetProcessInstancesPage(
-			null, null, DateUtils.truncate(new Date(), Calendar.SECOND),
-			DateUtils.truncate(new Date(), Calendar.SECOND),
-			new String[] {"Completed"},
-			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
-				Collections.singletonList(instance1), instances));
-		_testGetProcessInstancesPage(
-			new Long[] {_user.getUserId()}, null, null, null, null,
-			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
-				Collections.singletonList(instance2), instances));
-		_testGetProcessInstancesPage(
-			null, new Long[] {_classPK}, null, null, null,
-			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
-				Collections.singletonList(instance1), instances));
+		_deleteInstances();
+
+		Instance instance1 = randomInstance();
+
+		instance1.setClassPK(_classPK);
+		instance1.setCompleted(true);
+		instance1.setDateCompletion(
+			DateUtils.truncate(new Date(), Calendar.SECOND));
+
+		testGetProcessInstancesPage_addInstance(_process.getId(), instance1);
+
+		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
+			testGroup.getCompanyId(), instance1,
+			_toSLAResult(true, SLAResult.Status.STOPPED),
+			_toSLAResult(true, SLAResult.Status.PAUSED));
+
+		Instance instance2 = randomInstance();
+
+		instance2.setAssignees(
+			new Assignee[] {
+				new Assignee() {
+					{
+						id = _user.getUserId();
+					}
+				}
+			});
+
+		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
+
 		_testGetProcessInstancesPage(
 			null, null, null, null, new String[] {"Completed"},
-			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+			instances -> assertEqualsIgnoringOrder(
 				Collections.singletonList(instance1), instances));
 		_testGetProcessInstancesPage(
-			null, null, null, null, null,
-			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
-				Arrays.asList(instance1, instance2), instances));
+			null, new Long[] {_classPK}, null, null, null,
+			instances -> assertEqualsIgnoringOrder(
+				Collections.singletonList(instance1), instances));
 		_testGetProcessInstancesPage(
 			null, null, null, null, new String[] {"Pending"},
-			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+			instances -> assertEqualsIgnoringOrder(
+				Collections.singletonList(instance2), instances));
+		_testGetProcessInstancesPage(
+			new Long[] {_user.getUserId()}, null, null, null, null,
+			instances -> assertEqualsIgnoringOrder(
 				Collections.singletonList(instance2), instances));
 		_testGetProcessInstancesPage(
 			null, null, null, null, new String[] {"Completed", "Pending"},
-			(instance1, instance2, instances) -> assertEqualsIgnoringOrder(
+			instances -> assertEqualsIgnoringOrder(
+				Arrays.asList(instance1, instance2), instances));
+		_testGetProcessInstancesPage(
+			null, null, null, null, null,
+			instances -> assertEqualsIgnoringOrder(
+				Arrays.asList(instance1, instance2), instances));
+
+		Date dateEnd = DateUtils.addSeconds(instance1.getDateCompletion(), 1);
+		Date dateStart = DateUtils.addSeconds(
+			instance1.getDateCompletion(), -1);
+
+		_testGetProcessInstancesPage(
+			null, null, dateEnd, dateStart, new String[] {"Completed"},
+			instances -> assertEqualsIgnoringOrder(
+				Collections.singletonList(instance1), instances));
+		_testGetProcessInstancesPage(
+			null, null, dateEnd, dateStart,
+			new String[] {"Completed", "Pending"},
+			instances -> assertEqualsIgnoringOrder(
 				Arrays.asList(instance1, instance2), instances));
 	}
 
@@ -293,45 +324,14 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	private void _testGetProcessInstancesPage(
 			Long[] assigneeIds, Long[] classPKs, Date dateEnd, Date dateStart,
 			String[] statuses,
-			UnsafeTriConsumer<Instance, Instance, List<Instance>, Exception>
-				unsafeTriConsumer)
+			UnsafeConsumer<List<Instance>, Exception> unsafeConsumer)
 		throws Exception {
-
-		_deleteInstances();
-
-		Instance instance1 = randomInstance();
-
-		instance1.setClassPK(_classPK);
-		instance1.setCompleted(true);
-		instance1.setDateCompletion(
-			DateUtils.truncate(new Date(), Calendar.SECOND));
-
-		testGetProcessInstancesPage_addInstance(_process.getId(), instance1);
-
-		_workflowMetricsRESTTestHelper.addSLAInstanceResults(
-			testGroup.getCompanyId(), instance1,
-			_toSLAResult(true, SLAResult.Status.STOPPED),
-			_toSLAResult(true, SLAResult.Status.PAUSED));
-
-		Instance instance2 = randomInstance();
-
-		instance2.setAssignees(
-			new Assignee[] {
-				new Assignee() {
-					{
-						id = _user.getUserId();
-					}
-				}
-			});
-
-		testGetProcessInstancesPage_addInstance(_process.getId(), instance2);
 
 		Page<Instance> page = instanceResource.getProcessInstancesPage(
 			_process.getId(), assigneeIds, classPKs, dateEnd, dateStart, null,
 			statuses, null, Pagination.of(1, 2), null);
 
-		unsafeTriConsumer.accept(
-			instance1, instance2, (List<Instance>)page.getItems());
+		unsafeConsumer.accept((List<Instance>)page.getItems());
 	}
 
 	private SLAResult _toSLAResult(

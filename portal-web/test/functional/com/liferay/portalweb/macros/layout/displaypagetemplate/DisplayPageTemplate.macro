@@ -34,6 +34,15 @@ definition {
 						key_card = "${assetTitle}",
 						locator1 = "Card#CARD_TITLE");
 				}
+				else if ("${assetType}" == "Category") {
+					Portlet.expandTree();
+
+					Pause(locator1 = "3000");
+
+					Click(
+						key_nodeName = "${assetTitle}",
+						locator1 = "Treeview#NODE_UNSELECTED");
+				}
 
 				SelectFrameTop();
 			}
@@ -72,6 +81,15 @@ definition {
 				}
 				else if (("${assetType}" == "Blogs Entry") || ("${assetType}" == "Document")) {
 					LexiconCard.clickCardTitle(card = "${assetTitle}");
+				}
+				else if ("${assetType}" == "Category") {
+					Portlet.expandTree();
+
+					Pause(locator1 = "3000");
+
+					Click(
+						key_nodeName = "${assetTitle}",
+						locator1 = "Treeview#NODE_UNSELECTED");
 				}
 
 				SelectFrameTop();

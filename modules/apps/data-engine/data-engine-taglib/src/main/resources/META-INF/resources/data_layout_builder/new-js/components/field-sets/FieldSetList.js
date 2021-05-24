@@ -21,7 +21,7 @@ import {
 import React, {useState} from 'react';
 
 import EmptyState from '../../../js/components/empty-state/EmptyState.es';
-import {useNewDeleteFieldSet} from '../../../js/components/field-sets/actions/useDeleteFieldSet.es';
+import useDeleteFieldSet from '../../../js/components/field-sets/actions/useDeleteFieldSet.es';
 import usePropagateFieldSet from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
 import FieldType from '../../../js/components/field-types/FieldType.es';
 import {DRAG_FIELDSET_ADD} from '../../../js/drag-and-drop/dragTypes.es';
@@ -52,7 +52,7 @@ export default function FieldSetList({searchTerm}) {
 	const {fieldSets} = useFormState();
 	const {dataDefinition} = useFormState({schema: ['dataDefinition']});
 	const dispatch = useForm();
-	const deleteFieldSet = useNewDeleteFieldSet();
+	const deleteFieldSet = useDeleteFieldSet();
 	const propagateFieldSet = usePropagateFieldSet();
 	const filteredFieldsets = getFilteredFieldsets(fieldSets, searchTerm);
 

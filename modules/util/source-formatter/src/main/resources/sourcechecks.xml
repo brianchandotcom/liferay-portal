@@ -617,10 +617,6 @@
 			<property name="checkMismatchedServiceAttribute" value="false" />
 			<property name="checkSelfRegistration" value="false" />
 		</check>
-		<check name="JavaDataAccessConnectionCheck">
-			<category name="Performance" />
-			<description name="Finds calls to `DataAccess.getConnection` (use `DataAccess.getUpgradeOptimizedConnection` instead)." />
-		</check>
 		<check name="JavaDeprecatedJavadocCheck">
 			<category name="Javadoc" />
 			<description name="Checks if the `@deprecated` javadoc is pointing to the correct version." />

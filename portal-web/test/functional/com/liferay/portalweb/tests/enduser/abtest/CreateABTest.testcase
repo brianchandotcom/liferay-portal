@@ -8,42 +8,43 @@ definition {
 	property testray.main.component.name = "A/B Test";
 
 	setUp {
+		
+		task ("Open Analytics Cloud") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-		// Open Analytics Cloud, login and take the token to connect to DXP
+			Navigator.openURL(baseURL = "${analyticsCloudURL}");
+		}
 
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+		task ("Take token from Analytics Cloud") {
+			AnalyticsCloud.loginAnalyticsCloud(
+				emailAddress = "test@liferay.com",
+				password = "test");
 
-		// Take token from Analytics Cloud
+			AnalyticsCloud.takeTokenFromAnalyticsCloud();
+		}
 
-		AnalyticsCloud.loginAnalyticsCloud(
-			emailAddress = "test@liferay.com",
-			password = "test");
+		task ("Go to DXP portal, login and create site") {
+			TestCase.setUpPortalInstance();
 
-		AnalyticsCloud.takeTokenFromAnalyticsCloud();
+			User.firstLoginPG();
 
-		// Go to DXP portal
+			Navigator.openURL();
 
-		TestCase.setUpPortalInstance();
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		User.firstLoginPG();
+		task ("Connect and synchronyze with Analytics Cloud") {
+			AnalyticsCloud.syncAnalyticsCloud(siteName = "Test Site Name");
+		}
 
-		Navigator.openURL();
+		task ("Create content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page",
+				type = "content");
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
-		// Connect and synchronyze with Analytics Cloud
-
-		AnalyticsCloud.syncAnalyticsCloud(siteName = "Test Site Name");
-
-		// Create content page
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page",
-			type = "content");
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
 	}
 
 	tearDown {
@@ -60,112 +61,147 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can create an A/B Test"
+	@description = "Validate if the user can create an A/B Test by Bounce rate"
 	@priority = "5"
+	@uitest
 	test CreateABTestByBounceRate {
 		property minimum.slave.ram = "32";
 
-		ABTest.createABTest(
-			goal = "Bounce Rate",
-			testTitle = "AB test title");
+		task ("Create AB test, create variant and run the test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		ABTest.createVariant(variantName = "Variant name");
+			ABTest.createVariant(variantName = "Variant name");
 
-		ABTest.runTest();
+			ABTest.runTest();
+		}
 
-		ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+		task ("Check the info is correct in Analytics Cloud") {
+			ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+		}
 
-		Navigator.openURL();
+		task ("Go back to DXP") {
+			Navigator.openURL();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
 
-		ABTest.terminateTest();
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
 	}
 
-	@description = "Validate if, in the AB Test by Click, the sidebar informs the user that the element id is mandatory"
+	@description = "LPS-119475 Validate if the user can create an A/B Test by Click"
 	@priority = "5"
+	@uitest
 	test CreateABTestByClick {
 		property minimum.slave.ram = "32";
 
-		ContentPages.clickPencil();
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.clickPencil();
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Button");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 
-		Button.clickPublish();
+			Button.clickPublish();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
 
-		ABTest.createABTest(
-			goal = "Click",
-			testTitle = "AB test title");
+		task ("Create AB test, create variant and run the test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
 
-		ABTest.selectElementID();
+			ABTest.selectElementID();
 
-		ABTest.createVariant(variantName = "Variant name");
+			ABTest.createVariant(variantName = "Variant name");
 
-		ABTest.runTest();
+			ABTest.runTest();
+		}
 
-		ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+		task ("Check the info is correct in Analytics Cloud") {
+			ABTest.checkAnalyticsCloudInfo(ABtestTitle = "AB test title");
+		}
 
-		Navigator.openURL();
+		task ("Go back to DXP") {
+			Navigator.openURL();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+		}
 
-		ABTest.terminateTest();
+		task ("Terminate the AB test") {
+			ABTest.terminateTest();
+		}
 	}
 
-	@description = "Validate if, in the AB Test by Click, the sidebar informs the user that the element id is mandatory"
-	@priority = "5"
+	@description = "LPS-119475 Validate if, in the AB Test by Click, the sidebar informs the user that the element id is mandatory"
+	@priority = "3"
+	@uitest
 	test CreateABTestByClickInvalidId {
 		property minimum.slave.ram = "32";
 
-		ABTest.createABTest(
-			goal = "Click",
-			testTitle = "AB test title");
+		task ("Create AB test, write an invalid ID for the element and run the test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = "AB test title");
 
-		ABTest.writeId(elementId = "invalidID");
+			ABTest.writeId(elementId = "invalidID");
 
-		ABTest.runTest();
+			ABTest.runTest();
+		}
 
-		AssertElementPresent(locator1 = "ABTest#INVALID_ID_MESSAGE");
+		task ("Assert an error message is displayed") {
+			AssertElementPresent(locator1 = "ABTest#INVALID_ID_MESSAGE");
+		}
 	}
 
-	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
-	@priority = "5"
+	@description = "LPS-86285 Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
+	@priority = "4"
+	@uitest
 	test CreateABTestRunWithDeletedVariants {
 		property minimum.slave.ram = "32";
 
-		ABTest.createABTest(
-			goal = "Bounce Rate",
-			testTitle = "AB test title");
+		task ("Create AB test, create variant, delete variant and run the test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		ABTest.createVariant(variantName = "Variant name");
+			ABTest.createVariant(variantName = "Variant name");
 
-		ABTest.deleteVariant();
+			ABTest.deleteVariant();
 
-		ABTest.runTest();
+			ABTest.runTest();
+		}
 
-		AssertTextEquals(
-			locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
-			value1 = "A variant needs to be created.");
+		task ("Assert an error message is displayed") {
+			AssertTextEquals(
+				locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
+				value1 = "A variant needs to be created.");
+		}
 	}
 
-	@description = "Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control"
+	@description = "LPS-86285 Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control"
 	@priority = "5"
+	@uitest
 	test CreateABTestRunWithNoVariants {
 		property minimum.slave.ram = "32";
 
-		ABTest.createABTest(
-			goal = "Bounce Rate",
-			testTitle = "AB test title");
+		task ("Create AB test and run the test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = "AB test title");
 
-		ABTest.runTest();
+			ABTest.runTest();
+		}
 
-		AssertTextEquals(
-			locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
-			value1 = "A variant needs to be created.");
+		task ("Assert an error message is displayed") {
+			AssertTextEquals(
+				locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
+				value1 = "A variant needs to be created.");
+		}
 	}
 
 }

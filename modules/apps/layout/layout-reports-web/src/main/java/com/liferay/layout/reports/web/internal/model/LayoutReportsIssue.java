@@ -177,7 +177,8 @@ public class LayoutReportsIssue {
 				"key", _key.toString()
 			).put(
 				"title",
-				ResourceBundleUtil.getString(resourceBundle, _key.toString())
+				ResourceBundleUtil.getString(
+					resourceBundle, "detail-" + _key.toString())
 			).put(
 				"total", _total
 			);

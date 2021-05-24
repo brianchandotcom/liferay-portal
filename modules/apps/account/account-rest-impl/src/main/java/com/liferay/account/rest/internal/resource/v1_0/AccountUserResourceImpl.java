@@ -71,7 +71,7 @@ public class AccountUserResourceImpl
 
 	@Override
 	public void deleteAccountUserByExternalReferenceCodeByEmailAddress(
-			String emailAddress, String externalReferenceCode)
+			String externalReferenceCode, String emailAddress)
 		throws Exception {
 
 		deleteAccountUserByEmailAddress(
@@ -182,7 +182,7 @@ public class AccountUserResourceImpl
 
 	@Override
 	public void postAccountUserByExternalReferenceCodeByEmailAddress(
-			String emailAddress, String externalReferenceCode)
+			String externalReferenceCode, String emailAddress)
 		throws Exception {
 
 		postAccountUserByEmailAddress(

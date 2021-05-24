@@ -545,6 +545,114 @@ definition {
 		Refresh();
 
 		CommerceNavigator.gotoEntry(entryName = "Color");
+	@description = "COMMERCE-6371. As a buyer, I want to be able to select an option value(SKU contributor) and I want to see product details updating(Price, SKU and Availability)"
+	@priority = "3"
+	test SelectOptionValueAndAssertProductPriceIsUpdated {
+		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#SelectOptionValueAndAssertProductPriceIsUpdated";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.searchProduct(search = "Hoses");
+
+		CommerceNavigator.gotoEntry(entryName = "Hoses");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		CommerceNavigator.gotoEntry(entryName = "MIN93022B");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			key_fieldLabel = "Base Price",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "80.0");
+
+		Button.clickPublish();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		Type(
+			key_value1 = "0",
+			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+			value1 = "0");
+
+		Click(
+			key_value1 = "0",
+			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+
+		Type(
+			key_value1 = "1",
+			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+			value1 = "0");
+
+		Click(
+			key_value1 = "1",
+			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+
+		Type(
+			key_value1 = "2",
+			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+			value1 = "0");
+
+		Click(
+			key_value1 = "2",
+			locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_SAVE_BUTTON");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Type(
+			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
+			value1 = "Hoses");
+
+		Click(locator1 = "Button#SUBMIT");
+
+		CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Hoses");
+
+		AssertElementPresent(
+			key_selectValue = "6",
+			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+
+		AssertElementPresent(
+			key_FilterOption = "MIN93022A",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "120.00");
+
+		AssertElementPresent(
+			key_availability = "Available",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+
+		Click(locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PACKAGE_QUANTITY");
+
+		Click(
+			key_selectValue = "24",
+			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+
+		AssertElementPresent(
+			key_selectValue = "24",
+			locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+
+		AssertElementPresent(
+			key_FilterOption = "MIN93022B",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE",
+			value1 = "80.00");
+
+		AssertElementPresent(
+			key_availability = "Unavailable",
+			locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+	}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 

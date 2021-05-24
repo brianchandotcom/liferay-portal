@@ -34,6 +34,7 @@ const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
 						<div className="page-editor__collection-item__border">
 							<p className="page-editor__collection-item__title">
 								{collectionItem.title ||
+									collectionItem.name ||
 									collectionItem.defaultTitle}
 							</p>
 						</div>

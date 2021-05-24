@@ -29,7 +29,7 @@
 				button.text-secondary {
 					opacity: 1;
 
-					&:hover .lexicon-icon {
+					&:hover:not(:disabled) .lexicon-icon {
 						color: $gray-900;
 						transition: color ease 0.3s;
 					}

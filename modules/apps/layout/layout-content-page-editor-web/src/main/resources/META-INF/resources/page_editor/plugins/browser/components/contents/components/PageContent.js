@@ -19,7 +19,7 @@ import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {openModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
@@ -59,6 +59,11 @@ export default function PageContent({
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
 	const toControlsId = useToControlsId();
+
+	const isBeingEdited = useMemo(
+		() => toControlsId(editableId) === editableProcessorUniqueId,
+		[toControlsId, editableId, editableProcessorUniqueId]
+	);
 
 	let editURL = null;
 	let permissionsURL = null;
@@ -140,7 +145,7 @@ export default function PageContent({
 	};
 
 	const onClickEditInlineText = () => {
-		if (toControlsId(editableId) === editableProcessorUniqueId) {
+		if (isBeingEdited) {
 			return;
 		}
 
@@ -242,7 +247,10 @@ export default function PageContent({
 					</ClayDropDown>
 				) : (
 					<ClayButton
-						className="btn-sm mr-2 text-secondary"
+						className={classNames('btn-sm mr-2 text-secondary', {
+							'not-allowed': isBeingEdited,
+						})}
+						disabled={isBeingEdited}
 						displayType="unstyled"
 						onClick={onClickEditInlineText}
 					>

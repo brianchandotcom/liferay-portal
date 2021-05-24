@@ -92,8 +92,8 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 
 		accountUserResource.
 			deleteAccountUserByExternalReferenceCodeByEmailAddress(
-				user.getEmailAddress(),
-				_accountEntry.getExternalReferenceCode());
+				_accountEntry.getExternalReferenceCode(),
+				user.getEmailAddress());
 
 		Assert.assertNull(
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
@@ -150,8 +150,8 @@ public class AccountUserResourceTest extends BaseAccountUserResourceTestCase {
 
 		accountUserResource.
 			postAccountUserByExternalReferenceCodeByEmailAddress(
-				user.getEmailAddress(),
-				_accountEntry.getExternalReferenceCode());
+				_accountEntry.getExternalReferenceCode(),
+				user.getEmailAddress());
 
 		Assert.assertNotNull(
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(

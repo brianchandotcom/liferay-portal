@@ -506,6 +506,14 @@ public class DLFileEntryLocalServiceWrapper
 	}
 
 	@Override
+	public DLFileEntry fetchFileEntryByExternalReferenceCode(
+		long groupId, String externalReferenceCode) {
+
+		return _dlFileEntryLocalService.fetchFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntryByFileName(
 		long groupId, long folderId, String fileName) {
 

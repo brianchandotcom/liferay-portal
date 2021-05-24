@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -71,6 +72,10 @@ public class FooService {
 		}
 
 		return sb.toString();
+	}
+
+	public static String date(Date date) {
+		return date.toString();
 	}
 
 	public static FooData getFooData(int id) {

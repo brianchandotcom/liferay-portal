@@ -132,7 +132,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1171,16 +1170,16 @@ public class MainServlet extends HttpServlet {
 
 			_log.error(exception, exception);
 
-			httpServletRequest.setAttribute(PageContext.EXCEPTION, exception);
+			httpServletRequest.setAttribute(StrutsUtil.EXCEPTION, exception);
 
 			StrutsUtil.forward(
 				PropsValues.SERVLET_SERVICE_EVENTS_PRE_ERROR_PAGE,
 				getServletContext(), httpServletRequest, httpServletResponse);
 
 			if (exception == httpServletRequest.getAttribute(
-					PageContext.EXCEPTION)) {
+					StrutsUtil.EXCEPTION)) {
 
-				httpServletRequest.removeAttribute(PageContext.EXCEPTION);
+				httpServletRequest.removeAttribute(StrutsUtil.EXCEPTION);
 				httpServletRequest.removeAttribute(
 					RequestDispatcher.ERROR_EXCEPTION);
 				httpServletRequest.removeAttribute(

@@ -26,12 +26,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class StrutsUtil {
+
+	public static final String EXCEPTION =
+		StrutsUtil.class.getName() + "_EXCEPTION";
 
 	public static final String TEXT_HTML_DIR = "/html";
 
@@ -71,7 +73,7 @@ public class StrutsUtil {
 			}
 			catch (ServletException servletException1) {
 				httpServletRequest.setAttribute(
-					PageContext.EXCEPTION, servletException1.getRootCause());
+					EXCEPTION, servletException1.getRootCause());
 
 				String errorPath = TEXT_HTML_DIR + "/common/error.jsp";
 

@@ -21,7 +21,7 @@ import UserPopover from './UserPopover.es';
 
 export default withRouter(
 	({
-		creator,
+		creator = {},
 		match: {
 			params: {sectionTitle},
 		},

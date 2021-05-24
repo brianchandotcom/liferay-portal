@@ -142,20 +142,22 @@ export default ({currentSection, items, question, showSectionLabel}) => {
 
 			<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
 				<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
-					<Link
-						to={`/questions/${sectionTitle}/creator/${question.creator.id}`}
-					>
-						<UserIcon
-							fullName={question.creator.name}
-							portraitURL={question.creator.image}
-							size="sm"
-							userId={String(question.creator.id)}
-						/>
+					{question.creator && (
+						<Link
+							to={`/questions/${sectionTitle}/creator/${question.creator.id}`}
+						>
+							<UserIcon
+								fullName={question.creator.name}
+								portraitURL={question.creator.image}
+								size="sm"
+								userId={String(question.creator.id)}
+							/>
 
-						<strong className="c-ml-2 text-dark">
-							{question.creator.name}
-						</strong>
-					</Link>
+							<strong className="c-ml-2 text-dark">
+								{question.creator.name}
+							</strong>
+						</Link>
+					)}
 
 					<span className="c-ml-2 small">
 						{'- ' + dateToInternationalHuman(question.dateModified)}

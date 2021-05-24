@@ -46,11 +46,9 @@ export default withRouter(
 
 		useEffect(() => {
 			setRelatedQuestions(
-				data
-					? data.messageBoardThreads.items.filter(
-							(otherQuestion) => otherQuestion.id !== question.id
-					  )
-					: []
+				data?.messageBoardThreads.items.filter(
+					(otherQuestion) => otherQuestion.id !== question.id
+				) ?? []
 			);
 		}, [data, question.id]);
 
@@ -117,13 +115,13 @@ export default withRouter(
 
 								<div className="c-mt-3 small stretched-link-layer">
 									<UserIcon
-										fullName={relatedQuestion.creator.name}
+										fullName={relatedQuestion.creator?.name}
 										portraitURL={
-											relatedQuestion.creator.image
+											relatedQuestion.creator?.image
 										}
 										size="sm"
 										userId={String(
-											relatedQuestion.creator.id
+											relatedQuestion.creator?.id
 										)}
 									/>
 

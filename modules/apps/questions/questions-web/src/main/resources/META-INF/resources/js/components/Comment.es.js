@@ -50,7 +50,7 @@ export default ({comment, commentChange, editable = true}) => {
 				<div className="c-mb-0">
 					<ArticleBodyRenderer
 						{...comment}
-						signature={comment.creator.name}
+						signature={comment.creator && comment.creator.name}
 					/>
 				</div>
 

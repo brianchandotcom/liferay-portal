@@ -25,7 +25,7 @@ export default withRouter(
 		match: {
 			params: {sectionTitle},
 		},
-		question: {creator, creatorStatistics, dateCreated},
+		question: {creator = {}, creatorStatistics, dateCreated},
 	}) => (
 		<Link
 			className="align-items-center border-light btn btn-secondary c-ml-md-3 c-mt-3 c-mt-md-0 c-p-3 d-inline-flex justify-content-center position-relative questions-user"

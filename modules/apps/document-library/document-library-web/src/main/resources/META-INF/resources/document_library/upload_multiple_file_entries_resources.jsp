@@ -344,32 +344,33 @@ else {
 			</liferay-ui:panel>
 		</c:if>
 
-		<liferay-ui:panel
-			cssClass="expiration-date-panel"
-			defaultState="closed"
-			extended="<%= false %>"
-			id="dlFileEntryExpirationDatePanel"
-			markupView="lexicon"
-			persistState="<%= true %>"
-			title="expiration-date"
-		>
-			<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="expiration-date">
-				<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.expirationDateEnabled() %>">
-					<liferay-ui:error exception="<%= DLExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+		<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.expirationDateEnabled() || FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled() %>">
+			<liferay-ui:panel
+				cssClass="expiration-date-panel"
+				defaultState="closed"
+				extended="<%= false %>"
+				id="dlFileEntryExpirationDatePanel"
+				markupView="lexicon"
+				persistState="<%= true %>"
+				title="expiration-date"
+			>
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="expiration-date">
+					<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.expirationDateEnabled() %>">
+						<liferay-ui:error exception="<%= DLExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 
 						<p class="mb-5 text-secondary">
 							<liferay-ui:message key="including-an-expiration-date-will-allow-your-documents-or-media-to-expire-automatically-and-become-unpublished" />
 						</p>
 
-					<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= dlEditFileEntryDisplayContext.isNeverExpire() %>" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
-				</c:if>
+						<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= dlEditFileEntryDisplayContext.isNeverExpire() %>" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
+					</c:if>
 
-				<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled() %>">
-					<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= dlEditFileEntryDisplayContext.isNeverReview() %>" name="reviewDate" wrapperCssClass="mb-3 review-date" />
-				</c:if>
-			</aui:fieldset>
-
-		</liferay-ui:panel>
+					<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled() %>">
+						<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= dlEditFileEntryDisplayContext.isNeverReview() %>" name="reviewDate" wrapperCssClass="mb-3 review-date" />
+					</c:if>
+				</aui:fieldset>
+			</liferay-ui:panel>
+		</c:if>
 
 		<liferay-ui:panel
 			cssClass="mb-3"

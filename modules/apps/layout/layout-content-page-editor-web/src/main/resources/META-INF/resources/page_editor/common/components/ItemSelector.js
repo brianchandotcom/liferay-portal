@@ -13,14 +13,14 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayDropDown from '@clayui/drop-down';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useCallback} from 'react';
 
 import {config} from '../../app/config/index';
-import {useSelector} from '../../app/contexts/StoreContext';
+import {useSelectorCallback} from '../../app/contexts/StoreContext';
 import {useId} from '../../app/utils/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
@@ -36,25 +36,71 @@ export default function ItemSelector({
 	showMappedItems = true,
 	transformValueCallback,
 }) {
-	const [active, setActive] = useState(false);
 	const itemSelectorInputId = useId();
-	const mappedInfoItems = useSelector((state) => state.mappedInfoItems || []);
 
-	const mappedItems =
-		quickMappedInfoItems.length === 0
-			? mappedInfoItems
-			: quickMappedInfoItems;
-
-	const defaultEventName = `${config.portletNamespace}selectInfoItem`;
-
-	const openModal = () =>
-		openItemSelector({
-			callback: onItemSelect,
-			eventName: eventName || defaultEventName,
-			itemSelectorURL: itemSelectorURL || config.infoItemSelectorURL,
+	const openModal = useCallback(
+		() =>
+			openItemSelector({
+				callback: onItemSelect,
+				eventName:
+					eventName || `${config.portletNamespace}selectInfoItem`,
+				itemSelectorURL: itemSelectorURL || config.infoItemSelectorURL,
+				modalProps,
+				transformValueCallback,
+			}),
+		[
+			eventName,
+			itemSelectorURL,
 			modalProps,
+			onItemSelect,
 			transformValueCallback,
-		});
+		]
+	);
+
+	const mappedItemsMenu = useSelectorCallback(
+		(state) => {
+			let transformedMappedItems = [];
+
+			if (!showMappedItems) {
+				return transformedMappedItems;
+			}
+
+			const transformMappedItem = (item) => ({
+				itemId: `${item.classNameId}-${item.classPK}`,
+				label: item.title,
+				onClick: () => onItemSelect(item),
+			});
+
+			if (quickMappedInfoItems.length > 0) {
+				transformedMappedItems = quickMappedInfoItems.map(
+					transformMappedItem
+				);
+			}
+			else if (state.mappedInfoItems?.length > 0) {
+				transformedMappedItems = state.mappedInfoItems.map(
+					transformMappedItem
+				);
+			}
+
+			if (transformedMappedItems.length) {
+				transformedMappedItems.push(
+					{
+						type: 'divider',
+					},
+					{
+						label: `${Liferay.Language.get('select-content')}...`,
+						onClick: () => openModal(),
+					}
+				);
+			}
+
+			return transformedMappedItems;
+		},
+		[onItemSelect, openModal, quickMappedInfoItems, showMappedItems],
+		(a, b) =>
+			a.length === b.length &&
+			a.every((item, index) => item.itemId === b[index].itemId)
+	);
 
 	const selectContentIcon = selectedItem?.title ? 'change' : 'plus';
 
@@ -97,46 +143,20 @@ export default function ItemSelector({
 				/>
 
 				{showAddButton &&
-					(mappedItems.length > 0 && showMappedItems ? (
-						<ClayDropDown
-							active={active}
-							onActiveChange={setActive}
+					(mappedItemsMenu.length > 0 ? (
+						<ClayDropDownWithItems
+							items={mappedItemsMenu}
 							trigger={
 								<ClayButtonWithIcon
 									aria-label={contentButtonAriaLabel}
 									className="page-editor__item-selector__content-button"
 									displayType="secondary"
-									onClick={() => setActive(true)}
 									small
 									symbol={selectContentIcon}
 									title={contentButtonTitle}
 								/>
 							}
-						>
-							<ClayDropDown.ItemList>
-								{mappedItems.map((item) => (
-									<ClayDropDown.Item
-										key={`${item.classNameId}-${item.classPK}`}
-										onClick={() => {
-											onItemSelect(item);
-											setActive(false);
-										}}
-									>
-										{item.title}
-									</ClayDropDown.Item>
-								))}
-								<ClayDropDown.Divider />
-								<ClayDropDown.Item
-									onClick={() => {
-										openModal();
-
-										setActive(false);
-									}}
-								>
-									{Liferay.Language.get('select-content')}...
-								</ClayDropDown.Item>
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
+						/>
 					) : (
 						<ClayButtonWithIcon
 							aria-label={contentButtonAriaLabel}

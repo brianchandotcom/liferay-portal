@@ -32,13 +32,48 @@ definition {
 	}
 
 	@description = "Verify that a Form with required fields can be partially filled out and submitted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBePartiallyFilledWithRequiredFields {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131023 CanBePartiallyFilledWithRequiredFields pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormFields.enableSwitcher(fieldName = "Required Field");
+
+		Form.closeSidebar();
+		
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+		
+		Form.save();
+
+		Form.publishForm();
+		
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewRequiredAsteriskDataField(fieldFieldLabel = "Text");
+		
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 
 	}
 

@@ -127,13 +127,38 @@ definition {
 	}
 
 	@description = "COMMERCE-6175. As a buyer, I want to sort products by Relevance using Sort widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductsAreSortedByRelevance {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByRelevance";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.searchProduct(search = "ABS Sensor");
+
+		CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
 
 		// TODO COMMERCE-6175 AssertProductsAreSortedByRelevance pending implementation
 
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "ABS Sensor 2");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Relevance");
+
+		AssertTextEquals(
+			key_index = "1",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+			value1 = "ABS Sensor 2");
 	}
 
 }

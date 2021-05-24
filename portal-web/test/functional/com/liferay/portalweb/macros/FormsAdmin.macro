@@ -94,6 +94,24 @@ definition {
 		}
 	}
 
+	macro editFormEntry {
+		LexiconEntry.gotoEntryMenuItemNoError(
+			menuItem = "Edit",
+			rowEntry = "${formEntryValue}");
+
+		Type(
+			key_fieldName = "${formEntryValue}",
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "${fieldValue}");
+
+		FormPortlet.submit();
+
+		WaitForElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+		Alert.viewSuccessMessage();
+		
+	}
+
 	macro saveDataProvider {
 		PortletEntry.save();
 

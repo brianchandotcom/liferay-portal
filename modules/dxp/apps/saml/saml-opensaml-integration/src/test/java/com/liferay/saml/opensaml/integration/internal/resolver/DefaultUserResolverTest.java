@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Digester;
@@ -122,7 +123,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_company
 		);
 
-		_defaultUserResolver.setCompanyLocalService(companyLocalService);
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_companyLocalService", companyLocalService);
 
 		MetadataManager metadataManager = mock(MetadataManager.class);
 
@@ -132,7 +134,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_ATTRIBUTE_MAPPINGS
 		);
 
-		_defaultUserResolver.setMetadataManager(metadataManager);
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_metadataManager", metadataManager);
 
 		_samlSpIdpConnection = mock(SamlSpIdpConnection.class);
 
@@ -158,7 +161,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_samlSpIdpConnection
 		);
 
-		_defaultUserResolver.setSamlSpIdpConnectionLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
 		SamlPeerBindingLocalService samlPeerBindingLocalService = mock(
@@ -172,13 +176,15 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			null
 		);
 
-		_defaultUserResolver.setSamlPeerBindingLocalService(
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_samlPeerBindingLocalService",
 			samlPeerBindingLocalService);
 
 		_samlProviderConfigurationHelper = mock(
 			SamlProviderConfigurationHelper.class);
 
-		_defaultUserResolver.setSamlProviderConfigurationHelper(
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_samlProviderConfigurationHelper",
 			_samlProviderConfigurationHelper);
 
 		_userFieldExpressionHandlerRegistry = mock(
@@ -201,7 +207,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			new HashSet<>(Sets.newSet(""))
 		);
 
-		_defaultUserResolver.setUserFieldExpressionHandlerRegistry(
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_userFieldExpressionHandlerRegistry",
 			_userFieldExpressionHandlerRegistry);
 
 		_userFieldExpressionResolverRegistry = mock(
@@ -217,7 +224,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_testUserFieldExpressionResolver
 		);
 
-		_defaultUserResolver.setUserFieldExpressionResolverRegistry(
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_userFieldExpressionResolverRegistry",
 			_userFieldExpressionResolverRegistry);
 
 		User user = _createBlankUser();
@@ -229,10 +237,16 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			user
 		);
 
-		_defaultUserResolver.setUserLocalService(_userLocalService);
-
-		_defaultUserResolver.setUserProcessorFactory(
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_userProcessorFactory",
 			new UserProcessorFactoryImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			_defaultUserResolver, "_userLocalService", _userLocalService);
+
+		ReflectionTestUtil.setFieldValue(
+			defaultUserFieldExpressionHandler, "_userLocalService",
+			_userLocalService);
 
 		when(
 			_samlProviderConfigurationHelper.isLDAPImportEnabled()
@@ -251,9 +265,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		digesterUtil.setDigester(digester);
-
-		defaultUserFieldExpressionHandler.setUserLocalService(
-			_userLocalService);
 
 		LanguageUtil languageUtil = new LanguageUtil();
 

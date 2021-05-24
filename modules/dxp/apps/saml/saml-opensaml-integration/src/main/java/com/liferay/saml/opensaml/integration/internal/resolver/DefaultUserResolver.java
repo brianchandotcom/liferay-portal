@@ -99,73 +99,6 @@ public class DefaultUserResolver implements UserResolver {
 			subjectNameFormat, userResolverSAMLContext, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	public void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setMetadataManager(MetadataManager metadataManager) {
-		_metadataManager = metadataManager;
-	}
-
-	@Reference(unbind = "-")
-	public void setSamlPeerBindingLocalService(
-		SamlPeerBindingLocalService samlPeerBindingLocalService) {
-
-		_samlPeerBindingLocalService = samlPeerBindingLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setSamlProviderConfigurationHelper(
-		SamlProviderConfigurationHelper samlProviderConfigurationHelper) {
-
-		_samlProviderConfigurationHelper = samlProviderConfigurationHelper;
-	}
-
-	@Reference(unbind = "-")
-	public void setSamlSpIdpConnectionLocalService(
-		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService) {
-
-		_samlSpIdpConnectionLocalService = samlSpIdpConnectionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserFieldExpressionHandlerRegistry(
-		UserFieldExpressionHandlerRegistry userFieldExpressionHandlerRegistry) {
-
-		_userFieldExpressionHandlerRegistry =
-			userFieldExpressionHandlerRegistry;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserFieldExpressionResolverRegistry(
-		UserFieldExpressionResolverRegistry
-			userFieldExpressionResolverRegistry) {
-
-		_userFieldExpressionResolverRegistry =
-			userFieldExpressionResolverRegistry;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserImporter(UserImporter userImporter) {
-		_userImporter = userImporter;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
-	@Reference(unbind = "-")
-	public void setUserProcessorFactory(
-		UserProcessorFactory userProcessorFactory) {
-
-		_userProcessorFactory = userProcessorFactory;
-	}
-
 	protected User addUser(
 			long companyId, SamlSpIdpConnection samlSpIdpConnection,
 			Map<String, List<Serializable>> attributesMap,
@@ -462,17 +395,36 @@ public class DefaultUserResolver implements UserResolver {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultUserResolver.class);
 
+	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private MetadataManager _metadataManager;
+
+	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
+
+	@Reference
 	private SamlProviderConfigurationHelper _samlProviderConfigurationHelper;
+
+	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	@Reference
 	private UserFieldExpressionHandlerRegistry
 		_userFieldExpressionHandlerRegistry;
+
+	@Reference
 	private UserFieldExpressionResolverRegistry
 		_userFieldExpressionResolverRegistry;
+
+	@Reference
 	private UserImporter _userImporter;
+
+	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
 	private UserProcessorFactory _userProcessorFactory;
 
 }

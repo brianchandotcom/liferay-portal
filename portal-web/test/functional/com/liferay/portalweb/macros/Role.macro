@@ -41,6 +41,10 @@ definition {
 	}
 
 	macro addAssignees {
+		Role._goToRoleAssigneeType(
+			assigneeType = "${assigneeType}",
+			roleTitle = "${roleTitle}");
+
 		LexiconEntry.gotoAdd();
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -437,9 +441,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		RoleNavigator.gotoAssignees(roleTitle = "${roleTitle}");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "${assigneeType}");
+		Role._goToRoleAssigneeType(
+			assigneeType = "${assigneeType}",
+			roleTitle = "${roleTitle}");
 
 		Search.searchCP(searchTerm = "${assigneeName}");
 
@@ -506,9 +510,9 @@ definition {
 	}
 
 	macro viewAssignee {
-		RoleNavigator.gotoAssignees(roleTitle = "${roleTitle}");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "${assigneeType}");
+		Role._goToRoleAssigneeType(
+			assigneeType = "${assigneeType}",
+			roleTitle = "${roleTitle}");
 
 		LexiconEntry.viewEntryName(rowEntry = "${assigneeName}");
 	}

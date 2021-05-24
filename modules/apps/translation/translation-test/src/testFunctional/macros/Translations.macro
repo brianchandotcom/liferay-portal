@@ -127,6 +127,20 @@ definition {
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_translation_web_internal_portlet_TranslationPortlet");
 	}
 
+	macro saveInvalidConfiguration {
+		Check.toggleSwitch(
+			key_settingFieldName = "Enabled",
+			locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+		SystemSettings.editTextAreaSetting(
+			settingName = "Service Account Private Key",
+			settingValue = "${settingValue}");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = " The service account private key must be in JSON format.");
+	}
+
 	macro translateFields {
 		if (isSet(webContentTitle)) {
 			PortletEntry.inputTitle(title = "${webContentTitle}");

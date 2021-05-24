@@ -190,7 +190,8 @@ public class PanelAppTag extends BasePanelTag {
 
 				_label = HtmlUtil.escape(
 					PortalUtil.getPortletTitle(
-						portlet, servletContext, themeDisplay.getLocale()));
+						portlet, getServletContext(),
+						themeDisplay.getLocale()));
 			}
 
 			if (!_data.containsKey("qa-id")) {

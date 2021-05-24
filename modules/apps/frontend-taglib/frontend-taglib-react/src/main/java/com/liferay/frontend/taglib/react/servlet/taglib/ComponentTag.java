@@ -133,7 +133,7 @@ public class ComponentTag extends ParamAndPropertyAncestorTagImpl {
 		ServletContext servletContext = pageContext.getServletContext();
 
 		if (_setServletContext) {
-			servletContext = this.servletContext;
+			servletContext = getServletContext();
 		}
 
 		try {

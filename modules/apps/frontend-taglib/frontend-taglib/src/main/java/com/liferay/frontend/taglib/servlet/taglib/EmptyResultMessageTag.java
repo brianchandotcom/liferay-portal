@@ -164,7 +164,7 @@ public class EmptyResultMessageTag extends IncludeTag {
 			return _propsTransformerServletContext;
 		}
 
-		return servletContext;
+		return getServletContext();
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 				return EVAL_BODY_INCLUDE;
 			}
 
-			if (!FileAvailabilityUtil.isAvailable(servletContext, page)) {
+			if (!FileAvailabilityUtil.isAvailable(getServletContext(), page)) {
 				logUnavailablePage(page);
 			}
 

@@ -104,7 +104,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		String namespace;
 
 		if (_setServletContext) {
-			namespace = NPMResolvedPackageNameUtil.get(servletContext);
+			namespace = NPMResolvedPackageNameUtil.get(getServletContext());
 		}
 		else {
 			HttpServletRequest httpServletRequest =

@@ -22,7 +22,7 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"test": "liferay-npm-scripts test --passWithNoTests"
 	},
 	"version": "1.0.0"
 }

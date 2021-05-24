@@ -34,6 +34,11 @@ public class DocumentLibraryDataLayoutBuilderDefinition
 	}
 
 	@Override
+	public String[] getDisabledProperties() {
+		return new String[] {"requiredErrorMessage"};
+	}
+
+	@Override
 	public String[] getDisabledTabs() {
 		return new String[] {"Autocomplete"};
 	}

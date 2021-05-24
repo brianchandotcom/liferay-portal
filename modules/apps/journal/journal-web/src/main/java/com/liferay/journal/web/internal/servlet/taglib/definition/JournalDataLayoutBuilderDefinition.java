@@ -45,7 +45,7 @@ public class JournalDataLayoutBuilderDefinition
 
 	@Override
 	public String[] getDisabledProperties() {
-		return new String[] {"predefinedValue"};
+		return new String[] {"predefinedValue", "requiredErrorMessage"};
 	}
 
 	@Override

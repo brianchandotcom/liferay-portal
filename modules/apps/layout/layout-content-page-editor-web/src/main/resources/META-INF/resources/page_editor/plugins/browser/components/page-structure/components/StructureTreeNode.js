@@ -55,7 +55,6 @@ import {
 	useDragItem,
 	useDropTarget,
 } from '../../../../../app/utils/drag-and-drop/useDragAndDrop';
-import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 
 const HOVER_EXPAND_DELAY = 1000;
 
@@ -108,9 +107,14 @@ export default function StructureTreeNode({node}) {
 				return;
 			}
 
-			const {classNameId, itemSubtype, itemType} = item.config.collection;
+			const {
+				classNameId,
+				itemSubtype,
+				itemType,
+				key: collectionKey,
+			} = item.config.collection;
 
-			const key = getMappingFieldsKey(classNameId, itemSubtype);
+			const key = classNameId || collectionKey;
 
 			if (!mappingFields[key]) {
 				loadCollectionFields(dispatch, itemType, itemSubtype, key);

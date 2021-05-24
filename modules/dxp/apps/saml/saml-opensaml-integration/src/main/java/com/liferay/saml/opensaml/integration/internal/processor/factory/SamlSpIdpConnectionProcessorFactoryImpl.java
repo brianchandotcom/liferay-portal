@@ -108,6 +108,17 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 			}
 
 			@Override
+			public <T extends BaseModel<T>> SamlSpIdpConnectionBind<T> bind(
+				Function<SamlSpIdpConnection, T> modelGetterFunction,
+				int processingIndex, String publicIdentifier,
+				UpdateFunction<T> updateFunction) {
+
+				return new SamlSpIdpConnectionBindImpl<>(
+					modelGetterFunction, processingIndex, this,
+					publicIdentifier, updateFunction);
+			}
+
+			@Override
 			public SamlSpIdpConnectionBind<SamlSpIdpConnection> bind(
 				int processingIndex,
 				UpdateFunction<SamlSpIdpConnection> updateFunction) {
@@ -115,17 +126,6 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 				return new SamlSpIdpConnectionBindImpl<>(
 					Function.identity(), processingIndex, this, null,
 					updateFunction);
-			}
-
-			@Override
-			public <T extends BaseModel<T>> SamlSpIdpConnectionBind<T> bind(
-				String publicIdentifier,
-				Function<SamlSpIdpConnection, T> modelGetterFunction,
-				int processingIndex, UpdateFunction<T> updateFunction) {
-
-				return new SamlSpIdpConnectionBindImpl<>(
-					modelGetterFunction, processingIndex, this,
-					publicIdentifier, updateFunction);
 			}
 
 			@Override

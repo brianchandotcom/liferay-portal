@@ -27,11 +27,11 @@ import java.util.function.Function;
  */
 public interface ProcessorContext<M extends BaseModel<M>> {
 
-	public Bind<M> bind(int processingIndex, UpdateFunction<M> updateFunction);
-
 	public <T extends BaseModel<T>> Bind<T> bind(
-		String publicIdentifier, Function<M, T> modelGetterFunction,
-		int processingIndex, UpdateFunction<T> updateFunction);
+		Function<M, T> modelGetterFunction, int processingIndex,
+		String publicIdentifier, UpdateFunction<T> updateFunction);
+
+	public Bind<M> bind(int processingIndex, UpdateFunction<M> updateFunction);
 
 	public <V> V getValue(Class<V> clazz, String fieldExpression);
 

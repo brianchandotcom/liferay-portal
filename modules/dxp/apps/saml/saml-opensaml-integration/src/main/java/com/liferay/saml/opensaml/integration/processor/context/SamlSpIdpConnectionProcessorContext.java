@@ -28,15 +28,15 @@ public interface SamlSpIdpConnectionProcessorContext
 	extends ProcessorContext<SamlSpIdpConnection> {
 
 	@Override
+	public <T extends BaseModel<T>> SamlSpIdpConnectionBind<T> bind(
+		Function<SamlSpIdpConnection, T> modelGetterFunction,
+		int processingIndex, String publicIdentifier,
+		UpdateFunction<T> updateFunction);
+
+	@Override
 	public SamlSpIdpConnectionBind<SamlSpIdpConnection> bind(
 		int processingIndex,
 		UpdateFunction<SamlSpIdpConnection> updateFunction);
-
-	@Override
-	public <T extends BaseModel<T>> SamlSpIdpConnectionBind<T> bind(
-		String publicIdentifier,
-		Function<SamlSpIdpConnection, T> modelGetterFunction,
-		int processingIndex, UpdateFunction<T> updateFunction);
 
 	public FileItem[] getFileItemArray(String fieldExpression);
 
@@ -47,7 +47,7 @@ public interface SamlSpIdpConnectionProcessorContext
 
 		public void handleFileItemArray(
 			String fieldExpression,
-			UnsafeBiConsumer<T, FileItem[], ?> consumer);
+			UnsafeBiConsumer<T, FileItem[], ?> unsafeBiConsumer);
 
 	}
 

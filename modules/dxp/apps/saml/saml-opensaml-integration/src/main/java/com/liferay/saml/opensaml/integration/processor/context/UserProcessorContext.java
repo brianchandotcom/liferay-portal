@@ -25,13 +25,13 @@ import java.util.function.Function;
 public interface UserProcessorContext extends ProcessorContext<User> {
 
 	@Override
-	public UserBind<User> bind(
-		int processingIndex, UpdateFunction<User> updateFunction);
+	public <T extends BaseModel<T>> UserBind<T> bind(
+		Function<User, T> modelGetterFunction, int processingIndex,
+		String publicIdentifier, UpdateFunction<T> updateFunction);
 
 	@Override
-	public <T extends BaseModel<T>> UserBind<T> bind(
-		String publicIdentifier, Function<User, T> modelGetterFunction,
-		int processingIndex, UpdateFunction<T> updateFunction);
+	public UserBind<User> bind(
+		int processingIndex, UpdateFunction<User> updateFunction);
 
 	public interface UserBind<T extends BaseModel<T>> extends Bind<T> {
 	}

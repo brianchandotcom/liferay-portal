@@ -61,8 +61,8 @@ public class UserProcessorFactoryImpl implements UserProcessorFactory {
 			extends BindImpl<T> implements UserProcessorContext.UserBind<T> {
 
 			public UserBindImpl(
-				ProcessorContext processorContext, String publicIdentifier,
 				Function<User, T> modelGetterFunction, int processingIndex,
+				ProcessorContext processorContext, String publicIdentifier,
 				ProcessorContext.UpdateFunction<T> updateFunction) {
 
 				super(
@@ -80,22 +80,22 @@ public class UserProcessorFactoryImpl implements UserProcessorFactory {
 			}
 
 			@Override
+			public <T extends BaseModel<T>> UserBind<T> bind(
+				Function<User, T> modelGetterFunction, int processingIndex,
+				String publicIdentifier, UpdateFunction<T> updateFunction) {
+
+				return new UserBindImpl<>(
+					modelGetterFunction, processingIndex, this,
+					publicIdentifier, updateFunction);
+			}
+
+			@Override
 			public UserBind<User> bind(
 				int processingIndex, UpdateFunction<User> updateFunction) {
 
 				return new UserBindImpl<>(
-					this, null, Function.identity(), processingIndex,
+					Function.identity(), processingIndex, this, null,
 					updateFunction);
-			}
-
-			@Override
-			public <T extends BaseModel<T>> UserBind<T> bind(
-				String publicIdentifier, Function<User, T> modelGetterFunction,
-				int processingIndex, UpdateFunction<T> updateFunction) {
-
-				return new UserBindImpl<>(
-					this, publicIdentifier, modelGetterFunction,
-					processingIndex, updateFunction);
 			}
 
 		}

@@ -231,21 +231,21 @@ public abstract class ProcessorImpl
 		}
 
 		@Override
+		public <T extends BaseModel<T>> Bind<T> bind(
+			Function<M, T> modelGetterFunction, int processingIndex,
+			String publicIdentifier, UpdateFunction<T> updateFunction) {
+
+			return new BindImpl<>(
+				modelGetterFunction, processingIndex, this, publicIdentifier,
+				updateFunction);
+		}
+
+		@Override
 		public Bind<M> bind(
 			int processingIndex, UpdateFunction<M> updateFunction) {
 
 			return new BindImpl<>(
 				Function.identity(), processingIndex, this, null,
-				updateFunction);
-		}
-
-		@Override
-		public <T extends BaseModel<T>> Bind<T> bind(
-			String publicIdentifier, Function<M, T> modelGetterFunction,
-			int processingIndex, UpdateFunction<T> updateFunction) {
-
-			return new BindImpl<>(
-				modelGetterFunction, processingIndex, this, publicIdentifier,
 				updateFunction);
 		}
 

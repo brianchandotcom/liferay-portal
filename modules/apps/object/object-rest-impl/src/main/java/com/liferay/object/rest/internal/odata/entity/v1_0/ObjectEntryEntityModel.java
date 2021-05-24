@@ -15,10 +15,8 @@
 package com.liferay.object.rest.internal.odata.entity.v1_0;
 
 import com.liferay.object.model.ObjectField;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.DateEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
@@ -138,22 +136,12 @@ public class ObjectEntryEntityModel implements EntityModel {
 							objectField.getName()));
 		}
 		else if (Objects.equals(objectField.getType(), "String")) {
-			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
-				return Optional.of(
-					new StringEntityField(
-						objectField.getName(),
-						locale ->
-							"nestedFieldArray.value_text.sortable#" +
-								objectField.getName()));
-			}
-
 			return Optional.of(
 				new StringEntityField(
 					objectField.getName(),
-					locale -> StringBundler.concat(
-						"nestedFieldArray.value_",
-						objectField.getIndexedLanguageId(), "_sortable#",
-						objectField.getName())));
+					locale ->
+						"nestedFieldArray.value_keyword_lowercase#" +
+							objectField.getName()));
 		}
 
 		return Optional.empty();

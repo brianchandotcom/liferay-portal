@@ -105,7 +105,7 @@ public class OrderTransitionsTag extends IncludeTag {
 			ServletContextUtil.getCommerceOrderModelResourcePermission();
 		commerceOrderValidatorRegistry =
 			ServletContextUtil.getCommerceOrderValidatorRegistry();
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	@Override

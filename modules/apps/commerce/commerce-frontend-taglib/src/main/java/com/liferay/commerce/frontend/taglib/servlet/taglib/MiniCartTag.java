@@ -150,7 +150,7 @@ public class MiniCartTag extends IncludeTag {
 		_configurationProvider = ServletContextUtil.getConfigurationProvider();
 		_commerceOrderHttpHelper =
 			ServletContextUtil.getCommerceOrderHttpHelper();
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setSpritemap(String spritemap) {

@@ -66,7 +66,7 @@ public class ManagementBarFilterTag extends IncludeTag implements BodyTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setValue(String value) {

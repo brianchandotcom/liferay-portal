@@ -96,7 +96,7 @@ public class ProductListEntryRendererTag extends IncludeTag {
 
 		cpContentListEntryRendererRegistry =
 			ServletContextUtil.getCPContentListEntryRendererRegistry();
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	@Override

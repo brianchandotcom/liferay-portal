@@ -126,7 +126,7 @@ public class PriceTag extends IncludeTag {
 			ServletContextUtil.getCommerceChannelLocalService();
 		configurationProvider = ServletContextUtil.getConfigurationProvider();
 		_productHelper = ServletContextUtil.getProductHelper();
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setQuantity(int quantity) {

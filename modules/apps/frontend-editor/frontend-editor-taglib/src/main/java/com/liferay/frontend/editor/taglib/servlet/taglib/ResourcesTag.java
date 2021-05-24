@@ -87,8 +87,8 @@ public class ResourcesTag extends IncludeTag {
 			String page, HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		servletContext = PortalWebResourcesUtil.getServletContext(
-			_getEditorResourceType());
+		setServletContext(
+			PortalWebResourcesUtil.getServletContext(_getEditorResourceType()));
 
 		super.includePage(page, httpServletResponse);
 	}

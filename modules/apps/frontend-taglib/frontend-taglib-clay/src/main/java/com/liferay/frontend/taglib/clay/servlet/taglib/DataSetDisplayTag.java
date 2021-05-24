@@ -269,7 +269,7 @@ public class DataSetDisplayTag extends IncludeTag {
 
 		super.setPageContext(pageContext);
 
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setPageNumber(int pageNumber) {

@@ -232,7 +232,7 @@ public class AddToCartTag extends IncludeTag {
 			ServletContextUtil.getCommerceOrderItemLocalService();
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		_productHelper = ServletContextUtil.getProductHelper();
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setSpritemap(String spritemap) {

@@ -78,7 +78,7 @@ public class QuantityControlTag extends IncludeTag {
 
 		commerceOrderItemService =
 			ServletContextUtil.getCommerceOrderItemService();
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setShowInputLabel(boolean showInputLabel) {

@@ -55,7 +55,7 @@ public class ExportImportEntityManagementBarButtonTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setSearchContainerMappingId(String searchContainerMappingId) {

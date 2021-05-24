@@ -78,7 +78,7 @@ public class SocialBookmarkTag extends AttributesTagSupport {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setTarget(String target) {

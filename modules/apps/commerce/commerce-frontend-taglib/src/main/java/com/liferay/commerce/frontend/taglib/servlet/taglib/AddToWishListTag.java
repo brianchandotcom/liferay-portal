@@ -117,7 +117,7 @@ public class AddToWishListTag extends IncludeTag {
 		super.setPageContext(pageContext);
 
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setSkuId(long skuId) {

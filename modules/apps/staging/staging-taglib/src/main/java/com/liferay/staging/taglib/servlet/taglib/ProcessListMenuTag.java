@@ -62,7 +62,7 @@ public class ProcessListMenuTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setRelaunchMenu(boolean relaunchMenu) {

@@ -141,7 +141,7 @@ public class EmailNotificationSettingsTag extends IncludeTag {
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
 
-		servletContext = ServletContextUtil.getServletContext();
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setShowEmailEnabled(boolean showEmailEnabled) {

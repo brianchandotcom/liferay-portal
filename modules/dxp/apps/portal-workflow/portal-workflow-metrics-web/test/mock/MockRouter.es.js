@@ -52,17 +52,20 @@ const MockRouter = ({
 	const [reindexStatuses, setReindexStatuses] = useState(
 		initialReindexStatuses
 	);
+	const [fetchDateModified, setFetchDateModified] = useState(false);
 
 	const contextState = useMemo(
 		() => ({
 			client,
 			defaultDelta: 20,
 			deltaValues: [5, 10, 20, 30, 50, 75],
+			fetchDateModified,
 			getClient: () => client,
 			isAmPm,
 			maxPages: 3,
 			portletNamespace: 'workflow',
 			reindexStatuses,
+			setFetchDateModified,
 			setReindexStatuses,
 			setTitle,
 			title,

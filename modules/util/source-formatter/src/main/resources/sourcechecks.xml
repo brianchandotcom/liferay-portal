@@ -253,7 +253,6 @@
 		<check name="GradleDependencyArtifactsCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that value `default` is not used for attribute `version`." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="GradleDependencyConfigurationCheck">
 			<category name="Bug Prevention" />
@@ -290,7 +289,6 @@
 		<check name="GradleRequiredDependenciesCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates the dependencies in `/required-dependencies/required-dependencies/build.gradle`." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="GradleStylingCheck">
 			<category name="Styling" />
@@ -434,7 +432,6 @@
 		<check name="JavaExceptionCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks that variable names of exceptions in `catch` statements follow naming conventions." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaForLoopCheck">
 			<category name="Styling" />
@@ -533,7 +530,6 @@
 		<check name="JavaStaticMethodCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where methods are unncessarily declared static." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaStaticVariableDependencyCheck">
 			<category name="Bug Prevention" />
@@ -613,7 +609,6 @@
 		<check name="JavaComponentActivateCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks if methods with annotation `@Activate` or `@Deactivate` follow naming conventions." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaComponentAnnotationsCheck">
 			<category name="Bug Prevention" />
@@ -625,7 +620,6 @@
 		<check name="JavaDataAccessConnectionCheck">
 			<category name="Performance" />
 			<description name="Finds calls to `DataAccess.getConnection` (use `DataAccess.getUpgradeOptimizedConnection` instead)." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaDeprecatedJavadocCheck">
 			<category name="Javadoc" />
@@ -646,7 +640,6 @@
 		<check name="JavaHelperUtilCheck">
 			<category name="Naming Conventions" />
 			<description name="Finds incorrect use of `*Helper` or `*Util` classes." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaIgnoreAnnotationCheck">
 			<category name="Bug Prevention" />
@@ -688,7 +681,6 @@
 		<check name="JavaProviderTypeAnnotationCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on classes with `@ProviderType` annotation." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaReleaseInfoCheck">
 			<category name="Bug Prevention" />
@@ -709,12 +701,10 @@
 		<check name="JavaSignatureParametersCheck">
 			<category name="Styling" />
 			<description name="Checks the order of parameters." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaSourceFormatterDocumentationCheck">
 			<category name="Documentation" />
 			<description name="Finds SourceFormatter checks that have no documentation." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaStagedModelDataHandlerCheck">
 			<category name="Bug Prevention" />
@@ -747,7 +737,6 @@
 		<check name="JavaTestMethodAnnotationsCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks if methods with test annotations follow the naming conventions." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaTransactionBoundaryCheck">
 			<category name="Bug Prevention" />
@@ -816,7 +805,6 @@
 		<check name="JavaModuleExposureCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for exposure of `SPI` types in `API`." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaModuleIllegalImportsCheck">
 			<category name="Bug Prevention" />
@@ -916,7 +904,6 @@
 		<check name="JSPArrowFunctionCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that there are no array functions." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPDefineObjectsCheck">
 			<category name="Performance" />
@@ -957,7 +944,6 @@
 		<check name="JSPJavaParserCheck">
 			<category name="Styling" />
 			<description name="Performs JavaParser on `.java` files." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPLanguageUtilCheck">
 			<category name="Bug Prevention" />
@@ -974,7 +960,6 @@
 		<check name="JSPMethodCallsCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that type `LiferayPortletResponse` is used to call `getNamespace()`." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="JSPParenthesesCheck">
 			<category name="Miscellaneous" />
@@ -1093,7 +1078,6 @@
 		<check name="JSPServiceUtilCheck">
 			<category name="Miscellaneous" />
 			<description name="Finds incorrect use of `*ServiceUtil` in `.jsp` files in modules." />
-			<property name="enabled" value="false" />
 		</check>
 
 		<!-- Plugin Source Checks -->
@@ -1151,7 +1135,6 @@
 		<check name="MarkdownSourceFormatterReadmeCheck">
 			<category name="Documentation" />
 			<description name="Generates Source Formatter documentation index files." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="MarkdownStylingCheck">
 			<category name="Styling" />

@@ -227,7 +227,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.AssignAsUsedCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds cases where an assign statement can be inlined or moved closer to where it is used." />
-			<property name="enabled" value="false" />
 			<message key="variable.inline" value="No need to assign variable ''{0}''. Pass the method call directly as parameter on line ''{1}''." />
 			<message key="variable.move.after.branching.statement" value="For better performance, the variable assignment for ''{0}'' should come after the ''{1}'' statement on line ''{2}''" />
 			<message key="variable.move.inside.if.statement" value="For better performance, the variable assignment for ''{0}'' should be moved inside the {1}-statement on line ''{2}''" />
@@ -240,7 +239,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.CamelCaseNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks variable names for correct use of `CamelCase`." />
-			<property name="enabled" value="false" />
 			<message key="following.underscore.incorrect" value="''{0}'' should not be followed by ''_'' for variable ''{1}''" />
 			<message key="following.uppercase.incorrect" value="''{0}'' should not be followed by an uppercase character for {1} ''{2}''" />
 			<message key="preceding.underscore.required" value="''{0}'' should be preceded by ''_'' for variable ''{1}''" />
@@ -336,7 +334,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.ExceptionCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds private methods that throw unnecessary exception." />
-			<property name="enabled" value="false" />
 			<message key="exception.unnecessary" value="Method ''{0}'' throws unnecessary {1}. All methods calling ''{0}'' throw ''Exception''." />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ExceptionMessageCheck">
@@ -347,7 +344,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.ExceptionVariableNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Validates variable names that have type `*Exception`." />
-			<property name="enabled" value="false" />
 			<message key="variable.rename" value="Rename exception variable ''{0}'' to ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.FactoryCheck">
@@ -373,7 +369,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.GenericTypeCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Checks that generics are always specified to provide compile-time checking and removing the risk of `ClassCastException` during runtime." />
-			<property name="enabled" value="false" />
 			<property name="populateTypeNames" value="false" />
 			<message key="generic.type.parameterize" value="Parameterize the generic {0} for ''{1}'" />
 		</module>
@@ -467,7 +462,6 @@
 			<property name="description" value="Checks that method names follow naming conventions." />
 			<message key="method.incorrect.ending" value="Name of method returning type ''{0}'' should end with ''{0}''" />
 			<message key="method.rename" value="Rename method ''{0}'' to ''{1}''" />
-			<property name="enabled" value="false" />
 			<property name="enforceTypeNames" value="" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MissingAuthorCheck">
@@ -517,7 +511,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.MVCCommandNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks for consistent naming for values of `mvc.command.name`." />
-			<property name="enabled" value="false" />
 			<message key="value.incorrect" value="Incorrect value ''{0}'' for ''mvc.command.name''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.NestedIfStatementCheck">
@@ -538,7 +531,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOperandCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Verifies that operand do not go over too many lines and make the operator hard to read." />
-			<property name="enabled" value="false" />
 			<message key="readability.improve" value="Create a new variable for the {0} hand side operand of the ''{1}'' operator for better readability" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOrderCheck">
@@ -654,7 +646,6 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds missing LiferayUnitTestRule." />
 			<message key="test.rule.missing" value="Missing test rule ''LiferayUnitTestRule''" />
-			<property name="enabled" value="false" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.ThreadLocalUtilCheck">
 			<property name="category" value="Performance" />
@@ -674,7 +665,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.TryWithResourcesCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Ensures using Try-With-Resources statement to properly close the resource." />
-			<property name="enabled" value="false" />
 			<property name="populateTypeNames" value="false" />
 			<message key="try.with.resources.use" value="Use Try-With-Resources statement to declare ''{0}'' instead of closing the resource in the ''finally'' statement using ''{1}''" />
 		</module>
@@ -689,7 +679,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnnecessaryMethodCallCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Finds unnecessary method calls." />
-			<property name="enabled" value="false" />
 			<message key="method.call.unnecessary" value="Use ''{0}'' instead of calling method ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnnecessaryTypeCastCheck">
@@ -747,7 +736,6 @@
 			<property name="allowedVariableNames" value="bitMode,metadata,superClass,userName" />
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Checks that variable names follow naming conventions." />
-			<property name="enabled" value="false" />
 			<property name="enforceTypeNames" value="" />
 			<message key="variable.incorrect.count" value="Rename variable ''{0}'' to ''{1}'' (and increment counts for other variables ''{0}*'')" />
 			<message key="variable.incorrect.ending" value="Name of variable with type ''{0}'' should end with ''{1}''" />

@@ -160,7 +160,7 @@ definition {
 
 	macro selectSegmentProfile {
 		var key_segmentProfile = "${segmentProfile}";
-		
+
 		Click(locator1 = "ACSegments#SELECT_SEGMENT_PROFILE");
 	}
 

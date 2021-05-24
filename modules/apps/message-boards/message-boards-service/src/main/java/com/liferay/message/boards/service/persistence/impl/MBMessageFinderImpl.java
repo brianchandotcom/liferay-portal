@@ -272,6 +272,9 @@ public class MBMessageFinderImpl
 				getClass(), FIND_BY_PARENT_MESSAGE_ID, queryDefinition,
 				MBMessageImpl.TABLE_NAME);
 
+			sql = _customSQL.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 			sqlQuery.addEntity(MBMessageImpl.TABLE_NAME, MBMessageImpl.class);

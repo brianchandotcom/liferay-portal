@@ -194,6 +194,9 @@
 					)
 				) AND
 				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
+			ORDER BY
+				MBMessage.priority DESC,
+				MBMessage.modifiedDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.service.persistence.MBMessageFinder.findByThreadId">

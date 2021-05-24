@@ -38,8 +38,10 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBThreadLocalService;
-import com.liferay.message.boards.util.comparator.MBObjectsComparator;
 import com.liferay.message.boards.util.comparator.MessageCreateDateComparator;
+import com.liferay.message.boards.util.comparator.MessageModifiedDateComparator;
+import com.liferay.message.boards.util.comparator.MessageSubjectComparator;
+import com.liferay.message.boards.util.comparator.MessageURLSubjectComparator;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -510,12 +512,22 @@ public class MessageBoardMessageResourceImpl
 		if ((sorts != null) && (sorts.length == 1)) {
 			Sort sort = sorts[0];
 
-			if (Objects.equals(sort.getFieldName(), "dateCreated")) {
+			String fieldName = sort.getFieldName();
+
+			if (Objects.equals(fieldName, "createDate_sortable")) {
 				orderByComparator = new MessageCreateDateComparator(
 					!sort.isReverse());
 			}
-			else {
-				orderByComparator = new MBObjectsComparator<>(
+			else if (Objects.equals(fieldName, "modified_sortable")) {
+				orderByComparator = new MessageModifiedDateComparator(
+					!sort.isReverse());
+			}
+			else if (fieldName.contains("title")) {
+				orderByComparator = new MessageSubjectComparator(
+					!sort.isReverse());
+			}
+			else if (fieldName.contains("urlSubject")) {
+				orderByComparator = new MessageURLSubjectComparator(
 					!sort.isReverse());
 			}
 		}

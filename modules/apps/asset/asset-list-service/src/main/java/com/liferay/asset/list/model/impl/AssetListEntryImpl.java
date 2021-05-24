@@ -20,7 +20,6 @@ import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
-import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -198,7 +197,7 @@ public class AssetListEntryImpl extends AssetListEntryBaseImpl {
 			_serviceTracker;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(AssetHelper.class);
+		Bundle bundle = FrameworkUtil.getBundle(AssetListEntryImpl.class);
 
 		ServiceTracker<AssetListAssetEntryProvider, AssetListAssetEntryProvider>
 			serviceTracker = new ServiceTracker<>(

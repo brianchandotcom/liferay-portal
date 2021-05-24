@@ -1,5 +1,34 @@
 definition {
 
+	@summary = "This calls the JSON WS API to add an attachment to a MB"
+	macro addAttachmentToMessage {
+		var messageId = JSONMBMessage.getMessageIdByName(
+			categoryName = "${categoryName}",
+			groupName = "${groupName}",
+			threadSubject = "${threadSubject}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var baseDir = PropsUtil.get("test.base.dir.name");
+		var dependenciesDir = PropsUtil.get("test.dependencies.dir.name");
+		var filePath = "${baseDir}${dependenciesDir}/${fileName}";
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbmessage/add-message-attachment \
+			-u test@liferay.com:test \
+			-F messageId=${messageId} \
+			-F fileName=${fileName} \
+			-F mimeType=${mimeType} \
+			-F file=@${filePath}
+		''';
+
+		echo("## Adding a 'File' with the following info using JSONWS:");
+
+		echo("## * File Name: ${fileName}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "This calls the JSON WS API to add a MB category"
 	macro addCategory {
 		var portalURL = JSONCompany.getPortalURL();
@@ -71,7 +100,12 @@ definition {
 			assetTagNames = "${assetTagNames}",
 			workflowAction = "${workflowAction}");
 
-		if (!(isSet(categoryId))) {
+		if (isSet(categoryName)) {
+			var categoryId = JSONMBMessage.getCategoryIdByName(
+				groupName = "${groupName}",
+				categoryName = "${categoryName}");
+		}
+		else {
 			var categoryId = "0";
 		}
 
@@ -201,6 +235,41 @@ definition {
 		var messageBoardsThreadURL = selenium.getLocation();
 		var portalURL = PropsUtil.get("portal.url");
 		var messageId = StringUtil.replace("${messageBoardsThreadURL}", "${portalURL}/web/guest/message-boards-page/-/message_boards/message/", "");
+
+		return "${messageId}";
+	}
+
+	@summary = "Get the messageId by using both categoryName and groupName"
+	macro getMessageIdByName {
+		if (isSet(categoryName)) {
+			var categoryId = JSONMBMessage.getCategoryIdByName(
+				groupName = "${groupName}",
+				categoryName = "${categoryName}");
+		}
+		else {
+			var categoryId = "0";
+		}
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbthread/get-threads \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d categoryId=${categoryId} \
+			-d status=0 \
+			-d "start=-1" \
+			-d "end=-1"
+
+		''';
+
+		var messageId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${threadSubject}')]['rootMessageId']");
+
+		if ("${messageId}" == "[]") {
+			fail("FAIL. Cannot find category.");
+		}
 
 		return "${messageId}";
 	}

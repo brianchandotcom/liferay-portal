@@ -767,17 +767,14 @@
 						"value_keyword": {
 							"type": "keyword"
 						},
+						"value_keyword_lowercase": {
+							"normalizer": "lowercase",
+							"type": "keyword"
+						},
 						"value_long": {
 							"type": "long"
 						},
 						"value_text": {
-							"fields": {
-								"sortable": {
-									"ignore_above": 256,
-									"normalizer": "lowercase",
-									"type": "keyword"
-								}
-							},
 							"type": "text"
 						}
 					},

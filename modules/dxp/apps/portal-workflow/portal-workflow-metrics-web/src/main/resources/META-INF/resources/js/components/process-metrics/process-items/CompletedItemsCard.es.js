@@ -40,11 +40,7 @@ const CompletedItemsCard = ({routeParams}) => {
 			title={Liferay.Language.get('completed-items')}
 			{...routeParams}
 		>
-			<TimeRangeFilter
-				disabled={filtersError}
-				options={{position: 'right'}}
-				prefixKey={prefixKey}
-			/>
+			<TimeRangeFilter disabled={filtersError} prefixKey={prefixKey} />
 		</ProcessItemsCard>
 	);
 };

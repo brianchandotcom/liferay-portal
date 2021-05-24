@@ -56,10 +56,7 @@ export default function Header({
 					)}
 				/>
 				<ClayManagementToolbar.ItemList>
-					<TimeRangeFilter
-						buttonClassName="btn-flat btn-sm"
-						options={{position: 'right'}}
-					/>
+					<TimeRangeFilter />
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
 

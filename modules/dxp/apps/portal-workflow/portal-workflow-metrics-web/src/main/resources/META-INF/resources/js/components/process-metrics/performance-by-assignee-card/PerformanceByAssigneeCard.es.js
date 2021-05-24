@@ -32,13 +32,12 @@ function Header({disableFilters, prefixKey, processId}) {
 			title={Liferay.Language.get('performance-by-assignee')}
 		>
 			<ClayLayout.ContentCol className="m-0 management-bar management-bar-light navbar">
-				<ul className="navbar-nav">
+				<div className="navbar-nav">
 					<ProcessStepFilter
 						disabled={disableFilters}
 						options={{
 							hideControl: true,
 							multiple: false,
-							position: 'right',
 							withAllSteps: true,
 							withSelectionTitle: true,
 						}}
@@ -49,10 +48,9 @@ function Header({disableFilters, prefixKey, processId}) {
 					<TimeRangeFilter
 						className="pl-3"
 						disabled={disableFilters}
-						options={{position: 'right'}}
 						prefixKey={prefixKey}
 					/>
-				</ul>
+				</div>
 			</ClayLayout.ContentCol>
 		</PanelHeaderWithOptions>
 	);

@@ -44,9 +44,6 @@ export default function SLAStatusFilter({
 	prefixKey = '',
 }) {
 	options = {
-		hideControl: false,
-		multiple: true,
-		position: 'left',
 		withSelectionTitle: true,
 		withoutRouteParams: false,
 		...options,

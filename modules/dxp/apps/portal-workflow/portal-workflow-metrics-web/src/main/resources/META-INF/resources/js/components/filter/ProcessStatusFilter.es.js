@@ -39,9 +39,6 @@ export default function ProcessStatusFilter({
 	prefixKey = '',
 }) {
 	options = {
-		hideControl: false,
-		multiple: true,
-		position: 'left',
 		withSelectionTitle: false,
 		withoutRouteParams: false,
 		...options,

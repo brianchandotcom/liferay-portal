@@ -31,9 +31,6 @@ export default function ProcessStepFilter({
 	processId,
 }) {
 	options = {
-		hideControl: false,
-		multiple: true,
-		position: 'left',
 		requestUrl: `/processes/${processId}/tasks?page=0&pageSize=0`,
 		withAllSteps: false,
 		withSelectionTitle: false,

@@ -25,9 +25,6 @@ export default function RoleFilter({
 	processId,
 }) {
 	options = {
-		hideControl: false,
-		multiple: true,
-		position: 'left',
 		withSelectionTitle: false,
 		withoutRouteParams: false,
 		...options,

@@ -34,10 +34,7 @@ export default function Header({filterKeys, routeParams, totalCount}) {
 				/>
 
 				<ClayManagementToolbar.ItemList>
-					<TimeRangeFilter
-						buttonClassName="btn-flat btn-sm"
-						options={{position: 'right'}}
-					/>
+					<TimeRangeFilter />
 				</ClayManagementToolbar.ItemList>
 			</ClayManagementToolbar>
 

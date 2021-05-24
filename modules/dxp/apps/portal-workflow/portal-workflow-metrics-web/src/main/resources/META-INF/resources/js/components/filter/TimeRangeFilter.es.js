@@ -39,7 +39,6 @@ export default function TimeRangeFilter({
 	options = {
 		hideControl: true,
 		multiple: false,
-		position: 'left',
 		withSelectionTitle: true,
 		withoutRouteParams: false,
 		...options,

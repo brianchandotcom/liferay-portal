@@ -34,7 +34,6 @@ function Header({disableFilters, prefixKey, totalCount}) {
 				<ul className="navbar-nav">
 					<TimeRangeFilter
 						disabled={!totalCount || disableFilters}
-						options={{position: 'right'}}
 						prefixKey={prefixKey}
 					/>
 				</ul>

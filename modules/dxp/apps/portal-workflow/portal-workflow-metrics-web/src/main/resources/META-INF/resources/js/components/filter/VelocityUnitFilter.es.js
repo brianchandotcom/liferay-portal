@@ -28,7 +28,6 @@ export default function VelocityUnitFilter({
 	options = {
 		hideControl: true,
 		multiple: false,
-		position: 'right',
 		withSelectionTitle: true,
 		withoutRouteParams: false,
 		...options,

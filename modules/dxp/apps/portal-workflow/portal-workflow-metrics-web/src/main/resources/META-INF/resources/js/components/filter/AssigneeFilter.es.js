@@ -32,9 +32,6 @@ export default function AssigneeFilter({
 	staticData,
 }) {
 	options = {
-		hideControl: false,
-		multiple: true,
-		position: 'left',
 		withSelectionTitle: false,
 		withoutRouteParams: false,
 		withoutUnassigned: false,

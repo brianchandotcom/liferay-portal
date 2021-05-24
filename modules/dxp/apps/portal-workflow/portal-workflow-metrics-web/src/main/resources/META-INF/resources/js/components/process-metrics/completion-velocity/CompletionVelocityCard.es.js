@@ -100,10 +100,9 @@ function Header({disableFilters, prefixKey, timeRange}) {
 			title={Liferay.Language.get('completion-velocity')}
 		>
 			<ClayLayout.ContentCol className="m-0 management-bar management-bar-light navbar">
-				<ul className="navbar-nav">
+				<div className="navbar-nav">
 					<TimeRangeFilter
 						disabled={disableFilters}
-						options={{position: 'right'}}
 						prefixKey={prefixKey}
 					/>
 
@@ -113,7 +112,7 @@ function Header({disableFilters, prefixKey, timeRange}) {
 						prefixKey={prefixKey}
 						timeRange={timeRange}
 					/>
-				</ul>
+				</div>
 			</ClayLayout.ContentCol>
 		</PanelHeaderWithOptions>
 	);

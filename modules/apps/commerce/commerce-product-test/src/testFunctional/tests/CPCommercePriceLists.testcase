@@ -603,13 +603,302 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6227. Tier Price Entry lifecycle"
-	@ignore = "true"
 	@priority = "3"
 	test AddEditAndDeleteTierPriceEntry {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#AddEditAndDeleteTierPriceEntry";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Minium",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		var sku = "MIN55861";
+
+		Type(
+			key_title = "Add SKUs",
+			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+			value1 = "MIN55861");
+
+		Button.clickSelect();
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "${sku}");
+
+		CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = "100");
+
+		Refresh();
+
+		var price = "80";
+
+		for (var quantity : list "10,20") {
+			CommerceNavigator.gotoEntry(entryName = "${sku}");
+
+			if ("${quantity}" == "20") {
+				var price = "50";
+			}
+
+			CommercePriceLists.createPriceListPriceTiers(
+				key_pricingType = "Bulk Pricing",
+				key_quantity = "${quantity}",
+				key_value = "${price}");
+
+			Refresh();
+		}
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertTextEquals(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ 100.00");
+
+		for (var value : list "10,20") {
+			Type(
+				key_cartItemSKU = "${sku}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "${value}");
+
+			if ("${value}" == "10") {
+				AssertTextEquals(
+					key_cartItemSKU = "${sku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+					value1 = "$ 80.00");
+			}
+			else {
+				AssertTextEquals(
+					key_cartItemSKU = "${sku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+					value1 = "$ 50.00");
+			}
+		}
+
+		Click(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_REMOVE");
+
+		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		CommerceNavigator.gotoEntry(entryName = "${sku}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		for ( var value : list "$ 80.00,$ 50.00") {
+			ClickNoError(
+				key_value = "${value}",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+		}
 
 		// TODO COMMERCE-6227 AddEditAndDeleteTierPriceEntry Pending Implementation
 
+		Refresh();
+
+		var price = "80";
+
+		for (var quantity : list "10,20") {
+			CommerceNavigator.gotoEntry(entryName = "${sku}");
+
+			if ("${quantity}" == "20") {
+				var price = "50";
+			}
+
+			CommercePriceLists.createPriceListPriceTiers(
+				key_pricingType = "Tiered Pricing",
+				key_quantity = "${quantity}",
+				key_value = "${price}");
+
+			Refresh();
+		}
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertTextEquals(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ 100.00");
+
+		for (var value : list "10,20") {
+			Type(
+				key_cartItemSKU = "${sku}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "${value}");
+
+			if ("${value}" == "10") {
+				AssertTextEquals(
+					key_cartItemSKU = "${sku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+					value1 = "$ 98.00");
+			}
+			else {
+				AssertTextEquals(
+					key_cartItemSKU = "${sku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+					value1 = "$ 87.50");
+			}
+		}
+
+		Click(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_REMOVE");
+
+		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		var price = "60";
+
+		for (var title : list "$ 80.00,$ 50.00") {
+			CommerceNavigator.gotoEntry(entryName = "${sku}");
+
+			if ("${title}" == "$ 50.00") {
+				var price = "30";
+			}
+
+			CommercePriceLists.editPriceListPriceTiers(
+				key_title = "${title}",
+				key_value = "${price}");
+
+			Refresh();
+		}
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertTextEquals(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ 100.00");
+
+		for (var value : list "10,20") {
+			Type(
+				key_cartItemSKU = "${sku}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "${value}");
+
+			if ("${value}" == "10") {
+				AssertTextEquals(
+					key_cartItemSKU = "${sku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+					value1 = "$ 96.00");
+			}
+			else {
+				AssertTextEquals(
+					key_cartItemSKU = "${sku}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+					value1 = "$ 76.50");
+			}
+		}
+
+		Click(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_REMOVE");
+
+		Click(locator1 = "CommerceAccelerators#MINI_CART_CLOSE");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+		CommerceNavigator.gotoEntry(entryName = "${sku}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		for ( var value : list "$ 60.00,$ 30.00") {
+			ClickNoError(
+				key_value = "${value}",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			CommerceEntry.clickNoError(menuItem = "Delete");
+		}
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		AssertTextEquals(
+			key_cartItemSKU = "${sku}",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+			value1 = "$ 100.00");
+
+		for (var value : list "10,20") {
+			Type(
+				key_cartItemSKU = "${sku}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+				value1 = "${value}");
+
+			AssertTextEquals(
+				key_cartItemSKU = "${sku}",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+				value1 = "$ 100.00");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6234. Price List Qualifier Lifecycle"

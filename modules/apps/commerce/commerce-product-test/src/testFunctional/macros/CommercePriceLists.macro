@@ -68,4 +68,30 @@ definition {
 		Button.clickSave();
 	}
 
+	macro editPriceListPriceTiers {
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceNavigator.gotoEntry(entryName = "${key_title}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(key_quantity)) {
+			Type(
+				key_text = "Quantity",
+				locator1 = "TextInput#ANY",
+				value1 = "${key_quantity}");
+		}
+
+		if (isSet(key_value)) {
+			Type(
+				key_text = "Tier Price",
+				locator1 = "TextInput#ANY",
+				value1 = "${key_value}");
+		}
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
+	}
+
 }

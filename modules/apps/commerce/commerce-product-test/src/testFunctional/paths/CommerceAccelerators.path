@@ -382,6 +382,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_ITEM_REMOVE</td>
+	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSKU}')]/../../../div[@class='mini-cart-item-delete']//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_OPENED</td>
 	<td>//div[@class='is-open mini-cart']</td>
 	<td></td>

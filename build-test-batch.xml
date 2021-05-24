@@ -1429,10 +1429,10 @@ app.server.type=@{app.server.type}]]></echo>
 
 					<lstopwatch action="total" name="run.batch.test.tear.down" />
 
-					<print-gc-logs
-						tomcat.gc.log="@{tomcat.gc.log}"
-						tsant.gc.log="@{tsant.gc.log}"
-					/>
+					<antcall target="print-gc-logs">
+						<param name="tomcat.gc.log" value="@{tomcat.gc.log}" />
+						<param name="tsant.gc.log" value="@{tsant.gc.log}" />
+					</antcall>
 				</finally>
 			</trycatch>
 

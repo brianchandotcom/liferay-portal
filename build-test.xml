@@ -758,80 +758,6 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-jstack-output">
-		<attribute name="process.name" />
-
-		<sequential>
-			<execute>
-				<![CDATA[
-					jps > jps_output
-				]]>
-			</execute>
-
-			<local name="jps.output" />
-
-			<loadfile
-				property="jps.output"
-				srcfile="jps_output"
-			/>
-
-			<if>
-				<contains string="${jps.output}" substring="@{process.name}" />
-				<then>
-					<local name="process.pid" />
-
-					<propertyregex
-						input="${jps.output}"
-						override="true"
-						property="process.pid"
-						regexp="(|[\S\s]*\n)([0-9]+) @{process.name}[\S\s]*"
-						replace="\2"
-					/>
-
-					<local name="process.log.file" />
-
-					<property name="process.log.file" value="/tmp/@{process.name}__${process.pid}.log" />
-
-					<execute>
-						<![CDATA[
-							jstack -l ${process.pid} > ${process.log.file}
-						]]>
-					</execute>
-
-					<if>
-						<and>
-							<isset property="env.BUILD_DIR" />
-							<isset property="env.BUILD_USER_CONTENT_URL" />
-						</and>
-						<then>
-							<mkdir dir="${env.BUILD_DIR}/jstacks" />
-
-							<local name="process.log.file.name" />
-
-							<basename file="${process.log.file}" property="process.log.file.name" />
-
-							<copy
-								file="${process.log.file}"
-								tofile="${env.BUILD_DIR}/jstacks/${process.log.file.name}"
-							/>
-
-							<echo>${env.BUILD_USER_CONTENT_URL}/jstacks/${process.log.file.name}</echo>
-
-							<print-file file.name="${env.BUILD_DIR}/jstacks/${process.log.file.name}" file.line.count="10" />
-						</then>
-						<else>
-							<print-file file.name="${process.log.file}" />
-						</else>
-					</if>
-
-					<delete file="${process.log.file}" />
-				</then>
-			</if>
-
-			<delete file="jps_output" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="get-mac-address">
 		<sequential>
 			<if>
@@ -3342,14 +3268,24 @@ tell application "Safari" to quit
 						<then>
 							<mkdir dir="${env.BUILD_DIR}/gc" />
 
+							<resourcecount property="ant.gc.count">
+								<multirootfileset
+									basedirs="${env.BUILD_DIR}/gc"
+									erroronmissingdir="false"
+									includes="ant-gc-*.log"
+								/>
+							</resourcecount>
+
+							<property name="ant.gc.file.name" value="ant-gc-${ant.gc.count}.log" />
+
+							<echo>${env.BUILD_USER_CONTENT_URL}/gc/${ant.gc.file.name}</echo>
+
 							<copy
 								file="/tmp/ant-gc.log"
-								todir="${env.BUILD_DIR}/gc"
+								tofile="${env.BUILD_DIR}/gc/${ant.gc.file.name}"
 							/>
 
-							<echo>${env.BUILD_USER_CONTENT_URL}/gc/ant-gc.log</echo>
-
-							<print-file file.name="${env.BUILD_DIR}/gc/ant-gc.log" file.line.count="10" />
+							<print-file file.name="${env.BUILD_DIR}/gc/${ant.gc.file.name}" file.line.count="10" />
 						</then>
 						<else>
 							<print-file file.name="/tmp/ant-gc.log" />
@@ -3372,14 +3308,24 @@ tell application "Safari" to quit
 						<then>
 							<mkdir dir="${env.BUILD_DIR}/gc" />
 
+							<resourcecount property="tomcat.gc.count">
+								<multirootfileset
+									basedirs="${env.BUILD_DIR}/gc"
+									erroronmissingdir="false"
+									includes="tomcat-gc-*.log"
+								/>
+							</resourcecount>
+
+							<property name="tomcat.gc.file.name" value="tomcat-gc-${tomcat.gc.count}.log" />
+
+							<echo>${env.BUILD_USER_CONTENT_URL}/gc/${tomcat.gc.file.name}</echo>
+
 							<copy
 								file="/tmp/tomcat-gc.log"
-								todir="${env.BUILD_DIR}/gc"
+								tofile="${env.BUILD_DIR}/gc/${tomcat.gc.file.name}"
 							/>
 
-							<echo>${env.BUILD_USER_CONTENT_URL}/gc/tomcat-gc.log</echo>
-
-							<print-file file.name="${env.BUILD_DIR}/gc/tomcat-gc.log" file.line.count="10" />
+							<print-file file.name="${env.BUILD_DIR}/gc/${tomcat.gc.file.name}" file.line.count="10" />
 						</then>
 						<else>
 							<print-file file.name="/tmp/tomcat-gc.log" />
@@ -3402,14 +3348,24 @@ tell application "Safari" to quit
 						<then>
 							<mkdir dir="${env.BUILD_DIR}/gc" />
 
+							<resourcecount property="tsant.gc.count">
+								<multirootfileset
+									basedirs="${env.BUILD_DIR}/gc"
+									erroronmissingdir="false"
+									includes="tsant-gc-*.log"
+								/>
+							</resourcecount>
+
+							<property name="tsant.gc.file.name" value="tsant-gc-${tsant.gc.count}.log" />
+
+							<echo>${env.BUILD_USER_CONTENT_URL}/gc/${tsant.gc.file.name}</echo>
+
 							<copy
 								file="/tmp/tsant-gc.log"
-								todir="${env.BUILD_DIR}/gc"
+								tofile="${env.BUILD_DIR}/gc/${tsant.gc.file.name}"
 							/>
 
-							<echo>${env.BUILD_USER_CONTENT_URL}/gc/tsant-gc.log</echo>
-
-							<print-file file.name="${env.BUILD_DIR}/gc/tsant-gc.log" file.line.count="10" />
+							<print-file file.name="${env.BUILD_DIR}/gc/${tsant.gc.file.name}" file.line.count="10" />
 						</then>
 						<else>
 							<print-file file.name="/tmp/tsant-gc.log" />
@@ -3420,6 +3376,80 @@ tell application "Safari" to quit
 					<echo>Unable to read /tmp/tsant-gc.log</echo>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="print-jstack-logs">
+		<attribute name="process.name" />
+
+		<sequential>
+			<execute>
+				<![CDATA[
+					jps > jps_output
+				]]>
+			</execute>
+
+			<local name="jps.output" />
+
+			<loadfile
+				property="jps.output"
+				srcfile="jps_output"
+			/>
+
+			<if>
+				<contains string="${jps.output}" substring="@{process.name}" />
+				<then>
+					<local name="process.pid" />
+
+					<propertyregex
+						input="${jps.output}"
+						override="true"
+						property="process.pid"
+						regexp="(|[\S\s]*\n)([0-9]+) @{process.name}[\S\s]*"
+						replace="\2"
+					/>
+
+					<local name="process.log.file" />
+
+					<property name="process.log.file" value="/tmp/@{process.name}__${process.pid}.log" />
+
+					<execute>
+						<![CDATA[
+							jstack -l ${process.pid} > ${process.log.file}
+						]]>
+					</execute>
+
+					<if>
+						<and>
+							<isset property="env.BUILD_DIR" />
+							<isset property="env.BUILD_USER_CONTENT_URL" />
+						</and>
+						<then>
+							<mkdir dir="${env.BUILD_DIR}/jstacks" />
+
+							<local name="process.log.file.name" />
+
+							<basename file="${process.log.file}" property="process.log.file.name" />
+
+							<copy
+								file="${process.log.file}"
+								tofile="${env.BUILD_DIR}/jstacks/${process.log.file.name}"
+							/>
+
+							<echo>${env.BUILD_USER_CONTENT_URL}/jstacks/${process.log.file.name}</echo>
+
+							<print-file file.name="${env.BUILD_DIR}/jstacks/${process.log.file.name}" file.line.count="10" />
+						</then>
+						<else>
+							<print-file file.name="${process.log.file}" />
+						</else>
+					</if>
+
+					<delete file="${process.log.file}" />
+				</then>
+			</if>
+
+			<delete file="jps_output" />
 		</sequential>
 	</macrodef>
 
@@ -5076,7 +5106,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							</not>
 						</and>
 						<then>
-							<get-jstack-output process.name="Bootstrap" />
+							<antcall target="print-jstack-logs">
+								<param name="process.name" value="Bootstrap" />
+							</antcall>
 
 							<if>
 								<and>
@@ -5881,7 +5913,9 @@ war.path=${app.server.portal.dir}/</echo>
 			<if>
 				<isset property="app.server.waiting.timeout" />
 				<then>
-					<get-jstack-output process.name="Bootstrap" />
+					<antcall target="print-jstack-logs">
+						<param name="process.name" value="Bootstrap" />
+					</antcall>
 
 					<stop-app-server app.server.bundle.index="@{app.server.bundle.index}" />
 
@@ -6007,7 +6041,9 @@ war.path=${app.server.portal.dir}/</echo>
 					<if>
 						<isset property="wait.for.app.server.log.timed.out.message" />
 						<then>
-							<get-jstack-output process.name="Bootstrap" />
+							<antcall target="print-jstack-logs">
+								<param name="process.name" value="Bootstrap" />
+							</antcall>
 
 							<fail message="${wait.for.app.server.log.timed.out.message}" />
 						</then>
@@ -6094,7 +6130,9 @@ war.path=${app.server.portal.dir}/</echo>
 			<if>
 				<isset property="timed.out.message" />
 				<then>
-					<get-jstack-output process.name="Bootstrap" />
+					<antcall target="print-jstack-logs">
+						<param name="process.name" value="Bootstrap" />
+					</antcall>
 
 					<fail message="${timed.out.message}" />
 				</then>
@@ -11786,6 +11824,31 @@ cluster.link.bind.addr["cluster-link-control"]=127.0.0.1
 cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	</target>
 
+	<target name="print-gc-logs">
+		<condition property="tomcat.gc.log" value="false">
+			<not>
+				<isset property="tomcat.gc.log" />
+			</not>
+		</condition>
+
+		<condition property="tsant.gc.log" value="false">
+			<not>
+				<isset property="tsant.gc.log" />
+			</not>
+		</condition>
+
+		<print-gc-logs
+			tomcat.gc.log="${tomcat.gc.log}"
+			tsant.gc.log="${tsant.gc.log}"
+		/>
+	</target>
+
+	<target name="print-jstack-logs">
+		<fail message="Please set the property ${process.name}." unless="process.name" />
+
+		<print-jstack-logs process.name="${process.name}" />
+	</target>
+
 	<target name="print-lcs-log-content">
 		<var name="lcs.log.files" unset="true" />
 
@@ -14185,7 +14248,9 @@ url=${short.hostname}:8080</echo>
 				</if>
 			</try>
 			<catch>
-				<get-jstack-output process.name="DBUpgrader" />
+				<antcall target="print-jstack-logs">
+					<param name="process.name" value="DBUpgrader" />
+				</antcall>
 
 				<fail message="${upgrade.error}" />
 			</catch>

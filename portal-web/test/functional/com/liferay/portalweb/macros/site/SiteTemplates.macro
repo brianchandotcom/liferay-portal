@@ -223,7 +223,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ALERT_DISMISSIBLE",
-			value1 = "Info:Propagation is disabled. Connected sites might not have been updated yet. Propagation is only triggered when a site created from the template is visited.");
+			value1 = "Propagation is disabled. Connected sites might not have been updated yet. Propagation is only triggered when a site created from the template is visited.");
 	}
 
 	macro editCP {
@@ -303,7 +303,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ALERT_DISMISSIBLE",
-			value1 = "Info:Propagation is enabled. Connected sites will be updated once a site page is visited.");
+			value1 = "Propagation is enabled. Connected sites will be updated once a site page is visited.");
 	}
 
 	macro getSiteTemplateID {

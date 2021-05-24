@@ -98,7 +98,7 @@ public abstract class ProcessorImpl
 			_processorContext = processorContext;
 
 			_patchingQueue = getPatchingQueue(
-				publicIdentifier, modelGetterFunction, processingIndex,
+				modelGetterFunction, processingIndex, publicIdentifier,
 				updateFunction);
 		}
 
@@ -281,8 +281,8 @@ public abstract class ProcessorImpl
 
 	protected <T extends BaseModel<T>> Queue<UnsafeConsumer<T, ?>>
 		getPatchingQueue(
-			String publicIdentifier, Function<M, T> modelGetterFunction,
-			int processingIndex,
+			Function<M, T> modelGetterFunction, int processingIndex,
+			String publicIdentifier,
 			ProcessorContext.UpdateFunction<T> updateFunction) {
 
 		T model = modelGetterFunction.apply(_model);
@@ -294,8 +294,8 @@ public abstract class ProcessorImpl
 			}
 
 			return _getPatchingQueue(
-				publicIdentifier, processingIndex, updateFunction, model,
-				_unsafeConsumers);
+				model, processingIndex, _unsafeConsumers, publicIdentifier,
+				updateFunction);
 		}
 
 		if (publicIdentifier != null) {
@@ -304,8 +304,8 @@ public abstract class ProcessorImpl
 		}
 
 		return _getPatchingQueue(
-			publicIdentifier, processingIndex, updateFunction, model,
-			_modelUnsafeConsumers);
+			model, processingIndex, _modelUnsafeConsumers, publicIdentifier,
+			updateFunction);
 	}
 
 	protected abstract PC getProcessorContext(String prefix);
@@ -337,10 +337,11 @@ public abstract class ProcessorImpl
 
 	private <T extends BaseModel<T>> Queue<UnsafeConsumer<T, ?>>
 		_getPatchingQueue(
-			String publicIdentifier, int processingIndex,
-			ProcessorContext.UpdateFunction<T> updateFunction, T model,
+			T model, int processingIndex,
 			Queue<Map.Entry<Integer, UnsafeConsumer<ServiceContext, ?>>>
-				processingQueue) {
+				processingQueue,
+			String publicIdentifier,
+			ProcessorContext.UpdateFunction<T> updateFunction) {
 
 		Queue<UnsafeConsumer<T, ?>> queue = new LinkedList<>();
 

@@ -1,15 +1,5 @@
 definition {
 
-	macro gotoAssignees {
-		LexiconEntry.gotoEntry(rowEntry = "${roleTitle}");
-
-		Navigator.gotoNavItem(navItem = "Assignees");
-	}
-
-	macro gotoAssigneeType {
-		Navigator.gotoNavItem(navItem = "${assigneeType}");
-	}
-
 	macro gotoDefineRolePermissions {
 		if (contains("Asset Library,Organization,Site", "${roleType}")) {
 			Navigator.gotoNavItem(navItem = "${roleType} Roles");

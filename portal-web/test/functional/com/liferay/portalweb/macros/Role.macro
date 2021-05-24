@@ -1,5 +1,13 @@
 definition {
 
+	macro _goToRoleAssigneeType {
+		LexiconEntry.gotoEntry(rowEntry = "${roleTitle}");
+
+		Navigator.gotoNavItem(navItem = "Assignees");
+
+		Navigator.gotoNavItem(navItem = "${assigneeType}");
+	}
+
 	macro add {
 		if ((!(isSet(roleKey))) && (!(isSet(roleTitle)))) {
 			fail("Please declear the roleKey or roleTitle when refering this macro.");

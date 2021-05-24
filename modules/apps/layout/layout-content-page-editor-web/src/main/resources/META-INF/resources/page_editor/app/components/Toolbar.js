@@ -16,7 +16,7 @@ import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {useModal} from '@clayui/modal';
-import {useIsMounted, ReactPortal} from '@liferay/frontend-js-react-web';
+import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
 import useLazy from '../../core/hooks/useLazy';

@@ -13,10 +13,10 @@
  */
 
 import ClayPopover from '@clayui/popover';
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import {ALIGN_POSITIONS, align} from 'frontend-js-web';
 import Proptypes from 'prop-types';
 import React, {useRef} from 'react';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 /**
  * Tailored implementation of a ClayPopover for Experiences

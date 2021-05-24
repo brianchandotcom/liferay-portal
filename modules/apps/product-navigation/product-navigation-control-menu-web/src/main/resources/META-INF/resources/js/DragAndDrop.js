@@ -12,8 +12,8 @@
  * details.
  */
 
-import React, {useState} from 'react';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
+import React, {useState} from 'react';
 
 import {
 	DragAndDropProvider,

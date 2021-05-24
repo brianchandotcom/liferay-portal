@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useIsMounted, ReactPortal} from '@liferay/frontend-js-react-web';
+import {ReactPortal, useIsMounted} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 

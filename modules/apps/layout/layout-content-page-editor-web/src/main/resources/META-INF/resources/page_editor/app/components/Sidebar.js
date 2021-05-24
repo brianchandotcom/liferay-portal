@@ -16,9 +16,9 @@ import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {
+	ReactPortal,
 	useIsMounted,
 	useStateSafe,
-	ReactPortal,
 } from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React from 'react';

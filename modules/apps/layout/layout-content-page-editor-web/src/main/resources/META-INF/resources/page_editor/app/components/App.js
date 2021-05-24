@@ -12,9 +12,9 @@
  * details.
  */
 
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo} from 'react';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 import {StyleBookContextProvider} from '../../plugins/page-design-options/hooks/useStyleBook';
 import {INIT} from '../actions/types';

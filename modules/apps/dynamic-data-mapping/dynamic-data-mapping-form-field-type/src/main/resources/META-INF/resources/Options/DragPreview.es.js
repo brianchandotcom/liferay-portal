@@ -12,9 +12,9 @@
  * details.
  */
 
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 import {OPTIONS_TYPES} from './DnD.es';
 

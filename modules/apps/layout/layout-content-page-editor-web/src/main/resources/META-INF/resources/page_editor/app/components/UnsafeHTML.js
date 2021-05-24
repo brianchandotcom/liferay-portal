@@ -12,9 +12,9 @@
  * details.
  */
 
+import {ReactPortal} from '@liferay/frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React from 'react';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 import RawDOM from '../../common/components/RawDOM';
 

@@ -22,7 +22,6 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import {ReactPortal} from '@liferay/frontend-js-react-web';
 
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useGlobalContext} from '../contexts/GlobalContext';
@@ -94,7 +93,8 @@ const DisabledArea = () => {
 		if (element) {
 			if (sidebarOpen && !withinIframe) {
 				element.classList.add('collapsed');
-			} else {
+			}
+			else {
 				element.classList.remove('collapsed');
 			}
 		}
@@ -123,7 +123,8 @@ const DisabledArea = () => {
 				setCurrentElementClicked(event.target);
 				selectItem(null);
 				setShow(true);
-			} else if (show) {
+			}
+			else if (show) {
 				setCurrentElementClicked(null);
 				setShow(false);
 			}

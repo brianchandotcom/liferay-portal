@@ -29,7 +29,6 @@ definition {
 
 			Page.tearDownCP();
 		}
-
 	}
 
 	@description = "Verify that a Form with required fields can be partially filled out and submitted"
@@ -40,6 +39,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131023 CanBePartiallyFilledWithRequiredFields pending implementation
+
 	}
 
 	@description = "Verify that a Form can be submitted"
@@ -85,7 +85,6 @@ definition {
 			fieldType = "Numeric");
 
 		Form.save();
-
 
 		Form.publishForm();
 

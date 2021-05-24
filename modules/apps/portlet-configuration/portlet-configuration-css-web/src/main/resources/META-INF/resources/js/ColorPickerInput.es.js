@@ -26,7 +26,13 @@ const ColorPicker = ({color, label, name}) => {
 			<input
 				name={name}
 				type="hidden"
-				value={colorValue ? `${HEX_COLOR_REGEX.test(colorValue) ? '#' : ''}${colorValue}` : ''}
+				value={
+					colorValue
+						? `${
+								HEX_COLOR_REGEX.test(colorValue) ? '#' : ''
+						  }${colorValue}`
+						: ''
+				}
 			/>
 
 			<ClayColorPicker

@@ -436,6 +436,12 @@ definition {
 		DoubleClick(
 			key_fieldName = "${fieldsetName}",
 			locator1 = "Sidebar#ADD_FIELD_NAME");
+
+		AssertElementPresent(
+			key_fieldsetLabel = "${fieldsetName}",
+			locator1 = "DDMEditStructure#FORM_FIELD_SETS_CONTAINER_LABEL");
+
+		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro addFieldToFieldsGroup {

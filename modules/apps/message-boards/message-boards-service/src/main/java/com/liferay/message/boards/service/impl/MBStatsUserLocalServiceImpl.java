@@ -138,7 +138,7 @@ public class MBStatsUserLocalServiceImpl
 			"messageCount"
 		);
 
-		return _mbMessagePersistence.dslQuery(
+		List<Object[]> statsUser = _mbMessagePersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
 				MBMessageTable.INSTANCE.userId, countExpression,
 				DSLFunctionFactoryUtil.max(
@@ -154,8 +154,21 @@ public class MBStatsUserLocalServiceImpl
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				).and(
+					MBMessageTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
 				)
+			).groupBy(
+				MBMessageTable.INSTANCE.userId
+			).orderBy(
+				countExpression.descending()
 			));
+
+		if (statsUser.isEmpty()) {
+			return null;
+		}
+
+		return statsUser.get(0);
 	}
 
 	@Override
@@ -192,11 +205,12 @@ public class MBStatsUserLocalServiceImpl
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				).and(
+					MBMessageTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
 				)
 			).groupBy(
 				MBMessageTable.INSTANCE.userId
-			).having(
-				countExpression.gt(0L)
 			).orderBy(
 				countExpression.descending()
 			).limit(

@@ -173,7 +173,13 @@ public class MBStatsUserLocalServiceTest {
 		Object[] statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
-		return (Integer)statsUser[1];
+		if (statsUser == null) {
+			return 0;
+		}
+
+		Long messageCount = (Long)statsUser[1];
+
+		return messageCount.intValue();
 	}
 
 	protected void updateMessage(int workflowAction) throws Exception {

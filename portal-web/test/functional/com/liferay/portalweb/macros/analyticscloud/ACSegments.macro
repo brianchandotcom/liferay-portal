@@ -147,6 +147,10 @@ definition {
 	}
 
 	macro selectDocument {
+		var key_indexField = "${indexField}";
+
+		var key_titleName = "${titleName}";
+
 		Click(locator1 = "ACSegments#SELECT_BUTTON");
 
 		Click(locator1 = "ACSegments#SELECT_DOCUMENT");
@@ -155,6 +159,8 @@ definition {
 	}
 
 	macro selectSegmentProfile {
+		var key_segmentProfile = "${segmentProfile}";
+		
 		Click(locator1 = "ACSegments#SELECT_SEGMENT_PROFILE");
 	}
 

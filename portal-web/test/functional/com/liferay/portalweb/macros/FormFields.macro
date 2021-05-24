@@ -230,9 +230,9 @@ definition {
 		var key_fieldName = "${fieldName}";
 
 		Click(
+			key_fieldName = "${fieldName}",
 			key_optionValue = "${optionValue}",
 			key_rowNumber = "${rowNumber}",
-			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#SELECT_SINGLE_SELECTION_ROW_OPTION");
 	}
 

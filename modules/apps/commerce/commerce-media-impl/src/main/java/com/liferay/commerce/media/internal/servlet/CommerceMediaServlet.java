@@ -119,11 +119,11 @@ public class CommerceMediaServlet extends HttpServlet {
 			contentDisposition = HttpHeaders.CONTENT_DISPOSITION_ATTACHMENT;
 		}
 
-		sendMediaBytes(
+		_sendMediaBytes(
 			httpServletRequest, httpServletResponse, contentDisposition);
 	}
 
-	protected FileEntry getFileEntry(HttpServletRequest httpServletRequest)
+	private FileEntry _getFileEntry(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		String path = _http.fixPath(httpServletRequest.getPathInfo());
@@ -150,7 +150,20 @@ public class CommerceMediaServlet extends HttpServlet {
 		return _getFileEntry(cpAttachmentFileEntry.getFileEntryId());
 	}
 
-	protected long getGroupId(
+	private FileEntry _getFileEntry(long fileEntryId) {
+		try {
+			return _dlAppLocalService.getFileEntry(fileEntryId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
+			return null;
+		}
+	}
+
+	private long _getGroupId(
 			long commerceAccountId, long cpAttachmentFileEntryId)
 		throws PortalException {
 
@@ -195,7 +208,7 @@ public class CommerceMediaServlet extends HttpServlet {
 		return 0;
 	}
 
-	protected void sendDefaultMediaBytes(
+	private void _sendDefaultMediaBytes(
 			long groupId, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String contentDisposition)
 		throws IOException {
@@ -236,7 +249,7 @@ public class CommerceMediaServlet extends HttpServlet {
 		}
 	}
 
-	protected void sendMediaBytes(
+	private void _sendMediaBytes(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String contentDisposition)
 		throws IOException {
@@ -254,7 +267,7 @@ public class CommerceMediaServlet extends HttpServlet {
 				return;
 			}
 
-			sendDefaultMediaBytes(
+			_sendDefaultMediaBytes(
 				groupId, httpServletRequest, httpServletResponse,
 				contentDisposition);
 
@@ -272,7 +285,7 @@ public class CommerceMediaServlet extends HttpServlet {
 					cpAttachmentFileEntryIdParamArray[0];
 			}
 
-			long groupId = getGroupId(
+			long groupId = _getGroupId(
 				GetterUtil.getLong(pathArray[1]),
 				GetterUtil.getLong(cpAttachmentFileEntryIdParam));
 
@@ -282,10 +295,10 @@ public class CommerceMediaServlet extends HttpServlet {
 				return;
 			}
 
-			FileEntry fileEntry = getFileEntry(httpServletRequest);
+			FileEntry fileEntry = _getFileEntry(httpServletRequest);
 
 			if (fileEntry == null) {
-				sendDefaultMediaBytes(
+				_sendDefaultMediaBytes(
 					groupId, httpServletRequest, httpServletResponse,
 					contentDisposition);
 
@@ -302,19 +315,6 @@ public class CommerceMediaServlet extends HttpServlet {
 			_log.error(portalException, portalException);
 
 			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
-		}
-	}
-
-	private FileEntry _getFileEntry(long fileEntryId) {
-		try {
-			return _dlAppLocalService.getFileEntry(fileEntryId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-
-			return null;
 		}
 	}
 

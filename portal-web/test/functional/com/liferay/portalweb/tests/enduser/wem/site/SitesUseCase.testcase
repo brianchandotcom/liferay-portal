@@ -875,8 +875,6 @@ definition {
 			specificURL = "www.baker.com:8080/group/russia2018",
 			userEmailAddress = "userea@liferay.com");
 
-		Navigator.openSpecificURL(url = "http://www.baker.com:8080/group/russia2018");
-
 		Page.viewSpecificPG(pageNameList = "Accomodations,Maps");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/russia2018");

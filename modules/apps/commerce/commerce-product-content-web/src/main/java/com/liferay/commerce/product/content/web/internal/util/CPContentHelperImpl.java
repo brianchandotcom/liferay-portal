@@ -159,6 +159,20 @@ public class CPContentHelperImpl implements CPContentHelper {
 			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		long commerceAccountId = 0;
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		if (commerceAccount != null) {
+			commerceAccountId = commerceAccount.getCommerceAccountId();
+		}
+
 		List<CPMedia> cpMedias = new ArrayList<>();
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
@@ -171,7 +185,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {
 
-			cpMedias.add(new CPMediaImpl(cpAttachmentFileEntry, themeDisplay));
+			cpMedias.add(
+				new CPMediaImpl(
+					commerceAccountId, cpAttachmentFileEntry, themeDisplay));
 		}
 
 		return cpMedias;
@@ -360,6 +376,20 @@ public class CPContentHelperImpl implements CPContentHelper {
 			long cpDefinitionId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		long commerceAccountId = 0;
+
+		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
+		if (commerceAccount != null) {
+			commerceAccountId = commerceAccount.getCommerceAccountId();
+		}
+
 		List<CPMedia> cpMedias = new ArrayList<>();
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
@@ -372,7 +402,9 @@ public class CPContentHelperImpl implements CPContentHelper {
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {
 
-			cpMedias.add(new CPMediaImpl(cpAttachmentFileEntry, themeDisplay));
+			cpMedias.add(
+				new CPMediaImpl(
+					commerceAccountId, cpAttachmentFileEntry, themeDisplay));
 		}
 
 		if (cpMedias.isEmpty()) {

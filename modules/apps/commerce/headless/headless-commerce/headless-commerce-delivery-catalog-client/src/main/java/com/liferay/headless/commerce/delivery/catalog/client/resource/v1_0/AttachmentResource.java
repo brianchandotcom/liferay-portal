@@ -41,20 +41,24 @@ public interface AttachmentResource {
 	}
 
 	public Page<Attachment> getChannelProductAttachmentsPage(
-			Long channelId, Long productId, Pagination pagination)
+			Long channelId, Long productId, Long accountId,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getChannelProductAttachmentsPageHttpResponse(
-				Long channelId, Long productId, Pagination pagination)
+				Long channelId, Long productId, Long accountId,
+				Pagination pagination)
 		throws Exception;
 
 	public Page<Attachment> getChannelProductImagesPage(
-			Long channelId, Long productId, Pagination pagination)
+			Long channelId, Long productId, Long accountId,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getChannelProductImagesPageHttpResponse(
-			Long channelId, Long productId, Pagination pagination)
+			Long channelId, Long productId, Long accountId,
+			Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -129,12 +133,13 @@ public interface AttachmentResource {
 	public static class AttachmentResourceImpl implements AttachmentResource {
 
 		public Page<Attachment> getChannelProductAttachmentsPage(
-				Long channelId, Long productId, Pagination pagination)
+				Long channelId, Long productId, Long accountId,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelProductAttachmentsPageHttpResponse(
-					channelId, productId, pagination);
+					channelId, productId, accountId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -175,7 +180,8 @@ public interface AttachmentResource {
 
 		public HttpInvoker.HttpResponse
 				getChannelProductAttachmentsPageHttpResponse(
-					Long channelId, Long productId, Pagination pagination)
+					Long channelId, Long productId, Long accountId,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -199,6 +205,10 @@ public interface AttachmentResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
 
+			if (accountId != null) {
+				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
@@ -221,12 +231,13 @@ public interface AttachmentResource {
 		}
 
 		public Page<Attachment> getChannelProductImagesPage(
-				Long channelId, Long productId, Pagination pagination)
+				Long channelId, Long productId, Long accountId,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelProductImagesPageHttpResponse(
-					channelId, productId, pagination);
+					channelId, productId, accountId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -266,7 +277,8 @@ public interface AttachmentResource {
 		}
 
 		public HttpInvoker.HttpResponse getChannelProductImagesPageHttpResponse(
-				Long channelId, Long productId, Pagination pagination)
+				Long channelId, Long productId, Long accountId,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -289,6 +301,10 @@ public interface AttachmentResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (accountId != null) {
+				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
 
 			if (pagination != null) {
 				httpInvoker.parameter(

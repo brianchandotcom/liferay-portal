@@ -54,12 +54,15 @@ public class AttachmentDTOConverter
 	public Attachment toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
+		AttachmentDTOConverterContext attachmentDTOConverterContext =
+			(AttachmentDTOConverterContext)dtoConverterContext;
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
-				(Long)dtoConverterContext.getId());
+				(Long)attachmentDTOConverterContext.getId());
 
 		String languageId = LanguageUtil.getLanguageId(
-			dtoConverterContext.getLocale());
+			attachmentDTOConverterContext.getLocale());
 
 		Company company = _companyLocalService.getCompany(
 			cpAttachmentFileEntry.getCompanyId());
@@ -75,6 +78,7 @@ public class AttachmentDTOConverter
 				priority = cpAttachmentFileEntry.getPriority();
 
 				String downloadUrl = _commerceMediaResolver.getDownloadUrl(
+					attachmentDTOConverterContext.getCommerceAccountId(),
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
 				src = portalURL + downloadUrl;

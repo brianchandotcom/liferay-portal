@@ -83,15 +83,12 @@ definition {
 			fieldValue = "Test Text");
 
 		FormsAdmin.editFormEntry(
-			formEntryValue = "Text",
-			fieldValue = "Test Text Edit");
+			fieldValue = "Test Text Edit",
+			formEntryValue = "Text");
 
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Text",
 			fieldValue = "Test Text Edit");
-
-		
-		
 	}
 
 	@description = "Verify that a user can navigate to the correct metric by using the list on the right"

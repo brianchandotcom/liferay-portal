@@ -109,7 +109,6 @@ definition {
 		WaitForElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
 		Alert.viewSuccessMessage();
-		
 	}
 
 	macro saveDataProvider {

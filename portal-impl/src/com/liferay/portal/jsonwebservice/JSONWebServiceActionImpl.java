@@ -43,9 +43,17 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.TemporalAccessor;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -55,11 +63,14 @@ import java.util.Objects;
 import jodd.bean.BeanCopy;
 import jodd.bean.BeanUtil;
 
+import jodd.time.TimeUtil;
+
 import jodd.typeconverter.TypeConversionException;
 import jodd.typeconverter.TypeConverter;
 import jodd.typeconverter.TypeConverterManager;
 
 import jodd.util.ClassUtil;
+import jodd.util.StringUtil;
 
 /**
  * @author Igor Spasic
@@ -598,6 +609,100 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		_jsonWebServiceActionParameters;
 	private final JSONWebServiceNaming _jsonWebServiceNaming;
 
+	private static class DateTypeConverter implements TypeConverter<Date> {
+
+		@Override
+		public Date convert(Object object) {
+			if (object == null) {
+				return null;
+			}
+
+			if (object instanceof Date) {
+				return (Date)object;
+			}
+
+			if (object instanceof Calendar) {
+				Calendar calendar = (Calendar)object;
+
+				return new Date(calendar.getTimeInMillis());
+			}
+
+			if (object instanceof LocalDateTime) {
+				return TimeUtil.toDate((LocalDateTime)object);
+			}
+
+			if (object instanceof LocalDate) {
+				return TimeUtil.toDate((LocalDate)object);
+			}
+
+			if (object instanceof Number) {
+				Number number = (Number)object;
+
+				return new Date(number.longValue());
+			}
+
+			String stringValue = object.toString();
+
+			stringValue = stringValue.trim();
+
+			if (!StringUtil.containsOnlyDigits(stringValue)) {
+				TemporalAccessor temporalAccessor =
+					_dateTimeFormatter.parseBest(
+						stringValue, ZonedDateTime::from, LocalDateTime::from,
+						LocalDate::from);
+
+				if (temporalAccessor instanceof LocalDate) {
+					return TimeUtil.toDate((LocalDate)temporalAccessor);
+				}
+
+				if (temporalAccessor instanceof LocalDateTime) {
+					return TimeUtil.toDate((LocalDateTime)temporalAccessor);
+				}
+
+				if (temporalAccessor instanceof ZonedDateTime) {
+					ZonedDateTime zonedDateTime =
+						(ZonedDateTime)temporalAccessor;
+
+					return Date.from(zonedDateTime.toInstant());
+				}
+
+				throw new TypeConversionException(object);
+			}
+
+			try {
+				return new Date(Long.parseLong(stringValue));
+			}
+			catch (NumberFormatException numberFormatException) {
+				throw new TypeConversionException(
+					object, numberFormatException);
+			}
+		}
+
+		// 'M' and 'd' represent non-padded digit form of month-of-year and
+		// day-of-month, while 'MM' and 'dd' represent 2-digit form padded with
+		// 0. For example, May 1 is "5-1" with M-d while "05-01" with MM-dd.
+		// See java.time.format.DateTimeFormatterBuilder#appendPattern(String)
+		// javadoc for details.
+
+		private static final DateTimeFormatter _dateTimeFormatter =
+			new DateTimeFormatterBuilder().parseCaseInsensitive(
+			).appendPattern(
+				"yyyy-[MM][M]-[dd][d]"
+			).optionalStart(
+			).optionalStart(
+			).appendLiteral(
+				' '
+			).optionalEnd(
+			).optionalStart(
+			).appendLiteral(
+				'T'
+			).optionalEnd(
+			).appendOptional(
+				DateTimeFormatter.ISO_TIME
+			).toFormatter();
+
+	}
+
 	private static class LocaleTypeConverter implements TypeConverter<Locale> {
 
 		@Override
@@ -631,6 +736,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 		TypeConverterManager typeConverterManager = TypeConverterManager.get();
 
 		typeConverterManager.register(Locale.class, new LocaleTypeConverter());
+		typeConverterManager.register(Date.class, new DateTypeConverter());
 	}
 
 }

@@ -86,7 +86,7 @@
 </tr>
 <tr>
     <td>SELECT_BUTTON</td>
-    <td>//div[@class='criterion'] [${indexField}] //div[@class='input-group-item input-group-item-shrink input-group-append']</td>
+    <td>//div[@class='criterion'][${key_indexField}]//div[contains(@class,'input-group-append')]</td>
     <td></td>
 </tr>
 <tr>
@@ -101,17 +101,17 @@
 </tr>
 <tr>
     <td>SELECT_SEGMENT</td>
-    <td>//a[@class='text-truncate' and text()='${key_segmentName}']</td>
+    <td>//a[@class='text-truncate'and text()='${key_segmentName}']</td>
     <td></td>
 </tr>
 <tr>
     <td>SELECT_SEGMENT_PROFILE</td>
-    <td>//ul[contains(@class, 'nav-root page-subnav')]//span[text()='${key_segmentProfile}']</td>
+    <td>//ul[contains(@class,'nav-root')]//span[text()='${key_segmentProfile}']</td>
     <td></td>
 </tr>
 <tr>
     <td>SEGMENT_MEMBERS</td>
-    <td>//tbody//a[@class='text-truncate' and text()='${key_userName}']</td>
+    <td>//tbody//a[@class='text-truncate'and text()='${key_userName}']</td>
     <td></td>
 </tr>
 <!-- Dynamic Segments  -->
@@ -137,7 +137,7 @@
 </tr>
 <tr>
     <td>SEGMENT_CRITERION_ITEM</td>
-    <td>//div[@class = 'sidebar-collapse']//li[text()='${segmentField}']</td>
+    <td>//div[@class='sidebar-collapse']//li[text()='${segmentField}']</td>
     <td></td>
 </tr>
 <tr>
@@ -152,7 +152,7 @@
 </tr>
 <tr>
     <td>SELECT_DOCUMENT</td>
-    <td>//div[@class='table-title text-truncate' and text()='${key_titleName}']</td>
+    <td>//div[contains(@class,'table-title')and text()='${key_titleName}']</td>
     <td></td>
 </tr>
 <!-- Static Segments  -->

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mule.internal;
+package com.liferay.mule.internal.extension;
 
 import com.liferay.mule.internal.config.LiferayConfig;
 import com.liferay.mule.internal.error.LiferayError;

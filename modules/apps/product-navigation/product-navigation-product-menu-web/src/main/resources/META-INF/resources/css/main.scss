@@ -1,5 +1,5 @@
 @import 'NavigationMenuItemsTree';
-@import 'atlas-variables';
+
 @import 'cadmin-variables';
 @import 'variables';
 
@@ -7,441 +7,286 @@ $product-menu-width: 320px;
 $product-menu-item-fixed-width: $product-menu-width;
 $product-menu-pages-administration-link-height: 72px;
 
-.pages-tree {
-	.child-page-action-option {
-		display: block;
-	}
-
-	.child-page-action-option.type-false {
-		display: none;
-	}
-
-	.dropdown-toggle {
-		color: $gray-500 !important;
-
-		&:active {
-			color: $white;
-		}
-	}
-
-	.layout-finder {
-		border-bottom: 1px solid $dark;
-		padding: 24px 16px 0;
-
-		input {
-			background-color: $gray-800;
-		}
-
-		.back-to-menu {
-			color: $gray-500;
-		}
-
-		.breadcrumb {
-			flex-wrap: nowrap;
-			margin-bottom: 0;
-			padding-bottom: 4px;
-
-			.breadcrumb-item {
-				flex-shrink: 0;
-
-				&:not(:first-child):not(:last-child) {
-					flex-basis: 1.5rem;
-					flex-grow: 0.5;
-					flex-shrink: 1;
-					width: 100%;
-
-					.breadcrumb-text-truncate {
-						max-width: 95%;
-						padding-right: 0.5rem;
-						position: absolute;
-					}
-				}
-			}
-		}
-
-		.btn-sm {
-			font-size: 14px;
-		}
-
-		& .form-control:focus {
-			border-radius: 1px;
-		}
-
-		.layout-finder-icon {
-			color: white;
-			position: absolute;
-			right: 1.8rem;
-			top: 4.55rem;
-		}
-	}
-
-	.list-icon:not(.collection-layout) {
-		display: none;
-	}
-
-	.page-icon.collection-layout {
-		display: none;
-	}
-
-	.pages-administration-link {
-		align-items: center;
-		background-color: $dark;
-		border-top: 1px solid $gray-800;
-		bottom: 0;
-		display: flex;
-		font-size: 14px;
-		height: $product-menu-pages-administration-link-height;
-		padding: 16px 0 24px 16px;
-		position: fixed;
-		width: $product-menu-item-fixed-width;
-
-		a {
-			color: $secondary-l1;
-		}
-	}
-
-	.page-type-selector {
-		border-top: 1px solid $gray-800;
-		font-size: 14px;
-		margin-top: 20px;
-		padding-top: 16px;
-
-		.configure-link {
-			color: $secondary-l1;
-		}
-
-		.form-control {
-			background-color: $dark;
-			border-color: $gray-800;
-			color: $gray-500;
-		}
-
-		.dropdown-toggle.form-control-select {
-			&,
-			&:hover,
-			&:active,
-			&:focus {
-				background-color: $dark;
-				border-color: $gray-800;
-				color: $gray-500;
-			}
-		}
-	}
-
-	.tree-view {
-		.lfr-root-node.tree-node-content {
-			align-items: center;
-			display: flex;
-
-			.tree-label a {
-				color: $white;
-			}
-		}
-
-		.tree-container {
-			border-left: 1px solid $gray-800;
-			cursor: pointer;
-			margin-left: 6px;
-			padding-left: 14px;
-
-			.dropdown-item {
-				color: $gray-600;
-
-				&:hover {
-					color: $dark;
-				}
-			}
-
-			.tree-node .tree-node-content {
-				align-items: center;
-				display: flex;
-
-				&.tree-drag-insert-above {
-					border-top: none;
-
-					.autofit-row {
-						box-shadow: 0 -2px 0 0 $primary-l1;
-					}
-				}
-
-				&.tree-drag-insert-below {
-					border-bottom: none;
-
-					.autofit-row {
-						box-shadow: 0 2px 0 0 $primary-l1;
-					}
-				}
-
-				&.tree-drag-insert-append .tree-label {
-					background: transparent;
-					border: none;
-
-					> .autofit-row {
-						border-radius: 4px;
-						box-shadow: 0 0 0 2px $primary-l1;
-					}
-				}
-			}
-		}
-
-		.tree-node {
-			.tree-hitarea {
-				background-color: $gray-800;
-				border: 1px solid $gray-800;
-				border-radius: 2px;
-				font-size: 6px;
-				height: 12px;
-				margin-right: 0;
-				padding: 2px 2px 1px;
-				text-align: center;
-				width: 12px;
-
-				& + span {
-					display: none;
-				}
-			}
-
-			.tree-label > span a.layout-tree {
-				color: $gray-500;
-				padding-left: 1px;
-				width: 100%;
-
-				&:focus {
-					border-radius: 4px;
-					box-shadow: 0 0 0 2px $white, 0 0 0 4px $primary-l1;
-					outline: 0;
-				}
-
-				&:hover {
-					color: $white;
-				}
-			}
-
-			font-size: 14px;
-			margin-bottom: 6px;
-			margin-top: 6px;
-
-			.tree-label {
-				.dropdown {
-					visibility: hidden;
-				}
-
-				&:hover .dropdown {
-					visibility: visible;
-				}
-
-				color: $gray-500 !important;
-				display: flex;
-				flex-grow: 1;
-				margin-left: 8px;
-				padding-right: 17px;
-				vertical-align: middle;
-				width: calc(100% - 20px);
-			}
-
-			.tree-node-selected {
-				.tree-label .layout-tree {
-					color: white;
-					font-weight: 600;
-				}
-
-				.dropdown {
-					visibility: visible !important;
-				}
-			}
-		}
-
-		a.tree-node-paginator {
-			color: white !important;
-		}
-
-		.tree-view-content {
-			padding-top: 1rem;
-		}
-
-		.tree-hitarea:focus:before {
-			box-shadow: 0 0 0 0.125rem #fff,
-				0 0 0 0.25rem rgba(11, 95, 255, 0.5);
-		}
-
-		.tree-view-content {
-			margin-bottom: calc(
-				#{$product-menu-pages-administration-link-height} + #{$spacer}
-			);
-		}
-	}
-
-	.view-collection-items-action-option {
-		display: none;
-	}
-
-	.view-collection-items-action-option.collection {
-		display: block;
-	}
-}
-
-.page-type-selector-option {
-	padding-left: 32px;
-}
-
-.tree-drag-helper {
-	.tree-drag-helper-content {
-		background: $primary-l1;
-		border: none;
-		border-radius: 4px;
-		box-shadow: none;
-
-		.layout-tree {
-			color: white;
-			display: inline-block;
-			font-size: 12px;
-			font-weight: bold;
-			max-width: 16ch;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-
-		.autofit-col {
-			display: none;
-		}
-
-		.autofit-col:first-child {
-			display: block;
-		}
-	}
-}
-
-.product-menu {
-	.sidebar-header {
-		line-height: 32px;
-		padding-bottom: 8px;
-		padding-right: 9px;
-		padding-top: 8px;
-
-		@include media-breakpoint-up(sm) {
-			padding-bottom: 12px;
-			padding-left: 24px;
-			padding-top: 12px;
-		}
-
-		.sidenav-close {
-			float: right;
-			margin-right: -2px;
-		}
-	}
-
-	.sidebar-header-logo {
-		margin-right: 10px;
-	}
-
-	.sidebar-body {
-		bottom: 0;
-		left: 0;
-		padding: 0;
-		position: absolute;
-		right: 0;
-		top: 0;
-
-		@include media-breakpoint-down(xs) {
-			overflow: visible;
-			position: static;
-		}
-
-		.panel-app-root {
-			&.active {
-				border-left: 4px solid $white;
-			}
-
-			li {
-				font-weight: 400;
-				list-style: none;
-
-				&.active {
-					font-weight: 700;
-					margin-left: -24px;
-					padding-left: 20px;
-				}
-			}
-		}
-
-		.panel-group {
-			border-radius: 0;
-		}
-	}
-
-	.lfr-product-menu-sidebar .panel-group {
-		overflow: hidden;
-	}
-
-	small {
-		display: block;
-	}
-
-	.list-group-heading {
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			margin-bottom: 0;
-			margin-top: 0;
-		}
-	}
-
-	.list-group-item {
-		border-top-width: 0;
-		padding: 10px 20px;
-	}
-
-	.nav-nested-margins > li .nav > li {
-		.nav > li {
-			margin-bottom: 1px;
-		}
-	}
-
-	&.popover {
-		background-color: $white;
-	}
-
-	.impersonation-message {
-		font-size: 12px;
-	}
-
-	.manage-sites-link {
-		padding: 1em;
-	}
-
-	.site-selector {
-		box-shadow: none;
-
-		.selectable-site {
-			color: #333;
-			height: auto;
-		}
-
-		.site-link {
-			color: #333;
-
-			&.selected-site {
-				color: #999;
-			}
-		}
-
-		.site-logo-container {
-			padding: 2em;
-		}
-	}
-
-	.staging-links {
-		font-size: 12px;
-		margin: 6px 22px 4px 16px;
-	}
-}
-
 html#{$cadmin-selector} {
 	.cadmin {
+		.pages-tree {
+			.child-page-action-option {
+				display: block;
+			}
+
+			.child-page-action-option.type-false {
+				display: none;
+			}
+
+			.dropdown-toggle {
+				color: $cadmin-gray-500 !important;
+
+				&:active {
+					color: $cadmin-white;
+				}
+			}
+
+			.layout-finder {
+				border-bottom: 1px solid $cadmin-dark;
+				padding: 24px 16px 0;
+
+				input {
+					background-color: $cadmin-gray-800;
+				}
+
+				.back-to-menu {
+					color: $cadmin-gray-500;
+				}
+
+				.breadcrumb {
+					flex-wrap: nowrap;
+					margin-bottom: 0;
+					padding-bottom: 4px;
+
+					.breadcrumb-item {
+						flex-shrink: 0;
+
+						&:not(:first-child):not(:last-child) {
+							flex-basis: 1.5rem;
+							flex-grow: 0.5;
+							flex-shrink: 1;
+							width: 100%;
+
+							.breadcrumb-text-truncate {
+								max-width: 95%;
+								padding-right: 0.5rem;
+								position: absolute;
+							}
+						}
+					}
+				}
+
+				.btn-sm {
+					font-size: 14px;
+				}
+
+				& .form-control:focus {
+					border-radius: 1px;
+				}
+
+				.layout-finder-icon {
+					color: white;
+					position: absolute;
+					right: 1.8rem;
+					top: 4.55rem;
+				}
+			}
+
+			.list-icon:not(.collection-layout) {
+				display: none;
+			}
+
+			.page-icon.collection-layout {
+				display: none;
+			}
+
+			.pages-administration-link {
+				align-items: center;
+				background-color: $cadmin-dark;
+				border-top: 1px solid $cadmin-gray-800;
+				bottom: 0;
+				display: flex;
+				font-size: 14px;
+				height: $product-menu-pages-administration-link-height;
+				padding: 16px 0 24px 16px;
+				position: fixed;
+				width: $product-menu-item-fixed-width;
+
+				a {
+					color: $cadmin-secondary-l1;
+				}
+			}
+
+			.page-type-selector {
+				border-top: 1px solid $cadmin-gray-800;
+				font-size: 14px;
+				margin-top: 20px;
+				padding-top: 16px;
+
+				.configure-link {
+					color: $cadmin-secondary-l1;
+				}
+
+				.form-control {
+					background-color: $cadmin-dark;
+					border-color: $cadmin-gray-800;
+					color: $cadmin-gray-500;
+				}
+
+				.dropdown-toggle.form-control-select {
+					&,
+					&:hover,
+					&:active,
+					&:focus {
+						background-color: $cadmin-dark;
+						border-color: $cadmin-gray-800;
+						color: $cadmin-gray-500;
+					}
+				}
+			}
+
+			.tree-view {
+				.lfr-root-node.tree-node-content {
+					align-items: center;
+					display: flex;
+
+					.tree-label a {
+						color: $cadmin-white;
+					}
+				}
+
+				.tree-container {
+					border-left: 1px solid $cadmin-gray-800;
+					cursor: pointer;
+					margin-left: 6px;
+					padding-left: 14px;
+
+					.dropdown-item {
+						color: $cadmin-gray-600;
+
+						&:hover {
+							color: $cadmin-dark;
+						}
+					}
+
+					.tree-node .tree-node-content {
+						align-items: center;
+						display: flex;
+
+						&.tree-drag-insert-above {
+							border-top: none;
+
+							.autofit-row {
+								box-shadow: 0 -2px 0 0 $cadmin-primary-l1;
+							}
+						}
+
+						&.tree-drag-insert-below {
+							border-bottom: none;
+
+							.autofit-row {
+								box-shadow: 0 2px 0 0 $cadmin-primary-l1;
+							}
+						}
+
+						&.tree-drag-insert-append .tree-label {
+							background: transparent;
+							border: none;
+
+							> .autofit-row {
+								border-radius: 4px;
+								box-shadow: 0 0 0 2px $cadmin-primary-l1;
+							}
+						}
+					}
+				}
+
+				.tree-node {
+					.tree-hitarea {
+						background-color: $cadmin-gray-800;
+						border: 1px solid $cadmin-gray-800;
+						border-radius: 2px;
+						font-size: 6px;
+						height: 12px;
+						margin-right: 0;
+						padding: 2px 2px 1px;
+						text-align: center;
+						width: 12px;
+
+						& + span {
+							display: none;
+						}
+					}
+
+					.tree-label > span a.layout-tree {
+						color: $cadmin-gray-500;
+						padding-left: 1px;
+						width: 100%;
+
+						&:focus {
+							border-radius: 4px;
+							box-shadow: 0 0 0 2px $cadmin-white,
+								0 0 0 4px $cadmin-primary-l1;
+							outline: 0;
+						}
+
+						&:hover {
+							color: $cadmin-white;
+						}
+					}
+
+					font-size: 14px;
+					margin-bottom: 6px;
+					margin-top: 6px;
+
+					.tree-label {
+						.dropdown {
+							visibility: hidden;
+						}
+
+						&:hover .dropdown {
+							visibility: visible;
+						}
+
+						color: $cadmin-gray-500 !important;
+						display: flex;
+						flex-grow: 1;
+						margin-left: 8px;
+						padding-right: 17px;
+						vertical-align: middle;
+						width: calc(100% - 20px);
+					}
+
+					.tree-node-selected {
+						.tree-label .layout-tree {
+							color: white;
+							font-weight: 600;
+						}
+
+						.dropdown {
+							visibility: visible !important;
+						}
+					}
+				}
+
+				a.tree-node-paginator {
+					color: white !important;
+				}
+
+				.tree-view-content {
+					padding-top: 1rem;
+				}
+
+				.tree-hitarea:focus:before {
+					box-shadow: 0 0 0 0.125rem #fff,
+						0 0 0 0.25rem rgba(11, 95, 255, 0.5);
+				}
+
+				.tree-view-content {
+					margin-bottom: calc(
+						#{$product-menu-pages-administration-link-height} + #{$cadmin-spacer}
+					);
+				}
+			}
+
+			.view-collection-items-action-option {
+				display: none;
+			}
+
+			.view-collection-items-action-option.collection {
+				display: block;
+			}
+		}
+
+		.page-type-selector-option {
+			padding-left: 32px;
+		}
+
 		.product-menu-toast-toggle {
 			align-items: center;
 			display: inline-flex;
@@ -455,6 +300,162 @@ html#{$cadmin-selector} {
 			}
 
 			.icon-product-menu-closed {
+				display: block;
+			}
+		}
+
+		.product-menu {
+			.sidebar-header {
+				line-height: 32px;
+				padding-bottom: 8px;
+				padding-right: 9px;
+				padding-top: 8px;
+
+				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+					padding-bottom: 12px;
+					padding-left: 24px;
+					padding-top: 12px;
+				}
+
+				.sidenav-close {
+					float: right;
+					margin-right: -2px;
+				}
+			}
+
+			.sidebar-header-logo {
+				margin-right: 10px;
+			}
+
+			.sidebar-body {
+				bottom: 0;
+				left: 0;
+				padding: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+
+				@include media-breakpoint-down(xs) {
+					overflow: visible;
+					position: static;
+				}
+
+				.panel-app-root {
+					&.active {
+						border-left: 4px solid $cadmin-white;
+					}
+
+					li {
+						font-weight: 400;
+						list-style: none;
+
+						&.active {
+							font-weight: 700;
+							margin-left: -24px;
+							padding-left: 20px;
+						}
+					}
+				}
+
+				.panel-group {
+					border-radius: 0;
+				}
+			}
+
+			.lfr-product-menu-sidebar .panel-group {
+				overflow: hidden;
+			}
+
+			small {
+				display: block;
+			}
+
+			.list-group-heading {
+				h1,
+				h2,
+				h3,
+				h4,
+				h5,
+				h6 {
+					margin-bottom: 0;
+					margin-top: 0;
+				}
+			}
+
+			.list-group-item {
+				border-top-width: 0;
+				padding: 10px 20px;
+			}
+
+			.nav-nested-margins > li .nav > li {
+				.nav > li {
+					margin-bottom: 1px;
+				}
+			}
+
+			&.popover {
+				background-color: $cadmin-white;
+			}
+
+			.impersonation-message {
+				font-size: 12px;
+			}
+
+			.manage-sites-link {
+				padding: 1em;
+			}
+
+			.site-selector {
+				box-shadow: none;
+
+				.selectable-site {
+					color: #333;
+					height: auto;
+				}
+
+				.site-link {
+					color: #333;
+
+					&.selected-site {
+						color: #999;
+					}
+				}
+
+				.site-logo-container {
+					padding: 2em;
+				}
+			}
+
+			.staging-links {
+				font-size: 12px;
+				margin: 6px 22px 4px 16px;
+			}
+		}
+	}
+
+	.tree-drag-helper {
+		.tree-drag-helper-content {
+			background: $cadmin-primary-l1;
+			border: none;
+			border-radius: 4px;
+			box-shadow: none;
+
+			.layout-tree {
+				color: white;
+				display: inline-block;
+				font-size: 12px;
+				font-weight: bold;
+				max-width: 16ch;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.autofit-col {
+				display: none;
+			}
+
+			.autofit-col:first-child {
 				display: block;
 			}
 		}

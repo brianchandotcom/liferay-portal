@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.taglib;
+package com.liferay.portal.kernel.servlet;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,9 +30,7 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Shuyang Zhou
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.kernel.servlet.FileAvailabilityUtil}
  */
-@Deprecated
 public class FileAvailabilityUtil {
 
 	public static void clearAvailabilities() {

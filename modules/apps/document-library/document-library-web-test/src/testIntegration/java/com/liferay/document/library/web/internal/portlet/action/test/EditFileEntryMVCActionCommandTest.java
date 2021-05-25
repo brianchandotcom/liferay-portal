@@ -57,6 +57,7 @@ import java.io.InputStream;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -122,12 +123,13 @@ public class EditFileEntryMVCActionCommandTest {
 			_editFileEntryMVCActionCommand, "_addMultipleFileEntries",
 			new Class<?>[] {
 				PortletConfig.class, ActionRequest.class, String.class,
-				List.class, List.class, ServiceContext.class
+				List.class, List.class, Date.class, Date.class,
+				ServiceContext.class
 			},
 			_getLiferayPortletConfig(),
 			_getMockLiferayPortletActionRequest(parameters),
 			tempFileEntry.getFileName(), new ArrayList<>(), new ArrayList<>(),
-			ServiceContextTestUtil.getServiceContext());
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		FileEntry fileName = _dlAppLocalService.getFileEntryByFileName(
 			_group.getGroupId(), folderId, "image.jpg");
@@ -179,12 +181,13 @@ public class EditFileEntryMVCActionCommandTest {
 				_editFileEntryMVCActionCommand, "_addMultipleFileEntries",
 				new Class<?>[] {
 					PortletConfig.class, ActionRequest.class, String.class,
-					List.class, List.class, ServiceContext.class
+					List.class, List.class, Date.class, Date.class,
+					ServiceContext.class
 				},
 				_getLiferayPortletConfig(),
 				_getMockLiferayPortletActionRequest(parameters),
-				selectedFileName, new ArrayList<>(), new ArrayList<>(),
-				ServiceContextTestUtil.getServiceContext());
+				selectedFileName, new ArrayList<>(), new ArrayList<>(), null,
+				null, ServiceContextTestUtil.getServiceContext());
 		}
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntryByFileName(
@@ -243,12 +246,13 @@ public class EditFileEntryMVCActionCommandTest {
 				_editFileEntryMVCActionCommand, "_addMultipleFileEntries",
 				new Class<?>[] {
 					PortletConfig.class, ActionRequest.class, String.class,
-					List.class, List.class, ServiceContext.class
+					List.class, List.class, Date.class, Date.class,
+					ServiceContext.class
 				},
 				_getLiferayPortletConfig(),
 				_getMockLiferayPortletActionRequest(parameters),
-				selectedFileName, new ArrayList<>(), new ArrayList<>(),
-				ServiceContextTestUtil.getServiceContext());
+				selectedFileName, new ArrayList<>(), new ArrayList<>(), null,
+				null, ServiceContextTestUtil.getServiceContext());
 		}
 
 		FileEntry fileEntry = _dlAppLocalService.getFileEntryByFileName(

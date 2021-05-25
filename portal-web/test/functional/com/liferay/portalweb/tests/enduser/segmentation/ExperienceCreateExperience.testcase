@@ -1116,6 +1116,7 @@ definition {
 	@priority = "5"
 	test AddNewExperienceSessionHostnameSegment {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "ExperienceCreateExperience#AddNewExperienceSessionHostnameSegment";
 
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "www.able.com",

@@ -291,8 +291,7 @@ public class CTCollectionLocalServiceUtil {
 	}
 
 	public static List<com.liferay.change.tracking.mapping.CTMappingTableInfo>
-			getCTMappingTableInfos(long ctCollectionId)
-		throws java.sql.SQLException {
+		getCTMappingTableInfos(long ctCollectionId) {
 
 		return getService().getCTMappingTableInfos(ctCollectionId);
 	}

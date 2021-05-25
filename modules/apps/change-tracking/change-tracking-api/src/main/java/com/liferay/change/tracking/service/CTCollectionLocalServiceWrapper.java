@@ -334,8 +334,7 @@ public class CTCollectionLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.change.tracking.mapping.CTMappingTableInfo>
-				getCTMappingTableInfos(long ctCollectionId)
-			throws java.sql.SQLException {
+			getCTMappingTableInfos(long ctCollectionId) {
 
 		return _ctCollectionLocalService.getCTMappingTableInfos(ctCollectionId);
 	}

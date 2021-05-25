@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
-import java.sql.SQLException;
-
 import java.util.List;
 import java.util.Map;
 
@@ -263,8 +261,7 @@ public interface CTCollectionLocalService
 	public int getCTCollectionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CTMappingTableInfo> getCTMappingTableInfos(long ctCollectionId)
-		throws SQLException;
+	public List<CTMappingTableInfo> getCTMappingTableInfos(long ctCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTEntry> getDiscardCTEntries(

@@ -14,7 +14,7 @@ definition {
 
 			if (isSet(description)) {
 				SelectFrame.selectFrameNoLoading(
-					key_fieldLabel = "Summary",
+					key_fieldLabel = "Description",
 					locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
 
 				AssertTextEquals(

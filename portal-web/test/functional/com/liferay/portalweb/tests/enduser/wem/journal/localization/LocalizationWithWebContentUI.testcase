@@ -75,7 +75,7 @@ definition {
 
 		CKEditor.addContentInWebContent(
 			content = "A Japanese translation of the basic front page banner",
-			fieldLabel = "Summary");
+			fieldLabel = "Description");
 
 		CKEditor.addSourceContent(content = '''
 <h2 class="text-center">Space Program 大学生涯教育</h2>

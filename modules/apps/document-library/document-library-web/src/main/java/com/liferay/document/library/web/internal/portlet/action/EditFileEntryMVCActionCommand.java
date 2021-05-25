@@ -379,7 +379,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		Date expirationDate = _getExpirationDate(
 			uploadPortletRequest, user.getTimeZone());
-
 		Date reviewDate = _getReviewDate(
 			uploadPortletRequest, user.getTimeZone());
 
@@ -1130,7 +1129,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		Date expirationDate = _getExpirationDate(
 			uploadPortletRequest, user.getTimeZone());
-
 		Date reviewDate = _getReviewDate(
 			uploadPortletRequest, user.getTimeZone());
 

@@ -136,32 +136,42 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public JSONObject getDSEnvelopesJSONObject(
-		long groupId, String fromDateString, long count, long startPosition) {
+		long groupId, String fromDateString, int pageSize, int page,
+		String order) {
+
+		String startPosition = String.valueOf(pageSize * (page - 1));
 
 		JSONObject jsonObject = _dsHttp.get(
 			groupId,
 			StringBundler.concat(
 				"envelopes?from_date=", fromDateString, "&count=",
-				String.valueOf(count), "&start_position=",
-				String.valueOf(startPosition),
-				"&include=custom_fields,documents,recipients&order=desc"));
+				String.valueOf(pageSize), "&start_position=", startPosition,
+				"&include=custom_fields,documents,recipients&order=", order));
 
 		List<DSEnvelope> dsEnvelopes = JSONUtil.toList(
 			jsonObject.getJSONArray("envelopes"),
 			envelopeJSONObject -> _toDSEnvelope(envelopeJSONObject), _log);
 
+		int totalCount = jsonObject.getInt("totalSetSize");
+
+		int lastPage = 1;
+
+		if (totalCount != 0) {
+			lastPage = (int)Math.ceil((float)totalCount / pageSize);
+		}
+
 		return JSONUtil.put(
-			"endPosition", jsonObject.getString("endPosition")
-		).put(
-			"envelopes",
+			"items",
 			JSONUtil.toJSONArray(
 				dsEnvelopes, dsEnvelope -> _toJSONObject(dsEnvelope), _log)
 		).put(
-			"resultSetSize", jsonObject.getString("resultSetSize")
+			"lastPage", String.valueOf(lastPage)
 		).put(
-			"startPosition", jsonObject.getString("startPosition")
+			"page", String.valueOf(page)
 		).put(
-			"totalSetSize", jsonObject.getString("totalSetSize")
+			"pageSize", jsonObject.getString("resultSetSize")
+		).put(
+			"totalCount", String.valueOf(totalCount)
 		);
 	}
 
@@ -190,6 +200,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 					dsRecipientId = signerJSONObject.getString("recipientId");
 					emailAddress = signerJSONObject.getString("email");
 					name = signerJSONObject.getString("name");
+					status = signerJSONObject.getString("status");
 				}
 			},
 			_log);
@@ -239,9 +250,6 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 					jsonObject.getJSONObject("recipients"));
 				emailBlurb = jsonObject.getString("emailBlurb");
 				emailSubject = jsonObject.getString("emailSubject");
-				name = jsonObject.getString("envelopeName");
-				senderEmailAddress = jsonObject.getString(
-					"envelopeSenderEmailAddress");
 				status = jsonObject.getString("status");
 			}
 		};
@@ -254,6 +262,8 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	private JSONObject _toJSONObject(DSEnvelope dsEnvelope) {
 		return JSONUtil.put(
+			"createdLocalDateTime", dsEnvelope.getCreatedLocalDateTime()
+		).put(
 			"documents",
 			JSONUtil.toJSONArray(
 				dsEnvelope.getDSDocuments(),
@@ -272,6 +282,8 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 		).put(
 			"envelopeId", dsEnvelope.getDSEnvelopeId()
 		).put(
+			"name", dsEnvelope.getName()
+		).put(
 			"recipients",
 			JSONUtil.put(
 				"signers",
@@ -283,8 +295,12 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 						"name", dsRecipient.getName()
 					).put(
 						"recipientId", dsRecipient.getDSRecipientId()
+					).put(
+						"status", dsRecipient.getStatus()
 					),
 					_log))
+		).put(
+			"senderEmailAddress", dsEnvelope.getSenderEmailAddress()
 		).put(
 			"status", dsEnvelope.getStatus()
 		);

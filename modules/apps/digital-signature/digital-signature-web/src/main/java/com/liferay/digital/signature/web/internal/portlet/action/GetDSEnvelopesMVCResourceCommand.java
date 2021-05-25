@@ -53,10 +53,10 @@ public class GetDSEnvelopesMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		JSONObject jsonObject = _dsEnvelopeManager.getDSEnvelopesJSONObject(
-			themeDisplay.getSiteGroupId(),
-			ParamUtil.getString(resourceRequest, "from_date"),
-			ParamUtil.getLong(resourceRequest, "count"),
-			ParamUtil.getLong(resourceRequest, "start_position"));
+			themeDisplay.getSiteGroupId(), "2011-01-01",
+			ParamUtil.getInteger(resourceRequest, "pageSize"),
+			ParamUtil.getInteger(resourceRequest, "page"),
+			ParamUtil.getString(resourceRequest, "order", "desc"));
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);

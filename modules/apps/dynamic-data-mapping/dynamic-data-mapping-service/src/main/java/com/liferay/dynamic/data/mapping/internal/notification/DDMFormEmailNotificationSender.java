@@ -284,6 +284,14 @@ public class DDMFormEmailNotificationSender {
 			return null;
 		}
 
+		if (Objects.equals(ddmFormField.getType(), "paragraph")) {
+			return HashMapBuilder.<String, Object>put(
+				"label", getLabel(ddmFormField, locale)
+			).put(
+				"value", getParagraphText(ddmFormField, locale)
+			).build();
+		}
+
 		List<String> renderedDDMFormFieldValues = ListUtil.toList(
 			ddmFormFieldValues,
 			new Function<DDMFormFieldValue, String>() {
@@ -407,6 +415,18 @@ public class DDMFormEmailNotificationSender {
 		}
 
 		return pages;
+	}
+
+	protected String getParagraphText(
+		DDMFormField ddmFormField, Locale locale) {
+
+		LocalizedValue text = (LocalizedValue)ddmFormField.getProperty("text");
+
+		if (text == null) {
+			return StringPool.BLANK;
+		}
+
+		return HtmlUtil.extractText(text.getString(locale));
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {

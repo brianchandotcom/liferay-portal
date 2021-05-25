@@ -176,9 +176,7 @@ public class LayoutReportsIssue {
 			return JSONUtil.put(
 				"key", _key.toString()
 			).put(
-				"title",
-				ResourceBundleUtil.getString(
-					resourceBundle, "detail-" + _key.toString())
+				"title", _key.getTitle(resourceBundle)
 			).put(
 				"total", _total
 			);
@@ -305,7 +303,12 @@ public class LayoutReportsIssue {
 					return "small-tap-targets";
 				}
 
-			},
+			};
+
+			public String getTitle(ResourceBundle resourceBundle) {
+				return ResourceBundleUtil.getString(
+					resourceBundle, "detail-" + toString());
+			}
 
 		}
 

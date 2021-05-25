@@ -8,7 +8,6 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-
 		ACUtils.launchAC();
 
 		ACSettings.takeTokenFromAnalyticsCloud();
@@ -29,7 +28,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
-        // TO DO: ACtearDown
+		// TO DO: ACtearDown
+
 	}
 
 	@description = "Create a dynamic segment with individuals"
@@ -37,41 +37,41 @@ definition {
 	test CanCreateDynamicSegmentWithIndividuals {
 		ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-        Navigator.openURL();
+		Navigator.openURL();
 
 		Pause(locator1 = "5000");
 
-        ACUtils.launchAC();
+		ACUtils.launchAC();
 
-        ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
 
-        ACNavigation.goToSegments();
+		ACNavigation.goToSegments();
 
-        ACSegments.createDynamicSegment();
+		ACSegments.createDynamicSegment();
 
-        ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
 
-        ACSegments.goToSidebarAttrributes(criterion = "Individual Attributes");
+		ACSegments.goToSidebarAttrributes(criterion = "Individual Attributes");
 
-        ACSegments.addSegmentField(segmentField = "email");
-        
-        ACSegments.editTextCriterion(textInput = "test@liferay.com");
+		ACSegments.addSegmentField(segmentField = "email");
 
-        ACSegments.saveSegment();
+		ACSegments.editTextCriterion(textInput = "test@liferay.com");
 
-        ACNavigation.goToSegments();
+		ACSegments.saveSegment();
 
-        ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		ACNavigation.goToSegments();
 
-        ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
-        AssertTextEquals(
+		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+
+		AssertTextEquals(
 			locator1 = "ACSegments#SEGMENT_LABEL",
 			value1 = "DYNAMIC SEGMENT");
 
-        AssertElementPresent(
-			locator1 = "ACSegments#SEGMENT_MEMBERS",
-            key_userName = "Test Test");
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
 }

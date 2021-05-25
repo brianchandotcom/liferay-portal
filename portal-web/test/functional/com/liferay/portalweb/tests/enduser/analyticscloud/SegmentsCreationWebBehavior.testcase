@@ -8,7 +8,6 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-
 		ACUtils.launchAC();
 
 		ACSettings.takeTokenFromAnalyticsCloud();
@@ -42,7 +41,6 @@ definition {
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentSubmittingForm {
-
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "AC Page",
@@ -50,9 +48,9 @@ definition {
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-        Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openSiteURL(siteName = "Site Name");
 
-        ProductMenu.gotoPortlet(
+		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Forms");
 
@@ -102,15 +100,15 @@ definition {
 
 		Pause(locator1 = "10000");
 
-        ACUtils.launchAC();
+		ACUtils.launchAC();
 
-        ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
 
-        ACNavigation.goToSegments();
+		ACNavigation.goToSegments();
 
-        ACSegments.createDynamicSegment();
+		ACSegments.createDynamicSegment();
 
-        ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
 
 		ACSegments.addSegmentField(segmentField = "Submitted Form");
 
@@ -124,9 +122,9 @@ definition {
 
 		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
 
-        AssertTextEquals(
+		AssertTextEquals(
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
-            value1 = "There are no items found.");
+			value1 = "There are no items found.");
 
 		ACUtils.launchDXP();
 
@@ -156,13 +154,13 @@ definition {
 
 		ACNavigation.goToSegments();
 
-        ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
-        ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
 
-        AssertElementPresent(
-			locator1 = "ACSegments#SEGMENT_MEMBERS",
-            key_userName = "Test Test");
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
 }

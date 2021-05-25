@@ -1,5 +1,19 @@
 definition {
 
+	macro closeAllSessions {
+		var cleanCurl = '''
+			http://localhost:8082/admin/sessions/close \
+			-H 'Content-Type: application/json' \
+			-d '{
+				"query": {
+					"match_all": {}
+				}
+			}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
+	}
+
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
@@ -16,21 +30,6 @@ definition {
 		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
 			User.firstLoginPG();
 		}
-	}
-
-	macro closeAllSessions {
-
-		var cleanCurl = '''
-			http://localhost:8082/admin/sessions/close \
-			-H 'Content-Type: application/json' \
-			-d '{
-				"query": {
-					"match_all": {}
-				}
-			}'
-		''';
-
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
 }

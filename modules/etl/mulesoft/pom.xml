@@ -10,7 +10,7 @@
 	<artifactId>com.liferay.mule</artifactId>
 	<version>1.1.0-SNAPSHOT</version>
 	<packaging>mule-extension</packaging>
-	<name>Liferay Connector</name>
+	<name>Liferay Connector - Mule 4</name>
 
 	<properties>
 		<munit.input.directory>src/test/munit</munit.input.directory>

@@ -24,6 +24,7 @@ import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import Alert from '../../components/Alert.es';
 import Answer from '../../components/Answer.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import Breadcrumb from '../../components/Breadcrumb.es';
@@ -62,6 +63,8 @@ export default withRouter(
 		},
 	}) => {
 		const context = useContext(AppContext);
+
+		const [error, setError] = useState(null);
 
 		const queryParams = useQueryParams(location);
 
@@ -127,11 +130,28 @@ export default withRouter(
 
 		useEffect(() => {
 			getThread(questionId, context.siteKey)
-				.then(({data: {messageBoardThreadByFriendlyUrlPath}}) => {
-					setQuestion(messageBoardThreadByFriendlyUrlPath);
+				.then(
+					({data: {messageBoardThreadByFriendlyUrlPath}, error}) => {
+						if (error) {
+							setError({
+								message: 'Loading question',
+								title: 'Error',
+							});
+							setLoading(false);
+						}
+						else {
+							setQuestion(messageBoardThreadByFriendlyUrlPath);
+							setLoading(false);
+						}
+					}
+				)
+				.catch((error) => {
+					if (process.env.NODE_ENV === 'development') {
+						console.error(error);
+					}
+					setError({message: 'Loading question', title: 'Error'});
 					setLoading(false);
-				})
-				.catch((_) => setLoading(false));
+				});
 		}, [questionId, context.siteKey]);
 
 		sectionTitle =
@@ -198,7 +218,7 @@ export default withRouter(
 				/>
 
 				<div className="c-mt-5">
-					{!loading && (
+					{!loading && !error && (
 						<div className="questions-container row">
 							<div className="col-md-1 text-md-center">
 								<Rating
@@ -534,6 +554,8 @@ export default withRouter(
 					{question && question.id && (
 						<RelatedQuestions question={question} />
 					)}
+
+					<Alert info={error} />
 				</div>
 
 				{question && (

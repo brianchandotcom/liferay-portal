@@ -143,9 +143,9 @@ public class KBArticlePersistenceTest {
 
 		newKBArticle.setModifiedDate(RandomTestUtil.nextDate());
 
-		newKBArticle.setRootResourcePrimKey(RandomTestUtil.nextLong());
-
 		newKBArticle.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		newKBArticle.setRootResourcePrimKey(RandomTestUtil.nextLong());
 
 		newKBArticle.setParentResourceClassNameId(RandomTestUtil.nextLong());
 
@@ -212,11 +212,11 @@ public class KBArticlePersistenceTest {
 			Time.getShortTimestamp(existingKBArticle.getModifiedDate()),
 			Time.getShortTimestamp(newKBArticle.getModifiedDate()));
 		Assert.assertEquals(
-			existingKBArticle.getRootResourcePrimKey(),
-			newKBArticle.getRootResourcePrimKey());
-		Assert.assertEquals(
 			existingKBArticle.getExternalReferenceCode(),
 			newKBArticle.getExternalReferenceCode());
+		Assert.assertEquals(
+			existingKBArticle.getRootResourcePrimKey(),
+			newKBArticle.getRootResourcePrimKey());
 		Assert.assertEquals(
 			existingKBArticle.getParentResourceClassNameId(),
 			newKBArticle.getParentResourceClassNameId());
@@ -356,12 +356,12 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_E() throws Exception {
-		_persistence.countByG_E(RandomTestUtil.nextLong(), "");
+	public void testCountByG_ERC() throws Exception {
+		_persistence.countByG_ERC(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByG_E(0L, "null");
+		_persistence.countByG_ERC(0L, "null");
 
-		_persistence.countByG_E(0L, (String)null);
+		_persistence.countByG_ERC(0L, (String)null);
 	}
 
 	@Test
@@ -515,13 +515,13 @@ public class KBArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_E_V() throws Exception {
-		_persistence.countByG_E_V(
+	public void testCountByG_ERC_V() throws Exception {
+		_persistence.countByG_ERC_V(
 			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByG_E_V(0L, "null", 0);
+		_persistence.countByG_ERC_V(0L, "null", 0);
 
-		_persistence.countByG_E_V(0L, (String)null, 0);
+		_persistence.countByG_ERC_V(0L, (String)null, 0);
 	}
 
 	@Test
@@ -729,8 +729,8 @@ public class KBArticlePersistenceTest {
 			"KBArticle", "mvccVersion", true, "uuid", true, "kbArticleId", true,
 			"resourcePrimKey", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "rootResourcePrimKey", true,
-			"externalReferenceCode", true, "parentResourceClassNameId", true,
+			"modifiedDate", true, "externalReferenceCode", true,
+			"rootResourcePrimKey", true, "parentResourceClassNameId", true,
 			"parentResourcePrimKey", true, "kbFolderId", true, "version", true,
 			"title", true, "urlTitle", true, "description", true, "priority",
 			true, "sections", true, "latest", true, "main", true, "sourceURL",
@@ -1076,9 +1076,9 @@ public class KBArticlePersistenceTest {
 
 		kbArticle.setModifiedDate(RandomTestUtil.nextDate());
 
-		kbArticle.setRootResourcePrimKey(RandomTestUtil.nextLong());
-
 		kbArticle.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		kbArticle.setRootResourcePrimKey(RandomTestUtil.nextLong());
 
 		kbArticle.setParentResourceClassNameId(RandomTestUtil.nextLong());
 

@@ -113,6 +113,7 @@ page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
+page import="com.liferay.portal.kernel.util.SessionTreeJSClicks" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Tuple" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
@@ -121,8 +122,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.staging.StagingGroupHelper" %><%@
 page import="com.liferay.staging.StagingGroupHelperUtil" %><%@
 page import="com.liferay.staging.configuration.StagingConfiguration" %><%@
-page import="com.liferay.staging.constants.StagingProcessesWebKeys" %><%@
-page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
+page import="com.liferay.staging.constants.StagingProcessesWebKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 

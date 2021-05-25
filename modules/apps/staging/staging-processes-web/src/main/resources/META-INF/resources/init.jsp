@@ -71,6 +71,7 @@ page import="com.liferay.portal.kernel.util.MapUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
+page import="com.liferay.portal.kernel.util.SessionTreeJSClicks" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -82,8 +83,7 @@ page import="com.liferay.staging.processes.web.internal.display.context.PublishT
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebPublishTemplatesToolbarDisplayContext" %><%@
 page import="com.liferay.staging.processes.web.internal.display.context.StagingProcessesWebToolbarDisplayContext" %><%@
-page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.taglib.ui.util.SessionTreeJSClicks" %>
+page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.io.Serializable" %>
 

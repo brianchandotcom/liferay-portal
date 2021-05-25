@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.util;
+package com.liferay.portal.kernel.theme;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,9 +46,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Raymond Augé
  * @author Mika Koivisto
  * @author Shuyang Zhou
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.kernel.theme.ThemeUtil}
  */
-@Deprecated
 public class ThemeUtil {
 
 	public static String getPortletId(HttpServletRequest httpServletRequest) {

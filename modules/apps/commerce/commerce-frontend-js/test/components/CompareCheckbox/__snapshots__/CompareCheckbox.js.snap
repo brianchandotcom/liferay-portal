@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompareCheckbox by data flow renders a disabled checkbox if "disabled" is true and the product is not in the MiniCompare widget 1`] = `
+<DocumentFragment>
+  <div
+    class="custom-control custom-checkbox"
+  >
+    <label>
+      <input
+        aria-label=""
+        class="custom-control-input compare-checkbox-component"
+        disabled=""
+        type="checkbox"
+      />
+      <span
+        class="custom-control-label"
+      />
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CompareCheckbox by data flow renders an enabled checkbox if "disabled" is true but the product is in the MiniCompare widget 1`] = `
+<DocumentFragment>
+  <div
+    class="custom-control custom-checkbox"
+  >
+    <label>
+      <input
+        aria-label=""
+        checked=""
+        class="custom-control-input compare-checkbox-component"
+        type="checkbox"
+      />
+      <span
+        class="custom-control-label"
+      />
+    </label>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`CompareCheckbox by default renders a checkbox that is enabled and not checked 1`] = `
+<DocumentFragment>
+  <div
+    class="custom-control custom-checkbox"
+  >
+    <label>
+      <input
+        aria-label=""
+        class="custom-control-input compare-checkbox-component"
+        type="checkbox"
+      />
+      <span
+        class="custom-control-label"
+      />
+    </label>
+  </div>
+</DocumentFragment>
+`;

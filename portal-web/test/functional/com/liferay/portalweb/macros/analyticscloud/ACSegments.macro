@@ -252,5 +252,14 @@ definition {
 			locator1 = "ACSegments#SEGMENT_BREAKDOWN_CARD",
 			value1 = "Add a Breakdown by Attribute");
 	}
+	
+	macro setOccurence {
+		
+		Click(locator1 = "ACSegments#OCCURENCE_INPUT");
+
+		Type(
+			locator1 = "ACSegments#OCCURENCE_INPUT",
+			value1 = "${occurenceNumber}");
+	}
 
 }

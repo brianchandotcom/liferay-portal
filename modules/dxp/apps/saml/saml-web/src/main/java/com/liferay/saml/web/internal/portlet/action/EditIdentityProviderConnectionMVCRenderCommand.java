@@ -16,14 +16,20 @@ package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlPortletKeys;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.opensaml.integration.field.expression.handler.registry.UserFieldExpressionHandlerRegistry;
 import com.liferay.saml.opensaml.integration.field.expression.resolver.registry.UserFieldExpressionResolverRegistry;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
 import com.liferay.saml.runtime.configuration.SamlProviderConfiguration;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
+import com.liferay.saml.web.internal.display.context.AttributeMappingDisplayContext;
+
+import java.io.IOException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -64,9 +70,11 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 
 		long clockSkew;
 
+		SamlSpIdpConnection samlSpIdpConnection = null;
+
 		if (samlSpIdpConnectionId > 0) {
 			try {
-				SamlSpIdpConnection samlSpIdpConnection =
+				samlSpIdpConnection =
 					_samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
 						samlSpIdpConnectionId);
 
@@ -90,6 +98,19 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 				samlProviderConfiguration.clockSkew());
 		}
 
+		try {
+			renderRequest.setAttribute(
+				AttributeMappingDisplayContext.class.getName(),
+				new AttributeMappingDisplayContext(
+					renderRequest, samlSpIdpConnection,
+					_userFieldExpressionHandlerRegistry,
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)));
+		}
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
+		}
+
 		renderRequest.setAttribute(SamlWebKeys.SAML_CLOCK_SKEW, clockSkew);
 
 		return "/admin/edit_identity_provider_connection.jsp";
@@ -100,6 +121,10 @@ public class EditIdentityProviderConnectionMVCRenderCommand
 
 	@Reference
 	private SamlSpIdpConnectionLocalService _samlSpIdpConnectionLocalService;
+
+	@Reference
+	private UserFieldExpressionHandlerRegistry
+		_userFieldExpressionHandlerRegistry;
 
 	@Reference
 	private UserFieldExpressionResolverRegistry

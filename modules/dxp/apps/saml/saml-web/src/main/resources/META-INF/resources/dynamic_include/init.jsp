@@ -32,8 +32,8 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.saml.constants.SamlWebKeys" %><%@
 page import="com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler" %><%@
-page import="com.liferay.saml.web.internal.UserAttributeMappingException" %><%@
-page import="com.liferay.saml.web.internal.UserIdentifierExpressionException" %><%@
+page import="com.liferay.saml.web.internal.exception.UserAttributeMappingException" %><%@
+page import="com.liferay.saml.web.internal.exception.UserIdentifierExpressionException" %><%@
 page import="com.liferay.saml.web.internal.display.context.AttributeMappingDisplayContext" %>
 
 <%@ page import="java.util.List" %><%@

@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.field.expression.handler.registry.UserFieldExpressionHandlerRegistry;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
-import com.liferay.saml.web.internal.UserAttributeMappingException;
-import com.liferay.saml.web.internal.UserIdentifierExpressionException;
+import com.liferay.saml.web.internal.exception.UserAttributeMappingException;
+import com.liferay.saml.web.internal.exception.UserIdentifierExpressionException;
 
 import java.io.IOException;
 

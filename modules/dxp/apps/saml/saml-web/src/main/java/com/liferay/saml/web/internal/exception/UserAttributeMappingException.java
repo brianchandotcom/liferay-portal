@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.saml.web.internal;
+package com.liferay.saml.web.internal.exception;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;

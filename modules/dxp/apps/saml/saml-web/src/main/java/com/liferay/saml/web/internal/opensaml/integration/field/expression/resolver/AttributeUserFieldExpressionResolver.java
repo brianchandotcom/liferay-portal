@@ -22,7 +22,7 @@ import com.liferay.saml.opensaml.integration.field.expression.resolver.UserField
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.service.SamlSpIdpConnectionLocalService;
-import com.liferay.saml.web.internal.UserIdentifierExpressionException;
+import com.liferay.saml.web.internal.exception.UserIdentifierExpressionException;
 
 import java.io.Serializable;
 

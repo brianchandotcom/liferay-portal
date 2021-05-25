@@ -134,6 +134,37 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			evenlopeJSONObject -> _toDSEnvelope(evenlopeJSONObject), _log);
 	}
 
+	@Override
+	public JSONObject getDSEnvelopesJSONObject(
+		long groupId, String fromDateString, long count, long startPosition) {
+
+		JSONObject jsonObject = _dsHttp.get(
+			groupId,
+			StringBundler.concat(
+				"envelopes?from_date=", fromDateString, "&count=",
+				String.valueOf(count), "&start_position=",
+				String.valueOf(startPosition),
+				"&include=custom_fields,documents,recipients&order=desc"));
+
+		List<DSEnvelope> dsEnvelopes = JSONUtil.toList(
+			jsonObject.getJSONArray("envelopes"),
+			envelopeJSONObject -> _toDSEnvelope(envelopeJSONObject), _log);
+
+		return JSONUtil.put(
+			"endPosition", jsonObject.getString("endPosition")
+		).put(
+			"envelopes",
+			JSONUtil.toJSONArray(
+				dsEnvelopes, dsEnvelope -> _toJSONObject(dsEnvelope), _log)
+		).put(
+			"resultSetSize", jsonObject.getString("resultSetSize")
+		).put(
+			"startPosition", jsonObject.getString("startPosition")
+		).put(
+			"totalSetSize", jsonObject.getString("totalSetSize")
+		);
+	}
+
 	private List<DSDocument> _getDSDocuments(JSONArray jsonArray) {
 		return JSONUtil.toList(
 			jsonArray,

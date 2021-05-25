@@ -197,9 +197,7 @@ public class DefaultUserResolver implements UserResolver {
 
 		if (Validator.isBlank(userFieldExpression)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No user field expression to use for matching could be " +
-						"resolved");
+				_log.debug("User field expression is null");
 			}
 
 			User user = _resolveByNameId(
@@ -232,8 +230,9 @@ public class DefaultUserResolver implements UserResolver {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Matching Name Identifier ", subjectNameIdentifier,
-						" of type \"", nameIdFormat, "\""));
+						"Matching user using subject naming identifier ",
+						subjectNameIdentifier, " and name ID format ",
+						nameIdFormat));
 			}
 		}
 
@@ -254,7 +253,8 @@ public class DefaultUserResolver implements UserResolver {
 
 			if (user != null) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Matched/Imported LDAP user " + user.toString());
+					_log.debug(
+						"Matched and imported LDAP user " + user.toString());
 				}
 
 				return user;
@@ -380,10 +380,11 @@ public class DefaultUserResolver implements UserResolver {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Matched known Name Identifier ", subjectNameIdentifier,
-						" of type \"", subjectNameFormat,
-						"\", with qualifier \"", subjectNameQualifier,
-						"\", for \"", samlIdpEntityId, "\""));
+						"Matched known subject name identifier ",
+						subjectNameIdentifier, " of subject name format ",
+						subjectNameFormat, " with subject name qualifier \"",
+						subjectNameQualifier, "\" for SAML IDP entity ID ",
+						samlIdpEntityId));
 			}
 
 			return _userLocalService.fetchUserById(samlPeerBinding.getUserId());

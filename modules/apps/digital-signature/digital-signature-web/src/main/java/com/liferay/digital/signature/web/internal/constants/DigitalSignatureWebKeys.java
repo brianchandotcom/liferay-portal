@@ -19,8 +19,26 @@ package com.liferay.digital.signature.web.internal.constants;
  */
 public class DigitalSignatureWebKeys {
 
+	public static final String DIGITAL_SIGNATURE_ACCOUNT_BASE_URI =
+		"DIGITAL_SIGNATURE_ACCOUNT_BASE_URI";
+
+	public static final String DIGITAL_SIGNATURE_API_ACCOUNT_ID =
+		"DIGITAL_SIGNATURE_API_ACCOUNT_ID";
+
+	public static final String DIGITAL_SIGNATURE_API_USERNAME =
+		"DIGITAL_SIGNATURE_API_USERNAME";
+
+	public static final String DIGITAL_SIGNATURE_ENABLED =
+		"DIGITAL_SIGNATURE_ENABLED";
+
 	public static final String DIGITAL_SIGNATURE_FILE_ENTRY_ID =
 		"DIGITAL_SIGNATURE_FILE_ENTRY_ID";
+
+	public static final String DIGITAL_SIGNATURE_INTEGRATION_KEY =
+		"DIGITAL_SIGNATURE_INTEGRATION_KEY";
+
+	public static final String DIGITAL_SIGNATURE_RSA_PRIVATE_KEY =
+		"DIGITAL_SIGNATURE_RSA_PRIVATE_KEY";
 
 	public static final String DIGITAL_SIGNATURE_TITLE =
 		"DIGITAL_SIGNATURE_TITLE";

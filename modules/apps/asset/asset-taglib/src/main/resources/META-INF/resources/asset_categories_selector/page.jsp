@@ -67,7 +67,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 
 											<clay:label
 												dismissible="<%= true %>"
-												label='<%= GetterUtil.getString(selectedItem.get("label")) %>'
+												label='<%= HtmlUtil.escape(GetterUtil.getString(selectedItem.get("label"))) %>'
 											/>
 
 											<input name="<%= (String)data.get("inputName") %>" type="hidden" value="<%= GetterUtil.getString(selectedItem.get("value")) %>" />

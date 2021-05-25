@@ -16,6 +16,7 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import LayoutReports from './components/LayoutReports';
+import {SET_SELECTED_ISSUE} from './constants/actionTypes';
 import {
 	StoreContextProvider,
 	StoreDispatchContext,
@@ -89,6 +90,12 @@ export default function App(props) {
 }
 
 const LayoutReportsWrapper = ({eventTriggered}) => {
+	const {selectedIssue} = useContext(StoreStateContext);
+
+	const SidebarHeader = selectedIssue
+		? IssueDetailSidebarHeader
+		: DefaultSidebarHeader;
+
 	return (
 		<>
 			<SidebarHeader />
@@ -99,7 +106,7 @@ const LayoutReportsWrapper = ({eventTriggered}) => {
 	);
 };
 
-const SidebarHeader = () => {
+const DefaultSidebarHeader = () => {
 	const {data, languageId, loading} = useContext(StoreStateContext);
 	const {portletNamespace} = useContext(ConstantsContext);
 	const dispatch = useContext(StoreDispatchContext);
@@ -137,6 +144,39 @@ const SidebarHeader = () => {
 					title={Liferay.Language.get('close')}
 				/>
 			</div>
+		</div>
+	);
+};
+
+const IssueDetailSidebarHeader = () => {
+	const {selectedIssue} = useContext(StoreStateContext);
+	const dispatch = useContext(StoreDispatchContext);
+
+	return (
+		<div className="d-flex justify-content-between sidebar-header">
+			<div>
+				<ClayButtonWithIcon
+					className="sidenav-back"
+					displayType="unstyled"
+					onClick={() => {
+						dispatch({
+							issue: null,
+							type: SET_SELECTED_ISSUE,
+						});
+					}}
+					symbol="angle-left"
+					title={Liferay.Language.get('go-back')}
+				/>
+
+				<span>{selectedIssue.title}</span>
+			</div>
+
+			<ClayButtonWithIcon
+				className="sidenav-close"
+				displayType="unstyled"
+				symbol="times"
+				title={Liferay.Language.get('close')}
+			/>
 		</div>
 	);
 };

@@ -26,15 +26,19 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface DSEnvelopeManager {
 
-	public DSEnvelope addDSEnvelope(long groupId, DSEnvelope dsEnvelope);
+	public DSEnvelope addDSEnvelope(
+		long companyId, long groupId, DSEnvelope dsEnvelope);
 
-	public void deleteDSEnvelopes(long groupId, String... dsEnvelopeIds);
+	public void deleteDSEnvelopes(
+		long companyId, long groupId, String... dsEnvelopeIds);
 
-	public DSEnvelope getDSEnvelope(long groupId, String dsEnvelopeId);
-
-	public List<DSEnvelope> getDSEnvelopes(long groupId, String fromDateString);
+	public DSEnvelope getDSEnvelope(
+		long companyId, long groupId, String dsEnvelopeId);
 
 	public List<DSEnvelope> getDSEnvelopes(
-		long groupId, String... dsEnvelopeIds);
+		long companyId, long groupId, String fromDateString);
+
+	public List<DSEnvelope> getDSEnvelopes(
+		long companyId, long groupId, String... dsEnvelopeIds);
 
 }

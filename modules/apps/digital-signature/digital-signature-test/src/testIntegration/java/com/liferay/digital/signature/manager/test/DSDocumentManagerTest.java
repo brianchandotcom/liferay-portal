@@ -53,7 +53,7 @@ public class DSDocumentManagerTest {
 		Class<?> clazz = getClass();
 
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getGroupId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
 					dsDocuments = Collections.singletonList(
@@ -82,12 +82,14 @@ public class DSDocumentManagerTest {
 			});
 
 		byte[] dsDocumentsAsBytes = _dsDocumentManager.getDSDocumentsAsBytes(
-			TestPropsValues.getGroupId(), dsEnvelope.getDSEnvelopeId());
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelope.getDSEnvelopeId());
 
 		Assert.assertTrue(ArrayUtil.isNotEmpty(dsDocumentsAsBytes));
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
-			TestPropsValues.getGroupId(), dsEnvelope.getDSEnvelopeId());
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelope.getDSEnvelopeId());
 	}
 
 	@Inject

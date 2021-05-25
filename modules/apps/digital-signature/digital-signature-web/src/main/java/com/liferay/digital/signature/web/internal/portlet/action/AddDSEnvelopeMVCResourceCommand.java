@@ -67,7 +67,7 @@ public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 		User user = themeDisplay.getUser();
 
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
-			themeDisplay.getSiteGroupId(),
+			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
 			new DSEnvelope() {
 				{
 					dsDocuments = _getDSDocuments(resourceRequest);

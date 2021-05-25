@@ -36,11 +36,12 @@ public class DSCustomFieldManagerImpl implements DSCustomFieldManager {
 
 	@Override
 	public List<DSCustomField> addDSCustomFields(
-		long groupId, String dsEnvelopeId, DSCustomField... dsCustomFields) {
+		long companyId, long groupId, String dsEnvelopeId,
+		DSCustomField... dsCustomFields) {
 
 		return _toDSCustomFields(
 			_dsHttp.post(
-				groupId,
+				companyId, groupId,
 				StringBundler.concat(
 					"envelopes/", dsEnvelopeId, "/custom_fields"),
 				JSONUtil.put(

@@ -15,12 +15,12 @@
 package com.liferay.digital.signature.internal.http;
 
 import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.digital.signature.internal.web.cache.DSAccessTokenWebCacheItem;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Http;
@@ -35,18 +35,19 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = DSHttp.class)
 public class DSHttp {
 
-	public JSONObject get(long groupId, String location) {
+	public JSONObject get(long companyId, long groupId, String location) {
 		try {
-			return _invoke(groupId, location, Http.Method.GET, null);
+			return _invoke(companyId, groupId, location, Http.Method.GET, null);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
 		}
 	}
 
-	public byte[] getAsBytes(long groupId, String location) {
+	public byte[] getAsBytes(long companyId, long groupId, String location) {
 		try {
-			return _invokeAsBytes(groupId, location, Http.Method.GET, null);
+			return _invokeAsBytes(
+				companyId, groupId, location, Http.Method.GET, null);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -54,10 +55,12 @@ public class DSHttp {
 	}
 
 	public JSONObject post(
-		long groupId, String location, JSONObject bodyJSONObject) {
+		long companyId, long groupId, String location,
+		JSONObject bodyJSONObject) {
 
 		try {
-			return _invoke(groupId, location, Http.Method.POST, bodyJSONObject);
+			return _invoke(
+				companyId, groupId, location, Http.Method.POST, bodyJSONObject);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -65,10 +68,12 @@ public class DSHttp {
 	}
 
 	public JSONObject put(
-		long groupId, String location, JSONObject bodyJSONObject) {
+		long companyId, long groupId, String location,
+		JSONObject bodyJSONObject) {
 
 		try {
-			return _invoke(groupId, location, Http.Method.PUT, bodyJSONObject);
+			return _invoke(
+				companyId, groupId, location, Http.Method.PUT, bodyJSONObject);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);
@@ -88,12 +93,12 @@ public class DSHttp {
 	}
 
 	private JSONObject _invoke(
-			long groupId, String location, Http.Method method,
+			long companyId, long groupId, String location, Http.Method method,
 			JSONObject bodyJSONObject)
 		throws Exception {
 
 		byte[] bytes = _invokeAsBytes(
-			groupId, location, method, bodyJSONObject);
+			companyId, groupId, location, method, bodyJSONObject);
 
 		if (bytes == null) {
 			return _jsonFactory.createJSONObject();
@@ -103,7 +108,7 @@ public class DSHttp {
 	}
 
 	private byte[] _invokeAsBytes(
-			long groupId, String location, Http.Method method,
+			long companyId, long groupId, String location, Http.Method method,
 			JSONObject bodyJSONObject)
 		throws Exception {
 
@@ -115,8 +120,8 @@ public class DSHttp {
 		}
 
 		DigitalSignatureConfiguration digitalSignatureConfiguration =
-			ConfigurationProviderUtil.getGroupConfiguration(
-				DigitalSignatureConfiguration.class, groupId);
+			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
+				companyId, groupId);
 
 		options.addHeader(
 			"Authorization",

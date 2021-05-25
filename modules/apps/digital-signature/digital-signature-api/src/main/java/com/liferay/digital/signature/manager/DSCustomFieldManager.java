@@ -27,6 +27,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DSCustomFieldManager {
 
 	public List<DSCustomField> addDSCustomFields(
-		long groupId, String dsEnvelopeId, DSCustomField... dsCustomFields);
+		long companyId, long groupId, String dsEnvelopeId,
+		DSCustomField... dsCustomFields);
 
 }

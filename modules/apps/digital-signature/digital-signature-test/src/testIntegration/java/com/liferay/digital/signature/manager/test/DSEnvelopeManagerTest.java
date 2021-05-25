@@ -53,7 +53,7 @@ public class DSEnvelopeManagerTest {
 		Class<?> clazz = getClass();
 
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getGroupId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
 					dsDocuments = Collections.singletonList(
@@ -89,7 +89,8 @@ public class DSEnvelopeManagerTest {
 		Assert.assertTrue(Validator.isNotNull(dsEnvelope.getDSEnvelopeId()));
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
-			TestPropsValues.getGroupId(), dsEnvelope.getDSEnvelopeId());
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelope.getDSEnvelopeId());
 	}
 
 	@Test
@@ -97,7 +98,7 @@ public class DSEnvelopeManagerTest {
 		String expectedEmailSubject = RandomTestUtil.randomString();
 
 		DSEnvelope dsEnvelope = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getGroupId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
 					emailSubject = expectedEmailSubject;
@@ -106,18 +107,20 @@ public class DSEnvelopeManagerTest {
 			});
 
 		dsEnvelope = _dsEnvelopeManager.getDSEnvelope(
-			TestPropsValues.getGroupId(), dsEnvelope.getDSEnvelopeId());
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelope.getDSEnvelopeId());
 
 		Assert.assertEquals(expectedEmailSubject, dsEnvelope.getEmailSubject());
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
-			TestPropsValues.getGroupId(), dsEnvelope.getDSEnvelopeId());
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelope.getDSEnvelopeId());
 	}
 
 	@Test
 	public void testGetDSEnvelopes() throws Exception {
 		DSEnvelope dsEnvelope1 = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getGroupId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
 					emailSubject = RandomTestUtil.randomString();
@@ -125,7 +128,7 @@ public class DSEnvelopeManagerTest {
 				}
 			});
 		DSEnvelope dsEnvelope2 = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getGroupId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
 					emailSubject = RandomTestUtil.randomString();
@@ -134,7 +137,8 @@ public class DSEnvelopeManagerTest {
 			});
 
 		List<DSEnvelope> dsEnvelopes = _dsEnvelopeManager.getDSEnvelopes(
-			TestPropsValues.getGroupId(), "2021-01-01");
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			"2021-01-01");
 
 		Assert.assertTrue(dsEnvelopes.size() >= 2);
 
@@ -143,12 +147,14 @@ public class DSEnvelopeManagerTest {
 		};
 
 		dsEnvelopes = _dsEnvelopeManager.getDSEnvelopes(
-			TestPropsValues.getGroupId(), dsEnvelopeIds);
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelopeIds);
 
 		Assert.assertTrue(dsEnvelopes.size() == 2);
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
-			TestPropsValues.getGroupId(), dsEnvelopeIds);
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelopeIds);
 	}
 
 	@Inject

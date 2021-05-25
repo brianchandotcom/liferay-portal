@@ -28,9 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DSDocumentManagerImpl implements DSDocumentManager {
 
 	@Override
-	public byte[] getDSDocumentsAsBytes(long groupId, String dsEnvelopeId) {
+	public byte[] getDSDocumentsAsBytes(
+		long companyId, long groupId, String dsEnvelopeId) {
+
 		return _dsHttp.getAsBytes(
-			groupId,
+			companyId, groupId,
 			StringBundler.concat(
 				"envelopes/", dsEnvelopeId,
 				"/documents/archive?escape_non_ascii_filenames=true",

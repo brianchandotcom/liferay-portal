@@ -47,16 +47,19 @@ import org.osgi.service.component.annotations.Reference;
 public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
-	public DSEnvelope addDSEnvelope(long groupId, DSEnvelope dsEnvelope) {
+	public DSEnvelope addDSEnvelope(
+		long companyId, long groupId, DSEnvelope dsEnvelope) {
+
 		String dsEnvelopeName = dsEnvelope.getName();
 		String dsEnvelopeSenderEmailAddress =
 			dsEnvelope.getSenderEmailAddress();
 
 		dsEnvelope = _toDSEnvelope(
-			_dsHttp.post(groupId, "envelopes", _toJSONObject(dsEnvelope)));
+			_dsHttp.post(
+				companyId, groupId, "envelopes", _toJSONObject(dsEnvelope)));
 
 		_dsCustomFieldManager.addDSCustomFields(
-			groupId, dsEnvelope.getDSEnvelopeId(),
+			companyId, groupId, dsEnvelope.getDSEnvelopeId(),
 			new DSCustomField() {
 				{
 					name = "envelopeName";
@@ -76,9 +79,11 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	}
 
 	@Override
-	public void deleteDSEnvelopes(long groupId, String... dsEnvelopeIds) {
+	public void deleteDSEnvelopes(
+		long companyId, long groupId, String... dsEnvelopeIds) {
+
 		_dsHttp.put(
-			groupId, "folders/recyclebin",
+			companyId, groupId, "folders/recyclebin",
 			JSONUtil.put(
 				"envelopeIds",
 				JSONUtil.toJSONArray(
@@ -86,9 +91,11 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	}
 
 	@Override
-	public DSEnvelope getDSEnvelope(long groupId, String dsEnvelopeId) {
+	public DSEnvelope getDSEnvelope(
+		long companyId, long groupId, String dsEnvelopeId) {
+
 		JSONObject jsonObject = _dsHttp.get(
-			groupId,
+			companyId, groupId,
 			StringBundler.concat(
 				"envelopes/", dsEnvelopeId,
 				"?include=custom_fields,documents,recipients"));
@@ -98,10 +105,10 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public List<DSEnvelope> getDSEnvelopes(
-		long groupId, String fromDateString) {
+		long companyId, long groupId, String fromDateString) {
 
 		JSONObject jsonObject = _dsHttp.get(
-			groupId,
+			companyId, groupId,
 			StringBundler.concat(
 				"envelopes?from_date=", fromDateString,
 				"&include=custom_fields,documents,recipients&order=desc"));
@@ -113,10 +120,10 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public List<DSEnvelope> getDSEnvelopes(
-		long groupId, String... dsEnvelopeIds) {
+		long companyId, long groupId, String... dsEnvelopeIds) {
 
 		JSONObject jsonObject = _dsHttp.get(
-			groupId,
+			companyId, groupId,
 			StringBundler.concat(
 				"envelopes/?envelope_ids=",
 				ArrayUtil.toString(dsEnvelopeIds, StringPool.BLANK),

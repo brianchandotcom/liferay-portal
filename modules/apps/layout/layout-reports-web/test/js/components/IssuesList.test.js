@@ -74,6 +74,12 @@ const mockLayoutReportsIssuesNoAccessibilityNoSEO = [
 	},
 ];
 
+const mockPageURLs = [
+	{languageId: 'en-US', title: 'English', url: 'English URL'},
+];
+
+const defaultLanguageId = 'en-US';
+
 describe('IssuesList', () => {
 	afterEach(cleanup);
 
@@ -82,8 +88,10 @@ describe('IssuesList', () => {
 			<StoreContextProvider
 				value={{
 					data: {
+						defaultLanguageId,
 						imagesPath: 'imagesPath',
 						layoutReportsIssues: mockLayoutReportsIssues,
+						pageURLs: mockPageURLs,
 					},
 				}}
 			>
@@ -102,8 +110,10 @@ describe('IssuesList', () => {
 			<StoreContextProvider
 				value={{
 					data: {
+						defaultLanguageId,
 						imagesPath: 'imagesPath',
 						layoutReportsIssues: mockLayoutReportsIssuesNoSEO,
+						pageURLs: mockPageURLs,
 					},
 				}}
 			>
@@ -123,8 +133,10 @@ describe('IssuesList', () => {
 			<StoreContextProvider
 				value={{
 					data: {
+						defaultLanguageId,
 						imagesPath: 'imagesPath',
 						layoutReportsIssues: mockLayoutReportsIssuesNoAccessibilityNoSEO,
+						pageURLs: mockPageURLs,
 					},
 				}}
 			>
@@ -143,8 +155,10 @@ describe('IssuesList', () => {
 			<StoreContextProvider
 				value={{
 					data: {
+						defaultLanguageId,
 						imagesPath: 'imagesPath',
 						layoutReportsIssues: mockLayoutReportsIssues,
+						pageURLs: mockPageURLs,
 					},
 				}}
 			>

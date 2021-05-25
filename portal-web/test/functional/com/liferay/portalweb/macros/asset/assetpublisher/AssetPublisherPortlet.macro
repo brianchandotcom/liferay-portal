@@ -227,7 +227,7 @@ definition {
 
 		AssetCategorization.gotoSelectCategory();
 
-		Pause(locator1 = "3000");
+		AssertVisible(locator1 = "Treeview#NODE_COLLAPSE_BUTTON");
 
 		Portlet.selectTreeNode(nodeName = "${categoryName}");
 

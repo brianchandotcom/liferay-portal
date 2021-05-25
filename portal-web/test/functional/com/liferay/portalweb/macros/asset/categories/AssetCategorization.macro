@@ -62,7 +62,7 @@ definition {
 	macro gotoSelectCategory {
 		IFrame.selectCategoryFrame();
 
-		Pause(locator1 = "3000");
+		AssertVisible(locator1 = "Treeview#NODE_COLLAPSE_BUTTON");
 
 		Portlet.expandTree();
 	}
@@ -82,7 +82,9 @@ definition {
 	macro selectCategory {
 		AssetCategorization.gotoSelectCategory();
 
-		Pause(locator1 = "3000");
+		AssertVisible(
+			key_nodeName = "${categoryName}",
+			locator1 = "Treeview#NODE_ITEM");
 
 		Portlet.selectTreeNode(nodeName = "${categoryName}");
 

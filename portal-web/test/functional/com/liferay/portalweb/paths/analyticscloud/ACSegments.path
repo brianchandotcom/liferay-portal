@@ -225,6 +225,16 @@
     <td>//div[contains(@class,'table-title')and text()='${key_titleName}']</td>
     <td></td>
 </tr>
+<tr>
+    <td>OCCURENCE_INPUT</td>
+    <td>//input[@data-testid='occurence-count-input']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>NO_MEMBER_TITLE</td>
+    <td>//h4[@class='no-results-title']</td>
+    <td></td>
+</tr>
 <!-- Static Segments  -->
 <tr>
     <td>ADD_BUTTON</td>

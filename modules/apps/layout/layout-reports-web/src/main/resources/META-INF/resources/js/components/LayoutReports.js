@@ -23,13 +23,16 @@ import {LOAD_DATA, SET_DATA, SET_ERROR} from '../constants/actionTypes';
 import {ConstantsContext} from '../context/ConstantsContext';
 import {StoreDispatchContext, StoreStateContext} from '../context/StoreContext';
 import loadIssues from '../utils/loadIssues';
+import IssueDetail from './IssueDetail';
 import IssuesList from './IssuesList';
 import NotConfigured from './NotConfigured';
 
 export default function LayoutReports({eventTriggered}) {
 	const isMounted = useIsMounted();
 
-	const {data, error, languageId, loading} = useContext(StoreStateContext);
+	const {data, error, languageId, loading, selectedIssue} = useContext(
+		StoreStateContext
+	);
 
 	const {
 		isPanelStateOpen,
@@ -124,6 +127,8 @@ export default function LayoutReports({eventTriggered}) {
 		<ErrorAlert error={error} onRelaunch={onRelaunchButtonClick} />
 	) : notConfigured ? (
 		<NotConfigured />
+	) : selectedIssue ? (
+		<IssueDetail />
 	) : (
 		<IssuesList />
 	);

@@ -100,7 +100,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "PortletDataException");
 	}
 
-	@description = "This is a use case for LPS-87237."
+	@description = "This is a use case for LPS-87237 and LPS-126769."
 	@priority = "5"
 	test ViewStagingDefaultSettingAfterUpgrade704 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
@@ -111,9 +111,11 @@ definition {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Polls,Widget Templates,Wiki");
+
+		Upgrade.viewStagingConfiguration();
 	}
 
-	@description = "This is a use case for LPS-87237."
+	@description = "This is a use case for LPS-87237 and LPS-126769."
 	@priority = "5"
 	test ViewStagingDefaultSettingAfterUpgrade70106 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
@@ -123,9 +125,11 @@ definition {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Calendar,Dynamic Data Lists,Forms,Message Boards,Polls,Widget Templates,Wiki");
+
+		Upgrade.viewStagingConfiguration();
 	}
 
-	@description = "This is a use case for LPS-87237."
+	@description = "This is a use case for LPS-87237 and LPS-126769."
 	@priority = "5"
 	test ViewStagingDefaultSettingAfterUpgrade621021 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
@@ -135,6 +139,8 @@ definition {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");
 
 		Staging.viewUncheckContentNameList(uncheckContentNameList = "Blogs,Dynamic Data Lists,Message Boards,Polls,Widget Templates,Wiki");
+
+		Upgrade.viewStagingConfiguration();
 	}
 
 }

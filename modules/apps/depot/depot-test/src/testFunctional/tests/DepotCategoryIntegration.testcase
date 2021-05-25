@@ -221,6 +221,35 @@ definition {
 			searchAssetType = "Wiki Page");
 	}
 
+	@description = "This test covers LPS-131774. It ensures that a depot category can be viewed through details info on a connected site."
+	@priority = "4"
+	test CategoryCanBeViewedFromInfoPanel {
+		var categoryId = JSONCategory.addCategory(
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "apple",
+			vocabularyName = "Vocabulary Name");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetCategoryIds = "${categoryId}",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.txt",
+			groupName = "Site Name",
+			mimeType = "text/plain",
+			sourceFileName = "Document_1.txt");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.txt",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCategoriesInfo(categoryName = "apple");
+	}
+
 	@description = "This ensures that a depot vocabulary cannot be seen when creating assets from the disconnected site."
 	@priority = "4"
 	test VocabularyShouldNotBeViewedFromDisconnectedSite {

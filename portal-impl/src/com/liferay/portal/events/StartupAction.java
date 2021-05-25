@@ -37,7 +37,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.taglib.servlet.JspFactorySwapper;
 
 import java.io.InputStream;
 
@@ -161,10 +160,6 @@ public class StartupAction extends SimpleAction {
 		if (PropsValues.DATABASE_INDEXES_UPDATE_ON_STARTUP) {
 			StartupHelperUtil.updateIndexes(true);
 		}
-
-		// Liferay JspFactory
-
-		JspFactorySwapper.swap();
 
 		// Jericho
 

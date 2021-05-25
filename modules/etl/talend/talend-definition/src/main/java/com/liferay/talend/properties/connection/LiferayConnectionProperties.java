@@ -14,8 +14,6 @@
 
 package com.liferay.talend.properties.connection;
 
-import com.liferay.talend.LiferayDefinition;
-import com.liferay.talend.internal.oas.LiferayOASSource;
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.ui.UIKeys;
 
@@ -32,7 +30,6 @@ import org.talend.daikon.i18n.I18nMessageProvider;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.Properties;
-import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
@@ -83,14 +80,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 		return _getValue(itemsPerPage);
 	}
 
-	public String getOAuthClientId() {
-		return _getValue(oAuthAuthorizationProperties.oauthClientId);
-	}
-
-	public String getOAuthClientSecret() {
-		return _getValue(oAuthAuthorizationProperties.oauthClientSecret);
-	}
-
 	public String getPassword() {
 		return _getValue(basicAuthorizationProperties.password);
 	}
@@ -135,8 +124,11 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 	public void refreshLayout(Form form) {
 		super.refreshLayout(form);
 
-		String referencedComponentId = getReferencedComponentId();
+		if (Objects.equals(form.getName(), Form.ADVANCED)) {
+			return;
+		}
 
+		String referencedComponentId = getReferencedComponentId();
 		boolean hidden = false;
 
 		if ((referencedComponentId != null) &&
@@ -146,42 +138,10 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 			hidden = true;
 		}
 
-		Widget widget = form.getWidget(hostURL.getName());
-
-		if (widget != null) {
-			widget.setHidden(hidden);
-		}
-
-		widget = form.getWidget(loginType.getName());
-
-		if (widget != null) {
-			widget.setHidden(hidden);
-		}
-
-		Form basicAuthorizationPropertiesForm =
-			basicAuthorizationProperties.getForm(
-				UIKeys.FORM_BASIC_AUTHORIZATION);
-
-		basicAuthorizationPropertiesForm.setHidden(hidden);
-
-		Form oAuthAuthorizationPropertiesForm =
-			oAuthAuthorizationProperties.getForm(
-				UIKeys.FORM_OAUTH_AUTHORIZATION);
-
-		oAuthAuthorizationPropertiesForm.setHidden(hidden);
-
-		if (hidden) {
-			return;
-		}
-
-		if (!isBasicAuthorization()) {
-			basicAuthorizationPropertiesForm.setVisible(false);
-			oAuthAuthorizationPropertiesForm.setVisible(true);
-		}
-		else {
-			basicAuthorizationPropertiesForm.setVisible(true);
-			oAuthAuthorizationPropertiesForm.setVisible(false);
-		}
+		_setHidden(
+			hidden, form.getWidget(hostURL.getName()),
+			form.getWidget(loginType.getName()),
+			form.getWidget(basicAuthorizationProperties.getName()));
 
 		if (_logger.isTraceEnabled()) {
 			_logger.trace("Refreshed " + System.identityHashCode(this));
@@ -212,8 +172,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 		_addAuthorizationProps(referenceForm);
 
-		refreshLayout(referenceForm);
-
 		advanced.setFormtoShow(
 			_createAdvancedForm(
 				this, connectTimeout, readTimeout, itemsPerPage,
@@ -233,25 +191,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 		name.setRequired();
 	}
 
-	public ValidationResult validateTestConnection() {
-		LiferayOASSource liferayOASSource =
-			LiferayDefinition.getLiferayOASSource(
-				getEffectiveLiferayConnectionProperties());
-
-		Form form = getForm(UIKeys.FORM_WIZARD);
-
-		if (!liferayOASSource.isValid()) {
-			form.setAllowForward(false);
-
-			return liferayOASSource.getValidationResult();
-		}
-
-		form.setAllowFinish(true);
-		form.setAllowForward(true);
-
-		return liferayOASSource.getValidationResult();
-	}
-
 	public PresentationItem advanced = new PresentationItem("advanced");
 	public BasicAuthorizationProperties basicAuthorizationProperties =
 		new BasicAuthorizationProperties("basicAuthorizationProperties");
@@ -267,8 +206,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 	public Property<LoginType> loginType = PropertyFactory.newEnum(
 		"loginType", LoginType.class);
 	public Property<String> name = PropertyFactory.newString("name");
-	public OAuthAuthorizationProperties oAuthAuthorizationProperties =
-		new OAuthAuthorizationProperties("oAuthAuthorizationProperties");
 	public Property<Integer> readTimeout = PropertyFactory.newInteger(
 		"readTimeout", _READ_TIMEOUT);
 	public ComponentReferenceProperties<LiferayConnectionProperties>
@@ -318,12 +255,6 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 				UIKeys.FORM_BASIC_AUTHORIZATION);
 
 		form.addRow(basicAuthorizationPropertiesForm);
-
-		Form oAuthAuthorizationPropertiesForm =
-			oAuthAuthorizationProperties.getForm(
-				UIKeys.FORM_OAUTH_AUTHORIZATION);
-
-		form.addRow(oAuthAuthorizationPropertiesForm);
 	}
 
 	private Form _createAdvancedForm(
@@ -389,6 +320,12 @@ public class LiferayConnectionProperties extends ComponentPropertiesImpl {
 
 	private <T> T _getValue(Property<T> property) {
 		return property.getValue();
+	}
+
+	private void _setHidden(boolean hidden, Widget... widgets) {
+		for (Widget widget : widgets) {
+			widget.setHidden(hidden);
+		}
 	}
 
 	private static final int _CONNECT_TIMEOUT = 30;

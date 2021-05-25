@@ -12,39 +12,9 @@ exports[`MiniCart Wrapper by data flow if the cart is open, renders the MiniCart
       class="mini-cart-wrapper-items"
     >
       <div
-        class="dataset-display-wrapper"
+        id="ItemsList"
       >
-        <div
-          class="dataset-display dataset-display-inline"
-        >
-          <form>
-            <div
-              class="dataset-display-content-wrapper"
-            >
-              <input
-                hidden=""
-                name="cart-items-list-dataset-display_id"
-                readonly=""
-                value=""
-              />
-              <div
-                id="ItemsList"
-              >
-                ItemsList
-              </div>
-              <div
-                class="border-0 pt-0 sheet taglib-empty-result-message"
-              >
-                <div
-                  class="taglib-empty-result-message-header"
-                />
-                <div
-                  class="sheet-text text-center"
-                />
-              </div>
-            </div>
-          </form>
-        </div>
+        ItemsList
       </div>
     </div>
     <div>

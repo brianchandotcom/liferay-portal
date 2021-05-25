@@ -27,11 +27,8 @@ describe('MiniCart Opener', () => {
 			},
 		},
 		displayTotalItemsQuantity: false,
-		spritemap: 'someSpritemap.svg',
-	};
-
-	const BASE_PROPS = {
 		openCart: jest.fn(),
+		spritemap: 'someSpritemap.svg',
 	};
 
 	const COMPONENT_SELECTOR = '.mini-cart-opener';
@@ -48,7 +45,7 @@ describe('MiniCart Opener', () => {
 		beforeEach(() => {
 			const {container} = render(
 				<MiniCartContext.Provider value={BASE_CONTEXT_MOCK}>
-					<Opener {...BASE_PROPS} />
+					<Opener />
 				</MiniCartContext.Provider>
 			);
 
@@ -71,7 +68,7 @@ describe('MiniCart Opener', () => {
 			});
 
 			await wait(() => {
-				expect(BASE_PROPS.openCart).toHaveBeenCalled();
+				expect(BASE_CONTEXT_MOCK.openCart).toHaveBeenCalled();
 			});
 		});
 
@@ -105,7 +102,7 @@ describe('MiniCart Opener', () => {
 							},
 						}}
 					>
-						<Opener {...BASE_PROPS} />
+						<Opener />
 					</MiniCartContext.Provider>
 				);
 
@@ -144,7 +141,7 @@ describe('MiniCart Opener', () => {
 							displayTotalItemsQuantity: true,
 						}}
 					>
-						<Opener {...BASE_PROPS} />
+						<Opener />
 					</MiniCartContext.Provider>
 				);
 
@@ -180,7 +177,7 @@ describe('MiniCart Opener', () => {
 							displayTotalItemsQuantity: true,
 						}}
 					>
-						<Opener {...BASE_PROPS} />
+						<Opener />
 					</MiniCartContext.Provider>
 				);
 

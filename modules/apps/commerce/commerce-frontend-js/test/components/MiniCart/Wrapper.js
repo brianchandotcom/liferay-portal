@@ -67,8 +67,6 @@ describe('MiniCart Wrapper', () => {
 	});
 
 	describe('by data flow', () => {
-		const DATA_SET_DISPLAY_SELECTOR = '[class*="set-display-wrapper"]';
-
 		it(
 			'if the cart is open, renders the MiniCart Wrapper component w/ ' +
 				`${HEADER}, a DataSetDisplay component wrapping the ${ITEMS_LIST}, ` +
@@ -99,18 +97,14 @@ describe('MiniCart Wrapper', () => {
 				const ItemsWrapperElement = WrapperElement.querySelector(
 					`${COMPONENT_SELECTOR}-items`
 				);
-				const DataSetDisplayElement = ItemsWrapperElement.querySelector(
-					DATA_SET_DISPLAY_SELECTOR
-				);
 
 				expect(WrapperElement).toBeInTheDocument();
 				expect(ItemsWrapperElement).toBeInTheDocument();
-				expect(DataSetDisplayElement).toBeInTheDocument();
 
 				expect(getByText(HEADER)).toBeInTheDocument();
 				expect(getByText(ORDER_BUTTON)).toBeInTheDocument();
 
-				const ItemsListElement = DataSetDisplayElement.querySelector(
+				const ItemsListElement = ItemsWrapperElement.querySelector(
 					`#${ITEMS_LIST}`
 				);
 

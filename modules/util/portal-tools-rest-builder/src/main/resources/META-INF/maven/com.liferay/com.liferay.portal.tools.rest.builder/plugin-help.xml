@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.rest.builder</artifactId>
-	<version>1.0.181</version>
+	<version>1.0.182</version>
 	<goalPrefix>rest-builder</goalPrefix>
 	<mojos>
 		<mojo>
@@ -34,6 +34,13 @@
 				</parameter>
 				<parameter>
 					<name>forceClientVersionDescription</name>
+					<type>java.lang.Boolean</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>forcePredictableOperationId</name>
 					<type>java.lang.Boolean</type>
 					<required>false</required>
 					<editable>true</editable>

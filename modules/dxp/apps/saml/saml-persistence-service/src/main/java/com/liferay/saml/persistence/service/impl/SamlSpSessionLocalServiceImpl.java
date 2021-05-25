@@ -167,10 +167,14 @@ public class SamlSpSessionLocalServiceImpl
 
 		return stream.map(
 			SamlPeerBinding::getSamlPeerBindingId
-		).map(
-			samlSpSessionLocalService::fetchSamlSpSession
-		).filter(
-			Validator::isNotNull
+		).flatMap(
+			samlPeerBindingId -> {
+				List<SamlSpSession> samlSpSessions =
+					samlSpSessionPersistence.findBySamlPeerBindingId(
+						samlPeerBindingId);
+
+				return samlSpSessions.stream();
+			}
 		).collect(
 			Collectors.toList()
 		);

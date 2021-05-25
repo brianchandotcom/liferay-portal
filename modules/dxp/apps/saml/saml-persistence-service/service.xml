@@ -250,6 +250,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="SamlPeerBindingId" return-type="Collection">
+			<finder-column name="samlPeerBindingId" />
+		</finder>
 		<finder name="JSessionId" return-type="SamlSpSession">
 			<finder-column name="jSessionId" />
 		</finder>

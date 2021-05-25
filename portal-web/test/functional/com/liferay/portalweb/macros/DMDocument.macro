@@ -2089,7 +2089,7 @@ definition {
 		}
 	}
 
-	macro viewCategoriesPG {
+	macro viewCategoriesInfo {
 		DMDocument.expandInfo();
 
 		if (isSet(categoryNameList)) {

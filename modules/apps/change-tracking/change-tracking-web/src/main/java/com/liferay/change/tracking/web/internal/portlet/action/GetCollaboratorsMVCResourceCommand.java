@@ -18,7 +18,6 @@ import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
-import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.model.UserGroupRoleTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -46,10 +46,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -98,45 +96,43 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			return;
 		}
 
-		List<UserGroupRole> userGroupRoles =
-			_userGroupRoleLocalService.getUserGroupRolesByGroup(
-				group.getGroupId());
-
-		Set<Long> roleIds = new HashSet<>();
-		Set<Long> userIds = new HashSet<>();
-
-		for (UserGroupRole userGroupRole : userGroupRoles) {
-			roleIds.add(userGroupRole.getRoleId());
-			userIds.add(userGroupRole.getUserId());
-		}
-
 		Map<Long, Role> roleMap = new HashMap<>();
 
-		List<Role> roles = _roleLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				RoleTable.INSTANCE
-			).from(
-				RoleTable.INSTANCE
-			).where(
-				RoleTable.INSTANCE.roleId.in(roleIds.toArray(new Long[0]))
-			));
+		for (Role role :
+				_roleLocalService.<List<Role>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						RoleTable.INSTANCE
+					).from(
+						RoleTable.INSTANCE
+					).innerJoinON(
+						UserGroupRoleTable.INSTANCE,
+						UserGroupRoleTable.INSTANCE.roleId.eq(
+							RoleTable.INSTANCE.roleId)
+					).where(
+						UserGroupRoleTable.INSTANCE.groupId.eq(
+							group.getGroupId())
+					))) {
 
-		for (Role role : roles) {
 			roleMap.put(role.getRoleId(), role);
 		}
 
 		Map<Long, User> userMap = new HashMap<>();
 
-		List<User> users = _userLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				UserTable.INSTANCE
-			).from(
-				UserTable.INSTANCE
-			).where(
-				UserTable.INSTANCE.userId.in(userIds.toArray(new Long[0]))
-			));
+		for (User user :
+				_userLocalService.<List<User>>dslQuery(
+					DSLQueryFactoryUtil.select(
+						UserTable.INSTANCE
+					).from(
+						UserTable.INSTANCE
+					).innerJoinON(
+						UserGroupRoleTable.INSTANCE,
+						UserGroupRoleTable.INSTANCE.userId.eq(
+							UserTable.INSTANCE.userId)
+					).where(
+						UserGroupRoleTable.INSTANCE.groupId.eq(
+							group.getGroupId())
+					))) {
 
-		for (User user : users) {
 			userMap.put(user.getUserId(), user);
 		}
 
@@ -147,7 +143,10 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		for (UserGroupRole userGroupRole : userGroupRoles) {
+		for (UserGroupRole userGroupRole :
+				_userGroupRoleLocalService.getUserGroupRolesByGroup(
+					group.getGroupId())) {
+
 			Role role = roleMap.get(userGroupRole.getRoleId());
 			User user = userMap.get(userGroupRole.getUserId());
 
@@ -217,9 +216,6 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonArray);
 	}
-
-	@Reference
-	private BasePersistenceRegistry _basePersistenceRegistry;
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

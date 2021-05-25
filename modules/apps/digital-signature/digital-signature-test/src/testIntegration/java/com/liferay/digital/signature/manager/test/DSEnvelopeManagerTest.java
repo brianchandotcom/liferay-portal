@@ -178,9 +178,9 @@ public class DSEnvelopeManagerTest {
 			});
 
 		JSONObject jsonObject = _dsEnvelopeManager.getDSEnvelopesJSONObject(
-			TestPropsValues.getGroupId(), "2021-01-01", 2L, 0L);
+			TestPropsValues.getGroupId(), "2021-01-01", 2, 1, "desc");
 
-		Assert.assertTrue(jsonObject.getLong("resultSetSize") >= 2);
+		Assert.assertTrue(jsonObject.getInt("pageSize") == 2);
 
 		String[] dsEnvelopeIds = {
 			dsEnvelope1.getDSEnvelopeId(), dsEnvelope2.getDSEnvelopeId()

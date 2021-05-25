@@ -31,6 +31,10 @@ public class DSRecipient {
 		return name;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
 	public void setDSRecipientId(String dsRecipientId) {
 		this.dsRecipientId = dsRecipientId;
 	}
@@ -43,8 +47,13 @@ public class DSRecipient {
 		this.name = name;
 	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	protected String dsRecipientId;
 	protected String emailAddress;
 	protected String name;
+	protected String status;
 
 }

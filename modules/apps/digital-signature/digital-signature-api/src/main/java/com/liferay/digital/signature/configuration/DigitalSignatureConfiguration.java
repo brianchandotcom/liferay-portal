@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author José Abelenda
  */
 @ExtendedObjectClassDefinition(
-	category = "digital-signature",
+	category = "digital-signature", generateUI = false,
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
@@ -43,5 +43,7 @@ public interface DigitalSignatureConfiguration {
 	public String integrationKey();
 
 	public String rsaPrivateKey();
+
+	public String siteSettingsStrategy();
 
 }

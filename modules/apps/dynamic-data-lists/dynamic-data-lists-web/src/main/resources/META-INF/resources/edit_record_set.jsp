@@ -105,10 +105,11 @@ if (ddlDisplayContext.isAdminPortlet()) {
 					<aui:input label="data-definition" name="ddmStructureNameDisplay" required="<%= true %>" type="resource" value="<%= ddmStructureName %>" />
 
 					<liferay-ui:icon
-						cssClass="btn btn-secondary open-record-set-modal"
+						cssClass="open-record-set-modal"
 						label="<%= true %>"
 						linkCssClass="btn btn-secondary"
 						message="select"
+						url="javascript:;"
 					/>
 				</div>
 

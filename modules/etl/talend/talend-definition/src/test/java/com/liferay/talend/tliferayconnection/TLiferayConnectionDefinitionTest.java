@@ -14,6 +14,7 @@
 
 package com.liferay.talend.tliferayconnection;
 
+import com.liferay.talend.DefaultRuntimableRuntime;
 import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 
 import java.util.Set;
@@ -63,6 +64,11 @@ public class TLiferayConnectionDefinitionTest {
 			ExecutionEngine.DI, _tLiferayConnectionProperties,
 			ConnectorTopology.NONE);
 
+		Assert.assertNotNull(runtimeInfo.getMavenUrlDependencies());
+		Assert.assertEquals(
+			runtimeInfo.getRuntimeClassName(),
+			DefaultRuntimableRuntime.class.getName());
+
 		Assert.assertThat(
 			runtimeInfo, CoreMatchers.instanceOf(JarRuntimeInfo.class));
 
@@ -70,9 +76,6 @@ public class TLiferayConnectionDefinitionTest {
 
 		Assert.assertNotNull(jarRuntimeInfo.getDepTxtPath());
 		Assert.assertNotNull(jarRuntimeInfo.getJarUrl());
-		Assert.assertEquals(
-			"com.liferay.talend.runtime.LiferaySourceOrSink",
-			jarRuntimeInfo.getRuntimeClassName());
 	}
 
 	@Test

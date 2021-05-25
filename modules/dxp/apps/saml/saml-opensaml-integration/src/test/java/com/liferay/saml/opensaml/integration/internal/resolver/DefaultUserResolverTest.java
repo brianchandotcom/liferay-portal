@@ -344,12 +344,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
-		User existingUser = _defaultUserResolver.importUser(
+		User user = _defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
 			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
-		Assert.assertNotNull(existingUser);
+		Assert.assertNotNull(user);
 	}
 
 	@Test
@@ -371,13 +371,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("screenName");
 
-		User existingUser = _defaultUserResolver.importUser(
+		User user = _defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME,
 			NameIDType.UNSPECIFIED,
 			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
-		Assert.assertNotNull(existingUser);
+		Assert.assertNotNull(user);
 	}
 
 	@Test
@@ -398,13 +398,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("screenName");
 
-		User existingUser = _defaultUserResolver.importUser(
+		User user = _defaultUserResolver.importUser(
 			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
 			NameIDType.UNSPECIFIED,
 			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
-		Assert.assertNotNull(existingUser);
+		Assert.assertNotNull(user);
 	}
 
 	@Test(expected = SubjectException.class)
@@ -460,10 +460,10 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		ContactLocalService contactLocalService = getMockPortalService(
 			ContactLocalServiceUtil.class, ContactLocalService.class);
 
-		Contact contactUser = mock(Contact.class);
+		Contact contact = mock(Contact.class);
 
 		when(
-			contactUser.getBirthday()
+			contact.getBirthday()
 		).thenReturn(
 			new Date()
 		);
@@ -471,20 +471,20 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		when(
 			contactLocalService.getContact(Mockito.anyLong())
 		).thenReturn(
-			contactUser
+			contact
 		);
 
-		User existingUser = new UserImpl();
+		User user = new UserImpl();
 
-		existingUser.setScreenName("test");
-		existingUser.setEmailAddress(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS);
-		existingUser.setFirstName("test");
-		existingUser.setLastName("test");
+		user.setScreenName("test");
+		user.setEmailAddress(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS);
+		user.setFirstName("test");
+		user.setLastName("test");
 
 		when(
-			existingUser.getContact()
+			user.getContact()
 		).thenReturn(
-			contactUser
+			contact
 		);
 
 		when(
@@ -508,7 +508,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.anyLong(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS))
 		).thenReturn(
-			existingUser
+			user
 		);
 
 		when(
@@ -516,7 +516,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.anyLong(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))
 		).thenReturn(
-			existingUser
+			user
 		);
 
 		when(
@@ -524,7 +524,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.anyLong(), Mockito.eq(StringPool.BLANK),
 				Mockito.anyString(), Mockito.anyString())
 		).thenReturn(
-			existingUser
+			user
 		);
 
 		when(
@@ -544,7 +544,7 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 				Mockito.anyListOf(UserGroupRole.class),
 				Mockito.any(long[].class), Mockito.any(ServiceContext.class))
 		).thenReturn(
-			existingUser
+			user
 		);
 	}
 

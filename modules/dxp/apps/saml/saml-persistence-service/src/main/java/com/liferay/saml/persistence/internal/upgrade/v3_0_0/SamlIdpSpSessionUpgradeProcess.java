@@ -32,7 +32,7 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			if (!hasColumn("samlIdpSpSession", "samlPeerBindingId")) {
+			if (!hasColumn(SamlIdpSpSessionTable.TABLE_NAME, "samlPeerBindingId")) {
 				alter(
 					SamlIdpSpSessionTable.class,
 					new AlterTableAddColumn("samlPeerBindingId", "LONG null"));

@@ -3012,6 +3012,32 @@ definition {
 			dmDocumentTitle = "DM Document Title 1");
 	}
 
+	macro viewStagingConfiguration {
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Export/Import, Staging",
+			configurationScope = "Virtual Instance Scope");
+
+		SystemSettings.openSystemSettingsAdmin();
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Staging",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Export/Import, Staging",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Infrastructure",
+			configurationName = "Staging",
+			configurationScope = "Virtual Instance Scope");
+	}
+
 	macro viewStagingNestedPortlets {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",

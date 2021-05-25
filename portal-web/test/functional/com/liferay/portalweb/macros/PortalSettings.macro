@@ -679,10 +679,7 @@ definition {
 	}
 
 	macro gotoConfiguration {
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "${configurationCategory}",
@@ -700,6 +697,10 @@ definition {
 			configurationCategory = "Portal Settings",
 			configurationName = "Portal Settings",
 			configurationScope = "Virtual Instance Scope");
+	}
+
+	macro openInstanceSettingsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet");
 	}
 
 	macro setCurrentInstanceLanguageCP {

@@ -202,6 +202,9 @@ public class CommerceMediaResolverTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
+	private static Company _company;
+	private static User _user;
+
 	@DeleteAfterTestRun
 	private CommerceAccount _commerceAccount;
 
@@ -213,15 +216,11 @@ public class CommerceMediaResolverTest {
 	@Inject
 	private CommerceMediaResolver _commerceMediaResolver;
 
-	private static Company _company;
-
 	@Inject
 	private CPAttachmentFileEntryLocalService
 		_cpAttachmentFileEntryLocalService;
 
 	private Group _group;
 	private ServiceContext _serviceContext;
-
-	private static User _user;
 
 }

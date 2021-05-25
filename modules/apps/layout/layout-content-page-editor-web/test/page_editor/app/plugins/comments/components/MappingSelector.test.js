@@ -348,7 +348,7 @@ describe('MappingSelector', () => {
 		await act(async () => {
 			renderMappingSelector({
 				mappingFields: {
-					'collectionClassNameId-collectionItemSubtype': [
+					collectionClassNameId: [
 						{
 							fields: collectionFields,
 						},

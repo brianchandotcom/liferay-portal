@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -68,22 +67,19 @@ public class CTTableMapperHelper {
 	}
 
 	public CTMappingTableInfo getCTMappingTableInfo(long ctCollectionId)
-		throws SQLException {
+		throws Exception {
 
-		CTMappingTableInfo ctMappingTableInfo = new CTMappingTableInfoImpl(
-			_tableName, _leftColumnName, _rightColumnName,
-			_getCTMappingChangeList(
-				ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION),
-			_getCTMappingChangeList(
-				ctCollectionId, CTConstants.CT_CHANGE_TYPE_DELETION));
+		CTMappingTableInfo ctMappingTableInfo = null;
 
-		List<Map.Entry<Long, Long>> addedMappings =
-			ctMappingTableInfo.getAddedMappings();
-		List<Map.Entry<Long, Long>> removedMappings =
-			ctMappingTableInfo.getRemovedMappings();
+		List<Map.Entry<Long, Long>> addedMappings = _getCTMappingChangeList(
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_ADDITION);
+		List<Map.Entry<Long, Long>> removedMappings = _getCTMappingChangeList(
+			ctCollectionId, CTConstants.CT_CHANGE_TYPE_DELETION);
 
-		if (addedMappings.isEmpty() && removedMappings.isEmpty()) {
-			return null;
+		if (!addedMappings.isEmpty() || !removedMappings.isEmpty()) {
+			ctMappingTableInfo = new CTMappingTableInfoImpl(
+				_tableName, _leftColumnName, _rightColumnName, addedMappings,
+				removedMappings);
 		}
 
 		return ctMappingTableInfo;
@@ -179,7 +175,7 @@ public class CTTableMapperHelper {
 
 	private List<Map.Entry<Long, Long>> _getCTMappingChangeList(
 			long ctCollectionId, int ctChangeType)
-		throws SQLException {
+		throws Exception {
 
 		CTPersistence<?> ctPersistence = _ctService.getCTPersistence();
 
@@ -198,8 +194,7 @@ public class CTTableMapperHelper {
 			while (resultSet.next()) {
 				mappingChanges.add(
 					new AbstractMap.SimpleImmutableEntry<>(
-						resultSet.getLong(_leftColumnName),
-						resultSet.getLong(_rightColumnName)));
+						resultSet.getLong(1), resultSet.getLong(2)));
 			}
 		}
 

@@ -79,7 +79,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -477,20 +476,26 @@ public class CTCollectionLocalServiceImpl
 			companyId, status, start, end, orderByComparator);
 	}
 
-	public List<CTMappingTableInfo> getCTMappingTableInfos(long ctCollectionId)
-		throws SQLException {
+	@Override
+	public List<CTMappingTableInfo> getCTMappingTableInfos(
+		long ctCollectionId) {
 
 		List<CTMappingTableInfo> mappingTableInfos = new ArrayList<>();
 
-		for (CTTableMapperHelper ctTableMapperHelper :
-				_ctServiceRegistry.getCTTableMapperHelpers()) {
+		try {
+			for (CTTableMapperHelper ctTableMapperHelper :
+					_ctServiceRegistry.getCTTableMapperHelpers()) {
 
-			CTMappingTableInfo ctMappingTableInfo =
-				ctTableMapperHelper.getCTMappingTableInfo(ctCollectionId);
+				CTMappingTableInfo ctMappingTableInfo =
+					ctTableMapperHelper.getCTMappingTableInfo(ctCollectionId);
 
-			if (ctMappingTableInfo != null) {
-				mappingTableInfos.add(ctMappingTableInfo);
+				if (ctMappingTableInfo != null) {
+					mappingTableInfos.add(ctMappingTableInfo);
+				}
 			}
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 
 		return mappingTableInfos;

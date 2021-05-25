@@ -10,6 +10,11 @@
 <tbody>
 <!-- Segments  -->
 <tr>
+    <td>ACTIVE_PAGE</td>
+    <td>//li[@class='page-item active']/button</td>
+    <td></td>
+</tr>
+<tr>
     <td>ANONYMOUS_LABEL</td>
     <td>//div[@class='card-header']/div/span[@class='label-item']</td>
     <td></td>

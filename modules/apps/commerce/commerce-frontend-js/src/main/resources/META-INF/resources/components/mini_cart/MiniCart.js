@@ -161,6 +161,7 @@ function MiniCart({
 				isOpen,
 				isUpdating,
 				labels: {...DEFAULT_LABELS, ...labels},
+				openCart,
 				setIsUpdating,
 				spritemap,
 				summaryDataMapper,
@@ -183,7 +184,7 @@ function MiniCart({
 								onClick={() => setIsOpen(false)}
 							/>
 
-							<CartViews.Opener openCart={openCart} />
+							<CartViews.Opener />
 						</>
 					)}
 

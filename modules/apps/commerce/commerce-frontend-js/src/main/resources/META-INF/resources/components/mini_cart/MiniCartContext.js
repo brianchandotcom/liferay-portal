@@ -32,6 +32,7 @@ export const DEFAULT_MINI_CART_CONTEXT_VALUE = {
 	isOpen: false,
 	isUpdating: false,
 	labels: DEFAULT_LABELS,
+	openCart: () => {},
 	setIsUpdating: () => {},
 	spritemap: '',
 	summaryDataMapper: () => {},

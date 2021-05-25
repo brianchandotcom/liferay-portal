@@ -13,7 +13,6 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import MiniCartContext from './MiniCartContext';
@@ -66,9 +65,5 @@ function CartItemsList() {
 		</div>
 	);
 }
-
-CartItemsList.propTypes = {
-	items: PropTypes.array,
-};
 
 export default CartItemsList;

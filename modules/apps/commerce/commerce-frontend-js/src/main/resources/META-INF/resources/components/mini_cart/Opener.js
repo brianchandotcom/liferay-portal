@@ -19,10 +19,13 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import MiniCartContext from './MiniCartContext';
 
-function Opener({openCart}) {
-	const {cartState, displayTotalItemsQuantity, spritemap} = useContext(
-		MiniCartContext
-	);
+function Opener() {
+	const {
+		cartState,
+		displayTotalItemsQuantity,
+		openCart,
+		spritemap,
+	} = useContext(MiniCartContext);
 
 	const {cartItems = [], summary = {}} = cartState;
 	const {itemsQuantity: initialItemsQuantity} = summary;
@@ -38,7 +41,7 @@ function Opener({openCart}) {
 	useEffect(() => {
 		setNumberOfItems(
 			displayTotalItemsQuantity && 'itemsQuantity' in summary
-				? summary?.itemsQuantity
+				? summary.itemsQuantity
 				: cartItems.length
 		);
 	}, [cartItems, displayTotalItemsQuantity, summary, setNumberOfItems]);

@@ -1,0 +1,165 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Date Field can be created"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCreated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132810 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that a Date Field can be deleted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132815 CanBeDeleted pending implementation
+	}
+
+	@description = "Verify that a Date Field can be duplicated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDuplicated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132816 CanBeDuplicated pending implementation
+	}
+
+	@description = "Verify that a Date Field can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132814 CanBeEdited pending implementation
+	}
+
+	@description = "Verify that a Date Field can be Repeatable"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSetAsRepeatable {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132817 CanBeSetAsRepeatable pending implementation
+	}
+
+	@description = "Verify that a Form can be submitted with the Date Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSubmitted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132824 CanBeSubmitted pending implementation
+	}
+
+	@description = "Verify that changes to the Field can be canceled"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChangesCanBeCanceled {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132819 ChangesCanBeCanceled pending implementation
+	}
+
+	@description = "Verify that a help text can be added"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132822 HelpTextCanBeAdded pending implementation
+	}
+
+	@description = "Verify that the Field Label can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132820 LabelCanBeEdited pending implementation
+	}
+
+	@description = "Veriy that the Field Label can be hidden"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeHidden {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132821 LabelCanBeHidden pending implementation
+	}
+
+	@description = "Verify that a Predefined Value can be applied"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PredefinedValueCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132825 PredefinedValueCanBeAdded pending implementation
+	}
+
+	@description = "Verify that the Field Reference can be Edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132823 ReferenceCanBeEdited pending implementation
+	}
+
+	@description = "Verify that the Field Type can be changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TypeCanBeChanged {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132818 TypeCanBeChanged pending implementation
+	}
+
+}

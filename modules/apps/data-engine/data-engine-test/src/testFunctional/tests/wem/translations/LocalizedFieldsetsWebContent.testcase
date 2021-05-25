@@ -609,7 +609,7 @@ definition {
 	@description = "This test ensures create, translate and edit with different instance language."
 	@priority = "5"
 	test LocalizedFieldsetWithDifferentInstanceLanguage {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

@@ -25,7 +25,16 @@
 								"instanceId": "6VYYLvfJ",
 								"localizedValue": {
 									"pt_BR": "Texto 2"
-								}
+								},
+								"nestedFields": [
+									{
+										"fieldName": "TextField3",
+										"instanceId": "ZgQVb8b7",
+										"localizedValue": {
+											"pt_BR": "Texto 3"
+										}
+									}
+								]
 							}
 						]
 					}

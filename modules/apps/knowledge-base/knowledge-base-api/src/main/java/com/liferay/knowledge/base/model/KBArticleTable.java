@@ -53,13 +53,13 @@ public class KBArticleTable extends BaseTable<KBArticleTable> {
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, Date> modifiedDate = createColumn(
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<KBArticleTable, Long> rootResourcePrimKey =
-		createColumn(
-			"rootResourcePrimKey", Long.class, Types.BIGINT,
-			Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, String> externalReferenceCode =
 		createColumn(
 			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<KBArticleTable, Long> rootResourcePrimKey =
+		createColumn(
+			"rootResourcePrimKey", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
 	public final Column<KBArticleTable, Long> parentResourceClassNameId =
 		createColumn(

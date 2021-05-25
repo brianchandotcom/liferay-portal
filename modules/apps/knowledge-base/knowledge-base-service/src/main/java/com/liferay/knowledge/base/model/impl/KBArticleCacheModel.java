@@ -98,10 +98,10 @@ public class KBArticleCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", rootResourcePrimKey=");
-		sb.append(rootResourcePrimKey);
 		sb.append(", externalReferenceCode=");
 		sb.append(externalReferenceCode);
+		sb.append(", rootResourcePrimKey=");
+		sb.append(rootResourcePrimKey);
 		sb.append(", parentResourceClassNameId=");
 		sb.append(parentResourceClassNameId);
 		sb.append(", parentResourcePrimKey=");
@@ -183,8 +183,6 @@ public class KBArticleCacheModel
 			kbArticleImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		kbArticleImpl.setRootResourcePrimKey(rootResourcePrimKey);
-
 		if (externalReferenceCode == null) {
 			kbArticleImpl.setExternalReferenceCode("");
 		}
@@ -192,6 +190,7 @@ public class KBArticleCacheModel
 			kbArticleImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
+		kbArticleImpl.setRootResourcePrimKey(rootResourcePrimKey);
 		kbArticleImpl.setParentResourceClassNameId(parentResourceClassNameId);
 		kbArticleImpl.setParentResourcePrimKey(parentResourcePrimKey);
 		kbArticleImpl.setKbFolderId(kbFolderId);
@@ -292,9 +291,9 @@ public class KBArticleCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		externalReferenceCode = objectInput.readUTF();
 
 		rootResourcePrimKey = objectInput.readLong();
-		externalReferenceCode = objectInput.readUTF();
 
 		parentResourceClassNameId = objectInput.readLong();
 
@@ -355,14 +354,14 @@ public class KBArticleCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(rootResourcePrimKey);
-
 		if (externalReferenceCode == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(externalReferenceCode);
 		}
+
+		objectOutput.writeLong(rootResourcePrimKey);
 
 		objectOutput.writeLong(parentResourceClassNameId);
 
@@ -446,8 +445,8 @@ public class KBArticleCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long rootResourcePrimKey;
 	public String externalReferenceCode;
+	public long rootResourcePrimKey;
 	public long parentResourceClassNameId;
 	public long parentResourcePrimKey;
 	public long kbFolderId;

@@ -1515,7 +1515,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_E(
+	public java.util.List<KBArticle> findByG_ERC(
 		long groupId, String externalReferenceCode);
 
 	/**
@@ -1531,7 +1531,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_E(
+	public java.util.List<KBArticle> findByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end);
 
 	/**
@@ -1548,7 +1548,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_E(
+	public java.util.List<KBArticle> findByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -1568,7 +1568,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching kb articles
 	 */
-	public java.util.List<KBArticle> findByG_E(
+	public java.util.List<KBArticle> findByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator,
@@ -1583,7 +1583,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the first matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_E_First(
+	public KBArticle findByG_ERC_First(
 			long groupId, String externalReferenceCode,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -1597,7 +1597,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_E_First(
+	public KBArticle fetchByG_ERC_First(
 		long groupId, String externalReferenceCode,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -1611,7 +1611,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the last matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_E_Last(
+	public KBArticle findByG_ERC_Last(
 			long groupId, String externalReferenceCode,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -1625,7 +1625,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_E_Last(
+	public KBArticle fetchByG_ERC_Last(
 		long groupId, String externalReferenceCode,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -1640,7 +1640,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] findByG_E_PrevAndNext(
+	public KBArticle[] findByG_ERC_PrevAndNext(
 			long kbArticleId, long groupId, String externalReferenceCode,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -1653,7 +1653,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param externalReferenceCode the external reference code
 	 * @return the matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_E(
+	public java.util.List<KBArticle> filterFindByG_ERC(
 		long groupId, String externalReferenceCode);
 
 	/**
@@ -1669,7 +1669,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param end the upper bound of the range of kb articles (not inclusive)
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_E(
+	public java.util.List<KBArticle> filterFindByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end);
 
 	/**
@@ -1686,7 +1686,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
-	public java.util.List<KBArticle> filterFindByG_E(
+	public java.util.List<KBArticle> filterFindByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 			orderByComparator);
@@ -1701,7 +1701,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the previous, current, and next kb article
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
-	public KBArticle[] filterFindByG_E_PrevAndNext(
+	public KBArticle[] filterFindByG_ERC_PrevAndNext(
 			long kbArticleId, long groupId, String externalReferenceCode,
 			com.liferay.portal.kernel.util.OrderByComparator<KBArticle>
 				orderByComparator)
@@ -1713,7 +1713,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param groupId the group ID
 	 * @param externalReferenceCode the external reference code
 	 */
-	public void removeByG_E(long groupId, String externalReferenceCode);
+	public void removeByG_ERC(long groupId, String externalReferenceCode);
 
 	/**
 	 * Returns the number of kb articles where groupId = &#63; and externalReferenceCode = &#63;.
@@ -1722,7 +1722,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param externalReferenceCode the external reference code
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_E(long groupId, String externalReferenceCode);
+	public int countByG_ERC(long groupId, String externalReferenceCode);
 
 	/**
 	 * Returns the number of kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
@@ -1731,7 +1731,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param externalReferenceCode the external reference code
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
-	public int filterCountByG_E(long groupId, String externalReferenceCode);
+	public int filterCountByG_ERC(long groupId, String externalReferenceCode);
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and latest = &#63;.
@@ -4803,7 +4803,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @return the matching kb article
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
-	public KBArticle findByG_E_V(
+	public KBArticle findByG_ERC_V(
 			long groupId, String externalReferenceCode, int version)
 		throws NoSuchArticleException;
 
@@ -4815,7 +4815,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param version the version
 	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_E_V(
+	public KBArticle fetchByG_ERC_V(
 		long groupId, String externalReferenceCode, int version);
 
 	/**
@@ -4827,7 +4827,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
-	public KBArticle fetchByG_E_V(
+	public KBArticle fetchByG_ERC_V(
 		long groupId, String externalReferenceCode, int version,
 		boolean useFinderCache);
 
@@ -4839,7 +4839,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param version the version
 	 * @return the kb article that was removed
 	 */
-	public KBArticle removeByG_E_V(
+	public KBArticle removeByG_ERC_V(
 			long groupId, String externalReferenceCode, int version)
 		throws NoSuchArticleException;
 
@@ -4851,7 +4851,7 @@ public interface KBArticlePersistence extends BasePersistence<KBArticle> {
 	 * @param version the version
 	 * @return the number of matching kb articles
 	 */
-	public int countByG_E_V(
+	public int countByG_ERC_V(
 		long groupId, String externalReferenceCode, int version);
 
 	/**

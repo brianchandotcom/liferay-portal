@@ -242,20 +242,6 @@ public interface KBArticleModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the root resource prim key of this kb article.
-	 *
-	 * @return the root resource prim key of this kb article
-	 */
-	public long getRootResourcePrimKey();
-
-	/**
-	 * Sets the root resource prim key of this kb article.
-	 *
-	 * @param rootResourcePrimKey the root resource prim key of this kb article
-	 */
-	public void setRootResourcePrimKey(long rootResourcePrimKey);
-
-	/**
 	 * Returns the external reference code of this kb article.
 	 *
 	 * @return the external reference code of this kb article
@@ -269,6 +255,20 @@ public interface KBArticleModel
 	 * @param externalReferenceCode the external reference code of this kb article
 	 */
 	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
+	 * Returns the root resource prim key of this kb article.
+	 *
+	 * @return the root resource prim key of this kb article
+	 */
+	public long getRootResourcePrimKey();
+
+	/**
+	 * Sets the root resource prim key of this kb article.
+	 *
+	 * @param rootResourcePrimKey the root resource prim key of this kb article
+	 */
+	public void setRootResourcePrimKey(long rootResourcePrimKey);
 
 	/**
 	 * Returns the parent resource class name ID of this kb article.

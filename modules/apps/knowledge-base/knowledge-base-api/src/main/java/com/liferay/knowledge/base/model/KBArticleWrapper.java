@@ -53,8 +53,8 @@ public class KBArticleWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("rootResourcePrimKey", getRootResourcePrimKey());
 		attributes.put("externalReferenceCode", getExternalReferenceCode());
+		attributes.put("rootResourcePrimKey", getRootResourcePrimKey());
 		attributes.put(
 			"parentResourceClassNameId", getParentResourceClassNameId());
 		attributes.put("parentResourcePrimKey", getParentResourcePrimKey());
@@ -140,17 +140,17 @@ public class KBArticleWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long rootResourcePrimKey = (Long)attributes.get("rootResourcePrimKey");
-
-		if (rootResourcePrimKey != null) {
-			setRootResourcePrimKey(rootResourcePrimKey);
-		}
-
 		String externalReferenceCode = (String)attributes.get(
 			"externalReferenceCode");
 
 		if (externalReferenceCode != null) {
 			setExternalReferenceCode(externalReferenceCode);
+		}
+
+		Long rootResourcePrimKey = (Long)attributes.get("rootResourcePrimKey");
+
+		if (rootResourcePrimKey != null) {
+			setRootResourcePrimKey(rootResourcePrimKey);
 		}
 
 		Long parentResourceClassNameId = (Long)attributes.get(

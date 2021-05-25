@@ -43,8 +43,8 @@ public class KBArticleSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setRootResourcePrimKey(model.getRootResourcePrimKey());
 		soapModel.setExternalReferenceCode(model.getExternalReferenceCode());
+		soapModel.setRootResourcePrimKey(model.getRootResourcePrimKey());
 		soapModel.setParentResourceClassNameId(
 			model.getParentResourceClassNameId());
 		soapModel.setParentResourcePrimKey(model.getParentResourcePrimKey());
@@ -197,20 +197,20 @@ public class KBArticleSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getRootResourcePrimKey() {
-		return _rootResourcePrimKey;
-	}
-
-	public void setRootResourcePrimKey(long rootResourcePrimKey) {
-		_rootResourcePrimKey = rootResourcePrimKey;
-	}
-
 	public String getExternalReferenceCode() {
 		return _externalReferenceCode;
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
 		_externalReferenceCode = externalReferenceCode;
+	}
+
+	public long getRootResourcePrimKey() {
+		return _rootResourcePrimKey;
+	}
+
+	public void setRootResourcePrimKey(long rootResourcePrimKey) {
+		_rootResourcePrimKey = rootResourcePrimKey;
 	}
 
 	public long getParentResourceClassNameId() {
@@ -375,8 +375,8 @@ public class KBArticleSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _rootResourcePrimKey;
 	private String _externalReferenceCode;
+	private long _rootResourcePrimKey;
 	private long _parentResourceClassNameId;
 	private long _parentResourcePrimKey;
 	private long _kbFolderId;

@@ -82,8 +82,8 @@ public class KBArticleModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"rootResourcePrimKey", Types.BIGINT},
 		{"externalReferenceCode", Types.VARCHAR},
+		{"rootResourcePrimKey", Types.BIGINT},
 		{"parentResourceClassNameId", Types.BIGINT},
 		{"parentResourcePrimKey", Types.BIGINT}, {"kbFolderId", Types.BIGINT},
 		{"version", Types.INTEGER}, {"title", Types.VARCHAR},
@@ -110,8 +110,8 @@ public class KBArticleModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("rootResourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("rootResourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentResourceClassNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentResourcePrimKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("kbFolderId", Types.BIGINT);
@@ -133,7 +133,7 @@ public class KBArticleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,rootResourcePrimKey LONG,externalReferenceCode VARCHAR(75) null,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table KBArticle (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,kbArticleId LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,externalReferenceCode VARCHAR(75) null,rootResourcePrimKey LONG,parentResourceClassNameId LONG,parentResourcePrimKey LONG,kbFolderId LONG,version INTEGER,title STRING null,urlTitle VARCHAR(75) null,content TEXT null,description STRING null,priority DOUBLE,sections STRING null,latest BOOLEAN,main BOOLEAN,sourceURL STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table KBArticle";
 
@@ -273,8 +273,8 @@ public class KBArticleModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setRootResourcePrimKey(soapModel.getRootResourcePrimKey());
 		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
+		model.setRootResourcePrimKey(soapModel.getRootResourcePrimKey());
 		model.setParentResourceClassNameId(
 			soapModel.getParentResourceClassNameId());
 		model.setParentResourcePrimKey(soapModel.getParentResourcePrimKey());
@@ -481,15 +481,15 @@ public class KBArticleModelImpl
 			"modifiedDate",
 			(BiConsumer<KBArticle, Date>)KBArticle::setModifiedDate);
 		attributeGetterFunctions.put(
-			"rootResourcePrimKey", KBArticle::getRootResourcePrimKey);
-		attributeSetterBiConsumers.put(
-			"rootResourcePrimKey",
-			(BiConsumer<KBArticle, Long>)KBArticle::setRootResourcePrimKey);
-		attributeGetterFunctions.put(
 			"externalReferenceCode", KBArticle::getExternalReferenceCode);
 		attributeSetterBiConsumers.put(
 			"externalReferenceCode",
 			(BiConsumer<KBArticle, String>)KBArticle::setExternalReferenceCode);
+		attributeGetterFunctions.put(
+			"rootResourcePrimKey", KBArticle::getRootResourcePrimKey);
+		attributeSetterBiConsumers.put(
+			"rootResourcePrimKey",
+			(BiConsumer<KBArticle, Long>)KBArticle::setRootResourcePrimKey);
 		attributeGetterFunctions.put(
 			"parentResourceClassNameId",
 			KBArticle::getParentResourceClassNameId);
@@ -794,21 +794,6 @@ public class KBArticleModelImpl
 
 	@JSON
 	@Override
-	public long getRootResourcePrimKey() {
-		return _rootResourcePrimKey;
-	}
-
-	@Override
-	public void setRootResourcePrimKey(long rootResourcePrimKey) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_rootResourcePrimKey = rootResourcePrimKey;
-	}
-
-	@JSON
-	@Override
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCode == null) {
 			return "";
@@ -834,6 +819,21 @@ public class KBArticleModelImpl
 	@Deprecated
 	public String getOriginalExternalReferenceCode() {
 		return getColumnOriginalValue("externalReferenceCode");
+	}
+
+	@JSON
+	@Override
+	public long getRootResourcePrimKey() {
+		return _rootResourcePrimKey;
+	}
+
+	@Override
+	public void setRootResourcePrimKey(long rootResourcePrimKey) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_rootResourcePrimKey = rootResourcePrimKey;
 	}
 
 	@JSON
@@ -1399,8 +1399,8 @@ public class KBArticleModelImpl
 		kbArticleImpl.setUserName(getUserName());
 		kbArticleImpl.setCreateDate(getCreateDate());
 		kbArticleImpl.setModifiedDate(getModifiedDate());
-		kbArticleImpl.setRootResourcePrimKey(getRootResourcePrimKey());
 		kbArticleImpl.setExternalReferenceCode(getExternalReferenceCode());
+		kbArticleImpl.setRootResourcePrimKey(getRootResourcePrimKey());
 		kbArticleImpl.setParentResourceClassNameId(
 			getParentResourceClassNameId());
 		kbArticleImpl.setParentResourcePrimKey(getParentResourcePrimKey());
@@ -1546,8 +1546,6 @@ public class KBArticleModelImpl
 			kbArticleCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		kbArticleCacheModel.rootResourcePrimKey = getRootResourcePrimKey();
-
 		kbArticleCacheModel.externalReferenceCode = getExternalReferenceCode();
 
 		String externalReferenceCode =
@@ -1558,6 +1556,8 @@ public class KBArticleModelImpl
 
 			kbArticleCacheModel.externalReferenceCode = null;
 		}
+
+		kbArticleCacheModel.rootResourcePrimKey = getRootResourcePrimKey();
 
 		kbArticleCacheModel.parentResourceClassNameId =
 			getParentResourceClassNameId();
@@ -1736,8 +1736,8 @@ public class KBArticleModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _rootResourcePrimKey;
 	private String _externalReferenceCode;
+	private long _rootResourcePrimKey;
 	private long _parentResourceClassNameId;
 	private long _parentResourcePrimKey;
 	private long _kbFolderId;
@@ -1796,9 +1796,9 @@ public class KBArticleModelImpl
 		_columnOriginalValues.put("userName", _userName);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
-		_columnOriginalValues.put("rootResourcePrimKey", _rootResourcePrimKey);
 		_columnOriginalValues.put(
 			"externalReferenceCode", _externalReferenceCode);
+		_columnOriginalValues.put("rootResourcePrimKey", _rootResourcePrimKey);
 		_columnOriginalValues.put(
 			"parentResourceClassNameId", _parentResourceClassNameId);
 		_columnOriginalValues.put(
@@ -1862,9 +1862,9 @@ public class KBArticleModelImpl
 
 		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("rootResourcePrimKey", 1024L);
+		columnBitmasks.put("externalReferenceCode", 1024L);
 
-		columnBitmasks.put("externalReferenceCode", 2048L);
+		columnBitmasks.put("rootResourcePrimKey", 2048L);
 
 		columnBitmasks.put("parentResourceClassNameId", 4096L);
 

@@ -26,7 +26,7 @@ public class ClickToChatConfigurationCategory implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
-		return "message-boards";
+		return "chatbot";
 	}
 
 	@Override

@@ -1,0 +1,21 @@
+definition {
+
+	macro launchAC {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+
+		ACLogin.loginAs();
+
+		ACWorkspace.openWorkspace();
+	}
+
+	macro launchDXP {
+		Navigator.openURL();
+
+		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
+			User.firstLoginPG();
+		}
+	}
+
+}

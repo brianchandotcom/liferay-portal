@@ -51,7 +51,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 	},
 	service = Application.class
 )
-public class FrontendViewStateApplication {
+public class FVSApplication {
 
 	@GET
 	@Path("/active-view/{clayDataSetDisplayId}")
@@ -132,8 +132,7 @@ public class FrontendViewStateApplication {
 		).build();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		FrontendViewStateApplication.class);
+	private static final Log _log = LogFactoryUtil.getLog(FVSApplication.class);
 
 	@Reference
 	private FVSActiveEntryLocalService _fvsActiveEntryLocalService;

@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.info.exception,\
 	com.liferay.info.field,\
 	com.liferay.info.field.type,\
+	com.liferay.info.filter,\
 	com.liferay.info.form,\
 	com.liferay.info.formatter,\
 	com.liferay.info.item,\

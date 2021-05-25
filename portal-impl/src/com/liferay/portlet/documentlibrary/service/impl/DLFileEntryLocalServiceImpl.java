@@ -2708,8 +2708,8 @@ public class DLFileEntryLocalServiceImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Sending review notification for File entries with ",
-					"reviewDate between ", _previousCheckDate, " and ",
+					"Sending review notification for file entries with ",
+					"review date between ", _previousCheckDate, " and ",
 					reviewDate));
 		}
 

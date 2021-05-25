@@ -172,6 +172,8 @@ public class LayoutReportsIssueTest {
 			"description", detailJSONObject.getString("description"));
 		Assert.assertEquals(
 			"missing-title-element", detailJSONObject.getString("key"));
+		Assert.assertEquals(
+			StringPool.BLANK, detailJSONObject.getString("tips"));
 		Assert.assertEquals(100, detailJSONObject.getLong("total"));
 
 		Assert.assertEquals(

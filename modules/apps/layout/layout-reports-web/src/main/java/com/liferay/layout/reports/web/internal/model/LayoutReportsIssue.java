@@ -16,6 +16,7 @@ package com.liferay.layout.reports.web.internal.model;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -180,6 +181,8 @@ public class LayoutReportsIssue {
 			).put(
 				"key", _key.toString()
 			).put(
+				"tips", _key.getTips(resourceBundle)
+			).put(
 				"title", _key.getTitle(resourceBundle)
 			).put(
 				"total", _total
@@ -272,9 +275,20 @@ public class LayoutReportsIssue {
 
 				@Override
 				public String getTitle(ResourceBundle resourceBundle) {
+					return _getTitleMessage(resourceBundle, StringPool.BLANK);
+				}
+
+				@Override
+				public String getTips(ResourceBundle resourceBundle) {
+					return _getTitleMessage(resourceBundle, "-tip");
+				}
+
+				private String _getTitleMessage(
+					ResourceBundle resourceBundle, String suffix) {
+
 					return ResourceBundleUtil.getString(
-						resourceBundle, "detail-missing-x-element", "<title>",
-						false);
+						resourceBundle, "detail-missing-x-element" + suffix,
+						"<title>");
 				}
 
 				@Override
@@ -316,9 +330,18 @@ public class LayoutReportsIssue {
 
 			};
 
+			public String getTips(ResourceBundle resourceBundle) {
+				return ResourceBundleUtil.getString(
+					resourceBundle, _getDetailLanguageKey() + "-tip");
+			}
+
 			public String getTitle(ResourceBundle resourceBundle) {
 				return ResourceBundleUtil.getString(
-					resourceBundle, "detail-" + toString());
+					resourceBundle, _getDetailLanguageKey());
+			}
+
+			private String _getDetailLanguageKey() {
+				return "detail-" + toString();
 			}
 
 		}

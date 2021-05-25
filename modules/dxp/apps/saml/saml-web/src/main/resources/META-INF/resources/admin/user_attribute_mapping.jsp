@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/dynamic_include/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 AttributeMappingDisplayContext attributeMappingDisplayContext = (AttributeMappingDisplayContext)request.getAttribute(AttributeMappingDisplayContext.class.getName());

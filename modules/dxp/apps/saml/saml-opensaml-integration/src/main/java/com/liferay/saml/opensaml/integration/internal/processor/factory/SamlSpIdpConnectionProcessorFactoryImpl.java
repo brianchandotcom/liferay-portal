@@ -67,9 +67,9 @@ public class SamlSpIdpConnectionProcessorFactoryImpl
 
 		@Override
 		public void setFileItemArray(
-			String fieldExpression, FileItem[] values) {
+			String fieldExpression, FileItem[] fileItems) {
 
-			setValueArray(FileItem.class, fieldExpression, values);
+			setValueArray(FileItem.class, fieldExpression, fileItems);
 		}
 
 		public class SamlSpIdpConnectionBindImpl<T extends BaseModel<T>>

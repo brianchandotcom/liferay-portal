@@ -23,6 +23,6 @@ import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 public interface SamlSpIdpConnectionProcessor
 	extends Processor<SamlSpIdpConnection> {
 
-	public void setFileItemArray(String fieldExpression, FileItem[] values);
+	public void setFileItemArray(String fieldExpression, FileItem[] fileItems);
 
 }

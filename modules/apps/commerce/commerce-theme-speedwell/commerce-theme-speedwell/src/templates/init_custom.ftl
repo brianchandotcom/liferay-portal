@@ -1,5 +1,7 @@
 <#assign
 	copyright = getterUtil.getString(themeDisplay.getThemeSetting("copyright"))
+	mini_cart_display_total_items_count = getterUtil.getBoolean(themeDisplay.getThemeSetting("mini-cart-display-total-items-count"))
+	mini_cart_keep_open = getterUtil.getBoolean(themeDisplay.getThemeSetting("mini-cart-keep-open"))
 	show_top_menu = getterUtil.getBoolean(themeDisplay.getThemeSetting("show-top-menu"))
 	my_account_url = themeDisplay.getPathFriendlyURLPublic() + themeDisplay.getScopeGroup().getFriendlyURL() + "/my-account"
 	wishlistUrl = commerceWishListHttpHelper.getCommerceWishListPortletURL(request)

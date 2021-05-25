@@ -11,6 +11,8 @@
 	<theme id="speedwell" name="Speedwell">
 		<template-extension>ftl</template-extension>
 		<settings>
+			<setting configurable="true" key="mini-cart-display-total-items-count" type="checkbox" value="false" />
+			<setting configurable="true" key="mini-cart-keep-open" type="checkbox" value="false" />
 			<setting configurable="true" key="translucent-topbar" type="checkbox" value="false" />
 			<setting configurable="true" key="wide-layout" type="checkbox" value="false" />
 		</settings>

@@ -18,11 +18,11 @@ import ClayList from '@clayui/list';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
+import {getDataRendererById} from 'frontend-taglib-clay/data_set_display/data_renderers/index';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
 import {getValueFromItem} from '../../utilities/index';
-import {getDataRendererById} from '../data_renderers/index';
 import Expose from './Expose';
 
 function Item(props) {

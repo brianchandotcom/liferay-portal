@@ -13,12 +13,12 @@
  */
 
 import ClayTable from '@clayui/table';
+import DateRenderer from 'frontend-taglib-clay/data_set_display/data_renderers/DateRenderer';
+import StatusRenderer from 'frontend-taglib-clay/data_set_display/data_renderers/StatusRenderer';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {formatActionUrl} from '../../utilities/index';
-import DateRenderer from '../data_renderers/DateRenderer';
-import StatusRenderer from '../data_renderers/StatusRenderer';
 
 function OrdersTable({orders, selectOrderURL}) {
 	return (

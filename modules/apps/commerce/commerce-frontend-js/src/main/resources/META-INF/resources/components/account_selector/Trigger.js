@@ -16,9 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {Col, Row} from '@clayui/layout';
 import classnames from 'classnames';
+import StatusRenderer from 'frontend-taglib-clay/data_set_display/data_renderers/StatusRenderer';
 import React from 'react';
 
-import StatusRenderer from '../data_renderers/StatusRenderer';
 import Sticker from './Sticker';
 
 const Trigger = React.forwardRef(

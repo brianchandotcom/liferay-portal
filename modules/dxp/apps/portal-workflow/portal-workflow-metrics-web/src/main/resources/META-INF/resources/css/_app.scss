@@ -108,6 +108,12 @@ $font-weight-semi-bold: 600;
 	}
 }
 
+.modal-content {
+	.modal-body {
+		max-height: 80vh;
+	}
+}
+
 .modal-metrics-content {
 	background-color: #f1f2f5;
 

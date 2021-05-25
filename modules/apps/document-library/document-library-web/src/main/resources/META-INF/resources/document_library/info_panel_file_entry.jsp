@@ -352,35 +352,38 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 				</dt>
 				<dd class="sidebar-dd">
 					<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileEntry.getCreateDate()), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
-				</dd> <c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.expirationDateEnabled() %>">
-
-				<dt class="sidebar-dt">
-					<liferay-ui:message key="expiration-date" />
-				</dt>
-				<dd class="sidebar-dd">
-					<c:choose>
-						<c:when test="<%= fileVersion.getExpirationDate() != null %>">
-							<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getExpirationDate()), HtmlUtil.escape(fileVersion.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="never-expire" />
-						</c:otherwise>
-					</c:choose>
-				</dd> </c:if>
-				<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled() %>">
-		<dt class="sidebar-dt">
-					<liferay-ui:message key="review-date" />
-				</dt>
-				<dd class="sidebar-dd">
-					<c:choose>
-						<c:when test="<%= fileVersion.getReviewDate() != null %>">
-							<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getReviewDate()), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="never-review" />
-						</c:otherwise>
-					</c:choose>
 				</dd>
+
+				<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.expirationDateEnabled() %>">
+					<dt class="sidebar-dt">
+						<liferay-ui:message key="expiration-date" />
+					</dt>
+					<dd class="sidebar-dd">
+						<c:choose>
+							<c:when test="<%= fileVersion.getExpirationDate() != null %>">
+								<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getExpirationDate()), HtmlUtil.escape(fileVersion.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="never-expire" />
+							</c:otherwise>
+						</c:choose>
+					</dd>
+				</c:if>
+
+				<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled() %>">
+					<dt class="sidebar-dt">
+						<liferay-ui:message key="review-date" />
+					</dt>
+					<dd class="sidebar-dd">
+						<c:choose>
+							<c:when test="<%= fileVersion.getReviewDate() != null %>">
+								<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getReviewDate()), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="never-review" />
+							</c:otherwise>
+						</c:choose>
+					</dd>
 				</c:if>
 
 				<%

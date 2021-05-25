@@ -103,7 +103,9 @@ public class ResourceOpenAPIParser {
 									javaDataTypeMap, operation,
 									requestBodyMediaTypes);
 							String methodName = _getMethodName(
-								operation, path, returnType, schemaName);
+								operation, path, returnType,
+								schemaName,
+								configYAML.isForcePredictableOperationId());
 
 							JavaMethodSignature javaMethodSignature =
 								new JavaMethodSignature(
@@ -669,14 +671,16 @@ public class ResourceOpenAPIParser {
 
 	private static String _getMethodName(
 		Operation operation, String path, String returnType,
-		String schemaName) {
-
-		if (operation.getOperationId() != null) {
-			return operation.getOperationId();
-		}
+		String schemaName, boolean forcePredictableOperationId) {
 
 		boolean collection = StringUtil.startsWith(
 			returnType, Page.class.getName() + "<");
+
+		if (!forcePredictableOperationId &&
+			(operation.getOperationId() != null)) {
+
+			return operation.getOperationId();
+		}
 
 		List<String> methodNameSegments = new ArrayList<>();
 

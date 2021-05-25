@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 7.4.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7_4_0.dtd">
+
+<resource-action-mapping>
+	<model-resource>
+		<composite-model-name>
+			<model-name>com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.TestDataDefinitionContentType</model-name>
+			<model-name>com.liferay.dynamic.data.lists.model.DDLRecordSet</model-name>
+		</composite-model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_data_engine_test_portlet_DataEngineTestPortlet</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<composite-model-name>
+			<model-name>com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.TestDataDefinitionContentType</model-name>
+			<model-name>com.liferay.dynamic.data.mapping.model.DDMStructure</model-name>
+		</composite-model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_data_engine_test_portlet_DataEngineTestPortlet</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+		</permissions>
+	</model-resource>
+</resource-action-mapping>

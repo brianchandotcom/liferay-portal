@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DLReviewDateException extends PortalException {
+public class FileEntryExpirationDateException extends PortalException {
 
-	public DLReviewDateException() {
+	public FileEntryExpirationDateException() {
 	}
 
-	public DLReviewDateException(String msg) {
+	public FileEntryExpirationDateException(String msg) {
 		super(msg);
 	}
 
-	public DLReviewDateException(String msg, Throwable throwable) {
+	public FileEntryExpirationDateException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public DLReviewDateException(Throwable throwable) {
+	public FileEntryExpirationDateException(Throwable throwable) {
 		super(throwable);
 	}
 

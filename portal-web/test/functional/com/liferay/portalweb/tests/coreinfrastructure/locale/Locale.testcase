@@ -440,6 +440,7 @@ definition {
 	@priority = "3"
 	test UserLockoutShowsTimezoneInformation {
 		property test.name.skip.portal.instance = "Locale#UserLockoutShowsTimezoneInformation";
+		property testray.component.names = "Password Policies";
 		property user.time.zone = "UTC";
 
 		User.firstLoginPG();
@@ -462,11 +463,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
-		PasswordPoliciesNavigator.gotoPolicy(passwordPolicyName = "Default Password Policy");
-
-		PasswordPolicies.enableDefaultPasswordPolicyLockout();
-
-		PasswordPolicies.setLockoutDuration(duration = "5 Minutes");
+		PasswordPolicies.enableLockout(
+			lockoutDuration = "5 Minutes",
+			passwordPolicyName = "Default Password Policy",
+			passwordPolicyPanel = "Lockout");
 
 		User.logoutPG();
 

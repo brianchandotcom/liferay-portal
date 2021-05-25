@@ -256,6 +256,10 @@ definition {
 
 		WebContentStructures.addName(structureName = "WC Structure Name pt-BR");
 
+		DataEngine.editFieldsetsLabel(
+			fieldsetLabel = "New Fieldset",
+			fieldsetLabelEdit = "New Fieldset pt-BR");
+
 		WebContentStructures.saveCP();
 
 		NavItem.click(navItem = "Web Content");
@@ -341,6 +345,10 @@ definition {
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		WebContentStructures.addName(structureName = "WC Structure Name pt-BR");
+
+		DataEngine.editFieldsetsLabel(
+			fieldsetLabel = "New Fieldset Test",
+			fieldsetLabelEdit = "New Fieldset Test pt-BR");
 
 		WebContentStructures.saveCP();
 
@@ -655,6 +663,10 @@ definition {
 		PortletEntry.changeLocale(locale = "en-US");
 
 		WebContentStructures.addName(structureName = "WC Structure Name en-US");
+
+		DataEngine.editFieldsetsLabel(
+			fieldsetLabel = "New Fieldset Test",
+			fieldsetLabelEdit = "New Fieldset Test en-US");
 
 		WebContentStructures.saveCP();
 

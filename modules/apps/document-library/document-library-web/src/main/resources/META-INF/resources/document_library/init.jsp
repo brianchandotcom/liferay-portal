@@ -35,6 +35,7 @@ page import="com.liferay.document.library.web.internal.display.context.DLViewEnt
 page import="com.liferay.document.library.web.internal.display.context.DLViewFileEntryDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.FolderActionDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.exception.FileEntryExpirationDateException" %><%@
+page import="com.liferay.document.library.web.internal.exception.FileEntryReviewDateException" %><%@
 page import="com.liferay.document.library.web.internal.search.DDMStructureRowChecker" %><%@
 page import="com.liferay.document.library.web.internal.util.DDMStructureUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLAssetHelperUtil" %><%@

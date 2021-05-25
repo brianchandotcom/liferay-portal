@@ -14,6 +14,7 @@
 
 package com.liferay.talend.tliferayconnection;
 
+import com.liferay.talend.DefaultRuntimableRuntime;
 import com.liferay.talend.LiferayDefinition;
 import com.liferay.talend.properties.connection.LiferayConnectionProperties;
 
@@ -56,11 +57,7 @@ public class TLiferayConnectionDefinition extends LiferayDefinition {
 		assertConnectorTopologyCompatibility(connectorTopology);
 		assertEngineCompatibility(executionEngine);
 
-		if (connectorTopology == ConnectorTopology.NONE) {
-			return getCommonRuntimeInfo(SOURCE_OR_SINK_CLASS_NAME);
-		}
-
-		return null;
+		return getCommonRuntimeInfo(DefaultRuntimableRuntime.class.getName());
 	}
 
 	@Override

@@ -171,13 +171,15 @@ definition {
 	}
 
 	macro getFileEntryId {
-		var portalURL = JSONCompany.getPortalURL();
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
 
 		if (!(isSet(site))) {
 			var site = "true";
 		}
 
-		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var groupId = JSONGroupAPI._getGroupIdByName(portalURL = "${portalURL}", groupName = "${groupName}", site = "${site}");
 
 		if (!(isSet(folderId))) {
 			var folderId = "0";

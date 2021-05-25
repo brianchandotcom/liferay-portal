@@ -155,7 +155,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#DIALOG");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME");
 
 		Click(locator1 = "ContentDashboard#SEARCH_CATEGORY_FIELD");
 

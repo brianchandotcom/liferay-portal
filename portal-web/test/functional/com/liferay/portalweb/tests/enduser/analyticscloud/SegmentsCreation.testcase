@@ -1,0 +1,77 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.launchDXP();
+
+		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+        // TO DO: ACtearDown
+	}
+
+	@description = "Create a dynamic segment with individuals"
+	@priority = "5"
+	test CanCreateDynamicSegmentWithIndividuals {
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+        Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+        ACUtils.launchAC();
+
+        ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+        ACNavigation.goToSegments();
+
+        ACSegments.createDynamicSegment();
+
+        ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+        ACSegments.goToSidebarAttrributes(criterion = "Individual Attributes");
+
+        ACSegments.addSegmentField(segmentField = "email");
+        
+        ACSegments.editTextCriterion(textInput = "test@liferay.com");
+
+        ACSegments.saveSegment();
+
+        ACNavigation.goToSegments();
+
+        ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+        ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+
+        AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_LABEL",
+			value1 = "DYNAMIC SEGMENT");
+
+        AssertElementPresent(
+			locator1 = "ACSegments#SEGMENT_MEMBERS",
+            key_userName = "Test Test");
+	}
+
+}

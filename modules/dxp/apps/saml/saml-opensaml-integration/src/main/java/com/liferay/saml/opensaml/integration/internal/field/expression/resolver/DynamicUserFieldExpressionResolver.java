@@ -47,7 +47,7 @@ public class DynamicUserFieldExpressionResolver
 		return ResourceBundleUtil.getString(
 			ResourceBundleUtil.getBundle(
 				locale, DynamicUserFieldExpressionResolver.class),
-			"match-an-user-field-chosen-dynamically-based-on-nameid-format");
+			"match-a-user-field-chosen-dynamically-based-on-name-id-format");
 	}
 
 	@Override

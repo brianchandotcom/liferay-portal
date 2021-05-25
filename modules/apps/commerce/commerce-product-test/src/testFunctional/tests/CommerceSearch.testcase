@@ -27,13 +27,34 @@ definition {
 	}
 
 	@description = "COMMERCE-6664. I want to be able to disable Search Results widget pagination"
-	@ignore = "true"
 	@priority = "3"
 	test DisableSearchResultsWidgetPagination {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#DisableSearchResultsWidgetPagination";
 
-		// TODO COMMERCE-6664 DisableSearchResultsWidgetPagination pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		MouseOver(locator1 = "CommerceEntry#PAGINATION_BAR");
+
+		Click.clickNoWaitForVisible(locator1 = "CommerceAccelerators#SEARCH_RESULT_OPTIONS");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Navigator.gotoNavTab(navTab = "Pagination");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Paginate",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		IFrame.closeFrame();
+
+		AssertElementNotPresent(locator1 = "CommerceEntry#PAGINATION_BAR");
 	}
 
 	@description = "COMMERCE-6323. As a buyer, I want to be able to search an entry in Accounts using Global Search and I want the results to be visible in Account Management page"

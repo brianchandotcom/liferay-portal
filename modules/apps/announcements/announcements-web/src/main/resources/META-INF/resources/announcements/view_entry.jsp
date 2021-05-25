@@ -94,9 +94,11 @@ if (portletTitleBasedNavigation) {
 						</div>
 					</div>
 
-					<div class="autofit-col">
-						<%@ include file="/announcements/entry_action.jspf" %>
-					</div>
+					<c:if test="<%= !StringUtil.equals(announcementsRequestHelper.getPortletId(), AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN) %>">
+						<div class="autofit-col">
+							<%@ include file="/announcements/entry_action.jspf" %>
+						</div>
+					</c:if>
 				</div>
 
 				<div class="c-mt-3 entry-content">

@@ -27,26 +27,19 @@ import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUt
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -561,39 +554,6 @@ public class DataDefinitionResourceTest
 
 		assertEquals(randomDataDefinition, getDataDefinition);
 		assertValid(getDataDefinition);
-
-		// MustNotRemoveNativeFields
-
-		try {
-			DataDefinition userDataDefinition = _getUserDataDefinition();
-
-			List<DataDefinitionField> dataDefinitionFields = ListUtil.fromArray(
-				userDataDefinition.getDataDefinitionFields());
-
-			Stream<DataDefinitionField> stream = dataDefinitionFields.stream();
-
-			userDataDefinition.setDataDefinitionFields(
-				stream.filter(
-					dataDefinitionField -> !StringUtil.equals(
-						dataDefinitionField.getName(), "emailAddress")
-				).collect(
-					Collectors.toList()
-				).toArray(
-					new DataDefinitionField[0]
-				));
-
-			dataDefinitionResource.putDataDefinition(
-				userDataDefinition.getId(), userDataDefinition);
-
-			Assert.fail("An exception must be thrown");
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("emailAddress", problem.getDetail());
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertEquals("MustNotRemoveNativeField", problem.getType());
-		}
 	}
 
 	@Rule
@@ -789,25 +749,6 @@ public class DataDefinitionResourceTest
 		dataDefinition.setSiteId(testGroup.getGroupId());
 
 		return dataDefinition;
-	}
-
-	private DataDefinition _getUserDataDefinition() throws Exception {
-		Page<DataDefinition> dataDefinitionPage =
-			dataDefinitionResource.
-				getDataDefinitionByContentTypeContentTypePage(
-					_CONTENT_TYPE, null, Pagination.of(1, 2), null);
-
-		Collection<DataDefinition> dataDefinitions =
-			dataDefinitionPage.getItems();
-
-		Stream<DataDefinition> stream = dataDefinitions.stream();
-
-		Optional<DataDefinition> dataDefinitionOptional = stream.filter(
-			dataDefinition -> StringUtil.equalsIgnoreCase(
-				dataDefinition.getDataDefinitionKey(), User.class.getName())
-		).findFirst();
-
-		return dataDefinitionOptional.get();
 	}
 
 	private void _testGetSiteDataDefinitionsPage(

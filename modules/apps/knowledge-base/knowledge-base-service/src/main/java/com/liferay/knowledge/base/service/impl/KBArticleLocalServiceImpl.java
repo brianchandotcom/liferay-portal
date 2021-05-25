@@ -566,7 +566,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
 		long groupId, String externalReferenceCode) {
 
-		return kbArticlePersistence.fetchByG_E_Last(
+		return kbArticlePersistence.fetchByG_ERC_Last(
 			groupId, externalReferenceCode, new KBArticleVersionComparator());
 	}
 
@@ -870,7 +870,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			long groupId, String externalReferenceCode)
 		throws PortalException {
 
-		return kbArticlePersistence.findByG_E_First(
+		return kbArticlePersistence.findByG_ERC_First(
 			groupId, externalReferenceCode, new KBArticleVersionComparator());
 	}
 

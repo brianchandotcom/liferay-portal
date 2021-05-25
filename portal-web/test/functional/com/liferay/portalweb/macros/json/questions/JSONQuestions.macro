@@ -35,6 +35,20 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Add a question without a tag."
+	macro addQuestion {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
+
+		var categoryId = JSONMBMessage.getCategoryIdByName(
+			groupName = "${groupName}",
+			categoryName = "${categoryName}");
+
+		JSONQuestionsAPI._addQuestion(
+			bodyField = "${bodyField}",
+			categoryId = "${categoryId}",
+			titleField = "${titleField}");
+	}
+
 	@summary = "Add a question with a tag."
 	macro addQuestionWithTag {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
@@ -47,20 +61,6 @@ definition {
 			bodyField = "${bodyField}",
 			categoryId = "${categoryId}",
 			tagField = "${tagField}",
-			titleField = "${titleField}");
-	}
-
-	@summary = "Add a question without a tag."
-	macro addQuestion {
-		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
-
-		var categoryId = JSONMBMessage.getCategoryIdByName(
-			groupName = "${groupName}",
-			categoryName = "${categoryName}");
-
-		JSONQuestionsAPI._addQuestion(
-			bodyField = "${bodyField}",
-			categoryId = "${categoryId}",
 			titleField = "${titleField}");
 	}
 

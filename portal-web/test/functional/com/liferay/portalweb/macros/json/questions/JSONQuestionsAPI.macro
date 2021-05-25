@@ -1,5 +1,32 @@
 definition {
 
+	@summary = "Directly calls the JSON WS API to add a question without tag"
+	macro _addQuestion {
+		Variables.assertDefined(parameterList = "${categoryId},${titleField},${bodyField}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test' \
+			-d '{
+				"headline": "${titleField}",
+				"articleBody": "${bodyField}"
+			}'
+		''';
+
+		echo("## Adding a 'Question' with the following info using JSONWS:");
+
+		echo("## * Title: ${titleField}");
+
+		echo("## * Description: ${bodyField}");
+
+		echo("## * CategoryID: ${categoryId}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Directly calls the JSON WS API to add a question"
 	macro _addQuestionWithTag {
 		Variables.assertDefined(parameterList = "${categoryId},${tagField},${titleField},${bodyField}");
@@ -26,33 +53,6 @@ definition {
 		echo("## * Description: ${bodyField}");
 
 		echo("## * Tag: ${tagField}");
-
-		echo("## * CategoryID: ${categoryId}");
-
-		var messageId = JSONCurlUtil.post("${curl}");
-	}
-
-	@summary = "Directly calls the JSON WS API to add a question without tag"
-	macro _addQuestion {
-		Variables.assertDefined(parameterList = "${categoryId},${titleField},${bodyField}");
-
-		var portalURL = JSONCompany.getPortalURL();
-
-		var curl = '''
-			${portalURL}/o/headless-delivery/v1.0/message-board-sections/${categoryId}/message-board-threads \
-			-H 'Content-Type: application/json' \
-			-u 'test@liferay.com:test' \
-			-d '{
-				"headline": "${titleField}",
-				"articleBody": "${bodyField}"
-			}'
-		''';
-
-		echo("## Adding a 'Question' with the following info using JSONWS:");
-
-		echo("## * Title: ${titleField}");
-
-		echo("## * Description: ${bodyField}");
 
 		echo("## * CategoryID: ${categoryId}");
 

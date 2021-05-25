@@ -51,7 +51,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 	},
 	service = Application.class
 )
-public class FVSApplication {
+public class FVSApplication extends Application {
 
 	@GET
 	@Path("/active-view/{clayDataSetDisplayId}")

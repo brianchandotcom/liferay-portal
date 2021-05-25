@@ -8,4 +8,7 @@
 		<suppress checks="MemberNameCheck" />
 		<suppress checks="MethodNameCheck" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="CopyrightCheck" />
+	</source-check>
 </suppressions>

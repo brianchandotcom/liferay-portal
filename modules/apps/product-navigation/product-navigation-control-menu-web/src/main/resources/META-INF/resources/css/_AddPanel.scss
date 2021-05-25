@@ -1,25 +1,25 @@
-@import 'atlas-variables';
+html#{$cadmin-selector} {
+	.cadmin {
+		&.lfr-add-panel {
+			.sidebar {
+				border-left: 1px solid $cadmin-gray-300;
 
-@import 'variables';
+				.sidebar-body__add-panel {
+					height: 100%;
+					overflow: auto;
+					padding: 16px;
 
-.lfr-add-panel {
-	.sidebar {
-		border-left: 1px solid $gray-300;
+					.form-control-sm {
+						padding-left: 12px;
+						padding-right: 12px;
+					}
+				}
 
-		.sidebar-body__add-panel {
-			height: 100%;
-			overflow: auto;
-			padding: 16px;
-
-			.form-control-sm {
-				padding-left: 12px;
-				padding-right: 12px;
+				.sidebar-header {
+					height: 64px;
+					line-height: 32px;
+				}
 			}
-		}
-
-		.sidebar-header {
-			height: 64px;
-			line-height: 32px;
 		}
 	}
 }

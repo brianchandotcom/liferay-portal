@@ -1,37 +1,39 @@
-@import 'atlas-variables';
+html#{$cadmin-selector} {
+	.cadmin {
+		.sidebar__collapse {
+			cursor: pointer;
 
-.sidebar__collapse {
-	cursor: pointer;
+			.collapse-icon {
+				background: none;
+				border: 0;
+				color: $cadmin-gray-600;
+				font-size: 11.2;
+				height: 32px;
+				margin-bottom: 4px;
+				padding-left: 0;
+				text-align: left;
+				width: 100%;
 
-	.collapse-icon {
-		background: none;
-		border: 0;
-		color: $gray-600;
-		font-size: 0.7rem;
-		height: 2rem;
-		margin-bottom: 4px;
-		padding-left: 0;
-		text-align: left;
-		width: 100%;
+				&-closed {
+					.rtl & {
+						transform: rotate(-180deg);
+					}
+				}
+			}
 
-		&-closed {
-			.rtl & {
-				transform: rotate(-180deg);
+			.ellipsis {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.sheet-subtitle {
+				line-height: inherit;
+			}
+
+			.sidebar__collapse {
+				margin-left: 16px;
 			}
 		}
-	}
-
-	.ellipsis {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.sheet-subtitle {
-		line-height: inherit;
-	}
-
-	.sidebar__collapse {
-		margin-left: 1rem;
 	}
 }

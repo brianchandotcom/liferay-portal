@@ -24,7 +24,7 @@
 	String portletNamespace = PortalUtil.getPortletNamespace(ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU);
 	%>
 
-	<div class="closed d-print-none lfr-add-panel lfr-admin-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= portletNamespace %>addPanelId">
+	<div class="cadmin closed d-print-none lfr-add-panel lfr-admin-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= portletNamespace %>addPanelId">
 		<div class="sidebar sidebar-inverse sidebar-light sidenav-menu">
 			<div class="d-flex justify-content-between p-3 sidebar-header">
 				<h1 class="sr-only"><liferay-ui:message key="widget-selection-panel" /></h1>

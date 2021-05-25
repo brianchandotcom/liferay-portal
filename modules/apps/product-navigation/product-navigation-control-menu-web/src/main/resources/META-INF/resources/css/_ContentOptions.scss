@@ -1,28 +1,30 @@
-@import 'atlas-variables';
+html#{$cadmin-selector} {
+	.cadmin {
+		.sidebar-body__add-panel__content-options {
+			display: flex;
 
-.sidebar-body__add-panel__content-options {
-	display: flex;
+			&-add {
+				margin-left: 16px;
+			}
 
-	&-add {
-		margin-left: 16px;
-	}
+			&-list {
+				margin-left: auto;
+			}
 
-	&-list {
-		margin-left: auto;
-	}
+			&-select {
+				background-color: white;
+				border: 0;
+				color: $cadmin-gray-600;
+				font-weight: 600;
+				width: 140px;
+			}
 
-	&-select {
-		background-color: white;
-		border: 0;
-		color: $gray-600;
-		font-weight: 600;
-		width: 140px;
-	}
-
-	&-add,
-	&-list {
-		.lexicon-icon {
-			fill: $gray-600;
+			&-add,
+			&-list {
+				.lexicon-icon {
+					fill: $cadmin-gray-600;
+				}
+			}
 		}
 	}
 }

@@ -1,25 +1,25 @@
-@import 'atlas-variables';
+html#{$cadmin-selector} {
+	.cadmin {
+		.sidebar-body__add-panel {
+			&__tab-content {
+				ul.grid {
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-between;
+				}
+			}
 
-@import 'variables';
+			&__tabs {
+				border-bottom: 1px solid $cadmin-gray-300;
+				color: $cadmin-dark;
+				font-size: 12px;
+				margin-bottom: 16px;
 
-.sidebar-body__add-panel {
-	&__tab-content {
-		ul.grid {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-between;
-		}
-	}
-
-	&__tabs {
-		border-bottom: 1px solid $gray-300;
-		color: $dark;
-		font-size: 0.75rem;
-		margin-bottom: 16px;
-
-		.nav-item {
-			.nav-link.active {
-				color: $gray-600;
+				.nav-item {
+					.nav-link.active {
+						color: $cadmin-gray-600;
+					}
+				}
 			}
 		}
 	}

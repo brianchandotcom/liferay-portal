@@ -1,133 +1,135 @@
-@import 'atlas-variables';
+html#{$cadmin-selector} {
+	.cadmin {
+		.sidebar-body__add-panel__tab-item {
+			align-items: center;
+			border-radius: 4px;
+			color: $cadmin-secondary-d2;
+			cursor: grab;
+			display: flex;
+			height: 32px;
+			margin-bottom: 4px;
+			padding: 0 4px 0 12px;
 
-.sidebar-body__add-panel__tab-item {
-	align-items: center;
-	border-radius: 4px;
-	color: $secondary-d2;
-	cursor: grab;
-	display: flex;
-	height: 2rem;
-	margin-bottom: 4px;
-	padding: 0 4px 0 12px;
+			&.sidebar-body__add-panel__tab-portlet-item {
+				margin-left: 16px;
+			}
 
-	.grid & {
-		border: 1px solid $gray-300;
-		flex-wrap: wrap;
-		margin-bottom: 8px;
-		padding: 0;
-		width: calc(50% - 4px);
+			&.multiline {
+				height: 50px;
+				position: relative;
 
-		&-body {
-			flex-wrap: wrap;
-			text-align: left;
-			width: 100%;
-
-			.icon {
-				border-bottom: 1px solid $gray-300;
-				font-size: 40px;
-				padding: 4px 0 18px;
-				text-align: center;
-				width: 100%;
-
-				.lexicon-icon {
-					fill: $secondary-l1;
-					margin-right: 0;
+				.sidebar-body__add-panel__tab-item-add {
+					position: absolute;
+					right: 4px;
+					top: 0;
 				}
 			}
 
-			.text {
-				padding: 4px 8px 0;
+			&-add {
+				font-size: 14px;
+				opacity: 0;
+
+				&:focus {
+					opacity: 1;
+				}
+
+				.lexicon-icon {
+					fill: $cadmin-gray-500;
+				}
+			}
+
+			&:focus,
+			&:hover {
+				background-color: $cadmin-gray-100;
+
+				.sidebar-body__add-panel__tab-item-add {
+					opacity: 1;
+				}
+			}
+
+			&.disabled {
+				color: $cadmin-secondary-l1;
+				cursor: default;
+
+				&:hover {
+					background-color: transparent;
+				}
+			}
+
+			&-body {
+				align-items: center;
+				display: flex;
+				font-size: 14px;
+				text-align: center;
+				width: calc(100% - 24px);
+
+				.icon {
+					align-self: flex-start;
+					width: 30px;
+				}
+
+				.lexicon-icon {
+					margin-right: 16px;
+					transform: translateY(1px);
+				}
+
+				.text {
+					flex: 0 1 100%;
+					overflow: hidden;
+					text-align: left;
+				}
+
+				.title {
+					font-size: 12px;
+					font-weight: 600;
+				}
+
+				.subtitle {
+					color: $cadmin-gray-600;
+					flex-basis: 100%;
+					font-size: 12px;
+				}
+			}
+		}
+
+		.grid .sidebar-body__add-panel__tab-item {
+			border: 1px solid $cadmin-gray-300;
+			flex-wrap: wrap;
+			margin-bottom: 8px;
+			padding: 0;
+			width: calc(50% - 4px);
+
+			&-body {
+				flex-wrap: wrap;
+				text-align: left;
 				width: 100%;
+
+				.icon {
+					border-bottom: 1px solid $cadmin-gray-300;
+					font-size: 40px;
+					padding: 4px 0 18px;
+					text-align: center;
+					width: 100%;
+
+					.lexicon-icon {
+						fill: $cadmin-secondary-l1;
+						margin-right: 0;
+					}
+				}
+
+				.text {
+					padding: 4px 8px 0;
+					width: 100%;
+				}
 			}
-		}
 
-		&.multiline {
-			height: 8.5rem;
+			&.multiline {
+				height: 136px;
 
-			.sidebar-body__add-panel__tab-item-add {
-				right: 0;
+				.sidebar-body__add-panel__tab-item-add {
+					right: 0;
+				}
 			}
-		}
-	}
-
-	&.sidebar-body__add-panel__tab-portlet-item {
-		margin-left: 16px;
-	}
-
-	&.multiline {
-		height: 3.125rem;
-		position: relative;
-
-		.sidebar-body__add-panel__tab-item-add {
-			position: absolute;
-			right: 4px;
-			top: 0;
-		}
-	}
-
-	&-add {
-		font-size: 0.875rem;
-		opacity: 0;
-
-		&:focus {
-			opacity: 1;
-		}
-
-		.lexicon-icon {
-			fill: $gray-500;
-		}
-	}
-
-	&:focus,
-	&:hover {
-		background-color: $gray-100;
-
-		.sidebar-body__add-panel__tab-item-add {
-			opacity: 1;
-		}
-	}
-
-	&.disabled {
-		color: $secondary-l1;
-		cursor: default;
-
-		&:hover {
-			background-color: transparent;
-		}
-	}
-
-	&-body {
-		align-items: center;
-		display: flex;
-		font-size: 0.875rem;
-		text-align: center;
-		width: calc(100% - 1.5rem);
-
-		.icon {
-			align-self: flex-start;
-			width: 30px;
-		}
-
-		.lexicon-icon {
-			margin-right: 16px;
-			transform: translateY(1px);
-		}
-
-		.text {
-			flex: 0 1 100%;
-			overflow: hidden;
-			text-align: left;
-		}
-
-		.title {
-			font-size: 0.75rem;
-			font-weight: 600;
-		}
-
-		.subtitle {
-			color: $gray-600;
-			flex-basis: 100%;
-			font-size: 0.75rem;
 		}
 	}
 }

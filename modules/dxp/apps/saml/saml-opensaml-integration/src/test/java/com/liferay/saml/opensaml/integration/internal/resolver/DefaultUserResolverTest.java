@@ -98,144 +98,72 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		mockStatic(CalendarFactoryUtil.class);
+		_mockCalendarUtil();
+		_mockDigesterUtil();
+		_mockLanguageUtil();
 
-		when(
-			CalendarFactoryUtil.getCalendar()
-		).thenReturn(
-			new GregorianCalendar()
-		);
+		_company = _mockCompany();
 
-		_company = mock(Company.class);
+		CompanyLocalService companyLocalService = _mockCompanyLocalService(
+			_company);
 
-		when(
-			_company.hasCompanyMx(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS)
-		).thenReturn(
-			true
-		);
+		MetadataManager metadataManager = _mockMetadataManager();
 
-		CompanyLocalService companyLocalService = mock(
-			CompanyLocalService.class);
+		_samlSpIdpConnection = _mockSamlSpIdConnection();
 
-		when(
-			companyLocalService.getCompany(Mockito.anyLong())
-		).thenReturn(
-			_company
-		);
+		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService =
+			_mockSamlSpIdConnectionLocalService(_samlSpIdpConnection);
+
+		SamlPeerBindingLocalService samlPeerBindingLocalService =
+			_mockSamlPeerBindingLocalService();
+
+		_samlProviderConfigurationHelper =
+			_mockSamlProviderConfigurationHelper();
+
+		DefaultUserFieldExpressionHandler defaultUserFieldExpressionHandler =
+			new DefaultUserFieldExpressionHandler();
+
+		_userFieldExpressionHandlerRegistry =
+			_mockDefaultUserFieldExpressionHandler(
+				defaultUserFieldExpressionHandler);
+
+		_testUserFieldExpressionResolver =
+			new TestUserFieldExpressionResolver();
+
+		_userFieldExpressionResolverRegistry =
+			_mockUserFieldExpressionResolverRegistry(
+				_testUserFieldExpressionResolver);
+
+		_userLocalService = _mockUserLocalService();
+
+		getMockPortalService(
+			OrganizationLocalServiceUtil.class, OrganizationLocalService.class);
 
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_companyLocalService", companyLocalService);
 
-		MetadataManager metadataManager = mock(MetadataManager.class);
-
-		when(
-			metadataManager.getUserAttributeMappings(Mockito.eq(IDP_ENTITY_ID))
-		).thenReturn(
-			_ATTRIBUTE_MAPPINGS
-		);
-
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_metadataManager", metadataManager);
-
-		_samlSpIdpConnection = mock(SamlSpIdpConnection.class);
-
-		when(
-			_samlSpIdpConnection.getNormalizedUserAttributeMappings()
-		).thenReturn(
-			PropertiesUtil.load(_ATTRIBUTE_MAPPINGS)
-		);
-
-		when(
-			_samlSpIdpConnection.isUnknownUsersAreStrangers()
-		).thenReturn(
-			true
-		);
-
-		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService = mock(
-			SamlSpIdpConnectionLocalService.class);
-
-		when(
-			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
-				Mockito.anyLong(), Mockito.anyString())
-		).thenReturn(
-			_samlSpIdpConnection
-		);
 
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_samlSpIdpConnectionLocalService",
 			samlSpIdpConnectionLocalService);
 
-		SamlPeerBindingLocalService samlPeerBindingLocalService = mock(
-			SamlPeerBindingLocalService.class);
-
-		when(
-			samlPeerBindingLocalService.fetchSamlPeerBinding(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
-				Mockito.anyString(), Mockito.anyString())
-		).thenReturn(
-			null
-		);
-
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_samlPeerBindingLocalService",
 			samlPeerBindingLocalService);
-
-		_samlProviderConfigurationHelper = mock(
-			SamlProviderConfigurationHelper.class);
 
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_samlProviderConfigurationHelper",
 			_samlProviderConfigurationHelper);
 
-		_userFieldExpressionHandlerRegistry = mock(
-			UserFieldExpressionHandlerRegistry.class);
-
-		DefaultUserFieldExpressionHandler defaultUserFieldExpressionHandler =
-			new DefaultUserFieldExpressionHandler();
-
-		when(
-			_userFieldExpressionHandlerRegistry.getFieldExpressionHandler(
-				Mockito.anyString())
-		).thenReturn(
-			defaultUserFieldExpressionHandler
-		);
-
-		when(
-			_userFieldExpressionHandlerRegistry.
-				getFieldExpressionHandlerPrefixes()
-		).thenReturn(
-			new HashSet<>(Sets.newSet(""))
-		);
-
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userFieldExpressionHandlerRegistry",
 			_userFieldExpressionHandlerRegistry);
 
-		_userFieldExpressionResolverRegistry = mock(
-			UserFieldExpressionResolverRegistry.class);
-
-		_testUserFieldExpressionResolver =
-			new TestUserFieldExpressionResolver();
-
-		when(
-			_userFieldExpressionResolverRegistry.getUserFieldExpressionResolver(
-				Mockito.anyString())
-		).thenReturn(
-			_testUserFieldExpressionResolver
-		);
-
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userFieldExpressionResolverRegistry",
 			_userFieldExpressionResolverRegistry);
-
-		User user = _createBlankUser();
-		_userLocalService = mock(UserLocalService.class);
-
-		when(
-			_userLocalService.createUser(Mockito.eq(0L))
-		).thenReturn(
-			user
-		);
 
 		ReflectionTestUtil.setFieldValue(
 			_defaultUserResolver, "_userProcessorFactory",
@@ -247,31 +175,6 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		ReflectionTestUtil.setFieldValue(
 			defaultUserFieldExpressionHandler, "_userLocalService",
 			_userLocalService);
-
-		when(
-			_samlProviderConfigurationHelper.isLDAPImportEnabled()
-		).thenReturn(
-			false
-		);
-
-		DigesterUtil digesterUtil = new DigesterUtil();
-
-		Digester digester = Mockito.mock(Digester.class);
-
-		Mockito.when(
-			digester.digest(Mockito.anyString())
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		digesterUtil.setDigester(digester);
-
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(new LanguageImpl());
-
-		getMockPortalService(
-			OrganizationLocalServiceUtil.class, OrganizationLocalService.class);
 
 		_initMessageContext(true);
 		_initUnknownUserHandling();
@@ -667,6 +570,196 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		).thenReturn(
 			user
 		);
+	}
+
+	private void _mockCalendarUtil() {
+		mockStatic(CalendarFactoryUtil.class);
+
+		when(
+			CalendarFactoryUtil.getCalendar()
+		).thenReturn(
+			new GregorianCalendar()
+		);
+	}
+
+	private Company _mockCompany() {
+		Company company = mock(Company.class);
+
+		when(
+			company.hasCompanyMx(_SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS)
+		).thenReturn(
+			true
+		);
+
+		return company;
+	}
+
+	private CompanyLocalService _mockCompanyLocalService(Company company)
+		throws Exception {
+
+		CompanyLocalService companyLocalService = mock(
+			CompanyLocalService.class);
+
+		when(
+			companyLocalService.getCompany(Mockito.anyLong())
+		).thenReturn(
+			company
+		);
+
+		return companyLocalService;
+	}
+
+	private UserFieldExpressionHandlerRegistry
+		_mockDefaultUserFieldExpressionHandler(
+			DefaultUserFieldExpressionHandler
+				defaultUserFieldExpressionHandler) {
+
+		UserFieldExpressionHandlerRegistry userFieldExpressionHandlerRegistry =
+			mock(UserFieldExpressionHandlerRegistry.class);
+
+		when(
+			userFieldExpressionHandlerRegistry.getFieldExpressionHandler(
+				Mockito.anyString())
+		).thenReturn(
+			defaultUserFieldExpressionHandler
+		);
+
+		when(
+			userFieldExpressionHandlerRegistry.
+				getFieldExpressionHandlerPrefixes()
+		).thenReturn(
+			new HashSet<>(Sets.newSet(""))
+		);
+
+		return userFieldExpressionHandlerRegistry;
+	}
+
+	private void _mockDigesterUtil() {
+		DigesterUtil digesterUtil = new DigesterUtil();
+
+		Digester digester = Mockito.mock(Digester.class);
+
+		Mockito.when(
+			digester.digest(Mockito.anyString())
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		digesterUtil.setDigester(digester);
+	}
+
+	private void _mockLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+	}
+
+	private MetadataManager _mockMetadataManager() {
+		MetadataManager metadataManager = mock(MetadataManager.class);
+
+		when(
+			metadataManager.getUserAttributeMappings(Mockito.eq(IDP_ENTITY_ID))
+		).thenReturn(
+			_ATTRIBUTE_MAPPINGS
+		);
+
+		return metadataManager;
+	}
+
+	private SamlPeerBindingLocalService _mockSamlPeerBindingLocalService() {
+		SamlPeerBindingLocalService samlPeerBindingLocalService = mock(
+			SamlPeerBindingLocalService.class);
+
+		when(
+			samlPeerBindingLocalService.fetchSamlPeerBinding(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyString())
+		).thenReturn(
+			null
+		);
+
+		return samlPeerBindingLocalService;
+	}
+
+	private SamlProviderConfigurationHelper
+		_mockSamlProviderConfigurationHelper() {
+
+		SamlProviderConfigurationHelper samlProviderConfigurationHelper = mock(
+			SamlProviderConfigurationHelper.class);
+
+		when(
+			samlProviderConfigurationHelper.isLDAPImportEnabled()
+		).thenReturn(
+			false
+		);
+
+		return samlProviderConfigurationHelper;
+	}
+
+	private SamlSpIdpConnection _mockSamlSpIdConnection() throws Exception {
+		SamlSpIdpConnection samlSpIdpConnection = mock(
+			SamlSpIdpConnection.class);
+
+		when(
+			samlSpIdpConnection.getNormalizedUserAttributeMappings()
+		).thenReturn(
+			PropertiesUtil.load(_ATTRIBUTE_MAPPINGS)
+		);
+
+		when(
+			samlSpIdpConnection.isUnknownUsersAreStrangers()
+		).thenReturn(
+			true
+		);
+
+		return samlSpIdpConnection;
+	}
+
+	private SamlSpIdpConnectionLocalService _mockSamlSpIdConnectionLocalService(
+			SamlSpIdpConnection samlSpIdpConnection)
+		throws Exception {
+
+		SamlSpIdpConnectionLocalService samlSpIdpConnectionLocalService = mock(
+			SamlSpIdpConnectionLocalService.class);
+
+		when(
+			samlSpIdpConnectionLocalService.getSamlSpIdpConnection(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			samlSpIdpConnection
+		);
+
+		return samlSpIdpConnectionLocalService;
+	}
+
+	private UserFieldExpressionResolverRegistry
+		_mockUserFieldExpressionResolverRegistry(
+			TestUserFieldExpressionResolver testUserFieldExpressionResolver) {
+
+		UserFieldExpressionResolverRegistry
+			userFieldExpressionResolverRegistry = mock(
+				UserFieldExpressionResolverRegistry.class);
+
+		when(
+			userFieldExpressionResolverRegistry.getUserFieldExpressionResolver(
+				Mockito.anyString())
+		).thenReturn(
+			testUserFieldExpressionResolver
+		);
+
+		return userFieldExpressionResolverRegistry;
+	}
+
+	private UserLocalService _mockUserLocalService() {
+		UserLocalService userLocalService = mock(UserLocalService.class);
+
+		when(
+			userLocalService.createUser(Mockito.eq(0L))
+		).thenReturn(
+			_createBlankUser()
+		);
+
+		return userLocalService;
 	}
 
 	private static final String _ATTRIBUTE_MAPPINGS =

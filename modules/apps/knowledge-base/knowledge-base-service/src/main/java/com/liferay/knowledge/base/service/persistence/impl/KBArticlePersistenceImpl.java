@@ -5570,9 +5570,9 @@ public class KBArticlePersistenceImpl
 	private static final String _FINDER_COLUMN_R_S_STATUS_2 =
 		"kbArticle.status = ?";
 
-	private FinderPath _finderPathWithPaginationFindByG_E;
-	private FinderPath _finderPathWithoutPaginationFindByG_E;
-	private FinderPath _finderPathCountByG_E;
+	private FinderPath _finderPathWithPaginationFindByG_ERC;
+	private FinderPath _finderPathWithoutPaginationFindByG_ERC;
+	private FinderPath _finderPathCountByG_ERC;
 
 	/**
 	 * Returns all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
@@ -5582,10 +5582,10 @@ public class KBArticlePersistenceImpl
 	 * @return the matching kb articles
 	 */
 	@Override
-	public List<KBArticle> findByG_E(
+	public List<KBArticle> findByG_ERC(
 		long groupId, String externalReferenceCode) {
 
-		return findByG_E(
+		return findByG_ERC(
 			groupId, externalReferenceCode, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -5604,10 +5604,10 @@ public class KBArticlePersistenceImpl
 	 * @return the range of matching kb articles
 	 */
 	@Override
-	public List<KBArticle> findByG_E(
+	public List<KBArticle> findByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end) {
 
-		return findByG_E(groupId, externalReferenceCode, start, end, null);
+		return findByG_ERC(groupId, externalReferenceCode, start, end, null);
 	}
 
 	/**
@@ -5625,11 +5625,11 @@ public class KBArticlePersistenceImpl
 	 * @return the ordered range of matching kb articles
 	 */
 	@Override
-	public List<KBArticle> findByG_E(
+	public List<KBArticle> findByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		return findByG_E(
+		return findByG_ERC(
 			groupId, externalReferenceCode, start, end, orderByComparator,
 			true);
 	}
@@ -5650,7 +5650,7 @@ public class KBArticlePersistenceImpl
 	 * @return the ordered range of matching kb articles
 	 */
 	@Override
-	public List<KBArticle> findByG_E(
+	public List<KBArticle> findByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator,
 		boolean useFinderCache) {
@@ -5664,12 +5664,12 @@ public class KBArticlePersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByG_E;
+				finderPath = _finderPathWithoutPaginationFindByG_ERC;
 				finderArgs = new Object[] {groupId, externalReferenceCode};
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByG_E;
+			finderPath = _finderPathWithPaginationFindByG_ERC;
 			finderArgs = new Object[] {
 				groupId, externalReferenceCode, start, end, orderByComparator
 			};
@@ -5708,17 +5708,17 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
+			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
 
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -5776,12 +5776,12 @@ public class KBArticlePersistenceImpl
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
 	@Override
-	public KBArticle findByG_E_First(
+	public KBArticle findByG_ERC_First(
 			long groupId, String externalReferenceCode,
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_E_First(
+		KBArticle kbArticle = fetchByG_ERC_First(
 			groupId, externalReferenceCode, orderByComparator);
 
 		if (kbArticle != null) {
@@ -5812,11 +5812,11 @@ public class KBArticlePersistenceImpl
 	 * @return the first matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	@Override
-	public KBArticle fetchByG_E_First(
+	public KBArticle fetchByG_ERC_First(
 		long groupId, String externalReferenceCode,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		List<KBArticle> list = findByG_E(
+		List<KBArticle> list = findByG_ERC(
 			groupId, externalReferenceCode, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -5836,12 +5836,12 @@ public class KBArticlePersistenceImpl
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
 	@Override
-	public KBArticle findByG_E_Last(
+	public KBArticle findByG_ERC_Last(
 			long groupId, String externalReferenceCode,
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_E_Last(
+		KBArticle kbArticle = fetchByG_ERC_Last(
 			groupId, externalReferenceCode, orderByComparator);
 
 		if (kbArticle != null) {
@@ -5872,17 +5872,17 @@ public class KBArticlePersistenceImpl
 	 * @return the last matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	@Override
-	public KBArticle fetchByG_E_Last(
+	public KBArticle fetchByG_ERC_Last(
 		long groupId, String externalReferenceCode,
 		OrderByComparator<KBArticle> orderByComparator) {
 
-		int count = countByG_E(groupId, externalReferenceCode);
+		int count = countByG_ERC(groupId, externalReferenceCode);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<KBArticle> list = findByG_E(
+		List<KBArticle> list = findByG_ERC(
 			groupId, externalReferenceCode, count - 1, count,
 			orderByComparator);
 
@@ -5904,7 +5904,7 @@ public class KBArticlePersistenceImpl
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
 	@Override
-	public KBArticle[] findByG_E_PrevAndNext(
+	public KBArticle[] findByG_ERC_PrevAndNext(
 			long kbArticleId, long groupId, String externalReferenceCode,
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
@@ -5920,13 +5920,13 @@ public class KBArticlePersistenceImpl
 
 			KBArticle[] array = new KBArticleImpl[3];
 
-			array[0] = getByG_E_PrevAndNext(
+			array[0] = getByG_ERC_PrevAndNext(
 				session, kbArticle, groupId, externalReferenceCode,
 				orderByComparator, true);
 
 			array[1] = kbArticle;
 
-			array[2] = getByG_E_PrevAndNext(
+			array[2] = getByG_ERC_PrevAndNext(
 				session, kbArticle, groupId, externalReferenceCode,
 				orderByComparator, false);
 
@@ -5940,7 +5940,7 @@ public class KBArticlePersistenceImpl
 		}
 	}
 
-	protected KBArticle getByG_E_PrevAndNext(
+	protected KBArticle getByG_ERC_PrevAndNext(
 		Session session, KBArticle kbArticle, long groupId,
 		String externalReferenceCode,
 		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
@@ -5958,17 +5958,17 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
 
 		boolean bindExternalReferenceCode = false;
 
 		if (externalReferenceCode.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_3);
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
 		}
 		else {
 			bindExternalReferenceCode = true;
 
-			sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_2);
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -6072,10 +6072,10 @@ public class KBArticlePersistenceImpl
 	 * @return the matching kb articles that the user has permission to view
 	 */
 	@Override
-	public List<KBArticle> filterFindByG_E(
+	public List<KBArticle> filterFindByG_ERC(
 		long groupId, String externalReferenceCode) {
 
-		return filterFindByG_E(
+		return filterFindByG_ERC(
 			groupId, externalReferenceCode, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -6094,10 +6094,10 @@ public class KBArticlePersistenceImpl
 	 * @return the range of matching kb articles that the user has permission to view
 	 */
 	@Override
-	public List<KBArticle> filterFindByG_E(
+	public List<KBArticle> filterFindByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end) {
 
-		return filterFindByG_E(
+		return filterFindByG_ERC(
 			groupId, externalReferenceCode, start, end, null);
 	}
 
@@ -6116,12 +6116,12 @@ public class KBArticlePersistenceImpl
 	 * @return the ordered range of matching kb articles that the user has permission to view
 	 */
 	@Override
-	public List<KBArticle> filterFindByG_E(
+	public List<KBArticle> filterFindByG_ERC(
 		long groupId, String externalReferenceCode, int start, int end,
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_E(
+			return findByG_ERC(
 				groupId, externalReferenceCode, start, end, orderByComparator);
 		}
 
@@ -6144,17 +6144,17 @@ public class KBArticlePersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
 
 		boolean bindExternalReferenceCode = false;
 
 		if (externalReferenceCode.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_3);
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
 		}
 		else {
 			bindExternalReferenceCode = true;
 
-			sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_2);
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -6228,13 +6228,13 @@ public class KBArticlePersistenceImpl
 	 * @throws NoSuchArticleException if a kb article with the primary key could not be found
 	 */
 	@Override
-	public KBArticle[] filterFindByG_E_PrevAndNext(
+	public KBArticle[] filterFindByG_ERC_PrevAndNext(
 			long kbArticleId, long groupId, String externalReferenceCode,
 			OrderByComparator<KBArticle> orderByComparator)
 		throws NoSuchArticleException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_E_PrevAndNext(
+			return findByG_ERC_PrevAndNext(
 				kbArticleId, groupId, externalReferenceCode, orderByComparator);
 		}
 
@@ -6249,13 +6249,13 @@ public class KBArticlePersistenceImpl
 
 			KBArticle[] array = new KBArticleImpl[3];
 
-			array[0] = filterGetByG_E_PrevAndNext(
+			array[0] = filterGetByG_ERC_PrevAndNext(
 				session, kbArticle, groupId, externalReferenceCode,
 				orderByComparator, true);
 
 			array[1] = kbArticle;
 
-			array[2] = filterGetByG_E_PrevAndNext(
+			array[2] = filterGetByG_ERC_PrevAndNext(
 				session, kbArticle, groupId, externalReferenceCode,
 				orderByComparator, false);
 
@@ -6269,7 +6269,7 @@ public class KBArticlePersistenceImpl
 		}
 	}
 
-	protected KBArticle filterGetByG_E_PrevAndNext(
+	protected KBArticle filterGetByG_ERC_PrevAndNext(
 		Session session, KBArticle kbArticle, long groupId,
 		String externalReferenceCode,
 		OrderByComparator<KBArticle> orderByComparator, boolean previous) {
@@ -6292,17 +6292,17 @@ public class KBArticlePersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
 
 		boolean bindExternalReferenceCode = false;
 
 		if (externalReferenceCode.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_3);
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
 		}
 		else {
 			bindExternalReferenceCode = true;
 
-			sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_2);
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
 		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
@@ -6441,9 +6441,9 @@ public class KBArticlePersistenceImpl
 	 * @param externalReferenceCode the external reference code
 	 */
 	@Override
-	public void removeByG_E(long groupId, String externalReferenceCode) {
+	public void removeByG_ERC(long groupId, String externalReferenceCode) {
 		for (KBArticle kbArticle :
-				findByG_E(
+				findByG_ERC(
 					groupId, externalReferenceCode, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
@@ -6459,10 +6459,10 @@ public class KBArticlePersistenceImpl
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByG_E(long groupId, String externalReferenceCode) {
+	public int countByG_ERC(long groupId, String externalReferenceCode) {
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByG_E;
+		FinderPath finderPath = _finderPathCountByG_ERC;
 
 		Object[] finderArgs = new Object[] {groupId, externalReferenceCode};
 
@@ -6473,17 +6473,17 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
+			sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
 
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
 			}
 
 			String sql = sb.toString();
@@ -6526,9 +6526,9 @@ public class KBArticlePersistenceImpl
 	 * @return the number of matching kb articles that the user has permission to view
 	 */
 	@Override
-	public int filterCountByG_E(long groupId, String externalReferenceCode) {
+	public int filterCountByG_ERC(long groupId, String externalReferenceCode) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_E(groupId, externalReferenceCode);
+			return countByG_ERC(groupId, externalReferenceCode);
 		}
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
@@ -6537,17 +6537,17 @@ public class KBArticlePersistenceImpl
 
 		sb.append(_FILTER_SQL_COUNT_KBARTICLE_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_E_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_ERC_GROUPID_2);
 
 		boolean bindExternalReferenceCode = false;
 
 		if (externalReferenceCode.isEmpty()) {
-			sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_3);
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3);
 		}
 		else {
 			bindExternalReferenceCode = true;
 
-			sb.append(_FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_2);
+			sb.append(_FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2);
 		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -6584,13 +6584,13 @@ public class KBArticlePersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_G_E_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_ERC_GROUPID_2 =
 		"kbArticle.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_2 =
+	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_2 =
 		"kbArticle.externalReferenceCode = ?";
 
-	private static final String _FINDER_COLUMN_G_E_EXTERNALREFERENCECODE_3 =
+	private static final String _FINDER_COLUMN_G_ERC_EXTERNALREFERENCECODE_3 =
 		"(kbArticle.externalReferenceCode IS NULL OR kbArticle.externalReferenceCode = '')";
 
 	private FinderPath _finderPathWithPaginationFindByG_L;
@@ -18300,8 +18300,8 @@ public class KBArticlePersistenceImpl
 	private static final String _FINDER_COLUMN_R_G_S_STATUS_2 =
 		"kbArticle.status = ?";
 
-	private FinderPath _finderPathFetchByG_E_V;
-	private FinderPath _finderPathCountByG_E_V;
+	private FinderPath _finderPathFetchByG_ERC_V;
+	private FinderPath _finderPathCountByG_ERC_V;
 
 	/**
 	 * Returns the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchArticleException</code> if it could not be found.
@@ -18313,11 +18313,11 @@ public class KBArticlePersistenceImpl
 	 * @throws NoSuchArticleException if a matching kb article could not be found
 	 */
 	@Override
-	public KBArticle findByG_E_V(
+	public KBArticle findByG_ERC_V(
 			long groupId, String externalReferenceCode, int version)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = fetchByG_E_V(
+		KBArticle kbArticle = fetchByG_ERC_V(
 			groupId, externalReferenceCode, version);
 
 		if (kbArticle == null) {
@@ -18355,10 +18355,10 @@ public class KBArticlePersistenceImpl
 	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	@Override
-	public KBArticle fetchByG_E_V(
+	public KBArticle fetchByG_ERC_V(
 		long groupId, String externalReferenceCode, int version) {
 
-		return fetchByG_E_V(groupId, externalReferenceCode, version, true);
+		return fetchByG_ERC_V(groupId, externalReferenceCode, version, true);
 	}
 
 	/**
@@ -18371,7 +18371,7 @@ public class KBArticlePersistenceImpl
 	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
 	 */
 	@Override
-	public KBArticle fetchByG_E_V(
+	public KBArticle fetchByG_ERC_V(
 		long groupId, String externalReferenceCode, int version,
 		boolean useFinderCache) {
 
@@ -18386,7 +18386,8 @@ public class KBArticlePersistenceImpl
 		Object result = null;
 
 		if (useFinderCache) {
-			result = finderCache.getResult(_finderPathFetchByG_E_V, finderArgs);
+			result = finderCache.getResult(
+				_finderPathFetchByG_ERC_V, finderArgs);
 		}
 
 		if (result instanceof KBArticle) {
@@ -18407,20 +18408,20 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_SELECT_KBARTICLE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_E_V_GROUPID_2);
+			sb.append(_FINDER_COLUMN_G_ERC_V_GROUPID_2);
 
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_E_V_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_E_V_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_G_E_V_VERSION_2);
+			sb.append(_FINDER_COLUMN_G_ERC_V_VERSION_2);
 
 			String sql = sb.toString();
 
@@ -18446,7 +18447,7 @@ public class KBArticlePersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByG_E_V, finderArgs, list);
+							_finderPathFetchByG_ERC_V, finderArgs, list);
 					}
 				}
 				else {
@@ -18461,7 +18462,7 @@ public class KBArticlePersistenceImpl
 							}
 
 							_log.warn(
-								"KBArticlePersistenceImpl.fetchByG_E_V(long, String, int, boolean) with parameters (" +
+								"KBArticlePersistenceImpl.fetchByG_ERC_V(long, String, int, boolean) with parameters (" +
 									StringUtil.merge(finderArgs) +
 										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -18499,11 +18500,11 @@ public class KBArticlePersistenceImpl
 	 * @return the kb article that was removed
 	 */
 	@Override
-	public KBArticle removeByG_E_V(
+	public KBArticle removeByG_ERC_V(
 			long groupId, String externalReferenceCode, int version)
 		throws NoSuchArticleException {
 
-		KBArticle kbArticle = findByG_E_V(
+		KBArticle kbArticle = findByG_ERC_V(
 			groupId, externalReferenceCode, version);
 
 		return remove(kbArticle);
@@ -18518,12 +18519,12 @@ public class KBArticlePersistenceImpl
 	 * @return the number of matching kb articles
 	 */
 	@Override
-	public int countByG_E_V(
+	public int countByG_ERC_V(
 		long groupId, String externalReferenceCode, int version) {
 
 		externalReferenceCode = Objects.toString(externalReferenceCode, "");
 
-		FinderPath finderPath = _finderPathCountByG_E_V;
+		FinderPath finderPath = _finderPathCountByG_ERC_V;
 
 		Object[] finderArgs = new Object[] {
 			groupId, externalReferenceCode, version
@@ -18536,20 +18537,20 @@ public class KBArticlePersistenceImpl
 
 			sb.append(_SQL_COUNT_KBARTICLE_WHERE);
 
-			sb.append(_FINDER_COLUMN_G_E_V_GROUPID_2);
+			sb.append(_FINDER_COLUMN_G_ERC_V_GROUPID_2);
 
 			boolean bindExternalReferenceCode = false;
 
 			if (externalReferenceCode.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_E_V_EXTERNALREFERENCECODE_3);
+				sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_3);
 			}
 			else {
 				bindExternalReferenceCode = true;
 
-				sb.append(_FINDER_COLUMN_G_E_V_EXTERNALREFERENCECODE_2);
+				sb.append(_FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_G_E_V_VERSION_2);
+			sb.append(_FINDER_COLUMN_G_ERC_V_VERSION_2);
 
 			String sql = sb.toString();
 
@@ -18585,16 +18586,16 @@ public class KBArticlePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_E_V_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_ERC_V_GROUPID_2 =
 		"kbArticle.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_E_V_EXTERNALREFERENCECODE_2 =
+	private static final String _FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_2 =
 		"kbArticle.externalReferenceCode = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_E_V_EXTERNALREFERENCECODE_3 =
+	private static final String _FINDER_COLUMN_G_ERC_V_EXTERNALREFERENCECODE_3 =
 		"(kbArticle.externalReferenceCode IS NULL OR kbArticle.externalReferenceCode = '') AND ";
 
-	private static final String _FINDER_COLUMN_G_E_V_VERSION_2 =
+	private static final String _FINDER_COLUMN_G_ERC_V_VERSION_2 =
 		"kbArticle.version = ?";
 
 	private FinderPath _finderPathWithPaginationFindByG_P_L;
@@ -34769,7 +34770,7 @@ public class KBArticlePersistenceImpl
 			kbArticle);
 
 		finderCache.putResult(
-			_finderPathFetchByG_E_V,
+			_finderPathFetchByG_ERC_V,
 			new Object[] {
 				kbArticle.getGroupId(), kbArticle.getExternalReferenceCode(),
 				kbArticle.getVersion()
@@ -34869,9 +34870,9 @@ public class KBArticlePersistenceImpl
 			kbArticleModelImpl.getVersion()
 		};
 
-		finderCache.putResult(_finderPathCountByG_E_V, args, Long.valueOf(1));
+		finderCache.putResult(_finderPathCountByG_ERC_V, args, Long.valueOf(1));
 		finderCache.putResult(
-			_finderPathFetchByG_E_V, args, kbArticleModelImpl);
+			_finderPathFetchByG_ERC_V, args, kbArticleModelImpl);
 	}
 
 	/**
@@ -35531,8 +35532,8 @@ public class KBArticlePersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"resourcePrimKey", "status"}, false);
 
-		_finderPathWithPaginationFindByG_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_E",
+		_finderPathWithPaginationFindByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -35540,13 +35541,13 @@ public class KBArticlePersistenceImpl
 			},
 			new String[] {"groupId", "externalReferenceCode"}, true);
 
-		_finderPathWithoutPaginationFindByG_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_E",
+		_finderPathWithoutPaginationFindByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "externalReferenceCode"}, true);
 
-		_finderPathCountByG_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E",
+		_finderPathCountByG_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "externalReferenceCode"}, false);
 
@@ -35851,16 +35852,16 @@ public class KBArticlePersistenceImpl
 			},
 			new String[] {"resourcePrimKey", "groupId", "status"}, false);
 
-		_finderPathFetchByG_E_V = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_E_V",
+		_finderPathFetchByG_ERC_V = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "externalReferenceCode", "version"}, true);
 
-		_finderPathCountByG_E_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_E_V",
+		_finderPathCountByG_ERC_V = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()

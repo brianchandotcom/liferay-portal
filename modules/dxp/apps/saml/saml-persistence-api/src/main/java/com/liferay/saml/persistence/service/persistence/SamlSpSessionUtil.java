@@ -124,6 +124,182 @@ public class SamlSpSessionUtil {
 	}
 
 	/**
+	 * Returns all the saml sp sessions where samlPeerBindingId = &#63;.
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @return the matching saml sp sessions
+	 */
+	public static List<SamlSpSession> findBySamlPeerBindingId(
+		long samlPeerBindingId) {
+
+		return getPersistence().findBySamlPeerBindingId(samlPeerBindingId);
+	}
+
+	/**
+	 * Returns a range of all the saml sp sessions where samlPeerBindingId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @return the range of matching saml sp sessions
+	 */
+	public static List<SamlSpSession> findBySamlPeerBindingId(
+		long samlPeerBindingId, int start, int end) {
+
+		return getPersistence().findBySamlPeerBindingId(
+			samlPeerBindingId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the saml sp sessions where samlPeerBindingId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saml sp sessions
+	 */
+	public static List<SamlSpSession> findBySamlPeerBindingId(
+		long samlPeerBindingId, int start, int end,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		return getPersistence().findBySamlPeerBindingId(
+			samlPeerBindingId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the saml sp sessions where samlPeerBindingId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SamlSpSessionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @param start the lower bound of the range of saml sp sessions
+	 * @param end the upper bound of the range of saml sp sessions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching saml sp sessions
+	 */
+	public static List<SamlSpSession> findBySamlPeerBindingId(
+		long samlPeerBindingId, int start, int end,
+		OrderByComparator<SamlSpSession> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findBySamlPeerBindingId(
+			samlPeerBindingId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first saml sp session in the ordered set where samlPeerBindingId = &#63;.
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml sp session
+	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
+	 */
+	public static SamlSpSession findBySamlPeerBindingId_First(
+			long samlPeerBindingId,
+			OrderByComparator<SamlSpSession> orderByComparator)
+		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
+
+		return getPersistence().findBySamlPeerBindingId_First(
+			samlPeerBindingId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first saml sp session in the ordered set where samlPeerBindingId = &#63;.
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 */
+	public static SamlSpSession fetchBySamlPeerBindingId_First(
+		long samlPeerBindingId,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		return getPersistence().fetchBySamlPeerBindingId_First(
+			samlPeerBindingId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last saml sp session in the ordered set where samlPeerBindingId = &#63;.
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml sp session
+	 * @throws NoSuchSpSessionException if a matching saml sp session could not be found
+	 */
+	public static SamlSpSession findBySamlPeerBindingId_Last(
+			long samlPeerBindingId,
+			OrderByComparator<SamlSpSession> orderByComparator)
+		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
+
+		return getPersistence().findBySamlPeerBindingId_Last(
+			samlPeerBindingId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last saml sp session in the ordered set where samlPeerBindingId = &#63;.
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saml sp session, or <code>null</code> if a matching saml sp session could not be found
+	 */
+	public static SamlSpSession fetchBySamlPeerBindingId_Last(
+		long samlPeerBindingId,
+		OrderByComparator<SamlSpSession> orderByComparator) {
+
+		return getPersistence().fetchBySamlPeerBindingId_Last(
+			samlPeerBindingId, orderByComparator);
+	}
+
+	/**
+	 * Returns the saml sp sessions before and after the current saml sp session in the ordered set where samlPeerBindingId = &#63;.
+	 *
+	 * @param samlSpSessionId the primary key of the current saml sp session
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saml sp session
+	 * @throws NoSuchSpSessionException if a saml sp session with the primary key could not be found
+	 */
+	public static SamlSpSession[] findBySamlPeerBindingId_PrevAndNext(
+			long samlSpSessionId, long samlPeerBindingId,
+			OrderByComparator<SamlSpSession> orderByComparator)
+		throws com.liferay.saml.persistence.exception.NoSuchSpSessionException {
+
+		return getPersistence().findBySamlPeerBindingId_PrevAndNext(
+			samlSpSessionId, samlPeerBindingId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the saml sp sessions where samlPeerBindingId = &#63; from the database.
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 */
+	public static void removeBySamlPeerBindingId(long samlPeerBindingId) {
+		getPersistence().removeBySamlPeerBindingId(samlPeerBindingId);
+	}
+
+	/**
+	 * Returns the number of saml sp sessions where samlPeerBindingId = &#63;.
+	 *
+	 * @param samlPeerBindingId the saml peer binding ID
+	 * @return the number of matching saml sp sessions
+	 */
+	public static int countBySamlPeerBindingId(long samlPeerBindingId) {
+		return getPersistence().countBySamlPeerBindingId(samlPeerBindingId);
+	}
+
+	/**
 	 * Returns the saml sp session where jSessionId = &#63; or throws a <code>NoSuchSpSessionException</code> if it could not be found.
 	 *
 	 * @param jSessionId the j session ID

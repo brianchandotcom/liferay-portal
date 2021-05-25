@@ -189,6 +189,13 @@ public class SamlSpSessionPersistenceTest {
 	}
 
 	@Test
+	public void testCountBySamlPeerBindingId() throws Exception {
+		_persistence.countBySamlPeerBindingId(RandomTestUtil.nextLong());
+
+		_persistence.countBySamlPeerBindingId(0L);
+	}
+
+	@Test
 	public void testCountByJSessionId() throws Exception {
 		_persistence.countByJSessionId("");
 

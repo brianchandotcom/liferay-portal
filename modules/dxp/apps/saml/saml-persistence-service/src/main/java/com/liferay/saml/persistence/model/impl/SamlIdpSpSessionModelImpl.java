@@ -119,17 +119,11 @@ public class SamlIdpSpSessionModelImpl
 	public static final long SAMLIDPSSOSESSIONID_COLUMN_BITMASK = 2L;
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long SAMLPEERBINDINGID_COLUMN_BITMASK = 4L;
-
-	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SAMLIDPSPSESSIONID_COLUMN_BITMASK = 8L;
+	public static final long SAMLIDPSPSESSIONID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -478,16 +472,6 @@ public class SamlIdpSpSessionModelImpl
 		}
 
 		_samlPeerBindingId = samlPeerBindingId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalSamlPeerBindingId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("samlPeerBindingId"));
 	}
 
 	public long getColumnBitmask() {

@@ -837,11 +837,9 @@ public class SingleLogoutProfileImpl
 
 		NameID nameID = logoutRequest.getNameID();
 
-		List<SessionIndex> sessionIndexes = logoutRequest.getSessionIndexes();
-
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
-
+		List<SessionIndex> sessionIndexes = logoutRequest.getSessionIndexes();
 		String statusCodeURI = StatusCode.SUCCESS;
 
 		if (sessionIndexes.isEmpty()) {

@@ -666,6 +666,21 @@ public class Baseline {
 			}
 		}
 
+		Resource resource = jar.getResource(
+			info.packageName.replace('.', '/') + "/packageinfo");
+
+		if (resource != null) {
+			String content = IO.collect(resource.openInputStream());
+
+			if (content.startsWith("version ")) {
+				Version version = Version.parseVersion(content.substring(8));
+
+				if (version.getMajor() == 0) {
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 

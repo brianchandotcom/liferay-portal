@@ -144,7 +144,9 @@ definition {
 			menuItem = "Permissions",
 			rowEntry = "${dmDocumentTitle}");
 
-		IFrame.selectPermissionsFrame();
+		if (IsElementPresent(key_title = "Permissions", locator1 = "IFrame#MODAL_ANY")) {
+			IFrame.selectPermissionsFrame();
+		}
 	}
 
 	macro gotoDocumentsAndMediaHomeFolderPG {

@@ -274,13 +274,46 @@ definition {
 	}
 
 	@description = "COMMERCE-6361. In Members tab, I want to be able to remove users from the account"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveUserFromAccount {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountManagement#RemoveUserFromAccount";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		Click(locator1 = "Link#BACK");
+
+		AssertElementPresent(
+			key_addressType = "buyer@liferay.com",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
+
+		Click(
+			key_memberEmailAddress = "buyer@liferay.com buyer@liferay.com",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN");
 
 		// TODO COMMERCE-6361 RemoveUserFromAccount pending implementation
 
+		CommerceEntry.clickNoError(menuItem = "Remove");
+
+		AssertElementNotPresent(
+			key_addressType = "buyer@liferay.com",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
 	}
 
 	@description = "COMMERCE-6376. In Addresses tab, I want to be able to search for an address using the search bar"

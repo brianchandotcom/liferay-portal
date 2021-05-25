@@ -28,6 +28,7 @@ import com.liferay.saml.web.internal.exception.UserIdentifierExpressionException
 
 import java.io.StringWriter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +62,8 @@ public class AttributeMappingSamlSpIdpConnectionFieldExpressionHandler
 			(samlSpIdpConnection, prefixes) -> {
 				Properties userAttributeMappingsProperties = new Properties();
 
-				List<String> split = StringUtil.split(prefixes);
+				List<String> split = new ArrayList<>(
+					StringUtil.split(prefixes));
 
 				split.add(StringPool.BLANK);
 

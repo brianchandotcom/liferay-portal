@@ -21,8 +21,6 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.model.DEDataListView;
-import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
-import com.liferay.data.engine.nativeobject.DataEngineNativeObjectField;
 import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
@@ -82,7 +80,6 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
@@ -107,7 +104,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -115,7 +111,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -139,7 +134,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.validation.ValidationException;
@@ -714,47 +708,6 @@ public class DataDefinitionResourceImpl
 		}
 	}
 
-	private void _checkRemovedDataEngineNativeObjectFields(
-		DataDefinition dataDefinition) {
-
-		DataEngineNativeObject dataEngineNativeObject =
-			_dataEngineNativeObjectTracker.getDataEngineNativeObject(
-				dataDefinition.getDataDefinitionKey());
-
-		if ((dataEngineNativeObject == null) ||
-			ListUtil.isEmpty(
-				dataEngineNativeObject.getDataEngineNativeObjectFields())) {
-
-			return;
-		}
-
-		List<DataEngineNativeObjectField> dataEngineNativeObjectFields =
-			dataEngineNativeObject.getDataEngineNativeObjectFields();
-
-		Stream<DataEngineNativeObjectField> stream =
-			dataEngineNativeObjectFields.stream();
-
-		Set<String> removedDataEngineNativeObjectFieldNames = stream.map(
-			this::_getDataEngineNativeObjectFieldName
-		).filter(
-			dataEngineNativeObjectFieldName -> !Stream.of(
-				dataDefinition.getDataDefinitionFields()
-			).anyMatch(
-				dataDefinitionField -> StringUtil.equals(
-					dataDefinitionField.getName(),
-					dataEngineNativeObjectFieldName)
-			)
-		).collect(
-			Collectors.toSet()
-		);
-
-		if (SetUtil.isNotEmpty(removedDataEngineNativeObjectFieldNames)) {
-			throw new DataDefinitionValidationException.
-				MustNotRemoveNativeField(
-					removedDataEngineNativeObjectFieldNames);
-		}
-	}
-
 	private JSONObject _createFieldContextJSONObject(
 		DDMFormFieldType ddmFormFieldType, Locale locale, String type) {
 
@@ -827,14 +780,6 @@ public class DataDefinitionResourceImpl
 		}
 
 		return null;
-	}
-
-	private String _getDataEngineNativeObjectFieldName(
-		DataEngineNativeObjectField dataEngineNativeObjectField) {
-
-		Column<?, ?> column = dataEngineNativeObjectField.getColumn();
-
-		return column.getName();
 	}
 
 	private DataLayoutResource _getDataLayoutResource(boolean checkPermission) {
@@ -1566,13 +1511,6 @@ public class DataDefinitionResourceImpl
 		}
 		catch (Exception exception) {
 			throw new DataDefinitionValidationException(exception);
-		}
-
-		if (StringUtil.equals(
-				dataDefinitionContentType.getContentType(), "native-object") &&
-			Validator.isNotNull(dataDefinition.getId())) {
-
-			_checkRemovedDataEngineNativeObjectFields(dataDefinition);
 		}
 	}
 

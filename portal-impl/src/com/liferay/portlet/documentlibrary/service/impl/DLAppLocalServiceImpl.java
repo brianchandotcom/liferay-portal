@@ -40,8 +40,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -168,24 +166,24 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * sourceFileName</code> will be used.
 	 * </p>
 	 *
-	 * @param  userId the primary key of the file entry's creator/owner
-	 * @param  repositoryId the primary key of the repository
-	 * @param  folderId the primary key of the file entry's parent folder
-	 * @param  sourceFileName the original file's name
-	 * @param  mimeType the file's MIME type
-	 * @param  title the name to be assigned to the file (optionally <code>null
-	 *         </code>)
-	 * @param  description the file's description
-	 * @param  changeLog the file's version change log
-	 * @param  file the file's data (optionally <code>null</code>)
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         asset category IDs, asset tag names, and expando bridge
-	 *         attributes for the file entry. In a Liferay repository, it may
-	 *         include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
-	 *         type </li> <li> fieldsMap - mapping for fields associated with a
-	 *         custom file entry type </li> </ul>
-	 * @return the file entry
-	 * @throws PortalException if a portal exception occurred
+	 * @param      userId the primary key of the file entry's creator/owner
+	 * @param      repositoryId the primary key of the repository
+	 * @param      folderId the primary key of the file entry's parent folder
+	 * @param      sourceFileName the original file's name
+	 * @param      mimeType the file's MIME type
+	 * @param      title the name to be assigned to the file (optionally
+	 *             <code>null </code>)
+	 * @param      description the file's description
+	 * @param      changeLog the file's version change log
+	 * @param      file the file's data (optionally <code>null</code>)
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             asset category IDs, asset tag names, and expando bridge
+	 *             attributes for the file entry. In a Liferay repository, it
+	 *             may include:  <ul> <li> fileEntryTypeId - ID for a custom
+	 *             file entry type </li> <li> fieldsMap - mapping for fields
+	 *             associated with a custom file entry type </li> </ul>
+	 * @return     the file entry
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * 			   #addFileEntry(String, long, long, long, String, String,
 	 * 			   String, String, String, File, Date, Date, ServiceContext)}
@@ -217,25 +215,25 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * sourceFileName</code> will be used.
 	 * </p>
 	 *
-	 * @param  userId the primary key of the file entry's creator/owner
-	 * @param  repositoryId the primary key of the repository
-	 * @param  folderId the primary key of the file entry's parent folder
-	 * @param  sourceFileName the original file's name
-	 * @param  mimeType the file's MIME type
-	 * @param  title the name to be assigned to the file (optionally <code>null
-	 *         </code>)
-	 * @param  description the file's description
-	 * @param  changeLog the file's version change log
-	 * @param  inputStream the file's data (optionally <code>null</code>)
-	 * @param  size the file's size (optionally <code>0</code>)
-	 * @param  serviceContext the service context to be applied. Can set the
-	 *         asset category IDs, asset tag names, and expando bridge
-	 *         attributes for the file entry. In a Liferay repository, it may
-	 *         include:  <ul> <li> fileEntryTypeId - ID for a custom file entry
-	 *         type </li> <li> fieldsMap - mapping for fields associated with a
-	 *         custom file entry type </li> </ul>
-	 * @return the file entry
-	 * @throws PortalException if a portal exception occurred
+	 * @param      userId the primary key of the file entry's creator/owner
+	 * @param      repositoryId the primary key of the repository
+	 * @param      folderId the primary key of the file entry's parent folder
+	 * @param      sourceFileName the original file's name
+	 * @param      mimeType the file's MIME type
+	 * @param      title the name to be assigned to the file (optionally
+	 *             <code>null </code>)
+	 * @param      description the file's description
+	 * @param      changeLog the file's version change log
+	 * @param      inputStream the file's data (optionally <code>null</code>)
+	 * @param      size the file's size (optionally <code>0</code>)
+	 * @param      serviceContext the service context to be applied. Can set the
+	 *             asset category IDs, asset tag names, and expando bridge
+	 *             attributes for the file entry. In a Liferay repository, it
+	 *             may include:  <ul> <li> fileEntryTypeId - ID for a custom
+	 *             file entry type </li> <li> fieldsMap - mapping for fields
+	 *             associated with a custom file entry type </li> </ul>
+	 * @return     the file entry
+	 * @throws     PortalException if a portal exception occurred
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 * 			   #addFileEntry(String, long, long, long, String, String,
 	 * 			   String, String, String, InputStream, long, Date, Date,
@@ -673,6 +671,26 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the document library file entry with the matching external
+	 * reference code and group.
+	 *
+	 * @param  groupId the primary key of the file entry's group
+	 * @param  externalReferenceCode the file entry's external reference code
+	 * @return the matching document library file entry, or <code>null</code> if
+	 *         a matching document library file entry could not be found
+	 */
+	@Override
+	public FileEntry fetchFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		LocalRepository localRepository = getLocalRepository(groupId);
+
+		return localRepository.fetchFileEntryByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	/**
 	 * Returns the file entry with the primary key.
 	 *
 	 * @param  fileEntryId the primary key of the file entry
@@ -725,7 +743,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @return the file entry with the external reference code
 	 * @throws PortalException if a portal exception occurred
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Override
 	public FileEntry getFileEntryByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
 		throws PortalException {

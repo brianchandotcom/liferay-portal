@@ -47,7 +47,7 @@ public class DynamicUserFieldExpressionResolver
 		return ResourceBundleUtil.getString(
 			ResourceBundleUtil.getBundle(
 				locale, DynamicUserFieldExpressionResolver.class),
-			"dynamically-match-nameid");
+			"match-an-user-field-chosen-dynamically-based-on-nameid-format");
 	}
 
 	@Override

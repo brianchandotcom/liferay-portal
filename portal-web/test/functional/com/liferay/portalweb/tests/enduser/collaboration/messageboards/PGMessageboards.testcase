@@ -840,7 +840,7 @@ definition {
 			asset = "MB Category Name",
 			content = "MB Category Name",
 			recipient = "userfn userln",
-			sender = "Joe Bloggs",
+			sender = "Test Test",
 			subject = "MB Category Name");
 	}
 

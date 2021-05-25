@@ -117,13 +117,44 @@ definition {
 	}
 
 	@description = "COMMERCE-6172. As a buyer, I want to sort products by Price Low to High using Sort widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductsAreSortedByPriceLowToHigh {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByPriceLowToHigh";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Price Low to High");
+
+		Pause(locator1 = "3000");
 
 		// TODO COMMERCE-6172 AssertProductsAreSortedByPriceLowToHigh pending implementation
 
+		var indexProductArray = "1;Mount,2;Wheel Seal - Front,3;Valve Cover Grommets,4;Exhaust Clamps,5;Piston,6;Transmission Cooler Line Assembly";
+
+		for (var i : list "${indexProductArray}") {
+			var curr_index = StringUtil.extractFirst("${i}", ";");
+			var curr_productName = StringUtil.extractLast("${i}", ";");
+
+			AssertTextEquals(
+				key_index = "${curr_index}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+				value1 = "${curr_productName}");
+		}
+
+		var productAndPriceArray = "Mount;$ 3.00,Wheel Seal - Front;$ 4.00,Valve Cover Grommets;$ 6.00,Exhaust Clamps;$ 9.00,Piston;$ 14.00,Transmission Cooler Line Assembly;$ 15.00";
+
+		for (var i : list "${productAndPriceArray}") {
+			var curr_productName = StringUtil.extractFirst("${i}", ";");
+			var curr_price = StringUtil.extractLast("${i}", ";");
+
+			AssertTextEquals(
+				key_productName = "${curr_productName}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
+				value1 = "${curr_price}");
+		}
 	}
 
 	@description = "COMMERCE-6175. As a buyer, I want to sort products by Relevance using Sort widget and the results should be visible on the Search Results widget"

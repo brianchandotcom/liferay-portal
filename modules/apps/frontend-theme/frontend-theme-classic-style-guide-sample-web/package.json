@@ -1,7 +1,7 @@
 {
 	"dependencies": {
 		"@clayui/layout": "3.3.0",
-		"classnames": "2.2.6",
+		"classnames": "2.3.1",
 		"react": "16.12.0",
 		"react-dom": "16.12.0"
 	},

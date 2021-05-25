@@ -18,7 +18,7 @@
 		"@clayui/tabs": "3.29.0",
 		"@liferay/frontend-js-react-web": "*",
 		"axios": "0.21.1",
-		"classnames": "2.2.6",
+		"classnames": "2.3.1",
 		"custom-event-polyfill": "1.0.6",
 		"dom4": "^2.1.5",
 		"moment": "2.24.0",

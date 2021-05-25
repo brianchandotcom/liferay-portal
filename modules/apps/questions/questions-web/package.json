@@ -14,7 +14,7 @@
 		"@clayui/sticker": "3.3.0",
 		"@liferay/frontend-js-react-web": "*",
 		"asset-taglib": "*",
-		"classnames": "2.2.6",
+		"classnames": "2.3.1",
 		"frontend-editor-ckeditor-web": "*",
 		"frontend-js-web": "*",
 		"graphql-hooks": "4.4.0",

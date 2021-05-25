@@ -27,13 +27,46 @@ definition {
 	}
 
 	@description = "COMMERCE-6173. As a buyer, I want to sort products by Name(ascending) using Sort widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductsAreSortedByNameAscending {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByNameAscending";
 
-		// TODO COMMERCE-6173 AssertProductsAreSortedByNameAscending pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		AssertTextEquals(
+			key_index = "1",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+			value1 = "ABS Sensor");
+
+		AssertTextEquals(
+			key_index = "2",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+			value1 = "Ball Joints");
+
+		AssertTextEquals(
+			key_index = "3",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+			value1 = "Bearings");
+
+		AssertTextEquals(
+			key_index = "4",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+			value1 = "Brake Fluid");
+
+		AssertTextEquals(
+			key_index = "5",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+			value1 = "Brake Pads");
+
+		AssertTextEquals(
+			key_index = "6",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
+			value1 = "Brake Rotors");
 	}
 
 	@description = "COMMERCE-6174. As a buyer, I want to sort products by Name(descending) using Sort widget and the results should be visible on the Search Results widget"
@@ -79,6 +112,8 @@ definition {
 			key_index = "6",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
 			value1 = "Universal CV Boot");
+		// TODO COMMERCE-6174 AssertProductsAreSortedByNameDescending pending implementation
+
 	}
 
 	@description = "COMMERCE-6176. As a buyer, I want to sort products by New Items using Sort widget and the results should be visible on the Search Results widget"

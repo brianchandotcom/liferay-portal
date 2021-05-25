@@ -44,14 +44,12 @@
 
 </div>
 
-<c:if test="<%= entriesCount > 0 %>">
-	<liferay-ui:search-paginator
-		id="pageIteratorTop"
-		markupView="lexicon"
-		searchContainer="<%= searchContainer %>"
-		type="article"
-	/>
-</c:if>
+<liferay-ui:search-paginator
+	id="pageIteratorTop"
+	markupView="lexicon"
+	searchContainer="<%= searchContainer %>"
+	type="article"
+/>
 
 <%
 if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN, ActionKeys.VIEW)) {

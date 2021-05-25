@@ -217,6 +217,15 @@ public class ObjectEntryKeywordQueryContributor
 						StringUtil.toLowerCase(fieldKeywords)),
 					BooleanClauseOccur.MUST);
 			}
+			else if (StringUtil.equalsIgnoreCase(fieldKeywords, "yes") ||
+					 StringUtil.equalsIgnoreCase(fieldKeywords, "no")) {
+
+				nestedBooleanQuery.add(
+					new TermQueryImpl(
+						"nestedFieldArray.value_keyword",
+						StringUtil.toLowerCase(fieldKeywords)),
+					BooleanClauseOccur.MUST);
+			}
 		}
 		else if (Objects.equals(objectField.getType(), "Date")) {
 			_addDateRangeQuery(

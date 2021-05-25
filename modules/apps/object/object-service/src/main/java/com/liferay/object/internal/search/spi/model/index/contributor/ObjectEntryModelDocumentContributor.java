@@ -151,6 +151,9 @@ public class ObjectEntryModelDocumentContributor
 			_addField(
 				fieldArray, objectField.getName(), "value_boolean",
 				String.valueOf(value));
+			_addField(
+				fieldArray, objectField.getName(), "value_keyword",
+				_translate((Boolean)value));
 		}
 		else if (value instanceof Date) {
 			_addField(
@@ -218,6 +221,14 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		return value;
+	}
+
+	private String _translate(Boolean value) {
+		if (value.booleanValue()) {
+			return "yes";
+		}
+
+		return "no";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

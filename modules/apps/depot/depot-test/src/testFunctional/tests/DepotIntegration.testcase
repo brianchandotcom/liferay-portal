@@ -758,10 +758,6 @@ definition {
 
 		Depot.connectSite(siteList = "Child Site Name");
 
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Child Site Name");
-
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.jpg");

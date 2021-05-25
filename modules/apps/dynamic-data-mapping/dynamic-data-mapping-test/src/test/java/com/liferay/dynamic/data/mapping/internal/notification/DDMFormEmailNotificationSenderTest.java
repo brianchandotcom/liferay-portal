@@ -18,15 +18,19 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.HtmlImpl;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -36,6 +40,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.api.support.membermodification.MemberMatcher;
@@ -49,15 +54,17 @@ public class DDMFormEmailNotificationSenderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormEmailNotificationSender();
-		setUpDDMFormFieldTypeServicesTracker();
-		setUpHtmlUtil();
+		_setUpDDMFormEmailNotificationSender();
+		_setUpDDMFormFieldTypeServicesTracker();
+		_setUpHtmlUtil();
 	}
 
 	@Test
 	public void testGetFieldProperties() {
 		DDMFormValues ddmFormValues = createDDMFormValues(
-			new UnlocalizedValue("test"));
+			createDDMForm(new DDMFormField("TextField", "text")),
+			createDDMFormFieldValue(
+				"a1hd", "TextField", new UnlocalizedValue("test")));
 
 		Map<String, Object> fieldProperties =
 			_ddmFormEmailNotificationSender.getFieldProperties(
@@ -76,7 +83,9 @@ public class DDMFormEmailNotificationSenderTest {
 
 	@Test
 	public void testGetFieldPropertiesNullValue() {
-		DDMFormValues ddmFormValues = createDDMFormValues(null);
+		DDMFormValues ddmFormValues = createDDMFormValues(
+			createDDMForm(new DDMFormField("TextField", "text")),
+			createDDMFormFieldValue("a1hd", "TextField", null));
 
 		Map<String, Object> fieldProperties =
 			_ddmFormEmailNotificationSender.getFieldProperties(
@@ -93,18 +102,69 @@ public class DDMFormEmailNotificationSenderTest {
 			StringPool.BLANK, String.valueOf(fieldProperties.get("value")));
 	}
 
-	protected DDMFormValues createDDMFormValues(Value value) {
+	@Test
+	public void testGetFields() throws Exception {
 		DDMFormField ddmFormField = new DDMFormField("TextField", "text");
 
+		ddmFormField.addNestedDDMFormField(
+			new DDMFormField("NumericField", "numeric"));
+
+		DDMForm ddmForm = createDDMForm(ddmFormField);
+
+		DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
+			"a1hd", "TextField",
+			DDMFormValuesTestUtil.createLocalizedValue("test", LocaleUtil.US));
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"uxyj", "NumericField",
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"1", LocaleUtil.US)));
+
+		DDMFormValues ddmFormValues = createDDMFormValues(
+			ddmForm, ddmFormFieldValue);
+
+		List<Object> fields = _ddmFormEmailNotificationSender.getFields(
+			Arrays.asList("TextField"),
+			_ddmFormEmailNotificationSender.getDDMFormFieldValuesMap(
+				_mockDDMFormInstanceRecord(ddmFormValues)),
+			LocaleUtil.US);
+
+		Assert.assertEquals(fields.toString(), 2, fields.size());
+
+		Map<String, Object> fieldProperties = (Map<String, Object>)fields.get(
+			0);
+
+		Assert.assertEquals(
+			"test", String.valueOf(fieldProperties.get("value")));
+
+		fieldProperties = (Map<String, Object>)fields.get(1);
+
+		Assert.assertEquals("1", String.valueOf(fieldProperties.get("value")));
+	}
+
+	protected DDMForm createDDMForm(DDMFormField ddmFormField) {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.addDDMFormField(ddmFormField);
 
+		return ddmForm;
+	}
+
+	protected DDMFormFieldValue createDDMFormFieldValue(
+		String instanceId, String name, Value value) {
+
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-		ddmFormFieldValue.setInstanceId("a1hd");
-		ddmFormFieldValue.setName("TextField");
+		ddmFormFieldValue.setInstanceId(instanceId);
+		ddmFormFieldValue.setName(name);
 		ddmFormFieldValue.setValue(value);
+
+		return ddmFormFieldValue;
+	}
+
+	protected DDMFormValues createDDMFormValues(
+		DDMForm ddmForm, DDMFormFieldValue ddmFormFieldValue) {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
@@ -114,7 +174,23 @@ public class DDMFormEmailNotificationSenderTest {
 		return ddmFormValues;
 	}
 
-	protected void setUpDDMFormEmailNotificationSender() throws Exception {
+	private DDMFormInstanceRecord _mockDDMFormInstanceRecord(
+			DDMFormValues ddmFormValues)
+		throws Exception {
+
+		DDMFormInstanceRecord ddmFormInstanceRecord = Mockito.mock(
+			DDMFormInstanceRecord.class);
+
+		Mockito.when(
+			ddmFormInstanceRecord.getDDMFormValues()
+		).thenReturn(
+			ddmFormValues
+		);
+
+		return ddmFormInstanceRecord;
+	}
+
+	private void _setUpDDMFormEmailNotificationSender() throws Exception {
 		_ddmFormEmailNotificationSender = new DDMFormEmailNotificationSender();
 
 		MemberMatcher.field(
@@ -125,7 +201,7 @@ public class DDMFormEmailNotificationSenderTest {
 		);
 	}
 
-	protected void setUpDDMFormFieldTypeServicesTracker() {
+	private void _setUpDDMFormFieldTypeServicesTracker() {
 		PowerMockito.when(
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
 				Matchers.anyString())
@@ -134,7 +210,7 @@ public class DDMFormEmailNotificationSenderTest {
 		);
 	}
 
-	protected void setUpHtmlUtil() {
+	private void _setUpHtmlUtil() {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());

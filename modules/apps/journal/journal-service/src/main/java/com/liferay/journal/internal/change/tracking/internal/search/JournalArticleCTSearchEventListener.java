@@ -14,20 +14,15 @@
 
 package com.liferay.journal.internal.change.tracking.internal.search;
 
-import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntryTable;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleTable;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistry;
-import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import java.util.List;
@@ -45,60 +40,40 @@ public class JournalArticleCTSearchEventListener implements CTEventListener {
 
 	@Override
 	public void onAfterPublish(long ctCollectionId) {
-		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
-			ctCollectionId);
-
-		if (ctCollection == null) {
-			return;
-		}
-
-		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
-			JournalArticleTable.INSTANCE
-		).from(
-			JournalArticleTable.INSTANCE
-		).innerJoinON(
-			CTEntryTable.INSTANCE,
-			CTEntryTable.INSTANCE.modelClassPK.eq(
-				JournalArticleTable.INSTANCE.id)
-		).where(
-			JournalArticleTable.INSTANCE.ctCollectionId.eq(ctCollectionId)
-		);
-
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
+				List<JournalArticle> journalArticles = null;
+
 				try (SafeCloseable safeCloseable =
 						CTCollectionThreadLocal.
 							setCTCollectionIdWithSafeCloseable(
 								ctCollectionId)) {
 
-					List<JournalArticle> journalArticles =
-						_journalArticleLocalService.dslQuery(dslQuery);
-
-					_reindex(journalArticles);
+					journalArticles = _journalArticleLocalService.dslQuery(
+						DSLQueryFactoryUtil.select(
+							JournalArticleTable.INSTANCE
+						).from(
+							JournalArticleTable.INSTANCE
+						).innerJoinON(
+							CTEntryTable.INSTANCE,
+							CTEntryTable.INSTANCE.modelClassPK.eq(
+								JournalArticleTable.INSTANCE.id)
+						).where(
+							JournalArticleTable.INSTANCE.ctCollectionId.eq(
+								ctCollectionId)
+						));
 				}
+
+				_journalArticleIndexer.reindex(journalArticles);
 
 				return null;
 			});
 	}
 
-	private void _reindex(List<JournalArticle> journalArticles)
-		throws SearchException {
-
-		Indexer<JournalArticle> indexer = _indexerRegistry.getIndexer(
-			JournalArticle.class);
-
-		if (indexer == null) {
-			return;
-		}
-
-		indexer.reindex(journalArticles);
-	}
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private IndexerRegistry _indexerRegistry;
+	@Reference(
+		target = "(component.name=com.liferay.journal.internal.search.JournalArticleIndexer)"
+	)
+	private Indexer<JournalArticle> _journalArticleIndexer;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

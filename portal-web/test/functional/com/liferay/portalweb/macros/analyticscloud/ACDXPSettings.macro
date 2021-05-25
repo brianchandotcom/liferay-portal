@@ -5,8 +5,6 @@ definition {
 	}
 
 	macro connectDXPtoAnalyticsCloud {
-		var siteName = "${siteName}";
-
 		ACDXPSettings.goToInstanceSettingsAC();
 
 		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
@@ -19,7 +17,7 @@ definition {
 
 		ACDXPSettings.navToSyncedSitesMenu();
 
-		ACDXPSettings.createCombinedProperties();
+		ACDXPSettings.createCombinedProperties(siteName = "${siteName}");
 
 		ACDXPSettings.navToSyncedContactDataMenu();
 
@@ -27,6 +25,8 @@ definition {
 	}
 
 	macro createCombinedProperties {
+		var siteName = "${siteName}";
+
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 
 		Click(locator1 = "ACDXPSettings#COMBINATED_PROPERTY_OPTION");

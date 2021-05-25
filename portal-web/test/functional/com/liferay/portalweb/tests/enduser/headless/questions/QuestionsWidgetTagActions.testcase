@@ -174,7 +174,7 @@ definition {
 	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
 	@priority = "4"
 	@refactordone
-	test QuestionTagsCanBeOrderedByOccurrenceInTagsTap {
+	test QuestionTagsCanBeOrderedByOccurrenceInTagsTab {
 		for (var num : list "1,2") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",

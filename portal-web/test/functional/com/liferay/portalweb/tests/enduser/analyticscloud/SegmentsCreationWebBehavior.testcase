@@ -1,0 +1,168 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AC Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.launchDXP();
+
+		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "Create a Web Behavior Segment Submitting a Form"
+	@priority = "5"
+	test CanCreateWebBehaviorSegmentSubmittingForm {
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AC Page",
+			widgetName = "Form");
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+        Navigator.openSiteURL(siteName = "Site Name");
+
+        ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName();
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm();
+
+		PortletEntry.save();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Test Segments");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "10000");
+
+        ACUtils.launchAC();
+
+        ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+        ACNavigation.goToSegments();
+
+        ACSegments.createDynamicSegment();
+
+        ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.addSegmentField(segmentField = "Submitted Form");
+
+		ACSegments.selectDocument(
+			indexField = "1",
+			titleName = "Created Form Name");
+
+		ACSegments.setOccurence(occurenceNumber = "2");
+
+		ACSegments.saveSegment();
+
+		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+
+        AssertTextEquals(
+			locator1 = "ACSegments#NO_MEMBER_TITLE",
+            value1 = "There are no items found.");
+
+		ACUtils.launchDXP();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text Field",
+			fieldName = "${fieldTextField}");
+
+		FormFields.editText(
+			fieldName = "${fieldTextField}",
+			fieldValue = "Test Segments");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSegments();
+
+        ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+        ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+
+        AssertElementPresent(
+			locator1 = "ACSegments#SEGMENT_MEMBERS",
+            key_userName = "Test Test");
+	}
+
+}

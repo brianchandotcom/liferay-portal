@@ -16,8 +16,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -28,17 +26,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.saml.constants.SamlWebKeys" %><%@
-page import="com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler" %><%@
-page import="com.liferay.saml.web.internal.display.context.AttributeMappingDisplayContext" %><%@
-page import="com.liferay.saml.web.internal.exception.UserAttributeMappingException" %><%@
-page import="com.liferay.saml.web.internal.exception.UserIdentifierExpressionException" %>
-
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %><%@
-page import="java.util.Objects" %>
+page import="com.liferay.saml.constants.SamlWebKeys" %>
 
 <liferay-frontend:defineObjects />
 

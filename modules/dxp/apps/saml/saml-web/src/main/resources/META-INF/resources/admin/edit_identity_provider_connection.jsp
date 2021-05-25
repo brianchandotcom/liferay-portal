@@ -19,6 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+AttributeMappingDisplayContext attributeMappingDisplayContext = (AttributeMappingDisplayContext)request.getAttribute(AttributeMappingDisplayContext.class.getName());
 SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)request.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTION);
 UserFieldExpressionResolverRegistry userFieldExpressionResolverRegistry = (UserFieldExpressionResolverRegistry)request.getAttribute(UserFieldExpressionResolverRegistry.class.getName());
 
@@ -53,9 +54,15 @@ if (samlSpIdpConnection != null) {
 	<liferay-ui:error exception="<%= SamlSpIdpConnectionMetadataXmlException.class %>" message="please-enter-a-valid-metadata-xml" />
 	<liferay-ui:error exception="<%= SamlSpIdpConnectionSamlIdpEntityIdException.class %>" message="please-enter-a-valid-identity-provider-entity-id" />
 
-	<aui:model-context bean="<%= samlSpIdpConnection %>" model="<%= SamlSpIdpConnection.class %>" />
+	<liferay-ui:error exception="<%= UserAttributeMappingException.class %>">
+		<liferay-ui:message arguments="<%= attributeMappingDisplayContext.getMessageArguments((UserAttributeMappingException)errorException) %>" key="<%= attributeMappingDisplayContext.getMessageKey((UserAttributeMappingException)errorException) %>" translateArguments="<%= false %>" />
+	</liferay-ui:error>
 
-	<liferay-util:include page="/dynamic_include/saml_attribute_mapping_pre.jsp" servletContext="<%= application %>" />
+	<liferay-ui:error exception="<%= UserIdentifierExpressionException.class %>">
+		<liferay-ui:message key="<%= attributeMappingDisplayContext.getMessageKey((UserIdentifierExpressionException)errorException) %>" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
+	<aui:model-context bean="<%= samlSpIdpConnection %>" model="<%= SamlSpIdpConnection.class %>" />
 
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_identity_provider_connection.jsp#pre" />
 
@@ -117,7 +124,7 @@ if (samlSpIdpConnection != null) {
 
 	</aui:fieldset>
 
-	<liferay-util:include page="/dynamic_include/saml_attribute_mapping_post.jsp" servletContext="<%= application %>" />
+	<liferay-util:include page="/admin/user_attribute_mapping.jsp" servletContext="<%= application %>" />
 
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_identity_provider_connection.jsp#post" />
 

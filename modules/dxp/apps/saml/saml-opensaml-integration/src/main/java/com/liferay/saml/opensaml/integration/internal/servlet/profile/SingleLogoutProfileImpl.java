@@ -56,7 +56,6 @@ import com.liferay.saml.util.SamlHttpRequestUtil;
 
 import java.io.Writer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -840,11 +839,17 @@ public class SingleLogoutProfileImpl
 
 		List<SessionIndex> sessionIndexes = logoutRequest.getSessionIndexes();
 
+		SAMLPeerEntityContext samlPeerEntityContext =
+			messageContext.getSubcontext(SAMLPeerEntityContext.class);
+
 		String statusCodeURI = StatusCode.SUCCESS;
 
 		if (sessionIndexes.isEmpty()) {
-			List<SamlSpSession> samlSpSessions = new ArrayList<>();
-			//samlSpSessionLocalService.getSamlSpSessions(nameID.getValue());
+			List<SamlSpSession> samlSpSessions =
+				samlSpSessionLocalService.getSamlSpSessions(
+					CompanyThreadLocal.getCompanyId(), nameID.getFormat(),
+					nameID.getNameQualifier(), nameID.getSPNameQualifier(),
+					nameID.getValue(), samlPeerEntityContext.getEntityId());
 
 			if (samlSpSessions.isEmpty()) {
 				statusCodeURI = StatusCode.UNKNOWN_PRINCIPAL;
@@ -902,9 +907,6 @@ public class SingleLogoutProfileImpl
 		SecurityParametersContext securityParametersContext =
 			outboundMessageContext.getSubcontext(
 				SecurityParametersContext.class, true);
-
-		SAMLPeerEntityContext samlPeerEntityContext =
-			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
 		SAMLMetadataContext samlPeerMetadataContext =
 			samlPeerEntityContext.getSubcontext(SAMLMetadataContext.class);

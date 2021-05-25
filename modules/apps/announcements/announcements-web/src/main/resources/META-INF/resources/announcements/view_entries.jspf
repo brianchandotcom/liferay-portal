@@ -47,6 +47,7 @@
 <c:if test="<%= entriesCount > 0 %>">
 	<liferay-ui:search-paginator
 		id="pageIteratorTop"
+		markupView="lexicon"
 		searchContainer="<%= searchContainer %>"
 		type="article"
 	/>

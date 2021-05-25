@@ -177,6 +177,18 @@ public class LiferayClient {
 			return this;
 		}
 
+		public Builder setProxyIdentityId(String proxyIdentityId) {
+			_proxyIdentityId = proxyIdentityId;
+
+			return this;
+		}
+
+		public Builder setProxyIdentitySecret(String proxyIdentitySecret) {
+			_proxyIdentitySecret = proxyIdentitySecret;
+
+			return this;
+		}
+
 		public Builder setRadTimeoutMills(int readTimeoutMills) {
 			_readTimeoutMills = readTimeoutMills;
 
@@ -190,6 +202,8 @@ public class LiferayClient {
 		private boolean _forceHttps;
 		private String _hostURL;
 		private boolean _oAuthAuthorization;
+		private String _proxyIdentityId;
+		private String _proxyIdentitySecret;
 		private int _readTimeoutMills;
 
 	}
@@ -202,6 +216,8 @@ public class LiferayClient {
 
 		_hostURL = _toRequiredHttpScheme(builder._hostURL);
 
+		_proxyIdentityId = builder._proxyIdentityId;
+		_proxyIdentitySecret = builder._proxyIdentitySecret;
 		_readTimeoutMills = builder._readTimeoutMills;
 		_connectionTimeoutMills = builder._connectionTimeoutMills;
 		_oAuthAuthorization = builder._oAuthAuthorization;
@@ -215,6 +231,20 @@ public class LiferayClient {
 		if (_logger.isDebugEnabled()) {
 			_logger.debug("Created new Liferay Client for {}", _hostURL);
 		}
+	}
+
+	private void _addProxyAuthorizationHeader(Invocation.Builder builder) {
+		if (StringUtil.isEmpty(_proxyIdentityId) ||
+			StringUtil.isEmpty(_proxyIdentitySecret)) {
+
+			return;
+		}
+
+		builder.header(
+			"Proxy-Authorization",
+			String.format(
+				"Basic %s",
+				_getBasicToken(_proxyIdentityId, _proxyIdentitySecret)));
 	}
 
 	private Invocation.Builder _createBuilder(URI targetURI)
@@ -279,6 +309,8 @@ public class LiferayClient {
 				_authorizationIdentitySecret, "grant_type",
 				"client_credentials", "response_type", "code"));
 
+		_addProxyAuthorizationHeader(builder);
+
 		return _execute(HttpMethod.POST, builder, entity);
 	}
 
@@ -289,17 +321,20 @@ public class LiferayClient {
 			return "Bearer " + _getBearerToken();
 		}
 
-		return "Basic " + _getBasicToken();
+		return String.format(
+			"Basic %s",
+			_getBasicToken(
+				_authorizationIdentityId, _authorizationIdentitySecret));
 	}
 
-	private String _getBasicToken() {
+	private String _getBasicToken(String identityId, String identitySecret) {
 		Base64.Encoder base64Encoder = Base64.getEncoder();
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_authorizationIdentityId);
+		sb.append(identityId);
 		sb.append(":");
-		sb.append(_authorizationIdentitySecret);
+		sb.append(identitySecret);
 
 		String base64Seed = sb.toString();
 
@@ -457,6 +492,8 @@ public class LiferayClient {
 	private final boolean _forceHttps;
 	private final String _hostURL;
 	private final boolean _oAuthAuthorization;
+	private final String _proxyIdentityId;
+	private final String _proxyIdentitySecret;
 	private final int _readTimeoutMills;
 	private final ResponseHandler _responseHandler = new ResponseHandler();
 

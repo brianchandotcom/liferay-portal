@@ -32,6 +32,13 @@ public class OASParameter {
 				add(new OASParameter("nestedFields", "query"));
 			}
 		};
+	public static final List<OASParameter> proxyParameters =
+		new ArrayList<OASParameter>() {
+			{
+				add(new OASParameter("proxyIdentityId", "header"));
+				add(new OASParameter("proxyIdentitySecret", "header"));
+			}
+		};
 
 	public OASParameter(String name, String location) {
 		_name = name;
@@ -87,7 +94,7 @@ public class OASParameter {
 
 	public enum Location {
 
-		PATH, QUERY;
+		HEADER, PATH, QUERY;
 
 		public boolean isPath() {
 			if (this == PATH) {

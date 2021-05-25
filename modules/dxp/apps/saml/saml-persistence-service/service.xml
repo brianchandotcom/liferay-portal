@@ -71,10 +71,6 @@
 		<finder name="SamlIdpSsoSessionId" return-type="Collection">
 			<finder-column name="samlIdpSsoSessionId" />
 		</finder>
-		<finder name="SISSI_SPBI" return-type="SamlIdpSpSession">
-			<finder-column name="samlIdpSsoSessionId" />
-			<finder-column name="samlPeerBindingId" />
-		</finder>
 	</entity>
 	<entity local-service="true" name="SamlIdpSsoSession" remote-service="false">
 

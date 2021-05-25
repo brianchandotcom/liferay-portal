@@ -17,80 +17,84 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {
-	ADD_ITEM_TO_COMPARE,
-	COMPARE_IS_AVAILABLE,
-	COMPARE_IS_UNAVAILABLE,
 	ITEM_REMOVED_FROM_COMPARE,
-	REMOVE_ITEM_FROM_COMPARE,
+	PRODUCT_COMPARISON_TOGGLED,
+	TOGGLE_ITEM_IN_PRODUCT_COMPARISON,
 } from '../../utilities/eventsDefinitions';
 
-function CompareCheckbox(props) {
-	const [inCompare, setInCompare] = useState(Boolean(props.inCompare));
-	const [disabled, setDisabled] = useState(props.disabled);
+function CompareCheckbox({
+	disabled: isDisabled,
+	inCompare: isInCompare,
+	itemId,
+	label,
+	onUpdate,
+	pictureUrl,
+}) {
+	const [inCompare, setInCompare] = useState(isInCompare);
+	const [disabled, setDisabled] = useState(isDisabled);
 
-	const updateParent = useCallback(() => {
-		if (props.onUpdate) {
-			props.onUpdate({
-				disabled,
-				inCompare,
-			});
-		}
-	}, [disabled, inCompare, props]);
+	const toggleCompare = useCallback(
+		({disabled = true}) => {
+			setDisabled(disabled);
 
-	const enableCompare = useCallback(() => {
-		setDisabled(false);
-		updateParent();
-	}, [updateParent]);
-
-	const disableCompare = useCallback(() => {
-		setDisabled(true);
-		updateParent();
-	}, [updateParent]);
-
-	const removeFromCompare = useCallback(
-		(data) => {
-			if (data.id === props.itemId) {
-				setInCompare(false);
-			}
-			updateParent();
+			onUpdate({disabled, inCompare});
 		},
-		[props.itemId, updateParent]
+		[inCompare, onUpdate]
 	);
 
-	function handleCheckboxClick() {
-		setInCompare((v) => {
-			Liferay.fire(v ? ADD_ITEM_TO_COMPARE : REMOVE_ITEM_FROM_COMPARE, {
-				id: props.itemId,
-				thumbnail: props.pictureUrl || null,
-			});
+	const removeFromCompare = useCallback(
+		({id}) => {
+			if (id === itemId) {
+				setInCompare(() => {
+					const inCompare = false;
 
-			return !v;
-		});
-	}
+					onUpdate({disabled, inCompare});
+
+					return inCompare;
+				});
+			}
+		},
+		[disabled, itemId, onUpdate]
+	);
 
 	useEffect(() => {
-		Liferay.on(COMPARE_IS_AVAILABLE, enableCompare);
-		Liferay.on(COMPARE_IS_UNAVAILABLE, disableCompare);
 		Liferay.on(ITEM_REMOVED_FROM_COMPARE, removeFromCompare);
+		Liferay.on(PRODUCT_COMPARISON_TOGGLED, toggleCompare);
 
 		return () => {
-			Liferay.detach(COMPARE_IS_AVAILABLE, enableCompare);
-			Liferay.detach(COMPARE_IS_UNAVAILABLE, disableCompare);
 			Liferay.detach(ITEM_REMOVED_FROM_COMPARE, removeFromCompare);
+			Liferay.detach(PRODUCT_COMPARISON_TOGGLED, toggleCompare);
 		};
-	}, [disableCompare, enableCompare, removeFromCompare]);
+	}, [removeFromCompare, toggleCompare]);
 
 	return (
 		<ClayCheckbox
-			aria-label={props.label || null}
+			aria-label={label}
 			checked={inCompare}
 			className="compare-checkbox-component"
 			disabled={disabled && !inCompare}
-			label={props.label || null}
-			onChange={handleCheckboxClick}
+			label={label}
+			onChange={() =>
+				setInCompare((currentlyInCompare) => {
+					Liferay.fire(TOGGLE_ITEM_IN_PRODUCT_COMPARISON, {
+						id: itemId,
+						thumbnail: pictureUrl,
+					});
+
+					return !currentlyInCompare;
+				})
+			}
 		/>
 	);
 }
+
+CompareCheckbox.defaultProps = {
+	disabled: false,
+	inCompare: false,
+	label: '',
+	onUpdate: () => {},
+	pictureUrl: '',
+};
 
 CompareCheckbox.propTypes = {
 	disabled: PropTypes.bool,

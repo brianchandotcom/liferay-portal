@@ -16,8 +16,6 @@ export const AUTOCOMPLETE_VALUE_UPDATED = 'autocomplete-updated';
 export const CART_PRODUCT_QUANTITY_CHANGED = 'quantity-changed-from-cart';
 export const CLOSE_MODAL = 'close-modal';
 export const CLOSE_SIDE_PANEL = 'close-side-panel';
-export const COMPARE_IS_AVAILABLE = 'compareIsAvailable';
-export const COMPARE_IS_UNAVAILABLE = 'compareIsUnavailable';
 export const CP_INSTANCE_CHANGED = 'product-instance-changed';
 export const CURRENT_ACCOUNT_UPDATED = 'current-account-updated';
 export const CURRENT_ORDER_UPDATED = 'current-order-updated';
@@ -27,23 +25,21 @@ export const DATASET_ACTION_PERFORMED = 'dataset-action-performed';
 export const DATASET_DISPLAY_UPDATED = 'dataset-display-updated';
 export const IFRAME_LOADED = 'iframe-loaded';
 export const IS_LOADING_MODAL = 'is-loading-modal';
+export const ITEM_REMOVED_FROM_COMPARE = 'item-removed-from-compare';
 export const OPEN_MODAL = 'open-modal';
 export const OPEN_SIDE_PANEL = 'open-side-panel';
+export const PRODUCT_COMPARISON_TOGGLED = 'product-comparison-toggled';
 export const PRODUCT_OPTIONS_CHANGED = 'product-options-changed';
 export const PRODUCT_REMOVED_FROM_CART = 'product-removed-from-cart';
 export const SIDE_PANEL_CLOSED = 'side-panel-closed';
+export const TOGGLE_ITEM_IN_PRODUCT_COMPARISON = 'toggle-item-in-compare';
 export const UPDATE_DATASET_DISPLAY = 'update-dataset-display';
-export const ITEM_REMOVED_FROM_COMPARE = 'itemRemovedFromCompare';
-export const ADD_ITEM_TO_COMPARE = 'addItemToCompare';
-export const REMOVE_ITEM_FROM_COMPARE = 'removeItemFromCompare';
 
 export default {
 	AUTOCOMPLETE_VALUE_UPDATED,
 	CART_PRODUCT_QUANTITY_CHANGED,
 	CLOSE_MODAL,
 	CLOSE_SIDE_PANEL,
-	COMPARE_IS_AVAILABLE,
-	COMPARE_IS_UNAVAILABLE,
 	CP_INSTANCE_CHANGED,
 	CURRENT_ACCOUNT_UPDATED,
 	CURRENT_ORDER_UPDATED,
@@ -55,8 +51,10 @@ export default {
 	IS_LOADING_MODAL,
 	OPEN_MODAL,
 	OPEN_SIDE_PANEL,
+	PRODUCT_COMPARISON_TOGGLED,
 	PRODUCT_OPTIONS_CHANGED,
 	PRODUCT_REMOVED_FROM_CART,
 	SIDE_PANEL_CLOSED,
+	TOGGLE_ITEM_IN_PRODUCT_COMPARISON,
 	UPDATE_DATASET_DISPLAY,
 };

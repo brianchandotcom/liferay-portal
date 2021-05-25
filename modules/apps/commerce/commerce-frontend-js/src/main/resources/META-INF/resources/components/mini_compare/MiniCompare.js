@@ -21,11 +21,9 @@ import React, {useEffect, useState} from 'react';
 
 import CommerceCookie from '../../utilities/cookies';
 import {
-	ADD_ITEM_TO_COMPARE,
-	COMPARE_IS_AVAILABLE,
-	COMPARE_IS_UNAVAILABLE,
 	ITEM_REMOVED_FROM_COMPARE,
-	REMOVE_ITEM_FROM_COMPARE,
+	PRODUCT_COMPARISON_TOGGLED,
+	TOGGLE_ITEM_IN_PRODUCT_COMPARISON,
 } from '../../utilities/eventsDefinitions';
 
 const compareCookie = new CommerceCookie('COMMERCE_COMPARE_cpDefinitionIds_');
@@ -101,12 +99,10 @@ function MiniCompare(props) {
 			});
 		}
 
-		Liferay.on(ADD_ITEM_TO_COMPARE, toggleItem);
-		Liferay.on(REMOVE_ITEM_FROM_COMPARE, toggleItem);
+		Liferay.on(TOGGLE_ITEM_IN_PRODUCT_COMPARISON, toggleItem);
 
 		return () => {
-			Liferay.detach(ADD_ITEM_TO_COMPARE, toggleItem);
-			Liferay.detach(REMOVE_ITEM_FROM_COMPARE, toggleItem);
+			Liferay.detach(TOGGLE_ITEM_IN_PRODUCT_COMPARISON, toggleItem);
 		};
 	}, [
 		props.commerceChannelGroupId,
@@ -115,12 +111,9 @@ function MiniCompare(props) {
 	]);
 
 	useEffect(() => {
-		if (items.length < props.itemsLimit) {
-			Liferay.fire(COMPARE_IS_AVAILABLE);
-		}
-		else {
-			Liferay.fire(COMPARE_IS_UNAVAILABLE);
-		}
+		Liferay.fire(PRODUCT_COMPARISON_TOGGLED, {
+			disabled: items.length < props.itemsLimit,
+		});
 	}, [items, props.itemsLimit]);
 
 	return (

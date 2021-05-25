@@ -42,8 +42,13 @@ public class BuildRESTTask extends JavaExec {
 
 		_forceClientVersionDescription = GradleUtil.getTaskPrefixedProperty(
 			this, "forceClientVersionDescription");
+
 		_forcePredictableOperationId = GradleUtil.getTaskPrefixedProperty(
 			this, "forcePredictableOperationId");
+
+		if (_forcePredictableOperationId == null) {
+			_forcePredictableOperationId = Boolean.FALSE.toString();
+		}
 	}
 
 	@Override

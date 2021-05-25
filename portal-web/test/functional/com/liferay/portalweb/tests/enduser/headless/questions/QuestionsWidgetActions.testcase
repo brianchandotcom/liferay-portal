@@ -275,10 +275,12 @@ definition {
 	}
 
 	@description = "Validate if the user can create a question with an image."
-	@priority = "4"
+	@priority = "5"
 	@refactordone
 	@uitest
 	test CanAddQuestionWithImage {
+		property portal.acceptance = "true";
+
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "Document_1.svg",
@@ -484,6 +486,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditAnswer {
+		property portal.acceptance = "true";
+
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",
 			categoryName = "Questions Test Category",

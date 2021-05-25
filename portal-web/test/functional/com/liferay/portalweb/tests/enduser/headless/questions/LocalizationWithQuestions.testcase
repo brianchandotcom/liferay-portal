@@ -424,6 +424,8 @@ definition {
 	@priority = "5"
 	@refactordone
 	test QuestionCanBeViewedViaTag {
+		property portal.acceptance = "true";
+
 		JSONMBMessage.addCategory(
 			categoryDescription = "トピック記述",
 			categoryName = "質問トピック",

@@ -213,8 +213,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setCompanyId(user.getCompanyId());
 		kbArticle.setUserId(user.getUserId());
 		kbArticle.setUserName(user.getFullName());
-		kbArticle.setRootResourcePrimKey(rootResourcePrimKey);
 		kbArticle.setExternalReferenceCode(externalReferenceCode);
+		kbArticle.setRootResourcePrimKey(rootResourcePrimKey);
 		kbArticle.setParentResourceClassNameId(parentResourceClassNameId);
 		kbArticle.setParentResourcePrimKey(parentResourcePrimKey);
 		kbArticle.setKbFolderId(kbFolderId);
@@ -1180,10 +1180,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			kbArticle.setUserId(user.getUserId());
 			kbArticle.setUserName(user.getFullName());
 			kbArticle.setCreateDate(oldKBArticle.getCreateDate());
-			kbArticle.setRootResourcePrimKey(
-				oldKBArticle.getRootResourcePrimKey());
 			kbArticle.setExternalReferenceCode(
 				oldKBArticle.getExternalReferenceCode());
+			kbArticle.setRootResourcePrimKey(
+				oldKBArticle.getRootResourcePrimKey());
 			kbArticle.setParentResourceClassNameId(
 				oldKBArticle.getParentResourceClassNameId());
 			kbArticle.setParentResourcePrimKey(

@@ -212,13 +212,48 @@ definition {
 	}
 
 	@description = "COMMERCE-6373. In Addresses tab, I want to be able to remove addresses from the account"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveAddressFromAccount {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountManagement#RemoveAddressFromAccount";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Test",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Addresses",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
 
 		// TODO COMMERCE-6373 RemoveAddressFromAccount pending implementation
 
+		CommerceAcceleratorsInitializer.addAddressToAccount(
+			keyAddress = "Test Address",
+			keyCity = "Test City",
+			keyCountry = "United States",
+			keyName = "Test Name",
+			keyRegion = "Alaska",
+			keyTelephone = "Test Telephone",
+			keyType = "Billing",
+			keyZipCode = "Test Zip Code");
+
+		Refresh();
+
+		Click(
+			key_memberEmailAddress = "Test Name",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN");
+
+		MenuItem.click(menuItem = "Delete");
+
+		AssertElementNotPresent(
+			key_memberEmailAddress = "Test Name",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN");
 	}
 
 	@description = "COMMERCE-6351. In Info tab, I want to be able to remove an organization from the account by clicking 'Delete'"

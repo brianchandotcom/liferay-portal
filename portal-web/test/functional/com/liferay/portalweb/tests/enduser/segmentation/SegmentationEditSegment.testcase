@@ -211,7 +211,7 @@ definition {
 		}
 
 		task ("Assert segment edited") {
-			Segmentation.editSegment(entry = "EditSegmentUserByUserTag Test");
+			Segmentation.editSegment(entry = "EditSegmentUserEmailAddressContainsToEquals Test");
 
 			Segmentation.viewSegment(criterionInputOption = "Equals");
 		}

@@ -55,6 +55,8 @@ if (samlSpIdpConnection != null) {
 
 	<aui:model-context bean="<%= samlSpIdpConnection %>" model="<%= SamlSpIdpConnection.class %>" />
 
+	<liferay-util:include page="/dynamic_include/saml_attribute_mapping_pre.jsp" servletContext="<%= application %>" />
+
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_identity_provider_connection.jsp#pre" />
 
 	<aui:fieldset label="general">
@@ -114,6 +116,8 @@ if (samlSpIdpConnection != null) {
 		%>
 
 	</aui:fieldset>
+
+	<liferay-util:include page="/dynamic_include/saml_attribute_mapping_post.jsp" servletContext="<%= application %>" />
 
 	<liferay-util:dynamic-include key="com.liferay.saml.web#/admin/edit_identity_provider_connection.jsp#post" />
 

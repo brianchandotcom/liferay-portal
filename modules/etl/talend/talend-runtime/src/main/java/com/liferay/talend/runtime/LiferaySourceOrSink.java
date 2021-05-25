@@ -122,27 +122,7 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		liferayClientBuilder.setOAuthAuthorization(
 			_liferayConnectionProperties.isOAuth2Authorization());
 
-		if (_isProxy()) {
-			List<RequestParameter> proxyRequestParameters =
-				_requestParameterProperties.getProxyRequestParameters();
-
-			proxyRequestParameters.forEach(
-				requestParameter -> {
-					if (Objects.equals(
-							requestParameter.getName(), "proxyIdentityId")) {
-
-						liferayClientBuilder.setProxyIdentityId(
-							requestParameter.getValue());
-					}
-					else if (Objects.equals(
-								requestParameter.getName(),
-								"proxyIdentitySecret")) {
-
-						liferayClientBuilder.setProxyIdentitySecret(
-							requestParameter.getValue());
-					}
-				});
-		}
+		_setProxyParameters(liferayClientBuilder);
 
 		liferayClientBuilder.setRadTimeoutMills(
 			_liferayConnectionProperties.getReadTimeout() * 1000);
@@ -343,19 +323,28 @@ public class LiferaySourceOrSink implements OASSource, SourceOrSink {
 		return Optional.of(_responseHandler.asJsonObject(response));
 	}
 
-	private boolean _isProxy() {
+	private void _setProxyParameters(
+		LiferayClient.Builder liferayClientBuilder) {
+
 		if (_requestParameterProperties == null) {
-			return false;
+			return;
 		}
 
 		List<RequestParameter> proxyRequestParameters =
 			_requestParameterProperties.getProxyRequestParameters();
 
-		if (proxyRequestParameters.isEmpty()) {
-			return false;
-		}
+		for (RequestParameter requestParameter : proxyRequestParameters) {
+			if (Objects.equals(requestParameter.getName(), "proxyIdentityId")) {
+				liferayClientBuilder.setProxyIdentityId(
+					requestParameter.getValue());
+			}
+			else if (Objects.equals(
+						requestParameter.getName(), "proxyIdentitySecret")) {
 
-		return true;
+				liferayClientBuilder.setProxyIdentitySecret(
+					requestParameter.getValue());
+			}
+		}
 	}
 
 	private static final Logger _logger = LoggerFactory.getLogger(

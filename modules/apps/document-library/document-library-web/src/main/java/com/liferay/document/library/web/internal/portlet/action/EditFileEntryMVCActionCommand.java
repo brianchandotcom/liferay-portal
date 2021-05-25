@@ -1125,13 +1125,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		long fileEntryId = ParamUtil.getLong(
 			uploadPortletRequest, "fileEntryId");
 
-		User user = _userLocalService.getUser(themeDisplay.getUserId());
-
-		Date expirationDate = _getExpirationDate(
-			uploadPortletRequest, user.getTimeZone());
-		Date reviewDate = _getReviewDate(
-			uploadPortletRequest, user.getTimeZone());
-
 		long repositoryId = ParamUtil.getLong(
 			uploadPortletRequest, "repositoryId");
 		long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
@@ -1201,6 +1194,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					}
 				}
 			}
+
+			User user = _userLocalService.getUser(themeDisplay.getUserId());
+
+			Date expirationDate = _getExpirationDate(
+				uploadPortletRequest, user.getTimeZone());
+			Date reviewDate = _getReviewDate(
+				uploadPortletRequest, user.getTimeZone());
 
 			ServiceContext serviceContext = _createServiceContext(
 				uploadPortletRequest);

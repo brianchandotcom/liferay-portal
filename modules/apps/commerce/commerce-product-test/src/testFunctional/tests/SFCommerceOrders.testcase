@@ -27,13 +27,34 @@ definition {
 	}
 
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
-	@ignore = "true"
 	@priority = "3"
 	test CreateNewOrderFromPendingOrdersPage {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "SFCommerceOrders#CreateNewOrderFromPendingOrdersPage";
 
-		// TODO COMMERCE-6374 CreateNewOrderFromPendingOrdersPage pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Test",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Click.mouseDownMouseUp(
+			key_text = "Add Order",
+			locator1 = "Button#ANY");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		AssertElementPresent(
+			key_errorMessage = "Approved",
+			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
 	}
 
 	@description = "COMMERCE-6380. As a buyer, I want to be able to delete an Order in Pending Order details page"

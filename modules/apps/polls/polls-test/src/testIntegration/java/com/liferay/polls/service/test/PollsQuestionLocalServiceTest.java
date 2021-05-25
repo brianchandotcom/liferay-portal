@@ -68,13 +68,11 @@ public class PollsQuestionLocalServiceTest {
 		pollChoices.add(createPollsChoice("A"));
 		pollChoices.add(createPollsChoice("A"));
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		PollsQuestionLocalServiceUtil.addQuestion(
 			TestPropsValues.getUserId(), titleMap, descriptionMap,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire, pollChoices,
-			serviceContext);
+			new ServiceContext());
 	}
 
 	@Test(expected = QuestionChoiceException.class)

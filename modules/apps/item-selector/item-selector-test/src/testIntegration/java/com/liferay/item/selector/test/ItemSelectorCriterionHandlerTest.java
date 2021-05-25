@@ -65,11 +65,9 @@ public class ItemSelectorCriterionHandlerTest {
 
 	@Test
 	public void testItemSelectorCriterionHandlerReturnsViewsWithProvidedReturnTypes() {
-		TestItemSelectorView testItemSelectorView = new TestItemSelectorView();
-
 		ServiceRegistration<ItemSelectorView<?>>
 			itemSelectorViewServiceRegistration = registerItemSelectorView(
-				testItemSelectorView, "test-view");
+				new TestItemSelectorView(), "test-view");
 
 		ServiceRegistration<ItemSelectorViewReturnTypeProvider>
 			itemSelectorViewReturnTypeProviderServiceRegistration =

@@ -174,10 +174,8 @@ public class FolderAtomCollectionAdapter
 			repositoryId = atomRequestContext.getLongParameter("repositoryId");
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		return _dlAppService.addFolder(
-			repositoryId, parentFolderId, title, summary, serviceContext);
+			repositoryId, parentFolderId, title, summary, new ServiceContext());
 	}
 
 	@Override
@@ -186,10 +184,8 @@ public class FolderAtomCollectionAdapter
 			Date date, AtomRequestContext atomRequestContext)
 		throws Exception {
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		_dlAppService.updateFolder(
-			folder.getFolderId(), title, summary, serviceContext);
+			folder.getFolderId(), title, summary, new ServiceContext());
 	}
 
 	@Reference(unbind = "-")

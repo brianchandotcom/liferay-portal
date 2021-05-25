@@ -55,12 +55,9 @@ public class CustomFilterPortletConfigurationAction
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ConfigurationDisplayContext configurationDisplayContext =
-			new ConfigurationDisplayContext();
-
 		httpServletRequest.setAttribute(
 			CustomFilterPortletKeys.CONFIGURATION_DISPLAY_CONTEXT,
-			configurationDisplayContext);
+			new ConfigurationDisplayContext());
 
 		RenderRequest renderRequest =
 			(RenderRequest)httpServletRequest.getAttribute(

@@ -129,13 +129,12 @@ public class CalendarServiceTest {
 
 			Map<Locale, String> descriptionMap = new HashMap<>();
 
-			ServiceContext serviceContext = new ServiceContext();
-
 			calendarResource =
 				_calendarResourceLocalService.addCalendarResource(
 					group.getCreatorUserId(), group.getGroupId(),
 					PortalUtil.getClassNameId(Group.class), group.getGroupId(),
-					null, null, nameMap, descriptionMap, true, serviceContext);
+					null, null, nameMap, descriptionMap, true,
+					new ServiceContext());
 		}
 
 		return calendarResource.getDefaultCalendar();

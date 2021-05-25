@@ -43,11 +43,8 @@ public class JumpPageFunctionTest extends PowerMockito {
 
 	@Test
 	public void testExecuteAction() {
-		DefaultDDMExpressionActionHandler defaultDDMExpressionActionHandler =
-			new DefaultDDMExpressionActionHandler();
-
 		DefaultDDMExpressionActionHandler spyDefaultDDMExpressionActionHandler =
-			spy(defaultDDMExpressionActionHandler);
+			spy(new DefaultDDMExpressionActionHandler());
 
 		JumpPageFunction jumpPageFunction = new JumpPageFunction();
 

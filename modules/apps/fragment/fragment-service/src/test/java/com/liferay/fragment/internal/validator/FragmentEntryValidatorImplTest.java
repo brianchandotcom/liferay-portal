@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import org.hamcrest.core.StringContains;
@@ -51,9 +50,7 @@ public class FragmentEntryValidatorImplTest {
 
 		languageUtil.setLanguage(new LanguageImpl());
 
-		Registry registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(registry);
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		_classLoader = PortalClassLoaderUtil.getClassLoader();
 

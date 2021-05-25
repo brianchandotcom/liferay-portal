@@ -80,10 +80,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 
 	@Override
 	public Expression getModel() {
-		DDMExpressionModelVisitor ddmExpressionModelVisitor =
-			new DDMExpressionModelVisitor();
-
-		return _expressionContext.accept(ddmExpressionModelVisitor);
+		return _expressionContext.accept(new DDMExpressionModelVisitor());
 	}
 
 	@Override

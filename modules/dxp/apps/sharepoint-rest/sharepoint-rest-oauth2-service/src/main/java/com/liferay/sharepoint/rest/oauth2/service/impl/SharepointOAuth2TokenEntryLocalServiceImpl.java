@@ -65,9 +65,7 @@ public class SharepointOAuth2TokenEntryLocalServiceImpl
 
 		sharepointOAuth2TokenEntry.setUserName(user.getFullName());
 
-		Date now = new Date();
-
-		sharepointOAuth2TokenEntry.setCreateDate(now);
+		sharepointOAuth2TokenEntry.setCreateDate(new Date());
 
 		sharepointOAuth2TokenEntry.setAccessToken(accessToken);
 		sharepointOAuth2TokenEntry.setConfigurationPid(configurationPid);

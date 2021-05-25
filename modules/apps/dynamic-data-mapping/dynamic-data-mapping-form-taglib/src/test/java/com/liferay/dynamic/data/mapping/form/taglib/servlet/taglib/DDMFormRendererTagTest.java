@@ -388,11 +388,10 @@ public class DDMFormRendererTagTest extends PowerMockito {
 	}
 
 	protected void setUpHttpServletRequest() throws IllegalAccessException {
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
 		_httpServletRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE, new MockRenderResponse());
-		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+		_httpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, new ThemeDisplay());
 
 		MemberMatcher.field(
 			DDMFormRendererTag.class, "request"

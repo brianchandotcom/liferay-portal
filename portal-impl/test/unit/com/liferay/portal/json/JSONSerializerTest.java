@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.model.UserTrackerPath;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -94,9 +93,7 @@ public class JSONSerializerTest {
 	public void testSerializeHits() {
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		Hits hits = new HitsImpl();
-
-		String json = jsonSerializer.serialize(hits);
+		String json = jsonSerializer.serialize(new HitsImpl());
 
 		json = StringUtil.replace(json, CharPool.SPACE, StringPool.BLANK);
 

@@ -367,12 +367,9 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		DDMFormField ddmFormField, DDMFormFieldOptions ddmFormFieldOptions,
 		Locale locale) {
 
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
 		return _selectDDMFormFieldTemplateContextContributor.getOptions(
 			ddmFormField, ddmFormFieldOptions, locale,
-			ddmFormFieldRenderingContext);
+			new DDMFormFieldRenderingContext());
 	}
 
 	private void _setUpDDMFormFieldOptionsFactory(

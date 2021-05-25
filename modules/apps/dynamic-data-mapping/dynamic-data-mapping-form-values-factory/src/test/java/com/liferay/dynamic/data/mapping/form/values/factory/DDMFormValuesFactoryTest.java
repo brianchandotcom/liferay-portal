@@ -849,11 +849,8 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 				"Paragraph", "Paragraph", "paragraph", StringPool.BLANK, false,
 				false, false));
 
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
-			mockHttpServletRequest, ddmForm);
+			new MockHttpServletRequest(), ddmForm);
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();

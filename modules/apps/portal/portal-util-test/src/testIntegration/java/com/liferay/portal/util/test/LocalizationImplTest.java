@@ -218,10 +218,9 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetLocalizationXmlFromPreferencesWithEmptyPreferences() {
-		PortletPreferences preferences = new PortletPreferencesImpl();
-
 		String xml = LocalizationUtil.getLocalizationXmlFromPreferences(
-			preferences, new MockPortletRequest(), "test", "testValue");
+			new PortletPreferencesImpl(), new MockPortletRequest(), "test",
+			"testValue");
 
 		Assert.assertTrue(
 			"Default values were not included in XML: " + xml,

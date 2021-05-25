@@ -155,11 +155,9 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 						wikiGroupServiceConfiguration.frontPageName()) &&
 					(version == 0)) {
 
-					ServiceContext serviceContext = new ServiceContext();
-
 					page = _wikiPageService.addPage(
 						nodeId, title, null, WikiPageConstants.NEW, true,
-						serviceContext);
+						new ServiceContext());
 				}
 				else {
 					throw noSuchPageException2;

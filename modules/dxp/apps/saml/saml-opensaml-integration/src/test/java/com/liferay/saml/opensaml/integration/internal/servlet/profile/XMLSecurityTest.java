@@ -262,11 +262,8 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		mockHttpServletRequest.setParameter("Signature", signature);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		_webSsoProfileImpl.decodeAuthnRequest(
-			mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, new MockHttpServletResponse());
 	}
 
 	protected String encodeRequest(String requestXML) throws Exception {
@@ -304,15 +301,10 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 	protected AuthnRequest getAuthnRequest(String redirectURL)
 		throws Exception {
 
-		MockHttpServletRequest mockHttpServletRequest =
-			getMockHttpServletRequest(redirectURL);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		SamlSsoRequestContext samlSsoRequestContext =
 			_webSsoProfileImpl.decodeAuthnRequest(
-				mockHttpServletRequest, mockHttpServletResponse);
+				getMockHttpServletRequest(redirectURL),
+				new MockHttpServletResponse());
 
 		MessageContext<?> samlMessageContext =
 			samlSsoRequestContext.getSAMLMessageContext();

@@ -178,10 +178,8 @@ public class ResponsiveLayoutStructureUtilTest {
 
 		httpServletRequest.setMethod(HttpMethods.GET);
 
-		MockHttpServletResponse httpServletResponse =
-			new MockHttpServletResponse();
-
-		_layout.includeLayoutContent(httpServletRequest, httpServletResponse);
+		_layout.includeLayoutContent(
+			httpServletRequest, new MockHttpServletResponse());
 
 		String content = String.valueOf(
 			(StringBundler)httpServletRequest.getAttribute(

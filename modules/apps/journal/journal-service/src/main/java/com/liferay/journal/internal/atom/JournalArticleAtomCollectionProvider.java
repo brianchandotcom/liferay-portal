@@ -111,10 +111,8 @@ public class JournalArticleAtomCollectionProvider
 		long groupId = atomRequestContext.getLongParameter("groupId");
 		String articleId = resourceName;
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		_journalArticleService.deleteArticle(
-			groupId, articleId, null, serviceContext);
+			groupId, articleId, null, new ServiceContext());
 	}
 
 	@Override

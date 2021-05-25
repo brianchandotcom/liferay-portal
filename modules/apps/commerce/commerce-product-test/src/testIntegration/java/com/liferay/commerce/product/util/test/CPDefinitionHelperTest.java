@@ -200,10 +200,8 @@ public class CPDefinitionHelperTest {
 			cpDefinition.getName(), WorkflowConstants.STATUS_APPROVED,
 			_commerceCatalog.getGroup());
 
-		CPQuery cpQuery = new CPQuery();
-
 		CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(
-			_commerceCatalog.getGroupId(), searchContext, cpQuery,
+			_commerceCatalog.getGroupId(), searchContext, new CPQuery(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		List<CPCatalogEntry> cpCatalogEntries =
@@ -238,10 +236,8 @@ public class CPDefinitionHelperTest {
 			null, WorkflowConstants.STATUS_APPROVED,
 			_commerceCatalog.getGroup());
 
-		CPQuery cpQuery = new CPQuery();
-
 		CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(
-			_commerceCatalog.getGroupId(), searchContext, cpQuery,
+			_commerceCatalog.getGroupId(), searchContext, new CPQuery(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		List<CPCatalogEntry> cpCatalogEntries =

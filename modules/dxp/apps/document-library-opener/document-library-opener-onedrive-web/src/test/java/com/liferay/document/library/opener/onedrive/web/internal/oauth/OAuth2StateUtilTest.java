@@ -92,9 +92,7 @@ public class OAuth2StateUtilTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		MockHttpSession mockHttpSession = new MockHttpSession();
-
-		mockHttpServletRequest.setSession(mockHttpSession);
+		mockHttpServletRequest.setSession(new MockHttpSession());
 
 		Optional<OAuth2State> oAuth2StateOptional =
 			OAuth2StateUtil.getOAuth2StateOptional(mockHttpServletRequest);

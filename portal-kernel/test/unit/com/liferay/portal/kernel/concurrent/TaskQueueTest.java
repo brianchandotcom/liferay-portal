@@ -203,10 +203,11 @@ public class TaskQueueTest {
 		taskQueue = new TaskQueue<>();
 
 		object1 = new Object();
-		Object object2 = new Object();
 
 		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
-		Assert.assertTrue(taskQueue.offer(object2, new boolean[1]));
+
+		Assert.assertTrue(taskQueue.offer(new Object(), new boolean[1]));
+
 		Assert.assertSame(object1, taskQueue.poll());
 
 		taskQueue = new TaskQueue<>();
@@ -231,10 +232,11 @@ public class TaskQueueTest {
 		taskQueue = new TaskQueue<>();
 
 		object1 = new Object();
-		object2 = new Object();
 
 		Assert.assertTrue(taskQueue.offer(object1, new boolean[1]));
-		Assert.assertTrue(taskQueue.offer(object2, new boolean[1]));
+
+		Assert.assertTrue(taskQueue.offer(new Object(), new boolean[1]));
+
 		Assert.assertSame(object1, taskQueue.poll(100, TimeUnit.MILLISECONDS));
 	}
 

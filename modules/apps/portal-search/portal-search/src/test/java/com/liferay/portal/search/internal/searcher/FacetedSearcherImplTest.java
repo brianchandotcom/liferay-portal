@@ -32,7 +32,6 @@ import com.liferay.portal.search.internal.test.util.DocumentFixture;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import org.junit.After;
@@ -60,9 +59,7 @@ public class FacetedSearcherImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Registry registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(registry);
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 	}
 
 	@AfterClass
@@ -97,9 +94,7 @@ public class FacetedSearcherImplTest {
 
 	@Test
 	public void testEmptySearchDisabledByDefault() throws Exception {
-		SearchContext searchContext = new SearchContext();
-
-		assertSearchSkipped(searchContext);
+		assertSearchSkipped(new SearchContext());
 	}
 
 	@Test

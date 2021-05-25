@@ -383,10 +383,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	@Test
 	public void testExecuteIndexDocumentRequestNoUid() {
-		Document document = new DocumentImpl();
-
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
-			null, document);
+			null, new DocumentImpl());
 
 		Assert.assertEquals(
 			RestStatus.CREATED.getStatus(), indexDocumentResponse.getStatus());
@@ -429,10 +427,8 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	@Test
 	public void testExecuteIndexDocumentRequestUidInRequest() {
-		Document document = new DocumentImpl();
-
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
-			"1", document);
+			"1", new DocumentImpl());
 
 		Assert.assertEquals(
 			RestStatus.CREATED.getStatus(), indexDocumentResponse.getStatus());

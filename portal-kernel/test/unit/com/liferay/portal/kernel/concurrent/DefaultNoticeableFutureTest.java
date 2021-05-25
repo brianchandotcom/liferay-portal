@@ -139,9 +139,7 @@ public class DefaultNoticeableFutureTest {
 			_defaultNoticeableFuture, testFutureListener.getFuture());
 		Assert.assertEquals(1, testFutureListener.getCount());
 
-		Object result = new Object();
-
-		_defaultNoticeableFuture.set(result);
+		_defaultNoticeableFuture.set(new Object());
 
 		Assert.assertEquals(1, testFutureListener.getCount());
 	}

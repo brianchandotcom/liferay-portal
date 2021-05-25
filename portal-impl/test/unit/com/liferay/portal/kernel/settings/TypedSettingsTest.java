@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -85,10 +84,8 @@ public class TypedSettingsTest {
 
 		ModifiableSettings modifiableSettings = new MemorySettings();
 
-		JSONFactory jsonFactory = new JSONFactoryImpl();
-
 		ReflectionTestUtil.setFieldValue(
-			JSONFactoryUtil.class, "_jsonFactory", jsonFactory);
+			JSONFactoryUtil.class, "_jsonFactory", new JSONFactoryImpl());
 
 		JSONObject jsonObject = JSONUtil.put(
 			"en_GB", "value_en_GB"

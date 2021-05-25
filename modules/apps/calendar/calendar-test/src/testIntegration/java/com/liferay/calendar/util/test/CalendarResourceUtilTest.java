@@ -87,11 +87,9 @@ public class CalendarResourceUtilTest {
 	public void testGetGroupCalendarResourceCreatesResource()
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getGroupCalendarResource(
-				_group.getGroupId(), serviceContext);
+				_group.getGroupId(), new ServiceContext());
 
 		Assert.assertNotNull(calendarResource);
 	}
@@ -104,11 +102,9 @@ public class CalendarResourceUtilTest {
 
 		Group stagingGroup = _group.getStagingGroup();
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getGroupCalendarResource(
-				stagingGroup.getGroupId(), serviceContext);
+				stagingGroup.getGroupId(), new ServiceContext());
 
 		Assert.assertNotNull(calendarResource);
 	}
@@ -119,11 +115,9 @@ public class CalendarResourceUtilTest {
 
 		GroupTestUtil.enableLocalStaging(_group);
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getGroupCalendarResource(
-				_group.getGroupId(), serviceContext);
+				_group.getGroupId(), new ServiceContext());
 
 		Assert.assertNull(calendarResource);
 	}

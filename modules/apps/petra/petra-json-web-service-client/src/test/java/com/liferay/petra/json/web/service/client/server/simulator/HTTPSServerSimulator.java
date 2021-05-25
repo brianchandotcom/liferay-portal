@@ -16,7 +16,6 @@ package com.liferay.petra.json.web.service.client.server.simulator;
 
 import com.liferay.petra.json.web.service.client.keystore.KeyStoreLoader;
 
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsServer;
 
@@ -96,9 +95,7 @@ public class HTTPSServerSimulator {
 
 		_httpsServer.setHttpsConfigurator(new HttpsConfigurator(sslContext));
 
-		HttpHandler httpHandler = new BaseHttpHandlerImpl();
-
-		_httpsServer.createContext("/testGet/", httpHandler);
+		_httpsServer.createContext("/testGet/", new BaseHttpHandlerImpl());
 
 		_httpsServer.start();
 	}

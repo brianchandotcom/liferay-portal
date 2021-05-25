@@ -372,8 +372,6 @@ public class DataLayoutResourceImpl
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.addStructureLayout(
 				PrincipalThreadLocal.getUserId(), ddmStructure.getGroupId(),
@@ -381,7 +379,7 @@ public class DataLayoutResourceImpl
 				_getDDMStructureVersionId(dataDefinitionId),
 				LocalizedValueUtil.toLocaleStringMap(name),
 				LocalizedValueUtil.toLocaleStringMap(description), content,
-				serviceContext);
+				new ServiceContext());
 
 		_addDataDefinitionFieldLinks(
 			dataDefinitionId, ddmStructureLayout.getStructureLayoutId(),

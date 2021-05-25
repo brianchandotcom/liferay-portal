@@ -48,11 +48,9 @@ public class CommerceOrderModelListener
 				return;
 			}
 
-			ServiceContext serviceContext = new ServiceContext();
-
 			_commerceOrderLocalService.updateStatus(
 				commerceOrder.getUserId(), commerceOrder.getCommerceOrderId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				WorkflowConstants.STATUS_APPROVED, new ServiceContext(),
 				Collections.emptyMap());
 		}
 		catch (PortalException portalException) {

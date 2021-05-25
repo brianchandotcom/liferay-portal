@@ -338,10 +338,7 @@ public class HttpImplTest {
 
 	@Test
 	public void testIsForwarded() {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		Assert.assertFalse(_httpImpl.isForwarded(mockHttpServletRequest));
+		Assert.assertFalse(_httpImpl.isForwarded(new MockHttpServletRequest()));
 	}
 
 	@Test

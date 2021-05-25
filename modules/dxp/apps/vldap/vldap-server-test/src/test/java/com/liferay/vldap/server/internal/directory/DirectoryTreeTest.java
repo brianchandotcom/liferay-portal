@@ -1178,10 +1178,8 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testToFilterConstraintsFromBranchNodeWithAndNode()
 		throws Exception {
 
-		BranchNode branchNode = new AndNode();
-
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromBranchNode(branchNode, true);
+			getFilterConstraintsFromBranchNode(new AndNode(), true);
 
 		assertFilterConstraints(filterConstraints);
 	}
@@ -1252,10 +1250,8 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testToFilterConstraintsFromBranchNodeWithNotNode()
 		throws Exception {
 
-		BranchNode branchNode = new NotNode();
-
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromBranchNode(branchNode, true);
+			getFilterConstraintsFromBranchNode(new NotNode(), true);
 
 		Assert.assertTrue(ListUtil.isEmpty(filterConstraints));
 	}
@@ -1297,10 +1293,8 @@ public class DirectoryTreeTest extends BaseVLDAPTestCase {
 	public void testToFilterConstraintsFromBranchNodeWithOrNode()
 		throws Exception {
 
-		BranchNode branchNode = new OrNode();
-
 		List<FilterConstraint> filterConstraints =
-			getFilterConstraintsFromBranchNode(branchNode, true);
+			getFilterConstraintsFromBranchNode(new OrNode(), true);
 
 		assertFilterConstraints(filterConstraints);
 	}

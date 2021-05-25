@@ -82,10 +82,8 @@ public class BuildSoyCommand implements Command {
 
 		SoyFileSet soyFileSet = builder.build();
 
-		SoyJsSrcOptions soyJsSrcOptions = new SoyJsSrcOptions();
-
 		List<String> jsContents = soyFileSet.compileToJsSrc(
-			soyJsSrcOptions, null);
+			new SoyJsSrcOptions(), null);
 
 		for (int i = 0; i < paths.size(); i++) {
 			Path path = paths.get(i);

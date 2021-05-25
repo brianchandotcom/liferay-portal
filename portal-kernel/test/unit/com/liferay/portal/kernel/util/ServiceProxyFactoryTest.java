@@ -202,10 +202,8 @@ public class ServiceProxyFactoryTest {
 		}
 
 		try {
-			TestServiceUtil testServiceUtil = new TestServiceUtil();
-
 			ServiceProxyFactory.newServiceTrackedInstance(
-				TestService.class, TestServiceUtil.class, testServiceUtil,
+				TestService.class, TestServiceUtil.class, new TestServiceUtil(),
 				"wrongFieldName", null, false);
 
 			Assert.fail();
@@ -218,10 +216,8 @@ public class ServiceProxyFactoryTest {
 		// Test 2, field is static
 
 		try {
-			TestServiceUtil testServiceUtil = new TestServiceUtil();
-
 			ServiceProxyFactory.newServiceTrackedInstance(
-				TestService.class, TestServiceUtil.class, testServiceUtil,
+				TestService.class, TestServiceUtil.class, new TestServiceUtil(),
 				"testService", null, false);
 
 			Assert.fail();

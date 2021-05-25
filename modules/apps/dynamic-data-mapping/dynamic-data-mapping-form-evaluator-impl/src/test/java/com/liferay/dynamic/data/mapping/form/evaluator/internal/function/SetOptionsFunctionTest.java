@@ -87,11 +87,8 @@ public class SetOptionsFunctionTest extends PowerMockito {
 
 		String json = jsonObject.toJSONString();
 
-		DefaultDDMExpressionObserver defaultDDMExpressionObserver =
-			new DefaultDDMExpressionObserver();
-
 		DefaultDDMExpressionObserver spyDefaultDDMExpressionObserver = spy(
-			defaultDDMExpressionObserver);
+			new DefaultDDMExpressionObserver());
 
 		_setOptionsFunction.setDDMExpressionObserver(
 			spyDefaultDDMExpressionObserver);
@@ -142,11 +139,8 @@ public class SetOptionsFunctionTest extends PowerMockito {
 			"pt_BR"
 		);
 
-		DefaultDDMExpressionObserver defaultDDMExpressionObserver =
-			new DefaultDDMExpressionObserver();
-
 		DefaultDDMExpressionObserver spyDefaultDDMExpressionObserver = spy(
-			defaultDDMExpressionObserver);
+			new DefaultDDMExpressionObserver());
 
 		_setOptionsFunction.setDDMExpressionObserver(
 			spyDefaultDDMExpressionObserver);

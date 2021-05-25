@@ -144,11 +144,9 @@ public class PunchOutLoginPostAction extends Action {
 				punchOutUserId, commerceChannelGroupId, commerceAccountId,
 				commerceCurrencyId);
 
-			ServiceContext serviceContext = new ServiceContext();
-
 			commerceOrder = _commerceOrderLocalService.updateStatus(
 				punchOutUserId, commerceOrder.getCommerceOrderId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext,
+				WorkflowConstants.STATUS_APPROVED, new ServiceContext(),
 				Collections.emptyMap());
 		}
 

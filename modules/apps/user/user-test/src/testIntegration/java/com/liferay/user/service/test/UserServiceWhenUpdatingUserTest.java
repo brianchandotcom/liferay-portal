@@ -106,7 +106,6 @@ public class UserServiceWhenUpdatingUserTest {
 		long[] roleIds = null;
 		List<UserGroupRole> userGroupRoles = null;
 		long[] userGroupIds = null;
-		ServiceContext serviceContext = new ServiceContext();
 
 		return _userService.updateUser(
 			user.getUserId(), user.getPassword(), StringPool.BLANK,
@@ -120,7 +119,7 @@ public class UserServiceWhenUpdatingUserTest {
 			contact.getSmsSn(), contact.getFacebookSn(), contact.getJabberSn(),
 			contact.getSkypeSn(), contact.getTwitterSn(), contact.getJobTitle(),
 			groupIds, organizationIds, roleIds, userGroupRoles, userGroupIds,
-			serviceContext);
+			new ServiceContext());
 	}
 
 	@Inject

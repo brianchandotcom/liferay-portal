@@ -147,9 +147,7 @@ public class ToolDependencies {
 		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
 			new UnsecureSAXReaderUtil();
 
-		SAXReaderImpl unsecureSAXReaderImpl = new SAXReaderImpl();
-
-		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReaderImpl);
+		unsecureSAXReaderUtil.setSAXReader(new SAXReaderImpl());
 
 		// DefaultModelHintsImpl requires SecureXMLFactoryProviderUtil
 
@@ -192,9 +190,7 @@ public class ToolDependencies {
 
 		ResourceActionsUtil resourceActionsUtil = new ResourceActionsUtil();
 
-		ResourceActionsImpl resourceActionsImpl = new ResourceActionsImpl();
-
-		resourceActionsUtil.setResourceActions(resourceActionsImpl);
+		resourceActionsUtil.setResourceActions(new ResourceActionsImpl());
 	}
 
 	private static class TestMultiVMPool implements MultiVMPool {

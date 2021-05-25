@@ -79,11 +79,9 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 				_audienceAssetVocabulary.getName(),
 				_stageAssetVocabulary.getName());
 
-		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
-			new MockLiferayPortletRenderResponse();
-
 		_mvcRenderCommand.render(
-			mockLiferayPortletRenderRequest, mockLiferayPortletRenderResponse);
+			mockLiferayPortletRenderRequest,
+			new MockLiferayPortletRenderResponse());
 
 		List<KeyValuePair> keyValuePairs = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
@@ -111,11 +109,9 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 			_getMockLiferayPortletRenderRequest(
 				_audienceAssetVocabulary.getName());
 
-		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
-			new MockLiferayPortletRenderResponse();
-
 		_mvcRenderCommand.render(
-			mockLiferayPortletRenderRequest, mockLiferayPortletRenderResponse);
+			mockLiferayPortletRenderRequest,
+			new MockLiferayPortletRenderResponse());
 
 		List<KeyValuePair> keyValuePairs = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
@@ -142,11 +138,9 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 				_audienceAssetVocabulary.getName(),
 				_stageAssetVocabulary.getName());
 
-		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
-			new MockLiferayPortletRenderResponse();
-
 		_mvcRenderCommand.render(
-			mockLiferayPortletRenderRequest, mockLiferayPortletRenderResponse);
+			mockLiferayPortletRenderRequest,
+			new MockLiferayPortletRenderResponse());
 
 		List<KeyValuePair> keyValuePairs = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(
@@ -176,11 +170,9 @@ public class EditContentDashboardConfigurationMVCRenderCommandTest {
 			_getMockLiferayPortletRenderRequest(
 				_audienceAssetVocabulary.getName());
 
-		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
-			new MockLiferayPortletRenderResponse();
-
 		_mvcRenderCommand.render(
-			mockLiferayPortletRenderRequest, mockLiferayPortletRenderResponse);
+			mockLiferayPortletRenderRequest,
+			new MockLiferayPortletRenderResponse());
 
 		List<KeyValuePair> keyValuePairs = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(

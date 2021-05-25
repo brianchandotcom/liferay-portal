@@ -44,11 +44,8 @@ public class SetInvalidFunctionTest extends PowerMockito {
 
 	@Test
 	public void testApply() {
-		DefaultDDMExpressionObserver defaultDDMExpressionObserver =
-			new DefaultDDMExpressionObserver();
-
 		DefaultDDMExpressionObserver spyDefaultDDMExpressionObserver = spy(
-			defaultDDMExpressionObserver);
+			new DefaultDDMExpressionObserver());
 
 		SetInvalidFunction setInvalidFunction = new SetInvalidFunction();
 

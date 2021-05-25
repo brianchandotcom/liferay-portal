@@ -157,11 +157,9 @@ public class UpgradeCalendarResourceTest {
 	protected CalendarResource getDefaultUserCalendarResource()
 		throws PortalException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		CalendarResource calendarResource =
 			CalendarResourceUtil.getGroupCalendarResource(
-				_group.getGroupId(), serviceContext);
+				_group.getGroupId(), new ServiceContext());
 
 		Calendar calendar = calendarResource.getDefaultCalendar();
 

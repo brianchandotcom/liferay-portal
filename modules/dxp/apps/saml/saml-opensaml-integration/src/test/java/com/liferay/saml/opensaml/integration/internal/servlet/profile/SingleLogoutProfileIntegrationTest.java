@@ -22,7 +22,6 @@ import com.liferay.portal.struts.TilesUtil;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
-import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.model.impl.SamlIdpSpConnectionImpl;
@@ -131,13 +130,11 @@ public class SingleLogoutProfileIntegrationTest extends BaseSamlTestCase {
 
 	@Test
 	public void testPerformIdpSpLogoutValidSloRequestInfo() throws Exception {
-		SamlIdpSpConnection samlIdpSpConnection = new SamlIdpSpConnectionImpl();
-
 		when(
 			_samlIdpSpConnectionLocalService.getSamlIdpSpConnection(
 				COMPANY_ID, SP_ENTITY_ID)
 		).thenReturn(
-			samlIdpSpConnection
+			new SamlIdpSpConnectionImpl()
 		);
 
 		List<SamlIdpSpSession> samlIdpSpSessions = new ArrayList<>();

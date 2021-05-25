@@ -172,13 +172,11 @@ public class AsahSegmentsEntryProviderTest {
 
 	@Test
 	public void testGetSegmentsEntryIdsWithEmptyContext() {
-		Context context = new Context();
-
 		Assert.assertArrayEquals(
 			new long[0],
 			_asahSegmentsEntryProvider.getSegmentsEntryIds(
 				RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomLong(), context));
+				RandomTestUtil.randomLong(), new Context()));
 	}
 
 	@Test

@@ -277,11 +277,9 @@ public class JSONWebServiceActionsManagerImpl
 	public int registerService(
 		String contextName, String contextPath, Object service) {
 
-		JSONWebServiceRegistrator jsonWebServiceRegistrator =
-			new DefaultJSONWebServiceRegistrator();
-
 		return registerService(
-			contextName, contextPath, service, jsonWebServiceRegistrator);
+			contextName, contextPath, service,
+			new DefaultJSONWebServiceRegistrator());
 	}
 
 	@Override

@@ -209,11 +209,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		// Blacklist SHA512 and check that it is not used even though it is the
 		// only one signaled by the peer
 
-		SecurityConfigurationBootstrap securityConfigurationBootstrap =
-			new SecurityConfigurationBootstrap();
-
 		ReflectionTestUtil.invoke(
-			securityConfigurationBootstrap, "activate",
+			new SecurityConfigurationBootstrap(), "activate",
 			new Class<?>[] {Map.class},
 			HashMapBuilder.<String, Object>put(
 				"blacklisted.algorithms",
@@ -526,13 +523,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		prepareIdentityProvider(IDP_ENTITY_ID);
 
-		mockHttpServletRequest = getMockHttpServletRequest(redirect);
-
-		mockHttpServletResponse = new MockHttpServletResponse();
-
 		SamlSsoRequestContext samlSsoRequestContext =
 			_webSsoProfileImpl.decodeAuthnRequest(
-				mockHttpServletRequest, mockHttpServletResponse);
+				getMockHttpServletRequest(redirect),
+				new MockHttpServletResponse());
 
 		MessageContext<AuthnRequest> messageContext =
 			(MessageContext<AuthnRequest>)
@@ -696,13 +690,10 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 
 		prepareIdentityProvider(IDP_ENTITY_ID);
 
-		mockHttpServletRequest = getMockHttpServletRequest(redirect);
-
-		mockHttpServletResponse = new MockHttpServletResponse();
-
 		SamlSsoRequestContext samlSsoRequestContext =
 			_webSsoProfileImpl.decodeAuthnRequest(
-				mockHttpServletRequest, mockHttpServletResponse);
+				getMockHttpServletRequest(redirect),
+				new MockHttpServletResponse());
 
 		MessageContext<AuthnRequest> messageContext =
 			(MessageContext<AuthnRequest>)

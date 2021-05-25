@@ -110,9 +110,7 @@ public class ExportImportDateUtilTest {
 			ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE,
 			portletDataContextLastPublishDate);
 
-		Date portletLastPublishDate = new Date();
-
-		updateLastPublishDate(_portletPreferences, portletLastPublishDate);
+		updateLastPublishDate(_portletPreferences, new Date());
 
 		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			portletDataContext, _portletPreferences);
@@ -135,9 +133,7 @@ public class ExportImportDateUtilTest {
 			portletDataContext, ExportImportDateUtil.RANGE_ALL,
 			portletDataContextLastPublishDate);
 
-		Date portletLastPublishDate = new Date();
-
-		updateLastPublishDate(_portletPreferences, portletLastPublishDate);
+		updateLastPublishDate(_portletPreferences, new Date());
 
 		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			portletDataContext, _portletPreferences);

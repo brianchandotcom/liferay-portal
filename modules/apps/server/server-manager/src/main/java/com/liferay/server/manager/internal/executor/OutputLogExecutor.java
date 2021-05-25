@@ -107,9 +107,7 @@ public class OutputLogExecutor extends BaseExecutor {
 	}
 
 	protected String getTomcatDateString() {
-		Date date = new Date();
-
-		return _simpleDateFormat.format(date);
+		return _simpleDateFormat.format(new Date());
 	}
 
 	@Reference

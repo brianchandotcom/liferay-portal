@@ -177,14 +177,12 @@ public class GoogleAuthorizationImpl implements GoogleAuthorization {
 		long[] userGroupIds = null;
 		boolean sendEmail = true;
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		User user = _userLocalService.addUser(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			roleIds, userGroupIds, sendEmail, new ServiceContext());
 
 		user = _userLocalService.updateGoogleUserId(
 			user.getUserId(), googleUserId);

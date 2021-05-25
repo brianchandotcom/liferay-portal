@@ -83,10 +83,9 @@ public class DDMStructureManagerTest {
 	public void testAddAttributes() throws Exception {
 		DDMStructure structure = addStructure();
 
-		Document document = new DocumentImpl();
-
 		_ddmStructureManager.addAttributes(
-			structure.getStructureId(), document, createDDMFormValues());
+			structure.getStructureId(), new DocumentImpl(),
+			createDDMFormValues());
 
 		String fieldProperty = structure.getFieldProperty(
 			"fieldName", "indexType");

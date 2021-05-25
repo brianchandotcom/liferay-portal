@@ -209,13 +209,10 @@ public class UpdateItemConfigMVCActionCommandTest {
 		mockActionRequest.setParameter(
 			"itemId", layoutStructureItem.getItemId());
 
-		MockLiferayPortletActionResponse mockActionResponse =
-			new MockLiferayPortletActionResponse();
-
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doProcessAction",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockActionRequest, mockActionResponse);
+			mockActionRequest, new MockLiferayPortletActionResponse());
 
 		layoutStructure = _getLayoutStructure();
 
@@ -255,13 +252,10 @@ public class UpdateItemConfigMVCActionCommandTest {
 		mockActionRequest.setParameter(
 			"itemId", layoutStructureItem.getItemId());
 
-		MockLiferayPortletActionResponse mockActionResponse =
-			new MockLiferayPortletActionResponse();
-
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doProcessAction",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockActionRequest, mockActionResponse);
+			mockActionRequest, new MockLiferayPortletActionResponse());
 
 		layoutStructure = _getLayoutStructure();
 

@@ -34,21 +34,13 @@ public class BackgroundTaskExecutorConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		BackgroundTaskExecutor
-			optimizeImagesSingleConfigurationBackgroundTaskExecutor =
-				new OptimizeImagesSingleConfigurationBackgroundTaskExecutor();
+		registerBackgroundTaskExecutor(
+			bundleContext,
+			new OptimizeImagesSingleConfigurationBackgroundTaskExecutor());
 
 		registerBackgroundTaskExecutor(
 			bundleContext,
-			optimizeImagesSingleConfigurationBackgroundTaskExecutor);
-
-		BackgroundTaskExecutor
-			optimizeImagesAllConfigurationsBackgroundTaskExecutor =
-				new OptimizeImagesAllConfigurationsBackgroundTaskExecutor();
-
-		registerBackgroundTaskExecutor(
-			bundleContext,
-			optimizeImagesAllConfigurationsBackgroundTaskExecutor);
+			new OptimizeImagesAllConfigurationsBackgroundTaskExecutor());
 	}
 
 	@Deactivate

@@ -218,9 +218,7 @@ public class ZipWriterImplTest {
 	public void testAddEntryFromStringBuilderThatIsEmpty() throws Exception {
 		ZipWriter zipWriter = new ZipWriterImpl(new File(_tempZipFilePath));
 
-		StringBuilder sb = new StringBuilder();
-
-		zipWriter.addEntry("empty.txt", sb);
+		zipWriter.addEntry("empty.txt", new StringBuilder());
 
 		File file = zipWriter.getFile();
 

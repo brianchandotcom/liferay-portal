@@ -133,12 +133,9 @@ public class DispatchIoHandler implements IoHandler {
 				return;
 			}
 
-			LiferayLdapMessageContainer liferayLdapMessageContainer =
-				new LiferayLdapMessageContainer();
-
 			ioSession.setAttribute(
 				LdapDecoder.MESSAGE_CONTAINER_ATTR,
-				liferayLdapMessageContainer);
+				new LiferayLdapMessageContainer());
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

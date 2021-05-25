@@ -172,11 +172,9 @@ public class PreviewSegmentsEntryUsersMVCRenderCommandTest {
 		portletSession.setAttribute(
 			"PREVIEW_SEGMENTS_ENTRY_CRITERIA", criteria);
 
-		MockLiferayPortletRenderResponse mockLiferayPortletRenderResponse =
-			new MockLiferayPortletRenderResponse();
-
 		_mvcRenderCommand.render(
-			mockLiferayPortletRenderRequest, mockLiferayPortletRenderResponse);
+			mockLiferayPortletRenderRequest,
+			new MockLiferayPortletRenderResponse());
 
 		SearchContainer<User> searchContainer = ReflectionTestUtil.invoke(
 			mockLiferayPortletRenderRequest.getAttribute(

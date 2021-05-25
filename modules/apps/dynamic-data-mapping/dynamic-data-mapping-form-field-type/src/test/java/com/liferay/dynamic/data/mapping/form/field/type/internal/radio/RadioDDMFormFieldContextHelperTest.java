@@ -68,11 +68,8 @@ public class RadioDDMFormFieldContextHelperTest {
 		RadioDDMFormFieldContextHelper radioDDMFormFieldContextHelper =
 			new RadioDDMFormFieldContextHelper(ddmFormFieldOptions, locale);
 
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
 		return radioDDMFormFieldContextHelper.getOptions(
-			ddmFormFieldRenderingContext);
+			new DDMFormFieldRenderingContext());
 	}
 
 }

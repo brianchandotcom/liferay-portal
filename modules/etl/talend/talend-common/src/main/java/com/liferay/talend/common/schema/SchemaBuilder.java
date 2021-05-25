@@ -213,13 +213,12 @@ public class SchemaBuilder {
 					schemaName));
 		}
 
-		AtomicInteger index = new AtomicInteger();
 		List<Schema.Field> schemaFields = new ArrayList<>();
 		Set<String> previousFieldNames = new HashSet<>();
 
 		_processSchemaJsonObject(
-			null, schemaJsonObject, index, previousFieldNames, schemaFields,
-			oasJsonObject);
+			null, schemaJsonObject, new AtomicInteger(), previousFieldNames,
+			schemaFields, oasJsonObject);
 
 		return Schema.createRecord("Runtime", null, null, false, schemaFields);
 	}

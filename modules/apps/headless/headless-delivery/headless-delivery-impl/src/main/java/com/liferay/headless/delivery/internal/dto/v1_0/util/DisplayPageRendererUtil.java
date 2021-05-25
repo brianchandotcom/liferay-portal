@@ -122,16 +122,13 @@ public class DisplayPageRendererUtil {
 								return null;
 							}
 
-							HttpServletResponse httpServletResponse =
-								new DummyHttpServletResponse();
-
 							return toHTML(
 								itemClassName, itemClassTypeId,
 								layoutPageTemplateEntry.
 									getLayoutPageTemplateEntryKey(),
 								groupId,
 								dtoConverterContext.getHttpServletRequest(),
-								httpServletResponse, item,
+								new DummyHttpServletResponse(), item,
 								infoItemServiceTracker,
 								layoutDisplayPageProviderTracker,
 								layoutLocalService,

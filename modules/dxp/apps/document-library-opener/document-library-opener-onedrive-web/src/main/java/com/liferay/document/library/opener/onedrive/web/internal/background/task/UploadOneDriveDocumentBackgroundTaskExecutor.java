@@ -247,9 +247,6 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 			"id");
 
 		if (fileEntry.getSize() > 0) {
-			DriveItemUploadableProperties driveItemUploadableProperties =
-				new DriveItemUploadableProperties();
-
 			IDriveItemCreateUploadSessionRequest
 				iDriveItemCreateUploadSessionRequest =
 					iGraphServiceClientBuilder.me(
@@ -257,7 +254,7 @@ public class UploadOneDriveDocumentBackgroundTaskExecutor
 					).items(
 						jsonPrimitive.getAsString()
 					).createUploadSession(
-						driveItemUploadableProperties
+						new DriveItemUploadableProperties()
 					).buildRequest();
 
 			ChunkedUploadProvider<DriveItem> chunkedUploadProvider =

@@ -57,9 +57,8 @@ public class AopCacheManagerTest {
 	public void setUp() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
-		TestInterfaceImpl testInterfaceImpl = new TestInterfaceImpl();
-
-		_aopInvocationHandler = AopCacheManager.create(testInterfaceImpl, null);
+		_aopInvocationHandler = AopCacheManager.create(
+			new TestInterfaceImpl(), null);
 
 		_testInterfaceProxy = (TestInterface)ProxyUtil.newProxyInstance(
 			AopCacheManagerTest.class.getClassLoader(),

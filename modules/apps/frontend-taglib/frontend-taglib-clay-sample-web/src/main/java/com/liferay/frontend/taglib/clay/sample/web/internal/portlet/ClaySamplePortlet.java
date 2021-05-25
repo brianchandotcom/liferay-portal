@@ -63,31 +63,21 @@ public class ClaySamplePortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		CardsDisplayContext cardsDisplayContext = new CardsDisplayContext();
-
 		renderRequest.setAttribute(
-			ClaySamplePortletKeys.CARDS_DISPLAY_CONTEXT, cardsDisplayContext);
-
-		DropdownsDisplayContext dropdownsDisplayContext =
-			new DropdownsDisplayContext();
+			ClaySamplePortletKeys.CARDS_DISPLAY_CONTEXT,
+			new CardsDisplayContext());
 
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.DROPDOWNS_DISPLAY_CONTEXT,
-			dropdownsDisplayContext);
-
-		MultiselectDisplayContext multiselectDisplayContext =
-			new MultiselectDisplayContext();
+			new DropdownsDisplayContext());
 
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.MULTISELECT_DISPLAY_CONTEXT,
-			multiselectDisplayContext);
-
-		NavigationBarsDisplayContext navigationBarsDisplayContext =
-			new NavigationBarsDisplayContext();
+			new MultiselectDisplayContext());
 
 		renderRequest.setAttribute(
 			ClaySamplePortletKeys.NAVIGATION_BARS_DISPLAY_CONTEXT,
-			navigationBarsDisplayContext);
+			new NavigationBarsDisplayContext());
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

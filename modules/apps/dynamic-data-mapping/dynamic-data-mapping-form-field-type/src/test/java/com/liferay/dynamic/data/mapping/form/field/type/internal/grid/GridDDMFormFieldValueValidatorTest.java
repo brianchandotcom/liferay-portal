@@ -60,9 +60,7 @@ public class GridDDMFormFieldValueValidatorTest extends PowerMockito {
 
 		ddmFormField.setProperty("rows", ddmFormFieldRows);
 
-		DDMFormFieldOptions ddmFormFieldColumns = new DDMFormFieldOptions();
-
-		ddmFormField.setProperty("columns", ddmFormFieldColumns);
+		ddmFormField.setProperty("columns", new DDMFormFieldOptions());
 
 		ddmForm.addDDMFormField(ddmFormField);
 

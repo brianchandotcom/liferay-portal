@@ -81,11 +81,8 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 
 		Expression actionExpression = createExpression(actionExpressionString);
 
-		ActionExpressionVisitor actionExpressionVisitor =
-			new ActionExpressionVisitor();
-
 		return (SPIDDMFormRuleAction)actionExpression.accept(
-			actionExpressionVisitor);
+			new ActionExpressionVisitor());
 	}
 
 	protected String convertCondition(

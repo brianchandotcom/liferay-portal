@@ -180,17 +180,13 @@ public class InjectTestRuleTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Service2 service2 = new Service2();
-
-		registry.registerService(Service2.class, service2);
+		registry.registerService(Service2.class, new Service2());
 
 		injectTestBag.injectFields();
 
 		Assert.assertNull(testCase2._service2);
 
-		Service3 service3a = new Service3();
-
-		registry.registerService(Service3.class, service3a);
+		registry.registerService(Service3.class, new Service3());
 
 		injectTestBag.injectFields();
 

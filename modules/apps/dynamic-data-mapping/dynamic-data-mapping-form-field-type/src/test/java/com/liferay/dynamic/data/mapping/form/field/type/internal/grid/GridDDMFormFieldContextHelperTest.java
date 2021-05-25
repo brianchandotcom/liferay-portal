@@ -68,11 +68,8 @@ public class GridDDMFormFieldContextHelperTest {
 		GridDDMFormFieldContextHelper gridDDMFormFieldContextHelper =
 			new GridDDMFormFieldContextHelper(ddmFormFieldOptions, locale);
 
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
 		return gridDDMFormFieldContextHelper.getOptions(
-			ddmFormFieldRenderingContext);
+			new DDMFormFieldRenderingContext());
 	}
 
 }

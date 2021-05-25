@@ -115,9 +115,7 @@ public class VLDAPServer {
 	}
 
 	protected void initIoHandler(NioSocketAcceptor nioSocketAcceptor) {
-		DispatchIoHandler dispatchIoHandler = new DispatchIoHandler();
-
-		nioSocketAcceptor.setHandler(dispatchIoHandler);
+		nioSocketAcceptor.setHandler(new DispatchIoHandler());
 	}
 
 	protected void initLogging(NioSocketAcceptor nioSocketAcceptor) {

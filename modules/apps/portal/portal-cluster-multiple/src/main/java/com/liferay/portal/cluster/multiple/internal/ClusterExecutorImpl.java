@@ -229,13 +229,9 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 
 		BundleContext bundleContext = componentContext.getBundleContext();
 
-		ClusterExecutorPortalInetSocketAddressEventListener
-			clusterExecutorPortalInetSocketAddressEventListener =
-				new ClusterExecutorPortalInetSocketAddressEventListener();
-
 		_serviceRegistration = bundleContext.registerService(
 			PortalInetSocketAddressEventListener.class,
-			clusterExecutorPortalInetSocketAddressEventListener,
+			new ClusterExecutorPortalInetSocketAddressEventListener(),
 			new HashMapDictionary<String, Object>());
 	}
 

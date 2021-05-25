@@ -342,9 +342,7 @@ public class UserTestUtil {
 	}
 
 	public static User updateUser(User user) throws Exception {
-		ServiceContext serviceContext = new ServiceContext();
-
-		return updateUser(user, serviceContext);
+		return updateUser(user, new ServiceContext());
 	}
 
 	public static User updateUser(User user, ServiceContext serviceContext)

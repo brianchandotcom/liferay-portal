@@ -357,12 +357,11 @@ public class ExportImportHelperUtilTest {
 			).build();
 
 		Element portletDataElement = null;
-		ManifestSummary manifestSummary = new ManifestSummary();
 
 		Map<String, Boolean> actualPortletControlsMap =
 			ExportImportHelperUtil.getImportPortletControlsMap(
 				companyId, portletId, parameterMap, portletDataElement,
-				manifestSummary);
+				new ManifestSummary());
 
 		_assertPortletControlsMap(
 			actualPortletControlsMap, false, false, false, false, false);
@@ -547,12 +546,11 @@ public class ExportImportHelperUtilTest {
 			).build();
 
 		Element portletDataElement = null;
-		ManifestSummary manifestSummary = new ManifestSummary();
 
 		Map<String, Boolean> actualPortletControlsMap =
 			ExportImportHelperUtil.getImportPortletControlsMap(
 				companyId, portletId, parameterMap, portletDataElement,
-				manifestSummary);
+				new ManifestSummary());
 
 		_assertPortletControlsMap(
 			actualPortletControlsMap, false, false, false, false, false);

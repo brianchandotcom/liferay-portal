@@ -155,14 +155,13 @@ public class UserSetDigestTest {
 		long[] roleIds = null;
 		long[] userGroupIds = null;
 		boolean sendEmail = false;
-		ServiceContext serviceContext = new ServiceContext();
 
 		_userLocalService.addUserWithWorkflow(
 			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			roleIds, userGroupIds, sendEmail, new ServiceContext());
 	}
 
 	@Inject

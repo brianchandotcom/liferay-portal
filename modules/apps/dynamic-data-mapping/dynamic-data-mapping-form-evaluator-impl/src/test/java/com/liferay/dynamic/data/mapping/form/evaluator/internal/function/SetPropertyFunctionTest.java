@@ -44,11 +44,8 @@ public class SetPropertyFunctionTest extends PowerMockito {
 		SetPropertyFunction<Boolean> setPropertyFunction =
 			new SetMultipleFunction();
 
-		DefaultDDMExpressionObserver defaultDDMExpressionObserver =
-			new DefaultDDMExpressionObserver();
-
 		DefaultDDMExpressionObserver spyDefaultDDMExpressionObserver = spy(
-			defaultDDMExpressionObserver);
+			new DefaultDDMExpressionObserver());
 
 		setPropertyFunction.setDDMExpressionObserver(
 			spyDefaultDDMExpressionObserver);

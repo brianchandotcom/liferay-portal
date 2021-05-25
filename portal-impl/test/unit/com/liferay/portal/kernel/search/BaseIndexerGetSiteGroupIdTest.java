@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.Collections;
@@ -55,9 +54,7 @@ public class BaseIndexerGetSiteGroupIdTest {
 	public void setUp() throws Exception {
 		PropsTestUtil.setProps(Collections.emptyMap());
 
-		Registry registry = new BasicRegistryImpl();
-
-		RegistryUtil.setRegistry(registry);
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		_indexer = new TestIndexer();
 	}

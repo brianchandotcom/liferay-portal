@@ -98,11 +98,8 @@ public class DefaultTransactionExecutorTest
 			failingTransactionLifecycleListener);
 
 		try {
-			RecordPlatformTransactionManager recordPlatformTransactionManager =
-				new RecordPlatformTransactionManager();
-
 			TransactionExecutor transactionExecutor = createTransactionExecutor(
-				recordPlatformTransactionManager);
+				new RecordPlatformTransactionManager());
 
 			try {
 				transactionExecutor.execute(

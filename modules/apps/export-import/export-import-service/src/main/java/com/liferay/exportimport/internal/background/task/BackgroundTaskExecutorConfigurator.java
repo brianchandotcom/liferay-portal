@@ -34,59 +34,33 @@ public class BackgroundTaskExecutorConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		BackgroundTaskExecutor layoutExportBackgroundTaskExecutor =
-			new LayoutExportBackgroundTaskExecutor();
+		registerBackgroundTaskExecutor(
+			bundleContext, new LayoutExportBackgroundTaskExecutor());
 
 		registerBackgroundTaskExecutor(
-			bundleContext, layoutExportBackgroundTaskExecutor);
-
-		BackgroundTaskExecutor layoutImportBackgroundTaskExecutor =
-			new LayoutImportBackgroundTaskExecutor();
+			bundleContext, new LayoutImportBackgroundTaskExecutor());
 
 		registerBackgroundTaskExecutor(
-			bundleContext, layoutImportBackgroundTaskExecutor);
-
-		BackgroundTaskExecutor layoutRemoteStagingBackgroundTaskExecutor =
-			new LayoutRemoteStagingBackgroundTaskExecutor();
+			bundleContext, new LayoutRemoteStagingBackgroundTaskExecutor());
 
 		registerBackgroundTaskExecutor(
-			bundleContext, layoutRemoteStagingBackgroundTaskExecutor);
-
-		BackgroundTaskExecutor layoutSetPrototypeImportBackgroundTaskExcecutor =
-			new LayoutSetPrototypeImportBackgroundTaskExcecutor();
+			bundleContext,
+			new LayoutSetPrototypeImportBackgroundTaskExcecutor());
 
 		registerBackgroundTaskExecutor(
-			bundleContext, layoutSetPrototypeImportBackgroundTaskExcecutor);
-
-		BackgroundTaskExecutor layoutStagingBackgroundTaskExecutor =
-			new LayoutStagingBackgroundTaskExecutor();
+			bundleContext, new LayoutStagingBackgroundTaskExecutor());
 
 		registerBackgroundTaskExecutor(
-			bundleContext, layoutStagingBackgroundTaskExecutor);
-
-		BackgroundTaskExecutor portletExportBackgroundTaskExecutor =
-			new PortletExportBackgroundTaskExecutor();
+			bundleContext, new PortletExportBackgroundTaskExecutor());
 
 		registerBackgroundTaskExecutor(
-			bundleContext, portletExportBackgroundTaskExecutor);
-
-		BackgroundTaskExecutor portletImportBackgroundTaskExecutor =
-			new PortletImportBackgroundTaskExecutor();
+			bundleContext, new PortletImportBackgroundTaskExecutor());
 
 		registerBackgroundTaskExecutor(
-			bundleContext, portletImportBackgroundTaskExecutor);
-
-		BackgroundTaskExecutor portletRemoteStagingBackgroundTaskExecutor =
-			new PortletRemoteStagingBackgroundTaskExecutor();
+			bundleContext, new PortletRemoteStagingBackgroundTaskExecutor());
 
 		registerBackgroundTaskExecutor(
-			bundleContext, portletRemoteStagingBackgroundTaskExecutor);
-
-		BackgroundTaskExecutor portletStagingBackgroundTaskExecutor =
-			new PortletStagingBackgroundTaskExecutor();
-
-		registerBackgroundTaskExecutor(
-			bundleContext, portletStagingBackgroundTaskExecutor);
+			bundleContext, new PortletStagingBackgroundTaskExecutor());
 	}
 
 	@Deactivate

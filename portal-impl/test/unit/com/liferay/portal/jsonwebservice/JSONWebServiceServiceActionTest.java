@@ -109,11 +109,8 @@ public class JSONWebServiceServiceActionTest
 		MockHttpServletRequest mockHttpServletRequest =
 			createInvokerHttpServletRequest(json);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Assert.assertEquals("{}", json);
 	}
@@ -136,11 +133,8 @@ public class JSONWebServiceServiceActionTest
 		MockHttpServletRequest mockHttpServletRequest =
 			createInvokerHttpServletRequest(json);
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -291,11 +285,8 @@ public class JSONWebServiceServiceActionTest
 			setServletContext(mockHttpServletRequest, contextName);
 		}
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -318,11 +309,8 @@ public class JSONWebServiceServiceActionTest
 			setServletContext(mockHttpServletRequest, contextName);
 		}
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		String json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}
@@ -342,11 +330,8 @@ public class JSONWebServiceServiceActionTest
 			setServletContext(mockHttpServletRequest, contextName);
 		}
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
 		String json = _jsonWebServiceServiceAction.getJSON(
-			mockHttpServletRequest, mockHttpServletResponse);
+			mockHttpServletRequest, new MockHttpServletResponse());
 
 		Assert.assertEquals("\"Welcome 173 to Jupiter\"", json);
 	}

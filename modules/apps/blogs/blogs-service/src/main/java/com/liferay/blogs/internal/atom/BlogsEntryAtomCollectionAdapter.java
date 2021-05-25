@@ -218,14 +218,12 @@ public class BlogsEntryAtomCollectionAdapter
 
 		String[] trackbacks = StringUtil.split(blogsEntry.getTrackbacks());
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		_blogsEntryService.updateEntry(
 			blogsEntry.getEntryId(), title, blogsEntry.getSubtitle(), summary,
 			content, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, blogsEntry.isAllowPingbacks(),
 			blogsEntry.isAllowTrackbacks(), trackbacks, StringPool.BLANK, null,
-			null, serviceContext);
+			null, new ServiceContext());
 	}
 
 	private static final String _COLLECTION_NAME = "blogs";

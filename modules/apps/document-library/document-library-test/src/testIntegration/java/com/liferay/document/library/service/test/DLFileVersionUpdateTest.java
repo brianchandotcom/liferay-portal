@@ -92,14 +92,11 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 			addMimeType, addFileName, description, changeLog, addBytes, null,
 			null, serviceContext);
 
-		Date expirationDate = new Date();
-		Date reviewDate = new Date();
-
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), updateFileName, updateMimeType,
 			updateFileName, description, changeLog,
-			DLVersionNumberIncrease.MINOR, updateBytes, expirationDate,
-			reviewDate, serviceContext);
+			DLVersionNumberIncrease.MINOR, updateBytes, new Date(), new Date(),
+			serviceContext);
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 

@@ -161,12 +161,11 @@ public class ComboServletTest extends PowerMockito {
 
 	@Test
 	public void testEmptyParameters() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
-		_comboServlet.service(mockHttpServletRequest, mockHttpServletResponse);
+		_comboServlet.service(
+			new MockHttpServletRequest(), mockHttpServletResponse);
 
 		Assert.assertEquals(
 			HttpServletResponse.SC_NOT_FOUND,

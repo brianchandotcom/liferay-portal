@@ -71,11 +71,8 @@ public class CheckboxMultipleDDMFormFieldContextHelperTest {
 				new CheckboxMultipleDDMFormFieldContextHelper(
 					new JSONFactoryImpl(), ddmFormFieldOptions, locale);
 
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
-
 		return checkboxMultipleDDMFormFieldContextHelper.getOptions(
-			ddmFormFieldRenderingContext);
+			new DDMFormFieldRenderingContext());
 	}
 
 }

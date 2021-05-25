@@ -165,10 +165,8 @@ public class JournalArticleScheduledTest {
 		int initialSearchArticlesCount = JournalTestUtil.getSearchArticlesCount(
 			_group.getCompanyId(), _group.getGroupId());
 
-		Date now = new Date();
-
 		JournalArticle article = addArticle(
-			_group.getGroupId(), now, when, approved);
+			_group.getGroupId(), new Date(), when, approved);
 
 		JournalArticleLocalServiceUtil.checkArticles();
 

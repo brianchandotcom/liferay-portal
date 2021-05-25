@@ -233,9 +233,7 @@ public class WebDriverUtil extends PropsValues {
 	}
 
 	private WebDriver _getSafariDriver() {
-		SafariOptions safariOptions = new SafariOptions();
-
-		_setGenericCapabilities(safariOptions);
+		_setGenericCapabilities(new SafariOptions());
 
 		return new SafariDriver();
 	}

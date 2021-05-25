@@ -61,13 +61,9 @@ public class JournalArticleExportImportContentProcessorTest {
 	private void _testExcludeHTMLComments(
 		String expectedContent, String content) {
 
-		JournalArticleExportImportContentProcessor
-			journalArticleExportImportContentProcessor =
-				new JournalArticleExportImportContentProcessor();
-
 		String excludedHtmlCommentContent = ReflectionTestUtil.invoke(
-			journalArticleExportImportContentProcessor, "_excludeHTMLComments",
-			new Class<?>[] {String.class}, content);
+			new JournalArticleExportImportContentProcessor(),
+			"_excludeHTMLComments", new Class<?>[] {String.class}, content);
 
 		Assert.assertEquals(expectedContent, excludedHtmlCommentContent);
 	}

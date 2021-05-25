@@ -135,14 +135,12 @@ public class MembershipPolicyTestUtil {
 		String jobTitle = StringPool.BLANK;
 		boolean sendMail = false;
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		return UserServiceUtil.addUser(
 			TestPropsValues.getCompanyId(), autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, locale, firstName,
 			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, siteIds, organizationIds,
-			roleIds, userGroupIds, sendMail, serviceContext);
+			roleIds, userGroupIds, sendMail, new ServiceContext());
 	}
 
 	public static UserGroup addUserGroup() throws Exception {
@@ -200,8 +198,6 @@ public class MembershipPolicyTestUtil {
 		List<Website> websites = new ArrayList<>();
 		List<AnnouncementsDelivery> announcementsDelivers = new ArrayList<>();
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		UserServiceUtil.updateUser(
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
@@ -210,7 +206,7 @@ public class MembershipPolicyTestUtil {
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
 			jabberSn, skypeSn, twitterSn, jobTitle, siteIds, organizationIds,
 			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDelivers, serviceContext);
+			phones, websites, announcementsDelivers, new ServiceContext());
 	}
 
 	protected static Map<String, Serializable> addExpandoMap(Class<?> clazz)

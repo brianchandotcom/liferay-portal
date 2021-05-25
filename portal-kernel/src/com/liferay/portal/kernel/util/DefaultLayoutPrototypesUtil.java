@@ -51,18 +51,15 @@ public class DefaultLayoutPrototypesUtil {
 			nameMap.put(locale, LanguageUtil.get(locale, nameKey));
 		}
 
-		Map<Locale, String> friendlyURLMap = HashMapBuilder.put(
-			LocaleUtil.getDefault(), friendlyURL
-		).build();
-
-		ServiceContext serviceContext = new ServiceContext();
-
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			group.getCreatorUserId(), group.getGroupId(),
 			layoutSet.isPrivateLayout(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
 			null, LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
-			friendlyURLMap, serviceContext);
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), friendlyURL
+			).build(),
+			new ServiceContext());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

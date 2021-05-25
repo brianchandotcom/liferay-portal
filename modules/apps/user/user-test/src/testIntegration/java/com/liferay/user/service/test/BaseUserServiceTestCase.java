@@ -39,10 +39,8 @@ public abstract class BaseUserServiceTestCase {
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		_userService.unsetGroupUsers(
-			groupId, new long[] {objectUser.getUserId()}, serviceContext);
+			groupId, new long[] {objectUser.getUserId()}, new ServiceContext());
 	}
 
 	protected void unsetOrganizationUsers(

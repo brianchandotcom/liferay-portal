@@ -35,11 +35,11 @@ public class CPMediaImpl implements CPMedia {
 			fileEntry, fileEntry.getFileVersion(), themeDisplay,
 			StringPool.BLANK);
 
-		_downloadUrl = defaultUrl;
+		_downloadURL = defaultUrl;
 
 		_id = fileEntry.getFileEntryId();
 		_url = defaultUrl;
-		_thumbnailUrl = defaultUrl;
+		_thumbnailURL = defaultUrl;
 		_mimeType = fileEntry.getMimeType();
 		_title = fileEntry.getTitle();
 	}
@@ -47,11 +47,11 @@ public class CPMediaImpl implements CPMedia {
 	public CPMediaImpl(long groupId) throws PortalException {
 		String defaultUrl = CommerceMediaResolverUtil.getDefaultUrl(groupId);
 
-		_downloadUrl = defaultUrl;
+		_downloadURL = defaultUrl;
 
 		_id = 0;
 		_mimeType = null;
-		_thumbnailUrl = defaultUrl;
+		_thumbnailURL = defaultUrl;
 		_title = null;
 		_url = defaultUrl;
 	}
@@ -61,7 +61,7 @@ public class CPMediaImpl implements CPMedia {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		_downloadUrl = CommerceMediaResolverUtil.getDownloadURL(
+		_downloadURL = CommerceMediaResolverUtil.getDownloadURL(
 			commerceAccountId,
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 		_id = cpAttachmentFileEntry.getCPAttachmentFileEntryId();
@@ -75,7 +75,7 @@ public class CPMediaImpl implements CPMedia {
 			_mimeType = fileEntry.getMimeType();
 		}
 
-		_thumbnailUrl = CommerceMediaResolverUtil.getThumbnailURL(
+		_thumbnailURL = CommerceMediaResolverUtil.getThumbnailURL(
 			commerceAccountId,
 			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 		_title = cpAttachmentFileEntry.getTitle(themeDisplay.getLanguageId());
@@ -86,7 +86,7 @@ public class CPMediaImpl implements CPMedia {
 
 	@Override
 	public String getDownloadUrl() {
-		return _downloadUrl;
+		return _downloadURL;
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class CPMediaImpl implements CPMedia {
 
 	@Override
 	public String getThumbnailUrl() {
-		return _thumbnailUrl;
+		return _thumbnailURL;
 	}
 
 	@Override
@@ -114,10 +114,10 @@ public class CPMediaImpl implements CPMedia {
 		return _mimeType;
 	}
 
-	private final String _downloadUrl;
+	private final String _downloadURL;
 	private final long _id;
 	private final String _mimeType;
-	private final String _thumbnailUrl;
+	private final String _thumbnailURL;
 	private final String _title;
 	private final String _url;
 

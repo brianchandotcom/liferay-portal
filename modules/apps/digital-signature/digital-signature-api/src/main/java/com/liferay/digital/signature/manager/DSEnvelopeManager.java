@@ -15,6 +15,7 @@
 package com.liferay.digital.signature.manager;
 
 import com.liferay.digital.signature.model.DSEnvelope;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.List;
 
@@ -40,5 +41,8 @@ public interface DSEnvelopeManager {
 
 	public List<DSEnvelope> getDSEnvelopes(
 		long companyId, long groupId, String... dsEnvelopeIds);
+
+	public JSONObject getDSEnvelopesJSONObject(
+		long groupId, String fromDateString, long count, long startPosition);
 
 }

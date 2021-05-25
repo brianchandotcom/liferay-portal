@@ -19,6 +19,7 @@ import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -155,6 +156,38 @@ public class DSEnvelopeManagerTest {
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			dsEnvelopeIds);
+	}
+
+	@Test
+	public void testGetDSEnvelopesJSONObject() throws Exception {
+		DSEnvelope dsEnvelope1 = _dsEnvelopeManager.addDSEnvelope(
+			TestPropsValues.getGroupId(),
+			new DSEnvelope() {
+				{
+					emailSubject = RandomTestUtil.randomString();
+					status = "created";
+				}
+			});
+		DSEnvelope dsEnvelope2 = _dsEnvelopeManager.addDSEnvelope(
+			TestPropsValues.getGroupId(),
+			new DSEnvelope() {
+				{
+					emailSubject = RandomTestUtil.randomString();
+					status = "created";
+				}
+			});
+
+		JSONObject jsonObject = _dsEnvelopeManager.getDSEnvelopesJSONObject(
+			TestPropsValues.getGroupId(), "2021-01-01", 2L, 0L);
+
+		Assert.assertTrue(jsonObject.getLong("resultSetSize") >= 2);
+
+		String[] dsEnvelopeIds = {
+			dsEnvelope1.getDSEnvelopeId(), dsEnvelope2.getDSEnvelopeId()
+		};
+
+		_dsEnvelopeManager.deleteDSEnvelopes(
+			TestPropsValues.getGroupId(), dsEnvelopeIds);
 	}
 
 	@Inject

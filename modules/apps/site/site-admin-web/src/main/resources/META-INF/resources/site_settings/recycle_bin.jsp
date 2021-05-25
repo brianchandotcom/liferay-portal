@@ -31,7 +31,7 @@ int trashEntriesMaxAge = PropertiesParamUtil.getInteger(groupTypeSettings, reque
 		<aui:validator name="min"><%= PropsValues.TRASH_ENTRY_CHECK_INTERVAL %></aui:validator>
 	</aui:input>
 
-	<span class="form-text"><liferay-ui:message key="trash-entries-max-age-help" /></span>
+	<span class="small text-secondary"><liferay-ui:message key="trash-entries-max-age-help" /></span>
 </aui:field-wrapper>
 
 <script>

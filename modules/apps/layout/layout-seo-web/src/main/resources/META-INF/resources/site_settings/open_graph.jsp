@@ -24,32 +24,39 @@ OpenGraphSettingsDisplayContext openGraphSettingsDisplayContext = (OpenGraphSett
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div class="form-group" id="<portlet:namespace />idOptions">
+<aui:field-wrapper cssClass="form-group">
 	<aui:input id="openGraphEnabled" label="enable-open-graph" name="openGraphEnabled" type="checkbox" value="<%= openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" />
-</div>
 
-<p class="text-muted">
-	<liferay-ui:message key="enable-open-graph-description" />
-</p>
+	<p class="small text-secondary"><liferay-ui:message key="enable-open-graph-description" /></p>
+</aui:field-wrapper>
 
 <div class="open-graph-settings <%= openGraphSettingsDisplayContext.isOpenGraphEnabled() ? "" : "disabled" %>" id="<portlet:namespace />openGraphSettings">
-	<h4 class="sheet-tertiary-title">
+	<h4 class="sheet-subtitle">
 		<liferay-ui:message key="open-graph-image" />
 	</h4>
 
-	<p class="text-muted">
+	<p class="small text-secondary">
 		<liferay-ui:message key="open-graph-image-description" />
 	</p>
 
 	<div class="form-group">
 		<label class="control-label"><liferay-ui:message key="image" /></label>
 
-		<aui:input disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" label="<%= StringPool.BLANK %>" name="openGraphImageTitle" placeholder="image" readonly="<%= true %>" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageTitle() %>" wrapperCssClass="mb-3" />
+		<div class="input-group mb-3">
+			<div class="input-group-item">
+				<input class="field form-control lfr-input-text" disabled="<%= !openGraphSettingsDisplayContext.isOpenGraphEnabled() %>" id="<portlet:namespace />openGraphImageTitle" name="<portlet:namespace />parentSiteTitle" placeholder="image" readonly="<%= true %>" type="text" value="<%= openGraphSettingsDisplayContext.getOpenGraphImageTitle() %>" />
+			</div>
 
-		<aui:button-row cssClass="mt-0">
-			<aui:button name="openGraphImageButton" value="select" />
-			<aui:button name="openGraphClearImageButton" value="clear" />
-		</aui:button-row>
+			<div class="input-group-item input-group-item-shrink">
+				<button class="btn btn-secondary mr-1" id="<portlet:namespace />openGraphImageButton" type="button">
+					<liferay-ui:message key="select" />
+				</button>
+
+				<button class="btn btn-secondary" id="<portlet:namespace />openGraphClearImageButton" type="button">
+					<liferay-ui:message key="clear" />
+				</button>
+			</div>
+		</div>
 
 		<aui:model-context bean="<%= openGraphSettingsDisplayContext.getLayoutSEOSite() %>" model="<%= LayoutSEOSite.class %>" />
 

@@ -48,7 +48,7 @@ for (long defaultTeamId : defaultTeamIds) {
 	/>
 </liferay-util:buffer>
 
-<p class="text-secondary">
+<p class="small text-secondary">
 	<liferay-ui:message key="select-the-default-roles-and-teams-for-new-members" />
 </p>
 

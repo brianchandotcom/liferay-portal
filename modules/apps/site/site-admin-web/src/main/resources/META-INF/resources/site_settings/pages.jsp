@@ -120,7 +120,9 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 					<aui:a href="<%= siteGoup.getDisplayURL(themeDisplay, false) %>" label="open-public-pages" target="_blank" />
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
+					<p class="small text-secondary">
+						<liferay-ui:message key="this-site-does-not-have-any-public-pages" />
+					</p>
 				</c:otherwise>
 			</c:choose>
 
@@ -208,7 +210,9 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 					<aui:a href="<%= siteGoup.getDisplayURL(themeDisplay, true) %>" label="open-private-pages" target="_blank" />
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
+					<p class="small text-secondary">
+						<liferay-ui:message key="this-site-does-not-have-any-private-pages" />
+					</p>
 				</c:otherwise>
 			</c:choose>
 

@@ -23,7 +23,7 @@
 		</div>
 	</c:when>
 	<c:otherwise>
-		<p><%= LanguageUtil.get(resourceBundle, "select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets") %></p>
+		<p class="small text-secondary"><%= LanguageUtil.get(resourceBundle, "select-the-maps-api-provider-to-use-when-displaying-geolocalized-assets") %></p>
 
 		<%
 		for (MapProvider mapProvider : mapProviders) {

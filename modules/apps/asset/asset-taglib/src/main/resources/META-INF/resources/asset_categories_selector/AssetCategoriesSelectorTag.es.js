@@ -67,7 +67,7 @@ export default function (props) {
 		<>
 			{props.learnHowURL && (
 				<p
-					className="text-secondary"
+					className="small text-secondary"
 					dangerouslySetInnerHTML={{
 						__html: Liferay.Util.sub(
 							Liferay.Language.get(
@@ -86,7 +86,7 @@ export default function (props) {
 						{Liferay.Language.get('public-categories')}
 					</div>
 
-					<p className="text-secondary">
+					<p className="small text-secondary">
 						{Liferay.Language.get(
 							'they-can-be-displayed-through-pages-widgets-fragments-and-searches'
 						)}

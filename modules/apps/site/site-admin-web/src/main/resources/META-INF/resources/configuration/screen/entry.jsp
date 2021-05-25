@@ -64,7 +64,7 @@ else {
 		<liferay-util:include page="<%= siteSettingsConfigurationScreenContributor.getJspPath() %>" servletContext="<%= siteSettingsConfigurationScreenContributor.getServletContext() %>" />
 
 		<clay:sheet-footer>
-			<div class="btn-group">
+			<div class="btn-group mt-4">
 				<div class="btn-group-item">
 					<aui:button type="submit" value="save" />
 				</div>

@@ -29,19 +29,19 @@ for (String analyticsType : analyticsTypes) {
 			<aui:field-wrapper cssClass="form-group">
 				<aui:input label="google-analytics-id" name="googleAnalyticsId" type="text" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsId") %>' />
 
-				<span class="form-text"><liferay-ui:message key="set-the-google-analytics-id-that-is-used-for-this-set-of-pages" /></span>
+				<span class="small text-secondary"><liferay-ui:message key="set-the-google-analytics-id-that-is-used-for-this-set-of-pages" /></span>
 			</aui:field-wrapper>
 
 			<aui:field-wrapper cssClass="form-group">
 				<aui:input label="google-analytics-create-custom-configuration" name="googleAnalyticsCreateCustomConfiguration" type="textarea" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsCreateCustomConfiguration") %>' />
 
-				<span class="form-text"><liferay-ui:message key="set-the-google-analytics-create-custom-options-that-are-used-for-this-set-of-pages" /></span>
+				<span class="small text-secondary"><liferay-ui:message key="set-the-google-analytics-create-custom-options-that-are-used-for-this-set-of-pages" /></span>
 			</aui:field-wrapper>
 
 			<aui:field-wrapper cssClass="form-group">
 				<aui:input label="google-analytics-custom-configuration" name="googleAnalyticsCustomConfiguration" type="textarea" value='<%= PropertiesParamUtil.getString(groupTypeSettings, request, "googleAnalyticsCustomConfiguration") %>' />
 
-				<span class="form-text"><liferay-ui:message key="set-the-google-analytics-custom-options-that-are-used-for-this-set-of-pages" /></span>
+				<span class="small text-secondary"><liferay-ui:message key="set-the-google-analytics-custom-options-that-are-used-for-this-set-of-pages" /></span>
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>
@@ -53,7 +53,7 @@ for (String analyticsType : analyticsTypes) {
 			<aui:field-wrapper cssClass="form-group">
 				<aui:input label="<%= analyticsName %>" name="<%= Sites.ANALYTICS_PREFIX + analyticsType %>" type="textarea" value="<%= PropertiesParamUtil.getString(groupTypeSettings, request, Sites.ANALYTICS_PREFIX + analyticsType) %>" wrap="soft" />
 
-				<span class="form-text"><liferay-ui:message arguments="<%= analyticsName %>" key="set-the-script-for-x-that-is-used-for-this-set-of-pages" translateArguments="<%= false %>" /></span>
+				<span class="small text-secondary"><liferay-ui:message arguments="<%= analyticsName %>" key="set-the-script-for-x-that-is-used-for-this-set-of-pages" translateArguments="<%= false %>" /></span>
 			</aui:field-wrapper>
 		</c:otherwise>
 	</c:choose>

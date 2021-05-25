@@ -247,7 +247,7 @@ elasticsearch.username: "elastic"</echo>
 		<attribute name="connection.name" />
 
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-@{connection.name}.config">active=&quot;true&quot;
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration~@{connection.name}.config">active=&quot;true&quot;
 connectionId=&quot;@{connection.name}&quot;
 networkHostAddresses=[&quot;http://localhost:9202&quot;]</echo>
 		</sequential>
@@ -270,7 +270,7 @@ networkHostAddresses=[&quot;http://localhost:9202&quot;]</echo>
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-xpack.config">active="true"
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration~xpack.config">active="true"
 authenticationEnabled="true"
 connectionId="xpack"
 httpSSLEnabled="true"
@@ -300,7 +300,7 @@ username="elastic"</echo>
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-pki.config">active="true"
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration~pki.config">active="true"
 authenticationEnabled="false"
 connectionId="pki"
 httpSSLEnabled="true"

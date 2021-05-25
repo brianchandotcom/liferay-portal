@@ -104,6 +104,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -6068,6 +6070,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker != null) {
+			searchContext.setUserId(permissionChecker.getUserId());
+		}
 
 		return searchContext;
 	}

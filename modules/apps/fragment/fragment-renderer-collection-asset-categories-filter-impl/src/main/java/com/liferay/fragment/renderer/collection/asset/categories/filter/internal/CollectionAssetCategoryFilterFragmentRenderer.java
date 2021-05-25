@@ -34,8 +34,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -47,7 +45,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;
@@ -118,13 +115,7 @@ public class CollectionAssetCategoryFilterFragmentRenderer
 			return false;
 		}
 
-		Layout layout = (Layout)httpServletRequest.getAttribute(WebKeys.LAYOUT);
-
-		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	@Override

@@ -89,6 +89,9 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 
 		properties.remove("hibernate.cache.region.factory_class");
 
+		properties.setProperty(
+			"hibernate.query.sql.jdbc_style_params_base", "true");
+
 		setHibernateProperties(properties);
 
 		BootstrapServiceRegistryBuilder bootstrapServiceRegistryBuilder =

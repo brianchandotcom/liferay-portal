@@ -43,8 +43,8 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLTrashService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
-import com.liferay.document.library.web.internal.exception.DLExpirationDateException;
-import com.liferay.document.library.web.internal.exception.DLReviewDateException;
+import com.liferay.document.library.web.internal.exception.FileEntryExpirationDateException;
+import com.liferay.document.library.web.internal.exception.FileEntryReviewDateException;
 import com.liferay.document.library.web.internal.exception.FileNameExtensionException;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.document.library.web.internal.util.FFExpirationDateReviewDateConfigurationUtil;
@@ -902,7 +902,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		return _portal.getDate(
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, timeZone,
-			DLExpirationDateException.class);
+			FileEntryExpirationDateException.class);
 	}
 
 	private Date _getReviewDate(
@@ -939,7 +939,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		return _portal.getDate(
 			reviewDateMonth, reviewDateDay, reviewDateYear, reviewDateHour,
-			reviewDateMinute, timeZone, DLReviewDateException.class);
+			reviewDateMinute, timeZone, FileEntryReviewDateException.class);
 	}
 
 	private String _getSaveAndContinueRedirect(

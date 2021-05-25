@@ -1,5 +1,6 @@
 @import 'NavigationMenuItemsTree';
 @import 'atlas-variables';
+@import 'cadmin-variables';
 @import 'variables';
 
 $product-menu-width: 320px;
@@ -439,26 +440,33 @@ $product-menu-pages-administration-link-height: 72px;
 	}
 }
 
-.product-menu-toast-toggle {
-	height: 2em;
-	position: relative;
-	width: 2em;
+html#{$cadmin-selector} {
+	.cadmin {
+		.product-menu-toast-toggle {
+			align-items: center;
+			display: inline-flex;
+			height: 2em;
+			justify-content: center;
+			position: relative;
+			width: 2em;
 
-	> .icon-monospaced {
-		position: absolute;
+			.icon-product-menu-open {
+				display: none;
+			}
 
-		&.icon-product-menu-open {
-			display: none;
-
-			body.product-menu-open & {
+			.icon-product-menu-closed {
 				display: block;
 			}
 		}
+	}
 
-		&.icon-product-menu-closed {
-			display: block;
+	body.product-menu-open .cadmin {
+		.product-menu-toast-toggle {
+			.icon-product-menu-open {
+				display: block;
+			}
 
-			body.product-menu-open & {
+			.icon-product-menu-closed {
 				display: none;
 			}
 		}

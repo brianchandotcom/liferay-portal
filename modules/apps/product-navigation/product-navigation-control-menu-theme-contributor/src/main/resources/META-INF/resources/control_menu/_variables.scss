@@ -1,32 +1,32 @@
 $admin-panel-width: 320px;
 $admin-panel-zindex: 990 !default;
 
-$control-menu-focus-box-shadow: 0 0 0 2px $white, 0 0 0 4px $primary-l1 !default;
+$control-menu-focus-box-shadow: 0 0 0 2px $cadmin-white, 0 0 0 4px $cadmin-primary-l1 !default;
 
 $control-menu-css-transition: all 0.5s ease !default;
 
 $control-menu-level-1-padding: 8px;
 $control-menu-level-1-padding-desktop: 12px;
 
-$control-menu-level-1-active-border: $primary-l1 !default;
+$control-menu-level-1-active-border: $cadmin-primary-l1 !default;
 $control-menu-level-1-active-border-width: 2px !default;
-$control-menu-level-1-bg: $dark-l1 !default;
-$control-menu-level-1-color: $gray-400 !default;
-$control-menu-level-1-link-color: $gray-400 !default;
-$control-menu-level-1-link-hover-color: $white !default;
-$control-menu-level-1-link-background-color: fade_out($white, 0.97) !default;
+$control-menu-level-1-bg: $cadmin-dark-l1 !default;
+$control-menu-level-1-color: $cadmin-gray-400 !default;
+$control-menu-level-1-link-color: $cadmin-gray-400 !default;
+$control-menu-level-1-link-hover-color: $cadmin-white !default;
+$control-menu-level-1-link-background-color: fade_out($cadmin-white, 0.97) !default;
 
-$control-menu-level-1-light-bg: $white !default;
-$control-menu-level-1-light-border: 1px solid $light;
-$control-menu-level-1-light-color: $gray-600 !default;
-$control-menu-level-1-light-link-color: $gray-600 !default;
-$control-menu-level-1-light-link-hover-color: $gray-800 !default;
-$control-menu-level-1-light-link-background-color: $gray-200 !default;
+$control-menu-level-1-light-bg: $cadmin-white !default;
+$control-menu-level-1-light-border: 1px solid $cadmin-light;
+$control-menu-level-1-light-color: $cadmin-gray-600 !default;
+$control-menu-level-1-light-link-color: $cadmin-gray-600 !default;
+$control-menu-level-1-light-link-hover-color: $cadmin-gray-800 !default;
+$control-menu-level-1-light-link-background-color: $cadmin-gray-200 !default;
 
-$control-menu-level-2-bg: $white !default;
-$control-menu-level-2-color: $dark !default;
-$control-menu-level-2-label-color: $dark !default;
-$control-menu-level-2-link-color: $secondary !default;
+$control-menu-level-2-bg: $cadmin-white !default;
+$control-menu-level-2-color: $cadmin-dark !default;
+$control-menu-level-2-label-color: $cadmin-dark !default;
+$control-menu-level-2-link-color: $cadmin-secondary !default;
 
 $control-menu-zindex: $admin-panel-zindex - 1 !default;
 

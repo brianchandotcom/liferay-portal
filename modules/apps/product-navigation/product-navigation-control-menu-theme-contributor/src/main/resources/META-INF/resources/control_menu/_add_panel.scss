@@ -1,132 +1,145 @@
-#wrapper {
-	@include media-breakpoint-up(sm) {
-		body.sidenav-transition & {
-			@include transition(padding 0.5s ease);
-		}
-
-		body.open-admin-panel & {
-			padding-right: $admin-panel-width;
+html#{$cadmin-selector} {
+	body.sidenav-transition {
+		#wrapper {
+			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				@include transition(padding 0.5s ease);
+			}
 		}
 	}
-}
 
-.lfr-add-panel.open-admin-panel.sidenav-menu-slider {
-	visibility: visible;
-	width: $admin-panel-width;
-}
-
-.lfr-admin-panel {
-	&.sidenav-menu-slider {
-		top: $has-control-menu-margin-top-desktop;
-		z-index: $admin-panel-zindex;
-
-		@include media-breakpoint-down(sm) {
-			top: $has-control-menu-margin-top-mobile;
+	body.open-admin-panel {
+		#wrapper,
+		.cadmin.control-menu-container {
+			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				padding-right: $admin-panel-width;
+			}
 		}
+	}
 
-		.product-menu {
+	.cadmin {
+		&.lfr-add-panel.open-admin-panel.sidenav-menu-slider {
+			visibility: visible;
 			width: $admin-panel-width;
+		}
 
-			&.light {
-				background-color: white;
+		&.lfr-admin-panel {
+			&.sidenav-menu-slider {
+				top: $has-control-menu-margin-top-desktop;
+				z-index: $admin-panel-zindex;
+
+				@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+					top: $has-control-menu-margin-top-mobile;
+				}
+
+				.product-menu {
+					width: $admin-panel-width;
+
+					&.light {
+						background-color: white;
+					}
+				}
+			}
+
+			.sidebar-body {
+				padding: 0;
 			}
 		}
-	}
 
-	.sidebar-body {
-		padding: 0;
+		&.lfr-add-panel {
+			.search-bar {
+				display: block;
+				margin: 10px;
+
+				.form-control {
+					display: block;
+					float: none;
+					padding-right: 32px;
+				}
+			}
+
+			.input-group-btn {
+				display: block;
+				margin-top: -8px;
+				position: absolute;
+				right: 20px;
+				top: 50%;
+				z-index: 4;
+			}
+
+			.list-group-heading {
+				font-size: 14px;
+			}
+		}
+
+		&.lfr-add-panel .add-content-menu {
+			.add-application-panel .lfr-content-item {
+				margin-bottom: 8px;
+				padding: 0 16px 0 8px;
+
+				&.lfr-archived-setup {
+					padding-left: 30px;
+				}
+			}
+
+			.add-content-panel .lfr-content-item {
+				color: #272833;
+			}
+
+			.display-style-bar {
+				padding: 4px 16px;
+
+				.display-style {
+					align-items: center;
+					display: inline-flex;
+					height: 32px;
+					justify-content: center;
+					margin-left: 8px;
+					width: 32px;
+
+					&.active {
+						color: #869cad;
+					}
+				}
+
+				.dropdown-toggle {
+					align-items: center;
+					display: inline-flex;
+					height: 32px;
+					padding-left: 4px;
+					padding-right: 4px;
+					text-decoration: none;
+
+					.lexicon-icon-caret-double {
+						margin-left: 4.8px;
+					}
+				}
+			}
+
+			.add-content-button {
+				.nav > li {
+					padding: 4px 16px;
+				}
+
+				.dropdown-toggle {
+					align-items: center;
+					display: inline-flex;
+					height: 32px;
+					line-height: 1;
+					padding: 0 4px;
+
+					.lexicon-icon-caret-bottom {
+						margin-left: 4.8px;
+					}
+				}
+			}
+
+			.nav > li > a:before {
+				right: 0;
+			}
+		}
 	}
 }
 
-.lfr-add-panel {
-	.search-bar {
-		display: block;
-		margin: 10px;
 
-		.form-control {
-			display: block;
-			float: none;
-			padding-right: 32px;
-		}
-	}
 
-	.input-group-btn {
-		display: block;
-		margin-top: -8px;
-		position: absolute;
-		right: 20px;
-		top: 50%;
-		z-index: 4;
-	}
 
-	.list-group-heading {
-		font-size: 0.875rem;
-	}
-}
-
-.lfr-add-panel .add-content-menu {
-	.add-application-panel .lfr-content-item {
-		margin-bottom: 0.5rem;
-		padding: 0 16px 0 8px;
-
-		&.lfr-archived-setup {
-			padding-left: 30px;
-		}
-	}
-
-	.add-content-panel .lfr-content-item {
-		color: #272833;
-	}
-
-	.display-style-bar {
-		padding: 4px 16px;
-
-		.display-style {
-			align-items: center;
-			display: inline-flex;
-			height: 32px;
-			justify-content: center;
-			margin-left: 8px;
-			width: 32px;
-
-			&.active {
-				color: #869cad;
-			}
-		}
-
-		.dropdown-toggle {
-			align-items: center;
-			display: inline-flex;
-			height: 32px;
-			padding-left: 4px;
-			padding-right: 4px;
-			text-decoration: none;
-
-			.lexicon-icon-caret-double {
-				margin-left: 0.3rem;
-			}
-		}
-	}
-
-	.add-content-button {
-		.nav > li {
-			padding: 4px 16px;
-		}
-
-		.dropdown-toggle {
-			align-items: center;
-			display: inline-flex;
-			height: 32px;
-			line-height: 1;
-			padding: 0 4px;
-
-			.lexicon-icon-caret-bottom {
-				margin-left: 0.3rem;
-			}
-		}
-	}
-
-	.nav > li > a:before {
-		right: 0;
-	}
-}

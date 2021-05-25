@@ -1,292 +1,287 @@
-.affix,
-.control-menu-container {
-	position: sticky;
-	top: 0;
-	z-index: $control-menu-zindex;
-}
-
-.control-menu-icon {
-	display: inline-block;
-}
-
-a.control-menu-icon,
-.control-menu-icon .dropdown-toggle {
-	border-radius: 4px;
-	transition: box-shadow 0.15s ease-in-out;
-
-	&:focus {
-		box-shadow: $control-menu-focus-box-shadow;
-		outline: 0;
-	}
-}
-
-.control-menu-level-1 {
-	> .container-fluid {
-		padding: 8px;
-
-		@include media-breakpoint-up(sm) {
-			padding: 12px;
+html#{$cadmin-selector} {
+	.sidenav-transition {
+		.cadmin {
+			&.affix,
+			&.control-menu-container {
+				@include transition($control-menu-css-transition);
+			}
 		}
 	}
 
-	.personal-menu-dropdown .dropdown-toggle {
-		margin-bottom: -2px;
-		margin-top: -2px;
-		padding: 2px;
-	}
-
-	a:not(.dropdown-item),
-	button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
-		&:focus,
-		&:hover {
-			text-decoration: none;
-		}
-	}
-}
-
-.control-menu-level-1-heading {
-	font-size: 1rem;
-	font-weight: 600;
-}
-
-.control-menu-level-1-dark {
-	background-color: $control-menu-level-1-bg;
-	color: $control-menu-level-1-color;
-
-	a:not(.dropdown-item),
-	button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
-		color: $control-menu-level-1-link-color;
-
-		&:focus,
-		&:hover {
-			background-color: $control-menu-level-1-link-background-color;
-			color: $control-menu-level-1-link-hover-color;
-		}
-	}
-
-	.control-menu-level-1-heading {
-		color: $white;
-	}
-}
-
-.control-menu-level-1-light {
-	background-color: $control-menu-level-1-light-bg;
-	border-bottom: $control-menu-level-1-light-border;
-	color: $control-menu-level-1-light-color;
-
-	a:not(.dropdown-item),
-	button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
-		color: $control-menu-level-1-light-link-color;
-		&:focus,
-		&:hover {
-			background-color: $control-menu-level-1-light-link-background-color;
-			color: $control-menu-level-1-light-link-hover-color;
-		}
-	}
-
-	> .container-fluid {
-		padding-bottom: $control-menu-level-1-padding - 1px;
-
-		@include media-breakpoint-up(sm) {
-			padding-bottom: $control-menu-level-1-padding-desktop - 1px;
-		}
-	}
-
-	.control-menu-level-1-heading {
-		color: $gray-900;
-	}
-}
-
-.control-menu-level-1-nav {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-
-	@include media-breakpoint-up(sm) {
-		flex-wrap: nowrap;
-	}
-
-	> li > .control-menu-nav > .control-menu-nav-item {
-		margin-left: 4px;
-		margin-right: 4px;
-	}
-
-	> .control-menu-nav-item {
-		align-self: center;
-	}
-}
-
-.control-menu-level-2 {
-	background-color: $control-menu-level-2-bg;
-	border-bottom: 1px solid $secondary-l3;
-	color: $control-menu-level-2-color;
-	padding-bottom: 7px;
-	padding-top: 6px;
-
-	a,
-	a:focus,
-	a:hover {
-		color: $control-menu-level-2-link-color;
-	}
-
-	.container-fluid-max-xl {
-		padding-left: 20px;
-	}
-
-	.text-info {
-		font-size: 0.875rem;
-	}
-
-	.toggle-switch-bar .toggle-switch-handle {
-		font-size: 0.875rem;
-		text-transform: none;
-	}
-
-	.control-menu-label {
-		@include media-breakpoint-up(sm) {
-			color: $control-menu-level-2-label-color;
-		}
-	}
-
-	@include media-breakpoint-down(sm) {
-		bottom: 0;
-		display: none;
-		left: 0;
-		position: fixed;
-		right: 0;
-		top: 0;
-		z-index: 1;
-	}
-
-	&.open {
-		@include media-breakpoint-down(sm) {
-			display: block;
-			overflow: auto;
-		}
-	}
-}
-
-.control-menu-level-2-heading {
-	font-size: 18px;
-	font-weight: 500;
-	padding: 20px 0;
-	text-align: center;
-
-	button.close {
-		color: $control-menu-level-2-color;
-		opacity: 1;
-	}
-}
-
-.control-menu-level-2-nav {
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: space-between;
-
-	@include media-breakpoint-down(sm) {
-		> .control-menu-nav-item {
-			margin-bottom: 55px;
+	.cadmin {
+		&.affix,
+		&.control-menu-container {
+			position: sticky;
+			top: 0;
+			z-index: $control-menu-zindex;
 		}
 
-		.control-menu-nav-item,
-		.dropdown {
-			width: 100%;
+		.control-menu-icon {
+			display: inline-block;
+			height: 32px;
+			line-height: 32px;
+			text-align: center;
+			width: 32px;
 		}
-	}
-}
 
-.control-menu-nav {
-	align-items: center;
-	display: flex;
-	font-size: 16px;
-	list-style: none;
-	margin-bottom: 0;
-	padding-left: 0;
-}
+		a.control-menu-icon,
+		.control-menu-icon .dropdown-toggle {
+			border-radius: 4px;
+			transition: box-shadow 0.15s ease-in-out;
 
-.control-menu-nav-item {
-	display: inline-flex;
-}
+			&:focus {
+				box-shadow: $control-menu-focus-box-shadow;
+				outline: 0;
+			}
+		}
 
-.control-menu-nav-item-content:last-child {
-	display: flex;
-	flex-basis: 0;
-	flex-grow: 1;
-	flex-shrink: 1;
-	min-width: 48px;
-	width: 0;
+		.control-menu-level-1 {
+			> .container-fluid {
+				padding: 8px;
 
-	.clamp-container {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		top: 50%;
-		transform: translateY(-50%);
-		white-space: nowrap;
-	}
+				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+					padding: 12px;
+				}
+			}
 
-	span.text-muted {
-		font-size: 0.875rem;
-	}
-}
+			.personal-menu-dropdown .dropdown-toggle {
+				margin-bottom: -2px;
+				margin-top: -2px;
+				padding: 2px;
+			}
 
-.control-menu-nav-item-separator:not(:first-child):before {
-	background-color: $gray-600;
-	content: '';
-	height: 16px;
-	margin-right: 16px;
-	position: relative;
-	top: 9px;
-	width: 1px;
-}
+			a:not(.dropdown-item),
+			button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
+				&:focus,
+				&:hover {
+					text-decoration: none;
+				}
+			}
+		}
 
-.control-menu-nav-item-field {
-	flex: 0 1 auto;
-}
+		.control-menu-level-1-heading {
+			font-size: 16px;
+			font-weight: 600;
+		}
 
-.sidenav-transition {
-	.affix,
-	.control-menu-container {
-		@include transition($control-menu-css-transition);
-	}
-}
+		.control-menu-level-1-dark {
+			background-color: $control-menu-level-1-bg;
+			color: $control-menu-level-1-color;
 
-%control-menu-icon-monospaced {
-	height: 32px;
-	line-height: 32px;
-	text-align: center;
-	width: 32px;
-}
+			a:not(.dropdown-item),
+			button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
+				color: $control-menu-level-1-link-color;
 
-.tools-control-group {
-	flex: 1;
-	flex-wrap: wrap;
+				&:focus,
+				&:hover {
+					background-color: $control-menu-level-1-link-background-color;
+					color: $control-menu-level-1-link-hover-color;
+				}
+			}
 
-	> .control-menu-nav {
-		flex-wrap: nowrap;
-		justify-content: center;
+			.control-menu-level-1-heading {
+				color: $cadmin-white;
+			}
+		}
 
-		@include media-breakpoint-up(md) {
+		.control-menu-level-1-light {
+			background-color: $control-menu-level-1-light-bg;
+			border-bottom: $control-menu-level-1-light-border;
+			color: $control-menu-level-1-light-color;
+
+			a:not(.dropdown-item),
+			button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
+				color: $control-menu-level-1-light-link-color;
+				&:focus,
+				&:hover {
+					background-color: $control-menu-level-1-light-link-background-color;
+					color: $control-menu-level-1-light-link-hover-color;
+				}
+			}
+
+			> .container-fluid {
+				padding-bottom: $control-menu-level-1-padding - 1px;
+
+				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+					padding-bottom: $control-menu-level-1-padding-desktop - 1px;
+				}
+			}
+
+			.control-menu-level-1-heading {
+				color: $cadmin-gray-900;
+			}
+		}
+
+		.control-menu-level-1-nav {
+			display: flex;
 			flex-wrap: wrap;
+			justify-content: space-between;
+
+			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+				flex-wrap: nowrap;
+			}
+
+			> li > .control-menu-nav > .control-menu-nav-item {
+				margin-left: 4px;
+				margin-right: 4px;
+			}
+
+			> .control-menu-nav-item {
+				align-self: center;
+			}
 		}
 
-		> li > .lfr-portal-tooltip > .control-menu-icon {
-			@extend %control-menu-icon-monospaced;
+		.control-menu-level-2 {
+			background-color: $control-menu-level-2-bg;
+			border-bottom: 1px solid $cadmin-secondary-l3;
+			color: $control-menu-level-2-color;
+			padding-bottom: 7px;
+			padding-top: 6px;
+
+			a,
+			a:focus,
+			a:hover {
+				color: $control-menu-level-2-link-color;
+			}
+
+			.container-fluid-max-xl {
+				padding-left: 20px;
+			}
+
+			.text-info {
+				font-size: 14px;
+			}
+
+			.toggle-switch-bar .toggle-switch-handle {
+				font-size: 14px;
+				text-transform: none;
+			}
+
+			.control-menu-label {
+				@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {
+					color: $control-menu-level-2-label-color;
+				}
+			}
+
+			@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+				bottom: 0;
+				display: none;
+				left: 0;
+				position: fixed;
+				right: 0;
+				top: 0;
+				z-index: 1;
+			}
+
+			&.open {
+				@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+					display: block;
+					overflow: auto;
+				}
+			}
 		}
-	}
 
-	.taglib-icon-help {
-		margin-top: 1px;
-		min-width: 32px;
-		text-align: center;
-	}
-}
+		.control-menu-level-2-heading {
+			font-size: 18px;
+			font-weight: 500;
+			padding: 20px 0;
+			text-align: center;
 
-.user-control-group {
-	> .control-menu-nav > li > .control-menu-icon {
-		@extend %control-menu-icon-monospaced;
-	}
+			button.close {
+				color: $control-menu-level-2-color;
+				opacity: 1;
+			}
+		}
 
-	.portlet-options {
-		margin-right: -1px;
+		.control-menu-level-2-nav {
+			display: flex;
+			flex-wrap: nowrap;
+			justify-content: space-between;
+
+			@include media-breakpoint-down(sm, $cadmin-grid-breakpoints) {
+				> .control-menu-nav-item {
+					margin-bottom: 55px;
+				}
+
+				.control-menu-nav-item,
+				.dropdown {
+					width: 100%;
+				}
+			}
+		}
+
+		.control-menu-nav {
+			align-items: center;
+			display: flex;
+			font-size: 16px;
+			list-style: none;
+			margin-bottom: 0;
+			padding-left: 0;
+		}
+
+		.control-menu-nav-item {
+			display: inline-flex;
+		}
+
+		.control-menu-nav-item-content:last-child {
+			display: flex;
+			flex-basis: 0;
+			flex-grow: 1;
+			flex-shrink: 1;
+			min-width: 48px;
+			width: 0;
+
+			.clamp-container {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				top: 50%;
+				transform: translateY(-50%);
+				white-space: nowrap;
+			}
+
+			span.text-muted {
+				font-size: 14px;
+			}
+		}
+
+		.control-menu-nav-item-separator:not(:first-child):before {
+			background-color: $cadmin-gray-600;
+			content: '';
+			height: 16px;
+			margin-right: 16px;
+			position: relative;
+			top: 9px;
+			width: 1px;
+		}
+
+		.control-menu-nav-item-field {
+			flex: 0 1 auto;
+		}
+
+		.tools-control-group {
+			flex: 1;
+			flex-wrap: wrap;
+
+			> .control-menu-nav {
+				flex-wrap: nowrap;
+				justify-content: center;
+
+				@include media-breakpoint-up(md, $cadmin-grid-breakpoints) {
+					flex-wrap: wrap;
+				}
+			}
+
+			.taglib-icon-help {
+				margin-top: 1px;
+				min-width: 32px;
+				text-align: center;
+			}
+		}
+
+		.user-control-group {
+			.portlet-options {
+				margin-right: -1px;
+			}
+		}
 	}
 }

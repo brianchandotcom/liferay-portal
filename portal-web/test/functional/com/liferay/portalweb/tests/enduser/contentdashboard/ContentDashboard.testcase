@@ -1019,6 +1019,98 @@ definition {
 			title = "WC Title");
 	}
 
+	@description = "LPS-132254 When a user selects the value of the number of rows (4, 8, 40, 60) displayed in the list, the Content Dashboard will display the number of rows selected"
+	@priority = "5"
+	test PaginationDisplaySelectedNumberOfRows {
+		property portal.acceptance = "true";
+
+		task ("Create 10 WC using JSON") {
+			for (var count : list "1,2,3,4,5,6,7,8,9,10") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content ${count}",
+					groupName = "Test Site Name",
+					title = "WC Title ${count}");
+			}
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Check if the correct number of entries are being displayed") {
+			Pagination.changePagination(itemsPerPage = "8");
+
+			Pagination.viewResults(results = "Showing 1 to 8 of 10 entries.");
+		}
+	}
+
+	@description = "LPS-132254 When a user use the <, > buttons, the page displayed moves forward/backward"
+	@priority = "3"
+	test PaginationMoveAcrossPagesWithButtons {
+		property portal.acceptance = "true";
+
+		task ("Create 6 WC using JSON") {
+			for (var count : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content ${count}",
+					groupName = "Test Site Name",
+					title = "WC Title ${count}");
+			}
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Use < > buttons to move forth and back") {
+			Pagination.changePagination(itemsPerPage = "4");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+
+			Click(locator1 = "Pagination#PREVIOUS_LINK");
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+		}
+	}
+
+	@description = "LPS-132254 When a user clicks on a page number, that page is displayed in the Content Dashboard"
+	@priority = "3"
+	test PaginationMoveAcrossPagesWithNumber {
+		property portal.acceptance = "true";
+
+		task ("Create 6 WC using JSON") {
+			for (var count : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "WC Content ${count}",
+					groupName = "Test Site Name",
+					title = "WC Title ${count}");
+			}
+		}
+
+		task ("Go to Content Dashboard") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Use page numbers to move between pages") {
+			Pagination.changePagination(itemsPerPage = "4");
+
+			ContentDashboard.moveToPage(pageNumber = "2");
+
+			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+		}
+	}
+
 	@description = "LPS-131886 Validade if when Web Content is updated its being corectly displayed"
 	@priority = "3"
 	test ShouldExhibitUpdatedWebContent {
@@ -1110,98 +1202,6 @@ definition {
 				value1 = "WC Title");
 
 			AssertElementNotPresent(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_DISPLAY_PAGE");
-		}
-	}
-
-	@description = "LPS-132254 When a user selects the value of the number of rows (4, 8, 40, 60) displayed in the list, the Content Dashboard will display the number of rows selected"
-	@priority = "5"
-	test PaginationDisplaySelectedNumberOfRows {
-		property portal.acceptance = "true";
-
-		task ("Create 10 WC using JSON") {
-			for (var count : list "1,2,3,4,5,6,7,8,9,10") {
-				JSONWebcontent.addWebContent(
-					content = "WC Content ${count}",
-					groupName = "Test Site Name",
-					title = "WC Title ${count}");
-			}
-		}
-
-		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-
-		task ("Check if the correct number of entries are being displayed") {
-			Pagination.changePagination(itemsPerPage = "8");
-
-			Pagination.viewResults(results = "Showing 1 to 8 of 10 entries.");
-		}
-	}
-
-	@description = "LPS-132254 When a user use the <, > buttons, the page displayed moves forward/backward"
-	@priority = "3"
-	test PaginationMoveAcrossPagesWithButtons {
-		property portal.acceptance = "true";
-
-		task ("Create 6 WC using JSON") {
-			for (var count : list "1,2,3,4,5,6") {
-				JSONWebcontent.addWebContent(
-					content = "WC Content ${count}",
-					groupName = "Test Site Name",
-					title = "WC Title ${count}");
-			}
-		}
-
-		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-
-		task ("Use < > buttons to move forth and back") {
-			Pagination.changePagination(itemsPerPage = "4");
-
-			Click(locator1 = "Pagination#NEXT_LINK");
-
-			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
-
-			Click(locator1 = "Pagination#PREVIOUS_LINK");
-
-			Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
-		}
-	}
-
-	@description = "LPS-132254 When a user clicks on a page number, that page is displayed in the Content Dashboard"
-	@priority = "3"
-	test PaginationMoveAcrossPagesWithNumber {
-		property portal.acceptance = "true";
-
-		task ("Create 6 WC using JSON") {
-			for (var count : list "1,2,3,4,5,6") {
-				JSONWebcontent.addWebContent(
-					content = "WC Content ${count}",
-					groupName = "Test Site Name",
-					title = "WC Title ${count}");
-			}
-		}
-
-		task ("Go to Content Dashboard") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-
-		task ("Use page numbers to move between pages") {
-			Pagination.changePagination(itemsPerPage = "4");
-
-			ContentDashboard.moveToPage(pageNumber = "2");
-
-			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}
 	}
 

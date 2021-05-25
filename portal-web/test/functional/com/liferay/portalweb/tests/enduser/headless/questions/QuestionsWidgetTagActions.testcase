@@ -49,7 +49,7 @@ definition {
 			categoryName = "Questions Test Category",
 			userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
+		JSONQuestions.addQuestionWithTag(
 			bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
 			categoryName = "Questions Test Category",
 			groupName = "Guest",
@@ -88,7 +88,7 @@ definition {
 			groupName = "Guest",
 			tagName = "tag2");
 
-		JSONQuestions.addQuestion(
+		JSONQuestions.addQuestionWithTag(
 			bodyField = "Body ListOfTagsAppearsInTheTagsTab",
 			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
 			groupName = "Guest",
@@ -117,7 +117,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var num : list "1,2") {
-			JSONQuestions.addQuestion(
+			JSONQuestions.addQuestionWithTag(
 				bodyField = "Question Body ${num}",
 				categoryName = "Questions Test Category",
 				groupName = "Guest",
@@ -125,7 +125,7 @@ definition {
 				titleField = "Question ${num}");
 		}
 
-		JSONQuestions.addQuestion(
+		JSONQuestions.addQuestionWithTag(
 			bodyField = "Question Body 3",
 			categoryName = "Questions Test Category",
 			groupName = "Guest",
@@ -183,7 +183,7 @@ definition {
 		}
 
 		for (var num : list "1,2") {
-			JSONQuestions.addQuestion(
+			JSONQuestions.addQuestionWithTag(
 				bodyField = "Question Body ${num}",
 				categoryName = "Question ValidateTagsOccurrences1",
 				groupName = "Guest",
@@ -199,7 +199,7 @@ definition {
 			amountOfUsedTimes = "2",
 			tagName = "tag1");
 
-		JSONQuestions.addQuestion(
+		JSONQuestions.addQuestionWithTag(
 			bodyField = "Question Body 3",
 			categoryName = "Question ValidateTagsOccurrences2",
 			groupName = "Guest",
@@ -225,7 +225,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var num : list "1,2,3") {
-			JSONQuestions.addQuestion(
+			JSONQuestions.addQuestionWithTag(
 				bodyField = "Question Body ${num}",
 				categoryName = "Question ValidateSearchByQuestionTags",
 				groupName = "Guest",

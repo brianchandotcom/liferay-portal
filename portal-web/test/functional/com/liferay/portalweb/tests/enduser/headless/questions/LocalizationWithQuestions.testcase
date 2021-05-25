@@ -170,7 +170,7 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithoutTag(
+		JSONQuestions.addQuestion(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
 			groupName = "Guest",
@@ -208,7 +208,7 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithoutTag(
+		JSONQuestions.addQuestion(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
 			groupName = "Guest",
@@ -241,7 +241,7 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithoutTag(
+		JSONQuestions.addQuestion(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
 			groupName = "Guest",
@@ -274,7 +274,7 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithoutTag(
+		JSONQuestions.addQuestion(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
 			groupName = "Guest",
@@ -325,7 +325,7 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithoutTag(
+		JSONQuestions.addQuestion(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
 			groupName = "Guest",
@@ -357,7 +357,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		for (var num : list "1,2") {
-			JSONQuestions.addQuestion(
+			JSONQuestions.addQuestionWithTag(
 				bodyField = "Question Body ${num}",
 				categoryName = "質問トピック",
 				groupName = "Guest",
@@ -365,7 +365,7 @@ definition {
 				titleField = "Question ${num}");
 		}
 
-		JSONQuestions.addQuestion(
+		JSONQuestions.addQuestionWithTag(
 			bodyField = "Question Body 3",
 			categoryName = "質問トピック",
 			groupName = "Guest",
@@ -396,7 +396,7 @@ definition {
 			categoryName = "質問トピック",
 			userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestionWithoutTag(
+		JSONQuestions.addQuestion(
 			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
 			categoryName = "質問トピック",
 			groupName = "Guest",

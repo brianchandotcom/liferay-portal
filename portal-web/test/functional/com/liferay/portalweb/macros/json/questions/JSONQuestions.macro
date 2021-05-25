@@ -36,6 +36,21 @@ definition {
 	}
 
 	@summary = "Add a question with a tag."
+	macro addQuestionWithTag {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
+
+		var categoryId = JSONMBMessage.getCategoryIdByName(
+			groupName = "${groupName}",
+			categoryName = "${categoryName}");
+
+		JSONQuestionsAPI._addQuestionWithTag(
+			bodyField = "${bodyField}",
+			categoryId = "${categoryId}",
+			tagField = "${tagField}",
+			titleField = "${titleField}");
+	}
+
+	@summary = "Add a question without a tag."
 	macro addQuestion {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
@@ -44,21 +59,6 @@ definition {
 			categoryName = "${categoryName}");
 
 		JSONQuestionsAPI._addQuestion(
-			bodyField = "${bodyField}",
-			categoryId = "${categoryId}",
-			tagField = "${tagField}",
-			titleField = "${titleField}");
-	}
-
-	@summary = "Add a question without a tag."
-	macro addQuestionWithoutTag {
-		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
-
-		var categoryId = JSONMBMessage.getCategoryIdByName(
-			groupName = "${groupName}",
-			categoryName = "${categoryName}");
-
-		JSONQuestionsAPI._addQuestionWithoutTag(
 			bodyField = "${bodyField}",
 			categoryId = "${categoryId}",
 			titleField = "${titleField}");

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Directly calls the JSON WS API to add a question"
-	macro _addQuestion {
+	macro _addQuestionWithTag {
 		Variables.assertDefined(parameterList = "${categoryId},${tagField},${titleField},${bodyField}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Directly calls the JSON WS API to add a question without tag"
-	macro _addQuestionWithoutTag {
+	macro _addQuestion {
 		Variables.assertDefined(parameterList = "${categoryId},${titleField},${bodyField}");
 
 		var portalURL = JSONCompany.getPortalURL();

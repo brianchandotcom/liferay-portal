@@ -564,11 +564,15 @@ definition {
 			}
 		}
 
-		Modal.save();
+		Click(locator1 = "Modal#SAVE_BUTTON");
 
-		Click(
-			key_text = "Propagate",
-			locator1 = "Button#ANY");
+		WaitForPageLoad();
+
+		if (IsElementPresent(key_text = "Propagate", locator1 = "Button#ANY")) {
+			Click(
+				key_text = "Propagate",
+				locator1 = "Button#ANY");
+		}
 
 		Alert.viewSuccessMessage();
 

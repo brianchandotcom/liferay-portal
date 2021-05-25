@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.taglib.ui.util;
+package com.liferay.portal.kernel.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -33,9 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Lundgren
- * @deprecated As of Cavanaugh (7.4.x), replaced by {@link com.liferay.portal.kernel.util.SessionTreeJSClicks}
  */
-@Deprecated
 public class SessionTreeJSClicks {
 
 	public static void closeLayoutNodes(

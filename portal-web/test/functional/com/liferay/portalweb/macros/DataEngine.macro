@@ -575,8 +575,6 @@ definition {
 		}
 
 		Alert.viewSuccessMessage();
-
-		Click(locator1 = "Sidebar#BACK");
 	}
 
 	macro assertFieldNotPresent {

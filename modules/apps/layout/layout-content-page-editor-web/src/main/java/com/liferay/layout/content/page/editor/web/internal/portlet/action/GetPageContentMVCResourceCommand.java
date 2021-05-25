@@ -50,10 +50,11 @@ public class GetPageContentMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
-			_getPageContentsJSONArray(resourceRequest));
+			_getPageContentsJSONArray(resourceRequest, resourceResponse));
 	}
 
-	private JSONArray _getPageContentsJSONArray(ResourceRequest resourceRequest)
+	private JSONArray _getPageContentsJSONArray(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
@@ -61,6 +62,7 @@ public class GetPageContentMVCResourceCommand extends BaseMVCResourceCommand {
 
 		return ContentUtil.getPageContentsJSONArray(
 			_portal.getHttpServletRequest(resourceRequest),
+			_portal.getHttpServletResponse(resourceResponse),
 			themeDisplay.getPlid());
 	}
 

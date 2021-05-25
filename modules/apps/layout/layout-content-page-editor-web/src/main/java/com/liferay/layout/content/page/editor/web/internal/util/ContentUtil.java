@@ -74,6 +74,7 @@ import java.util.Set;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Víctor Galán
@@ -114,7 +115,8 @@ public class ContentUtil {
 	}
 
 	public static JSONArray getPageContentsJSONArray(
-			HttpServletRequest httpServletRequest, long plid)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long plid)
 		throws PortalException {
 
 		if (FFLayoutContentPageEditorConfigurationUtil.
@@ -124,7 +126,7 @@ public class ContentUtil {
 				_getLayoutClassedModelPageContentsJSONArray(
 					httpServletRequest, plid),
 				AssetListEntryUsagesUtil.getPageContentsJSONArray(
-					httpServletRequest, plid));
+					httpServletRequest, httpServletResponse, plid));
 		}
 
 		return _getLayoutClassedModelPageContentsJSONArray(

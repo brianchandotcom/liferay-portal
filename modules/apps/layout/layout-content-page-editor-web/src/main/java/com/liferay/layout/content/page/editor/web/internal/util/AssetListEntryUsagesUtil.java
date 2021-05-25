@@ -22,6 +22,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryUsage;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryUsageLocalServiceUtil;
+import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -69,6 +70,7 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Víctor Galán
@@ -76,7 +78,8 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetListEntryUsagesUtil {
 
 	public static JSONArray getPageContentsJSONArray(
-			HttpServletRequest httpServletRequest, long plid)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, long plid)
 		throws PortalException {
 
 		JSONArray mappedContentsJSONArray = JSONFactoryUtil.createJSONArray();
@@ -101,7 +104,8 @@ public class AssetListEntryUsagesUtil {
 
 			mappedContentsJSONArray.put(
 				_getPageContentJSONObject(
-					assetListEntryUsage, httpServletRequest));
+					assetListEntryUsage, httpServletRequest,
+					httpServletResponse));
 
 			uniqueAssetListEntryUsagesKeys.add(
 				_generateUniqueLayoutClassedModelUsageKey(assetListEntryUsage));
@@ -133,7 +137,8 @@ public class AssetListEntryUsagesUtil {
 	}
 
 	private static JSONObject _getAssetListEntryActionsJSONObject(
-		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest) {
+		AssetListEntry assetListEntry, HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -158,7 +163,49 @@ public class AssetListEntryUsagesUtil {
 			jsonObject.put("viewItemsURL", viewItemsURL);
 		}
 
+		try {
+			JSONArray addItemsJSONArray = _getAssetListEntryAddItemsJSONArray(
+				assetListEntry, httpServletRequest, httpServletResponse);
+
+			if ((addItemsJSONArray != null) &&
+				(addItemsJSONArray.length() > 0)) {
+
+				jsonObject.put("addItems", addItemsJSONArray);
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
 		return jsonObject;
+	}
+
+	private static JSONArray _getAssetListEntryAddItemsJSONArray(
+			AssetListEntry assetListEntry,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		JSONArray addItemsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
+			AssetHelperUtil.getAssetPublisherAddItemHolders(
+				assetListEntry, httpServletRequest, httpServletResponse);
+
+		for (AssetPublisherAddItemHolder assetPublisherAddItemHolder :
+				assetPublisherAddItemHolders) {
+
+			addItemsJSONArray.put(
+				JSONUtil.put(
+					"title", assetPublisherAddItemHolder.getModelResource()
+				).put(
+					"url", assetPublisherAddItemHolder.getPortletURL()
+				));
+		}
+
+		return addItemsJSONArray;
 	}
 
 	private static String _getAssetListEntryEditURL(
@@ -351,7 +398,8 @@ public class AssetListEntryUsagesUtil {
 
 	private static JSONObject _getPageContentJSONObject(
 		AssetListEntryUsage assetListEntryUsage,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -381,7 +429,7 @@ public class AssetListEntryUsagesUtil {
 				mappedContentJSONObject.put(
 					"actions",
 					_getAssetListEntryActionsJSONObject(
-						assetListEntry, httpServletRequest)
+						assetListEntry, httpServletRequest, httpServletResponse)
 				).put(
 					"subtype",
 					_getAssetEntryListSubtypeLabel(

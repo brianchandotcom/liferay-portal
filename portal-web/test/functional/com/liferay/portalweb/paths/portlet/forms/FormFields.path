@@ -442,6 +442,11 @@
 </tr>
 <!--SELECT-->
 <tr>
+	<td>SELECT_ASSERT_RADIO_OPTION_ORDER</td>
+	<td>//div[@class='ddm-radio']//div[contains(concat(' ',normalize-space(@class),' '),'custom-radio')][${key_position}]//span[contains(text(),'${key_optionLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FIELD</td>
 	<td>//label[contains(text(),'${key_fieldName}') or contains(@for,'${key_fieldName}')]/following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')] | //div[contains(@data-field-name,'${key_fieldName}') or contains(@for,'${key_fieldName}')]//following-sibling::div[contains(@class,'ddm-select-dropdown') or contains(@class,'input-group-container')]</td>
 	<td></td>

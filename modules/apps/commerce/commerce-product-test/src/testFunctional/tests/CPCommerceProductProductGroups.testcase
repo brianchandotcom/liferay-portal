@@ -113,13 +113,65 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6068. EditAProductGroup"
-	@ignore = "true"
 	@priority = "3"
 	test EditAProductGroup {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceProductProductGroups#EditAProductGroup";
 
-		// TODO COMMERCE-6068 EditAProductGroup
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
 
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields");
+
+		CustomFields.addCP(
+			customFieldName = "Custom Field",
+			customFieldType = "Input Field",
+			customInputDataType = "Text",
+			resourceName = "Commerce Product Group");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Simple T-Shirt",
+			productType = "Simple");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Product Groups");
+
+		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
+
+		Type(
+			locator1 = "ContentDashboard#SEARCH_FIELD",
+			value1 = "PG2");
+
+		Click(
+			key_text = "Create New",
+			locator1 = "Button#ANY");
+
+		Refresh();
+
+		CommerceNavigator.gotoEntry(entryName = "PG2");
+
+		SelectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Type(
+			locator1 = "TextInput#CUSTOM_FIELD",
+			value1 = "Test");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
 	}
 
 	@description = "This is a test for COMMERCE-6067. RemoveAProductGroup"

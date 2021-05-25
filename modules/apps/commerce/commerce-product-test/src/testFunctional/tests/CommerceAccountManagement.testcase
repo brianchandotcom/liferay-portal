@@ -202,13 +202,59 @@ definition {
 	}
 
 	@description = "COMMERCE-6372. In Addresses tab, I want to be able to edit an address added to the account"
-	@ignore = "true"
 	@priority = "3"
 	test EditAddressInAccount {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountManagement#EditAddressInAccount";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Test",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Addresses",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.addAddressToAccount(
+			keyAddress = "Test Address",
+			keyCity = "Test City",
+			keyCountry = "United States",
+			keyName = "Test Address",
+			keyRegion = "Alaska",
+			keyTelephone = "Test Telephone",
+			keyType = "Billing",
+			keyZipCode = "Test Zip Code");
+
+		Refresh();
+
+		Click(
+			key_memberEmailAddress = "Test Address",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN");
+
+		MenuItem.click(menuItem = "Edit");
+
+		Click(locator1 = "Button#ARROW_SUBMIT_BTN");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test Address 2");
 
 		// TODO COMMERCE-6372 EditAddressInAccount pending implementation
 
+		Click(
+			key_tab = "Update",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+
+		AssertElementPresent(
+			key_memberEmailAddress = "Test Address 2",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_MEMBER_ACTIONS_DROPDOWN");
 	}
 
 	@description = "COMMERCE-6373. In Addresses tab, I want to be able to remove addresses from the account"

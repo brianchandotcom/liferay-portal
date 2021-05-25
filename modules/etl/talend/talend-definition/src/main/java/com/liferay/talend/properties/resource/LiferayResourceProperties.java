@@ -361,16 +361,7 @@ public class LiferayResourceProperties extends ComponentPropertiesImpl {
 				parameters.getRequestParameters();
 
 			for (RequestParameter requestParameter : requestParameters) {
-				if (requestParameter.isPathLocation()) {
-					uriBuilder.resolveTemplate(
-						requestParameter.getName(),
-						requestParameter.getValue());
-
-					continue;
-				}
-
-				uriBuilder.queryParam(
-					requestParameter.getName(), requestParameter.getValue());
+				requestParameter.apply(uriBuilder);
 			}
 		}
 

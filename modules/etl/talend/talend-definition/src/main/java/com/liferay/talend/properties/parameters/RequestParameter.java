@@ -16,6 +16,8 @@ package com.liferay.talend.properties.parameters;
 
 import java.util.Objects;
 
+import javax.ws.rs.core.UriBuilder;
+
 /**
  * @author Igor Beslic
  */
@@ -25,6 +27,15 @@ public class RequestParameter {
 		_location = location;
 		_name = name;
 		_value = value;
+	}
+
+	public void apply(UriBuilder uriBuilder) {
+		if (Objects.equals("query", _location)) {
+			uriBuilder.queryParam(getName(), getValue());
+		}
+		else if (Objects.equals("path", _location)) {
+			uriBuilder.resolveTemplate(getName(), getValue());
+		}
 	}
 
 	public String getLocation() {

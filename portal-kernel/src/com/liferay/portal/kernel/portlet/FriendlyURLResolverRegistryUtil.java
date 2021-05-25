@@ -27,7 +27,7 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 /**
  * @author Eduardo García
@@ -38,7 +38,19 @@ public class FriendlyURLResolverRegistryUtil {
 	public static FriendlyURLResolver getFriendlyURLResolver(
 		String urlSeparator) {
 
-		return _serviceTrackerMap.getService(urlSeparator);
+		for (String key : _serviceTrackerMap.keySet()) {
+			FriendlyURLResolver friendlyURLResolver =
+				_serviceTrackerMap.getService(key);
+
+			if ((friendlyURLResolver != null) &&
+				Objects.equals(
+					friendlyURLResolver.getURLSeparator(), urlSeparator)) {
+
+				return friendlyURLResolver;
+			}
+		}
+
+		return null;
 	}
 
 	public static Collection<FriendlyURLResolver>
@@ -59,7 +71,16 @@ public class FriendlyURLResolverRegistryUtil {
 	}
 
 	public static String[] getURLSeparators() {
-		Set<String> urlSeparators = _serviceTrackerMap.keySet();
+		List<String> urlSeparators = new ArrayList<>();
+
+		for (String key : _serviceTrackerMap.keySet()) {
+			FriendlyURLResolver friendlyURLResolver =
+				_serviceTrackerMap.getService(key);
+
+			if (friendlyURLResolver != null) {
+				urlSeparators.add(friendlyURLResolver.getURLSeparator());
+			}
+		}
 
 		return urlSeparators.toArray(new String[0]);
 	}
@@ -101,7 +122,10 @@ public class FriendlyURLResolverRegistryUtil {
 					FriendlyURLResolver friendlyURLResolver =
 						registry.getService(serviceReference);
 
-					emitter.emit(friendlyURLResolver.getURLSeparator());
+					Class<?> friendlyURLResolverClass =
+						friendlyURLResolver.getClass();
+
+					emitter.emit(friendlyURLResolverClass.getName());
 
 					registry.ungetService(serviceReference);
 				}

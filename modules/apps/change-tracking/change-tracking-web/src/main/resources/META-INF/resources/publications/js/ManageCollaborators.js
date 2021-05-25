@@ -93,8 +93,8 @@ const CollaboratorRow = ({
 			label: Liferay.Language.get('remove'),
 			onClick: () =>
 				handleSelect({
-					id: -1,
 					label: Liferay.Language.get('remove'),
+					value: -1,
 				}),
 			symbolLeft: activeRole.value === -1 ? 'check' : '',
 		}
@@ -199,6 +199,9 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 							'cannot-update-permissions-for-an-owner'
 						);
 					}
+					else if (item.isInvited) {
+						title = Liferay.Language.get('user-is-already-invited');
+					}
 
 					return (
 						<ClayDropDown.Item
@@ -257,7 +260,6 @@ export default ({
 		[]
 	);
 	const [multiSelectValue, setMultiSelectValue] = useState('');
-	const [navigation, setNavigation] = useState(null);
 	const [selectedItems, setSelectedItems] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const [updatedRoles, setUpdatedRoles] = useState({});
@@ -282,8 +284,6 @@ export default ({
 
 	const handleItemsChange = useCallback(
 		(items) => {
-			setNavigation(NAVIGATION_INVITE_USERS);
-
 			emailValidationInProgress.current = true;
 
 			Promise.all(
@@ -415,9 +415,6 @@ export default ({
 
 	const emailValidationInProgress = useRef(false);
 
-	const NAVIGATION_EDIT_ROLES = 'NAVIGATION_EDIT_ROLES';
-	const NAVIGATION_INVITE_USERS = 'NAVIGATION_INVITE_USERS';
-
 	const filterDuplicateItems = (items) => {
 		return items.filter(
 			(item, index) =>
@@ -437,7 +434,6 @@ export default ({
 	const resetForm = () => {
 		setEmailAddressErrorMessages([]);
 		setMultiSelectValue('');
-		setNavigation(null);
 		setSelectedItems([]);
 		setSelectedRole(defaultRole);
 		setUpdatedRoles({});
@@ -467,22 +463,22 @@ export default ({
 		let roleValues = [];
 		let userIds = [];
 
-		if (navigation === NAVIGATION_EDIT_ROLES) {
-			const keys = Object.keys(updatedRoles);
+		const keys = Object.keys(updatedRoles);
 
-			for (let i = 0; i < keys.length; i++) {
-				roleValues.push(updatedRoles[keys[i]].value);
-				userIds.push(keys[i]);
-			}
+		for (let i = 0; i < keys.length; i++) {
+			roleValues.push(updatedRoles[keys[i]].value);
+			userIds.push(keys[i]);
 		}
-		else {
-			roleValues = Array(selectedItems.length).fill(selectedRole.value);
-			userIds = selectedItems.map(({id}) => id);
+
+		if (selectedItems.length > 0) {
+			roleValues = roleValues.concat(
+				Array(selectedItems.length).fill(selectedRole.value)
+			);
+			userIds = userIds.concat(selectedItems.map(({id}) => id));
 		}
 
 		const formData = objectToFormData({
 			[`${namespace}roleValues`]: roleValues.join(','),
-			[`${namespace}update`]: navigation === NAVIGATION_EDIT_ROLES,
 			[`${namespace}userIds`]: userIds.join(','),
 		});
 
@@ -506,8 +502,6 @@ export default ({
 	};
 
 	const updateRole = (role, user) => {
-		setNavigation(NAVIGATION_EDIT_ROLES);
-
 		const json = {};
 
 		const keys = Object.keys(updatedRoles);
@@ -544,11 +538,7 @@ export default ({
 	};
 
 	const renderCollaborators = () => {
-		if (
-			navigation === NAVIGATION_INVITE_USERS ||
-			!collaborators ||
-			!collaborators.length
-		) {
+		if (!collaborators || !collaborators.length) {
 			return '';
 		}
 
@@ -597,10 +587,6 @@ export default ({
 	};
 
 	const renderSelect = () => {
-		if (navigation === NAVIGATION_EDIT_ROLES) {
-			return '';
-		}
-
 		const dropdownItems = [];
 
 		for (let i = 0; i < roles.length; i++) {
@@ -644,6 +630,13 @@ export default ({
 														hasPublicationsAccess:
 															user.hasPublicationsAccess,
 														id: user.userId,
+														isInvited:
+															collaborators &&
+															!!collaborators.find(
+																(item) =>
+																	item.emailAddress ===
+																	user.emailAddress
+															),
 														isOwner: user.isOwner,
 														isSelected: !!selectedItems.find(
 															(item) =>
@@ -703,25 +696,18 @@ export default ({
 	};
 
 	const renderSubmit = () => {
-		if (navigation === NAVIGATION_EDIT_ROLES) {
-			return (
-				<ClayButton
-					disabled={Object.keys(updatedRoles).length === 0}
-					displayType="primary"
-					type="submit"
-				>
-					{Liferay.Language.get('save')}
-				</ClayButton>
-			);
-		}
-
 		return (
 			<ClayButton
-				disabled={selectedItems.length === 0}
+				disabled={
+					selectedItems.length === 0 &&
+					Object.keys(updatedRoles).length === 0
+				}
 				displayType="primary"
 				type="submit"
 			>
-				{Liferay.Language.get('send')}
+				{Object.keys(updatedRoles).length === 0
+					? Liferay.Language.get('send')
+					: Liferay.Language.get('save')}
 			</ClayButton>
 		);
 	};
@@ -742,40 +728,13 @@ export default ({
 					<ClayModal.Header>
 						<div className="autofit-row">
 							<div className="autofit-col">
-								{navigation ? (
-									<ClayButtonWithIcon
-										borderless
-										displayType="secondary"
-										onClick={() => {
-											const keys = Object.keys(
-												updatedRoles
-											);
-
-											if (
-												(keys.length === 0 &&
-													selectedItems.length ===
-														0) ||
-												confirm(
-													Liferay.Language.get(
-														'discard-unsaved-changes'
-													)
-												)
-											) {
-												resetForm();
-											}
-										}}
-										small
-										symbol="angle-left"
-									/>
-								) : (
-									<ClaySticker
-										className="sticker-use-icon user-icon-color-0"
-										displayType="secondary"
-										shape="circle"
-									>
-										<ClayIcon symbol="users" />
-									</ClaySticker>
-								)}
+								<ClaySticker
+									className="sticker-use-icon user-icon-color-0"
+									displayType="secondary"
+									shape="circle"
+								>
+									<ClayIcon symbol="users" />
+								</ClaySticker>
 							</div>
 							<div className="autofit-col">
 								<div className="modal-title">

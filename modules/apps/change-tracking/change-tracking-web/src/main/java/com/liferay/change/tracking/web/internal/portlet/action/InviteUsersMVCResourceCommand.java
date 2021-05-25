@@ -111,8 +111,6 @@ public class InviteUsersMVCResourceCommand
 			return;
 		}
 
-		boolean update = ParamUtil.getBoolean(resourceRequest, "update");
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -120,21 +118,14 @@ public class InviteUsersMVCResourceCommand
 				themeDisplay.getPermissionChecker(), ctCollection,
 				ActionKeys.PERMISSIONS)) {
 
-			String message =
-				"you-do-not-have-permission-to-invite-users-to-this-" +
-					"publication";
-
-			if (update) {
-				message =
-					"you-do-not-have-permission-to-update-permissions-for-" +
-						"this-publication";
-			}
-
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"errorMessage",
-					_language.get(httpServletRequest, message)));
+					_language.get(
+						httpServletRequest,
+						"you-do-not-have-permission-to-invite-users-to-this-" +
+							"publication")));
 
 			return;
 		}
@@ -178,16 +169,12 @@ public class InviteUsersMVCResourceCommand
 				themeDisplay);
 		}
 
-		String message = "users-were-invited-successfully";
-
-		if (update) {
-			message = "permissions-were-updated-successfully";
-		}
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
-				"successMessage", _language.get(httpServletRequest, message)));
+				"successMessage",
+				_language.get(
+					httpServletRequest, "users-were-invited-successfully")));
 	}
 
 	private Role _getRole(int roleValue, ThemeDisplay themeDisplay)

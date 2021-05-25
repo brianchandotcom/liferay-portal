@@ -728,6 +728,15 @@ $productMenuWidth: 320px;
 		padding-bottom: 15px;
 	}
 
+	.expiration-date,
+	.review-date {
+		margin-bottom: 1rem;
+
+		.form-group-autofit {
+			margin-bottom: 0.5rem;
+		}
+	}
+
 	.lfr-asset-column-details .lfr-panel {
 		margin-bottom: 0.5em;
 		padding-bottom: 0;

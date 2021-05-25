@@ -354,19 +354,19 @@ else {
 				persistState="<%= true %>"
 				title="expiration-date"
 			>
-				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="expiration-date">
+				<aui:fieldset>
 					<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.expirationDateEnabled() %>">
 						<liferay-ui:error exception="<%= FileEntryExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 
-						<p class="mb-5 text-secondary">
+						<p class="text-secondary">
 							<liferay-ui:message key="including-an-expiration-date-will-allow-your-documents-or-media-to-expire-automatically-and-become-unpublished" />
 						</p>
 
-						<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= dlEditFileEntryDisplayContext.isNeverExpire() %>" name="expirationDate" wrapperCssClass="expiration-date mb-3" />
+						<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= dlEditFileEntryDisplayContext.isNeverExpire() %>" name="expirationDate" wrapperCssClass="expiration-date" />
 					</c:if>
 
 					<c:if test="<%= FFExpirationDateReviewDateConfigurationUtil.reviewDateEnabled() %>">
-						<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= dlEditFileEntryDisplayContext.isNeverReview() %>" name="reviewDate" wrapperCssClass="mb-3 review-date" />
+						<aui:input dateTogglerCheckboxLabel="never-review" disabled="<%= dlEditFileEntryDisplayContext.isNeverReview() %>" name="reviewDate" wrapperCssClass="review-date" />
 					</c:if>
 				</aui:fieldset>
 			</liferay-ui:panel>

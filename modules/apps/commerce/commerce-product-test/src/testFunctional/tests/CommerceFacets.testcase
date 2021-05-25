@@ -27,13 +27,27 @@ definition {
 	}
 
 	@description = "COMMERCE-6169. As a buyer, I want to filter products using Category Facet widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductsAreFilteredByCategoryFacet {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredByCategoryFacet";
 
-		// TODO COMMERCE-6169 AssertProductsAreFilteredByCategoryFacet pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Check.checkToggleSwitch(
+			key_fieldName = "Exhaust System",
+			locator1 = "FormFields#CHECKBOX");
+
+		for (var i : list "Catalytic Converters,Exhaust Clamps,Muffler/Resonators,Lift Support") {
+			AssertElementPresent(
+				key_productName = "${i}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+		AssertElementNotPresent(
+			key_value = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
 	@description = "COMMERCE-6165. As a buyer, I want to filter products using Option Facet widget and the results should be visible on the Search Results widget"

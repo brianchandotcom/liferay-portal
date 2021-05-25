@@ -18,4 +18,19 @@ definition {
 		}
 	}
 
+	macro closeAllSessions {
+
+		var cleanCurl = '''
+			http://localhost:8082/admin/sessions/close \
+			-H 'Content-Type: application/json' \
+			-d '{
+				"query": {
+					"match_all": {}
+				}
+			}'
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
+	}
+
 }

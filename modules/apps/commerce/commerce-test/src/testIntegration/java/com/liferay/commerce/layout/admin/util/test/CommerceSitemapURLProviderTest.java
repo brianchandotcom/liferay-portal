@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.product.constants.CPPortletKeys;
@@ -92,7 +93,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Alec Sloan
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
+@DataGuard(scope = DataGuard.Scope.CLASS)
 @RunWith(Arquillian.class)
 @Sync
 public class CommerceSitemapURLProviderTest {
@@ -133,8 +134,14 @@ public class CommerceSitemapURLProviderTest {
 		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 
-		CommerceAccount commerceAccount = CommerceTestUtil.addAccount(
-			_group.getGroupId(), _user.getUserId());
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
+
+		CommerceAccount commerceAccount =
+			CommerceAccountTestUtil.addBusinessCommerceAccount(
+				_user.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + "@liferay.com",
+				RandomTestUtil.randomString(), _serviceContext);
 
 		_httpServletRequest.setAttribute(
 			"LIFERAY_SHARED_CURRENT_COMMERCE_ACCOUNT_ID_" +
@@ -142,9 +149,6 @@ public class CommerceSitemapURLProviderTest {
 			commerceAccount.getCommerceAccountId());
 
 		_themeDisplay.setRequest(_httpServletRequest);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_company.getCompanyId(), _group.getGroupId(), _user.getUserId());
 
 		Class<?> clazz = CommerceSitemapURLProviderTest.class;
 

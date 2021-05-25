@@ -52,9 +52,6 @@ public class LayoutFixture {
 			LocalizedValuesMap nameMap, LocalizedValuesMap titleMap)
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
 		UnicodeProperties typeSettingsUnicodeProperties =
 			new UnicodeProperties();
 
@@ -75,7 +72,8 @@ public class LayoutFixture {
 			titleMap.getValues(), null, null, null,
 			LayoutConstants.TYPE_CONTENT,
 			typeSettingsUnicodeProperties.toString(), false,
-			friendlyUrlMap.getValues(), serviceContext);
+			friendlyUrlMap.getValues(),
+			ServiceContextTestUtil.getServiceContext());
 
 		_layouts.add(layout);
 

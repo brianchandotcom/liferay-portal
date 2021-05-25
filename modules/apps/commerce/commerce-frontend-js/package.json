@@ -39,6 +39,9 @@
 			"!<rootDir>/src/**/constants.js",
 			"!<rootDir>/src/**/entry.js"
 		],
+		"moduleNameMapper": {
+			"^frontend-taglib-clay/(.*)": "<rootDir>../../frontend-taglib/frontend-taglib-clay/src/main/resources/META-INF/resources/$1"
+		},
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/dev/",
 			"<rootDir>/test/utils/"

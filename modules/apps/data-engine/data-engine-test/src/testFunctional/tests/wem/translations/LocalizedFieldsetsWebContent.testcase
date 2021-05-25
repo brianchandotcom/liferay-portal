@@ -319,10 +319,17 @@ definition {
 
 		DataEngine.addFields(fieldNameList = "Date");
 
-		Modal.save();
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Click(
+			key_text = "Propagate",
+			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessage();
 
 		DataEngine.addTranslationToFieldset(
-			fieldsetName = "Text,Numeric,Date",
+			fieldNameList = "Text,Numeric,Date",
+			fieldsetName = "New Fieldset Test",
 			localeList = "pt-BR");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
@@ -622,10 +629,17 @@ definition {
 
 		DataEngine.addFields(fieldNameList = "Date");
 
-		Modal.save();
+		Click(locator1 = "Modal#SAVE_BUTTON");
+
+		Click(
+			key_text = "Propagate",
+			locator1 = "Button#ANY");
+
+		Alert.viewSuccessMessage();
 
 		DataEngine.addTranslationToFieldset(
-			fieldsetName = "Text,Numeric,Date",
+			fieldNameList = "Text,Numeric,Date",
+			fieldsetName = "New Fieldset Test",
 			localeList = "en-US");
 
 		PortletEntry.changeLocale(locale = "en-US");

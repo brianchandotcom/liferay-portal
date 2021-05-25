@@ -102,6 +102,8 @@ definition {
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
+		Refresh();
+
 		PortletEntry.changeLocale(locale = "pt-BR");
 
 		DataEngine.editFieldsetsLabel(
@@ -246,6 +248,8 @@ definition {
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
+		Refresh();
+
 		DataEngine.toggleFieldRepeatable(fieldsetLabel = "New Fieldset");
 
 		PortletEntry.changeLocale(locale = "pt_BR");
@@ -331,6 +335,8 @@ definition {
 			fieldNameList = "Text,Numeric,Date",
 			fieldsetName = "New Fieldset Test",
 			localeList = "pt-BR");
+
+		Refresh();
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -565,6 +571,8 @@ definition {
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
 
+		Refresh();
+
 		WebContentStructures.saveCP(structureName = "Structure Name");
 
 		NavItem.gotoWebContent();
@@ -641,6 +649,8 @@ definition {
 			fieldNameList = "Text,Numeric,Date",
 			fieldsetName = "New Fieldset Test",
 			localeList = "en-US");
+
+		Refresh();
 
 		PortletEntry.changeLocale(locale = "en-US");
 
@@ -932,6 +942,8 @@ definition {
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
+
+		Refresh();
 
 		WebContentStructures.saveCP();
 

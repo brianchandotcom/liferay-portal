@@ -202,6 +202,8 @@ definition {
 			fieldsetName = "${fieldsetNameEN}",
 			localeList = "pt-BR,de-DE,es-ES");
 
+		Refresh();
+
 		WebContentStructures.saveCP();
 
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Name");
@@ -1117,6 +1119,8 @@ definition {
 			fieldNameList = "Text",
 			fieldsetName = "Fieldset Name",
 			localeList = "pt-BR");
+
+		Refresh();
 
 		WebContentStructures.addLocalization(
 			locale = "pt-BR",

@@ -84,6 +84,7 @@ public class DataCleanup implements UpgradeStepRegistrator {
 
 			_cleanUpModuleData(
 				_dataCleanupConfiguration::cleanUpShoppingModuleData,
+				"com.liferay.shopping.service",
 				() -> new ShoppingUpgradeProcess(_imageLocalService));
 
 			_cleanUpModuleData(
@@ -117,20 +118,6 @@ public class DataCleanup implements UpgradeStepRegistrator {
 
 				CacheRegistryUtil.clear();
 			}
-		}
-	}
-
-	private void _cleanUpModuleData(
-			Supplier<Boolean> booleanSupplier,
-			Supplier<UpgradeProcess> upgradeProcessSupplier)
-		throws UpgradeException {
-
-		if (booleanSupplier.get()) {
-			UpgradeProcess upgradeProcess = upgradeProcessSupplier.get();
-
-			upgradeProcess.upgrade();
-
-			CacheRegistryUtil.clear();
 		}
 	}
 

@@ -40,7 +40,7 @@ public class RESTBuilderTest {
 
 		RESTBuilder restBuilder = new RESTBuilder(
 			new File(dependenciesPath, "copyright.txt"),
-			new File(dependenciesPath), null);
+			new File(dependenciesPath), null, null);
 
 		restBuilder.build();
 

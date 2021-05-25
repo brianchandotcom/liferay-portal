@@ -62,6 +62,16 @@ public class BuildRESTMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setForcePredictableOperationId(
+		Boolean forcePredictableOperationId) {
+
+		_restBuilderArgs.setForcePredictableOperationId(
+			forcePredictableOperationId);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setRESTConfigDir(File restConfigDir) {
 		_restBuilderArgs.setRESTConfigDir(restConfigDir);
 	}

@@ -39,6 +39,10 @@ public class RESTBuilderArgs {
 		return _forceClientVersionDescription;
 	}
 
+	public Boolean isForcePredictableOperationId() {
+		return _forcePredictableOperationId;
+	}
+
 	public void setCopyrightFile(File copyrightFile) {
 		_copyrightFile = copyrightFile;
 	}
@@ -47,6 +51,12 @@ public class RESTBuilderArgs {
 		Boolean forceClientVersionDescription) {
 
 		_forceClientVersionDescription = forceClientVersionDescription;
+	}
+
+	public void setForcePredictableOperationId(
+		Boolean forcePredictableOperationId) {
+
+		_forcePredictableOperationId = forcePredictableOperationId;
 	}
 
 	public void setRESTConfigDir(File restConfigDir) {
@@ -70,6 +80,13 @@ public class RESTBuilderArgs {
 		names = {"-f", "--force-client-version-description"}
 	)
 	private Boolean _forceClientVersionDescription;
+
+	@Parameter(
+		arity = 1, converter = BooleanConverter.class,
+		description = "Updates the operation ID.",
+		names = {"-o", "--force-predictable-operation-id"}
+	)
+	private Boolean _forcePredictableOperationId;
 
 	@Parameter(
 		description = "Print this message.", help = true,

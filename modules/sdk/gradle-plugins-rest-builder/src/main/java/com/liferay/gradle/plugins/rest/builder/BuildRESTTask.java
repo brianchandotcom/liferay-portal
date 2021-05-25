@@ -42,6 +42,8 @@ public class BuildRESTTask extends JavaExec {
 
 		_forceClientVersionDescription = GradleUtil.getTaskPrefixedProperty(
 			this, "forceClientVersionDescription");
+		_forcePredictableOperationId = GradleUtil.getTaskPrefixedProperty(
+			this, "forcePredictableOperationId");
 	}
 
 	@Override
@@ -64,6 +66,12 @@ public class BuildRESTTask extends JavaExec {
 		return GradleUtil.toString(_forceClientVersionDescription);
 	}
 
+	@Input
+	@Optional
+	public String getForcePredictableOperationId() {
+		return GradleUtil.toString(_forcePredictableOperationId);
+	}
+
 	@InputDirectory
 	@PathSensitive(PathSensitivity.RELATIVE)
 	public File getRESTConfigDir() {
@@ -78,6 +86,12 @@ public class BuildRESTTask extends JavaExec {
 		Object forceClientVersionDescription) {
 
 		_forceClientVersionDescription = forceClientVersionDescription;
+	}
+
+	public void setForcePredictableOperationId(
+		Object forcePredictableOperationId) {
+
+		_forcePredictableOperationId = forcePredictableOperationId;
 	}
 
 	public void setRESTConfigDir(Object restConfigDir) {
@@ -111,11 +125,19 @@ public class BuildRESTTask extends JavaExec {
 			args.add(forceClientVersionDescription);
 		}
 
+		String forcePredictableOperationId = getForcePredictableOperationId();
+
+		if (forcePredictableOperationId != null) {
+			args.add("--force-predictable-operation-id");
+			args.add(forcePredictableOperationId);
+		}
+
 		return args;
 	}
 
 	private Object _copyrightFile;
 	private Object _forceClientVersionDescription;
+	private Object _forcePredictableOperationId;
 	private Object _restConfigDir;
 
 }

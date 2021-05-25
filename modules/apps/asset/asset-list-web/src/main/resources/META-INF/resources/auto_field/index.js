@@ -78,6 +78,9 @@ function AssetCategories({
 
 	return (
 		<ClayForm.Group>
+			<label htmlFor={`${namespace}queryCategoryIds${index}`}>
+				{Liferay.Language.get('categories')}
+			</label>
 			<AssetVocabularyCategoriesSelector
 				categoryIds={rule.queryValues ? rule.queryValues : ''}
 				eventName={`${namespace}selectCategory`}

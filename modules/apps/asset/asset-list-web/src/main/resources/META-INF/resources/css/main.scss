@@ -31,6 +31,10 @@
 			&:first-child {
 				margin-left: 0;
 			}
+
+			.field-content:after {
+				overflow: visible;
+			}
 		}
 
 		.container-trash {

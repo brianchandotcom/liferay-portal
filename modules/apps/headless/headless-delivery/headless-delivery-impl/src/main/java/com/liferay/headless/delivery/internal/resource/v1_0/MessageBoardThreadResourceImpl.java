@@ -95,6 +95,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriBuilder;
 
@@ -223,13 +224,17 @@ public class MessageBoardThreadResourceImpl
 	public MessageBoardThread getMessageBoardThread(Long messageBoardThreadId)
 		throws Exception {
 
+		MBThread mbThread = _mbThreadLocalService.getMBThread(
+			messageBoardThreadId);
+
+		_checkMessageStatusPermissions(
+			mbThread.getCompanyId(), mbThread.getGroupId(),
+			mbThread.getStatus(), mbThread.getUserId());
+
 		_viewCountManager.incrementViewCount(
 			contextCompany.getCompanyId(),
 			_classNameLocalService.getClassNameId(MBThread.class),
 			messageBoardThreadId, 1);
-
-		MBThread mbThread = _mbThreadLocalService.getMBThread(
-			messageBoardThreadId);
 
 		_mbThreadFlagLocalService.addThreadFlag(
 			contextUser.getUserId(), mbThread, new ServiceContext());
@@ -305,6 +310,10 @@ public class MessageBoardThreadResourceImpl
 				"No message thread exists with friendly URL path " +
 					friendlyUrlPath);
 		}
+
+		_checkMessageStatusPermissions(
+			mbMessage.getCompanyId(), mbMessage.getGroupId(),
+			mbMessage.getStatus(), mbMessage.getUserId());
 
 		_viewCountManager.incrementViewCount(
 			contextCompany.getCompanyId(),
@@ -501,6 +510,24 @@ public class MessageBoardThreadResourceImpl
 		_updateQuestion(mbMessage, messageBoardThread);
 
 		return _toMessageBoardThread(mbMessage);
+	}
+
+	private void _checkMessageStatusPermissions(
+		long companyId, long groupId, int status, long userId) {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((status != WorkflowConstants.STATUS_APPROVED) &&
+			(userId != contextUser.getUserId()) &&
+			!permissionChecker.isContentReviewer(companyId, groupId)) {
+
+			throw new NotAuthorizedException(
+				StringBundler.concat(
+					"User ", userId,
+					" must be owner or content reviewer to access this ",
+					"message thread"));
+		}
 	}
 
 	private DynamicQuery _getDynamicQuery(

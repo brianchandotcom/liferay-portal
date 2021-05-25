@@ -29,11 +29,11 @@ export function getDDMFormField({
 		dataDefinition,
 		fieldName
 	);
+	const {fieldType, nestedDataDefinitionFields} = dataDefinitionField;
 
-	if (dataDefinitionField.fieldType === 'ddm-text-html') {
+	if (fieldType === 'ddm-text-html') {
 		dataDefinitionField.fieldType = 'rich_text';
 	}
-
 	const settingsContext = getDDMFormFieldSettingsContext({
 		dataDefinitionField,
 		defaultLanguageId,
@@ -41,39 +41,33 @@ export function getDDMFormField({
 		fieldTypes,
 	});
 
-	const ddmFormField = {
-		nestedFields: dataDefinitionField.nestedDataDefinitionFields,
-		settingsContext,
-	};
+	const nestedFields = nestedDataDefinitionFields.map(({name: fieldName}) =>
+		getDDMFormField({
+			dataDefinition,
+			defaultLanguageId,
+			editingLanguageId,
+			fieldName,
+			fieldTypes,
+		})
+	);
+
+	const ddmFormField = {nestedFields, settingsContext};
 	const visitor = new PagesVisitor(settingsContext.pages);
 
 	visitor.mapFields((field) => {
-		const {fieldName} = field;
-		let {value} = field;
-
+		const {fieldName, localizable, value} = field;
 		if (fieldName === 'options' && value) {
-			value = value[editingLanguageId];
+			ddmFormField[fieldName] = value[editingLanguageId];
 		}
 		else if (fieldName === 'name') {
 			ddmFormField.fieldName = value;
 		}
-
-		ddmFormField[fieldName] = value;
+		else {
+			ddmFormField[fieldName] = localizable
+				? value[editingLanguageId] ?? value[defaultLanguageId]
+				: value;
+		}
 	});
-
-	if (ddmFormField.nestedFields.length > 0) {
-		ddmFormField.nestedFields = ddmFormField.nestedFields.map(
-			(nestedField) =>
-				getDDMFormField({
-					dataDefinition,
-					defaultLanguageId,
-					editingLanguageId,
-					fieldName: nestedField.name,
-					fieldTypes,
-				})
-		);
-	}
-
 	if (!ddmFormField.instanceId) {
 		ddmFormField.instanceId = FieldSupport.generateInstanceId(8);
 	}

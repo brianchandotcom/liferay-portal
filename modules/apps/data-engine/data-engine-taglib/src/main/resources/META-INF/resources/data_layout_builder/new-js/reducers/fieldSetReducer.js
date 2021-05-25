@@ -149,46 +149,29 @@ export default (state, action, config) => {
 			});
 		}
 		case EVENT_TYPES.FIELD_SET.UPDATE: {
-			const {fieldSet} = action.payload;
 			const {fieldTypes} = config;
 			const {editingLanguageId, pages} = state;
-
+			const {fieldSet} = action.payload;
+			const {dataDefinitionFields, defaultDataLayout, id} = fieldSet;
+			const fieldSetId = `${id}`;
 			const visitor = new PagesVisitor(pages);
-
 			const newPages = visitor.mapFields((field) => {
-				if (field.ddmStructureId !== fieldSet.id) {
+				if (field.ddmStructureId !== fieldSetId) {
 					return field;
 				}
-
-				const nestedFields = fieldSet.dataDefinitionFields.map(
-					({name}) => {
-						const field = getDDMFormField({
-							dataDefinition: fieldSet,
-							editingLanguageId,
-							fieldName: name,
-							fieldTypes,
-						});
-
-						return {
-							...field,
-							label:
-								field.label[editingLanguageId] ??
-								field.label[fieldSet.defaultLanguageId],
-						};
-					}
-				);
-
+				const nestedFields = dataDefinitionFields.map(({name}) => {
+					return getDDMFormField({
+						dataDefinition: fieldSet,
+						editingLanguageId,
+						fieldName: name,
+						fieldTypes,
+					});
+				});
 				const rows = normalizeDataLayoutRows(
-					fieldSet.defaultDataLayout.dataLayoutPages
+					defaultDataLayout.dataLayoutPages
 				);
 
-				const updatedFieldSetDefinition = {
-					...field,
-					nestedFields,
-					rows,
-				};
-
-				return updatedFieldSetDefinition;
+				return {...field, nestedFields, rows};
 			});
 
 			return {pages: newPages};

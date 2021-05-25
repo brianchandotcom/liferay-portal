@@ -19,7 +19,6 @@ import {
 	ConfigProvider,
 	EVENT_TYPES as CORE_EVENT_TYPES,
 	FormProvider,
-	PagesVisitor,
 	useConfig,
 	useForm,
 	useFormState,
@@ -303,12 +302,6 @@ const FieldSetModal = ({fieldSet, onClose: onCloseProp}) => {
 			editingLanguageId: fieldSet.defaultLanguageId,
 			fieldSet,
 			fieldTypes: config.fieldTypes,
-		});
-
-		// TODO: check for issue on getFieldSetDDMForm converting label property
-
-		new PagesVisitor(ddmForm.pages).mapFields((field) => {
-			field.label = field.label[fieldSet.defaultLanguageId];
 		});
 
 		const {

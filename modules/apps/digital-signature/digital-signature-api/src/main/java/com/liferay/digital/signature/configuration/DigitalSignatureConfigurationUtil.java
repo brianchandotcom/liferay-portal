@@ -15,29 +15,72 @@
 package com.liferay.digital.signature.configuration;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author José Abelenda
  */
 public class DigitalSignatureConfigurationUtil {
 
-	public static boolean enabled(long groupId) {
-		DigitalSignatureConfiguration digitalSignatureConfiguration =
-			_getDigitalSignatureConfiguration(groupId);
-
-		return digitalSignatureConfiguration.enabled();
-	}
-
-	private static DigitalSignatureConfiguration
-		_getDigitalSignatureConfiguration(long groupId) {
+	public static DigitalSignatureConfiguration
+		getDigitalSignatureConfiguration(long companyId, long groupId) {
 
 		try {
-			return ConfigurationProviderUtil.getGroupConfiguration(
-				DigitalSignatureConfiguration.class, groupId);
+			DigitalSignatureConfiguration digitalSignatureConfigurationCompany =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					DigitalSignatureConfiguration.class, companyId);
+
+			if (groupId == 0) {
+				return digitalSignatureConfigurationCompany;
+			}
+
+			if (Objects.equals(
+					digitalSignatureConfigurationCompany.siteSettingsStrategy(),
+					"always-inherit")) {
+
+				return digitalSignatureConfigurationCompany;
+			}
+
+			DigitalSignatureConfiguration digitalSignatureConfigurationGroup =
+				ConfigurationProviderUtil.getGroupConfiguration(
+					DigitalSignatureConfiguration.class, groupId);
+
+			if (Objects.equals(
+					digitalSignatureConfigurationCompany.siteSettingsStrategy(),
+					"always-override")) {
+
+				return digitalSignatureConfigurationGroup;
+			}
+
+			if (Objects.equals(
+					digitalSignatureConfigurationCompany.siteSettingsStrategy(),
+					"inherit-or-override")) {
+
+				if (Validator.isNotNull(
+						digitalSignatureConfigurationGroup.apiUsername()) &&
+					Validator.isNotNull(
+						digitalSignatureConfigurationGroup.apiAccountId()) &&
+					Validator.isNotNull(
+						digitalSignatureConfigurationGroup.accountBaseURI()) &&
+					Validator.isNotNull(
+						digitalSignatureConfigurationGroup.integrationKey()) &&
+					Validator.isNotNull(
+						digitalSignatureConfigurationGroup.rsaPrivateKey())) {
+
+					return digitalSignatureConfigurationGroup;
+				}
+
+				return digitalSignatureConfigurationCompany;
+			}
+
+			return digitalSignatureConfigurationCompany;
 		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
+		catch (ConfigurationException configurationException) {
+			return ReflectionUtil.throwException(configurationException);
 		}
 	}
 

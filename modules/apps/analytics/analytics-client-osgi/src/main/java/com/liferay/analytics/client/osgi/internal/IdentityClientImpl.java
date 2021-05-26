@@ -103,6 +103,6 @@ public class IdentityClientImpl implements IdentityClient {
 	)
 	private JSONObjectMapper<IdentityContextMessage> _jsonObjectMapper;
 
-	private JSONWebServiceClient _jsonWebServiceClient;
+	private volatile JSONWebServiceClient _jsonWebServiceClient;
 
 }

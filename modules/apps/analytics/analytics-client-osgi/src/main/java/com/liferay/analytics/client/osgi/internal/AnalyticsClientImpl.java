@@ -186,7 +186,7 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 	)
 	private JSONObjectMapper<AnalyticsEventsMessage> _jsonObjectMapper;
 
-	private JSONWebServiceClient _jsonWebServiceClient;
+	private volatile JSONWebServiceClient _jsonWebServiceClient;
 
 	@Reference
 	private UserLocalService _userLocalService;

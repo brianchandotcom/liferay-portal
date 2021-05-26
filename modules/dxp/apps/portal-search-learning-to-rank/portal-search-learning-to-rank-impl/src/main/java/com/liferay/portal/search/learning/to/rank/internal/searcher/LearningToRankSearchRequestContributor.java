@@ -102,7 +102,7 @@ public class LearningToRankSearchRequestContributor
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
-	private boolean _enabled;
-	private String _model;
+	private volatile boolean _enabled;
+	private volatile String _model;
 
 }

@@ -119,6 +119,6 @@ public class JabberUtil {
 	private static volatile ChatGroupServiceConfiguration
 		_chatGroupServiceConfiguration;
 	private static Jabber _jabber;
-	private static boolean _jabberEnabled;
+	private static volatile boolean _jabberEnabled;
 
 }

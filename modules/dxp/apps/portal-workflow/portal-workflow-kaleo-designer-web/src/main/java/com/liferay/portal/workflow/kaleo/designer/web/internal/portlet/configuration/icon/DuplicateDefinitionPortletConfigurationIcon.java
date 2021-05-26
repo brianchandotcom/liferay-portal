@@ -142,7 +142,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 	}
 
-	private boolean _companyAdministratorCanPublish;
+	private volatile boolean _companyAdministratorCanPublish;
 
 	@Reference
 	private Portal _portal;

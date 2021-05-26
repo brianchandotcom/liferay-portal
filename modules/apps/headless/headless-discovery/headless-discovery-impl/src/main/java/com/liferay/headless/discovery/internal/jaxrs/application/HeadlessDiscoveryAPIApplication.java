@@ -299,7 +299,7 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 		return null;
 	}
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 	private volatile HeadlessDiscoveryConfiguration
 		_headlessDiscoveryConfiguration;
 

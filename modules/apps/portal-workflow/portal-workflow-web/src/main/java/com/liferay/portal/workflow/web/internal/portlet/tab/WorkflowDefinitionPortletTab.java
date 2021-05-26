@@ -167,6 +167,6 @@ public class WorkflowDefinitionPortletTab extends BaseWorkflowPortletTab {
 	@Reference
 	protected WorkflowPreprocessorHelper workflowPreprocessorHelper;
 
-	private boolean _companyAdministratorCanPublish;
+	private volatile boolean _companyAdministratorCanPublish;
 
 }

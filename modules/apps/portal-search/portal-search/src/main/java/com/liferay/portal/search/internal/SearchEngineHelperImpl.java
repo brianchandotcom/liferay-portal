@@ -347,7 +347,7 @@ public class SearchEngineHelperImpl implements SearchEngineHelper {
 		new HashMap<>();
 	private final Map<String, SearchEngine> _searchEngines =
 		new ConcurrentHashMap<>();
-	private ServiceTracker<SearchEngineConfigurator, SearchEngineConfigurator>
-		_serviceTracker;
+	private volatile ServiceTracker
+		<SearchEngineConfigurator, SearchEngineConfigurator> _serviceTracker;
 
 }

@@ -242,7 +242,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 		return kaleoDefinition;
 	}
 
-	private boolean _companyAdministratorCanPublish;
+	private volatile boolean _companyAdministratorCanPublish;
 
 	@Reference
 	private KaleoConditionLocalService _kaleoConditionLocalService;

@@ -152,6 +152,6 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 		new ConcurrentHashMap<>());
 	private boolean _readWriteRequired;
 	private Throwable _requireIndexReadWriteCallStackThrowable;
-	private boolean _suppressIndexReadOnly;
+	private volatile boolean _suppressIndexReadOnly;
 
 }

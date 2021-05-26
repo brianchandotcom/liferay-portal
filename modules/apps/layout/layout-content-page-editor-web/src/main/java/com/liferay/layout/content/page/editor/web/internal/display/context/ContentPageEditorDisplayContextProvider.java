@@ -178,7 +178,7 @@ public class ContentPageEditorDisplayContextProvider {
 		_layoutPageTemplateEntryLocalService;
 
 	private volatile PageEditorConfiguration _pageEditorConfiguration;
-	private ServiceTrackerList
+	private volatile ServiceTrackerList
 		<ContentPageEditorSidebarPanel, ContentPageEditorSidebarPanel>
 			_serviceTrackerList;
 

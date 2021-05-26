@@ -80,7 +80,7 @@ public class VersioningPolicyVersioningStrategy implements VersioningStrategy {
 	}
 
 	private volatile DLConfiguration _dlConfiguration;
-	private ServiceTrackerList<VersioningPolicy, VersioningPolicy>
+	private volatile ServiceTrackerList<VersioningPolicy, VersioningPolicy>
 		_serviceTrackerList;
 
 }

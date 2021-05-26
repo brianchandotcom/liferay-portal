@@ -164,7 +164,7 @@ public class DeleteMBMessagesListener extends BaseMessageListener {
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	private SchedulerEntryImpl _schedulerEntryImpl;
+	private volatile SchedulerEntryImpl _schedulerEntryImpl;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

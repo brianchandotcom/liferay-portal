@@ -95,9 +95,9 @@ public class FontAwesomeTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 	private volatile CSSFontAwesomeConfiguration _cssFontAwesomeConfiguration;
-	private long _lastModified;
+	private volatile long _lastModified;
 
 	@Reference
 	private Portal _portal;

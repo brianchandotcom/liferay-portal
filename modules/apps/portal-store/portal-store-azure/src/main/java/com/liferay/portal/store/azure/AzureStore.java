@@ -448,6 +448,6 @@ public class AzureStore implements Store {
 
 	private static final Log _log = LogFactoryUtil.getLog(AzureStore.class);
 
-	private BlobContainerClient _blobContainerClient;
+	private volatile BlobContainerClient _blobContainerClient;
 
 }

@@ -259,8 +259,8 @@ public class BundleBlacklist {
 	private static final Pattern _pattern = Pattern.compile(
 		"\\{location=([^,]+), startLevel=(\\d+)\\}");
 
-	private Set<String> _blacklistBundleSymbolicNames;
-	private File _blacklistFile;
+	private volatile Set<String> _blacklistBundleSymbolicNames;
+	private volatile File _blacklistFile;
 
 	private final BundleListener _bundleListener =
 		new SynchronousBundleListener() {
@@ -277,7 +277,7 @@ public class BundleBlacklist {
 	@Reference
 	private LPKGDeployer _lpkgDeployer;
 
-	private BundleListener _selfMonitorBundleListener;
+	private volatile BundleListener _selfMonitorBundleListener;
 	private final Map<String, UninstalledBundleData> _uninstalledBundles =
 		new ConcurrentHashMap<>();
 

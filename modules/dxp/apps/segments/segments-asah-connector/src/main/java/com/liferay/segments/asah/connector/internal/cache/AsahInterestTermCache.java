@@ -71,7 +71,7 @@ public class AsahInterestTermCache {
 
 	private static final String _CACHE_PREFIX = "segments-";
 
-	private int _interestTermsTimeToLiveInSeconds =
+	private volatile int _interestTermsTimeToLiveInSeconds =
 		PortalCache.DEFAULT_TIME_TO_LIVE;
 	private PortalCache<String, String[]> _portalCache;
 

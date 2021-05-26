@@ -71,7 +71,7 @@ public class AsahSegmentsEntryCache {
 
 	private static final String _CACHE_PREFIX = "segments-";
 
-	private int _anonymousTimeToLiveInSeconds =
+	private volatile int _anonymousTimeToLiveInSeconds =
 		PortalCache.DEFAULT_TIME_TO_LIVE;
 	private PortalCache<String, long[]> _portalCache;
 

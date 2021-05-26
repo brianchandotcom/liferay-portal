@@ -128,7 +128,7 @@ public class DuplicateDefinitionPortletConfigurationIcon
 		return false;
 	}
 
-	private boolean _companyAdministratorCanPublish;
+	private volatile boolean _companyAdministratorCanPublish;
 
 	@Reference
 	private Portal _portal;

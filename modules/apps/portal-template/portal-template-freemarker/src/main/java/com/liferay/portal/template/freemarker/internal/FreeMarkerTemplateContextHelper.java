@@ -197,7 +197,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	private volatile FreeMarkerEngineConfiguration
 		_freeMarkerEngineConfiguration;
 	private BeansWrapper _restrictedBeansWrapper;
-	private Set<String> _restrictedVariables;
+	private volatile Set<String> _restrictedVariables;
 	private final List<TemplateContextContributor>
 		_templateContextContributors = new CopyOnWriteArrayList<>();
 

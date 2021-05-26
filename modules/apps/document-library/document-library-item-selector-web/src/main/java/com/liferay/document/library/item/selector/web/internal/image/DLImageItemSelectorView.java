@@ -94,6 +94,6 @@ public class DLImageItemSelectorView
 
 	private volatile DLImageItemSelectorViewConfiguration
 		_dlImageItemSelectorViewConfiguration;
-	private String[] _mimeTypes;
+	private volatile String[] _mimeTypes;
 
 }

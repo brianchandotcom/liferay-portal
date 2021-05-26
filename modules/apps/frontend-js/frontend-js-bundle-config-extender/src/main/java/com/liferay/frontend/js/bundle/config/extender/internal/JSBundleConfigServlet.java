@@ -142,7 +142,7 @@ public class JSBundleConfigServlet extends HttpServlet {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSBundleConfigServlet.class);
 
-	private ComponentContext _componentContext;
+	private volatile ComponentContext _componentContext;
 	private JSBundleConfigTracker _jsBundleConfigTracker;
 
 	@Reference

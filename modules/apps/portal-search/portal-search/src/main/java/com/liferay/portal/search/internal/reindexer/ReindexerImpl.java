@@ -103,8 +103,8 @@ public class ReindexerImpl implements Reindexer {
 	private static final ThreadFactory _threadFactory =
 		Executors.defaultThreadFactory();
 
-	private ExecutorService _executorService;
+	private volatile ExecutorService _executorService;
 	private volatile ReindexerConfiguration _reindexerConfiguration;
-	private ReindexRequestsHolder _reindexRequestsHolder;
+	private volatile ReindexRequestsHolder _reindexRequestsHolder;
 
 }

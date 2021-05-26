@@ -110,6 +110,6 @@ public class FormNavigatorEntryConfigurationParser {
 		"^(?:(?<key>.*)=)?(?<value>.*)$", Pattern.MULTILINE);
 
 	private volatile FormNavigatorConfiguration _formNavigatorConfiguration;
-	private Map<String, List<String>> _formNavigatorEntryKeysMap;
+	private volatile Map<String, List<String>> _formNavigatorEntryKeysMap;
 
 }

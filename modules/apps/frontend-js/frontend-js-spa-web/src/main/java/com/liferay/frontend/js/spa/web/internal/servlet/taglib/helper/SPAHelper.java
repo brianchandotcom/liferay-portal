@@ -299,7 +299,7 @@ public class SPAHelper {
 		_REDIRECT_PARAM_NAME = portletNamespace.concat("redirect");
 	}
 
-	private long _cacheExpirationTime;
+	private volatile long _cacheExpirationTime;
 	private ServiceTracker<Object, Object> _navigationExceptionSelectorTracker;
 
 	@Reference
@@ -307,7 +307,7 @@ public class SPAHelper {
 
 	private PortletLocalService _portletLocalService;
 	private volatile SPAConfiguration _spaConfiguration;
-	private JSONArray _spaExcludedPathsJSONArray;
+	private volatile JSONArray _spaExcludedPathsJSONArray;
 
 	private static final class NavigationExceptionSelectorTrackerCustomizer
 		implements ServiceTrackerCustomizer<Object, Object> {

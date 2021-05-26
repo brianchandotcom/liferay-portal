@@ -92,6 +92,6 @@ public class ProductNavigationProductMenuTopHeadDynamicInclude
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
-	private Bundle _bundle;
+	private volatile Bundle _bundle;
 
 }

@@ -57,7 +57,7 @@ public class AMImageSizeProviderImpl implements AMImageSizeProvider {
 			DLFileEntryConfiguration.class, properties);
 	}
 
-	private AMImageConfiguration _amImageConfiguration;
-	private DLFileEntryConfiguration _dlFileEntryConfiguration;
+	private volatile AMImageConfiguration _amImageConfiguration;
+	private volatile DLFileEntryConfiguration _dlFileEntryConfiguration;
 
 }

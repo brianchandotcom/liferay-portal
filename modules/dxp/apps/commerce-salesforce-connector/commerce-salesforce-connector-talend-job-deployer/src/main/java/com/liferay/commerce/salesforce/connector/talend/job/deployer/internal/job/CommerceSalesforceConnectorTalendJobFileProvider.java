@@ -86,7 +86,7 @@ public class CommerceSalesforceConnectorTalendJobFileProvider
 		_commerceSalesforceConnectorTalendJobConfiguration = null;
 	}
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 	private volatile CommerceSalesforceConnectorTalendJobConfiguration
 		_commerceSalesforceConnectorTalendJobConfiguration;
 

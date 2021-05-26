@@ -796,7 +796,7 @@ public class AnalyticsConfigurationTrackerImpl
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private ComponentContext _componentContext;
+	private volatile ComponentContext _componentContext;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

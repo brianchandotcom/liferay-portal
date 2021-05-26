@@ -144,6 +144,7 @@ public class CaptchaUtil {
 
 	private static volatile CaptchaConfiguration _captchaConfiguration;
 	private static ConfigurationAdmin _configurationAdmin;
-	private static ServiceTrackerMap<String, Captcha> _serviceTrackerMap;
+	private static volatile ServiceTrackerMap<String, Captcha>
+		_serviceTrackerMap;
 
 }

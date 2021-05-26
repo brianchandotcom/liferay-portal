@@ -98,7 +98,7 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 	private volatile JSLodashConfiguration _jsLodashConfiguration;
 
 }

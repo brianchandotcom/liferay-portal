@@ -251,8 +251,8 @@ public class S3FileCache {
 
 	private static final Log _log = LogFactoryUtil.getLog(S3FileCache.class);
 
-	private AtomicInteger _cacheDirCleanUpExpunge;
-	private AtomicInteger _cacheDirCleanUpFrequency;
+	private volatile AtomicInteger _cacheDirCleanUpExpunge;
+	private volatile AtomicInteger _cacheDirCleanUpFrequency;
 	private int _calledCleanUpCacheFilesCount;
 	private S3KeyTransformer _s3KeyTransformer;
 	private volatile S3StoreConfiguration _s3StoreConfiguration;

@@ -227,7 +227,7 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductMenuBodyTopDynamicInclude.class);
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

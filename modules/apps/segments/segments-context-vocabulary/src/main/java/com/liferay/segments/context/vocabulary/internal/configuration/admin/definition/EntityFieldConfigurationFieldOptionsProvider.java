@@ -123,6 +123,6 @@ public class EntityFieldConfigurationFieldOptionsProvider
 	@Reference
 	private Language _language;
 
-	private List<Option> _options;
+	private volatile List<Option> _options;
 
 }

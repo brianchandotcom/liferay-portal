@@ -36,13 +36,30 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "content.type=test",
-	service = DataDefinitionContentType.class
+	service = {
+		DataDefinitionContentType.class, TestDataDefinitionContentType.class
+	}
 )
 public class TestDataDefinitionContentType
 	implements DataDefinitionContentType {
 
 	public static final String DATA_ENGINE_TEST =
 		"com_liferay_data_engine_test_portlet_DataEngineTestPortlet";
+
+	@Override
+	public boolean allowEmptyDataDefinition() {
+		return _allowEmptyDataDefinition;
+	}
+
+	@Override
+	public boolean allowInvalidAvailableLocalesForProperty() {
+		return true;
+	}
+
+	@Override
+	public boolean allowReferencedDataDefinitionDeletion() {
+		return true;
+	}
 
 	@Override
 	public long getClassNameId() {
@@ -81,6 +98,10 @@ public class TestDataDefinitionContentType
 		return true;
 	}
 
+	public void setAllowEmptyDataDefinition(boolean allowEmptyDataDefinition) {
+		_allowEmptyDataDefinition = allowEmptyDataDefinition;
+	}
+
 	@Activate
 	protected void activate() throws Exception {
 		URL url = TestDataDefinitionContentType.class.getResource(
@@ -115,6 +136,8 @@ public class TestDataDefinitionContentType
 			}
 		}
 	}
+
+	private boolean _allowEmptyDataDefinition = true;
 
 	@Reference
 	private Portal _portal;

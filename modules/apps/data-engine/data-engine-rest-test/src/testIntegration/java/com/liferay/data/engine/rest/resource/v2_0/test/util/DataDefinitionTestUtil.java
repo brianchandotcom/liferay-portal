@@ -17,6 +17,7 @@ package com.liferay.data.engine.rest.resource.v2_0.test.util;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.resource.v2_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.TestDataDefinitionContentType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
@@ -51,7 +52,7 @@ public class DataDefinitionTestUtil {
 		).build();
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			groupId, "document-library", dataDefinition);
+			groupId, "test", dataDefinition);
 	}
 
 	public static DataDefinition addDataDefinition(long groupId)
@@ -78,7 +79,7 @@ public class DataDefinitionTestUtil {
 		).build();
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			groupId, "document-library", dataDefinition);
+			groupId, "test", dataDefinition);
 	}
 
 	public static DataDefinition addDataDefinitionWithFieldset(long groupId)
@@ -98,7 +99,7 @@ public class DataDefinitionTestUtil {
 
 		DataDefinition fieldsetDataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				groupId, "document-library",
+				groupId, "test",
 				DataDefinition.toDTO(
 					read("data-definition-fieldset-structure.json")));
 
@@ -113,19 +114,17 @@ public class DataDefinitionTestUtil {
 		}
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
-			groupId, "document-library", dataDefinition);
+			groupId, "test", dataDefinition);
 	}
 
 	public static DDMStructure addDDMStructure(Group group) throws Exception {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
-				PortalUtil.getClassNameId(
-					"com.liferay.app.builder.model.AppBuilderApp"),
+				PortalUtil.getClassNameId(TestDataDefinitionContentType.class),
 				group);
 
 		return ddmStructureTestHelper.addStructure(
-			PortalUtil.getClassNameId(
-				"com.liferay.app.builder.model.AppBuilderApp"),
+			PortalUtil.getClassNameId(TestDataDefinitionContentType.class),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			read("test-structured-content-structure.json"),
 			StorageType.DEFAULT.getValue());

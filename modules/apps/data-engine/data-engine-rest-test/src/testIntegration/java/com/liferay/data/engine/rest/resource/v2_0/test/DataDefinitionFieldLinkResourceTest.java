@@ -93,7 +93,7 @@ public class DataDefinitionFieldLinkResourceTest
 		throws Exception {
 
 		_dataDefinitionResource.postDataDefinitionByContentType(
-			"document-library", dataDefinitionFieldLink.getDataDefinition());
+			"test", dataDefinitionFieldLink.getDataDefinition());
 
 		return dataDefinitionFieldLink;
 	}

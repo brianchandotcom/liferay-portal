@@ -2,7 +2,7 @@
 	"availableLanguageIds": [
 		"en_US"
 	],
-	"contentType": "app-builder",
+	"contentType": "test",
 	"dataDefinitionFields": [
 		{
 			"customProperties": {

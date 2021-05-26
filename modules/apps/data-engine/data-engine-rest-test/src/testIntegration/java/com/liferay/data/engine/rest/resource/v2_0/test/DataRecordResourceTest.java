@@ -43,7 +43,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -74,7 +73,6 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			ddmStructure, irrelevantGroup, _resourceLocalService);
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetDataDefinitionDataRecordsPageWithSortInteger()
@@ -175,7 +173,6 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 					Pagination.of(1, 2)));
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetDataRecordCollectionDataRecordsPage() throws Exception {
@@ -303,7 +300,6 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			(List<DataRecord>)searchPartialTermPage.getItems());
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetDataRecordCollectionDataRecordsPageWithSortString()
@@ -498,7 +494,6 @@ public class DataRecordResourceTest extends BaseDataRecordResourceTestCase {
 			(List<DataRecord>)sortByTextDescPage.getItems());
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostDataDefinitionDataRecord() throws Exception {

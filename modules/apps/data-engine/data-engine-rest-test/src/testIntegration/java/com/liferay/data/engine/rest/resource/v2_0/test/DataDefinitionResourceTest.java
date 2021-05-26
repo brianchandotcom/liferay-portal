@@ -25,6 +25,7 @@ import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.problem.Problem;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUtil;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
+import com.liferay.data.engine.rest.resource.v2_0.test.util.content.type.TestDataDefinitionContentType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -42,7 +43,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,7 +55,6 @@ import org.junit.runner.RunWith;
 public class DataDefinitionResourceTest
 	extends BaseDataDefinitionResourceTestCase {
 
-	@Ignore
 	@Override
 	@Test
 	public void testDeleteDataDefinition() throws Exception {
@@ -101,34 +100,6 @@ public class DataDefinitionResourceTest
 			404,
 			dataDefinitionResource.getDataDefinitionHttpResponse(
 				parentDataDefinition.getId()));
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetDataDefinitionByContentTypeContentTypePage()
-		throws Exception {
-
-		super.testGetDataDefinitionByContentTypeContentTypePage();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetDataDefinitionByContentTypeContentTypePageWithPagination()
-		throws Exception {
-
-		super.testGetDataDefinitionByContentTypeContentTypePageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetDataDefinitionByContentTypeContentTypePageWithSortDateTime()
-		throws Exception {
-
-		super.
-			testGetDataDefinitionByContentTypeContentTypePageWithSortDateTime();
 	}
 
 	@Override
@@ -290,7 +261,7 @@ public class DataDefinitionResourceTest
 	public void testPostDataDefinitionByContentType() throws Exception {
 		super.testPostDataDefinitionByContentType();
 
-		// Allow invalid field languages for app builder
+		// Allow invalid field languages
 
 		assertValid(
 			DataDefinitionTestUtil.addDataDefinitionWithFieldset(
@@ -356,9 +327,11 @@ public class DataDefinitionResourceTest
 
 		// MustSetFields
 
+		_testDataDefinitionContentType.setAllowEmptyDataDefinition(false);
+
 		try {
 			dataDefinitionResource.postDataDefinitionByContentType(
-				"journal",
+				"test",
 				DataDefinition.toDTO(
 					DataDefinitionTestUtil.read(
 						"data-definition-must-set-fields.json")));
@@ -372,8 +345,10 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("MustSetFields", problem.getType());
 		}
 
+		_testDataDefinitionContentType.setAllowEmptyDataDefinition(true);
+
 		dataDefinitionResource.postDataDefinitionByContentType(
-			"document-library",
+			"test",
 			DataDefinition.toDTO(
 				DataDefinitionTestUtil.read(
 					"data-definition-must-set-fields.json")));
@@ -781,12 +756,15 @@ public class DataDefinitionResourceTest
 		dataDefinitionResource.deleteDataDefinition(dataDefinition.getId());
 	}
 
-	private static final String _CONTENT_TYPE = "document-library";
+	private static final String _CONTENT_TYPE = "test";
 
 	@Inject(type = DataEngineNativeObjectTracker.class)
 	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
 
 	@Inject(type = Portal.class)
 	private Portal _portal;
+
+	@Inject
+	private TestDataDefinitionContentType _testDataDefinitionContentType;
 
 }

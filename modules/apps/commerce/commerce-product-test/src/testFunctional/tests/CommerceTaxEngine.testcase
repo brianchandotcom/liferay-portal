@@ -223,6 +223,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6259 AddTaxRateToFixedTaxEngine Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6262. Test address restriction on tax calculation"
@@ -232,6 +233,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6262 AssertAddressRestrictiedTaxIsCorrectlyCalculated Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6260. Test tax calculation"
@@ -241,6 +243,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6260 AssertProductTaxCategoryIsCorrectlyCalculated Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6263. Configure tax properties at channel level"

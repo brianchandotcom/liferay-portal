@@ -47,6 +47,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6086 AddAChannelFilter
+
 	}
 
 	@description = "This is a test for COMMERCE-6089. RemoveAccountGroupFilter"
@@ -119,6 +120,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6087 RemoveAChannelFilter
+
 	}
 
 }

@@ -44,6 +44,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6257 SubscriptionLifecycle Pending Implementation
+
 	}
 
 	@description = "COMMERCE-5844. As a system admin I want to check subscription notifications are properly created"
@@ -53,6 +54,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5841 SubscriptionNotifications Pending Implementation
+
 	}
 
 }

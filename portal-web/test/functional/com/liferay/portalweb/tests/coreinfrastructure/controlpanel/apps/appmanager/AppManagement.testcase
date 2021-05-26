@@ -98,6 +98,7 @@ definition {
 	@ignore = "true"
 	@priority = "3"
 	test AppsCanBeActivatedAfterUninstalling {
+
 		// TODO LPS-102506 Unable to activate an app (lpkg) after uninstalling it via the app manager, waiting for fix
 
 	}

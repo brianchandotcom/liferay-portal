@@ -44,6 +44,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5843 DeactivateCurrency Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-5842. As a system administrator I want currencies to be sorted by priority"
@@ -53,6 +54,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5842 SortCurrenciesByPriority Pending Implementation
+
 	}
 
 	test ViewInstanceCurrenciesAvailable {

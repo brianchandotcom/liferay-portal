@@ -43,6 +43,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5859 AssertDefaultChannelCurrencyIsAppliedToProductCard pending implementation
+
 	}
 
 	@description = "COMMERCE-6657. As a buyer, I want to be unable to add a bundled product(Price Type Dynamic) to cart directly"
@@ -293,6 +294,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6162 AssertOnlyMultipleValuesAreSelectableQuantities pending implementation
+
 	}
 
 	@description = "COMMERCE-6164. As a buyer I want to be able to add a product to the cart regardless of the availability, if back ordererabilty of that product is enabled"
@@ -436,6 +438,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5860 AssertProductCardCurrencyAfterChannelCurrencyChanged pending implementation
+
 	}
 
 	@description = "COMMERCE-5856. As a buyer, I want to view the product image container in the top area and I want to be able to click on the product image to navigate to the product detail page"
@@ -445,6 +448,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5856 AssertProductCardImageRedirectsToProductDetailsPage pending implementation
+
 	}
 
 	@description = "COMMERCE-5858. As a buyer, I want to view the catalog default product image if set"
@@ -454,6 +458,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5858 AssertProductCardShowsCatalogDefaultImage pending implementation
+
 	}
 
 	@description = "COMMERCE-5857. As a buyer, I want to view the product's own image if set"
@@ -495,6 +500,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5872 AssertProductIsAvailable pending implementation
+
 	}
 
 	@description = "COMMERCE-5871. As a buyer, I want to view the availability of the product, if set and configured admin-side(product unavailable)"
@@ -504,6 +510,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5871 AssertProductIsUnavailable pending implementation
+
 	}
 
 	@description = "COMMERCE-5861. As a buyer, I want to view the product name with the correct localization"
@@ -610,6 +617,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6161 AssertSelectableQuantitiesStartFromMinimumQuantitySet pending implementation
+
 	}
 
 	@description = "COMMERCE-6656. As a buyer, I want to be unable to add a bundled product(Price Type Static) to cart directly"
@@ -805,6 +813,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5868 CompareProductFromProductCard pending implementation
+
 	}
 
 	@description = "COMMERCE-5869. As a buyer, I want to be able to remove a product from a product comparison items list, by unchecking the product via checkbox"
@@ -844,6 +853,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5867 RemoveProductFromWishList pending implementation
+
 	}
 
 	@description = "COMMERCE-6193. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
@@ -853,6 +863,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6193 ViewFirstSelectableQuantityWhenMinimumOrderQuantityIsHigherThanMultipleOrderQuantity pending implementation
+
 	}
 
 	@description = "COMMERCE-6194. As a buyer, I want the first selectable quantity of a product to be the minimum multiple quantity if Minimum Order Quantity is lower than Multiple Order Quantity"
@@ -909,6 +920,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5864 ViewProductCardPrice pending implementation
+
 	}
 
 	@description = "COMMERCE-6158. As a buyer, I want to see the barred list price and a discount price of a product, if set"
@@ -983,6 +995,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5862 ViewProductCardSKU pending implementation
+
 	}
 
 	@description = "COMMERCE-5865. As a buyer, I want to view starting price on product card when product has different SKUs with different prices"
@@ -992,6 +1005,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5865 ViewProductCardStartingPrice pending implementation
+
 	}
 
 }

@@ -524,6 +524,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6331 RemoveSingleCartItemFromMiniCart pending implementation
+
 	}
 
 	@description = "COMMERCE-6348. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"
@@ -659,6 +660,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6334 ViewMiniCartBundledProductDetails pending implementation
+
 	}
 
 	@description = "COMMERCE-6332. As a buyer, I want to view cart item details in the mini-cart(Name, SKU, Quantity, Options(if present), List Price, Image) and I want to be able to view the number of different products I have in my cart"
@@ -789,6 +791,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6339 ViewMiniCartItemWithDiscountLevels pending implementation
+
 	}
 
 	@description = "COMMERCE-6340. As a buyer, I want to be able to view subtotal and it's total price changed in the mini-cart summary when a discount with target 'Subtotal' is set"
@@ -798,6 +801,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6340 ViewMiniCartItemWithDiscountToSubtotal pending implementation
+
 	}
 
 	@description = "COMMERCE-6341. As a buyer, I want to be able to view order discount and it's total price changed in the mini-cart summary when a discount with target 'Total' is set"

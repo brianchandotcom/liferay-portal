@@ -77,6 +77,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131332 CanBeDeleted pending implementation
+
 	}
 
 	@description = "Verify that a Text Field can be duplicated"
@@ -87,6 +88,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131333 CanBeDuplicated pending implementation
+
 	}
 
 	@description = "Verify that the "Contains" option can be used to validate a Text Field"
@@ -160,6 +162,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131348 CanBeValidatedUsingTheDoesNotMatchOption pending implementation
+
 	}
 
 	@description = "Verify that the "Is Not Email" option can be used to validate a Text Field"
@@ -288,6 +291,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131335 ChangesCanBeCanceled pending implementation
+
 	}
 
 	@description = "Verify that a Help Text can be added to a Text Field"
@@ -298,6 +302,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131338 HelpTextCanBeAdded pending implementation
+
 	}
 
 	@description = "Verify that the Field Label can be edited"
@@ -308,6 +313,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131336 LabelCanBeEdited pending implementation
+
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
@@ -318,6 +324,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131337 LabelCanBeHidden pending implementation
+
 	}
 
 	@description = "Verify that Placeholder Text can be set"
@@ -355,6 +362,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131341 PredefinedValueCanBeAdded pending implementation
+
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
@@ -365,6 +373,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131339 ReferenceCanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that the Field Type can be changed"
@@ -375,6 +384,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131334 TypeCanBeChanged pending implementation
+
 	}
 
 	@description = "Verify that Validation options are reset after changing the Field Type from Text Field to Numeric Field"
@@ -385,6 +395,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131352 ValidationIsResetAfterChangingFieldType pending implementation
+
 	}
 
 }

@@ -43,6 +43,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6218 MoneyOrderCheckout Pending Implementation
+
 	}
 
 }

@@ -1092,6 +1092,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130330 AddNewExperienceSessionDeviceModelSegment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130331."
@@ -1101,6 +1102,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130331 AddNewExperienceSessionDeviceScreenResolutionHeightSegment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130332."
@@ -1110,6 +1112,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130332 AddNewExperienceSessionDeviceScreenResolutionWidthSegment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130333."
@@ -1430,6 +1433,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130337 AddNewExperienceSessionReferrerURLSegment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130338."
@@ -1439,6 +1443,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130338 AddNewExperienceSessionRequestParametersSegment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130339."
@@ -1590,6 +1595,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-130341 AddNewExperienceSessionUserAgentSegment pending implementation
+
 	}
 
 	@description = "This is a test for LPS-130293."

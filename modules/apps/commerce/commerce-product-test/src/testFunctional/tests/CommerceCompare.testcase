@@ -87,6 +87,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5916 EditMaxNumberOfComparisonItemsInMiniCompare pending implementation
+
 	}
 
 	@description = "COMMERCE-5918. As a buyer, I want to deselect a item in Product Compare page"
@@ -96,6 +97,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5918 RemoveComparisonItemFromComparePage pending implementation
+
 	}
 
 	@description = "COMMERCE-5913. As a buyer, I want to deselect items in Catalog for compare in MiniCompare widget"
@@ -183,6 +185,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6662 UseADTInCommerceComparisonBarWidget pending implementation
+
 	}
 
 	@description = "COMMERCE-6661. I want to be able to use ADT to render Commerce Comparison Table widget and I want to be able to select a Display Template and see it applied to the widget"
@@ -192,6 +195,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6661 UseADTInCommerceComparisonTableWidget pending implementation
+
 	}
 
 	@description = "COMMERCE-5919. As a buyer, when comparing items in Compare page, I want to view product options and specifications, if set"

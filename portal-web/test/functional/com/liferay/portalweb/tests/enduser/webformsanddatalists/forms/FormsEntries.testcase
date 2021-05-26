@@ -99,6 +99,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131084 CanBeNavigatedUsingNavigationList pending implementation
+
 	}
 
 	@description = "Verify that Entries can be viewed"
@@ -222,6 +223,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131083 DisplayCorrectNumberOfEntries pending implementation
+
 	}
 
 	@description = "Verify that Entries for the Color, Date and Text Fields display a Field List in the Summary Tab"
@@ -232,6 +234,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131078 DisplayFieldListInSummaryTab pending implementation
+
 	}
 
 	@description = "Verify that Entries for the Paragraph, Rich Text, Separator, Image, and Upload Fields do not display any metrics in the Summary Tab"
@@ -242,6 +245,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131082 DisplayNoMetricsInSummaryTab pending implementation
+
 	}
 
 	@description = "Verify that Entries for the Numeric Field display a Field List, Average, Maximum Value, Minimum Value, and Sum in the Summary Tab"
@@ -316,6 +320,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131203 WorkflowApprovalChangesLabelToApproved pending implementation
+
 	}
 
 	@description = "Verify that with Single Approver Workflow enabled, the Submit button now reads "Submit for Publication""
@@ -357,6 +362,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131202 WorkflowSubmissionChangesLabelToPending pending implementation
+
 	}
 
 }

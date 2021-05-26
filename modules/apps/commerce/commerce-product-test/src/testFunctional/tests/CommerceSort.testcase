@@ -43,6 +43,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6174 AssertProductsAreSortedByNameDescending pending implementation
+
 	}
 
 	@description = "COMMERCE-6176. As a buyer, I want to sort products by New Items using Sort widget and the results should be visible on the Search Results widget"
@@ -52,6 +53,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6176 AssertProductsAreSortedByNewItems pending implementation
+
 	}
 
 	@description = "COMMERCE-6171. As a buyer, I want to sort products by Price High to Low using Sort widget and the results should be visible on the Search Results widget"
@@ -61,6 +63,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6171 AssertProductsAreSortedByPriceHighToLow pending implementation
+
 	}
 
 	@description = "COMMERCE-6172. As a buyer, I want to sort products by Price Low to High using Sort widget and the results should be visible on the Search Results widget"
@@ -70,6 +73,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6172 AssertProductsAreSortedByPriceLowToHigh pending implementation
+
 	}
 
 	@description = "COMMERCE-6175. As a buyer, I want to sort products by Relevance using Sort widget and the results should be visible on the Search Results widget"
@@ -79,6 +83,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6175 AssertProductsAreSortedByRelevance pending implementation
+
 	}
 
 }

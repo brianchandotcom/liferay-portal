@@ -521,6 +521,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6227 AddEditAndDeleteTierPriceEntry Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6234. Price List Qualifier Lifecycle"
@@ -670,6 +671,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6235 AddEditAndRemoveProductGroupFromPL Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6069. Price List Qualifier"
@@ -1308,6 +1310,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6220 CheckOnlyPermittedCatalogIsSelectable Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6236. Check info about where a product group is used"
@@ -1317,6 +1320,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6236 CheckPLProductGroupUsageInfo Pending Implementation
+
 	}
 
 	test CreateNewPriceList {
@@ -1450,6 +1454,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6221 ViewExpiredPL Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6222. Price Entry expiration management"
@@ -1459,6 +1464,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6222 ViewExpiredPriceEntry Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6224. Price Modifier expiration management"
@@ -1468,6 +1474,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6224 ViewExpiredPriceModifier Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6223. Tier Price Entry expiration management"
@@ -1477,6 +1484,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6223 ViewExpiredTierPriceEntry Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6228. Check that an expired entity is not considered in the price calculation"
@@ -1486,6 +1494,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6228 ViewPriceNotAffectedByExpiredPriceEntities Pending Implementation
+
 	}
 
 }

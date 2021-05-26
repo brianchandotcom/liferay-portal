@@ -43,6 +43,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6248 AssertAddingNonShippableItemToShipmentNotPossible Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6252. Check that shipment information set at product level are overriden by the shipment info at cpInstance level"
@@ -52,6 +53,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6252 AssertProductShipmentInfoOverrideCPInstanceShipmentInfo Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6253. Shipment dimensions should be correctly calculated"
@@ -61,6 +63,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6253 AssertShipmentDimensionsCorrectlyCalculated Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6249. Shipment items should be taken only from active warehouses"
@@ -70,6 +73,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6249 AssertShipmentItemTakenFromActiveWarehouses Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6254. Shipment weight should be correctly calculated"
@@ -79,6 +83,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6254 AssertShipmentWeightIsCorrectlyCalculated Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6251. Delete shipment"
@@ -88,6 +93,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6251 AssertStateShippedShipmentNotDeletable Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6247. Multiple shipment for the same order"
@@ -208,6 +214,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6237 CreateOrderShipment Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6250. Delete shipment"
@@ -217,6 +224,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6250 DeleteShipment Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6241. Execute the shipment workflow"
@@ -226,6 +234,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6241 ExecuteShipmentWorkflow Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6255. Filter, Sort shipment from shipment UI"
@@ -235,6 +244,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6255 FilterAndSortShipments Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6240. Remove shipment items from a shipment"
@@ -244,6 +254,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6240 RemoveItemFromShipment Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6256. Search shipment from shipment UI"
@@ -253,6 +264,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6256 SearchShipment Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6242. Update address"
@@ -262,6 +274,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6242 UpdateShipmentAddress Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6239. Update shipment items to a shipment"
@@ -271,6 +284,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6239 UpdateShipmentItems Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6243. Update address"
@@ -280,6 +294,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6243 ValidateShipmentAddress Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6245. Check that shipping amount is correctly calculated in the order"
@@ -289,6 +304,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6245 ViewOrderShipmentAmountIsCorrect Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6246. Check that shipping discount amount is correctly calculated in the order"
@@ -298,6 +314,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6246 ViewOrderShipmentDiscountAmountIsCorrect Pending Implementation
+
 	}
 
 }

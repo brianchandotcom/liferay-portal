@@ -46,6 +46,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6210 CancelShipmentAndCreateNewFromPendingOrder Pending Implementation
+
 	}
 
 	test EditOrder {
@@ -216,6 +217,7 @@ definition {
 
 		// TODO COMMERCE-5980 EditOrderPaymentMethod Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
 	}
 
 	@description = "This is a test for COMMERCE-5980. As an order manager, I want to edit the payment method and payment status of a submitted order"
@@ -226,6 +228,7 @@ definition {
 
 		// TODO COMMERCE-5980 EditOrderPaymentStatus Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
 	}
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"
@@ -236,6 +239,7 @@ definition {
 
 		// TODO COMMERCE-5997 FilterOrderByAccount Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
 	}
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"
@@ -246,6 +250,7 @@ definition {
 
 		// TODO COMMERCE-5997 FilterOrderByChannel Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
 	}
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"
@@ -256,6 +261,7 @@ definition {
 
 		// TODO COMMERCE-5997 FilterOrderByOrderDataRange Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
 	}
 
 	@description = "This is a test for COMMERCE-5997. As an order manager, I want to filter orders by Channel, Account, Order Data Range and Order Status"
@@ -266,6 +272,7 @@ definition {
 
 		// TODO COMMERCE-5997 FilterOrderByStatus Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
 	}
 
 	@description = "This is a test for COMMERCE-6209. Admin order fulfillment"
@@ -275,6 +282,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6209 FulfillOrder Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6213. Buyer Order Approval Workflow"
@@ -284,6 +292,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6213 FulfillOrderWithBuyerOrderApprovalWorkflowActive Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6214. Seller Order Acceptance Workflow"
@@ -293,6 +302,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6214 FulfillOrderWithSellerOrderAcceptanceWorkflowActive Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6211. Stock management from order"
@@ -302,6 +312,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6211 ManageBackOrdersFromOrder Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6211. Stock management from order"
@@ -311,6 +322,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6211 ManageProductAvailabilityFromOrder Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6217. Order Permission Management"
@@ -320,6 +332,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6217 OrderPermissionManagement Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6216. Search Order from UI"
@@ -329,6 +342,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6216 SearchOrder Pending Implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-5982. As an order manager, I want to sort orders by ascending or descending order date"
@@ -339,6 +353,7 @@ definition {
 
 		// TODO COMMERCE-5982 SortOrdersByOrderDate Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
 	}
 
 	@description = "This is a test for COMMERCE-5845. As a product specialist I want to see if a SKU is on order"
@@ -349,6 +364,7 @@ definition {
 
 		// TODO COMMERCE-5845 ViewOrderSKU Pending Implementation
 		// NOTE: 1. Delete action is already handled by commerceAdminTearDown
+
 	}
 
 }

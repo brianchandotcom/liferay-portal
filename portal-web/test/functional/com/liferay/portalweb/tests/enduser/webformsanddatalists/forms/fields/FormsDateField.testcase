@@ -50,6 +50,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132815 CanBeDeleted pending implementation
+
 	}
 
 	@description = "Verify that a Date Field can be duplicated"
@@ -60,6 +61,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132816 CanBeDuplicated pending implementation
+
 	}
 
 	@description = "Verify that a Date Field can be edited"
@@ -70,6 +72,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132814 CanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that a Date Field can be Repeatable"
@@ -80,6 +83,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132817 CanBeSetAsRepeatable pending implementation
+
 	}
 
 	@description = "Verify that a Form can be submitted with the Date Field"
@@ -90,6 +94,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132824 CanBeSubmitted pending implementation
+
 	}
 
 	@description = "Verify that changes to the Field can be canceled"
@@ -100,6 +105,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132819 ChangesCanBeCanceled pending implementation
+
 	}
 
 	@description = "Verify that a help text can be added"
@@ -110,6 +116,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132822 HelpTextCanBeAdded pending implementation
+
 	}
 
 	@description = "Verify that the Field Label can be edited"
@@ -120,6 +127,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132820 LabelCanBeEdited pending implementation
+
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
@@ -130,6 +138,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132821 LabelCanBeHidden pending implementation
+
 	}
 
 	@description = "Verify that a Predefined Value can be applied"
@@ -140,6 +149,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132825 PredefinedValueCanBeAdded pending implementation
+
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
@@ -150,6 +160,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132823 ReferenceCanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that the Field Type can be changed"
@@ -160,6 +171,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132818 TypeCanBeChanged pending implementation
+
 	}
 
 }

@@ -85,6 +85,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6287 AddASpecificationAndVerifyIfIsPresent
+
 	}
 
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
@@ -94,6 +95,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6302 AddGroupedProduct
+
 	}
 
 	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"
@@ -103,6 +105,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6301 AddVirtualProduct
+
 	}
 
 	@description = "This is a test for COMMERCE-6020. AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic"
@@ -578,6 +581,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6022 EditASKU
+
 	}
 
 	@description = "This is a test for COMMERCE-5807. EditSkuAndDelete"
@@ -742,6 +746,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6304 UseFriendlyURL
+
 	}
 
 	@description = "This is a test for COMMERCE-6303. UseSchedule"
@@ -792,6 +797,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-5805 UseSearchBarAndPagination
+
 	}
 
 	@description = "This is a test for COMMERCE-5806. UseSkuSearchBarAndPagination"

@@ -70,6 +70,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-6170 AssertProductsAreFilteredByPriceRangeFacet pending implementation
+
 	}
 
 	@description = "COMMERCE-6166. As a buyer, I want to filter products using Specification Facet widget and the results should be visible on the Search Results widget"

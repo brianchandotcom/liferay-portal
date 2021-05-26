@@ -38,12 +38,12 @@
 			margin-left: 8px;
 		}
 
-		& .card {
+		.card {
 			box-shadow: 0 0 0 1px $gray-300;
 			height: 112px;
 		}
 
-		& .card-item-first {
+		.card-item-first {
 			.card-type-asset-icon {
 				width: 32px;
 			}
@@ -55,7 +55,7 @@
 			height: 70%;
 		}
 
-		& .card-body {
+		.card-body {
 			align-items: center;
 			background-color: $white;
 			border-bottom-left-radius: 4px;
@@ -69,8 +69,8 @@
 				font-weight: 600;
 				width: 100%;
 
-				& .text-truncate,
-				& .text-truncate-inline {
+				.text-truncate,
+				.text-truncate-inline {
 					width: 100%;
 				}
 			}

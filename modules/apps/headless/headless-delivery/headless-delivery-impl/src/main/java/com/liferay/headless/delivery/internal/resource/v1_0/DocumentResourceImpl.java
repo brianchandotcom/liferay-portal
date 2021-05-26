@@ -339,8 +339,8 @@ public class DocumentResourceImpl
 		Folder folder = _dlAppService.getFolder(documentFolderId);
 
 		return _addDocument(
-			documentFolderId, null, folder.getGroupId(), multipartBody,
-			folder.getRepositoryId());
+			null, folder.getGroupId(), folder.getRepositoryId(),
+			documentFolderId, multipartBody);
 	}
 
 	@Override
@@ -357,7 +357,7 @@ public class DocumentResourceImpl
 	public Document postSiteDocument(Long siteId, MultipartBody multipartBody)
 		throws Exception {
 
-		return _addDocument(0L, null, siteId, multipartBody, siteId);
+		return _addDocument(null, siteId, siteId, 0L, multipartBody);
 	}
 
 	@Override
@@ -391,7 +391,7 @@ public class DocumentResourceImpl
 
 		if (fileEntry == null) {
 			return _addDocument(
-				0L, externalReferenceCode, siteId, multipartBody, siteId);
+				externalReferenceCode, siteId, siteId, 0L, multipartBody);
 		}
 
 		return _updateDocument(
@@ -415,8 +415,8 @@ public class DocumentResourceImpl
 	}
 
 	private Document _addDocument(
-			long documentFolderId, String externalReferenceCode, Long groupId,
-			MultipartBody multipartBody, Long repositoryId)
+			String externalReferenceCode, Long groupId, Long repositoryId,
+			long documentFolderId, MultipartBody multipartBody)
 		throws Exception {
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");

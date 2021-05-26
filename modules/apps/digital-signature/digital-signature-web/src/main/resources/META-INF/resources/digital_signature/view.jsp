@@ -16,8 +16,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 <div class="digital-signature">
 	<react:component
 		module="js/pages/DigitalSignature"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"baseResourceURL", String.valueOf(baseResourceURL)
+			).build()
+		%>'
 	/>
 </div>

@@ -513,19 +513,6 @@ public class LayoutServiceWrapper
 	@Override
 	public java.util.List<Layout> getLayouts(
 			long groupId, boolean privateLayout, String keywords,
-			int[] statuses, String[] types, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<Layout>
-				orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutService.getLayouts(
-			groupId, privateLayout, keywords, statuses, types, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public java.util.List<Layout> getLayouts(
-			long groupId, boolean privateLayout, String keywords,
 			String[] types, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator<Layout>
 				orderByComparator)
@@ -533,6 +520,19 @@ public class LayoutServiceWrapper
 
 		return _layoutService.getLayouts(
 			groupId, privateLayout, keywords, types, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<Layout> getLayouts(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types, int[] statuses, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<Layout>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.getLayouts(
+			groupId, privateLayout, keywords, types, statuses, start, end,
 			orderByComparator);
 	}
 
@@ -580,21 +580,21 @@ public class LayoutServiceWrapper
 	@Override
 	public int getLayoutsCount(
 			long groupId, boolean privateLayout, String keywords,
-			int[] statuses, String[] types)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _layoutService.getLayoutsCount(
-			groupId, privateLayout, keywords, statuses, types);
-	}
-
-	@Override
-	public int getLayoutsCount(
-			long groupId, boolean privateLayout, String keywords,
 			String[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutService.getLayoutsCount(
 			groupId, privateLayout, keywords, types);
+	}
+
+	@Override
+	public int getLayoutsCount(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types, int[] statuses)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.getLayoutsCount(
+			groupId, privateLayout, keywords, types, statuses);
 	}
 
 	@Override

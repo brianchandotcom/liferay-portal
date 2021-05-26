@@ -801,7 +801,7 @@ public class LayoutServiceSoap {
 
 	public static com.liferay.portal.kernel.model.LayoutSoap[] getLayouts(
 			long groupId, boolean privateLayout, String keywords,
-			int[] statuses, String[] types, int start, int end,
+			String[] types, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.portal.kernel.model.Layout> orderByComparator)
 		throws RemoteException {
@@ -809,8 +809,8 @@ public class LayoutServiceSoap {
 		try {
 			java.util.List<com.liferay.portal.kernel.model.Layout> returnValue =
 				LayoutServiceUtil.getLayouts(
-					groupId, privateLayout, keywords, statuses, types, start,
-					end, orderByComparator);
+					groupId, privateLayout, keywords, types, start, end,
+					orderByComparator);
 
 			return com.liferay.portal.kernel.model.LayoutSoap.toSoapModels(
 				returnValue);
@@ -824,7 +824,7 @@ public class LayoutServiceSoap {
 
 	public static com.liferay.portal.kernel.model.LayoutSoap[] getLayouts(
 			long groupId, boolean privateLayout, String keywords,
-			String[] types, int start, int end,
+			String[] types, int[] statuses, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.portal.kernel.model.Layout> orderByComparator)
 		throws RemoteException {
@@ -832,8 +832,8 @@ public class LayoutServiceSoap {
 		try {
 			java.util.List<com.liferay.portal.kernel.model.Layout> returnValue =
 				LayoutServiceUtil.getLayouts(
-					groupId, privateLayout, keywords, types, start, end,
-					orderByComparator);
+					groupId, privateLayout, keywords, types, statuses, start,
+					end, orderByComparator);
 
 			return com.liferay.portal.kernel.model.LayoutSoap.toSoapModels(
 				returnValue);
@@ -951,12 +951,12 @@ public class LayoutServiceSoap {
 
 	public static int getLayoutsCount(
 			long groupId, boolean privateLayout, String keywords,
-			int[] statuses, String[] types)
+			String[] types)
 		throws RemoteException {
 
 		try {
 			int returnValue = LayoutServiceUtil.getLayoutsCount(
-				groupId, privateLayout, keywords, statuses, types);
+				groupId, privateLayout, keywords, types);
 
 			return returnValue;
 		}
@@ -969,12 +969,12 @@ public class LayoutServiceSoap {
 
 	public static int getLayoutsCount(
 			long groupId, boolean privateLayout, String keywords,
-			String[] types)
+			String[] types, int[] statuses)
 		throws RemoteException {
 
 		try {
 			int returnValue = LayoutServiceUtil.getLayoutsCount(
-				groupId, privateLayout, keywords, types);
+				groupId, privateLayout, keywords, types, statuses);
 
 			return returnValue;
 		}

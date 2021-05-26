@@ -498,23 +498,23 @@ public class LayoutServiceUtil {
 
 	public static List<Layout> getLayouts(
 			long groupId, boolean privateLayout, String keywords,
-			int[] statuses, String[] types, int start, int end,
-			OrderByComparator<Layout> orderByComparator)
-		throws PortalException {
-
-		return getService().getLayouts(
-			groupId, privateLayout, keywords, statuses, types, start, end,
-			orderByComparator);
-	}
-
-	public static List<Layout> getLayouts(
-			long groupId, boolean privateLayout, String keywords,
 			String[] types, int start, int end,
 			OrderByComparator<Layout> orderByComparator)
 		throws PortalException {
 
 		return getService().getLayouts(
 			groupId, privateLayout, keywords, types, start, end,
+			orderByComparator);
+	}
+
+	public static List<Layout> getLayouts(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types, int[] statuses, int start, int end,
+			OrderByComparator<Layout> orderByComparator)
+		throws PortalException {
+
+		return getService().getLayouts(
+			groupId, privateLayout, keywords, types, statuses, start, end,
 			orderByComparator);
 	}
 
@@ -555,20 +555,20 @@ public class LayoutServiceUtil {
 
 	public static int getLayoutsCount(
 			long groupId, boolean privateLayout, String keywords,
-			int[] statuses, String[] types)
-		throws PortalException {
-
-		return getService().getLayoutsCount(
-			groupId, privateLayout, keywords, statuses, types);
-	}
-
-	public static int getLayoutsCount(
-			long groupId, boolean privateLayout, String keywords,
 			String[] types)
 		throws PortalException {
 
 		return getService().getLayoutsCount(
 			groupId, privateLayout, keywords, types);
+	}
+
+	public static int getLayoutsCount(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types, int[] statuses)
+		throws PortalException {
+
+		return getService().getLayoutsCount(
+			groupId, privateLayout, keywords, types, statuses);
 	}
 
 	public static int getLayoutsCount(long groupId, String type) {

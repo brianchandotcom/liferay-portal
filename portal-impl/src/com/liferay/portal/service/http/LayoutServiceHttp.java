@@ -1013,8 +1013,8 @@ public class LayoutServiceHttp {
 	public static java.util.List<com.liferay.portal.kernel.model.Layout>
 			getLayouts(
 				HttpPrincipal httpPrincipal, long groupId,
-				boolean privateLayout, String keywords, int[] statuses,
-				String[] types, int start, int end,
+				boolean privateLayout, String keywords, String[] types,
+				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.kernel.model.Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1025,8 +1025,8 @@ public class LayoutServiceHttp {
 				_getLayoutsParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, privateLayout, keywords, statuses, types,
-				start, end, orderByComparator);
+				methodKey, groupId, privateLayout, keywords, types, start, end,
+				orderByComparator);
 
 			Object returnObj = null;
 
@@ -1061,7 +1061,7 @@ public class LayoutServiceHttp {
 			getLayouts(
 				HttpPrincipal httpPrincipal, long groupId,
 				boolean privateLayout, String keywords, String[] types,
-				int start, int end,
+				int[] statuses, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.portal.kernel.model.Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1072,8 +1072,8 @@ public class LayoutServiceHttp {
 				_getLayoutsParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, privateLayout, keywords, types, start, end,
-				orderByComparator);
+				methodKey, groupId, privateLayout, keywords, types, statuses,
+				start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -1305,7 +1305,7 @@ public class LayoutServiceHttp {
 
 	public static int getLayoutsCount(
 			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-			String keywords, int[] statuses, String[] types)
+			String keywords, String[] types)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1314,7 +1314,7 @@ public class LayoutServiceHttp {
 				_getLayoutsCountParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, privateLayout, keywords, statuses, types);
+				methodKey, groupId, privateLayout, keywords, types);
 
 			Object returnObj = null;
 
@@ -1346,7 +1346,7 @@ public class LayoutServiceHttp {
 
 	public static int getLayoutsCount(
 			HttpPrincipal httpPrincipal, long groupId, boolean privateLayout,
-			String keywords, String[] types)
+			String keywords, String[] types, int[] statuses)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -1355,7 +1355,7 @@ public class LayoutServiceHttp {
 				_getLayoutsCountParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, privateLayout, keywords, types);
+				methodKey, groupId, privateLayout, keywords, types, statuses);
 
 			Object returnObj = null;
 
@@ -2365,13 +2365,13 @@ public class LayoutServiceHttp {
 		long.class, boolean.class, String.class, int.class, int.class
 	};
 	private static final Class<?>[] _getLayoutsParameterTypes23 = new Class[] {
-		long.class, boolean.class, String.class, int[].class, String[].class,
-		int.class, int.class,
-		com.liferay.portal.kernel.util.OrderByComparator.class
-	};
-	private static final Class<?>[] _getLayoutsParameterTypes24 = new Class[] {
 		long.class, boolean.class, String.class, String[].class, int.class,
 		int.class, com.liferay.portal.kernel.util.OrderByComparator.class
+	};
+	private static final Class<?>[] _getLayoutsParameterTypes24 = new Class[] {
+		long.class, boolean.class, String.class, String[].class, int[].class,
+		int.class, int.class,
+		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
 	private static final Class<?>[] _getLayoutsParameterTypes25 = new Class[] {
 		long.class, String.class
@@ -2388,11 +2388,11 @@ public class LayoutServiceHttp {
 	private static final Class<?>[] _getLayoutsCountParameterTypes30 =
 		new Class[] {long.class, boolean.class, String.class};
 	private static final Class<?>[] _getLayoutsCountParameterTypes31 =
-		new Class[] {
-			long.class, boolean.class, String.class, int[].class, String[].class
-		};
-	private static final Class<?>[] _getLayoutsCountParameterTypes32 =
 		new Class[] {long.class, boolean.class, String.class, String[].class};
+	private static final Class<?>[] _getLayoutsCountParameterTypes32 =
+		new Class[] {
+			long.class, boolean.class, String.class, String[].class, int[].class
+		};
 	private static final Class<?>[] _getLayoutsCountParameterTypes33 =
 		new Class[] {long.class, String.class};
 	private static final Class<?>[] _getTempFileNamesParameterTypes34 =

@@ -57,7 +57,7 @@ public class AnalyticsSiteSettingsConfigurationScreenContributor
 
 	@Override
 	public String getSaveMVCActionCommandName() {
-		return "";
+		return "/site_admin/edit_analytics";
 	}
 
 	@Override

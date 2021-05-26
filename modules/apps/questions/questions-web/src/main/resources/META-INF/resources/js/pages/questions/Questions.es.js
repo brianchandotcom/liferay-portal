@@ -479,7 +479,7 @@ export default withRouter(
 							changeDelta={setPageSize}
 							data={questions}
 							emptyState={
-								!search && !filter ? (
+								sectionTitle && !search && !filter ? (
 									<ClayEmptyState
 										description={Liferay.Language.get(
 											'there-are-no-questions-inside-this-topic-be-the-first-to-ask-something'

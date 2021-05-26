@@ -70,6 +70,53 @@ const getDefaultRows = (nestedFields) => {
 	});
 };
 
+const getFieldDetails = (props) => {
+	let fieldDetails = '';
+
+	const {errorMessage, hasError, required, text, tip} = props;
+
+	if (tip) {
+		fieldDetails += tip + '<br>';
+	}
+
+	if (text) {
+		fieldDetails += text + '<br>';
+	}
+
+	if (hasError) {
+		fieldDetails += errorMessage;
+	}
+	else if (required) {
+		fieldDetails += Liferay.Language.get('required');
+	}
+
+	return fieldDetails;
+};
+
+const FieldProperties = ({required, showPopover, tooltip}) => {
+	return (
+		<>
+			{required && (
+				<span className="ddm-label-required reference-mark">
+					<ClayIcon symbol="asterisk" />
+				</span>
+			)}
+
+			{tooltip && (
+				<>
+					{showPopover ? (
+						<Popover tooltip={tooltip} />
+					) : (
+						<span className="ddm-tooltip" title={tooltip}>
+							<ClayIcon symbol="question-circle-full" />
+						</span>
+					)}
+				</>
+			)}
+		</>
+	);
+};
+
 const Popover = ({tooltip}) => {
 	const [isPopoverVisible, setPopoverVisible] = useState(false);
 
@@ -107,30 +154,6 @@ const Popover = ({tooltip}) => {
 	);
 };
 
-const FieldProperties = ({required, showPopover, tooltip}) => {
-	return (
-		<>
-			{required && (
-				<span className="ddm-label-required reference-mark">
-					<ClayIcon symbol="asterisk" />
-				</span>
-			)}
-
-			{tooltip && (
-				<>
-					{showPopover ? (
-						<Popover tooltip={tooltip} />
-					) : (
-						<span className="ddm-tooltip" title={tooltip}>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
-					)}
-				</>
-			)}
-		</>
-	);
-};
-
 function FieldBase({
 	children,
 	displayErrors,
@@ -157,7 +180,18 @@ function FieldBase({
 }) {
 	const {editingLanguageId} = useFormState();
 	const dispatch = useForm();
-	const inputEditedName = name + '_edited';
+
+	const hasError = displayErrors && errorMessage && !valid;
+
+	const fieldDetails = getFieldDetails({
+		errorMessage,
+		hasError,
+		required,
+		text,
+		tip,
+	});
+
+	const fieldDetailsId = id ? id + '_fieldDetails' : name + '_fieldDetails';
 
 	const hiddenTranslations = useMemo(() => {
 		const array = [];
@@ -179,38 +213,16 @@ function FieldBase({
 		return array;
 	}, [localizedValue, editingLanguageId, name]);
 
+	const inputEditedName = name + '_edited';
 	const renderLabel =
 		(label && showLabel) || required || tooltip || repeatable;
-
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
-
 	const showLegend =
 		type &&
 		(type === 'checkbox_multiple' ||
 			type === 'grid' ||
 			type === 'paragraph' ||
 			type === 'radio');
-
-	const fieldDetailsId = id ? id + '_fieldDetails' : name + '_fieldDetails';
-	const hasError = displayErrors && errorMessage && !valid;
-
-	let fieldDetails = '';
-
-	if (tip) {
-		fieldDetails += tip + '<br>';
-	}
-
-	if (text) {
-		fieldDetails += text + '<br>';
-	}
-
-	if (hasError) {
-		fieldDetails += errorMessage;
-	}
-	else if (required) {
-		fieldDetails += Liferay.Language.get('required');
-	}
-
 	const showPopover = fieldName === 'inputMaskFormat';
 
 	return (

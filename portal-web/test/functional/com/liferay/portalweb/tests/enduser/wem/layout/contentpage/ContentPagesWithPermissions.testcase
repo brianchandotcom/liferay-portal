@@ -843,7 +843,7 @@ definition {
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Content");
+				value1 = "Title");
 
 			PageEditor.waitForAutoSave();
 
@@ -871,10 +871,6 @@ definition {
 				id = "element-text",
 				key_fragmentName = "paragraph",
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_WITHOUT_TOPPER");
-
-			Click(
-				key_navItem = "Mapping",
-				locator1 = "PageEditor#NAV_ITEM_BUTTON");
 
 			Pause(locator1 = "3000");
 

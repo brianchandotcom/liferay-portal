@@ -3820,6 +3820,182 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-132081. View related categories shown in display page template for non-category assets when apply Categories for This Item to Collection Display."
+	@priority = "5"
+	test ViewRelatedCategoriesInCollectionDisplayWithCategoriesForThisItem {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Web Content DPT",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a display page template for Blogs Entry") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Blogs Entry DPT",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a display page template for Document and Basic Document") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Document DPT",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+		}
+
+		task ("Add a Collection Display with Categories for This Item then map the Name field to Heading inside Collection Display in each display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			for (var displayPageName : list "Web Content DPT,Blogs Entry DPT,Document DPT") {
+				DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "${displayPageName}");
+
+				PageEditor.addFragment(
+					collectionName = "Content Display",
+					fragmentName = "Collection Display");
+
+				PageEditor.editCollectionDisplay(
+					fragmentName = "Collection Display",
+					infoItemRelatedListProviderName = "Categories for This Item");
+
+				PageEditor.addFragmentToCollectionDisplay(
+					collectionName = "Basic Components",
+					entryTitle = "Title",
+					fragmentName = "Heading");
+
+				PageEditorMapping.mapEditableFieldToCollectionItems(
+					field = "Name",
+					fragmentName = "Heading",
+					id = "element-text");
+
+				PageEditor.clickPublish();
+			}
+		}
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add three categories in vocabulary") {
+			var firstCategoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 1",
+				vocabularyName = "Vocabulary Name");
+
+			var secondCategoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 2",
+				vocabularyName = "Vocabulary Name");
+
+			var thirdCategoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 3",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content with all three categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${firstCategoryId},${secondCategoryId},${thirdCategoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Web Content DPT",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a blogs entry with all three categories") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${firstCategoryId},${secondCategoryId},${thirdCategoryId}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Select the display page template in blogs entry") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Blogs Entry DPT",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a document entry with all three categories") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${firstCategoryId},${secondCategoryId},${thirdCategoryId}",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Select the display page template in document") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Document Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Document DPT",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a widget page then add an Asset Publisher to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Assert related categories displayed in display page template") {
+			for (var assetType : list "Web Content,Blogs Entry,Document") {
+				Navigator.gotoSitePage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				AssetPublisherPortlet.clickAssetTitle(assetTitle = "${assetType} Title");
+
+				ControlMenu.viewHeaderTitle(headerTitle = "${assetType} DPT");
+
+				for (var n : list "1,2,3") {
+					AssertTextEquals(
+						key_colPosition = "1",
+						key_fragmentName = "heading",
+						key_rowPosition = "${n}",
+						locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+						value1 = "Category Name ${n}");
+				}
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-112094. The title of asset entries should be shown when select Title as List Item Style for different List styles."
 	@priority = "5"
 	test ViewTitleListItemStyleInDifferentListStyles {

@@ -75,7 +75,6 @@ import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ManagedServiceFactory;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -229,11 +228,7 @@ public class AnalyticsConfigurationTrackerImpl
 
 	@Activate
 	@Modified
-	protected void activate(
-		ComponentContext componentContext, Map<String, Object> properties) {
-
-		_componentContext = componentContext;
-
+	protected void activate(Map<String, Object> properties) {
 		_systemAnalyticsConfiguration = ConfigurableUtil.createConfigurable(
 			AnalyticsConfiguration.class, properties);
 	}
@@ -795,8 +790,6 @@ public class AnalyticsConfigurationTrackerImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	private volatile ComponentContext _componentContext;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

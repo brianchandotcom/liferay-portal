@@ -313,6 +313,16 @@ definition {
 			successPageTitle = "Thank you.");
 	}
 
+	@description = "Verify that a Text Field can require Confirmation"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanRequireConfirmation {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133011 CanRequireConfirmation pending implementation
+	}
+
 	@description = "Verify that changes to a Field can be canceled"
 	@ignore = "Test Stub"
 	@priority = "5"
@@ -321,6 +331,36 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131335 ChangesCanBeCanceled pending implementation
+	}
+
+	@description = "Verify that the Confirmation can be placed Horizontally"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ConfirmationBoxCanBePlacedHorizontally {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133012 ConfirmationBoxCanBePlacedHorizontally pending implementation
+	}
+
+	@description = "Verify that the Confirmation Error Message can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ConfirmationErrorMessageCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133014 ConfirmationErrorMessageCanBeEdited pending implementation
+	}
+
+	@description = "Verify that the Confirmation Label can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ConfirmationLabelCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133013 ConfirmationLabelCanBeEdited pending implementation
 	}
 
 	@description = "Verify that a Help Text can be added to a Text Field"

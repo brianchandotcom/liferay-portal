@@ -270,14 +270,25 @@ definition {
 			locator1 = "FormFields#PARAGRAPH_SPECIFIC_FIELD_BY_BODY");
 	}
 
-	@description = "Verify that a Table can be deleted in the Body Text"
+	@description = "Verify that a Table can be deleted in the Body Text by highlighting the table and pressing backspace"
 	@ignore = "true"
 	@priority = "4"
-	test CanDeleteATable {
+	test CanDeleteATableUsingBackspace {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131237 CanDeleteATable pending implementation
+		// TODO LPS-131237 CanDeleteATableUsingBackspace pending implementation
 
+	}
+
+	@description = "Verify that a Table can be deleted in the Body Text using the right click menu"
+	@ignore = "true"
+	@priority = "4"
+	test CanDeleteATableUsingRightClick {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133010 CanDeleteATableUsingRightClick pending implementation
 	}
 
 	@description = "Verify that the Formatting Style can be changed using the predefined style options"
@@ -425,7 +436,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131241 CanSupportALinkToAnAnchor pending implementation
-
 	}
 
 	@description = "Verify that a link to an Email can be added to the Body Text"
@@ -435,7 +445,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131242 CanSupportALinkToAnEmail pending implementation
-
 	}
 
 	@description = "Verify that a link to a Phone Number can be added to the Body Text"
@@ -445,7 +454,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131243 CanSupportALinkToAPhoneNumber pending implementation
-
 	}
 
 	@description = "Verify that a link to a URL can be added to the Body Text"
@@ -553,7 +561,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131247 CanSupportHTML pending implementation
-
 	}
 
 	@description = "Verify that an Image can be uploaded to the Body Text"
@@ -795,7 +802,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131244 CanUnlinkALink pending implementation
-
 	}
 
 	@description = "Verify that changes to a Field can be canceled"
@@ -805,7 +811,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131225 ChangesCanBeCanceled pending implementation
-
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
@@ -950,7 +955,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131232 TypeCanBeChanged pending implementation
-
 	}
 
 }

@@ -80,6 +80,14 @@ public interface OrganizationResource {
 	public Response putOrganizationBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteUserAccountByEmailAddress(
+			String organizationId, String emailAddress)
+		throws Exception;
+
+	public void postUserAccountByEmailAddress(
+			String organizationId, String emailAddress)
+		throws Exception;
+
 	public Page<Organization> getOrganizationOrganizationsPage(
 			String parentOrganizationId, Boolean flatten, String search,
 			Filter filter, Pagination pagination, Sort[] sorts)

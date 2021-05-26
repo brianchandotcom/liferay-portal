@@ -687,6 +687,49 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteUserAccountByEmailAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testDeleteUserAccountByEmailAddress_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.deleteUserAccountByEmailAddressHttpResponse(
+				organization.getId(), null));
+	}
+
+	protected Organization testDeleteUserAccountByEmailAddress_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostUserAccountByEmailAddress() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization =
+			testPostUserAccountByEmailAddress_addOrganization();
+
+		assertHttpResponseStatusCode(
+			204,
+			organizationResource.postUserAccountByEmailAddressHttpResponse(
+				organization.getId(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			organizationResource.postUserAccountByEmailAddressHttpResponse(
+				"-", null));
+	}
+
+	protected Organization testPostUserAccountByEmailAddress_addOrganization()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetOrganizationOrganizationsPage() throws Exception {
 		Page<Organization> page =
 			organizationResource.getOrganizationOrganizationsPage(

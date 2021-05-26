@@ -2495,7 +2495,6 @@ definition {
 			key_movePage = "Move Page Up",
 			locator1 = "Form#PAGE_MOVE_ACTIVATED");
 
-
 		Click(
 			key_fieldName = "Page C",
 			key_movePage = "Move Page Up",

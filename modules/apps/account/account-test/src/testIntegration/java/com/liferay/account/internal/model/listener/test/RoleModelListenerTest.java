@@ -45,7 +45,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,6 +64,16 @@ public class RoleModelListenerTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+	}
 
 	@Test
 	public void testAddAccountScopedRole() throws Exception {
@@ -82,8 +94,6 @@ public class RoleModelListenerTest {
 
 	@Test
 	public void testDefaultAccountRoles() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
 		String[] defaultAccountRoleNames = {
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER
@@ -91,7 +101,7 @@ public class RoleModelListenerTest {
 
 		for (String roleName : defaultAccountRoleNames) {
 			Role role = _roleLocalService.getRole(
-				company.getCompanyId(), roleName);
+				_company.getCompanyId(), roleName);
 
 			DSLQuery dslQuery = DSLQueryFactoryUtil.countDistinct(
 				AccountRoleTable.INSTANCE.accountRoleId
@@ -99,7 +109,7 @@ public class RoleModelListenerTest {
 				AccountRoleTable.INSTANCE
 			).where(
 				AccountRoleTable.INSTANCE.companyId.eq(
-					company.getCompanyId()
+					_company.getCompanyId()
 				).and(
 					AccountRoleTable.INSTANCE.accountEntryId.eq(
 						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
@@ -161,15 +171,13 @@ public class RoleModelListenerTest {
 
 	@Test
 	public void testDeleteDefaultAccountRole() throws Exception {
-		Company company = CompanyTestUtil.addCompany();
-
 		for (String requiredRoleName :
 				AccountRoleConstants.REQUIRED_ROLE_NAMES) {
 
 			try {
 				_roleLocalService.deleteRole(
 					_roleLocalService.getRole(
-						company.getCompanyId(), requiredRoleName));
+						_company.getCompanyId(), requiredRoleName));
 
 				Assert.fail(
 					"Allowed to delete default role: " + requiredRoleName);
@@ -216,14 +224,16 @@ public class RoleModelListenerTest {
 		}
 	}
 
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountRoleLocalService _accountRoleLocalService;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

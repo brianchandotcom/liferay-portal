@@ -907,6 +907,148 @@ definition {
 			value1 = "test@liferay.com");
 	}
 
+	@description = "This is a use case for LPS-66196."
+	@priority = "5"
+	test RememberDeviceWithMultipleAuth {
+
+		// Test Setup
+
+		var clientId1 = "default1";
+		var clientId2 = "default2";
+		var clientSecret1 = "defaultsecret1";
+		var clientSecret2 = "defaultsecret2";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Security",
+			panel = "Control Panel",
+			portlet = "OAuth 2 Administration");
+
+		for (var count : list "1,2") {
+			var portalURL = PropsUtil.get("portal.url");
+			var applicationName = "My application${count}";
+
+			OAuth2.addApplication(
+				applicationName = "${applicationName}",
+				callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default${count}''',
+				checkboxCheckList = "Remember Device",
+				clientProfile = "Web Application",
+				websiteURL = "http://localhost:8080");
+
+			OAuth2.inputApplicationValues(
+				clientId = "default${count}",
+				clientSecret = "defaultsecret${count}");
+
+			Navigator.gotoBack();
+
+			OAuth2.editScopes(
+				applicationName = "My application${count}",
+				resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
+				resourcePanels = "Portal Services");
+		}
+
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId1}");
+
+		Button.click(button = "Authorize My Application");
+
+		Check(
+			key_checkboxName = "Remember Device",
+			locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
+
+		Button.click(button = "Authorize");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret1}");
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		// Execute a request as final verification
+
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com");
+
+		// Re-open test harness to check if Device is remembered
+
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId1}");
+
+		Button.click(button = "Authorize My Application");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret1}");
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com");
+
+		// Repeating the authorization on a second page
+
+		Open.openInTheNewTab(locator1 = "http://martamedio.com/oauth2-tester/");
+
+		SelectWindow.selectPopUp(locator1 = "null");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId2}");
+
+		Button.click(button = "Authorize My Application");
+
+		Check(
+			key_checkboxName = "Remember Device",
+			locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
+
+		Button.click(button = "Authorize");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret2}");
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com");
+
+		// Re-open test harness to check if Device is remembered
+
+		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
+			value1 = "${clientId2}");
+
+		Button.click(button = "Authorize My Application");
+
+		Type(
+			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
+			value1 = "${clientSecret2}");
+
+		Button.click(button = "Obtain OAuth2 Access");
+
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com");
+	}
+
 	@description = "This is a use case for LPS-105156."
 	@priority = "5"
 	test RemoveExpiredAuthorization {

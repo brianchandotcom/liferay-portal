@@ -389,7 +389,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		}
 
 		return StringBundler.concat(
-			"<meta property=\"", property, "\" content=\"", content, "\">");
+			"<meta property=\"", HtmlUtil.escapeAttribute(property),
+			"\" content=\"", HtmlUtil.escapeAttribute(content), "\">");
 	}
 
 	private String _getTitleTagValue(

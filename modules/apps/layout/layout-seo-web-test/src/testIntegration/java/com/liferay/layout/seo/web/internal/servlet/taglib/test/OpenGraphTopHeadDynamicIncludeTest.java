@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -875,6 +876,40 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertMetaTag(
 			document, "og:url",
 			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
+	}
+
+	@Test
+	public void testMetaTagValuesAreEscaped() throws Exception {
+		String xssContent = "'\"><img src=x onerror=alert()>";
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setRequest(_getHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			false, Collections.emptyMap(), Collections.emptyMap(), 0, true,
+			Collections.singletonMap(LocaleUtil.US, xssContent),
+			serviceContext);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			true);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(
+			content.contains(HtmlUtil.escapeAttribute(xssContent)));
 	}
 
 	@Test

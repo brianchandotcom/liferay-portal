@@ -779,7 +779,7 @@ function Treeview({
 		}
 	};
 
-	const handleMouseDown = (event) => {
+	const handleMouseDown = () => {
 		cancelTimer();
 
 		setHasFocus((hadFocus) => {
@@ -792,8 +792,6 @@ function Treeview({
 
 			return true;
 		});
-
-		event.preventDefault();
 	};
 
 	const handleFocus = () => {

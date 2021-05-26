@@ -28,6 +28,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -51,6 +52,7 @@ import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
@@ -2708,12 +2710,11 @@ public class DLFileEntryLocalServiceImpl
 		if (_log.isDebugEnabled()) {
 			_log.debug(
 				StringBundler.concat(
-					"Sending review notification for file entries with ",
-					"review date between ", _previousCheckDate, " and ",
-					reviewDate));
+					"Sending review notification for file entries with review ",
+					"date between ", _previousCheckDate, " and ", reviewDate));
 		}
 
-		List<DLFileEntry> fileEntries = dlFileEntryFinder.findByReviewDate(
+		List<DLFileEntry> fileEntries = _getFileEntriesByReviewDate(
 			reviewDate, _previousCheckDate);
 
 		for (DLFileEntry fileEntry : fileEntries) {
@@ -2884,6 +2885,23 @@ public class DLFileEntryLocalServiceImpl
 
 		return versioningStrategy.computeDLVersionNumberIncrease(
 			previousDLFileVersion, nextDLFileVersion);
+	}
+
+	private List<DLFileEntry> _getFileEntriesByReviewDate(
+		Date reviewDateLT, Date reviewDateGT) {
+
+		return dlFileEntryPersistence.dslQuery(
+			DSLQueryFactoryUtil.select(
+				DLFileEntryTable.INSTANCE
+			).from(
+				DLFileEntryTable.INSTANCE
+			).where(
+				DLFileEntryTable.INSTANCE.reviewDate.gte(
+					reviewDateGT
+				).and(
+					DLFileEntryTable.INSTANCE.reviewDate.lte(reviewDateLT)
+				)
+			));
 	}
 
 	private boolean _isValidFileVersionNumber(String version) {

@@ -211,14 +211,6 @@ public class DLFileEntryFinderUtil {
 	}
 
 	public static java.util.List
-		<com.liferay.document.library.kernel.model.DLFileEntry>
-			findByReviewDate(
-				java.util.Date reviewDateLT, java.util.Date reviewDateGT) {
-
-		return getFinder().findByReviewDate(reviewDateLT, reviewDateGT);
-	}
-
-	public static java.util.List
 		<com.liferay.document.library.kernel.model.DLFileEntry> findByG_F(
 			long groupId, java.util.List<Long> folderIds,
 			com.liferay.portal.kernel.dao.orm.QueryDefinition

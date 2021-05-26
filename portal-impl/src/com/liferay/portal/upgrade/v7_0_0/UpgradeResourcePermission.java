@@ -172,7 +172,8 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 			StringBundler.concat(
 				"update ResourcePermission set primKeyId = CAST_LONG(primKey",
 				") where name = '", name,
-				"' and (primKey not like '%_LAYOUT_%' and primKeyId IS NULL)"));
+				"' and (primKey not like '%_LAYOUT_%' and (primKeyId IS NULL ",
+				"or primKeyId != 0))"));
 	}
 
 }

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 public class AMMessagingConfigurator {
 
 	@Modified
-	public void modified(
+	protected void modified(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
 		deactivate();

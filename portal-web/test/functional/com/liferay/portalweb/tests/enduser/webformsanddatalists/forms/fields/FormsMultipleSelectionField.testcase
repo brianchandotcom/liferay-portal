@@ -175,14 +175,54 @@ definition {
 	}
 
 	@description = "Verify that options can be displayed both inline and as a list"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test OptionsCanBeDisplayedInlineAndAsList {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132275 OptionsCanBeDisplayedInlineAndAsList pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editOptionsRow(
+			optionName = "Option3",
+			optionValue = "Option 3",
+			rowNumber = "3");
+
+		FormViewBuilder.viewMultipleSelectionNotInline(selectOptionsList = "Option 1,Option 2,Option 3");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Inline");
+
+		FormViewBuilder.validateInlineOptionIsSetOn();
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormViewBuilder.viewMultipleSelectionInline(selectOptionsList = "Option 1,Option 2,Option 3");
+		
 	}
 
 	@description = "Verify that options can be rearranged"

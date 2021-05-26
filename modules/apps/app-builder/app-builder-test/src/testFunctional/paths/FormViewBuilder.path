@@ -704,6 +704,11 @@
 	<td>//div[@class='popover-body']//span[text()='${optionLabel}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>OPTIONS_PLACED_INLINE</td>
+	<td>//div[contains(@class,'custom-control-inline') and contains(.,'${optionLabel}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
 
 <!--ENTRIES-->
 <tr>

@@ -32,13 +32,51 @@ definition {
 	}
 
 	@description = "Verify that Entries can be deleted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131076 CanBeDeleted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text",
+			fieldValue = "Test Text");
+
+		FormsAdmin.deleteFormEntry(formEntryValue = "Text");
+
+		FormsAdmin.viewFormTableEntryNotPresent(
+			fieldLabel = "Text",
+			fieldValue = "Test Text");
+			
 
 	}
 

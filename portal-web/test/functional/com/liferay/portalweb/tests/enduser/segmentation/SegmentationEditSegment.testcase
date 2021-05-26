@@ -90,13 +90,11 @@ definition {
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
 
-			Segmentation.addProperties(propertyOption = "Country");
+			Segmentation.addProperties(propertyOption = "Region");
 
-			Segmentation.fillProperty(optionsValue = "Spain");
+			Segmentation.fillProperty(optionsValue = "Spain - Madrid");
 
 			Segmentation.fillTitle(titleField = "EditSegmentUserByRegion Test");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
 
 			Button.clickSave();
 
@@ -108,7 +106,7 @@ definition {
 
 			Segmentation.viewSegment(
 				criterion = "options",
-				value = "spain");
+				value = "madrid");
 		}
 	}
 

@@ -56,6 +56,10 @@ public class LabelTag extends BaseContainerTag {
 		return _large;
 	}
 
+	public boolean getTranslateLabel() {
+		return _translateLabel;
+	}
+
 	public void setDismissible(boolean dismissible) {
 		_dismissible = dismissible;
 	}
@@ -72,6 +76,10 @@ public class LabelTag extends BaseContainerTag {
 		_large = large;
 	}
 
+	public void setTranslateLabel(boolean translateLabel) {
+		_translateLabel = translateLabel;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -80,6 +88,7 @@ public class LabelTag extends BaseContainerTag {
 		_displayType = "secondary";
 		_label = null;
 		_large = false;
+		_translateLabel = true;
 	}
 
 	@Override
@@ -107,10 +116,15 @@ public class LabelTag extends BaseContainerTag {
 
 			jspWriter.write("<span class=\"label-item label-item-expand\">");
 
-			jspWriter.write(
-				LanguageUtil.get(
-					TagResourceBundleUtil.getResourceBundle(pageContext),
-					_label));
+			if (_translateLabel) {
+				jspWriter.write(
+					LanguageUtil.get(
+						TagResourceBundleUtil.getResourceBundle(pageContext),
+						_label));
+			}
+			else {
+				jspWriter.write(_label);
+			}
 
 			jspWriter.write("</span>");
 
@@ -141,5 +155,6 @@ public class LabelTag extends BaseContainerTag {
 	private String _displayType = "secondary";
 	private String _label;
 	private boolean _large;
+	private boolean _translateLabel = true;
 
 }

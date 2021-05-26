@@ -151,18 +151,16 @@ definition {
 				var plidBeforeConversion = Page.getPlidFromHtmlSource();
 
 				if ("${i}" == "1") {
-					var plidsBeforeConversion = StringUtil.add("${plidsBeforeConversion}", "${plidBeforeConversion}");
+					var plidsBeforeConversion = List.add(
+						item = "${plidBeforeConversion}",
+						list = "${plidsBeforeConversion}");
 				}
 				else {
-					var plidsBeforeConversion = StringUtil.add("${plidsBeforeConversion}", " ${plidBeforeConversion}");
+					var plidsBeforeConversion = List.add(
+						item = " ${plidBeforeConversion}",
+						list = "${plidsBeforeConversion}");
 				}
 			}
-
-			var length = StringUtil.length("${plidsBeforeConversion}");
-
-			var endIndex = ${length} - 1;
-
-			var plidsBeforeConversion = StringUtil.substring("${plidsBeforeConversion}", "0","${endIndex}");
 
 			echo("${plidsBeforeConversion}");
 		}
@@ -210,18 +208,16 @@ definition {
 				var plidAfterConversion = Page.getPlidFromHtmlSource();
 
 				if ("${i}" == "1") {
-					var plidsAfterConversion = StringUtil.add("${plidsAfterConversion}", "${plidAfterConversion}");
+					var plidsAfterConversion = List.add(
+						item = "${plidAfterConversion}",
+						list = "${plidsAfterConversion}");
 				}
 				else {
-					var plidsAfterConversion = StringUtil.add("${plidsAfterConversion}", " ${plidAfterConversion}");
+					var plidsAfterConversion = List.add(
+						item = " ${plidAfterConversion}",
+						list = "${plidsAfterConversion}");
 				}
 			}
-
-			var length = StringUtil.length("${plidsAfterConversion}");
-
-			var endIndex = ${length} - 1;
-
-			var plidsAfterConversion = StringUtil.substring("${plidsAfterConversion}", "0","${endIndex}");
 
 			echo("${plidsAfterConversion}");
 		}

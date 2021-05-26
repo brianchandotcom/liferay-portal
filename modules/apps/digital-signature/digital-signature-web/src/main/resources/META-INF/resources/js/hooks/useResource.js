@@ -15,7 +15,6 @@
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {useEffect, useState} from 'react';
 
-import {request} from '../utils/client';
 import {isEqualObjects} from '../utils/utils';
 
 export default ({customFetch, endpoint, method, params}) => {
@@ -32,10 +31,7 @@ export default ({customFetch, endpoint, method, params}) => {
 			isLoading: true,
 		}));
 
-		const requestFn =
-			typeof customFetch === 'function' ? customFetch : request;
-
-		requestFn(options)
+		customFetch(options)
 			.then((response) => {
 				setState({
 					error: null,

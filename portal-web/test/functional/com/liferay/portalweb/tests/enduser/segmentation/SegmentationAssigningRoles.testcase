@@ -188,7 +188,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-122799: Validate if, with the option Enable Assign roles by segments disabled, the warning message"
+	@description = "LPS-122799: Validate if, with the option Enable Assign roles by segments disabled, the warning message is displayed"
 	@priority = "3"
 	@uitest
 	test DisableAssignRolesWarningMessage {
@@ -266,6 +266,46 @@ definition {
 				key_category = "Content",
 				key_portlet = "Content Dashboard",
 				locator1 = "ApplicationsMenu#PORTLET");
+		}
+	}
+
+	@description = "LPS-122799: Validate if, with the option Enable Assign roles by segments enabled, the warning message is not displayed"
+	@priority = "3"
+	@uitest
+	test EnableAssignRolesNoWarningMessage {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#EnableAssignRolesNoWarningMessage";
+
+		task ("Enable Assign roles by segment") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+
+			Segmentation.enableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Go to the role segments assignee's section") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
+
+			RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
+		}
+
+		task ("Assert the warning message is NOT displayed") {
+			AssertTextPresent(
+				textValue = "Assigning roles by segment is disabled",
+				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
+				value1 = "Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service.");
 		}
 	}
 

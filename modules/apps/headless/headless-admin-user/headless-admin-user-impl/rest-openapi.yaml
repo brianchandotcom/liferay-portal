@@ -1263,6 +1263,55 @@ paths:
                     description:
                         ""
             tags: ["UserAccount"]
+    "/organizations/{organizationId}/user-accounts/by-email-address/{emailAddress}":
+        delete:
+            # @review
+            description:
+                Removes a user from an organization by their email address
+            operationId: deleteUserAccountByEmailAddress
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: emailAddress
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Organization"]
+        post:
+            # @review
+            description:
+                Assigns a user to an organization by their email address
+            operationId: postUserAccountByEmailAddress
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      type: string
+                - in: path
+                  name: emailAddress
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Organization"]
     "/organizations/{organizationId}/web-urls":
         get:
             description:

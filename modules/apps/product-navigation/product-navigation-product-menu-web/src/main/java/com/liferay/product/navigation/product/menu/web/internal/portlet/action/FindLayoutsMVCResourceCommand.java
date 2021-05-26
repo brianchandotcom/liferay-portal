@@ -93,7 +93,6 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			themeDisplay.getSiteGroupId(), keywords,
-			new int[] {WorkflowConstants.STATUS_ANY},
 			new String[] {
 				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,
@@ -101,7 +100,7 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
 				LayoutConstants.TYPE_URL
 			},
-			0, 10, null);
+			new int[] {WorkflowConstants.STATUS_ANY}, 0, 10, null);
 
 		for (Layout layout : layouts) {
 			JSONArray layoutPathJSONArray = _getLayoutPathJSONArray(
@@ -121,14 +120,14 @@ public class FindLayoutsMVCResourceCommand extends BaseMVCResourceCommand {
 
 		int totalCount = _layoutLocalService.getLayoutsCount(
 			themeDisplay.getSiteGroupId(), keywords,
-			new int[] {WorkflowConstants.STATUS_ANY},
 			new String[] {
 				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
 				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
 				LayoutConstants.TYPE_URL
-			});
+			},
+			new int[] {WorkflowConstants.STATUS_ANY});
 
 		jsonObject.put("totalCount", totalCount);
 

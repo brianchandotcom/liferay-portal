@@ -91,6 +91,7 @@ definition {
 			widgetName = "Knowledge Base Display");
 
 		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 
@@ -115,6 +116,7 @@ definition {
 			widgetName = "Knowledge Base Display");
 
 		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
 			kbArticleContent = "Knowledge Base Article Content",
 			kbArticleTitle = "Knowledge Base Article Title");
 

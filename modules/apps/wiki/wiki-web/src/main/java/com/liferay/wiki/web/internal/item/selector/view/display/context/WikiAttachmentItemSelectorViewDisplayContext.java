@@ -35,7 +35,9 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.internal.item.selector.view.WikiAttachmentItemSelectorView;
 
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -67,6 +69,10 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
+	}
+
+	public Set<String> getAllowedCreationMenuUIItemKeys() {
+		return Collections.emptySet();
 	}
 
 	public PortletURL getEditImageURL(

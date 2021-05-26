@@ -387,6 +387,7 @@ export const createField = (props, event) => {
 		defaultLanguageId,
 		editingLanguageId,
 		fieldNameGenerator,
+		portletNamespace,
 		spritemap,
 	} = props;
 	const {
@@ -415,11 +416,19 @@ export const createField = (props, event) => {
 		}
 	}
 
+	const instanceId = generateInstanceId(8);
+
 	const newField = {
 		...fieldType,
 		fieldName: newFieldName,
 		fieldReference: newFieldName,
-		name: newFieldName,
+		name: generateName(null, {
+			editingLanguageId,
+			fieldName: newFieldName,
+			instanceId,
+			portletNamespace,
+			repeatedIndex: 0,
+		}),
 		settingsContext: {
 			...fieldType.settingsContext,
 			defaultLanguageId,
@@ -452,7 +461,7 @@ export const createField = (props, event) => {
 		editorConfig,
 		fieldName,
 		fieldReference,
-		instanceId: generateInstanceId(8),
+		instanceId,
 		name,
 		settingsContext,
 		spritemap,

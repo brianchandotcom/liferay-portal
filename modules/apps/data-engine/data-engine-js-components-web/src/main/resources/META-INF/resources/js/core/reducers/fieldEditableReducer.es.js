@@ -123,6 +123,7 @@ export default (state, action, config) => {
 			const {
 				generateFieldNameUsingFieldLabel,
 				getFieldNameGenerator,
+				portletNamespace,
 			} = config;
 
 			const fieldNameGenerator = getFieldNameGenerator(
@@ -133,7 +134,12 @@ export default (state, action, config) => {
 			const field =
 				action.payload.newField ||
 				FieldSupport.createField(
-					{defaultLanguageId, editingLanguageId, fieldNameGenerator},
+					{
+						defaultLanguageId,
+						editingLanguageId,
+						fieldNameGenerator,
+						portletNamespace,
+					},
 					action.payload
 				);
 

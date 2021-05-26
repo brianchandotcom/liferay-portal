@@ -27,7 +27,8 @@ const getSortable = (columns, sort = '') => {
 		const [column, order] = sort.split(':');
 
 		return {asc: order === 'asc', column};
-	} else if (columns.length) {
+	}
+	else if (columns.length) {
 		const {asc = true, key: column} =
 			columns.find(({asc}) => asc !== undefined) || columns[0];
 
@@ -80,7 +81,8 @@ export default ({columns = [], disabled, filters = []}) => {
 					}}
 				/>
 			);
-		} else {
+		}
+		else {
 			return (
 				<RadioGroup
 					{...props}

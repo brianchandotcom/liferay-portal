@@ -506,7 +506,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-110247. The user can navigate to associated display page template via View Display Page of category."
+	@description = "This is a test for LPS-110247 and LPS-132081. The user can navigate to associated display page template via View Display Page of category."
 	@priority = "5"
 	test ViewMappedContentInDisplayPageTemplate {
 		property portal.acceptance = "true";
@@ -518,21 +518,35 @@ definition {
 				groupName = "Test Site Name");
 		}
 
-		task ("Add a Heading fragment to display Page Template") {
+		task ("Add a Banner Center fragment to display Page Template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Heading");
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
 		}
 
-		task ("Mapping the Description field to Heading fragment") {
+		task ("Mapping the Name field to title editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Name",
-				fragmentName = "Heading",
-				id = "element-text");
+				fragmentName = "Banner Center",
+				id = "01-title");
+		}
+
+		task ("Mapping the Display Page URL field to link editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Display Page URL",
+				fragmentName = "Banner Center",
+				id = "03-link");
+		}
+
+		task ("Mapping the Main Image field to background image editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Main Image",
+				fragmentName = "Banner Center",
+				id = "banner-center");
 
 			PageEditor.clickPublish();
 		}
@@ -553,17 +567,45 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
+		task ("Add an image to category") {
+			Category.addImageToCategory(
+				categoryName = "Category Name",
+				imageName = "Document_1.jpg");
+		}
+
+		task ("Get the categoryId") {
+			var categoryId = JSONCategory.getCategoryId(
+				categoryName = "Category Name",
+				groupName = "Test Site Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
 		task ("View the mapped content in display page template") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "View Display Page",
 				rowEntry = "Category Name");
 
 			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Category Name");
+			AssertVisible(
+				id = "01-title",
+				key_position = "1",
+				key_text = "Category Name",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				id = "03-link",
+				key_position = "1",
+				key_text = "/web/test-site-name/v/${categoryId}",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_imageName = "/images/",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
 	}
 

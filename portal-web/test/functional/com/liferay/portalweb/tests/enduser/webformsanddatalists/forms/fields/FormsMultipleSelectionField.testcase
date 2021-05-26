@@ -68,6 +68,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132262 CanBeDeleted pending implementation
+
 	}
 
 	@description = "Verify that a Multiple Selection Field can be duplicated"

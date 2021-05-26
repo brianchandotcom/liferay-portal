@@ -112,6 +112,52 @@ definition {
 			locator1 = "Home#PAGE_ACTIVE");
 	}
 
+	@description = "This is a use case for LPS-65368."
+	@priority = "5"
+	@refactordone
+	test CanViewBBCodeNoXSSWithRemoteServices {
+		property custom.properties = "message.boards.message.formats.default=bbcode";
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Message Boards Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Message Boards Page",
+			widgetName = "Message Boards");
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addMessageReply(
+			groupName = "Guest",
+			replyBody = '''<script>alert(123);</script>''',
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.viewBBCodeNoXSS(
+			threadBody = '''<script>alert(123);</script>''',
+			threadSubject = "RE: MB Thread Message Subject",
+			userName = "Anonymous");
+
+		var actualScript = '''<script>alert(123);</script>''';
+
+		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
+
+		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
+
+		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test DeleteMessageboardsThread {
@@ -327,64 +373,6 @@ definition {
 			threadSplitReplySubject = "Split Reply Thread Subject",
 			threadSplitSubject = "MB Thread Split Subject",
 			threadSubject = "MB Thread Message Subject");
-	}
-
-	@description = "This is a use case for LPS-65368."
-	@priority = "5"
-	@refactorneeded
-	test ViewBBCodeNoXSSWithRemoteServices {
-		property custom.properties = "message.boards.message.formats.default=bbcode";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Message Boards Page");
-
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Guest",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		Pause(locator1 = "3000");
-
-		JSONMBMessage.addMessageReply(
-			threadBody = '''<script>alert(123);</script>''',
-			threadSubject = '''<script>alert(123);</script>''');
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Anonymous",
-			replyCount = "1",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewBBCodeNoXSS(
-			threadBody = '''<script>alert(123);</script>''',
-			threadSubject = '''<script>alert(123);</script>''',
-			userName = "Anonymous");
-
-		var actualScript = '''<script>alert(123);</script>''';
-
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
-
-		AssertHTMLSourceTextNotPresent(value1 = "${actualScript}");
-
-		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
 	@priority = "3"

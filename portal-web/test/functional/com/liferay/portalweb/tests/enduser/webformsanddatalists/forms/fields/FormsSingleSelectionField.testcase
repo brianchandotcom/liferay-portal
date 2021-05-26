@@ -103,14 +103,80 @@ definition {
 	}
 
 	@description = "Verify that a Single Selection Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132193 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection",
+			formPageNumber = "0");
+
+		Type(
+			key_rowNumber = "1",
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "Option 1");
+
+		Type(
+			key_rowNumber = "2",
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "Option 2");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Help Text Test");
+
+		Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+		Click(
+			key_selectOption = "Duplicate",
+			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
+
+		AssertElementPresent(
+			key_name = "Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		AssertElementPresent(
+			key_name = "Copy of Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		AssertElementPresent(
+			key_bodyText = "Option 1",
+			key_fieldName = "Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+
+		AssertElementPresent(
+			key_bodyText = "Option 2",
+			key_fieldName = "Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+
+
+		AssertElementPresent(
+			key_bodyText = "Option 1",
+			key_fieldName = "Copy of Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+
+		AssertElementPresent(
+			key_bodyText = "Option 2",
+			key_fieldName = "Copy of Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
+
+		AssertElementPresent(
+			key_bodyText = "Help Text Test",
+			key_fieldName = "Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_TEXT");
+
+		AssertElementPresent(
+			key_bodyText = "Help Text Test",
+			key_fieldName = "Copy of Single Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_TEXT");
 	}
 
 	@description = "Verify that a Single Selection Field can be edited"
@@ -342,6 +408,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132196 ChangesCanBeCanceled pending implementation
+
 	}
 
 	@description = "Verify that the Field References for the options can be edited"

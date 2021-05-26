@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGN_SITE_ROLES_DISABLED_WARNING</td>
+	<td>//*[contains(@class,'autofit-section') and contains(text(), '${textValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGN_SITE_ROLES_OPTION</td>
 	<td>//*[contains(@class,'assign-site-roles-link')]</td>
 	<td></td>

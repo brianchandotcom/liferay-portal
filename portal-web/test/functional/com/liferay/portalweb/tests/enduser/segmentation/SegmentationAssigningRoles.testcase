@@ -188,6 +188,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-122799: Validate if, with the option Enable Assign roles by segments disabled, the warning message"
+	@priority = "3"
+	@uitest
+	test DisableAssignRolesWarningMessage {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationAssigningRoles#DisableAssignRolesWarningMessage";
+
+		task ("Assert the Enable Assign roles by segments checkbox is disabled") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Segments Service",
+				configurationScope = "System Scope");
+
+			Segmentation.disableAssingRolesBySegmentsCheckbox();
+		}
+
+		task ("Go to the role segments assignee's section") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
+
+			RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
+		}
+
+		task ("Assert the warning message is displayed") {
+			AssertTextPresent(
+				textValue = "Assigning roles by segment is disabled",
+				locator1 = "Segmentation#ASSIGN_SITE_ROLES_DISABLED_WARNING",
+				value1 = "Assigning roles by segment is disabled. To enable, go to System Settings > Segments > Segments Service.");
+		}
+	}
+
 	@description = "LPS-121943: Validate if, with the option Enable Assign roles by segments enabled, the role is working for the user."
 	@priority = "4"
 	@uitest

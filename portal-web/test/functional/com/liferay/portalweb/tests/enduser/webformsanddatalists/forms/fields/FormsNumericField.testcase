@@ -82,14 +82,14 @@ definition {
 		// TODO LPS-132832 CanBeRequired pending implementation
 	}
 
-	@description = "Verify that a Numeric Field can be set to Integer or Decimal"
+	@description = "Verify that a Numeric Field can accept decimals when the numeric type set to Decimal"
 	@ignore = "Test Stub"
 	@priority = "5"
-	test CanBeSetToIntegerOrDecimal {
+	test CanBeSetToAcceptDecimals {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132834 CanBeSetToIntegerOrDecimal pending implementation
+		// TODO LPS-132861 CanBeSetToAcceptDecimals pending implementation
 	}
 
 	@description = "Verify that a Numeric Field can be set to repeatable"
@@ -180,6 +180,16 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132839 ChangesCanBeCanceled pending implementation
+	}
+
+	@description = "Verify that a Numeric Field does not accept decimals by default"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DoesNotAcceptDecimalsByDefault {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-132834 DoesNotAcceptDecimalsByDefault pending implementation
 	}
 
 	@description = "Verify that a help text can be added"

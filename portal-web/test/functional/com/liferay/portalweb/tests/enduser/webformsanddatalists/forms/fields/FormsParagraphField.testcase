@@ -270,14 +270,25 @@ definition {
 			locator1 = "FormFields#PARAGRAPH_SPECIFIC_FIELD_BY_BODY");
 	}
 
-	@description = "Verify that a Table can be deleted in the Body Text"
+	@description = "Verify that a Table can be deleted in the Body Text by highlighting the table and pressing backspace"
 	@ignore = "true"
 	@priority = "4"
-	test CanDeleteATable {
+	test CanDeleteATableUsingBackspace {
+		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131237 CanDeleteATable pending implementation
+		// TODO LPS-131237 CanDeleteATableUsingBackspace pending implementation
 
+	}
+
+	@description = "Verify that a Table can be deleted in the Body Text using the right click menu"
+	@ignore = "true"
+	@priority = "4"
+	test CanDeleteATableUsingRightClick {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133010 CanDeleteATableUsingRightClick pending implementation
 	}
 
 	@description = "Verify that the Formatting Style can be changed using the predefined style options"

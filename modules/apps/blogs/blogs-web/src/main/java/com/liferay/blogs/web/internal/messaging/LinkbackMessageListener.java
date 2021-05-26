@@ -48,10 +48,10 @@ import org.osgi.service.component.annotations.Reference;
 public class LinkbackMessageListener extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_blogsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsConfiguration.class, properties);
+		BlogsConfiguration blogsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BlogsConfiguration.class, properties);
 
 		Class<?> clazz = getClass();
 
@@ -59,7 +59,7 @@ public class LinkbackMessageListener extends BaseMessageListener {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			_blogsConfiguration.linkbackJobInterval(), TimeUnit.MINUTE);
+			blogsConfiguration.linkbackJobInterval(), TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -80,7 +80,12 @@ public class LinkbackMessageListener extends BaseMessageListener {
 		LinkbackProducerUtil.sendQueuedPingbacks();
 	}
 
-	private volatile BlogsConfiguration _blogsConfiguration;
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		deactivate();
+
+		activate(properties);
+	}
 
 	@Reference
 	private LinkbackConsumer _linkbackConsumer;

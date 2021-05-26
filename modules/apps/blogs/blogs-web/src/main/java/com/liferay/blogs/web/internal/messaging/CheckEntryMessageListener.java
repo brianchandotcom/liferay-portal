@@ -46,10 +46,10 @@ import org.osgi.service.component.annotations.Reference;
 public class CheckEntryMessageListener extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_blogsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsConfiguration.class, properties);
+		BlogsConfiguration blogsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BlogsConfiguration.class, properties);
 
 		Class<?> clazz = getClass();
 
@@ -57,7 +57,7 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			className, className, null, null,
-			_blogsConfiguration.entryCheckInterval(), TimeUnit.MINUTE);
+			blogsConfiguration.entryCheckInterval(), TimeUnit.MINUTE);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
@@ -76,7 +76,12 @@ public class CheckEntryMessageListener extends BaseMessageListener {
 		_blogsEntryLocalService.checkEntries();
 	}
 
-	private volatile BlogsConfiguration _blogsConfiguration;
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		deactivate();
+
+		activate(properties);
+	}
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;

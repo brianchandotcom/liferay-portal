@@ -12,29 +12,18 @@
  * details.
  */
 
-export const DOCUSIGN_STATUS = {
-	completed: {
-		color: 'success',
-		label: Liferay.Language.get('completed'),
-	},
-	declined: {
-		color: 'danger',
-		label: Liferay.Language.get('declined'),
-	},
-	deleted: {
-		color: 'danger',
-		label: Liferay.Language.get('deleted'),
-	},
-	delivered: {
-		color: 'success',
-		label: Liferay.Language.get('delivered'),
-	},
-	sent: {
-		color: 'primary',
-		label: Liferay.Language.get('sent'),
-	},
-	voided: {
-		color: 'warning',
-		label: Liferay.Language.get('void'),
-	},
+export const isEqualObjects = (firstObj, secondObj) => {
+	if (typeof firstObj !== 'object' || typeof secondObj !== 'object') {
+		return false;
+	}
+
+	return JSON.stringify(firstObj) === JSON.stringify(secondObj);
 };
+
+export const concatValues = (values) =>
+	values
+		.join(', ')
+		.replace(
+			/, ([^,]*)$/,
+			` ${Liferay.Language.get('and').toLowerCase()} $1`
+		);

@@ -12,29 +12,26 @@
  * details.
  */
 
-export const DOCUSIGN_STATUS = {
-	completed: {
-		color: 'success',
-		label: Liferay.Language.get('completed'),
-	},
-	declined: {
-		color: 'danger',
-		label: Liferay.Language.get('declined'),
-	},
-	deleted: {
-		color: 'danger',
-		label: Liferay.Language.get('deleted'),
-	},
-	delivered: {
-		color: 'success',
-		label: Liferay.Language.get('delivered'),
-	},
-	sent: {
-		color: 'primary',
-		label: Liferay.Language.get('sent'),
-	},
-	voided: {
-		color: 'warning',
-		label: Liferay.Language.get('void'),
-	},
+import {openToast} from 'frontend-js-web';
+
+export const errorToast = (
+	message = Liferay.Language.get('an-unexpected-error-occurred'),
+	title = Liferay.Language.get('error')
+) => {
+	openToast({
+		message,
+		title,
+		type: 'danger',
+	});
+};
+
+export const successToast = (
+	message = Liferay.Language.get('your-request-completed-successfully'),
+	title = Liferay.Language.get('success')
+) => {
+	openToast({
+		message,
+		title,
+		type: 'success',
+	});
 };

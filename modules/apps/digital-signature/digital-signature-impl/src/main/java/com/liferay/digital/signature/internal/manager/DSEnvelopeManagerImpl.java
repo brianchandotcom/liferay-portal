@@ -111,6 +111,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			companyId, groupId,
 			StringBundler.concat(
 				"envelopes?from_date=", fromDateString,
+				"&folder_types=sentitems",
 				"&include=custom_fields,documents,recipients&order=desc"));
 
 		return JSONUtil.toList(
@@ -146,6 +147,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			StringBundler.concat(
 				"envelopes?from_date=", fromDateString, "&count=",
 				String.valueOf(pageSize), "&start_position=", startPosition,
+				"&folder_types=sentitems",
 				"&include=custom_fields,documents,recipients&order=", order));
 
 		List<DSEnvelope> dsEnvelopes = JSONUtil.toList(

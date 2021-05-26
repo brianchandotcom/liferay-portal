@@ -73,11 +73,23 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			for (var content : list "Banner Title Example,This is a simple banner component that you can use when you need extra attention to featured content or information.,Go Somewhere") {
-				AssertVisible(
-					key_text = "${content}",
-					locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
-			}
+			AssertVisible(
+				id = "01-title",
+				key_position = "1",
+				key_text = "Banner Title Example",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				id = "02-subtitle",
+				key_position = "1",
+				key_text = "This is a simple banner component that you can use when you need extra attention to featured content or information.",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				id = "03-link",
+				key_position = "1",
+				key_text = "Go Somewhere",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
 		}
 	}
 

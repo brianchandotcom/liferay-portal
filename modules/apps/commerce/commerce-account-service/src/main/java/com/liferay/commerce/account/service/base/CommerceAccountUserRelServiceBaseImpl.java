@@ -19,7 +19,6 @@ import com.liferay.commerce.account.model.CommerceAccountUserRel;
 import com.liferay.commerce.account.service.CommerceAccountUserRelService;
 import com.liferay.commerce.account.service.CommerceAccountUserRelServiceUtil;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence;
-import com.liferay.commerce.account.service.persistence.CommerceAccountGroupRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPersistence;
@@ -298,29 +297,6 @@ public abstract class CommerceAccountUserRelServiceBaseImpl
 			commerceAccountGroupRelService) {
 
 		this.commerceAccountGroupRelService = commerceAccountGroupRelService;
-	}
-
-	/**
-	 * Returns the commerce account group rel persistence.
-	 *
-	 * @return the commerce account group rel persistence
-	 */
-	public CommerceAccountGroupRelPersistence
-		getCommerceAccountGroupRelPersistence() {
-
-		return commerceAccountGroupRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce account group rel persistence.
-	 *
-	 * @param commerceAccountGroupRelPersistence the commerce account group rel persistence
-	 */
-	public void setCommerceAccountGroupRelPersistence(
-		CommerceAccountGroupRelPersistence commerceAccountGroupRelPersistence) {
-
-		this.commerceAccountGroupRelPersistence =
-			commerceAccountGroupRelPersistence;
 	}
 
 	/**
@@ -960,10 +936,6 @@ public abstract class CommerceAccountUserRelServiceBaseImpl
 	protected
 		com.liferay.commerce.account.service.CommerceAccountGroupRelService
 			commerceAccountGroupRelService;
-
-	@BeanReference(type = CommerceAccountGroupRelPersistence.class)
-	protected CommerceAccountGroupRelPersistence
-		commerceAccountGroupRelPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService.class

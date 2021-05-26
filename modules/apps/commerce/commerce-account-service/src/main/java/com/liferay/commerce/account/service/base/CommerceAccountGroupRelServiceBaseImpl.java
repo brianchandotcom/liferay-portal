@@ -19,26 +19,17 @@ import com.liferay.commerce.account.model.CommerceAccountGroupRel;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelService;
 import com.liferay.commerce.account.service.CommerceAccountGroupRelServiceUtil;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence;
-import com.liferay.commerce.account.service.persistence.CommerceAccountGroupRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
-
-import javax.sql.DataSource;
 
 /**
  * Provides the base implementation for the commerce account group rel remote service.
@@ -293,29 +284,6 @@ public abstract class CommerceAccountGroupRelServiceBaseImpl
 		CommerceAccountGroupRelService commerceAccountGroupRelService) {
 
 		this.commerceAccountGroupRelService = commerceAccountGroupRelService;
-	}
-
-	/**
-	 * Returns the commerce account group rel persistence.
-	 *
-	 * @return the commerce account group rel persistence
-	 */
-	public CommerceAccountGroupRelPersistence
-		getCommerceAccountGroupRelPersistence() {
-
-		return commerceAccountGroupRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce account group rel persistence.
-	 *
-	 * @param commerceAccountGroupRelPersistence the commerce account group rel persistence
-	 */
-	public void setCommerceAccountGroupRelPersistence(
-		CommerceAccountGroupRelPersistence commerceAccountGroupRelPersistence) {
-
-		this.commerceAccountGroupRelPersistence =
-			commerceAccountGroupRelPersistence;
 	}
 
 	/**
@@ -729,31 +697,6 @@ public abstract class CommerceAccountGroupRelServiceBaseImpl
 		return CommerceAccountGroupRel.class.getName();
 	}
 
-	/**
-	 * Performs a SQL query.
-	 *
-	 * @param sql the sql query
-	 */
-	protected void runSQL(String sql) {
-		try {
-			DataSource dataSource =
-				commerceAccountGroupRelPersistence.getDataSource();
-
-			DB db = DBManagerUtil.getDB();
-
-			sql = db.buildSQL(sql);
-			sql = PortalUtil.transformSQL(sql);
-
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
-
-			sqlUpdate.update();
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-	}
-
 	private void _setServiceUtilService(
 		CommerceAccountGroupRelService commerceAccountGroupRelService) {
 
@@ -828,10 +771,6 @@ public abstract class CommerceAccountGroupRelServiceBaseImpl
 
 	@BeanReference(type = CommerceAccountGroupRelService.class)
 	protected CommerceAccountGroupRelService commerceAccountGroupRelService;
-
-	@BeanReference(type = CommerceAccountGroupRelPersistence.class)
-	protected CommerceAccountGroupRelPersistence
-		commerceAccountGroupRelPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService.class

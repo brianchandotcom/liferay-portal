@@ -19,7 +19,6 @@ import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalService;
 import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalServiceUtil;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence;
-import com.liferay.commerce.account.service.persistence.CommerceAccountGroupRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPersistence;
 import com.liferay.commerce.account.service.persistence.CommerceAccountPersistence;
@@ -563,29 +562,6 @@ public abstract class CommerceAccountOrganizationRelLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce account group rel persistence.
-	 *
-	 * @return the commerce account group rel persistence
-	 */
-	public CommerceAccountGroupRelPersistence
-		getCommerceAccountGroupRelPersistence() {
-
-		return commerceAccountGroupRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce account group rel persistence.
-	 *
-	 * @param commerceAccountGroupRelPersistence the commerce account group rel persistence
-	 */
-	public void setCommerceAccountGroupRelPersistence(
-		CommerceAccountGroupRelPersistence commerceAccountGroupRelPersistence) {
-
-		this.commerceAccountGroupRelPersistence =
-			commerceAccountGroupRelPersistence;
-	}
-
-	/**
 	 * Returns the commerce account organization rel local service.
 	 *
 	 * @return the commerce account organization rel local service
@@ -969,10 +945,6 @@ public abstract class CommerceAccountOrganizationRelLocalServiceBaseImpl
 	protected
 		com.liferay.commerce.account.service.CommerceAccountGroupRelLocalService
 			commerceAccountGroupRelLocalService;
-
-	@BeanReference(type = CommerceAccountGroupRelPersistence.class)
-	protected CommerceAccountGroupRelPersistence
-		commerceAccountGroupRelPersistence;
 
 	@BeanReference(type = CommerceAccountOrganizationRelLocalService.class)
 	protected CommerceAccountOrganizationRelLocalService

@@ -15,25 +15,14 @@
 package com.liferay.commerce.account.service;
 
 import com.liferay.commerce.account.model.CommerceAccountGroupRel;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.search.Indexable;
-import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.io.Serializable;
 
 import java.util.List;
 
@@ -54,26 +43,13 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface CommerceAccountGroupRelLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+public interface CommerceAccountGroupRelLocalService extends BaseLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.commerce.account.service.impl.CommerceAccountGroupRelLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the commerce account group rel local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CommerceAccountGroupRelLocalServiceUtil} if injection and service tracking are not available.
 	 */
-
-	/**
-	 * Adds the commerce account group rel to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupRel the commerce account group rel
-	 * @return the commerce account group rel that was added
-	 */
-	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAccountGroupRel addCommerceAccountGroupRel(
 		CommerceAccountGroupRel commerceAccountGroupRel);
 
@@ -82,48 +58,9 @@ public interface CommerceAccountGroupRelLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * Creates a new commerce account group rel with the primary key. Does not add the commerce account group rel to the database.
-	 *
-	 * @param commerceAccountGroupRelId the primary key for the new commerce account group rel
-	 * @return the new commerce account group rel
-	 */
-	@Transactional(enabled = false)
-	public CommerceAccountGroupRel createCommerceAccountGroupRel(
-		long commerceAccountGroupRelId);
-
-	/**
-	 * @throws PortalException
-	 */
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	 * Deletes the commerce account group rel from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupRel the commerce account group rel
-	 * @return the commerce account group rel that was removed
-	 */
-	@Indexable(type = IndexableType.DELETE)
 	public CommerceAccountGroupRel deleteCommerceAccountGroupRel(
 		CommerceAccountGroupRel commerceAccountGroupRel);
 
-	/**
-	 * Deletes the commerce account group rel with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupRelId the primary key of the commerce account group rel
-	 * @return the commerce account group rel that was removed
-	 * @throws PortalException if a commerce account group rel with the primary key could not be found
-	 */
-	@Indexable(type = IndexableType.DELETE)
 	public CommerceAccountGroupRel deleteCommerceAccountGroupRel(
 			long commerceAccountGroupRelId)
 		throws PortalException;
@@ -132,115 +69,15 @@ public interface CommerceAccountGroupRelLocalService
 
 	public void deleteCommerceAccountGroupRels(String className, long classPK);
 
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> T dslQuery(DSLQuery dslQuery);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int dslQueryCount(DSLQuery dslQuery);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DynamicQuery dynamicQuery();
-
-	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
-
-	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
-
-	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccountGroupRel fetchCommerceAccountGroupRel(
 		long commerceAccountGroupRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	 * Returns the commerce account group rel with the primary key.
-	 *
-	 * @param commerceAccountGroupRelId the primary key of the commerce account group rel
-	 * @return the commerce account group rel
-	 * @throws PortalException if a commerce account group rel with the primary key could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccountGroupRel getCommerceAccountGroupRel(
 			long commerceAccountGroupRelId)
 		throws PortalException;
 
-	/**
-	 * Returns a range of all the commerce account group rels.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce account group rels
-	 * @param end the upper bound of the range of commerce account group rels (not inclusive)
-	 * @return the range of commerce account group rels
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAccountGroupRel> getCommerceAccountGroupRels(
 		int start, int end);
@@ -255,11 +92,6 @@ public interface CommerceAccountGroupRelLocalService
 		String className, long classPK, int start, int end,
 		OrderByComparator<CommerceAccountGroupRel> orderByComparator);
 
-	/**
-	 * Returns the number of commerce account group rels.
-	 *
-	 * @return the number of commerce account group rels
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceAccountGroupRelsCount();
 
@@ -269,36 +101,11 @@ public interface CommerceAccountGroupRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceAccountGroupRelsCount(String className, long classPK);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	 * Updates the commerce account group rel in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountGroupRelLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupRel the commerce account group rel
-	 * @return the commerce account group rel that was updated
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceAccountGroupRel updateCommerceAccountGroupRel(
-		CommerceAccountGroupRel commerceAccountGroupRel);
 
 }

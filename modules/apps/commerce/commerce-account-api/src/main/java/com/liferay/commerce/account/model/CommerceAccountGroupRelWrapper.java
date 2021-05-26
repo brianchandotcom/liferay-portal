@@ -245,11 +245,6 @@ public class CommerceAccountGroupRelWrapper
 	}
 
 	@Override
-	public void persist() {
-		model.persist();
-	}
-
-	@Override
 	public void setClassName(String className) {
 		model.setClassName(className);
 	}

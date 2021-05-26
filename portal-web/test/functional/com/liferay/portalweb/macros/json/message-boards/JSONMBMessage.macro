@@ -143,8 +143,11 @@ definition {
 
 	@summary = "This calls the JSON WS API to add a MB reply"
 	macro addMessageReply {
-		if (isSet(messageId)) {
-			var messageId = "${messageId}";
+		if (isSet(groupName)) {
+			var messageId = JSONMBMessage.getMessageIdByName(
+				categoryName = "${categoryName}",
+				groupName = "${groupName}",
+				threadSubject = "${threadSubject}");
 		}
 		else {
 			var messageId = JSONMBMessage.getmessageId();
@@ -156,11 +159,11 @@ definition {
 			${portalURL}/api/jsonws/mb.mbmessage/add-message \
 				-u test@liferay.com:test \
 				-d parentMessageId=${messageId} \
-				-d subject=<script>alert(123);</script> \
-				-d body=<script>alert(123);</script> \
+				-d subject=RE: ${threadSubject} \
+				-d body=${replyBody} \
 				-d format=bbcode \
 				-d inputStreamOVPs=[] \
-				-d anonymous=true \
+				-d anonymous=false \
 				-d priority=0 \
 				-d allowPingbacks=true \
 		''';

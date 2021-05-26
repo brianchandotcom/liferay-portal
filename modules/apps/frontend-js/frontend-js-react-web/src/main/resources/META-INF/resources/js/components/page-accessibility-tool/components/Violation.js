@@ -24,6 +24,7 @@ function PanelSection({children, title}) {
 		<ClayPanel
 			displayTitle={title}
 			displayType="unstyled"
+			role="tab"
 			showCollapseIcon={false}
 		>
 			<ClayPanel.Body>{children}</ClayPanel.Body>
@@ -47,7 +48,7 @@ function Violation({navigationState, next, previous, violations}) {
 				title={id}
 			/>
 			<div className="page-accessibility-tool__sidebar--violation-panel-wrapper">
-				<ClayPanel.Group flush small>
+				<ClayPanel.Group flush>
 					<PanelSection title={Liferay.Language.get('details')}>
 						{description}
 					</PanelSection>
@@ -60,6 +61,7 @@ function Violation({navigationState, next, previous, violations}) {
 
 								return (
 									<Rule
+										ariaLabel={occurrenceName}
 										key={index}
 										onListItemClick={() =>
 											next({

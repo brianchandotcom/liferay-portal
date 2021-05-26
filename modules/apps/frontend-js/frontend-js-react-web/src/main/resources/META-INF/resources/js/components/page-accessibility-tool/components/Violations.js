@@ -54,6 +54,9 @@ function ViolationsFilter() {
 				onActiveChange={setDropdownExpanded}
 				trigger={
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get(
+							'open-violations-filter'
+						)}
 						displayType="unstyled"
 						small
 						symbol="filter"
@@ -76,7 +79,8 @@ function ViolationsFilter() {
 									key={item.value}
 								>
 									<ClayCheckbox
-										active={existsImpact}
+										checked={existsImpact}
+										data-testid={item.value}
 										label={item.label}
 										onChange={() => {
 											if (existsImpact) {
@@ -110,7 +114,8 @@ function ViolationsFilter() {
 							return (
 								<ClayDropDown.Section key={item.value}>
 									<ClayCheckbox
-										active={existsCategory}
+										checked={existsCategory}
+										data-testid={item.value}
 										label={item.label}
 										onChange={() => {
 											if (existsCategory) {
@@ -207,12 +212,22 @@ export default function Violations({next, violations: initialViolations}) {
 					  )}
 			</div>
 			{hasViolations && (
-				<ClayList className="list-group-flush">
+				<ClayList
+					aria-label={Liferay.Language.get('violations-list')}
+					className="list-group-flush"
+					role="tablist"
+				>
 					{violations.map((violation, index) => {
 						const {id, impact, nodes, ...props} = violation;
 
 						return (
 							<Rule
+								ariaLabel={Liferay.Util.sub(
+									Liferay.Language.get(
+										'navigate-to-violation-x'
+									),
+									id
+								)}
 								id={id}
 								impact={impact}
 								key={id}

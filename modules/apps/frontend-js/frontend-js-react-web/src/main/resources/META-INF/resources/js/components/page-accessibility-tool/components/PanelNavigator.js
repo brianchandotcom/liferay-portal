@@ -26,7 +26,6 @@ function PanelNavigator({helpUrl, impact, onBack, title}) {
 				className="autofit-row sidebar-section"
 				displayType="unstyled"
 				onClick={onBack}
-				role="tab"
 			>
 				<ClayLayout.ContentCol className="align-self-center mr-2">
 					<ClayIcon symbol="angle-left" />

@@ -16,9 +16,13 @@ import React from 'react';
 
 import PanelNavigator from './PanelNavigator';
 
-function CodeBlock({children}) {
+function CodeBlock({ariaLabel, children}) {
 	return (
-		<div className="page-accessibility-tool__sidebar--occurrence-panel-code-block">
+		<div
+			aria-label={ariaLabel}
+			className="page-accessibility-tool__sidebar--occurrence-panel-code-block"
+			role="textbox"
+		>
 			<div className="p-2 page-accessibility-tool__sidebar--occurrence-panel-code-text">
 				{children}
 			</div>
@@ -50,11 +54,17 @@ function Occurrence({navigationState, previous, violations}) {
 				<div className="my-3">
 					<strong>{Liferay.Language.get('target')}</strong>
 				</div>
-				<CodeBlock>{target}</CodeBlock>
+				<CodeBlock ariaLabel={Liferay.Language.get('target-selector')}>
+					{target}
+				</CodeBlock>
 				<div className="my-3">
 					<strong>{Liferay.Language.get('code')}</strong>
 				</div>
-				<CodeBlock>{html}</CodeBlock>
+				<CodeBlock
+					ariaLabel={Liferay.Language.get('code-of-the-element')}
+				>
+					{html}
+				</CodeBlock>
 			</div>
 		</>
 	);

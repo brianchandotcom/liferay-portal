@@ -18,10 +18,11 @@ import ClayList from '@clayui/list';
 import React from 'react';
 
 function Rule(props) {
-	const {onListItemClick, quantity, subtext, text, title} = props;
+	const {ariaLabel, onListItemClick, quantity, subtext, text, title} = props;
 
 	return (
 		<button
+			aria-label={ariaLabel}
 			className="list-group-item list-group-item-action list-group-item-flex list-group-item-flush"
 			onClick={() => onListItemClick(props)}
 			role="tab"

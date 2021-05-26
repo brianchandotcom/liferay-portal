@@ -25,7 +25,7 @@ export const selectPageContentDropdownItems = (classPK) => (state) => {
 		return null;
 	}
 
-	const {editURL, permissionsURL, viewItemsURL, viewUsagesURL} =
+	const {addItems, editURL, permissionsURL, viewItemsURL, viewUsagesURL} =
 		pageContent.actions || {};
 
 	const dropdownItems = [];
@@ -45,6 +45,13 @@ export const selectPageContentDropdownItems = (classPK) => (state) => {
 					title: Liferay.Language.get('view-items'),
 					url: viewItemsURL,
 				}),
+		});
+	}
+
+	if (addItems) {
+		dropdownItems.push({
+			child: 'mappedItemsMenu',
+			label: Liferay.Language.get('add-items'),
 		});
 	}
 

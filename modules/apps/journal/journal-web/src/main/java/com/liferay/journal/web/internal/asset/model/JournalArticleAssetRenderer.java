@@ -405,7 +405,9 @@ public class JournalArticleAssetRenderer
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (!_isShowDisplayPage(group.getGroupId(), _article)) {
+		if (!_isShowDisplayPage(group.getGroupId(), _article) &&
+			!_isShowDisplayPage(_article.getGroupId(), _article)) {
+
 			String hitLayoutURL = getHitLayoutURL(
 				layout.isPrivateLayout(), noSuchEntryRedirect, themeDisplay);
 

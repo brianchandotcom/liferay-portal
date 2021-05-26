@@ -179,6 +179,15 @@ public class OrganizationLocalServiceWrapper
 	}
 
 	@Override
+	public void addUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_organizationLocalService.addUserOrganizationByEmailAddress(
+			emailAddress, organizationId);
+	}
+
+	@Override
 	public void addUserOrganizations(
 		long userId, java.util.List<Organization> organizations) {
 
@@ -318,6 +327,15 @@ public class OrganizationLocalServiceWrapper
 	@Override
 	public void deleteUserOrganization(long userId, Organization organization) {
 		_organizationLocalService.deleteUserOrganization(userId, organization);
+	}
+
+	@Override
+	public void deleteUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_organizationLocalService.deleteUserOrganizationByEmailAddress(
+			emailAddress, organizationId);
 	}
 
 	@Override

@@ -181,6 +181,14 @@ public class OrganizationLocalServiceUtil {
 		getService().addUserOrganization(userId, organization);
 	}
 
+	public static void addUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException {
+
+		getService().addUserOrganizationByEmailAddress(
+			emailAddress, organizationId);
+	}
+
 	public static void addUserOrganizations(
 		long userId, List<Organization> organizations) {
 
@@ -308,6 +316,14 @@ public class OrganizationLocalServiceUtil {
 		long userId, Organization organization) {
 
 		getService().deleteUserOrganization(userId, organization);
+	}
+
+	public static void deleteUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException {
+
+		getService().deleteUserOrganizationByEmailAddress(
+			emailAddress, organizationId);
 	}
 
 	public static void deleteUserOrganizations(

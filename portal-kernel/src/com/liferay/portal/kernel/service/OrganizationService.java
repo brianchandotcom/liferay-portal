@@ -143,6 +143,10 @@ public interface OrganizationService extends BaseService {
 			long passwordPolicyId, long[] organizationIds)
 		throws PortalException;
 
+	public void addUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException;
+
 	/**
 	 * Deletes the organization's logo.
 	 *
@@ -157,6 +161,10 @@ public interface OrganizationService extends BaseService {
 	 * @param organizationId the primary key of the organization
 	 */
 	public void deleteOrganization(long organizationId) throws PortalException;
+
+	public void deleteUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException;
 
 	/**
 	 * Returns the organization with the primary key.

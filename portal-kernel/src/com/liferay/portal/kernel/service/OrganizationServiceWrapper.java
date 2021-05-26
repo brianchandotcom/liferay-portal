@@ -141,6 +141,15 @@ public class OrganizationServiceWrapper
 			passwordPolicyId, organizationIds);
 	}
 
+	@Override
+	public void addUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_organizationService.addUserOrganizationByEmailAddress(
+			emailAddress, organizationId);
+	}
+
 	/**
 	 * Deletes the organization's logo.
 	 *
@@ -164,6 +173,15 @@ public class OrganizationServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_organizationService.deleteOrganization(organizationId);
+	}
+
+	@Override
+	public void deleteUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_organizationService.deleteUserOrganizationByEmailAddress(
+			emailAddress, organizationId);
 	}
 
 	/**

@@ -146,6 +146,14 @@ public class OrganizationServiceUtil {
 			passwordPolicyId, organizationIds);
 	}
 
+	public static void addUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException {
+
+		getService().addUserOrganizationByEmailAddress(
+			emailAddress, organizationId);
+	}
+
 	/**
 	 * Deletes the organization's logo.
 	 *
@@ -165,6 +173,14 @@ public class OrganizationServiceUtil {
 		throws PortalException {
 
 		getService().deleteOrganization(organizationId);
+	}
+
+	public static void deleteUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException {
+
+		getService().deleteUserOrganizationByEmailAddress(
+			emailAddress, organizationId);
 	}
 
 	/**

@@ -173,6 +173,10 @@ public interface OrganizationLocalService
 
 	public void addUserOrganization(long userId, Organization organization);
 
+	public void addUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException;
+
 	public void addUserOrganizations(
 		long userId, List<Organization> organizations);
 
@@ -255,6 +259,10 @@ public interface OrganizationLocalService
 	public void deleteUserOrganization(long userId, long organizationId);
 
 	public void deleteUserOrganization(long userId, Organization organization);
+
+	public void deleteUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException;
 
 	public void deleteUserOrganizations(
 		long userId, List<Organization> organizations);

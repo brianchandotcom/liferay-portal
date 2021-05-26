@@ -222,6 +222,21 @@ public class OrganizationServiceSoap {
 		}
 	}
 
+	public static void addUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws RemoteException {
+
+		try {
+			OrganizationServiceUtil.addUserOrganizationByEmailAddress(
+				emailAddress, organizationId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Deletes the organization's logo.
 	 *
@@ -249,6 +264,21 @@ public class OrganizationServiceSoap {
 
 		try {
 			OrganizationServiceUtil.deleteOrganization(organizationId);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static void deleteUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws RemoteException {
+
+		try {
+			OrganizationServiceUtil.deleteUserOrganizationByEmailAddress(
+				emailAddress, organizationId);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

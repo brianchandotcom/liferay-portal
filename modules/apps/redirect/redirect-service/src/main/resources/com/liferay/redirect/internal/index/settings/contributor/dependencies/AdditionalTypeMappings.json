@@ -1,0 +1,32 @@
+{
+	"properties": {
+		"destinationURL": {
+			"store": true,
+			"type": "text"
+		},
+		"destinationURLParts": {
+			"store": true,
+			"type": "text"
+		},
+		"ignored": {
+			"store": true,
+			"type": "keyword"
+		},
+		"requestCount": {
+			"store": true,
+			"type": "integer"
+		},
+		"sourceURL": {
+			"store": true,
+			"type": "text"
+		},
+		"sourceURLParts": {
+			"store": true,
+			"type": "text"
+		},
+		"urlParts": {
+			"store": true,
+			"type": "text"
+		}
+	}
+}

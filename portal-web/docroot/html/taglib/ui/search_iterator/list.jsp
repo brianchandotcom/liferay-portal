@@ -172,11 +172,11 @@ if (iteratorURL != null) {
 							<%
 							String headerNameValue = null;
 
-							if ((rowChecker == null) || (i > 0)) {
-								headerNameValue = LanguageUtil.get(resourceBundle, HtmlUtil.escape(headerName));
+							if ((rowChecker != null) && (i == 0)) {
+								headerNameValue = headerName;
 							}
 							else {
-								headerNameValue = HtmlUtil.escape(headerName);
+								headerNameValue = LanguageUtil.get(resourceBundle, HtmlUtil.escape(headerName));
 							}
 							%>
 

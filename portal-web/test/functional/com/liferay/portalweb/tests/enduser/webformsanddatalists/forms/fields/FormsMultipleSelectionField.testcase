@@ -50,7 +50,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132262 CanBeDeleted pending implementation
-
 	}
 
 	@description = "Verify that a Multiple Selection Field can be duplicated"
@@ -61,7 +60,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132264 CanBeDuplicated pending implementation
-
 	}
 
 	@description = "Verify that a Multiple Selection Field can be edited"
@@ -72,7 +70,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132261 CanBeEdited pending implementation
-
 	}
 
 	@description = "Verify that a Multiple Selection Field can be required"
@@ -83,7 +80,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132263 CanBeRequired pending implementation
-
 	}
 
 	@description = "Verify that a Multiple Selection Field can be set to repeatable"
@@ -94,7 +90,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132265 CanBeSetToRepeatable pending implementation
-
 	}
 
 	@description = "Verify that a Form can be submitted with the Multiple Selection Field"
@@ -105,7 +100,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132271 CanBeSubmitted pending implementation
-
 	}
 
 	@description = "Verify that edits to the Field can be canceled"
@@ -116,7 +110,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132268 ChangesCanBeCanceled pending implementation
-
 	}
 
 	@description = "Verify that an option's Field References can be edited"
@@ -127,7 +120,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132276 FieldReferencesOfOptionsCanBeEdited pending implementation
-
 	}
 
 	@description = "Verify that a help text can be added"
@@ -138,7 +130,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132269 HelpTextCanBeAdded pending implementation
-
 	}
 
 	@description = "Verify that the Field Label can be edited"
@@ -149,7 +140,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132266 LabelCanBeEdited pending implementation
-
 	}
 
 	@description = "Verify that options can be added"
@@ -160,7 +150,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132272 OptionsCanBeAdded pending implementation
-
 	}
 
 	@description = "Verify that option can be deleted"
@@ -171,7 +160,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132273 OptionsCanBeDeleted pending implementation
-
 	}
 
 	@description = "Verify that options can be displayed both inline and as a list"
@@ -222,7 +210,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormViewBuilder.viewMultipleSelectionInline(selectOptionsList = "Option 1,Option 2,Option 3");
-		
 	}
 
 	@description = "Verify that options can be rearranged"
@@ -233,7 +220,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132274 OptionsCanBeRearranged pending implementation
-
 	}
 
 	@description = "Verify that an option can be selected as a Predefined Value"
@@ -244,7 +230,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132277 PredefinedValueCanBeAdded pending implementation
-
 	}
 
 	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""
@@ -255,7 +240,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132278 PredefinedValueIsResetWhenSelectedOptionIsDeleted pending implementation
-
 	}
 
 	@description = "Verify that the Field Reference can be edited"
@@ -266,7 +250,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132270 ReferenceCanBeEdited pending implementation
-
 	}
 
 	@description = "Verify that the Field Type can be changed"
@@ -277,7 +260,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132267 TypeCanBeChanged pending implementation
-
 	}
 
 }

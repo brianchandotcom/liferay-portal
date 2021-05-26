@@ -368,6 +368,20 @@ public class OrganizationLocalServiceImpl
 			passwordPolicyId, Organization.class.getName(), organizationIds);
 	}
 
+	@Override
+	public void addUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException {
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
+		User user = userPersistence.findByC_EA(
+			organization.getCompanyId(), emailAddress);
+
+		addUserOrganization(user.getUserId(), organizationId);
+	}
+
 	/**
 	 * Deletes the organization's logo.
 	 *
@@ -485,6 +499,20 @@ public class OrganizationLocalServiceImpl
 		organizationPersistence.remove(organization);
 
 		return organization;
+	}
+
+	@Override
+	public void deleteUserOrganizationByEmailAddress(
+			String emailAddress, long organizationId)
+		throws PortalException {
+
+		Organization organization = organizationPersistence.findByPrimaryKey(
+			organizationId);
+
+		User user = userPersistence.findByC_EA(
+			organization.getCompanyId(), emailAddress);
+
+		deleteUserOrganization(user.getUserId(), organizationId);
 	}
 
 	/**

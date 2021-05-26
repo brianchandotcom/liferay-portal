@@ -45,7 +45,7 @@ public class CPMediaImpl implements CPMedia {
 	}
 
 	public CPMediaImpl(long groupId) throws PortalException {
-		String defaultURL = CommerceMediaResolverUtil.getDefaultUrl(groupId);
+		String defaultURL = CommerceMediaResolverUtil.getDefaultURL(groupId);
 
 		_downloadURL = defaultURL;
 
@@ -85,7 +85,7 @@ public class CPMediaImpl implements CPMedia {
 	}
 
 	@Override
-	public String getDownloadUrl() {
+	public String getDownloadURL() {
 		return _downloadURL;
 	}
 
@@ -95,7 +95,7 @@ public class CPMediaImpl implements CPMedia {
 	}
 
 	@Override
-	public String getThumbnailUrl() {
+	public String getThumbnailURL() {
 		return _thumbnailURL;
 	}
 
@@ -105,7 +105,7 @@ public class CPMediaImpl implements CPMedia {
 	}
 
 	@Override
-	public String getUrl() {
+	public String getURL() {
 		return _url;
 	}
 

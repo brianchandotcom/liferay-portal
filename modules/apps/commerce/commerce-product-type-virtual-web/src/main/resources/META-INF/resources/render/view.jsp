@@ -48,7 +48,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 
 							<%
 							for (CPMedia imageCPMedia : cpContentHelper.getImages(cpDefinitionId, themeDisplay)) {
-								String url = imageCPMedia.getUrl();
+								String url = imageCPMedia.getURL();
 							%>
 
 								<div class="card thumb" data-url="<%= HtmlUtil.escapeAttribute(url) %>">
@@ -256,7 +256,7 @@ String sampleURL = virtualCPTypeHelper.getSampleURL(cpDefinitionId, cpInstanceId
 												<span><%= HtmlUtil.escape(attachmentCPMedia.getTitle()) %></span>
 
 												<span>
-													<aui:icon cssClass="icon-monospaced" image="download" markupView="lexicon" target="_blank" url="<%= attachmentCPMedia.getDownloadUrl() %>" />
+													<aui:icon cssClass="icon-monospaced" image="download" markupView="lexicon" target="_blank" url="<%= attachmentCPMedia.getDownloadURL() %>" />
 												</span>
 											</td>
 										</tr>

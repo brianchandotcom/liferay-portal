@@ -226,7 +226,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			CPDefinitionLocalServiceUtil.getDefaultImage(getCPDefinitionId());
 
 		if (cpAttachmentFileEntry == null) {
-			return CommerceMediaResolverUtil.getDefaultUrl(getGroupId());
+			return CommerceMediaResolverUtil.getDefaultURL(getGroupId());
 		}
 
 		return CommerceMediaResolverUtil.getURL(
@@ -240,7 +240,7 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			CPDefinitionLocalServiceUtil.getDefaultImage(getCPDefinitionId());
 
 		if (cpAttachmentFileEntry == null) {
-			return CommerceMediaResolverUtil.getDefaultUrl(getGroupId());
+			return CommerceMediaResolverUtil.getDefaultURL(getGroupId());
 		}
 
 		return CommerceMediaResolverUtil.getThumbnailURL(

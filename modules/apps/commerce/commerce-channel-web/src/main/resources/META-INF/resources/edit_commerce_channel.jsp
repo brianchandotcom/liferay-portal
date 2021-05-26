@@ -21,7 +21,7 @@ CommerceChannelDisplayContext commerceChannelDisplayContext = (CommerceChannelDi
 
 CommerceChannel commerceChannel = commerceChannelDisplayContext.getCommerceChannel();
 
-String thumbnailUrl = PortalUtil.getPortalURL(request) + "/o/commerce-channel-web/images/channel-default-icon.svg";
+String thumbnailURL = PortalUtil.getPortalURL(request) + "/o/commerce-channel-web/images/channel-default-icon.svg";
 
 portletDisplay.setShowBackIcon(true);
 
@@ -45,7 +45,7 @@ else {
 	externalReferenceCode="<%= commerceChannel.getExternalReferenceCode() %>"
 	externalReferenceCodeEditUrl="<%= editCommerceChannelExternalReferenceCodeURL %>"
 	model="<%= CommerceChannel.class %>"
-	thumbnailUrl="<%= thumbnailUrl %>"
+	thumbnailUrl="<%= thumbnailURL %>"
 	title="<%= commerceChannel.getName() %>"
 />
 

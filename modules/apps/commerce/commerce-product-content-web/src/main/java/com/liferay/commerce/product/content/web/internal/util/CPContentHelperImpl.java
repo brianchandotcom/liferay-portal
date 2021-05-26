@@ -359,7 +359,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		CPMedia cpMedia = new CPMediaImpl(fileEntry, themeDisplay);
 
-		return cpMedia.getDownloadUrl();
+		return cpMedia.getDownloadURL();
 	}
 
 	@Override
@@ -432,7 +432,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		CPMedia cpMedia = new CPMediaImpl(fileEntry, themeDisplay);
 
-		return cpMedia.getUrl();
+		return cpMedia.getURL();
 	}
 
 	@Override

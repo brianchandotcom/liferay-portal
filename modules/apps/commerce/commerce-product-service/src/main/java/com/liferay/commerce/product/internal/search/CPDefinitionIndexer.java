@@ -724,7 +724,7 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		if (cpAttachmentFileEntryId == 0) {
 			document.addKeyword(
 				CPField.DEFAULT_IMAGE_FILE_URL,
-				_commerceMediaResolver.getDefaultUrl(
+				_commerceMediaResolver.getDefaultURL(
 					cpDefinition.getGroupId()));
 		}
 		else {

@@ -24,7 +24,9 @@ SelectAssetCategoryInfoItemDisplayContext selectAssetCategoryInfoItemDisplayCont
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/asset-categories-item-selector-web/css/tree.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<react:component
-	module="js/SelectAssetCategoryInfoItem.es"
-	props="<%= selectAssetCategoryInfoItemDisplayContext.getData() %>"
-/>
+<div>
+	<react:component
+		module="js/SelectAssetCategoryInfoItem.es"
+		props="<%= selectAssetCategoryInfoItemDisplayContext.getData() %>"
+	/>
+</div>

@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>INSERT_LINK_TEXT</td>
-	<td>//div[@class="docs-link-insertlinkbubble-text-wrapper"]/input[@type='text']</td>
+	<td>//div[@class="docs-link-smartinsertlinkbubble-text-wrapper"]/input[@type='text']</td>
 	<td></td>
 </tr>
 </tbody>

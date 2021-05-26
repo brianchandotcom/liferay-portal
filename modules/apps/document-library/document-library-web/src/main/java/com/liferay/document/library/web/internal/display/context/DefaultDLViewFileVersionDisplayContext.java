@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -50,6 +52,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -395,7 +398,17 @@ public class DefaultDLViewFileVersionDisplayContext
 
 			_uiItemsBuilder.addCheckinMenuItem(menuItems);
 
-			if (false) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			DigitalSignatureConfiguration digitalSignatureConfiguration =
+				DigitalSignatureConfigurationUtil.
+					getDigitalSignatureConfiguration(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getSiteGroupId());
+
+			if (digitalSignatureConfiguration.enabled()) {
 				_uiItemsBuilder.addCollectDigitalSignatureMenuItem(menuItems);
 			}
 

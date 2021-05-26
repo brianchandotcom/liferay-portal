@@ -12,9 +12,9 @@
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/IncorrectWhitespace\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/InefficientStringMethods\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/JavaTermDividers\.java" />
-		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/LPS28266\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/MissingEmptyLines\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/NullVariable\.java" />
+		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/ResultSetCount\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/SecureRandomNumberGeneration\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/SortJavaTerms1\.java" />
 		<suppress checks="UnusedVariableCheck" files="com/liferay/source/formatter/dependencies/SortMethodsWithAnnotatedParameters\.java" />

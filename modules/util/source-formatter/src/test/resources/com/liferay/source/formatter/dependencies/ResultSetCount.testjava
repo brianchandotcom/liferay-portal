@@ -23,7 +23,7 @@ import java.sql.ResultSet;
 /**
  * @author Hugo Huijser
  */
-public class LPS28266 {
+public class ResultSetCount {
 
 	public void method() {
 		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();

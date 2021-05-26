@@ -294,11 +294,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testLPS28266() throws Exception {
-		test("LPS28266.testjava", "Use resultSet.getInt(1) for count", 35);
-	}
-
-	@Test
 	public void testMissingAuthor() throws Exception {
 		test("MissingAuthor.testjava", "Missing author", 20);
 	}
@@ -381,6 +376,12 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testRedundantCommas() throws Exception {
 		test("RedundantCommas.testjava");
+	}
+
+	@Test
+	public void testResultCountSet() throws Exception {
+		test(
+			"ResultSetCount.testjava", "Use resultSet.getInt(1) for count", 35);
 	}
 
 	@Test

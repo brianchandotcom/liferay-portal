@@ -30,6 +30,4 @@ public interface DispatchTriggerMetadata {
 
 	public boolean isDispatchTaskExecutorReady();
 
-	public boolean isEmpty();
-
 }

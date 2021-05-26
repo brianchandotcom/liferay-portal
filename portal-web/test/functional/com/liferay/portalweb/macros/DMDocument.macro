@@ -2560,6 +2560,22 @@ definition {
 		}
 	}
 
+	macro viewEntryInEdit {
+		if (isSet(dmDocumentTitle)) {
+			AssertTextEquals.assertValue(
+				key_fieldLabel = "Title",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${dmDocumentTitle}");
+		}
+
+		if (isSet(dmDocumentFileName)) {
+			AssertTextEquals.assertValue(
+				key_fieldLabel = "File Name",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${dmDocumentFileName}");
+		}
+	}
+
 	macro viewFieldLabels {
 		for (var fieldFieldLabels : list "${labels}") {
 			AssertTextEquals.assertPartialText(

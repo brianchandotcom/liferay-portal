@@ -76,7 +76,6 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public void afterPropertiesSet() {
-		_imageProcessor = new ImageProcessorImpl();
 	}
 
 	@Override
@@ -288,8 +287,6 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		afterPropertiesSet();
-
 		_amSystemImagesConfiguration = ConfigurableUtil.createConfigurable(
 			AMSystemImagesConfiguration.class, properties);
 	}
@@ -407,7 +404,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	private ImageProcessor _imageProcessor;
+	private final ImageProcessor _imageProcessor = new ImageProcessorImpl();
 
 	@Reference
 	private InputStreamSanitizer _inputStreamSanitizer;

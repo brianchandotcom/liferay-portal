@@ -209,6 +209,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_DETAILS_ADD_TO_WISH_LIST</td>
+	<td>//div[contains(@class,'product-detail')]//div[@class='add-to-wish-list']//button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_CARD_AVAILABILITY_LABEL</td>
 	<td>//a[contains(@href,'${key_productName}')]//span[contains(@class,'m-0')]</td>
 	<td></td>

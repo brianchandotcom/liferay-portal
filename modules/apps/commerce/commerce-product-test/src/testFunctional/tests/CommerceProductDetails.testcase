@@ -417,13 +417,62 @@ definition {
 	}
 
 	@description = "COMMERCE-6355. As a buyer, I want to be able to remove a product from wish list from Product Details"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveProductFromWishListFromProductDetails {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceProductDetails#RemoveProductFromWishListFromProductDetails";
 
-		// TODO COMMERCE-6355 RemoveProductFromWishListFromProductDetails pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		Click(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_ADD_TO_WISH_LIST");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_localizationName = "heart-full",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
+
+		ClickNoError(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
+
+		Click(
+			key_menuItem = "My Lists",
+			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+
+		AssertElementPresent(
+			key_formViewName = "U-Joint",
+			locator1 = "FormViewBuilder#ASSERT_FORM");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Click(
+			key_productName = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		Click(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_ADD_TO_WISH_LIST");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_localizationName = "heart",
+			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
+
+		ClickNoError(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
+
+		Click(
+			key_menuItem = "My Lists",
+			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+
+		AssertElementNotPresent(
+			key_formViewName = "U-Joint",
+			locator1 = "FormViewBuilder#ASSERT_FORM");
 	}
 
 	@description = "COMMERCE-6370. As a buyer, I want to be able to select an option value, and add the product to cart in Product Details"

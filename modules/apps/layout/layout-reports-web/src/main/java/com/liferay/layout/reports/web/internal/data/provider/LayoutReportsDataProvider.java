@@ -166,10 +166,7 @@ public class LayoutReportsDataProvider {
 					_getDetail(
 						LayoutReportsIssue.Detail.Key.
 							MISSING_INPUT_ALT_ATTRIBUTES,
-						lighthouseAuditResultV5s.get("input-image-alt")),
-					_getDetail(
-						LayoutReportsIssue.Detail.Key.MISSING_VIDEO_CAPTION,
-						lighthouseAuditResultV5s.get("video-caption"))),
+						lighthouseAuditResultV5s.get("input-image-alt"))),
 				LayoutReportsIssue.Key.ACCESSIBILITY),
 			new LayoutReportsIssue(
 				Arrays.asList(

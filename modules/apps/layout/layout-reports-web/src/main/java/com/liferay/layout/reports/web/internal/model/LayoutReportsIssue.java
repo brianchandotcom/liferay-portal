@@ -297,14 +297,6 @@ public class LayoutReportsIssue {
 				}
 
 			},
-			MISSING_VIDEO_CAPTION {
-
-				@Override
-				public String toString() {
-					return "missing-video-caption";
-				}
-
-			},
 			NOT_ALL_LINKS_ARE_CRAWLABLE {
 
 				@Override

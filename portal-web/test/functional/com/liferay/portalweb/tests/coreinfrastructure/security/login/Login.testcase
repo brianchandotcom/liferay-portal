@@ -192,7 +192,7 @@ definition {
 		var facebookEmail = PropsUtil.get("facebook.email");
 		var facebookPassword = PropsUtil.get("facebook.password");
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
@@ -214,10 +214,7 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com",
-			userScreenName = "usersn");
+		User.firstLoginUI();
 	}
 
 	@priority = "4"
@@ -260,7 +257,9 @@ definition {
 	test LoginWithSpanishOnlyEnabledLocale {
 		property test.name.skip.portal.instance = "Login#LoginWithSpanishOnlyEnabledLocale";
 
-		User.firstLoginPG();
+		User.firstLoginUI();
+
+		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -279,9 +278,9 @@ definition {
 
 		Portlet.assertServerStartup();
 
-		User.loginPG(
-			localization = "ES",
+		User.firstLoginUI(
 			password = "test",
+			specificURL = "${portalURL}/es",
 			userEmailAddress = "test@liferay.com");
 	}
 
@@ -423,7 +422,7 @@ definition {
 		var userEmailAddress = PropsUtil.get("email.address.2");
 		var userPassword = PropsUtil.get("email.password.2");
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
@@ -437,17 +436,13 @@ definition {
 
 		PortalInstances.viewCP(virtualHost = "www.able.com");
 
-		User.firstLoginPG(
+		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "SSO",
 			configurationName = "OpenID Connect",
 			configurationScope = "Virtual Instance Scope");
@@ -482,7 +477,7 @@ definition {
 
 		UserBar.signOut();
 
-		User.loginPG(
+		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://www.able.com:8080",
 			userEmailAddress = "test@www.able.com");
@@ -605,7 +600,7 @@ definition {
 	test TokenBasedSSOSmoke {
 		property test.name.skip.portal.instance = "Login#TokenBasedSSOSmoke";
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -639,10 +634,10 @@ definition {
 			virtualHost = "www.able.com",
 			webId = "www.able.com");
 
-		User.firstLoginPG(
+		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

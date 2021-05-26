@@ -50,11 +50,6 @@ public class TalendDispatchTriggerMetadata implements DispatchTriggerMetadata {
 		return _ready;
 	}
 
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
-
 	private final Map<String, String> _errors;
 	private final boolean _ready;
 

@@ -36,10 +36,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
@@ -53,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 
 	@Override
-	public String getDefaultUrl(long groupId) {
+	public String getDefaultURL(long groupId) {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(_portal.getPathModule());
@@ -65,18 +61,6 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 		return sb.toString();
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getDownloadURL(long, long)}}
-	 */
-	@Deprecated
-	@Override
-	public String getDownloadUrl(long cpAttachmentFileEntryId)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public String getDownloadURL(
 			long commerceAccountId, long cpAttachmentFileEntryId)
@@ -85,72 +69,12 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 		return getURL(commerceAccountId, cpAttachmentFileEntryId, true, false);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public byte[] getMediaBytes(HttpServletRequest httpServletRequest)
-		throws IOException, PortalException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getThumbnailURL(long, long)}}
-	 */
-	@Deprecated
-	@Override
-	public String getThumbnailUrl(long cpAttachmentFileEntryId)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public String getThumbnailURL(
 			long commerceAccountId, long cpAttachmentFileEntryId)
 		throws PortalException {
 
 		return getURL(commerceAccountId, cpAttachmentFileEntryId, false, true);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getURL(long, long)}}
-	 */
-	@Deprecated
-	@Override
-	public String getUrl(long cpAttachmentFileEntryId) throws PortalException {
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getURL(long, long, boolean, boolean)}}
-	 */
-	@Deprecated
-	@Override
-	public String getUrl(
-			long cpAttachmentFileEntryId, boolean download, boolean thumbnail)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getURL(long, long, boolean, boolean, boolean)}}
-	 */
-	@Deprecated
-	@Override
-	public String getUrl(
-			long cpAttachmentFileEntryId, boolean download, boolean thumbnail,
-			boolean secure)
-		throws PortalException {
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -199,7 +123,7 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 
 			Company company = _companyLocalService.getCompany(companyId);
 
-			return getDefaultUrl(company.getGroupId());
+			return getDefaultURL(company.getGroupId());
 		}
 
 		if (secure) {
@@ -240,32 +164,6 @@ public class DefaultCommerceMediaResolver implements CommerceMediaResolver {
 		sb.append(download);
 
 		return sb.toString();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void sendMediaBytes(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void sendMediaBytes(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String download)
-		throws IOException {
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Reference

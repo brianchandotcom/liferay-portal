@@ -122,6 +122,26 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro addImageToCategory {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${categoryName}");
+
+		Navigator.gotoNavTab(navTab = "Images");
+
+		LexiconEntry.gotoAdd();
+
+		ControlMenu.viewHeaderTitle(headerTitle = "Add Image");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(locator1 = "Button#SELECT_FILE");
+
+		ItemSelector.uploadFile(uploadFileName = "${imageName}");
+
+		PortletEntry.publish();
+	}
+
 	macro addPropertyCP {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",

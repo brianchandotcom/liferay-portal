@@ -31,8 +31,6 @@ if (digitalSignatureTitle != null) {
 		module="js/pages/CollectDigitalSignature"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"basePortletURL", String.valueOf(renderResponse.createRenderURL())
-			).put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
 				"fileEntryId", (Long)request.getAttribute(DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRY_ID)

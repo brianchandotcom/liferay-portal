@@ -25,7 +25,8 @@ export const selectPageContentDropdownItems = (classPK) => (state) => {
 		return null;
 	}
 
-	const {editURL, permissionsURL, viewUsagesURL} = pageContent.actions;
+	const {editURL, permissionsURL, viewItemsURL, viewUsagesURL} =
+		pageContent.actions || {};
 
 	const dropdownItems = [];
 
@@ -33,6 +34,17 @@ export const selectPageContentDropdownItems = (classPK) => (state) => {
 		dropdownItems.push({
 			href: editURL,
 			label: Liferay.Language.get('edit'),
+		});
+	}
+
+	if (viewItemsURL) {
+		dropdownItems.push({
+			label: Liferay.Language.get('view-items'),
+			onClick: () =>
+				openModal({
+					title: Liferay.Language.get('view-items'),
+					url: viewItemsURL,
+				}),
 		});
 	}
 

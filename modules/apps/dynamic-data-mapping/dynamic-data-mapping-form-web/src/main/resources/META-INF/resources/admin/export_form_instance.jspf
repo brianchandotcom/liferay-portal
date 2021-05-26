@@ -26,13 +26,6 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 %>
 
 <div class="hide" id="<portlet:namespace />exportFormInstance">
-	<div class="hide" id="<portlet:namespace />csvWarning">
-		<clay:alert
-			displayType="warning"
-			message="csv-warning-message"
-		/>
-	</div>
-
 	<clay:alert
 		message="timezone-warning-message"
 	/>
@@ -40,6 +33,20 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 	<clay:alert
 		message="the-export-includes-data-from-all-fields-and-form-versions"
 	/>
+
+	<div class="hide" id="<portlet:namespace />csvWarning">
+		<clay:alert
+			displayType="warning"
+			message="csv-warning-message"
+		/>
+	</div>
+
+	<div class="hide" id="<portlet:namespace />xlsWarning">
+		<clay:alert
+			displayType="warning"
+			message="the-total-number-of-characters-that-a-cell-can-contain-is-32767-characters.-in-case-of-this-limit-is-exceeded-cell-content-will-be-trimmed"
+		/>
+	</div>
 
 	<aui:select label="file-extension" name="fileExtension">
 
@@ -87,11 +94,28 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 				}
 			};
 
+			var showXLSWarning = function () {
+				var xlsWarning = A.one('#<portlet:namespace />xlsWarning');
+
+				if (fileExtensionSelect.val() === 'xls') {
+					xlsWarning.show();
+				}
+				else {
+					xlsWarning.hide();
+				}
+			};
+
+			var showWarnings = function () {
+				showCSVWarning();
+
+				showXLSWarning();
+			};
+
 			if (content) {
 				if (fileExtensionSelect) {
-					showCSVWarning();
+					showWarnings();
 
-					fileExtensionSelect.on('change', showCSVWarning);
+					fileExtensionSelect.on('change', showWarnings);
 				}
 
 				form.append(content);

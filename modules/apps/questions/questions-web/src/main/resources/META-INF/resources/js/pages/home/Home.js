@@ -51,8 +51,10 @@ export default withRouter(({history}) => {
 	const [getSectionBySectionTitle] = useManualQuery(
 		getSectionBySectionTitleQuery,
 		{
-			filter: `title eq '${context.rootTopicId}' or id eq '${context.rootTopicId}'`,
-			siteKey: context.siteKey,
+			variables: {
+				filter: `title eq '${context.rootTopicId}' or id eq '${context.rootTopicId}'`,
+				siteKey: context.siteKey,
+			},
 		}
 	);
 
@@ -60,9 +62,10 @@ export default withRouter(({history}) => {
 		const fn =
 			!context.rootTopicId || context.rootTopicId === '0'
 				? getSections()
-				: getSectionBySectionTitle().then(
-						({data}) => data.messageBoardSections.items[0]
-				  );
+				: getSectionBySectionTitle().then((result) => ({
+						...result,
+						data: result.data.messageBoardSections.items[0],
+				  }));
 
 		fn.then((result) => ({
 			...result,
@@ -87,7 +90,7 @@ export default withRouter(({history}) => {
 	]);
 
 	function descriptionTruncate(description) {
-		return description.length > 150
+		return description?.length > 150
 			? description.substring(0, 150) + '...'
 			: description;
 	}

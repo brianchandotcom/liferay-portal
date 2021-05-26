@@ -84,7 +84,9 @@ export default withRouter(
 			if (question && question.id) {
 				getMessages(question.id, sort, page, pageSize).then(
 					({data: {messageBoardThreadMessageBoardMessages}}) => {
-						if (messageBoardThreadMessageBoardMessages.totalCount) {
+						if (
+							messageBoardThreadMessageBoardMessages?.totalCount
+						) {
 							if (sort !== 'votes') {
 								setAnswers({
 									...messageBoardThreadMessageBoardMessages,

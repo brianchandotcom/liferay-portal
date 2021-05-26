@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.util;
+package com.liferay.document.library.web.internal.configuration.util;
 
 import com.liferay.document.library.web.internal.configuration.FFExpirationDateReviewDateConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

@@ -12,25 +12,20 @@
  * details.
  */
 
-import React from 'react';
-import {HashRouter, Route, Switch} from 'react-router-dom';
+import moment from 'moment/min/moment-with-locales';
 
-import EnvelopeList from './envelope/EnvelopeList';
+const getLanguage = () => {
+	const language = Liferay.ThemeDisplay.getBCP47LanguageId();
 
-const DigitalSignature = (digitalSignatureProps) => {
-	return (
-		<HashRouter>
-			<Switch>
-				<Route
-					component={(props) => (
-						<EnvelopeList {...props} {...digitalSignatureProps} />
-					)}
-					exact
-					path="/"
-				/>
-			</Switch>
-		</HashRouter>
-	);
+	const languages = {
+		'zh-Hans-CN': 'zh-CN',
+	};
+
+	return languages[language] || language;
 };
 
-export default DigitalSignature;
+export const formatDate = (date, format) =>
+	moment(date).locale(getLanguage()).format(format);
+
+export const getDateFromNow = (date) =>
+	moment(date).locale(getLanguage()).fromNow();

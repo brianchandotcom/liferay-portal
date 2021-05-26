@@ -12,25 +12,24 @@
  * details.
  */
 
-import React from 'react';
-import {HashRouter, Route, Switch} from 'react-router-dom';
-
-import EnvelopeList from './envelope/EnvelopeList';
-
-const DigitalSignature = (digitalSignatureProps) => {
-	return (
-		<HashRouter>
-			<Switch>
-				<Route
-					component={(props) => (
-						<EnvelopeList {...props} {...digitalSignatureProps} />
-					)}
-					exact
-					path="/"
-				/>
-			</Switch>
-		</HashRouter>
-	);
+export const DOCUSIGN_STATUS = {
+	completed: {
+		color: 'success',
+		label: Liferay.Language.get('completed'),
+	},
+	declined: {
+		color: 'danger',
+		label: Liferay.Language.get('declined'),
+	},
+	delivered: {
+		color: 'success',
+		label: Liferay.Language.get('delivered'),
+	},
+	other: {
+		color: 'secondary',
+	},
+	sent: {
+		color: 'secondary',
+		label: Liferay.Language.get('sent'),
+	},
 };
-
-export default DigitalSignature;

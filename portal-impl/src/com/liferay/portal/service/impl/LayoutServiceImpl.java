@@ -768,24 +768,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	@Override
 	public List<Layout> getLayouts(
 			long groupId, boolean privateLayout, String keywords,
-			int[] statuses, String[] types, int start, int end,
-			OrderByComparator<Layout> orderByComparator)
-		throws PortalException {
-
-		if (Validator.isNull(keywords)) {
-			return layoutPersistence.filterFindByG_P_ST(
-				groupId, privateLayout, statuses, start, end,
-				orderByComparator);
-		}
-
-		return layoutLocalService.getLayouts(
-			groupId, getUserId(), privateLayout, keywords, statuses, types,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public List<Layout> getLayouts(
-			long groupId, boolean privateLayout, String keywords,
 			String[] types, int start, int end,
 			OrderByComparator<Layout> orderByComparator)
 		throws PortalException {
@@ -798,6 +780,24 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.getLayouts(
 			groupId, getUserId(), privateLayout, keywords, types, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public List<Layout> getLayouts(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types, int[] statuses, int start, int end,
+			OrderByComparator<Layout> orderByComparator)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return layoutPersistence.filterFindByG_P_ST(
+				groupId, privateLayout, statuses, start, end,
+				orderByComparator);
+		}
+
+		return layoutLocalService.getLayouts(
+			groupId, getUserId(), privateLayout, keywords, types, statuses,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -845,21 +845,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	@Override
 	public int getLayoutsCount(
 			long groupId, boolean privateLayout, String keywords,
-			int[] statuses, String[] types)
-		throws PortalException {
-
-		if (Validator.isNull(keywords)) {
-			return layoutPersistence.filterCountByG_P_ST(
-				groupId, privateLayout, statuses);
-		}
-
-		return layoutLocalService.getLayoutsCount(
-			groupId, getUserId(), privateLayout, keywords, statuses, types);
-	}
-
-	@Override
-	public int getLayoutsCount(
-			long groupId, boolean privateLayout, String keywords,
 			String[] types)
 		throws PortalException {
 
@@ -869,6 +854,21 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutLocalService.getLayoutsCount(
 			groupId, getUserId(), privateLayout, keywords, types);
+	}
+
+	@Override
+	public int getLayoutsCount(
+			long groupId, boolean privateLayout, String keywords,
+			String[] types, int[] statuses)
+		throws PortalException {
+
+		if (Validator.isNull(keywords)) {
+			return layoutPersistence.filterCountByG_P_ST(
+				groupId, privateLayout, statuses);
+		}
+
+		return layoutLocalService.getLayoutsCount(
+			groupId, getUserId(), privateLayout, keywords, types, statuses);
 	}
 
 	@Override

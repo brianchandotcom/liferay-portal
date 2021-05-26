@@ -1,7 +1,6 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Upgrades WEM";
@@ -36,6 +35,7 @@ definition {
 	@priority = "5"
 	test ViewMSBAndAddContentPageAfterUpgrade71102 {
 		property data.archive.type = "data-archive-msb";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.1.10.2";
 
 		Upgrade.viewMSBUpgrade();

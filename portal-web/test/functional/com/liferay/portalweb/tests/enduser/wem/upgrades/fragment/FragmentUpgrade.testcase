@@ -1,7 +1,6 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "mariadb,mysql,postgresql";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Upgrades Foundation";

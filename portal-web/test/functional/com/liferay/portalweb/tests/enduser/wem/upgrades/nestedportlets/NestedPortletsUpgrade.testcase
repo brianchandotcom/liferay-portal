@@ -1,7 +1,6 @@
 @component-name = "portal-upgrades"
 definition {
 
-	property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Nested Portlets,Upgrades WEM";
@@ -34,6 +33,7 @@ definition {
 	@priority = "5"
 	test ViewNestedPortletsArchive621015 {
 		property data.archive.type = "data-archive-nested-portlets";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
 		Upgrade.viewNestedPortlets();
@@ -42,6 +42,7 @@ definition {
 	@priority = "5"
 	test ViewNestedPortletsArchive621021 {
 		property data.archive.type = "data-archive-nested-portlets";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.viewNestedPortlets();
@@ -61,6 +62,7 @@ definition {
 	@priority = "5"
 	test ViewStagingNestedPortletsArchive621015 {
 		property data.archive.type = "data-archive-staging-nested-portlets";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.15";
 
 		Upgrade.viewStagingNestedPortlets();
@@ -70,6 +72,7 @@ definition {
 	@priority = "5"
 	test ViewStagingNestedPortletsArchive621021 {
 		property data.archive.type = "data-archive-staging-nested-portlets";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "6.2.10.21";
 
 		Upgrade.viewStagingNestedPortlets();

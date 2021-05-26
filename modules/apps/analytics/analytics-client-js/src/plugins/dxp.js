@@ -17,7 +17,12 @@ import {
 	MARK_NAVIGATION_START,
 	MARK_PAGE_LOAD_TIME,
 	MARK_VIEW_DURATION,
+	PARAM_CONFIGURATION_PORTLET_NAME,
+	PARAM_MODE_KEY,
+	PARAM_PORTLET_ID_KEY,
+	PARAM_VIEW_MODE,
 } from '../utils/constants';
+import {getSearchParams} from '../utils/params';
 import {createMark, getDuration} from '../utils/performance';
 
 const pageApplicationId = 'Page';
@@ -54,7 +59,41 @@ function dxp(analytics) {
 		});
 	}
 
+	/**
+	 * Checks based on the URL param if it is a configuration portlet
+	 */
+	function isConfigurationPortlet() {
+		const searchParams = getSearchParams();
+
+		const portletId = searchParams.get(PARAM_PORTLET_ID_KEY);
+
+		if (portletId === PARAM_CONFIGURATION_PORTLET_NAME) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks based on the URL param if the page is in view mode
+	 */
+	function isViewMode() {
+		const searchParams = getSearchParams();
+
+		const mode = searchParams.get(PARAM_MODE_KEY) || PARAM_VIEW_MODE;
+
+		if (mode === PARAM_VIEW_MODE) {
+			return true;
+		}
+
+		return false;
+	}
+
 	if (window.Liferay && window.Liferay.SPA) {
+		if (isConfigurationPortlet() || !isViewMode()) {
+			return analytics.disposeInternal();
+		}
+
 		const loadingStartMarks = window.performance.getEntriesByName(
 			MARK_LOAD_EVENT_START
 		);

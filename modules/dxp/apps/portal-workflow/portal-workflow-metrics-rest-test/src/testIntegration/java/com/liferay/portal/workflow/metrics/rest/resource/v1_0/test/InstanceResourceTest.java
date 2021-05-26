@@ -87,6 +87,28 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetProcessInstance() throws Exception {
+		Instance instance = randomInstance();
+
+		instance.setSlaResults(
+			new SLAResult[] {
+				_toSLAResult(true, SLAResult.Status.NEW),
+				_toSLAResult(true, SLAResult.Status.PAUSED),
+				_toSLAResult(true, SLAResult.Status.RUNNING),
+				_toSLAResult(true, SLAResult.Status.STOPPED)
+			});
+
+		testGetProcessInstancesPage_addInstance(_process.getId(), instance);
+
+		Instance getInstance = instanceResource.getProcessInstance(
+			instance.getProcessId(), instance.getId());
+
+		assertEquals(instance, getInstance);
+		assertValid(getInstance);
+	}
+
+	@Override
+	@Test
 	public void testGetProcessInstancesPage() throws Exception {
 		super.testGetProcessInstancesPage();
 

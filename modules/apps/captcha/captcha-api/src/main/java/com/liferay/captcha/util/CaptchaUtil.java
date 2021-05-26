@@ -117,12 +117,10 @@ public class CaptchaUtil {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_captchaConfiguration = ConfigurableUtil.createConfigurable(
-			CaptchaConfiguration.class, properties);
+		modified(properties);
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, Captcha.class, "captcha.engine.impl");
@@ -135,6 +133,12 @@ public class CaptchaUtil {
 		_serviceTrackerMap = null;
 	}
 
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_captchaConfiguration = ConfigurableUtil.createConfigurable(
+			CaptchaConfiguration.class, properties);
+	}
+
 	@Reference(unbind = "-")
 	protected void setConfigurationAdmin(
 		ConfigurationAdmin configurationAdmin) {
@@ -144,7 +148,6 @@ public class CaptchaUtil {
 
 	private static volatile CaptchaConfiguration _captchaConfiguration;
 	private static ConfigurationAdmin _configurationAdmin;
-	private static volatile ServiceTrackerMap<String, Captcha>
-		_serviceTrackerMap;
+	private static ServiceTrackerMap<String, Captcha> _serviceTrackerMap;
 
 }

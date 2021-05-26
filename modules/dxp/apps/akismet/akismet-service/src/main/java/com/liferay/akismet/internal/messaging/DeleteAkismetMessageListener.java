@@ -54,10 +54,8 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteAkismetMessageListener extends BaseMessageListener {
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
-			AkismetServiceConfiguration.class, properties);
+		modified(properties);
 
 		String cronExpression = GetterUtil.getString(
 			properties.get("cron.expression"), _DEFAULT_CRON_EXPRESSION);
@@ -77,6 +75,12 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 		_schedulerEngineHelper.register(
 			this, _schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 		_initialized = true;
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
+			AkismetServiceConfiguration.class, properties);
 	}
 
 	@Deactivate
@@ -129,7 +133,7 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
-	private volatile SchedulerEntryImpl _schedulerEntryImpl;
+	private SchedulerEntryImpl _schedulerEntryImpl;
 
 	@Reference
 	private TriggerFactory _triggerFactory;

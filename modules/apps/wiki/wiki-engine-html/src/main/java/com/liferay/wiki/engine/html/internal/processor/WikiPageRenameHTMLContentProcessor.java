@@ -26,7 +26,6 @@ import java.net.URLEncoder;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Roberto Díaz
@@ -40,7 +39,6 @@ public class WikiPageRenameHTMLContentProcessor
 	extends BaseWikiPageRenameContentProcessor {
 
 	@Activate
-	@Modified
 	protected void activate() {
 		regexps.put(
 			"(<img [^s]*src=\"[^g]+get_page_attachment\\?[^t]+title=)" +

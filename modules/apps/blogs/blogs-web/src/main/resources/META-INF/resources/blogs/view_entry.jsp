@@ -102,9 +102,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						<strong><liferay-ui:message key="more-blog-entries" /></strong>
 					</h2>
 
-					<clay:row
-						cssClass="widget-mode-card"
-					>
+					<div class="widget-mode-card">
 
 						<%
 						request.setAttribute("view_entry_related.jsp-blogs_entry", previousEntry);
@@ -117,7 +115,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						%>
 
 						<liferay-util:include page="/blogs/view_entry_related.jsp" servletContext="<%= application %>" />
-					</clay:row>
+					</div>
 				</clay:col>
 			</clay:row>
 		</c:if>

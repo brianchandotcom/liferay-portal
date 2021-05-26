@@ -65,8 +65,7 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 					"deleted, nameIdFormat, null as nameIdNameQualifier, null ",
 					"as nameIdSpProvidedId, nameIdValue, samlSpEntityId from ",
 					"SamlIdpSpSession group by companyId, userId, userName, ",
-					"samlSpEntityId, nameIdFormat, nameIdValue, ",
-					"samlSpEntityId"));
+					"samlSpEntityId, nameIdFormat, nameIdValue"));
 
 			runSQL(
 				StringBundler.concat(

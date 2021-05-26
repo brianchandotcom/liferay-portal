@@ -41,10 +41,13 @@ export default [
 
 	resolution,
 
+	// Dxp should be before other events plugins, because it can dispose analytics
+
+	dxp,
+
 	blogs,
 	custom,
 	documents,
-	dxp,
 	forms,
 	read,
 	scrolling,

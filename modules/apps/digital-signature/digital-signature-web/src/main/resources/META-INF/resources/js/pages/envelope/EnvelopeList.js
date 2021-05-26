@@ -15,11 +15,11 @@
 import ClayBadge from '@clayui/badge';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLabel from '@clayui/label';
-import ListView from 'data-engine-js-components-web/js/components/list-view/ListView.es';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+import ListView from '../../components/list-view/ListView';
 import {DOCUSIGN_STATUS} from '../../utils/contants';
 import {getDateFromNow} from '../../utils/moment';
 
@@ -51,10 +51,20 @@ const COLUMNS = [
 	},
 ];
 
+const getEnvelopeStatus = (status) =>
+	DOCUSIGN_STATUS[status] || {color: 'secondary', label: status};
+
 const EnvelopeList = ({baseResourceURL, history}) => (
 	<div className="envelope-list">
 		<ListView
-			actions={[]}
+			actions={[
+				{
+					name: Liferay.Language.get('download-files'),
+				},
+				{
+					name: Liferay.Language.get('move'),
+				},
+			]}
 			addButton={() => (
 				<ClayButtonWithIcon
 					className="nav-btn nav-btn-monospaced"
@@ -83,30 +93,29 @@ const EnvelopeList = ({baseResourceURL, history}) => (
 				senderEmailAddress,
 				status,
 				recipients: {signers = []},
-			}) => {
-				const {color} =
-					DOCUSIGN_STATUS[status] || DOCUSIGN_STATUS.other;
-
-				return {
-					createdAt: getDateFromNow(createdLocalDateTime),
-					emailSubject,
-					name: <Link to={`/envelope/${envelopeId}`}>{name}</Link>,
-					recipients: (
-						<span className="d-flex">
-							{signers[0]?.name}
-							{signers.length > 1 && (
-								<ClayBadge
-									className="ml-1"
-									displayType="primary"
-									label={`+${signers.length - 1}`}
-								/>
-							)}
-						</span>
-					),
-					senderEmailAddress,
-					status: <ClayLabel displayType={color}>{status}</ClayLabel>,
-				};
-			}}
+			}) => ({
+				createdAt: getDateFromNow(createdLocalDateTime),
+				emailSubject,
+				name: <Link to={`/envelope/${envelopeId}`}>{name}</Link>,
+				recipients: (
+					<span className="d-flex">
+						{signers[0]?.name}
+						{signers.length > 1 && (
+							<ClayBadge
+								className="ml-1"
+								displayType="primary"
+								label={`+${signers.length - 1}`}
+							/>
+						)}
+					</span>
+				),
+				senderEmailAddress,
+				status: (
+					<ClayLabel displayType={getEnvelopeStatus(status).color}>
+						{getEnvelopeStatus(status).label}
+					</ClayLabel>
+				),
+			})}
 		</ListView>
 	</div>
 );

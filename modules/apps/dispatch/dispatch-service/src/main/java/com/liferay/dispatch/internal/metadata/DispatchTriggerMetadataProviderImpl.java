@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Igor Beslic
  */
 @Component(service = DispatchTriggerMetadataProvider.class)
-public class DispatchTaskMetadataProviderImpl
+public class DispatchTriggerMetadataProviderImpl
 	implements DispatchTriggerMetadataProvider {
 
 	@Override
@@ -120,7 +120,7 @@ public class DispatchTaskMetadataProviderImpl
 		"dispatch.task.executor.type";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DispatchTaskMetadataProviderImpl.class);
+		DispatchTriggerMetadataProviderImpl.class);
 
 	private static final DispatchTriggerMetadata
 		_defaultDispatchTriggerMetadata = new DispatchTriggerMetadata() {

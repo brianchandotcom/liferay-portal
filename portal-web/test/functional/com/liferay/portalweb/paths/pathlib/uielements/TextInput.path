@@ -490,7 +490,7 @@
 </tr>
 <tr>
 	<td>SELECTOR_INPUT</td>
-	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::div//div[contains(@class,'input-group')]//input[contains(@type,'text')]</td>
+	<td>//label[normalize-space(text())='${key_fieldFieldLabel}']/following-sibling::div//div[contains(@class,'input-group')]//input[not(contains(@type,'hidden'))]</td>
 	<td></td>
 </tr>
 <tr>

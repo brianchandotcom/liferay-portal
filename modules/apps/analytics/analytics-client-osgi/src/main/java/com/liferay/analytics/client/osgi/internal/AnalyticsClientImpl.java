@@ -29,13 +29,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.TimeZoneThreadLocal;
 
-import java.util.Dictionary;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpSession;
@@ -156,18 +155,15 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 	}
 
 	protected void initializeJSONWebServiceClient() {
-		Properties properties = new Properties();
-
-		properties.setProperty(
-			"hostName", _analyticsClientConfiguration.analyticsGatewayHost());
-		properties.setProperty(
-			"hostPort", _analyticsClientConfiguration.analyticsGatewayPort());
-		properties.setProperty(
-			"protocol",
-			_analyticsClientConfiguration.analyticsGatewayProtocol());
-
 		ComponentInstance componentInstance = _componentFactory.newInstance(
-			(Dictionary)properties);
+			HashMapDictionaryBuilder.put(
+				"hostName", _analyticsClientConfiguration.analyticsGatewayHost()
+			).put(
+				"hostPort", _analyticsClientConfiguration.analyticsGatewayPort()
+			).put(
+				"protocol",
+				_analyticsClientConfiguration.analyticsGatewayProtocol()
+			).build());
 
 		_jsonWebServiceClient =
 			(JSONWebServiceClient)componentInstance.getInstance();

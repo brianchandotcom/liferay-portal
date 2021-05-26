@@ -14,28 +14,28 @@
 
 package com.liferay.layout.reports.web.internal.util;
 
-import org.commonmark.node.Link;
-import org.commonmark.parser.Parser;
-import org.commonmark.renderer.html.HtmlRenderer;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * @author Alejandro Tardín
  */
-public class MarkdownUtil {
+public class MarkdownUtilTest {
 
-	public static String markdownToHtml(String markdown) {
-		return _htmlRenderer.render(_markdownParser.parse(markdown));
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testMarkdownLinksAreOpenInAnotherTab() {
+		Assert.assertEquals(
+			"<p><a href=\"url\" target=\"_blank\">text</a></p>\n",
+			MarkdownUtil.markdownToHtml("[text](url)"));
 	}
-
-	private static final HtmlRenderer _htmlRenderer = HtmlRenderer.builder(
-	).attributeProviderFactory(
-		context -> (node, tagName, attributes) -> {
-			if (node instanceof Link) {
-				attributes.put("target", "_blank");
-			}
-		}
-	).build();
-	private static final Parser _markdownParser = Parser.builder(
-	).build();
 
 }

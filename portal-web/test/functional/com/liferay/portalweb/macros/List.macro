@@ -1,0 +1,18 @@
+definition {
+
+	@summary = "Add an item to the end of the list."
+	macro add {
+		Variables.assertDefined(parameterList = "${item}");
+
+		if ("${list}" == "") {
+			var newList = "${item}";
+		}
+
+		if ("${list}" != "") {
+			var newList = '''${list},${item}''';
+		}
+
+		return "${newList}";
+	}
+
+}

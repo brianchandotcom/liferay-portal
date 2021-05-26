@@ -26,7 +26,7 @@ import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery;
+import org.elasticsearch.index.query.ZeroTermsQueryOption;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -161,10 +161,10 @@ public class MatchQueryTranslatorImpl
 		}
 
 		if (matchQuery.getZeroTermsQuery() != null) {
-			ZeroTermsQuery matchQueryBuilderZeroTermsQuery = translate(
+			ZeroTermsQueryOption zeroTermsQueryOption = translate(
 				matchQuery.getZeroTermsQuery());
 
-			matchQueryBuilder.zeroTermsQuery(matchQueryBuilderZeroTermsQuery);
+			matchQueryBuilder.zeroTermsQuery(zeroTermsQueryOption);
 		}
 
 		if (matchQuery.isFuzzyTranspositions() != null) {

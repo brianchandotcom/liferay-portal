@@ -20,7 +20,7 @@ import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.core.TimeValue;
 
 import org.junit.After;
 import org.junit.Assert;

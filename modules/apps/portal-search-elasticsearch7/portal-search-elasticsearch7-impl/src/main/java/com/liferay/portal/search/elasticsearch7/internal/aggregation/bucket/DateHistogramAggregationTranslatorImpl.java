@@ -23,7 +23,7 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.elasticsearch.search.aggregations.bucket.histogram.ExtendedBounds;
+import org.elasticsearch.search.aggregations.bucket.histogram.LongBounds;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -52,11 +52,11 @@ public class DateHistogramAggregationTranslatorImpl
 		if ((dateHistogramAggregation.getMaxBound() != null) &&
 			(dateHistogramAggregation.getMinBound() != null)) {
 
-			ExtendedBounds extendedBounds = new ExtendedBounds(
+			LongBounds longBounds = new LongBounds(
 				dateHistogramAggregation.getMinBound(),
 				dateHistogramAggregation.getMaxBound());
 
-			dateHistogramAggregationBuilder.extendedBounds(extendedBounds);
+			dateHistogramAggregationBuilder.extendedBounds(longBounds);
 		}
 
 		if (dateHistogramAggregation.getMinDocCount() != null) {

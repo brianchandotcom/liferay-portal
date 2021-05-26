@@ -17,6 +17,8 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 import com.liferay.portal.search.query.MatchQuery;
 import com.liferay.portal.search.query.Operator;
 
+import org.elasticsearch.index.query.ZeroTermsQueryOption;
+
 /**
  * @author Michael C. Han
  */
@@ -60,15 +62,14 @@ public abstract class BaseMatchQueryTranslatorImpl {
 			"Invalid rewrite method: " + matchQueryRewriteMethod);
 	}
 
-	protected org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery
-		translate(MatchQuery.ZeroTermsQuery matchQueryZeroTermsQuery) {
+	protected ZeroTermsQueryOption translate(
+		MatchQuery.ZeroTermsQuery matchQueryZeroTermsQuery) {
 
 		if (matchQueryZeroTermsQuery == MatchQuery.ZeroTermsQuery.ALL) {
-			return org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery.ALL;
+			return ZeroTermsQueryOption.ALL;
 		}
 		else if (matchQueryZeroTermsQuery == MatchQuery.ZeroTermsQuery.NONE) {
-			return org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery.
-				NONE;
+			return ZeroTermsQueryOption.NONE;
 		}
 
 		throw new IllegalArgumentException(

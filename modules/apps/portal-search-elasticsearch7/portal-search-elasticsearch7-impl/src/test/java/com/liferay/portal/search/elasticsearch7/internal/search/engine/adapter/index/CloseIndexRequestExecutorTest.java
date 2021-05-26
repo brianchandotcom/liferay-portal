@@ -19,7 +19,7 @@ import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.core.TimeValue;
 
 import org.junit.After;
 import org.junit.Assert;

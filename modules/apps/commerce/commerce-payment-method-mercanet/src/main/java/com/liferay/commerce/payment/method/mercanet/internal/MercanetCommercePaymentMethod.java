@@ -19,6 +19,7 @@ import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.payment.constants.CommercePaymentWebKeys;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.mercanet.internal.configuration.MercanetGroupServiceConfiguration;
 import com.liferay.commerce.payment.method.mercanet.internal.connector.Environment;
@@ -259,12 +260,15 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 		URL redirectionURL = initializationResponse.getRedirectionUrl();
 
 		String url = StringBundler.concat(
-			_getServletUrl(mercanetCommercePaymentRequest), "?redirectUrl=",
-			URLCodec.encodeURL(redirectionURL.toString()), "&redirectionData=",
+			_getServletUrl(mercanetCommercePaymentRequest), StringPool.QUESTION,
+			CommercePaymentWebKeys.REDIRECT_URL, StringPool.EQUAL,
+			URLCodec.encodeURL(redirectionURL.toString()), StringPool.QUESTION,
+			CommercePaymentWebKeys.REDIRECTION_DATA, StringPool.EQUAL,
 			URLEncoder.encode(
-				initializationResponse.getRedirectionData(), "UTF-8"),
-			"&seal=",
-			URLEncoder.encode(initializationResponse.getSeal(), "UTF-8"));
+				initializationResponse.getRedirectionData(), StringPool.UTF8),
+			StringPool.AMPERSAND, CommercePaymentWebKeys.SEAL, StringPool.EQUAL,
+			URLEncoder.encode(
+				initializationResponse.getSeal(), StringPool.UTF8));
 
 		return new CommercePaymentResult(
 			transactionId, commerceOrder.getCommerceOrderId(),

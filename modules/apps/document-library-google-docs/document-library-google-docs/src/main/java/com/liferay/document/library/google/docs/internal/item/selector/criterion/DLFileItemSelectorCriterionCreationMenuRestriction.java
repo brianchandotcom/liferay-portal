@@ -14,12 +14,13 @@
 
 package com.liferay.document.library.google.docs.internal.item.selector.criterion;
 
+import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.google.docs.internal.util.constants.GoogleDocsConstants;
 import com.liferay.document.library.item.selector.criterion.DLItemSelectorCriterionCreationMenuRestriction;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.Collections;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -41,9 +42,15 @@ public class DLFileItemSelectorCriterionCreationMenuRestriction
 
 	@Override
 	public Set<String> getAllowedCreationMenuUIItemKeys() {
-		return Collections.singleton(
-			DLFileEntryType.class.getSimpleName() +
-				GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY);
+		return _allowedCreationMenuUIItemKeys;
 	}
+
+	private static final Set<String> _allowedCreationMenuUIItemKeys =
+		SetUtil.fromArray(
+			new String[] {
+				DLFileEntryType.class.getSimpleName() +
+					GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY,
+				DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.UPLOAD
+			});
 
 }

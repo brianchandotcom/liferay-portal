@@ -21,7 +21,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.GenericUtil;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,7 +48,7 @@ public class DLItemSelectorCriterionCreationMenuRestrictionUtil {
 				_serviceTrackerMap.getService(clazz.getName());
 
 		if (dlItemSelectorCriterionCreationMenuRestrictions == null) {
-			return Collections.emptySet();
+			return null;
 		}
 
 		Stream<DLItemSelectorCriterionCreationMenuRestriction> stream =

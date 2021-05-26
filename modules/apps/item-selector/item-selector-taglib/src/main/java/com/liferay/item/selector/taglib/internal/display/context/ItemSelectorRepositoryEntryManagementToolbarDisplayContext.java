@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -110,15 +109,16 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 		Set<String> allowedCreationMenuUIItemKeys =
 			_getAllowedCreationMenuUIItemKeys();
 
+		if (SetUtil.isEmpty(allowedCreationMenuUIItemKeys)) {
+			return creationMenu;
+		}
+
 		for (Menu menu : menus) {
 			List<URLMenuItem> urlMenuItems =
 				(List<URLMenuItem>)(List<?>)menu.getMenuItems();
 
 			for (URLMenuItem urlMenuItem : urlMenuItems) {
-				if (Objects.equals(
-						urlMenuItem.getKey(), DLUIItemKeys.ADD_FOLDER) ||
-					Objects.equals(urlMenuItem.getKey(), DLUIItemKeys.UPLOAD) ||
-					allowedCreationMenuUIItemKeys.contains(
+				if (allowedCreationMenuUIItemKeys.contains(
 						urlMenuItem.getKey())) {
 
 					creationMenu.addDropdownItem(
@@ -283,8 +283,9 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 				"liferay-item-selector:repository-entry-browser:" +
 					"allowedCreationMenuUIItemKeys");
 
-		if (SetUtil.isEmpty(allowedCreationMenuUIItemKeys)) {
-			return Collections.emptySet();
+		if (allowedCreationMenuUIItemKeys == null) {
+			return SetUtil.fromArray(
+				new String[] {DLUIItemKeys.ADD_FOLDER, DLUIItemKeys.UPLOAD});
 		}
 
 		return allowedCreationMenuUIItemKeys;

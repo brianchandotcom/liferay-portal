@@ -74,6 +74,21 @@ const mockLayoutReportsIssuesNoAccessibilityNoSEO = [
 	},
 ];
 
+const mockLayoutReportsIssuesOver100SEO = [
+	{
+		details: [],
+		key: 'accessibility',
+		title: 'Accessibility',
+		total: '0',
+	},
+	{
+		details: [],
+		key: 'seo',
+		title: 'SEO',
+		total: '101',
+	},
+];
+
 const mockPageURLs = [
 	{languageId: 'en-US', title: 'English', url: 'English URL'},
 ];
@@ -170,5 +185,24 @@ describe('IssuesList', () => {
 		expect(getByText('Missing Video Caption')).toBeInTheDocument();
 		expect(getAllByText('4').length).toBe(1);
 		expect(getAllByText('5').length).toBe(1);
+	});
+
+	it('show +100 if a section has more than 100 issues', () => {
+		const {getByText} = render(
+			<StoreContextProvider
+				value={{
+					data: {
+						defaultLanguageId,
+						imagesPath: 'imagesPath',
+						layoutReportsIssues: mockLayoutReportsIssuesOver100SEO,
+						pageURLs: mockPageURLs,
+					},
+				}}
+			>
+				<IssuesList />
+			</StoreContextProvider>
+		);
+
+		expect(getByText('+100')).toBeInTheDocument();
 	});
 });

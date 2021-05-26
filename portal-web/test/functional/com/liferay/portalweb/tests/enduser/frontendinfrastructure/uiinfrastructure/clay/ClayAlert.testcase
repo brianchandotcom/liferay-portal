@@ -20,10 +20,26 @@ definition {
 		}
 	}
 
+	@description = "Verify toast message popup can be closed manually"
+	@priority = "3"
+	@refactorneeded
+	test ToastMessageCanBeClosedManually {
+		property test.name.skip.portal.instance = "ClayAlert#ToastMessageCanBeClosedManually";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration");
+
+		SystemSettings.saveConfiguration();
+
+		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+	}
+
+	@description = "Verify toast message popup will close automatically"
 	@priority = "4"
 	@refactorneeded
-	test ToastMessageAutoClose {
-		property test.name.skip.portal.instance = "ClayAlert#ToastMessageAutoClose";
+	test ToastMessageCanCloseAutomatically {
+		property test.name.skip.portal.instance = "ClayAlert#ToastMessageCanCloseAutomatically";
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -43,20 +59,6 @@ definition {
 		Pause(locator1 = "5000");
 
 		takeScreenshot();
-
-		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
-	}
-
-	@priority = "3"
-	@refactorneeded
-	test ToastMessageManualClose {
-		property test.name.skip.portal.instance = "ClayAlert#ToastMessageManualClose";
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.frontend.js.spa.web.internal.configuration.SPAConfiguration");
-
-		SystemSettings.saveConfiguration();
 
 		AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}

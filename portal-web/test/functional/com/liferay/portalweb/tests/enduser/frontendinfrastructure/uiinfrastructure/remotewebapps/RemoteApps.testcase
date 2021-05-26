@@ -26,8 +26,9 @@ definition {
 		}
 	}
 
+	@description = "Verify remote app can be created"
 	@priority = "5"
-	test AddRemoteApp {
+	test CanBeCreated {
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -43,8 +44,9 @@ definition {
 		RemoteApps.viewTableEntryURL(entryURL = "http://www.liferay.com");
 	}
 
+	@description = "Verify remote app can be deleted"
 	@priority = "5"
-	test DeleteRemoteApp {
+	test CanBeDeleted {
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(

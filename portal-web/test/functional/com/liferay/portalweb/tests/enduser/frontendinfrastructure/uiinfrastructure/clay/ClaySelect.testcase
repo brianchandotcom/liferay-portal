@@ -37,9 +37,10 @@ definition {
 		}
 	}
 
+	@description = "Verify clay multiple select API options can be configured"
 	@priority = "5"
 	@refactorneeded
-	test SmokeMultipleSelect {
+	test MultipleCanBeConfigured {
 		Navigator.gotoNavTab(navTab = "Form Elements");
 
 		AssertEditable(
@@ -67,9 +68,10 @@ definition {
 			locator1 = "ClaySamplePortlet#SELECTOR");
 	}
 
+	@description = "Verify clay regular select API options can be configured"
 	@priority = "5"
 	@refactorneeded
-	test SmokeRegularSelect {
+	test RegularCanBeConfigured {
 		Navigator.gotoNavTab(navTab = "Form Elements");
 
 		ScrollWebElementIntoView(

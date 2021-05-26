@@ -1,0 +1,90 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "User Interface";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify the right to left localization css values are applied to a text field"
+	@priority = "5"
+	@refactorneeded
+	test RTLDirectionStyleAppliedToTextField {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RightToLeftInfrastructure#RTLDirectionStyleAppliedToTextField";
+		property testray.component.names = "WYSIWYG";
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		Navigator.ensureLocaleURL(locale = "ar");
+
+		PortletEntry.changeLocale(locale = "ar_SA");
+
+		WebContent.addCP(webContentTitle = "WC Title");
+
+		WebContent.viewRTLLayout();
+
+		Navigator.openURL();
+
+		Navigator.ensureLocaleURL(locale = "en");
+	}
+
+	@description = "Verify the right to left localization css values are applied to page layout"
+	@priority = "5"
+	@refactorneeded
+	test RTLStylesAppliedToPageLayout {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "RightToLeftInfrastructure#RTLStylesAppliedToPageLayout";
+		property testray.component.names = "WYSIWYG";
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "RTL Test Page");
+
+		Navigator.gotoPage(pageName = "RTL Test Page");
+
+		Portlet.addPG(portletName = "Language Selector");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "ar_SA",
+			textIcon = "العربية-السعودية");
+
+		ProductMenuHelper.openProductMenu();
+
+		Page.viewRTLLayout();
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "en_US",
+			textIcon = "english-United States");
+	}
+
+}

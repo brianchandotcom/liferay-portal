@@ -27,11 +27,11 @@ definition {
 		Button.clickPublish();
 	}
 
-	@description = "This test validates that a theme can be applied to a single page."
+	@description = "Verify page theme can be applied to page"
 	@priority = "5"
 	@refactorneeded
-	test ApplyThemeToSinglePage {
-		property test.name.skip.portal.instance = "Theme#ApplyThemeToSinglePage";
+	test CanBeAppliedToPage {
+		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPage";
 
 		User.firstLoginPG();
 
@@ -57,10 +57,40 @@ definition {
 		Theme.viewTestThemeBackgroundColor();
 	}
 
+	@description = "Verify portal will apply different available page theme if classic theme not available"
 	@priority = "5"
 	@refactorneeded
-	test DeactivateAndReactivateTheme {
-		property test.name.skip.portal.instance = "Theme#DeactivateAndReactivateTheme";
+	test CanBeAppliedToPageWhenClassicThemeNotAvailable {
+		property portal.upstream = "true";
+		property skip.start-app-server = "true";
+		property test.name.skip.portal.instance = "Theme#CanBeAppliedToPageWhenClassicThemeNotAvailable";
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "delete-portal-theme -Dtheme-name=classic-theme");
+
+		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openURL();
+
+		AssertConsoleTextPresent(value1 = "No theme found for specified theme id classic_WAR_classictheme. Returning the default theme.");
+
+		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
+
+		AssertHTMLSourceTextPresent(value1 = "-theme/images/favicon.ico");
+
+		AssertHTMLSourceTextNotPresent(value1 = "classic-theme/images/favicon.ico");
+
+		takeScreenshot();
+	}
+
+	@description = "Verify page theme can be deactivated and reactivated"
+	@priority = "5"
+	@refactorneeded
+	test CanBeDeactivatedAndReactivated {
+		property test.name.skip.portal.instance = "Theme#CanBeDeactivatedAndReactivated";
 
 		var appName = "test-theme";
 
@@ -133,38 +163,11 @@ definition {
 			themeName = "test-theme-7-4");
 	}
 
+	@description = "Verify page theme can be uninstalled and redeployed"
 	@priority = "5"
 	@refactorneeded
-	test StartPortalWithoutClassicTheme {
-		property portal.upstream = "true";
-		property skip.start-app-server = "true";
-		property test.name.skip.portal.instance = "Theme#StartPortalWithoutClassicTheme";
-
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "delete-portal-theme -Dtheme-name=classic-theme");
-
-		FileInstall.deployFileOnServer(liferayDependencyJars = "test-theme.war");
-
-		Portlet.startServer(deleteLiferayHome = "false");
-
-		Navigator.openURL();
-
-		AssertConsoleTextPresent(value1 = "No theme found for specified theme id classic_WAR_classictheme. Returning the default theme.");
-
-		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
-
-		AssertHTMLSourceTextPresent(value1 = "-theme/images/favicon.ico");
-
-		AssertHTMLSourceTextNotPresent(value1 = "classic-theme/images/favicon.ico");
-
-		takeScreenshot();
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test UninstallAndRedeployTheme {
-		property test.name.skip.portal.instance = "Theme#UninstallAndRedeployTheme";
+	test CanBeUnInstalledAndRedeployed {
+		property test.name.skip.portal.instance = "Theme#CanBeUnInstalledAndRedeployed";
 
 		var appName = "test-theme";
 

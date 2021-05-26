@@ -19,11 +19,12 @@ definition {
 		}
 	}
 
+	@description = "Verify loading bar is can be visible during new location based SPA load event"
 	@priority = "5"
 	@refactorneeded
-	test AssertLoadingBar {
+	test NewURLLoadEventCanDisplayLoadingBar {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "SPA#AssertLoadingBar";
+		property test.name.skip.portal.instance = "SPA#NewURLLoadEventCanDisplayLoadingBar";
 
 		Navigator.openURL();
 

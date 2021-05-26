@@ -25,90 +25,10 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-95157. Verify control menu on an admin page is styled correctly after refreshing page"
 	@priority = "5"
 	@refactorneeded
-	test CheckAUIPreloadConfiguration {
-		property test.name.skip.portal.instance = "UIInfrastructureUsecase#CheckAUIPreloadConfiguration";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Third Party",
-			configurationName = "AUI",
-			configurationScope = "System Scope");
-
-		FormFields.viewCheckboxNotChecked(fieldName = "enableAUIPreload");
-
-		SystemSettings.configureSystemSettingWithRefresh(
-			enableSetting = "true",
-			settingFieldName = "Preload Widely Used AUI Modules");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Third Party",
-			configurationName = "AUI",
-			configurationScope = "System Scope");
-
-		FormFields.viewCheckboxChecked(fieldName = "enableAUIPreload");
-
-		Navigator.gotoPage(pageName = "Home");
-	}
-
-	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on guest page level after page refresh."
-	@priority = "5"
-	@refactorneeded
-	test RefreshHomePage {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
-
-		Navigator.gotoPage(pageName = "Home");
-
-		ProductMenuHelper.closeProductMenu();
-
-		Refresh();
-
-		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
-			locator2 = "display",
-			value1 = "flex");
-
-		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
-			locator2 = "list-style",
-			value1 = "outside none none");
-
-		takeScreenshot();
-
-		ProductMenuHelper.openProductMenu();
-
-		Refresh();
-
-		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
-			locator2 = "display",
-			value1 = "flex");
-
-		AssertCssValue(
-			locator1 = "//ul[contains(@id,'controlMenu')]",
-			locator2 = "list-style",
-			value1 = "outside none none");
-
-		takeScreenshot();
-	}
-
-	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on admin page level after page refresh."
-	@priority = "5"
-	@refactorneeded
-	test RefreshWebContent {
+	test AdminPageCanDisplayStyleCorrectlyAfterPageRefresh {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -133,161 +53,10 @@ definition {
 		takeScreenshot();
 	}
 
+	@description = "Verify portlets have defined boundaries in 3 column page layout."
 	@priority = "5"
 	@refactorneeded
-	test RightToLeftSmoke {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RightToLeftSmoke";
-		property testray.component.names = "WYSIWYG";
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "RTL Test Page");
-
-		Navigator.gotoPage(pageName = "RTL Test Page");
-
-		Portlet.addPG(portletName = "Language Selector");
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "ar_SA",
-			textIcon = "العربية-السعودية");
-
-		ProductMenuHelper.openProductMenu();
-
-		Page.viewRTLLayout();
-
-		LanguagePortlet.selectLanguagePG(
-			locale = "en_US",
-			textIcon = "english-United States");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content");
-
-		WebContentNavigator.gotoAddCP();
-
-		Navigator.ensureLocaleURL(locale = "ar");
-
-		PortletEntry.changeLocale(locale = "ar_SA");
-
-		WebContent.addCP(webContentTitle = "WC Title");
-
-		WebContent.viewRTLLayout();
-
-		Navigator.openURL();
-
-		Navigator.ensureLocaleURL(locale = "en");
-	}
-
-	@description = "Ensure that a user can access portlet options and drag and drop portlets."
-	@priority = "5"
-	@refactorneeded
-	test Smoke {
-		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Test Page");
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		Portlet.addPG(portletName = "IFrame");
-
-		task ("Assert the 'Configuration' iframe of the IFrame portlet") {
-			Portlet.gotoPortletOptions(
-				portletName = "IFrame",
-				portletOption = "Configuration");
-
-			IFrame.selectConfigurationFrame();
-
-			AssertTextEquals(
-				key_navItem = "Sharing",
-				locator1 = "NavBar#NAV_ITEM_LINK",
-				value1 = "Sharing");
-
-			IFrame.closeFrame();
-		}
-
-		Navigator.gotoPage(pageName = "Test Page");
-
-		task ("Assert the 'Look and Feel' iframe of the IFrame portlet") {
-			Portlet.gotoPortletOptions(
-				portletName = "IFrame",
-				portletOption = "Look and Feel Configuration");
-
-			IFrame.selectConfigurationFrame();
-
-			var key_tab = "General";
-
-			AssertTextEquals(
-				locator1 = "NavTab#TAB_LINK",
-				value1 = "General");
-
-			IFrame.closeFrame();
-		}
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "1",
-			columnNumberTo = "2",
-			portletName = "IFrame");
-
-		Portlet.dragAndDropPortletToColumnPG(
-			columnNumberFrom = "2",
-			columnNumberTo = "1",
-			portletName = "IFrame");
-
-		task ("Removes IFrame Portlet on Test Page") {
-			Navigator.gotoPage(pageName = "Test Page");
-
-			Portlet.deletePG(portletName = "IFrame");
-
-			Portlet.viewNoSpecificPG(portletName = "IFrame");
-		}
-	}
-
-	@description = "This is a use case for LPS-70390."
-	@priority = "4"
-	@refactorneeded
-	test ViewNonASCIICharactersWithSPADisabled {
-		property custom.properties = "javascript.single.page.application.enabled=false";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userEmailAddress = "skandi@liferay.com",
-			userFirstName = "Skändi",
-			userLastName = "Ääkkönen",
-			userScreenName = "uskandi");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.viewCP(
-			userEmailAddress = "skandi@liferay.com",
-			userFirstName = "Skändi",
-			userLastName = "Ääkkönen",
-			userScreenName = "uskandi");
-	}
-
-	@description = "Checks for each portlet having defined boundaries."
-	@priority = "5"
-	@refactorneeded
-	test ViewPortletBoundaries {
+	test PortletBoundariesAreContained {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -356,6 +125,152 @@ definition {
 		Portlet.assertPortletHeader(portletName = "DLPortlet");
 
 		takeScreenshot();
+	}
+
+	@description = "Smoke test to verify portlet can be dragged and dropped, configuration is available, look and feel is available, and can be removed"
+	@priority = "5"
+	@refactorneeded
+	test PortletUISmoke {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Test Page");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Portlet.addPG(portletName = "IFrame");
+
+		task ("Assert the 'Configuration' iframe of the IFrame portlet") {
+			Portlet.gotoPortletOptions(
+				portletName = "IFrame",
+				portletOption = "Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			AssertTextEquals(
+				key_navItem = "Sharing",
+				locator1 = "NavBar#NAV_ITEM_LINK",
+				value1 = "Sharing");
+
+			IFrame.closeFrame();
+		}
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		task ("Assert the 'Look and Feel' iframe of the IFrame portlet") {
+			Portlet.gotoPortletOptions(
+				portletName = "IFrame",
+				portletOption = "Look and Feel Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			var key_tab = "General";
+
+			AssertTextEquals(
+				locator1 = "NavTab#TAB_LINK",
+				value1 = "General");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Assert able to drag and drop portlet") {
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "1",
+				columnNumberTo = "2",
+				portletName = "IFrame");
+
+			Portlet.dragAndDropPortletToColumnPG(
+				columnNumberFrom = "2",
+				columnNumberTo = "1",
+				portletName = "IFrame");
+		}
+
+		task ("Removes IFrame Portlet on Test Page") {
+			Navigator.gotoPage(pageName = "Test Page");
+
+			Portlet.deletePG(portletName = "IFrame");
+
+			Portlet.viewNoSpecificPG(portletName = "IFrame");
+		}
+	}
+
+	@description = "This is a use case for LPS-95157. Verify control menu on home page is styled correctly after refreshing page."
+	@priority = "5"
+	@refactorneeded
+	test SitePageCanDisplayStyleCorrectlyAfterPageRefresh {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		Navigator.gotoPage(pageName = "Home");
+
+		ProductMenuHelper.closeProductMenu();
+
+		Refresh();
+
+		AssertCssValue(
+			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator2 = "display",
+			value1 = "flex");
+
+		AssertCssValue(
+			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator2 = "list-style",
+			value1 = "outside none none");
+
+		takeScreenshot();
+
+		ProductMenuHelper.openProductMenu();
+
+		Refresh();
+
+		AssertCssValue(
+			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator2 = "display",
+			value1 = "flex");
+
+		AssertCssValue(
+			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator2 = "list-style",
+			value1 = "outside none none");
+
+		takeScreenshot();
+	}
+
+	@description = "This is a use case for LPS-70390."
+	@priority = "4"
+	@refactorneeded
+	test ViewNonASCIICharactersWithSPADisabled {
+		property custom.properties = "javascript.single.page.application.enabled=false";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addCP(
+			userEmailAddress = "skandi@liferay.com",
+			userFirstName = "Skändi",
+			userLastName = "Ääkkönen",
+			userScreenName = "uskandi");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "skandi@liferay.com",
+			userFirstName = "Skändi",
+			userLastName = "Ääkkönen",
+			userScreenName = "uskandi");
 	}
 
 	@description = "This test validates sign in and sign out UI"

@@ -95,7 +95,18 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		_analyticsClientConfiguration = ConfigurableUtil.createConfigurable(
 			AnalyticsClientConfiguration.class, properties);
 
-		initializeJSONWebServiceClient();
+		ComponentInstance componentInstance = _componentFactory.newInstance(
+			HashMapDictionaryBuilder.put(
+				"hostName", _analyticsClientConfiguration.analyticsGatewayHost()
+			).put(
+				"hostPort", _analyticsClientConfiguration.analyticsGatewayPort()
+			).put(
+				"protocol",
+				_analyticsClientConfiguration.analyticsGatewayProtocol()
+			).build());
+
+		_jsonWebServiceClient =
+			(JSONWebServiceClient)componentInstance.getInstance();
 	}
 
 	protected String getUserId(String dataSourceId) throws Exception {
@@ -152,21 +163,6 @@ public class AnalyticsClientImpl implements AnalyticsClient {
 		}
 
 		return userId;
-	}
-
-	protected void initializeJSONWebServiceClient() {
-		ComponentInstance componentInstance = _componentFactory.newInstance(
-			HashMapDictionaryBuilder.put(
-				"hostName", _analyticsClientConfiguration.analyticsGatewayHost()
-			).put(
-				"hostPort", _analyticsClientConfiguration.analyticsGatewayPort()
-			).put(
-				"protocol",
-				_analyticsClientConfiguration.analyticsGatewayProtocol()
-			).build());
-
-		_jsonWebServiceClient =
-			(JSONWebServiceClient)componentInstance.getInstance();
 	}
 
 	private static final String _REQUEST_ATTRIBUTE_NAME_ANALYTICS_USER_ID =

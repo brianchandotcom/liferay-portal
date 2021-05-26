@@ -62,6 +62,17 @@ export const MARK_PAGE_LOAD_TIME = 'pageLoadTimeSPA';
 
 export const MARK_VIEW_DURATION = 'viewDurationSPA';
 
+// Params Constants
+
+export const PARAM_PORTLET_ID_KEY = 'p_p_id';
+
+export const PARAM_CONFIGURATION_PORTLET_NAME =
+	'com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet';
+
+export const PARAM_MODE_KEY = 'p_l_mode';
+
+export const PARAM_VIEW_MODE = 'view';
+
 // Read metrics Constants
 
 export const READ_CHARS_PER_MIN = 500;

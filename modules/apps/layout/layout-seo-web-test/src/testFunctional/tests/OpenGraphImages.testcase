@@ -47,7 +47,10 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_1.jpg");
 
-		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
+		Click(
+			key_fieldLabel = "Image",
+			key_text = "Clear",
+			locator1 = "Button#ANY_WITH_LABEL");
 
 		OpenGraph.configureOpenGraph(
 			customImage = "true",
@@ -147,7 +150,10 @@ definition {
 			customImage = "true",
 			uploadFileName = "Document_2.jpg");
 
-		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
+		Click(
+			key_fieldLabel = "Image",
+			key_text = "Clear",
+			locator1 = "Button#ANY_WITH_LABEL");
 
 		Button.click(button = "Save");
 
@@ -212,7 +218,10 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Open Graph");
 
-		Click(locator1 = "Button#CLEAR_OPEN_GRAPH_IMAGE");
+		Click(
+			key_fieldLabel = "Image",
+			key_text = "Clear",
+			locator1 = "Button#ANY_WITH_LABEL");
 
 		Button.click(button = "Save");
 

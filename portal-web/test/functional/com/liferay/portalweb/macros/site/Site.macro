@@ -100,7 +100,10 @@ definition {
 		if (isSet(parentSiteName)) {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
-			Button.click(button = "Change");
+			Click(
+				key_fieldLabel = "Parent Site",
+				key_text = "Change",
+				locator1 = "Button#ANY_WITH_LABEL");
 
 			var key_parentSiteName = "${parentSiteName}";
 
@@ -1101,7 +1104,10 @@ definition {
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");
 
-		Button.click(button = "Change");
+		Click(
+			key_fieldLabel = "Parent Site",
+			key_text = "Change",
+			locator1 = "Button#ANY_WITH_LABEL");
 
 		var key_parentSiteName = "${parentSiteName}";
 

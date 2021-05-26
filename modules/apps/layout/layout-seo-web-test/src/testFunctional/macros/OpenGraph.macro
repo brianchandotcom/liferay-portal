@@ -39,9 +39,15 @@ definition {
 		if (isSet(customImage)) {
 			var key_uploadFileName = "${uploadFileName}";
 
-			AssertElementPresent.pauseAssertVisible(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
+			AssertElementPresent.pauseAssertVisible(
+				key_fieldLabel = "Image",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
 
-			Click.pauseClickAt(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
+			Click.pauseClickAt(
+				key_fieldLabel = "Image",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
 
 			AssertTextEquals(
 				locator1 = "Modal#HEADER",
@@ -165,7 +171,10 @@ definition {
 				locator1 = "FormFields#OPEN_GRAPH_LABEL",
 				value1 = "Image Alt Description");
 
-			AssertElementPresent(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
+			AssertElementPresent(
+				key_fieldLabel = "Image",
+				key_text = "Select",
+				locator1 = "Button#ANY_WITH_LABEL");
 		}
 	}
 

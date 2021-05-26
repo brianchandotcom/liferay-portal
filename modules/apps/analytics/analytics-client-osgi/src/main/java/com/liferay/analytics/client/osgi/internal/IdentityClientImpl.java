@@ -22,10 +22,9 @@ import com.liferay.petra.json.web.service.client.JSONWebServiceClient;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
-import java.util.Dictionary;
 import java.util.Map;
-import java.util.Properties;
 
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
@@ -79,17 +78,15 @@ public class IdentityClientImpl implements IdentityClient {
 	}
 
 	protected void initializeJSONWebServiceClient() {
-		Properties properties = new Properties();
-
-		properties.setProperty(
-			"hostName", _identifyClientConfiguration.identifyGatewayHost());
-		properties.setProperty(
-			"hostPort", _identifyClientConfiguration.identifyGatewayPort());
-		properties.setProperty(
-			"protocol", _identifyClientConfiguration.identifyGatewayProtocol());
-
 		ComponentInstance componentInstance = _componentFactory.newInstance(
-			(Dictionary)properties);
+			HashMapDictionaryBuilder.put(
+				"hostName", _identifyClientConfiguration.identifyGatewayHost()
+			).put(
+				"hostPort", _identifyClientConfiguration.identifyGatewayPort()
+			).put(
+				"protocol",
+				_identifyClientConfiguration.identifyGatewayProtocol()
+			).build());
 
 		componentInstance.getInstance();
 

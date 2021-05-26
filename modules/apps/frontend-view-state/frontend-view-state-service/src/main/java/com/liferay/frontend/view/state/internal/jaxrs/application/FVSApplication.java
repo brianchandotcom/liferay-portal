@@ -54,17 +54,17 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 public class FVSApplication extends Application {
 
 	@GET
-	@Path("/active-view/{clayDataSetDisplayId}")
+	@Path("/active-view/{activeViewId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getActiveView(
-		@PathParam("clayDataSetDisplayId") String clayDataSetDisplayId,
+		@PathParam("activeViewId") String activeViewId,
 		@QueryParam("plid") long plid,
 		@QueryParam("portletId") String portletId, @Context User user) {
 
 		try {
 			FVSActiveEntry fvsActiveEntry =
 				_fvsActiveEntryLocalService.fetchFVSActiveEntry(
-					user.getUserId(), clayDataSetDisplayId, plid, portletId);
+					user.getUserId(), activeViewId, plid, portletId);
 
 			if (fvsActiveEntry == null) {
 				return Response.status(
@@ -90,10 +90,10 @@ public class FVSApplication extends Application {
 	}
 
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/active-view/{clayDataSetDisplayId}/save")
+	@Path("/active-view/{activeViewId}/save")
 	@POST
 	public Response saveActiveView(
-		@PathParam("clayDataSetDisplayId") String clayDataSetDisplayId,
+		@PathParam("activeViewId") String activeViewId,
 		@QueryParam("plid") long plid,
 		@QueryParam("portletId") String portletId, @Context User user,
 		String viewState) {
@@ -101,15 +101,15 @@ public class FVSApplication extends Application {
 		try {
 			FVSActiveEntry fvsActiveEntry =
 				_fvsActiveEntryLocalService.fetchFVSActiveEntry(
-					user.getUserId(), clayDataSetDisplayId, plid, portletId);
+					user.getUserId(), activeViewId, plid, portletId);
 
 			if (fvsActiveEntry == null) {
 				FVSEntry fvsEntry = _fvsEntryLocalService.addFVSEntry(
 					user.getUserId(), viewState);
 
 				_fvsActiveEntryLocalService.addFVSActiveEntry(
-					user.getUserId(), fvsEntry.getFvsEntryId(),
-					clayDataSetDisplayId, plid, portletId);
+					user.getUserId(), fvsEntry.getFvsEntryId(), activeViewId,
+					plid, portletId);
 			}
 			else {
 				FVSEntry fvsEntry = _fvsEntryLocalService.getFVSEntry(

@@ -73,6 +73,9 @@ public class TextDDMFormFieldTemplateContextContributor
 			).put(
 				"displayStyle", getDisplayStyle(ddmFormField)
 			).put(
+				"hideField",
+				GetterUtil.getBoolean(ddmFormField.getProperty("hideField"))
+			).put(
 				"placeholder",
 				DDMFormFieldTypeUtil.getPropertyValue(
 					ddmFormField, locale, "placeholder")

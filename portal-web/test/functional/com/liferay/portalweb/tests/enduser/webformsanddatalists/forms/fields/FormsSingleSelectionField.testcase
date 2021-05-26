@@ -157,7 +157,6 @@ definition {
 			key_fieldName = "Single Selection",
 			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
 
-
 		AssertElementPresent(
 			key_bodyText = "Option 1",
 			key_fieldName = "Copy of Single Selection",

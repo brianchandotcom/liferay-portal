@@ -336,13 +336,54 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6216. Search Order from UI"
-	@ignore = "true"
 	@priority = "3"
 	test SearchOrder {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceOrders#SearchOrder";
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
 
 		// TODO COMMERCE-6216 SearchOrder Pending Implementation
 
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		CommerceAcceleratorsInitializer.createNewOrderFromAccountSelectorDropdown();
+
+		Refresh();
+
+		var orderId = selenium.getText("CommerceOrders#PENDING_ORDERS_ORDER_ID");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Mount",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		CommerceNavigator.searchEntry(entryName = "${orderId}");
+
+		AssertElementPresent(
+			key_entryName = "${orderId}",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		AssertTextEquals(
+			locator1 = "CommerceEntry#PAGINATION_RESULTS",
+			value1 = "Showing 1 to 1 of 1");
 	}
 
 	@description = "This is a test for COMMERCE-5982. As an order manager, I want to sort orders by ascending or descending order date"

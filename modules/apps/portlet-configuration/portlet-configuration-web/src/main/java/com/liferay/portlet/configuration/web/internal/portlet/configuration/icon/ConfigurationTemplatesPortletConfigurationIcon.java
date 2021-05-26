@@ -165,6 +165,11 @@ public class ConfigurationTemplatesPortletConfigurationIcon
 	}
 
 	@Override
+	public boolean isShowInEditMode(PortletRequest portletRequest) {
+		return true;
+	}
+
+	@Override
 	public boolean isUseDialog() {
 		return true;
 	}

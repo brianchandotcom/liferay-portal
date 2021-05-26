@@ -139,6 +139,11 @@ public class ExportImportPortletConfigurationIcon
 	}
 
 	@Override
+	public boolean isShowInEditMode(PortletRequest portletRequest) {
+		return true;
+	}
+
+	@Override
 	public boolean isToolTip() {
 		return false;
 	}

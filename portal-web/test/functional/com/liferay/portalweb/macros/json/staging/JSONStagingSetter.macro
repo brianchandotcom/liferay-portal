@@ -24,7 +24,7 @@ com_liferay_wiki_web_portlet_WikiAdminPortlet
 
 		var portletIds = StringUtil.regexReplaceAll("${portletIds}", "${newLine}", "");
 
-		var attributes = "{}";
+		var attributes = "";
 
 		for (var portletId : list "${portletIds}") {
 			var result = JSONPortlet.hasPortlet(portletId = "${portletId}");
@@ -32,17 +32,12 @@ com_liferay_wiki_web_portlet_WikiAdminPortlet
 			var attribute = '''"staged--staged-portlet_${portletId}--" : "true"''';
 
 			if ("${result}" == "true") {
-				var attributes = StringUtil.extractFirst("${attributes}","}");
-				var attributes = StringUtil.add("${attributes}", "${attribute}}");
+				var attributes = List.add(
+					item = "${attribute}",
+					list = "${attributes}");
 			}
 		}
 
-		var length = StringUtil.length("${attributes}");
-
-		var endIndex = ${length} - 2;
-
-		var attributes = StringUtil.substring("${attributes}", "0","${endIndex}");
-		var attributes = StringUtil.extractLast("${attributes}","{,");
 		var attributes = '''{${attributes}}''';
 
 		return "${attributes}";

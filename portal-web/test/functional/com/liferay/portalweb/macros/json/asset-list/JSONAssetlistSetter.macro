@@ -59,15 +59,11 @@ com.liferay.wiki.model.WikiPage
 			var classNameId = JSONClassname._getClassNameId(value = "${value}");
 
 			if ("${value}" != "[]") {
-				var classNameIds = StringUtil.add("${classNameIds}", "${classNameId}");
+				var classNameIds = List.add(
+					item = "${classNameId}",
+					list = "${classNameIds}");
 			}
 		}
-
-		var length = StringUtil.length("${classNameIds}");
-
-		var endIndex = ${length} - 1;
-
-		var classNameIds = StringUtil.substring("${classNameIds}", "0","${endIndex}");
 
 		var googleDriveShortcutClassTypeId = JSONDLfileentrytype._getFileEntryTypeId(
 			fileEntryTypeName = "Google Drive Shortcut",

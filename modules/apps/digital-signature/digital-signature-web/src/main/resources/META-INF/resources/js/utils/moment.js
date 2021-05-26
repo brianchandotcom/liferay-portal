@@ -24,8 +24,5 @@ const getLanguage = () => {
 	return languages[language] || language;
 };
 
-export const formatDate = (date, format) =>
-	moment(date).locale(getLanguage()).format(format);
-
 export const getDateFromNow = (date) =>
 	moment(date).locale(getLanguage()).fromNow();

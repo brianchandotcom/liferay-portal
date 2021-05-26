@@ -331,12 +331,14 @@ function FieldBase({
 					/>
 				))}
 
-			<input
-				key={inputEditedName}
-				name={inputEditedName}
-				type="hidden"
-				value={localizedValue[editingLanguageId] !== undefined}
-			/>
+			{type !== 'captcha' && (
+				<input
+					key={inputEditedName}
+					name={inputEditedName}
+					type="hidden"
+					value={localizedValue[editingLanguageId] !== undefined}
+				/>
+			)}
 
 			{typeof tip === 'string' && (
 				<span aria-hidden="true" className="form-text">

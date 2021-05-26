@@ -33,7 +33,6 @@ import lang from '../../utils/lang.es';
 import {
 	dateToInternationalHuman,
 	historyPushWithSlug,
-	isWebCrawler,
 	useDebounceCallback,
 } from '../../utils/utils.es';
 
@@ -116,16 +115,8 @@ export default withRouter(({history, location}) => {
 
 	const historyPushParser = historyPushWithSlug(history.push);
 
-	function buildURL(needHashtag, search, page, pageSize) {
-		let pathname = window.location.pathname;
-
-		pathname = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
-
-		let url = isWebCrawler()
-			? pathname + '/-/tags?'
-			: needHashtag
-			? pathname + '/#/tags?'
-			: '/tags?';
+	function buildURL(search, page, pageSize) {
+		let url = `${context.historyRouterBasePath ? '' : '/#'}/tags?`;
 
 		if (search) {
 			url += `search=${search}&`;
@@ -140,10 +131,10 @@ export default withRouter(({history, location}) => {
 
 	const [debounceCallback] = useDebounceCallback((needHashtag, search) => {
 		setLoading(true);
-		historyPushParser(buildURL(needHashtag, search, 1, pageSize));
+		historyPushParser(buildURL(search, 1, pageSize));
 	}, 500);
 
-	const hrefConstructor = (page) => buildURL(true, search, page, pageSize);
+	const hrefConstructor = (page) => buildURL(search, page, pageSize);
 
 	return (
 		<>

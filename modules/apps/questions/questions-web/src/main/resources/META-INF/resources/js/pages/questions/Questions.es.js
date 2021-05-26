@@ -41,7 +41,6 @@ import {
 	getBasePath,
 	getFullPath,
 	historyPushWithSlug,
-	isWebCrawler,
 	slugToText,
 	useDebounceCallback,
 } from '../../utils/utils.es';
@@ -370,17 +369,9 @@ export default withRouter(
 			getThreadsCallback,
 		]);
 
-		function buildURL(needHashtag, search, page, pageSize) {
-			let pathname = window.location.pathname;
-
-			pathname = pathname.endsWith('/')
-				? pathname.slice(0, -1)
-				: pathname;
-
-			let url = isWebCrawler()
-				? pathname + '/-/questions'
-				: needHashtag
-				? pathname + '/#/questions'
+		function buildURL(search, page, pageSize) {
+			let url = !context.historyRouterBasePath
+				? '/#/questions'
 				: '/questions';
 
 			if (sectionTitle || sectionTitle === '0') {
@@ -405,13 +396,10 @@ export default withRouter(
 			return url;
 		}
 
-		const [debounceCallback] = useDebounceCallback(
-			(needHashtag, search) => {
-				setLoading(true);
-				historyPushParser(buildURL(needHashtag, search, 1, 20));
-			},
-			500
-		);
+		const [debounceCallback] = useDebounceCallback((search) => {
+			setLoading(true);
+			historyPushParser(buildURL(search, 1, 20));
+		}, 500);
 
 		useEffect(() => {
 			if (sectionTitle && sectionTitle !== '0') {
@@ -465,8 +453,7 @@ export default withRouter(
 			return false;
 		};
 
-		const hrefConstructor = (page) =>
-			buildURL(true, search, page, pageSize);
+		const hrefConstructor = (page) => buildURL(search, page, pageSize);
 
 		return (
 			<section className="questions-section questions-section-list">
@@ -615,10 +602,7 @@ export default withRouter(
 											!questions.items.length
 										}
 										onChange={(event) =>
-											debounceCallback(
-												false,
-												event.target.value
-											)
+											debounceCallback(event.target.value)
 										}
 										placeholder={Liferay.Language.get(
 											'search'
@@ -647,10 +631,7 @@ export default withRouter(
 												<ClayButtonWithIcon
 													displayType="unstyled"
 													onClick={() => {
-														debounceCallback(
-															false,
-															''
-														);
+														debounceCallback('');
 													}}
 													symbol="times-circle"
 													type="submit"

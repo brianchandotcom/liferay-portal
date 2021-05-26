@@ -23,7 +23,6 @@ import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
-import {isWebCrawler} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -86,8 +85,8 @@ export default withRouter(
 
 		const hrefConstructor = (page) =>
 			`${
-				isWebCrawler() ? '/-' : '#'
-			}/activity/${creatorId}?page=${page}&pagesize=${pageSize}`;
+				context.historyRouterBasePath ? '' : '/#'
+			}/questions/activity/${creatorId}?page=${page}&pagesize=${pageSize}`;
 
 		const addSectionToQuestion = (question) => {
 			return {

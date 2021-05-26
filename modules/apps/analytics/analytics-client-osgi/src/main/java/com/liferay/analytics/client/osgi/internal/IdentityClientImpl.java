@@ -74,10 +74,6 @@ public class IdentityClientImpl implements IdentityClient {
 		_identifyClientConfiguration = ConfigurableUtil.createConfigurable(
 			IdentifyClientConfiguration.class, properties);
 
-		initializeJSONWebServiceClient();
-	}
-
-	protected void initializeJSONWebServiceClient() {
 		ComponentInstance componentInstance = _componentFactory.newInstance(
 			HashMapDictionaryBuilder.put(
 				"hostName", _identifyClientConfiguration.identifyGatewayHost()

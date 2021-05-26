@@ -88,8 +88,6 @@ public class IdentityClientImpl implements IdentityClient {
 				_identifyClientConfiguration.identifyGatewayProtocol()
 			).build());
 
-		componentInstance.getInstance();
-
 		_jsonWebServiceClient =
 			(JSONWebServiceClient)componentInstance.getInstance();
 	}

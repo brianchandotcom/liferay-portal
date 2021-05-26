@@ -76,8 +76,6 @@ definition {
 		FormsAdmin.viewFormTableEntryNotPresent(
 			fieldLabel = "Text",
 			fieldValue = "Test Text");
-			
-
 	}
 
 	@description = "Verify that Entries can be edited"
@@ -137,6 +135,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131084 CanBeNavigatedUsingNavigationList pending implementation
+
 	}
 
 	@description = "Verify that Entries can be viewed"

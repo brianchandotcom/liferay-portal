@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ public class DispatchTaskMetadataProviderImpl
 			!_dispatchTriggerMetadataBuilders.containsKey(
 				dispatchTrigger.getDispatchTaskExecutorType())) {
 
-			return _emptyDispatchTriggerMetadata;
+			return _defaultDispatchTriggerMetadata;
 		}
 
 		DispatchTriggerMetadataFactory dispatchTriggerMetadataFactory =
@@ -121,26 +122,21 @@ public class DispatchTaskMetadataProviderImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DispatchTaskMetadataProviderImpl.class);
 
-	private static final DispatchTriggerMetadata _emptyDispatchTriggerMetadata =
-		new DispatchTriggerMetadata() {
+	private static final DispatchTriggerMetadata
+		_defaultDispatchTriggerMetadata = new DispatchTriggerMetadata() {
 
 			@Override
 			public Map<String, String> getAttributes() {
-				throw new UnsupportedOperationException();
+				return Collections.emptyMap();
 			}
 
 			@Override
 			public Map<String, String> getErrors() {
-				throw new UnsupportedOperationException();
+				return Collections.emptyMap();
 			}
 
 			@Override
 			public boolean isDispatchTaskExecutorReady() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public boolean isEmpty() {
 				return true;
 			}
 

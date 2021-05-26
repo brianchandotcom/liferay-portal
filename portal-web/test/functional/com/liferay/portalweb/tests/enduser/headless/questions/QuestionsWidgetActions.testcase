@@ -486,7 +486,7 @@ definition {
 	@priority = "5"
 	@refactordone
 	test CanEditAnswer {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",

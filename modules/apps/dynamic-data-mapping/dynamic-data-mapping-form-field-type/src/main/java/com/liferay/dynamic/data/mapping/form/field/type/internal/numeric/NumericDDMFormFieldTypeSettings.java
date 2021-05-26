@@ -84,7 +84,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 								"visibilityExpression", "fieldNamespace",
 								"indexType", "labelAtStructureLevel",
 								"localizable", "nativeField", "readOnly",
-								"type", "showLabel", "repeatable",
+								"type", "hideField", "showLabel", "repeatable",
 								"requireConfirmation", "direction",
 								"confirmationLabel", "confirmationErrorMessage",
 								"validation", "tooltip", "inputMask",
@@ -131,6 +131,16 @@ public interface NumericDDMFormFieldTypeSettings
 		properties = "showEmptyOption=false", type = "select"
 	)
 	public String direction();
+
+	@DDMFormField(
+		label = "%hide-field",
+		properties = {
+			"showAsSwitcher=true",
+			"tooltip=%the-user-filling-the-form-wont-be-able-to-see-this-field"
+		},
+		visibilityExpression = "FALSE"
+	)
+	public boolean hideField();
 
 	@DDMFormField(label = "%input-mask", properties = "showAsSwitcher=true")
 	public boolean inputMask();

@@ -12,7 +12,16 @@ definition {
 	}
 
 	macro addCP {
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "${dmDocumentTypeName}");
+		if (isSet(siteURLKey)) {
+			DMNavigator.openToAddEntry(
+				documentTypeName = "${documentTypeName}",
+				folderName = "${folderName}",
+				groupName = "${groupName}",
+				siteURLKey = "${siteURLKey}");
+		}
+		else {
+			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "${dmDocumentTypeName}");
+		}
 
 		var key_dmDocumentTitle = "${dmDocumentTitle}";
 

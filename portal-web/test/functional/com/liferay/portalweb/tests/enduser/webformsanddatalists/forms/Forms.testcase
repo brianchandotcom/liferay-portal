@@ -5734,13 +5734,39 @@ definition {
 	}
 
 	@description = "Verify that a Form autosaves after 1 minute by default"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test WillAutosaveAfterOneMinute {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130510 WillAutosaveAfterOneMinute pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editDescription(formDescription = "Form Description");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Pause(locator1 = "60000");
+
+		Form.viewSaveNotification();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Form.viewFormName(formName = "Form 1");
+
+		Form.viewFormDescription(formDescription = "Form Description");
+
+		FormFields.viewTextLabel(fieldLabel = "Text");
+
+
+
 
 	}
 

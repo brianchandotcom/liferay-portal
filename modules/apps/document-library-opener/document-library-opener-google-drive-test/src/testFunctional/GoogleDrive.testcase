@@ -994,6 +994,34 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException:");
 	}
 
+	@description = "This test ensures that the Google Drive file can be added with Japanese."
+	@priority = "5"
+	test TitleAndFileNameCanBeDisplayedCorrectlyWithJapanese {
+		property test.name.skip.portal.instance = "GoogleDrive#TitleAndFileNameCanBeDisplayedCorrectlyWithJapanese";
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
+
+		Google.signIn(
+			userEmailAddress = PropsUtil.get("email.address.3"),
+			userPassword = PropsUtil.get("email.password.3"),
+			windowTitle = "Documents and Media Page - Liferay");
+
+		GoogleDoc.editTitleInGoogleDoc(dmDocumentTitle = "これは日本語のファイルです");
+
+		GoogleDoc.saveAndExit();
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "これは日本語のファイルです",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewEntryInEdit(
+			dmDocumentFileName = "これは日本語のファイルです.docx",
+			dmDocumentTitle = "これは日本語のファイルです");
+	}
+
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 

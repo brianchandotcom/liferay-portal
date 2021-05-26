@@ -161,7 +161,7 @@ public class DSEnvelopeManagerTest {
 	@Test
 	public void testGetDSEnvelopesJSONObject() throws Exception {
 		DSEnvelope dsEnvelope1 = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getGroupId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
 					emailSubject = RandomTestUtil.randomString();
@@ -169,7 +169,7 @@ public class DSEnvelopeManagerTest {
 				}
 			});
 		DSEnvelope dsEnvelope2 = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getGroupId(),
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
 				{
 					emailSubject = RandomTestUtil.randomString();
@@ -178,7 +178,8 @@ public class DSEnvelopeManagerTest {
 			});
 
 		JSONObject jsonObject = _dsEnvelopeManager.getDSEnvelopesJSONObject(
-			TestPropsValues.getGroupId(), "2021-01-01", 2, 1, "desc");
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			"2021-01-01", "desc", 1, 2);
 
 		Assert.assertTrue(jsonObject.getInt("pageSize") == 2);
 
@@ -187,7 +188,8 @@ public class DSEnvelopeManagerTest {
 		};
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
-			TestPropsValues.getGroupId(), dsEnvelopeIds);
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			dsEnvelopeIds);
 	}
 
 	@Inject

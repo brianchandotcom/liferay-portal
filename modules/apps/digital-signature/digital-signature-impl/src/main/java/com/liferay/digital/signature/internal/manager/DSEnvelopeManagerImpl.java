@@ -136,13 +136,13 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 	@Override
 	public JSONObject getDSEnvelopesJSONObject(
-		long groupId, String fromDateString, int pageSize, int page,
-		String order) {
+		long companyId, long groupId, String fromDateString, String order,
+		int page, int pageSize) {
 
 		String startPosition = String.valueOf(pageSize * (page - 1));
 
 		JSONObject jsonObject = _dsHttp.get(
-			groupId,
+			companyId, groupId,
 			StringBundler.concat(
 				"envelopes?from_date=", fromDateString, "&count=",
 				String.valueOf(pageSize), "&start_position=", startPosition,

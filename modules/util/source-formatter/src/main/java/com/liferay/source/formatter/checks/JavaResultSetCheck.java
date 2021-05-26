@@ -14,7 +14,8 @@
 
 package com.liferay.source.formatter.checks;
 
-import com.liferay.petra.string.StringPool;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -25,33 +26,30 @@ public class JavaResultSetCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		for (int pos1 = -1;;) {
-			pos1 = content.indexOf(StringPool.TAB + "try {", pos1 + 1);
+		Matcher matcher = _tryStatementPattern.matcher(content);
 
-			if (pos1 == -1) {
-				break;
-			}
+		while (matcher.find()) {
+			int x = content.indexOf("\"select count(", matcher.start());
 
-			int pos2 = content.indexOf(StringPool.TAB + "try {", pos1 + 1);
-			int pos3 = content.indexOf("\"select count(", pos1);
-
-			if ((pos2 != -1) && (pos3 != -1) && (pos2 < pos3)) {
+			if (x == -1) {
 				continue;
 			}
 
-			int pos4 = content.indexOf("resultSet.getLong(1)", pos1);
-			int pos5 = content.indexOf(StringPool.TAB + "finally {", pos1);
+			int y = content.indexOf("resultSet.getLong(1)", matcher.start());
+			int z = content.indexOf(
+				"\n" + matcher.group(1) + "}", matcher.start());
 
-			if ((pos3 == -1) || (pos4 == -1) || (pos5 == -1)) {
-				break;
-			}
-
-			if ((pos3 < pos4) && (pos4 < pos5)) {
-				addMessage(fileName, "Use resultSet.getInt(1) for count");
+			if ((y != -1) && (z != -1) && (x < y) && (y < z)) {
+				addMessage(
+					fileName, "Use resultSet.getInt(1) for count",
+					getLineNumber(content, y));
 			}
 		}
 
 		return content;
 	}
+
+	private static final Pattern _tryStatementPattern = Pattern.compile(
+		"\n(\t+)try [\\{\\(]");
 
 }

@@ -26,24 +26,14 @@ import java.sql.ResultSet;
 public class LPS28266 {
 
 	public void method() {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-
-		try {
-			connection = DataAccess.getUpgradeOptimizedConnection();
-
-			preparedStatement = connection.prepareStatement(
+		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				"select count(*) from Table");
-
-			resultSet = ps.executeQuery();
+			ResultSet resultSet = ps.executeQuery()) {
 
 			while (resultSet.next()) {
 				long count = resultSet.getLong(1);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(connection, preparedStatement, resultSet);
 		}
 	}
 

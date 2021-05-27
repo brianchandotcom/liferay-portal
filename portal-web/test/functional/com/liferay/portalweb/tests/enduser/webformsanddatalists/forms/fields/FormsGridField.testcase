@@ -82,15 +82,14 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Grid");
 
-		
 		Form.save();
-	
+
 		FormsAdminNavigator.gotoBack();
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormViewBuilder.clickFieldLabel(fieldLabel = "Grid");
-		
+
 		FormViewBuilder.editFieldLabel(
 			fieldLabel = "Grid",
 			label = "Test Grid");
@@ -106,7 +105,6 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Grid");
 
 		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Grid");
-	
 	}
 
 	@description = "Verify that a Grid can be required"

@@ -3,19 +3,20 @@
 exports[`Field Numeric has a helptext 1`] = `
 <div>
   <div
-    aria-labelledby="numericField_fieldDetails"
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    data-field-name="numericField"
     tabindex="0"
   >
     <input
       class="form-control"
-      name="numericField"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
       type="text"
       value=""
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />
@@ -27,7 +28,7 @@ exports[`Field Numeric has a helptext 1`] = `
     </span>
     <span
       class="sr-only"
-      id="numericField_fieldDetails"
+      id="undefined_fieldDetails"
     >
       Type something
       <br />
@@ -39,19 +40,20 @@ exports[`Field Numeric has a helptext 1`] = `
 exports[`Field Numeric has a key 1`] = `
 <div>
   <div
-    aria-labelledby="numericField_fieldDetails"
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    data-field-name="numericField"
     tabindex="0"
   >
     <input
       class="form-control"
-      name="numericField"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
       type="text"
       value=""
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />
@@ -64,10 +66,9 @@ exports[`Field Numeric has a label 1`] = `
 <div>
   <div
     class="form-group hide"
-    data-field-name="numericField"
   >
     <label
-      aria-describedby="numericField_fieldDetails"
+      aria-describedby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -75,6 +76,34 @@ exports[`Field Numeric has a label 1`] = `
     </label>
     <input
       class="form-control"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
+      type="text"
+      value=""
+    />
+    <input
+      name="undefined_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+</div>
+`;
+
+exports[`Field Numeric has a name 1`] = `
+<div>
+  <div
+    aria-labelledby="numericField_fieldDetails"
+    class="form-group hide"
+    data-field-name="numericField"
+    tabindex="0"
+  >
+    <input
+      class="form-control"
+      dir="rtl"
+      lang="en_US"
       name="numericField"
       type="text"
       value=""
@@ -92,20 +121,21 @@ exports[`Field Numeric has a label 1`] = `
 exports[`Field Numeric has a placeholder 1`] = `
 <div>
   <div
-    aria-labelledby="numericField_fieldDetails"
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    data-field-name="numericField"
     tabindex="0"
   >
     <input
       class="form-control"
-      name="numericField"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
       placeholder="Placeholder"
       type="text"
       value=""
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />
@@ -117,19 +147,20 @@ exports[`Field Numeric has a placeholder 1`] = `
 exports[`Field Numeric has a value 1`] = `
 <div>
   <div
-    aria-labelledby="numericField_fieldDetails"
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    data-field-name="numericField"
     tabindex="0"
   >
     <input
       class="form-control"
-      name="numericField"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
       type="text"
       value="123"
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />
@@ -143,18 +174,19 @@ exports[`Field Numeric has an id 1`] = `
   <div
     aria-labelledby="ID_fieldDetails"
     class="form-group hide"
-    data-field-name="numericField"
     tabindex="0"
   >
     <input
       class="form-control"
+      dir="rtl"
       id="ID"
-      name="numericField"
+      lang="en_US"
+      name="undefined"
       type="text"
       value=""
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />
@@ -166,19 +198,20 @@ exports[`Field Numeric has an id 1`] = `
 exports[`Field Numeric is not readOnly 1`] = `
 <div>
   <div
-    aria-labelledby="numericField_fieldDetails"
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    data-field-name="numericField"
     tabindex="0"
   >
     <input
       class="form-control"
-      name="numericField"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
       type="text"
       value=""
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />
@@ -190,19 +223,20 @@ exports[`Field Numeric is not readOnly 1`] = `
 exports[`Field Numeric is not required 1`] = `
 <div>
   <div
-    aria-labelledby="numericField_fieldDetails"
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    data-field-name="numericField"
     tabindex="0"
   >
     <input
       class="form-control"
-      name="numericField"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
       type="text"
       value=""
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />
@@ -215,10 +249,9 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
 <div>
   <div
     class="form-group hide"
-    data-field-name="numericField"
   >
     <label
-      aria-describedby="numericField_fieldDetails"
+      aria-describedby="undefined_fieldDetails"
       class="ddm-label"
       tabindex="0"
     >
@@ -226,12 +259,14 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
     </label>
     <input
       class="form-control"
-      name="numericField"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
       type="text"
       value=""
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />
@@ -243,19 +278,20 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
 exports[`Field Numeric renders the default markup 1`] = `
 <div>
   <div
-    aria-labelledby="numericField_fieldDetails"
+    aria-labelledby="undefined_fieldDetails"
     class="form-group hide"
-    data-field-name="numericField"
     tabindex="0"
   >
     <input
       class="form-control"
-      name="numericField"
+      dir="rtl"
+      lang="en_US"
+      name="undefined"
       type="text"
       value=""
     />
     <input
-      name="numericField_edited"
+      name="undefined_edited"
       type="hidden"
       value="false"
     />

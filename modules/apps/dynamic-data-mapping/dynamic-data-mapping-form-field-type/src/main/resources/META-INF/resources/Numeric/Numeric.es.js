@@ -13,208 +13,148 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import {usePrevious} from '@liferay/frontend-js-react-web';
-import React, {useEffect, useRef, useState} from 'react';
+import {useFormState} from 'data-engine-js-components-web';
+import React, {useMemo} from 'react';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import vanillaTextMask from 'vanilla-text-mask';
+import {conformToMask} from 'vanilla-text-mask';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import withConfirmationField from '../util/withConfirmationField.es';
 
-const ONE_DIGIT_NEGATIVE_NUMBER_LENGTH = 2;
+const adaptiveMask = (rawValue, inputMaskFormat) => {
+	const generateMask = (mask) => {
+		if (!mask.includes('0')) {
+			return mask;
+		}
 
-const getGenericValue = (symbols, value = '') => {
-	if (typeof value === 'number' || !symbols) {
-		return value;
-	}
+		const inputNumbers = rawValue.match(/\d/g)?.length ?? 0;
+		const mandatorySize = mask.match(/9/g)?.length ?? 0;
+		if (inputNumbers <= mandatorySize) {
+			return mask.replaceAll('0', '');
+		}
 
-	return value.replace(symbols.decimalSymbol, '$[DECIMAL_SYMBOL]');
-};
-
-const getMaskConfig = (dataType, symbols) => {
-	let config = {
-		allowLeadingZeroes: true,
-		allowNegative: true,
-		includeThousandsSeparator: false,
-		prefix: '',
+		return generateMask(mask.replace('0', '9'));
 	};
 
-	if (dataType === 'double') {
-		config = {
-			...config,
-			allowDecimal: true,
-			decimalLimit: null,
-			decimalSymbol: symbols.decimalSymbol,
-		};
-	}
-
-	return config;
+	return [...generateMask(inputMaskFormat)].map((char) =>
+		char === '9' ? /\d/ : char
+	);
 };
 
-const getValue = (dataType, symbols, value = '') => {
-	let decimalSymbol = symbols.decimalSymbol;
+const getMaskedValue = ({
+	dataType,
+	decimalSymbol,
+	inputMask,
+	inputMaskFormat,
+	value,
+}) => {
+	let mask;
 
-	let newValue;
-
-	if (typeof value === 'number') {
-		newValue = `${value}`;
-		newValue = newValue.replace('.', decimalSymbol);
+	if (inputMask) {
+		mask = adaptiveMask(value, inputMaskFormat);
 	}
 	else {
-		newValue = value;
-	}
+		const config = {
+			allowLeadingZeroes: true,
+			allowNegative: true,
+			includeThousandsSeparator: false,
+			prefix: '',
+		};
 
-	newValue = newValue.replace('$[DECIMAL_SYMBOL]', decimalSymbol);
-
-	if (newValue && !newValue.includes('.') && decimalSymbol != ',') {
-		decimalSymbol = ',';
-	}
-
-	if (dataType === 'integer' && newValue) {
-		newValue = newValue.replace(decimalSymbol, '.');
-
-		if (!isNaN(Number(newValue)) && newValue.indexOf('.') !== -1) {
-			newValue = String(Math.round(newValue.replace(decimalSymbol, '.')));
+		if (dataType === 'double') {
+			config.allowDecimal = true;
+			config.decimalLimit = null;
+			config.decimalSymbol = decimalSymbol;
 		}
+		mask = createNumberMask(config);
+
+		if (typeof value === 'string') {
+			if (!value) {
+				return '';
+			}
+			value = value.replace(decimalSymbol, '.');
+			if (dataType == 'integer' && value.includes('.')) {
+				value = Number(value);
+				value = Math.round(value);
+			}
+		}
+		value = String(value).replace('.', decimalSymbol);
 	}
 
-	return newValue;
+	const {conformedValue} = conformToMask(value, mask, {
+		guide: false,
+		keepCharPositions: false,
+		placeholderChar: '\u2000',
+	});
+
+	return conformedValue;
 };
 
 const Numeric = ({
 	dataType = 'integer',
 	defaultLanguageId,
-	disabled,
-	editingLanguageId,
-	localizable,
-	localizedValue,
-	onChange,
-	symbols = {
-		decimalSymbol: '.',
-		thousandsSeparator: ',',
-	},
-	value,
-	...otherProps
-}) => {
-	const [currentValue, setCurrentValue] = useState(value);
-	const inputRef = useRef(null);
-
-	const [defaultSymbols] = useState(symbols);
-
-	const prevEditingLanguageId = usePrevious(editingLanguageId);
-
-	useEffect(() => {
-		if (prevEditingLanguageId !== editingLanguageId && localizable) {
-			let newValue =
-				localizedValue[editingLanguageId] !== undefined
-					? localizedValue[editingLanguageId]
-					: getGenericValue(
-							defaultSymbols,
-							localizedValue[defaultLanguageId]
-					  );
-
-			newValue = getValue(dataType, symbols, newValue);
-
-			setCurrentValue(newValue);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		defaultLanguageId,
-		editingLanguageId,
-		localizable,
-		localizedValue,
-		prevEditingLanguageId,
-		defaultSymbols,
-		setCurrentValue,
-	]);
-
-	useEffect(() => {
-		let maskInstance = null;
-
-		if (inputRef.current) {
-			const newValue = getValue(dataType, symbols, value);
-
-			const mask = createNumberMask(getMaskConfig(dataType, symbols));
-
-			maskInstance = vanillaTextMask({
-				inputElement: inputRef.current,
-				mask,
-			});
-
-			if (newValue !== inputRef.current.value) {
-				setCurrentValue(newValue);
-			}
-		}
-
-		return () => {
-			if (maskInstance) {
-				maskInstance.destroy();
-			}
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [dataType, inputRef, setCurrentValue, value]);
-
-	return (
-		<ClayInput
-			{...otherProps}
-			dir={Liferay.Language.direction[editingLanguageId]}
-			disabled={disabled}
-			lang={editingLanguageId}
-			onChange={(event) => {
-				const {value: newValue} = event.target;
-
-				if (
-					dataType === 'integer' &&
-					newValue.substr(-1) === symbols.decimalSymbol
-				) {
-					return;
-				}
-
-				setCurrentValue(newValue);
-				onChange(event);
-			}}
-			onKeyUp={(event) => {
-				const {value: newValue} = event.target;
-
-				if (newValue === '-_') {
-					return;
-				}
-
-				if (
-					!newValue ||
-					(newValue.startsWith('-') &&
-						newValue.length <= ONE_DIGIT_NEGATIVE_NUMBER_LENGTH)
-				) {
-					setCurrentValue(newValue);
-					onChange(event);
-				}
-			}}
-			ref={inputRef}
-			type="text"
-			value={currentValue}
-		/>
-	);
-};
-
-const Main = ({
-	dataType,
-	defaultLanguageId,
-	editingLanguageId,
 	id,
-	localizable,
-	localizedValue = {},
+	inputMask,
+	inputMaskFormat,
+	localizedValue,
 	name,
 	onBlur,
 	onChange,
 	onFocus,
 	placeholder,
-	predefinedValue = '',
+	predefinedValue,
 	readOnly,
-	symbols,
-	value = '',
+	symbols: {decimalSymbol} = {decimalSymbol: '.'},
+	value,
 	...otherProps
 }) => {
-	const [edited, setEdited] = useState(false);
+	const {editingLanguageId} = useFormState();
+
+	const formattedValue = useMemo(() => {
+		const newValue =
+			(localizedValue?.[editingLanguageId] ||
+				localizedValue?.[defaultLanguageId] ||
+				value) ??
+			predefinedValue ??
+			'';
+
+		return getMaskedValue({
+			dataType,
+			decimalSymbol,
+			inputMask,
+			inputMaskFormat,
+			value: newValue,
+		});
+	}, [
+		dataType,
+		decimalSymbol,
+		defaultLanguageId,
+		editingLanguageId,
+		inputMask,
+		inputMaskFormat,
+		localizedValue,
+		predefinedValue,
+		value,
+	]);
+
+	const handleChange = ({target: {value}}) => {
+		const maskedValue = getMaskedValue({
+			dataType,
+			decimalSymbol,
+			inputMask,
+			inputMaskFormat,
+			value,
+		});
+		if (maskedValue !== formattedValue) {
+			onChange({
+				target: {
+					value: inputMask
+						? maskedValue.replace(/\D/g, '')
+						: maskedValue,
+				},
+			});
+		}
+	};
 
 	return (
 		<FieldBase
@@ -224,33 +164,26 @@ const Main = ({
 			name={name}
 			readOnly={readOnly}
 		>
-			<Numeric
-				dataType={dataType}
-				defaultLanguageId={defaultLanguageId}
+			<ClayInput
+				dir={Liferay.Language.direction[editingLanguageId]}
 				disabled={readOnly}
-				editingLanguageId={editingLanguageId}
 				id={id}
-				localizable={localizable}
-				localizedValue={localizedValue}
-				name={name}
+				lang={editingLanguageId}
+				name={`${name}${inputMask ? '_masked' : ''}`}
 				onBlur={onBlur}
-				onChange={(event) => {
-					if (!edited) {
-						setEdited(true);
-					}
-
-					onChange(event);
-				}}
+				onChange={handleChange}
 				onFocus={onFocus}
-				placeholder={placeholder}
-				symbols={symbols}
-				value={edited || value ? value : predefinedValue}
+				placeholder={
+					placeholder ||
+					(inputMask ? inputMaskFormat?.replace(/\d/g, '_') : null)
+				}
+				type="text"
+				value={formattedValue}
 			/>
+			{inputMask && <input name={name} type="hidden" value={value} />}
 		</FieldBase>
 	);
 };
 
-Main.displayName = 'Numeric';
-
-export {Main};
-export default withConfirmationField(Main);
+export {Numeric};
+export default withConfirmationField(Numeric);

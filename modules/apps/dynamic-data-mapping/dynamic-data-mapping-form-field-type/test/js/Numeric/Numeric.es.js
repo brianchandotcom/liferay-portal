@@ -12,269 +12,140 @@
  * details.
  */
 
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
-import {PageProvider} from 'data-engine-js-components-web';
+import {cleanup, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import Numeric from '../../../src/main/resources/META-INF/resources/Numeric/Numeric.es';
 
 const globalLanguageDirection = Liferay.Language.direction;
 
-const spritemap = 'icons.svg';
-
-const defaultNumericConfig = {
-	name: 'numericField',
-	spritemap,
-};
-
-const NumericWithProvider = (props) => (
-	<PageProvider value={{editingLanguageId: 'en_US'}}>
-		<Numeric {...props} />
-	</PageProvider>
-);
-
 describe('Field Numeric', () => {
-	// eslint-disable-next-line no-console
-	const originalWarn = console.warn;
-
 	beforeAll(() => {
-		// eslint-disable-next-line no-console
-		console.warn = (...args) => {
-			if (/DataProvider: Trying/.test(args[0])) {
-				return;
-			}
-			originalWarn.call(console, ...args);
-		};
-
-		Liferay.Language.direction = {
-			en_US: 'rtl',
-		};
+		Liferay.Language.direction = {en_US: 'rtl'};
 	});
 
 	afterAll(() => {
-		// eslint-disable-next-line no-console
-		console.warn = originalWarn;
-
 		Liferay.Language.direction = globalLanguageDirection;
 	});
 
 	afterEach(cleanup);
 
-	beforeEach(() => {
-		jest.useFakeTimers();
-		fetch.mockResponse(JSON.stringify({}));
+	it('renders the default markup', () => {
+		const {container} = render(<Numeric />);
+
+		expect(container).toMatchSnapshot();
 	});
 
-	it('renders the default markup', () => {
-		const {container} = render(
-			<NumericWithProvider {...defaultNumericConfig} />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+	it('has a name', () => {
+		const {container} = render(<Numeric name="numericField" />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('is not readOnly', () => {
-		const {container} = render(
-			<NumericWithProvider {...defaultNumericConfig} readOnly={false} />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric readOnly={false} />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('has a helptext', () => {
-		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
-				tip="Type something"
-			/>
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric tip="Type something" />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('has an id', () => {
-		const {container} = render(
-			<NumericWithProvider {...defaultNumericConfig} id="ID" />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric id="ID" />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('has a label', () => {
-		const {container} = render(
-			<NumericWithProvider {...defaultNumericConfig} label="label" />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric label="label" />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('has a placeholder', () => {
-		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
-				placeholder="Placeholder"
-			/>
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric placeholder="Placeholder" />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('is not required', () => {
-		const {container} = render(
-			<NumericWithProvider {...defaultNumericConfig} required={false} />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric required={false} />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('renders Label if showLabel is true', () => {
 		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
-				label="Numeric Field"
-				showLabel={true}
-			/>
+			<Numeric label="Numeric Field" showLabel={true} />
 		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
-				onChange={jest.fn()}
-				value="123"
-			/>
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric value="123" />);
 
 		expect(container).toMatchSnapshot();
 	});
 
 	it('has a key', () => {
-		const {container} = render(
-			<NumericWithProvider {...defaultNumericConfig} key="key" />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric key="key" />);
 
 		expect(container).toMatchSnapshot();
 	});
 
-	it('calls the field`s onChange callback', () => {
-		const onChange = jest.fn();
-
+	it('fills with an input number', () => {
+		let output;
 		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
-				key="input"
-				onChange={onChange}
+			<Numeric
+				onChange={({target: {value}}) => {
+					output = value;
+				}}
 			/>
 		);
 
 		const input = container.querySelector('input');
 
-		fireEvent.change(input, {target: {value: '2'}});
+		userEvent.type(input, '2');
 
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(onChange).toHaveBeenCalled();
+		expect(output).toBe('2');
 	});
 
 	it('changes the mask type', () => {
-		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
-				dataType="double"
-				onChange={jest.fn()}
-				value="22.22"
-			/>
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric dataType="double" value="22.22" />);
 
 		expect(container.querySelector('input').value).toBe('22.22');
 	});
 
-	it('check if event is sent when decimal is being writen', () => {
+	it('filters the non numeric characters when set to integer', () => {
+		let output = '';
 		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
-				key="input"
-				onChange={jest.fn()}
+			<Numeric
+				onChange={({target: {value}}) => {
+					output += value;
+				}}
 			/>
 		);
 
 		const input = container.querySelector('input');
 
-		fireEvent.change(input, {
-			target: {
-				value: '3.0',
-			},
-		});
+		// due to an issue on jest was needed to call type() for each key
+		// https://github.com/testing-library/user-event/issues/387
 
-		act(() => {
-			jest.runAllTimers();
-		});
+		userEvent.type(input, '3');
+		userEvent.type(input, '.');
+		userEvent.type(input, '0');
 
-		expect(input.value).toBe('3.0');
+		expect(output).toBe('30');
 	});
 
 	it('check field value is rounded when fieldType is integer but it receives a double', () => {
-		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
-				key="input"
-				onChange={jest.fn()}
-				value="3.8"
-			/>
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
+		const {container} = render(<Numeric value="3.8" />);
 
 		const input = container.querySelector('input');
 
@@ -283,18 +154,12 @@ describe('Field Numeric', () => {
 
 	it('round up value when changing from decimal to integer when symbol of language is comma', () => {
 		const {container} = render(
-			<NumericWithProvider
-				{...defaultNumericConfig}
+			<Numeric
 				dataType="integer"
-				onChange={jest.fn()}
 				symbols={{decimalSymbol: ','}}
 				value="22,82"
 			/>
 		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
 
 		expect(container.querySelector('input').value).toBe('23');
 	});
@@ -302,18 +167,13 @@ describe('Field Numeric', () => {
 	describe('Confirmation Field', () => {
 		it('renders the confirmation field with the same data type as the original field', () => {
 			render(
-				<NumericWithProvider
-					{...defaultNumericConfig}
+				<Numeric
 					confirmationValue="22.82"
 					dataType="double"
-					onChange={jest.fn()}
+					name="numericField"
 					requireConfirmation={true}
 				/>
 			);
-
-			act(() => {
-				jest.runAllTimers();
-			});
 
 			const confirmationField = document.getElementById(
 				'numericFieldconfirmationField'
@@ -324,18 +184,13 @@ describe('Field Numeric', () => {
 
 		it('rounds the confirmation value if the data type is Integer', () => {
 			render(
-				<NumericWithProvider
-					{...defaultNumericConfig}
+				<Numeric
 					confirmationValue="22.82"
 					dataType="integer"
-					onChange={jest.fn()}
+					name="numericField"
 					requireConfirmation={true}
 				/>
 			);
-
-			act(() => {
-				jest.runAllTimers();
-			});
 
 			const confirmationField = document.getElementById(
 				'numericFieldconfirmationField'

@@ -23,7 +23,7 @@ const FormDispatchContext = React.createContext(() => {});
 
 FormDispatchContext.displayName = 'FormDispatchContext';
 
-const FormStateContext = React.createContext({});
+const FormStateContext = React.createContext({editingLanguageId: 'en_US'});
 
 FormStateContext.displayName = 'FormStateContext';
 

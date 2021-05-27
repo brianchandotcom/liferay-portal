@@ -103,6 +103,28 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
+	public int getMessageCount(long groupId, long userId) {
+		return _mbMessagePersistence.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				MBMessageTable.INSTANCE.messageId
+			).from(
+				MBMessageTable.INSTANCE
+			).where(
+				MBMessageTable.INSTANCE.userId.eq(
+					userId
+				).and(
+					MBMessageTable.INSTANCE.groupId.eq(groupId)
+				).and(
+					MBMessageTable.INSTANCE.categoryId.neq(
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				).and(
+					MBMessageTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				)
+			));
+	}
+
+	@Override
 	public long getMessageCountByGroupId(long groupId) throws PortalException {
 		Group group = groupLocalService.getGroup(groupId);
 
@@ -137,28 +159,6 @@ public class MBStatsUserLocalServiceImpl
 			).where(
 				MBMessageTable.INSTANCE.userId.eq(
 					userId
-				).and(
-					MBMessageTable.INSTANCE.categoryId.neq(
-						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
-				).and(
-					MBMessageTable.INSTANCE.status.eq(
-						WorkflowConstants.STATUS_APPROVED)
-				)
-			));
-	}
-
-	@Override
-	public int getMessageCount(long groupId, long userId) {
-		return _mbMessagePersistence.dslQueryCount(
-			DSLQueryFactoryUtil.countDistinct(
-				MBMessageTable.INSTANCE.messageId
-			).from(
-				MBMessageTable.INSTANCE
-			).where(
-				MBMessageTable.INSTANCE.userId.eq(
-					userId
-				).and(
-					MBMessageTable.INSTANCE.groupId.eq(groupId)
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)

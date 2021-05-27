@@ -871,9 +871,17 @@ public class MessageBoardThreadResourceImpl
 			PermissionChecker permissionChecker, long primaryKey,
 			String actionId) {
 
-			return permissionChecker.hasPermission(
-				_mbMessage.getGroupId(), _name, _mbMessage.getRootMessageId(),
-				actionId);
+			if (permissionChecker.hasOwnerPermission(
+					_mbMessage.getCompanyId(), _name, _mbMessage.getMessageId(),
+					_mbMessage.getUserId(), actionId) ||
+				permissionChecker.hasPermission(
+					_mbMessage.getGroupId(), _name, _mbMessage.getMessageId(),
+					actionId)) {
+
+				return true;
+			}
+
+			return false;
 		}
 
 		@Override

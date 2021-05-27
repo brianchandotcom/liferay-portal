@@ -407,14 +407,32 @@ definition {
 	}
 
 	@description = "Verify that a Help Text can be added to a Text Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131338 HelpTextCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Help Text Test");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Text",
+			fieldValue = "Help Text Test");
 	}
 
 	@description = "Verify that the Field Label can be edited"

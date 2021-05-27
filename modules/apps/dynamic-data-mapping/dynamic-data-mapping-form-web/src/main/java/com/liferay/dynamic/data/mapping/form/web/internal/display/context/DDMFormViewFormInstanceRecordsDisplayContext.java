@@ -103,8 +103,19 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(
-			ParamUtil.getString(_renderRequest, "redirect"));
+
+		String redirect = ParamUtil.getString(_renderRequest, "redirect");
+
+		if (redirect.isEmpty()) {
+			DDMFormAdminDisplayContext ddmFormAdminDisplayContext =
+				(DDMFormAdminDisplayContext)_renderRequest.getAttribute(
+					WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+			redirect = String.valueOf(
+				ddmFormAdminDisplayContext.getPortletURL());
+		}
+
+		portletDisplay.setURLBack(redirect);
 
 		setDDMFormFields();
 	}

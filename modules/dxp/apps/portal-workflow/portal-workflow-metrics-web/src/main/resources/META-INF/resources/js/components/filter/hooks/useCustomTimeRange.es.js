@@ -51,7 +51,7 @@ const validateDate = (dateEndMoment, dateStartMoment) => {
 };
 
 const validateEarlierDate = (dateEndMoment, dateStartMoment) => {
-	const earlierDate = moment.utc().date(1).month(1).year(1970);
+	const earlierDate = moment.utc([1970, 0, 1, 0]);
 	let errors;
 
 	if (dateEndMoment.isBefore(earlierDate)) {

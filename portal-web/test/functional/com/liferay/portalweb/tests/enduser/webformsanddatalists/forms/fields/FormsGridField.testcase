@@ -65,14 +65,48 @@ definition {
 	}
 
 	@description = "Verify that a Grid can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132452 CanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid");
+
+		
+		Form.save();
+	
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormViewBuilder.clickFieldLabel(fieldLabel = "Grid");
+		
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Grid",
+			label = "Test Grid");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Grid");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Grid");
+
+		FormViewBuilder.validateNoFieldLabel(fieldLabel = "Grid");
+	
 	}
 
 	@description = "Verify that a Grid can be required"

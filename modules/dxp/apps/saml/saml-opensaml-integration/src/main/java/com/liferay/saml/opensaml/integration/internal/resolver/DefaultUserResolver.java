@@ -93,13 +93,13 @@ public class DefaultUserResolver implements UserResolver {
 		subjectNameFormat = _getNameIdFormat(
 			userResolverSAMLContext, samlSpIdpConnection.getNameIdFormat());
 
-		return importUser(
+		return _importUser(
 			companyId, samlSpIdpConnection,
 			userResolverSAMLContext.resolveSubjectNameIdentifier(),
 			subjectNameFormat, userResolverSAMLContext, serviceContext);
 	}
 
-	protected User addUser(
+	private User _addUser(
 			long companyId, SamlSpIdpConnection samlSpIdpConnection,
 			Map<String, List<Serializable>> attributesMap,
 			ServiceContext serviceContext)
@@ -112,7 +112,7 @@ public class DefaultUserResolver implements UserResolver {
 		}
 
 		Company company = _companyLocalService.getCompany(companyId);
-		String emailAddress = getValueAsString("emailAddress", attributesMap);
+		String emailAddress = _getValueAsString("emailAddress", attributesMap);
 
 		if (samlSpIdpConnection.isUnknownUsersAreStrangers()) {
 			if (!company.isStrangers()) {
@@ -142,7 +142,7 @@ public class DefaultUserResolver implements UserResolver {
 		return user;
 	}
 
-	protected Map<String, List<Serializable>> getAttributesMap(
+	private Map<String, List<Serializable>> _getAttributesMap(
 		SamlSpIdpConnection samlSpIdpConnection,
 		UserResolverSAMLContext userResolverSAMLContext) {
 
@@ -163,7 +163,48 @@ public class DefaultUserResolver implements UserResolver {
 		return Collections.emptyMap();
 	}
 
-	protected String getValueAsString(
+	private String _getNameIdFormat(
+		UserResolverSAMLContext userResolverSAMLContext,
+		String defaultNameIdFormat) {
+
+		String format = userResolverSAMLContext.resolveSubjectNameFormat();
+
+		if (Validator.isNull(format)) {
+			format = defaultNameIdFormat;
+		}
+
+		return format;
+	}
+
+	private String _getPrefix(String userFieldExpression) {
+		if (userFieldExpression == null) {
+			return null;
+		}
+
+		int prefixEndIndex = userFieldExpression.indexOf(CharPool.COLON);
+
+		if (prefixEndIndex == -1) {
+			return StringPool.BLANK;
+		}
+
+		return userFieldExpression.substring(0, prefixEndIndex);
+	}
+
+	private UserFieldExpressionResolver _getUserFieldExpressionResolver(
+		String userIdentifierExpression) {
+
+		String userFieldExpressionResolverKey = _getPrefix(
+			userIdentifierExpression);
+
+		if (Validator.isBlank(userFieldExpressionResolverKey)) {
+			userFieldExpressionResolverKey = userIdentifierExpression;
+		}
+
+		return _userFieldExpressionResolverRegistry.
+			getUserFieldExpressionResolver(userFieldExpressionResolverKey);
+	}
+
+	private String _getValueAsString(
 		String key, Map<String, List<Serializable>> attributesMap) {
 
 		List<Serializable> values = attributesMap.get(key);
@@ -175,7 +216,7 @@ public class DefaultUserResolver implements UserResolver {
 		return String.valueOf(values.get(0));
 	}
 
-	protected User importUser(
+	private User _importUser(
 			long companyId, SamlSpIdpConnection samlSpIdpConnection,
 			String subjectNameIdentifier, String nameIdFormat,
 			UserResolverSAMLContext userResolverSAMLContext,
@@ -186,7 +227,7 @@ public class DefaultUserResolver implements UserResolver {
 			_getUserFieldExpressionResolver(
 				samlSpIdpConnection.getUserIdentifierExpression());
 
-		Map<String, List<Serializable>> attributesMap = getAttributesMap(
+		Map<String, List<Serializable>> attributesMap = _getAttributesMap(
 			samlSpIdpConnection, userResolverSAMLContext);
 
 		String userFieldExpression = _removePrefix(
@@ -207,7 +248,7 @@ public class DefaultUserResolver implements UserResolver {
 				userResolverSAMLContext.resolvePeerEntityId());
 
 			if (user != null) {
-				return updateUser(user, attributesMap, serviceContext);
+				return _updateUser(user, attributesMap, serviceContext);
 			}
 
 			return null;
@@ -216,7 +257,7 @@ public class DefaultUserResolver implements UserResolver {
 		String searchFieldValue = subjectNameIdentifier;
 
 		if (attributesMap.containsKey(userFieldExpression)) {
-			searchFieldValue = getValueAsString(
+			searchFieldValue = _getValueAsString(
 				userFieldExpression, attributesMap);
 
 			if (_log.isDebugEnabled()) {
@@ -274,67 +315,11 @@ public class DefaultUserResolver implements UserResolver {
 		}
 
 		if (user == null) {
-			return addUser(
+			return _addUser(
 				companyId, samlSpIdpConnection, attributesMap, serviceContext);
 		}
 
-		return updateUser(user, attributesMap, serviceContext);
-	}
-
-	protected User updateUser(
-			User user, Map<String, List<Serializable>> attributesMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringBundler.concat(
-					"Updating user ", user.getUserId(), " with attributes map ",
-					MapUtil.toString(attributesMap)));
-		}
-
-		return _processUser(user, attributesMap, serviceContext);
-	}
-
-	private String _getNameIdFormat(
-		UserResolverSAMLContext userResolverSAMLContext,
-		String defaultNameIdFormat) {
-
-		String format = userResolverSAMLContext.resolveSubjectNameFormat();
-
-		if (Validator.isNull(format)) {
-			format = defaultNameIdFormat;
-		}
-
-		return format;
-	}
-
-	private String _getPrefix(String userFieldExpression) {
-		if (userFieldExpression == null) {
-			return null;
-		}
-
-		int prefixEndIndex = userFieldExpression.indexOf(CharPool.COLON);
-
-		if (prefixEndIndex == -1) {
-			return StringPool.BLANK;
-		}
-
-		return userFieldExpression.substring(0, prefixEndIndex);
-	}
-
-	private UserFieldExpressionResolver _getUserFieldExpressionResolver(
-		String userIdentifierExpression) {
-
-		String userFieldExpressionResolverKey = _getPrefix(
-			userIdentifierExpression);
-
-		if (Validator.isBlank(userFieldExpressionResolverKey)) {
-			userFieldExpressionResolverKey = userIdentifierExpression;
-		}
-
-		return _userFieldExpressionResolverRegistry.
-			getUserFieldExpressionResolver(userFieldExpressionResolverKey);
+		return _updateUser(user, attributesMap, serviceContext);
 	}
 
 	private User _processUser(
@@ -347,7 +332,7 @@ public class DefaultUserResolver implements UserResolver {
 
 		for (String key : attributesMap.keySet()) {
 			userProcessor.setValueArray(
-				key, new String[] {getValueAsString(key, attributesMap)});
+				key, new String[] {_getValueAsString(key, attributesMap)});
 		}
 
 		return userProcessor.process(serviceContext);
@@ -391,6 +376,21 @@ public class DefaultUserResolver implements UserResolver {
 		}
 
 		return null;
+	}
+
+	private User _updateUser(
+			User user, Map<String, List<Serializable>> attributesMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Updating user ", user.getUserId(), " with attributes map ",
+					MapUtil.toString(attributesMap)));
+		}
+
+		return _processUser(user, attributesMap, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

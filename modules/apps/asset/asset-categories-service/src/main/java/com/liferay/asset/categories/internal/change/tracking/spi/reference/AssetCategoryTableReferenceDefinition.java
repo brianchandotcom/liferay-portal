@@ -43,9 +43,9 @@ public class AssetCategoryTableReferenceDefinition
 			AssetCategoryTable.INSTANCE.categoryId, AssetCategory.class
 		).systemEventReference(
 			AssetCategoryTable.INSTANCE.categoryId, AssetCategory.class
-		).singleColumnReference(
+		).classNameReference(
 			AssetCategoryTable.INSTANCE.categoryId,
-			FriendlyURLEntryTable.INSTANCE.classPK
+			FriendlyURLEntryTable.INSTANCE.classPK, AssetCategory.class
 		);
 	}
 

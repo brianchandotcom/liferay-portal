@@ -6,14 +6,6 @@ definition {
 			value1 = "${headerTitle}");
 	}
 
-	macro changeTimeSelector {
-		var key_time = "${time}";
-
-		Click(locator1 = "ACNavigation#TIME_SELECTOR");
-
-		Click(locator1 = "ACNavigation#CHANGE_TIME_SELECTOR");
-	}
-
 	macro clickHeaderTab {
 		Click(
 			key_tabName = "${tabName}",

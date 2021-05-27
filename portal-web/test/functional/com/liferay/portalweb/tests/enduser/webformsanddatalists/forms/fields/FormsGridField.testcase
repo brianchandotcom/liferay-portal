@@ -412,14 +412,62 @@ definition {
 	}
 
 	@description = "Verify that options can be rearranged"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test OptionsCanBeRearranged {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132466 OptionsCanBeRearranged pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option A",
+			rowNumber = "1");
+
+		FormFields.moveOptionsRow(
+			rowNumberEnd = "1",
+			rowNumberStart = "2");
+
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			optionName = "Option 2",
+			rowNumber = "1");
+
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			optionName = "Option 1",
+			rowNumber = "2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			optionName = "Option 2",
+			rowNumber = "1");
 	}
 
 	@description = "Verify that the Field Reference can be edited"

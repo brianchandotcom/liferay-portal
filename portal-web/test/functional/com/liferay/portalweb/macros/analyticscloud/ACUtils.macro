@@ -41,4 +41,12 @@ definition {
 			layoutName = "AC Page");
 	}
 
+	macro addWidgetToPage {
+		
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AC Page",
+			widgetName = "${widgetName}");
+	}
+
 }

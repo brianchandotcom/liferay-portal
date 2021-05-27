@@ -14,6 +14,8 @@
 
 package com.liferay.layout.reports.web.internal.util;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import org.commonmark.node.Link;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -24,6 +26,10 @@ import org.commonmark.renderer.html.HtmlRenderer;
 public class MarkdownUtil {
 
 	public static String markdownToHtml(String markdown) {
+		if (Validator.isNull(markdown)) {
+			return null;
+		}
+
 		return _htmlRenderer.render(_markdownParser.parse(markdown));
 	}
 

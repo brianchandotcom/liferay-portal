@@ -14,9 +14,9 @@
 
 package com.liferay.layout.reports.web.internal.model;
 
+import com.liferay.layout.reports.web.internal.util.MarkdownUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -181,7 +181,8 @@ public class LayoutReportsIssue {
 			).put(
 				"key", _key.toString()
 			).put(
-				"tips", _key.getTips(resourceBundle)
+				"tips",
+				MarkdownUtil.markdownToHtml(_key.getTips(resourceBundle))
 			).put(
 				"title", _key.getTitle(resourceBundle)
 			).put(
@@ -275,20 +276,17 @@ public class LayoutReportsIssue {
 
 				@Override
 				public String getTitle(ResourceBundle resourceBundle) {
-					return _getTitleMessage(resourceBundle, StringPool.BLANK);
+					return ResourceBundleUtil.getString(
+						resourceBundle, "detail-missing-x-element", "<title>");
 				}
 
 				@Override
-				public String getTips(ResourceBundle resourceBundle) {
-					return _getTitleMessage(resourceBundle, "-tip");
-				}
-
-				private String _getTitleMessage(
-					ResourceBundle resourceBundle, String suffix) {
+				public String getTips(
+					ResourceBundle resourceBundle, Object... args) {
 
 					return ResourceBundleUtil.getString(
-						resourceBundle, "detail-missing-x-element" + suffix,
-						"<title>");
+						resourceBundle, "detail-missing-x-element-tip",
+						"`<title>`");
 				}
 
 				@Override
@@ -304,12 +302,28 @@ public class LayoutReportsIssue {
 					return "not-all-links-are-crawlable";
 				}
 
+				@Override
+				public String getTips(
+					ResourceBundle resourceBundle, Object... args) {
+
+					return super.getTips(
+						resourceBundle, "`<a>`", "`href`",
+						"`<a href=\"https://example.com\">`");
+				}
+
 			},
 			PAGE_BLOCKED_FROM_INDEXING {
 
 				@Override
 				public String toString() {
 					return "page-blocked-from-indexing";
+				}
+
+				@Override
+				public String getTips(
+					ResourceBundle resourceBundle, Object... args) {
+
+					return super.getTips(resourceBundle, "`noindex`");
 				}
 
 			},
@@ -322,9 +336,11 @@ public class LayoutReportsIssue {
 
 			};
 
-			public String getTips(ResourceBundle resourceBundle) {
+			public String getTips(
+				ResourceBundle resourceBundle, Object... args) {
+
 				return ResourceBundleUtil.getString(
-					resourceBundle, _getDetailLanguageKey() + "-tip");
+					resourceBundle, _getDetailLanguageKey() + "-tip", args);
 			}
 
 			public String getTitle(ResourceBundle resourceBundle) {

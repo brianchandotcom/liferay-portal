@@ -24,18 +24,24 @@ export default function IssueDetail() {
 	return (
 		<div className="c-p-3">
 			<ClayPanel.Group className="panel-group-flush panel-group-sm">
-				<Description description={selectedIssue.description} />
-				<Tips tips={selectedIssue.tips} />
+				<HtmlPanel
+					content={selectedIssue.description}
+					title={Liferay.Language.get('description')}
+				/>
+				<HtmlPanel
+					content={selectedIssue.tips}
+					title={Liferay.Language.get('tips')}
+				/>
 			</ClayPanel.Group>
 		</div>
 	);
 }
 
-const Description = ({description}) => (
+const HtmlPanel = ({content, title}) => (
 	<ClayPanel
 		collapsable
 		collapseClassNames="c-mb-4 c-mt-3"
-		displayTitle={Liferay.Language.get('description')}
+		displayTitle={title}
 		displayType="unstyled"
 		showCollapseIcon={true}
 	>
@@ -43,31 +49,14 @@ const Description = ({description}) => (
 			<div
 				className="text-secondary"
 				dangerouslySetInnerHTML={{
-					__html: description,
+					__html: content,
 				}}
 			></div>
 		</ClayPanel.Body>
 	</ClayPanel>
 );
 
-Description.propTypes = {
-	description: PropTypes.string.isRequired,
-};
-
-const Tips = ({tips}) => (
-	<ClayPanel
-		collapsable
-		collapseClassNames="c-mb-4 c-mt-3"
-		displayTitle={Liferay.Language.get('tips')}
-		displayType="unstyled"
-		showCollapseIcon={true}
-	>
-		<ClayPanel.Body>
-			<p className="text-secondary">{tips}</p>
-		</ClayPanel.Body>
-	</ClayPanel>
-);
-
-Tips.propTypes = {
-	tips: PropTypes.string.isRequired,
+HtmlPanel.propTypes = {
+	content: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
 };

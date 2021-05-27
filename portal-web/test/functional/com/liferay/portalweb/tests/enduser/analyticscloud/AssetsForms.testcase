@@ -36,46 +36,9 @@ definition {
 		}
 	}
 
-	@description = "Forms visitor behavior card shows expected amount of views"
-	@priority = "5"
-	test VisitorBehaviorCardShowsExpectedAmountOfViews {
-
-		Navigator.openURL();
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		Pause(locator1 = "10000");
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Forms");
-
-		ACNavigation.changeTimeSelector(time = "24 hours");
-
-		ACAssets.accessAssets(titleName = "Created Form Name");
-
-		AssertTextEquals(
-			matricTitle = "Views",
-			locator1 = "ACAssets#MATRIC_VALUE",
-			value1 = "1");
-	}
-
 	@description = "Form known individuals shows which individuals interact with the form"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
-
 		Navigator.openURL();
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -121,6 +84,41 @@ definition {
 		AssertElementPresent(
 			key_userName = "Test Test",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
+	@description = "Forms visitor behavior card shows expected amount of views"
+	@priority = "5"
+	test VisitorBehaviorCardShowsExpectedAmountOfViews {
+		Navigator.openURL();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Forms");
+
+		ACNavigation.changeTimeSelector(time = "24 hours");
+
+		ACAssets.accessAssets(titleName = "Created Form Name");
+
+		AssertTextEquals(
+			locator1 = "ACAssets#MATRIC_VALUE",
+			matricTitle = "Views",
+			value1 = "1");
 	}
 
 }

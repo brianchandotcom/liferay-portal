@@ -80,7 +80,7 @@ renderResponse.setTitle((accountEntryAddressId == 0) ? LanguageUtil.get(request,
 			</div>
 		</div>
 
-		<aui:input name="phoneNumber" type="text" />
+		<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(Phone.class.getName(), "number") %>' name="phoneNumber" type="text" />
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

@@ -1,0 +1,177 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that an Image Field can be duplicated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDuplicated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133033 CanBeDuplicated pending implementation
+
+	}
+
+	@description = "Verify that an Image Field can be set to repeatable"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSetToRepeatable {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-LPS-133034 CanBeSetToRepeatable pending implementation
+
+	}
+
+	@description = "Verify that an image can be uploaded"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUploadAnImage {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133043 CanBeUploaded pending implementation
+
+	}
+
+	@description = "Verify that an image can be uploaded from Liferay Documents and Media"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanUploadFromDocumentsAndMedia {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133044 CanUploadFromDocumentsAndMedia pending implementation
+
+	}
+
+	@description = "Verify that changes to the Field can be canceled"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ChangesCanBeCanceled {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133038 ChangesCanBeCanceled pending implementation
+
+	}
+
+	@description = "Verify that an Image Description can be added to an uploaded Image"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DescriptionCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133048 DescriptionCanBeAdded pending implementation
+
+	}
+
+	@description = "Verify that a help text can be added to an Image Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133041 HelpTextCanBeAdded pending implementation
+
+	}
+
+	@description = "Verify that the Field Label can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133039 LabelCanBeEdited pending implementation
+
+	}
+
+	@description = "Veriy that the Field Label can be hidden"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeHidden {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133040 LabelCanBeHidden pending implementation
+
+	}
+
+	@description = "Verify that a Predefined Value can be set"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PredefinedValueCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133049 PredefinedValueCanBeAdded pending implementation
+
+	}
+
+	@description = "Verify that the Field Reference can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133042 ReferenceCanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that an image added to the Image Field can be removed by clicking the Clear button"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SelectedImagesCanBeCleared {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133046 SelectedImagesCanBeCleared pending implementation
+
+	}
+
+	@description = " Verify that the Field Type can be changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TypeCanBeChanged {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133037 TypeCanBeChanged pending implementation
+
+	}
+
+}

@@ -1006,9 +1006,7 @@ definition {
 
 		Click(locator1 = "CKEditor#TOOLBAR_IMAGE_BUTTON");
 
-		SelectFrame.selectFrameNoLoading(
-			key_title = "Select Item",
-			locator1 = "IFrame#MODAL_ANY");
+		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		AssertClick(
 			key_breadcrumbName = "Sites and Libraries",

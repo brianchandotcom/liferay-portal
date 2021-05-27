@@ -78,6 +78,10 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		return _readOnly;
 	}
 
+	public boolean getSubmittable() {
+		return _submittable;
+	}
+
 	public void setContainerId(java.lang.String containerId) {
 		_containerId = containerId;
 	}
@@ -122,6 +126,10 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		_readOnly = readOnly;
 	}
 
+	public void setSubmittable(boolean submittable) {
+		_submittable = submittable;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -144,6 +152,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		_persistDefaultValues = false;
 		_persisted = false;
 		_readOnly = false;
+		_submittable = true;
 	}
 
 	@Override
@@ -164,6 +173,7 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 		setNamespacedAttribute(request, "persistDefaultValues", _persistDefaultValues);
 		setNamespacedAttribute(request, "persisted", _persisted);
 		setNamespacedAttribute(request, "readOnly", _readOnly);
+		setNamespacedAttribute(request, "submittable", _submittable);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-data-engine:data-layout-renderer:";
@@ -182,5 +192,6 @@ public abstract class BaseDataLayoutRendererTag extends com.liferay.taglib.util.
 	private boolean _persistDefaultValues = false;
 	private boolean _persisted = false;
 	private boolean _readOnly = false;
+	private boolean _submittable = true;
 
 }

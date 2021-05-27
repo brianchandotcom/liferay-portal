@@ -2477,8 +2477,6 @@ definition {
 	}
 
 	macro gotoTab {
-		Pause(locator1 = "3000");
-
 		if (IsElementNotPresent(key_sidebarButton = "${tabName}", locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE")) {
 			Click.clickNoMouseOver(
 				key_tabName = "${tabName}",

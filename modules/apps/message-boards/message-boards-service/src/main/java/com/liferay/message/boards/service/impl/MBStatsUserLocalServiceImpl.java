@@ -16,7 +16,9 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessageTable;
+import com.liferay.message.boards.model.MBStatsUser;
 import com.liferay.message.boards.model.MBThreadTable;
+import com.liferay.message.boards.model.impl.MBStatsUserImpl;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
 import com.liferay.message.boards.service.persistence.MBMessagePersistence;
 import com.liferay.message.boards.service.persistence.MBThreadPersistence;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -151,7 +154,7 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public List<Object[]> getStatsUsersByGroupId(
+	public List<MBStatsUser> getStatsUsersByGroupId(
 			long groupId, int start, int end)
 		throws PortalException {
 
@@ -166,7 +169,7 @@ public class MBStatsUserLocalServiceImpl
 			"messageCount"
 		);
 
-		return _mbMessagePersistence.dslQuery(
+		List<Object[]> rows = _mbMessagePersistence.dslQuery(
 			DSLQueryFactoryUtil.select(
 				MBMessageTable.INSTANCE.userId, countExpression,
 				DSLFunctionFactoryUtil.max(
@@ -195,6 +198,20 @@ public class MBStatsUserLocalServiceImpl
 			).limit(
 				start, end
 			));
+
+		List<MBStatsUser> mbStatsUsers = new ArrayList<>(rows.size());
+
+		for (Object[] columns : rows) {
+			Long userId = (Long)columns[0];
+			Long messageCount = (Long)columns[1];
+			Date lastPostDate = (Date)columns[2];
+
+			mbStatsUsers.add(
+				new MBStatsUserImpl(
+					userId, messageCount.intValue(), lastPostDate));
+		}
+
+		return mbStatsUsers;
 	}
 
 	@Override

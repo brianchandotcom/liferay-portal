@@ -78,16 +78,14 @@
 		/>
 
 		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="result"
+			className="com.liferay.message.boards.model.MBStatsUser"
+			modelVar="mbStatsUser"
 		>
 
 			<%
-			Object[] array = (Object[])result;
-
-			long userId = (Long)array[0];
-			long messageCount = (Long)array[1];
-			Date lastPostDate = (Date)array[2];
+			long userId = mbStatsUser.getUserId();
+			int messageCount = mbStatsUser.getMessageCount();
+			Date lastPostDate = mbStatsUser.getLastPostDate();
 
 			User topUser = UserLocalServiceUtil.fetchUserById(userId);
 			%>

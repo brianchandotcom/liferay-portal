@@ -1,0 +1,188 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Rich Text Field can be created"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCreated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133109 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that a Rich Text Field can be deleted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133111 CanBeDeleted pending implementation
+
+	}
+
+	@description = "Verify that a Rich Text Field can be duplicated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDuplicated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133113 CanBeDuplicated pending implementation
+
+	}
+
+	@description = "Verify that a Rich Text Field can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133110 CanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that a Rich Text Field can be required"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeRequired {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133112 CanBeRequired pending implementation
+
+	}
+
+	@description = "Verify that a Rich Text Field can be set to repeatable"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSetToRepeatable {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133114 CanBeSetToRepeatable pending implementation
+
+	}
+
+	@description = "Verify that a Form can be submitted with the Rich Text Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSubmitted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133121 CanBeSubmitted pending implementation
+
+	}
+
+	@description = "Verify that changes to the Field can be canceled"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChangesCanBeCanceled {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133116 ChangesCanBeCanceled pending implementation
+
+	}
+
+	@description = "Verify that a help text can be added to a Rich Text Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133120 HelpTextCanBeAdded pending implementation
+
+	}
+
+	@description = "Verify that the Field Label can be changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133118 LabelCanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that the Field Label can be hidden"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeHidden {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133119 LabelCanBeHidden pending implementation
+
+	}
+
+	@description = "Verify that a Predefined Value can be set for the Rich Text Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PredefinedValueCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133122 PredefinedValueCanBeAdded pending implementation
+
+	}
+
+	@description = "Verify that the Field Reference can be changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133117 ReferenceCanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that the Field Type can be changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TypeCanBeChanged {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133115 TypeCanBeChanged pending implementation
+
+	}
+
+}

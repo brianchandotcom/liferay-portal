@@ -222,20 +222,18 @@ definition {
 		FormsAdminNavigator.gotoSettings();
 
 		Form.configureSubmitLabel(submitLabel = "Send Form");
-		
+
 		Form.save();
 
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		Form.viewSubmitButtonText(
-            key_buttonText = "Send Form");
+		Form.viewSubmitButtonText(key_buttonText = "Send Form");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Send Form");
 
 		Navigator.openURL();
-
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -246,16 +244,14 @@ definition {
 		FormsAdminNavigator.gotoSettings();
 
 		Form.configureSubmitLabel(submitLabel = "Complete");
-		
+
 		Form.save();
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		Form.viewSubmitButtonText(
-            key_buttonText = "Complete");
+		Form.viewSubmitButtonText(key_buttonText = "Complete");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Complete");
-
 	}
 
 	@description = "Verify that a Form's Submit button's text can be customized with numbers"

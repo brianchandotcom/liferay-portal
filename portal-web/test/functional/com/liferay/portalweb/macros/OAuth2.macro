@@ -134,12 +134,6 @@ definition {
 			value1 = "${clientSecret}");
 
 		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
 	}
 
 	macro deleteApplication {
@@ -435,6 +429,14 @@ definition {
 		}
 
 		PortletEntry.save();
+	}
+
+	macro launchRequest {
+		Button.click(button = "Launch Request");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
+			value1 = "test@liferay.com");
 	}
 
 	macro openOAuth2Admin {

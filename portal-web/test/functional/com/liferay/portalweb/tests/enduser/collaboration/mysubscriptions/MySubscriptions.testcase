@@ -51,6 +51,8 @@ definition {
 
 		Portlet.addPG(portletName = "Documents and Media");
 
+		DMDocument.enableActionsMenuOnPortlet();
+
 		DMFolder.addPG(
 			dmFolderDescription = "DM Folder Description",
 			dmFolderName = "DM Folder");

@@ -241,15 +241,11 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpeg");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Depot.connectSite(siteList = "${siteName}");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "${siteName}");
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",

@@ -251,14 +251,35 @@ definition {
 	}
 
 	@description = "Veriy that the Field Label can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132456 LabelCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid",
+			formPageNumber = "0");
+
+		Form.editFieldLabelMetal(fieldValue = "Test Grid");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewRadioLabel(
+			fieldLabel = "Test Grid",
+			fieldName = "Test Grid");
 	}
 
 	@description = "Verify that the Field Label can be hidden"

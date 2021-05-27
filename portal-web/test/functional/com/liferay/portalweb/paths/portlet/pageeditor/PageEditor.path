@@ -734,7 +734,7 @@
 <!--MANAGEMENT_BAR-->
 <tr>
 	<td>AUTOSAVE_MESSAGE</td>
-	<td>//div[contains(@class,'management-bar')]//span[contains(@class,'navbar-text')]</td>
+	<td>//div[contains(@class,'management-bar')]//span[contains(@class,'text-success')]</td>
 	<td></td>
 </tr>
 <tr>

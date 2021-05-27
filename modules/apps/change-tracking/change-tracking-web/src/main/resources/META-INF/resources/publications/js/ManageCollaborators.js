@@ -46,6 +46,7 @@ const CollaboratorRow = ({
 	user,
 }) => {
 	let activeRole = roles[0];
+	let changed = false;
 	let className = '';
 
 	if (
@@ -54,6 +55,8 @@ const CollaboratorRow = ({
 			user.userId.toString()
 		)
 	) {
+		changed = true;
+
 		activeRole = updatedRoles[user.userId.toString()];
 
 		if (updatedRoles[user.userId.toString()].value === -1) {
@@ -79,6 +82,11 @@ const CollaboratorRow = ({
 
 	for (let i = 0; i < roles.length; i++) {
 		dropdownItems.push({
+			className:
+				activeRole.value !== roles[i].value &&
+				user.roleValue === roles[i].value
+					? 'font-italic'
+					: '',
 			label: roles[i].label,
 			onClick: () => handleSelect(roles[i]),
 			symbolLeft: activeRole.value === roles[i].value ? 'check' : '',
@@ -109,6 +117,18 @@ const CollaboratorRow = ({
 		title = Liferay.Language.get(
 			'you-cannot-update-permissions-for-yourself'
 		);
+	}
+
+	let label = activeRole.label;
+
+	if (user.isOwner) {
+		label = Liferay.Language.get('owner');
+	}
+	else if (
+		changed &&
+		Object.prototype.hasOwnProperty.call(user, 'roleValue')
+	) {
+		label = label + ' (' + user.roleLabel + ')';
 	}
 
 	return (
@@ -156,9 +176,7 @@ const CollaboratorRow = ({
 							small
 							title={title}
 						>
-							{user.isOwner
-								? Liferay.Language.get('owner')
-								: activeRole.label}
+							{label}
 
 							<span className="inline-item inline-item-after">
 								<ClayIcon

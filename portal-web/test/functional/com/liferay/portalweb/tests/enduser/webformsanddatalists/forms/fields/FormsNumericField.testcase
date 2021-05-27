@@ -50,6 +50,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132831 CanBeDeleted pending implementation
+
 	}
 
 	@description = "Verify that a Numeric Field can be duplicated"
@@ -60,6 +61,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132835 CanBeDuplicated pending implementation
+
 	}
 
 	@description = "Verify that a Numeric Field can be edited"
@@ -70,6 +72,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132830 CanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that a Numeric Field can be required"
@@ -80,6 +83,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132832 CanBeRequired pending implementation
+
 	}
 
 	@description = "Verify that a Numeric Field can accept decimals when the numeric type set to Decimal"
@@ -90,6 +94,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132861 CanBeSetToAcceptDecimals pending implementation
+
 	}
 
 	@description = "Verify that a Numeric Field can be set to repeatable"
@@ -100,6 +105,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132836 CanBeSetToRepeatable pending implementation
+
 	}
 
 	@description = "Verify that a Form can be submitted with the Numeric Field"
@@ -110,6 +116,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132844 CanBeSubmitted pending implementation
+
 	}
 
 	@description = "Verify that the "Is Equal To" option can be used to validate a Numeric Field"
@@ -120,6 +127,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132849 CanBeValidatedUsingIsEqualTo pending implementation
+
 	}
 
 	@description = "Verify that the "Is Greater Than" option can be used to validate a Numeric Field"
@@ -130,6 +138,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132851 CanBeValidatedUsingIsGreaterThan pending implementation
+
 	}
 
 	@description = "Verify that the "Is Greater Than Or Equal To" option can be used to validate a Numeric Field"
@@ -140,6 +149,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132850 CanBeValidatedUsingIsGreaterThanOrEqualTo pending implementation
+
 	}
 
 	@description = "Verify that the "Is Less Than" option can be used to validate a Numeric Field"
@@ -150,6 +160,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132854 CanBeValidatedUsingIsLessThan pending implementation
+
 	}
 
 	@description = "Verify that the "Is Less Than Or Equal To" option can be used to validate a Numeric Field"
@@ -160,6 +171,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132853 CanBeValidatedUsingIsLessThanOrEqualTo pending implementation
+
 	}
 
 	@description = "Verify that the "Is Not Equal To" option can be used to validate a Numeric Field"
@@ -170,6 +182,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132852 CanBeValidatedUsingIsNotEqualTo pending implementation
+
 	}
 
 	@description = "Verify that changes to a Field can be canceled"
@@ -180,6 +193,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132839 ChangesCanBeCanceled pending implementation
+
 	}
 
 	@description = "Verify that a Numeric Field does not accept decimals by default"
@@ -190,6 +204,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132834 DoesNotAcceptDecimalsByDefault pending implementation
+
 	}
 
 	@description = "Verify that a help text can be added"
@@ -200,6 +215,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132842 HelpTextCanBeAdded pending implementation
+
 	}
 
 	@description = "Verify that the Field Label can be edited"
@@ -210,6 +226,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132840 LabelCanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that the Field Label can be hidden"
@@ -220,6 +237,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132841 LabelCanBeHidden pending implementation
+
 	}
 
 	@description = "Verify that a Numeric Field only accepts numbers"
@@ -230,6 +248,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132833 OnlyAcceptsNumbers pending implementation
+
 	}
 
 	@description = "Verify that a Placeholder Text can be set"
@@ -240,6 +259,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132846 PlaceholderTextCanBeSet pending implementation
+
 	}
 
 	@description = "Verify that a Predefined Value can be set"
@@ -250,6 +270,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132845 PredefinedValueCanBeSet pending implementation
+
 	}
 
 	@description = "Verify that Predefined Value has higher priority than Placeholder Text for the Numeric Field"
@@ -260,6 +281,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132847 PredefinedValueHasHigherPriorityThanPlaceholderText pending implementation
+
 	}
 
 	@description = "Verify that when erasing the Predefined Value in the Numeric Field it will be replaced by the Placeholder Text"
@@ -270,6 +292,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132848 PredefinedValueIsReplacedByPlaceholderText pending implementation
+
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
@@ -280,6 +303,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132843 ReferenceCanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that the Field Type can be changed"
@@ -290,6 +314,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132837 TypeCanBeChanged pending implementation
+
 	}
 
 	@description = "Verify that Validation options are reset after changing the Field Type from a Numeric Field to Text Field"
@@ -300,6 +325,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-132838 ValidationIsResetAfterChangingFieldType pending implementation
+
 	}
 
 }

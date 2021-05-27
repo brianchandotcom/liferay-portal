@@ -289,6 +289,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-133010 CanDeleteATableUsingRightClick pending implementation
+
 	}
 
 	@description = "Verify that the Formatting Style can be changed using the predefined style options"
@@ -436,6 +437,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131241 CanSupportALinkToAnAnchor pending implementation
+
 	}
 
 	@description = "Verify that a link to an Email can be added to the Body Text"
@@ -445,6 +447,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131242 CanSupportALinkToAnEmail pending implementation
+
 	}
 
 	@description = "Verify that a link to a Phone Number can be added to the Body Text"
@@ -454,6 +457,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131243 CanSupportALinkToAPhoneNumber pending implementation
+
 	}
 
 	@description = "Verify that a link to a URL can be added to the Body Text"
@@ -561,6 +565,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131247 CanSupportHTML pending implementation
+
 	}
 
 	@description = "Verify that an Image can be uploaded to the Body Text"
@@ -802,6 +807,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131244 CanUnlinkALink pending implementation
+
 	}
 
 	@description = "Verify that changes to a Field can be canceled"
@@ -811,6 +817,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131225 ChangesCanBeCanceled pending implementation
+
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
@@ -955,6 +962,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131232 TypeCanBeChanged pending implementation
+
 	}
 
 }

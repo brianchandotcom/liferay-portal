@@ -27,13 +27,36 @@ definition {
 	}
 
 	@description = "COMMERCE-5937. As a buyer, I want open Account Selector to close if I open the Global Search"
-	@ignore = "true"
 	@priority = "3"
 	test AssertAccountSelectorIsClosedAfterGlobalSearchIsOpened {
-		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountSelector#AssertAccountSelectorIsClosedAfterGlobalSearchIsOpened";
 
-		// TODO COMMERCE-5937 AssertAccountSelectorIsClosedAfterGlobalSearchIsOpened pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
 
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account 1",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(locator1 = "Button#ANGLE_DOWN");
+
+		AssertElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_SHOW");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+		AssertElementNotPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_SHOW");
 	}
 
 	@description = "COMMERCE-5938. As a buyer, I want open Account Selector to close if I open the mini-cart"

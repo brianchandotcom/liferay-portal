@@ -402,7 +402,12 @@ function getMappedFieldLabel(
 	}
 
 	const key = collectionConfig
-		? collectionConfig.classNameId || collectionConfig.key
+		? collectionConfig.classNameId
+			? getMappingFieldsKey(
+					collectionConfig.classNameId,
+					collectionConfig.classPK
+			  )
+			: collectionConfig.key
 		: editable.mappedField
 		? getMappingFieldsKey(
 				selectedMappingTypes.type.id,

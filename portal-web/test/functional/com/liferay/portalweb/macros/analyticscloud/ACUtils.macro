@@ -1,5 +1,20 @@
 definition {
 
+	macro addSiteAndPage {
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AC Page");
+	}
+
+	macro addWidgetToPage {
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AC Page",
+			widgetName = "${widgetName}");
+	}
+
 	macro closeAllSessions {
 		var cleanCurl = '''
 			http://localhost:8082/admin/sessions/close \
@@ -14,45 +29,9 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
-	macro launchAC {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-		Navigator.openURL(baseURL = "${analyticsCloudURL}");
-
-		ACLogin.loginAs();
-
-		ACWorkspace.openWorkspace();
-	}
-
-	macro launchDXP {
-		Navigator.openURL();
-
-		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
-			User.firstLoginPG();
-		}
-	}
-
-	macro addSiteAndPage {
-
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "AC Page");
-	}
-
-	macro addWidgetToPage {
-		
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "AC Page",
-			widgetName = "${widgetName}");
-	}
-
 	macro createFormAndAddToPage {
-		
 		ACUtils.addWidgetToPage(widgetName = "Form");
-		
+
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		ProductMenu.gotoPortlet(
@@ -78,6 +57,24 @@ definition {
 		FormPortletConfiguration.selectForm();
 
 		PortletEntry.save();
+	}
+
+	macro launchAC {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		Navigator.openURL(baseURL = "${analyticsCloudURL}");
+
+		ACLogin.loginAs();
+
+		ACWorkspace.openWorkspace();
+	}
+
+	macro launchDXP {
+		Navigator.openURL();
+
+		if (IsElementNotPresent(locator1 = "ApplicationsMenu#APPLICATIONS_MENU")) {
+			User.firstLoginPG();
+		}
 	}
 
 }

@@ -78,6 +78,11 @@ public class LocalizableTextDDMFormFieldTypeSettingsTest
 		Assert.assertEquals("string", placeholderDDMFormField.getDataType());
 		Assert.assertEquals("text", placeholderDDMFormField.getType());
 
+		DDMFormField requiredErrorMessage = ddmFormFieldsMap.get(
+			"requiredErrorMessage");
+
+		Assert.assertNotNull(requiredErrorMessage);
+
 		DDMFormField tooltipDDMFormField = ddmFormFieldsMap.get("tooltip");
 
 		Assert.assertNotNull(tooltipDDMFormField);

@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.key.value;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -76,11 +78,30 @@ public class KeyValueDDMFormFieldTypeSettingsTest
 		Assert.assertEquals("string", placeholderDDMFormField.getDataType());
 		Assert.assertEquals("text", placeholderDDMFormField.getType());
 
+		DDMFormField requiredErrorMessage = ddmFormFieldsMap.get(
+			"requiredErrorMessage");
+
+		Assert.assertNotNull(requiredErrorMessage);
+
 		DDMFormField tooltipDDMFormField = ddmFormFieldsMap.get("tooltip");
 
 		Assert.assertNotNull(tooltipDDMFormField);
 		Assert.assertEquals(
 			"FALSE", tooltipDDMFormField.getVisibilityExpression());
+
+		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+
+		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());
+
+		DDMFormRule ddmFormRule = ddmFormRules.get(0);
+
+		Assert.assertEquals("TRUE", ddmFormRule.getCondition());
+
+		List<String> actions = ddmFormRule.getActions();
+
+		Assert.assertEquals(actions.toString(), 1, actions.size());
+
+		Assert.assertEquals("setVisible('indexType', false)", actions.get(0));
 	}
 
 	@Override

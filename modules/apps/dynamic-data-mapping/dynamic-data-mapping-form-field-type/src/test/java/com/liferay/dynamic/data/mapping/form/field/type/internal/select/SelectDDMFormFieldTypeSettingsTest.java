@@ -113,6 +113,11 @@ public class SelectDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(indexTypeDDMFormField.getLabel());
 		Assert.assertEquals("radio", indexTypeDDMFormField.getType());
 
+		DDMFormField requiredErrorMessage = ddmFormFieldsMap.get(
+			"requiredErrorMessage");
+
+		Assert.assertNotNull(requiredErrorMessage);
+
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
 		Assert.assertEquals(ddmFormRules.toString(), 3, ddmFormRules.size());
@@ -142,56 +147,44 @@ public class SelectDDMFormFieldTypeSettingsTest
 		actions = ddmFormRule1.getActions();
 
 		Assert.assertEquals(actions.toString(), 11, actions.size());
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				"setMultiple('predefinedValue', getValue('multiple'))"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				"setOptions('predefinedValue', getValue('options'))"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				"setRequired('ddmDataProviderInstanceId', contains(getValue(" +
-					"'dataSourceType'), \"data-provider\"))"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				"setRequired('ddmDataProviderInstanceOutput', contains(" +
-					"getValue('dataSourceType'), \"data-provider\"))"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				StringBundler.concat(
-					"setRequired('options', ",
-					"contains(getValue('dataSourceType'), \"manual\") OR ",
-					"isEmpty(getValue('dataSourceType')))")));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				"setVisible('ddmDataProviderInstanceId', contains(getValue(" +
-					"'dataSourceType'), \"data-provider\"))"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				"setVisible('ddmDataProviderInstanceOutput', contains(" +
-					"getValue('dataSourceType'), \"data-provider\"))"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				StringBundler.concat(
-					"setVisible('options', ",
-					"contains(getValue('dataSourceType'), \"manual\") OR ",
-					"isEmpty(getValue('dataSourceType')))")));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains(
-				"setVisible('predefinedValue', " +
-					"contains(getValue('dataSourceType'), \"manual\"))"));
-		Assert.assertTrue(
-			actions.toString(),
-			actions.contains("setVisible('validation', false)"));
+		Assert.assertEquals(
+			"setMultiple('predefinedValue', getValue('multiple'))",
+			actions.get(0));
+		Assert.assertEquals(
+			"setOptions('predefinedValue', getValue('options'))",
+			actions.get(1));
+		Assert.assertEquals(
+			"setRequired('ddmDataProviderInstanceId', contains(getValue(" +
+				"'dataSourceType'), \"data-provider\"))",
+			actions.get(2));
+		Assert.assertEquals(
+			"setRequired('ddmDataProviderInstanceOutput', contains(" +
+				"getValue('dataSourceType'), \"data-provider\"))",
+			actions.get(3));
+		Assert.assertEquals(
+			"setRequired('options', contains(getValue('dataSourceType'), " +
+				"\"manual\") OR isEmpty(getValue('dataSourceType')))",
+			actions.get(4));
+		Assert.assertEquals(
+			"setVisible('ddmDataProviderInstanceId', contains(getValue(" +
+				"'dataSourceType'), \"data-provider\"))",
+			actions.get(5));
+		Assert.assertEquals(
+			"setVisible('ddmDataProviderInstanceOutput', contains(" +
+				"getValue('dataSourceType'), \"data-provider\"))",
+			actions.get(6));
+		Assert.assertEquals(
+			"setVisible('options', contains(getValue('dataSourceType'), " +
+				"\"manual\") OR isEmpty(getValue('dataSourceType')))",
+			actions.get(7));
+		Assert.assertEquals(
+			"setVisible('predefinedValue', " +
+				"contains(getValue('dataSourceType'), \"manual\"))",
+			actions.get(8));
+		Assert.assertEquals(
+			"setVisible('requiredErrorMessage', getValue('required'))",
+			actions.get(9));
+		Assert.assertEquals("setVisible('validation', false)", actions.get(10));
 
 		DDMFormRule ddmFormRule3 = ddmFormRules.get(2);
 

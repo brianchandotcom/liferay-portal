@@ -75,6 +75,11 @@ public class CheckboxDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"true", predefinedValueDDMFormField.getProperty("showAsSwitcher"));
 
+		DDMFormField requiredErrorMessage = ddmFormFieldsMap.get(
+			"requiredErrorMessage");
+
+		Assert.assertNotNull(requiredErrorMessage);
+
 		DDMFormField repeatableDDMFormField = ddmFormFieldsMap.get(
 			"repeatable");
 

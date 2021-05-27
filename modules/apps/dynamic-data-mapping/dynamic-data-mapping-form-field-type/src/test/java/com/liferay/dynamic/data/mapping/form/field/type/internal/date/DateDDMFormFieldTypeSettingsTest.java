@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.date;
 import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSettingsTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -67,6 +69,11 @@ public class DateDDMFormFieldTypeSettingsTest
 		DDMFormField predefinedValueDDMFormField = ddmFormFieldsMap.get(
 			"predefinedValue");
 
+		DDMFormField requiredErrorMessage = ddmFormFieldsMap.get(
+			"requiredErrorMessage");
+
+		Assert.assertNotNull(requiredErrorMessage);
+
 		Assert.assertNotNull(predefinedValueDDMFormField);
 		Assert.assertEquals(
 			"string", predefinedValueDDMFormField.getDataType());
@@ -87,6 +94,23 @@ public class DateDDMFormFieldTypeSettingsTest
 		Assert.assertNotNull(indexTypeDDMFormField);
 		Assert.assertNotNull(indexTypeDDMFormField.getLabel());
 		Assert.assertEquals("radio", indexTypeDDMFormField.getType());
+
+		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+
+		Assert.assertEquals(ddmFormRules.toString(), 1, ddmFormRules.size());
+
+		DDMFormRule ddmFormRule = ddmFormRules.get(0);
+
+		Assert.assertEquals("TRUE", ddmFormRule.getCondition());
+
+		List<String> actions = ddmFormRule.getActions();
+
+		Assert.assertEquals(actions.toString(), 2, actions.size());
+
+		Assert.assertEquals("setVisible('dataType', false)", actions.get(0));
+		Assert.assertEquals(
+			"setVisible('requiredErrorMessage', getValue('required'))",
+			actions.get(1));
 	}
 
 	@Override

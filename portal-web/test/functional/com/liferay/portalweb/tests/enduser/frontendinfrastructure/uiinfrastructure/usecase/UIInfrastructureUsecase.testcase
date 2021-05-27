@@ -273,38 +273,4 @@ definition {
 			userScreenName = "uskandi");
 	}
 
-	@description = "This test validates sign in and sign out UI"
-	@ignore = "true"
-	@priority = "5"
-	@refactorneeded
-	test ViewSignInSignOutUI {
-		property portal.acceptance = "false";
-
-		UserBar.signOut();
-
-		WaitForElementPresent(locator1 = "UserBar#USER_SIGN_IN");
-
-		SikuliAssertElementPresent(locator1 = "UserBar#USER_SIGN_IN_PNG");
-
-		takeScreenshot();
-
-		var portalURL = PropsUtil.get("portal.url");
-
-		Navigator.openSpecificURL(url = "${portalURL}/c/portal/login");
-
-		WaitForElementPresent(locator1 = "SignIn#PORTLET_TITLE");
-
-		SikuliAssertElementPresent(locator1 = "SignIn#LOGIN_PORTLET_PNG");
-
-		SignIn._signIn();
-
-		WaitForElementPresent(locator1 = "UserBar#USER_AVATAR_ICON");
-
-		takeScreenshot();
-
-		UserBar.signOut();
-
-		AssertElementPresent(locator1 = "UserBar#USER_SIGN_IN");
-	}
-
 }

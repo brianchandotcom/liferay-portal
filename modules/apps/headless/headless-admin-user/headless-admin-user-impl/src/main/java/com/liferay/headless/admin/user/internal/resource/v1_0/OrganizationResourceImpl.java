@@ -101,6 +101,15 @@ public class OrganizationResourceImpl
 	}
 
 	@Override
+	public void deleteUserAccountByEmailAddress(
+			String organizationId, String emailAddress)
+		throws Exception {
+
+		_organizationService.deleteUserOrganizationByEmailAddress(
+			emailAddress, _getServiceBuilderOrganizationId(organizationId));
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
@@ -176,6 +185,15 @@ public class OrganizationResourceImpl
 			_getDTOConverterContext(
 				String.valueOf(serviceBuilderOrganization.getOrganizationId())),
 			serviceBuilderOrganization);
+	}
+
+	@Override
+	public void postUserAccountByEmailAddress(
+			String organizationId, String emailAddress)
+		throws Exception {
+
+		_organizationService.addUserOrganizationByEmailAddress(
+			emailAddress, _getServiceBuilderOrganizationId(organizationId));
 	}
 
 	@Override

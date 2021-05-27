@@ -1,5 +1,7 @@
 dependencies {
-	compileInclude group: "com.notnoop.apns", name: "apns", version: "1.0.0.Beta6"
+	compileInclude group: "com.eatthepath", name: "fast-uuid", version: "0.1"
+	compileInclude group: "com.eatthepath", name: "pushy", version: "0.14.2"
+	compileInclude group: "io.netty", name: "netty-all", version: "4.1.62.Final"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"

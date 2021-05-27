@@ -128,18 +128,17 @@ definition {
 
 		Form.save();
 
-
-		FormsAdminNavigator.gotoEditField(fieldName = "Grid");	
-
-		FormFields.editGridOptions(
-				gridField = "Rows",
-				optionValue = "Option 1",
-				rowNumber = "1");
+		FormsAdminNavigator.gotoEditField(fieldName = "Grid");
 
 		FormFields.editGridOptions(
-				gridField = "Columns",
-				optionValue = "Option 2",
-				rowNumber = "1");
+			gridField = "Rows",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option 2",
+			rowNumber = "1");
 
 		FormFields.editOptionsRowValueOrFieldReference(
 			fieldReference = "Option1234",
@@ -158,7 +157,6 @@ definition {
 			fieldReference = "Option1234",
 			fieldValue = "Option 1",
 			rowNumber = "1");
-
 	}
 
 	@description = "Verify that a help text can be added"

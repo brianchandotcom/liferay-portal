@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -44,7 +45,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,6 +64,16 @@ public class AccountGroupLocalServiceTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+	}
 
 	@Test
 	public void testAddAccountGroup() throws Exception {
@@ -121,18 +134,16 @@ public class AccountGroupLocalServiceTest {
 	public void testHasDefaultAccountGroupWhenCompanyIsCreated()
 		throws Exception {
 
-		Company company = CompanyTestUtil.addCompany();
-
 		Assert.assertTrue(
 			_accountGroupLocalService.hasDefaultAccountGroup(
-				company.getCompanyId()));
+				_company.getCompanyId()));
 
 		AccountGroup defaultAccountGroup =
 			_accountGroupLocalService.getDefaultAccountGroup(
-				company.getCompanyId());
+				_company.getCompanyId());
 
 		Assert.assertEquals(
-			company.getCompanyId(), defaultAccountGroup.getCompanyId());
+			_company.getCompanyId(), defaultAccountGroup.getCompanyId());
 	}
 
 	@Test
@@ -285,6 +296,11 @@ public class AccountGroupLocalServiceTest {
 			ListUtil.subList(expectedAccountGroups, start, start + delta),
 			actualAccountGroups);
 	}
+
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

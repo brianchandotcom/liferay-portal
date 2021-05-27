@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
@@ -61,8 +62,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,6 +86,16 @@ public class AccountRoleLocalServiceTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_companyLocalService.deleteCompany(_company);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -427,9 +440,7 @@ public class AccountRoleLocalServiceTest {
 			TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, keyword, null, null);
 
-		Company companyB = CompanyTestUtil.addCompany();
-
-		User adminUserB = UserTestUtil.getAdminUser(companyB.getCompanyId());
+		User adminUserB = UserTestUtil.getAdminUser(_company.getCompanyId());
 
 		AccountRole accountRoleB = _accountRoleLocalService.addAccountRole(
 			adminUserB.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
@@ -557,6 +568,11 @@ public class AccountRoleLocalServiceTest {
 			ArrayUtil.contains(
 				_getRoleIds(_users.get(0)), accountRole.getRoleId()));
 	}
+
+	private static Company _company;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private AccountEntry _accountEntry1;

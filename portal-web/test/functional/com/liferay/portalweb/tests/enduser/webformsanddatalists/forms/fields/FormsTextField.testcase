@@ -114,8 +114,6 @@ definition {
 		AssertElementNotPresent(
 			key_name = "Text",
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
-
-			
 	}
 
 	@description = "Verify that a Text Field can be duplicated"
@@ -232,6 +230,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131348 CanBeValidatedUsingTheDoesNotMatchOption pending implementation
+
 	}
 
 	@description = "Verify that the "Is Not Email" option can be used to validate a Text Field"
@@ -360,6 +359,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-133011 CanRequireConfirmation pending implementation
+
 	}
 
 	@description = "Verify that changes to a Field can be canceled"
@@ -370,6 +370,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131335 ChangesCanBeCanceled pending implementation
+
 	}
 
 	@description = "Verify that the Confirmation can be placed Horizontally"
@@ -380,6 +381,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-133012 ConfirmationBoxCanBePlacedHorizontally pending implementation
+
 	}
 
 	@description = "Verify that the Confirmation Error Message can be edited"
@@ -390,6 +392,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-133014 ConfirmationErrorMessageCanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that the Confirmation Label can be edited"
@@ -400,6 +403,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-133013 ConfirmationLabelCanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that a Help Text can be added to a Text Field"
@@ -410,6 +414,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131338 HelpTextCanBeAdded pending implementation
+
 	}
 
 	@description = "Verify that the Field Label can be edited"
@@ -420,6 +425,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131336 LabelCanBeEdited pending implementation
+
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
@@ -430,6 +436,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131337 LabelCanBeHidden pending implementation
+
 	}
 
 	@description = "Verify that Placeholder Text can be set"
@@ -467,6 +474,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131341 PredefinedValueCanBeAdded pending implementation
+
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
@@ -477,6 +485,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131339 ReferenceCanBeEdited pending implementation
+
 	}
 
 	@description = "Verify that the Field Type can be changed"
@@ -487,6 +496,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131334 TypeCanBeChanged pending implementation
+
 	}
 
 	@description = "Verify that Validation options are reset after changing the Field Type from Text Field to Numeric Field"
@@ -497,6 +507,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131352 ValidationIsResetAfterChangingFieldType pending implementation
+
 	}
 
 }

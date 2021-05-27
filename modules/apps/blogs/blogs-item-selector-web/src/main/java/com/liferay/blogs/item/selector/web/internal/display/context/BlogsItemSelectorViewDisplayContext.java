@@ -34,7 +34,9 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
 
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -71,6 +73,10 @@ public class BlogsItemSelectorViewDisplayContext {
 
 	public Folder fetchAttachmentsFolder(long userId, long groupId) {
 		return _blogsEntryLocalService.fetchAttachmentsFolder(userId, groupId);
+	}
+
+	public Set<String> getAllowedCreationMenuUIItemKeys() {
+		return Collections.emptySet();
 	}
 
 	public PortletURL getEditImageURL(

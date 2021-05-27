@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-aws-s3" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="assert-document-in-bucket">
+		<exec executable="aws" outputproperty="bucketContents">
+			<arg line="s3api list-objects --bucket lfr-qa-poshi-test --prefix ${companyId}/${groupId}" />
+		</exec>
+
+		<echo>${bucketContents}</echo>
+
+		<if>
+			<contains string="${bucketContents}" substring="1.0" />
+			<then>
+				<echo message="Document is in bucket." />
+			</then>
+			<else>
+				<fail>Document is not in bucket.</fail>
+			</else>
+		</if>
+	</target>
+
+	<target name="assert-no-document-in-bucket">
+		<exec executable="aws" outputproperty="bucketContents">
+			<arg line="s3api list-objects --bucket lfr-qa-poshi-test --prefix ${companyId}/${groupId}" />
+		</exec>
+
+		<echo>${bucketContents}</echo>
+
+		<if>
+			<equals arg1="${bucketContents}" arg2="" />
+			<then>
+				<echo message="The bucket is empty." />
+			</then>
+			<else>
+				<fail>The bucket is not empty.</fail>
+			</else>
+		</if>
+	</target>
+
+	<target name="configure-aws-cli">
+		<exec executable="aws">
+			<arg line="configure set aws_access_key_id ${aws.s3.access.key.id}" />
+		</exec>
+
+		<exec executable="aws">
+			<arg line="configure set aws_secret_access_key ${aws.s3.secret.access.key}" />
+		</exec>
+
+		<exec executable="aws">
+			<arg line="configure set default.region us-west-1" />
+		</exec>
+
+		<exec executable="aws" outputproperty="configureOutput">
+			<arg line="configure list" />
+		</exec>
+
+		<echo>${configureOutput}</echo>
+	</target>
+
+	<target name="create-s3-bucket">
+		<exec executable="aws" outputproperty="bucketContents">
+			<arg line="s3api create-bucket --bucket lfr-qa-poshi-test --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
+		</exec>
+
+		<echo>${bucketContents}</echo>
+
+		<if>
+			<not>
+				<contains string="${bucketContents}" substring="lfr-qa-poshi-test" />
+			</not>
+			<then>
+				<fail>Bucket is not created.</fail>
+			</then>
+		</if>
+	</target>
+
+	<target name="delete-s3-bucket">
+		<sequential>
+			<exec executable="aws">
+				<arg line="s3 rm s3://lfr-qa-poshi-test --recursive" />
+			</exec>
+
+			<exec executable="aws">
+				<arg line="s3api delete-bucket --bucket lfr-qa-poshi-test" />
+			</exec>
+
+			<exec executable="aws" outputproperty="bucketContents">
+				<arg line="s3api list-buckets" />
+			</exec>
+
+			<echo>${bucketContents}</echo>
+
+			<if>
+				<contains string="${bucketContents}" substring="lfr-qa-poshi-test" />
+				<then>
+					<fail>Bucket is not deleted.</fail>
+				</then>
+			</if>
+		</sequential>
+	</target>
+</project>

@@ -48,6 +48,7 @@ import {paginationReducer} from './reducers/index.es';
  */
 const useFormSubmit = ({apiRef, containerRef}) => {
 	const {activePage, pages} = useFormState();
+	const {submittable} = useConfig();
 
 	const handleFormSubmitted = useCallback(
 		(event) => {
@@ -69,7 +70,9 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 							return;
 						}
 
-						Liferay.Util.submitForm(event.target);
+						if (submittable) {
+							Liferay.Util.submitForm(event.target);
+						}
 
 						Liferay.fire('ddmFormSubmit', {
 							formId: getFormId(
@@ -82,7 +85,7 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 					console.error(error);
 				});
 		},
-		[containerRef, apiRef]
+		[apiRef, containerRef, submittable]
 	);
 
 	useEffect(() => {

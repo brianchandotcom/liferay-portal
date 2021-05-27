@@ -66,6 +66,7 @@ export const parseProps = ({
 	showSubmitButton,
 	spritemap,
 	submitLabel,
+	submittable,
 	view,
 	...otherProps
 }) => ({
@@ -104,6 +105,7 @@ export const parseProps = ({
 		sidebarPanels,
 		spritemap,
 		submitLabel,
+		submittable,
 		view,
 	}),
 	state: validator({

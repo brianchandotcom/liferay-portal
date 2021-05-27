@@ -78,7 +78,6 @@ public class DeleteByQueryDocumentRequestExecutorTest {
 					{
 						setElasticsearchClientResolver(_elasticsearchFixture);
 
-
 						com.liferay.portal.search.elasticsearch7.internal.
 							legacy.query.ElasticsearchQueryTranslatorFixture
 								legacyElasticsearchQueryTranslatorFixture =

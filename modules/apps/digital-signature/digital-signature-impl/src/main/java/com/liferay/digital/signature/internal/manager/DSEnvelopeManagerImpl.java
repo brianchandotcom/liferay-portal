@@ -56,7 +56,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 
 		dsEnvelope = _toDSEnvelope(
 			_dsHttp.post(
-				companyId, groupId, "envelopes", _toJSONObject(dsEnvelope)));
+				companyId, groupId, "envelopes", dsEnvelope.toJSONObject()));
 
 		_dsCustomFieldManager.addDSCustomFields(
 			companyId, groupId, dsEnvelope.getDSEnvelopeId(),
@@ -209,52 +209,6 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			dsEnvelope, jsonObject.getJSONObject("customFields"));
 
 		return dsEnvelope;
-	}
-
-	private JSONObject _toJSONObject(DSEnvelope dsEnvelope) {
-		return JSONUtil.put(
-			"createdLocalDateTime", dsEnvelope.getCreatedLocalDateTime()
-		).put(
-			"documents",
-			JSONUtil.toJSONArray(
-				dsEnvelope.getDSDocuments(),
-				dsDocument -> JSONUtil.put(
-					"documentBase64", dsDocument.getData()
-				).put(
-					"documentId", dsDocument.getDSDocumentId()
-				).put(
-					"name", dsDocument.getName()
-				),
-				_log)
-		).put(
-			"emailBlurb", dsEnvelope.getEmailBlurb()
-		).put(
-			"emailSubject", dsEnvelope.getEmailSubject()
-		).put(
-			"envelopeId", dsEnvelope.getDSEnvelopeId()
-		).put(
-			"name", dsEnvelope.getName()
-		).put(
-			"recipients",
-			JSONUtil.put(
-				"signers",
-				JSONUtil.toJSONArray(
-					dsEnvelope.getDSRecipients(),
-					dsRecipient -> JSONUtil.put(
-						"email", dsRecipient.getEmailAddress()
-					).put(
-						"name", dsRecipient.getName()
-					).put(
-						"recipientId", dsRecipient.getDSRecipientId()
-					).put(
-						"status", dsRecipient.getStatus()
-					),
-					_log))
-		).put(
-			"senderEmailAddress", dsEnvelope.getSenderEmailAddress()
-		).put(
-			"status", dsEnvelope.getStatus()
-		);
 	}
 
 	private LocalDateTime _toLocalDateTime(String localDateTimeString) {

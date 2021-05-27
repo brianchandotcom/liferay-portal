@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>ACAssets</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACAssets</td></tr>
+</thead>
+<tbody>
+<!-- ASSETS PAGE  -->
+<tr>
+	<td>ASSETS_TITLE_NAME</td>
+	<td>//a[@class='text-truncate'and text()='${key_titleName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MATRIC_VALUE</td>
+	<td>//span[@class='title'and text()='${matricTitle}']/..//div[@class='metric-value']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

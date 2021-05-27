@@ -1023,7 +1023,7 @@ definition {
 
 		Segmentation.gotoSidebar(fieldType = "Session");
 
-		Segmentation.addProperties(propertyOption = "URL");
+		Segmentation.addProperties(propertyOption = "User Agent");
 
 		Segmentation.fillTitle(titleField = "AddSegmentBySessionUserAgent Test");
 

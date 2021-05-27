@@ -32,8 +32,6 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 Group group = (Group)request.getAttribute("site.group");
 %>
 
-<liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
-
 <aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 <aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 <aui:input name="groupId" type="hidden" value="<%= group.getGroupId() %>" />

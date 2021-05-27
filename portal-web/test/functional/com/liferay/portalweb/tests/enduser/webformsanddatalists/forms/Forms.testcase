@@ -5764,10 +5764,6 @@ definition {
 		Form.viewFormDescription(formDescription = "Form Description");
 
 		FormFields.viewTextLabel(fieldLabel = "Text");
-
-
-
-
 	}
 
 }

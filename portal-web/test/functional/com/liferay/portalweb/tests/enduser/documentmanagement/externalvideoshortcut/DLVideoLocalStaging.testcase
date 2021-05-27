@@ -56,23 +56,13 @@ definition {
 	test PublishKBAfterDeletingEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideoLocalStaging#PublishKBAfterDeletingEmbeddedVideo";
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
+		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
-			portlet = "Settings");
+			groupName = "Site Name");
 
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoPortlet(portlet = "Staging");
-
-		Depot.activateStaging(depotName = "Test Depot Name");
+		JSONStaging.enableLocalStaging(
+			groupName = "Test Depot Name",
+			site = "false");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 

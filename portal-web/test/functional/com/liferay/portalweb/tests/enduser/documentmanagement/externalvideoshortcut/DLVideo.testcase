@@ -108,13 +108,9 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -270,13 +266,9 @@ definition {
 			mimeType = "video/mp4",
 			sourceFileName = "Document_1.mp4");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		KBAdmin.openKBAdmin(siteURLKey = "Site Name");
 
@@ -411,13 +403,9 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

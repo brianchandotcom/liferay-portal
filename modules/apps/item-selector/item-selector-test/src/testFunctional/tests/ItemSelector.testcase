@@ -226,13 +226,9 @@ definition {
 			groupName = "Site Name",
 			title = "WC WebContent From Site");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -285,13 +281,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
@@ -457,13 +449,9 @@ definition {
 			groupName = "Site Name",
 			title = "Web Content From Site");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
@@ -654,13 +642,9 @@ definition {
 				dmDocumentTitle = "DM Document JPG${documentNumber}");
 		}
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		for (var documentNumber : list "_1,_2,_3,_4,_5,_6,_7") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
@@ -723,13 +707,9 @@ definition {
 			videoShortcutTitle = "Test Facebook Video",
 			videoURL = "https://www.facebook.com/Cristiano/videos/1710977485745946");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
@@ -882,13 +862,9 @@ definition {
 			videoShortcutTitle = "Test Twitch Video",
 			videoURL = "https://www.twitch.tv/videos/806178790");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		KBAdmin.openKBAdmin(siteURLKey = "site-name");
 
@@ -1098,13 +1074,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		for (var locationName : list "Test Depot Name,Site Name") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
@@ -1151,13 +1123,9 @@ definition {
 			groupName = "Site Name",
 			title = "WC WebContent From Site");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Web Content Display Page",
@@ -1240,13 +1208,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
@@ -1288,13 +1252,9 @@ definition {
 			groupName = "Site Name",
 			title = "WC WebContent From Site");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -1360,13 +1320,9 @@ definition {
 			videoShortcutTitle = "Test Vimeo Video",
 			videoURL = "https://vimeo.com/483035084");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -1408,13 +1364,9 @@ definition {
 			title = "WC WebContent Title",
 			workflowAction = "DRAFT");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
@@ -1502,13 +1454,9 @@ definition {
 			groupName = "Site Name",
 			title = "WC WebContent From Site");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Depot Name");
-
-		Depot.connectSite(siteList = "Site Name");
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",

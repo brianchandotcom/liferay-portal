@@ -164,6 +164,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 			dialog: {
 				height: 400,
 				modal: true,
+				resizable: false,
 				width: 600,
 			},
 			title: Liferay.Language.get('valid-domains'),

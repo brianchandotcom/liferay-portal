@@ -22,7 +22,7 @@ String redirectURL = URLCodec.decodeURL((String)request.getAttribute(CommercePay
 String tokenAttribute = (String)request.getAttribute(CommercePaymentWebKeys.TOKEN);
 %>
 
-<form action="<%= HtmlUtil.escapeHREF(redirectUrl) %>" class="hide" id="formAuthorizeNet" method="post" name="formAuthorizeNet">
+<form action="<%= HtmlUtil.escapeHREF(redirectURL) %>" class="hide" id="formAuthorizeNet" method="post" name="formAuthorizeNet">
 	<input name="token" type="hidden" value="<%= HtmlUtil.escapeAttribute(URLDecoder.decode(tokenAttribute, StringPool.UTF8)) %>" />
 	<button id="btnContinue">Continue</button>
 </form>

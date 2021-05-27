@@ -19,12 +19,12 @@ package com.liferay.commerce.payment.constants;
  */
 public class CommercePaymentWebKeys {
 
-	public static final String REDIRECT_URL = "redirectUrl";
+	public static final String REDIRECT_URL = "REDIRECT_URL";
 
-	public static final String REDIRECTION_DATA = "redirectionData";
+	public static final String REDIRECTION_DATA = "REDIRECTION_DATA";
 
-	public static final String SEAL = "seal";
+	public static final String SEAL = "SEAL";
 
-	public static final String TOKEN = "token";
+	public static final String TOKEN = "TOKEN";
 
 }

@@ -43,68 +43,6 @@ definition {
 
 	@priority = "5"
 	@refactorneeded
-	test AddMBCategories {
-		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name") {
-			Navigator.gotoPage(pageName = "Message Boards Page");
-
-			MessageboardsCategory.addPG(categoryName = "${categoryName}");
-
-			MessageboardsCategory.viewPG(categoryName = "${categoryName}");
-		}
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test AddMBCategoryDescription {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(
-			categoryDescription = "MB Category Description",
-			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category Name");
-
-		MessageboardsCategory.viewPG(
-			categoryDescription = "MB Category Description",
-			categoryDescriptionEnabled = "true",
-			categoryName = "MB Category Name");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test AddMBCategoryNameUTF8 {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Catègory Name");
-
-		MessageboardsCategory.viewPG(categoryName = "MB Catègory Name");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test AddMBCategoryNullName {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		AssertClick(
-			locator1 = "Button#ADD_CATEGORY",
-			value1 = "Add Category");
-
-		PortletEntry.inputName(name = " ");
-
-		PortletEntry.inputDescription(description = "MB Category Description");
-
-		Button.clickSave();
-
-		Alert.viewRequiredField();
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		AssertTextEquals.assertText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no threads or categories.");
-	}
-
-	@priority = "5"
-	@refactorneeded
 	test AddMBCategorySubcategoryThread {
 		property testray.component.names = "Training";
 
@@ -178,36 +116,6 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "4"
-	@refactorneeded
-	test AddMBCategoryThreadUTF8 {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.addPG(categoryName = "MB Category Name");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
-
-		MessageboardsThread.addPG(
-			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category Name");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thrèad Mèssagè Body",
-			threadSubject = "MB Thrèad Mèssagè Subjèct");
-	}
-
 	@priority = "5"
 	@refactorneeded
 	test AddMBThreadGuestReply {
@@ -251,28 +159,6 @@ definition {
 			threadReplyBody = "MB Thread Reply Body As Guest",
 			threadSubject = "MB Thread Message Subject",
 			userName = "Anonymous");
-	}
-
-	@priority = "4"
-	@refactorneeded
-	test AddMBThreadNullBody {
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.addPG(
-			threadBody = "",
-			threadSubject = "MB Thread Message Subject");
-
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsThread.gotoPG(
-			lastPostUserName = "Test Test",
-			replyCount = "0",
-			threadBody = "",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageboardsThread.viewPG(
-			threadBody = "MB Thread Message Subject",
-			threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "4"
@@ -388,6 +274,77 @@ definition {
 
 	@priority = "5"
 	@refactordone
+	test CanAddMBCategories {
+		for (var categoryName : list "MB Category1 Name,MB Category2 Name,MB Category3 Name") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Category Description",
+				categoryName = "${categoryName}",
+				userEmailAddress = "test@liferay.com");
+
+			Navigator.gotoPage(pageName = "Message Boards Page");
+
+			MessageboardsCategory.viewPG(categoryName = "${categoryName}");
+		}
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddMBCategoryNameUTF8 {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Catègory Name",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewPG(categoryName = "MB Catègory Name");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddMBCategoryThreadUTF8 {
+		JSONMBMessage.addCategory(
+			categoryDescription = "MB Category Description",
+			categoryName = "MB Category Name",
+			userEmailAddress = "test@liferay.com");
+
+		JSONMBMessage.addMessage(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			threadBody = "MB Thrèad Mèssagè Body",
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
+
+		MessageboardsThread.openToThread(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thrèad Mèssagè Body",
+			threadSubject = "MB Thrèad Mèssagè Subjèct");
+	}
+
+	@priority = "4"
+	@refactordone
+	@uitest
+	test CanAddMBCategoryWithDescription {
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Category Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category Name");
+
+		MessageboardsCategory.viewPG(
+			categoryDescription = "MB Category Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = "MB Category Name");
+	}
+
+	@priority = "5"
+	@refactordone
 	test CanAddMBThread {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
@@ -402,6 +359,25 @@ definition {
 
 		MessageboardsThread.viewPG(
 			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+	}
+
+	@priority = "4"
+	@refactordone
+	test CanAddMBThreadNullBody {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.viewPG(
+			threadBody = "MB Thread Message Subject",
 			threadSubject = "MB Thread Message Subject");
 	}
 
@@ -615,6 +591,22 @@ definition {
 			groupName = "Guest",
 			replyBody = "MB Thread Reply Body",
 			threadSubject = "MB Thread Message Subject");
+	}
+
+	@priority = "4"
+	@refactordone
+	test MBCategoryCannotBeAddedWithoutName {
+		MessageboardsCategory.addPG(
+			categoryDescription = "MB Category Description",
+			categoryDescriptionEnabled = "true",
+			categoryName = " ",
+			categoryWithoutName = "true",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest");
+
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
+		MessageboardsCategory.viewDefaultPG();
 	}
 
 	@priority = "4"

@@ -1427,13 +1427,68 @@ definition {
 	}
 
 	@description = "This is a test for LPS-130337."
-	@ignore = "true"
 	@priority = "5"
 	test AddNewExperienceSessionReferrerURLSegment {
 		property portal.acceptance = "false";
 
-		// TODO LPS-130337 AddNewExperienceSessionReferrerURLSegment pending implementation
+		Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
 
+		LexiconEntry.gotoAdd();
+
+		Segmentation.gotoSidebar(fieldType = "Session");
+
+		Segmentation.addProperties(propertyOption = "Referrer URL");
+
+		Segmentation.fillTitle(titleField = "ReferrerURLSegment Name");
+
+		Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+		Segmentation.fillProperty(propertyField = "8080");
+
+		Button.clickSave();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.addExperience(
+			experienceName = "New Experience",
+			segmentName = "ReferrerURLSegment Name");
+
+		Button.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Experience Content Page",
+			siteName = "Test Site Name");
+
+		PageEditor.changeExperience(newExperience = "New Experience");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "This is a new experience for you");
+
+		PageEditor.prioritizeExperience(experienceName = "New Experience");
+
+		PageEditor.clickPublish();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea1@liferay.com",
+			userLoginFullName = "userfn1 userln1");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+		// Navigating to content page is a workaroud for LPS-132766, remove this when LPS-132766 get resolved
+
+		Navigator._gotoPage(pageName = "Experience Content Page");
+
+		AssertTextEquals(
+			locator1 = "Experience#FRAGMENT_HEADING",
+			value1 = "This is a new experience for you");
 	}
 
 	@description = "This is a test for LPS-130338."

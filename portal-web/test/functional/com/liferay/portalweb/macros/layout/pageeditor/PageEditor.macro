@@ -1,7 +1,7 @@
 definition {
 
 	macro addComment {
-		WaitForPageLoad();
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Comments");
 
@@ -637,7 +637,7 @@ definition {
 	}
 
 	macro addFragment {
-		WaitForPageLoad();
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
@@ -803,7 +803,7 @@ definition {
 	}
 
 	macro addFragmentToCollectionDisplay {
-		WaitForPageLoad();
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
@@ -881,7 +881,7 @@ definition {
 	}
 
 	macro addWidget {
-		WaitForPageLoad();
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 

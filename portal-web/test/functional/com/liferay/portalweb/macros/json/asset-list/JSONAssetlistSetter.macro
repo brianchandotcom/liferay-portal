@@ -31,27 +31,21 @@ definition {
 			groupName = "Global",
 			site = "true");
 
-		var values = '''
-com.liferay.blogs.model.BlogsEntry,
-com.liferay.bookmarks.model.BookmarksEntry,
-com.liferay.bookmarks.model.BookmarksFolder,
-com.liferay.calendar.model.CalendarBooking,
-com.liferay.commerce.model.CommerceOrder,
-com.liferay.document.library.kernel.model.DLFileEntry,
-com.liferay.document.library.kernel.model.DLFolder,
-com.liferay.dynamic.data.lists.model.DDLRecord,
-com.liferay.knowledge.base.model.KBArticle,
-com.liferay.message.boards.model.MBMessage,
-com.liferay.translation.model.TranslationEntry,
-com.liferay.journal.model.JournalArticle,
-com.liferay.journal.model.JournalFolder,
-com.liferay.wiki.model.WikiPage
-''';
-
-		var newLine = '''
-''';
-
-		var values = StringUtil.regexReplaceAll("${values}", "${newLine}", "");
+		var values = "";
+		var values = List.add(item = "com.liferay.blogs.model.BlogsEntry", list = "${values}");
+		var values = List.add(item = "com.liferay.bookmarks.model.BookmarksEntry", list = "${values}");
+		var values = List.add(item = "com.liferay.bookmarks.model.BookmarksFolder", list = "${values}");
+		var values = List.add(item = "com.liferay.calendar.model.CalendarBooking", list = "${values}");
+		var values = List.add(item = "com.liferay.commerce.model.CommerceOrder", list = "${values}");
+		var values = List.add(item = "com.liferay.document.library.kernel.model.DLFileEntry", list = "${values}");
+		var values = List.add(item = "com.liferay.document.library.kernel.model.DLFolder", list = "${values}");
+		var values = List.add(item = "com.liferay.dynamic.data.lists.model.DDLRecord", list = "${values}");
+		var values = List.add(item = "com.liferay.knowledge.base.model.KBArticle", list = "${values}");
+		var values = List.add(item = "com.liferay.message.boards.model.MBMessage", list = "${values}");
+		var values = List.add(item = "com.liferay.translation.model.TranslationEntry", list = "${values}");
+		var values = List.add(item = "com.liferay.journal.model.JournalArticle", list = "${values}");
+		var values = List.add(item = "com.liferay.journal.model.JournalFolder", list = "${values}");
+		var values = List.add(item = "com.liferay.wiki.model.WikiPage", list = "${values}");
 
 		var classNameIds = "";
 
@@ -319,6 +313,9 @@ classTypeIdsJournalArticleAssetRendererFactory=${classTypeIdsDDMStructure}
 		else {
 			fail("'itemType' is either invalid or not yet set.");
 		}
+
+		var newLine = '''
+''';
 
 		var typeSettings = StringUtil.regexReplaceAll("${typeSettings}", "${newLine}", "%0A");
 

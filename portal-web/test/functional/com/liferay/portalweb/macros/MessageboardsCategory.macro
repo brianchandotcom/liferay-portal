@@ -17,9 +17,16 @@ definition {
 	}
 
 	macro addPG {
-		AssertClick(
-			locator1 = "Button#ADD_CATEGORY",
-			value1 = "Add Category");
+		if (isSet(siteURLKey)) {
+			MessageboardsCategory.openToAddCategory(
+				layoutName = "${layoutName}",
+				siteURLKey = "${siteURLKey}");
+		}
+		else {
+			AssertClick(
+				locator1 = "Button#ADD_CATEGORY",
+				value1 = "Add Category");
+		}
 
 		PortletEntry.inputName(name = "${categoryName}");
 
@@ -42,7 +49,13 @@ definition {
 			locator1 = "Button#SAVE",
 			value1 = "Save");
 
-		Alert.viewSuccessMessage();
+		if ("${categoryWithoutName}" == "true") {
+			Alert.viewRequiredField();
+		}
+
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro deleteCP {
@@ -134,6 +147,16 @@ definition {
 				locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
 				value1 = "${subCategoryName}");
 		}
+	}
+
+	macro openToAddCategory {
+		var baseURL = "${baseURL}";
+
+		if (contains("${baseURL}", "{baseURL}")) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		Open(locator1 = "${baseURL}/web/${siteURLKey}/${layoutName}?p_p_id=com_liferay_message_boards_web_portlet_MBPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_message_boards_web_portlet_MBPortlet_javax.portlet.action=%2Fmessage_boards%2Fedit_category&_com_liferay_message_boards_web_portlet_MBPortlet_mvcRenderCommandName=%2Fmessage_boards%2Fedit_category");
 	}
 
 	macro openToEditCategory {
@@ -251,9 +274,9 @@ definition {
 	}
 
 	macro viewDefaultPG {
-		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_PANEL");
-
-		AssertElementNotPresent(locator1 = "MessageBoards#CATEGORY_TABLE_CATEGORY_GENERIC");
+		AssertTextEquals.assertText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no threads or categories.");
 	}
 
 	macro viewMySubscriptionsPG {

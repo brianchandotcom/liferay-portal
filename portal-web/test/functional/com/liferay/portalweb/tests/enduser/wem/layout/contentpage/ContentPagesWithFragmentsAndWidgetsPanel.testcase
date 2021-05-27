@@ -1,0 +1,146 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-130964. Change display style in Fragments and Widgets panel."
+	@priority = "4"
+	test ChangeDisplayStyle {
+		property portal.acceptance = "true";
+
+		task ("Navigate to the Pages admin in new site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Access to content page at edit mode") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Edit",
+				pageName = "Test Content Page Name");
+		}
+
+		task ("Open the Fragments and Widgets panel") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		}
+
+		task ("Change to card display style") {
+			Click(
+				key_displayStyle = "list",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			AssertVisible(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("View the tooltip when hover on the display style button") {
+			MouseOver(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			AssertVisible(
+				key_content = "Change View",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Change to list display style") {
+			Click(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			AssertVisible(
+				key_displayStyle = "list",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("View the tooltip when hover on the display style button") {
+			MouseOver(
+				key_displayStyle = "list",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			AssertVisible(
+				key_content = "Change View",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Navigate to Widgets tab") {
+			Navigator.gotoNavTab(navTab = "Widgets");
+		}
+
+		task ("Change to card display style") {
+			Click(
+				key_displayStyle = "list",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			AssertVisible(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("View the tooltip when hover on the display style button") {
+			MouseOver(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			AssertVisible(
+				key_content = "Change View",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+		}
+
+		task ("Pubish the page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Access to content page at edit mode again") {
+			SitePages.gotoPageMenuItem(
+				menuItem = "Edit",
+				pageName = "Test Content Page Name");
+		}
+
+		task ("View the display style is card in Fragments and Widgets panel") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			AssertVisible(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			AssertVisible(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+	}
+
+}

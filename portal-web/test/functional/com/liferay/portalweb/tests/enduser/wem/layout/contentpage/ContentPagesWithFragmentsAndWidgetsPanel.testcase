@@ -143,4 +143,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-130964. View visual feedback when hover on items in Fragments and Widgets panel."
+	@priority = "4"
+	test ViewVisualFeedbackWhenHoverOnItems {
+		task ("Navigate to content page at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Open the Fragments and Widgets panel") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		}
+
+		task ("View the display style is list") {
+			AssertVisible(
+				key_displayStyle = "list",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("View the visual feedback when hover on items") {
+			MouseOver(
+				key_collectionName = "Layout Elements",
+				key_fragmentName = "Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT");
+
+			AssertCssValue(
+				key_collectionName = "Layout Elements",
+				key_fragmentName = "Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "box-shadow",
+				value1 = "rgb(128, 172, 255) 0px 0px 0px 2px, rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			MouseOver(
+				key_portletName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET");
+
+			AssertCssValue(
+				key_portletName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "box-shadow",
+				value1 = "rgb(128, 172, 255) 0px 0px 0px 2px, rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
+		}
+
+		task ("Change to card display style") {
+			Click(
+				key_displayStyle = "list",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			AssertVisible(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("View the visual feedback when hover on items") {
+			MouseOver(
+				key_portletName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM");
+
+			AssertCssValue(
+				key_portletName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
+				locator2 = "box-shadow",
+				value1 = "rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
+
+			Navigator.gotoNavTab(navTab = "Fragments");
+
+			MouseOver(
+				key_collectionName = "Layout Elements",
+				key_fragmentName = "Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM");
+
+			AssertCssValue(
+				key_collectionName = "Layout Elements",
+				key_fragmentName = "Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
+				locator2 = "box-shadow",
+				value1 = "rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
+		}
+	}
+
 }

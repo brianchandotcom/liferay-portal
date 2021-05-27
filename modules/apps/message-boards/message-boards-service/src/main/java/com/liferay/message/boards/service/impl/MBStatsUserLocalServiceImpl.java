@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -108,12 +107,15 @@ public class MBStatsUserLocalServiceImpl
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				).and(
+					MBMessageTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
 				)
 			));
 	}
 
 	@Override
-	public long getMessageCountByUserId(long userId) throws PortalException {
+	public long getMessageCountByUserId(long userId) {
 		return _mbMessagePersistence.dslQuery(
 			DSLQueryFactoryUtil.count(
 			).from(
@@ -124,6 +126,9 @@ public class MBStatsUserLocalServiceImpl
 				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				).and(
+					MBMessageTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
 				)
 			));
 	}
@@ -229,22 +234,24 @@ public class MBStatsUserLocalServiceImpl
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 
-		return GetterUtil.getInteger(
-			(Long)_mbMessagePersistence.dslQuery(
-				DSLQueryFactoryUtil.countDistinct(
-					MBMessageTable.INSTANCE.userId
-				).from(
-					MBMessageTable.INSTANCE
-				).where(
-					MBMessageTable.INSTANCE.groupId.eq(
-						groupId
-					).and(
-						MBMessageTable.INSTANCE.userId.neq(defaultUserId)
-					).and(
-						MBMessageTable.INSTANCE.categoryId.neq(
-							MBCategoryConstants.DISCUSSION_CATEGORY_ID)
-					)
-				)));
+		return _mbMessagePersistence.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				MBMessageTable.INSTANCE.userId
+			).from(
+				MBMessageTable.INSTANCE
+			).where(
+				MBMessageTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					MBMessageTable.INSTANCE.userId.neq(defaultUserId)
+				).and(
+					MBMessageTable.INSTANCE.categoryId.neq(
+						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
+				).and(
+					MBMessageTable.INSTANCE.status.eq(
+						WorkflowConstants.STATUS_APPROVED)
+				)
+			));
 	}
 
 	@Override

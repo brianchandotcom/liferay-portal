@@ -16,13 +16,14 @@ package com.liferay.digital.signature.web.internal.portlet.action;
 
 import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.digital.signature.manager.DSEnvelopeManager;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -52,14 +53,14 @@ public class GetDSEnvelopesMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jsonObject = _dsEnvelopeManager.getDSEnvelopesJSONObject(
+		Page<DSEnvelope> page = _dsEnvelopeManager.getDSEnvelopesPage(
 			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
 			"2011-01-01", ParamUtil.getString(resourceRequest, "order", "desc"),
 			ParamUtil.getInteger(resourceRequest, "page"),
 			ParamUtil.getInteger(resourceRequest, "pageSize"));
 
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse, jsonObject);
+			resourceRequest, resourceResponse, page.toString());
 	}
 
 	@Reference

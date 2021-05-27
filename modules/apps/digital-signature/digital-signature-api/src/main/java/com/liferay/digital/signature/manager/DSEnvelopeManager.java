@@ -15,7 +15,7 @@
 package com.liferay.digital.signature.manager;
 
 import com.liferay.digital.signature.model.DSEnvelope;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public interface DSEnvelopeManager {
 	public List<DSEnvelope> getDSEnvelopes(
 		long companyId, long groupId, String... dsEnvelopeIds);
 
-	public JSONObject getDSEnvelopesJSONObject(
+	public Page<DSEnvelope> getDSEnvelopesPage(
 		long companyId, long groupId, String fromDateString, String order,
 		int page, int pageSize);
 

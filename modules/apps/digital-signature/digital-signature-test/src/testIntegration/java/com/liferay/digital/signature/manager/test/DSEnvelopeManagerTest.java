@@ -19,7 +19,6 @@ import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collections;
 import java.util.List;
@@ -159,7 +159,7 @@ public class DSEnvelopeManagerTest {
 	}
 
 	@Test
-	public void testGetDSEnvelopesJSONObject() throws Exception {
+	public void testGetDSEnvelopesPage() throws Exception {
 		DSEnvelope dsEnvelope1 = _dsEnvelopeManager.addDSEnvelope(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			new DSEnvelope() {
@@ -177,11 +177,11 @@ public class DSEnvelopeManagerTest {
 				}
 			});
 
-		JSONObject jsonObject = _dsEnvelopeManager.getDSEnvelopesJSONObject(
+		Page<DSEnvelope> page = _dsEnvelopeManager.getDSEnvelopesPage(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			"2021-01-01", "desc", 1, 2);
 
-		Assert.assertTrue(jsonObject.getInt("pageSize") == 2);
+		Assert.assertEquals(2, page.getPageSize());
 
 		String[] dsEnvelopeIds = {
 			dsEnvelope1.getDSEnvelopeId(), dsEnvelope2.getDSEnvelopeId()

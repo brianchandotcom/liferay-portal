@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -136,7 +138,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 	}
 
 	@Override
-	public JSONObject getDSEnvelopesJSONObject(
+	public Page<DSEnvelope> getDSEnvelopesPage(
 		long companyId, long groupId, String fromDateString, String order,
 		int page, int pageSize) {
 
@@ -150,31 +152,12 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 				"&folder_types=sentitems",
 				"&include=custom_fields,documents,recipients&order=", order));
 
-		List<DSEnvelope> dsEnvelopes = JSONUtil.toList(
-			jsonObject.getJSONArray("envelopes"),
-			envelopeJSONObject -> _toDSEnvelope(envelopeJSONObject), _log);
-
-		int totalCount = jsonObject.getInt("totalSetSize");
-
-		int lastPage = 1;
-
-		if (totalCount != 0) {
-			lastPage = (int)Math.ceil((float)totalCount / pageSize);
-		}
-
-		return JSONUtil.put(
-			"items",
-			JSONUtil.toJSONArray(
-				dsEnvelopes, dsEnvelope -> _toJSONObject(dsEnvelope), _log)
-		).put(
-			"lastPage", String.valueOf(lastPage)
-		).put(
-			"page", String.valueOf(page)
-		).put(
-			"pageSize", jsonObject.getString("resultSetSize")
-		).put(
-			"totalCount", String.valueOf(totalCount)
-		);
+		return Page.of(
+			JSONUtil.toList(
+				jsonObject.getJSONArray("envelopes"),
+				envelopeJSONObject -> _toDSEnvelope(envelopeJSONObject), _log),
+			Pagination.of(page, jsonObject.getInt("resultSetSize")),
+			jsonObject.getInt("totalSetSize"));
 	}
 
 	private List<DSDocument> _getDSDocuments(JSONArray jsonArray) {

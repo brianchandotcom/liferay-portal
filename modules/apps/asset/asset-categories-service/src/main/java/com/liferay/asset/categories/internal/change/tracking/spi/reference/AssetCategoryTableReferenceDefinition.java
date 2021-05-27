@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.friendly.url.model.FriendlyURLEntryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,6 +43,9 @@ public class AssetCategoryTableReferenceDefinition
 			AssetCategoryTable.INSTANCE.categoryId, AssetCategory.class
 		).systemEventReference(
 			AssetCategoryTable.INSTANCE.categoryId, AssetCategory.class
+		).singleColumnReference(
+			AssetCategoryTable.INSTANCE.categoryId,
+			FriendlyURLEntryTable.INSTANCE.classPK
 		);
 	}
 

@@ -104,6 +104,18 @@ definition {
 
 		Button.click(button = "Authorize My Application");
 
+		if (IsElementPresent(locator1 = "Button#SIGN_IN")) {
+			Type(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "test@liferay.com");
+
+			Type(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "test");
+
+			Click(locator1 = "Button#SIGN_IN");
+		}
+
 		if (isSet(rememberDevice)) {
 			Check(
 				key_checkboxName = "Remember Device",

@@ -3598,11 +3598,7 @@ definition {
 	}
 
 	macro waitForAutoSave {
-		Pause(locator1 = "1000");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "PageEditor#AUTOSAVE_MESSAGE",
-			value1 = "Saved");
+		WaitForElementPresent(locator1 = "PageEditor#AUTOSAVE_MESSAGE");
 	}
 
 }

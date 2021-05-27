@@ -36,27 +36,23 @@ const wrapper = ({children}) => (
 );
 
 describe('The role filter component should', () => {
-	let container;
-
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		const renderResult = render(<RoleFilter processId={12345} />, {
+		render(<RoleFilter processId={12345} />, {
 			wrapper,
 		});
-
-		container = renderResult.container;
 	});
 
 	test('Be rendered with filter item names', () => {
-		const filterItems = container.querySelectorAll('.dropdown-item');
+		const filterItems = document.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0].innerHTML).toContain('Admin');
 		expect(filterItems[1].innerHTML).toContain('User');
 	});
 
 	test('Be rendered with active option "User"', () => {
-		const activeItem = container.querySelector('.active');
+		const activeItem = document.querySelector('.active');
 
 		expect(activeItem).toHaveTextContent('User');
 	});

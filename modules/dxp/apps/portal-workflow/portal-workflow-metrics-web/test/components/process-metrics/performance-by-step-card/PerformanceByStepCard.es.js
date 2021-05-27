@@ -76,7 +76,7 @@ const timeRangeData = {
 };
 
 describe('The performance by step card component should', () => {
-	let container, getAllByText, getByText;
+	let getAllByText, getByText;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -99,13 +99,12 @@ describe('The performance by step card component should', () => {
 				{wrapper}
 			);
 
-			container = renderResult.container;
 			getAllByText = renderResult.getAllByText;
 			getByText = renderResult.getByText;
 		});
 
 		test('Be rendered with time range filter', async () => {
-			const activeItem = container.querySelector('.active');
+			const activeItem = document.querySelector('.active');
 
 			expect(getAllByText('Last 7 Days').length).toEqual(2);
 			expect(activeItem).toHaveTextContent('Last 7 Days');

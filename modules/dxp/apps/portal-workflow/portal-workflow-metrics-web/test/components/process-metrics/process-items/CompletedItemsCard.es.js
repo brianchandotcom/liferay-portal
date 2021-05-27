@@ -88,7 +88,7 @@ describe('The completed items card component should', () => {
 	});
 
 	test('Be rendered with time range filter', async () => {
-		const activeItem = container.querySelector('.active');
+		const activeItem = document.querySelector('.active');
 
 		expect(getAllByText('Last 7 Days').length).toEqual(2);
 		expect(activeItem).toHaveTextContent('Last 7 Days');

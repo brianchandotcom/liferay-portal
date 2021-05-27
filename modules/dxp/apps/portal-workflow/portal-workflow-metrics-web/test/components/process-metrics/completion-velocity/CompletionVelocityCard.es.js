@@ -83,7 +83,7 @@ const timeRangeData = {
 };
 
 describe('The completion velocity card component should', () => {
-	let container, getAllByText, getByText;
+	let getAllByText, getByText;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -98,14 +98,13 @@ describe('The completion velocity card component should', () => {
 			</MockRouter>
 		);
 
-		container = renderResult.container;
 		getAllByText = renderResult.getAllByText;
 		getByText = renderResult.getByText;
 	});
 
 	test('Be rendered with time range filter', () => {
 		const timeRangeFilter = getByText('Last 30 Days');
-		const activeItem = container.querySelector('.active');
+		const activeItem = document.querySelector('.active');
 
 		expect(timeRangeFilter).not.toBeNull();
 		expect(activeItem).toHaveTextContent('Last 7 Days');
@@ -114,7 +113,7 @@ describe('The completion velocity card component should', () => {
 	test('Be rendered with velocity unit filter', () => {
 		const velocityUnitFilter = getAllByText('inst-day')[0];
 
-		const activeItem = container.querySelectorAll('.active')[1];
+		const activeItem = document.querySelectorAll('.active')[1];
 
 		expect(velocityUnitFilter).not.toBeNull();
 		expect(activeItem).toHaveTextContent('inst-day');

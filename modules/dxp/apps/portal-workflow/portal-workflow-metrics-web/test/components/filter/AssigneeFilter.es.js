@@ -36,20 +36,16 @@ const wrapper = ({children}) => (
 );
 
 describe('The assignee filter component should', () => {
-	let container;
-
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		const renderResult = render(<AssigneeFilter processId={12345} />, {
+		render(<AssigneeFilter processId={12345} />, {
 			wrapper,
 		});
-
-		container = renderResult.container;
 	});
 
 	test('Be rendered with filter item names', () => {
-		const filterItems = container.querySelectorAll('.dropdown-item');
+		const filterItems = document.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0].innerHTML).toContain('unassigned');
 		expect(filterItems[1].innerHTML).toContain('User 1');
@@ -57,7 +53,7 @@ describe('The assignee filter component should', () => {
 	});
 
 	test('Be rendered with active option "User 1"', () => {
-		const activeItem = container.querySelector('.active');
+		const activeItem = document.querySelector('.active');
 
 		expect(activeItem).toHaveTextContent('User 1');
 	});

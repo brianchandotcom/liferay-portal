@@ -89,7 +89,7 @@ const timeRangeData = {
 };
 
 describe('The performance by assignee card component should', () => {
-	let container, getByText;
+	let getByText;
 
 	beforeAll(() => {
 		jsonSessionStorage.set('timeRanges', timeRangeData);
@@ -115,7 +115,6 @@ describe('The performance by assignee card component should', () => {
 				{wrapper}
 			);
 
-			container = renderResult.container;
 			getByText = renderResult.getByText;
 		});
 
@@ -130,7 +129,7 @@ describe('The performance by assignee card component should', () => {
 
 		test('Be rendered with process step filter', async () => {
 			const processStepFilter = getByText('all-steps');
-			const activeItem = container.querySelectorAll('.active')[0];
+			const activeItem = document.querySelectorAll('.active')[0];
 
 			expect(processStepFilter).not.toBeNull();
 			expect(activeItem).toHaveTextContent('Update');
@@ -138,7 +137,7 @@ describe('The performance by assignee card component should', () => {
 
 		test('Be rendered with time range filter', async () => {
 			const timeRangeFilter = getByText('Last 30 Days');
-			const activeItem = container.querySelectorAll('.active')[1];
+			const activeItem = document.querySelectorAll('.active')[1];
 
 			expect(timeRangeFilter).not.toBeNull();
 			expect(activeItem).toHaveTextContent('Last 7 Days');

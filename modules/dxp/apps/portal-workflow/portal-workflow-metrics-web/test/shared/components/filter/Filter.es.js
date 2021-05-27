@@ -31,7 +31,7 @@ describe('The filter component should', () => {
 	afterEach(cleanup);
 
 	test('Be rendered with filter item names and default item selected', async () => {
-		const {container} = render(
+		render(
 			<MockRouter>
 				<Filter
 					defaultItem={items[2]}
@@ -43,13 +43,13 @@ describe('The filter component should', () => {
 			</MockRouter>
 		);
 
-		const filterItems = container.querySelectorAll('.dropdown-item');
+		const filterItems = document.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0]).toHaveTextContent('Overdue');
 		expect(filterItems[1]).toHaveTextContent('OnTime');
 		expect(filterItems[2]).toHaveTextContent('Untracked');
 
-		const activeItem = container.querySelector('.active');
+		const activeItem = document.querySelector('.active');
 
 		expect(activeItem).toHaveTextContent('Untracked');
 	});
@@ -57,7 +57,7 @@ describe('The filter component should', () => {
 	test('Be rendered with other item selected', async () => {
 		items[0].active = true;
 
-		const {container} = render(
+		render(
 			<MockRouter>
 				<Filter
 					defaultItem={items[2]}
@@ -69,7 +69,7 @@ describe('The filter component should', () => {
 			</MockRouter>
 		);
 
-		const activeItem = container.querySelector('.active');
+		const activeItem = document.querySelector('.active');
 
 		expect(activeItem).toHaveTextContent('Overdue');
 	});
@@ -102,7 +102,7 @@ describe('The filter component should', () => {
 		fireEvent.click(filterBtn);
 
 		const filterSearch = getByPlaceholderText('search-for');
-		let filterItems = container.querySelectorAll('.dropdown-item');
+		let filterItems = document.querySelectorAll('.dropdown-item');
 
 		filterItems.forEach((item, index) => {
 			expect(item).toHaveTextContent(mappedItems[index].name);
@@ -110,7 +110,7 @@ describe('The filter component should', () => {
 
 		fireEvent.change(filterSearch, {target: {value: 'Over'}});
 
-		filterItems = container.querySelectorAll('.dropdown-item');
+		filterItems = document.querySelectorAll('.dropdown-item');
 
 		expect(filterItems.length).toEqual(1);
 		expect(filterItems[0].className.includes('active')).toBe(true);
@@ -118,7 +118,7 @@ describe('The filter component should', () => {
 
 		fireEvent.change(filterSearch, {target: {value: 'test'}});
 
-		filterItems = container.querySelectorAll('.dropdown-item');
+		filterItems = document.querySelectorAll('.dropdown-item');
 
 		expect(filterItems.length).toEqual(12);
 		expect(filterItems[0]).toHaveTextContent('0test0');
@@ -149,7 +149,7 @@ describe('The filter component should', () => {
 
 		fireEvent.click(filterBtn);
 
-		const filterItems = container.querySelectorAll('.dropdown-item');
+		const filterItems = document.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0].className.includes('active')).toBe(true);
 		expect(filterItems[1].className.includes('active')).toBe(true);

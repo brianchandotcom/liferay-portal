@@ -69,7 +69,7 @@ describe('The SummaryCard component should', () => {
 
 	test('Show see items only when item is hovered', () => {
 		const childLink = container.querySelector(
-			'a.process-dashboard-summary-card'
+			'a.process-tabs-summary-card'
 		);
 		const footer = container.querySelector('.footer');
 
@@ -126,7 +126,7 @@ describe('The SummaryCard component should', () => {
 
 	test('Render with correct link', () => {
 		const childLink = container.querySelector(
-			'a.process-dashboard-summary-card'
+			'a.process-tabs-summary-card'
 		);
 
 		const href = childLink.getAttribute('href');
@@ -166,7 +166,7 @@ describe('The SummaryCard component should', () => {
 
 	test('Render component with disabled state', () => {
 		const childLink = container.querySelector(
-			'a.process-dashboard-summary-card'
+			'a.process-tabs-summary-card'
 		);
 
 		expect([childLink.classList][0]).toContain('disabled');

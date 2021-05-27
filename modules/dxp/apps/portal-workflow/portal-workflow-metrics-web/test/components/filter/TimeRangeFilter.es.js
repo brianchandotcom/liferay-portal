@@ -51,24 +51,19 @@ const wrapper = ({children}) => (
 );
 
 describe('The time range filter component should', () => {
-	let container;
-
 	describe('Render without custom range date option selected', () => {
 		afterEach(cleanup);
 
 		beforeEach(() => {
 			jsonSessionStorage.set('timeRanges', data);
 
-			const renderResult = render(
-				<TimeRangeFilter prefixKey="test" processId={12345} />,
-				{wrapper}
-			);
-
-			container = renderResult.container;
+			render(<TimeRangeFilter prefixKey="test" processId={12345} />, {
+				wrapper,
+			});
 		});
 
 		test('Be rendered with filter item names', () => {
-			const filterItems = container.querySelectorAll('.dropdown-item');
+			const filterItems = document.querySelectorAll('.dropdown-item');
 
 			expect(filterItems[0].innerHTML).toContain('custom-range');
 			expect(filterItems[1].innerHTML).toContain('Last 7 Days');
@@ -76,19 +71,14 @@ describe('The time range filter component should', () => {
 		});
 
 		test('Be rendered with active option "Last 7 Days"', async () => {
-			const activeItem = container.querySelector('.active');
+			const activeItem = document.querySelector('.active');
 
 			expect(activeItem).toHaveTextContent('Last 7 Days');
 		});
 	});
 
 	describe('Render with custom date range option selected and', () => {
-		let container,
-			dateEndInput,
-			dateStartInput,
-			getAllByPlaceholderText,
-			getAllByText,
-			getByText;
+		let container, dateEndInput, dateStartInput, getAllByText, getByText;
 
 		beforeAll(() => {
 			jsonSessionStorage.set('timeRanges', data);
@@ -99,18 +89,17 @@ describe('The time range filter component should', () => {
 			);
 
 			container = renderResult.container;
-			getAllByPlaceholderText = renderResult.getAllByPlaceholderText;
 			getAllByText = renderResult.getAllByText;
 			getByText = renderResult.getByText;
 		});
 
 		test('Show the date the href has as a suggestion', () => {
-			const filterItems = container.querySelectorAll('.dropdown-item');
+			const filterItems = document.querySelectorAll('.dropdown-item div');
 
 			fireEvent.click(filterItems[0]);
 
-			dateEndInput = getAllByPlaceholderText('MM/DD/YYYY')[1];
-			dateStartInput = getAllByPlaceholderText('MM/DD/YYYY')[0];
+			dateStartInput = document.querySelectorAll('.form-control')[0];
+			dateEndInput = document.querySelectorAll('.form-control')[1];
 
 			expect(dateStartInput.value).toEqual('12/03/2019');
 			expect(dateEndInput.value).toEqual('12/09/2019');
@@ -123,7 +112,7 @@ describe('The time range filter component should', () => {
 			fireEvent.change(dateEndInput, {target: {value: '13/09/2020'}});
 			fireEvent.blur(dateEndInput);
 
-			const errorSpan = container.querySelectorAll('.form-feedback-item');
+			const errorSpan = document.querySelectorAll('.form-feedback-item');
 
 			expect(errorSpan[0]).toHaveTextContent('please-enter-a-valid-date');
 			expect(errorSpan[1]).toHaveTextContent('please-enter-a-valid-date');
@@ -136,7 +125,7 @@ describe('The time range filter component should', () => {
 			fireEvent.change(dateEndInput, {target: {value: '12/09/1960'}});
 			fireEvent.blur(dateEndInput);
 
-			const errorSpan = container.querySelectorAll('.form-feedback-item');
+			const errorSpan = document.querySelectorAll('.form-feedback-item');
 
 			expect(errorSpan[0]).toHaveTextContent(
 				'the-date-cannot-be-earlier-than-1970'
@@ -153,7 +142,7 @@ describe('The time range filter component should', () => {
 			fireEvent.change(dateEndInput, {target: {value: '12/09/2019'}});
 			fireEvent.blur(dateEndInput);
 
-			const errorSpan = container.querySelectorAll('.form-feedback-item');
+			const errorSpan = document.querySelectorAll('.form-feedback-item');
 
 			expect(errorSpan[0]).toHaveTextContent(
 				'the-start-date-cannot-be-later-than-the-end-date'

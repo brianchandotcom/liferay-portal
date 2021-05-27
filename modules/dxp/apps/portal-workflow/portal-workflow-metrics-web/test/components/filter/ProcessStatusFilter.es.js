@@ -23,27 +23,23 @@ const wrapper = ({children}) => (
 );
 
 describe('The process status filter component should', () => {
-	let container;
-
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		const renderResult = render(<ProcessStatusFilter processId={12345} />, {
+		render(<ProcessStatusFilter processId={12345} />, {
 			wrapper,
 		});
-
-		container = renderResult.container;
 	});
 
 	test('Be rendered with filter item names', () => {
-		const filterItems = container.querySelectorAll('.dropdown-item');
+		const filterItems = document.querySelectorAll('.dropdown-item');
 
 		expect(filterItems[0].innerHTML).toContain('completed');
 		expect(filterItems[1].innerHTML).toContain('pending');
 	});
 
 	test('Be rendered with active option "Completed"', async () => {
-		const activeItem = container.querySelector('.active');
+		const activeItem = document.querySelector('.active');
 
 		expect(activeItem).toHaveTextContent('completed');
 	});

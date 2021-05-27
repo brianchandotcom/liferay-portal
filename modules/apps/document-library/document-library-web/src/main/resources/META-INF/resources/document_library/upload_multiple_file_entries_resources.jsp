@@ -189,13 +189,14 @@ else {
 								}
 						%>
 
-								<div class="document-type-fields">
+								<div class="document-type-fields" data-ddm-fieldset>
 									<liferay-data-engine:data-layout-renderer
 										containerId='<%= liferayPortletResponse.getNamespace() + "dataEngineLayoutRenderer" + ddmStructure.getStructureId() %>'
 										dataDefinitionId="<%= ddmStructure.getStructureId() %>"
 										dataRecordValues="<%= DataRecordValuesUtil.getDataRecordValues(ddmFormValues, ddmStructure) %>"
 										namespace="<%= liferayPortletResponse.getNamespace() + ddmStructure.getStructureId() + StringPool.UNDERLINE %>"
 										persisted="<%= fileEntry != null %>"
+										submittable="<%= false %>"
 									/>
 								</div>
 

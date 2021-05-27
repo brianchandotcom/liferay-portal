@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -382,6 +384,19 @@ public class KaleoFormsAdminDisplayContext {
 		SearchContainer<?> searchContainer = getKaleoProcessSearch();
 
 		return searchContainer.getTotal();
+	}
+
+	public boolean isCompanyAdministrator() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker.isCompanyAdmin() ||
+			permissionChecker.isOmniadmin()) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isShowAddButton() {

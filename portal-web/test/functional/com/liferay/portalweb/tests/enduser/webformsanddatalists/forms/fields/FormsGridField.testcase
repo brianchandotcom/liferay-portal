@@ -193,19 +193,19 @@ definition {
 			fieldType = "Grid");
 
 		FormFields.editGridOptions(
-				gridField = "Rows",
-				optionValue = "Option 1",
-				rowNumber = "1");
-		
-		FormFields.editGridOptions(
-				gridField = "Rows",
-				optionValue = "Option 2",
-				rowNumber = "2");
+			gridField = "Rows",
+			optionValue = "Option 1",
+			rowNumber = "1");
 
 		FormFields.editGridOptions(
-				gridField = "Columns",
-				optionValue = "Option A",
-				rowNumber = "1");
+			gridField = "Rows",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option A",
+			rowNumber = "1");
 
 		FormFields.moveOptionsRow(
 			rowNumberEnd = "1",
@@ -213,13 +213,13 @@ definition {
 
 		FormFields.viewOptionRowName(
 			fieldTitle = "Grid",
-			rowNumber = "1",
-			optionName = "Option 2");
+			optionName = "Option 2",
+			rowNumber = "1");
 
 		FormFields.viewOptionRowName(
 			fieldTitle = "Grid",
-			rowNumber = "2",
-			optionName = "Option 1");
+			optionName = "Option 1",
+			rowNumber = "2");
 
 		Form.save();
 
@@ -229,8 +229,8 @@ definition {
 
 		FormFields.viewOptionRowName(
 			fieldTitle = "Grid",
-			rowNumber = "1",
-			optionName = "Option 2");
+			optionName = "Option 2",
+			rowNumber = "1");
 	}
 
 	@description = "Verify that the Field Reference can be edited"

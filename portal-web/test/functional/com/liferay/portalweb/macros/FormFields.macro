@@ -756,6 +756,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewOptionRowName {
+		AssertElementPresent(
+			key_fieldName = "${fieldTitle}",
+			key_optionName = "${optionName}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
+	}
 
 	macro viewOptionsRowFieldName {
 		AssertTextEquals(
@@ -797,14 +804,6 @@ definition {
 				locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD_VISIBLE",
 				value1 = "${fieldValue}");
 		}
-	}
-
-	macro viewOptionRowName{
-		AssertElementPresent(
-			key_fieldName = "${fieldTitle}",
-			key_rowNumber = "${rowNumber}",
-			key_optionName = "${optionName}",
-			locator1="FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
 	}
 
 	macro viewParagraphField {

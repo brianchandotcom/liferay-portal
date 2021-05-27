@@ -88,8 +88,7 @@ public class ObjectDefinitionSampleGenerator {
 					_createObjectField(true, true, null, "fox", "String"),
 					_createObjectField(
 						true, false, "en_US", "george", "String"),
-					_createObjectField(
-						false, false, null, "how", "String"),
+					_createObjectField(false, false, null, "how", "String"),
 					_createObjectField("item", "Double"),
 					_createObjectField("jig", "Integer"),
 					_createObjectField("king", "BigDecimal")));
@@ -107,15 +106,15 @@ public class ObjectDefinitionSampleGenerator {
 					"easy",
 					"The quick brown fox jumps over the lazy dog. " + i + "!"
 				).put(
-					"fox",
+					"fox", "test" + i
+				).put(
+					"george",
 					"The english brown fox trusted the lazy dog. " + i + "!"
 				).put(
-					"george", "test" + i
-				).put(
-					"how", 180.5D + i
-				).put(
-					"item",
+					"how",
 					"The unsearchable brown fox jumps over the lazy dog. " + i
+				).put(
+					"item", 180.5D + i
 				).put(
 					"jig", 5 + i
 				).put(

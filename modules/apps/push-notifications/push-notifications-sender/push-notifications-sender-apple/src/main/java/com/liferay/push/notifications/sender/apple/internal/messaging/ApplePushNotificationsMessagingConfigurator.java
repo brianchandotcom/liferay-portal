@@ -17,7 +17,6 @@ package com.liferay.push.notifications.sender.apple.internal.messaging;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
-import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -37,8 +36,7 @@ public class ApplePushNotificationsMessagingConfigurator {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_applePushNotificationsResponseMessageListener =
-			new ApplePushNotificationsResponseMessageListener(
-				_pushNotificationsDeviceLocalService);
+			new ApplePushNotificationsResponseMessageListener();
 
 		_destination.register(_applePushNotificationsResponseMessageListener);
 	}
@@ -54,9 +52,5 @@ public class ApplePushNotificationsMessagingConfigurator {
 		target = "(destination.name= " + PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE + ")"
 	)
 	private Destination _destination;
-
-	@Reference
-	private PushNotificationsDeviceLocalService
-		_pushNotificationsDeviceLocalService;
 
 }

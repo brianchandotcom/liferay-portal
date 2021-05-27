@@ -14,29 +14,17 @@
 
 package com.liferay.push.notifications.sender.apple.internal.messaging;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.push.notifications.exception.PushNotificationsException;
 import com.liferay.push.notifications.sender.Response;
 import com.liferay.push.notifications.sender.apple.internal.AppleResponse;
-import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
-
-import com.notnoop.apns.DeliveryError;
 
 /**
  * @author Bruno Farache
  */
 public class ApplePushNotificationsResponseMessageListener
 	extends BaseMessageListener {
-
-	public ApplePushNotificationsResponseMessageListener(
-		PushNotificationsDeviceLocalService
-			pushNotificationsDeviceLocalService) {
-
-		_pushNotificationsDeviceLocalService =
-			pushNotificationsDeviceLocalService;
-	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -46,33 +34,7 @@ public class ApplePushNotificationsResponseMessageListener
 			return;
 		}
 
-		AppleResponse appleResponse = (AppleResponse)response;
-
-		String invalidTokenErrorName = DeliveryError.INVALID_TOKEN.name();
-
-		if (invalidTokenErrorName.equals(appleResponse.getStatus())) {
-			String token = appleResponse.getToken();
-
-			try {
-				_pushNotificationsDeviceLocalService.
-					deletePushNotificationsDevice(token);
-
-				if (_log.isWarnEnabled()) {
-					_log.warn("Token " + token + " is invalid and was deleted");
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
-				}
-			}
-		}
+		throw new PushNotificationsException(response.getStatus());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ApplePushNotificationsResponseMessageListener.class);
-
-	private final PushNotificationsDeviceLocalService
-		_pushNotificationsDeviceLocalService;
 
 }

@@ -112,7 +112,7 @@ definition {
 					value1 = "");
 			}
 
-			if (!(isSet(targetFragmentName))) {
+			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
 					key_columnNumber = "${columnNumber}",
@@ -147,7 +147,7 @@ definition {
 					value1 = "");
 			}
 
-			if (!(isSet(targetFragmentName))) {
+			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
 					key_columnNumber = "${columnNumber}",
@@ -182,7 +182,7 @@ definition {
 					value1 = "${portletName}");
 			}
 
-			if (!(isSet(targetFragmentName))) {
+			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_columnNumber = "${columnNumber}",
 					key_portletName = "${portletName}",
@@ -212,7 +212,7 @@ definition {
 					value1 = "${portletName}");
 			}
 
-			if (!(isSet(targetFragmentName))) {
+			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_columnNumber = "${columnNumber}",
 					key_portletName = "${portletName}",
@@ -698,7 +698,7 @@ definition {
 					value1 = "");
 			}
 
-			if ((!(isSet(scope))) && (!(isSet(targetFragmentName)))) {
+			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -747,7 +747,7 @@ definition {
 					value1 = "");
 			}
 
-			if ((!(isSet(scope))) && (!(isSet(targetFragmentName)))) {
+			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
@@ -801,7 +801,7 @@ definition {
 					locator1 = "Fragment#MESSAGE_INFO");
 			}
 
-			if (("${fragmentName}" != "Collection Display") && ("${fragmentName}" != "Content Display") && ("${fragmentName}" != "Display Page Content")) {
+			else {
 				AssertElementPresent(
 					key_fragmentName = "${fragmentName}",
 					locator1 = "Fragment#FRAGMENT_HEADER");
@@ -812,7 +812,7 @@ definition {
 			echo("## Adding a composition of fragments");
 		}
 
-		if (("${collectionName}" != "Content Display") && ("${collectionName}" != "Layout Elements") && (!(isSet(composition)))) {
+		else {
 			AssertElementPresent(
 				key_fragmentName = "${fragmentName}",
 				locator1 = "Fragment#FRAGMENT_HEADER");
@@ -958,7 +958,7 @@ definition {
 					value1 = "${portletName}");
 			}
 
-			if ((!(isSet(scope))) && (!(isSet(targetFragmentName)))) {
+			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
 					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
@@ -1000,7 +1000,7 @@ definition {
 					value1 = "${portletName}");
 			}
 
-			if ((!(isSet(scope))) && (!(isSet(targetFragmentName)))) {
+			else {
 				DragAndDrop.javaScriptDragAndDropToObject(
 					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",

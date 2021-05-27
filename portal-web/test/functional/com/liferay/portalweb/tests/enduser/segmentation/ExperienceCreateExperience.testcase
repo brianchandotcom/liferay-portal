@@ -1139,6 +1139,8 @@ definition {
 
 		ContentPages.addPage(pageName = "Experience Content Page");
 
+		PageEditor.clickPublish();
+
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		ProductMenu.gotoPortlet(
@@ -1159,7 +1161,11 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/experience-content-page?p_l_mode=edit");
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		Navigator._gotoPage(pageName = "Experience Content Page");
+
+		ContentPages.clickPencil();
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -1171,7 +1177,11 @@ definition {
 
 		Button.clickPublish();
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/experience-content-page?p_l_mode=edit");
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		Navigator._gotoPage(pageName = "Experience Content Page");
+
+		ContentPages.clickPencil();
 
 		PageEditor.changeExperience(newExperience = "New Experience");
 
@@ -1197,7 +1207,9 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			virtualHostsURL = "http://www.able.com:8080");
 
-		Navigator.openSpecificURL(url = "http://www.able.com:8080/experience-content-page");
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		Navigator._gotoPage(pageName = "Experience Content Page");
 
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",

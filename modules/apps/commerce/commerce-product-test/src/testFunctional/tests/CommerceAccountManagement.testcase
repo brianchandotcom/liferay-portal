@@ -192,12 +192,111 @@ definition {
 	}
 
 	@description = "COMMERCE-6378. In Account Details page, I want to be able to edit account by clicking 'Edit Account'(Account Image, Account Name, VAT Number, Email, Default Billing/Shipping address) and I want to be able to see changes I made in Account details page"
-	@ignore = "true"
 	@priority = "3"
 	test EditAccountDetails {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountManagement#EditAccountDetails";
 
-		// TODO COMMERCE-6378 EditAccountDetails pending implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Addresses",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.addAddressToAccount(
+			keyAddress = "Test Address",
+			keyCity = "Test City",
+			keyCountry = "United States",
+			keyName = "Test Address",
+			keyRegion = "Alaska",
+			keyTelephone = "Test Telephone",
+			keyType = "Billing and Shipping",
+			keyZipCode = "Test Zip Code");
+
+		Refresh();
+
+		Click(
+			key_FilterOption = "Edit Account",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Commerce Account 2");
+
+		Type(
+			key_fieldLabel = "VAT Number",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "12345");
+
+		Type(
+			key_fieldLabel = "Email",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "test@liferay.com");
+
+		Select(
+			key_title = "Default Billing",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Test Address");
+
+		Select(
+			key_title = "Default Shipping",
+			locator1 = "CommerceEntry#CATALOGS_FORM",
+			value1 = "Test Address");
+
+		Click(
+			key_FilterOption = "Change",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		SelectFrame.selectFrameNoLoading(
+			key_frameTitle = "Upload Image",
+			locator1 = "CommerceEntry#ANY_IFRAME");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			locator1 = "TextInput#FILE",
+			value1 = "Commerce_Blue.jpg");
+
+		Click(
+			locator1 = "MyWorkflowTasks#DONE_BUTTON",
+			status = "Done");
+
+		Click(
+			key_text = "Save",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			key_email = "test@liferay.com",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_EMAIL");
+
+		AssertElementPresent(
+			key_FilterOption = "Commerce Account 2",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		AssertElementPresent(
+			key_FilterOption = "12345",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		AssertElementPresent(
+			key_addressName = "Test Address",
+			key_addressType = "Billing Address",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESSES");
+
+		AssertElementPresent(
+			key_addressName = "Test Address",
+			key_addressType = "Shipping Address",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESSES");
+
+		AssertElementNotPresent(
+			key_imageId = "0",
+			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_AVATAR_BY_ID");
 
 	}
 

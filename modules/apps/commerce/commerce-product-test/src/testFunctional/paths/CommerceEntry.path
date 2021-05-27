@@ -537,6 +537,11 @@
 	<td>//div[contains(@class,'side-panel') and contains(@class,'is-visible')]//iframe</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ANY_IFRAME</td>
+	<td>//iframe[@title='${key_frameTitle}']</td>
+	<td></td>
+</tr>
 <!--PRICE-->
 <tr>
 	<td>INPUT_PRICE</td>

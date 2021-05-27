@@ -29,6 +29,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACCOUNT_MANAGEMENT_EMAIL</td>
+	<td>//span[@class='account-management__email' and contains(text(),'${key_email}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_MANAGEMENT_ADDRESSES</td>
+	<td>//span[contains(text(),'${key_addressType}')]//..//span[contains(text(),'${key_addressName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_MANAGEMENT_AVATAR_BY_ID</td>
+	<td>//div[@class='col-auto']//img[contains(@src,'id=${key_imageId}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM</td>
 	<td>//ul[contains(@class,'accounts-list')]//button[@class='dropdown-item']/span[contains(.,'${key_accountName}')]</td>
 	<td></td>

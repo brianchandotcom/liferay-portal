@@ -232,7 +232,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/liferay/liferay-etl-mulesoft</connection>
 		<developerConnection>scm:svn:https://github.com/liferay/liferay-etl-mulesoft/tree/master</developerConnection>
-		<tag>etl-mulesoft-1.0.0</tag>
+		<tag>HEAD</tag>
 		<url>https://github.com/liferay/liferay-etl-mulesoft/tree/master</url>
 	</scm>
 </project>

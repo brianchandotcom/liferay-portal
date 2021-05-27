@@ -1077,6 +1077,22 @@ definition {
 			locator1 = "FormViewBuilder#CHECKBOX_AT_FORM_BODY");
 	}
 
+	macro viewMultipleSelectionInline {
+		for (var selectOption : list "${selectOptionsList}") {
+			AssertElementPresent(
+				locator1 = "FormViewBuilder#OPTIONS_PLACED_INLINE",
+				optionLabel = "${selectOption}");
+		}
+	}
+
+	macro viewMultipleSelectionNotInline {
+		for (var selectOption : list "${selectOptionsList}") {
+			AssertElementNotPresent(
+				locator1 = "FormViewBuilder#OPTIONS_PLACED_INLINE",
+				optionLabel = "${selectOption}");
+		}
+	}
+
 	macro viewSelectChecked {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = "${fieldName}",
@@ -1089,6 +1105,28 @@ definition {
 			key_fieldName = "${fieldName}",
 			key_fieldValue = "${fieldValue}",
 			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION");
+	}
+
+	macro viewSummaryEntryNumeric {
+		AssertElementPresent(
+			key_type = "Sum",
+			key_value = "${key_sumValue}",
+			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
+
+		AssertElementPresent(
+			key_type = "Average",
+			key_value = "${key_averageValue}",
+			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
+
+		AssertElementPresent(
+			key_type = "Min",
+			key_value = "${key_minValue}",
+			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
+
+		AssertElementPresent(
+			key_type = "Max",
+			key_value = "${key_maxValue}",
+			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
 	}
 
 }

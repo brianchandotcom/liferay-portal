@@ -12,6 +12,8 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
 	}
 
 	tearDown {
@@ -30,17 +32,19 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddBlogsEntryWithImageViaBlogsImages {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Widget Page Name");
 
-		SitePages.addPublicPage(pageName = "${pageName}");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Test Site Name",
+			layoutName = "Test Widget Page Name",
+			widgetName = "Blogs");
 
-		Navigator.gotoPage(pageName = "${pageName}");
-
-		Portlet.addPG(portletName = "Blogs");
-
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "Test Widget Page Name",
+			siteName = "Test Site Name");
 
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
@@ -116,13 +120,16 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
 
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		PortletEntry.inputTitle(title = "Web Content Title");
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
@@ -177,15 +184,16 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test AddWebContentArticleWithImageViaURL {
-		Navigator.openURL();
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddCP();
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
 
-		PortletEntry.inputTitle(title = "Web Content Title");
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
@@ -233,13 +241,16 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test PreviewSourceContent {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
 
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		PortletEntry.inputTitle(title = "Web Content Title");
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
@@ -277,13 +288,16 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
 
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		PortletEntry.inputTitle(title = "Web Content Title");
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
 
@@ -313,13 +327,16 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewSourceCodeFormattedInTextView {
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Web Content");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "Web Content Title");
 
-		WebContentNavigator.gotoAddCP();
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		PortletEntry.inputTitle(title = "Web Content Title");
+		WebContent.viewTitle(webContentTitle = "Web Content Title");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
@@ -339,24 +356,28 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewWikiFrontPageLeftToRight {
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "${pageName}");
 
-		SitePages.addPublicPage(pageName = "${pageName}");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Test Site Name",
+			layoutName = "${pageName}",
+			widgetName = "Wiki");
 
-		Navigator.gotoPage(pageName = "${pageName}");
-
-		Portlet.addPG(portletName = "Wiki");
-
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "Test Site Name");
 
 		WikiPage.addLocalizedFrontPagePG(
 			emptyPageMessage = "This page is empty. Edit it to add some text.",
 			successMessage = "Your request completed successfully.",
 			wikiPageContent = "Wiki Left to Right Content");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "Test Site Name");
 
 		WikiPage.viewLocalizedFrontPagePG(wikiPageContent = "Wiki Left to Right Content");
 	}
@@ -366,19 +387,25 @@ definition {
 	test ViewWikiFrontPageRightToLeft {
 		property test.name.skip.portal.instance = "WYSIWIGUsecase#ViewWikiFrontPageRightToLeft";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "${pageName}");
 
-		SitePages.addPublicPage(pageName = "${pageName}");
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Test Site Name",
+			layoutName = "${pageName}",
+			widgetName = "Language Selector");
 
-		Navigator.gotoPage(pageName = "${pageName}");
-
-		Portlet.addPG(portletName = "Language Selector");
-
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "Test Site Name");
 
 		Portlet.addPG(portletName = "Wiki");
+
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "Test Site Name");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "ar_SA",
@@ -390,7 +417,9 @@ definition {
 			successMessage = "نجاح:تم تنفيذ طلبك بنجاح",
 			wikiPageContent = "Wiki Right to Left يحتوى");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		Navigator.gotoSitePage(
+			pageName = "${pageName}",
+			siteName = "Test Site Name");
 
 		WikiPage.viewLocalizedFrontPagePG(
 			rightToLeft = "true",

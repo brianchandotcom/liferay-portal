@@ -470,52 +470,18 @@ definition {
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
-		var clientId = "abc123";
-		var clientSecret = "abc123";
-		var portalURL = PropsUtil.get("portal.url");
-
-		OAuth2.addApplication(
+		OAuth2.addAndEditExternalApplication(
 			applicationName = "Third-party Application",
-			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
-			clientProfile = "Web Application");
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+			clientId = "abc123",
+			clientProfile = "Web Application",
+			clientSecret = "abc123");
 
-		OAuth2.inputApplicationValues(
-			clientId = "${clientId}",
-			clientSecret = "${clientSecret}");
+		OAuth2.authorizeMyApplication(
+			clientId = "abc123",
+			clientSecret = "abc123");
 
-		Navigator.gotoBack();
-
-		OAuth2.editScopes(
-			applicationName = "Third-party Application",
-			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-			resourcePanels = "Portal Services");
-
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId}");
-
-		Button.click(button = "Authorize My Application");
-
-		Button.click(button = "Authorize");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret}");
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 	}
 
 	@description = "This is a use case for LPS-126597."
@@ -523,75 +489,29 @@ definition {
 	test AuthorizeExternalApplicationWithRememberDeviceEnabled {
 		property test.name.skip.portal.instance = "OAuth2#AuthorizeExternalApplicationWithRememberDeviceEnabled";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
-		var clientId = "abc123";
-		var clientSecret = "abc123";
-		var portalURL = PropsUtil.get("portal.url");
-
-		OAuth2.addApplication(
+		OAuth2.addAndEditExternalApplication(
 			applicationName = "Third-party Application",
-			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
 			checkboxCheckList = "Remember Device",
-			clientProfile = "Web Application");
+			clientId = "abc123",
+			clientProfile = "Web Application",
+			clientSecret = "abc123");
 
-		OAuth2.inputApplicationValues(
-			clientId = "${clientId}",
-			clientSecret = "${clientSecret}");
-
-		Navigator.gotoBack();
-
-		OAuth2.editScopes(
-			applicationName = "Third-party Application",
-			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-			resourcePanels = "Portal Services");
-
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId}");
-
-		Button.click(button = "Authorize My Application");
-
-		Check(
-			key_checkboxName = "Remember Device",
-			locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
-
-		Button.click(button = "Authorize");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret}");
-
-		Button.click(button = "Obtain OAuth2 Access");
+		OAuth2.authorizeMyApplication(
+			clientId = "abc123",
+			clientSecret = "abc123",
+			rememberDevice = "true");
 
 		// Re-open test harness to check if Device is remembered
 
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId}");
-
-		Button.click(button = "Authorize My Application");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret}");
-
-		Button.click(button = "Obtain OAuth2 Access");
+		OAuth2.authorizeMyApplication(
+			clientId = "abc123",
+			clientSecret = "abc123",
+			noAuthorize = "true");
 
 		// Execute a request as final verification
 
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 	}
 
 	@description = "This is a use case for LPS-126596."
@@ -599,51 +519,20 @@ definition {
 	test AuthorizeExternalTrustedApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
-		var clientId = "abc123";
-		var clientSecret = "abc123";
-		var portalURL = PropsUtil.get("portal.url");
-
-		OAuth2.addApplication(
+		OAuth2.addAndEditExternalApplication(
 			applicationName = "Third-party Application",
-			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
 			checkboxCheckList = "Trusted Application",
-			clientProfile = "Web Application");
+			clientId = "abc123",
+			clientProfile = "Web Application",
+			clientSecret = "abc123");
 
-		OAuth2.inputApplicationValues(
-			clientId = "${clientId}",
-			clientSecret = "${clientSecret}");
+		OAuth2.authorizeMyApplication(
+			clientId = "abc123",
+			clientSecret = "abc123",
+			noAuthorize = "true");
 
-		Navigator.gotoBack();
-
-		OAuth2.editScopes(
-			applicationName = "Third-party Application",
-			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-			resourcePanels = "Portal Services");
-
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId}");
-
-		Button.click(button = "Authorize My Application");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret}");
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 	}
 
 	@description = "This is a use case for LPS-105158."
@@ -847,46 +736,16 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;5&quot;";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
-		var clientId = "abc123";
-		var clientSecret = "abc123";
-		var portalURL = PropsUtil.get("portal.url");
-
-		OAuth2.addApplication(
+		OAuth2.addAndEditExternalApplication(
 			applicationName = "Third-party Application",
-			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
-			clientProfile = "Web Application");
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=abc123''',
+			clientId = "abc123",
+			clientProfile = "Web Application",
+			clientSecret = "abc123");
 
-		OAuth2.inputApplicationValues(
-			clientId = "${clientId}",
-			clientSecret = "${clientSecret}");
-
-		Navigator.gotoBack();
-
-		OAuth2.editScopes(
-			applicationName = "Third-party Application",
-			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-			resourcePanels = "Portal Services");
-
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId}");
-
-		Button.click(button = "Authorize My Application");
-
-		Button.click(button = "Authorize");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret}");
-
-		Button.click(button = "Obtain OAuth2 Access");
+		OAuth2.authorizeMyApplication(
+			clientId = "abc123",
+			clientSecret = "abc123");
 
 		Pause(locator1 = "6000");
 
@@ -900,309 +759,123 @@ definition {
 
 		Button.click(button = "Refresh Token");
 
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 	}
 
-	@description = "This is a use case for LPS-66196."
-	@priority = "5"
+	@description = "This is a use case for LPS-129398."
+	@priority = "4"
 	test RememberDeviceWithMultipleAuth {
 
 		// Test Setup
 
-		var clientId1 = "default1";
-		var clientId2 = "default2";
-		var clientSecret1 = "defaultsecret1";
-		var clientSecret2 = "defaultsecret2";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
 		for (var count : list "1,2") {
-			var portalURL = PropsUtil.get("portal.url");
-			var applicationName = "My application${count}";
-
-			OAuth2.addApplication(
-				applicationName = "${applicationName}",
+			OAuth2.addAndEditExternalApplication(
+				applicationName = "My application${count}",
 				callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default${count}''',
 				checkboxCheckList = "Remember Device",
-				clientProfile = "Web Application",
-				websiteURL = "http://localhost:8080");
-
-			OAuth2.inputApplicationValues(
 				clientId = "default${count}",
-				clientSecret = "defaultsecret${count}");
-
-			Navigator.gotoBack();
-
-			OAuth2.editScopes(
-				applicationName = "My application${count}",
-				resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-				resourcePanels = "Portal Services");
+				clientProfile = "Web Application",
+				clientSecret = "defaultsecret${count}",
+				websiteURL = "http://localhost:8080");
 		}
 
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+		// Test starts here
 
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId1}");
-
-		Button.click(button = "Authorize My Application");
-
-		Check(
-			key_checkboxName = "Remember Device",
-			locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
-
-		Button.click(button = "Authorize");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret1}");
-
-		Button.click(button = "Obtain OAuth2 Access");
+		OAuth2.authorizeMyApplication(
+			clientId = "default1",
+			clientSecret = "defaultsecret1",
+			rememberDevice = "true");
 
 		// Execute a request as final verification
 
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 
 		// Re-open test harness to check if Device is remembered
 
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+		OAuth2.authorizeMyApplication(
+			clientId = "default1",
+			clientSecret = "defaultsecret1",
+			noAuthorize = "true");
 
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId1}");
-
-		Button.click(button = "Authorize My Application");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret1}");
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 
 		// Repeating the authorization on a second page
 
-		Open.openInTheNewTab(locator1 = "http://martamedio.com/oauth2-tester/");
+		OAuth2.authorizeMyApplication(
+			clientId = "default2",
+			clientSecret = "defaultsecret2",
+			newTab = "true",
+			rememberDevice = "true");
 
-		SelectWindow.selectPopUp(locator1 = "null");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId2}");
-
-		Button.click(button = "Authorize My Application");
-
-		Check(
-			key_checkboxName = "Remember Device",
-			locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
-
-		Button.click(button = "Authorize");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret2}");
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 
 		// Re-open test harness to check if Device is remembered
 
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+		OAuth2.authorizeMyApplication(
+			clientId = "default2",
+			clientSecret = "defaultsecret2",
+			noAuthorize = "true");
 
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId2}");
-
-		Button.click(button = "Authorize My Application");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret2}");
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 	}
 
-	@description = "This is a use case for LPS-66196."
-	@priority = "3"
+	@description = "This is a use case for LPS-129398."
+	@priority = "4"
 	test RememberDeviceWithMultipleAuthWithoutSession {
 
 		// Test Setup
 
-		var clientId1 = "default1";
-		var clientId2 = "default2";
-		var clientSecret1 = "defaultsecret1";
-		var clientSecret2 = "defaultsecret2";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Security",
-			panel = "Control Panel",
-			portlet = "OAuth 2 Administration");
-
 		for (var count : list "1,2") {
-			var portalURL = PropsUtil.get("portal.url");
-			var applicationName = "My application${count}";
-
-			OAuth2.addApplication(
-				applicationName = "${applicationName}",
+			OAuth2.addAndEditExternalApplication(
+				applicationName = "My application${count}",
 				callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=default${count}''',
 				checkboxCheckList = "Remember Device",
-				clientProfile = "Web Application",
-				websiteURL = "http://localhost:8080");
-
-			OAuth2.inputApplicationValues(
 				clientId = "default${count}",
-				clientSecret = "defaultsecret${count}");
-
-			Navigator.gotoBack();
-
-			OAuth2.editScopes(
-				applicationName = "My application${count}",
-				resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
-				resourcePanels = "Portal Services");
+				clientProfile = "Web Application",
+				clientSecret = "defaultsecret${count}",
+				websiteURL = "http://localhost:8080");
 		}
 
 		// Test starts here
 
 		User.logoutPG();
 
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId1}");
-
-		Button.click(button = "Authorize My Application");
-
-		Type(
-			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "test@liferay.com");
-
-		Type(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "test");
-
-		Click(locator1 = "Button#SIGN_IN");
-
-		Check(
-			key_checkboxName = "Remember Device",
-			locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
-
-		Button.click(button = "Authorize");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret1}");
-
-		Button.click(button = "Obtain OAuth2 Access");
+		OAuth2.authorizeMyApplication(
+			clientId = "default1",
+			clientSecret = "defaultsecret1",
+			rememberDevice = "true");
 
 		// Execute a request as final verification
 
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 
 		// Re-open test harness to check if Device is remembered
 
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+		OAuth2.authorizeMyApplication(
+			clientId = "default1",
+			clientSecret = "defaultsecret1",
+			noAuthorize = "true");
 
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId1}");
-
-		Button.click(button = "Authorize My Application");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret1}");
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 
 		// Repeating the authorization on a second page
 
-		Open.openInTheNewTab(locator1 = "http://martamedio.com/oauth2-tester/");
+		OAuth2.authorizeMyApplication(
+			clientId = "default2",
+			clientSecret = "defaultsecret2",
+			newTab = "true",
+			rememberDevice = "true");
 
-		SelectWindow.selectPopUp(locator1 = "null");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId2}");
-
-		Button.click(button = "Authorize My Application");
-
-		Check(
-			key_checkboxName = "Remember Device",
-			locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
-
-		Button.click(button = "Authorize");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret2}");
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 
 		// Re-open test harness to check if Device is remembered
 
-		Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");
+		OAuth2.authorizeMyApplication(
+			clientId = "default2",
+			clientSecret = "defaultsecret2",
+			noAuthorize = "true");
 
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID",
-			value1 = "${clientId2}");
-
-		Button.click(button = "Authorize My Application");
-
-		Type(
-			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_SECRET",
-			value1 = "${clientSecret2}");
-
-		Button.click(button = "Obtain OAuth2 Access");
-
-		Button.click(button = "Launch Request");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
-			value1 = "test@liferay.com");
+		OAuth2.launchRequest();
 	}
 
 	@description = "This is a use case for LPS-105156."

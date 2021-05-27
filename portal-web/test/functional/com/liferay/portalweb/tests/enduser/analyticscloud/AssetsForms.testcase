@@ -72,4 +72,55 @@ definition {
 			value1 = "1");
 	}
 
+	@description = "Form known individuals shows which individuals interact with the form"
+	@priority = "5"
+	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
+
+		Navigator.openURL();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Assets");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Forms");
+
+		ACNavigation.changeTimeSelector(time = "24 hours");
+
+		ACAssets.accessAssets(titleName = "Created Form Name");
+
+		ACNavigation.switchTab(tabName = "Known Individuals");
+
+		ACNavigation.changeTimeSelector(time = "24 hours");
+
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
 }

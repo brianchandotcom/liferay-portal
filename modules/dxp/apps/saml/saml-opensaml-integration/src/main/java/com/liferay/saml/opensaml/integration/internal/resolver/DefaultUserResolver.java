@@ -17,7 +17,6 @@ package com.liferay.saml.opensaml.integration.internal.resolver;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -103,7 +102,7 @@ public class DefaultUserResolver implements UserResolver {
 			long companyId, SamlSpIdpConnection samlSpIdpConnection,
 			Map<String, List<Serializable>> attributesMap,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -325,7 +324,7 @@ public class DefaultUserResolver implements UserResolver {
 	private User _processUser(
 			User user, Map<String, List<Serializable>> attributesMap,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		UserProcessor userProcessor = _userProcessorFactory.create(
 			user, _userFieldExpressionHandlerRegistry);
@@ -381,7 +380,7 @@ public class DefaultUserResolver implements UserResolver {
 	private User _updateUser(
 			User user, Map<String, List<Serializable>> attributesMap,
 			ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

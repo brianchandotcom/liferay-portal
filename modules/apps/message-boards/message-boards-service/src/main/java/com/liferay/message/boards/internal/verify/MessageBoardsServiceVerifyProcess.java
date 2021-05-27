@@ -43,7 +43,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	}
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.service)(&(release.schema.version>=5.0.0)(!(release.schema.version>=6.0.0))))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.message.boards.service)(&(release.schema.version>=6.0.0)(!(release.schema.version>=7.0.0))))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

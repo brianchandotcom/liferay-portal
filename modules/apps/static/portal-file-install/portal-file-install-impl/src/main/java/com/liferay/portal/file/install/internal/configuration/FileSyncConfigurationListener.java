@@ -116,6 +116,7 @@ public class FileSyncConfigurationListener implements ConfigurationListener {
 
 				if ((file != null) && file.isFile()) {
 					_pidToFile.put(configuration.getPid(), fileName);
+
 					ConfigurationProperties configurationProperties =
 						ConfigurationPropertiesFactory.create(file, _encoding);
 

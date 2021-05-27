@@ -333,6 +333,7 @@ public class ProjectTemplatesServiceBuilderTest
 	@Test
 	public void testCompareServiceBuilderPluginVersions() throws Exception {
 		Assume.assumeTrue(isBuildProjects());
+
 		String liferayVersion = getDefaultLiferayVersion();
 		String name = "sample";
 		String packageName = "com.test.sample";

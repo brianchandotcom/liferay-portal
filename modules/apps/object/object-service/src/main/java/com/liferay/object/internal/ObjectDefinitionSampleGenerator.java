@@ -88,8 +88,7 @@ public class ObjectDefinitionSampleGenerator {
 					_createObjectField(true, true, null, "fox", "String"),
 					_createObjectField(
 						true, false, "en_US", "george", "String"),
-					_createObjectField(
-						false, false, null, "how", "String"),
+					_createObjectField(false, false, null, "how", "String"),
 					_createObjectField("item", "Double"),
 					_createObjectField("jig", "Integer"),
 					_createObjectField("king", "BigDecimal")));

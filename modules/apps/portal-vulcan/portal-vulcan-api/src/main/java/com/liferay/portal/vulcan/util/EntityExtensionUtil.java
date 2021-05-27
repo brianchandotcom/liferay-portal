@@ -53,6 +53,7 @@ public class EntityExtensionUtil {
 		for (Field baseEntityField : baseEntityClass.getDeclaredFields()) {
 			Field extendedEntityField = extendedEntityFieldsMap.get(
 				baseEntityField.getName());
+
 			baseEntityField.setAccessible(true);
 			extendedEntityField.setAccessible(true);
 			extendedEntityField.set(

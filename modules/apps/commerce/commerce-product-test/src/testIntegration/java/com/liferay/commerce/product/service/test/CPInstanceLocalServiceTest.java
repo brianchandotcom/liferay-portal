@@ -177,6 +177,7 @@ public class CPInstanceLocalServiceTest {
 		).and(
 			"all product instances are APPROVED"
 		);
+
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
 			true);

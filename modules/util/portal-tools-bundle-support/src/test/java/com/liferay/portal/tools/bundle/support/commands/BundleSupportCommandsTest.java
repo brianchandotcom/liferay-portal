@@ -438,6 +438,7 @@ public class BundleSupportCommandsTest extends HttpProxyMockServerSupport {
 			}
 
 		};
+
 		_createHttpContext(
 			httpServer, _CONTEXT_PATH_7Z, "application/x-7z-compressed", null);
 		_createHttpContext(

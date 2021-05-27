@@ -72,6 +72,7 @@ public class UserSearchPermissionFilterContributorTest {
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		User userA = _addOrganizationUser(organization);
+
 		_addOrganizationUser(organization);
 
 		Assert.assertEquals(1, _performUserSearchCount(userA));

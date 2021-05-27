@@ -381,10 +381,10 @@ definition {
 		);
 
 		JSONUser.addUser(
-				userEmailAddress = "user1@liferay.com",
-				userFirstName = "user1",
-				userLastName = "user1",
-				userScreenName = "user1");
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "user1",
+			userLastName = "user1",
+			userScreenName = "user1");
 
 		JSONUser.setFirstPassword(
 			agreeToTermsAndAnswerReminderQuery = "true",
@@ -454,9 +454,6 @@ definition {
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = "Status",
 			fieldValue = "Approved");
-
-			
-
 	}
 
 	@description = "Verify that with Single Approver Workflow enabled, the Submit button now reads "Submit for Publication""

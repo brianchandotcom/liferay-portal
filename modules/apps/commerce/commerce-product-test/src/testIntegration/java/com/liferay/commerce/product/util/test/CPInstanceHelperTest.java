@@ -514,6 +514,7 @@ public class CPInstanceHelperTest {
 
 		while (iterator.hasNext()) {
 			String optionKey = iterator.next();
+
 			sb.append(StringPool.OPEN_CURLY_BRACE);
 			sb.append("\"key\":");
 			sb.append(StringPool.QUOTE);

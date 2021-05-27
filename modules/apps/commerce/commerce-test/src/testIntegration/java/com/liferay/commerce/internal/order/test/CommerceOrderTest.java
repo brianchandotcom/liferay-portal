@@ -313,6 +313,7 @@ public class CommerceOrderTest {
 			"If I remove the user from the second account they should only " +
 				"see 1 order"
 		);
+
 		CommerceAccount commerceAccount =
 			_commerceAccountLocalService.addBusinessCommerceAccount(
 				"Test Business Account", 0, null, null, true, null,

@@ -142,6 +142,7 @@ public class DepotEntrySearchTest {
 	public void testSearchOneWithPermissions() throws Exception {
 		DepotEntry depotEntry1 = _addDepotEntry(
 			TestPropsValues.getUser(), "Depot Entry 1");
+
 		_addDepotEntry(TestPropsValues.getUser(), "Depot Entry 2");
 
 		DepotTestUtil.withRegularUser(

@@ -306,6 +306,7 @@ public class SegmentsExperienceServiceTest {
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
 				_classNameId, _classPK, serviceContext);
+
 		SegmentsTestUtil.addSegmentsExperience(
 			_classNameId, _classPK, serviceContext);
 		SegmentsTestUtil.addSegmentsExperience(
@@ -346,6 +347,7 @@ public class SegmentsExperienceServiceTest {
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(
 				_classNameId, _classPK, serviceContext);
+
 		SegmentsTestUtil.addSegmentsExperience(
 			_classNameId, _classPK, serviceContext);
 		SegmentsTestUtil.addSegmentsExperience(

@@ -148,6 +148,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 			sharingNotificationSubcriptionSender.setCurrentUserId(
 				serviceContext.getUserId());
 			sharingNotificationSubcriptionSender.setEntryURL(entryURL);
+
 			String fromName = PrefsPropsUtil.getString(
 				user.getCompanyId(), PropsKeys.ADMIN_EMAIL_FROM_NAME);
 			String fromAddress = PrefsPropsUtil.getString(

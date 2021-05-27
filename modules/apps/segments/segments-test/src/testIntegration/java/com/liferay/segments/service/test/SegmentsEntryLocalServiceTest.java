@@ -425,6 +425,7 @@ public class SegmentsEntryLocalServiceTest {
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
+
 		SegmentsTestUtil.addSegmentsEntry(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(),

@@ -176,6 +176,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	public void testGetRedirectNotFoundEntriesReturnsActiveEntries() {
 		RedirectNotFoundEntry activeRedirectNotFoundEntry =
 			_addOrUpdateRedirectNotFoundEntry("url1", false);
+
 		_addOrUpdateRedirectNotFoundEntry("url2", true);
 
 		List<RedirectNotFoundEntry> activeRedirectNotFoundEntries =
@@ -216,6 +217,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	@Test
 	public void testGetRedirectNotFoundEntriesReturnsIgnoredEntries() {
 		_addOrUpdateRedirectNotFoundEntry("url1", false);
+
 		RedirectNotFoundEntry ignoredRedirectNotFoundEntry =
 			_addOrUpdateRedirectNotFoundEntry("url2", true);
 
@@ -241,6 +243,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 
 		RedirectNotFoundEntry redirectNotFoundEntry =
 			_addOrUpdateRedirectNotFoundEntry("url1", new Date());
+
 		_addOrUpdateRedirectNotFoundEntry(
 			"url2", Date.from(instant.minus(Duration.ofDays(6))));
 		_addOrUpdateRedirectNotFoundEntry(

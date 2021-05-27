@@ -479,6 +479,7 @@ public class ServiceProxyFactoryTest {
 					private boolean _logged;
 
 				});
+
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			FutureTask<String> futureTask = new FutureTask<>(

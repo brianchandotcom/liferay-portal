@@ -16,11 +16,7 @@ definition {
 
 		ACUtils.launchDXP();
 
-		JSONGroup.addGroup(groupName = "Site Name");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "AC Page");
+		ACUtils.addSiteAndPage();
 	}
 
 	tearDown {
@@ -41,42 +37,13 @@ definition {
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentSubmittingForm {
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "AC Page",
-			widgetName = "Form");
+		ACUtils.createFormAndAddToPage();
+
+		Navigator.openURL();
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
-
-		Form.editName();
-
-		Form.addTextField(fieldPositionNumber = "0");
-
-		var fieldTextField = FormFields.getFieldName();
-
-		Form.editFieldLabelMetal(fieldValue = "Text Field");
-
-		Form.closeSidebar();
-
-		Form.save();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
 
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
@@ -85,11 +52,11 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextLabel(
-			fieldLabel = "Text Field",
-			fieldName = "${fieldTextField}");
+			fieldLabel = "Text",
+			fieldName = "Text");
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = "Text",
 			fieldValue = "Test Segments");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
@@ -98,7 +65,7 @@ definition {
 
 		ACUtils.closeAllSessions();
 
-		Pause(locator1 = "10000");
+		Pause(locator1 = "30000");
 
 		ACUtils.launchAC();
 
@@ -120,7 +87,7 @@ definition {
 
 		ACSegments.saveSegment();
 
-		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertTextEquals(
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
@@ -135,11 +102,11 @@ definition {
 		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextLabel(
-			fieldLabel = "Text Field",
-			fieldName = "${fieldTextField}");
+			fieldLabel = "Text",
+			fieldName = "Text");
 
 		FormFields.editText(
-			fieldName = "${fieldTextField}",
+			fieldName = "Text",
 			fieldValue = "Test Segments");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
@@ -156,7 +123,7 @@ definition {
 
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
-		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
 			key_userName = "Test Test",

@@ -39,6 +39,9 @@ module.exports = {
 						'react-dnd-html5-backend': '*',
 						'react-dom': '*',
 					},
+					'@liferay/frontend-js-a11y-web': {
+						'/': '*',
+					},
 					'@liferay/frontend-js-state-web': {
 						'/': '*',
 					},

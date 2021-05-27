@@ -13,3 +13,7 @@
  */
 
 export {A11y} from './A11y';
+
+// @ts-ignore
+
+export {A11yPanel} from './A11yPanel';

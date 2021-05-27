@@ -1,10 +1,14 @@
 {
-	"@generated": "bcba4b119d3cf7bdcb52b5d3d5a71d24f5290ca2",
+	"@generated": "0a5c232bac81c9effe3a4493e3d1d90bbf50c9ee",
 	"@overrides": {
+		"compilerOptions": {
+			"allowJs": true
+		}
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
 	"@see": "https://git.io/JY2EA",
 	"compilerOptions": {
+		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
 		"composite": true,

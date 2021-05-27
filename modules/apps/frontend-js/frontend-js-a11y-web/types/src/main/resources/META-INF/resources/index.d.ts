@@ -13,3 +13,4 @@
  */
 
 export {A11y} from './A11y';
+export {A11yPanel} from './A11yPanel';

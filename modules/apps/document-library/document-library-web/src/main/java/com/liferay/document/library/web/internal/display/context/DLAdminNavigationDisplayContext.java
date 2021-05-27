@@ -90,8 +90,6 @@ public class DLAdminNavigationDisplayContext {
 				_liferayPortletResponse
 			).setMVCRenderCommandName(
 				"/document_library/view"
-			).setRedirect(
-				_currentURLObj.toString()
 			).buildString());
 
 		navigationItem.setLabel(
@@ -108,8 +106,6 @@ public class DLAdminNavigationDisplayContext {
 		navigationItem.setHref(
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
-			).setRedirect(
-				_currentURLObj.toString()
 			).setNavigation(
 				"file_entry_types"
 			).buildString());
@@ -130,10 +126,6 @@ public class DLAdminNavigationDisplayContext {
 		navigationItem.setHref(
 			PortletURLBuilder.createRenderURL(
 				_liferayPortletResponse
-			).setRedirect(
-				_currentURLObj.toString()
-			).setBackURL(
-				_themeDisplay.getURLCurrent()
 			).setNavigation(
 				"file_entry_metadata_sets"
 			).setParameter(

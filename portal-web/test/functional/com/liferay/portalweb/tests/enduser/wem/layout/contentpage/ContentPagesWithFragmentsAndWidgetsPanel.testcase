@@ -217,7 +217,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-130964. View visual feedback when hover on items in Fragments and Widgets panel."
+	@description = "This is a test for LPS-130964 and LPS-132890. View visual feedback when hover on items in Fragments and Widgets panel."
 	@priority = "4"
 	test ViewVisualFeedbackWhenHoverOnItems {
 		task ("Navigate to content page at edit mode") {
@@ -296,6 +296,26 @@ definition {
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
 				locator2 = "box-shadow",
 				value1 = "rgba(39, 40, 51, 0.1) 0px 4px 8px 0px");
+		}
+
+		task ("View the tooltip when hover on the card title") {
+			MouseOver(
+				key_card = "Container",
+				locator1 = "Card#CARD_TITLE");
+
+			AssertVisible(
+				key_content = "Container",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			MouseOver(
+				key_card = "Blogs",
+				locator1 = "Card#CARD_TITLE");
+
+			AssertVisible(
+				key_content = "Blogs",
+				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 		}
 	}
 

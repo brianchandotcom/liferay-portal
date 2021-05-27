@@ -107,8 +107,9 @@ public class ObjectEntryKeywordQueryContributor
 		}
 	}
 
-	private void _addDateRangeQuery(
-			String keywords, BooleanQuery booleanQuery, String fieldName)
+	private void _addRangeQuery(
+			String keywords, BooleanQuery booleanQuery, String fieldName,
+			String type)
 		throws ParseException {
 
 		if (Validator.isBlank(keywords)) {
@@ -120,41 +121,13 @@ public class ObjectEntryKeywordQueryContributor
 		String lowerTerm = range[0];
 		String upperTerm = range[1];
 
-		if ((lowerTerm == null) || (upperTerm == null)) {
-			return;
-		}
-
-		Matcher lowerTermMatcher = _pattern.matcher(lowerTerm);
-		Matcher upperTermMatcher = _pattern.matcher(upperTerm);
-
-		if (!lowerTermMatcher.matches() || !upperTermMatcher.matches()) {
+		if (!_isValidRange(lowerTerm, upperTerm, type)) {
 			return;
 		}
 
 		booleanQuery.add(
 			new TermRangeQueryImpl(fieldName, lowerTerm, upperTerm, true, true),
 			BooleanClauseOccur.MUST);
-	}
-
-	private void _addRangeQuery(
-			String keywords, BooleanQuery booleanQuery, String fieldName)
-		throws ParseException {
-
-		if (Validator.isBlank(keywords)) {
-			return;
-		}
-
-		String[] range = RangeParserUtil.parserRange(keywords);
-
-		String lowerTerm = range[0];
-		String upperTerm = range[1];
-
-		if ((lowerTerm != null) && (upperTerm != null)) {
-			booleanQuery.add(
-				new TermRangeQueryImpl(
-					fieldName, lowerTerm, upperTerm, true, true),
-				BooleanClauseOccur.MUST);
-		}
 	}
 
 	private void _contribute(
@@ -202,7 +175,7 @@ public class ObjectEntryKeywordQueryContributor
 		else if (Objects.equals(objectField.getType(), "BigDecimal")) {
 			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
-				"nestedFieldArray.value_double");
+				"nestedFieldArray.value_double", objectField.getType());
 		}
 		else if (Objects.equals(objectField.getType(), "Blob")) {
 			_log.error("Blob type is not indexable");
@@ -228,24 +201,24 @@ public class ObjectEntryKeywordQueryContributor
 			}
 		}
 		else if (Objects.equals(objectField.getType(), "Date")) {
-			_addDateRangeQuery(
+			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
-				"nestedFieldArray.value_date");
+				"nestedFieldArray.value_date", objectField.getType());
 		}
 		else if (Objects.equals(objectField.getType(), "Double")) {
 			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
-				"nestedFieldArray.value_double");
+				"nestedFieldArray.value_double", objectField.getType());
 		}
 		else if (Objects.equals(objectField.getType(), "Integer")) {
 			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
-				"nestedFieldArray.value_integer");
+				"nestedFieldArray.value_integer", objectField.getType());
 		}
 		else if (Objects.equals(objectField.getType(), "Long")) {
 			_addRangeQuery(
 				fieldKeywords, nestedBooleanQuery,
-				"nestedFieldArray.value_long");
+				"nestedFieldArray.value_long", objectField.getType());
 		}
 		else if (Objects.equals(objectField.getType(), "String")) {
 			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
@@ -315,6 +288,49 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		return value;
+	}
+
+	private boolean _isValidRange(
+		String lowerTerm, String upperTerm, String type) {
+
+		if ((lowerTerm == null) || (upperTerm == null)) {
+			return false;
+		}
+
+		try {
+			if (Objects.equals(type, "Double") ||
+				Objects.equals(type, "BigDecimal")) {
+
+				Double.valueOf(lowerTerm);
+				Double.valueOf(upperTerm);
+			}
+			else if (Objects.equals(type, "Long")) {
+				Long.valueOf(lowerTerm);
+				Long.valueOf(upperTerm);
+			}
+			else if (Objects.equals(type, "Integer")) {
+				Integer.valueOf(lowerTerm);
+				Integer.valueOf(upperTerm);
+			}
+			else if (Objects.equals(type, "Date")) {
+				Matcher lowerTermMatcher = _pattern.matcher(lowerTerm);
+				Matcher upperTermMatcher = _pattern.matcher(upperTerm);
+
+				if (!lowerTermMatcher.matches() ||
+					!upperTermMatcher.matches()) {
+
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

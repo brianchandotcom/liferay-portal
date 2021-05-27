@@ -63,7 +63,7 @@ definition {
 
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
-		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertTextEquals(
 			locator1 = "ACSegments#SEGMENT_LABEL",

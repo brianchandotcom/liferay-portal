@@ -50,8 +50,6 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
-import javax.net.ssl.SSLException;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -72,8 +70,6 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 	public static final String PLATFORM = "apple";
 
-	public static final String TOPIC = "com.liferay.demopush1";
-
 	@Override
 	public void send(List<String> tokens, JSONObject payloadJSONObject)
 		throws Exception {
@@ -88,8 +84,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		Stream<String> tokensStream = tokens.stream();
 
 		tokensStream.map(
-			t -> new SimpleApnsPushNotification(
-				t, ApplePushNotificationsSender.TOPIC, payload)
+			token -> new SimpleApnsPushNotification(token, _topic, payload)
 		).forEach(
 			notification -> _handleNotificationResponse(
 				_apnsClient.sendNotification(notification))
@@ -98,9 +93,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties)
-		throws SSLException {
-
+	protected void activate(Map<String, Object> properties) throws Exception {
 		ApplePushNotificationsSenderConfiguration
 			applePushNotificationsSenderConfiguration =
 				ConfigurableUtil.createConfigurable(
@@ -111,16 +104,19 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 			applePushNotificationsSenderConfiguration.certificatePath();
 		String certificatePassword =
 			applePushNotificationsSenderConfiguration.certificatePassword();
+		String appId = applePushNotificationsSenderConfiguration.appId();
 
 		if (Validator.isNull(certificatePath) ||
-			Validator.isNull(certificatePassword)) {
+			Validator.isNull(certificatePassword) || Validator.isNull(appId)) {
 
 			_apnsClient = null;
+			_topic = "";
 
 			return;
 		}
 
 		ApnsClientBuilder apnsClientBuilder = new ApnsClientBuilder();
+		_topic = appId;
 
 		try (InputStream inputStream = _getCertificateInputStream(
 				certificatePath)) {
@@ -318,15 +314,15 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 						_log.warn(
 							StringBundler.concat(
-								"Notification rejected by the APNs ",
-								"gateway: ", response.getRejectionReason(),
+								"Notification rejected by the APNs gateway: ",
+								response.getRejectionReason(),
 								"\t…and the token is invalid as of ",
 								timestamp));
 					}
 
 					sendResponse(
-						new AppleResponse(response.getPushNotification(),
-							false));
+						new AppleResponse(
+							response.getPushNotification(), false));
 				}
 				else {
 					sendResponse(new AppleResponse(null, cause));
@@ -341,5 +337,7 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 	@Reference
 	private MessageBus _messageBus;
+
+	private String _topic;
 
 }

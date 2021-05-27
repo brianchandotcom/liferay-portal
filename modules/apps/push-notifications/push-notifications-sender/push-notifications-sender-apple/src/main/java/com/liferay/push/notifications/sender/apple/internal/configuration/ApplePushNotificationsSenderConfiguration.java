@@ -30,6 +30,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ApplePushNotificationsSenderConfiguration {
 
 	@Meta.AD(
+		description = "app-id-description", name = "app-id", required = false
+	)
+	public String appId();
+
+	@Meta.AD(
 		description = "certificate-password-description",
 		name = "certificate-password-name", required = false
 	)

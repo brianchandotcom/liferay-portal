@@ -162,12 +162,6 @@ definition {
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}
 
-	macro selectSegmentProfile {
-		var key_segmentProfile = "${segmentProfile}";
-
-		Click(locator1 = "ACSegments#SELECT_SEGMENT_PROFILE");
-	}
-
 	macro selectSegmentType {
 		var key_SegmentType = "${segmentType}";
 

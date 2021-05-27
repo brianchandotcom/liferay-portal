@@ -54,4 +54,10 @@ definition {
 		ACNavigation.goToSidebarOption(sidebarOption = "tests");
 	}
 
+	macro switchTab {
+		var key_tabName = "${tabName}";
+
+		Click(locator1 = "ACNavigation#TAB_NAME");
+	}
+
 }

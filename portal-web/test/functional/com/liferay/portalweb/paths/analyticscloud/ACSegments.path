@@ -170,11 +170,6 @@
     <td></td>
 </tr>
 <tr>
-    <td>SELECT_SEGMENT_PROFILE</td>
-    <td>//ul[contains(@class,'nav-root')]//span[text()='${key_segmentProfile}']</td>
-    <td></td>
-</tr>
-<tr>
     <td>SEGMENT_MEMBERS</td>
     <td>//tbody//a[@class='text-truncate'and text()='${key_userName}']</td>
     <td></td>

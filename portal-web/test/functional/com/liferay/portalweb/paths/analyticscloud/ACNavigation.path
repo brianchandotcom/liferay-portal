@@ -24,6 +24,12 @@
 	<td>//*[contains(@class,'sidebar-item-root')]//*[contains(@href,'${key_SidebarOption}')]</td>
 	<td></td>
 </tr>
+<!-- TABS/OPTIONS AVAILABLE IN DIFFERENT PLACES E.G: ASSETS, SEGMENTS, SITES  -->
+<tr>
+    <td>TAB_NAME</td>
+    <td>//ul[contains(@class,'nav-root')]//span[text()='${key_tabName}']</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

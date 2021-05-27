@@ -62,35 +62,25 @@ function dxp(analytics) {
 	/**
 	 * Checks based on the URL param if it is a configuration portlet
 	 */
-	function isConfigurationPortlet() {
-		const searchParams = getSearchParams();
-
+	function isConfigurationPortlet(searchParams) {
 		const portletId = searchParams.get(PARAM_PORTLET_ID_KEY);
 
-		if (portletId === PARAM_CONFIGURATION_PORTLET_NAME) {
-			return true;
-		}
-
-		return false;
+		return portletId === PARAM_CONFIGURATION_PORTLET_NAME;
 	}
 
 	/**
 	 * Checks based on the URL param if the page is in view mode
 	 */
-	function isViewMode() {
-		const searchParams = getSearchParams();
-
+	function isViewMode(searchParams) {
 		const mode = searchParams.get(PARAM_MODE_KEY) || PARAM_VIEW_MODE;
 
-		if (mode === PARAM_VIEW_MODE) {
-			return true;
-		}
-
-		return false;
+		return mode === PARAM_VIEW_MODE;
 	}
 
 	if (window.Liferay && window.Liferay.SPA) {
-		if (isConfigurationPortlet() || !isViewMode()) {
+		const searchParams = getSearchParams();
+
+		if (isConfigurationPortlet(searchParams) || !isViewMode(searchParams)) {
 			return analytics.disposeInternal();
 		}
 

@@ -24,14 +24,12 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.akismet.internal.util.MBUserRankUtil" %><%@
-page import="com.liferay.akismet.internal.util.ModerationUtil" %><%@
+<%@ page import="com.liferay.akismet.internal.util.ModerationUtil" %><%@
 page import="com.liferay.message.boards.exception.NoSuchMessageException" %><%@
 page import="com.liferay.message.boards.exception.RequiredMessageException" %><%@
 page import="com.liferay.message.boards.model.MBMessage" %><%@
 page import="com.liferay.message.boards.service.MBMessageLocalServiceUtil" %><%@
 page import="com.liferay.message.boards.service.MBStatsUserLocalServiceUtil" %><%@
-page import="com.liferay.message.boards.settings.MBGroupServiceSettings" %><%@
 page import="com.liferay.message.boards.util.MBUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
@@ -61,8 +59,6 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-MBGroupServiceSettings mbGroupServiceSettings = MBGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId());
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 DateFormat longDateFormatDate = DateFormat.getDateInstance(DateFormat.LONG, locale);

@@ -94,10 +94,8 @@ if (messageId > 0) {
 					<c:if test="<%= (messageUser != null) && !messageUser.isDefaultUser() %>">
 
 						<%
-						Object[] statsUser = MBStatsUserLocalServiceUtil.getStatsUser(scopeGroupId, message.getUserId());
-
-						long posts = (Long)statsUser[1];
-						String[] ranks = MBUserRankUtil.getUserRank(mbGroupServiceSettings, themeDisplay.getLanguageId(), statsUser);
+						long posts = MBStatsUserLocalServiceUtil.getMessageCount(scopeGroupId, message.getUserId());
+						String[] ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), message.getUserId());
 						%>
 
 						<c:if test="<%= Validator.isNotNull(ranks[1]) %>">

@@ -148,23 +148,10 @@ public class MBStatsUserLocalServiceImpl
 	}
 
 	@Override
-	public Object[] getStatsUser(long groupId, long userId)
-		throws PortalException {
-
-		Expression<Long> countExpression = DSLFunctionFactoryUtil.count(
-			MBMessageTable.INSTANCE.messageId
-		).as(
-			"messageCount"
-		);
-
-		List<Object[]> statsUser = _mbMessagePersistence.dslQuery(
-			DSLQueryFactoryUtil.select(
-				MBMessageTable.INSTANCE.userId, countExpression,
-				DSLFunctionFactoryUtil.max(
-					MBMessageTable.INSTANCE.modifiedDate
-				).as(
-					"lastPostDate"
-				)
+	public int getMessageCount(long groupId, long userId) {
+		return _mbMessagePersistence.dslQueryCount(
+			DSLQueryFactoryUtil.countDistinct(
+				MBMessageTable.INSTANCE.messageId
 			).from(
 				MBMessageTable.INSTANCE
 			).where(
@@ -179,17 +166,7 @@ public class MBStatsUserLocalServiceImpl
 					MBMessageTable.INSTANCE.status.eq(
 						WorkflowConstants.STATUS_APPROVED)
 				)
-			).groupBy(
-				MBMessageTable.INSTANCE.userId
-			).orderBy(
-				countExpression.descending()
 			));
-
-		if (statsUser.isEmpty()) {
-			return null;
-		}
-
-		return statsUser.get(0);
 	}
 
 	@Override
@@ -272,8 +249,6 @@ public class MBStatsUserLocalServiceImpl
 	public String[] getUserRank(long groupId, String languageId, long userId)
 		throws PortalException {
 
-		Object[] statsUser = getStatsUser(groupId, userId);
-
 		MBGroupServiceSettings mbGroupServiceSettings =
 			MBGroupServiceSettings.getInstance(groupId);
 
@@ -287,7 +262,7 @@ public class MBStatsUserLocalServiceImpl
 
 		String[] ranks = mbGroupServiceSettings.getRanks(languageId);
 
-		long messageCount = (Long)statsUser[1];
+		int messageCount = getMessageCount(groupId, userId);
 
 		for (String curRank : ranks) {
 			String[] kvp = StringUtil.split(curRank, CharPool.EQUAL);

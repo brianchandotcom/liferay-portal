@@ -17,8 +17,8 @@ package com.liferay.message.boards.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.service.MBStatsUserLocalServiceUtil;
+import com.liferay.message.boards.service.MBMessageLocalService;
+import com.liferay.message.boards.service.MBStatsUserLocalService;
 import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -82,7 +83,7 @@ public class MBStatsUserLocalServiceTest {
 
 		addMessage(false);
 
-		MBMessageLocalServiceUtil.deleteMessage(_message.getMessageId());
+		_mbMessageLocalService.deleteMessage(_message.getMessageId());
 
 		Assert.assertEquals(
 			initialStatsUserMessageCount, getStatsUserMessageCount());
@@ -96,7 +97,7 @@ public class MBStatsUserLocalServiceTest {
 
 		addMessage(true);
 
-		MBMessageLocalServiceUtil.deleteMessage(_message.getMessageId());
+		_mbMessageLocalService.deleteMessage(_message.getMessageId());
 
 		Assert.assertEquals(
 			initialStatsUserMessageCount, getStatsUserMessageCount());
@@ -170,16 +171,8 @@ public class MBStatsUserLocalServiceTest {
 	}
 
 	protected int getStatsUserMessageCount() throws Exception {
-		Object[] statsUser = MBStatsUserLocalServiceUtil.getStatsUser(
+		return _mbStatsUserLocalService.getMessageCount(
 			_group.getGroupId(), TestPropsValues.getUserId());
-
-		if (statsUser == null) {
-			return 0;
-		}
-
-		Long messageCount = (Long)statsUser[1];
-
-		return messageCount.intValue();
 	}
 
 	protected void updateMessage(int workflowAction) throws Exception {
@@ -189,10 +182,16 @@ public class MBStatsUserLocalServiceTest {
 
 		serviceContext.setWorkflowAction(workflowAction);
 
-		_message = MBMessageLocalServiceUtil.updateMessage(
+		_message = _mbMessageLocalService.updateMessage(
 			TestPropsValues.getUserId(), _message.getMessageId(),
 			_message.getBody(), serviceContext);
 	}
+
+	@Inject
+	private static MBMessageLocalService _mbMessageLocalService;
+
+	@Inject
+	private static MBStatsUserLocalService _mbStatsUserLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -95,7 +95,9 @@ if (tabs1.equals("published")) {
 		<portlet:param name="closeRedirect" value="<%= backURL %>" />
 	</liferay-portlet:renderURL>
 
-	<aui:button onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + addURL + "');" %>' primary="<%= true %>" value="add-workflow" />
+	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+		<aui:button onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + addURL + "');" %>' primary="<%= true %>" value="add-workflow" />
+	</c:if>
 
 	<div class="separator"><!-- --></div>
 

@@ -33,10 +33,13 @@ import com.liferay.commerce.wish.list.model.CommerceWishListItem;
 import com.liferay.commerce.wish.list.service.CommerceWishListItemService;
 import com.liferay.commerce.wish.list.service.CommerceWishListService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,11 +75,20 @@ public class CommerceWishListResource {
 		WishListItemUpdated wishListItemUpdated = new WishListItemUpdated();
 
 		try {
+			long userId = _portal.getUserId(httpServletRequest);
+
+			if (userId == 0) {
+				User user = _userLocalService.getDefaultUser(
+					_portal.getCompanyId(httpServletRequest));
+
+				userId = user.getUserId();
+			}
+
 			CommerceContext commerceContext = _commerceContextFactory.create(
 				_portal.getCompanyId(httpServletRequest),
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
-				_portal.getUserId(httpServletRequest), 0, commerceAccountId);
+				userId, 0, commerceAccountId);
 
 			httpServletRequest.setAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
@@ -88,7 +100,13 @@ public class CommerceWishListResource {
 
 			CommerceWishList commerceWishList =
 				_commerceWishListService.getDefaultCommerceWishList(
-					groupId, _portal.getUserId(httpServletRequest));
+					groupId, userId);
+
+			if (commerceWishList == null) {
+				commerceWishList = _commerceWishListService.addCommerceWishList(
+					LanguageUtil.get(serviceContext.getLocale(), "default"),
+					true, serviceContext);
+			}
 
 			CPCatalogEntry cpCatalogEntry =
 				_cpDefinitionHelper.getCPCatalogEntry(
@@ -192,5 +210,8 @@ public class CommerceWishListResource {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -28,6 +28,7 @@ import com.liferay.commerce.wish.list.util.CommerceWishListHttpHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -111,6 +112,12 @@ public class AddCommerceWishListItemMVCActionCommand
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceWishListItem.class.getName(), actionRequest);
+
+			if (commerceWishList == null) {
+				commerceWishList = _commerceWishListService.addCommerceWishList(
+					LanguageUtil.get(serviceContext.getLocale(), "default"),
+					true, serviceContext);
+			}
 
 			CommerceWishListItem commerceWishListItem =
 				_commerceWishListItemService.addCommerceWishListItem(

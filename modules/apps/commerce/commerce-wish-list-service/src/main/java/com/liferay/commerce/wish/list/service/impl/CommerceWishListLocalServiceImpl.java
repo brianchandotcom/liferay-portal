@@ -190,12 +190,6 @@ public class CommerceWishListLocalServiceImpl
 		serviceContext.setUserId(user.getUserId());
 
 		if (user.isDefaultUser()) {
-			if (guestCommerceWishList == null) {
-				guestCommerceWishList =
-					commerceWishListLocalService.addCommerceWishList(
-						_DEFAULT_NAME, false, serviceContext);
-			}
-
 			return guestCommerceWishList;
 		}
 
@@ -213,11 +207,6 @@ public class CommerceWishListLocalServiceImpl
 				commerceWishList = commerceWishListPersistence.update(
 					commerceWishList);
 			}
-		}
-
-		if (commerceWishList == null) {
-			commerceWishList = commerceWishListLocalService.addCommerceWishList(
-				_DEFAULT_NAME, true, serviceContext);
 		}
 
 		if (guestCommerceWishList != null) {
@@ -340,8 +329,6 @@ public class CommerceWishListLocalServiceImpl
 			throw new GuestWishListMaxAllowedException();
 		}
 	}
-
-	private static final String _DEFAULT_NAME = "default";
 
 	@ServiceReference(type = CommerceWishListConfiguration.class)
 	private CommerceWishListConfiguration _commerceWishListConfiguration;

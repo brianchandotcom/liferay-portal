@@ -30,7 +30,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Collections;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -116,46 +115,6 @@ public class DSEnvelopeManagerTest {
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
 			dsEnvelope.getDSEnvelopeId());
-	}
-
-	@Test
-	public void testGetDSEnvelopes() throws Exception {
-		DSEnvelope dsEnvelope1 = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			new DSEnvelope() {
-				{
-					emailSubject = RandomTestUtil.randomString();
-					status = "created";
-				}
-			});
-		DSEnvelope dsEnvelope2 = _dsEnvelopeManager.addDSEnvelope(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			new DSEnvelope() {
-				{
-					emailSubject = RandomTestUtil.randomString();
-					status = "created";
-				}
-			});
-
-		List<DSEnvelope> dsEnvelopes = _dsEnvelopeManager.getDSEnvelopes(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			"2021-01-01");
-
-		Assert.assertTrue(dsEnvelopes.size() >= 2);
-
-		String[] dsEnvelopeIds = {
-			dsEnvelope1.getDSEnvelopeId(), dsEnvelope2.getDSEnvelopeId()
-		};
-
-		dsEnvelopes = _dsEnvelopeManager.getDSEnvelopes(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			dsEnvelopeIds);
-
-		Assert.assertTrue(dsEnvelopes.size() == 2);
-
-		_dsEnvelopeManager.deleteDSEnvelopes(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			dsEnvelopeIds);
 	}
 
 	@Test

@@ -21,13 +21,11 @@ import com.liferay.digital.signature.model.DSCustomField;
 import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -103,38 +101,6 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 				"?include=custom_fields,documents,recipients"));
 
 		return _toDSEnvelope(jsonObject);
-	}
-
-	@Override
-	public List<DSEnvelope> getDSEnvelopes(
-		long companyId, long groupId, String fromDateString) {
-
-		JSONObject jsonObject = _dsHttp.get(
-			companyId, groupId,
-			StringBundler.concat(
-				"envelopes?from_date=", fromDateString,
-				"&folder_types=sentitems",
-				"&include=custom_fields,documents,recipients&order=desc"));
-
-		return JSONUtil.toList(
-			jsonObject.getJSONArray("envelopes"),
-			evenlopeJSONObject -> _toDSEnvelope(evenlopeJSONObject), _log);
-	}
-
-	@Override
-	public List<DSEnvelope> getDSEnvelopes(
-		long companyId, long groupId, String... dsEnvelopeIds) {
-
-		JSONObject jsonObject = _dsHttp.get(
-			companyId, groupId,
-			StringBundler.concat(
-				"envelopes/?envelope_ids=",
-				ArrayUtil.toString(dsEnvelopeIds, StringPool.BLANK),
-				"&include=custom_fields,documents,recipients"));
-
-		return JSONUtil.toList(
-			jsonObject.getJSONArray("envelopes"),
-			evenlopeJSONObject -> _toDSEnvelope(evenlopeJSONObject), _log);
 	}
 
 	@Override

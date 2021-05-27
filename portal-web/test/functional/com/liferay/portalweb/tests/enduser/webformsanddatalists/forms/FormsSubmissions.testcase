@@ -204,13 +204,57 @@ definition {
 	}
 
 	@description = "Verify that a Form's Submit button's text can be customized multiple times"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedMultipleTimes {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131031 SubmitButtonTextCanBeCustomizedMultipleTimes pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = "Send Form");
+		
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.viewSubmitButtonText(
+            key_buttonText = "Send Form");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Send Form");
+
+		Navigator.openURL();
+
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = "Complete");
+		
+		Form.save();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.viewSubmitButtonText(
+            key_buttonText = "Complete");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Complete");
 
 	}
 

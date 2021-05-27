@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
@@ -47,6 +48,26 @@ public class DLPortletToolbarContributorHelper {
 
 		if (folder != null) {
 			return folder;
+		}
+
+		try {
+			long folderId = ParamUtil.getLong(portletRequest, "folderId");
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				folder = _dlAppLocalService.getFolder(folderId);
+			}
+
+			if (folder != null) {
+				return folder;
+			}
+		}
+		catch (NoSuchFolderException | PrincipalException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
 		}
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();

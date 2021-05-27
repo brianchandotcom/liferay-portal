@@ -89,6 +89,10 @@ const ImagePicker = ({
 		Liferay.Util.openSelectionModal({
 			onSelect: handleFieldChanged,
 			selectEventName: `${portletNamespace}selectDocumentLibrary`,
+			title: Liferay.Util.sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('image')
+			),
 			url: itemSelectorURL,
 		});
 	};

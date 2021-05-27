@@ -347,6 +347,10 @@ const Main = ({
 		Liferay.Util.openSelectionModal({
 			onSelect: handleFieldChanged,
 			selectEventName: `${portletNamespace}selectDocumentLibrary`,
+			title: Liferay.Util.sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('document')
+			),
 			url: itemSelectorURL,
 		});
 	};

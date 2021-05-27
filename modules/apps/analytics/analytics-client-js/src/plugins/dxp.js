@@ -77,31 +77,36 @@ function dxp(analytics) {
 		return mode === PARAM_VIEW_MODE;
 	}
 
-	if (window.Liferay && window.Liferay.SPA) {
+	if (window.Liferay) {
 		const searchParams = getSearchParams();
 
 		if (isConfigurationPortlet(searchParams) || !isViewMode(searchParams)) {
 			return analytics.disposeInternal();
 		}
 
-		const loadingStartMarks = window.performance.getEntriesByName(
-			MARK_LOAD_EVENT_START
-		);
+		if (window.Liferay.SPA) {
+			const loadingStartMarks = window.performance.getEntriesByName(
+				MARK_LOAD_EVENT_START
+			);
 
-		createMark(MARK_NAVIGATION_START);
+			createMark(MARK_NAVIGATION_START);
 
-		if (!loadingStartMarks.length) {
-			const createLoadMark = createMark.bind(null, MARK_LOAD_EVENT_START);
+			if (!loadingStartMarks.length) {
+				const createLoadMark = createMark.bind(
+					null,
+					MARK_LOAD_EVENT_START
+				);
 
-			createMark(MARK_LOAD_EVENT_START);
-			window.Liferay.on('beforeNavigate', createLoadMark);
+				createMark(MARK_LOAD_EVENT_START);
+				window.Liferay.on('beforeNavigate', createLoadMark);
+			}
+
+			if (document.readyState === 'complete') {
+				sendLoadEvent();
+			}
+
+			window.Liferay.once('beforeNavigate', sendUnloadEvent);
 		}
-
-		if (document.readyState === 'complete') {
-			sendLoadEvent();
-		}
-
-		window.Liferay.once('beforeNavigate', sendUnloadEvent);
 	}
 }
 

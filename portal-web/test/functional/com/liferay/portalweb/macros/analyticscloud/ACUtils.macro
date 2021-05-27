@@ -32,4 +32,13 @@ definition {
 		}
 	}
 
+	macro addSiteAndPage {
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AC Page");
+	}
+
 }

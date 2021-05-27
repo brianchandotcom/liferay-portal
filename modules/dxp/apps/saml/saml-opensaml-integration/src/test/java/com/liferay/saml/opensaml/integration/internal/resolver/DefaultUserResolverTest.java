@@ -149,7 +149,8 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			_defaultUserResolver, "_userProcessorFactory",
 			new UserProcessorFactoryImpl());
 
-		_initMessageContext(true);
+		_initMessageContext(
+			true, NameIDType.ENTITY, _SAML_NAME_IDENTIFIER_VALUE);
 		_initUnknownUserHandling();
 	}
 
@@ -167,11 +168,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			true
 		);
 
+		_initMessageContext(
+			true, NameIDType.EMAIL, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS);
+
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
-		User resolvedUser = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
-			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
+		User resolvedUser = _defaultUserResolver.resolveUser(
+			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
 		Assert.assertNotNull(resolvedUser);
@@ -191,11 +194,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			true
 		);
 
+		_initMessageContext(
+			true, NameIDType.UNSPECIFIED, _SAML_NAME_IDENTIFIER_VALUE);
+
 		_testUserFieldExpressionResolver.setUserFieldExpression("screenName");
 
-		User resolvedUser = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
-			NameIDType.UNSPECIFIED,
+		User resolvedUser = _defaultUserResolver.resolveUser(
 			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
@@ -217,12 +221,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		_initMatchingUserHandling();
+		_initMessageContext(
+			true, NameIDType.EMAIL, _SAML_NAME_IDENTIFIER_VALUE);
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
-		User user = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
-			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
+		User user = _defaultUserResolver.resolveUser(
+			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
 		Assert.assertNotNull(user);
@@ -243,13 +248,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		_initMatchingUserHandling();
-		_initMessageContext(false);
+		_initMessageContext(
+			false, NameIDType.UNSPECIFIED,
+			_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME);
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("screenName");
 
-		User user = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_SCREEN_NAME,
-			NameIDType.UNSPECIFIED,
+		User user = _defaultUserResolver.resolveUser(
 			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
@@ -271,12 +276,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		_initMatchingUserHandling();
+		_initMessageContext(
+			true, NameIDType.UNSPECIFIED, _SAML_NAME_IDENTIFIER_VALUE);
 
 		_testUserFieldExpressionResolver.setUserFieldExpression("screenName");
 
-		User user = _defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SAML_NAME_IDENTIFIER_VALUE,
-			NameIDType.UNSPECIFIED,
+		User user = _defaultUserResolver.resolveUser(
 			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 
@@ -291,11 +296,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			false
 		);
 
+		_initMessageContext(
+			true, NameIDType.EMAIL, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS);
+
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
-		_defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
-			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
+		_defaultUserResolver.resolveUser(
+			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 	}
 
@@ -315,11 +322,13 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 			false
 		);
 
+		_initMessageContext(
+			true, NameIDType.EMAIL, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS);
+
 		_testUserFieldExpressionResolver.setUserFieldExpression("emailAddress");
 
-		_defaultUserResolver.importUser(
-			1L, _samlSpIdpConnection, _SUBJECT_NAME_IDENTIFIER_EMAIL_ADDRESS,
-			NameIDType.EMAIL, new UserResolverSAMLContextImpl(_messageContext),
+		_defaultUserResolver.resolveUser(
+			new UserResolverSAMLContextImpl(_messageContext),
 			new ServiceContext());
 	}
 
@@ -438,12 +447,14 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 	}
 
-	private void _initMessageContext(boolean addScreenNameAttribute) {
+	private void _initMessageContext(
+		boolean addScreenNameAttribute, String nameIdFormat,
+		String nameIdValue) {
+
 		Assertion assertion = OpenSamlUtil.buildAssertion();
 
 		NameID subjectNameID = OpenSamlUtil.buildNameId(
-			NameIDType.ENTITY, null, "urn:liferay",
-			_SAML_NAME_IDENTIFIER_VALUE);
+			nameIdFormat, null, "urn:liferay", nameIdValue);
 
 		Subject subject = OpenSamlUtil.buildSubject(subjectNameID);
 

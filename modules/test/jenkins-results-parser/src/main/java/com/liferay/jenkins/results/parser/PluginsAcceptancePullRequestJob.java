@@ -17,7 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael Hashimoto
@@ -40,7 +42,7 @@ public class PluginsAcceptancePullRequestJob extends PluginsGitRepositoryJob {
 	}
 
 	private List<File> _getPluginsTestBaseDirs() {
-		List<File> pluginsTestBaseDirs = new ArrayList<>();
+		Set<File> pluginsTestBaseDirs = new HashSet<>();
 
 		PluginsGitWorkingDirectory pluginsGitWorkingDirectory =
 			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();
@@ -64,7 +66,7 @@ public class PluginsAcceptancePullRequestJob extends PluginsGitRepositoryJob {
 			}
 		}
 
-		return pluginsTestBaseDirs;
+		return new ArrayList<>(pluginsTestBaseDirs);
 	}
 
 	private final List<File> _pluginsTestBaseDirs;

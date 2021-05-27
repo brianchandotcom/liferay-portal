@@ -160,13 +160,79 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6248. It should not be possible to add non-shippable items to a shipment"
-	@ignore = "true"
 	@priority = "3"
 	test AssertAddingNonShippableItemToShipmentNotPossible {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6248 AssertAddingNonShippableItemToShipmentNotPossible Pending Implementation
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceNavigator.searchEntry(entryName = "ABS Sensor");
+
+		CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Shippable",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickPublish();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "ABS Sensor",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "ABS Sensor",
+			productQuantity = "1",
+			productUnitPrice = "50");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		ClickNoError(
+			key_orderStatus = "Pending",
+			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
+
+		CommerceEntry.clickNoError(menuItem = "View");
+
+		Click(
+			key_index = "Accept Order",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		AssertElementNotPresent(
+			key_index = "Create Shipment",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Click(
+			key_index = "Completed",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 	}
 
 	@description = "This is a test for COMMERCE-6252. Check that shipment information set at product level are overriden by the shipment info at cpInstance level"

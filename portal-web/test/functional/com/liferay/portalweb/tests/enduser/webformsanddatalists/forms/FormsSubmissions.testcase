@@ -226,14 +226,35 @@ definition {
 	}
 
 	@description = "Verify that a Form's Submit button's text can be customized with special characters"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedWithSpecialCharacters {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131029 SubmitButtonTextCanBeCustomizedWithSpecialCharacters pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = "!@#$%^&*()+?");
+
+		Form.save();
+
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.viewSubmitButtonText(key_buttonText = "!@#$%^&*()+?");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "!@#$%^&*()+?");
 	}
 
 	@description = "Verify that a Form's Success Page can be deleted"

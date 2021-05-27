@@ -116,7 +116,7 @@ export default withRouter(({history, location}) => {
 	const historyPushParser = historyPushWithSlug(history.push);
 
 	function buildURL(search, page, pageSize) {
-		let url = `${context.historyRouterBasePath ? '' : '/#'}/tags?`;
+		let url = (context.historyRouterBasePath || '/#') + '/tags?';
 
 		if (search) {
 			url += `search=${search}&`;

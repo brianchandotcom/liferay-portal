@@ -370,9 +370,7 @@ export default withRouter(
 		]);
 
 		function buildURL(search, page, pageSize) {
-			let url = !context.historyRouterBasePath
-				? '/#/questions'
-				: '/questions';
+			let url = (context.historyRouterBasePath || '/#') + '/questions';
 
 			if (sectionTitle || sectionTitle === '0') {
 				url += `/${sectionTitle}`;

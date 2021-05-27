@@ -7,7 +7,7 @@ definition {
 	property testray.main.component.name = "Upgrades User and System Management";
 
 	setUp {
-		User.loginPG(
+		User.firstLoginUI(
 			authenticationMethod = "By Screen Name",
 			userScreenName = "test");
 

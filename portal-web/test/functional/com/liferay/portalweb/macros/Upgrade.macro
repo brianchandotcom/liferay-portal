@@ -1073,7 +1073,7 @@ definition {
 
 		User.logoutPG();
 
-		User.loginPG(
+		User.firstLoginUI(
 			password = "test2",
 			userEmailAddress = "test@liferay.com");
 	}

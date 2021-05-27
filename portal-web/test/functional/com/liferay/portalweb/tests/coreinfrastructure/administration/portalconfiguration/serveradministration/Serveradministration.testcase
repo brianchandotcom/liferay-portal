@@ -6,7 +6,7 @@ definition {
 	property testray.main.component.name = "Server Administration";
 
 	setUp {
-		User.firstLoginPG();
+		User.firstLoginUI();
 	}
 
 	@description = "This is a use case for LPS-111757"

@@ -9,7 +9,8 @@
  * distribution rights of the Software.
  */
 
-import getClassName from 'classnames';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import React, {useEffect, useState} from 'react';
 
 const FilterItem = ({
@@ -21,63 +22,84 @@ const FilterItem = ({
 	multiple,
 	name,
 	onClick,
-	preventClick,
 	...otherProps
 }) => {
 	const [checked, setChecked] = useState(active);
-
-	const classes = {
-		control: getClassName(
-			'custom-control',
-			multiple ? 'custom-checkbox' : 'custom-radio'
-		),
-		dropdown: getClassName(
-			'dropdown-item',
-			checked && 'active',
-			description && 'with-description',
-			hideControl && 'control-hidden'
-		),
-	};
+	const [selectedValue, setSelectedValue] = useState();
+	const itemLabel = otherProps[labelPropertyName] || name;
 
 	useEffect(() => {
-		setChecked(active);
+		if (!hideControl && !multiple && active) {
+			setSelectedValue(itemLabel);
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [active]);
+	}, []);
 
-	const onClickFilter = (event) => {
-		onClick(event);
+	useEffect(() => {
+		if (!multiple && !hideControl && !active) {
+			setSelectedValue();
+		}
+		else if (multiple) {
+			setChecked(active);
+		}
 
-		if (!preventClick) {
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [active, selectedValue]);
+
+	const onClickDescription = () => {
+		onClick();
+
+		if (multiple) {
 			setChecked(!checked);
+		}
+		else {
+			if (!hideControl && !active) {
+				setSelectedValue(itemLabel);
+			}
 		}
 	};
 
 	return (
 		<>
-			<div className={classes.dropdown} onClick={onClickFilter}>
-				<div className={classes.control}>
-					<input
+			<ClayDropDown.Item
+				active={active}
+				className={hideControl && 'control-hidden'}
+			>
+				{multiple ? (
+					<ClayCheckbox
 						checked={checked}
-						className="custom-control-input"
-						onChange={onClickFilter}
-						type={multiple ? 'checkbox' : 'radio'}
+						label={itemLabel}
+						onChange={() => {
+							onClick();
+							setChecked(!checked);
+						}}
 					/>
+				) : hideControl ? (
+					<div onClick={onClick}>{itemLabel}</div>
+				) : (
+					<ClayRadioGroup
+						onSelectedValueChange={(newValue) => {
+							onClick();
+							setSelectedValue(newValue);
+						}}
+						selectedValue={selectedValue}
+					>
+						<ClayRadio label={itemLabel} value={itemLabel} />
+					</ClayRadioGroup>
+				)}
 
-					<span className="custom-control-label">
-						<span className="custom-control-label-text">
-							{otherProps[labelPropertyName] || name}
-						</span>
+				{description && (
+					<div
+						className="filter-dropdown-item-description"
+						onClick={onClickDescription}
+					>
+						{description}
+					</div>
+				)}
+			</ClayDropDown.Item>
 
-						{description && (
-							<span className="custom-control-label-text dropdown-item-description">
-								{description}
-							</span>
-						)}
-					</span>
-				</div>
-			</div>
-
-			{dividerAfter && <li className="dropdown-divider" />}
+			{dividerAfter && <div className="dropdown-divider" />}
 		</>
 	);
 };

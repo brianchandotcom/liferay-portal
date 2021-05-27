@@ -1,5 +1,39 @@
 definition {
 
+	macro addAndEditExternalApplication {
+		var portalURL = PropsUtil.get("portal.url");
+
+		OAuth2.openOAuth2Admin();
+
+		OAuth2.addApplication(
+			applicationName = "${applicationName}",
+			callbackURI = '''http://martamedio.com/oauth2-tester/?url=${portalURL}&client_id=${clientId}''',
+			clientProfile = "Web Application");
+
+		if (isSet(checkboxCheckList)) {
+			Check(
+				key_checkboxName = "${checkboxCheckList}",
+				locator1 = "OAuth2#ADMIN_INPUT_FORM_CHECKBOX");
+		}
+
+		if (isSet(websiteURL)) {
+			PortletEntry.inputText(
+				fieldLabel = "Website URL",
+				text = "${websiteURL}");
+		}
+
+		OAuth2.inputApplicationValues(
+			clientId = "${clientId}",
+			clientSecret = "${clientSecret}");
+
+		Navigator.gotoBack();
+
+		OAuth2.editScopes(
+			applicationName = "${applicationName}",
+			resourceCheckList = "liferay-json-web-services.everything.read.userprofile",
+			resourcePanels = "Portal Services");
+	}
+
 	macro addApplication {
 		LexiconEntry.gotoAdd();
 
@@ -347,6 +381,12 @@ definition {
 		}
 
 		PortletEntry.save();
+	}
+
+	macro openOAuth2Admin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet");
 	}
 
 	macro revokeGrantedAuthViaAdmin {

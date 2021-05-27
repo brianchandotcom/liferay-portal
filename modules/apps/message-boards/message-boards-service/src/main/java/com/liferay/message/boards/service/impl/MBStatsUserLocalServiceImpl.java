@@ -152,6 +152,8 @@ public class MBStatsUserLocalServiceImpl
 				MBMessageTable.INSTANCE.userId.eq(
 					userId
 				).and(
+					MBMessageTable.INSTANCE.groupId.eq(groupId)
+				).and(
 					MBMessageTable.INSTANCE.categoryId.neq(
 						MBCategoryConstants.DISCUSSION_CATEGORY_ID)
 				).and(

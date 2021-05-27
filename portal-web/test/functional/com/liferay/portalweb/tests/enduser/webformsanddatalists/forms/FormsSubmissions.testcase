@@ -247,7 +247,6 @@ definition {
 
 		Form.save();
 
-
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();

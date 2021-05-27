@@ -147,6 +147,12 @@
 				<outputType>boolean</outputType>
 				<required>false</required>
 			</attribute>
+			<attribute>
+				<name>submittable</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
 		</attributes>
 	</component>
 </taglibs>

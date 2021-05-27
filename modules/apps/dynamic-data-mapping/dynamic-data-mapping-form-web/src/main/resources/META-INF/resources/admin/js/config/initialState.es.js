@@ -66,6 +66,8 @@ const normalizePages = (pages) => {
 			// to refactor the Options field to better deal with states and location.
 
 			return {
+				...otherProps,
+				localizedValue: {},
 				settingsContext: {
 					...settingsContext,
 					pages: visitor.mapFields((field) => {
@@ -92,7 +94,7 @@ const normalizePages = (pages) => {
 						return field;
 					}),
 				},
-				...otherProps,
+				value: undefined,
 			};
 		},
 		true,

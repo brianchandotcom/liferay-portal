@@ -98,6 +98,17 @@ definition {
 		return "${userId}";
 	}
 
+	macro setUserIdByScreenName {
+		Variables.assertDefined(parameterList = "${userScreenName}");
+
+		var userId = JSONUserAPI._getUserIdByScreenName(
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}",
+			userScreenName = "${userScreenName}");
+
+		return "${userId}";
+	}
+
 	macro setUserLastName {
 		Variables.assertDefined(parameterList = "${userLastName}");
 

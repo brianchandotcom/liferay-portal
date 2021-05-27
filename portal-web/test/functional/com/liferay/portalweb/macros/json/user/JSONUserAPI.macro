@@ -187,6 +187,35 @@ definition {
 		return "${userId}";
 	}
 
+	macro _getUserIdByScreenName {
+		Variables.assertDefined(parameterList = "${userScreenName}");
+
+		var companyId = JSONCompany.getCompanyId(
+			authenticationMethod = "By Screen Name",
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}",
+			userScreenName = "${userScreenName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userScreenName))) {
+			var userScreenName = "test";
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/user/get-user-id-by-screen-name/company-id/${companyId}/screen-name/${userScreenName} \
+				-u ${userScreenName}:${creatorPassword}
+		''';
+
+		var userId = JSONCurlUtil.get("${curl}");
+
+		return "${userId}";
+	}
+
 	macro _getUserIds {
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = "${authenticationMethod}");
 

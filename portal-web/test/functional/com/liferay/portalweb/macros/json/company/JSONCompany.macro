@@ -11,7 +11,12 @@ definition {
 
 		if (!(isSet(creatorEmailAddress))) {
 			if ("${authenticationMethod}" == "By Screen Name") {
-				var creatorEmailAddress = "test";
+				if (!(isSet(userScreenName))) {
+					var creatorEmailAddress = "test";
+				}
+				else {
+					var creatorEmailAddress = "${userScreenName}";
+				}
 			}
 			else {
 				var creatorEmailAddress = "test@liferay.com";

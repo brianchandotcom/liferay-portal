@@ -178,6 +178,19 @@ definition {
 		JSONUserAPI._agreeToTermsAndAnswerReminderQuery(userId = "${userId}");
 	}
 
+	macro agreeToTermsAndAnswerReminderQueryByScreenName {
+		Variables.assertDefined(parameterList = "${userScreenName}");
+
+		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalURL = "${portalURL}");
+
+		var userId = JSONUserSetter.setUserIdByScreenName(
+			creatorPassword = "${creatorPassword}",
+			portalInstanceName = "${portalInstanceName}",
+			userScreenName = "${userScreenName}");
+
+		JSONUserAPI._agreeToTermsAndAnswerReminderQuery(userId = "${userId}");
+	}
+
 	macro deleteUserByEmailAddress {
 		Variables.assertDefined(parameterList = "${userEmailAddress}");
 

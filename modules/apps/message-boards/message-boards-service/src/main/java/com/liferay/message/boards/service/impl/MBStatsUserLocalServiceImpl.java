@@ -16,7 +16,6 @@ package com.liferay.message.boards.service.impl;
 
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.internal.util.MBThreadUtil;
-import com.liferay.message.boards.internal.util.MBUserRankUtil;
 import com.liferay.message.boards.model.MBMessageTable;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.base.MBStatsUserLocalServiceBaseImpl;
@@ -26,6 +25,8 @@ import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -36,7 +37,20 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -258,15 +272,135 @@ public class MBStatsUserLocalServiceImpl
 	public String[] getUserRank(long groupId, String languageId, long userId)
 		throws PortalException {
 
-		return MBUserRankUtil.getUserRank(
-			MBGroupServiceSettings.getInstance(groupId), languageId,
-			getStatsUser(groupId, userId));
+		Object[] statsUser = getStatsUser(groupId, userId);
+
+		MBGroupServiceSettings mbGroupServiceSettings =
+			MBGroupServiceSettings.getInstance(groupId);
+
+		String[] rank = {StringPool.BLANK, StringPool.BLANK};
+
+		int maxPosts = 0;
+
+		User user = _userLocalService.getUser(userId);
+
+		long companyId = user.getCompanyId();
+
+		String[] ranks = mbGroupServiceSettings.getRanks(languageId);
+
+		long messageCount = (Long)statsUser[1];
+
+		for (String curRank : ranks) {
+			String[] kvp = StringUtil.split(curRank, CharPool.EQUAL);
+
+			String kvpPosts = kvp[1];
+
+			String[] curRankValueKvp = StringUtil.split(
+				kvpPosts, CharPool.COLON);
+
+			if (curRankValueKvp.length <= 1) {
+				int posts = GetterUtil.getInteger(kvpPosts);
+
+				if ((posts <= messageCount) && (posts >= maxPosts)) {
+					rank[0] = kvp[0];
+					maxPosts = posts;
+				}
+			}
+			else {
+				String entityType = curRankValueKvp[0];
+				String entityValue = curRankValueKvp[1];
+
+				try {
+					if (_isEntityRank(
+							companyId, user, entityType, entityValue)) {
+
+						rank[1] = curRank;
+
+						break;
+					}
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception, exception);
+					}
+				}
+			}
+		}
+
+		return rank;
 	}
+
+	private boolean _isEntityRank(
+			long companyId, User statsUser, String entityType,
+			String entityValue)
+		throws Exception {
+
+		long userId = statsUser.getUserId();
+
+		if (entityType.equals("organization-role") ||
+			entityType.equals("site-role")) {
+
+			Role role = _roleLocalService.getRole(companyId, entityValue);
+
+			if (_userGroupRoleLocalService.hasUserGroupRole(
+					userId, statsUser.getGroupId(), role.getRoleId(), true)) {
+
+				return true;
+			}
+		}
+		else if (entityType.equals("organization")) {
+			Organization organization =
+				_organizationLocalService.getOrganization(
+					companyId, entityValue);
+
+			if (_organizationLocalService.hasUserOrganization(
+					userId, organization.getOrganizationId(), false, false)) {
+
+				return true;
+			}
+		}
+		else if (entityType.equals("regular-role")) {
+			if (_roleLocalService.hasUserRole(
+					userId, companyId, entityValue, true)) {
+
+				return true;
+			}
+		}
+		else if (entityType.equals("user-group")) {
+			UserGroup userGroup = _userGroupLocalService.getUserGroup(
+				companyId, entityValue);
+
+			if (_userLocalService.hasUserGroupUser(
+					userGroup.getUserGroupId(), userId)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MBStatsUserLocalServiceImpl.class);
 
 	@Reference
 	private MBMessagePersistence _mbMessagePersistence;
 
 	@Reference
 	private MBThreadPersistence _mbThreadPersistence;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -294,7 +294,6 @@ public class DDMFormTemplateContextFactoryImpl
 
 		templateContext.put(
 			"submittable", ddmFormRenderingContext.isSubmittable());
-
 		templateContext.put(
 			"templateNamespace", getTemplateNamespace(ddmFormLayout));
 		templateContext.put("validations", _getValidations(locale));

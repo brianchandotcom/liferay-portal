@@ -143,6 +143,80 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-130964. View visual feedback when drag items in Fragments and Widgets panel."
+	@priority = "4"
+	test ViewVisualFeedbackWhenDragItems {
+		task ("Navigate to content page at edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Open the Fragments and Widgets panel") {
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+		}
+
+		task ("View the display style is list") {
+			AssertVisible(
+				key_displayStyle = "list",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("View the visual feedback when drag items") {
+			DragOver(
+				key_collectionName = "Layout Elements",
+				key_fragmentName = "Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
+
+			AssertVisible(locator1 = "//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='Container'][contains(@class,'disabled')]");
+
+			Refresh();
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			DragOver(
+				key_portletName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
+
+			AssertVisible(locator1 = "//li[contains(@class,'page-editor__fragments-widgets__tab-list-item')][normalize-space()='Blogs'][contains(@class,'disabled')]");
+
+			Refresh();
+		}
+
+		task ("Change to card display style") {
+			Click(
+				key_displayStyle = "list",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+
+			AssertVisible(
+				key_displayStyle = "card",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_DISPLAY_STYLE_BUTTON");
+		}
+
+		task ("View the visual feedback when drag items") {
+			DragOver(
+				key_collectionName = "Layout Elements",
+				key_fragmentName = "Container",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT_CARD_ITEM",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
+
+			AssertVisible(locator1 = "//li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='Container'][contains(@class,'disabled')]");
+
+			Refresh();
+
+			Navigator.gotoNavTab(navTab = "Widgets");
+
+			DragOver(
+				key_portletName = "Blogs",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET_CARD_ITEM",
+				locator2 = "PageEditor#FRAGMENT_DROP_TARGET");
+
+			AssertVisible(locator1 = "//li[contains(@class,'page-editor__fragments-widgets__tab-card-item')][normalize-space()='Blogs'][contains(@class,'disabled')]");
+		}
+	}
+
 	@description = "This is a test for LPS-130964. View visual feedback when hover on items in Fragments and Widgets panel."
 	@priority = "4"
 	test ViewVisualFeedbackWhenHoverOnItems {

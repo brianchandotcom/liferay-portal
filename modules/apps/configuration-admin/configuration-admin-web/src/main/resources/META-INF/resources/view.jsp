@@ -35,6 +35,8 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 	showSearch="<%= true %>"
 />
 
+<liferay-ui:success key='<%= ConfigurationAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
+
 <clay:container-fluid
 	cssClass="container-view"
 >

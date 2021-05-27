@@ -301,14 +301,34 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be hidden"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132459 LabelCanBeHidden pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.clickShowLabel();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Grid");
 	}
 
 	@description = "Verify that options can be added"

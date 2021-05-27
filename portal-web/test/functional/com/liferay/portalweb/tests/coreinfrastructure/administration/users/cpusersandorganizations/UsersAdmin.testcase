@@ -2115,7 +2115,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
-		PasswordPolicies.editSyntaxChecking(
+		PasswordPolicies.enableSyntaxChecking(
 			minimumAlphaNumeric = "0",
 			minimumLength = "0",
 			minimumLowerCase = "0",
@@ -2153,7 +2153,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
-		PasswordPolicies.editSyntaxChecking(
+		PasswordPolicies.enableSyntaxChecking(
 			passwordPolicyName = "Default Password Policy",
 			regularExpression = "(?=.{6})(?:[a-zA-Z0-9]*)");
 
@@ -2197,7 +2197,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
-		PasswordPolicies.editSyntaxChecking(
+		PasswordPolicies.enableSyntaxChecking(
 			minimumNumbers = "2",
 			passwordPolicyName = "Default Password Policy");
 

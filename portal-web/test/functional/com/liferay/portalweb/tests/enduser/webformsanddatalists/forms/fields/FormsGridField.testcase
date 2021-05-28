@@ -182,19 +182,19 @@ definition {
 			fieldType = "Grid");
 
 		FormFields.editGridOptions(
-				gridField = "Rows",
-				optionValue = "Option 1",
-				rowNumber = "1");
+			gridField = "Rows",
+			optionValue = "Option 1",
+			rowNumber = "1");
 
 		FormFields.editGridOptions(
-				gridField = "Rows",
-				optionValue = "Option 2",
-				rowNumber = "2");
+			gridField = "Rows",
+			optionValue = "Option 2",
+			rowNumber = "2");
 
 		FormFields.editGridOptions(
-				gridField = "Columns",
-				optionValue = "Option A",
-				rowNumber = "1");
+			gridField = "Columns",
+			optionValue = "Option A",
+			rowNumber = "1");
 
 		FormFields.deleteGridOptionsRow(
 			gridField = "Rows",
@@ -202,9 +202,9 @@ definition {
 
 		FormFields.viewOptionRowNameNotPresent(
 			fieldTitle = "Grid",
-			rowNumber = "1",
-			optionName = "Option 1");
-		
+			optionName = "Option 1",
+			rowNumber = "1");
+
 		Form.save();
 
 		Form.publishForm();
@@ -213,19 +213,18 @@ definition {
 
 		FormFields.viewOptionRowNameNotPresent(
 			fieldTitle = "Grid",
-			rowNumber = "1",
-			optionName = "Option 1");
+			optionName = "Option 1",
+			rowNumber = "1");
 
 		FormFields.viewOptionRowName(
 			fieldTitle = "Grid",
-			rowNumber = "1",
-			optionName = "Option 2");
+			optionName = "Option 2",
+			rowNumber = "1");
 
 		FormFields.viewOptionColumnsName(
 			fieldTitle = "Grid",
-			rowNumber = "1",
-			optionName = "Option A");
-
+			optionName = "Option A",
+			rowNumber = "1");
 	}
 
 	@description = "Verify that options can be rearranged"

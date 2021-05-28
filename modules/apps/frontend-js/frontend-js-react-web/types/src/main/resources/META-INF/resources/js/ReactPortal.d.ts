@@ -13,20 +13,24 @@
  */
 
 import React from 'react';
-declare const ReactPortal: React.FunctionComponent<
-	React.HTMLAttributes<HTMLDivElement> & {
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 
-		/**
-		 * Element to render portal into.
-		 */
-		container?: Element;
+	/**
+	 * Element to render portal into.
+	 */
+	container?: Element;
 
-		/**
-		 * Ref of element to render nested portals into.
-		 * This is often used for portals that take up the entire
-		 * screen, such as a modal.
-		 */
-		subPortalRef?: React.RefObject<Element>;
-	}
->;
+	/**
+	 * Name of element to wrap content in. Default is
+	 * a 'div' element.
+	 */
+	wrapper?:
+		| keyof JSX.IntrinsicElements
+		| React.ComponentType<{
+				className: string;
+				id?: string;
+		  }>
+		| false;
+}
+declare const ReactPortal: React.FunctionComponent<IProps>;
 export default ReactPortal;

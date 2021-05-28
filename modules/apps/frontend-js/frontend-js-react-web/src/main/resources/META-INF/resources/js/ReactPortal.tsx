@@ -25,7 +25,7 @@ interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 
 	/**
 	 * Name of element to wrap content in. Default is
-	 * a 'div' element,
+	 * a 'div' element.
 	 */
 	wrapper?:
 		| keyof JSX.IntrinsicElements

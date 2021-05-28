@@ -21,7 +21,20 @@ import React from 'react';
 import PanelNavigator from './PanelNavigator';
 import Rule from './Rule';
 
-function PanelSection({children, title}) {
+import type {Result} from 'axe-core';
+
+declare var Liferay: {
+	Language: {
+		get(value: string): string;
+	};
+};
+
+type PanelSectionProps = {
+	children: React.ReactChildren | string | JSX.Element;
+	title: React.ReactNode;
+};
+
+function PanelSection({children, title}: PanelSectionProps) {
 	return (
 		<ClayPanel
 			displayTitle={title}
@@ -34,7 +47,25 @@ function PanelSection({children, title}) {
 	);
 }
 
-function Violation({navigationState, next, previous, violations}) {
+type TViolationNext = {
+	occurrenceIndex: number;
+	occurrenceName: string;
+	violationIndex: number;
+};
+
+type ViolationProps = {
+	navigationState: {violationIndex: number};
+	next: (payload: TViolationNext) => void;
+	previous: () => void;
+	violations: Array<Result>;
+};
+
+function Violation({
+	navigationState,
+	next,
+	previous,
+	violations,
+}: ViolationProps) {
 	const {violationIndex} = navigationState;
 
 	const {description, helpUrl, id, impact, nodes} = violations[
@@ -56,7 +87,7 @@ function Violation({navigationState, next, previous, violations}) {
 					</PanelSection>
 					<PanelSection title={Liferay.Language.get('occurrences')}>
 						<ClayList className="list-group-flush">
-							{nodes.map((occurrence, index) => {
+							{nodes.map((_occurrence, index) => {
 								const occurrenceName = `${Liferay.Language.get(
 									'occurrence'
 								)} ${String(index)}`;
@@ -72,7 +103,7 @@ function Violation({navigationState, next, previous, violations}) {
 												violationIndex,
 											})
 										}
-										text={occurrenceName}
+										ruleText={occurrenceName}
 									/>
 								);
 							})}

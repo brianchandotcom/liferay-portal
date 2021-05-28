@@ -12,9 +12,11 @@
  * details.
  */
 
-/* eslint-disable */
+/* eslint-disable sort-keys */
 
-export default violations = [
+import type {Result} from 'axe-core';
+
+const violations = [
 	{
 		id: 'aria-required-parent-crit',
 		impact: 'critical',
@@ -355,4 +357,6 @@ export default violations = [
 			},
 		],
 	},
-];
+] as Array<Result>;
+
+export default violations;

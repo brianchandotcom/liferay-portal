@@ -18,12 +18,24 @@ import React from 'react';
 
 import PanelNavigator from './PanelNavigator';
 
-function CodeBlock({ariaLabel, children}) {
+import type {ImpactValue, Result} from 'axe-core';
+
+interface ICodeBlock extends React.HTMLAttributes<HTMLDivElement> {
+	children: React.ReactChildren | string | Array<String>;
+}
+
+declare var Liferay: {
+	Language: {
+		get(value: string): string;
+	};
+};
+
+function CodeBlock({children, ...otherProps}: ICodeBlock) {
 	return (
 		<div
-			aria-label={ariaLabel}
 			className="page-accessibility-tool__sidebar--occurrence-panel-code-block"
 			role="textbox"
+			{...otherProps}
 		>
 			<div className="p-2 page-accessibility-tool__sidebar--occurrence-panel-code-text">
 				{children}
@@ -32,18 +44,30 @@ function CodeBlock({ariaLabel, children}) {
 	);
 }
 
-function Occurrence({navigationState, previous, violations}) {
+type OccurrenceProps = {
+	navigationState: {
+		occurrenceIndex: number;
+		occurrenceName: string;
+		violationIndex: number;
+	};
+	previous: () => void;
+	violations: Array<Result>;
+};
+
+function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 	const {occurrenceIndex, occurrenceName, violationIndex} = navigationState;
 
-	const {helpUrl, html, impact, target} = violations[violationIndex].nodes[
-		occurrenceIndex
-	];
+	const currentViolation = violations[violationIndex];
+
+	const {helpUrl} = currentViolation;
+
+	const {html, impact, target} = currentViolation.nodes[occurrenceIndex];
 
 	return (
 		<>
 			<PanelNavigator
 				helpUrl={helpUrl}
-				impact={impact}
+				impact={impact as ImpactValue}
 				onBack={() => previous()}
 				title={occurrenceName}
 			/>
@@ -56,14 +80,14 @@ function Occurrence({navigationState, previous, violations}) {
 				<div className="my-3">
 					<strong>{Liferay.Language.get('target')}</strong>
 				</div>
-				<CodeBlock ariaLabel={Liferay.Language.get('target-selector')}>
+				<CodeBlock aria-label={Liferay.Language.get('target-selector')}>
 					{target}
 				</CodeBlock>
 				<div className="my-3">
 					<strong>{Liferay.Language.get('code')}</strong>
 				</div>
 				<CodeBlock
-					ariaLabel={Liferay.Language.get('code-of-the-element')}
+					aria-label={Liferay.Language.get('code-of-the-element')}
 				>
 					{html}
 				</CodeBlock>

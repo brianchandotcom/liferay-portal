@@ -19,52 +19,61 @@ import Violation from './Violation';
 import Violations from './Violations';
 import {FilteredViolationsContextProvider} from './useFilteredViolations';
 
-function isBetweenRange({childrenCount, newIndex}) {
+import type {ImpactValue, Result} from 'axe-core';
+
+function isBetweenRange(childrenCount: number, newIndex: number) {
 	return 0 <= newIndex && newIndex <= childrenCount;
 }
 
-function SidebarPanelsNavigator({children}) {
+type SidebarPanelNavigatorProps = {
+	children: React.ReactChildren;
+};
+
+type TNavigationState = {
+	occurrenceIndex?: number;
+	occurrenceName?: string;
+	violationsIndex: number;
+};
+
+enum PagesEnum {
+	Occurrence = 2,
+	Violation = 1,
+	Violations = 0,
+}
+
+function SidebarPanelsNavigator({children}: SidebarPanelNavigatorProps) {
 	const [activePageIndex, setActivePageIndex] = useState(
 		PagesEnum.Violations
 	);
 
-	const [navigationState, setNavigationState] = useState({});
+	const [navigationState, setNavigationState] = useState<TNavigationState>({
+		violationsIndex: 0,
+	});
 
 	return (
 		<div className="page-accessibility-tool__sidebar sidebar sidebar-light">
 			{React.Children.map(children, (child, index) => {
 				const childrenCount = React.Children.count(children);
 
-				if (index === activePageIndex) {
+				if (index === activePageIndex && React.isValidElement(child)) {
 					return (
 						child &&
 						React.cloneElement(child, {
-							...child.props,
 							index: activePageIndex,
 							key: index,
 							navigationState,
-							next: (newPayload) => {
+							next: (newPayload: TNavigationState) => {
 								const newIndex = activePageIndex + 1;
 
-								if (
-									isBetweenRange({
-										childrenCount,
-										newIndex,
-									})
-								) {
+								if (isBetweenRange(childrenCount, newIndex)) {
 									setActivePageIndex(newIndex);
 									setNavigationState(newPayload);
 								}
 							},
-							previous: (newPayload) => {
+							previous: (newPayload: TNavigationState) => {
 								const newIndex = activePageIndex - 1;
 
-								if (
-									isBetweenRange({
-										childrenCount,
-										newIndex,
-									})
-								) {
+								if (isBetweenRange(childrenCount, newIndex)) {
 									setActivePageIndex(newIndex);
 
 									if (newPayload) {
@@ -72,6 +81,7 @@ function SidebarPanelsNavigator({children}) {
 									}
 								}
 							},
+							...child.props,
 						})
 					);
 				}
@@ -80,32 +90,37 @@ function SidebarPanelsNavigator({children}) {
 	);
 }
 
-export const PagesEnum = Object.freeze({
-	Occurrence: 2,
-	Violation: 1,
-	Violations: 0,
-});
-
 const IMPACT_PRIORITY = {
 	critical: 4,
 	minor: 1,
 	moderate: 2,
 	serious: 3,
+} as const;
+
+function getImpactPriority(impact: ImpactValue) {
+	if (impact) {
+		return IMPACT_PRIORITY[impact];
+	}
+
+	return IMPACT_PRIORITY.minor;
+}
+
+function sortByImpact(violations: Array<Result>) {
+	return violations.sort((currentViolation, nextViolation) => {
+		if (nextViolation.impact && currentViolation.impact) {
+			return (
+				getImpactPriority(nextViolation.impact) -
+				getImpactPriority(currentViolation.impact)
+			);
+		}
+	});
+}
+
+type A11yPanelProps = {
+	violations: Array<Result>;
 };
 
-function getImpactPriority(impact) {
-	return IMPACT_PRIORITY[impact];
-}
-
-function sortByImpact(violations) {
-	return violations.sort(
-		(currentViolation, nextViolation) =>
-			getImpactPriority(nextViolation.impact) -
-			getImpactPriority(currentViolation.impact)
-	);
-}
-
-export function A11yPanel({violations}) {
+export function A11yPanel({violations}: A11yPanelProps) {
 	const sortedByImpactViolations = sortByImpact(violations);
 
 	return (

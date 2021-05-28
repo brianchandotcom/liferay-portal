@@ -19,7 +19,16 @@ import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import React from 'react';
 
-function PanelNavigator({helpUrl, impact, onBack, title}) {
+import type {ImpactValue} from 'axe-core';
+
+type PanelNavigatorProps = {
+	helpUrl: string;
+	impact: ImpactValue;
+	onBack: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	title: string;
+};
+
+function PanelNavigator({helpUrl, impact, onBack, title}: PanelNavigatorProps) {
 	return (
 		<div className="sidebar-header">
 			<ClayButton

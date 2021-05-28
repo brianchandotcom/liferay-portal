@@ -17,7 +17,20 @@ import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import React from 'react';
 
-function Rule({quantity, subtext, text, title, ...otherProps}) {
+interface IRule extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+	quantity?: number;
+	ruleSubtext?: string | React.ReactChildren;
+	ruleText?: string | React.ReactChildren;
+	ruleTitle?: string | React.ReactChildren;
+}
+
+function Rule({
+	quantity,
+	ruleSubtext,
+	ruleText,
+	ruleTitle,
+	...otherProps
+}: IRule) {
 	return (
 		<button
 			className="list-group-item list-group-item-action list-group-item-flex list-group-item-flush"
@@ -28,11 +41,13 @@ function Rule({quantity, subtext, text, title, ...otherProps}) {
 				className="page-accessibility-tool__sidebar--rule-list-item"
 				expand
 			>
-				<ClayList.ItemTitle>{title}</ClayList.ItemTitle>
-				{subtext && (
-					<ClayList.ItemText subtext>{subtext}</ClayList.ItemText>
+				{ruleTitle && (
+					<ClayList.ItemTitle>{ruleTitle}</ClayList.ItemTitle>
 				)}
-				{text && <ClayList.ItemText>{text}</ClayList.ItemText>}
+				{ruleSubtext && (
+					<ClayList.ItemText subtext>{ruleSubtext}</ClayList.ItemText>
+				)}
+				{ruleText && <ClayList.ItemText>{ruleText}</ClayList.ItemText>}
 			</ClayList.ItemField>
 			{quantity && (
 				<ClayList.ItemField className="align-self-center">

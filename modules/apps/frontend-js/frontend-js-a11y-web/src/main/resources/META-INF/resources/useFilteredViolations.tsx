@@ -12,41 +12,61 @@
  * details.
  */
 
-import React, {createContext, useContext, useReducer} from 'react';
+import React, {Dispatch, createContext, useContext, useReducer} from 'react';
+
+import type {ImpactValue, Result} from 'axe-core';
 
 export const TYPES = {
 	CATEGORY_ADD: 'CATEGORY_ADD',
 	CATEGORY_REMOVE: 'CATEGORY_REMOVE',
 	IMPACT_ADD: 'IMPACT_ADD',
 	IMPACT_REMOVE: 'IMPACT_REMOVE',
+} as const;
+
+type TAction = {
+	payload: {value: string};
+	type: 'CATEGORY_ADD' | 'CATEGORY_REMOVE' | 'IMPACT_ADD' | 'IMPACT_REMOVE';
 };
 
-const INITIAL_STATE = {
-	filteredViolations: {},
+type TState = {
+	filteredViolations: Array<Result> | [];
+	selectedCategories: Array<String> | [];
+	selectedImpact: Array<ImpactValue> | [];
+	violations: Array<Result> | [];
+};
+
+const INITIAL_STATE: TState = {
+	filteredViolations: [],
 	selectedCategories: [],
 	selectedImpact: [],
-	violations: {},
+	violations: [],
 };
 
-function filterByCategories({receivedTags, selectedCategories}) {
+function filterByCategories(
+	receivedTags: Array<String>,
+	selectedCategories: Array<String>
+) {
 	return selectedCategories.some((category) =>
 		receivedTags.includes(category)
 	);
 }
 
-function filterByImpact({receivedImpact, selectedImpact}) {
+function filterByImpact(
+	receivedImpact: ImpactValue,
+	selectedImpact: Array<ImpactValue>
+) {
 	return selectedImpact.includes(receivedImpact);
 }
 
-function addItem(list, value) {
+function addItem(list: Array<any>, value: any) {
 	return [...list, value];
 }
 
-function removeItem(list, value) {
+function removeItem(list: Array<any>, value: any) {
 	return list.filter((currentItem) => currentItem !== value);
 }
 
-function violationsReducer(state = INITIAL_STATE, action) {
+function violationsReducer(state = INITIAL_STATE, action: TAction) {
 	const {selectedCategories, selectedImpact, violations} = state;
 
 	const {value} = action.payload;
@@ -58,12 +78,14 @@ function violationsReducer(state = INITIAL_STATE, action) {
 			return {
 				...state,
 				filteredViolations: newSelectedCategories.length
-					? violations.filter(({tags}) =>
-							filterByCategories({
-								receivedTags: tags,
-								selectedCategories: newSelectedCategories,
-							})
-					  )
+					? violations.filter(({tags}) => {
+							if (tags) {
+								return filterByCategories(
+									tags,
+									newSelectedCategories
+								);
+							}
+					  })
 					: violations,
 				selectedCategories: newSelectedCategories,
 			};
@@ -74,12 +96,14 @@ function violationsReducer(state = INITIAL_STATE, action) {
 			return {
 				...state,
 				filteredViolations: newSelectedCategories.length
-					? violations.filter(({tags}) =>
-							filterByCategories({
-								receivedTags: tags,
-								selectedCategories: newSelectedCategories,
-							})
-					  )
+					? violations.filter(({tags}) => {
+							if (tags) {
+								return filterByCategories(
+									tags,
+									newSelectedCategories
+								);
+							}
+					  })
 					: violations,
 				selectedCategories: newSelectedCategories,
 			};
@@ -90,12 +114,14 @@ function violationsReducer(state = INITIAL_STATE, action) {
 			return {
 				...state,
 				filteredViolations: newImpactSelected.length
-					? violations.filter(({impact}) =>
-							filterByImpact({
-								receivedImpact: impact,
-								selectedImpact: newImpactSelected,
-							})
-					  )
+					? violations.filter(({impact}) => {
+							if (impact) {
+								return filterByImpact(
+									impact,
+									newImpactSelected
+								);
+							}
+					  })
 					: violations,
 				selectedImpact: newImpactSelected,
 			};
@@ -106,12 +132,14 @@ function violationsReducer(state = INITIAL_STATE, action) {
 			return {
 				...state,
 				filteredViolations: newImpactSelected.length
-					? violations.filter(({impact}) =>
-							filterByImpact({
-								receivedImpact: impact,
-								selectedImpact: newImpactSelected,
-							})
-					  )
+					? violations.filter(({impact}) => {
+							if (impact) {
+								return filterByImpact(
+									impact,
+									newImpactSelected
+								);
+							}
+					  })
 					: violations,
 				selectedImpact: newImpactSelected,
 			};
@@ -121,12 +149,22 @@ function violationsReducer(state = INITIAL_STATE, action) {
 	}
 }
 
-const FilteredViolationsDispatchContext = createContext();
+const FilteredViolationsDispatchContext = createContext(
+	{} as Dispatch<TAction>
+);
 
 export const useFilteredViolationsDispatch = () =>
 	useContext(FilteredViolationsDispatchContext);
 
-export function FilteredViolationsContextProvider({children, value}) {
+type FilteredViolationsContextProviderProps = {
+	children: (props: TState) => React.ReactChildren;
+	value: Array<Result>;
+};
+
+export function FilteredViolationsContextProvider({
+	children,
+	value,
+}: FilteredViolationsContextProviderProps) {
 	const [state, dispatch] = useReducer(violationsReducer, {
 		...INITIAL_STATE,
 		...value,

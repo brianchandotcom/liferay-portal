@@ -17,14 +17,14 @@ import {cleanup, fireEvent, getByText, render} from '@testing-library/react';
 import userEvents from '@testing-library/user-event';
 import React from 'react';
 
-import PageAccessibilityToolSidebar from '../../../../src/main/resources/META-INF/resources/js/components/page-accessibility-tool/index';
-import violationsMock from '../../../__fixtures__/violationsMock';
+import {A11yPanel} from '../../src/main/resources/META-INF/resources/A11yPanel';
+import violationsMock from './__fixtures__/violationsMock';
 
 const renderA11yToolSidebar = () => {
-	return render(<PageAccessibilityToolSidebar violations={violationsMock} />);
+	return render(<A11yPanel violations={violationsMock} />);
 };
 
-describe('PageAccessibilityToolSidebar', () => {
+describe('A11yPanel', () => {
 	afterEach(() => {
 		jest.restoreAllMocks();
 		cleanup();
@@ -48,7 +48,7 @@ describe('PageAccessibilityToolSidebar', () => {
 				'minor',
 			];
 
-			const tabs = getAllByRole('tab', {name: 'aria-required-parent'});
+			const tabs = getAllByRole('tab');
 
 			tabs.forEach((tab, index) =>
 				expect(getByText(tab, prioritiesFixture[index])).toBeDefined()
@@ -60,7 +60,7 @@ describe('PageAccessibilityToolSidebar', () => {
 
 			const occurrencesCountFixture = [3, 3, 2, 3, 3];
 
-			const tabs = getAllByRole('tab', {name: 'aria-required-parent'});
+			const tabs = getAllByRole('tab');
 
 			tabs.forEach((tab, index) =>
 				expect(
@@ -76,9 +76,7 @@ describe('PageAccessibilityToolSidebar', () => {
 				queryByText,
 			} = renderA11yToolSidebar();
 
-			const [firstViolationTab] = getAllByRole('tab', {
-				name: 'aria-required-parent-crit',
-			});
+			const [firstViolationTab] = getAllByRole('tab');
 
 			// Navigates to "aria-required-parent-crit" violation
 
@@ -117,9 +115,7 @@ describe('PageAccessibilityToolSidebar', () => {
 					expect(getByTestId('moderate')).not.toBeChecked();
 					expect(getByTestId('minor')).not.toBeChecked();
 
-					expect(getAllByRole('tab', {name: 'critical'}).length).toBe(
-						2
-					);
+					expect(getAllByRole('tab').length).toBe(2);
 				});
 
 				it('when selecting CRITICAL, SERIOUS impacts it shows only corresponding violations', () => {
@@ -356,9 +352,7 @@ describe('PageAccessibilityToolSidebar', () => {
 
 			userEvents.click(firstViolation);
 
-			const backElement = getByRole('button', {
-				name: 'aria-required-parent-crit',
-			});
+			const backElement = getByRole('button');
 
 			userEvents.click(backElement);
 
@@ -392,9 +386,7 @@ describe('PageAccessibilityToolSidebar', () => {
 
 			userEvents.click(firstOccurrence);
 
-			const backElement = getByRole('button', {
-				name: 'occurrence 0',
-			});
+			const backElement = getByRole('button');
 
 			// Back to the first violation panel
 

@@ -24,6 +24,17 @@ import React, {useState} from 'react';
 import Rule from './Rule';
 import {TYPES, useFilteredViolationsDispatch} from './useFilteredViolations';
 
+import type {ImpactValue, Result} from 'axe-core';
+
+declare var Liferay: {
+	Language: {
+		get(value: string): string;
+	};
+	Util: {
+		sub(...value: string[]): string;
+	};
+};
+
 const IMPACT_FILTER_OPTIONS = [
 	{label: Liferay.Language.get('critical'), value: 'critical'},
 	{label: Liferay.Language.get('serious'), value: 'serious'},
@@ -39,7 +50,15 @@ const CATEGORY_FILTER_OPTIONS = [
 	{label: 'Best Practices', value: 'best-practice'},
 ];
 
-function ViolationsFilter({selectedCategories, selectedImpact}) {
+type ViolationsFilterProps = {
+	selectedCategories: Array<String>;
+	selectedImpact: Array<ImpactValue>;
+};
+
+function ViolationsFilter({
+	selectedCategories,
+	selectedImpact,
+}: ViolationsFilterProps) {
 	const [dropdownExpanded, setDropdownExpanded] = useState(false);
 	const dispatch = useFilteredViolationsDispatch();
 
@@ -147,12 +166,23 @@ function ViolationsFilter({selectedCategories, selectedImpact}) {
 	);
 }
 
+type TViolationNext = {
+	violationIndex: number;
+};
+
+type ViolationsProps = {
+	next: (payload: TViolationNext) => void;
+	selectedCategories: Array<String>;
+	selectedImpact: Array<ImpactValue>;
+	violations: Array<Result>;
+};
+
 export default function Violations({
 	next,
 	selectedCategories,
 	selectedImpact,
 	violations,
-}) {
+}: ViolationsProps) {
 	const hasViolations = !!violations.length;
 
 	return (
@@ -194,7 +224,7 @@ export default function Violations({
 					role="tablist"
 				>
 					{violations.map((violation, index) => {
-						const {id, impact, nodes, ...props} = violation;
+						const {id, impact, nodes} = violation;
 
 						return (
 							<Rule
@@ -207,8 +237,10 @@ export default function Violations({
 								key={id}
 								onClick={() => next({violationIndex: index})}
 								quantity={nodes.length}
-								subtext={impact}
-								title={id}
+								ruleSubtext={
+									impact as string | React.ReactChildren
+								}
+								ruleTitle={id}
 							/>
 						);
 					})}

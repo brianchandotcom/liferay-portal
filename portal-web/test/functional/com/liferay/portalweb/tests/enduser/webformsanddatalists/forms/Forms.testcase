@@ -794,8 +794,6 @@ definition {
 		AssertElementNotPresent(
 			key_pageNumber = "1",
 			locator1 = "FormViewBuilder#EMPTY_FORM_FIELD_BY_NUMBER");
-			
-
 	}
 
 	@description = "Verify that a Form can be deleted"

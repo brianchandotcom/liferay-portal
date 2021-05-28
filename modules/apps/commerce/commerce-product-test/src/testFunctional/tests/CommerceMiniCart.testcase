@@ -800,6 +800,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceMiniCart#ViewMiniCartItemWithDiscountToSubtotal";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -826,8 +828,6 @@ definition {
 		CommerceAcceleratorsInitializer.createNewAccountViaFront(
 			accountName = "Commerce Account",
 			adminEmailAddress = "test@liferay.com");
-
-		// TODO COMMERCE-6340 ViewMiniCartItemWithDiscountToSubtotal pending implementation
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 

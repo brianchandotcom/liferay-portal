@@ -32,6 +32,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSearch#DisableSearchResultsWidgetPagination";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -293,7 +295,7 @@ definition {
 	test GlobalSearchSuggestedAccountsEntry {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6320 GlobalSearchSuggestedAccountsEntry pending implementation
+		// TODO Review
 
 	}
 

@@ -33,6 +33,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="ExecuteStatus" return-type="Collection">
 			<finder-column name="executeStatus" />
 		</finder>
@@ -68,6 +71,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="ExecuteStatus" return-type="Collection">
 			<finder-column name="executeStatus" />
 		</finder>

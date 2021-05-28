@@ -51,6 +51,7 @@ export const Column = forwardRef(
 			onMouseOver,
 			pageIndex,
 			rowIndex,
+			viewMode,
 		},
 		ref
 	) => {
@@ -87,11 +88,15 @@ export const Column = forwardRef(
 						)}
 						data-field-name={firstField.fieldName}
 					>
-						{column.fields.map((field, index) =>
-							typeof children === 'function'
+						{column.fields.map((field, index) => {
+							if (viewMode) {
+								field.predefinedValue = '';
+							}
+
+							return typeof children === 'function'
 								? children({field, index})
-								: children
-						)}
+								: children;
+						})}
 					</div>
 				)}
 			</ClayLayout.Col>

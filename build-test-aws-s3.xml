@@ -5,7 +5,7 @@
 
 	<target name="assert-document-in-bucket">
 		<exec executable="aws" outputproperty="bucketContents">
-			<arg line="s3api list-objects --bucket lfr-qa-poshi-test --prefix ${companyId}/${groupId}" />
+			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${bucket.id} --prefix ${companyId}/${groupId}" />
 		</exec>
 
 		<echo>${bucketContents}</echo>
@@ -23,7 +23,7 @@
 
 	<target name="assert-no-document-in-bucket">
 		<exec executable="aws" outputproperty="bucketContents">
-			<arg line="s3api list-objects --bucket lfr-qa-poshi-test --prefix ${companyId}/${groupId}" />
+			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${bucket.id} --prefix ${companyId}/${groupId}" />
 		</exec>
 
 		<echo>${bucketContents}</echo>
@@ -61,14 +61,14 @@
 
 	<target name="create-s3-bucket">
 		<exec executable="aws" outputproperty="bucketContents">
-			<arg line="s3api create-bucket --bucket lfr-qa-poshi-test --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
+			<arg line="s3api create-bucket --bucket lfr-qa-poshi-test-${bucket.id} --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
 		</exec>
 
 		<echo>${bucketContents}</echo>
 
 		<if>
 			<not>
-				<contains string="${bucketContents}" substring="lfr-qa-poshi-test" />
+				<contains string="${bucketContents}" substring="lfr-qa-poshi-test-${bucket.id}" />
 			</not>
 			<then>
 				<fail>Bucket is not created.</fail>
@@ -79,11 +79,11 @@
 	<target name="delete-s3-bucket">
 		<sequential>
 			<exec executable="aws">
-				<arg line="s3 rm s3://lfr-qa-poshi-test --recursive" />
+				<arg line="s3 rm s3://lfr-qa-poshi-test-${bucket.id} --recursive" />
 			</exec>
 
 			<exec executable="aws">
-				<arg line="s3api delete-bucket --bucket lfr-qa-poshi-test" />
+				<arg line="s3api delete-bucket --bucket lfr-qa-poshi-test-${bucket.id}" />
 			</exec>
 
 			<exec executable="aws" outputproperty="bucketContents">
@@ -93,7 +93,7 @@
 			<echo>${bucketContents}</echo>
 
 			<if>
-				<contains string="${bucketContents}" substring="lfr-qa-poshi-test" />
+				<contains string="${bucketContents}" substring="lfr-qa-poshi-test-${bucket.id}" />
 				<then>
 					<fail>Bucket is not deleted.</fail>
 				</then>

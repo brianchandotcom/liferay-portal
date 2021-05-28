@@ -13520,6 +13520,10 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<equals arg1="${aws.store.enabled}" arg2="true" />
 			<then>
+				<tstamp>
+					<format pattern="yyyyMMddkkmmssSSS" property="bucket.id" />
+				</tstamp>
+
 				<ant antfile="build-test-aws-s3.xml" target="configure-aws-cli" />
 
 				<ant antfile="build-test-aws-s3.xml" target="create-s3-bucket" />

@@ -26,6 +26,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutListRetrieverContext {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public Optional<long[][]> getAssetCategoryIdsOptional();
 
 	public Optional<Object> getContextObjectOptional();

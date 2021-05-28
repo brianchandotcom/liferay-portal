@@ -24,6 +24,10 @@ import java.util.Optional;
 public class DefaultLayoutListRetrieverContext
 	implements LayoutListRetrieverContext {
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public Optional<long[][]> getAssetCategoryIdsOptional() {
 		return Optional.ofNullable(_assetCategoryIds);
@@ -53,6 +57,10 @@ public class DefaultLayoutListRetrieverContext
 		return Optional.ofNullable(_segmentsExperienceIds);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setAssetCategoryIds(long[][] assetCategoryIds) {
 		_assetCategoryIds = assetCategoryIds;
 	}

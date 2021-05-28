@@ -187,6 +187,10 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 		return _getAssetListEntryAssetEntryRels(assetListEntryAssetEntryRels);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<AssetListEntryAssetEntryRel> getAssetListEntryAssetEntryRels(
 		long assetListEntryId, long[] segmentsEntryIds,
@@ -243,6 +247,10 @@ public class AssetListEntryAssetEntryRelLocalServiceImpl
 			assetListEntryId, segmentsEntryIds);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public int getAssetListEntryAssetEntryRelsCount(
 		long assetListEntryId, long[] segmentsEntryIds,

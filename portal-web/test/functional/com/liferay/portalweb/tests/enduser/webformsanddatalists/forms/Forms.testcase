@@ -725,13 +725,76 @@ definition {
 	}
 
 	@description = "Verify that a Form can be created with more than one page"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreatedWithMultiplePages {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130996 CanBeCreatedWithMultiplePages pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		FormFields.viewPaginationField(
+			key_currentPage = "1",
+			key_lastPage = "2");
+
+		FormFields.viewPaginationField(
+			key_currentPage = "2",
+			key_lastPage = "2");
+
+		AssertElementPresent(
+			key_pageNumber = "1",
+			locator1 = "Form#PAGE_DEFAULT_TITLE_BY_NUMBER");
+
+		AssertElementPresent(
+			key_pageNumber = "1",
+			locator1 = "Form#PAGE_DEFAULT_DESCRIPTION_BY_NUMBER");
+
+		AssertElementPresent(
+			key_pageNumber = "1",
+			locator1 = "FormViewBuilder#EMPTY_FORM_FIELD_BY_NUMBER");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text",
+			formPageNumber = "1");
+
+		Type(
+			key_pageNumber = "1",
+			locator1 = "Form#PAGE_DEFAULT_TITLE_BY_NUMBER",
+			value1 = "Page Title Test");
+
+		Type(
+			key_pageNumber = "1",
+			locator1 = "Form#PAGE_DEFAULT_DESCRIPTION_BY_NUMBER",
+			value1 = "Page Description");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertElementPresent(
+			key_pageNumber = "1",
+			key_value = "Page Title Test",
+			locator1 = "Form#PAGE_TITLE_BY_NUMBER");
+
+		AssertElementPresent(
+			key_pageNumber = "1",
+			key_value = "Page Description",
+			locator1 = "Form#PAGE_DESCRIPTION_BY_NUMBER");
+
+		AssertElementNotPresent(
+			key_pageNumber = "1",
+			locator1 = "FormViewBuilder#EMPTY_FORM_FIELD_BY_NUMBER");
+			
 
 	}
 

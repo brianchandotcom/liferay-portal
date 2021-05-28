@@ -49,6 +49,26 @@
     <td></td>
 </tr>
 <tr>
+    <td>PAGE_DESCRIPTION_BY_NUMBER</td>
+    <td>//div[contains(@data-ddm-page,'${key_pageNumber}')]//input[contains(@value, '${key_value}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PAGE_TITLE_BY_NUMBER</td>
+    <td>//div[contains(@data-ddm-page,'${key_pageNumber}')]//input[contains(@value, '${key_value}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PAGE_DEFAULT_DESCRIPTION_BY_NUMBER</td>
+    <td>//div[contains(@data-ddm-page,'${key_pageNumber}')]//input[contains(@placeholder,'Add a short description for this page.') and (@value)]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PAGE_DEFAULT_TITLE_BY_NUMBER</td>
+    <td>//div[contains(@data-ddm-page,'${key_pageNumber}')]//input[contains(@placeholder,'Page title') and (@value)]</td>
+    <td></td>
+</tr>
+<tr>
     <td>PAGE_TITLE_FIELD</td>
     <td>xpath=(//input[contains(@class,'form-builder-page-header-title')])[${key_titleNumber}]</td>
     <td></td>
@@ -97,6 +117,11 @@
 <tr>
     <td>ALT_PAGINATION_SUCCESS_PAGE</td>
     <td>//*[contains(@class,'ddm-pagination')]//*[contains(text(),'Success Page')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PAGINATION_NUMBER</td>
+    <td>//h5[contains(@class,'pagination') and contains(text(),'${key_pagination}')]</td>
     <td></td>
 </tr>
 <tr>

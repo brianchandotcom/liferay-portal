@@ -664,6 +664,12 @@
 </tr>
 
 <tr>
+	<td>EMPTY_FORM_FIELD_BY_NUMBER</td>
+	<td>//div[contains(@data-ddm-page,'${key_pageNumber}')]//p[contains(text(),'Drag fields from the sidebar to compose your form.')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FORM_FIELD_FIRST_ROW</td>
 	<td>//div[contains(@class,"placeholder row")]//div[contains(@data-ddm-field-page, "0") and contains(@data-ddm-field-row, "0")]//div[contains(@class, "ddm-target")]</td>
 	<td></td>

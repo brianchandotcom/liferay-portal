@@ -798,6 +798,15 @@ definition {
 		}
 	}
 
+	macro viewPaginationField {
+		var key_currentPage = "${key_currentPage}";
+		var key_lastPage = "${key_lastPage}";
+
+		AssertElementPresent(
+			key_pagination = "Page ${key_currentPage} of ${key_lastPage}",
+			locator1 = "Form#PAGINATION_NUMBER");
+	}
+
 	macro viewParagraphField {
 		if (!(isSet(fieldName))) {
 			var key_fieldName = "${fieldTitle}";

@@ -28,6 +28,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PERMISSIONS_MODAL-->
+<tr>
+	<td>PERMISSIONS_MODAL_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_${key_actionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CONFIGURATION_PERMISSIONS-->
 <tr>
 	<td>CONFIGURATION_PERMISSIONS_ROLE_NAME</td>

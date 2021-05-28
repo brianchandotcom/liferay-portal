@@ -1671,7 +1671,7 @@
     liferay-npm-bundler-plugin-namespace-packages "2.24.2"
     liferay-npm-bundler-plugin-replace-browser-modules "2.24.2"
     liferay-npm-bundler-plugin-resolve-linked-dependencies "2.24.2"
-    liferay-theme-tasks "10.3.0"
+    liferay-theme-tasks "10.4.0"
     metal-tools-soy "4.3.2"
     mini-css-extract-plugin "0.11.2"
     minimist "^1.2.0"
@@ -3733,12 +3733,19 @@ ci-info@^2.0.0:
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
-ckeditor4-react@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/ckeditor4-react/-/ckeditor4-react-1.3.0.tgz#de0d93380f1b634b896ed41eb9f476cfdfef308a"
-  integrity sha512-73PSba0K0Bx1m9rqCagX2ajPBFq4PDgkUAtqa8o2QrKVzhtPcnpo7uyuY6VYwAN0xLmmolsQu7x5XY4jmEJidg==
+ckeditor4-integrations-common@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/ckeditor4-integrations-common/-/ckeditor4-integrations-common-0.2.0.tgz#994a83f94e14161fa8ee15e7f0edc8735b12d8f8"
+  integrity sha512-KkHztF0bkGOnTcifWFd55j5Y9SCR3uk12SGgS6L1mZNnBeIJFCcgTwZWEHtG2aDJF7aZob7cex1CShL+SrNuow==
   dependencies:
     load-script "^1.0.0"
+
+ckeditor4-react@1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/ckeditor4-react/-/ckeditor4-react-1.4.2.tgz#6fc9b350c2f0541fd7acf3b102450039f57d91d5"
+  integrity sha512-4H5ZRCLBWoAaOVN+u+3bMXGOaq0n+FlYvHiH7F4FAIbxDXPSyDweQiTdMS74au/neOJffGY8mLtqf2nIP9wr7g==
+  dependencies:
+    ckeditor4-integrations-common "^0.2.0"
     prop-types "^15.6.2"
 
 class-utils@^0.3.5:

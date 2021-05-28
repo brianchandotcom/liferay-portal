@@ -111,7 +111,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1141,13 +1140,6 @@ public class JournalDisplayContext {
 
 		searchContext.setAndSearch(false);
 
-		LinkedHashMap<String, Object> params =
-			LinkedHashMapBuilder.<String, Object>put(
-				"expandoAttributes", getKeywords()
-			).put(
-				"keywords", getKeywords()
-			).build();
-
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
 				Field.ARTICLE_ID, getKeywords()
@@ -1169,7 +1161,12 @@ public class JournalDisplayContext {
 			).put(
 				"latest", !showVersions
 			).put(
-				"params", params
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"expandoAttributes", getKeywords()
+				).put(
+					"keywords", getKeywords()
+				).build()
 			).build());
 
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());

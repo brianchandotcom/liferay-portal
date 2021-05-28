@@ -12,34 +12,30 @@ definition {
 			User.firstLoginPG();
 		}
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
+		task ("Execute Reindex all search indexes") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Search");
 
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		}
 
-		task ("Add a site via JSON") {
+		task ("Add a new site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
-		task ("Add a destination page for the Search Bar widget") {
+		task ("Add a Search page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Search");
-
-			for (var widgetName : list "Search Results,Type Facet") {
-				JSONLayout.addWidgetToPublicLayout(
-					groupName = "Test Site Name",
-					layoutName = "Search",
-					widgetName = "${widgetName}");
-			}
 		}
 
-		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+		task ("Add a Search Results to Search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search",
+				widgetName = "Search Results");
 		}
 
 		task ("Add a content page") {
@@ -61,20 +57,34 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-78928. Content pages will appear when users filter search results by page facet."
+	@description = "This is a test for LPS-78928. View content page in search results when filter by Type Facet."
 	@priority = "5"
-	test FilterByPageFacet {
+	test FilterByTypeFacet {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#FilterByPageFacet";
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#FilterByTypeFacet";
 
-		task ("Add a Static Text fragment to the content page") {
+		task ("Add a Type Facet to Search page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Search",
+				widgetName = "Type Facet");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "This is a heading content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Static Text");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
 		task ("Publish the content page") {
@@ -87,113 +97,41 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Add a web content article with the same text as the Static Text fragment") {
-			JSONWebcontent.addWebContent(
-				content = "This is static text",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
+		task ("Search by keywords") {
+			Search.searchCP(searchTerm = "heading");
 		}
 
-		task ("Search by text that appears in both the content page and web content article") {
-			Search.searchCP(searchTerm = "static");
-		}
-
-		task ("Assert both the content page and web content article appear in the search results") {
+		task ("View both the content page and web content shown in the search results") {
 			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 
 			Search.viewResultAssetTitle(searchAssetTitle = "Web Content Title");
 		}
 
-		task ("Flag the Page facet in the search results to filter results to only show pages") {
+		task ("Check the Page type in Type Facet") {
 			SearchFacetPortlet.checkFacet(facetValueName = "Page");
 		}
 
-		task ("Assert the content page appears in the search results") {
+		task ("View only the content page shown in the search results") {
 			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
-		}
 
-		task ("Assert the web content article does not appear in the search results") {
 			Search.viewNoResultAssetTitle(searchAssetTitle = "Web Content Title");
 		}
 	}
 
-	@description = "This is a test for LPS-91405. Content page associated with category will not display after category deleted."
-	@priority = "3"
-	test SearchContentPagesWithDeletedCategory {
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchContentPagesWithDeletedCategory";
-
-		task ("Add a a vocabulary with a category") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
-
-			JSONCategory.addCategory(
-				groupName = "Test Site Name",
-				title = "New Category",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Modify page so that it contains created category") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			SitePages.gotoPageMenuItem(
-				menuItem = "Configure",
-				pageName = "Test Content Page Name");
-
-			Page.addCategory(
-				categoryName = "New Category",
-				vocabularyName = "Vocabulary Name");
-
-			PortletEntry.save();
-		}
-
-		task ("Navigate to the search page") {
-			Navigator.gotoSitePage(
-				pageName = "Search",
-				siteName = "Test Site Name");
-		}
-
-		task ("Search for created category") {
-			Search.searchCP(searchTerm = "New Category");
-		}
-
-		task ("Assert the content page appears in the search results") {
-			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
-		}
-
-		task ("Delete created vocabulary") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Vocabulary.deleteByIconCP(vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Navigate to the search page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
-		}
-
-		task ("Search for created category") {
-			Search.searchCP(searchTerm = "New Category");
-		}
-
-		task ("Assert the content page does not appear in the search results") {
-			Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
-		}
-	}
-
-	@description = "This is a test for LPS-78928. Editable text in content pages is searchable."
+	@description = "This is a test for LPS-78928. Search content page by inline text."
 	@priority = "5"
-	test SearchEditableText {
+	test SearchByInlineText {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchEditableText";
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchByInlineText";
 
-		task ("Add a Rich Text fragment to the content page") {
+		task ("Add a Heading fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
 		task ("Publish the content page") {
@@ -206,25 +144,22 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Search by text that appears in the editable text field in the Rich Text fragment") {
-			Search.searchCP(searchTerm = "duis");
+		task ("Search by inline text of Heading") {
+			Search.searchCP(searchTerm = "Example");
 		}
 
-		task ("Assert the content page appears in the search results") {
+		task ("View the content page shown in the search results") {
 			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 		}
 
-		task ("Navigate to the content page's 'Edit Mode'") {
+		task ("Edit the inline text") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
-		}
 
-		task ("Edit the Rich Text fragment's editable text") {
 			PageEditor.editFragmentText(
-				contributed = "false",
-				fragmentName = "Rich Text",
-				id = "rich-text",
+				fragmentName = "Heading",
+				id = "element-text",
 				text = "New editable fragment text");
 		}
 
@@ -233,32 +168,93 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			ContentPagesNavigator.openViewContentPage(
+			Navigator.gotoSitePage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 		}
 
-		task ("Search by the new text that appears in the editable text field in the Rich Text fragment") {
+		task ("Search by edited inline text") {
 			Search.searchCP(searchTerm = "editable");
 		}
 
-		task ("Assert the content page appears in the search results") {
+		task ("View the content page shown in the search results") {
 			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 		}
 
-		task ("Search by the old text that appeared in the editable text field in the Rich Text fragment") {
-			Search.searchCP(searchTerm = "duis");
+		task ("Search by default inline text") {
+			Search.searchCP(searchTerm = "Example");
 		}
 
-		task ("Assert the content page does not appear in the search results") {
+		task ("View the content page not shown in the search results") {
 			Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 		}
 	}
 
-	@description = "This is a use case for LPS-120198. Search page in select page iframe."
+	@description = "This is a test for LPS-78928. Search content page by not editable text."
+	@priority = "5"
+	test SearchByNotEditableText {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchByNotEditableText";
+
+		task ("Add a fragment collection") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Collection Name");
+		}
+
+		task ("Add a fragment in new collection") {
+			var newLine = '''
+''';
+
+			var htmlSnippet = '''
+<div class="fragment-static-text">
+	<div class="static-text">This is static text.</div>
+</div>
+			''';
+
+			var htmlSnippet = StringUtil.regexReplaceAll("${htmlSnippet}", "${newLine}", "");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Fragment Name");
+		}
+
+		task ("Add a new fragment to content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Publish the content page") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Navigate to the content page") {
+			Navigator.gotoSitePage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Search by non editable text") {
+			Search.searchCP(searchTerm = "static");
+		}
+
+		task ("View the content page shown in the search results") {
+			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-120198. Search page in page select modal when map it to editable field."
 	@priority = "4"
-	test SearchPageWhenMapPageToFragment {
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageWhenMapPageToFragment";
+	test SearchPageInSelectModalWhenMapPageToEditableField {
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchPageInSelectModalWhenMapPageToEditableField";
 
 		task ("Add a parent widget page") {
 			JSONLayout.addPublicLayout(
@@ -288,7 +284,7 @@ definition {
 				fragmentName = "Banner Center");
 		}
 
-		task ("Map the grandchild widget page to link type editable field of Banner Center") {
+		task ("Search the grandchild widget page in select modal then map it to link type editable field") {
 			PageEditorEditableLink.mapEditableFieldToPage(
 				fragmentName = "Banner Center",
 				id = "link",
@@ -333,38 +329,71 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-78928. Static text in content pages is searchable."
-	@priority = "5"
-	test SearchStaticText {
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchStaticText";
+	@description = "This is a test for LPS-91405. View content page is not shown in search results after deleting the associated category."
+	@priority = "3"
+	test ViewContentPageNotShownInSearchResultsAfterDeleteCategory {
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageNotShownInSearchResultsAfterDeleteCategory";
 
-		task ("Add a Static Text fragment to the content page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = "Test Site Name");
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Static Text");
+		task ("Add a a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
 		}
 
-		task ("Publish the content page") {
-			PageEditor.clickPublish();
+		task ("Add a category") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
 		}
 
-		task ("Navigate to the content page") {
+		task ("Associate a category to page") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			SitePages.gotoPageMenuItem(
+				menuItem = "Configure",
+				pageName = "Test Content Page Name");
+
+			Page.addCategory(
+				categoryName = "Category Name",
+				vocabularyName = "Vocabulary Name");
+
+			PortletEntry.save();
+		}
+
+		task ("Navigate to the search page") {
 			Navigator.gotoSitePage(
-				pageName = "Test Content Page Name",
+				pageName = "Search",
 				siteName = "Test Site Name");
 		}
 
-		task ("Search by the static text in the Static Text fragment") {
-			Search.searchCP(searchTerm = "static");
+		task ("Search for category") {
+			Search.searchCP(searchTerm = "Category");
 		}
 
-		task ("Assert the content page appears in the search results") {
+		task ("View the content page is shown in the search results") {
 			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+		}
+
+		task ("Delete the category") {
+			JSONCategory.deleteCategory(
+				categoryName = "Category Name",
+				groupName = "Test Site Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Navigate to the search page") {
+			Navigator.gotoSitePage(
+				pageName = "Search",
+				siteName = "Test Site Name");
+		}
+
+		task ("Search for category") {
+			Search.searchCP(searchTerm = "Category");
+		}
+
+		task ("View the content page is not shown in the search results") {
+			Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
 		}
 	}
 

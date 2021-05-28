@@ -259,11 +259,9 @@ definition {
 			titleField = "Title AddQuestionWithTheALImage",
 			topicName = "questions-test-category");
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "title-addquestionwiththealimage",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestionWithTheALImage");
 
 		Questions.viewImageInQuestion(imageFileName = "Document_2.jpeg");
 	}

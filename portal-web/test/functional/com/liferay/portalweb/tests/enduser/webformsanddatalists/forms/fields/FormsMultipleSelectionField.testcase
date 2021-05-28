@@ -72,14 +72,65 @@ definition {
 	}
 
 	@description = "Verify that a Multiple Selection Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132264 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormViewBuilder.editText(
+			fieldName = "Help Text",
+			fieldValue = "Help Text Test");
+
+		FormFields.duplicateField();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Multiple Selection");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Copy of Multiple Selection");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option 1",
+			fieldName = "Multiple Selection");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option 2",
+			fieldName = "Multiple Selection");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option 1",
+			fieldName = "Copy of Multiple Selection");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option 2",
+			fieldName = "Copy of Multiple Selection");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Multiple Selection",
+			fieldValue = "Help Text Test");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Copy of Multiple Selection",
+			fieldValue = "Help Text Test");
 	}
 
 	@description = "Verify that a Multiple Selection Field can be edited"

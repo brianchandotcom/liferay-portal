@@ -79,7 +79,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormFields.viewDeletedFieldLabel(fieldName = "Color");
-
 	}
 
 	@description = "Verify that a Color Field can be duplicated"

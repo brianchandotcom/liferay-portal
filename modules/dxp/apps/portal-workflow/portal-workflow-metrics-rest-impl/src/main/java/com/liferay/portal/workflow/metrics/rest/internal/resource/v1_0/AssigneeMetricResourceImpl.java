@@ -483,7 +483,7 @@ public class AssigneeMetricResourceImpl
 		return Stream.of(
 			_userLocalService.search(
 				contextCompany.getCompanyId(), keywords, keywords, keywords,
-				null, null, WorkflowConstants.STATUS_APPROVED, params, false,
+				null, null, WorkflowConstants.STATUS_ANY, params, false,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				(OrderByComparator<User>)null)
 		).flatMap(

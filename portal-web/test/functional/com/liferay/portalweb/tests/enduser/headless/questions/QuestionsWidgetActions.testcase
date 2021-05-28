@@ -241,11 +241,9 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpeg");
 
-		var siteName = TestCase.getSiteName(siteName = "${siteName}");
-
 		JSONDepot.connectSite(
 			depotName = "Test Depot Name",
-			groupName = "${siteName}");
+			groupName = "Guest");
 
 		JSONMBMessage.addCategory(
 			categoryDescription = "Description",

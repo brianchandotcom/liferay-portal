@@ -2516,7 +2516,6 @@ definition {
 			formPageName = "Page C",
 			formTitleNumber = "3");
 
-
 		AssertElementPresent(
 			key_fieldName = "Page A",
 			key_movePage = "Move Page Up",

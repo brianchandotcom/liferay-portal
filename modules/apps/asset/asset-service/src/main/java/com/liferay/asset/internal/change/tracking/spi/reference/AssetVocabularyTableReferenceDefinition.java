@@ -37,8 +37,11 @@ public class AssetVocabularyTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<AssetVocabularyTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.systemEventReference(
-			AssetVocabularyTable.INSTANCE.vocabularyId, AssetVocabulary.class);
+		childTableReferenceInfoBuilder.resourcePermissionReference(
+			AssetVocabularyTable.INSTANCE.vocabularyId, AssetVocabulary.class
+		).systemEventReference(
+			AssetVocabularyTable.INSTANCE.vocabularyId, AssetVocabulary.class
+		);
 	}
 
 	@Override

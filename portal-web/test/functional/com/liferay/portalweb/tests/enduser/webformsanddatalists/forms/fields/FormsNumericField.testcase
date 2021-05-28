@@ -969,14 +969,38 @@ definition {
 	}
 
 	@description = "Verify that when erasing the Predefined Value in the Numeric Field it will be replaced by the Placeholder Text"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PredefinedValueIsReplacedByPlaceholderText {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132848 PredefinedValueIsReplacedByPlaceholderText pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Numeric Placeholder Text");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldPredefinedText(fieldValue = "123");
+
+		FormViewBuilder.validatePredefinedText(
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		FormViewBuilder.setFieldPredefinedText(fieldValue = " ");
+
+		Form.save();
+
+		Form.viewFormPlaceholderText(fieldPlaceholderText = "Numeric Placeholder Text");
 	}
 
 	@description = "Verify that the Field Reference can be Edited"

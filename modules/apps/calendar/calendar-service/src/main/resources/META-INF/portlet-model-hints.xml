@@ -40,7 +40,9 @@
 		<field name="vEventUid" type="String">
 			<hint name="max-length">255</hint>
 		</field>
-		<field localized="true" name="title" type="String" />
+		<field localized="true" name="title" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field localized="true" name="description" type="String">
 			<hint-collection name="EDITOR" />
 		</field>

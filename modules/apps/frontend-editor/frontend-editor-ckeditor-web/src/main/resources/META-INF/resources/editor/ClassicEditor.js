@@ -123,6 +123,7 @@ const ClassicEditor = React.forwardRef(
 				<Editor
 					className="lfr-editable"
 					config={getConfig()}
+					data={contents}
 					name={name}
 					onBeforeLoad={(CKEDITOR) => {
 						CKEDITOR.disableAutoInline = true;
@@ -153,9 +154,6 @@ const ClassicEditor = React.forwardRef(
 								return editor.pasteFilter.check(name);
 							}
 						}
-					}}
-					onInstanceReady={({editor}) => {
-						editor.setData(contents, {internal: true});
 					}}
 					ref={editorRefsCallback}
 					{...otherProps}

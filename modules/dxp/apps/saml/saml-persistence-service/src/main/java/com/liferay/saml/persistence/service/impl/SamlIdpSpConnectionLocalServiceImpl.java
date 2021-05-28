@@ -58,8 +58,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Date now = new Date();
-
 		if (Validator.isNull(samlSpEntityId)) {
 			throw new SamlIdpSpConnectionSamlSpEntityIdException(
 				"SAML SP entity ID is null");
@@ -82,6 +80,8 @@ public class SamlIdpSpConnectionLocalServiceImpl
 
 		SamlIdpSpConnection samlIdpSpConnection =
 			samlIdpSpConnectionPersistence.create(samlIdpSpConnectionId);
+
+		Date now = new Date();
 
 		samlIdpSpConnection.setCompanyId(serviceContext.getCompanyId());
 		samlIdpSpConnection.setCreateDate(now);
@@ -220,8 +220,6 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Date now = new Date();
-
 		if (Validator.isNull(samlSpEntityId)) {
 			throw new SamlIdpSpConnectionSamlSpEntityIdException(
 				"SAML SP entity ID is null");
@@ -242,7 +240,10 @@ public class SamlIdpSpConnectionLocalServiceImpl
 			}
 		}
 
+		Date now = new Date();
+
 		samlIdpSpConnection.setModifiedDate(now);
+
 		samlIdpSpConnection.setAssertionLifetime(assertionLifetime);
 		samlIdpSpConnection.setAttributeNames(attributeNames);
 		samlIdpSpConnection.setAttributesEnabled(attributesEnabled);

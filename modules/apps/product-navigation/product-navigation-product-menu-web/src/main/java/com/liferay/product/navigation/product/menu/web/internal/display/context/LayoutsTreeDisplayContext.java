@@ -295,11 +295,11 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"showAddIcon",
 			() -> {
-				Group scopeGroup = _themeDisplay.getScopeGroup();
-
 				if (!hasAddLayoutPermission()) {
 					return false;
 				}
+
+				Group scopeGroup = _themeDisplay.getScopeGroup();
 
 				if (scopeGroup.isStaged() &&
 					Objects.equals(

@@ -45,9 +45,6 @@ public class SamlIdpSsoSessionLocalServiceImpl
 			String samlIdpSsoSessionKey, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUserById(serviceContext.getUserId());
-		Date now = new Date();
-
 		SamlIdpSsoSession samlIdpSsoSession =
 			samlIdpSsoSessionPersistence.fetchBySamlIdpSsoSessionKey(
 				samlIdpSsoSessionKey);
@@ -56,6 +53,9 @@ public class SamlIdpSsoSessionLocalServiceImpl
 			throw new DuplicateSamlIdpSsoSessionException(
 				"Duplicate SAML IDP SSO session for " + samlIdpSsoSessionKey);
 		}
+
+		User user = userLocalService.getUserById(serviceContext.getUserId());
+		Date now = new Date();
 
 		long samlIdpSsoSessionId = counterLocalService.increment(
 			SamlIdpSsoSession.class.getName());

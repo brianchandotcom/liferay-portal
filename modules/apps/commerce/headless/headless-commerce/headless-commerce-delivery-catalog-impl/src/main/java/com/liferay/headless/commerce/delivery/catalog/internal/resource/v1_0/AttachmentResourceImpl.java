@@ -65,9 +65,6 @@ public class AttachmentResourceImpl
 			Long accountId, Pagination pagination)
 		throws Exception {
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(channelId);
-
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
 
@@ -77,8 +74,9 @@ public class AttachmentResourceImpl
 		}
 
 		return _getAttachmentPage(
-			commerceChannel, cpDefinition, accountId,
-			CPAttachmentFileEntryConstants.TYPE_OTHER, pagination);
+			_commerceChannelLocalService.getCommerceChannel(channelId),
+			cpDefinition, accountId, CPAttachmentFileEntryConstants.TYPE_OTHER,
+			pagination);
 	}
 
 	@NestedField(parentClass = Product.class, value = "images")
@@ -88,9 +86,6 @@ public class AttachmentResourceImpl
 			Long accountId, Pagination pagination)
 		throws Exception {
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(channelId);
-
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
 
@@ -100,8 +95,9 @@ public class AttachmentResourceImpl
 		}
 
 		return _getAttachmentPage(
-			commerceChannel, cpDefinition, accountId,
-			CPAttachmentFileEntryConstants.TYPE_IMAGE, pagination);
+			_commerceChannelLocalService.getCommerceChannel(channelId),
+			cpDefinition, accountId, CPAttachmentFileEntryConstants.TYPE_IMAGE,
+			pagination);
 	}
 
 	private Long _getAccountId(

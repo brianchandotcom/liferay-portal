@@ -3205,7 +3205,7 @@ tell application "Safari" to quit
 					int fileLineCount = getFileLineCount();
 
 					for (int i = 0; i < fileLines.length; i++) {
-						if (fileLineCount <= i) {
+						if ((fileLineCount != -1) && (fileLineCount <= i)) {
 							break;
 						}
 

@@ -707,6 +707,9 @@ public class FragmentEntryLinkLocalServiceImpl
 			fragmentEntryLink.getFragmentEntryId());
 
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
+
+		// LPS-132154 Set configuration before processing the HTML
+
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
 
 		String processedHTML = _getProcessedHTML(

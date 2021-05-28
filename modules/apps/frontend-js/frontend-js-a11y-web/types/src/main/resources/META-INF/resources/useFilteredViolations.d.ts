@@ -11,30 +11,39 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 import React from 'react';
-import type { ImpactValue, Result } from 'axe-core';
+import type {ImpactValue, Result} from 'axe-core';
 export declare const TYPES: {
-    readonly CATEGORY_ADD: "CATEGORY_ADD";
-    readonly CATEGORY_REMOVE: "CATEGORY_REMOVE";
-    readonly IMPACT_ADD: "IMPACT_ADD";
-    readonly IMPACT_REMOVE: "IMPACT_REMOVE";
+	readonly CATEGORY_ADD: 'CATEGORY_ADD';
+	readonly CATEGORY_REMOVE: 'CATEGORY_REMOVE';
+	readonly IMPACT_ADD: 'IMPACT_ADD';
+	readonly IMPACT_REMOVE: 'IMPACT_REMOVE';
 };
 declare type TAction = {
-    payload: {
-        value: string;
-    };
-    type: 'CATEGORY_ADD' | 'CATEGORY_REMOVE' | 'IMPACT_ADD' | 'IMPACT_REMOVE';
+	payload: {
+		value: string;
+	};
+	type: 'CATEGORY_ADD' | 'CATEGORY_REMOVE' | 'IMPACT_ADD' | 'IMPACT_REMOVE';
 };
 declare type TState = {
-    filteredViolations: Array<Result> | [];
-    selectedCategories: Array<String> | [];
-    selectedImpact: Array<ImpactValue> | [];
-    violations: Array<Result> | [];
+	filteredViolations: Array<Result>;
+	selectedCategories: Array<String> | [];
+	selectedImpact: Array<ImpactValue> | [];
+	violations: Array<Result>;
 };
-export declare const useFilteredViolationsDispatch: () => React.Dispatch<TAction>;
+export declare const useFilteredViolationsDispatch: () => React.Dispatch<
+	TAction
+>;
 declare type FilteredViolationsContextProviderProps = {
-    children: (props: TState) => React.ReactChildren;
-    value: Array<Result>;
+	children: (props: TState) => React.ReactNode;
+	value: {
+		filteredViolations: Array<Result>;
+		violations: Array<Result>;
+	};
 };
-export declare function FilteredViolationsContextProvider({ children, value, }: FilteredViolationsContextProviderProps): JSX.Element;
+export declare function FilteredViolationsContextProvider({
+	children,
+	value,
+}: FilteredViolationsContextProviderProps): JSX.Element;
 export {};

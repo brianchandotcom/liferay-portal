@@ -11,10 +11,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /// <reference types="react" />
-import type { Result } from 'axe-core';
+
+import type {Result} from 'axe-core';
 declare type A11yPanelProps = {
-    violations: Array<Result>;
+	violations: Array<Result>;
 };
-export declare function A11yPanel({ violations }: A11yPanelProps): JSX.Element;
+export declare function A11yPanel({violations}: A11yPanelProps): JSX.Element;
 export {};

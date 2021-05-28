@@ -11,12 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 import React from 'react';
 interface IRule extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    quantity?: number;
-    ruleSubtext?: string | React.ReactChildren;
-    ruleText?: string | React.ReactChildren;
-    ruleTitle?: string | React.ReactChildren;
+	quantity?: number;
+	ruleSubtext?: string | React.ReactChildren;
+	ruleText?: string | React.ReactChildren;
+	ruleTitle?: string | React.ReactChildren;
 }
-declare function Rule({ quantity, ruleSubtext, ruleText, ruleTitle, ...otherProps }: IRule): JSX.Element;
+declare function Rule({
+	quantity,
+	ruleSubtext,
+	ruleText,
+	ruleTitle,
+	...otherProps
+}: IRule): JSX.Element;
 export default Rule;

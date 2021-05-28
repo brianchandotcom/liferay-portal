@@ -11,20 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-import type { CheckResult, ImpactValue } from 'axe-core';
-import type { A11yCheckerOptions } from './A11yChecker';
+
+import type {CheckResult, ImpactValue} from 'axe-core';
+import type {A11yCheckerOptions} from './A11yChecker';
 export declare type Violation = {
-    all: Array<CheckResult>;
-    any: Array<CheckResult>;
-    help: string;
-    helpUrl: string;
-    id: string;
-    impact?: ImpactValue;
+	all: Array<CheckResult>;
+	any: Array<CheckResult>;
+	help: string;
+	helpUrl: string;
+	id: string;
+	impact?: ImpactValue;
 };
 declare type Violations = {
-    modifyIndex: number;
-    target: string;
-    violations: Array<Violation>;
+	modifyIndex: number;
+	target: string;
+	violations: Array<Violation>;
 };
-export default function useA11y(props: Omit<A11yCheckerOptions, 'callback'>): Violations[];
+export default function useA11y(
+	props: Omit<A11yCheckerOptions, 'callback'>
+): Violations[];
 export {};

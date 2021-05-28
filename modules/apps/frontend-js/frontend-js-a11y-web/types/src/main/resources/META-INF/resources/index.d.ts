@@ -11,5 +11,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-export { A11y } from './A11y';
-export { A11yPanel } from './A11yPanel';
+
+export {A11y} from './A11y';
+export {A11yPanel} from './A11yPanel';

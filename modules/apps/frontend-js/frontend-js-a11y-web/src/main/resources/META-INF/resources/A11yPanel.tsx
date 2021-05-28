@@ -26,7 +26,7 @@ function isBetweenRange(childrenCount: number, newIndex: number) {
 }
 
 type SidebarPanelNavigatorProps = {
-	children: React.ReactChildren;
+	children: React.ReactNode;
 };
 
 type TNavigationState = {
@@ -113,6 +113,8 @@ function sortByImpact(violations: Array<Result>) {
 				getImpactPriority(currentViolation.impact)
 			);
 		}
+
+		return 0;
 	});
 }
 

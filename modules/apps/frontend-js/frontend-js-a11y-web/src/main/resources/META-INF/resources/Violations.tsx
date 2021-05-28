@@ -171,7 +171,7 @@ type TViolationNext = {
 };
 
 type ViolationsProps = {
-	next: (payload: TViolationNext) => void;
+	next?: (payload: TViolationNext) => void;
 	selectedCategories: Array<String>;
 	selectedImpact: Array<ImpactValue>;
 	violations: Array<Result>;
@@ -235,7 +235,11 @@ export default function Violations({
 									id
 								)}
 								key={id}
-								onClick={() => next({violationIndex: index})}
+								onClick={() => {
+									if (next) {
+										next({violationIndex: index});
+									}
+								}}
 								quantity={nodes.length}
 								ruleSubtext={
 									impact as string | React.ReactChildren

@@ -29,10 +29,10 @@ type TAction = {
 };
 
 type TState = {
-	filteredViolations: Array<Result> | [];
+	filteredViolations: Array<Result>;
 	selectedCategories: Array<String> | [];
 	selectedImpact: Array<ImpactValue> | [];
-	violations: Array<Result> | [];
+	violations: Array<Result>;
 };
 
 const INITIAL_STATE: TState = {
@@ -157,8 +157,11 @@ export const useFilteredViolationsDispatch = () =>
 	useContext(FilteredViolationsDispatchContext);
 
 type FilteredViolationsContextProviderProps = {
-	children: (props: TState) => React.ReactChildren;
-	value: Array<Result>;
+	children: (props: TState) => React.ReactNode;
+	value: {
+		filteredViolations: Array<Result>;
+		violations: Array<Result>;
+	};
 };
 
 export function FilteredViolationsContextProvider({

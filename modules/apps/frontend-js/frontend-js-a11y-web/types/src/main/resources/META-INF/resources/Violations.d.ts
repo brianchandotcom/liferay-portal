@@ -11,17 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /// <reference types="react" />
+
 import './Violations.scss';
-import type { ImpactValue, Result } from 'axe-core';
+import type {ImpactValue, Result} from 'axe-core';
 declare type TViolationNext = {
-    violationIndex: number;
+	violationIndex: number;
 };
 declare type ViolationsProps = {
-    next: (payload: TViolationNext) => void;
-    selectedCategories: Array<String>;
-    selectedImpact: Array<ImpactValue>;
-    violations: Array<Result>;
+	next?: (payload: TViolationNext) => void;
+	selectedCategories: Array<String>;
+	selectedImpact: Array<ImpactValue>;
+	violations: Array<Result>;
 };
-export default function Violations({ next, selectedCategories, selectedImpact, violations, }: ViolationsProps): JSX.Element;
+export default function Violations({
+	next,
+	selectedCategories,
+	selectedImpact,
+	violations,
+}: ViolationsProps): JSX.Element;
 export {};

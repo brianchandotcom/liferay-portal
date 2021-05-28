@@ -11,13 +11,19 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 import React from 'react';
-import type { ImpactValue } from 'axe-core';
+import type {ImpactValue} from 'axe-core';
 declare type PanelNavigatorProps = {
-    helpUrl: string;
-    impact: ImpactValue;
-    onBack: (event: React.MouseEvent<HTMLButtonElement>) => void;
-    title: string;
+	helpUrl: string;
+	impact?: ImpactValue;
+	onBack: (event: React.MouseEvent<HTMLButtonElement>) => void;
+	title: string;
 };
-declare function PanelNavigator({ helpUrl, impact, onBack, title }: PanelNavigatorProps): JSX.Element;
+declare function PanelNavigator({
+	helpUrl,
+	impact,
+	onBack,
+	title,
+}: PanelNavigatorProps): JSX.Element;
 export default PanelNavigator;

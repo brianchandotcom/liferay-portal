@@ -11,17 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /// <reference types="react" />
+
 import './Occurrence.scss';
-import type { Result } from 'axe-core';
+import type {Result} from 'axe-core';
 declare type OccurrenceProps = {
-    navigationState: {
-        occurrenceIndex: number;
-        occurrenceName: string;
-        violationIndex: number;
-    };
-    previous: () => void;
-    violations: Array<Result>;
+	navigationState?: {
+		occurrenceIndex: number;
+		occurrenceName: string;
+		violationIndex: number;
+	};
+	previous?: () => void;
+	violations: Array<Result>;
 };
-declare function Occurrence({ navigationState, previous, violations }: OccurrenceProps): JSX.Element;
+declare function Occurrence({
+	navigationState,
+	previous,
+	violations,
+}: OccurrenceProps): JSX.Element | null;
 export default Occurrence;

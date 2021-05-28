@@ -30,7 +30,7 @@ declare var Liferay: {
 };
 
 type PanelSectionProps = {
-	children: React.ReactChildren | string | JSX.Element;
+	children: React.ReactNode;
 	title: React.ReactNode;
 };
 
@@ -54,9 +54,9 @@ type TViolationNext = {
 };
 
 type ViolationProps = {
-	navigationState: {violationIndex: number};
-	next: (payload: TViolationNext) => void;
-	previous: () => void;
+	navigationState?: {violationIndex: number};
+	next?: (payload: TViolationNext) => void;
+	previous?: () => void;
 	violations: Array<Result>;
 };
 
@@ -66,6 +66,10 @@ function Violation({
 	previous,
 	violations,
 }: ViolationProps) {
+	if (!navigationState) {
+		return null;
+	}
+
 	const {violationIndex} = navigationState;
 
 	const {description, helpUrl, id, impact, nodes} = violations[
@@ -77,7 +81,11 @@ function Violation({
 			<PanelNavigator
 				helpUrl={helpUrl}
 				impact={impact}
-				onBack={() => previous()}
+				onBack={() => {
+					if (previous) {
+						previous();
+					}
+				}}
 				title={id}
 			/>
 			<div className="page-accessibility-tool__sidebar--violation-panel-wrapper">
@@ -96,13 +104,15 @@ function Violation({
 									<Rule
 										aria-label={occurrenceName}
 										key={index}
-										onClick={() =>
-											next({
-												occurrenceIndex: index,
-												occurrenceName,
-												violationIndex,
-											})
-										}
+										onClick={() => {
+											if (next) {
+												next({
+													occurrenceIndex: index,
+													occurrenceName,
+													violationIndex,
+												});
+											}
+										}}
 										ruleText={occurrenceName}
 									/>
 								);

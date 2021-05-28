@@ -11,19 +11,26 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-import { AxeResults, RunOptions } from 'axe-core';
+
+import {AxeResults, RunOptions} from 'axe-core';
 declare global {
-    interface Window {
-        requestIdleCallback(callback: Function): any;
-        cancelIdleCallback(handle: number): void;
-    }
+	interface Window {
+		requestIdleCallback(callback: Function): any;
+		cancelIdleCallback(handle: number): void;
+	}
 }
 declare type Task<T> = {
-    id: number;
-    callback: Function;
-    target: T;
+	id: number;
+	callback: Function;
+	target: T;
 };
-declare type Selector<T> = (this: void, value: T, index: number, obj: Array<T>) => unknown;
+declare type Selector<T> = (
+	this: void,
+	value: T,
+	index: number,
+	obj: Array<T>
+) => unknown;
+
 /**
  * Scheduler deals with scheduling a callback to A11y that runs axe-core at the
  * end, many of the logics and algorithms in the scheduler are restricted to
@@ -57,82 +64,97 @@ declare type Selector<T> = (this: void, value: T, index: number, obj: Array<T>) 
  * empty.
  */
 export declare class Scheduler<T> {
-    private taskIdCounter;
-    private readonly queue;
-    private currentTask;
-    private scheduledHostHandle;
-    private isCallbackScheduled;
-    private isPerformingWork;
-    /**
-     * The frame phases can be recognized as lanes which are a space of time
-     * where the scheduler yields up the main thread to the host in that time
-     * interval before taking up again.
-     */
-    private nextFramePhase;
-    /**
-     * The yield interval is defined based on the RAIL model, this value is
-     * static and means that we yield 100ms to the host and define the deadline
-     * to maximize the chances of hitting 60 fps.
-     */
-    private readonly yieldInterval;
-    deadline: number;
-    cancelHostCallback(): void;
-    hasCallback(selector: Selector<Task<T>>): Task<T> | undefined;
-    private flushWork;
-    private requestHostCallback;
-    private shouldYieldToHost;
-    private workLoop;
-    scheduleCallback(callback: Function, target: T): void;
+	private taskIdCounter;
+	private readonly queue;
+	private currentTask;
+	private scheduledHostHandle;
+	private isCallbackScheduled;
+	private isPerformingWork;
+
+	/**
+	 * The frame phases can be recognized as lanes which are a space of time
+	 * where the scheduler yields up the main thread to the host in that time
+	 * interval before taking up again.
+	 */
+	private nextFramePhase;
+
+	/**
+	 * The yield interval is defined based on the RAIL model, this value is
+	 * static and means that we yield 100ms to the host and define the deadline
+	 * to maximize the chances of hitting 60 fps.
+	 */
+	private readonly yieldInterval;
+	deadline: number;
+	cancelHostCallback(): void;
+	hasCallback(selector: Selector<Task<T>>): Task<T> | undefined;
+	private flushWork;
+	private requestHostCallback;
+	private shouldYieldToHost;
+	private workLoop;
+	scheduleCallback(callback: Function, target: T): void;
 }
 declare type Mutation = {
-    /**
-     * Attributes are the attributes of a node. The array is considered a
-     * conditional `or`, the same for the values of an attribute.
-     */
-    attributes: Record<string, Array<string>>;
-    /**
-     * NodeNames is an array of node names. This array is considered as a
-     * conditional `or`.
-     */
-    nodeNames: Array<string>;
+
+	/**
+	 * Attributes are the attributes of a node. The array is considered a
+	 * conditional `or`, the same for the values of an attribute.
+	 */
+	attributes: Record<string, Array<string>>;
+
+	/**
+	 * NodeNames is an array of node names. This array is considered as a
+	 * conditional `or`.
+	 */
+	nodeNames: Array<string>;
 };
 export interface A11yCheckerOptions {
-    /**
-     * AxeOptions is the set of settings that are passed to axe-core.
-     */
-    axeOptions?: RunOptions;
-    /**
-     * Callback for when the analysis is finished.
-     */
-    callback: (violations: AxeResults) => void;
-    /**
-     * Denylist is an optional list with CSS selectors that will be excluded
-     * from the analysis.
-     */
-    denylist?: Array<string>;
-    /**
-     * Mutation is an optional list of criteria on which a new analysis will be
-     * ignored.
-     */
-    mutations?: Record<MutationRecordType, Mutation>;
-    /**
-     * Targets is a list or element that represents the subtree(s) to be
-     * analyzed.
-     */
-    targets: Array<string>;
+
+	/**
+	 * AxeOptions is the set of settings that are passed to axe-core.
+	 */
+	axeOptions?: RunOptions;
+
+	/**
+	 * Callback for when the analysis is finished.
+	 */
+	callback: (violations: AxeResults) => void;
+
+	/**
+	 * Denylist is an optional list with CSS selectors that will be excluded
+	 * from the analysis.
+	 */
+	denylist?: Array<string>;
+
+	/**
+	 * Mutation is an optional list of criteria on which a new analysis will be
+	 * ignored.
+	 */
+	mutations?: Record<MutationRecordType, Mutation>;
+
+	/**
+	 * Targets is a list or element that represents the subtree(s) to be
+	 * analyzed.
+	 */
+	targets: Array<string>;
 }
 export declare class A11yChecker {
-    private callback;
-    private scheduler;
-    private observers;
-    private mutations?;
-    readonly axeOptions: RunOptions;
-    readonly denylist?: Array<Array<string>>;
-    constructor({ axeOptions, callback, denylist, mutations, targets, }: A11yCheckerOptions);
-    private run;
-    private recordCallback;
-    private mutationCallback;
-    observe(): void;
-    unobserve(): void;
+	private callback;
+	private scheduler;
+	private observers;
+	private mutations?;
+	readonly axeOptions: RunOptions;
+	readonly denylist?: Array<Array<string>>;
+	constructor({
+		axeOptions,
+		callback,
+		denylist,
+		mutations,
+		targets,
+	}: A11yCheckerOptions);
+	private run;
+	private recordCallback;
+	private mutationCallback;
+	observe(): void;
+	unobserve(): void;
 }
 export {};

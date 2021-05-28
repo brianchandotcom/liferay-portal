@@ -23,7 +23,7 @@ import type {ImpactValue} from 'axe-core';
 
 type PanelNavigatorProps = {
 	helpUrl: string;
-	impact: ImpactValue;
+	impact?: ImpactValue;
 	onBack: (event: React.MouseEvent<HTMLButtonElement>) => void;
 	title: string;
 };
@@ -41,16 +41,18 @@ function PanelNavigator({helpUrl, impact, onBack, title}: PanelNavigatorProps) {
 				</ClayLayout.ContentCol>
 				<ClayLayout.ContentCol expand>
 					<ClayList.ItemTitle>{title}</ClayList.ItemTitle>
-					<ClayList.ItemText className="text-secondary">
-						{`${impact} - `}
-						<ClayLink
-							className="text-primary"
-							displayType="unstyled"
-							href={helpUrl}
-						>
-							WCAG
-						</ClayLink>
-					</ClayList.ItemText>
+					{impact && (
+						<ClayList.ItemText className="text-secondary">
+							{`${impact} - `}
+							<ClayLink
+								className="text-primary"
+								displayType="unstyled"
+								href={helpUrl}
+							>
+								WCAG
+							</ClayLink>
+						</ClayList.ItemText>
+					)}
 				</ClayLayout.ContentCol>
 			</ClayButton>
 		</div>

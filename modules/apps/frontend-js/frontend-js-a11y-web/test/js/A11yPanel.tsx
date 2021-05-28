@@ -302,7 +302,7 @@ describe('A11yPanel', () => {
 
 			expect(
 				getByText(
-					'please-open-the-devTools-in-the-browser-to-see-selected-occurrence'
+					'please-open-the-devtools-in-the-browser-to-see-selected-occurrence'
 				)
 			).toBeInTheDocument();
 

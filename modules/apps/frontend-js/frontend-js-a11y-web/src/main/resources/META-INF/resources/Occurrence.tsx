@@ -21,7 +21,7 @@ import PanelNavigator from './PanelNavigator';
 import type {ImpactValue, Result} from 'axe-core';
 
 interface ICodeBlock extends React.HTMLAttributes<HTMLDivElement> {
-	children: React.ReactChildren | string | Array<String>;
+	children: React.ReactNode;
 }
 
 declare var Liferay: {
@@ -45,16 +45,20 @@ function CodeBlock({children, ...otherProps}: ICodeBlock) {
 }
 
 type OccurrenceProps = {
-	navigationState: {
+	navigationState?: {
 		occurrenceIndex: number;
 		occurrenceName: string;
 		violationIndex: number;
 	};
-	previous: () => void;
+	previous?: () => void;
 	violations: Array<Result>;
 };
 
 function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
+	if (!navigationState) {
+		return null;
+	}
+
 	const {occurrenceIndex, occurrenceName, violationIndex} = navigationState;
 
 	const currentViolation = violations[violationIndex];
@@ -68,13 +72,17 @@ function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 			<PanelNavigator
 				helpUrl={helpUrl}
 				impact={impact as ImpactValue}
-				onBack={() => previous()}
+				onBack={() => {
+					if (previous) {
+						previous();
+					}
+				}}
 				title={occurrenceName}
 			/>
 			<div className="page-accessibility-tool__sidebar--occurrence-description-wrapper">
 				<p className="text-secondary">
 					{Liferay.Language.get(
-						'please-open-the-devTools-in-the-browser-to-see-selected-occurrence'
+						'please-open-the-devtools-in-the-browser-to-see-selected-occurrence'
 					)}
 				</p>
 				<div className="my-3">

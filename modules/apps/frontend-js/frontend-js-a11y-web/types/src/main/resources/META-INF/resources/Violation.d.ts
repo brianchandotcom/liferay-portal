@@ -11,21 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 /// <reference types="react" />
+
 import './Violation.scss';
-import type { Result } from 'axe-core';
+import type {Result} from 'axe-core';
 declare type TViolationNext = {
-    occurrenceIndex: number;
-    occurrenceName: string;
-    violationIndex: number;
+	occurrenceIndex: number;
+	occurrenceName: string;
+	violationIndex: number;
 };
 declare type ViolationProps = {
-    navigationState: {
-        violationIndex: number;
-    };
-    next: (payload: TViolationNext) => void;
-    previous: () => void;
-    violations: Array<Result>;
+	navigationState?: {
+		violationIndex: number;
+	};
+	next?: (payload: TViolationNext) => void;
+	previous?: () => void;
+	violations: Array<Result>;
 };
-declare function Violation({ navigationState, next, previous, violations, }: ViolationProps): JSX.Element;
+declare function Violation({
+	navigationState,
+	next,
+	previous,
+	violations,
+}: ViolationProps): JSX.Element | null;
 export default Violation;

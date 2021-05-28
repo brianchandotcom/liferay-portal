@@ -859,14 +859,46 @@ definition {
 	}
 
 	@description = "Verify that Predefined Value has higher priority than Placeholder Text for the Numeric Field"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PredefinedValueHasHigherPriorityThanPlaceholderText {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132847 PredefinedValueHasHigherPriorityThanPlaceholderText pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Numeric Placeholder Text");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldPredefinedDate(fieldValue = "123");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertElementPresent(
+			key_fieldName = "Numeric",
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "123");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that when erasing the Predefined Value in the Numeric Field it will be replaced by the Placeholder Text"

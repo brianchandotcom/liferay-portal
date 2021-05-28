@@ -15,11 +15,20 @@
 package com.liferay.batch.engine.web.internal.portlet;
 
 import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.batch.engine.web.internal.display.context.BatchEngineImportTaskDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matija Petanjek
@@ -29,10 +38,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Batch Jobs",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.view-template=/view_import_tasks.jsp",
 		"javax.portlet.name=" + BatchEnginePortletKeys.BATCH,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,power-user,user"
@@ -40,4 +51,27 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class BatchEnginePortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		BatchEngineImportTaskDisplayContext
+			batchEngineImportTaskDisplayContext =
+				new BatchEngineImportTaskDisplayContext(
+					_batchEngineImportTaskLocalService, renderRequest,
+					renderResponse);
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			batchEngineImportTaskDisplayContext);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
+
 }

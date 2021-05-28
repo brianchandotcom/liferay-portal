@@ -396,8 +396,13 @@ public class StyleBookEntryLocalServiceImpl
 
 		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
 
-		_validateStyleBookEntryKey(
-			styleBookEntry.getGroupId(), styleBookEntryKey);
+		if (!StringUtil.equals(
+				_getStyleBookEntryKey(styleBookEntry.getStyleBookEntryKey()),
+				styleBookEntryKey)) {
+
+			_validateStyleBookEntryKey(
+				styleBookEntry.getGroupId(), styleBookEntryKey);
+		}
 
 		styleBookEntry.setUserId(userId);
 		styleBookEntry.setDefaultStyleBookEntry(defaultStylebookEntry);

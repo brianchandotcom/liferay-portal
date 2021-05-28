@@ -15,21 +15,16 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.planner.constants.BatchPlannerConstants;
 import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
 import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
-import com.liferay.batch.planner.service.BatchPlannerPlanService;
-import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
-import com.liferay.batch.planner.service.persistence.BatchPlannerPlanUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -43,7 +38,7 @@ import org.junit.runner.RunWith;
  * @author Igor Beslic
  */
 @RunWith(Arquillian.class)
-public class BatchPlannerPlanServiceTest {
+public class BatchPlannerPlanServiceTest extends BaseBatchPlannerTestCase {
 
 	@ClassRule
 	@Rule
@@ -66,7 +61,7 @@ public class BatchPlannerPlanServiceTest {
 		Class<?> exceptionClass = Exception.class;
 
 		try {
-			_addBatchPlannerPlan(user1, -1);
+			addBatchPlannerPlan(user1, -1);
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -79,7 +74,7 @@ public class BatchPlannerPlanServiceTest {
 		try {
 			exceptionClass = Exception.class;
 
-			_addBatchPlannerPlan(user1, RandomTestUtil.randomString(80));
+			addBatchPlannerPlan(user1, RandomTestUtil.randomString(80));
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -89,10 +84,10 @@ public class BatchPlannerPlanServiceTest {
 			"Add batch planner plan with too long name",
 			BatchPlannerPlanNameException.class, exceptionClass);
 
-		BatchPlannerPlan batchPlannerPlan1 = _addBatchPlannerPlan(user1, 300);
+		BatchPlannerPlan batchPlannerPlan1 = addBatchPlannerPlan(user1, 300);
 
 		try {
-			_addBatchPlannerPlan(user1, batchPlannerPlan1.getName());
+			addBatchPlannerPlan(user1, batchPlannerPlan1.getName());
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -108,85 +103,11 @@ public class BatchPlannerPlanServiceTest {
 
 		UserTestUtil.setUser(user2);
 
-		BatchPlannerPlan batchPlannerPlan2 = _addBatchPlannerPlan(
+		BatchPlannerPlan batchPlannerPlan2 = addBatchPlannerPlan(
 			user2, batchPlannerPlan1.getName());
 
 		Assert.assertEquals(
 			batchPlannerPlan1.getName(), batchPlannerPlan2.getName());
 	}
-
-	private BatchPlannerPlan _addBatchPlannerPlan(User user, int nameSeed)
-		throws PortalException {
-
-		BatchPlannerPlan batchPlannerPlan = _randomBatchPlannerPlan(
-			user, nameSeed);
-
-		return _batchPlannerPlanService.addBatchPlannerPlan(
-			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
-	}
-
-	private BatchPlannerPlan _addBatchPlannerPlan(User user, String name)
-		throws PortalException {
-
-		BatchPlannerPlan batchPlannerPlan = _randomBatchPlannerPlan(user, name);
-
-		return _batchPlannerPlanService.addBatchPlannerPlan(
-			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
-	}
-
-	private BatchPlannerPlan _randomBatchPlannerPlan(
-		boolean active, long companyId, boolean export, String externalType,
-		String externalURL, String internalClassName, String name,
-		long userId) {
-
-		BatchPlannerPlanPersistence batchPlannerPlanPersistence =
-			BatchPlannerPlanUtil.getPersistence();
-
-		BatchPlannerPlan batchPlannerPlan = batchPlannerPlanPersistence.create(
-			RandomTestUtil.nextLong());
-
-		batchPlannerPlan.setCompanyId(companyId);
-		batchPlannerPlan.setUserId(userId);
-		batchPlannerPlan.setActive(active);
-		batchPlannerPlan.setExternalType(externalType);
-		batchPlannerPlan.setExternalURL(externalURL);
-		batchPlannerPlan.setInternalClassName(internalClassName);
-		batchPlannerPlan.setName(name);
-		batchPlannerPlan.setExport(export);
-
-		return batchPlannerPlan;
-	}
-
-	private BatchPlannerPlan _randomBatchPlannerPlan(User user, int nameSalt) {
-		return _randomBatchPlannerPlan(user, _randomName(nameSalt));
-	}
-
-	private BatchPlannerPlan _randomBatchPlannerPlan(User user, String name) {
-		return _randomBatchPlannerPlan(
-			RandomTestUtil.randomBoolean(), user.getCompanyId(),
-			RandomTestUtil.randomBoolean(), _randomExternalType(),
-			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
-			name, user.getUserId());
-	}
-
-	private String _randomExternalType() {
-		String[] externalTypes = BatchPlannerConstants.EXTERNAL_TYPES;
-
-		return externalTypes
-			[RandomTestUtil.randomInt(0, externalTypes.length - 1)];
-	}
-
-	private String _randomName(int nameSalt) {
-		if (nameSalt < 0) {
-			return null;
-		}
-
-		return String.format(
-			"TEST-PLAN-%06d-%s", nameSalt % 999999,
-			RandomTestUtil.randomString(RandomTestUtil.randomInt(20, 57)));
-	}
-
-	@Inject
-	private BatchPlannerPlanService _batchPlannerPlanService;
 
 }

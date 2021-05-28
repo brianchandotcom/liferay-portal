@@ -45,22 +45,6 @@ definition {
 			siteName = "Site Name");
 	}
 
-	macro createWCAndAddToPage {
-		ACUtils.addWidgetToPage(widgetName = "Web Content Display");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		WebContent.addPGViaWCD(
-			webContentContent = "This is the web content test for AC",
-			webContentTitle = "Web Content AC Title");
-
-		Pause(locator1 = "500");
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-	}
-
 	macro createFormAndAddToPage {
 		ACUtils.addWidgetToPage(widgetName = "Form");
 
@@ -89,6 +73,22 @@ definition {
 		FormPortletConfiguration.selectForm();
 
 		PortletEntry.save();
+	}
+
+	macro createWCAndAddToPage {
+		ACUtils.addWidgetToPage(widgetName = "Web Content Display");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		WebContent.addPGViaWCD(
+			webContentContent = "This is the web content test for AC",
+			webContentTitle = "Web Content AC Title");
+
+		Pause(locator1 = "500");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
 	}
 
 	macro launchAC {

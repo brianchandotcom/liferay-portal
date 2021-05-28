@@ -198,12 +198,8 @@ public class LiferayRelengUtil {
 
 		Project rootProject = project.getRootProject();
 
-		String gitId = GitUtil.getGitResult(
-			project, rootProject.getProjectDir(), "rev-parse", "--short",
-			"HEAD");
-
 		File gitResultsDir = new File(
-			rootProject.getBuildDir(), "releng/git-results/" + gitId);
+			rootProject.getBuildDir(), "releng/git-results");
 
 		StringBuilder sb = new StringBuilder();
 

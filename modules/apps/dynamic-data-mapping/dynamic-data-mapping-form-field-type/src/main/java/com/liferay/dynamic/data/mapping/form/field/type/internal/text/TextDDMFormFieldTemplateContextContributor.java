@@ -90,17 +90,15 @@ public class TextDDMFormFieldTemplateContextContributor
 			).build();
 		}
 
-		parameters.put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
-
-		String predefinedValue = getPredefinedValue(
-			ddmFormField, ddmFormFieldRenderingContext);
-
-		if (predefinedValue != null) {
-			parameters.put("predefinedValue", predefinedValue);
-		}
-
-		return parameters;
+		return HashMapBuilder.<String, Object>put(
+			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext)
+		).put(
+			"predefinedValue",
+			DDMFormFieldTypeUtil.getPredefinedValue(
+				ddmFormField, ddmFormFieldRenderingContext)
+		).putAll(
+			parameters
+		).build();
 	}
 
 	protected String getDisplayStyle(DDMFormField ddmFormField) {
@@ -142,20 +140,6 @@ public class TextDDMFormFieldTemplateContextContributor
 		}
 
 		return options;
-	}
-
-	protected String getPredefinedValue(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		if (predefinedValue == null) {
-			return null;
-		}
-
-		return predefinedValue.getString(
-			ddmFormFieldRenderingContext.getLocale());
 	}
 
 	protected boolean isAutocompleteEnabled(DDMFormField ddmFormField) {

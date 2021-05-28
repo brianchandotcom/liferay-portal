@@ -27,6 +27,19 @@ import java.util.Locale;
  */
 public class DDMFormFieldTypeUtil {
 
+	public static String getPredefinedValue(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		if (ddmFormFieldRenderingContext.isViewMode()) {
+			return StringPool.BLANK;
+		}
+
+		return getPropertyValue(
+			ddmFormField, ddmFormFieldRenderingContext.getLocale(),
+			"predefinedValue");
+	}
+
 	public static String getPropertyValue(
 		DDMFormField ddmFormField, Locale locale, String propertyName) {
 

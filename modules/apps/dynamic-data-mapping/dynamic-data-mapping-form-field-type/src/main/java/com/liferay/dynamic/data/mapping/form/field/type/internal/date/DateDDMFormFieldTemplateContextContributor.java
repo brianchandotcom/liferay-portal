@@ -16,12 +16,11 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.date;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -66,7 +65,8 @@ public class DateDDMFormFieldTemplateContextContributor
 					LocaleThreadLocal.getThemeDisplayLocale()))
 		).put(
 			"predefinedValue",
-			_getPredefinedValue(ddmFormField, ddmFormFieldRenderingContext)
+			DDMFormFieldTypeUtil.getPredefinedValue(
+				ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"weekdaysShort",
 			Stream.of(
@@ -89,21 +89,6 @@ public class DateDDMFormFieldTemplateContextContributor
 		DayOfWeek dayOfWeek = weekFields.getFirstDayOfWeek();
 
 		return dayOfWeek.getValue() % 7;
-	}
-
-	private String _getPredefinedValue(
-		DDMFormField ddmFormField,
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
-
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		if (predefinedValue == null) {
-			return null;
-		}
-
-		return GetterUtil.getString(
-			predefinedValue.getString(
-				ddmFormFieldRenderingContext.getLocale()));
 	}
 
 	private List<Integer> _getYears() {

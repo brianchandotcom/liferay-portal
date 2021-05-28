@@ -46,9 +46,8 @@ public class ColorDDMFormFieldTemplateContextContributor
 
 		return HashMapBuilder.<String, Object>put(
 			"predefinedValue",
-			DDMFormFieldTypeUtil.getPropertyValue(
-				ddmFormField, ddmFormFieldRenderingContext.getLocale(),
-				"predefinedValue")
+			DDMFormFieldTypeUtil.getPredefinedValue(
+				ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"value",
 			DDMFormFieldTypeUtil.getPropertyValue(

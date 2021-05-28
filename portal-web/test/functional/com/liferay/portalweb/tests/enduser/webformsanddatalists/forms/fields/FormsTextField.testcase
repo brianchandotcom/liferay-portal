@@ -230,6 +230,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131348 CanBeValidatedUsingTheDoesNotMatchOption pending implementation
+
 	}
 
 	@description = "Verify that the "Is Not Email" option can be used to validate a Text Field"
@@ -369,6 +370,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131335 ChangesCanBeCanceled pending implementation
+
 	}
 
 	@description = "Verify that the Confirmation can be placed Horizontally"
@@ -441,6 +443,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131336 LabelCanBeEdited pending implementation
+
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
@@ -509,6 +512,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131341 PredefinedValueCanBeAdded pending implementation
+
 	}
 
 	@description = "Verify that the Field Reference can be Edited"
@@ -536,9 +540,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		Form.viewFieldReferenceFromTextField(key_fieldReferenceText = "Text1234");
-
-
-		
 	}
 
 	@description = "Verify that the Field Type can be changed"
@@ -549,6 +550,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131334 TypeCanBeChanged pending implementation
+
 	}
 
 	@description = "Verify that Validation options are reset after changing the Field Type from Text Field to Numeric Field"
@@ -559,6 +561,7 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO LPS-131352 ValidationIsResetAfterChangingFieldType pending implementation
+
 	}
 
 }

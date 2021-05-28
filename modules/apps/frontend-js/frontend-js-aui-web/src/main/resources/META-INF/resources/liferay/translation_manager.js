@@ -132,7 +132,7 @@ AUI.add(
 			'">' +
 			'<li class="lfr-trigger">' +
 			'<strong>' +
-			'<a class="nobr" href="javascript:;">' +
+			'<a class="text-nowrap" href="javascript:;">' +
 			'<img src="' +
 			themeDisplay.getPathThemeImages() +
 			'/common/add.png" />' +

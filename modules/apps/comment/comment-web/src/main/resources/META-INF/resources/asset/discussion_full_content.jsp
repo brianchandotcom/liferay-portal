@@ -44,7 +44,7 @@ if (comment instanceof WorkflowableComment) {
 				userName="<%= HtmlUtil.escape(comment.getUserName()) %>"
 			/>
 		</td>
-		<td class="align-top stretch">
+		<td class="align-top table-cell-expand">
 			<c:if test="<%= (workflowableComment != null) && (workflowableComment.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
 				<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
 

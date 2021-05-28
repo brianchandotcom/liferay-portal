@@ -150,6 +150,21 @@ definition {
 			privateLayout = "false");
 	}
 
+	@summary = "Get the plid from a layout by groupName and layoutName"
+	macro getPlid {
+		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
+
+		var groupId = JSONLayoutSetter.setGroupId(groupName = "${groupName}");
+
+		if (!(isSet(privateLayout))) {
+			privateLayout = "false";
+		}
+
+		JSONLayoutAPI._getPlidByName(
+			groupId = "${groupId}",
+			privateLayout = "${privateLayout}");
+	}
+
 	@summary = "Publish the draft layout"
 	macro publishLayout {
 		Variables.assertDefined(parameterList = "${plid}");

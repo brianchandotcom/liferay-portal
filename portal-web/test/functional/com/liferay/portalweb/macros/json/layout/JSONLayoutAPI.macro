@@ -89,6 +89,28 @@ definition {
 		return "${layoutId}";
 	}
 
+	@summary = "Get the plid from a layout by groupId and layoutName"
+	macro _getPlidByName {
+		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/get-layouts \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d privateLayout=${privateLayout}
+		''';
+
+		var plid = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['plid']");
+
+		if ("${plid}" == "[]") {
+			fail("FAIL. Cannot find layout.");
+		}
+
+		return "${plid}";
+	}
+
 	@summary = = "Get the typeSettings from a layout by using groupId and layoutName"
 	macro _getTypeSettingsByName {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");

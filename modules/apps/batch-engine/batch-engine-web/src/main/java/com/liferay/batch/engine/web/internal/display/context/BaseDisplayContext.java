@@ -39,6 +39,7 @@ public class BaseDisplayContext {
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 
+		companyId = PortalUtil.getCompanyId(renderRequest);
 		httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
@@ -84,6 +85,7 @@ public class BaseDisplayContext {
 			renderRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, "desc");
 	}
 
+	protected final long companyId;
 	protected final HttpServletRequest httpServletRequest;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;

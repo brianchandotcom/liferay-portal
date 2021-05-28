@@ -15,6 +15,7 @@
 package com.liferay.saml.web.internal.display.context;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -204,7 +205,8 @@ public class AttributeMappingDisplayContext {
 
 	private boolean _loadFromPortletRequest(String prefix) {
 		String userAttributeMappingsIndexesParam = ParamUtil.getString(
-			_portletRequest, prefix + ":userAttributeMappingsIndexes");
+			_portletRequest,
+			"attribute:" + prefix + ":userAttributeMappingsIndexes");
 
 		if (Validator.isBlank(userAttributeMappingsIndexesParam)) {
 			return false;
@@ -223,12 +225,16 @@ public class AttributeMappingDisplayContext {
 					new AbstractMap.SimpleEntry<>(
 						ParamUtil.getString(
 							_portletRequest,
-							prefix + ":userAttributeMappingFieldExpression-" +
-								prefixEntriesIndex),
+							StringBundler.concat(
+								"attribute:", prefix,
+								":userAttributeMappingFieldExpression-",
+								prefixEntriesIndex)),
 						ParamUtil.getString(
 							_portletRequest,
-							prefix + ":userAttributeMappingSamlAttribute-" +
-								prefixEntriesIndex)));
+							StringBundler.concat(
+								"attribute:", prefix,
+								":userAttributeMappingSamlAttribute-",
+								prefixEntriesIndex))));
 			}
 		}
 		else if (prefixEntries.isEmpty()) {

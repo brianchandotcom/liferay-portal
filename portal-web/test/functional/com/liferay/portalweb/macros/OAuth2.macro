@@ -92,7 +92,7 @@ definition {
 		if ("${newTab}" == "true") {
 			Open.openInTheNewTab(locator1 = "http://martamedio.com/oauth2-tester/");
 
-		    SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(locator1 = "null");
 		}
 		else {
 			Navigator.openSpecificURL(url = "http://martamedio.com/oauth2-tester/");

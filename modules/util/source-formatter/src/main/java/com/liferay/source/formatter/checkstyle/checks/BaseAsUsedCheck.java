@@ -332,7 +332,8 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 
 		List<DetailAST> branchingStatementDetailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.LITERAL_BREAK,
-			TokenTypes.LITERAL_CONTINUE, TokenTypes.LITERAL_RETURN);
+			TokenTypes.LITERAL_CONTINUE, TokenTypes.LITERAL_RETURN,
+			TokenTypes.LITERAL_THROW);
 
 		for (DetailAST branchingStatementDetailAST :
 				branchingStatementDetailASTList) {

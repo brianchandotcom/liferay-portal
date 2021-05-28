@@ -40,11 +40,13 @@ String backURL = (String)row.getParameter("backURL");
 		<portlet:param name="draftVersion" value="<%= String.valueOf(workflowDefinition.getVersion()) + StringPool.PERIOD + '0' %>" />
 	</liferay-portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + editURL + "');" %>'
-		url="javascript:;"
-	/>
+	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+		<liferay-ui:icon
+			message="edit"
+			onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + editURL + "');" %>'
+			url="javascript:;"
+		/>
+	</c:if>
 
 	<liferay-ui:icon
 		message="choose"

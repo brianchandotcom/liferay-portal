@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
 const DEFAULT_EMPTY = {
@@ -27,14 +28,14 @@ const DEFAULT_EMPTY = {
 
 const EmptyState = ({
 	button,
-	className = DEFAULT_EMPTY.empty.className,
+	className = '',
 	description,
 	title = DEFAULT_EMPTY.empty.title,
 }) => {
 	return (
 		<div className="taglib-empty-result-message">
 			<div className="text-center">
-				<div className={className} />
+				<div className={classNames('taglib-empty-state', className)} />
 
 				{title && (
 					<h1 className="taglib-empty-result-message-title">

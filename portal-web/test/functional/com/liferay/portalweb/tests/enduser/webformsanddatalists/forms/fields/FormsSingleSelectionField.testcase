@@ -736,8 +736,6 @@ definition {
 				key_position = "${optionSelector}",
 				locator1 = "FormFields#SELECT_ASSERT_RADIO_OPTION_ORDER");
 		}
-
-		
 	}
 
 	@description = "Verify that options can be rearranged"

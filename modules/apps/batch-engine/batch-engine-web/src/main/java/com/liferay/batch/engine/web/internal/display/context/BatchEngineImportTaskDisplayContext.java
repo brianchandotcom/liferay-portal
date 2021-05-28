@@ -85,7 +85,8 @@ public class BatchEngineImportTaskDisplayContext extends BaseDisplayContext {
 
 		List<BatchEngineImportTask> results =
 			_batchEngineImportTaskLocalService.getBatchEngineImportTasks(
-				_searchContainer.getStart(), _searchContainer.getEnd());
+				companyId, _searchContainer.getStart(),
+				_searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
 

@@ -87,7 +87,8 @@ public class BatchEngineExportTaskDisplayContext extends BaseDisplayContext {
 
 		List<BatchEngineExportTask> results =
 			_batchEngineExportTaskLocalService.getBatchEngineExportTasks(
-				_searchContainer.getStart(), _searchContainer.getEnd());
+				companyId, _searchContainer.getStart(),
+				_searchContainer.getEnd());
 
 		_searchContainer.setResults(results);
 

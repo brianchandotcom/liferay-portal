@@ -71,7 +71,6 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Select from List");
 
-
 		FormFields.editOptionsRow(
 			optionName = "Option1",
 			optionValue = "Option 1");

@@ -241,13 +241,38 @@ definition {
 	}
 
 	@description = "Verify that a Numeric Field only accepts numbers"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test OnlyAcceptsNumbers {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132833 OnlyAcceptsNumbers pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Numeric",
+			fieldValue = "123abc");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "123");
+			
 
 	}
 

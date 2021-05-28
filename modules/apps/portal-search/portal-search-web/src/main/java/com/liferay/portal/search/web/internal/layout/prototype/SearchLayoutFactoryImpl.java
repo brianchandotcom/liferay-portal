@@ -128,6 +128,14 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 			baseLayout.getTypeSettings(), baseLayout.isPrivateLayout(),
 			getFriendlyURLMap(), serviceContext);
 
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		unicodeProperties.put("searchLayoutCreated", "true");
+
+		group.setTypeSettingsProperties(unicodeProperties);
+
+		groupLocalService.updateGroup(group);
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Search Page created");
 		}
@@ -263,12 +271,6 @@ public class SearchLayoutFactoryImpl implements SearchLayoutFactory {
 		if (unicodeProperties.get("searchLayoutCreated") != null) {
 			return false;
 		}
-
-		unicodeProperties.put("searchLayoutCreated", "true");
-
-		group.setTypeSettingsProperties(unicodeProperties);
-
-		groupLocalService.updateGroup(group);
 
 		return true;
 	}

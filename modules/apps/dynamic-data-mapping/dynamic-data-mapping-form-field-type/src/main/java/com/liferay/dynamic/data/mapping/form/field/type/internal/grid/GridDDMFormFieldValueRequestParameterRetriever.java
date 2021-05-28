@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.form.field.type.internal.grid;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequestParameterRetriever;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -50,25 +51,29 @@ public class GridDDMFormFieldValueRequestParameterRetriever
 		String[] parameterValues = httpServletRequest.getParameterValues(
 			ddmFormFieldParameterName);
 
-		if (ArrayUtil.isNotEmpty(parameterValues)) {
-			if (parameterValues.length == 1) {
-				jsonObject = Optional.ofNullable(
-					getJSONObject(_log, parameterValues[0])
-				).orElse(
-					jsonObject
-				);
-			}
-			else {
-				for (String parameterValue : parameterValues) {
-					if (!parameterValue.isEmpty()) {
-						String[] parameterValueParts = parameterValue.split(
-							";");
+		if (ArrayUtil.isEmpty(parameterValues)) {
+			return jsonObject.toString();
+		}
 
-						jsonObject.put(
-							parameterValueParts[0], parameterValueParts[1]);
-					}
-				}
+		if (parameterValues.length == 1) {
+			jsonObject = Optional.ofNullable(
+				getJSONObject(_log, parameterValues[0])
+			).orElse(
+				jsonObject
+			);
+		}
+
+		for (String parameterValue : parameterValues) {
+			if (parameterValue.isEmpty() ||
+				!parameterValue.contains(StringPool.SEMICOLON)) {
+
+				continue;
 			}
+
+			String[] parameterValueParts = parameterValue.split(
+				StringPool.SEMICOLON);
+
+			jsonObject.put(parameterValueParts[0], parameterValueParts[1]);
 		}
 
 		return jsonObject.toString();

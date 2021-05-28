@@ -15,7 +15,9 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
+import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.batch.planner.service.test.util.BatchPlannerPlanTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -46,7 +48,14 @@ public abstract class BaseBatchPlannerTestCase {
 			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
 	}
 
+	protected BatchPlannerPolicy addBatchPlannerPolicy(User user, String... keyValues) {
+		_batchPlannerPolicyService.getOSGiServiceIdentifier();
+	}
+
 	@Inject
 	private BatchPlannerPlanService _batchPlannerPlanService;
+
+	@Inject
+	private BatchPlannerPolicyService _batchPlannerPolicyService;
 
 }

@@ -96,6 +96,12 @@ public class StyleBookEntryLocalServiceImpl
 
 		StyleBookEntry styleBookEntry = create();
 
+		String uuid = serviceContext.getUuid();
+
+		if (Validator.isNotNull(uuid)) {
+			styleBookEntry.setUuid(uuid);
+		}
+
 		styleBookEntry.setGroupId(groupId);
 		styleBookEntry.setCompanyId(companyId);
 		styleBookEntry.setUserId(user.getUserId());

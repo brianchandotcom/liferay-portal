@@ -29,6 +29,9 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
+					'@liferay/frontend-js-a11y-web': {
+						'/': '*',
+					},
 					'@liferay/frontend-js-react-web': {
 						'/': '*',
 						classnames: '*',
@@ -38,9 +41,6 @@ module.exports = {
 						'react-dnd': '*',
 						'react-dnd-html5-backend': '*',
 						'react-dom': '*',
-					},
-					'@liferay/frontend-js-a11y-web': {
-						'/': '*',
 					},
 					'@liferay/frontend-js-state-web': {
 						'/': '*',

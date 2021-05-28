@@ -295,9 +295,6 @@ definition {
 
 		Form.closeSidebar();
 
-
-
-
 		Form.gotoAddField(
 			fieldPositionNumber = "1",
 			fieldType = "Rich Text");

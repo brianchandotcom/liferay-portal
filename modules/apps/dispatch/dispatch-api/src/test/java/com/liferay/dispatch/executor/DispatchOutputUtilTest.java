@@ -45,7 +45,14 @@ public class DispatchOutputUtilTest {
 
 		Assert.assertTrue(output.contains("Truncation message"));
 
-		output = _getRandomOutput(5, 20);
+		output = _getOutput(20);
+
+		output = DispatchOutputUtil.truncate(
+			5, 5, "Truncation message", output);
+
+		Assert.assertTrue(output.contains("Truncation message"));
+
+		output = _getRandomOutput(5, 19);
 
 		Assert.assertFalse(output.contains("Truncation message"));
 
@@ -71,9 +78,7 @@ public class DispatchOutputUtilTest {
 			DispatchOutputUtil.truncate(-20, -10, null, output));
 	}
 
-	private String _getRandomOutput(int lineCountMin, int lineCountMax) {
-		int lineCount = RandomTestUtil.randomInt(lineCountMin, lineCountMax);
-
+	private String _getOutput(int lineCount) {
 		StringBundler sb = new StringBundler(lineCount);
 
 		for (int i = 0; i <= lineCount; i++) {
@@ -87,6 +92,10 @@ public class DispatchOutputUtilTest {
 		}
 
 		return sb.toString();
+	}
+
+	private String _getRandomOutput(int lineCountMin, int lineCountMax) {
+		return _getOutput(RandomTestUtil.randomInt(lineCountMin, lineCountMax));
 	}
 
 }

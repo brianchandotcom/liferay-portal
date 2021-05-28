@@ -2487,14 +2487,110 @@ definition {
 	}
 
 	@description = "Verify that Form Pages can be reordered"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PagesCanBeReordered {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130999 PagesCanBeReordered pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editPageTitle(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page B",
+			formTitleNumber = "2");
+
+		Form.addPage(formAddNewPageNumber = "2");
+
+		Form.editPageTitle(
+			formPageName = "Page C",
+			formTitleNumber = "3");
+
+
+		AssertElementPresent(
+			key_fieldName = "Page A",
+			key_movePage = "Move Page Up",
+			locator1 = "Form#PAGE_MOVE_DISABLED");
+
+		AssertElementPresent(
+			key_fieldName = "Page A",
+			key_movePage = "Move Page Down",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
+
+		AssertElementPresent(
+			key_fieldName = "Page B",
+			key_movePage = "Move Page Up",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
+
+		AssertElementPresent(
+			key_fieldName = "Page B",
+			key_movePage = "Move Page Down",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
+
+		AssertElementPresent(
+			key_fieldName = "Page C",
+			key_movePage = "Move Page Down",
+			locator1 = "Form#PAGE_MOVE_DISABLED");
+
+		AssertElementPresent(
+			key_fieldName = "Page C",
+			key_movePage = "Move Page Up",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
+
+		Click(
+			key_fieldName = "Page C",
+			key_movePage = "Move Page Up",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
+
+		Click(
+			key_fieldName = "Page C",
+			key_movePage = "Move Page Up",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
+
+		AssertElementPresent(
+			key_fieldName = "Page C",
+			key_pagination = "Page 1 of 3",
+			locator1 = "Form#PAGE_PAGINATION");
+
+		AssertElementPresent(
+			key_fieldName = "Page C",
+			key_movePage = "Move Page Up",
+			locator1 = "Form#PAGE_MOVE_DISABLED");
+
+		AssertElementPresent(
+			key_fieldName = "Page C",
+			key_movePage = "Move Page Down",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
+
+		Click(
+			key_fieldName = "Page A",
+			key_movePage = "Move Page Down",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
+
+		AssertElementPresent(
+			key_fieldName = "Page A",
+			key_pagination = "Page 3 of 3",
+			locator1 = "Form#PAGE_PAGINATION");
+
+		AssertElementPresent(
+			key_fieldName = "Page A",
+			key_movePage = "Move Page Down",
+			locator1 = "Form#PAGE_MOVE_DISABLED");
+
+		AssertElementPresent(
+			key_fieldName = "Page A",
+			key_movePage = "Move Page Up",
+			locator1 = "Form#PAGE_MOVE_ACTIVATED");
 	}
 
 	@description = "Verify that Form Pages can be reset"

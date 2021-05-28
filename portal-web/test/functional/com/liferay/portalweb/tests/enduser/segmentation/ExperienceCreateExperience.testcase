@@ -1700,7 +1700,10 @@ definition {
 
 		// Navigating to content page is a workaroud for LPS-132766, remove this when LPS-132766 get resolved
 
-		Navigator._gotoPage(pageName = "Experience Content Page");
+		AssertClick.assertPartialTextClickAt(
+			key_pageName = "Experience Content Page",
+			locator1 = "Home#PAGE",
+			value1 = "Experience Content Page");
 
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",

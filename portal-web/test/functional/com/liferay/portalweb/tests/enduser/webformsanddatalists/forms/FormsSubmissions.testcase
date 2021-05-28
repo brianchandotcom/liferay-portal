@@ -182,14 +182,60 @@ definition {
 	}
 
 	@description = "Verify that the Submit button's default value is restored if the Submit Button Label is left blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test SubmitButtonRestoredToDefaultIfLeftBlank {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131032 SubmitButtonRestoredToDefaultIfLeftBlank pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = "Send Form");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.viewSubmitButtonText(key_buttonText = "Send Form");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = " ");
+
+		Button.clickDone();
+
+		Form.save();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Form.viewSubmitButtonText(key_buttonText = "Submit");
+
+		Button.clickSubmitButton();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+			
 	}
 
 	@description = "Verify that a Form's Submit button's text can be customized"

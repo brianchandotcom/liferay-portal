@@ -531,9 +531,22 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			}
 		}
 		else {
+			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
+
+			Set<Locale> siteAvailableLocales = LanguageUtil.getAvailableLocales(
+				groupId);
+
+			String[] siteAvailableLocalesString = LocaleUtil.toLanguageIds(
+				siteAvailableLocales);
+
 			for (String availableLocaleString : availableLocalesString) {
-				ddmFormValues.addAvailableLocale(
-					LocaleUtil.fromLanguageId(availableLocaleString));
+				if (ArrayUtil.contains(
+						siteAvailableLocalesString, availableLocaleString,
+						false)) {
+
+					ddmFormValues.addAvailableLocale(
+						LocaleUtil.fromLanguageId(availableLocaleString));
+				}
 			}
 		}
 	}

@@ -382,6 +382,23 @@ public class UserFinderTest {
 		Assert.assertEquals(users.toString(), 1, users.size());
 	}
 
+	@Test
+	public void testParseQueryWithLimit() throws Exception {
+		String[] firstNames = {null};
+		String[] middleNames = {null};
+		String[] lastNames = {null};
+		String[] screenNames = {null};
+		String[] emailAddresses = {null};
+
+		_userFinder.findByC_FN_MN_LN_SN_EA_S(
+			TestPropsValues.getCompanyId(), firstNames, middleNames, lastNames,
+			screenNames, emailAddresses, 0,
+			LinkedHashMapBuilder.<String, Object>put(
+				"announcementsDeliveryEmailOrSms", "general"
+			).build(),
+			true, 0, 1, null);
+	}
+
 	private void _setOrganizationsMembershipStrict(boolean strict)
 		throws Exception {
 

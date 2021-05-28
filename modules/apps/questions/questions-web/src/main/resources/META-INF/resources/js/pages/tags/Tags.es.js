@@ -56,9 +56,9 @@ export default withRouter(({history, location}) => {
 	const [searchBoxValue, setSearchBoxValue] = useState('');
 	const [loading, setLoading] = useState(true);
 	const [orderBy, setOrderBy] = useState('number-of-usages');
-	const [page, setPage] = useState(1);
-	const [pageSize, setPageSize] = useState(20);
-	const [search, setSearch] = useState('');
+	const [page, setPage] = useState(null);
+	const [pageSize, setPageSize] = useState(null);
+	const [search, setSearch] = useState(null);
 	const [tags, setTags] = useState([]);
 
 	const [tagsByDate] = useManualQuery(getTagsOrderByDateCreatedQuery, {
@@ -70,6 +70,10 @@ export default withRouter(({history, location}) => {
 	});
 
 	useEffect(() => {
+		if (!page || !pageSize || search == null) {
+			return;
+		}
+
 		const fn =
 			orderBy === 'latest-created'
 				? tagsByDate().then(({data, loading}) => ({

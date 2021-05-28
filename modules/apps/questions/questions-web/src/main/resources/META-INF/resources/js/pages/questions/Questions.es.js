@@ -102,10 +102,10 @@ export default withRouter(
 		const [error, setError] = useState({});
 		const [filter, setFilter] = useState();
 		const [loading, setLoading] = useState(true);
-		const [page, setPage] = useState(1);
-		const [pageSize, setPageSize] = useState(20);
+		const [page, setPage] = useState(null);
+		const [pageSize, setPageSize] = useState(null);
 		const [questions, setQuestions] = useState([]);
-		const [search, setSearch] = useState('');
+		const [search, setSearch] = useState(null);
 		const [section, setSection] = useState({});
 		const [totalCount, setTotalCount] = useState(0);
 
@@ -301,6 +301,10 @@ export default withRouter(
 		);
 
 		useEffect(() => {
+			if (!page || !pageSize || search == null) {
+				return;
+			}
+
 			if (section.id == null && !currentTag) {
 				return;
 			}

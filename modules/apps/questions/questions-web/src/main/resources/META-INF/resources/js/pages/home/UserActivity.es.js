@@ -13,7 +13,7 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
-import {useQuery} from 'graphql-hooks';
+import {useManualQuery} from 'graphql-hooks';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -34,8 +34,10 @@ export default withRouter(
 		const context = useContext(AppContext);
 		const queryParams = useQueryParams(location);
 		const siteKey = context.siteKey;
-		const [page, setPage] = useState(1);
-		const [pageSize, setPageSize] = useState(20);
+		const [loading, setLoading] = useState(true);
+		const [page, setPage] = useState(null);
+		const [pageSize, setPageSize] = useState(null);
+		const [totalCount, setTotalCount] = useState(0);
 		const [userInfo, setUserInfo] = useState({
 			id: creatorId,
 			image: null,
@@ -59,9 +61,27 @@ export default withRouter(
 			document.title = creatorId;
 		}, [creatorId]);
 
-		const {data, loading} = useQuery(getUserActivityQuery, {
-			onCompleted(data) {
-				if (data.messageBoardMessages.items.lenght) {
+		const [fetchUserActivity, {data}] = useManualQuery(
+			getUserActivityQuery,
+			{
+				variables: {
+					filter: `creatorId eq ${creatorId}`,
+					page,
+					pageSize,
+					siteKey,
+				},
+			}
+		);
+
+		useEffect(() => {
+			if (!page || !pageSize) {
+				return;
+			}
+
+			setLoading(true);
+
+			fetchUserActivity().then(({data, loading}) => {
+				if (data.messageBoardMessages.items.length) {
 					const {
 						creator,
 						creatorStatistics,
@@ -74,14 +94,10 @@ export default withRouter(
 						rank: creatorStatistics.rank,
 					});
 				}
-			},
-			variables: {
-				filter: `creatorId eq ${creatorId}`,
-				page,
-				pageSize,
-				siteKey,
-			},
-		});
+				setTotalCount(data?.messageBoardMessages.totalCount || 0);
+				setLoading(loading);
+			});
+		}, [fetchUserActivity, page, pageSize]);
 
 		const hrefConstructor = (page) =>
 			`${
@@ -151,6 +167,7 @@ export default withRouter(
 							}
 							hrefConstructor={hrefConstructor}
 							loading={loading}
+							totalCount={totalCount}
 						>
 							{(question) => (
 								<QuestionRow

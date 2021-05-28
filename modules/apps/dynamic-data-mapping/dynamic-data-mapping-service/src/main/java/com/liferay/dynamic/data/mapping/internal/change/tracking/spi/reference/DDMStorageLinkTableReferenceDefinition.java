@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.dynamic.data.mapping.model.DDMFieldTable;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
@@ -38,6 +39,10 @@ public class DDMStorageLinkTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<DDMStorageLinkTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.singleColumnReference(
+			DDMStorageLinkTable.INSTANCE.classPK,
+			DDMFieldTable.INSTANCE.storageId);
 	}
 
 	@Override

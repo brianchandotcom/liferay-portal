@@ -888,6 +888,18 @@ definition {
 			value1 = "${key_fieldReferenceValue}");
 	}
 
+	macro viewFieldReferenceFromGridField {
+		Click(
+			key_fieldName = "Grid",
+			locator1 = "Form#FIELD_BODY");
+
+		Form.gotoAdvancedTab();
+
+		AssertTextEquals(
+			locator1 = "Form#FIELD_REFERENCE",
+			value1 = "${fieldReferenceValue}");
+	}
+
 	macro viewFieldRepeatableButton {
 		key_fieldName = "${fieldName}";
 

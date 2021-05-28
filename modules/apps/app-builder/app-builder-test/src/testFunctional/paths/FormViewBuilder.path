@@ -216,6 +216,12 @@
 </tr>
 
 <tr>
+	<td>FIELD_PLACEHOLDER_TEXT</td>
+	<td>//div[contains(@class,'ddm-drag')]//div[contains(*,'${key_fieldLabel}')]//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_placeHolder}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>SIDEBAR_ADVANCED_FIELD_REFERENCE</td>
 	<td>//input[contains(@name,'fieldReference')]</td>
 	<td></td>

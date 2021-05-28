@@ -102,14 +102,50 @@ definition {
 	}
 
 	@description = "Verify that a Numeric Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132835 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Placeholder Text Test");
+
+		FormViewBuilder.editText(
+			fieldName = "Help Text",
+			fieldValue = "Help Text Test");
+
+		FormFields.duplicateField();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Copy of Numeric");
+
+		FormViewBuilder.assertPlaceholderTextFormField(
+			key_fieldLabel = "Numeric",
+			placeHolder = "Placeholder Text Test");
+
+		FormViewBuilder.assertPlaceholderTextFormField(
+			key_fieldLabel = "Copy of Numeric",
+			placeHolder = "Placeholder Text Test");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Numeric",
+			fieldValue = "Help Text Test");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Copy of Numeric",
+			fieldValue = "Help Text Test");
 	}
 
 	@description = "Verify that a Numeric Field can be edited"

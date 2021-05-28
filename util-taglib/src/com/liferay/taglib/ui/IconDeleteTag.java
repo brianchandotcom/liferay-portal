@@ -91,7 +91,9 @@ public class IconDeleteTag extends IconTag {
 				}
 			}
 
-			setLinkCssClass("component-action");
+			if (!isLabel()) {
+				setLinkCssClass("component-action");
+			}
 		}
 
 		setIcon(icon);

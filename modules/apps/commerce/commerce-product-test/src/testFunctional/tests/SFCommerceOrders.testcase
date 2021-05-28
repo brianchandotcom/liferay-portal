@@ -62,7 +62,7 @@ definition {
 	@description = "COMMERCE-6380. As a buyer, I want to be able to delete an Order in Pending Order details page"
 	@priority = "3"
 	test DeleteOrderFromPendingOrderDetailsPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
 		property test.name.skip.portal.instance = "SFCommerceOrders#DeleteOrderFromPendingOrderDetailsPage";
 
 		// TODO Review

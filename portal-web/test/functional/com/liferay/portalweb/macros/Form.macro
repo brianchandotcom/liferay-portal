@@ -662,17 +662,17 @@ definition {
 	}
 
 	macro viewFieldReference {
-			Click(
-				key_fieldName = "${fieldName}",
-				locator1 = "Form#FIELD_BODY");
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "Form#FIELD_BODY");
 
-			Form.gotoAdvancedTab();
+		Form.gotoAdvancedTab();
 
-			AssertTextEquals(
-				locator1 = "Form#FIELD_REFERENCE",
-				value1 = "${key_fieldReference}");
+		AssertTextEquals(
+			locator1 = "Form#FIELD_REFERENCE",
+			value1 = "${key_fieldReference}");
 	}
-	
+
 	macro viewFormDescription {
 		AssertTextEquals(
 			locator1 = "Form#DESCRIPTION_FIELD",

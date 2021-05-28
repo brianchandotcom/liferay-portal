@@ -59,6 +59,22 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro createDMAndAddToPage {
+		ACUtils.addWidgetToPage(widgetName = "Documents and Media");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM AC Title");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+	}
+
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 

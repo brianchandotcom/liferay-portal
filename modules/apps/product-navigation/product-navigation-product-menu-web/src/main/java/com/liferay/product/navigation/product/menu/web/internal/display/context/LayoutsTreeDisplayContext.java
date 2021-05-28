@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -34,6 +36,9 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletQName;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -275,7 +280,14 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"addLayoutURL", _setSelPlid(getAddLayoutURL())
 		).put(
-			"configureLayoutSetURL", _setSelPlid(getConfigureLayoutSetURL())
+			"configureLayoutSetURL",
+			() -> {
+				if (!hasConfigureLayoutPermission()) {
+					return StringPool.BLANK;
+				}
+
+				return _setSelPlid(getConfigureLayoutSetURL());
+			}
 		).put(
 			"namespace", getNamespace()
 		).put(
@@ -284,6 +296,10 @@ public class LayoutsTreeDisplayContext {
 			"showAddIcon",
 			() -> {
 				Group scopeGroup = _themeDisplay.getScopeGroup();
+
+				if (!hasAddLayoutPermission()) {
+					return false;
+				}
 
 				if (scopeGroup.isStaged() &&
 					Objects.equals(
@@ -359,6 +375,49 @@ public class LayoutsTreeDisplayContext {
 			"collectionPK={collectionPK}&",
 			PortalUtil.getPortletNamespace(AssetListPortletKeys.ASSET_LIST),
 			"collectionType={collectionType}");
+	}
+
+	public boolean hasAddLayoutPermission() throws PortalException {
+		if (GroupPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroup(), ActionKeys.ADD_LAYOUT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean hasAdministrationPortletPermission() throws Exception {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			_themeDisplay.getCompanyId(), LayoutAdminPortletKeys.GROUP_PAGES);
+
+		if (portlet == null) {
+			return false;
+		}
+
+		ControlPanelEntry controlPanelEntry =
+			portlet.getControlPanelEntryInstance();
+
+		if (!controlPanelEntry.hasAccessPermission(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroup(), portlet)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean hasConfigureLayoutPermission() throws PortalException {
+		if (GroupPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroup(), ActionKeys.MANAGE_LAYOUTS)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isPrivateLayout() {

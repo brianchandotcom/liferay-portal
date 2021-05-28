@@ -2391,14 +2391,14 @@ jdbc.default.password=${database.password}</echo>
 						dest="tools/selenium"
 						src="tools/selenium/edgedriver.zip"
 					>
-						<patternset>
-							<include name="${selenium.edge.driver.executable}"/>
-							<exclude name="*/*"/>
-						</patternset>
 						<globmapper
 							from="*/${selenium.edge.driver.executable}"
 							to="${selenium.edge.driver.executable}"
 						/>
+						<patternset>
+							<include name="${selenium.edge.driver.executable}" />
+							<exclude name="*/*" />
+						</patternset>
 					</unzip>
 				</then>
 				<else>

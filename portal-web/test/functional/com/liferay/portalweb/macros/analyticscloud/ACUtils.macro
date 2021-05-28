@@ -29,6 +29,22 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
+	macro createDMAndAddToPage {
+		ACUtils.addWidgetToPage(widgetName = "Documents and Media");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		DMDocument.enableActionsMenuOnPortlet();
+
+		DMDocument.addPG(
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM AC Title");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+	}
+
 	macro createFormAndAddToPage {
 		ACUtils.addWidgetToPage(widgetName = "Form");
 
@@ -57,22 +73,6 @@ definition {
 		FormPortletConfiguration.selectForm();
 
 		PortletEntry.save();
-	}
-
-	macro createDMAndAddToPage {
-		ACUtils.addWidgetToPage(widgetName = "Documents and Media");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		DMDocument.enableActionsMenuOnPortlet();
-
-		DMDocument.addPG(
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "DM AC Title");
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
 	}
 
 	macro launchAC {

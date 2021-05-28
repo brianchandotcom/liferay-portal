@@ -41,12 +41,12 @@ definition {
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-        for (var n : list "1,2,3,4") {
+		for (var n : list "1,2,3,4") {
 			Navigator.gotoSitePage(
-			    pageName = "AC Page",
-			    siteName = "Site Name");
+				pageName = "AC Page",
+				siteName = "Site Name");
 
-            DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
 		}
 
 		Pause(locator1 = "10000");

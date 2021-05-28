@@ -277,17 +277,17 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_DELETE_BUTTON</td>
-	<td>//div[contains(@class,'toolbar-experience')]//button[contains(@title,'Delete Experience')]</td>
+	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Delete Experience')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPERIENCE_DUPLICATE_BUTTON</td>
-	<td>//div[contains(@class,'toolbar-experience')]//button[contains(@title,'Duplicate Experience')]</td>
+	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Duplicate Experience')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPERIENCE_EDIT_BUTTON</td>
-	<td>//div[contains(@class,'toolbar-experience')]//button[contains(@title,'Edit Experience')]</td>
+	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Edit Experience')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -307,7 +307,7 @@
 </tr>
 <tr>
 	<td>EXPERIENCE_PRIORITIZE_BUTTON</td>
-	<td>//div[contains(@class,'toolbar-experience')]//button[contains(@title,'Prioritize Experience')]</td>
+	<td>//div[contains(@class,'toolbar-experience')]//button[@*[contains(.,'Prioritize Experience')]]</td>
 	<td></td>
 </tr>
 <tr>

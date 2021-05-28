@@ -104,26 +104,28 @@ public class AssignAsUsedCheck extends BaseAsUsedCheck {
 				return;
 			}
 
-			if (checkMoveStatement(
-					assignDetailAST, dependentIdentDetailAST.getLineNo()) &&
-				!hasParentWithTokenType(
+			if (!hasParentWithTokenType(
 					assignDetailAST, TokenTypes.LITERAL_FOR,
 					TokenTypes.LITERAL_WHILE)) {
 
-				checkMoveAfterBranchingStatement(
-					detailAST, assignDetailAST, variableName,
-					dependentIdentDetailAST);
-				checkMoveInsideIfStatement(
-					assignDetailAST, nameDetailAST, variableName,
-					dependentIdentDetailAST,
-					dependentIdentDetailASTList.get(
-						dependentIdentDetailASTList.size() - 1));
+				int actionLineNumber = getActionLineNumber(assignDetailAST);
+
+				if (actionLineNumber != assignDetailAST.getLineNo()) {
+					checkMoveAfterBranchingStatement(
+						detailAST, assignDetailAST, variableName,
+						dependentIdentDetailAST, actionLineNumber);
+					checkMoveInsideIfStatement(
+						assignDetailAST, nameDetailAST, variableName,
+						dependentIdentDetailAST,
+						dependentIdentDetailASTList.get(
+							dependentIdentDetailASTList.size() - 1),
+						actionLineNumber);
+				}
 			}
 
 			checkInline(
-				assignDetailAST, variableName,
-				assignDetailAST.findFirstToken(TokenTypes.METHOD_CALL),
-				dependentIdentDetailAST, dependentIdentDetailASTList);
+				assignDetailAST, variableName, dependentIdentDetailAST,
+				dependentIdentDetailASTList);
 
 			return;
 		}

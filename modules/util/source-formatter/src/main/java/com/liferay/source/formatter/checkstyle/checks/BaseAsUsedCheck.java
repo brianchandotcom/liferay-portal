@@ -33,13 +33,51 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 
 	protected void checkInline(
 		DetailAST assignDetailAST, String variableName,
-		DetailAST assignMethodCallDetailAST, DetailAST identDetailAST,
-		List<DetailAST> dependentIdentDetailASTList) {
+		DetailAST identDetailAST, List<DetailAST> dependentIdentDetailASTList) {
 
-		if ((assignMethodCallDetailAST == null) ||
-			!variableName.equals(identDetailAST.getText()) ||
-			_isInsideMockitoMethodCall(identDetailAST)) {
+		if (!variableName.equals(identDetailAST.getText())) {
+			return;
+		}
 
+		DetailAST assignExpressionDetailAST = _getAssignExpressionDetailAST(
+			assignDetailAST);
+
+		if (assignExpressionDetailAST == null) {
+			return;
+		}
+
+		if (assignExpressionDetailAST.getType() == TokenTypes.METHOD_CALL) {
+			if (_hasChainStyle(
+					assignExpressionDetailAST, "build", "create.*", "map",
+					"put")) {
+
+				if (_isInsideStatementClause(identDetailAST)) {
+					return;
+				}
+			}
+			else {
+				if ((getStartLineNumber(assignExpressionDetailAST) !=
+						getEndLineNumber(assignExpressionDetailAST)) ||
+					(_isInsideStatementClause(identDetailAST) &&
+					 hasParentWithTokenType(
+						 identDetailAST, RELATIONAL_OPERATOR_TOKEN_TYPES))) {
+
+					return;
+				}
+
+				if (!_matchesGetOrSetCall(
+						assignExpressionDetailAST, identDetailAST,
+						variableName)) {
+
+					return;
+				}
+			}
+		}
+		else {
+			return;
+		}
+
+		if (_isInsideMockitoMethodCall(identDetailAST)) {
 			return;
 		}
 
@@ -59,30 +97,6 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			if (variableName.equals(dependentIdentDetailAST.getText()) &&
 				!equals(dependentIdentDetailAST, identDetailAST) &&
 				(dependentIdentDetailAST.getLineNo() > endLineNumber)) {
-
-				return;
-			}
-		}
-
-		if (_hasChainStyle(
-				assignMethodCallDetailAST, "build", "create.*", "map", "put")) {
-
-			if (_isInsideStatementClause(identDetailAST)) {
-				return;
-			}
-		}
-		else {
-			if ((getStartLineNumber(assignMethodCallDetailAST) !=
-					getEndLineNumber(assignMethodCallDetailAST)) ||
-				(_isInsideStatementClause(identDetailAST) &&
-				 hasParentWithTokenType(
-					 identDetailAST, RELATIONAL_OPERATOR_TOKEN_TYPES))) {
-
-				return;
-			}
-
-			if (!_matchesGetOrSetCall(
-					assignMethodCallDetailAST, identDetailAST, variableName)) {
 
 				return;
 			}
@@ -119,7 +133,7 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 
 	protected void checkMoveAfterBranchingStatement(
 		DetailAST detailAST, DetailAST assignDetailAST, String variableName,
-		DetailAST firstDependentIdentDetailAST) {
+		DetailAST firstDependentIdentDetailAST, int actionLineNumber) {
 
 		int endLineNumber = getEndLineNumber(assignDetailAST);
 
@@ -129,7 +143,13 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 				_getClosestParentLineNumber(
 					firstDependentIdentDetailAST, endLineNumber));
 
-		if (lastBranchingStatementDetailAST != null) {
+		if (lastBranchingStatementDetailAST == null) {
+			return;
+		}
+
+		int lineNumber = lastBranchingStatementDetailAST.getLineNo();
+
+		if ((actionLineNumber == -1) || (actionLineNumber > lineNumber)) {
 			log(
 				assignDetailAST, _MSG_MOVE_VARIABLE_AFTER_BRANCHING_STATEMENT,
 				variableName, lastBranchingStatementDetailAST.getText(),
@@ -140,7 +160,7 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 	protected void checkMoveInsideIfStatement(
 		DetailAST assignDetailAST, DetailAST nameDetailAST, String variableName,
 		DetailAST firstDependentIdentDetailAST,
-		DetailAST lastDependentIdentDetailAST) {
+		DetailAST lastDependentIdentDetailAST, int actionLineNumber) {
 
 		DetailAST elseOrIfStatementDetailAST = _getElseOrIfStatementDetailAST(
 			firstDependentIdentDetailAST, getEndLineNumber(assignDetailAST));
@@ -170,6 +190,29 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			return;
 		}
 
+		if (actionLineNumber != -1) {
+			parentDetailAST = elseOrIfStatementDetailAST;
+
+			while (true) {
+				DetailAST grandParentDetailAST = parentDetailAST.getParent();
+
+				if ((grandParentDetailAST.getType() ==
+						TokenTypes.LITERAL_ELSE) ||
+					(grandParentDetailAST.getType() == TokenTypes.LITERAL_IF)) {
+
+					parentDetailAST = grandParentDetailAST;
+
+					continue;
+				}
+
+				if (actionLineNumber < parentDetailAST.getLineNo()) {
+					return;
+				}
+
+				break;
+			}
+		}
+
 		if (elseOrIfStatementDetailAST.getType() == TokenTypes.LITERAL_ELSE) {
 			log(
 				nameDetailAST, _MSG_MOVE_VARIABLE_INSIDE_IF_STATEMENT,
@@ -192,23 +235,23 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 		}
 	}
 
-	protected boolean checkMoveStatement(DetailAST detailAST, int lineNumber) {
+	protected int getActionLineNumber(DetailAST detailAST) {
 		String actionNameRegex = StringBundler.concat(
-			"_?(add|channel|close|copy|create|delete|execute|import|",
-			"increment|manage|next|open|post|put|read|register|",
-			"resolve|run|send|test|transform|unzip|update|upsert|zip)",
-			"([A-Z].*)?");
+			"_?(re|un)?(add|calculate|channel|close|copy|create|decode|delete|",
+			"encode|execute|finish|import|increment|manage|next|open|post|put|",
+			"read|register|resolve|run|send|set|start|stop|test|transform|",
+			"update|upsert|zip)([A-Z].*)?");
 
 		if (_containsMethodName(
-				detailAST, actionNameRegex, "currentTimeMillis", "nextVersion",
-				"toString") ||
+				detailAST, actionNameRegex, "currentTimeMillis",
+				"getCurrentTimeMillis", "nextVersion", "toString") ||
 			_containsVariableType(detailAST, "ActionQueue", "File")) {
 
-			return false;
+			return detailAST.getLineNo();
 		}
 
 		if (detailAST.getType() != TokenTypes.VARIABLE_DEF) {
-			return true;
+			return -1;
 		}
 
 		List<DetailAST> dependentIdentDetailASTList =
@@ -216,10 +259,6 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 				detailAST, detailAST.getLineNo(), true);
 
 		for (DetailAST dependentIdentDetailAST : dependentIdentDetailASTList) {
-			if (dependentIdentDetailAST.getLineNo() > lineNumber) {
-				return true;
-			}
-
 			DetailAST elistDetailAST = getParentWithTokenType(
 				dependentIdentDetailAST, TokenTypes.ELIST);
 
@@ -233,12 +272,12 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 				String methodName = getMethodName(parentDetailAST);
 
 				if (methodName.matches(actionNameRegex)) {
-					return false;
+					return dependentIdentDetailAST.getLineNo();
 				}
 			}
 		}
 
-		return true;
+		return -1;
 	}
 
 	private boolean _containsMethodName(
@@ -277,6 +316,24 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 		}
 
 		return false;
+	}
+
+	private DetailAST _getAssignExpressionDetailAST(DetailAST assignDetailAST) {
+		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
+
+		if (firstChildDetailAST == null) {
+			return null;
+		}
+
+		if (firstChildDetailAST.getType() == TokenTypes.EXPR) {
+			return firstChildDetailAST.getFirstChild();
+		}
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			return firstChildDetailAST.getNextSibling();
+		}
+
+		return null;
 	}
 
 	private int _getClosestParentLineNumber(

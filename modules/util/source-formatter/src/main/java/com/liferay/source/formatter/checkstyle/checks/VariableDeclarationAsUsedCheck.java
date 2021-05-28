@@ -75,44 +75,23 @@ public class VariableDeclarationAsUsedCheck extends BaseAsUsedCheck {
 		DetailAST firstDependentIdentDetailAST =
 			dependentIdentDetailASTList.get(0);
 
-		if (checkMoveStatement(
-				variableDefinitionDetailAST,
-				firstDependentIdentDetailAST.getLineNo())) {
+		int actionLineNumber = getActionLineNumber(variableDefinitionDetailAST);
 
+		if (actionLineNumber != assignDetailAST.getLineNo()) {
 			checkMoveAfterBranchingStatement(
 				detailAST, assignDetailAST, variableName,
-				firstDependentIdentDetailAST);
+				firstDependentIdentDetailAST, actionLineNumber);
 			checkMoveInsideIfStatement(
 				assignDetailAST, nameDetailAST, variableName,
 				firstDependentIdentDetailAST,
 				dependentIdentDetailASTList.get(
-					dependentIdentDetailASTList.size() - 1));
+					dependentIdentDetailASTList.size() - 1),
+				actionLineNumber);
 		}
 
 		checkInline(
-			assignDetailAST, variableName,
-			_getAssignMethodCallDetailAST(assignDetailAST),
-			firstDependentIdentDetailAST, dependentIdentDetailASTList);
-	}
-
-	private DetailAST _getAssignMethodCallDetailAST(DetailAST assignDetailAST) {
-		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
-
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
-
-			return null;
-		}
-
-		firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-		if ((firstChildDetailAST != null) &&
-			(firstChildDetailAST.getType() == TokenTypes.METHOD_CALL)) {
-
-			return firstChildDetailAST;
-		}
-
-		return null;
+			assignDetailAST, variableName, firstDependentIdentDetailAST,
+			dependentIdentDetailASTList);
 	}
 
 }

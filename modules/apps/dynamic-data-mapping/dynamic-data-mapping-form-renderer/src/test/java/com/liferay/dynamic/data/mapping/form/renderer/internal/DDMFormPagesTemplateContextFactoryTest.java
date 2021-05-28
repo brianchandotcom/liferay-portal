@@ -601,7 +601,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, true);
+				ddmForm, ddmFormLayout, null, false, true, false);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 
@@ -826,7 +826,7 @@ public class DDMFormPagesTemplateContextFactoryTest extends PowerMockito {
 
 		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
 			createDDMFormPagesTemplateContextFactory(
-				ddmForm, ddmFormLayout, null, false, true, true);
+				ddmForm, ddmFormLayout, null, false, true, false);
 
 		List<Object> pages = ddmFormPagesTemplateContextFactory.create();
 

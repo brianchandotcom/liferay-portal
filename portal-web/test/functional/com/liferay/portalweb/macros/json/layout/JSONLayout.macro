@@ -21,7 +21,7 @@ definition {
 
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
-		JSONLayoutAPI._addLayout(
+		var plid = JSONLayoutAPI._addLayout(
 			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
@@ -29,6 +29,8 @@ definition {
 			privateLayout = "true",
 			serviceContext = "${serviceContext}",
 			type = "${type}");
+
+		return "${plid}";
 	}
 
 	@summary = "Add a public site page  or public child site page to an existing site or child site via groupName"
@@ -52,7 +54,7 @@ definition {
 
 		var type = JSONLayoutSetter.setType(type = "${type}");
 
-		JSONLayoutAPI._addLayout(
+		var plid = JSONLayoutAPI._addLayout(
 			friendlyURL = "${friendlyURL}",
 			groupId = "${groupId}",
 			layoutName = "${layoutName}",
@@ -60,6 +62,8 @@ definition {
 			privateLayout = "false",
 			serviceContext = "${serviceContext}",
 			type = "${type}");
+
+		return "${plid}";
 	}
 
 	@summary = "Add a widget to a private layout via widgetName"

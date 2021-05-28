@@ -21,7 +21,9 @@ definition {
 				-d serviceContext=${serviceContext}
 		''';
 
-		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+		var plid = JSONCurlUtil.post("${curl}", "$['plid']");
+
+		return "${plid}";
 	}
 
 	@summary = "Directly calls the JSON WS API to delete a layout"

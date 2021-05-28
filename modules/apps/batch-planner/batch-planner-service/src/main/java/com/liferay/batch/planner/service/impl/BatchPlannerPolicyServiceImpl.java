@@ -14,8 +14,13 @@
 
 package com.liferay.batch.planner.service.impl;
 
+import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.base.BatchPlannerPolicyServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,4 +36,74 @@ import org.osgi.service.component.annotations.Component;
 )
 public class BatchPlannerPolicyServiceImpl
 	extends BatchPlannerPolicyServiceBaseImpl {
+
+	@Override
+	public BatchPlannerPolicy addBatchPlannerPolicy(
+			long batchPlannerPlanId, String name, String value)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		return batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			permissionChecker.getUserId(), batchPlannerPlanId, name, value);
+	}
+
+	@Override
+	public BatchPlannerPolicy deleteBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		BatchPlannerPolicy batchPlannerPolicy = getBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+
+		return batchPlannerPolicyLocalService.deleteBatchPlannerPolicy(
+			batchPlannerPolicy.getBatchPlannerPlanId(), name);
+	}
+
+	@Override
+	public List<BatchPlannerPolicy> getBatchPlannerPolicies(
+			long batchPlannerPlanId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		return batchPlannerPolicyPersistence.findByBatchPlannerPlanId(
+			batchPlannerPlanId);
+	}
+
+	@Override
+	public BatchPlannerPolicy getBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		BatchPlannerPolicy batchPlannerPolicy = getBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+
+		return batchPlannerPolicyLocalService.getBatchPlannerPolicy(
+			batchPlannerPolicy.getBatchPlannerPlanId(), name);
+	}
+
+	@Override
+	public boolean hasBatchPlannerPolicy(long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		BatchPlannerPolicy batchPlannerPolicy = getBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+
+		return batchPlannerPolicyLocalService.hasBatchPlannerPolicy(
+			batchPlannerPolicy.getBatchPlannerPlanId(), name);
+	}
+
+	@Override
+	public BatchPlannerPolicy updateBatchPlannerPolicy(
+			long batchPlannerPlanId, String name, String value)
+		throws PortalException {
+
+		BatchPlannerPolicy batchPlannerPolicy = getBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+
+		return batchPlannerPolicyLocalService.updateBatchPlannerPolicy(
+			batchPlannerPolicy.getBatchPlannerPlanId(), name, value);
+	}
+
 }

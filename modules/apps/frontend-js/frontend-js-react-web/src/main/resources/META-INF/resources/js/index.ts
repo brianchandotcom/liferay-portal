@@ -24,11 +24,6 @@ export {default as useStateSafe} from './hooks/useStateSafe';
 export {default as useThunk} from './hooks/useThunk';
 export {default as useTimeout} from './hooks/useTimeout';
 
-// This is temporary, while this component don't move to TS
-// @ts-ignore
-
-export {default as PageAccessibilityToolSidebar} from './components/page-accessibility-tool/index';
-
 // Egregious hack because react-dnd expects `window.process` to exist:
 //
 // https://github.com/react-dnd/asap/blob/b6bebeb734/src/node/asap.ts#L24

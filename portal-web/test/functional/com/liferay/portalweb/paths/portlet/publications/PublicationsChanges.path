@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>COMMENT_BODY</td>
+	<td>//textarea[contains(@aria-label,'Comment')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTEXT_CHANGE_CATEGORY_RADIO</td>
 	<td>//input[contains(@type,'radio') and contains(@value,'${key_changeCategory}')]</td>
 	<td></td>

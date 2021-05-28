@@ -1,5 +1,21 @@
 definition {
 
+	macro addComment {
+		Type(
+			locator1 = "PublicationsChanges#COMMENT_BODY",
+			value1 = "${commentValue}");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertClick(
+			locator1 = "Button#REPLY",
+			value1 = "Reply");
+
+		Pause(locator1 = "3000");
+	}
+
 	macro changeDisplayStyle {
 		Click(locator1 = "PublicationsChanges#CURRENT_DISPLAY_STYLE");
 

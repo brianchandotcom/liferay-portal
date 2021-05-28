@@ -676,14 +676,68 @@ definition {
 	}
 
 	@description = "Verify that options can be displayed both Inline and as a list"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test OptionsCanBeDisplayedInlineAndAsList {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132204 OptionsCanBeDisplayedInlineAndAsList pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editOptionsRow(
+			optionName = "Option3",
+			optionValue = "Option 3",
+			rowNumber = "3");
+
+		AssertElementPresent(locator1 = "FormFields#SELECT_OPTIONS_INLINE_IDENTIFIER");
+
+		Form.gotoAdvancedTab();
+
+		Click(
+			key_fieldName = "Inline",
+			locator1 = "FormFields#SWITCHER");
+
+		AssertElementNotPresent(locator1 = "FormFields#SELECT_OPTIONS_INLINE_IDENTIFIER");
+
+		for (var optionSelector : list "1,2,3") {
+			AssertElementPresent(
+				key_optionLabel = "${optionSelector}",
+				key_position = "${optionSelector}",
+				locator1 = "FormFields#SELECT_ASSERT_RADIO_OPTION_ORDER");
+		}
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertElementNotPresent(locator1 = "FormFields#SELECT_OPTIONS_INLINE_IDENTIFIER");
+
+		for (var optionSelector : list "1,2,3") {
+			AssertElementPresent(
+				key_optionLabel = "${optionSelector}",
+				key_position = "${optionSelector}",
+				locator1 = "FormFields#SELECT_ASSERT_RADIO_OPTION_ORDER");
+		}
+
+		
 	}
 
 	@description = "Verify that options can be rearranged"

@@ -54,14 +54,45 @@ definition {
 	}
 
 	@description = "Verify that a Select From List Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131361 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1");
+
+		FormFields.duplicateField();
+
+		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Select from List");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Copy of Select from List");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "Copy of Select from List",
+			fieldName = "Copy of Select from List");
 	}
 
 	@description = "Verify that a Select From List Field can be edited"

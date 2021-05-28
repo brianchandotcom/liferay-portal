@@ -1072,6 +1072,61 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = "${escapedScript}");
 	}
 
+	@description = "This is a test for LPS-102711. The changes of site scope configuration in Instance Settings should be applied to the site."
+	@priority = "4"
+	test ViewChangesOfSiteScopeConfigurationDefinedInInstanceSettings {
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Navigate to Site Settings admin in custom site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "Test Site Name");
+		}
+
+		task ("Navigate to Message Boards configuration") {
+			Click(
+				key_itemName = "Message Boards",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("View the Checkbox of Message Boards is unchecked") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "Enable Message Boards Moderation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Navigate to Message Boards configuration in Instance Settings") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Message Boards",
+				configurationName = "Message Boards Moderation Workflow",
+				configurationScope = "Site Scope");
+		}
+
+		task ("Click in the Checkbox and save") {
+			Check.checkNotVisible(
+				checkboxName = "Enable Message Boards Moderation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("Navigate to Site Settings admin in custom site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "Test Site Name");
+		}
+
+		task ("Navigate to Message Boards configuration") {
+			Click(
+				key_itemName = "Message Boards",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+		}
+
+		task ("View the Checkbox of Message Boards is checked") {
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "Enable Message Boards Moderation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+	}
+
 	@description = "This ensures that the custom site logo can be viewed in cards and list views."
 	@priority = "4"
 	test ViewSiteLogo {

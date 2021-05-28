@@ -46,6 +46,8 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 			return;
 		}
 
+		String assignExpressionType = null;
+
 		if (assignExpressionDetailAST.getType() == TokenTypes.METHOD_CALL) {
 			if (_hasChainStyle(
 					assignExpressionDetailAST, "build", "create.*", "map",
@@ -72,6 +74,46 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 					return;
 				}
 			}
+
+			assignExpressionType = "method call";
+		}
+		else if (assignExpressionDetailAST.getType() ==
+					TokenTypes.LITERAL_NEW) {
+
+			DetailAST objBlockDetailAST =
+				assignExpressionDetailAST.findFirstToken(TokenTypes.OBJBLOCK);
+
+			if (objBlockDetailAST != null) {
+				return;
+			}
+
+			List<DetailAST> typeArgumentsDetailASTList = null;
+
+			DetailAST parentDetailAST = assignDetailAST.getParent();
+
+			if (parentDetailAST.getType() == TokenTypes.VARIABLE_DEF) {
+				typeArgumentsDetailASTList = getAllChildTokens(
+					parentDetailAST, true, TokenTypes.TYPE_ARGUMENTS);
+			}
+			else {
+				typeArgumentsDetailASTList = getAllChildTokens(
+					assignDetailAST, true, TokenTypes.TYPE_ARGUMENTS);
+			}
+
+			if (!typeArgumentsDetailASTList.isEmpty()) {
+				return;
+			}
+
+			DetailAST elistDetailAST = assignExpressionDetailAST.findFirstToken(
+				TokenTypes.ELIST);
+
+			if ((elistDetailAST == null) ||
+				(elistDetailAST.getChildCount() > 0)) {
+
+				return;
+			}
+
+			assignExpressionType = "new instance";
 		}
 		else {
 			return;
@@ -128,7 +170,7 @@ public abstract class BaseAsUsedCheck extends BaseCheck {
 
 		log(
 			assignDetailAST, _MSG_INLINE_VARIABLE, variableName,
-			identDetailAST.getLineNo());
+			assignExpressionType, identDetailAST.getLineNo());
 	}
 
 	protected void checkMoveAfterBranchingStatement(

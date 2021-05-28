@@ -9,8 +9,23 @@
 </thead>
 <tbody>
 <tr>
+	<td>COMMENT_ACTIONS</td>
+	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_commentValue}')]//div//button[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_BODY</td>
 	<td>//textarea[contains(@aria-label,'Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_BODY_SPECIFIC</td>
+	<td>//div[contains(@class,'autofit-col-expand') and contains(.,'${key_userName}')]//div//textarea[contains(@aria-label,'Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_VALUE</td>
+	<td>//div[(@class='autofit-row') and contains(.,'${key_commentValue}')]</td>
 	<td></td>
 </tr>
 <tr>

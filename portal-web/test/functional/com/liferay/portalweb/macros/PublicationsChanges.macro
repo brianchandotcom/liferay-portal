@@ -22,6 +22,30 @@ definition {
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
 	}
 
+	macro editComment {
+		Click.mouseOverClick(
+			key_commentValue = "${commentValue}",
+			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
+
+		MenuItem.click(menuItem = "Edit");
+
+		Pause(locator1 = "500");
+
+		Type.clickAtType(
+			key_userName = "${userName}",
+			locator1 = "PublicationsChanges#COMMENT_BODY_SPECIFIC",
+			value1 = "${commentValueEdit}");
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickSave();
+
+		AssertElementPresent(
+			key_commentValue = "${commentValueEdit}",
+			locator1 = "PublicationsChanges#COMMENT_VALUE",
+			value1 = "${commentValueEdit}");
+	}
+
 	macro viewChangesViaChangesStyle {
 		if ("${publishedPublication}" == "true") {
 			Click(

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.saml.constants.SamlCommandQueryConstants;
 import com.liferay.saml.constants.SamlProviderConfigurationKeys;
 import com.liferay.saml.opensaml.integration.internal.binding.HttpPostBinding;
 import com.liferay.saml.opensaml.integration.internal.binding.HttpRedirectBinding;
@@ -583,6 +584,12 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 				new String[] {"8080", "8443"})
 		);
 
+		when(
+			portal.getRelativeHomeURL(Mockito.any(MockHttpServletRequest.class))
+		).thenReturn(
+			RELATIVE_HOME_URL
+		);
+
 		groupLocalService = getMockPortalService(
 			GroupLocalServiceUtil.class, GroupLocalService.class);
 
@@ -647,7 +654,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 	}
 
 	protected static final String ACS_URL =
-		"http://localhost:8080/c/portal/saml/acs";
+		"http://localhost:8080" + BaseSamlTestCase.RELATIVE_HOME_URL +
+			SamlCommandQueryConstants.ACS;
 
 	protected static final long COMPANY_ID = 1;
 
@@ -664,18 +672,21 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 
 	protected static final String PORTAL_URL = "http://localhost:8080";
 
+	protected static final String RELATIVE_HOME_URL = "/web/guest";
+
 	protected static final String RELAY_STATE =
 		"http://localhost:8080/relaystate";
 
 	protected static final long SESSION_ID = 2;
 
 	protected static final String SLO_LOGOUT_URL =
-		"http://localhost:8080/c/portal/saml/slo_logout";
+		"http://localhost:8080" + RELATIVE_HOME_URL +
+			SamlCommandQueryConstants.SLO_LOGOUT;
 
 	protected static final String SP_ENTITY_ID = "testsp";
 
 	protected static final String SSO_URL =
-		"http://localhost:8080/c/portal/saml/sso";
+		"http://localhost:8080/c/portal/saml/redirect/sso";
 
 	protected static final String UNKNOWN_ENTITY_ID = "testunknown";
 
@@ -740,8 +751,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			if (entityId.equals(IDP_ENTITY_ID)) {
 				EntityDescriptor entityDescriptor =
 					MetadataGeneratorUtil.buildIdpEntityDescriptor(
-						PORTAL_URL, entityId, _idpNeedsSignature, true,
-						credential, null);
+						PORTAL_URL, RELATIVE_HOME_URL, entityId,
+						_idpNeedsSignature, true, credential, null);
 
 				IDPSSODescriptor idpSSODescriptor =
 					entityDescriptor.getIDPSSODescriptor(
@@ -781,7 +792,8 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 			}
 			else if (entityId.equals(SP_ENTITY_ID)) {
 				return MetadataGeneratorUtil.buildSpEntityDescriptor(
-					PORTAL_URL, entityId, true, true, false, credential, null);
+					PORTAL_URL, RELATIVE_HOME_URL, entityId, true, true, false,
+					credential, null);
 			}
 
 			return null;

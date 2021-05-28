@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.saml.constants.SamlCommandQueryConstants;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -82,17 +83,26 @@ public class SamlSameSiteLaxCookiesFilterTest {
 
 	@Test
 	public void testACSSameSiteLaxCookiesSupport() throws Exception {
-		_execute(new URL("http://localhost:8080/c/portal/saml/acs"));
+		_execute(
+			new URL(
+				"http://localhost:8080/web/guest" +
+					SamlCommandQueryConstants.ACS));
 	}
 
 	@Test
 	public void testSLOSameSiteLaxCookies() throws Exception {
-		_execute(new URL("http://localhost:8080/c/portal/saml/slo"));
+		_execute(
+			new URL(
+				"http://localhost:8080/web/guest" +
+					SamlCommandQueryConstants.SLO));
 	}
 
 	@Test
 	public void testSSOSameSiteLaxCookies() throws Exception {
-		_execute(new URL("http://localhost:8080/c/portal/saml/sso"));
+		_execute(
+			new URL(
+				"http://localhost:8080/web/guest" +
+					SamlCommandQueryConstants.WEB_SSO));
 	}
 
 	private void _execute(URL url) throws Exception {
@@ -104,6 +114,7 @@ public class SamlSameSiteLaxCookiesFilterTest {
 
 		httpClient.setDoOutput(true);
 		httpClient.setRequestMethod("POST");
+		httpClient.setRequestProperty("Accept", "text/html");
 
 		try (DataOutputStream dataOutputStream = new DataOutputStream(
 				httpClient.getOutputStream())) {

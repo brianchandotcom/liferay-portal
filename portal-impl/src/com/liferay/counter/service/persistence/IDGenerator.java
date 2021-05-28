@@ -18,7 +18,7 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 
 import java.io.Serializable;
 
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 
 /**
@@ -27,7 +27,9 @@ import org.hibernate.id.IdentifierGenerator;
 public class IDGenerator implements IdentifierGenerator {
 
 	@Override
-	public Serializable generate(SessionImplementor session, Object object) {
+	public Serializable generate(
+		SharedSessionContractImplementor session, Object object) {
+
 		Class<?> clazz = object.getClass();
 
 		String name = clazz.getName();

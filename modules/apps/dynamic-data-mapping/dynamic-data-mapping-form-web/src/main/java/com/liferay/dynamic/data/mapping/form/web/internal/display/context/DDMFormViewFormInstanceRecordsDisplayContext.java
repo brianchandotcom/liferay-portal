@@ -106,7 +106,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 
 		String redirect = ParamUtil.getString(_renderRequest, "redirect");
 
-		if (redirect.isEmpty()) {
+		if (Validator.isNull(redirect)) {
 			DDMFormAdminDisplayContext ddmFormAdminDisplayContext =
 				(DDMFormAdminDisplayContext)_renderRequest.getAttribute(
 					WebKeys.PORTLET_DISPLAY_CONTEXT);

@@ -527,13 +527,9 @@ public class JournalArticleLocalServiceImpl
 		updateDDMFields(
 			article, _formatContent(article, content, groupId, user));
 
-		if (classNameLocalService.getClassNameId(DDMStructure.class) ==
+		if (classNameLocalService.getClassNameId(DDMStructure.class) !=
 				classNameId) {
 
-			updateDDMStructurePredefinedValues(
-				classPK, content, serviceContext);
-		}
-		else {
 			updateDDMLinks(id, groupId, ddmStructureKey, ddmTemplateKey, true);
 		}
 
@@ -842,8 +838,6 @@ public class JournalArticleLocalServiceImpl
 		content = _formatContent(article, content, groupId, user);
 
 		updateDDMFields(article, content);
-
-		updateDDMStructurePredefinedValues(classPK, content, serviceContext);
 
 		return journalArticlePersistence.findByPrimaryKey(article.getId());
 	}
@@ -6189,9 +6183,6 @@ public class JournalArticleLocalServiceImpl
 
 		updateDDMFields(article, content);
 
-		updateDDMStructurePredefinedValues(
-			article.getClassPK(), content, serviceContext);
-
 		// Small image
 
 		saveImages(
@@ -8500,60 +8491,6 @@ public class JournalArticleLocalServiceImpl
 					classNameLocalService.getClassNameId(JournalArticle.class),
 					id, ddmTemplate.getTemplateId());
 			}
-		}
-	}
-
-	protected void updateDDMStructurePredefinedValues(
-			long ddmStructureId, String content, ServiceContext serviceContext)
-		throws PortalException {
-
-		DDMStructure ddmStructure = ddmStructureLocalService.fetchDDMStructure(
-			ddmStructureId);
-
-		if (ddmStructure == null) {
-			return;
-		}
-
-		DDMForm ddmForm = ddmStructure.getDDMForm();
-
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
-
-		Map<String, DDMFormField> fullHierarchyDDMFormFieldsMap =
-			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
-
-		Map<String, LocalizedValue> fieldsValuesMap = createFieldsValuesMap(
-			content);
-
-		for (Map.Entry<String, LocalizedValue> fieldValue :
-				fieldsValuesMap.entrySet()) {
-
-			String ddmFormFieldName = fieldValue.getKey();
-			LocalizedValue ddmFormFieldValue = fieldValue.getValue();
-
-			if (fullHierarchyDDMFormFieldsMap.containsKey(ddmFormFieldName)) {
-				updateDDMFormFieldPredefinedValue(
-					fullHierarchyDDMFormFieldsMap.get(ddmFormFieldName),
-					ddmFormFieldValue);
-			}
-
-			if (ddmFormFieldsMap.containsKey(ddmFormFieldName)) {
-				updateDDMFormFieldPredefinedValue(
-					ddmFormFieldsMap.get(ddmFormFieldName), ddmFormFieldValue);
-			}
-		}
-
-		boolean indexingEnabled = serviceContext.isIndexingEnabled();
-
-		try {
-			serviceContext.setIndexingEnabled(false);
-
-			ddmStructureLocalService.updateStructure(
-				serviceContext.getUserId(), ddmStructureId, ddmForm,
-				ddmStructure.getDDMFormLayout(), serviceContext);
-		}
-		finally {
-			serviceContext.setIndexingEnabled(indexingEnabled);
 		}
 	}
 

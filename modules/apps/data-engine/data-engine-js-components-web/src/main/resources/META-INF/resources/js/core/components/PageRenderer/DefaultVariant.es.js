@@ -45,6 +45,7 @@ export const Column = forwardRef(
 			children,
 			className,
 			column,
+			editable,
 			index,
 			onClick,
 			onMouseLeave,
@@ -67,7 +68,9 @@ export const Column = forwardRef(
 		return (
 			<ClayLayout.Col
 				{...addr}
-				className="col-ddm"
+				className={classnames('col-ddm', {
+					hide: firstField?.hideField && !editable,
+				})}
 				key={index}
 				md={column.size}
 				onClick={onClick}

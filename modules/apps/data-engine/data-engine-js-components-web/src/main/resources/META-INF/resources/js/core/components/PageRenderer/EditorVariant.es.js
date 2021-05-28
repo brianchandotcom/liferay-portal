@@ -136,6 +136,7 @@ export const Column = ({
 						resizing,
 				})}
 				column={column}
+				editable={editable}
 				index={columnIndex}
 				pageIndex={pageIndex}
 				ref={columnRef}
@@ -217,6 +218,7 @@ export const Page = ({
 	return (
 		<DefaultVariant.Page
 			activePage={activePage}
+			editable={editable}
 			forceAriaUpdate={forceAriaUpdate}
 			header={header}
 			invalidFormMessage={invalidFormMessage}

@@ -113,7 +113,7 @@ definition {
 	test ChangeActiveOrderFromOrdersList {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-5929 ChangeActiveOrderFromOrdersList pending implementation
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

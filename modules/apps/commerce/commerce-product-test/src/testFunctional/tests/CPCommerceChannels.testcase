@@ -400,7 +400,7 @@ definition {
 	test AddTaxRateSettingsByAddressTaxCalculation {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6120 AddTaxRateSettingsByAddressTaxCalculation
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -683,6 +683,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#CreateProductDisplayPage";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -706,8 +708,6 @@ definition {
 		Click(locator1 = "Button#CHOOSE");
 
 		SelectFrameTop();
-
-		// TODO COMMERCE-6197 CreateProductDisplayPage
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
@@ -799,7 +799,7 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceChannels#EditAvalaraTaxCalculation";
 
-		// TODO Fix Commerce tests that are skipping portal instances - COMMERCE-6586; COMMERCE-6588
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -856,8 +856,6 @@ definition {
 		Button.clickSave();
 
 		Refresh();
-
-		// TODO COMMERCE-6119 EditAvalaraTaxCalculation
 
 		Click(
 			key_entryName = "Avalara",
@@ -1010,7 +1008,7 @@ definition {
 	test EditConfigurationRemoteTaxCalculation {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-6122 EditConfigurationRemoteTaxCalculation
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

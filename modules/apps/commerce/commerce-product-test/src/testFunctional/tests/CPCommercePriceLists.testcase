@@ -31,6 +31,8 @@ definition {
 	test AddEditAndDeletePriceEntry {
 		property portal.acceptance = "false";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -608,6 +610,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#AddEditAndDeleteTierPriceEntry";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -729,8 +733,6 @@ definition {
 
 			CommerceEntry.clickNoError(menuItem = "Delete");
 		}
-
-		// TODO COMMERCE-6227 AddEditAndDeleteTierPriceEntry Pending Implementation
 
 		Refresh();
 
@@ -1830,6 +1832,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommercePriceLists#ViewExpiredPL";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
@@ -1881,7 +1885,7 @@ definition {
 		if ("${minutes}" == "58") {
 			var minutes = "00";
 
-		// TODO COMMERCE-6221 ViewExpiredPL Pending Implementation
+			// TODO COMMERCE-6221 ViewExpiredPL Pending Implementation
 
 			if ("${hours}" == "12") {
 				var hours = "01";

@@ -32,6 +32,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByNameAscending";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -75,6 +77,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByNameDescending";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -106,14 +110,10 @@ definition {
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
 			value1 = "Universal CV Boot");
 
-		// TODO COMMERCE-6174 AssertProductsAreSortedByNameDescending pending implementation
-
 		AssertTextEquals(
 			key_index = "6",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
 			value1 = "Universal CV Boot");
-		// TODO COMMERCE-6174 AssertProductsAreSortedByNameDescending pending implementation
-
 	}
 
 	@description = "COMMERCE-6176. As a buyer, I want to sort products by New Items using Sort widget and the results should be visible on the Search Results widget"
@@ -121,6 +121,8 @@ definition {
 	test AssertProductsAreSortedByNewItems {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByNewItems";
+
+		// TODO Review
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -137,8 +139,6 @@ definition {
 
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "New Items");
 
-		// TODO COMMERCE-6176 AssertProductsAreSortedByNewItems pending implementation
-
 		AssertTextEquals(
 			key_index = "1",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME_BY_INDEX",
@@ -151,6 +151,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByPriceHighToLow";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -158,8 +160,6 @@ definition {
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Price High to Low");
 
 		Pause(locator1 = "3000");
-
-		// TODO COMMERCE-6171 AssertProductsAreSortedByPriceHighToLow pending implementation
 
 		var indexProductArray = "1;Cams,2;Timing Belt,3;Oil Filter,4;Drive Shafts,5;Differential Ring and Pinion - Universal,6;Pulley Kit";
 
@@ -192,6 +192,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByPriceLowToHigh";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoSite(site = "Minium");
@@ -199,8 +201,6 @@ definition {
 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Price Low to High");
 
 		Pause(locator1 = "3000");
-
-		// TODO COMMERCE-6172 AssertProductsAreSortedByPriceLowToHigh pending implementation
 
 		var indexProductArray = "1;Mount,2;Wheel Seal - Front,3;Valve Cover Grommets,4;Exhaust Clamps,5;Piston,6;Transmission Cooler Line Assembly";
 
@@ -233,6 +233,8 @@ definition {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CommerceSort#AssertProductsAreSortedByRelevance";
 
+		// TODO Review
+
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		CommerceNavigator.gotoPortlet(
@@ -242,8 +244,6 @@ definition {
 		CommerceProducts.searchProduct(search = "ABS Sensor");
 
 		CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
-
-		// TODO COMMERCE-6175 AssertProductsAreSortedByRelevance pending implementation
 
 		Type(
 			key_fieldLabel = "Name",

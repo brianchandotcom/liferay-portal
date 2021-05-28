@@ -12,8 +12,6 @@
  * details.
  */
 
-import {openSelectionModal} from 'frontend-js-web';
-
 export default function ({itemSelectorURL, portletNamespace, selectEventName}) {
 	const openRecordSetModalButton = document.querySelector(
 		'.open-record-set-modal'
@@ -21,7 +19,9 @@ export default function ({itemSelectorURL, portletNamespace, selectEventName}) {
 
 	if (openRecordSetModalButton) {
 		openRecordSetModalButton.addEventListener('click', () => {
-			openSelectionModal({
+			const openerWindow = Liferay.Util.getOpener();
+
+			openerWindow.Liferay.Util.openSelectionModal({
 				onSelect: (selectedItem) => {
 					const form = document.getElementById(
 						`${portletNamespace}fm`
@@ -41,6 +41,7 @@ export default function ({itemSelectorURL, portletNamespace, selectEventName}) {
 				selectEventName,
 				title: Liferay.Language.get('data-definitions'),
 				url: itemSelectorURL,
+				zIndex: 9999,
 			});
 		});
 	}

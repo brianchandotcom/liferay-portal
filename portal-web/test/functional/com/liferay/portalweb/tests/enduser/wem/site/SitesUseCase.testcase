@@ -1075,11 +1075,11 @@ definition {
 	@description = "This is a test for LPS-102711. The changes of site scope configuration in Instance Settings should be applied to the site."
 	@priority = "4"
 	test ViewChangesOfSiteScopeConfigurationDefinedInInstanceSettings {
-		task ("Add a site via JSON") {
+		task ("Add a new site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
-		task ("Navigate to Site Settings admin in custom site") {
+		task ("Navigate to Site Settings admin in new site") {
 			Site.openSiteSettingsAdmin(siteURLKey = "Test Site Name");
 		}
 
@@ -1089,7 +1089,7 @@ definition {
 				locator1 = "ListGroupItem#ITEM_TEXT");
 		}
 
-		task ("View the Checkbox of Message Boards is unchecked") {
+		task ("View the checkbox of Message Boards is unchecked") {
 			AssertNotChecked.assertNotCheckedNotVisible(
 				checkboxName = "Enable Message Boards Moderation",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -1102,7 +1102,7 @@ definition {
 				configurationScope = "Site Scope");
 		}
 
-		task ("Click in the Checkbox and save") {
+		task ("Check the Enable Message Boards Moderation") {
 			Check.checkNotVisible(
 				checkboxName = "Enable Message Boards Moderation",
 				locator1 = "Checkbox#ANY_CHECKBOX");
@@ -1110,7 +1110,7 @@ definition {
 			SystemSettings.saveConfiguration();
 		}
 
-		task ("Navigate to Site Settings admin in custom site") {
+		task ("Navigate to Site Settings admin in new site") {
 			Site.openSiteSettingsAdmin(siteURLKey = "Test Site Name");
 		}
 
@@ -1120,7 +1120,7 @@ definition {
 				locator1 = "ListGroupItem#ITEM_TEXT");
 		}
 
-		task ("View the Checkbox of Message Boards is checked") {
+		task ("View the checkbox of Message Boards is checked") {
 			AssertChecked.assertCheckedNotVisible(
 				checkboxName = "Enable Message Boards Moderation",
 				locator1 = "Checkbox#ANY_CHECKBOX");

@@ -282,7 +282,28 @@ public abstract class BaseCheck extends AbstractCheck {
 		CommonASTWithHiddenTokens commonASTWithHiddenTokens =
 			(CommonASTWithHiddenTokens)detailAST;
 
-		return commonASTWithHiddenTokens.getHiddenBefore();
+		CommonHiddenStreamToken commonHiddenStreamToken =
+			commonASTWithHiddenTokens.getHiddenBefore();
+
+		if (commonHiddenStreamToken != null) {
+			return commonHiddenStreamToken;
+		}
+
+		DetailAST previousSiblingDetailAST = detailAST.getPreviousSibling();
+
+		while (true) {
+			if (previousSiblingDetailAST == null) {
+				return null;
+			}
+
+			commonHiddenStreamToken = getHiddenAfter(previousSiblingDetailAST);
+
+			if (commonHiddenStreamToken != null) {
+				return commonHiddenStreamToken;
+			}
+
+			previousSiblingDetailAST = previousSiblingDetailAST.getLastChild();
+		}
 	}
 
 	protected List<String> getImportNames(DetailAST detailAST) {
@@ -871,29 +892,13 @@ public abstract class BaseCheck extends AbstractCheck {
 		CommonHiddenStreamToken commonHiddenStreamToken = getHiddenBefore(
 			detailAST);
 
-		if (commonHiddenStreamToken != null) {
-			String text = commonHiddenStreamToken.getText();
-
-			return text.contains("PLACEHOLDER");
+		if (commonHiddenStreamToken == null) {
+			return false;
 		}
 
-		DetailAST previousSiblingDetailAST = detailAST.getPreviousSibling();
+		String text = commonHiddenStreamToken.getText();
 
-		while (true) {
-			if (previousSiblingDetailAST == null) {
-				return false;
-			}
-
-			commonHiddenStreamToken = getHiddenAfter(previousSiblingDetailAST);
-
-			if (commonHiddenStreamToken != null) {
-				String text = commonHiddenStreamToken.getText();
-
-				return text.contains("PLACEHOLDER");
-			}
-
-			previousSiblingDetailAST = previousSiblingDetailAST.getLastChild();
-		}
+		return text.contains("PLACEHOLDER");
 	}
 
 	protected boolean isArray(DetailAST detailAST) {

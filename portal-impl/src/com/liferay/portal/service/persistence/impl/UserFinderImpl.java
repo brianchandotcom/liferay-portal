@@ -912,25 +912,33 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				sql = StringUtil.removeSubstring(sql, _STATUS_SQL);
 			}
 
-			StringBundler sb = new StringBundler((paramsList.size() * 3) + 2);
-
-			for (int i = 0; i < paramsList.size(); i++) {
-				if (i == 0) {
-					sb.append(replaceJoinAndWhere(sql, paramsList.get(i)));
-				}
-				else {
-					sb.append(" UNION (");
-					sb.append(replaceJoinAndWhere(sql, paramsList.get(i)));
-					sb.append(StringPool.CLOSE_PARENTHESIS);
-				}
-			}
+			int initialCapacity = (paramsList.size() * 3) - 2;
 
 			if (orderByComparator != null) {
-				sb.append(" ORDER BY ");
-				sb.append(orderByComparator.toString());
+				initialCapacity += 2;
 			}
 
-			sql = sb.toString();
+			if (initialCapacity > 0) {
+				StringBundler sb = new StringBundler(initialCapacity);
+
+				for (int i = 0; i < paramsList.size(); i++) {
+					if (i == 0) {
+						sb.append(replaceJoinAndWhere(sql, paramsList.get(i)));
+					}
+					else {
+						sb.append(" UNION (");
+						sb.append(replaceJoinAndWhere(sql, paramsList.get(i)));
+						sb.append(StringPool.CLOSE_PARENTHESIS);
+					}
+				}
+
+				if (orderByComparator != null) {
+					sb.append(" ORDER BY ");
+					sb.append(orderByComparator.toString());
+				}
+
+				sql = sb.toString();
+			}
 
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 

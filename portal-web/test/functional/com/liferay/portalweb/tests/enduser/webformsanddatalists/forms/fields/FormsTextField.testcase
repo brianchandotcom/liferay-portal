@@ -32,14 +32,52 @@ definition {
 	}
 
 	@description = "Verify that a Text Field can be Autocompleted from a list of options"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanBeAutocompletedUsingAList {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131349 CanBeAutocompletedUsingAList pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+		FormViewBuilder.editAutoComplete(key_optionValue = "Manually");
+
+		Type(
+			key_rowNumber = "1",
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "Option 1");
+
+		Type(
+			key_rowNumber = "2",
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "Option 2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Option");
+
+		Click(
+			key_selectOption = "Option 1",
+			locator1 = "FormViewBuilder#SELECT_FIELD_OPTIONS_LIST");
+
+		Click(
+			key_text = "Submit",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
 	@description = "Verify that a Text Field can be created"

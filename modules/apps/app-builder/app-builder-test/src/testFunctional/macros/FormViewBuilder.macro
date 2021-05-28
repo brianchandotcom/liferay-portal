@@ -368,6 +368,18 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
+	macro editAutoComplete {
+		AssertClick(
+			locator1 = "FormViewBuilder#SIDEBAR_AUTOCOMPLETE_TAB",
+			value1 = "Autocomplete");
+
+		Form.enableAutocompleteConfiguration();
+
+		FormFields.viewRadioValue(
+			fieldName = "dataSourceType",
+			fieldValue = "${key_optionValue}");
+	}
+
 	macro editDate {
 		Type(
 			key_fieldName = "${fieldName}",

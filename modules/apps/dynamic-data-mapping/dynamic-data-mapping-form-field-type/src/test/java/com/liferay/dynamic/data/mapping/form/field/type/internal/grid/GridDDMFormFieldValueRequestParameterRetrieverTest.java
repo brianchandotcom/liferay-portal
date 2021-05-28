@@ -108,7 +108,25 @@ public class GridDDMFormFieldValueRequestParameterRetrieverTest {
 			parameterValue);
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
+	public void testGetRequestParameterValueWithOneOption() {
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addParameter(_PARAMETER_NAME, "row1;column1");
+
+		String parameterValue =
+			_gridDDMFormFieldValueRequestParameterRetriever.get(
+				mockHttpServletRequest, _PARAMETER_NAME, StringPool.BLANK);
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"row1", "column1"
+			).toString(),
+			parameterValue);
+	}
+
+	@Test
 	public void testGetRequestParameterWithMalformedString() {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -116,8 +134,15 @@ public class GridDDMFormFieldValueRequestParameterRetrieverTest {
 		mockHttpServletRequest.addParameter(
 			_PARAMETER_NAME, "row1/column2", "row2;column1");
 
-		_gridDDMFormFieldValueRequestParameterRetriever.get(
-			mockHttpServletRequest, _PARAMETER_NAME, StringPool.BLANK);
+		String parameterValue =
+			_gridDDMFormFieldValueRequestParameterRetriever.get(
+				mockHttpServletRequest, _PARAMETER_NAME, StringPool.BLANK);
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"row2", "column1"
+			).toString(),
+			parameterValue);
 	}
 
 	@Test

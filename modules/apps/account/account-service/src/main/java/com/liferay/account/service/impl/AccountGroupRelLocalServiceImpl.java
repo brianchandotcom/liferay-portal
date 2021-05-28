@@ -16,15 +16,19 @@ package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.DuplicateAccountGroupRelException;
+import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.base.AccountGroupRelLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,8 +59,6 @@ public class AccountGroupRelLocalServiceImpl
 			throw new DuplicateAccountGroupRelException();
 		}
 
-		_accountGroupLocalService.getAccountGroup(accountGroupId);
-
 		if (classPK != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
 			_accountEntryLocalService.getAccountEntry(classPK);
 		}
@@ -64,6 +66,17 @@ public class AccountGroupRelLocalServiceImpl
 		accountGroupRel = createAccountGroupRel(
 			counterLocalService.increment());
 
+		AccountGroup accountGroup = _accountGroupLocalService.getAccountGroup(
+			accountGroupId);
+
+		User user = GuestOrUserUtil.getGuestOrUser(accountGroup.getCompanyId());
+
+		accountGroupRel.setCompanyId(user.getCompanyId());
+		accountGroupRel.setUserId(user.getUserId());
+		accountGroupRel.setUserName(user.getFullName());
+
+		accountGroupRel.setCreateDate(new Date());
+		accountGroupRel.setModifiedDate(new Date());
 		accountGroupRel.setAccountGroupId(accountGroupId);
 		accountGroupRel.setClassNameId(classNameId);
 		accountGroupRel.setClassPK(classPK);

@@ -614,6 +614,10 @@ public class LayoutServiceUtil {
 		return getService().hasPortletId(plid, portletId);
 	}
 
+	public static Layout publishLayout(long plid) throws Exception {
+		return getService().publishLayout(plid);
+	}
+
 	/**
 	 * Schedules a range of layouts to be published.
 	 *

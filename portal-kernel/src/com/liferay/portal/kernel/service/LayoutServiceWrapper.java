@@ -644,6 +644,11 @@ public class LayoutServiceWrapper
 		return _layoutService.hasPortletId(plid, portletId);
 	}
 
+	@Override
+	public Layout publishLayout(long plid) throws Exception {
+		return _layoutService.publishLayout(plid);
+	}
+
 	/**
 	 * Schedules a range of layouts to be published.
 	 *

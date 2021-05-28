@@ -1060,6 +1060,24 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.LayoutSoap publishLayout(
+			long plid)
+		throws RemoteException {
+
+		try {
+			com.liferay.portal.kernel.model.Layout returnValue =
+				LayoutServiceUtil.publishLayout(plid);
+
+			return com.liferay.portal.kernel.model.LayoutSoap.toSoapModel(
+				returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	/**
 	 * Sets the layouts for the group, replacing and prioritizing all layouts of
 	 * the parent layout.

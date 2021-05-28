@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>AppBuilderAppAdmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AppBuilderAppAdmin</td></tr>
+</thead>
+<tbody>
+<!--APPS_LISTING_SCREEN-->
+<tr>
+	<td>APP_TAB</td>
+	<td>//a[contains(@class,'nav-link') and contains (@href,'${key_tabName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

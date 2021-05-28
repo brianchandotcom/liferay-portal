@@ -164,13 +164,67 @@ definition {
 	}
 
 	@description = "Verify that option can be deleted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test OptionsCanBeDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132465 OptionsCanBeDeleted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid");
+
+		FormFields.editGridOptions(
+				gridField = "Rows",
+				optionValue = "Option 1",
+				rowNumber = "1");
+
+		FormFields.editGridOptions(
+				gridField = "Rows",
+				optionValue = "Option 2",
+				rowNumber = "2");
+
+		FormFields.editGridOptions(
+				gridField = "Columns",
+				optionValue = "Option A",
+				rowNumber = "1");
+
+		FormFields.deleteGridOptionsRow(
+			gridField = "Rows",
+			rowNumber = "1");
+
+		FormFields.viewOptionRowNameNotPresent(
+			fieldTitle = "Grid",
+			rowNumber = "1",
+			optionName = "Option 1");
+		
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewOptionRowNameNotPresent(
+			fieldTitle = "Grid",
+			rowNumber = "1",
+			optionName = "Option 1");
+
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			rowNumber = "1",
+			optionName = "Option 2");
+
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Grid",
+			rowNumber = "1",
+			optionName = "Option A");
 
 	}
 

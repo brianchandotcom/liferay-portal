@@ -756,6 +756,14 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewOptionColumnsName{
+        AssertElementPresent(
+            key_fieldName = "${fieldTitle}",
+            key_rowNumber = "${rowNumber}",
+            key_optionName = "${optionName}",
+            locator1="FormFields#GRID_OPTIONS_OPTION_COL_NAME");
+    }
+	
 	macro viewOptionsRowFieldName {
 		AssertTextEquals(
 			key_rowNumber = "${rowNumber}",
@@ -797,6 +805,22 @@ definition {
 				value1 = "${fieldValue}");
 		}
 	}
+
+	macro viewOptionRowName{
+        AssertElementPresent(
+            key_fieldName = "${fieldTitle}",
+            key_rowNumber = "${rowNumber}",
+            key_optionName = "${optionName}",
+            locator1="FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
+    }
+
+	macro viewOptionRowNameNotPresent{
+        AssertElementNotPresent(
+            key_fieldName = "${fieldTitle}",
+            key_rowNumber = "${rowNumber}",
+            key_optionName = "${optionName}",
+            locator1="FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
+    }		
 
 	macro viewParagraphField {
 		if (!(isSet(fieldName))) {

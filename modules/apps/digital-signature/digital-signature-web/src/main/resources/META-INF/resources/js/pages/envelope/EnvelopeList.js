@@ -65,9 +65,6 @@ const EnvelopeList = ({history}) => {
 					{
 						name: Liferay.Language.get('download-files'),
 					},
-					{
-						name: Liferay.Language.get('move'),
-					},
 				]}
 				addButton={() => (
 					<ClayButtonWithIcon
@@ -93,7 +90,7 @@ const EnvelopeList = ({history}) => {
 				{({
 					envelopeId,
 					emailSubject,
-					name,
+					name = Liferay.Language.get('untitled-envelope'),
 					createdLocalDateTime,
 					senderEmailAddress,
 					status,

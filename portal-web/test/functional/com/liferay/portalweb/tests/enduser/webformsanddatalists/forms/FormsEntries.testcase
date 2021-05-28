@@ -274,14 +274,91 @@ definition {
 	}
 
 	@description = "Verify that Entries for the Paragraph, Rich Text, Separator, Image, and Upload Fields do not display any metrics in the Summary Tab"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DisplayNoMetricsInSummaryTab {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131082 DisplayNoMetricsInSummaryTab pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Paragraph");
+
+		FormFields.editParagraphBody(content = "Hello");
+
+		Form.closeSidebar();
+
+
+
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Rich Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Separator");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "3",
+			fieldType = "Image");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "4",
+			fieldType = "Upload");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editParagraphBody(content = "Test Text");
+
+		ItemSelector.gotoImageSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_2.jpg");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		AssertElementPresent(
+			key_text = "1 Entry",
+			locator1 = "FormViewBuilder#ENTRIES_TITLE_CONTENT");
+
+		AssertElementPresent(
+			key_value = "There are no entries",
+			locator1 = "FormFields#VALIDATION_ERROR_ENTRIES");
 	}
 
 	@description = "Verify that Entries for the Numeric Field display a Field List, Average, Maximum Value, Minimum Value, and Sum in the Summary Tab"

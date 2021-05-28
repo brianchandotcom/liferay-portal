@@ -223,6 +223,10 @@ definition {
 		ManagementBar.setFilterAndOrder(filterBy = "${filterBy}");
 	}
 
+	macro gotoImageSelectorViaSelectButton {
+		Click(locator1 = "FormFields#UPLOAD_ON_WIDGET");
+	}
+
 	macro gotoItemSelectorViaAlloyEditor {
 		AlloyEditor.clickContentField();
 

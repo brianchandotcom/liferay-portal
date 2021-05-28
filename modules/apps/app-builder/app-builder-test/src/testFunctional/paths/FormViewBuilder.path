@@ -716,6 +716,12 @@
 	<td>//*[contains(@class,'summary-item')][contains(.,'${key_value}')]//div[contains(text(),'${key_type}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRIES_TITLE_CONTENT</td>
+	<td>//span[contains(@class,'title') and contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

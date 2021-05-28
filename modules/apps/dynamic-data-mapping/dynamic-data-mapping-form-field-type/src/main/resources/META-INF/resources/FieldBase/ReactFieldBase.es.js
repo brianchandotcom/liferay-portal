@@ -76,15 +76,15 @@ const getFieldDetails = (props) => {
 	const {errorMessage, hasError, required, text, tip} = props;
 
 	if (tip) {
-		fieldDetails += tip + '<br>';
+		fieldDetails += Liferay.Util.escape(tip) + '<br>';
 	}
 
 	if (text) {
-		fieldDetails += text + '<br>';
+		fieldDetails += Liferay.Util.escape(text) + '<br>';
 	}
 
 	if (hasError) {
-		fieldDetails += errorMessage;
+		fieldDetails += Liferay.Util.escape(errorMessage);
 	}
 	else if (required) {
 		fieldDetails += Liferay.Language.get('required');

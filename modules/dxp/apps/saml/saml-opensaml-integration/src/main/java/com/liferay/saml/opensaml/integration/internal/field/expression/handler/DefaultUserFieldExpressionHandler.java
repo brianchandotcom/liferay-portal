@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
 import com.liferay.saml.opensaml.integration.field.expression.handler.UserFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.processor.context.ProcessorContext;
@@ -176,6 +177,10 @@ public class DefaultUserFieldExpressionHandler
 		int birthdayYear = 1970;
 		boolean sendEmail = false;
 
+		if (!Validator.isBlank(newUser.getUuid())) {
+			serviceContext.setUuid(newUser.getUuid());
+		}
+
 		User user = _userLocalService.addUser(
 			creatorUserId, newUser.getCompanyId(), autoPassword, password1,
 			password2, autoScreenName, newUser.getScreenName(),
@@ -208,6 +213,8 @@ public class DefaultUserFieldExpressionHandler
 			return _addUser(newUser, serviceContext);
 		}
 
+		currentUser = _userLocalService.getUserById(currentUser.getUserId());
+
 		if (!Objects.equals(
 				currentUser.getEmailAddress(), newUser.getEmailAddress())) {
 
@@ -224,6 +231,7 @@ public class DefaultUserFieldExpressionHandler
 			Objects.equals(currentUser.getLastName(), newUser.getLastName()) &&
 			Objects.equals(
 				currentUser.getScreenName(), newUser.getScreenName()) &&
+			Objects.equals(currentUser.getUuid(), newUser.getUuid()) &&
 			Objects.equals(
 				currentUser.getModifiedDate(), newUser.getModifiedDate())) {
 
@@ -236,6 +244,8 @@ public class DefaultUserFieldExpressionHandler
 		birthdayCalendar.setTime(contact.getBirthday());
 
 		Date modifiedDate = newUser.getModifiedDate();
+
+		serviceContext.setUuid(newUser.getUuid());
 
 		newUser = _userLocalService.updateUser(
 			newUser.getUserId(), StringPool.BLANK, StringPool.BLANK,

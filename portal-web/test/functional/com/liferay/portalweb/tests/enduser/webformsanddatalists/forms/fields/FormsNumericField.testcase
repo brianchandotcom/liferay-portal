@@ -848,14 +848,40 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be set"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PredefinedValueCanBeSet {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132845 PredefinedValueCanBeSet pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormFields.editFieldPredefined(key_fieldReference = "123");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		FormPortlet.submitAndViewSuccessPage();
 	}
 
 	@description = "Verify that Predefined Value has higher priority than Placeholder Text for the Numeric Field"

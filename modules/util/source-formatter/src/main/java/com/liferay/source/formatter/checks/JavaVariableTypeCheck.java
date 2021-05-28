@@ -97,7 +97,9 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 					classContent, javaVariable.getContent(), fieldType);
 			}
 		}
-		else if (!_containsNonaccessModifier(javaVariable, "volatile")) {
+		else if (!_containsNonaccessModifier(javaVariable, "volatile") &&
+				 isAttributeValue(_CHECK_VOLATILE_FIELDS_KEY, absolutePath)) {
+
 			if (_isVolatileField(javaClass, javaVariable)) {
 				String javaVariableContent = javaVariable.getContent();
 
@@ -376,6 +378,9 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 		return false;
 	}
+
+	private static final String _CHECK_VOLATILE_FIELDS_KEY =
+		"checkVolatileFields";
 
 	private static final String _IMMUTABLE_FIELD_TYPES_KEY =
 		"immutableFieldTypes";

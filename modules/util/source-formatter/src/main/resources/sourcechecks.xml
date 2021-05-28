@@ -762,6 +762,7 @@
 		<check name="JavaVariableTypeCheck">
 			<category name="Bug Prevention" />
 			<description name="Performs several checks on the modifiers on variables." />
+			<property name="checkVolatileFields" value="false" />
 			<property name="immutableFieldTypes" value="boolean,byte,char,double,float,int,long,short,Boolean,Byte,Character,Class,Double,Float,Int,Long,Number,Short,String" />
 		</check>
 		<check name="JavaVerifyUpgradeConnectionCheck">

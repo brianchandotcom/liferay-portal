@@ -150,6 +150,13 @@ definition {
 			privateLayout = "false");
 	}
 
+	@summary = "Publish the draft layout"
+	macro publishLayout {
+		Variables.assertDefined(parameterList = "${plid}");
+
+		JSONLayoutAPI._publishLayoutByPlid(plid = "${plid}");
+	}
+
 	macro updateLayoutTemplateOfPublicLayout {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName},${layoutTemplate}");
 

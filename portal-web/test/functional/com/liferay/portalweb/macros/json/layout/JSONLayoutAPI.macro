@@ -111,6 +111,21 @@ definition {
 		return "${typeSettings}";
 	}
 
+	@summary = "Publish the layout by the plid"
+	macro _publishLayoutByPlid {
+		Variables.assertDefined(parameterList = "${plid}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout/publish-layout \
+				-u test@liferay.com:test \
+				-d plid=${plid}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Directly calls the JavaScript API to update typeSettings"
 	macro _updateTypeSettings {
 		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${layoutId},${typeSettings}");

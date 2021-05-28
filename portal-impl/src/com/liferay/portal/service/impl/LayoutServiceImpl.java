@@ -935,6 +935,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return false;
 	}
 
+	public Layout publishLayout(long plid) throws Exception {
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * Schedules a range of layouts to be published.
 	 *

@@ -219,12 +219,14 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@JSON
 	@Override
 	public String getContent() {
-		String content = null;
+		if (Validator.isNotNull(_content)) {
+			return _content;
+		}
 
 		DDMStructure ddmStructure = getDDMStructure();
 
 		if (ddmStructure == null) {
-			return content;
+			return _content;
 		}
 
 		DDMFormValues ddmFormValues = DDMFieldLocalServiceUtil.getDDMFormValues(
@@ -235,7 +237,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 				Fields fields = _ddmFormValuesToFieldsConverter.convert(
 					ddmStructure, ddmFormValues);
 
-				content = _journalConverter.getContent(
+				_content = _journalConverter.getContent(
 					ddmStructure, fields, getGroupId());
 			}
 			catch (Exception exception) {
@@ -245,7 +247,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			}
 		}
 
-		return content;
+		return _content;
 	}
 
 	@Override
@@ -810,6 +812,8 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	private static volatile DDMFormValuesToFieldsConverter
 		_ddmFormValuesToFieldsConverter;
 	private static volatile JournalConverter _journalConverter;
+
+	private String _content;
 
 	/**
 	 * @deprecated As of Judson (7.1.x)

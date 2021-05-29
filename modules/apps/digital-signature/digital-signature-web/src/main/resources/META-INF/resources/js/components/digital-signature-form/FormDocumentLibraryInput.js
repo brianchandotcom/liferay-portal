@@ -19,14 +19,7 @@ import DocumentLibrary from 'dynamic-data-mapping-form-field-type/DocumentLibrar
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext';
-
-const ErrorFeedback = ({error}) => (
-	<ClayForm.FeedbackGroup className="mt-n3">
-		<ClayForm.FeedbackItem>
-			<span>{error}</span>
-		</ClayForm.FeedbackItem>
-	</ClayForm.FeedbackGroup>
-);
+import {ErrorFeedback} from '../form/FormBase';
 
 const FormDocumentLibraryInput = ({error, onChange}) => {
 	const {portletNamespace} = useContext(AppContext);
@@ -72,7 +65,7 @@ const FormDocumentLibraryInput = ({error, onChange}) => {
 					/>
 				</ConfigProvider>
 
-				{error && <ErrorFeedback error={error} />}
+				{error && <ErrorFeedback className="mt-n3" error={error} />}
 			</ClayForm.Group>
 		</div>
 	);

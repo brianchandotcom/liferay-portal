@@ -1,11 +1,11 @@
 {
 	"dependencies": {
 		"@clayui/button": "3.6.0",
-		"@clayui/form": "3.28.0",
+		"@clayui/form": "3.29.0",
 		"@clayui/layout": "3.3.0",
-		"@clayui/modal": "3.28.0",
-		"@clayui/popover": "3.28.0",
-		"@clayui/table": "3.1.0",
+		"@clayui/modal": "3.29.0",
+		"@clayui/popover": "3.29.0",
+		"@clayui/table": "3.29.0",
 		"axios": "0.21.1",
 		"classnames": "2.2.6",
 		"clay-icon": "2.22.2",

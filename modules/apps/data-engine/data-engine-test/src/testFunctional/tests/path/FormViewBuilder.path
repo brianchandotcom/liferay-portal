@@ -216,6 +216,12 @@
 </tr>
 
 <tr>
+	<td>FIELD_PLACEHOLDER_TEXT</td>
+	<td>//div[contains(@class,'ddm-drag')]//div[contains(*,'${key_fieldLabel}')]//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_placeHolder}')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>SIDEBAR_ADVANCED_FIELD_REFERENCE</td>
 	<td>//input[contains(@name,'fieldReference')]</td>
 	<td></td>
@@ -280,6 +286,11 @@
 <tr>
 	<td>TEXT_FIELD</td>
 	<td>//label[contains(text(),'${key_fieldName}')]/..//input[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COLOR_FIELD</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/..//input[@type!="hidden"]</td>
 	<td></td>
 </tr>
 
@@ -664,6 +675,12 @@
 </tr>
 
 <tr>
+	<td>EMPTY_FORM_FIELD_BY_NUMBER</td>
+	<td>//div[contains(@data-ddm-page,'${key_pageNumber}')]//p[contains(text(),'Drag fields from the sidebar to compose your form.')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FORM_FIELD_FIRST_ROW</td>
 	<td>//div[contains(@class,"placeholder row")]//div[contains(@data-ddm-field-page, "0") and contains(@data-ddm-field-row, "0")]//div[contains(@class, "ddm-target")]</td>
 	<td></td>
@@ -716,6 +733,22 @@
 	<td>//*[contains(@class,'summary-item')][contains(.,'${key_value}')]//div[contains(text(),'${key_type}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRIES_TITLE_CONTENT</td>
+	<td>//span[contains(@class,'title') and contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_NAME</td>
+	<td>//*[contains(@class,'field-list')][contains(.,'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_NUMBER</td>
+	<td>//*[contains(@class,'card-text')][contains(.,'${key_entryNumber}')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

@@ -402,6 +402,12 @@ public class DefaultUserResolverTest extends BaseSamlTestCase {
 		);
 
 		when(
+			_userLocalService.getUserById(Mockito.anyLong())
+		).thenReturn(
+			user
+		);
+
+		when(
 			_userLocalService.getUserByScreenName(
 				Mockito.anyLong(),
 				Mockito.eq(_SUBJECT_NAME_IDENTIFIER_SCREEN_NAME))

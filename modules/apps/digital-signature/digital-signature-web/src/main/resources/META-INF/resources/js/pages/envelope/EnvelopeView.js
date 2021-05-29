@@ -18,8 +18,9 @@ import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import DocumentPreviewer from 'document-library-preview-document/preview/js/DocumentPreviewer.es';
 import {createResourceURL, fetch, openToast} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import {AppContext} from '../../AppContext';
 import EmptyState from '../../components/table/EmptyState';
 import {DOCUSIGN_STATUS} from '../../utils/contants';
 import {concatValues} from '../../utils/utils';
@@ -77,11 +78,12 @@ const EnvelopeHeader = ({
 );
 
 function EnvelopeView({
-	baseResourceURL,
 	match: {
 		params: {envelopeId},
 	},
 }) {
+	const {baseResourceURL} = useContext(AppContext);
+
 	const [{envelope, fileEntries = [], isLoading}, setEnvelope] = useState({
 		envelope: {},
 		isLoading: true,

@@ -59,37 +59,34 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		String envelopeId = ParamUtil.getString(resourceRequest, "envelopeId");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONArray dsDocumentsJSONArray = JSONFactoryUtil.createJSONArray();
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject();
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
 			DSEnvelope dsEnvelope = _dsEnvelopeManager.getDSEnvelope(
 				themeDisplay.getCompanyId(), themeDisplay.getCompanyGroupId(),
-				envelopeId);
+				ParamUtil.getString(resourceRequest, "envelopeId"));
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 			for (DSDocument dsDocument : dsEnvelope.getDSDocuments()) {
 				JSONObject fileEntryDetailsJSONObject =
 					_getFileEntryDetailsJSONObject(themeDisplay, dsDocument);
 
 				if (fileEntryDetailsJSONObject != null) {
-					dsDocumentsJSONArray.put(fileEntryDetailsJSONObject);
+					jsonArray.put(fileEntryDetailsJSONObject);
 				}
 			}
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				responseJSONObject.put(
+				JSONUtil.put(
 					"envelope", dsEnvelope.toJSONObject()
 				).put(
-					"fileEntries", dsDocumentsJSONArray
+					"fileEntries", jsonArray
 				));
 		}
 		catch (Exception exception) {
@@ -100,23 +97,18 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONObject _getFileEntryDetailsJSONObject(
-			ThemeDisplay themeDisplay, DSDocument dsDocument)
-		throws PortalException {
+		ThemeDisplay themeDisplay, DSDocument dsDocument) {
 
 		String dsDocumentId = dsDocument.getDSDocumentId();
 
 		if (!dsDocumentId.equals("certificate")) {
-			Long fileEntryId = GetterUtil.getLong(dsDocumentId);
-
 			try {
 				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-					fileEntryId);
+					GetterUtil.getLong(dsDocumentId));
 
 				FileVersion fileVersion = fileEntry.getFileVersion();
 
 				return JSONUtil.put(
-					"fileEntryId", fileEntryId
-				).put(
 					"initialPage", 1
 				).put(
 					"previewFileCount",
@@ -128,9 +120,9 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 						"&previewFileIndex=")
 				);
 			}
-			catch (Exception exception) {
+			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(exception, exception);
+					_log.debug(portalException, portalException);
 				}
 			}
 		}

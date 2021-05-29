@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 import {Input} from '../form/FormBase';
-import FormDocumentLibraryInput from './DocumentLibraryForm';
+import FormDocumentLibraryInput from './FormDocumentLibraryInput';
 
 const MAX_LENGTH = {
 	EMAIL_MESSAGE: 10000,

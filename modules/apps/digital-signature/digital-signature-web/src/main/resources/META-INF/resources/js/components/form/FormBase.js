@@ -17,8 +17,8 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
 
-const ErrorFeedback = ({error}) => (
-	<ClayForm.FeedbackGroup>
+const ErrorFeedback = ({className, error}) => (
+	<ClayForm.FeedbackGroup className={classNames(className)}>
 		<ClayForm.FeedbackItem>
 			<span>{error}</span>
 		</ClayForm.FeedbackItem>

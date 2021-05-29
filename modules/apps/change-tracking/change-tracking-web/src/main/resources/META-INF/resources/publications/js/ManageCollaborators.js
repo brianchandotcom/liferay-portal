@@ -265,13 +265,16 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 	);
 };
 
-export default ({
+const ManageCollaborators = ({
 	autocompleteUserURL,
 	getCollaboratorsURL,
 	inviteUsersURL,
 	namespace,
 	roles,
+	setShowModal,
+	showModal,
 	spritemap,
+	trigger,
 	verifyEmailAddressURL,
 }) => {
 	const [emailAddressErrorMessages, setEmailAddressErrorMessages] = useState(
@@ -279,7 +282,6 @@ export default ({
 	);
 	const [multiSelectValue, setMultiSelectValue] = useState('');
 	const [selectedItems, setSelectedItems] = useState([]);
-	const [showModal, setShowModal] = useState(false);
 	const [updatedRoles, setUpdatedRoles] = useState({});
 
 	let defaultRole = roles[0];
@@ -799,6 +801,10 @@ export default ({
 	};
 
 	const renderTrigger = () => {
+		if (trigger) {
+			return trigger;
+		}
+
 		if (!collaborators || collaborators.length === 0) {
 			return (
 				<ClayButtonWithIcon
@@ -907,3 +913,18 @@ export default ({
 		</>
 	);
 };
+
+const ManageCollaboratorsWithStateHook = ({...props}) => {
+	const [showModal, setShowModal] = useState(false);
+
+	return (
+		<ManageCollaborators
+			setShowModal={setShowModal}
+			showModal={showModal}
+			{...props}
+		/>
+	);
+};
+
+export default ManageCollaboratorsWithStateHook;
+export {ManageCollaborators, ManageCollaboratorsWithStateHook};

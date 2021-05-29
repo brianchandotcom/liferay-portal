@@ -31,8 +31,6 @@ import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -46,7 +44,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -216,9 +213,98 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 			CTCollection ctCollection, PermissionChecker permissionChecker)
 		throws Exception {
 
-		return Collections.singletonMap(
-			"dropdownItems",
-			_getDropdownItemsJSONArray(ctCollection, permissionChecker));
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return HashMapBuilder.<String, Object>put(
+				"reviewURL",
+				PublicationsPortletURLUtil.getHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/change_tracking/view_changes", "ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId()))
+			).put(
+				"spritemap",
+				_themeDisplay.getPathThemeImages() + "/clay/icons.svg"
+			).build();
+		}
+
+		Map<String, Object> data = getCollaboratorsReactData(
+			ctCollection, permissionChecker);
+
+		if (CTCollectionPermission.contains(
+				permissionChecker, ctCollection, ActionKeys.UPDATE)) {
+
+			if (ctCollection.getCtCollectionId() != _ctCollectionId) {
+				data.put(
+					"checkoutURL",
+					PublicationsPortletURLUtil.getHref(
+						_renderResponse.createActionURL(),
+						ActionRequest.ACTION_NAME,
+						"/change_tracking/checkout_ct_collection", "redirect",
+						_themeDisplay.getURLCurrent(), "ctCollectionId",
+						String.valueOf(ctCollection.getCtCollectionId())));
+			}
+
+			data.put(
+				"editURL",
+				PublicationsPortletURLUtil.getHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/change_tracking/edit_ct_collection", "redirect",
+					_themeDisplay.getURLCurrent(), "ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId())));
+		}
+
+		data.put(
+			"reviewURL",
+			PublicationsPortletURLUtil.getHref(
+				_renderResponse.createRenderURL(), "mvcRenderCommandName",
+				"/change_tracking/view_changes", "ctCollectionId",
+				String.valueOf(ctCollection.getCtCollectionId())));
+
+		if (CTCollectionPermission.contains(
+				permissionChecker, ctCollection, ActionKeys.PERMISSIONS)) {
+
+			data.put(
+				"permissionsURL",
+				PublicationsPortletURLUtil.getPermissionsHref(
+					_httpServletRequest, ctCollection, _language));
+		}
+
+		if (CTCollectionPermission.contains(
+				permissionChecker, ctCollection, ActionKeys.DELETE)) {
+
+			data.put(
+				"deleteURL",
+				PublicationsPortletURLUtil.getDeleteHref(
+					_httpServletRequest, _renderResponse,
+					_themeDisplay.getURLCurrent(),
+					ctCollection.getCtCollectionId(), _language));
+		}
+
+		if (isPublishEnabled(ctCollection.getCtCollectionId()) &&
+			CTCollectionPermission.contains(
+				permissionChecker, ctCollection, CTActionKeys.PUBLISH)) {
+
+			if (PropsValues.SCHEDULER_ENABLED) {
+				data.put(
+					"scheduleURL",
+					PublicationsPortletURLUtil.getHref(
+						_renderResponse.createRenderURL(),
+						"mvcRenderCommandName",
+						"/change_tracking/view_conflicts", "redirect",
+						_themeDisplay.getURLCurrent(), "ctCollectionId",
+						String.valueOf(ctCollection.getCtCollectionId()),
+						"schedule", Boolean.TRUE.toString()));
+			}
+
+			data.put(
+				"publishURL",
+				PublicationsPortletURLUtil.getHref(
+					_renderResponse.createRenderURL(), "mvcRenderCommandName",
+					"/change_tracking/view_conflicts", "redirect",
+					_themeDisplay.getURLCurrent(), "ctCollectionId",
+					String.valueOf(ctCollection.getCtCollectionId())));
+		}
+
+		return data;
 	}
 
 	public String getReviewChangesURL(long ctCollectionId) {
@@ -362,153 +448,6 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	@Override
 	protected String getPortalPreferencesPrefix() {
 		return "ongoing";
-	}
-
-	private JSONArray _getDropdownItemsJSONArray(
-			CTCollection ctCollection, PermissionChecker permissionChecker)
-		throws Exception {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		if (CTCollectionPermission.contains(
-				permissionChecker, ctCollection, ActionKeys.UPDATE)) {
-
-			if (ctCollection.getCtCollectionId() != _ctCollectionId) {
-				jsonArray.put(
-					JSONUtil.put(
-						"disabled",
-						ctCollection.getStatus() ==
-							WorkflowConstants.STATUS_EXPIRED
-					).put(
-						"href",
-						PublicationsPortletURLUtil.getHref(
-							_renderResponse.createActionURL(),
-							ActionRequest.ACTION_NAME,
-							"/change_tracking/checkout_ct_collection",
-							"redirect", _themeDisplay.getURLCurrent(),
-							"ctCollectionId",
-							String.valueOf(ctCollection.getCtCollectionId()))
-					).put(
-						"label",
-						_language.get(
-							_httpServletRequest, "work-on-publication")
-					).put(
-						"symbolLeft", "radio-button"
-					));
-			}
-
-			jsonArray.put(
-				JSONUtil.put(
-					"href",
-					PublicationsPortletURLUtil.getHref(
-						_renderResponse.createRenderURL(),
-						"mvcRenderCommandName",
-						"/change_tracking/edit_ct_collection", "redirect",
-						_themeDisplay.getURLCurrent(), "ctCollectionId",
-						String.valueOf(ctCollection.getCtCollectionId()))
-				).put(
-					"label", _language.get(_httpServletRequest, "edit")
-				).put(
-					"symbolLeft", "pencil"
-				));
-		}
-
-		jsonArray.put(
-			JSONUtil.put(
-				"href",
-				PublicationsPortletURLUtil.getHref(
-					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/change_tracking/view_changes", "ctCollectionId",
-					String.valueOf(ctCollection.getCtCollectionId()))
-			).put(
-				"label", _language.get(_httpServletRequest, "review-changes")
-			).put(
-				"symbolLeft", "list-ul"
-			));
-
-		if (CTCollectionPermission.contains(
-				permissionChecker, ctCollection, ActionKeys.PERMISSIONS)) {
-
-			jsonArray.put(
-				JSONUtil.put(
-					"href",
-					PublicationsPortletURLUtil.getPermissionsHref(
-						_httpServletRequest, ctCollection, _language)
-				).put(
-					"label", _language.get(_httpServletRequest, "permissions")
-				).put(
-					"symbolLeft", "password-policies"
-				));
-		}
-
-		if (CTCollectionPermission.contains(
-				permissionChecker, ctCollection, ActionKeys.DELETE)) {
-
-			jsonArray.put(
-				JSONUtil.put("type", "divider")
-			).put(
-				JSONUtil.put(
-					"href",
-					PublicationsPortletURLUtil.getDeleteHref(
-						_httpServletRequest, _renderResponse,
-						_themeDisplay.getURLCurrent(),
-						ctCollection.getCtCollectionId(), _language)
-				).put(
-					"label", _language.get(_httpServletRequest, "delete")
-				).put(
-					"symbolLeft", "times-circle"
-				)
-			);
-		}
-
-		if (isPublishEnabled(ctCollection.getCtCollectionId()) &&
-			CTCollectionPermission.contains(
-				permissionChecker, ctCollection, CTActionKeys.PUBLISH)) {
-
-			jsonArray.put(JSONUtil.put("type", "divider"));
-
-			if (PropsValues.SCHEDULER_ENABLED) {
-				jsonArray.put(
-					JSONUtil.put(
-						"disabled",
-						ctCollection.getStatus() ==
-							WorkflowConstants.STATUS_EXPIRED
-					).put(
-						"href",
-						PublicationsPortletURLUtil.getHref(
-							_renderResponse.createRenderURL(),
-							"mvcRenderCommandName",
-							"/change_tracking/view_conflicts", "redirect",
-							_themeDisplay.getURLCurrent(), "ctCollectionId",
-							String.valueOf(ctCollection.getCtCollectionId()),
-							"schedule", Boolean.TRUE.toString())
-					).put(
-						"label", _language.get(_httpServletRequest, "schedule")
-					).put(
-						"symbolLeft", "calendar"
-					));
-			}
-
-			jsonArray.put(
-				JSONUtil.put(
-					"disabled",
-					ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED
-				).put(
-					"href",
-					PublicationsPortletURLUtil.getHref(
-						_renderResponse.createRenderURL(),
-						"mvcRenderCommandName",
-						"/change_tracking/view_conflicts", "redirect",
-						_themeDisplay.getURLCurrent(), "ctCollectionId",
-						String.valueOf(ctCollection.getCtCollectionId()))
-				).put(
-					"label", _language.get(_httpServletRequest, "publish")
-				).put(
-					"symbolLeft", "change"
-				));
-		}
-
-		return jsonArray;
 	}
 
 	private final long _ctCollectionId;

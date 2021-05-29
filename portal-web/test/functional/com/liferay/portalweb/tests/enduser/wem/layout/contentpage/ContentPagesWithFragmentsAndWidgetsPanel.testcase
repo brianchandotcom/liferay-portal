@@ -46,6 +46,8 @@ definition {
 			SitePages.gotoPageMenuItem(
 				menuItem = "Edit",
 				pageName = "Test Content Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 		}
 
 		task ("Open the Fragments and Widgets panel") {
@@ -124,6 +126,8 @@ definition {
 			SitePages.gotoPageMenuItem(
 				menuItem = "Edit",
 				pageName = "Test Content Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 		}
 
 		task ("View the display style is card in Fragments and Widgets panel") {

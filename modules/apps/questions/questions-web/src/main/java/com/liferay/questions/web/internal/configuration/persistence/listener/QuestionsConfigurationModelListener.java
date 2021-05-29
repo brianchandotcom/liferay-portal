@@ -15,27 +15,40 @@
 package com.liferay.questions.web.internal.configuration.persistence.listener;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
+import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.questions.web.internal.asset.model.MBCategoryAssetRendererFactory;
 import com.liferay.questions.web.internal.asset.model.MBMessageAssetRendererFactory;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
 
+import java.util.Collections;
 import java.util.Dictionary;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
+	configurationPid = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
 	immediate = true,
 	property = "model.class.name=com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
 	service = ConfigurationModelListener.class
@@ -45,35 +58,81 @@ public class QuestionsConfigurationModelListener
 
 	@Override
 	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
-		boolean enabled = GetterUtil.getBoolean(
-			properties.get("enableCustomAssetRenderer"));
+		List<String> keys = Collections.list(properties.keys());
 
-		if (enabled) {
-			_serviceRegistration =
-				(ServiceRegistration)_bundleContext.registerService(
-					AssetRendererFactory.class,
-					new MBMessageAssetRendererFactory(
-						GetterUtil.getString(
-							properties.get("historyRouterBasePath")),
-						_mbMessageLocalService,
-						_messageModelResourcePermission),
-					HashMapDictionaryBuilder.<String, Object>put(
-						"javax.portlet.name", QuestionsPortletKeys.QUESTIONS
-					).put(
-						"service.ranking:Integer", 100
-					).build());
-		}
-		else if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
+		Stream<String> stream = keys.stream();
+
+		_enableAssetRenderer(
+			stream.collect(
+				Collectors.toMap(Function.identity(), properties::get)));
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	@Modified
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_bundleContext = bundleContext;
+		_enableAssetRenderer(properties);
+	}
+
+	private void _enableAssetRenderer(Map<String, Object> properties) {
+		if (GetterUtil.getBoolean(
+				properties.get("enableCustomAssetRenderer"))) {
+
+			String historyRouterBasePath = GetterUtil.getString(
+				properties.get("historyRouterBasePath"));
+			HashMapDictionary<String, Object> hashMapDictionary =
+				HashMapDictionaryBuilder.<String, Object>put(
+					"javax.portlet.name", QuestionsPortletKeys.QUESTIONS
+				).put(
+					"service.ranking:Integer", 100
+				).build();
+
+			_mbCategoryServiceRegistration =
+				(ServiceRegistration)_bundleContext.registerService(
+					AssetRendererFactory.class,
+					new MBCategoryAssetRendererFactory(
+						_companyLocalService, historyRouterBasePath,
+						_mbCategoryLocalService,
+						_mbCategoryModelResourcePermission),
+					hashMapDictionary);
+			_mbMessageServiceRegistration =
+				(ServiceRegistration)_bundleContext.registerService(
+					AssetRendererFactory.class,
+					new MBMessageAssetRendererFactory(
+						_companyLocalService, historyRouterBasePath,
+						_mbMessageLocalService,
+						_mbMessageModelResourcePermission),
+					hashMapDictionary);
+		}
+		else {
+			if (_mbMessageServiceRegistration != null) {
+				_mbMessageServiceRegistration.unregister();
+			}
+
+			if (_mbCategoryServiceRegistration != null) {
+				_mbCategoryServiceRegistration.unregister();
+			}
+		}
 	}
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private MBCategoryLocalService _mbCategoryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.message.boards.model.MBCategory)"
+	)
+	private ModelResourcePermission<MBCategory>
+		_mbCategoryModelResourcePermission;
+
+	private ServiceRegistration<AssetRendererFactory<MBCategory>>
+		_mbCategoryServiceRegistration;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
@@ -81,9 +140,10 @@ public class QuestionsConfigurationModelListener
 	@Reference(
 		target = "(model.class.name=com.liferay.message.boards.model.MBMessage)"
 	)
-	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
+	private ModelResourcePermission<MBMessage>
+		_mbMessageModelResourcePermission;
 
 	private ServiceRegistration<AssetRendererFactory<MBMessage>>
-		_serviceRegistration;
+		_mbMessageServiceRegistration;
 
 }

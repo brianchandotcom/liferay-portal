@@ -86,12 +86,42 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			return;
 		}
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User owner = _userLocalService.fetchUser(ctCollection.getUserId());
+
+		if (owner != null) {
+			String portraitURL = StringPool.BLANK;
+
+			if (owner.getPortraitId() > 0) {
+				portraitURL = owner.getPortraitURL(themeDisplay);
+			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"emailAddress", owner.getEmailAddress()
+				).put(
+					"fullName", owner.getFullName()
+				).put(
+					"isCurrentUser",
+					owner.getUserId() == themeDisplay.getUserId()
+				).put(
+					"isOwner", true
+				).put(
+					"portraitURL", portraitURL
+				).put(
+					"userId", owner.getUserId()
+				));
+		}
+
 		Group group = ctCollection.getGroup();
 
 		if (group == null) {
 			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONFactoryUtil.createJSONArray());
+				resourceRequest, resourceResponse, jsonArray);
 
 			return;
 		}
@@ -136,12 +166,8 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 			userMap.put(user.getUserId(), user);
 		}
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		for (UserGroupRole userGroupRole :
 				_userGroupRoleLocalService.getUserGroupRolesByGroup(
@@ -184,32 +210,6 @@ public class GetCollaboratorsMVCResourceCommand extends BaseMVCResourceCommand {
 					PublicationRoleConstants.getNameRole(role.getName())
 				).put(
 					"userId", user.getUserId()
-				));
-		}
-
-		User owner = _userLocalService.fetchUser(ctCollection.getUserId());
-
-		if (owner != null) {
-			String portraitURL = StringPool.BLANK;
-
-			if (owner.getPortraitId() > 0) {
-				portraitURL = owner.getPortraitURL(themeDisplay);
-			}
-
-			jsonArray.put(
-				JSONUtil.put(
-					"emailAddress", owner.getEmailAddress()
-				).put(
-					"fullName", owner.getFullName()
-				).put(
-					"isCurrentUser",
-					owner.getUserId() == themeDisplay.getUserId()
-				).put(
-					"isOwner", true
-				).put(
-					"portraitURL", portraitURL
-				).put(
-					"userId", owner.getUserId()
 				));
 		}
 

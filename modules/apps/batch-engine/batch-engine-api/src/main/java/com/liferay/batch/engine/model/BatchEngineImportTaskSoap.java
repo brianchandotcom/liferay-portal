@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.batch.engine.service.http.BatchEngineImportTaskServiceSoap}.
  *
  * @author Shuyang Zhou
  * @deprecated As of Athanasius (7.3.x), with no direct replacement

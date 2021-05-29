@@ -337,6 +337,14 @@ public class BatchEngineImportTaskLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.batch.engine.model.BatchEngineImportTask>
+		getBatchEngineImportTasks(long companyId, int start, int end) {
+
+		return _batchEngineImportTaskLocalService.getBatchEngineImportTasks(
+			companyId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.engine.model.BatchEngineImportTask>
 		getBatchEngineImportTasks(String executeStatus) {
 
 		return _batchEngineImportTaskLocalService.getBatchEngineImportTasks(
@@ -352,6 +360,12 @@ public class BatchEngineImportTaskLocalServiceWrapper
 	public int getBatchEngineImportTasksCount() {
 		return _batchEngineImportTaskLocalService.
 			getBatchEngineImportTasksCount();
+	}
+
+	@Override
+	public int getBatchEngineImportTasksCount(long companyId) {
+		return _batchEngineImportTaskLocalService.
+			getBatchEngineImportTasksCount(companyId);
 	}
 
 	@Override

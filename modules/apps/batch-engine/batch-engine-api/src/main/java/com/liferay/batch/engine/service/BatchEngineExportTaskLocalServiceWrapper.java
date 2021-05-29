@@ -335,6 +335,14 @@ public class BatchEngineExportTaskLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.batch.engine.model.BatchEngineExportTask>
+		getBatchEngineExportTasks(long companyId, int start, int end) {
+
+		return _batchEngineExportTaskLocalService.getBatchEngineExportTasks(
+			companyId, start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.engine.model.BatchEngineExportTask>
 		getBatchEngineExportTasks(String executeStatus) {
 
 		return _batchEngineExportTaskLocalService.getBatchEngineExportTasks(
@@ -350,6 +358,12 @@ public class BatchEngineExportTaskLocalServiceWrapper
 	public int getBatchEngineExportTasksCount() {
 		return _batchEngineExportTaskLocalService.
 			getBatchEngineExportTasksCount();
+	}
+
+	@Override
+	public int getBatchEngineExportTasksCount(long companyId) {
+		return _batchEngineExportTaskLocalService.
+			getBatchEngineExportTasksCount(companyId);
 	}
 
 	@Override

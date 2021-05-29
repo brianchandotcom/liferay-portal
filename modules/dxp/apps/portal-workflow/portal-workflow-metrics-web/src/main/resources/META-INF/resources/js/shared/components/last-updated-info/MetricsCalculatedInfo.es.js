@@ -10,9 +10,9 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import {sub} from 'data-engine-js-components-web/js/utils/lang.es';
 import React from 'react';
 
+import {sub} from '../../util/lang.es';
 import moment from '../../util/moment.es';
 
 export default function MetricsCalculatedInfo({dateModified}) {

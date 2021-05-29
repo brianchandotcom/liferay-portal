@@ -706,10 +706,8 @@ export default ({
 	orderByAscending,
 	orderByColumn,
 	preferencesPrefix,
-	publishDropdownItem,
 	reviewDropdownItem,
 	saveDisplayPreferenceURL,
-	scheduleDropdownItem,
 	spritemap,
 	title,
 }) => {
@@ -757,15 +755,6 @@ export default ({
 	if (reviewDropdownItem) {
 		dropdownItems.push({type: 'divider'});
 		dropdownItems.push(reviewDropdownItem);
-	}
-
-	if (publishDropdownItem) {
-		dropdownItems.push({type: 'divider'});
-		dropdownItems.push(publishDropdownItem);
-	}
-
-	if (scheduleDropdownItem) {
-		dropdownItems.push(scheduleDropdownItem);
 	}
 
 	/* eslint-disable no-unused-vars */

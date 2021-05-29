@@ -5,8 +5,8 @@
 The Anypoint Liferay Connector connects Liferay to other platforms and services
 in the Mulesoft ecosystem.
 
-Here, you'll learn how the Liferay connector is designed and to set up and
-configure a basic flow using a Liferay connector.
+Here, you'll learn how the Liferay connector is designed, as well as how to use it to set up
+and configure a basic flow. 
 
 == Prerequisites
 You should be familiar already with Mule and Anypoint Studio. To learn about
@@ -20,7 +20,7 @@ Liferay Connector is dynamically configured using OpenAPI 3.0 documents that
 describe all Liferay APIs at https://app.swaggerhub.com/organizations/liferayinc[Swagger Hub]
 
 Each OpenAPI document is also deployed dynamically in your Liferay Portal
-instance under following schema:
+instance under the following schema:
 ....
 http://[host]:[port]/o/[headless-api-app-name]/[version]/openapi.json
 ....
@@ -30,18 +30,18 @@ web services, so it is the most current and accurate description of your APIs.
 More about Liferay APIs can be found
 https://portal.liferay.dev/docs/7-1/tutorials/-/knowledge_base/t/get-started-discover-the-api[here].
 
-Once you specify an OpenAPI document endpoint, Liferay connector is dynamically
+Once you specify an OpenAPI document endpoint, Liferay Connector is dynamically
 configured with paths, path/query parameters and entity metadata defined in the
 OpenAPI document.
 
-Liferay connector works with any OpenAPI 3.0 document that follows Liferay
+Liferay Connector works with any OpenAPI 3.0 document that follows Liferay
 standards. A single Liferay connector supports all Liferay APIs.
 
 == Connector Configuration
-To configure the Liferay connector, you must
+To configure the Liferay Connector, you must
 
-. Select authentication method and enter required authentication parameters
-. Specify OpenAPI document endpoint
+. Select an authentication method and enter required authentication parameters
+. Specify an OpenAPI document endpoint
 
 Choose between *Basic* and *OAuth2* authentication methods.
 Read more about authentication methods
@@ -59,8 +59,8 @@ https://portal.liferay.dev/docs/7-2/deploy/-/knowledge_base/d/oauth-2-0#creating
 Liferay supports the OAuth 2.0 Client Credentials grant type. Select *Headless
 Server* for the Client Profile.
 
-Liferay generates a Client ID (*Consumer Key*) and Client Secret (*Consumer
-Secret*) to use in your Liferay connector configuration. Before you can start
+Liferay generates a Client ID (*Consumer Key*) and Client Secret (*Consumer Secret*)
+to use in your Liferay Connector configuration. Before you can start
 using endpoints with OAuth2 authorization you must also enable
 https://portal.liferay.dev/docs/7-2/deploy/-/knowledge_base/d/oauth2-scopes[scopes].
 Select the desired scope and check authorization options you need, such as
@@ -92,19 +92,19 @@ Enter it into the
 ```
 
 If *Test Connection* is successful you can start building flows using the
-Liferay connector!
+Liferay Connector!
 
 == Operations
 Now that you've created your Mule project and imported and configured the
-Liferay connector, you can build your Mule flows using Liferay connector
+Liferay Connector, you can build your Mule flows using Liferay Connector
 operations. Operations *Create Records*, *Delete Records*, *Get Records*, and
 *Update Records* resources defined by your OpenAPI document. Each operation
 implements and exposes different parts of the specified OpenAPI document.
 
-If you're working with large data sets you probably don't want to handle every
+If you're working with large data sets, you probably don't want to handle every
 single record one at the time. This is where Liferay Batch operations come into
 play. They enable you to submit large amount of data to be processed in batch by
-the Liferay instance which results in much faster execution time.
+the Liferay instance, which results in much faster execution time.
 
 === Create Records Operation
 
@@ -116,7 +116,7 @@ structures, and all possible responses.
 image::swaggerhub_products_post.png[The "/products" endpoint creates a new product using HTTP POST.]
 
 Once you select desired endpoint from the Endpoint selector the connector
-dynamically generates related Metadata.
+dynamically generates related metadata.
 
 image::anypoint_studio_products_create.png[The same endpoint is used in a flow that imports products from Salesforce into Liferay Commerce. ]
 
@@ -132,7 +132,7 @@ web services and need not be used with every endpoint:
 
 |Endpoint
 |String
-|Drop down list of available endpoints that support create operation
+|Drop-down list of available endpoints that support create operation
 |Yes
 
 |Records
@@ -151,26 +151,25 @@ web services and need not be used with every endpoint:
 |No
 |===
 
-You should use
-https://app.swaggerhub.com/organizations/liferayinc as documentation for Liferay
-connector operations.
+Use https://app.swaggerhub.com/organizations/liferayinc as documentation for 
+Liferay Connector operations.
 You can also use the OpenAPI document from the endpoint you defined in
 connector configuration, in which case you lose the helpful UI offered by
 SwaggerHub editor.
 
 === Batch Export Operation
-Batch Export operation allows you to get all records of the specified entity
+The Batch Export operation allows you to get all records of a specified entity
 with a single request.
 
 image::anypoint_studio_products_export.png[Batch export operation example]
 
-Once you select desired entity from Class name dropdown list the connector
-dynamically generates related output Metadata.
-You can also specify which fields should exported entities contain using the
-Field names input. Field names should be specified as a comma separated
-list.
-After specifying site ID (optional) parameter, you have fully configured Batch
-export operation.
+To configure a Batch export operation, first select the entity you want to export
+using the Class name drop-down list. 
+Once selected, the connector dynamically generates related output metadata.
+If desired, you can use the Field names input to specify which fields are 
+included in the exported entity.
+Field names should be separated using commas.
+You can also specify a Site ID parameter for the entity. 
 
 [%header,cols=4*]
 |===
@@ -197,25 +196,24 @@ export operation.
 |===
 
 Running this flow will result in a JSON array of Products ready
-to be transformed and load into another system.
+to be transformed and loaded into another system.
 
 === Batch Import Operations
-Batch import operations consist of 3 types: Create, Delete and Update. With
-every operation you're importing a set of entities only difference is how they
-will be processed by the batch engine. The following example shows
-Batch Import Create operation.
+There are three types of Batch import operations: Create, Delete and Update. 
+Each type of operation imports a set of entities, though they process these
+entities differently. The following example shows a Batch Import Create operation.
 
 image::anypoint_studio_products_import.png[Batch import operation example]
 
-Similar to Batch export, import operations also let you select desired entity
-from Class name drop down list after which connector dynamically generates
-related input Metadata.
+Similar to configuring Batch exports, first use the Class name drop-down list 
+to select the entity you want to import. 
+Once selected, the connector dynamically generates related input metadata.
+Then, use the Record field to submit a JSON array of entity objects .
 
-Field name mappings input allow you to define field name mapping between
-related entities from different systems. If you used Transform Message module to
-map entity fields between source and destination systems you can leave this
-field empty. As Records you should submit JSON array of specified entity
-objects.
+If desired, use the Field name mappings drop-down list to map field names between
+related entities from different systems. If you've used the Transform Message module
+to map entity fields between source and destination systems, you can leave this
+field empty.
 
 [%header,cols=4*]
 |===
@@ -240,6 +238,6 @@ objects.
 | Yes
 |===
 
-To see list of all available operations and related input parameters check out
+To view all available operations and related input parameters, check out
 link:liferay-connector-tech-ref.adoc[Liferay Connector Technical Reference].
 

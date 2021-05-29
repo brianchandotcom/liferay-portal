@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (CommerceOrderContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrder();
 
 long billingCommerceAddressId = BeanParamUtil.getLong(commerceOrder, request, "billingAddressId");

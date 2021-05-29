@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (CommerceOrderContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
 CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerceAccount();
 %>
 
@@ -33,7 +31,7 @@ CommerceAccount commerceAccount = commerceOrderContentDisplayContext.getCommerce
 	%>'
 	displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
 	displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT) %>"
-	entries="<%= commerceOrderContentDisplayContext.getCommerceOrders() %>"
+	entries="<%= commerceOrderSearchContainer.getResults() %>"
 >
 	<clay:data-set-display
 		dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PENDING_ORDERS %>"

@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (CommerceOrderContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-%>
-
 <liferay-ddm:template-renderer
 	className="<%= CommerceOrderContentPortlet.class.getName() %>"
 	contextObjects='<%=
@@ -29,7 +25,7 @@ CommerceOrderContentDisplayContext commerceOrderContentDisplayContext = (Commerc
 	%>'
 	displayStyle="<%= commerceOrderContentDisplayContext.getDisplayStyle(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
 	displayStyleGroupId="<%= commerceOrderContentDisplayContext.getDisplayStyleGroupId(CommercePortletKeys.COMMERCE_ORDER_CONTENT) %>"
-	entries="<%= commerceOrderContentDisplayContext.getCommerceOrders() %>"
+	entries="<%= commerceOrderSearchContainer.getResults() %>"
 >
 	<clay:data-set-display
 		dataProviderKey="<%= CommerceOrderDataSetConstants.COMMERCE_DATA_SET_KEY_PLACED_ORDERS %>"

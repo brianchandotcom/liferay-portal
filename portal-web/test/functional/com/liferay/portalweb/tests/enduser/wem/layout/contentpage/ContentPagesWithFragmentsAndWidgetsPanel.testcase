@@ -38,8 +38,6 @@ definition {
 	@description = "This is a test for LPS-130964. Change display style in Fragments and Widgets panel."
 	@priority = "4"
 	test ChangeDisplayStyle {
-		property portal.acceptance = "true";
-
 		task ("Navigate to the Pages admin in new site") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 		}

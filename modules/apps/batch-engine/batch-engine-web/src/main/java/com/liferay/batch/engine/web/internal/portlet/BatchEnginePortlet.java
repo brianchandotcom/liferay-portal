@@ -15,7 +15,7 @@
 package com.liferay.batch.engine.web.internal.portlet;
 
 import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
-import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.batch.engine.web.internal.display.context.BatchEngineImportTaskDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -60,7 +60,7 @@ public class BatchEnginePortlet extends MVCPortlet {
 		BatchEngineImportTaskDisplayContext
 			batchEngineImportTaskDisplayContext =
 				new BatchEngineImportTaskDisplayContext(
-					_batchEngineImportTaskLocalService, renderRequest,
+					_batchEngineImportTaskService, renderRequest,
 					renderResponse);
 
 		renderRequest.setAttribute(
@@ -71,7 +71,6 @@ public class BatchEnginePortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private BatchEngineImportTaskLocalService
-		_batchEngineImportTaskLocalService;
+	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
 }

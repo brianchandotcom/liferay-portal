@@ -15,9 +15,10 @@
 package com.liferay.batch.engine.web.internal.display.context;
 
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -33,12 +34,12 @@ import javax.portlet.RenderResponse;
 public class BatchEngineImportTaskDisplayContext extends BaseDisplayContext {
 
 	public BatchEngineImportTaskDisplayContext(
-		BatchEngineImportTaskLocalService batchEngineImportTaskLocalService,
+		BatchEngineImportTaskService batchEngineImportTaskService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(renderRequest, renderResponse);
 
-		_batchEngineImportTaskLocalService = batchEngineImportTaskLocalService;
+		_batchEngineImportTaskService = batchEngineImportTaskService;
 	}
 
 	public PortletURL getPortletURL() {
@@ -64,7 +65,9 @@ public class BatchEngineImportTaskDisplayContext extends BaseDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer<BatchEngineImportTask> getSearchContainer() {
+	public SearchContainer<BatchEngineImportTask> getSearchContainer()
+		throws PortalException {
+
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -80,11 +83,11 @@ public class BatchEngineImportTaskDisplayContext extends BaseDisplayContext {
 		_searchContainer.setRowChecker(null);
 
 		_searchContainer.setTotal(
-			_batchEngineImportTaskLocalService.
-				getBatchEngineImportTasksCount());
+			_batchEngineImportTaskService.getBatchEngineImportTasksCount(
+				companyId));
 
 		List<BatchEngineImportTask> results =
-			_batchEngineImportTaskLocalService.getBatchEngineImportTasks(
+			_batchEngineImportTaskService.getBatchEngineImportTasks(
 				companyId, _searchContainer.getStart(),
 				_searchContainer.getEnd());
 
@@ -93,8 +96,7 @@ public class BatchEngineImportTaskDisplayContext extends BaseDisplayContext {
 		return _searchContainer;
 	}
 
-	private final BatchEngineImportTaskLocalService
-		_batchEngineImportTaskLocalService;
+	private final BatchEngineImportTaskService _batchEngineImportTaskService;
 	private SearchContainer<BatchEngineImportTask> _searchContainer;
 
 }

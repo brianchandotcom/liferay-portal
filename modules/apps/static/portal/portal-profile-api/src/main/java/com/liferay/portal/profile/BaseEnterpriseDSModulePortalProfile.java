@@ -19,10 +19,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -78,6 +80,10 @@ public class BaseEnterpriseDSModulePortalProfile implements PortalProfile {
 			return;
 		}
 
+		if (!_startedBundleNames.add(bundle.getSymbolicName())) {
+			return;
+		}
+
 		if (liferayEnterpriseApp.contains("dxp.only=true")) {
 			_supportedPortalProfileNames.add(
 				PortalProfile.PORTAL_PROFILE_NAME_DXP);
@@ -96,6 +102,9 @@ public class BaseEnterpriseDSModulePortalProfile implements PortalProfile {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseEnterpriseDSModulePortalProfile.class);
+
+	private static final Set<String> _startedBundleNames =
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	static {
 		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();

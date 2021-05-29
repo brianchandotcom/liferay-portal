@@ -37,6 +37,11 @@ public interface QuestionsConfiguration {
 	public boolean enableRedirectToLogin();
 
 	@Meta.AD(
+		deflt = "false", name = "enable-custom-asset-renderer", required = false
+	)
+	public boolean enableCustomAssetRenderer();
+
+	@Meta.AD(
 		deflt = "true", name = "show-cards-for-topic-navigation",
 		required = false
 	)

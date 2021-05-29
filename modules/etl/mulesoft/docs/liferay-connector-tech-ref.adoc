@@ -399,7 +399,7 @@ The Update operation exposes all endpoints that are manipulated by HTTP PATCH.
 [[batch-export-operation]]
 === Batch Export Records
 
-The Batch export operation exports all records of defined entity in a JSON
+The Batch export operation exports all records of defined entities in a JSON
 format.
 
 ==== Parameters

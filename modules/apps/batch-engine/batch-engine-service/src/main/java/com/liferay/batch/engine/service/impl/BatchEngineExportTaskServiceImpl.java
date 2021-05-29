@@ -14,8 +14,14 @@
 
 package com.liferay.batch.engine.service.impl;
 
+import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.service.base.BatchEngineExportTaskServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,9 +48,36 @@ import org.osgi.service.component.annotations.Component;
 public class BatchEngineExportTaskServiceImpl
 	extends BatchEngineExportTaskServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use <code>com.liferay.batch.engine.service.BatchEngineExportTaskServiceUtil</code> to access the batch engine export task remote service.
-	 */
+	@Override
+	public List<BatchEngineExportTask> getBatchEngineExportTasks(
+			long companyId, int start, int end)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if ((companyId != permissionChecker.getCompanyId()) &&
+			!permissionChecker.isOmniadmin()) {
+
+			throw new PrincipalException();
+		}
+
+		return batchEngineExportTaskLocalService.getBatchEngineExportTasks(
+			companyId, start, end);
+	}
+
+	public int getBatchEngineExportTasksCount(long companyId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if ((companyId != permissionChecker.getCompanyId()) &&
+			!permissionChecker.isOmniadmin()) {
+
+			throw new PrincipalException();
+		}
+
+		return batchEngineExportTaskLocalService.getBatchEngineExportTasksCount(
+			companyId);
+	}
+
 }

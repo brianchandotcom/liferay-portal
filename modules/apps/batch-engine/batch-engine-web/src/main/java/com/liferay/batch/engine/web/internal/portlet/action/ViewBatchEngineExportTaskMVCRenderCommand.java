@@ -15,7 +15,7 @@
 package com.liferay.batch.engine.web.internal.portlet.action;
 
 import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
-import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.batch.engine.web.internal.display.context.BatchEngineExportTaskDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -46,7 +46,7 @@ public class ViewBatchEngineExportTaskMVCRenderCommand
 		BatchEngineExportTaskDisplayContext
 			batchEngineExportTaskDisplayContext =
 				new BatchEngineExportTaskDisplayContext(
-					_batchEngineExportTaskLocalService, renderRequest,
+					_batchEngineExportTaskService, renderRequest,
 					renderResponse);
 
 		renderRequest.setAttribute(
@@ -57,7 +57,6 @@ public class ViewBatchEngineExportTaskMVCRenderCommand
 	}
 
 	@Reference
-	private BatchEngineExportTaskLocalService
-		_batchEngineExportTaskLocalService;
+	private BatchEngineExportTaskService _batchEngineExportTaskService;
 
 }

@@ -646,23 +646,26 @@ public class ViewChangesDisplayContext {
 					));
 			}
 
-			jsonArray.put(
-				JSONUtil.put(
-					"href",
-					PublicationsPortletURLUtil.getHref(
-						_renderResponse.createRenderURL(),
-						"mvcRenderCommandName",
-						"/change_tracking/edit_ct_collection", "redirect",
-						_themeDisplay.getURLCurrent(), "ctCollectionId",
-						String.valueOf(_ctCollection.getCtCollectionId()))
-				).put(
-					"label", _language.get(_httpServletRequest, "edit")
-				).put(
-					"symbolLeft", "pencil"
-				));
+			if (_ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) {
+				jsonArray.put(
+					JSONUtil.put(
+						"href",
+						PublicationsPortletURLUtil.getHref(
+							_renderResponse.createRenderURL(),
+							"mvcRenderCommandName",
+							"/change_tracking/edit_ct_collection", "redirect",
+							_themeDisplay.getURLCurrent(), "ctCollectionId",
+							String.valueOf(_ctCollection.getCtCollectionId()))
+					).put(
+						"label", _language.get(_httpServletRequest, "edit")
+					).put(
+						"symbolLeft", "pencil"
+					));
+			}
 		}
 
-		if (CTCollectionPermission.contains(
+		if ((_ctCollection.getStatus() != WorkflowConstants.STATUS_EXPIRED) &&
+			CTCollectionPermission.contains(
 				permissionChecker, _ctCollection, ActionKeys.PERMISSIONS)) {
 
 			jsonArray.put(

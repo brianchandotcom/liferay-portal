@@ -19,7 +19,6 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.taglib.util.HtmlTopTag;
 
 import java.io.IOException;
@@ -364,51 +362,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				).put(
 					"symbolLeft", "list-ul"
 				));
-
-			int count = _ctEntryLocalService.getCTCollectionCTEntriesCount(
-				ctCollection.getCtCollectionId());
-
-			if ((count > 0) &&
-				_ctCollectionModelResourcePermission.contains(
-					themeDisplay.getPermissionChecker(), ctCollection,
-					CTActionKeys.PUBLISH)) {
-
-				PortletURL publishURL = PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						httpServletRequest, themeDisplay.getScopeGroup(),
-						CTPortletKeys.PUBLICATIONS, 0, 0,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/change_tracking/view_conflicts"
-				).setParameter(
-					"ctCollectionId", ctCollection.getCtCollectionId()
-				).build();
-
-				data.put(
-					"publishDropdownItem",
-					JSONUtil.put(
-						"href", publishURL.toString()
-					).put(
-						"label", _language.get(resourceBundle, "publish")
-					).put(
-						"symbolLeft", "change"
-					));
-
-				if (PropsValues.SCHEDULER_ENABLED) {
-					publishURL.setParameter(
-						"schedule", Boolean.TRUE.toString());
-
-					data.put(
-						"scheduleDropdownItem",
-						JSONUtil.put(
-							"href", publishURL.toString()
-						).put(
-							"label", _language.get(resourceBundle, "schedule")
-						).put(
-							"symbolLeft", "calendar"
-						));
-				}
-			}
 		}
 
 		return data;
@@ -425,9 +378,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	)
 	private ModelResourcePermission<CTCollection>
 		_ctCollectionModelResourcePermission;
-
-	@Reference
-	private CTEntryLocalService _ctEntryLocalService;
 
 	@Reference
 	private CTPreferencesLocalService _ctPreferencesLocalService;

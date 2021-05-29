@@ -35,7 +35,7 @@ configured with paths, path/query parameters and entity metadata defined in the
 OpenAPI document.
 
 Liferay Connector works with any OpenAPI 3.0 document that follows Liferay
-standards. A single Liferay connector supports all Liferay APIs.
+standards and supports all Liferay APIs.
 
 == Connector Configuration
 To configure the Liferay Connector, you must
@@ -91,7 +91,7 @@ Enter it into the
  </liferay:config>
 ```
 
-If *Test Connection* is successful you can start building flows using the
+If *Test Connection* is successful, you can start building flows using the
 Liferay Connector!
 
 == Operations

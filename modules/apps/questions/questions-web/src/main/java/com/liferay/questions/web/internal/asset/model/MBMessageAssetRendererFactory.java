@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
@@ -36,12 +37,14 @@ public class MBMessageAssetRendererFactory
 	public static final String TYPE = "message";
 
 	public MBMessageAssetRendererFactory(
-		String historyRouterPath, MBMessageLocalService mbMessageLocalService,
-		ModelResourcePermission<MBMessage> messageModelResourcePermission) {
+		CompanyLocalService companyLocalService, String historyRouterPath,
+		MBMessageLocalService mbMessageLocalService,
+		ModelResourcePermission<MBMessage> mbMessageModelResourcePermission) {
 
+		_companyLocalService = companyLocalService;
 		_historyRouterPath = historyRouterPath;
 		_mbMessageLocalService = mbMessageLocalService;
-		_messageModelResourcePermission = messageModelResourcePermission;
+		_mbMessageModelResourcePermission = mbMessageModelResourcePermission;
 
 		setLinkable(true);
 		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
@@ -52,10 +55,13 @@ public class MBMessageAssetRendererFactory
 	public AssetRenderer<MBMessage> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
+		MBMessage mbMessage = _mbMessageLocalService.getMessage(classPK);
+
 		MBMessageAssetRenderer mbMessageAssetRenderer =
 			new MBMessageAssetRenderer(
-				_historyRouterPath, _mbMessageLocalService.getMessage(classPK),
-				_messageModelResourcePermission);
+				_companyLocalService.getCompany(mbMessage.getCompanyId()),
+				_historyRouterPath, mbMessage,
+				_mbMessageModelResourcePermission);
 
 		mbMessageAssetRenderer.setAssetRendererType(type);
 
@@ -90,13 +96,14 @@ public class MBMessageAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _messageModelResourcePermission.contains(
+		return _mbMessageModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
+	private final CompanyLocalService _companyLocalService;
 	private final String _historyRouterPath;
 	private final MBMessageLocalService _mbMessageLocalService;
 	private final ModelResourcePermission<MBMessage>
-		_messageModelResourcePermission;
+		_mbMessageModelResourcePermission;
 
 }

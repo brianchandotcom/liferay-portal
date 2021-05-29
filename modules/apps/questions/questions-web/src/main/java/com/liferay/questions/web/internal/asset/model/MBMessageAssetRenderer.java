@@ -21,6 +21,7 @@ import com.liferay.message.boards.service.permission.MBDiscussionPermission;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -48,17 +49,18 @@ public class MBMessageAssetRenderer
 	extends BaseJSPAssetRenderer<MBMessage> implements TrashRenderer {
 
 	public MBMessageAssetRenderer(
-		String historyRouterPath, MBMessage message,
-		ModelResourcePermission<MBMessage> messageModelResourcePermission) {
+		Company company, String historyRouterPath, MBMessage mbMessage,
+		ModelResourcePermission<MBMessage> mbMessageModelResourcePermission) {
 
+		_company = company;
 		_historyRouterPath = historyRouterPath;
-		_message = message;
-		_messageModelResourcePermission = messageModelResourcePermission;
+		_mbMessage = mbMessage;
+		_mbMessageModelResourcePermission = mbMessageModelResourcePermission;
 	}
 
 	@Override
 	public MBMessage getAssetObject() {
-		return _message;
+		return _mbMessage;
 	}
 
 	@Override
@@ -68,12 +70,12 @@ public class MBMessageAssetRenderer
 
 	@Override
 	public long getClassPK() {
-		return _message.getMessageId();
+		return _mbMessage.getMessageId();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _message.getGroupId();
+		return _mbMessage.getGroupId();
 	}
 
 	@Override
@@ -104,19 +106,19 @@ public class MBMessageAssetRenderer
 
 	@Override
 	public int getStatus() {
-		return _message.getStatus();
+		return _mbMessage.getStatus();
 	}
 
 	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _message.getBody();
+		return _mbMessage.getBody();
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return _message.getSubject();
+		return _mbMessage.getSubject();
 	}
 
 	@Override
@@ -134,10 +136,11 @@ public class MBMessageAssetRenderer
 
 	@Override
 	public String getURLView(
-		LiferayPortletResponse liferayPortletResponse,
-		WindowState windowState) {
+			LiferayPortletResponse liferayPortletResponse,
+			WindowState windowState)
+		throws PortalException {
 
-		return null;
+		return _getQuestionsURL(_company.getPortalURL(_mbMessage.getGroupId()));
 	}
 
 	@Override
@@ -150,64 +153,57 @@ public class MBMessageAssetRenderer
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(_historyRouterPath);
-		sb.append("/questions/question/");
-		sb.append(_message.getMessageId());
-
-		return sb.toString();
+		return _getQuestionsURL(themeDisplay.getPortalURL());
 	}
 
 	@Override
 	public long getUserId() {
-		if (_message.isAnonymous()) {
+		if (_mbMessage.isAnonymous()) {
 			return 0;
 		}
 
-		return _message.getUserId();
+		return _mbMessage.getUserId();
 	}
 
 	@Override
 	public String getUserName() {
-		if (_message.isAnonymous()) {
+		if (_mbMessage.isAnonymous()) {
 			return LanguageUtil.get(
 				LocaleThreadLocal.getDefaultLocale(), "anonymous");
 		}
 
-		return _message.getUserName();
+		return _mbMessage.getUserName();
 	}
 
 	@Override
 	public String getUuid() {
-		return _message.getUuid();
+		return _mbMessage.getUuid();
 	}
 
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (_message.isDiscussion()) {
+		if (_mbMessage.isDiscussion()) {
 			return MBDiscussionPermission.contains(
-				permissionChecker, _message, ActionKeys.UPDATE);
+				permissionChecker, _mbMessage, ActionKeys.UPDATE);
 		}
 
-		return _messageModelResourcePermission.contains(
-			permissionChecker, _message, ActionKeys.UPDATE);
+		return _mbMessageModelResourcePermission.contains(
+			permissionChecker, _mbMessage, ActionKeys.UPDATE);
 	}
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (_message.isDiscussion()) {
+		if (_mbMessage.isDiscussion()) {
 			return MBDiscussionPermission.contains(
-				permissionChecker, _message, ActionKeys.VIEW);
+				permissionChecker, _mbMessage, ActionKeys.VIEW);
 		}
 
-		return _messageModelResourcePermission.contains(
-			permissionChecker, _message, ActionKeys.VIEW);
+		return _mbMessageModelResourcePermission.contains(
+			permissionChecker, _mbMessage, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -217,7 +213,7 @@ public class MBMessageAssetRenderer
 		throws Exception {
 
 		httpServletRequest.setAttribute(
-			WebKeys.MESSAGE_BOARDS_MESSAGE, _message);
+			WebKeys.MESSAGE_BOARDS_MESSAGE, _mbMessage);
 
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}
@@ -227,9 +223,21 @@ public class MBMessageAssetRenderer
 		return true;
 	}
 
+	private String _getQuestionsURL(String portalURL) {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(portalURL);
+		sb.append(_historyRouterPath);
+		sb.append("/questions/question/");
+		sb.append(_mbMessage.getMessageId());
+
+		return sb.toString();
+	}
+
+	private final Company _company;
 	private final String _historyRouterPath;
-	private final MBMessage _message;
+	private final MBMessage _mbMessage;
 	private final ModelResourcePermission<MBMessage>
-		_messageModelResourcePermission;
+		_mbMessageModelResourcePermission;
 
 }

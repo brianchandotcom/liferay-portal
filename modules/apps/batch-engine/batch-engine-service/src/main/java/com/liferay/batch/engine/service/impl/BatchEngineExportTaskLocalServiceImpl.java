@@ -82,4 +82,9 @@ public class BatchEngineExportTaskLocalServiceImpl
 			executeStatus);
 	}
 
+	@Override
+	public int getBatchEngineExportTasksCount(long companyId) {
+		return batchEngineExportTaskPersistence.countByCompanyId(companyId);
+	}
+
 }

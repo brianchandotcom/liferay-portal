@@ -1401,8 +1401,8 @@ public class DynamicDataMappingUpgradeProcess extends UpgradeProcess {
 				Long resourceClassNameId = getTemplateResourceClassNameId(
 					classNameId, classPK);
 
-				if (resourceClassNameId == null) {
-					_log.error("Orphaned DDM template " + templateId);
+				if ((resourceClassNameId == null) && _log.isWarnEnabled()) {
+					_log.warn("Orphaned DDM template " + templateId);
 
 					continue;
 				}

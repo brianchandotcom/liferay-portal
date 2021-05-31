@@ -64,6 +64,101 @@ definition {
 			titleField = "${titleField}");
 	}
 
+	@summary = "Get the answer title"
+	macro getAnswerTitle {
+		var categoryId = JSONMBMessage.getCategoryIdByName(
+			groupName = "${groupName}",
+			categoryName = "${categoryName}");
+
+		var threadId = JSONMBMessage.getThreadIdByName(
+			categoryName = "${categoryName}",
+			groupName = "${groupName}",
+			threadSubject = "${titleField}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbmessage/get-thread-messages \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d categoryId=${categoryId} \
+			-d threadId=${threadId} \
+			-d status=0 \
+			-d "start=-1" \
+			-d "end=-1"
+
+		''';
+
+		var commentTitle = JSONCurlUtil.post("${curl}", "$.[?(@['subject'] == 'RE: ${replyTitle}')]['subject']");
+
+		echo("## ${commentTitle}");
+
+		if ("${commentTitle}" == "RE: ${replyTitle}") {
+			echo("This question has an answer.");
+		}
+
+		else {
+			fail("FAIL!");
+		}
+	}
+
+	@summary = "Get the approve status of question"
+	macro getApprovedStatus {
+		var questionId = JSONQuestions.getQuestionIdViaThreadId(
+			categoryName = "${categoryName}",
+			groupName = "${groupName}",
+			titleField = "${titleField}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test'
+		''';
+
+		var status = JSONCurlUtil.get("${curl}", "$.[?(@['headline'] == '${titleField}')]['status']");
+
+		echo("## ${status}");
+
+		if ("${status}" == "approved") {
+			echo("This is a approved question.");
+		}
+		else {
+			fail("FAIL!");
+		}
+	}
+
+	@summary = "Get the pending status of question"
+	macro getPendingStatus {
+		var questionId = JSONQuestions.getQuestionIdViaThreadId(
+			pending = "1",
+			categoryName = "${categoryName}",
+			groupName = "${groupName}",
+			titleField = "${titleField}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-delivery/v1.0/message-board-threads/${questionId} \
+			-H 'Content-Type: application/json' \
+			-u 'test@liferay.com:test'
+		''';
+
+		var status = JSONCurlUtil.get("${curl}", "$.[?(@['headline'] == '${titleField}')]['status']");
+
+		echo("## ${status}");
+
+		if ("${status}" == "pending") {
+			echo("This is a pending question.");
+		}
+		else {
+			fail("FAIL!");
+		}
+	}
+
 	@summary = "Get the questionId by using categoryName and groupName"
 	macro getQuestionIdByName {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
@@ -88,6 +183,45 @@ definition {
 		''';
 
 		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['rootMessageId']");
+
+		if ("${questionId}" == "[]") {
+			fail("FAIL. Cannot find category.");
+		}
+
+		return "${questionId}";
+	}
+
+	@summary = "Get the questionId through threadId"
+	macro getQuestionIdViaThreadId {
+		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
+
+		var categoryId = JSONMBMessage.getCategoryIdByName(
+			groupName = "${groupName}",
+			categoryName = "${categoryName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		if (isSet(pending)) {
+			var status = "1";
+		}
+		else {
+			var status = "0";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/mb.mbthread/get-threads \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d categoryId=${categoryId} \
+			-d status=${status} \
+			-d "start=-1" \
+			-d "end=-1"
+
+		''';
+
+		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['threadId']");
 
 		if ("${questionId}" == "[]") {
 			fail("FAIL. Cannot find category.");

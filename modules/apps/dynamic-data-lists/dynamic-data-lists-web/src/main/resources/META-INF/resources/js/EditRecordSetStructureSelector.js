@@ -41,7 +41,6 @@ export default function ({itemSelectorURL, portletNamespace, selectEventName}) {
 				selectEventName,
 				title: Liferay.Language.get('data-definitions'),
 				url: itemSelectorURL,
-				zIndex: 9999,
 			});
 		});
 	}

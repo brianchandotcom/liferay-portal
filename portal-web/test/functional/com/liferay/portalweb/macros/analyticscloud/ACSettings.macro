@@ -18,36 +18,6 @@ definition {
 			value1 = "${keyword}");
 	}
 
-	macro deleteProperty {
-
-		ACNavigation.goToSettings();
-
-		ACSettings.goToProperties();
-
-		Click(locator1 = "ACSettings#PROPERTIES_SEARCH_BAR");
-
-		Type(
-			locator1 = "ACSettings#PROPERTIES_SEARCH_BAR",
-			value1 = "${propertyName}");
-
-		KeyPress(
-				locator1 = "ACSettings#PROPERTIES_SEARCH_BAR",
-				value1 = "\ENTER");
-
-		Click(locator1 = "ACSettings#PROPERTIES_ITEM_ON_LIST");
-
-		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
-
-		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
-
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
-
-		Click(locator1 = "ACSettings#GENERIC_CONFIRMATION_BUTTON");
-
-	}
-
 	macro deleteKeywordCheckbox {
 		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
 			Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");
@@ -64,6 +34,34 @@ definition {
 
 			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
 		}
+	}
+
+	macro deleteProperty {
+		ACNavigation.goToSettings();
+
+		ACSettings.goToProperties();
+
+		Click(locator1 = "ACSettings#PROPERTIES_SEARCH_BAR");
+
+		Type(
+			locator1 = "ACSettings#PROPERTIES_SEARCH_BAR",
+			value1 = "${propertyName}");
+
+		KeyPress(
+			locator1 = "ACSettings#PROPERTIES_SEARCH_BAR",
+			value1 = "\ENTER");
+
+		Click(locator1 = "ACSettings#PROPERTIES_ITEM_ON_LIST");
+
+		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+
+		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Click(locator1 = "ACSettings#GENERIC_CONFIRMATION_BUTTON");
 	}
 
 	macro goToApis {

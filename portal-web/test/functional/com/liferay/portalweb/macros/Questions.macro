@@ -537,6 +537,16 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_ACTIVE_TAB_FIELD");
 	}
 
+	macro openToConfigInSystemSettings {
+		var baseURL = PropsUtil.get("portal.url");
+
+		if ("${portlet}" == "Message Boards Moderation Workflow") {
+			var portletId = "com.liferay.message.boards.moderation.internal.configuration.MBModerationGroupConfiguration";
+		}
+
+		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+	}
+
 	macro openToEditQuestion {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}/edit");
 	}

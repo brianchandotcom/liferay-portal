@@ -527,14 +527,35 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131336 LabelCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Test Text");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertTextEquals(
+			fieldLabel = "Test Text",
+			locator1 = "FormViewBuilder#FIELD_LABEL",
+			value1 = "Test Text");
 	}
 
 	@description = "Veriy that the Field Label can be hidden"

@@ -26,15 +26,9 @@ import getPageSpeedProgress from '../utils/getPageSpeedProgress';
 import BasicInformation from './BasicInformation';
 
 export default function IssuesList() {
-	const {data, error, loading} = useContext(StoreStateContext);
+	const {data, error, languageId, loading} = useContext(StoreStateContext);
 
-	const {
-		defaultLanguageId,
-		imagesPath,
-		languageId,
-		layoutReportsIssues,
-		pageURLs,
-	} = data;
+	const {defaultLanguageId, imagesPath, layoutReportsIssues, pageURLs} = data;
 
 	const [percentage, setPercentage] = useState(0);
 

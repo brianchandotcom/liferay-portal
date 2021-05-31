@@ -199,6 +199,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENCY_COLUMN_VALUE</td>
+	<td>//td[contains(@class,'lfr-name-column')]//*[text()='${key_entryName}']/../..//td[contains(@class,'${key_columnClassName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISCOUNT_TARGET_SELECT</td>
 	<td>//div[label[contains(.,'Target')]]/select</td>
 	<td></td>

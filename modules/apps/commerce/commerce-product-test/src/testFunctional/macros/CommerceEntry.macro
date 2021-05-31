@@ -139,10 +139,34 @@ definition {
 			value1 = "${entryName}");
 
 		Type(
-			locator1 = "CommerceEntry#CODE_FIELD",
+			key_fieldLabel = "Code",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = "${code}");
 
-		Check.checkToggleSwitch(locator1 = "CommerceEntry#PRIMARY_CHECKBOX");
+		if (isSet(symbol)) {
+			Type(
+				key_fieldLabel = "Symbol",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${symbol}");
+		}
+		if (isSet(formatPattern)) {
+			Type(
+				key_fieldLabel = "Format Pattern",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${formatPattern}");
+		}
+
+		if (!(isSet(isPrimary)) || "${isPrimary}" == "true") {
+			Check.checkToggleSwitch(locator1 = "CommerceEntry#PRIMARY_CHECKBOX");
+		}
+		else {
+			if (isSet(exchangeRate)) {
+				Type(
+					key_fieldLabel = "Exchange Rate with US Dollar",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = "${exchangeRate}");
+			}
+		}
 
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 	}

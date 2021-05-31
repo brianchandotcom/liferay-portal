@@ -150,6 +150,40 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 	protected String buildPayload(JSONObject payloadJSONObject) {
 		SimpleApnsPayloadBuilder builder = new SimpleApnsPayloadBuilder();
 
+		JSONObject newPayloadJSONObject = JSONFactoryUtil.createJSONObject();
+
+		Iterator<String> iterator = payloadJSONObject.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (!key.equals(PushNotificationsConstants.KEY_BADGE) &&
+				!key.equals(PushNotificationsConstants.KEY_BODY) &&
+				!key.equals(PushNotificationsConstants.KEY_BODY_LOCALIZED) &&
+				!key.equals(
+					PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS) &&
+				!key.equals(PushNotificationsConstants.KEY_SOUND) &&
+				!key.equals(PushNotificationsConstants.KEY_SILENT) &&
+				!key.equals(PushNotificationsConstants.KEY_TITLE) &&
+				!key.equals(PushNotificationsConstants.KEY_TITLE_LOCALIZED) &&
+				!key.equals(
+					PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS)) {
+
+				newPayloadJSONObject.put(key, payloadJSONObject.get(key));
+			}
+		}
+
+		builder.addCustomProperty(
+			PushNotificationsConstants.KEY_PAYLOAD,
+			newPayloadJSONObject.toString());
+
+		String body = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_BODY);
+
+		if (Validator.isNotNull(body)) {
+			builder.setAlertBody(body);
+		}
+
 		String title = payloadJSONObject.getString(
 			PushNotificationsConstants.KEY_TITLE);
 
@@ -162,21 +196,41 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 				payloadJSONObject.getInt(PushNotificationsConstants.KEY_BADGE));
 		}
 
-		String body = payloadJSONObject.getString(
-			PushNotificationsConstants.KEY_BODY);
+		String titleLocalizedKey = payloadJSONObject.getString(
+			PushNotificationsConstants.KEY_TITLE_LOCALIZED);
 
-		if (Validator.isNotNull(body)) {
-			builder.setAlertBody(body);
+		if (Validator.isNotNull(titleLocalizedKey)) {
+			JSONArray titleLocalizedArgumentsJSONArray =
+				payloadJSONObject.getJSONArray(
+					PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS);
+
+			if (titleLocalizedArgumentsJSONArray != null) {
+				List<String> localizedArguments = new ArrayList<>();
+
+				for (int i = 0; i < titleLocalizedArgumentsJSONArray.length();
+					 i++) {
+
+					localizedArguments.add(
+						titleLocalizedArgumentsJSONArray.getString(i));
+				}
+
+				builder.setLocalizedAlertTitle(
+					titleLocalizedKey,
+					localizedArguments.toArray(new String[0]));
+			}
+			else {
+				builder.setLocalizedAlertTitle(titleLocalizedKey);
+			}
 		}
 
 		String bodyLocalizedKey = payloadJSONObject.getString(
 			PushNotificationsConstants.KEY_BODY_LOCALIZED);
 
-		JSONArray bodyLocalizedArgumentsJSONArray =
-			payloadJSONObject.getJSONArray(
-				PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS);
-
 		if (Validator.isNotNull(bodyLocalizedKey)) {
+			JSONArray bodyLocalizedArgumentsJSONArray =
+				payloadJSONObject.getJSONArray(
+					PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS);
+
 			if (bodyLocalizedArgumentsJSONArray != null) {
 				List<String> localizedArguments = new ArrayList<>();
 
@@ -209,60 +263,6 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 		if (Validator.isNotNull(sound)) {
 			builder.setSound(sound);
 		}
-
-		String titleLocalizedKey = payloadJSONObject.getString(
-			PushNotificationsConstants.KEY_TITLE_LOCALIZED);
-
-		JSONArray titleLocalizedArgumentsJSONArray =
-			payloadJSONObject.getJSONArray(
-				PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS);
-
-		if (Validator.isNotNull(titleLocalizedKey)) {
-			if (titleLocalizedArgumentsJSONArray != null) {
-				List<String> localizedArguments = new ArrayList<>();
-
-				for (int i = 0; i < titleLocalizedArgumentsJSONArray.length();
-					 i++) {
-
-					localizedArguments.add(
-						titleLocalizedArgumentsJSONArray.getString(i));
-				}
-
-				builder.setLocalizedAlertTitle(
-					titleLocalizedKey,
-					localizedArguments.toArray(new String[0]));
-			}
-			else {
-				builder.setLocalizedAlertTitle(titleLocalizedKey);
-			}
-		}
-
-		JSONObject newPayloadJSONObject = JSONFactoryUtil.createJSONObject();
-
-		Iterator<String> iterator = payloadJSONObject.keys();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
-			if (!key.equals(PushNotificationsConstants.KEY_BADGE) &&
-				!key.equals(PushNotificationsConstants.KEY_BODY) &&
-				!key.equals(PushNotificationsConstants.KEY_BODY_LOCALIZED) &&
-				!key.equals(
-					PushNotificationsConstants.KEY_BODY_LOCALIZED_ARGUMENTS) &&
-				!key.equals(PushNotificationsConstants.KEY_SOUND) &&
-				!key.equals(PushNotificationsConstants.KEY_SILENT) &&
-				!key.equals(PushNotificationsConstants.KEY_TITLE) &&
-				!key.equals(PushNotificationsConstants.KEY_TITLE_LOCALIZED) &&
-				!key.equals(
-					PushNotificationsConstants.KEY_TITLE_LOCALIZED_ARGUMENTS)) {
-
-				newPayloadJSONObject.put(key, payloadJSONObject.get(key));
-			}
-		}
-
-		builder.addCustomProperty(
-			PushNotificationsConstants.KEY_PAYLOAD,
-			newPayloadJSONObject.toString());
 
 		return builder.build();
 	}

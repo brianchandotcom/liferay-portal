@@ -232,11 +232,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLES_ORGANIZATION_ROLES_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectOrganizationRoleLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROLES_SELECT_ROLE_NAME</td>
 	<td>//tr//*[normalize-space(text())='${key_roleTitle}']</td>
 	<td></td>
@@ -258,11 +253,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ROLES_REGULAR_ROLES_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectRegularRoleLink')]/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROLES_REGULAR_ROLES_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_regularRoleName}')]/td[1]</td>
 	<td></td>
@@ -281,11 +271,6 @@
 <tr>
 	<td>ROLES_SITE_ROLES_TABLE_TITLE</td>
 	<td>//tr[contains(.,'${key_siteRoleName}')]/td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ROLES_SITE_ROLES_SELECT_LINK</td>
-	<td>//a[contains(@id,'selectSiteRoleLink')]/span</td>
 	<td></td>
 </tr>
 <tr>

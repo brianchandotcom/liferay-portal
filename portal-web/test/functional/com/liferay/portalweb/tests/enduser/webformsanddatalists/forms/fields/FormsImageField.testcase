@@ -136,9 +136,9 @@ definition {
 		FormsAdminNavigator.gotoView();
 
 		FormsAdmin.viewImageEntry(
+			fieldDescription = "Test Image Description",
 			fieldLabel = "Image",
-			fieldName = "Image",
-			fieldDescription = "Test Image Description");
+			fieldName = "Image");
 	}
 
 	@description = "Verify that a help text can be added to an Image Field"

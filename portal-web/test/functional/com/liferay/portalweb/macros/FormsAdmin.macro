@@ -256,8 +256,8 @@ definition {
 			fieldName = "${fieldName}");
 
 		AssertElementPresent(
-			locator1 = "FormFields#IMAGE_FIELD_DESCRIPTION",
-			key_description = "${fieldDescription}");
+			key_description = "${fieldDescription}",
+			locator1 = "FormFields#IMAGE_FIELD_DESCRIPTION");
 	}
 
 	macro viewImageTableEntry {

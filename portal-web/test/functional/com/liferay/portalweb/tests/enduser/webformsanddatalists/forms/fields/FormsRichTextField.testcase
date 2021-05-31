@@ -160,8 +160,6 @@ definition {
 		FormFields.viewRadioLabel(
 			fieldLabel = "Test Rich Text",
 			fieldName = "Test Rich Text");
-			
-
 	}
 
 	@description = "Verify that the Field Label can be hidden"

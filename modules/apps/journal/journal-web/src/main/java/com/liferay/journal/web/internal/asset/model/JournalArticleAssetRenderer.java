@@ -432,15 +432,9 @@ public class JournalArticleAssetRenderer
 			}
 		}
 
-		Group group = themeDisplay.getScopeGroup();
-
-		if (group.getGroupId() != _article.getGroupId()) {
-			group = GroupLocalServiceUtil.getGroup(_article.getGroupId());
-		}
-
 		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 			LayoutSetLocalServiceUtil.getLayoutSet(
-				group.getGroupId(), layout.isPrivateLayout()),
+				_article.getGroupId(), layout.isPrivateLayout()),
 			themeDisplay);
 
 		StringBundler sb = new StringBundler(3);

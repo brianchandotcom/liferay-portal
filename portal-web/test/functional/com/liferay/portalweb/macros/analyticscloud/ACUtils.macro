@@ -29,6 +29,21 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${cleanCurl}");
 	}
 
+	macro createBlogsAndAddToPage {
+		ACUtils.addWidgetToPage(widgetName = "Blogs");
+
+		Navigator.openSiteURL(siteName = "Site Name");
+
+		Blogs.addEntry(
+			entryContent = "This is the blog test for AC",
+			entrySubtitle = "Blogs AC Subtitle",
+			entryTitle = "Blogs AC Title");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+	}
+
 	macro createDMAndAddToPage {
 		ACUtils.addWidgetToPage(widgetName = "Documents and Media");
 

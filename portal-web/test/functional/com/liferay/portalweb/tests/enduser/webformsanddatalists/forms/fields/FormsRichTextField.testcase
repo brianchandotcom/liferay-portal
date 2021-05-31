@@ -57,9 +57,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormFields.viewTextLabel(fieldLabel = "Rich Text");
-
-
-
 	}
 
 	@description = "Verify that a Rich Text Field can be deleted"

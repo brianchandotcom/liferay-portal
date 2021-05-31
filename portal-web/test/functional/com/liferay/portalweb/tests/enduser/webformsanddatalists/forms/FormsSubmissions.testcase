@@ -215,14 +215,40 @@ definition {
 	}
 
 	@description = "Verify that a Form's Submit button's text can be customized with numbers"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test SubmitButtonTextCanBeCustomizedWithNumbers {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131030 SubmitButtonTextCanBeCustomizedWithNumbers pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureSubmitLabel(submitLabel = "123456789");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "123456789");
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+			
 	}
 
 	@description = "Verify that a Form's Submit button's text can be customized with special characters"

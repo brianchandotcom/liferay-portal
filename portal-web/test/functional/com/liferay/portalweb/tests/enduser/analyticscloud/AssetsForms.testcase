@@ -97,9 +97,13 @@ definition {
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
+		for (var n : list "1,2,3,4") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "100");
+		}
 
 		Pause(locator1 = "10000");
 
@@ -124,7 +128,7 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACAssets#MATRIC_VALUE",
 			matricTitle = "Views",
-			value1 = "1");
+			value1 = "4");
 	}
 
 }

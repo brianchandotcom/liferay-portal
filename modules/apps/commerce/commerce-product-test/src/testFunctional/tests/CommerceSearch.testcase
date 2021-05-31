@@ -400,13 +400,35 @@ definition {
 	}
 
 	@description = "COMMERCE-6148. As a buyer, I want to search a product by its name using the Search Bar widget and I want the results to be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test SearchBarWidgetSearchProductByName {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CommerceSearch#SearchBarWidgetSearchProductByName";
 
-		// TODO COMMERCE-6148 SearchBarWidgetSearchProductByName pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Type(
+			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			value1 = "ABS Sensor");
+
+		Button.clickSubmitButton();
+
+		for (var i : list "ABS Sensor,Wear Sensors,3") {
+			if ("${i}" == "3") {
+				AssertElementNotPresent(
+					key_value = "${i}",
+					locator1 = "CommerceAccelerators#ASSERT_PRODUCT_CARD");
+			}
+			else {
+				AssertElementPresent(
+					key_productName = "${i}",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+		}
 	}
 
 	@description = "COMMERCE-6149.As a buyer, I want to search a product by its name using double quotes in the Search Bar widget and that product should be visible on the Search Results widget"

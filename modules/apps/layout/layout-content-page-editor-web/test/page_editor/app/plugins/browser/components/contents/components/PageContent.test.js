@@ -12,13 +12,37 @@
  * details.
  */
 
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, fireEvent, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
+import {useSelectItem} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
+import {
+	useEditableProcessorUniqueId,
+	useSetEditableProcessorUniqueId,
+} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext';
 import {StoreContextProvider} from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import PageContent from '../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/contents/components/PageContent';
+
+jest.mock(
+	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext',
+	() => {
+		const selectItem = jest.fn();
+		const hoverItem = jest.fn();
+		const hoveredItemId = null;
+
+		return {
+			useHoverItem: () => hoverItem,
+			useHoveredItemId: () => hoveredItemId,
+			useSelectItem: () => selectItem,
+		};
+	}
+);
+
+jest.mock(
+	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext'
+);
 
 const renderPageContent = (props) =>
 	render(
@@ -29,6 +53,7 @@ const renderPageContent = (props) =>
 					permissionsURL: 'permissionsURL',
 					viewUsagesURL: 'viewUsagesURL',
 				}}
+				editableId="11111-element-text"
 				subtype="Web Content Article"
 				title="Test Web Content"
 				{...props}
@@ -38,6 +63,8 @@ const renderPageContent = (props) =>
 
 describe('PageContent', () => {
 	afterEach(cleanup);
+
+	useSetEditableProcessorUniqueId.mockImplementation(() => jest.fn);
 
 	it('shows properly the title of the content', () => {
 		const {getByText} = renderPageContent();
@@ -79,5 +106,29 @@ describe('PageContent', () => {
 		const {getByText} = renderPageContent({actions: {}});
 
 		expect(getByText('edit-inline-text')).toBeInTheDocument();
+	});
+
+	it('selects the corresponding element on the page when Edit button is clicked', async () => {
+		const selectItem = useSelectItem();
+		const {getByText} = renderPageContent({actions: {}});
+
+		fireEvent.click(getByText('edit-inline-text'));
+
+		await wait(() => {
+			expect(selectItem).toHaveBeenCalledWith('11111-element-text', {
+				itemType: 'editable',
+				origin: 'sidebar',
+			});
+		});
+	});
+
+	it('disables Edit button when an inline text is being edited', () => {
+		useEditableProcessorUniqueId.mockImplementation(
+			() => '11111-element-text'
+		);
+
+		const {getByText} = renderPageContent({actions: {}});
+
+		expect(getByText('edit-inline-text').parentElement).toBeDisabled();
 	});
 });

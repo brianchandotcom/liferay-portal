@@ -14,10 +14,12 @@
 
 package com.liferay.batch.planner.service.impl;
 
+import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.base.BatchPlannerPolicyServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.List;
@@ -42,10 +44,10 @@ public class BatchPlannerPolicyServiceImpl
 			long batchPlannerPlanId, String name, String value)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_getBatchPlannerPlan(batchPlannerPlanId);
 
 		return batchPlannerPolicyLocalService.addBatchPlannerPolicy(
-			permissionChecker.getUserId(), batchPlannerPlanId, name, value);
+			getUserId(), batchPlannerPlanId, name, value);
 	}
 
 	@Override
@@ -65,9 +67,9 @@ public class BatchPlannerPolicyServiceImpl
 			long batchPlannerPlanId)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_getBatchPlannerPlan(batchPlannerPlanId);
 
-		return batchPlannerPolicyPersistence.findByBatchPlannerPlanId(
+		return batchPlannerPolicyLocalService.getBatchPlannerPolicies(
 			batchPlannerPlanId);
 	}
 
@@ -76,22 +78,20 @@ public class BatchPlannerPolicyServiceImpl
 			long batchPlannerPlanId, String name)
 		throws PortalException {
 
-		BatchPlannerPolicy batchPlannerPolicy = getBatchPlannerPolicy(
-			batchPlannerPlanId, name);
+		_getBatchPlannerPlan(batchPlannerPlanId);
 
 		return batchPlannerPolicyLocalService.getBatchPlannerPolicy(
-			batchPlannerPolicy.getBatchPlannerPlanId(), name);
+			batchPlannerPlanId, name);
 	}
 
 	@Override
 	public boolean hasBatchPlannerPolicy(long batchPlannerPlanId, String name)
 		throws PortalException {
 
-		BatchPlannerPolicy batchPlannerPolicy = getBatchPlannerPolicy(
-			batchPlannerPlanId, name);
+		_getBatchPlannerPlan(batchPlannerPlanId);
 
 		return batchPlannerPolicyLocalService.hasBatchPlannerPolicy(
-			batchPlannerPolicy.getBatchPlannerPlanId(), name);
+			batchPlannerPlanId, name);
 	}
 
 	@Override
@@ -104,6 +104,18 @@ public class BatchPlannerPolicyServiceImpl
 
 		return batchPlannerPolicyLocalService.updateBatchPlannerPolicy(
 			batchPlannerPolicy.getBatchPlannerPlanId(), name, value);
+	}
+
+	private BatchPlannerPlan _getBatchPlannerPlan(long batchPlannerPlanId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		return batchPlannerPlanPersistence.findByPrimaryKey(batchPlannerPlanId);
 	}
 
 }

@@ -66,6 +66,24 @@ public class BatchPlannerPlanLocalServiceImpl
 	}
 
 	@Override
+	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)
+		throws PortalException {
+
+		BatchPlannerPlan batchPlannerPlan =
+			batchPlannerPlanLocalService.deleteBatchPlannerPlan(
+				batchPlannerPlanId);
+
+		batchPlannerLogPersistence.removeByBatchPlannerPlanId(
+			batchPlannerPlanId);
+		batchPlannerMappingPersistence.removeByBatchPlannerPlanId(
+			batchPlannerPlanId);
+		batchPlannerPolicyPersistence.removeByBatchPlannerPlanId(
+			batchPlannerPlanId);
+
+		return batchPlannerPlan;
+	}
+
+	@Override
 	public BatchPlannerPlan updateBatchPlannerPlan(
 			long userId, long batchPlannerPlanId, String name)
 		throws PortalException {

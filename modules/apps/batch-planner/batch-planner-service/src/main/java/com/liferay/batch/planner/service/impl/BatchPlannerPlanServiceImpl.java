@@ -18,6 +18,7 @@ import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.base.BatchPlannerPlanServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,6 +45,20 @@ public class BatchPlannerPlanServiceImpl
 
 		return batchPlannerPlanLocalService.addBatchPlannerPlan(
 			permissionChecker.getUserId(), externalType, name);
+	}
+
+	@Override
+	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			throw new PrincipalException();
+		}
+
+		return batchPlannerPlanLocalService.deleteBatchPlannerPlan(
+			batchPlannerPlanId);
 	}
 
 	@Override

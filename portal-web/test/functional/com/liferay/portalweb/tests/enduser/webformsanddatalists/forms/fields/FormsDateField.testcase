@@ -332,14 +332,43 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be applied"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132825 PredefinedValueCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldPredefinedDate(fieldValue = "01/01/2021");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewDateValue(
+			fieldLabel = "Date",
+			fieldName = "Date",
+			fieldValue = "01/01/2021");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that the Field Reference can be Edited"

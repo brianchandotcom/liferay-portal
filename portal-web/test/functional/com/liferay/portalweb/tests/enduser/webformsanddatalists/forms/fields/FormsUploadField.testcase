@@ -1,0 +1,243 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a user can upload up to 5 files when the Repeatable option is enabled"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AllowsFiveUploadsWhenRepeatableIsEnabled {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133253 AllowsFiveUploadsWhenRepeatableIsEnabled pending implementation
+
+	}
+
+	@description = "Verify that, by default, guest users cannot upload files"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ByDefaultCannotBeUsedByGuestUser {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133252 ByDefaultCannotBeUsedByGuestUser pending implementation
+
+	}
+
+	@description = "Verify that a file added to the Upload field can be removed by clicking the Clear button"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCleared {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133258 CanBeCleared pending implementation
+
+	}
+
+	@description = "Verify that an Upload Field can be created"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCreated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133211 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that an Upload Field can be deleted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133213 CanBeDeleted pending implementation
+
+	}
+
+	@description = "Verify that an Upload Field can be duplicated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDuplicated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133215 CanBeDuplicated pending implementation
+
+	}
+
+	@description = "Verify that an Upload Field can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133212 CanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that an Upload Field can be required"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeRequired {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133214 CanBeRequired pending implementation
+
+	}
+
+	@description = "Verify that an Upload Field can be set to repeatable"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSetToRepeatable {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133216 CanBeSetToRepeatable pending implementation
+
+	}
+
+	@description = "Verify that changes to the Field can be canceled"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChangesCanBeCanceled {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133218 ChangesCanBeCanceled pending implementation
+
+	}
+
+	@description = "Verify that guest users can only access upload fields that have guest user uploads enabled"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test GuestUserCanOnlyAccessEnabledFields {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133257 GuestUserCanOnlyAccessEnabledFields pending implementation
+
+	}
+
+	@description = "Verify that a help text can be added to an Upload Field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test HelpTextCanBeAdded {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133221 HelpTextCanBeAdded pending implementation
+
+	}
+
+	@description = "Verify that the Field Label can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133219 LabelCanBeEdited pending implementation
+
+	}
+
+	@description = "Veriy that the Field Label can be hidden"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test LabelCanBeHidden {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133220 LabelCanBeHidden pending implementation
+
+	}
+
+	@description = "Verify that the limit of Maximum Repetitions for Upload Fields can be changed in System Settings"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test MaximumRepetitionsCanBeChanged {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133254 MaximumRepetitionsCanBeChanged pending implementation
+
+	}
+
+	@description = "Verify that the Field Reference can be Edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ReferenceCanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133222 ReferenceCanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that a registered user cannot upload a file with an invalid size"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test RegisteredUserCannotUploadFileWithInvalidSize {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133256 RegisteredUserCannotUploadFileWithInvalidSize pending implementation
+
+	}
+
+	@description = "Verify that guest users cannot see files submitted by other users"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SubmittedFilesCannotBeSeenByGuestUsers {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133251 SubmittedFilesCannotBeSeenByGuestUsers pending implementation
+
+	}
+
+	@description = "Verify that the Field Type can be changed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TypeCanBeChanged {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133217 TypeCanBeChanged pending implementation
+
+	}
+
+}

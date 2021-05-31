@@ -12,7 +12,7 @@ definition {
 			User.firstLoginPG();
 		}
 
-		task ("Add a site via JSON") {
+		task ("Add a site") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
@@ -35,691 +35,887 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for for LPS-111548. Reloading the page will clean all Undo states."
-	@priority = "4"
-	test ConfigureHeadingFragmentAndRefreshPageWithUndoEnabled {
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		PageEditor.waitForAutoSave();
-
-		AssertVisible(
-			key_text = "undo",
-			locator1 = "Icon#ANY_ENABLED");
-
-		PageEditor.gotoStyle(fragmentName = "Heading");
-
-		PageEditor.configureFragment(alignment = "Center");
-
-		PageEditor.viewFragmentStyle(
-			alignment = "center",
-			fragmentName = "heading");
-
-		Refresh();
-
-		AssertElementPresent(
-			key_text = "undo",
-			locator1 = "Icon#ANY_DISABLED");
-	}
-
-	@description = "This is a test for LPS-112030. Can return to a given saved interactions via Undo History list."
+	@description = "This is a test for LPS-112030. Can return to a specific interaction state via Undo History list."
 	@priority = "5"
-	test RestoreSavedInteractionsViaUndoHistory {
+	@uitest
+	test NavigateToSpecificInteractionStateViaUndoHistory {
 		property portal.acceptance = "true";
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Button");
-
-		PageEditor.gotoStyle(fragmentName = "Button");
-
-		PageEditor.configureFragment(alignment = "Center");
-
-		PageEditor.gotoDuplicate(fragmentName = "Button");
-
-		PageEditor.removeFragment(
-			duplicateFragment = "true",
-			fragmentName = "Button");
-
-		Click(locator1 = "PageEditor#UNDO_HISTORY");
-
-		MenuItem.click(menuItem = "Add Button");
-
-		PageEditor.viewFragment(fragmentName = "Button");
-
-		MenuItem.click(menuItem = "Update Button Configuration");
-
-		PageEditor.viewFragmentStyle(
-			alignment = "center",
-			fragmentName = "button");
-
-		for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
-			MenuItem.viewVisible(menuItem = "${menuItem}");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 		}
 
-		MenuItem.click(menuItem = "Duplicate Button");
+		task ("Configure the style of Button") {
+			PageEditor.gotoStyle(fragmentName = "Button");
 
-		PageEditor.viewDuplicateFragment(fragmentName = "Button");
-
-		PageEditor.viewFragmentStyle(
-			alignment = "center",
-			fragmentName = "button");
-
-		for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
-			MenuItem.viewVisible(menuItem = "${menuItem}");
+			PageEditor.configureFragment(alignment = "Center");
 		}
 
-		MenuItem.click(menuItem = "Delete Button");
+		task ("Duplicate the Button fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Button");
+		}
 
-		AssertElementNotPresent(
-			key_fragmentName = "Button",
-			locator1 = "Fragment#FRAGMENT_HEADER_2");
+		task ("Remove the duplicated Button") {
+			PageEditor.removeFragment(
+				duplicateFragment = "true",
+				fragmentName = "Button");
+		}
 
-		PageEditor.viewFragment(fragmentName = "Button");
+		task ("Navigate to specific interaction states via Undo History") {
+			Click(locator1 = "PageEditor#UNDO_HISTORY");
 
-		PageEditor.viewFragmentStyle(
-			alignment = "center",
-			fragmentName = "button");
+			MenuItem.click(menuItem = "Add Button");
 
-		for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
-			MenuItem.viewVisible(menuItem = "${menuItem}");
+			PageEditor.viewFragment(fragmentName = "Button");
+
+			MenuItem.click(menuItem = "Update Button Configuration");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button");
+
+			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
+				MenuItem.viewVisible(menuItem = "${menuItem}");
+			}
+
+			MenuItem.click(menuItem = "Duplicate Button");
+
+			PageEditor.viewDuplicateFragment(fragmentName = "Button");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button");
+
+			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
+				MenuItem.viewVisible(menuItem = "${menuItem}");
+			}
+
+			MenuItem.click(menuItem = "Delete Button");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Button",
+				locator1 = "Fragment#FRAGMENT_HEADER_2");
+
+			PageEditor.viewFragment(fragmentName = "Button");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "button");
+
+			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
+				MenuItem.viewVisible(menuItem = "${menuItem}");
+			}
 		}
 	}
 
 	@description = "This is a test for LPS-111549. Redo can make the page editor rollback the previous undo state up to X that is the number of undo interactions."
 	@priority = "5"
-	test UndoAndRedoPagechanges {
+	@uitest
+	test RedoInteractionStates {
 		property portal.acceptance = "true";
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Tabs fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
 
-		PageEditor.addElementToTab(
-			collectionName = "Basic Components",
-			fragmentName = "Heading",
-			index = "2",
-			navItem = "Tab 1",
-			navTab = "Fragments",
-			position = "1");
+		task ("Add a Heading fragment to Tab 1") {
+			PageEditor.addElementToTab(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				index = "2",
+				navItem = "Tab 1",
+				navTab = "Fragments",
+				position = "1");
+		}
 
-		PageEditor.editFragmentText(
-			fragmentName = "Heading",
-			id = "element-text",
-			text = "New editable fragment text");
+		task ("Edit the inline content of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
 
-		PageEditor.gotoStyle(fragmentName = "Heading");
+		task ("Configure the style of Heading") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
 
-		PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Center");
+		}
 
-		PageEditor.gotoDuplicate(fragmentName = "Tabs");
+		task ("Duplicate the Tabs fragment") {
+			PageEditor.gotoDuplicate(fragmentName = "Tabs");
+		}
 
-		PageEditor.removeFragment(
-			duplicateFragment = "true",
-			fragmentName = "Tabs");
+		task ("Remove the duplicated Tabs") {
+			PageEditor.removeFragment(
+				duplicateFragment = "true",
+				fragmentName = "Tabs");
+		}
 
-		AssertVisible(
-			key_text = "undo",
-			locator1 = "Icon#ANY_ENABLED");
+		task ("View the Undo button is enabled but the Redo button is disabled") {
+			AssertVisible(
+				key_text = "undo",
+				locator1 = "Icon#ANY_ENABLED");
 
-		AssertElementPresent(
-			key_text = "redo",
-			locator1 = "Icon#ANY_DISABLED");
+			AssertElementPresent(
+				key_text = "redo",
+				locator1 = "Icon#ANY_DISABLED");
+		}
 
-		for (var i : list "1,2,3,4,5,6") {
+		task ("Undo 6 times") {
+			for (var i : list "1,2,3,4,5,6") {
+				Click(
+					key_text = "undo",
+					locator1 = "Icon#ANY");
+			}
+		}
+
+		task ("View the Tabs fragment not shown in page") {
+			PageEditor.viewNoFragment(fragmentName = "Tabs");
+		}
+
+		task ("View the Redo button is enabled but the Undo button is disabled") {
+			AssertVisible(
+				key_text = "redo",
+				locator1 = "Icon#ANY_ENABLED");
+
+			AssertElementPresent(
+				key_text = "undo",
+				locator1 = "Icon#ANY_DISABLED");
+		}
+
+		task ("Redo 6 times") {
+			Click(
+				key_text = "redo",
+				locator1 = "Icon#ANY");
+
+			PageEditor.viewFragment(fragmentName = "Tabs");
+
+			Click(
+				key_text = "redo",
+				locator1 = "Icon#ANY");
+
+			AssertElementPresent(
+				key_fragmentName = "Heading",
+				key_inFragmentName = "Tabs",
+				locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+
+			Click(
+				key_text = "redo",
+				locator1 = "Icon#ANY");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+
+			Click(
+				key_text = "redo",
+				locator1 = "Icon#ANY");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading");
+
+			Click(
+				key_text = "redo",
+				locator1 = "Icon#ANY");
+
+			PageEditor.viewDuplicateFragment(fragmentName = "Tabs");
+
+			Click(
+				key_text = "redo",
+				locator1 = "Icon#ANY");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER_2");
+
+			PageEditor.viewFragment(fragmentName = "Tabs");
+		}
+
+		task ("View the Undo button is enabled but the Redo button is disabled") {
+			AssertVisible(
+				key_text = "undo",
+				locator1 = "Icon#ANY_ENABLED");
+
+			AssertElementPresent(
+				key_text = "redo",
+				locator1 = "Icon#ANY_DISABLED");
+		}
+	}
+
+	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."
+	@priority = "5"
+	@uitest
+	test UndoAllInteractionStates {
+		property portal.acceptance = "true";
+
+		task ("Add a Grid to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid");
+		}
+
+		task ("Change the number of modules to 1") {
+			PageEditor.editLayoutGrid(
+				columnCount = "1",
+				panel = "General");
+
+			PageEditor.viewGridStyle(
+				columnCount = "1",
+				position = "1");
+		}
+
+		task ("Change the number of modules to 2") {
+			PageEditor.editLayoutGrid(
+				columnCount = "2",
+				panel = "General");
+
+			PageEditor.viewGridStyle(
+				columnCount = "2",
+				position = "1");
+		}
+
+		task ("Undo 3 times") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+
+			PageEditor.viewGridStyle(
+				columnCount = "1",
+				position = "1");
+
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+
+			PageEditor.viewGridStyle(
+				columnCount = "3",
+				position = "1");
+
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+
+			PageEditor.viewNoFragment(fragmentName = "Grid");
+		}
+
+		task ("View the Undo button is disabled") {
+			AssertElementPresent(
+				key_text = "undo",
+				locator1 = "Icon#ANY_DISABLED");
+		}
+	}
+
+	@description = "This is a test for LPS-111946. Undo can bring deleted Collection Display with collection items back."
+	@priority = "3"
+	@uitest
+	test UndoDeletedCollectionDisplay {
+		task ("Add three web contents") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent Content ${i}",
+					groupName = "Test Site Name",
+					title = "WC WebContent Title ${i}");
+			}
+		}
+
+		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Dynamic Asset List Test");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Asset List Test",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Delete the Collection Display") {
+			PageEditor.removeFragment(fragmentName = "Collection Display");
+		}
+
+		task ("Undo the last change") {
 			Click(
 				key_text = "undo",
 				locator1 = "Icon#ANY");
 		}
 
-		PageEditor.viewNoFragment(fragmentName = "Tabs");
+		task ("View the Collection Display is back") {
+			PageEditor.viewFragment(fragmentName = "Collection Display");
+		}
 
-		AssertVisible(
-			key_text = "redo",
-			locator1 = "Icon#ANY_ENABLED");
-
-		AssertElementPresent(
-			key_text = "undo",
-			locator1 = "Icon#ANY_DISABLED");
-
-		Click(
-			key_text = "redo",
-			locator1 = "Icon#ANY");
-
-		PageEditor.viewFragment(fragmentName = "Tabs");
-
-		Click(
-			key_text = "redo",
-			locator1 = "Icon#ANY");
-
-		AssertElementPresent(
-			key_fragmentName = "Heading",
-			key_inFragmentName = "Tabs",
-			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
-
-		Click(
-			key_text = "redo",
-			locator1 = "Icon#ANY");
-
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "New editable fragment text");
-
-		Click(
-			key_text = "redo",
-			locator1 = "Icon#ANY");
-
-		PageEditor.viewFragmentStyle(
-			alignment = "center",
-			fragmentName = "heading");
-
-		Click(
-			key_text = "redo",
-			locator1 = "Icon#ANY");
-
-		PageEditor.viewDuplicateFragment(fragmentName = "Tabs");
-
-		Click(
-			key_text = "redo",
-			locator1 = "Icon#ANY");
-
-		AssertElementNotPresent(
-			key_fragmentName = "Heading",
-			locator1 = "Fragment#FRAGMENT_HEADER_2");
-
-		PageEditor.viewFragment(fragmentName = "Tabs");
-
-		AssertVisible(
-			key_text = "undo",
-			locator1 = "Icon#ANY_ENABLED");
-
-		AssertElementPresent(
-			key_text = "redo",
-			locator1 = "Icon#ANY_DISABLED");
+		task ("View the displayed collection items") {
+			for (var i : list "1,2,3") {
+				if ("${i}" == "1") {
+					AssertVisible(
+						key_colPosition = "1",
+						key_entryTitle = "WC WebContent Title 3",
+						key_fragmentName = "Collection Display",
+						key_rowPosition = "${i}",
+						locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				}
+				if ("${i}" == "2") {
+					AssertVisible(
+						key_colPosition = "1",
+						key_entryTitle = "WC WebContent Title ${i}",
+						key_fragmentName = "Collection Display",
+						key_rowPosition = "${i}",
+						locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				}
+				if ("${i}" == "3") {
+					AssertVisible(
+						key_colPosition = "1",
+						key_entryTitle = "WC WebContent Title 1",
+						key_fragmentName = "Collection Display",
+						key_rowPosition = "${i}",
+						locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+				}
+			}
+		}
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments and widgets back."
 	@priority = "5"
-	test UndoDeletedFragmentAndWidgetInPage {
+	@uitest
+	test UndoDeletedFragmentAndWidget {
 		property portal.acceptance = "true";
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Button");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
 
-		PageEditor.addWidget(
-			portletName = "Asset Publisher",
-			targetFragmentName = "Button");
+		task ("Add an Asset Publisher below the Button") {
+			PageEditor.addWidget(
+				portletName = "Asset Publisher",
+				targetFragmentName = "Button");
+		}
 
-		PageEditor.removeFragment(fragmentName = "Button");
+		task ("Delete the Button") {
+			PageEditor.removeFragment(fragmentName = "Button");
+		}
 
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
+		task ("Undo the last change") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
 
-		PageEditor.viewFragment(fragmentName = "Button");
+		task ("View the Button is back") {
+			PageEditor.viewFragment(fragmentName = "Button");
+		}
 
-		PageEditor.removeFragment(fragmentName = "Asset Publisher");
+		task ("Delete the Asset Publisher") {
+			PageEditor.removeFragment(fragmentName = "Asset Publisher");
+		}
 
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
+		task ("Undo the last change") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
 
-		PageEditor.viewFragment(fragmentName = "Asset Publisher");
+		task ("View the Asset Publisher is back") {
+			PageEditor.viewFragment(fragmentName = "Asset Publisher");
+		}
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted composition of fragments back."
 	@priority = "5"
+	@uitest
 	test UndoDeletedFragmentComposition {
 		property portal.acceptance = "true";
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Layout Elements",
-			fragmentName = "Container");
-
-		PageEditor.addElementToContainer(
-			collectionName = "Layout Elements",
-			fragmentName = "Grid",
-			navTab = "Fragments");
-
-		PageEditor.removeFragmentViaPageStructure(fragmentName = "Container");
-
-		PageEditor.viewNoFragment(fragmentName = "Container");
-
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
-
-		PageEditor.viewFragment(fragmentName = "Container");
-	}
-
-	@description = "This is a test for LPS-111946. Undo can bring deleted Collection Display with collection items back."
-	@priority = "3"
-	test UndoDeletedFragmentWithCollection {
-		for (var i : list "1,2,3") {
-			JSONWebcontent.addWebContent(
-				content = "WC WebContent Content ${i}",
-				groupName = "Test Site Name",
-				title = "WC WebContent Title ${i}");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
 		}
 
-		JSONAssetlist.addDynamicAssetListEntryWithItemType(
-			groupName = "Test Site Name",
-			itemSubtype = "Basic Web Content",
-			itemType = "Web Content Article",
-			title = "Dynamic Asset List Test");
+		task ("Add a Grid into Container") {
+			PageEditor.addElementToContainer(
+				collectionName = "Layout Elements",
+				fragmentName = "Grid",
+				navTab = "Fragments");
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Remove the fragment composition via Selection panel") {
+			PageEditor.removeFragmentViaPageStructure(fragmentName = "Container");
 
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Collection Display");
-
-		PageEditor.editCollectionDisplay(
-			assetListName = "Dynamic Asset List Test",
-			fragmentName = "Collection Display");
-
-		PageEditor.removeFragment(fragmentName = "Collection Display");
-
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
-
-		PageEditor.viewFragment(fragmentName = "Collection Display");
-
-		for (var i : list "1,2,3") {
-			if ("${i}" == "1") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 3",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			for (var fragmentName : list "Container,Grid") {
+				PageEditor.viewNoFragment(fragmentName = "${fragmentName}");
 			}
-			if ("${i}" == "2") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title ${i}",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-			}
-			if ("${i}" == "3") {
-				AssertVisible(
-					key_colPosition = "1",
-					key_entryTitle = "WC WebContent Title 1",
-					key_fragmentName = "Collection Display",
-					key_rowPosition = "${i}",
-					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Undo the last change") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
+
+		task ("View the fragment composition is back") {
+			for (var fragmentName : list "Container,Grid") {
+				PageEditor.viewFragment(fragmentName = "${fragmentName}");
 			}
 		}
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with custom configuration back."
 	@priority = "4"
+	@uitest
 	test UndoDeletedFragmentWithCustomConfiguration {
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Tabs fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
 
-		PageEditor.gotoConfiguration(fragmentName = "Tabs");
+		task ("Configure the number of Tabs to 2") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
 
-		PageEditor.configureFragment(numberOfTabs = "2");
+			PageEditor.configureFragment(numberOfTabs = "2");
 
-		AssertVisible(
-			key_navItem = "Tab 2",
-			locator1 = "Fragment#NAV_ITEM_TAB");
+			AssertVisible(
+				key_navItem = "Tab 2",
+				locator1 = "Fragment#NAV_ITEM_TAB");
 
-		AssertElementNotPresent(
-			key_navItem = "Tab 3",
-			locator1 = "Fragment#NAV_ITEM_TAB");
+			AssertElementNotPresent(
+				key_navItem = "Tab 3",
+				locator1 = "Fragment#NAV_ITEM_TAB");
+		}
 
-		PageEditor.removeFragment(fragmentName = "Tabs");
+		task ("Delete the Tabs") {
+			PageEditor.removeFragment(fragmentName = "Tabs");
+		}
 
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
+		task ("Undo the last change") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
 
-		PageEditor.viewFragment(fragmentName = "Tabs");
+		task ("View the Tabs is back") {
+			PageEditor.viewFragment(fragmentName = "Tabs");
+		}
 
-		AssertVisible(
-			key_navItem = "Tab 2",
-			locator1 = "Fragment#NAV_ITEM_TAB");
+		task ("View the number of Tabs is 2") {
+			AssertVisible(
+				key_navItem = "Tab 2",
+				locator1 = "Fragment#NAV_ITEM_TAB");
 
-		AssertElementNotPresent(
-			key_navItem = "Tab 3",
-			locator1 = "Fragment#NAV_ITEM_TAB");
+			AssertElementNotPresent(
+				key_navItem = "Tab 3",
+				locator1 = "Fragment#NAV_ITEM_TAB");
+		}
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with edited inline content back."
 	@priority = "4"
+	@uitest
 	test UndoDeletedFragmentWithInlineContent {
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
 
-		PageEditor.editFragmentText(
-			fragmentName = "Heading",
-			id = "element-text",
-			text = "New editable fragment text");
+		task ("Edit the inline content of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
 
-		PageEditor.removeFragment(fragmentName = "Heading");
+		task ("Delete the Heading") {
+			PageEditor.removeFragment(fragmentName = "Heading");
+		}
 
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
+		task ("Undo the last change") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
 
-		PageEditor.viewFragment(fragmentName = "Heading");
+		task ("View the Heading is back") {
+			PageEditor.viewFragment(fragmentName = "Heading");
+		}
 
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "New editable fragment text");
+		task ("View the edited inline content is shown") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "New editable fragment text");
+		}
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with mapped content back."
 	@priority = "3"
+	@uitest
 	test UndoDeletedFragmentWithMappedContent {
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a HTML fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "HTML");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+		}
 
-		PageEditorMapping.gotoEditableFieldMapping(
-			fragmentName = "HTML",
-			id = "element");
+		task ("Map the Title field of web content to editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "HTML",
+				id = "element-html");
 
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "WebContent Title",
-			navItem = "Web Content");
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WebContent Title",
+				navItem = "Web Content");
 
-		Select(
-			locator1 = "PageEditorEditableLink#FIELD",
-			value1 = "Title");
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
+		}
 
-		PageEditor.removeFragment(fragmentName = "HTML");
+		task ("Delete the HTML") {
+			PageEditor.removeFragment(fragmentName = "HTML");
+		}
 
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
+		task ("Undo the last change") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
 
-		PageEditor.viewFragment(fragmentName = "HTML");
+		task ("View the HTML is back") {
+			PageEditor.viewFragment(fragmentName = "HTML");
+		}
 
-		AssertVisible(
-			key_content = "WC WebContent Title",
-			key_fragmentClass = "content",
-			locator1 = "Fragment#FRAGMENT");
+		task ("View the mapped content is shown") {
+			AssertVisible(
+				key_content = "WC WebContent Title",
+				key_fragmentClass = "content",
+				locator1 = "Fragment#FRAGMENT");
+		}
 	}
 
 	@description = "This is a use case for for LPS-111548. Undo can make the page editor come back to previous state up to 100 last states when the page has more than 100 states."
 	@priority = "5"
-	test UndoPagechangeHundredTimes {
+	@uitest
+	test UndoInteractionStatesHundredTimes {
 		property web.xml.timeout = "30";
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Tabs fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "${i}");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
 		}
 
-		PageEditor.removeFragment(fragmentName = "Tabs");
+		task ("Change the number of Tabs 19 times") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
+				PageEditor.gotoConfiguration(fragmentName = "Tabs");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "${i}");
+				PageEditor.configureFragment(numberOfTabs = "${i}");
+			}
 		}
 
-		PageEditor.removeFragment(fragmentName = "Tabs");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "${i}");
+		task ("Delete the Tabs") {
+			PageEditor.removeFragment(fragmentName = "Tabs");
 		}
 
-		PageEditor.removeFragment(fragmentName = "Tabs");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "${i}");
+		task ("Add a Tabs fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
 		}
 
-		PageEditor.removeFragment(fragmentName = "Tabs");
+		task ("Change the number of Tabs 18 times") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
+				PageEditor.gotoConfiguration(fragmentName = "Tabs");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "${i}");
+				PageEditor.configureFragment(numberOfTabs = "${i}");
+			}
 		}
 
-		var count = "0";
+		task ("Delete the Tabs") {
+			PageEditor.removeFragment(fragmentName = "Tabs");
+		}
 
-		while ("${count}" != "100" && (maxIterations = "100")) {
-			Click(
+		task ("Add a Tabs fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
+
+		task ("Change the number of Tabs 18 times") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
+				PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+				PageEditor.configureFragment(numberOfTabs = "${i}");
+			}
+		}
+
+		task ("Delete the Tabs") {
+			PageEditor.removeFragment(fragmentName = "Tabs");
+		}
+
+		task ("Add a Tabs fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
+
+		task ("Change the number of Tabs 18 times") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
+				PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+				PageEditor.configureFragment(numberOfTabs = "${i}");
+			}
+		}
+
+		task ("Delete the Tabs") {
+			PageEditor.removeFragment(fragmentName = "Tabs");
+		}
+
+		task ("Add a Tabs fragment to page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Tabs");
+		}
+
+		task ("Change the number of Tabs 19 times") {
+			for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
+				PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+				PageEditor.configureFragment(numberOfTabs = "${i}");
+			}
+		}
+
+		task ("Undo 100 times") {
+			var count = "0";
+
+			while ("${count}" != "100" && (maxIterations = "100")) {
+				Click(
+					key_text = "undo",
+					locator1 = "Icon#ANY");
+
+				AssertTextEquals(
+					locator1 = "PageEditor#AUTOSAVE_MESSAGE",
+					value1 = "Saved");
+
+				var count = ${count} + 1;
+			}
+		}
+
+		task ("View the Tabs with 4 tabs is shown") {
+			AssertVisible(
+				key_navItem = "Tab 4",
+				locator1 = "Fragment#NAV_ITEM_TAB");
+
+			AssertElementNotPresent(
+				key_navItem = "Tab 5",
+				locator1 = "Fragment#NAV_ITEM_TAB");
+		}
+
+		task ("View the Undo button is disabled") {
+			AssertElementPresent(
 				key_text = "undo",
-				locator1 = "Icon#ANY");
-
-			AssertTextEquals(
-				locator1 = "PageEditor#AUTOSAVE_MESSAGE",
-				value1 = "Saved");
-
-			var count = ${count} + 1;
+				locator1 = "Icon#ANY_DISABLED");
 		}
-
-		AssertVisible(
-			key_navItem = "Tab 4",
-			locator1 = "Fragment#NAV_ITEM_TAB");
-
-		AssertElementNotPresent(
-			key_navItem = "Tab 5",
-			locator1 = "Fragment#NAV_ITEM_TAB");
-
-		AssertElementPresent(
-			key_text = "undo",
-			locator1 = "Icon#ANY_DISABLED");
-	}
-
-	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."
-	@priority = "5"
-	test UndoPagechangeThreeTimes {
-		property portal.acceptance = "true";
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Layout Elements",
-			fragmentName = "Grid");
-
-		PageEditor.viewGridStyle(
-			columnCount = "3",
-			position = "1");
-
-		PageEditor.editLayoutGrid(
-			columnCount = "1",
-			panel = "General");
-
-		PageEditor.viewGridStyle(
-			columnCount = "1",
-			position = "1");
-
-		Click(
-			key_sidebarButton = "Selection",
-			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
-
-		PageEditor.editLayoutGrid(
-			columnCount = "2",
-			panel = "General");
-
-		PageEditor.viewGridStyle(
-			columnCount = "2",
-			position = "1");
-
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
-
-		PageEditor.viewGridStyle(
-			columnCount = "1",
-			position = "1");
-
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
-
-		PageEditor.viewGridStyle(
-			columnCount = "3",
-			position = "1");
-
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
-
-		AssertElementPresent(
-			key_text = "undo",
-			locator1 = "Icon#ANY_DISABLED");
 	}
 
 	@description = "This is a test for LPS-112030. The all saved interactions are shown in the Undo History list."
 	@priority = "5"
-	test ViewSavedInteractionsViaUndoHistory {
+	@uitest
+	test ViewInteractionStatesViaUndoHistory {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Button fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Button");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+		}
 
-		PageEditor.gotoStyle(fragmentName = "Button");
+		task ("Configure the style of Button") {
+			PageEditor.gotoStyle(fragmentName = "Button");
 
-		PageEditor.configureFragment(alignment = "Center");
+			PageEditor.configureFragment(alignment = "Center");
+		}
 
-		PageEditor.gotoDuplicate(fragmentName = "Button");
+		task ("Duplicate the Button") {
+			PageEditor.gotoDuplicate(fragmentName = "Button");
+		}
 
-		PageEditor.removeFragment(
-			duplicateFragment = "true",
-			fragmentName = "Button");
+		task ("Remove the duplicated Button") {
+			PageEditor.removeFragment(
+				duplicateFragment = "true",
+				fragmentName = "Button");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading",
-			targetFragmentName = "Button");
+		task ("Add a Heading fragment below the Button") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading",
+				targetFragmentName = "Button");
+		}
 
-		PageEditor.editFragmentText(
-			fragmentName = "Heading",
-			id = "element-text",
-			text = "New editable fragment text");
+		task ("Edit the inline content of Heading") {
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "New editable fragment text");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Image",
-			targetFragmentName = "Heading");
+		task ("Add an Image fragment to Heading") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				targetFragmentName = "Heading");
+		}
 
-		PageEditorMapping.gotoEditableFieldMapping(
-			fragmentName = "Image",
-			id = "image");
+		task ("Map the Small Image field of web content to image editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Image",
+				id = "image");
 
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "WC WebContent Title",
-			navItem = "Web Content");
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC WebContent Title",
+				navItem = "Web Content");
 
-		Select(
-			locator1 = "PageEditorEditableLink#FIELD",
-			value1 = "Small Image");
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Small Image");
 
-		SelectFrame(value1 = "relative=top");
+			PageEditor.waitForAutoSave();
+		}
 
-		PageEditor.waitForAutoSave();
+		task ("Move the Heading above the Button") {
+			DragAndDrop.javaScriptDragAndDropToUp(
+				id = "element-text",
+				key_dragFragmentName = "Button",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
+				locator2 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				value1 = "");
 
-		DragAndDrop.javaScriptDragAndDropToUp(
-			id = "element-text",
-			key_dragFragmentName = "Button",
-			key_fragmentName = "Heading",
-			locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
-			locator2 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-			value1 = "");
+			PageEditor.waitForAutoSave();
+		}
 
-		PageEditor.waitForAutoSave();
+		task ("View interaction states via Undo History") {
+			Click(locator1 = "PageEditor#UNDO_HISTORY");
 
-		Click(locator1 = "PageEditor#UNDO_HISTORY");
+			for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Fragment,Delete Button,Add Heading,Update Heading Editable Values,Add Image,Update Image Editable Values,Move Button") {
+				MenuItem.viewVisible(menuItem = "${menuItem}");
+			}
+		}
+	}
 
-		for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Fragment,Delete Button,Add Heading,Update Heading Editable Values,Add Image,Update Image Editable Values,Move Button") {
-			MenuItem.viewVisible(menuItem = "${menuItem}");
+	@description = "This is a use case for for LPS-111548. Reloading the page will clean all Undo states."
+	@priority = "4"
+	@uitest
+	test ViewUndoInteractionStatesClearedAfterRefreshPage {
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("View the Undo button is enabled") {
+			AssertVisible(
+				key_text = "undo",
+				locator1 = "Icon#ANY_ENABLED");
+		}
+
+		task ("Configure the style of Heading") {
+			PageEditor.gotoStyle(fragmentName = "Heading");
+
+			PageEditor.configureFragment(alignment = "Center");
+
+			PageEditor.viewFragmentStyle(
+				alignment = "center",
+				fragmentName = "heading");
+		}
+
+		task ("Refresh the page") {
+			Refresh();
+		}
+
+		task ("Assert the Undo button is disabled") {
+			AssertVisible(
+				key_text = "undo",
+				locator1 = "Icon#ANY_DISABLED");
 		}
 	}
 

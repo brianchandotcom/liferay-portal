@@ -380,63 +380,63 @@ definition {
 	}
 
 	@description = "This is a test for LPS-131040. The category name should be shown when select a category in Content Display with Default Template."
-    @priority = "4"
-    test ViewSelectedCategoryInDisplayPageTemplate {
-        task ("Add a Vocabulary via JSON") {
-            JSONCategory.addVocabulary(
-                groupName = "Test Site Name",
-                title = "Vocabulary Name");
-        }
+	@priority = "4"
+	test ViewSelectedCategoryInDisplayPageTemplate {
+		task ("Add a Vocabulary via JSON") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
 
-        task ("Add a Category via JSON") {
-            JSONCategory.addCategory(
-                groupName = "Test Site Name",
-                title = "Category Name",
-                vocabularyName = "Vocabulary Name");
-        }
+		task ("Add a Category via JSON") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
 
-        task ("Add a Display Page Template for Category via JSON") {
-            JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-                contentType = "Category",
-                displayPageTemplateEntryName = "Display Page Name",
-                groupName = "Test Site Name");
-        }
+		task ("Add a Display Page Template for Category via JSON") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
 
-        task ("Add a Content Display fragment to the display Page Template") {
-            DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a Content Display fragment to the display Page Template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-            DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-            PageEditor.addFragment(
-                collectionName = "Content Display",
-                fragmentName = "Content Display");
-        }
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display");
+		}
 
-        task ("Select the category in Content Display") {
-            PageEditor.editContentDisplay(
-                assetTitle = "Category Name",
-                categories = "true",
-                fragmentName = "Content Display");
-        }
+		task ("Select the category in Content Display") {
+			PageEditor.editContentDisplay(
+				assetTitle = "Category Name",
+				categories = "true",
+				fragmentName = "Content Display");
+		}
 
-        task ("View category name shown in Content Display") {
-            AssertVisible(
-                key_contentName = "Category Name",
-                locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
-        }
+		task ("View category name shown in Content Display") {
+			AssertVisible(
+				key_contentName = "Category Name",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
+		}
 
-        task ("Open the Preview modal") {
-            WaitForLiferayEvent.initializeLiferayEventLog();
+		task ("Open the Preview modal") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
-            Click(locator1 = "PageEditor#PREVIEW");
-        }
+			Click(locator1 = "PageEditor#PREVIEW");
+		}
 
-        task ("View category name shown in modal Content Display") {
-            AssertTextEquals(
-                locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
-                value1 = "Category Name");
-        }
-    }
+		task ("View category name shown in modal Content Display") {
+			AssertTextEquals(
+				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
+				value1 = "Category Name");
+		}
+	}
 
 	@description = "This case ensures that a user can map an image to a fragment via the content display."
 	@priority = "5"

@@ -1762,18 +1762,18 @@ definition {
 			}
 
 			if (isSet(categories)) {
-                NavItem.click(navItem = "Categories");
+				NavItem.click(navItem = "Categories");
 
-                Portlet.expandTree();
+				Portlet.expandTree();
 
-                AssertVisible(
-                    key_nodeName = "${assetTitle}",
-                    locator1 = "Treeview#NODE_ITEM");
-					
-                Click(
-                    key_nodeName = "${assetTitle}",
-                    locator1 = "Treeview#NODE_UNSELECTED");
-            }
+				AssertVisible(
+					key_nodeName = "${assetTitle}",
+					locator1 = "Treeview#NODE_ITEM");
+
+				Click(
+					key_nodeName = "${assetTitle}",
+					locator1 = "Treeview#NODE_UNSELECTED");
+			}
 
 			if (isSet(webcontent)) {
 				NavItem.click(navItem = "Web Content");

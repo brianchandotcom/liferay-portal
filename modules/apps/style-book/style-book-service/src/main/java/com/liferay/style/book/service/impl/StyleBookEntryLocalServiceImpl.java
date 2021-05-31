@@ -89,8 +89,9 @@ public class StyleBookEntryLocalServiceImpl
 		if (Validator.isNull(styleBookEntryKey)) {
 			styleBookEntryKey = generateStyleBookEntryKey(groupId, name);
 		}
-
-		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
+		else {
+			styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
+		}
 
 		_validateStyleBookEntryKey(groupId, styleBookEntryKey);
 
@@ -399,8 +400,9 @@ public class StyleBookEntryLocalServiceImpl
 			styleBookEntryKey = generateStyleBookEntryKey(
 				styleBookEntry.getGroupId(), name);
 		}
-
-		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
+		else {
+			styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
+		}
 
 		if (!StringUtil.equals(
 				_getStyleBookEntryKey(styleBookEntry.getStyleBookEntryKey()),

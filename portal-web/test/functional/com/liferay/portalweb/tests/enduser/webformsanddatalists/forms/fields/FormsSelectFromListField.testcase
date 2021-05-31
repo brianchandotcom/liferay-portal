@@ -186,14 +186,49 @@ definition {
 	}
 
 	@description = "Verify that options can be rearranged"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test OptionsCanBeRearranged {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131374 OptionsCanBeRearranged pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.moveOptionsRow(
+			rowNumberEnd = "1",
+			rowNumberStart = "2");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Form.viewSelectFromListOnPreview(
+			fieldName = "Option 2",
+			rowPosition = "1");
+
+		Form.viewSelectFromListOnPreview(
+			fieldName = "Option 1",
+			rowPosition = "2");
+
+			
 	}
 
 	@description = "Verify that options can be sorted alphabetically"

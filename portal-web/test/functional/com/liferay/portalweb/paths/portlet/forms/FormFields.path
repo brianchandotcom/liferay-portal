@@ -482,6 +482,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_OPTIONS_FIELD_BY_ROW_PREVIEW</td>
+	<td>//button[contains(text(),'${key_fieldName}') and contains(@data-testid, '${key_rowPosition}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_OPTIONS_INLINE_IDENTIFIER</td>
 	<td>//div[@class='ddm-radio']//div[@class='custom-control custom-radio custom-control-inline']</td>
 	<td></td>

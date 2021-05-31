@@ -754,6 +754,13 @@ definition {
 			value1 = "Draft");
 	}
 
+	macro viewSelectFromListOnPreview {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_rowPosition = "${rowPosition}",
+			locator1 = "FormFields#SELECT_OPTIONS_FIELD_BY_ROW_PREVIEW");
+	}
+
 	macro viewSubmitButtonText {
 		AssertTextEquals(
 			locator1 = "FormPortlet#SUBMIT_BUTTON",

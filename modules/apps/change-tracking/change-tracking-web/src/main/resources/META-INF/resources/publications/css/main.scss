@@ -169,6 +169,11 @@
 	.table-responsive {
 		margin-bottom: 0;
 
+		.table-add,
+		.table-list .table-add td {
+			background-color: #edf9f0;
+		}
+
 		.table-delete,
 		.table-list .table-delete td {
 			background-color: #feefef;

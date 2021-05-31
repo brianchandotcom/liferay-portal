@@ -41,6 +41,7 @@ import React, {useCallback, useRef, useState} from 'react';
 const CollaboratorRow = ({
 	handleSelect,
 	roles,
+	selectedItems,
 	spritemap,
 	updatedRoles,
 	user,
@@ -49,7 +50,11 @@ const CollaboratorRow = ({
 	let changed = false;
 	let className = '';
 
-	if (
+	if (user.new) {
+		activeRole = selectedItems[user.userId.toString()];
+		className = 'table-add';
+	}
+	else if (
 		Object.prototype.hasOwnProperty.call(
 			updatedRoles,
 			user.userId.toString()
@@ -196,7 +201,6 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 	return (
 		<ClayDropDown.ItemList>
 			{sourceItems
-				.filter((item) => !item.isSelected)
 				.sort((a, b) => {
 					if (a.emailAddress < b.emailAddress) {
 						return -1;
@@ -217,15 +221,12 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 							'cannot-update-permissions-for-an-owner'
 						);
 					}
-					else if (item.isInvited) {
-						title = Liferay.Language.get('user-is-already-invited');
-					}
 
 					return (
 						<ClayDropDown.Item
 							data-tooltip-align="top"
 							disabled={title}
-							key={item.id}
+							key={item.userId}
 							onClick={() => onItemClick(item)}
 							title={title}
 						>
@@ -236,7 +237,7 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 											item.portraitURL
 												? ''
 												: 'user-icon-color-' +
-												  (item.id % 10)
+												  (item.userId % 10)
 										}`}
 										size="lg"
 									>
@@ -281,7 +282,8 @@ const ManageCollaborators = ({
 		[]
 	);
 	const [multiSelectValue, setMultiSelectValue] = useState('');
-	const [selectedItems, setSelectedItems] = useState([]);
+	const [selectedItems, setSelectedItems] = useState({});
+	const [selectedUserData, setSelectedUserData] = useState({});
 	const [updatedRoles, setUpdatedRoles] = useState({});
 
 	let defaultRole = roles[0];
@@ -302,16 +304,30 @@ const ManageCollaborators = ({
 		}
 	}, []);
 
+	const {
+		refetch: collaboratorsRefetch,
+		resource: collaboratorsResource,
+	} = useResource({
+		fetchOptions: {
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			method: 'GET',
+		},
+		fetchRetry: {
+			attempts: 0,
+		},
+		link: getCollaboratorsURL,
+	});
+
+	const collaborators = collaboratorsResource;
+
 	const handleItemsChange = useCallback(
 		(items) => {
 			emailValidationInProgress.current = true;
 
 			Promise.all(
 				items.map((item) => {
-					if (
-						item.id ||
-						selectedItems.some(({value}) => item.value === value)
-					) {
+					if (item.userId) {
 						return Promise.resolve({item});
 					}
 
@@ -346,8 +362,8 @@ const ManageCollaborators = ({
 									item: {
 										emailAddress: user.emailAddress,
 										fullName: user.fullName,
-										id: user.userId,
 										label: item.label,
+										userId: user.userId,
 										value: item.value,
 									},
 								};
@@ -381,16 +397,57 @@ const ManageCollaborators = ({
 					setMultiSelectValue(erroredResults[0].item.value);
 				}
 
-				setSelectedItems(
-					filterDuplicateItems(
-						results
-							.filter(({error}) => !error)
-							.map(({item}) => item)
-					)
+				const newSelectedItems = JSON.parse(
+					JSON.stringify(selectedItems)
 				);
+				const newSelectedUserData = JSON.parse(
+					JSON.stringify(selectedUserData)
+				);
+				const newUpdatedRoles = JSON.parse(
+					JSON.stringify(updatedRoles)
+				);
+
+				results
+					.filter(({error}) => !error)
+					.map(({item}) => {
+						if (
+							collaborators &&
+							!!collaborators.find(
+								(collaborator) =>
+									collaborator.emailAddress ===
+									item.emailAddress
+							)
+						) {
+							newUpdatedRoles[
+								item.userId.toString()
+							] = selectedRole;
+
+							return;
+						}
+
+						const user = JSON.parse(JSON.stringify(item));
+
+						user.new = true;
+
+						newSelectedItems[user.userId.toString()] = selectedRole;
+						newSelectedUserData[user.userId.toString()] = user;
+					});
+
+				setSelectedUserData(newSelectedUserData);
+
+				setSelectedItems(newSelectedItems);
+				setUpdatedRoles(newUpdatedRoles);
 			});
 		},
-		[namespace, selectedItems, verifyEmailAddressURL]
+		[
+			collaborators,
+			namespace,
+			selectedItems,
+			selectedRole,
+			selectedUserData,
+			updatedRoles,
+			verifyEmailAddressURL,
+		]
 	);
 
 	const multiSelectFilter = useCallback(() => true, []);
@@ -416,34 +473,7 @@ const ManageCollaborators = ({
 
 	const autocompleteUsers = autocompleteResource;
 
-	const {
-		refetch: collaboratorsRefetch,
-		resource: collaboratorsResource,
-	} = useResource({
-		fetchOptions: {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		},
-		fetchRetry: {
-			attempts: 0,
-		},
-		link: getCollaboratorsURL,
-	});
-
-	const collaborators = collaboratorsResource;
-
 	const emailValidationInProgress = useRef(false);
-
-	const filterDuplicateItems = (items) => {
-		return items.filter(
-			(item, index) =>
-				items.findIndex(
-					(newItem) =>
-						newItem.value.toLowerCase() === item.value.toLowerCase()
-				) === index
-		);
-	};
 
 	const isEmailAddressValid = (email) => {
 		const emailRegex = /.+@.+\..+/i;
@@ -454,8 +484,9 @@ const ManageCollaborators = ({
 	const resetForm = () => {
 		setEmailAddressErrorMessages([]);
 		setMultiSelectValue('');
-		setSelectedItems([]);
+		setSelectedItems({});
 		setSelectedRole(defaultRole);
+		setSelectedUserData({});
 		setUpdatedRoles({});
 
 		emailValidationInProgress.current = false;
@@ -480,21 +511,21 @@ const ManageCollaborators = ({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		let roleValues = [];
-		let userIds = [];
+		const roleValues = [];
+		const userIds = [];
 
-		const keys = Object.keys(updatedRoles);
+		const selectedItemsKeys = Object.keys(selectedItems);
 
-		for (let i = 0; i < keys.length; i++) {
-			roleValues.push(updatedRoles[keys[i]].value);
-			userIds.push(keys[i]);
+		for (let i = 0; i < selectedItemsKeys.length; i++) {
+			roleValues.push(selectedItems[selectedItemsKeys[i]].value);
+			userIds.push(selectedItemsKeys[i]);
 		}
 
-		if (selectedItems.length > 0) {
-			roleValues = roleValues.concat(
-				Array(selectedItems.length).fill(selectedRole.value)
-			);
-			userIds = userIds.concat(selectedItems.map(({id}) => id));
+		const updatedRolesKeys = Object.keys(updatedRoles);
+
+		for (let i = 0; i < updatedRolesKeys.length; i++) {
+			roleValues.push(updatedRoles[updatedRolesKeys[i]].value);
+			userIds.push(updatedRolesKeys[i]);
 		}
 
 		const formData = objectToFormData({
@@ -522,6 +553,26 @@ const ManageCollaborators = ({
 	};
 
 	const updateRole = (role, user) => {
+		if (user.new) {
+			const json = {};
+
+			const keys = Object.keys(selectedItems);
+
+			for (let i = 0; i < keys.length; i++) {
+				if (keys[i] !== user.userId.toString()) {
+					json[keys[i]] = selectedItems[keys[i]];
+				}
+			}
+
+			if (role.value > 0) {
+				json[user.userId.toString()] = role;
+			}
+
+			setSelectedItems(json);
+
+			return;
+		}
+
 		const json = {};
 
 		const keys = Object.keys(updatedRoles);
@@ -558,7 +609,19 @@ const ManageCollaborators = ({
 	};
 
 	const renderCollaborators = () => {
-		if (!collaborators || !collaborators.length) {
+		let users = [];
+
+		if (collaborators && collaborators.length > 0) {
+			users = collaborators.slice(0);
+		}
+
+		const keys = Object.keys(selectedItems);
+
+		for (let i = 0; i < keys.length; i++) {
+			users.push(selectedUserData[keys[i]]);
+		}
+
+		if (users.length === 0) {
 			return '';
 		}
 
@@ -566,8 +629,34 @@ const ManageCollaborators = ({
 			<ClayForm.Group>
 				<ClayTable hover={false}>
 					<ClayTable.Body>
-						{collaborators
+						{users
 							.sort((a, b) => {
+								const aIsUpdated =
+									Object.prototype.hasOwnProperty.call(
+										selectedItems,
+										a.userId.toString()
+									) ||
+									Object.prototype.hasOwnProperty.call(
+										updatedRoles,
+										a.userId.toString()
+									);
+								const bIsUpdated =
+									Object.prototype.hasOwnProperty.call(
+										selectedItems,
+										b.userId.toString()
+									) ||
+									Object.prototype.hasOwnProperty.call(
+										updatedRoles,
+										b.userId.toString()
+									);
+
+								if (aIsUpdated && !bIsUpdated) {
+									return -1;
+								}
+								else if (!aIsUpdated && bIsUpdated) {
+									return 1;
+								}
+
 								if (a.isOwner) {
 									return -1;
 								}
@@ -595,6 +684,7 @@ const ManageCollaborators = ({
 									}
 									key={user.userId}
 									roles={roles}
+									selectedItems={selectedItems}
 									spritemap={spritemap}
 									updatedRoles={updatedRoles}
 									user={user}
@@ -633,7 +723,7 @@ const ManageCollaborators = ({
 									filter={multiSelectFilter}
 									inputName={`${namespace}userEmailAddress`}
 									inputValue={multiSelectValue}
-									items={selectedItems}
+									items={[]}
 									menuRenderer={SharingAutocomplete}
 									onChange={handleChange}
 									onItemsChange={handleItemsChange}
@@ -649,23 +739,11 @@ const ManageCollaborators = ({
 														fullName: user.fullName,
 														hasPublicationsAccess:
 															user.hasPublicationsAccess,
-														id: user.userId,
-														isInvited:
-															collaborators &&
-															!!collaborators.find(
-																(item) =>
-																	item.emailAddress ===
-																	user.emailAddress
-															),
 														isOwner: user.isOwner,
-														isSelected: !!selectedItems.find(
-															(item) =>
-																item.value ===
-																user.emailAddress
-														),
 														label: user.fullName,
 														portraitURL:
 															user.portraitURL,
+														userId: user.userId,
 														value:
 															user.emailAddress,
 													};
@@ -719,7 +797,7 @@ const ManageCollaborators = ({
 		return (
 			<ClayButton
 				disabled={
-					selectedItems.length === 0 &&
+					Object.keys(selectedItems).length === 0 &&
 					Object.keys(updatedRoles).length === 0
 				}
 				displayType="primary"
@@ -773,11 +851,11 @@ const ManageCollaborators = ({
 								<ClayButton
 									displayType="secondary"
 									onClick={() => {
-										const keys = Object.keys(updatedRoles);
-
 										if (
-											(keys.length === 0 &&
-												selectedItems.length === 0) ||
+											(Object.keys(selectedItems)
+												.length === 0 &&
+												Object.keys(updatedRoles)
+													.length === 0) ||
 											confirm(
 												Liferay.Language.get(
 													'discard-unsaved-changes'

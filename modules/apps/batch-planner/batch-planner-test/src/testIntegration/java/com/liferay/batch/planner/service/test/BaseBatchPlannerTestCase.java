@@ -19,6 +19,7 @@ import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.batch.planner.service.test.util.BatchPlannerPlanTestUtil;
+import com.liferay.batch.planner.service.test.util.BatchPlannerPolicyTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.test.rule.Inject;
@@ -37,7 +38,7 @@ public abstract class BaseBatchPlannerTestCase {
 		BatchPlannerPlan batchPlannerPlan =
 			BatchPlannerPlanTestUtil.randomBatchPlannerPlan(user, nameSeed);
 
-		return _batchPlannerPlanService.addBatchPlannerPlan(
+		return batchPlannerPlanService.addBatchPlannerPlan(
 			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
 	}
 
@@ -47,15 +48,15 @@ public abstract class BaseBatchPlannerTestCase {
 		BatchPlannerPlan batchPlannerPlan =
 			BatchPlannerPlanTestUtil.randomBatchPlannerPlan(user, name);
 
-		return _batchPlannerPlanService.addBatchPlannerPlan(
+		return batchPlannerPlanService.addBatchPlannerPlan(
 			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
 	}
 
 	protected List<BatchPlannerPolicy> addBatchPlannerPolicy(
-			User user, String... nameValues)
+			User user, String... names)
 		throws PortalException {
 
-		if ((nameValues == null) || ((nameValues.length % 2) != 0)) {
+		if ((names == null) || (names.length == 0)) {
 			throw new IllegalArgumentException();
 		}
 
@@ -63,20 +64,25 @@ public abstract class BaseBatchPlannerTestCase {
 
 		List<BatchPlannerPolicy> batchPlannerPolicies = new ArrayList<>();
 
-		for (int i = 0; (i + 1) <= nameValues.length;) {
+		for (String name : names) {
+			BatchPlannerPolicy batchPlannerPolicy =
+				BatchPlannerPolicyTestUtil.randomBatchPlannerPolicy(
+					user, name, name);
+
 			batchPlannerPolicies.add(
-				_batchPlannerPolicyService.addBatchPlannerPolicy(
-					batchPlannerPlan.getBatchPlannerPlanId(), nameValues[i],
-					nameValues[i + 1]));
+				batchPlannerPolicyService.addBatchPlannerPolicy(
+					batchPlannerPlan.getBatchPlannerPlanId(),
+					batchPlannerPolicy.getName(),
+					batchPlannerPolicy.getValue()));
 		}
 
 		return batchPlannerPolicies;
 	}
 
 	@Inject
-	private BatchPlannerPlanService _batchPlannerPlanService;
+	protected BatchPlannerPlanService batchPlannerPlanService;
 
 	@Inject
-	private BatchPlannerPolicyService _batchPlannerPolicyService;
+	protected BatchPlannerPolicyService batchPlannerPolicyService;
 
 }

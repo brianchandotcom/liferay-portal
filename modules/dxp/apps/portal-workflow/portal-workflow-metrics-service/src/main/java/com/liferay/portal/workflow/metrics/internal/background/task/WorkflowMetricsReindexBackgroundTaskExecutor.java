@@ -59,7 +59,7 @@ public class WorkflowMetricsReindexBackgroundTaskExecutor
 	public WorkflowMetricsReindexBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new WorkflowMetricsReindexBackgroundTaskStatusMessageTranslator());
-		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
+		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_COMPANY);
 	}
 
 	@Override

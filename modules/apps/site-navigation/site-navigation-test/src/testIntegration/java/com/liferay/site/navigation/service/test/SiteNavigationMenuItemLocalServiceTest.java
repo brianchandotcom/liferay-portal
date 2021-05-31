@@ -570,7 +570,7 @@ public class SiteNavigationMenuItemLocalServiceTest {
 			"invalidMenuItemType", StringPool.BLANK, serviceContext);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void testSiteNavigationMenuItemInvalidCustomAttribute()
 		throws PortalException {
 
@@ -588,7 +588,7 @@ public class SiteNavigationMenuItemLocalServiceTest {
 		_expandoBridge.setClassPK(
 			siteNavigationMenuItem.getSiteNavigationMenuItemId());
 
-		_expandoBridge.getAttribute("invalid");
+		Assert.assertNull(_expandoBridge.getAttribute("invalid"));
 	}
 
 	@Test

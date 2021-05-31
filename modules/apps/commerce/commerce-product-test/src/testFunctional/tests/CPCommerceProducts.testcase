@@ -99,13 +99,41 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"
-	@ignore = "true"
 	@priority = "3"
 	test AddVirtualProduct {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CPCommerceProducts#AddVirtualProduct";
 
-		// TODO COMMERCE-6301 AddVirtualProduct
+		// TODO Review
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Virtual Book",
+			productType = "Virtual");
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#BACK");
+
+		AssertElementPresent(
+			key_productName = "Virtual Book",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
+		AssertElementPresent(
+			key_productName = "Virtual Book",
+			key_value = "Virtual",
+			locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_CONTENT");
 	}
 
 	@description = "This is a test for COMMERCE-6020. AssertProductBundleCanBeCreatedWithPriceTypeStaticAndDynamic"

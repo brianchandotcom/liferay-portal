@@ -700,6 +700,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_SEARCH_BY_NAME_AND_CONTENT</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_productName}')]/following-sibling::div[contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
     <td>VALUE_PRODUCT_RELATIONS</td>
     <td>//a[contains(text(),'${key_productName}')]/../../..//div[contains(@class,'dnd-td') and contains(text(),'${key_Value}')]</td>
     <td></td>

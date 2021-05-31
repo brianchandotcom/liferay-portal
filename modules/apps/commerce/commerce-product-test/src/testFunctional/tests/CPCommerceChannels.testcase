@@ -1139,13 +1139,80 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6276. EditNotificationTemplate"
-	@ignore = "true"
 	@priority = "3"
 	test EditNotificationTemplate {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#EditNotificationTemplate";
 
-		// TODO COMMERCE-6276 EditNotificationTemplate
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		CommerceEntry.addNewNotificationTemplate(
+			entryName = "Test Notification Template",
+			fromAddress = "test@liferay.com",
+			fromName = "Test",
+			notificationType = "Order Placed");
+
+		Type(
+			key_fieldLabel = "To",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "[%ACCOUNT_ROLE_ADMINISTRATOR%]");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		AssertVisible(
+			key_productQuantity = "Test Notification Template",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
+
+		Click(
+			key_text = "Test Notification Template",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
+
+		SelectFrameTop();
+
+		CommerceEntry.addNewNotificationTemplate(
+			entryName = "Notification Template",
+			fromAddress = "test@liferay.com",
+			fromName = "Test",
+			notificationType = "Order Completed");
+
+		Type(
+			key_fieldLabel = "To",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "[%ACCOUNT_ROLE_ORDER_MANAGER%]");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		AssertVisible(
+			key_productQuantity = "Notification Template",
+			locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_QUANTITY");
 	}
 
 	@description = "This is a test for COMMERCE-6106. EditPaypalPaymentMethod"

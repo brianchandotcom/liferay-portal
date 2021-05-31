@@ -247,8 +247,6 @@ definition {
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");
-
-			
 	}
 
 	@description = "Verify that a Form's Submit button's text can be customized with special characters"

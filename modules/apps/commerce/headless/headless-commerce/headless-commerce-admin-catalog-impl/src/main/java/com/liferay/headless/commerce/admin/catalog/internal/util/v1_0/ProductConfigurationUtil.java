@@ -14,7 +14,6 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.util.v1_0;
 
-import com.liferay.commerce.constants.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class ProductConfigurationUtil {
 
 	public static CPDefinitionInventory updateCPDefinitionInventory(
-
 			CPDefinitionInventoryService cpDefinitionInventoryService,
 			ProductConfiguration productConfiguration, long cpDefinitionId)
 		throws PortalException {
@@ -38,37 +36,35 @@ public class ProductConfigurationUtil {
 			cpDefinitionInventoryService.
 				fetchCPDefinitionInventoryByCPDefinitionId(cpDefinitionId);
 
-
 		return cpDefinitionInventoryService.updateCPDefinitionInventory(
-					cpDefinitionInventory.getCPDefinitionInventoryId(),
-					GetterUtil.get(
-						productConfiguration.getInventoryEngine(),
-						cpDefinitionInventory.getCPDefinitionInventoryEngine()),
-					productConfiguration.getLowStockAction(),
-					GetterUtil.get(
-						productConfiguration.getDisplayAvailability(),
-						cpDefinitionInventory.isDisplayAvailability()),
-					GetterUtil.get(
-						productConfiguration.getDisplayStockQuantity(),
-						cpDefinitionInventory.isDisplayStockQuantity()),
-					GetterUtil.get(
-						productConfiguration.getMinStockQuantity(),
-						cpDefinitionInventory.getMinStockQuantity()),
-					GetterUtil.get(
-						productConfiguration.getAllowBackOrder(),
-						cpDefinitionInventory.isBackOrders()),
-					GetterUtil.get(
-						productConfiguration.getMinOrderQuantity(),
-						cpDefinitionInventory.getMinOrderQuantity()),
-					GetterUtil.get(
-						productConfiguration.getMaxOrderQuantity(),
-						cpDefinitionInventory.getMaxOrderQuantity()),
-					_getAllowedOrderQuantities(
-						cpDefinitionInventory, productConfiguration),
-					GetterUtil.get(
-						productConfiguration.getMultipleOrderQuantity(),
-						cpDefinitionInventory.getMultipleOrderQuantity()));
-
+			cpDefinitionInventory.getCPDefinitionInventoryId(),
+			GetterUtil.get(
+				productConfiguration.getInventoryEngine(),
+				cpDefinitionInventory.getCPDefinitionInventoryEngine()),
+			productConfiguration.getLowStockAction(),
+			GetterUtil.get(
+				productConfiguration.getDisplayAvailability(),
+				cpDefinitionInventory.isDisplayAvailability()),
+			GetterUtil.get(
+				productConfiguration.getDisplayStockQuantity(),
+				cpDefinitionInventory.isDisplayStockQuantity()),
+			GetterUtil.get(
+				productConfiguration.getMinStockQuantity(),
+				cpDefinitionInventory.getMinStockQuantity()),
+			GetterUtil.get(
+				productConfiguration.getAllowBackOrder(),
+				cpDefinitionInventory.isBackOrders()),
+			GetterUtil.get(
+				productConfiguration.getMinOrderQuantity(),
+				cpDefinitionInventory.getMinOrderQuantity()),
+			GetterUtil.get(
+				productConfiguration.getMaxOrderQuantity(),
+				cpDefinitionInventory.getMaxOrderQuantity()),
+			_getAllowedOrderQuantities(
+				cpDefinitionInventory, productConfiguration),
+			GetterUtil.get(
+				productConfiguration.getMultipleOrderQuantity(),
+				cpDefinitionInventory.getMultipleOrderQuantity()));
 	}
 
 	private static String _getAllowedOrderQuantities(

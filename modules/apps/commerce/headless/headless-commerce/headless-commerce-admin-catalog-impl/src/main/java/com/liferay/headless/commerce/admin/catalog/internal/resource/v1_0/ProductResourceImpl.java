@@ -573,8 +573,8 @@ public class ProductResourceImpl
 
 		if (productConfiguration != null) {
 			ProductConfigurationUtil.updateCPDefinitionInventory(
-				 _cpDefinitionInventoryService,
-				productConfiguration, cpDefinition.getCPDefinitionId());
+				_cpDefinitionInventoryService, productConfiguration,
+				cpDefinition.getCPDefinitionId());
 		}
 
 		// Product shipping configuration

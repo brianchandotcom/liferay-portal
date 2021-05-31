@@ -100,8 +100,8 @@ public class ProductConfigurationResourceImpl
 		}
 
 		ProductConfigurationUtil.updateCPDefinitionInventory(
-			 _cpDefinitionInventoryService,
-			productConfiguration, cpDefinition.getCPDefinitionId());
+			_cpDefinitionInventoryService, productConfiguration,
+			cpDefinition.getCPDefinitionId());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 
@@ -122,8 +122,8 @@ public class ProductConfigurationResourceImpl
 		}
 
 		ProductConfigurationUtil.updateCPDefinitionInventory(
-			 _cpDefinitionInventoryService,
-			productConfiguration, cpDefinition.getCPDefinitionId());
+			_cpDefinitionInventoryService, productConfiguration,
+			cpDefinition.getCPDefinitionId());
 
 		Response.ResponseBuilder responseBuilder = Response.ok();
 

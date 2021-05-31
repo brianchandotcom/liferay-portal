@@ -316,14 +316,48 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be set for the Rich Text Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133122 PredefinedValueCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Rich Text");
+
+		Form.gotoAdvancedTab();
+
+		CKEditor.addContentInWebContent(
+			content = "Rich Text Test",
+			fieldLabel = "Predefined Value");
+
+		FormFields.viewRichTextValue(
+			fieldName = "Rich Text",
+			fieldValue = "Rich Text Test");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewRichTextValue(
+			fieldName = "Rich Text",
+			fieldValue = "Rich Text Test");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that the Field Reference can be changed"

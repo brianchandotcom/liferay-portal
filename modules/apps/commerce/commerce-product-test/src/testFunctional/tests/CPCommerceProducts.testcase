@@ -89,13 +89,40 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6302. AddGroupedProduct"
-	@ignore = "true"
 	@priority = "3"
 	test AddGroupedProduct {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CPCommerceProducts#AddGroupedProduct";
 
-		// TODO COMMERCE-6302 AddGroupedProduct
+		// TODO Review
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Grouped T-Shirt",
+			productType = "Grouped");
+
+		AssertElementPresent(locator1 = "Message#SUCCESS");
+
+		Click(locator1 = "Icon#BACK");
+
+		AssertElementPresent(
+			key_entryName = "Grouped T-Shirt",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		AssertElementPresent(
+			key_tableEntryURL = "Grouped",
+			locator1 = "RemoteApps#TABLE_ENTRY_URL_REMOTE_TABLE");
 	}
 
 	@description = "This is a test for COMMERCE-6301. AddVirtualProduct"

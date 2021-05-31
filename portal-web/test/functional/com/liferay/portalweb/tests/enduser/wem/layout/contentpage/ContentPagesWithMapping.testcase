@@ -6,16 +6,22 @@ definition {
 	property testray.main.component.name = "Content Pages";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+		}
 	}
 
 	tearDown {
@@ -31,119 +37,105 @@ definition {
 
 	@description = "This is a use case for LPS-116975. Map all categories from asset entry to editable field."
 	@priority = "4"
-	test MapAllCategoriesToEditableField {
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name 1");
+	test MapAllCategoriesFromAssetToEditableField {
+		task ("Add three vocabularies") {
+			for (var n : list "1,2,3") {
+				JSONCategory.addVocabulary(
+					groupName = "Test Site Name",
+					title = "Vocabulary Name ${n}");
+			}
+		}
 
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name 2");
+		task ("Add a category in the first vocabulary") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 1",
+				vocabularyName = "Vocabulary Name 1");
+		}
 
-		JSONCategory.addVocabulary(
-			groupName = "Test Site Name",
-			title = "Vocabulary Name 3");
+		task ("Add a category in the second vocabulary") {
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 2",
+				vocabularyName = "Vocabulary Name 2");
+		}
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 1",
-			vocabularyName = "Vocabulary Name 1");
+		task ("Add a subcategory in category") {
+			var categoryId2 = JSONCategory.addSubcategory(
+				groupName = "Test Site Name",
+				parentCategoryName = "Category Name 2",
+				title = "Subcategory Name 2",
+				vocabularyName = "Vocabulary Name 2");
+		}
 
-		var categoryId1 = JSONCategory.getCategoryId(
-			categoryName = "Category Name 1",
-			groupName = "Test Site Name",
-			vocabularyName = "Vocabulary Name 1");
+		task ("Add three categories in the third vocabulary") {
+			var categoryId3	 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 3-1",
+				vocabularyName = "Vocabulary Name 3");
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 2",
-			vocabularyName = "Vocabulary Name 2");
+			var categoryId4	 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 3-2",
+				vocabularyName = "Vocabulary Name 3");
 
-		JSONCategory.addSubcategory(
-			groupName = "Test Site Name",
-			parentCategoryName = "Category Name 2",
-			title = "Subcategory Name 2",
-			vocabularyName = "Vocabulary Name 2");
+			var categoryId5	 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 3-3",
+				vocabularyName = "Vocabulary Name 3");
+		}
 
-		var categoryId2 = JSONCategory.getCategoryId(
-			categoryName = "Subcategory Name 2",
-			groupName = "Test Site Name",
-			vocabularyName = "Vocabulary Name 2");
+		task ("Add a web content with categories") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3},${categoryId4},${categoryId5}",
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title");
+		}
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 3-1",
-			vocabularyName = "Vocabulary Name 3");
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 3-2",
-			vocabularyName = "Vocabulary Name 3");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
 
-		JSONCategory.addCategory(
-			groupName = "Test Site Name",
-			title = "Category Name 3-3",
-			vocabularyName = "Vocabulary Name 3");
+		task ("Map the All Categories field to editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
 
-		var categoryId3 = JSONCategory.getCategoryId(
-			categoryName = "Category Name 3-1",
-			groupName = "Test Site Name",
-			vocabularyName = "Vocabulary Name 3");
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WebContent Title",
+				navItem = "Web Content");
 
-		var categoryId4 = JSONCategory.getCategoryId(
-			categoryName = "Category Name 3-2",
-			groupName = "Test Site Name",
-			vocabularyName = "Vocabulary Name 3");
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "All Categories");
+		}
 
-		var categoryId5 = JSONCategory.getCategoryId(
-			categoryName = "Category Name 3-3",
-			groupName = "Test Site Name",
-			vocabularyName = "Vocabulary Name 3");
+		task ("View mapped content") {
+			AssertTextEquals.assertPartialText(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				value1 = "Category Name 3-1, Category Name 3-2, Category Name 3-3");
 
-		JSONWebcontent.addWebContent(
-			assetCategoryIds = "${categoryId1},${categoryId2},${categoryId3},${categoryId4},${categoryId5}",
-			content = "WC WebContent Content",
-			groupName = "Test Site Name",
-			title = "WC WebContent Title");
+			AssertTextEquals.assertPartialText(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				value1 = "Subcategory Name 2");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		PageEditorMapping.gotoEditableFieldMapping(
-			contributed = "true",
-			fragmentName = "Heading",
-			id = "text");
-
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "WebContent Title",
-			navItem = "Web Content");
-
-		Select(
-			locator1 = "PageEditorEditableLink#FIELD",
-			value1 = "All Categories");
-
-		AssertTextEquals.assertPartialText(
-			id = "element-text",
-			key_fragmentName = "Heading",
-			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-			value1 = "Category Name 3-1, Category Name 3-2, Category Name 3-3");
-
-		AssertTextEquals.assertPartialText(
-			id = "element-text",
-			key_fragmentName = "Heading",
-			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-			value1 = "Subcategory Name 2");
-
-		AssertTextEquals.assertPartialText(
-			id = "element-text",
-			key_fragmentName = "Heading",
-			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
-			value1 = "Category Name 1");
+			AssertTextEquals.assertPartialText(
+				id = "element-text",
+				key_fragmentName = "Heading",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD",
+				value1 = "Category Name 1");
+		}
 	}
 
 	@description = "This is a test for LPS-99686. The user can map the content of link editable to a field of a Blog and the editable link display text will update to the published Blog field content."
@@ -689,7 +681,7 @@ definition {
 
 	@description = "This is a use case for LPS-118276. Map single vocabulary with single category from asset entry to editable field."
 	@priority = "5"
-	test MapSingleCategoryFromAssetEntryToEditableField {
+	test MapSingleCategoryFromAssetToEditableField {
 		property portal.acceptance = "true";
 
 		task ("Add a new vocabulary") {
@@ -811,96 +803,94 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-116975. Map multiple tags from asset entry to editable field."
-	@priority = "5"
-	test MapTagsToEditableField {
-		property portal.acceptance = "true";
-
-		JSONAssettag.addTag(
-			groupName = "Test Site Name",
-			tagName = "tagname1");
-
-		JSONAssettag.addTag(
-			groupName = "Test Site Name",
-			tagName = "tagname2");
-
-		JSONAssettag.addTag(
-			groupName = "Test Site Name",
-			tagName = "tagname3");
-
-		JSONWebcontent.addWebContent(
-			assetTagNames = "tagname1,tagname2,tagname3",
-			content = "Web Content Content",
-			groupName = "Test Site Name",
-			title = "Web Content Title");
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Paragraph");
-
-		PageEditorMapping.gotoEditableFieldMapping(
-			contributed = "true",
-			fragmentName = "Paragraph",
-			id = "text");
-
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "Web Content Title",
-			navItem = "Web Content");
-
-		Select(
-			locator1 = "PageEditorEditableLink#FIELD",
-			value1 = "Tags");
-
-		PageEditor.viewFragmentEditableText(
-			editableText = "tagname1, tagname2, tagname3",
-			fragmentName = "Paragraph",
-			id = "element-text");
-	}
-
 	@description = "This is a use case for LPS-116975. Map single tag from asset entry to editable field."
 	@priority = "5"
-	test MapTagToEditableField {
+	test MapTagFromAssetToEditableField {
 		property portal.acceptance = "true";
 
-		JSONAssettag.addTag(
-			groupName = "Test Site Name",
-			tagName = "tagname1");
+		task ("Add a blogs entry with a tag") {
+			JSONBlog.addEntry(
+				assetTagNames = "tagname1",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
 
-		JSONBlog.addEntry(
-			assetTagNames = "tagname1",
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Test Site Name");
+		task ("Add a Heading fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
+		task ("Map the Tags field to editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Heading",
+				id = "element-text");
 
-		PageEditorMapping.gotoEditableFieldMapping(
-			contributed = "true",
-			fragmentName = "Heading",
-			id = "text");
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Blogs Entry Title",
+				navItem = "Blogs");
 
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "Blogs Entry Title",
-			navItem = "Blogs");
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Tags");
+		}
 
-		Select(
-			locator1 = "PageEditorEditableLink#FIELD",
-			value1 = "Tags");
+		task ("View mapped content") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "tagname1",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+	}
 
-		PageEditor.viewFragmentEditableText(
-			editableText = "tagname1",
-			fragmentName = "Heading",
-			id = "element-text");
+	@description = "This is a use case for LPS-116975. Map multiple tags from asset entry to editable field."
+	@priority = "5"
+	test MapTagsFromAssetToEditableField {
+		property portal.acceptance = "true";
+
+		task ("Add a web content with three tags") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tagname1,tagname2,tagname3",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a Paragraph fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Paragraph");
+		}
+
+		task ("Map the Tags field to editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Paragraph",
+				id = "element-text");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "Web Content Title",
+				navItem = "Web Content");
+
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Tags");
+		}
+
+		task ("View mapped content") {
+			PageEditor.viewFragmentEditableText(
+				editableText = "tagname1, tagname2, tagname3",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
 	}
 
 	@description = "This is a test for LPS-99686. Map web content fields to link editable field".
@@ -1281,83 +1271,82 @@ definition {
 		}
 	}
 
-	@description = "This case ensures a user can map the editable background image of a fragment to an existing image content."
+	@description = "This case ensures a user can map an image to the editable background image of a fragment."
 	@priority = "5"
-	test MapWebContentImageToFragmentBackground {
+	test MapWebContentImageToBackgroundImageOfBannerCenter {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a web content structure with an Image field") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoStructures();
+			NavItem.gotoStructures();
 
-		WebContentStructures.addCP(
-			structureDescription = "WC Structure Description",
-			structureName = "WC Structure Name");
+			WebContentStructures.addCP(structureName = "WC Structure Name");
 
-		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
+			DataEngine.addField(
+				fieldFieldLabel = "Image",
+				fieldName = "Image");
 
-		WebContentStructures.saveCP(structureName = "WC Structure Name");
+			WebContentStructures.saveCP();
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a template for new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		NavItem.gotoTemplates();
+			NavItem.gotoTemplates();
 
-		WebContentTemplates.addCP(
-			structureName = "WC Structure Name",
-			templateDescription = "WC Template Description",
-			templateFieldNames = "Image",
-			templateName = "WC Template Name");
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Image",
+				templateName = "WC Template Name");
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a web content based on new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
-		WebContent.addWithStructureCP(
-			navTab = "Web Content Images",
-			structureName = "WC Structure Name",
-			templateName = "WC Template Name",
-			webContentImage = "Document_2.jpeg",
-			webContentTitle = "WC WebContent Title");
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				webContentImage = "Document_2.jpeg",
+				webContentTitle = "WC WebContent Title");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Content Page Name",
-			type = "content");
+		task ("Add a Banner Center fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
 
-		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			fragmentName = "Banner Center");
+		task ("Map the Image field to the background image field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "banner-center");
 
-		PageEditorMapping.gotoEditableFieldMapping(
-			fragmentName = "Banner Center",
-			id = "banner-center");
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "WC WebContent Title",
+				navItem = "Web Content");
 
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "WC WebContent Title",
-			navItem = "Web Content");
-
-		task ("Select mapping panel field.") {
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
 				value1 = "Image");
 
-			SelectFrame(value1 = "relative=top");
-
 			PageEditor.waitForAutoSave();
+
+			PageEditor.clickPublish();
 		}
 
-		task ("Assert the image field contains the mapped image.") {
-			PageEditor.clickPublish();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+		task ("View the mapped image") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			AssertElementPresent(
 				key_imageName = "Document_2.jpeg",
@@ -1370,38 +1359,46 @@ definition {
 	test MapWebContentTitleToLinkFragment {
 		property portal.acceptance = "true";
 
-		JSONWebcontent.addWebContent(
-			content = "Test Content",
-			groupName = "Test Site Name",
-			title = "liferay.com");
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Test Content",
+				groupName = "Test Site Name",
+				title = "liferay.com");
+		}
 
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+		task ("Add a Banner Center to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
-		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			fragmentName = "Banner Center");
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
 
-		PageEditorMapping.gotoEditableFieldMapping(
-			fragmentName = "Banner Center",
-			id = "link");
+		task ("Map the Title field of web content to link type editable field") {
+			PageEditorMapping.gotoEditableFieldMapping(
+				fragmentName = "Banner Center",
+				id = "link");
 
-		PageEditorMapping.mapEditableFieldToAsset(
-			entryTitle = "liferay.com",
-			navItem = "Web Content");
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = "liferay.com",
+				navItem = "Web Content");
 
-		Select(
-			locator1 = "PageEditorEditableLink#FIELD",
-			value1 = "Title");
+			Select(
+				locator1 = "PageEditorEditableLink#FIELD",
+				value1 = "Title");
 
-		PageEditor.clickPublish();
+			PageEditor.waitForAutoSave();
 
-		ContentPagesNavigator.openViewContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
+			PageEditor.clickPublish();
+		}
 
-		task ("Assert mapped content is shown in link editable field") {
+		task ("View mapped content is shown in link editable field") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
 			AssertVisible(
 				key_append = "[contains(@data-lfr-editable-id,'link')][normalize-space(text())='liferay.com']",
 				key_URL = "",

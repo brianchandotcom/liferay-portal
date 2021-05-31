@@ -1,0 +1,15 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "test-configuration-1",
+					"name": "test1",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

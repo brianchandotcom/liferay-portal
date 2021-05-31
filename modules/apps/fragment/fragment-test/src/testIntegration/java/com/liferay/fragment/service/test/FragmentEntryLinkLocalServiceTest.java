@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -104,6 +105,8 @@ public class FragmentEntryLinkLocalServiceTest {
 			_group.getGroupId(), TestPropsValues.getUserId());
 
 		_serviceContext.setRequest(_getMockHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_fragmentEntry = _fragmentEntryLocalService.addFragmentEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
@@ -613,6 +616,48 @@ public class FragmentEntryLinkLocalServiceTest {
 			_objectMapper.readTree(
 				_read("expected-editable-values-light-modified.json")),
 			_objectMapper.readTree(editableValuesJSONObject.toString()));
+	}
+
+	@Test
+	public void testUpdateFragmentEntryLinkWithPropagationAndNewConfigurationValues()
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.addFragmentEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				_fragmentCollection.getFragmentCollectionId(), null,
+				"Fragment Name", StringPool.BLANK,
+				_read("fragment-configuration.html"), StringPool.BLANK,
+				_read("configuration-new-field.json"), 0,
+				FragmentConstants.TYPE_COMPONENT,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
+
+		_fragmentEntryLocalService.updateFragmentEntry(
+			TestPropsValues.getUserId(), fragmentEntry.getFragmentEntryId(),
+			fragmentEntry.getName(), fragmentEntry.getCss(),
+			_read("updated-fragment-configuration.html"), fragmentEntry.getJs(),
+			_read("updated-configuration-new-field.json"),
+			WorkflowConstants.STATUS_APPROVED);
+
+		_fragmentEntryLinkLocalService.updateLatestChanges(
+			fragmentEntryLink.getFragmentEntryLinkId());
+
+		fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLink.getFragmentEntryLinkId());
+
+		Assert.assertEquals(
+			_objectMapper.readTree(
+				_read("updated-configuration-new-field.json")),
+			_objectMapper.readTree(fragmentEntryLink.getConfiguration()));
 	}
 
 	@Test

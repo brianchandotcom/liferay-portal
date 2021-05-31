@@ -51,6 +51,8 @@
 		String password = StringPool.BLANK;
 		boolean rememberMe = ParamUtil.getBoolean(request, "rememberMe");
 
+		boolean validateCookies = PropsValues.SESSION_ENABLE_PERSISTENT_COOKIES && PropsValues.SESSION_TEST_COOKIE_SUPPORT;
+
 		if (Validator.isNull(authType)) {
 			authType = company.getAuthType();
 		}
@@ -112,6 +114,12 @@
 						</div>
 					</c:when>
 				</c:choose>
+
+				<c:if test="<%= validateCookies %>">
+					<div class="alert alert-danger" id="<portlet:namespace />cookieDisabled" style="display: none;">
+						<liferay-ui:message key="authentication-failed-please-enable-browser-cookies" />
+					</div>
+				</c:if>
 
 				<liferay-ui:error exception="<%= AuthException.class %>" message="authentication-failed" />
 				<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-log-in-because-the-maximum-number-of-users-has-been-reached" />
@@ -195,6 +203,17 @@
 
 			if (form) {
 				form.addEventListener('submit', (event) => {
+					<c:if test="<%= validateCookies %>">
+
+						if (!navigator.cookieEnabled) {
+							document.getElementById(
+								'<portlet:namespace />cookieDisabled'
+							).style.display = '';
+
+							return;
+						}
+					</c:if>
+
 					<c:if test="<%= Validator.isNotNull(redirect) %>">
 						var redirect = form.querySelector('#<portlet:namespace />redirect');
 

@@ -214,6 +214,8 @@ public class InstanceResourceImpl
 			booleanQuery.addMustQueryClauses(
 				_queries.term("instanceId", instanceId)));
 
+		searchSearchRequest.setSize(10000);
+
 		SearchSearchResponse searchSearchResponse =
 			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
 

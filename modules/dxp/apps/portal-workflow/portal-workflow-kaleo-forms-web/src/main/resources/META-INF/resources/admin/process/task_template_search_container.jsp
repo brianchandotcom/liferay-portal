@@ -125,6 +125,8 @@ String itemSelectorURL = PortletURLBuilder.create(
 ).setParameter(
 	"resourceClassNameId", scopeClassNameId
 ).setParameter(
+	"scopeTitle", LanguageUtil.get(request, "form")
+).setParameter(
 	"showBackURL", false
 ).setParameter(
 	"showHeader", false

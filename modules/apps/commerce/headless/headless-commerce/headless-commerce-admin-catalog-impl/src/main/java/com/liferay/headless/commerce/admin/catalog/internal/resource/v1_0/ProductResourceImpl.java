@@ -573,7 +573,7 @@ public class ProductResourceImpl
 
 		if (productConfiguration != null) {
 			ProductConfigurationUtil.updateCPDefinitionInventory(
-				cpDefinition.getGroupId(), _cpDefinitionInventoryService,
+				 _cpDefinitionInventoryService,
 				productConfiguration, cpDefinition.getCPDefinitionId());
 		}
 

@@ -36,6 +36,8 @@ definition {
 		}
 	}
 
+	@summary = "Deletes a specific property \
+	@param propertyName the name of the property you want to delete"
 	macro deleteProperty {
 		ACNavigation.goToSettings();
 

@@ -165,14 +165,54 @@ definition {
 	}
 
 	@description = "Verify that a Form can be submitted with the Date Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSubmitted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132824 CanBeSubmitted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date",
+			formPageNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editDate(
+			fieldName = "Date",
+			fieldValue = "01/01/2021");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewDateEntry(
+			fieldLabel = "Date",
+			fieldName = "Date",
+			fieldValue = "01/01/2021");
 	}
 
 	@description = "Verify that changes to the Field can be canceled"

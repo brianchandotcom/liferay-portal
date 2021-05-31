@@ -499,18 +499,13 @@ definition {
 			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
-		JSONQuestions.addAnswer(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			replyBody = "This is my answer",
-			threadSubject = "Title AddQuestion",
-			titleField = "Title AddQuestion");
-
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			questionsTitle = "title-addquestion",
 			siteURLKey = "guest",
 			topicName = "questions-test-category");
+
+		Questions.answerQuestion(contentField = "This is my answer");
 
 		Questions.editAnswer(contentField = "This is my edited answer");
 	}

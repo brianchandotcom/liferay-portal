@@ -20,24 +20,19 @@ import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -122,25 +117,6 @@ public class VerifyEmailAddressMVCResourceCommand
 			return;
 		}
 
-		Group group = ctCollection.getGroup();
-
-		if (group != null) {
-			List<UserGroupRole> userGroupRoles =
-				_userGroupRoleLocalService.getUserGroupRoles(
-					user.getUserId(), group.getGroupId());
-
-			if (!userGroupRoles.isEmpty()) {
-				JSONPortletResponseUtil.writeJSON(
-					resourceRequest, resourceResponse,
-					JSONUtil.put(
-						"errorMessage",
-						_language.get(
-							httpServletRequest, "user-is-already-invited")));
-
-				return;
-			}
-		}
-
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
@@ -187,9 +163,6 @@ public class VerifyEmailAddressMVCResourceCommand
 
 	@Reference
 	private PortletPermission _portletPermission;
-
-	@Reference
-	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

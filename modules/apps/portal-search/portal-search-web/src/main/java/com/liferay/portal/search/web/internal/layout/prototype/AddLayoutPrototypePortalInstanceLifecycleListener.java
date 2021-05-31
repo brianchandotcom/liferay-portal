@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.web.internal.layout.prototype;
 
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
@@ -40,7 +41,14 @@ public class AddLayoutPrototypePortalInstanceLifecycleListener
 		Group guestGroup = groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);
 
-		searchLayoutFactory.createSearchLayout(guestGroup);
+		try {
+			MergeLayoutPrototypesThreadLocal.setInProgress(true);
+
+			searchLayoutFactory.createSearchLayout(guestGroup);
+		}
+		finally {
+			MergeLayoutPrototypesThreadLocal.setInProgress(false);
+		}
 	}
 
 	@Reference(

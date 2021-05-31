@@ -13,6 +13,12 @@ const width = configuration.videoWidth
 	: configuration.videoWidth;
 
 function main() {
+	window.removeEventListener('resize', resize);
+
+	if (!document.body.contains(fragmentElement)) {
+		return;
+	}
+
 	content = fragmentElement.querySelector('.video');
 
 	if (!content) {
@@ -23,8 +29,6 @@ function main() {
 	loadingIndicator = content.querySelector('.loading-animation');
 	videoContainer = content.querySelector('.video-container');
 	videoMask = content.querySelector('.video-mask');
-
-	window.removeEventListener('resize', resize);
 
 	try {
 		if (configuration.video) {
@@ -49,6 +53,12 @@ function main() {
 }
 
 function resize() {
+	if (!document.body.contains(fragmentElement)) {
+		window.removeEventListener('resize', resize);
+
+		return;
+	}
+
 	content.style.height = '';
 	content.style.width = '';
 

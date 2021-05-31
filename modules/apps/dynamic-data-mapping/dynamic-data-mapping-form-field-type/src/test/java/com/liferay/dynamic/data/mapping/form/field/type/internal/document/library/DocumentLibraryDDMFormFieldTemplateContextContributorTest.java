@@ -28,6 +28,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
@@ -96,18 +98,19 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setUpDLAppService();
-		setUpFileEntry();
-		setUpGroupLocalService();
-		setUpHtml();
-		setUpItemSelector();
-		setUpJSONFactory();
-		setUpJSONFactoryUtil();
-		setUpParamUtil();
-		setUpPortal();
-		setUpPortletFileRepository();
-		setUpRequestBackedPortletURLFactoryUtil();
-		setUpUserLocalService();
+		_setUpCompanyLocalService();
+		_setUpDLAppService();
+		_setUpFileEntry();
+		_setUpGroupLocalService();
+		_setUpHtml();
+		_setUpItemSelector();
+		_setUpJSONFactory();
+		_setUpJSONFactoryUtil();
+		_setUpParamUtil();
+		_setUpPortal();
+		_setUpPortletFileRepository();
+		_setUpRequestBackedPortletURLFactoryUtil();
+		_setUpUserLocalService();
 	}
 
 	@Test
@@ -506,7 +509,40 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		return user;
 	}
 
-	protected void setUpDLAppService() throws Exception {
+	private Company _mockCompany() {
+		Company company = mock(Company.class);
+
+		PowerMockito.when(
+			company.getMx()
+		).thenReturn(
+			"liferay.com"
+		);
+
+		return company;
+	}
+
+	private void _setUpCompanyLocalService() throws Exception {
+		CompanyLocalService companyLocalService = mock(
+			CompanyLocalService.class);
+
+		Company company = _mockCompany();
+
+		PowerMockito.when(
+			companyLocalService.getCompany(_COMPANY_ID)
+		).thenReturn(
+			company
+		);
+
+		MemberMatcher.field(
+			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
+			"_companyLocalService"
+		).set(
+			_documentLibraryDDMFormFieldTemplateContextContributor,
+			companyLocalService
+		);
+	}
+
+	private void _setUpDLAppService() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
 			"dlAppService"
@@ -531,7 +567,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpFileEntry() {
+	private void _setUpFileEntry() {
 		_fileEntry.setUuid(_FILE_ENTRY_UUID);
 		_fileEntry.setGroupId(_GROUP_ID);
 
@@ -542,7 +578,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpGroupLocalService() throws Exception {
+	private void _setUpGroupLocalService() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
 			"_groupLocalService"
@@ -554,7 +590,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		mockGroupLocalServiceFetchGroup(_group);
 	}
 
-	protected void setUpHtml() throws Exception {
+	private void _setUpHtml() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class, "html"
 		).set(
@@ -562,7 +598,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpItemSelector() throws Exception {
+	private void _setUpItemSelector() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
 			"_itemSelector"
@@ -598,7 +634,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpJSONFactory() throws Exception {
+	private void _setUpJSONFactory() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
 			"jsonFactory"
@@ -607,17 +643,17 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpJSONFactoryUtil() {
+	private void _setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	protected void setUpParamUtil() {
+	private void _setUpParamUtil() {
 		PropsUtil.setProps(Mockito.mock(Props.class));
 	}
 
-	protected void setUpPortal() throws Exception {
+	private void _setUpPortal() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
 			"portal"
@@ -633,7 +669,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpPortletFileRepository() throws Exception {
+	private void _setUpPortletFileRepository() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
 			"_portletFileRepository"
@@ -662,7 +698,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpRequestBackedPortletURLFactoryUtil() {
+	private void _setUpRequestBackedPortletURLFactoryUtil() {
 		PowerMockito.mockStatic(RequestBackedPortletURLFactoryUtil.class);
 
 		PowerMockito.when(
@@ -673,7 +709,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		);
 	}
 
-	protected void setUpUserLocalService() throws Exception {
+	private void _setUpUserLocalService() throws Exception {
 		MemberMatcher.field(
 			DocumentLibraryDDMFormFieldTemplateContextContributor.class,
 			"_userLocalService"
@@ -685,8 +721,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest
 		User user = mockUser();
 
 		PowerMockito.when(
-			_userLocalService.getUserByScreenName(
-				_COMPANY_ID, DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME)
+			_userLocalService.getUserByEmailAddress(
+				_COMPANY_ID,
+				DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME +
+					"@liferay.com")
 		).thenReturn(
 			user
 		);

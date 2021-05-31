@@ -229,6 +229,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--IMAGE-->
+<tr>
+	<td>IMAGE_FIELD_DESCRIPTION</td>
+	<td>//div[contains(@class,'form-group')]//input[@type='text' and @value='${key_description}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--GRID-->
 <tr>
 	<td>GRID_OPTIONS_OPTION_DELETE_ROW_BUTTON</td>

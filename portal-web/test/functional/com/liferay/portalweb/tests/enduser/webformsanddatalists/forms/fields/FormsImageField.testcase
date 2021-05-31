@@ -87,14 +87,58 @@ definition {
 	}
 
 	@description = "Verify that an Image Description can be added to an uploaded Image"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DescriptionCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133048 DescriptionCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Image",
+			formPageNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		Click(locator1 = "FormFields#UPLOAD_ON_WIDGET");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		Form.editImageDescription(
+			descriptionContent = "Test Image Description",
+			descriptionPosition = "1");
+
+		FormPortlet.submitSuccessfully();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewImageEntry(
+			fieldLabel = "Image",
+			fieldName = "Image",
+			fieldDescription = "Test Image Description");
 	}
 
 	@description = "Verify that a help text can be added to an Image Field"

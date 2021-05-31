@@ -248,6 +248,18 @@ definition {
 			value1 = "${fieldHeader}");
 	}
 
+	macro viewImageEntry {
+		FormsAdmin.viewCannotEditFormEntries();
+
+		FormFields.viewTextLabel(
+			fieldLabel = "${fieldLabel}",
+			fieldName = "${fieldName}");
+
+		AssertElementPresent(
+			locator1 = "FormFields#IMAGE_FIELD_DESCRIPTION",
+			key_description = "${fieldDescription}");
+	}
+
 	macro viewImageTableEntry {
 		AssertElementPresent(locator1 = "FormFields#IMAGE_TABLE_ENTRY");
 	}

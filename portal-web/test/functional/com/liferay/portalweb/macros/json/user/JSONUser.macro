@@ -188,7 +188,7 @@ definition {
 			portalInstanceName = "${portalInstanceName}",
 			userScreenName = "${userScreenName}");
 
-		JSONUserAPI._agreeToTermsAndAnswerReminderQuery(userId = "${userId}");
+		JSONUserAPI._agreeToTermsAndAnswerReminderQueryByScreenName(userId = "${userId}");
 	}
 
 	macro deleteUserByEmailAddress {

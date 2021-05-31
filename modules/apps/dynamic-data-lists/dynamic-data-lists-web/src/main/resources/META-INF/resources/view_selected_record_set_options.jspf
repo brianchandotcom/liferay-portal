@@ -40,7 +40,7 @@
 			</liferay-portlet:renderURL>
 
 			<%
-			String taglibAddRecordSetURL = "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + LanguageUtil.get(request, "add-list") + "', uri:'" + HtmlUtil.escapeJS(addRecordSetURL.toString()) + "'});";
+			String taglibAddRecordSetURL = "javascript:Liferay.Util.openModal({dialog: {destroyOnHide: true}, id: '_" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_editAsset', title: '" + LanguageUtil.get(request, "add-list") + "', url:'" + HtmlUtil.escapeJS(addRecordSetURL.toString()) + "'});";
 			%>
 
 			<div class="btn-group-item">

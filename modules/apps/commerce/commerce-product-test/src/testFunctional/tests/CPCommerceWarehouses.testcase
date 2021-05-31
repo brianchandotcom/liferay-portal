@@ -287,13 +287,116 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6204. Get stock quantity of a SKU for specific channel"
-	@ignore = "true"
 	@priority = "3"
 	test GetChannelSKUStockQuantity {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CPCommerceWarehouses#GetChannelSKUStockQuantity";
 
-		// TODO COMMERCE-6204 GetChannelSKUStockQuantity Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(
+			siteName = "Minium2",
+			siteTemplateName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		AppBuilderAdmin.searchByItem(itemName = "ABS Sensor");
+
+		Click(
+			key_entryName = "ABS Sensor",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+		Click(
+			key_entryName = "MIN93015",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+		var key_value1 = "0";
+
+		for (var value1 : list "20,60,60") {
+			AssertTextEquals(
+				key_value1 = "${key_value1}",
+				locator1 = "CommerceEntry#WAREHOUSE_INVENTORY_ITEM_QUANTITY",
+				value1 = "${value1}");
+			var key_value1 = MathUtil.sum("${key_value1}", "1");
+		}
+
+		Refresh();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Inventory Management",
+			portlet = "Warehouses");
+
+		Click(
+			key_metadataSetName = "Italy",
+			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+
+		if (!(IsElementPresent(
+					key_specifiedCollapse = "Channels",
+					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+			Click(
+				key_contentType = "Channels",
+				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+			Pause(locator1 = "1000");
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Minium2 Portal",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		Click(
+			key_metadataSetName = "United States - Northeast",
+			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
+
+		if (!(IsElementPresent(
+					key_specifiedCollapse = "Channels",
+					locator1="CommerceEntry#CHECK_WAREHOUSE_COLLAPSE_OPEN"))) {
+			Click(
+				key_contentType = "Channels",
+				locator1 = "Notifications#NOTIFICATION_DELIVERY_PANEL");
+			Pause(locator1 = "1000");
+		}
+
+		Uncheck.uncheckToggleSwitch(
+			key_toggleSwitchLabel = "Minium Portal",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		Click(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementPresent(
+			key_FilterOption = "80 in Stock",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		ApplicationsMenu.gotoSite(site = "Minium2");
+
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+
+		Click(
+			key_productName = "ABS Sensor",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		AssertElementPresent(
+			key_FilterOption = "120 in Stock",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 	}
 
 	@description = "This is a test for COMMERCE-6203. Get stock quantity of a SKU"

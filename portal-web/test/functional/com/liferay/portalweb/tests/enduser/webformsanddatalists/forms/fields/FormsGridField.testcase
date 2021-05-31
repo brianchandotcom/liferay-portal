@@ -184,14 +184,69 @@ definition {
 	}
 
 	@description = "Verify that a Grid can be required"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeRequired {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132454 CanBeRequired pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid",
+			formPageNumber = "0");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option 3",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option 4",
+			rowNumber = "2");
+
+		FormFields.enableSwitcher(fieldName = "Required Field");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Grid");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is required.");
+
+		FormFields.selectGridRadioOptionWithoutCategory(
+			fieldName = "",
+			optionNumber1 = "1",
+			optionNumber2 = "3");
+
+		FormFields.selectGridRadioOptionWithoutCategory(
+			fieldName = "",
+			optionNumber1 = "2",
+			optionNumber2 = "4");
+
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that a Form can be submitted with the Grid Field"

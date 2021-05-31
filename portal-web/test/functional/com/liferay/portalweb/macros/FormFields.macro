@@ -586,6 +586,13 @@ definition {
 		ItemSelector.uploadFile(
 			navTab = "${navTab}",
 			uploadFileName = "${fileName}");
+	macro selectGridRadioOptionWithoutCategory {
+		var optionNumber1 = "${optionNumber1}";
+		var optionNumber2 = "${optionNumber2}";
+		var key_optionNumber = "Row: Option ${optionNumber1}, Column: Option ${optionNumber2}";
+		var key_fieldName = "${fieldName}";
+
+		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}
 
 	macro selectRadioOption {

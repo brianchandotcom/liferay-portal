@@ -18,8 +18,10 @@ import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -96,7 +98,7 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 				DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
 		}
 
-		long userId = _getDDMFormDefaultUser(themeDisplay.getCompanyId());
+		long userId = _getDDMFormDefaultUserId(themeDisplay.getCompanyId());
 
 		String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
 			groupId, folderId, fileName);
@@ -107,11 +109,16 @@ public class DDMFormUploadFileEntryHandler implements UploadFileEntryHandler {
 			mimeType, true);
 	}
 
-	private long _getDDMFormDefaultUser(long companyId) throws PortalException {
-		User user = _userLocalService.getUserByScreenName(
-			companyId, DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
+	private long _getDDMFormDefaultUserId(long companyId)
+		throws PortalException {
 
-		return user.getUserId();
+		Company company = _companyLocalService.getCompany(companyId);
+
+		return _userLocalService.getUserIdByEmailAddress(
+			companyId,
+			StringBundler.concat(
+				DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME,
+				StringPool.AT, company.getMx()));
 	}
 
 	@Reference

@@ -372,12 +372,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			boolean autoScreenName = false;
 			String screenName =
 				DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME;
-
-			Company company = _companyLocalService.getCompany(companyId);
-
-			String emailAddress = StringBundler.concat(
-				screenName, StringPool.AT, company.getMx());
-
+			String emailAddress = _getEmailAddress(companyId);
 			Locale locale = LocaleUtil.getDefault();
 			String firstName =
 				DDMFormConstants.DDM_FORM_DEFAULT_USER_FIRST_NAME;
@@ -465,8 +460,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	private User _getDDMFormDefaultUser(long companyId) {
 		try {
-			return _userLocalService.getUserByScreenName(
-				companyId, DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
+			return _userLocalService.getUserByEmailAddress(
+				companyId, _getEmailAddress(companyId));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
@@ -492,6 +487,23 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 			return _createDDMFormUploadedFilesFolder(
 				userId, repositoryId, httpServletRequest);
+		}
+	}
+
+	private String _getEmailAddress(long companyId) {
+		try {
+			Company company = _companyLocalService.getCompany(companyId);
+
+			return StringBundler.concat(
+				DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME,
+				StringPool.AT, company.getMx());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
+			return null;
 		}
 	}
 

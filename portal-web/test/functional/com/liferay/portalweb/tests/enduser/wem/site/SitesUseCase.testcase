@@ -555,7 +555,12 @@ definition {
 
 		User.firstLoginUI(specificURL = "http://www.able.com:8080/");
 
-		PortalSettings.gotoConfiguration(
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
 			configurationCategory = "Email",
 			configurationName = "Email Verification Notification",
 			configurationScope = "Virtual Instance Scope");

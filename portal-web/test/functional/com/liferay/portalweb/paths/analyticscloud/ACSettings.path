@@ -72,6 +72,37 @@
     <td>//input</td>
     <td></td>
 </tr>
+<!-- PROPERTIES -->
+<tr>
+    <td>PROPERTIES_SEARCH_BAR</td>
+    <td>//div[@class='input-group-item']/input</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PROPERTIES_ITEM_ON_LIST</td>
+    <td>//span[contains(@class,'text-truncate') and contains(text(),'${propertyName}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>GENERIC_DELETE_BUTTON</td>
+    <td>//button[contains(@class,'btn-secondary') and contains(text(),'Delete')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DELETE_CONFIRMATION_MESSAGE</td>
+    <td>//span[contains(@class,'text-secondary')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DELETE_CONFIRMATION_INPUT</td>
+    <td>//input[@data-testid='delete-confirmation-input']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>GENERIC_CONFIRMATION_BUTTON</td>
+    <td>//input[@data-testid='delete-confirmation-input']</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

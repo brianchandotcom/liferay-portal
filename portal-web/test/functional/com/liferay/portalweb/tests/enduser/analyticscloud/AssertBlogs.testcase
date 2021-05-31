@@ -46,7 +46,7 @@ definition {
 				pageName = "AC Page",
 				siteName = "Site Name");
 
-            BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
 		Pause(locator1 = "10000");

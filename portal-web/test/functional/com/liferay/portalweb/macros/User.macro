@@ -772,7 +772,8 @@ definition {
 		UserNavigator.gotoRoles();
 
 		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_ROLES_SELECT_LINK",
+			key_RoleType = StringUtil.replace("Organization Role", " ", ""),
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
 			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#SELECT_ORGANIZATION_ROLE");
@@ -804,7 +805,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#ROLES_REGULAR_ROLES_SELECT_LINK",
+			key_RoleType = StringUtil.replace("Regular Role", " ", ""),
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
 			value1 = "Select");
 
 		Pause(locator1 = "3000");
@@ -836,7 +838,8 @@ definition {
 		UserNavigator.gotoRoles();
 
 		AssertClick(
-			locator1 = "UsersAndOrganizationsEditUser#ROLES_SITE_ROLES_SELECT_LINK",
+			key_RoleType = StringUtil.replace("Site Role", " ", ""),
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
 			value1 = "Select");
 
 		SelectFrame(locator1 = "IFrame#SELECT_SITE_ROLE");

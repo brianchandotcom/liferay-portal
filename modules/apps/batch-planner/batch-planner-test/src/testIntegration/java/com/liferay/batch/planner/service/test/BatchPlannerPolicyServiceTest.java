@@ -15,18 +15,17 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.batch.planner.exception.BatchPlannerPlanNameException;
-import com.liferay.batch.planner.exception.DuplicateBatchPlannerPlanException;
-import com.liferay.batch.planner.model.BatchPlannerPlan;
+import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -66,56 +65,43 @@ public class BatchPlannerPolicyServiceTest extends BaseBatchPlannerTestCase {
 
 		UserTestUtil.setUser(user1);
 
-		Class<?> exceptionClass = Exception.class;
+		List<BatchPlannerPolicy> batchPlannerPolicies = addBatchPlannerPolicy(
+			user1, "policy_1", "policy_2", "policy_3", "policy_4", "policy_5");
 
-		try {
-			addBatchPlannerPlan(user1, -1);
-		}
-		catch (Exception exception) {
-			exceptionClass = exception.getClass();
-		}
+		Assert.assertEquals("policies count", 5, batchPlannerPolicies.size());
 
-		Assert.assertEquals(
-			"Add batch planner plan with no name",
-			BatchPlannerPlanNameException.class, exceptionClass);
+		BatchPlannerPolicy batchPlannerPolicy = batchPlannerPolicies.get(0);
 
-		try {
-			exceptionClass = Exception.class;
+		batchPlannerPolicyService.deleteBatchPlannerPolicy(
+			batchPlannerPolicy.getBatchPlannerPlanId(),
+			batchPlannerPolicy.getName());
 
-			addBatchPlannerPlan(user1, RandomTestUtil.randomString(80));
-		}
-		catch (Exception exception) {
-			exceptionClass = exception.getClass();
-		}
+		Assert.assertFalse(
+			batchPlannerPolicyService.hasBatchPlannerPolicy(
+				batchPlannerPolicy.getBatchPlannerPlanId(),
+				batchPlannerPolicy.getName()));
 
-		Assert.assertEquals(
-			"Add batch planner plan with too long name",
-			BatchPlannerPlanNameException.class, exceptionClass);
+		batchPlannerPolicies =
+			batchPlannerPolicyService.getBatchPlannerPolicies(
+				batchPlannerPolicy.getBatchPlannerPlanId());
 
-		BatchPlannerPlan batchPlannerPlan1 = addBatchPlannerPlan(user1, 300);
+		Assert.assertEquals("policies count", 5, batchPlannerPolicies.size());
 
-		try {
-			addBatchPlannerPlan(user1, batchPlannerPlan1.getName());
-		}
-		catch (Exception exception) {
-			exceptionClass = exception.getClass();
-		}
+		batchPlannerPolicy = batchPlannerPolicies.get(0);
 
-		Assert.assertEquals(
-			"Add batch planner plan with existing name",
-			DuplicateBatchPlannerPlanException.class, exceptionClass);
+		Assert.assertTrue(
+			batchPlannerPolicyService.hasBatchPlannerPolicy(
+				batchPlannerPolicy.getBatchPlannerPlanId(),
+				batchPlannerPolicy.getName()));
 
-		UserTestUtil.setUser(omniAdminUser);
+		batchPlannerPlanService.deleteBatchPlannerPlan(
+			batchPlannerPolicy.getBatchPlannerPlanId());
 
-		User user2 = UserTestUtil.addUser(CompanyTestUtil.addCompany());
+		batchPlannerPolicies =
+			batchPlannerPolicyService.getBatchPlannerPolicies(
+				batchPlannerPolicy.getBatchPlannerPlanId());
 
-		UserTestUtil.setUser(user2);
-
-		BatchPlannerPlan batchPlannerPlan2 = addBatchPlannerPlan(
-			user2, batchPlannerPlan1.getName());
-
-		Assert.assertEquals(
-			batchPlannerPlan1.getName(), batchPlannerPlan2.getName());
+		Assert.assertTrue(batchPlannerPolicies.isEmpty());
 	}
 
 }

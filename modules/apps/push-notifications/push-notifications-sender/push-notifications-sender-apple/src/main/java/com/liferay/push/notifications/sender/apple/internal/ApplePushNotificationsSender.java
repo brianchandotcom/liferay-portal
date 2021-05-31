@@ -269,7 +269,11 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 
 	@Deactivate
 	protected void deactivate() {
-		_apnsClient.close();
+		if (_apnsClient != null) {
+			CompletableFuture<Void> close = _apnsClient.close();
+
+			close.join();
+		}
 	}
 
 	protected void sendResponse(AppleResponse appleResponse) {

@@ -1,3 +1,5 @@
+@import 'atlas-variables';
+
 .portlet-blogs {
 	.edit-entry {
 		.cover-image-caption {
@@ -100,8 +102,11 @@
 	}
 
 	.widget-mode-card {
-		.card {
+		.card-page-item {
 			max-width: 300px;
+			padding-left: $grid-gutter-width / 2;
+			padding-right: $grid-gutter-width / 2;
+			width: 100%;
 		}
 	}
 

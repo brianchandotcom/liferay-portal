@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -47,6 +48,7 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import com.liferay.trash.TrashHelper;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -216,13 +218,25 @@ public class BlogsEntryActionDropdownItemsProvider {
 				WebKeys.THEME_DISPLAY);
 
 		return dropdownItem -> {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			String portletResource = StringPool.BLANK;
+
+			if (!Objects.equals(
+					portletDisplay.getPortletName(),
+					BlogsPortletKeys.BLOGS_ADMIN)) {
+
+				portletResource = portletDisplay.getPortletName();
+			}
+
 			dropdownItem.setHref(
 				PortalUtil.getControlPanelPortletURL(
 					_httpServletRequest, themeDisplay.getScopeGroup(),
 					BlogsPortletKeys.BLOGS_ADMIN, 0, themeDisplay.getPlid(),
 					PortletRequest.RENDER_PHASE),
 				"mvcRenderCommandName", "/blogs/edit_entry", "redirect",
-				_getRedirectURL(), "entryId", blogsEntry.getEntryId());
+				_getRedirectURL(), "portletResource", portletResource,
+				"entryId", blogsEntry.getEntryId());
 
 			dropdownItem.setIcon("edit");
 			dropdownItem.setLabel(LanguageUtil.get(_resourceBundle, "edit"));

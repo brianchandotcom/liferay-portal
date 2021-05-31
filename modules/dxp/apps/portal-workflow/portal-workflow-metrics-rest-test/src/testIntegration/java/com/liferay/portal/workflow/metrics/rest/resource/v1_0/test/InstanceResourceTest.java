@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -90,13 +91,21 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	public void testGetProcessInstance() throws Exception {
 		Instance instance = randomInstance();
 
-		instance.setSlaResults(
-			new SLAResult[] {
-				_toSLAResult(true, SLAResult.Status.NEW),
-				_toSLAResult(true, SLAResult.Status.PAUSED),
-				_toSLAResult(true, SLAResult.Status.RUNNING),
-				_toSLAResult(true, SLAResult.Status.STOPPED)
-			});
+		List<SLAResult> slaResults = Arrays.asList(
+			_toSLAResult(true, SLAResult.Status.NEW),
+			_toSLAResult(true, SLAResult.Status.NEW),
+			_toSLAResult(true, SLAResult.Status.PAUSED),
+			_toSLAResult(true, SLAResult.Status.PAUSED),
+			_toSLAResult(true, SLAResult.Status.RUNNING),
+			_toSLAResult(true, SLAResult.Status.RUNNING),
+			_toSLAResult(true, SLAResult.Status.RUNNING),
+			_toSLAResult(true, SLAResult.Status.STOPPED),
+			_toSLAResult(true, SLAResult.Status.STOPPED),
+			_toSLAResult(true, SLAResult.Status.STOPPED));
+
+		slaResults.sort(Comparator.comparing(SLAResult::getRemainingTime));
+
+		instance.setSlaResults((SLAResult[])slaResults.toArray());
 
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance);
 
@@ -367,7 +376,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 				id = RandomTestUtil.randomLong();
 				name = StringPool.BLANK;
 				onTime = !overdue;
-				remainingTime = overdue ? -1L : 1L;
+				remainingTime = overdue ? -RandomTestUtil.randomLong() :
+					RandomTestUtil.randomLong();
 				status = slaResultStatus;
 			}
 		};

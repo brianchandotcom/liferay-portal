@@ -76,7 +76,7 @@ public class HtmlBBCodeTranslatorImplTest {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("<div class=\"lfr-code\"><table><tbody><tr>");
-		sb.append("<td class=\"line-numbers\" data-line-number=\"1\"></td>");
+		sb.append("<td class=\"line-numbers\">1</td>");
 		sb.append("<td class=\"lines\"><div class=\"line\">:)</div>");
 		sb.append("</td></tr></tbody></table></div>");
 

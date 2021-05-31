@@ -279,9 +279,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	protected void handleCode(
 		StringBundler sb, List<BBCodeItem> bbCodeItems, IntegerWrapper marker) {
 
-		sb.append("<div class=\"lfr-code\">");
-		sb.append("<table>");
-		sb.append("<tbody>");
+		sb.append("<div class=\"lfr-code\"><table><tbody>");
 
 		String code = extractData(
 			bbCodeItems, marker, "code", BBCodeParser.TYPE_DATA, true);
@@ -292,15 +290,13 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		String[] lines = code.split("\r?\n");
 
 		for (int i = 0; i < lines.length; i++) {
-			sb.append("<tr>");
-			sb.append("<td class=\"line-numbers\" data-line-number=\"");
+			sb.append("<tr><td class=\"line-numbers\">");
 
 			String index = String.valueOf(i + 1);
 
 			sb.append(index);
 
-			sb.append("\"></td>");
-			sb.append("<td class=\"lines\">");
+			sb.append("</td><td class=\"lines\">");
 
 			String line = lines[i];
 
@@ -314,14 +310,10 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 			sb.append("<div class=\"line\">");
 			sb.append(line);
-			sb.append("</div>");
-			sb.append("</td>");
-			sb.append("</tr>");
+			sb.append("</div></td></tr>");
 		}
 
-		sb.append("</tbody>");
-		sb.append("</table>");
-		sb.append("</div>");
+		sb.append("</tbody></table></div>");
 	}
 
 	protected void handleColor(

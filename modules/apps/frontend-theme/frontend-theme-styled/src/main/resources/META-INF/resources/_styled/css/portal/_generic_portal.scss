@@ -16,11 +16,8 @@
 
 	tr td.line-numbers {
 		background: #fafafa;
-
-		&:before {
-			color: #aaa;
-			text-shadow: 1px 1px #fff;
-		}
+		color: #aaa;
+		text-shadow: 1px 1px #fff;
 	}
 }
 

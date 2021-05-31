@@ -63,10 +63,6 @@ td {
 				vertical-align: top;
 				width: 1%;
 			}
-
-			&.line-numbers:before {
-				content: attr(data-line-number);
-			}
 		}
 	}
 }

@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ROLE_EMPTY_MUTED_INFO</td>
+	<td>//div[h3[*[*[contains(text(),'${key_RoleType}')]]]]//div[*[contains(@class,'text-muted')]or contains(@class,'text-muted')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_INFO_DEPOT</td>
 	<td>//p[contains(@class,'text-muted')]</td>
 	<td></td>

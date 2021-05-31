@@ -2885,6 +2885,26 @@ definition {
 			value1 = "No users were found.");
 	}
 
+	macro viewUnableToAssignRoleToUserCP {
+		AssertElementNotPresent(
+			key_RoleType = StringUtil.replace("${roleType}", " ", ""),
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
+			value1 = "Select");
+
+		if (contains("${roleType}", "Site")) {
+			var emptyMessage = "This user does not belong to a site to which a site role can be assigned.";
+		}
+
+		if (contains("${roleType}", "Organization")) {
+			var emptyMessage = "This user does not belong to an organization to which an organization role can be assigned.";
+		}
+
+		AssertTextEquals(
+			key_RoleType = "${roleType}",
+			locator1 = "Message#ROLE_EMPTY_MUTED_INFO",
+			value1 = "${emptyMessage}");
+	}
+
 	macro viewUserCustomFieldsCP {
 		var key_customFieldName = "${customFieldName}";
 

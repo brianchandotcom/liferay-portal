@@ -1,8 +1,11 @@
 let content = null;
 let errorMessage = null;
 let loadingIndicator = null;
+let resizeIntervalId = null;
 let videoContainer = null;
 let videoMask = null;
+
+const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 const height = configuration.videoHeight
 	? configuration.videoHeight.replace('px', '')
@@ -15,14 +18,15 @@ const width = configuration.videoWidth
 function debounce(fn, timeout) {
 	let timeoutId = null;
 
-	return function() {
+	return function () {
 		clearTimeout(timeoutId);
 
 		timeoutId = setTimeout(fn, timeout);
-	}
+	};
 }
 
 function main() {
+	clearInterval(resizeIntervalId);
 	window.removeEventListener('resize', resize);
 
 	if (!document.body.contains(fragmentElement)) {
@@ -64,6 +68,7 @@ function main() {
 
 const resize = debounce(function () {
 	if (!document.body.contains(fragmentElement)) {
+		clearInterval(resizeIntervalId);
 		window.removeEventListener('resize', resize);
 
 		return;
@@ -84,6 +89,7 @@ const resize = debounce(function () {
 			content.style.width = contentWidth + 'px';
 		}
 		catch (error) {
+			clearInterval(resizeIntervalId);
 			window.removeEventListener('resize', resize);
 		}
 	});
@@ -110,6 +116,10 @@ function showVideo() {
 	}
 
 	window.addEventListener('resize', resize);
+
+	if (editMode) {
+		resizeIntervalId = setInterval(resize, 2000);
+	}
 
 	resize();
 }

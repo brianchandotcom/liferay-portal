@@ -11,7 +11,7 @@
 		"clay-icon": "2.22.2",
 		"frontend-editor-ckeditor-web": "*",
 		"frontend-js-web": "*",
-		"leaflet": "1.2.0",
+		"leaflet": "1.7.1",
 		"map-google-maps": "*",
 		"map-openstreetmap": "*",
 		"metal-component": "2.16.8",

@@ -77,6 +77,62 @@ definition {
 			titleField = "Title AddQuestion");
 	}
 
+	@description = "Validate if a question can be approved."
+	@priority = "4"
+	test CanApproveQuestion {
+		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Message Boards Moderation");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestion",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "title-addquestion",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewStatus(status = "pending");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Title AddQuestion",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Title AddQuestion",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		JSONQuestions.addAnswer(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyBody = "This is my answer",
+			threadSubject = "Title AddQuestion",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.getAnswerTitle(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyTitle = "Title AddQuestion",
+			titleField = "Title AddQuestion");
+	}
+
 	@description = "Validate if the pending status can be returned through JSON once MB moderation Workflow is enabled."
 	@priority = "4"
 	test PendingStatusCanBeReturnedThroughJSON {
@@ -101,6 +157,105 @@ definition {
 			categoryName = "Questions Test Category",
 			groupName = "Guest",
 			titleField = "Title AddQuestion");
+	}
+
+	@description = "Validate if the related question can be viewed after approving."
+	@priority = "4"
+	test RelatedQuestionCanBeViewedAfterApproving {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONUser.addUserToSite(
+			groupName = "Guest",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignSiteRoleToUser(
+			groupName = "Guest",
+			roleTitle = "Site Administrator",
+			userEmailAddress = "userea@liferay.com");
+
+		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Message Boards Moderation");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		for (var num : list "1,2") {
+			JSONQuestions.addQuestion(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Question ${num}");
+		}
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "question-1",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewStatus(status = "pending");
+
+		Questions.viewNoRelatedQuestions();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Question 2",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Question 2",
+			workflowAssetType = "Message Boards Message",
+			workflowTask = "Review");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "question-2",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewStatus();
+
+		Questions.openToQuestionDetails(
+			layoutName = "questions-page",
+			questionsTitle = "question-1",
+			siteURLKey = "guest",
+			topicName = "questions-test-category");
+
+		Questions.viewStatus(status = "pending");
+
+		Questions.viewRelatedQuestion(questionTitle = "Question 2");
 	}
 
 }

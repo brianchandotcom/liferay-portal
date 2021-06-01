@@ -16,6 +16,10 @@ definition {
 				locator1 = "Icon#ANY_ITEM_SELECTOR");
 		}
 
+		if (IsElementPresent(key_menuItem = "Select Content...",locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			MenuItem.click(menuItem = "Select Content...");
+		}
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		NavItem.click(navItem = "${navItem}");

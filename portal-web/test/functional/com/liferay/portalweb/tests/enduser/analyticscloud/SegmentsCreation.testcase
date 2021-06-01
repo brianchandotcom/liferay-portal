@@ -28,8 +28,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 
-		// TO DO: ACtearDown
-
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Create a dynamic segment with individuals"
@@ -116,6 +115,63 @@ definition {
 		AssertElementPresent(
 			key_userName = "Test Test",
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
+	@description = "Create a segment that contains anonymous individuals"
+	@priority = "5"
+	test CanCreateSegmentWithAnonymousIndividuals {
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.includeAnonymous();
+
+		ACSegments.goToSidebarAttrributes(criterion = "Individual Attributes");
+
+		ACSegments.addSegmentField(segmentField = "fullName");
+
+		ACSegments.editFormControlCriterion(
+			criterionName = "fullName",
+			option = "is unknown");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.viewSegmentMembershipLegendNumbers(
+			knownNumber = "1",
+			anonymousNumber = "1",
+			totalNumber = "2");
+
+		ACSegments.viewIncludeAnonymousLabel();
 	}
 
 }

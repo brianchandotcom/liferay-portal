@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_RATIO</td>
+	<td>//select[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KNOWLEDGE_BASE_RATING</td>
 	<td>//select[contains(@id,'knowledge-base')]</td>
 	<td></td>

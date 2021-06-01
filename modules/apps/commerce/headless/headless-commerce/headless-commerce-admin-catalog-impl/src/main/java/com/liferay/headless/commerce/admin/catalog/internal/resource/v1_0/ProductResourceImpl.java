@@ -93,9 +93,11 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -363,17 +365,11 @@ public class ProductResourceImpl
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
 		}
 
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
+		DateConfig displayDateConfig = _getDisplayDateConfig(
+			product.getDisplayDate(), serviceContext.getTimeZone());
 
-		DateConfig displayDateConfig = new DateConfig(displayCalendar);
-
-		Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
-			serviceContext.getTimeZone());
-
-		expirationCalendar.add(Calendar.MONTH, 1);
-
-		DateConfig expirationDateConfig = new DateConfig(expirationCalendar);
+		DateConfig expirationDateConfig = _getExpirationDateConfig(
+			product.getExpirationDate(), serviceContext.getTimeZone());
 
 		ProductShippingConfiguration shippingConfiguration =
 			_getProductShippingConfiguration(product);
@@ -520,6 +516,17 @@ public class ProductResourceImpl
 		);
 	}
 
+	private DateConfig _getDisplayDateConfig(Date date, TimeZone timeZone) {
+		if (date == null) {
+			return new DateConfig(CalendarFactoryUtil.getCalendar(timeZone));
+		}
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			date.getTime(), timeZone);
+
+		return new DateConfig(calendar);
+	}
+
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		Attachment attachment) {
 
@@ -536,6 +543,22 @@ public class ProductResourceImpl
 			CPDefinition.class.getName(), contextCompany.getCompanyId(),
 			product.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private DateConfig _getExpirationDateConfig(Date date, TimeZone timeZone) {
+		if (date == null) {
+			Calendar expirationCalendar = CalendarFactoryUtil.getCalendar(
+				timeZone);
+
+			expirationCalendar.add(Calendar.MONTH, 1);
+
+			return new DateConfig(expirationCalendar);
+		}
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(
+			date.getTime(), timeZone);
+
+		return new DateConfig(calendar);
 	}
 
 	private ProductShippingConfiguration _getProductShippingConfiguration(

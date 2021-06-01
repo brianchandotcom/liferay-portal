@@ -1,0 +1,441 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a Form can be published after adding a Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AddedToAFormCanBePublished {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133476 AddedToAFormCanBePublished pending implementation
+
+	}
+
+	@description = "Verify that a Form can be saved after adding a Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AddedToAFormCanBeSaved {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133475 AddedToAFormCanBeSaved pending implementation
+
+	}
+
+	@description = "Verify that a Form can be submitted after adding a Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AddedToAFormCanBeSubmitted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133477 AddedToAFormCanBeSubmitted pending implementation
+
+	}
+
+	@description = "Verify that a Color Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddAColorFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133498 CanAddAColorFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Date Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddADateFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133490 CanAddADateFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Grid Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddAGridFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133489 CanAddAGridFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that an Image Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddAImageFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133492 CanAddAImageFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Multiple Selection Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddAMultipleSelectionFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133488 CanAddAMultipleSelectionFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Numeric Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddANumericFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133491 CanAddANumericFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Paragraph Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddAParagraphFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133484 CanAddAParagraphFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Rich Text Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddARichTextFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133493 CanAddARichTextFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Select From List Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddASelectFromListFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133486 CanAddASelectFromListFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Separator Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddASeparatorFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133499 CanAddASeparatorFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Single Selection Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddASingleSelectionFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133487 CanAddASingleSelectionFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Text Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddATextFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133485 CanAddATextFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that an Upload Field can be added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddAUploadFieldToAForm {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133496 CanAddAUploadFieldToAForm pending implementation
+
+	}
+
+	@description = "Verify that a Fieldset can be added to a Fieldset"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanBeAddedToAFieldset {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133462 CanBeAddedToAFieldset pending implementation
+
+	}
+
+	@description = "Verify that a Fieldset can be added multiple times to Form"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanBeAddedToAFormMultipleTimes {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133463 CanBeAddedToAFormMultipleTimes pending implementation
+
+	}
+
+	@description = "Verify that a Fieldset can be created"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCreated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133459 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that a Fieldset can be deleted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133461 CanBeDeleted pending implementation
+
+	}
+
+	@description = "Verify that a user with delete permissions can delete another user's Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDeletedByUsersWithDeletePermissions {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133480 CanBeDeletedByUsersWithDeletePermissions pending implementation
+
+	}
+
+	@description = "Verify that a Fieldset can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133460 CanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that a user with update permission can edit another user's Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeEditedByUsersWithUpdatePermissions {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133478 CanBeEditedByUsersWithUpdatePermissions pending implementation
+
+	}
+
+	@description = "Verify that a user with Delete (but not Edit) permission cannot edit another user's Fieldset"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotBeEditedByUsersWithoutPermissions {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133482 CannotBeEditedByUsersWithoutPermissions pending implementation
+
+	}
+
+	@description = "Verify that a user with Delete (but not View) permission cannot view another user's Fieldset"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotBeViewedByUsersWithoutPermissions {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133483 CannotBeViewedByUsersWithoutPermissions pending implementation
+
+	}
+
+	@description = "Verify that Options persist after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreserveOptions {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133466 PreserveOptions pending implementation
+
+	}
+
+	@description = "Verify that a Field with the Autocomplete Property persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreserveTheAutoCompleteProperty {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133464 PreserveTheAutoCompleteProperty pending implementation
+
+	}
+
+	@description = "Verify that the Help Text property persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreserveTheHelpText {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133465 PreserveTheHelpText pending implementation
+
+	}
+
+	@description = "Verify that a Hide Label Property persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreserveTheHideLabelProperty {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133472 PreserveTheHideLabelProperty pending implementation
+
+	}
+
+	@description = "Verify that an Inline Property persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreserveTheInlineProperty {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133474 PreserveTheInlineProperty pending implementation
+
+	}
+
+	@description = "Verify that an Allow Multiple Selections Property persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreserveTheMultipleSelectionsProperty {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133473 PreserveTheMultipleSelectionsProperty pending implementation
+
+	}
+
+	@description = "Verify that a Placeholder Text persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreserveThePlaceholderText {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133467 PreserveThePlaceholderText pending implementation
+
+	}
+
+	@description = "Verify that a Predefined Value persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreserveThePredefinedValue {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133468 PreserveThePredefinedValue pending implementation
+
+	}
+
+	@description = "Verify that a Repeatable Property persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreserveTheRepeatableProperty {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133469 PreserveTheRepeatableProperty pending implementation
+
+	}
+
+	@description = "Verify that a Required Field Property persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test PreserveTheRequiredFieldProperty {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133470 PreserveTheRequiredFieldProperty pending implementation
+
+	}
+
+	@description = "Verify that a Show as Switcher Property persists after being added to a Form via Fieldset"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PreserveTheShowAsSwitcherProperty {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133471 PreserveTheShowAsSwitcherProperty pending implementation
+
+	}
+
+	@description = "Verify that leaving a Fieldset without saving will prompt a notification warning the user that any unsaved changes wil be lost"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test WillWarnUsersWhenExitingWithoutSaving {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133500 WillWarnUsersWhenExitingWithoutSaving pending implementation
+
+	}
+
+}

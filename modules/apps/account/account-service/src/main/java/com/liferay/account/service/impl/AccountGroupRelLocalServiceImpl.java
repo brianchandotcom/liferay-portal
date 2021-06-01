@@ -16,6 +16,7 @@ package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.DuplicateAccountGroupRelException;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,7 +61,9 @@ public class AccountGroupRelLocalServiceImpl
 			throw new DuplicateAccountGroupRelException();
 		}
 
-		if (classPK != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+		if (Objects.equals(AccountEntry.class.getName(), className) &&
+			(classPK != AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT)) {
+
 			_accountEntryLocalService.getAccountEntry(classPK);
 		}
 

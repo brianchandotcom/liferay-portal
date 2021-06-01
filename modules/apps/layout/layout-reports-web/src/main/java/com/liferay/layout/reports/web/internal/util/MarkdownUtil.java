@@ -16,7 +16,9 @@ package com.liferay.layout.reports.web.internal.util;
 
 import com.liferay.portal.kernel.util.Validator;
 
+import org.commonmark.node.Document;
 import org.commonmark.node.Link;
+import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
@@ -31,6 +33,30 @@ public class MarkdownUtil {
 		}
 
 		return _htmlRenderer.render(_markdownParser.parse(markdown));
+	}
+
+	public static String markdownToInlineHtml(String markdown) {
+		if (Validator.isNull(markdown)) {
+			return null;
+		}
+
+		return _htmlRenderer.render(
+			_removeWrappingParagraph(_markdownParser.parse(markdown)));
+	}
+
+	private static Document _removeWrappingParagraph(Node rootNode) {
+		Document document = new Document();
+
+		Node paragraphNode = rootNode.getFirstChild();
+
+		Node childNode = paragraphNode.getFirstChild();
+
+		while (childNode != null) {
+			document.appendChild(childNode);
+			childNode = childNode.getNext();
+		}
+
+		return document;
 	}
 
 	private static final HtmlRenderer _htmlRenderer = HtmlRenderer.builder(

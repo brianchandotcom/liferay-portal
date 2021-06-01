@@ -1,3 +1,5 @@
 <#include "init.ftl">
 
-${getVariableReferenceCode(variableName)}
+${r"<#if"} (${variableName})??>
+	${getVariableReferenceCode(variableName)}
+${r"</#if>"}

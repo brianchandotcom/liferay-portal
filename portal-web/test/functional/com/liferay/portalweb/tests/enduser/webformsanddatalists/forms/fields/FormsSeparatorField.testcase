@@ -259,14 +259,40 @@ definition {
 	}
 
 	@description = "Veriy that the Field Label can be hidden"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133242 LabelCanBeHidden pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Separator");
+
+		FormFields.viewTextLabel(fieldLabel = "Separator");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Separator");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.clickShowLabel();
+
+		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Separator");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Separator");
 	}
 
 	@description = "Verify that the Field Reference can be changed"

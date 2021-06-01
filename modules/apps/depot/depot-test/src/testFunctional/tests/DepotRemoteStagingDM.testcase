@@ -1759,25 +1759,18 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
-			category = "System",
+			category = "Configuration",
 			panel = "Control Panel",
-			portlet = "Server Administration");
+			portlet = "System Settings");
 
-		ServerAdministration.configureExternalServices(installXuggler = "true");
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "FFMPEG Video Converter",
+			configurationScope = "System Scope");
 
-		Clustering.shutdownSpecificServer(nodePort = "9080");
+		FormFields.enableCheckbox(fieldName = "enabled");
 
-		Clustering.startSpecificServer(
-			deleteLiferayHome = "false",
-			keepCachedAppServerData = "true",
-			nodePort = "9080");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Server Administration");
-
-		ServerAdministration.configureExternalServices(enableXuggler = "true");
+		SystemSettings.saveConfiguration();
 
 		User.loginPG(
 			nodePort = "8080",

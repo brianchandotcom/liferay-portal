@@ -157,6 +157,25 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(".", separatorSymbolsMap.get("thousandsSeparator"));
 	}
 
+	@Test
+	public void testGetInputMaskProperties() {
+		DDMFormField ddmFormField = new DDMFormField("field", "numeric");
+
+		ddmFormField.setProperty("inputMask", true);
+		ddmFormField.setProperty(
+			"inputMaskFormat",
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"(999) 0999-9999", _locale));
+
+		Map<String, Object> parameters =
+			_numericDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, _createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(true, (boolean)parameters.get("inputMask"));
+		Assert.assertEquals(
+			"(999) 0999-9999", parameters.get("inputMaskFormat"));
+	}
+
 	private DDMFormFieldRenderingContext _createDDMFormFieldRenderingContext() {
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();

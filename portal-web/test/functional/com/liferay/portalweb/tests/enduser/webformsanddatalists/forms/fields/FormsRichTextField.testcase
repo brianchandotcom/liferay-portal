@@ -166,14 +166,57 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be set to repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133114 CanBeSetToRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Rich Text");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldRepeatable();
+
+		AssertElementPresent(locator1 = "Button#DUPLICATE");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Click(locator1 = "Button#DUPLICATE");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		CKEditor.addContentInWebContent(
+			content = "Test",
+			fieldLabel = "Rich Text");
+
+		SelectFrame.selectFrameNoLoading(
+			index = "2",
+			key_fieldLabel = "Rich Text",
+			locator1 = "CKEditor#ANY_BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		Type(
+			locator1 = "CKEditor#BODY",
+			value1 = "Test");
+
+		SelectFrame(value1 = "relative=top");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Form can be submitted with the Rich Text Field"

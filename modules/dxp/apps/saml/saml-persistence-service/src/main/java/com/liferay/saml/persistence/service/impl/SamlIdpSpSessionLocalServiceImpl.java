@@ -91,30 +91,6 @@ public class SamlIdpSpSessionLocalServiceImpl
 		return samlIdpSpSessionPersistence.update(samlIdpSpSession);
 	}
 
-	private SamlIdpSpSession _fetchSamlIdpSpSession(
-		long samlIdpSsoSessionId, String samlSpEntityId) {
-
-		List<SamlIdpSpSession> samlIdpSsoSessions =
-			samlIdpSpSessionPersistence.findBySamlIdpSsoSessionId(
-				samlIdpSsoSessionId);
-
-		Stream<SamlIdpSpSession> stream = samlIdpSsoSessions.stream();
-
-		return stream.filter(
-			samlIdpSsoSession -> {
-				SamlPeerBinding samlPeerBinding =
-					_samlPeerBindingLocalService.fetchSamlPeerBinding(
-						samlIdpSsoSession.getSamlPeerBindingId());
-
-				return Objects.equals(
-					samlSpEntityId, samlPeerBinding.getSamlPeerEntityId());
-			}
-		).findFirst(
-		).orElse(
-			null
-		);
-	}
-
 	@Override
 	public SamlIdpSpSession getSamlIdpSpSession(
 			long samlIdpSsoSessionId, String samlSpEntityId)
@@ -153,6 +129,30 @@ public class SamlIdpSpSessionLocalServiceImpl
 		samlIdpSpSession.setModifiedDate(new Date());
 
 		return samlIdpSpSessionPersistence.update(samlIdpSpSession);
+	}
+
+	private SamlIdpSpSession _fetchSamlIdpSpSession(
+		long samlIdpSsoSessionId, String samlSpEntityId) {
+
+		List<SamlIdpSpSession> samlIdpSsoSessions =
+			samlIdpSpSessionPersistence.findBySamlIdpSsoSessionId(
+				samlIdpSsoSessionId);
+
+		Stream<SamlIdpSpSession> stream = samlIdpSsoSessions.stream();
+
+		return stream.filter(
+			samlIdpSsoSession -> {
+				SamlPeerBinding samlPeerBinding =
+					_samlPeerBindingLocalService.fetchSamlPeerBinding(
+						samlIdpSsoSession.getSamlPeerBindingId());
+
+				return Objects.equals(
+					samlSpEntityId, samlPeerBinding.getSamlPeerEntityId());
+			}
+		).findFirst(
+		).orElse(
+			null
+		);
 	}
 
 	@Reference

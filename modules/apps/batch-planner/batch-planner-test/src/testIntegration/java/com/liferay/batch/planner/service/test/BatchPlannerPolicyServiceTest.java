@@ -15,13 +15,18 @@
 package com.liferay.batch.planner.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.planner.exception.NoSuchPlanException;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -49,24 +54,68 @@ public class BatchPlannerPolicyServiceTest extends BaseBatchPlannerTestCase {
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Test
-	public void testAddBatchPlannerPolicy() {
-		User user1 = UserTestUtil.addUser(CompanyTestUtil.addCompany());
+	public void testBatchPlannerPolicyPermissions() throws Exception {
+		List<BatchPlannerPolicy> batchPlannerPolicies = addBatchPlannerPolicy(
+			"policy_1", "policy_2", "policy_3", "policy_4", "policy_5");
 
-		UserTestUtil.setUser(user1);
-	}
+		BatchPlannerPolicy batchPlannerPolicy = batchPlannerPolicies.get(0);
 
-	@Test
-	public void testDeleteBatchPlannerPolicy() throws Exception {
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(), batchPlannerPolicy.getCompanyId());
+
+		Assert.assertTrue(
+			batchPlannerPolicyService.hasBatchPlannerPolicy(
+				batchPlannerPolicy.getBatchPlannerPlanId(),
+				batchPlannerPolicy.getName()));
+
+		User user2 = UserTestUtil.addUser(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+
+		UserTestUtil.setUser(user2);
+
+		Class<?> exceptionClass = Exception.class;
+
+		try {
+			batchPlannerPolicyService.hasBatchPlannerPolicy(
+				batchPlannerPolicy.getBatchPlannerPlanId(),
+				batchPlannerPolicy.getName());
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(
+			PrincipalException.MustHavePermission.class, exceptionClass);
+
 		User omniAdminUser = UserTestUtil.addOmniAdminUser();
 
 		UserTestUtil.setUser(omniAdminUser);
 
-		User user1 = UserTestUtil.addUser(CompanyTestUtil.addCompany());
+		Assert.assertTrue(
+			batchPlannerPolicyService.hasBatchPlannerPolicy(
+				batchPlannerPolicy.getBatchPlannerPlanId(),
+				batchPlannerPolicy.getName()));
 
-		UserTestUtil.setUser(user1);
+		User user3 = UserTestUtil.addUser(CompanyTestUtil.addCompany());
 
+		UserTestUtil.setUser(user3);
+
+		try {
+			batchPlannerPolicyService.hasBatchPlannerPolicy(
+				batchPlannerPolicy.getBatchPlannerPlanId(),
+				batchPlannerPolicy.getName());
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
+
+		Assert.assertEquals(IllegalArgumentException.class, exceptionClass);
+	}
+
+	@Test
+	public void testDeleteBatchPlannerPolicy() throws Exception {
 		List<BatchPlannerPolicy> batchPlannerPolicies = addBatchPlannerPolicy(
-			user1, "policy_1", "policy_2", "policy_3", "policy_4", "policy_5");
+			"policy_1", "policy_2", "policy_3", "policy_4", "policy_5");
 
 		Assert.assertEquals("policies count", 5, batchPlannerPolicies.size());
 
@@ -85,7 +134,7 @@ public class BatchPlannerPolicyServiceTest extends BaseBatchPlannerTestCase {
 			batchPlannerPolicyService.getBatchPlannerPolicies(
 				batchPlannerPolicy.getBatchPlannerPlanId());
 
-		Assert.assertEquals("policies count", 5, batchPlannerPolicies.size());
+		Assert.assertEquals("policies count", 4, batchPlannerPolicies.size());
 
 		batchPlannerPolicy = batchPlannerPolicies.get(0);
 
@@ -97,11 +146,20 @@ public class BatchPlannerPolicyServiceTest extends BaseBatchPlannerTestCase {
 		batchPlannerPlanService.deleteBatchPlannerPlan(
 			batchPlannerPolicy.getBatchPlannerPlanId());
 
-		batchPlannerPolicies =
+		Class<?> exceptionClass = Exception.class;
+
+		try {
 			batchPlannerPolicyService.getBatchPlannerPolicies(
 				batchPlannerPolicy.getBatchPlannerPlanId());
+		}
+		catch (Exception exception) {
+			exceptionClass = exception.getClass();
+		}
 
-		Assert.assertTrue(batchPlannerPolicies.isEmpty());
+		Assert.assertEquals(NoSuchPlanException.class, exceptionClass);
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 }

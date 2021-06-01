@@ -18,7 +18,6 @@ import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 /**
@@ -26,26 +25,20 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
  */
 public class BatchPlannerPlanTestUtil {
 
-	public static BatchPlannerPlan randomBatchPlannerPlan(
-		User user, int nameSalt) {
-
-		return randomBatchPlannerPlan(user, _randomName(nameSalt));
+	public static BatchPlannerPlan randomBatchPlannerPlan(int nameSalt) {
+		return randomBatchPlannerPlan(_randomName(nameSalt));
 	}
 
-	public static BatchPlannerPlan randomBatchPlannerPlan(
-		User user, String name) {
-
+	public static BatchPlannerPlan randomBatchPlannerPlan(String name) {
 		return _randomBatchPlannerPlan(
-			RandomTestUtil.randomBoolean(), user.getCompanyId(),
-			RandomTestUtil.randomBoolean(), _randomExternalType(),
-			RandomTestUtil.randomString(20), RandomTestUtil.randomString(20),
-			name, user.getUserId());
+			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
+			_randomExternalType(), RandomTestUtil.randomString(20),
+			RandomTestUtil.randomString(20), name);
 	}
 
 	private static BatchPlannerPlan _randomBatchPlannerPlan(
-		boolean active, long companyId, boolean export, String externalType,
-		String externalURL, String internalClassName, String name,
-		long userId) {
+		boolean active, boolean export, String externalType, String externalURL,
+		String internalClassName, String name) {
 
 		BatchPlannerPlanPersistence batchPlannerPlanPersistence =
 			BatchPlannerPlanUtil.getPersistence();
@@ -53,8 +46,6 @@ public class BatchPlannerPlanTestUtil {
 		BatchPlannerPlan batchPlannerPlan = batchPlannerPlanPersistence.create(
 			RandomTestUtil.nextLong());
 
-		batchPlannerPlan.setCompanyId(companyId);
-		batchPlannerPlan.setUserId(userId);
 		batchPlannerPlan.setActive(active);
 		batchPlannerPlan.setExternalType(externalType);
 		batchPlannerPlan.setExternalURL(externalURL);

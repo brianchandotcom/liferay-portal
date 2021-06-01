@@ -21,7 +21,6 @@ import com.liferay.batch.planner.service.BatchPlannerPolicyService;
 import com.liferay.batch.planner.service.test.util.BatchPlannerPlanTestUtil;
 import com.liferay.batch.planner.service.test.util.BatchPlannerPolicyTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -32,42 +31,40 @@ import java.util.List;
  */
 public abstract class BaseBatchPlannerTestCase {
 
-	protected BatchPlannerPlan addBatchPlannerPlan(User user, int nameSeed)
+	protected BatchPlannerPlan addBatchPlannerPlan(int nameSeed)
 		throws PortalException {
 
 		BatchPlannerPlan batchPlannerPlan =
-			BatchPlannerPlanTestUtil.randomBatchPlannerPlan(user, nameSeed);
+			BatchPlannerPlanTestUtil.randomBatchPlannerPlan(nameSeed);
 
 		return batchPlannerPlanService.addBatchPlannerPlan(
-			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
+			batchPlannerPlan.getExternalType(), batchPlannerPlan.getName());
 	}
 
-	protected BatchPlannerPlan addBatchPlannerPlan(User user, String name)
+	protected BatchPlannerPlan addBatchPlannerPlan(String name)
 		throws PortalException {
 
 		BatchPlannerPlan batchPlannerPlan =
-			BatchPlannerPlanTestUtil.randomBatchPlannerPlan(user, name);
+			BatchPlannerPlanTestUtil.randomBatchPlannerPlan(name);
 
 		return batchPlannerPlanService.addBatchPlannerPlan(
-			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
+			batchPlannerPlan.getExternalType(), batchPlannerPlan.getName());
 	}
 
-	protected List<BatchPlannerPolicy> addBatchPlannerPolicy(
-			User user, String... names)
+	protected List<BatchPlannerPolicy> addBatchPlannerPolicy(String... names)
 		throws PortalException {
 
 		if ((names == null) || (names.length == 0)) {
 			throw new IllegalArgumentException();
 		}
 
-		BatchPlannerPlan batchPlannerPlan = addBatchPlannerPlan(user, 300);
+		BatchPlannerPlan batchPlannerPlan = addBatchPlannerPlan(300);
 
 		List<BatchPlannerPolicy> batchPlannerPolicies = new ArrayList<>();
 
 		for (String name : names) {
 			BatchPlannerPolicy batchPlannerPolicy =
-				BatchPlannerPolicyTestUtil.randomBatchPlannerPolicy(
-					user, name, name);
+				BatchPlannerPolicyTestUtil.randomBatchPlannerPolicy(name, name);
 
 			batchPlannerPolicies.add(
 				batchPlannerPolicyService.addBatchPlannerPolicy(

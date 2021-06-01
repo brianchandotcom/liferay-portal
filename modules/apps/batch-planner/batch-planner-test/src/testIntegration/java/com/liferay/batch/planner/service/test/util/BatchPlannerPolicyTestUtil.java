@@ -17,7 +17,6 @@ package com.liferay.batch.planner.service.test.util;
 import com.liferay.batch.planner.model.BatchPlannerPolicy;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPolicyUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 /**
@@ -25,22 +24,19 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
  */
 public class BatchPlannerPolicyTestUtil {
 
-	public static BatchPlannerPolicy randomBatchPlannerPolicy(
-		User user, int nameSalt) {
-
+	public static BatchPlannerPolicy randomBatchPlannerPolicy(int nameSalt) {
 		return randomBatchPlannerPolicy(
-			user, _randomName(nameSalt), _randomName(nameSalt));
+			_randomName(nameSalt), _randomName(nameSalt));
 	}
 
 	public static BatchPlannerPolicy randomBatchPlannerPolicy(
-		User user, String name, String value) {
+		String name, String value) {
 
-		return _randomBatchPlannerPolicy(
-			user.getCompanyId(), name, value, user.getUserId());
+		return _randomBatchPlannerPolicy(name, value);
 	}
 
 	private static BatchPlannerPolicy _randomBatchPlannerPolicy(
-		long companyId, String name, String value, long userId) {
+		String name, String value) {
 
 		BatchPlannerPolicyPersistence batchPlannerPolicyPersistence =
 			BatchPlannerPolicyUtil.getPersistence();
@@ -48,8 +44,6 @@ public class BatchPlannerPolicyTestUtil {
 		BatchPlannerPolicy batchPlannerPolicy =
 			batchPlannerPolicyPersistence.create(RandomTestUtil.nextLong());
 
-		batchPlannerPolicy.setCompanyId(companyId);
-		batchPlannerPolicy.setUserId(userId);
 		batchPlannerPolicy.setName(name);
 		batchPlannerPolicy.setValue(value);
 

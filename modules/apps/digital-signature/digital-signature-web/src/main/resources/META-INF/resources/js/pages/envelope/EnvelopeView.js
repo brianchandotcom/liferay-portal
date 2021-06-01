@@ -54,28 +54,37 @@ const EnvelopeDetail = ({
 	</div>
 );
 
-const EnvelopeHeader = ({
-	docusignStatus,
-	emailSubject,
-	fileEntry: {previewFileURL},
-}) => (
-	<div className="envelope-view__header">
-		<div>
-			<span className="envelope-view__header__title">{emailSubject}</span>
-			<ClayLabel className="ml-2" displayType={docusignStatus.color}>
-				{docusignStatus.label}
-			</ClayLabel>
+const EnvelopeHeader = ({docusignStatus, emailSubject, envelopeId}) => {
+	const {baseResourceURL} = useContext(AppContext);
+
+	return (
+		<div className="envelope-view__header">
+			<div>
+				<span className="envelope-view__header__title">
+					{emailSubject}
+				</span>
+				<ClayLabel className="ml-2" displayType={docusignStatus.color}>
+					{docusignStatus.label}
+				</ClayLabel>
+			</div>
+			<ClayButton
+				onClick={() =>
+					window.open(
+						createResourceURL(baseResourceURL, {
+							envelopeId,
+							p_p_resource_id:
+								'/digital_signature/get_ds_documents_as_bytes',
+						}),
+						'_blank'
+					)
+				}
+			>
+				<ClayIcon symbol="download" />
+				<span className="ml-1">{Liferay.Language.get('download')}</span>
+			</ClayButton>
 		</div>
-		<ClayButton
-			onClick={() =>
-				window.open(`${previewFileURL}&download=true`, '_blank')
-			}
-		>
-			<ClayIcon symbol="download" />
-			<span className="ml-1">{Liferay.Language.get('download')}</span>
-		</ClayButton>
-	</div>
-);
+	);
+};
 
 function EnvelopeView({
 	match: {
@@ -134,7 +143,7 @@ function EnvelopeView({
 			<EnvelopeHeader
 				docusignStatus={docusignStatus}
 				emailSubject={envelope.emailSubject}
-				fileEntry={fileEntry}
+				envelopeId={envelopeId}
 			/>
 
 			{fileEntries.length === 0 ? (

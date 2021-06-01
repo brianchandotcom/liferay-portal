@@ -162,6 +162,7 @@ function FieldBase({
 	displayErrors,
 	errorMessage,
 	fieldName,
+	hideField,
 	id,
 	label,
 	localizedValue = {},
@@ -315,9 +316,22 @@ function FieldBase({
 								})}
 								tabIndex="0"
 							>
-								{label && showLabel && label}
+								{label && showLabel && (
+									<>
+										{hideField ? (
+											<span className="text-secondary">
+												{label}
+											</span>
+										) : (
+											label
+										)}
+									</>
+								)}
 
 								{required && <RequiredProperty />}
+
+								{hideField && <HideFieldProperty />}
+
 								{showLabel && tooltip && (
 									<TooltipProperty
 										showPopover={showPopover}

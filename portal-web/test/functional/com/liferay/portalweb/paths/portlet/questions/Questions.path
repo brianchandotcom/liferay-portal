@@ -374,6 +374,12 @@
 	<td>//a[contains(@class,'questions-title')]/h3[contains(.,'${key_questionTitle}')]</td>
 	<td></td>
 </tr>
+<!--WORKFLOW-->
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//span[contains(@class,'label-item') and contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

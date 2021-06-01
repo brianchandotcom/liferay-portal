@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISHED_FORM_FIELD_BY_INDEX</td>
+	<td>//div[contains(concat(' ',normalize-space(@class),' '),'ddm-field-container')]/div[${key_index}]//label[contains(text(),'${key_fieldLabel}')]/..//input[@type!="hidden"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

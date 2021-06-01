@@ -154,14 +154,60 @@ definition {
 	}
 
 	@description = "Verify that a Date Field can be Repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetAsRepeatable {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132817 CanBeSetAsRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date",
+			formPageNumber = "0");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldRepeatable();
+
+		AssertElementPresent(
+			key_fieldName = "Date",
+			key_repeatableFieldNumber = "1",
+			locator1 = "FormFields#FIELD_ADD_SPECIFIC");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			fieldName = "Date",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewPublishedFormFieldByIndex(
+			fieldLabel = "Date",
+			index = "1");
+
+		FormFields.viewPublishedFormFieldByIndex(
+			fieldLabel = "Date",
+			index = "2");
+
+		FormFields.editDateByIndex(
+			index = "1",
+			key_value = "01012021");
+
+		FormFields.editDateByIndex(
+			index = "2",
+			key_value = "01012021");
+
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that a Form can be submitted with the Date Field"

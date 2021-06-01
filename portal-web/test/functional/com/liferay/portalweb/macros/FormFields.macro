@@ -149,6 +149,14 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editDateByIndex {
+		Type(
+			key_fieldLabel = "Date",
+			key_index = "${index}",
+			locator1 = "FormFields#PUBLISHED_FORM_FIELD_BY_INDEX",
+			value1 = "${key_value}");
+	}
+
 	macro editFieldName {
 		Form.gotoAdvancedTab();
 
@@ -1069,6 +1077,13 @@ definition {
 		AssertElementPresent(
 			key_textContent = "${key_textContent}",
 			locator1 = "FormFields#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST_DROPDOWN_CONTENT");
+	}
+
+	macro viewPublishedFormFieldByIndex {
+		AssertElementPresent(
+			key_fieldLabel = "${fieldLabel}",
+			key_index = "${index}",
+			locator1 = "FormFields#PUBLISHED_FORM_FIELD_BY_INDEX");
 	}
 
 	macro viewRadioLabel {

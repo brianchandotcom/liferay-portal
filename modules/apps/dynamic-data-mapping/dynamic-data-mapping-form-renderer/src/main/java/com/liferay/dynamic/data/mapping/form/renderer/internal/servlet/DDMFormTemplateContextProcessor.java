@@ -117,6 +117,8 @@ public class DDMFormTemplateContextProcessor {
 			jsonObject.getString("fieldName"), ddmFormField);
 		setDDMFormFieldFieldReference(
 			jsonObject.getString("fieldReference"), ddmFormField);
+		setDDMFormFieldInputMaskFormat(
+			jsonObject.getString("inputMaskFormat"), ddmFormField);
 		setDDMFormFieldLabel(jsonObject.getString("label"), ddmFormField);
 		setDDMFormFieldLocalizable(
 			jsonObject.getBoolean("localizable", false), ddmFormField);
@@ -298,6 +300,14 @@ public class DDMFormTemplateContextProcessor {
 		String fieldReference, DDMFormField ddmFormField) {
 
 		ddmFormField.setFieldReference(GetterUtil.getString(fieldReference));
+	}
+
+	protected void setDDMFormFieldInputMaskFormat(
+		String inputMaskFormat, DDMFormField ddmFormField) {
+
+		ddmFormField.setProperty(
+			"inputMaskFormat",
+			getLocalizedValue(GetterUtil.getString(inputMaskFormat)));
 	}
 
 	protected void setDDMFormFieldLabel(

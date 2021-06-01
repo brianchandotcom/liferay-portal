@@ -328,13 +328,42 @@ definition {
 	}
 
 	@description = "COMMERCE-5928. As a buyer, I want to be able to switch the account selector dropdown's view from the account list to the order list and I want to be able to see all the orders for the account I have selected"
-	@ignore = "true"
 	@priority = "3"
 	test ViewAccountSelectorDropdownOrdersList {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CommerceAccountSelector#ViewAccountSelectorDropdownOrdersList";
 
-		// TODO COMMERCE-5928 ViewAccountSelectorDropdownOrdersList pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account 1",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Button.click(button = "Add Order");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
+
+		Button.click(button = "Add Order");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+		AssertElementPresent(
+			key_RowNumber = "1",
+			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW");
+
+		AssertElementPresent(
+			key_RowNumber = "2",
+			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW");
 	}
 
 }

@@ -319,9 +319,16 @@ definition {
 
 		var key_iframeTitle = "${assetTitle}";
 
-		AssertTextEquals(
-			locator1 = "IFrame#IFRAME_TITLE",
-			value1 = "${assetTitle}");
+		if (IsElementNotPresent(locator1 = "IFrame#IFRAME_TITLE")) {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "${assetTitle}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "IFrame#IFRAME_TITLE",
+				value1 = "${assetTitle}");
+		}
 	}
 
 }

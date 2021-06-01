@@ -80,12 +80,12 @@ definition {
 				locator1 = "Icon#ANY_ITEM_SELECTOR");
 		}
 
-		if (IsElementPresent(key_menuItem = "Select Content",locator1 = "MenuItem#ANY_MENU_ITEM")) {
+		if (IsElementPresent(key_menuItem = "Select Content...",locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			if (isSet(contentItem)) {
-				DropdownMenuItem.click(menuItem = "${contentItem}");
+				MenuItem.click(menuItem = "${contentItem}");
 			}
 			else {
-				DropdownMenuItem.click(menuItem = "Select Content");
+				MenuItem.click(menuItem = "Select Content...");
 			}
 		}
 

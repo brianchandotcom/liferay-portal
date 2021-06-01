@@ -13,7 +13,7 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		JSONGroup.addGroup(groupName = "WYSIWYG Site Name");
 	}
 
 	tearDown {
@@ -25,7 +25,7 @@ definition {
 		else {
 			Page.tearDownCP();
 
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+			JSONGroup.deleteGroupByName(groupName = "WYSIWYG Site Name");
 		}
 	}
 
@@ -33,18 +33,18 @@ definition {
 	@refactorneeded
 	test AddBlogsEntryWithImageViaBlogsImages {
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Widget Page Name");
+			groupName = "WYSIWYG Site Name",
+			layoutName = "${pageName}");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
-			groupName = "Test Site Name",
-			layoutName = "Test Widget Page Name",
+			groupName = "WYSIWYG Site Name",
+			layoutName = "${pageName}",
 			widgetName = "Blogs");
 
 		Navigator.gotoSitePage(
-			pageName = "Test Widget Page Name",
-			siteName = "Test Site Name");
+			pageName = "${pageName}",
+			siteName = "WYSIWYG Site Name");
 
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
@@ -122,12 +122,14 @@ definition {
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
+		VerifyElementPresent(
+			key_assetTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -186,12 +188,14 @@ definition {
 	test AddWebContentArticleWithImageViaURL {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
+		VerifyElementPresent(
+			key_assetTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -213,16 +217,16 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanAddHyperlinkToExistingText {
-		JSONGroup.addGroup(groupName = "Test Site Name");
-
 		JSONWebcontent.addWebContent(
 			content = "Test Link",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			title = "Test Web Content");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
-		WebContent.viewTitle(webContentTitle = "Test Web Content");
+		VerifyElementPresent(
+			key_assetTitle = "Test Web Content",
+			locator1 = "WC#ENTRY_LIST_TITLE");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test Web Content");
 
@@ -243,12 +247,14 @@ definition {
 	test PreviewSourceContent {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
+		VerifyElementPresent(
+			key_assetTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -290,12 +296,14 @@ definition {
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
+		VerifyElementPresent(
+			key_assetTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -329,12 +337,14 @@ definition {
 	test ViewSourceCodeFormattedInTextView {
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			title = "Web Content Title");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "wysiwyg-site-name");
 
-		WebContent.viewTitle(webContentTitle = "Web Content Title");
+		VerifyElementPresent(
+			key_assetTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -357,18 +367,18 @@ definition {
 	@refactorneeded
 	test ViewWikiFrontPageLeftToRight {
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			layoutName = "${pageName}");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			layoutName = "${pageName}",
 			widgetName = "Wiki");
 
 		Navigator.gotoSitePage(
 			pageName = "${pageName}",
-			siteName = "Test Site Name");
+			siteName = "WYSIWYG Site Name");
 
 		WikiPage.addLocalizedFrontPagePG(
 			emptyPageMessage = "This page is empty. Edit it to add some text.",
@@ -377,7 +387,7 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "${pageName}",
-			siteName = "Test Site Name");
+			siteName = "WYSIWYG Site Name");
 
 		WikiPage.viewLocalizedFrontPagePG(wikiPageContent = "Wiki Left to Right Content");
 	}
@@ -388,24 +398,28 @@ definition {
 		property test.name.skip.portal.instance = "WYSIWIGUsecase#ViewWikiFrontPageRightToLeft";
 
 		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			layoutName = "${pageName}");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
-			groupName = "Test Site Name",
+			groupName = "WYSIWYG Site Name",
 			layoutName = "${pageName}",
 			widgetName = "Language Selector");
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "WYSIWYG Site Name",
+			layoutName = "${pageName}",
+			widgetName = "Wiki");
+
 		Navigator.gotoSitePage(
 			pageName = "${pageName}",
-			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Wiki");
+			siteName = "WYSIWYG Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "${pageName}",
-			siteName = "Test Site Name");
+			siteName = "WYSIWYG Site Name");
 
 		LanguagePortlet.selectLanguagePG(
 			locale = "ar_SA",
@@ -419,7 +433,7 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "${pageName}",
-			siteName = "Test Site Name");
+			siteName = "WYSIWYG Site Name");
 
 		WikiPage.viewLocalizedFrontPagePG(
 			rightToLeft = "true",

@@ -294,11 +294,14 @@ function FieldBase({
 							>
 								{label && showLabel && label}
 
-								<FieldProperties
-									required={required}
-									showPopover={showPopover}
-									tooltip={tooltip}
-								/>
+								{required && <RequiredProperty />}
+
+								{tooltip && (
+									<TooltipProperty
+										showPopover={showPopover}
+										tooltip={tooltip}
+									/>
+								)}
 							</legend>
 							{children}
 						</fieldset>
@@ -314,13 +317,23 @@ function FieldBase({
 							>
 								{label && showLabel && label}
 
-								<FieldProperties
-									required={required}
+								{required && <RequiredProperty />}
+								{showLabel && tooltip && (
+									<TooltipProperty
+										showPopover={showPopover}
+										tooltip={tooltip}
+									/>
+								)}
+							</label>
+
+							{children}
+
+							{!showLabel && tooltip && (
+								<TooltipProperty
 									showPopover={showPopover}
 									tooltip={tooltip}
 								/>
-							</label>
-							{children}
+							)}
 						</>
 					)}
 				</>

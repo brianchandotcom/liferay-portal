@@ -1003,21 +1003,11 @@ definition {
 			localizationName3 = "${localizationName3}",
 			localizationName4 = "${localizationName4}");
 
-		Click(
-			key_portletName = "JournalPortlet_Menu",
-			locator1 = "Button#LANGUAGE_DROPDOWN");
-
-		Depot.view4LanguagesOrder(
-			localizationName1 = "${localizationName1}",
-			localizationName2 = "${localizationName2}",
-			localizationName3 = "${localizationName3}",
-			localizationName4 = "${localizationName4}");
-
 		Panel.expandPanel(panel = "Basic Information");
 
 		Click(
-			key_fieldName = "Summary",
-			locator1 = "Button#LOCALIZATION");
+			key_portletName = "JournalPortlet_description",
+			locator1 = "Button#LANGUAGE_DROPDOWN");
 
 		Depot.view4LanguagesOrder(
 			localizationName1 = "${localizationName1}",

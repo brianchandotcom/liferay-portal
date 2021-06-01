@@ -133,6 +133,12 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
+	macro gotoEditImage {
+		LexiconEntry.openEntryMenu(rowEntry = "${dmDocumentTitle}");
+
+		MenuItem.click(menuItem = "Edit Image");
+	}
+
 	macro gotoFolder {
 		var key_dmFolderName = "${dmFolderName}";
 

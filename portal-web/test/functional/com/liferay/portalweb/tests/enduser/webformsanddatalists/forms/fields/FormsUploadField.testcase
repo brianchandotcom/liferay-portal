@@ -32,14 +32,92 @@ definition {
 	}
 
 	@description = "Verify that a user can upload up to 5 files when the Repeatable option is enabled"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test AllowsFiveUploadsWhenRepeatableIsEnabled {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133253 AllowsFiveUploadsWhenRepeatableIsEnabled pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Upload");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "repeatable");
+
+		FormFields.viewRepeatableFieldDuplicateVisible();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			fieldName = "Upload",
+			repeatableFieldNumber = "1");
+
+		FormFields.addRepeatableField(
+			fieldName = "Upload",
+			repeatableFieldNumber = "1");
+
+		FormFields.addRepeatableField(
+			fieldName = "Upload",
+			repeatableFieldNumber = "1");
+
+		FormFields.addRepeatableField(
+			fieldName = "Upload",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewRepeatableFieldDuplicateHidden();
+
+		FormFields.viewRepeatableFields(
+			fieldName = "Upload",
+			rows = "1,2,3,4,5");
+
+		FormFields.selectFileUpload(
+			fieldName = "Upload",
+			fileName = "Document_1.docx",
+			navTab = "Documents and Media",
+			rowNumber = "1");
+
+		FormFields.selectFileUpload(
+			fieldName = "Upload",
+			fileName = "Document_1.pdf",
+			navTab = "Documents and Media",
+			rowNumber = "2");
+
+		FormFields.selectFileUpload(
+			fieldName = "Upload",
+			fileName = "Document_1.pptx",
+			navTab = "Documents and Media",
+			rowNumber = "3");
+
+		FormFields.selectFileUpload(
+			fieldName = "Upload",
+			fileName = "Document_1.xlsx",
+			navTab = "Documents and Media",
+			rowNumber = "4");
+
+		FormFields.selectFileUpload(
+			fieldName = "Upload",
+			fileName = "Document_1.jpg",
+			navTab = "Documents and Media",
+			rowNumber = "5");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that, by default, guest users cannot upload files"

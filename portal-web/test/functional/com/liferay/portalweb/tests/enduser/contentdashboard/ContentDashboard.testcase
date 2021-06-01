@@ -35,9 +35,6 @@ definition {
 		}
 	}
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
 	@description = "LPS-132597 When a web content is associated to a Display Page and its status is Approved, a display page icon is displayed"
 	@priority = "5"
 	test CheckDisplayPageIconofApprovedWebContent {
@@ -158,7 +155,7 @@ definition {
 
 	@description = "When click on the 'Other options' icon of Approved WC and has NOT a display page associated, View option NOT displayed"
 	@priority = "4"
-	test CheckViewOptionNotDisplayedApprovedWCNotAssiciatedDPT{
+	test CheckViewOptionNotDisplayedApprovedWCNotAssiciatedDPT {
 		task ("Create a Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
@@ -180,7 +177,7 @@ definition {
 
 	@description = "When click on the 'Other options' icon of not Approved WC and has a display page associated, View option NOT displayed"
 	@priority = "4"
-	test CheckViewOptionNotDisplayedNotApprovedWCAssiciatedDPT{
+	test CheckViewOptionNotDisplayedNotApprovedWCAssiciatedDPT {
 		task ("Create and Publish a Display Page Template with Fragment") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -228,9 +225,6 @@ definition {
 		}
 	}
 
-=======
->>>>>>> parent of f49f29b (LPS-132597 Test Autom. Icon Associated With Display Page)
->>>>>>> Stashed changes
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
 	test ContentDashboardClickTitleApprovedDPTWithNoPermissions {

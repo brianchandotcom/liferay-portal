@@ -278,6 +278,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 
 		JSONMBMessage.addMessageReply(
+			anonymous = "true",
 			groupName = "Guest",
 			replyBody = '''<script>alert(123);</script>''',
 			threadSubject = "MB Thread Message Subject");

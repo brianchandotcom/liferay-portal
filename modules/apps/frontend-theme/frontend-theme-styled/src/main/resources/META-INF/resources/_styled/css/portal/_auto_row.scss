@@ -1,12 +1,48 @@
 .lfr-form-row {
-	border-bottom-color: #ccc;
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding: 1px 5px 25px;
+	position: relative;
+
+	&:after {
+		clear: both;
+		content: '';
+		display: block;
+		height: 0;
+	}
+
+	&:hover {
+		border: solid#ccc;
+		border-width: 1px 0;
+		padding-top: 0;
+	}
+
+	&.lfr-form-row-inline .form-group {
+		margin-right: 5px;
+	}
+
+	legend .field-label {
+		float: left;
+		margin-right: 10px;
+	}
+
+	.handle-sort-vertical {
+		background: url(../images/application/handle_sort_vertical.png)
+			no-repeat 0 50%;
+		cursor: move;
+		padding-left: 20px;
+	}
+
+	fieldset {
+		border-width: 0;
+		margin: 0;
+		padding: 0;
+	}
 }
 
-.lfr-form-row:hover {
-	border-bottom-color: #ccc;
-}
-
-.lfr-form-row .handle-sort-vertical {
-	background: url(../images/application/handle_sort_vertical.png) no-repeat 0
-		50%;
+.lfr-autorow-controls {
+	bottom: 5px;
+	position: absolute;
+	right: 5px;
 }

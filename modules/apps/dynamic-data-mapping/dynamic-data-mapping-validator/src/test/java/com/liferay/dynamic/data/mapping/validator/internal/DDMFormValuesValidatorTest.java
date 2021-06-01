@@ -51,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -69,6 +70,53 @@ public class DDMFormValuesValidatorTest {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormValuesValidator();
+	}
+
+	@Test
+	public void testEvaluateForDoubleType() throws Exception {
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
+			new DDMFormFieldValidationExpression() {
+				{
+					setName("eq");
+					setValue("Field=={parameter}");
+				}
+			});
+		ddmFormFieldValidation.setParameterLocalizedValue(
+			DDMFormValuesTestUtil.createLocalizedValue("10", LocaleUtil.US));
+
+		Assert.assertTrue(
+			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
+				"double", "Field", ddmFormFieldValidation, LocaleUtil.US,
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"10", LocaleUtil.US)));
+	}
+
+	@Test
+	public void testEvaluateForDoubleTypeWithSeparator() throws Exception {
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		ddmFormFieldValidation.setDDMFormFieldValidationExpression(
+			new DDMFormFieldValidationExpression() {
+				{
+					setName("eq");
+					setValue("Field=={parameter}");
+				}
+			});
+		ddmFormFieldValidation.setParameterLocalizedValue(
+			DDMFormValuesTestUtil.createLocalizedValue("10.0", LocaleUtil.US));
+
+		LocalizedValue localizedValue = new LocalizedValue();
+
+		localizedValue.addString(LocaleUtil.BRAZIL, "10,0");
+
+		Assert.assertTrue(
+			_ddmFormValuesValidatorImpl.evaluateValidationExpression(
+				"double", "Field", ddmFormFieldValidation, LocaleUtil.BRAZIL,
+				localizedValue));
 	}
 
 	@Test(expected = MustSetValidValue.class)

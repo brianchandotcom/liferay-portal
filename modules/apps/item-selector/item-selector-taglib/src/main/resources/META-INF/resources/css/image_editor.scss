@@ -1,20 +1,98 @@
 @import 'atlas-variables';
 
 .image-editor {
-	background-color: $dark;
-	height: 100%;
+	background-color: #4d4f65;
+	height: calc(100% - 56px);
 	position: relative;
+
+	.cropper-line {
+		background-color: $primary;
+		opacity: 1;
+	}
+
+	.cropper-line.line-e,
+	.cropper-line.line-w {
+		width: 2px;
+	}
+
+	.cropper-line.line-n,
+	.cropper-line.line-s {
+		height: 2px;
+	}
+
+	.cropper-line.line-e {
+		right: 0;
+	}
+
+	.cropper-line.line-n {
+		top: 0;
+	}
+
+	.cropper-line.line-s {
+		bottom: 0;
+	}
+
+	.cropper-line.line-w {
+		left: 0;
+	}
+
+	.cropper-point {
+		background-color: $white;
+		border: 3px solid $primary;
+		border-radius: 5px;
+		height: 10px !important;
+		width: 10px !important;
+	}
+
+	.cropper-point.point-e {
+		margin-top: -5px;
+		right: -5px;
+	}
+
+	.cropper-point.point-n {
+		margin-left: -5px;
+		top: -5px;
+	}
+
+	.cropper-point.point-ne {
+		right: -5px;
+		top: -5px;
+	}
+
+	.cropper-point.point-nw {
+		left: -5px;
+		top: -5px;
+	}
+
+	.cropper-point.point-s {
+		bottom: -5px;
+		margin-left: -5px;
+	}
+
+	.cropper-point.point-se {
+		bottom: -5px;
+		right: -5px;
+	}
+
+	.cropper-point.point-sw {
+		bottom: -5px;
+		left: -5px;
+	}
+
+	.cropper-point.point-w {
+		left: -5px;
+		margin-top: -5px;
+	}
+
+	.cropper-view-box {
+		outline-color: $primary;
+	}
 
 	.tbar {
 		background-color: $dark-d2;
 		border: none;
-		bottom: 1.5rem;
-		left: 50%;
 		padding: 8px;
-		position: absolute;
 		text-align: center;
-		transform: translateX(-50%);
-		width: 75%;
 
 		&.component-tbar,
 		.btn:not(.btn-primary),

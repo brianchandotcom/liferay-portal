@@ -357,6 +357,10 @@ describe('MappingSelector', () => {
 			});
 		});
 
+		useCollectionConfig.mockReset();
+
+		CollectionService.getCollectionMappingFields.mockReset();
+
 		expect(queryByText(document.body, 'source')).not.toBeInTheDocument();
 		expect(queryByText(document.body, 'content')).not.toBeInTheDocument();
 
@@ -365,10 +369,6 @@ describe('MappingSelector', () => {
 		collectionFields.forEach((field) =>
 			expect(getByText(document.body, field.label)).toBeInTheDocument()
 		);
-
-		useCollectionConfig.mockReset();
-
-		CollectionService.getCollectionMappingFields.mockReset();
 	});
 
 	it('shows a warning and disables the selector if the fields array is empty', async () => {

@@ -257,4 +257,52 @@ describe('IssuesList', () => {
 
 		expect(queryByText('No failing elements')).not.toBeInTheDocument();
 	});
+
+	it('renders loading progress bar, title, URL and language when issues are loading', () => {
+		const {getByText} = render(
+			<StoreContextProvider
+				value={{
+					data: {
+						defaultLanguageId,
+						imagesPath: 'imagesPath',
+						layoutReportsIssues: mockLayoutReportsIssuesSEODetails,
+						pageURLs: mockPageURLs,
+					},
+					loading: true,
+				}}
+			>
+				<IssuesList />
+			</StoreContextProvider>
+		);
+
+		expect(
+			getByText('connecting-with-google-pagespeed')
+		).toBeInTheDocument();
+
+		expect(getByText('en-US')).toBeInTheDocument();
+		expect(getByText('English')).toBeInTheDocument();
+		expect(getByText('English URL')).toBeInTheDocument();
+	});
+
+	it('renders language selector button disabled when issues are loading', () => {
+		const {getByText} = render(
+			<StoreContextProvider
+				value={{
+					data: {
+						defaultLanguageId,
+						imagesPath: 'imagesPath',
+						layoutReportsIssues: mockLayoutReportsIssuesSEODetails,
+						pageURLs: mockPageURLs,
+					},
+					loading: true,
+				}}
+			>
+				<IssuesList />
+			</StoreContextProvider>
+		);
+
+		const button = getByText('en-US').parentElement;
+
+		expect(button.disabled).toBe(true);
+	});
 });

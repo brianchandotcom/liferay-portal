@@ -741,7 +741,14 @@ definition {
 	}
 
 	macro assertFileNameFromTempFolder {
-		var documentFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${downloadedFileName}");
+		if (isSet(specialLanguageFileName)) {
+			var tempDir = PropsUtil.get("output.dir.name");
+
+			var documentFileName = FileUtil.getFileName("${tempDir}/${downloadedFileName}");
+		}
+		else {
+			var documentFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${downloadedFileName}");
+		}
 
 		echo("## downloadedFileName: ${documentFileName}");
 

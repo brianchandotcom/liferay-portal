@@ -57,6 +57,8 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 %>
 
+<liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
+
 <liferay-ddm:template-renderer
 	className="<%= FileEntry.class.getName() %>"
 	contextObjects="<%= contextObjects %>"

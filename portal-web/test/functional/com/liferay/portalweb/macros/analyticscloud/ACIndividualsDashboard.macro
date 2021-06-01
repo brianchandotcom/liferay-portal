@@ -4,6 +4,12 @@ definition {
 		Click(locator1 = "ACIndividualsDashboard#ADD_BREAKDOWN_BUTTON");
 	}
 
+	macro assertIndividualsActivitiesTimeRange {
+		var key_timeRange = "${timeRange}";
+
+		AssertElementPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_TIME_RANGE");
+	}
+
 	macro clickBreakdownTab {
 		var key_tabName = "${tabName}";
 
@@ -12,6 +18,33 @@ definition {
 
 	macro deleteBreakdown {
 		Click(locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
+	}
+
+	macro goToDistributionTab {
+		ACIndividualsDashboard.goToTabName(tabName = "Distribution");
+	}
+
+	macro goToInterestsTab {
+		ACIndividualsDashboard.goToTabName(tabName = "Interests");
+	}
+
+	macro goToKnownIndividualDetails {
+		var key_individualName = "${individualName}";
+		Click(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUALS_LIST_ITEMS");
+	}
+
+	macro goToKnownIndividualsTab {
+		ACIndividualsDashboard.goToTabName(tabName = "Known Individuals");
+	}
+
+	macro goToOverviewTab {
+		ACIndividualsDashboard.goToTabName(tabName = "Overview");
+	}
+
+	macro goToTabName {
+		var key_tabName = "${tabName}";
+
+		Click(locator1 = "ACIndividualsDashboard#INDIVIDUALS_TAB");
 	}
 
 	macro nameBreakdown {

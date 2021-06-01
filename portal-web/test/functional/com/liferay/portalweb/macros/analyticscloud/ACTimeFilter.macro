@@ -48,13 +48,15 @@ definition {
 	macro setCustomRange {
 		var key_dropdownOption = "Custom Range";
 
+		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN");
+
 		Click(locator1 = "ACTimeFilter#TIME_FILTER_DROPDOWN_OPTION");
 
 		WaitForElementPresent(locator1 = "ACTimeFilter#DATE_PICKER");
 
-		var key_Day = "${startDay}";
-		var key_Month = "${startMonth}";
-		var key_Year = "${startYear}";
+		var key_day = "${startDay}";
+		var key_month = "${startMonth}";
+		var key_year = "${startYear}";
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN_OPTION");
@@ -64,9 +66,9 @@ definition {
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_DAY");
 
-		var key_Day = "${endDay}";
-		var key_Month = "${endMonth}";
-		var key_Year = "${endYear}";
+		var key_day = "${endDay}";
+		var key_month = "${endMonth}";
+		var key_year = "${endYear}";
 
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN");
 		Click(locator1 = "ACTimeFilter#DATE_PICKER_MONTH_DROPDOWN_OPTION");

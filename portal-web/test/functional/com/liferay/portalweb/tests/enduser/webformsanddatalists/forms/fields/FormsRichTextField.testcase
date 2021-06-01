@@ -103,14 +103,66 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133113 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Rich Text");
+		
+		FormFields.editHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "tip");
+
+		Form.gotoAdvancedTab();
+
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "Predefined Value",
+			locator1 = "FormFields#PREDEFINED_VALUE_IFRAME");
+
+		Type(
+			locator1 = "FormFields#PREDEFINED_VALUE_BODY",
+			value1 = "Rich Text Test");
+
+		SelectFrame(value1 = "relative=top");
+
+		FormFields.duplicateField();
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Rich Text",
+			fieldName = "Rich Text");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Copy of Rich Text",
+			fieldName = "Copy of Rich Text");
+
+		FormFields.viewRichTextValue(
+			fieldName = "Predefined Value",
+			fieldValue = "Rich Text Test"
+		);
+
+		FormFields.viewRichTextValue(
+			fieldName = "Field",
+			fieldValue = "Rich Text Test"
+		);		
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "Help Text");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "Field");
 	}
 
 	@description = "Verify that a Rich Text Field can be edited"

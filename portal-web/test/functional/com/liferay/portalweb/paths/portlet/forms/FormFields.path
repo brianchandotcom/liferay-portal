@@ -347,6 +347,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--RICH TEXT-->
+<tr>
+	<td>PREDEFINED_VALUE_IFRAME</td>
+	<td>//label[contains(.,'Predefined Value')]//following-sibling::div//div[contains(@id,'cke')]/iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREDEFINED_VALUE_BODY</td>
+	<td>//body[contains(@class,'cke_editable')]</td>
+	<td></td>
+</tr>
 <!--NUMBER-->
 <tr>
 	<td>NUMBER_FIELD</td>

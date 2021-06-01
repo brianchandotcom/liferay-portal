@@ -1,0 +1,331 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a translation can be added"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCreated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133516 CanBeCreated pending implementation
+
+	}
+
+	@description = "Verify that multiple translations can be added"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCreatedInMultipleLanguages {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133517 CanBeCreatedInMultipleLanguages pending implementation
+
+	}
+
+	@description = "Verify that only one translation is supported for each language"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeCreatedOnlyOncePerLanguage {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133514 CanBeCreatedOnlyOncePerLanguage pending implementation
+
+	}
+
+	@description = "Verify that a translation can be deactivated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeDeleted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133519 CanBeDeleted pending implementation
+
+	}
+
+	@description = "Verify that a translation can be edited"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeEdited {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133518 CanBeEdited pending implementation
+
+	}
+
+	@description = "Verify that a translation can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133520 CanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a translation can be published"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBePublished {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133521 CanBePublished pending implementation
+
+	}
+
+	@description = "Verify that a translated Form can be submitted"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanBeSubmitted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133522 CanBeSubmitted pending implementation
+
+	}
+
+	@description = "Verify that a Color field's Label and Help Text can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ColorFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133512 ColorFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Date field's Label and Help Text can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DateFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133505 DateFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that Forms submitted in different languages show the appropriate country flags in View Entries"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test EntriesDisplayTheCorrectLanguageFlag {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133523 EntriesDisplayTheCorrectLanguageFlag pending implementation
+
+	}
+
+	@description = "Verify that a field that is added in a translation is also added to the default language"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test FieldsAddedToTranslationAreAddedToDefaultLanguage {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133524 FieldsAddedToTranslationAreAddedToDefaultLanguage pending implementation
+
+	}
+
+	@description = "Verify that if a field is deleted on the default language, it is also deleted on the translation"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133525 FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage pending implementation
+
+	}
+
+	@description = "Verify that a Grid field's Label, Help Text and Options can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test GridFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133504 GridFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that an Image field's Label and Help Text can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ImageFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133507 ImageFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that the properties of a field remain the same when adding a translation"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test MaintainPropertiesFromDefaultLanguage {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133526 MaintainPropertiesFromDefaultLanguage pending implementation
+
+	}
+
+	@description = "Verify that a Multiple Selection field's Label, Help Text and Options can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test MultipleSelectionFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133503 MultipleSelectionFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Numeric field's Label, Placeholder Text and Help Text can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test NumericFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133506 NumericFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Paragraph field's Label and Body Text can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ParagraphFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133479 ParagraphFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Rich Text field's Label, Help Text and Predefined Value can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test RichTextFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133509 RichTextFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Select From List field's Label, Help Text and Options can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SelectFromListFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133501 SelectFromListFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Separator field's Label and Help Text can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SeparatorFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133513 SeparatorFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Single Selection field's Label, Help Text and Options can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SingleSelectionFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133502 SingleSelectionFieldCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Text field's Autocomplete Options can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TextFieldAutocompleteOptionsCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133497 TextFieldAutocompleteOptionsCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Text field's Label, Placeholder Text and Help Text can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TextFieldBasicPropertiesCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133481 TextFieldBasicPropertiesCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that a Text field's Predefined Value can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TextFieldPredefinedValueCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133494 TextFieldPredefinedValueCanBeTranslated pending implementation
+
+	}
+
+	@description = "Verify that an Upload field's Label and Help Text can be translated"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test UploadFieldCanBeTranslated {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133511 UploadFieldCanBeTranslated pending implementation
+
+	}
+
+}

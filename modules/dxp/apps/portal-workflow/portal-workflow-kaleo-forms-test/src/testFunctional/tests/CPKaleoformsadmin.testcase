@@ -594,14 +594,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Kaleo Forms Admin");
 
-		KaleoFormsAdmin.addProcess();
-
-		KaleoFormsAdmin.addProcessDetails(
-			kfProcessDescription = "${kfProcessDescription}",
-			kfProcessName = "${kfProcessName}");
-
-		KaleoFormsAdmin.next();
-
 		KaleoFormsAdmin.addFieldSet(
 			kfFieldSetName = "${kfFieldSetName}",
 			kfProcessName = "${kfProcessName}");
@@ -612,6 +604,14 @@ definition {
 			fieldName = "Boolean");
 
 		KaleoFormsAdmin.saveFieldSet();
+
+		KaleoFormsAdmin.addProcess();
+
+		KaleoFormsAdmin.addProcessDetails(
+			kfProcessDescription = "${kfProcessDescription}",
+			kfProcessName = "${kfProcessName}");
+
+		KaleoFormsAdmin.next();
 
 		KaleoFormsAdmin.chooseFieldSet(
 			kfFieldSetName = "${kfFieldSetName}",

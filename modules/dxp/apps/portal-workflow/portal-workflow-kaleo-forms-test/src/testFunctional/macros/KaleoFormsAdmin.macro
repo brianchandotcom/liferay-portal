@@ -17,12 +17,6 @@ definition {
 				locator1 = "KaleoFormsAdminEditProcess#ADD_FIELD_SET_BUTTON",
 				value1 = "Add Field Set");
 
-			var key_iframeTitle = "Field Set";
-
-			AssertTextEquals(
-				locator1 = "IFrame#IFRAME_TITLE",
-				value1 = "New Field Set");
-
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			PortletEntry.inputName(name = "${kfFieldSetName}");
@@ -172,6 +166,8 @@ definition {
 			kfProgressName = "Workflow",
 			kfProgressStep = "3");
 
+		Refresh();
+
 		if ("${kfPendingForm}" == "true") {
 			AssertTextEquals(
 				locator1 = "Message#INFO",
@@ -316,12 +312,6 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "${kfFieldSetName}");
-
-		var key_iframeTitle = "Field Set";
-
-		AssertTextEquals(
-			locator1 = "IFrame#IFRAME_TITLE",
-			value1 = "Edit Field Set");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -535,7 +525,7 @@ definition {
 		SelectFrame(value1 = "relative=top");
 
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
-			Click(locator1 = "Icon#CLOSE");
+			Click(locator1 = "KaleoFormsAdmin#CLOSE_BUTTON");
 		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -567,6 +557,8 @@ definition {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
 			kfProgressStep = "4");
+
+		Refresh();
 
 		AssertElementNotPresent(locator1 = "Button#SAVE_INACTIVE");
 

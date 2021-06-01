@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'selectDDMStructure')] | //div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'selectStructure')]</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'selectDDMStructure')] | //div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'selectStructure')] | //iframe[contains(@id,'selectStructure')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -924,8 +924,6 @@ definition {
 
 		Alert.viewSuccessMessageText(successMessage = "Definition imported successfully.");
 
-		Alert.closeMessage(messageType = "SUCCESS");
-
 		PortletEntry.publish();
 
 		AssertTextEquals.assertPartialText(

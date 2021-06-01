@@ -282,6 +282,8 @@ public class MenuItemProvider {
 			LanguageUtil.get(
 				PortalUtil.getHttpServletRequest(portletRequest), "shortcut"));
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		urlMenuItem.setURL(
 			PortletURLBuilder.create(
 				_getPortletURL(themeDisplay, portletRequest)
@@ -291,6 +293,8 @@ public class MenuItemProvider {
 				PortalUtil.getCurrentURL(portletRequest)
 			).setParameter(
 				"folderId", folderId
+			).setParameter(
+				"portletResource", portletDisplay.getId()
 			).setParameter(
 				"repositoryId", _getRepositoryId(folder, themeDisplay)
 			).buildString());

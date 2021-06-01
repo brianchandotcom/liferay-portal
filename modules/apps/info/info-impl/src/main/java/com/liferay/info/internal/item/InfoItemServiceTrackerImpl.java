@@ -15,6 +15,7 @@
 package com.liferay.info.internal.item;
 
 import com.liferay.info.exception.CapabilityVerificationException;
+import com.liferay.info.filter.InfoRequestItemProvider;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
 import com.liferay.info.formatter.InfoTextFormatter;
 import com.liferay.info.internal.util.ItemClassNameServiceReferenceMapper;
@@ -255,7 +256,8 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 			InfoItemLanguagesProvider.class, InfoItemObjectProvider.class,
 			InfoItemPermissionProvider.class, InfoItemRelatedListProvider.class,
 			InfoItemRenderer.class, InfoItemSelector.class,
-			InfoListRenderer.class, InfoListProvider.class
+			InfoListRenderer.class, InfoListProvider.class,
+			InfoRequestItemProvider.class
 		};
 
 		for (Class<?> serviceClass : serviceClasses) {

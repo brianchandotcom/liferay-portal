@@ -14,6 +14,7 @@
 
 package com.liferay.item.selector.editor.configuration.internal;
 
+import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.audio.criterion.AudioItemSelectorCriterion;
@@ -46,7 +47,7 @@ public class AudioEditorConfigContributor extends BaseEditorConfigContributor {
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		if (!XugglerUtil.isEnabled()) {
+		if (!XugglerUtil.isEnabled() && !AudioProcessorUtil.isEnabled()) {
 			return;
 		}
 

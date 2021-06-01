@@ -14,6 +14,7 @@
 
 package com.liferay.journal.editor.configuration.internal;
 
+import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -48,7 +49,7 @@ public class JournalMediaEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		if (!XugglerUtil.isEnabled()) {
+		if (!XugglerUtil.isEnabled() && !AudioProcessorUtil.isEnabled()) {
 			return;
 		}
 

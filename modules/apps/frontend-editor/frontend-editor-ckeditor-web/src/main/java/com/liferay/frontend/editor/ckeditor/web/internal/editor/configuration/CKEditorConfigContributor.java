@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.editor.ckeditor.web.internal.editor.configuration;
 
+import com.liferay.document.library.kernel.util.AudioProcessorUtil;
 import com.liferay.frontend.editor.ckeditor.web.internal.constants.CKEditorConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -214,7 +215,7 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 			toJSONArray("['Link', Unlink]"),
 			toJSONArray("['Table', 'ImageSelector', 'VideoSelector']"));
 
-		if (XugglerUtil.isEnabled()) {
+		if (XugglerUtil.isEnabled() || AudioProcessorUtil.isEnabled()) {
 			jsonArray.put(toJSONArray("['AudioSelector']"));
 		}
 

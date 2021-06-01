@@ -186,23 +186,6 @@ definition {
 			value1 = "${occurenceNumber}");
 	}
 
-	macro viewSegmentMembershipLegendNumbers {
-		AssertTextEquals(
-			key_memberType = "Known Members:",
-			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
-			value1 = "${knownNumber}");
-
-		AssertTextEquals(
-			key_memberType = "Anonymous Members:",
-			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
-			value1 = "${anonymousNumber}");
-
-		AssertTextEquals(
-			key_memberType = "Total Members:",
-			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
-			value1 = "${totalNumber}");
-	}
-
 	macro viewActivePageCreationModel {
 		AssertTextEquals(
 			locator1 = "ACSegments#ACTIVE_PAGE",
@@ -232,8 +215,7 @@ definition {
 	}
 
 	macro viewIncludeAnonymousLabel {
-		AssertElementPresent(
-			locator1 = "ACSegments#ANONYMOUS_LABEL");
+		AssertElementPresent(locator1 = "ACSegments#ANONYMOUS_LABEL");
 	}
 
 	macro viewSegmentComposition {
@@ -265,6 +247,23 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSegments#SEGMENT_CRITERIA_CRITERIA_VALUE",
 			value1 = "${criteriaValue}");
+	}
+
+	macro viewSegmentMembershipLegendNumbers {
+		AssertTextEquals(
+			key_memberType = "Known Members:",
+			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
+			value1 = "${knownNumber}");
+
+		AssertTextEquals(
+			key_memberType = "Anonymous Members:",
+			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
+			value1 = "${anonymousNumber}");
+
+		AssertTextEquals(
+			key_memberType = "Total Members:",
+			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
+			value1 = "${totalNumber}");
 	}
 
 	macro viewSegmentProfileCards {

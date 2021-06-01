@@ -18,30 +18,12 @@ definition {
 			value1 = "${keyword}");
 	}
 
-	macro deleteKeywordCheckbox {
-		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
-			Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");
-
-			Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
-
-			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-		}
-	}
-
-	macro deleteKeywordIcon {
-		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
-			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
-
-			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
-		}
-	}
-
 	macro deleteAllProperties {
 		if (!(isSet(propertyList))) {
 			var propertyList = "Liferay DXP,Liferay DXP Combined Property";
 		}
 
-		for(var itemName : list "${propertyList}"){
+		for (var itemName : list "${propertyList}") {
 			ACSettings.deleteProperty(propertyName = "${itemName}");
 		}
 	}
@@ -78,6 +60,24 @@ definition {
 		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
 		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+	}
+
+	macro deleteKeywordCheckbox {
+		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+			Click(locator1 = "ACSettings#KEYWORD_DELETE_CHECKBOX");
+
+			Click(locator1 = "ACSettings#DELETE_FROM_TOOLBAR");
+
+			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
+		}
+	}
+
+	macro deleteKeywordIcon {
+		if (IsVisible(locator1 = "ACSettings#KEYWORD_NAME", value1 = "${keyword}")) {
+			Click(locator1 = "ACSettings#KEYWORD_DELETE_ICON");
+
+			Click(locator1 = "ACSettings#CONTINUE_BUTTON");
+		}
 	}
 
 	@summary = "Deletes a specific property \

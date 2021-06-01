@@ -165,8 +165,8 @@ definition {
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
 		ACSegments.viewSegmentMembershipLegendNumbers(
-			knownNumber = "1",
 			anonymousNumber = "1",
+			knownNumber = "1",
 			totalNumber = "2");
 
 		ACSegments.viewIncludeAnonymousLabel();

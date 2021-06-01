@@ -85,7 +85,7 @@ export default withRouter(
 
 		const hrefConstructor = (page) =>
 			`${
-				context.historyRouterBasePath || '/#'
+				context.historyRouterBasePath || '#'
 			}/questions/activity/${creatorId}?page=${page}&pagesize=${pageSize}`;
 
 		const addSectionToQuestion = (question) => {

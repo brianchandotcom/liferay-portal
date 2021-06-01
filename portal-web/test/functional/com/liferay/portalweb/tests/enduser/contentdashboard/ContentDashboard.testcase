@@ -227,7 +227,7 @@ definition {
 
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
-	test ContentDashboardClickTitleApprovedDPTWithNoPermissions {
+	test ClickTitleApprovedDPTWithNoPermissions {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithNoPermissions";
 
@@ -340,7 +340,7 @@ definition {
 
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
-	test ContentDashboardClickTitleApprovedDPTWithPermissions {
+	test ClickTitleApprovedDPTWithPermissions {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithPermissions";
 
@@ -466,7 +466,7 @@ definition {
 
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
-	test ContentDashboardEditWebContent {
+	test EditWebContent {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -498,7 +498,7 @@ definition {
 
 	@description = "Validate if the user can access to the Content Dashboard after s/he has expired a Web Content"
 	@priority = "5"
-	test ContentDashboardExpiredWebContent {
+	test ExpiredWebContent {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -532,7 +532,7 @@ definition {
 
 	@description = "Validate if the user can filter by Author, using different display types"
 	@priority = "5"
-	test ContentDashboardFilterByAuthor {
+	test FilterByAuthor {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -586,7 +586,7 @@ definition {
 
 	@description = "Validate if the user can filter by category"
 	@priority = "5"
-	test ContentDashboardFilterByCategory {
+	test FilterByCategory {
 		property portal.acceptance = "true";
 
 		JSONCategory.addVocabulary(
@@ -634,7 +634,7 @@ definition {
 
 	@description = "Validate if the user can filter by category and subtype"
 	@priority = "5"
-	test ContentDashboardFilterByCategoryAndSubtype {
+	test FilterByCategoryAndSubtype {
 		property portal.acceptance = "true";
 
 		JSONCategory.addVocabulary(
@@ -754,7 +754,7 @@ definition {
 
 	@description = "Validate if the user can filter by multiple tags"
 	@priority = "5"
-	test ContentDashboardFilterByMultipleTags {
+	test FilterByMultipleTags {
 		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -825,7 +825,7 @@ definition {
 
 	@description = "Validate if the user can filter by Site"
 	@priority = "5"
-	test ContentDashboardFilterBySite {
+	test FilterBySite {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -853,7 +853,7 @@ definition {
 
 	@description = "Validate if the user can filter by Status: Any"
 	@priority = "5"
-	test ContentDashboardFilterByStatusAny {
+	test FilterByStatusAny {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -903,7 +903,7 @@ definition {
 
 	@description = "Validate if the user can filter by Status: Approved"
 	@priority = "5"
-	test ContentDashboardFilterByStatusApproved {
+	test FilterByStatusApproved {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -931,7 +931,7 @@ definition {
 
 	@description = "Validate if the user can filter by Status: Draft"
 	@priority = "5"
-	test ContentDashboardFilterByStatusDraft {
+	test FilterByStatusDraft {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -964,7 +964,7 @@ definition {
 
 	@description = "Validate if the user can filter by Status: Scheduled"
 	@priority = "5"
-	test ContentDashboardFilterByStatusScheduled {
+	test FilterByStatusScheduled {
 		property portal.acceptance = "true";
 
 		task ("Add a web content article with a future display date") {
@@ -1005,7 +1005,7 @@ definition {
 
 	@description = "Validate if the user can filter by tag"
 	@priority = "5"
-	test ContentDashboardFilterByTag {
+	test FilterByTag {
 		property portal.acceptance = "true";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -1059,7 +1059,7 @@ definition {
 
 	@description = "Validate if the user can order by Modification Date"
 	@priority = "5"
-	test ContentDashboardOrderByModificationDate {
+	test OrderByModificationDate {
 		for (var count : list "1,2,3,4,5") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content ${count}",
@@ -1103,7 +1103,7 @@ definition {
 
 	@description = "Validate if the user can order by title"
 	@priority = "5"
-	test ContentDashboardOrderByTitle {
+	test OrderByTitle {
 		for (var count : list "1,2,3,4,5") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content ${count}",
@@ -1147,7 +1147,7 @@ definition {
 
 	@description = "Validate if the user can open de Info side panel of a web content"
 	@priority = "5"
-	test ContentDashboardSaveFiltersAfterEditing {
+	test SaveFiltersAfterEditing {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -1181,7 +1181,7 @@ definition {
 
 	@description = "Validate if the user can open de Info side panel of a web content"
 	@priority = "5"
-	test ContentDashboardViewInfoPanel {
+	test ViewInfoPanel {
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(

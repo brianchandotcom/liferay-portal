@@ -74,4 +74,48 @@ definition {
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
+	@description = "Create a Dynamic Individuals Segment with a criteria that uses is unknown"
+	@priority = "5"
+	test CanCreateDynamicSegmentWithIndividualsUseUnknown {
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.goToSidebarAttrributes(criterion = "Individual Attributes");
+
+		ACSegments.addSegmentField(segmentField = "fullName");
+
+		ACSegments.editFormControlCriterion(
+			criterionName = "fullName",
+			option = "is unknown");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_LABEL",
+			value1 = "DYNAMIC SEGMENT");
+
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
 }

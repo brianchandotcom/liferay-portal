@@ -12,6 +12,16 @@ const width = configuration.videoWidth
 	? configuration.videoWidth.replace('px', '')
 	: configuration.videoWidth;
 
+function debounce(fn, timeout) {
+	let timeoutId = null;
+
+	return function() {
+		clearTimeout(timeoutId);
+
+		timeoutId = setTimeout(fn, timeout);
+	}
+}
+
 function main() {
 	window.removeEventListener('resize', resize);
 
@@ -52,7 +62,7 @@ function main() {
 	}
 }
 
-function resize() {
+const resize = debounce(function () {
 	if (!document.body.contains(fragmentElement)) {
 		window.removeEventListener('resize', resize);
 
@@ -77,7 +87,7 @@ function resize() {
 			window.removeEventListener('resize', resize);
 		}
 	});
-}
+}, 300);
 
 function showError() {
 	if (document.body.classList.contains('has-edit-mode-menu')) {

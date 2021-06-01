@@ -228,9 +228,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-121658 When a user with no edit permissions clicks on the title of a content in status Approved with associated DPT, the user is led to the page view"
-	@priority = "4"
-	@uitest
 	test ClickTitleApprovedDPTWithNoPermissions {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithNoPermissions";
@@ -342,9 +339,6 @@ definition {
 			webContentTitle = "WC Title");
 	}
 
-	@description = "LPS-121658 When a user with edit permissions clicks on the title of a content in status Approved with associated DPT, the user is led to the page view"
-	@priority = "4"
-	@uitest
 	test ClickTitleApprovedDPTWithPermissions {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithPermissions";
@@ -469,9 +463,6 @@ definition {
 			webContentTitle = "WC Title");
 	}
 
-	@description = "LPS-121658 When a user with edit permissions (owner) clicks on the title of a content in status Approved with no associated DPT, the user is led to the web content editor"
-	@priority = "3"
-	@uitest
 	test ClickTitleApprovedNoDPT {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedNoDPT";
@@ -501,9 +492,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Draft, associated DPT or not, the user is led to web content editor"
-	@priority = "3"
-	@uitest
 	test ClickTitleDraftNoDPT {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleDraftNoDPT";
@@ -516,7 +504,7 @@ definition {
 			WebContent.addDraft(
 				webContentContent = "WC Content",
 				webContentTitle = "WC Title");
-			
+
 			VerifyElementPresent(locator1 = "Message#SUCCESS");
 
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -540,9 +528,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Pending, associated DPT or not, the user is led to web content editor"
-	@priority = "3"
-	@uitest
 	test ClickTitlePendingNoDPT {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitlePendingNoDPT";
@@ -594,9 +579,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Scheduled, associated DPT or not, the user is led to web content editor"
-	@priority = "3"
-	@uitest
 	test ClickTitleScheduledNoDPT {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleScheduledNoDPT";
@@ -1314,70 +1296,6 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can open de Info side panel of a web content"
-	@priority = "5"
-	test SaveFiltersAfterEditing {
-		property portal.acceptance = "true";
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.filterByAuthorTable(filterOption = "Author");
-
-		ContentDashboard.editWebContent(webContentTitle = "WC Title Edited");
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#FILTER_TEXT",
-			value1 = "Author:Test Test");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.viewTitle(webContentTitle = "WC Title Edited");
-
-		WebContent.deleteCP(
-			siteURLKey = "test-site-name",
-			webContentTitle = "WC Title Edited");
-	}
-
-	@description = "Validate if the user can open de Info side panel of a web content"
-	@priority = "5"
-	test ViewInfoPanel {
-		property portal.acceptance = "true";
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.openInfoPanelByDropdownMenu();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
-			value1 = "Content Info");
-
-		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title");
-	}
-
 	@description = "LPS-132254 When a user selects the value of the number of rows (4, 8, 40, 60) displayed in the list, the Content Dashboard will display the number of rows selected"
 	@priority = "5"
 	test PaginationDisplaySelectedNumberOfRows {
@@ -1468,6 +1386,40 @@ definition {
 
 			Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
 		}
+	}
+
+	@description = "Validate if the user can open de Info side panel of a web content"
+	@priority = "5"
+	test SaveFiltersAfterEditing {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.filterByAuthorTable(filterOption = "Author");
+
+		ContentDashboard.editWebContent(webContentTitle = "WC Title Edited");
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FILTER_TEXT",
+			value1 = "Author:Test Test");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		WebContent.viewTitle(webContentTitle = "WC Title Edited");
+
+		WebContent.deleteCP(
+			siteURLKey = "test-site-name",
+			webContentTitle = "WC Title Edited");
 	}
 
 	@description = "LPS-131886 Validade if when Web Content is updated its being corectly displayed"
@@ -1562,6 +1514,36 @@ definition {
 
 			AssertElementNotPresent(locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED_DISPLAY_PAGE");
 		}
+	}
+
+	@description = "Validate if the user can open de Info side panel of a web content"
+	@priority = "5"
+	test ViewInfoPanel {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.openInfoPanelByDropdownMenu();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+			value1 = "Content Info");
+
+		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title");
 	}
 
 }

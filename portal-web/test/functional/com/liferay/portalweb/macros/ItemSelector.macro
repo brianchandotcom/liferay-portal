@@ -262,6 +262,12 @@ definition {
 			key_fieldName = "${fieldName}",
 			locator1 = "FormFields#UPLOAD_FIELD_GUEST_1");
 	}
+	
+	macro gotoItemSelectorViaSelectButtonByIndex {
+		Click(
+			key_index = "${index}",
+			locator1 = "FormFields#SELECT_UPLOAD_FIELD_BY_INDEX");
+	}
 
 	macro gotoPreviewViaSelectFile {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");

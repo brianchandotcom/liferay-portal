@@ -337,14 +337,59 @@ definition {
 	}
 
 	@description = "Verify that an Upload Field can be set to repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133216 CanBeSetToRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Upload",
+			formPageNumber = "0");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Repeatable");
+
+		FormFields.viewFieldRepeatableButton(
+			fieldName = "Upload",
+			key_repeatableFieldNumber = "1");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			key_fieldName = "Upload",
+			key_repeatableFieldNumber = "1");
+
+		FormFields.viewFieldRepeatableButton(
+			fieldName = "Upload",
+			key_repeatableFieldNumber = "1,2");
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.docx");
+
+		ItemSelector.gotoItemSelectorViaSelectButtonByIndex(index = "2");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.docx");
+
+		FormPortlet.submitSuccessfully();
 	}
 
 	@description = "Verify that changes to the Field can be canceled"

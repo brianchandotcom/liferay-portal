@@ -51,6 +51,22 @@ describe('SidebarHeader', () => {
 		expect(getByTitle('relaunch')).toBeInTheDocument();
 	});
 
+	it('does not render relaunch button if key is not configured', () => {
+		const {queryByTitle} = render(
+			<StoreContextProvider
+				value={{
+					data: {
+						validConnection: false,
+					},
+				}}
+			>
+				<SidebarHeader />
+			</StoreContextProvider>
+		);
+
+		expect(queryByTitle('relaunch')).not.toBeInTheDocument();
+	});
+
 	it('calls loadIssues when clicking relaunch button', () => {
 		const {getByTitle} = render(
 			<StoreContextProvider

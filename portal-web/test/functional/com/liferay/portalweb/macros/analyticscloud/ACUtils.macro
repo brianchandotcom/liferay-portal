@@ -124,4 +124,12 @@ definition {
 		}
 	}
 
+	macro tearDownAC {
+		ACUtils.launchAC();
+
+		ACSettings.deleteAllProperties();
+
+		ACSettings.deleteDataSource(dataSourceName = "Liferay DXP");
+	}
+
 }

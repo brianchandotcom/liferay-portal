@@ -119,6 +119,8 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AddMBThreadGuestReply {
+		Navigator.gotoPage(pageName = "Message Boards Page");
+
 		MessageboardsThread.addPG(
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");

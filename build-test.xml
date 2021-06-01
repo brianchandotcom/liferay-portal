@@ -2463,18 +2463,16 @@ jdbc.default.password=${database.password}</echo>
 			<if>
 				<os family="windows" />
 				<then>
-					<property name="selenium.ie.driver.zip" value="IEDriverServer_Win32_${selenium.ie.driver.version}.0.zip" />
+					<stop-ie-driver />
 
 					<mirrors-get
-						dest="tools/selenium/${selenium.ie.driver.zip}"
-						src="http://selenium-release.storage.googleapis.com/${selenium.ie.driver.version}/${selenium.ie.driver.zip}"
+						dest="tools/selenium/iedriver.zip"
+						src="${selenium.ie.driver.zip.url}"
 					/>
-
-					<stop-ie-driver />
 
 					<unzip
 						dest="tools/selenium"
-						src="tools/selenium/${selenium.ie.driver.zip}"
+						src="tools/selenium/iedriver.zip"
 					/>
 				</then>
 				<else>

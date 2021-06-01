@@ -230,6 +230,16 @@
     <td>//h4[@class='no-results-title']</td>
     <td></td>
 </tr>
+<tr>
+    <td>FORM_CONTROL_CRITERION</td>
+    <td>//div[contains(@class,'form-group-item')and text()='${key_Criterion}']/..//select[contains(@class,'form-control')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>FORM_CONTROL_CRITERION_OPTION</td>
+    <td>//div[contains(@class,'form-group-item')and text()='${key_Criterion}']/..//select[contains(@class,'form-control')]//option[text()='${key_option}']</td>
+    <td></td>
+</tr>
 <!-- Static Segments  -->
 <tr>
     <td>ADD_BUTTON</td>

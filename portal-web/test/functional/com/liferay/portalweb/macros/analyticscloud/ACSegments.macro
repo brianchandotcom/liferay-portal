@@ -176,6 +176,16 @@ definition {
 			value1 = "${occurenceNumber}");
 	}
 
+	macro editFormControlCriterion {
+		var key_Criterion = "${criterionName}";
+
+		var key_option = "${option}";
+
+		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION");
+
+		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION_OPTION");
+	}
+
 	macro viewActivePageCreationModel {
 		AssertTextEquals(
 			locator1 = "ACSegments#ACTIVE_PAGE",

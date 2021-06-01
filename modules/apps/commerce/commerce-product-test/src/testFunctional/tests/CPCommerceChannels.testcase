@@ -1199,13 +1199,126 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6274. EditProductDisplayPage"
-	@ignore = "true"
 	@priority = "3"
 	test EditProductDisplayPage {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CPCommerceChannels#EditProductDisplayPage";
 
-		// TODO COMMERCE-6274 EditProductDisplayPage
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Product Display Pages");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select Product");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_siteName = "ABS Sensor",
+			locator1 = "CommerceNavigation#CHOOSE_SITE_BUTTON");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(locator1 = "Button#CHOOSE");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_card = "Login",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrameTop();
+
+		Click(locator1 = "Button#DONE");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrameTop();
+
+		AssertElementPresent(
+			key_entryName = "ABS Sensor",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		ClickNoError(
+			key_value = "ABS Sensor",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		CommerceEntry.clickNoError(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.click(button = "Select Product");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_siteName = "Ball Joints",
+			locator1 = "CommerceNavigation#CHOOSE_SITE_BUTTON");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(locator1 = "Button#CHOOSE");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_card = "Login",
+			locator1 = "Card#CARD_TITLE");
+
+		SelectFrameTop();
+
+		Click(locator1 = "Button#DONE");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "CommerceEntry#MODAL_BUTTON_CLOSE");
+
+		SelectFrameTop();
+
+		AssertElementPresent(
+			key_entryName = "Ball Joints",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+
+		AssertElementNotPresent(
+			key_entryName = "ABS Sensor",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
 	@description = "This is a test for COMMERCE-6198. RemoveCategoryDisplayPage"

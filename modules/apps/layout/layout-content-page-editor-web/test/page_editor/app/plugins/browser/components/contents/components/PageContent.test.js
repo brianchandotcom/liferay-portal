@@ -44,20 +44,46 @@ jest.mock(
 	'../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/EditableProcessorContext'
 );
 
-const renderPageContent = (props) =>
+const contents = [
+	{
+		actions: {
+			editURL: 'editURL',
+			permissionsURL: 'permissionsURL',
+			viewUsagesURL: 'viewUsagesURL',
+		},
+		classPK: '11111',
+		subtype: 'Web Content Article',
+		title: 'Test Web Content',
+	},
+	{
+		actions: {
+			addItems: [
+				{
+					title: 'Basic Web Content to be added',
+					url: 'URL',
+				},
+			],
+			editURL: 'editURL',
+			otherAction: 'other-action',
+			permissionsURL: 'permissionsURL',
+			viewItemsURL: 'viewItemsURL',
+			viewUsagesURL: 'viewUsagesURL',
+		},
+		classPK: '11112',
+		subtype: 'Collection',
+		title: 'Test Collection',
+	},
+];
+
+const inlineText = {
+	editableId: '11113-element-text',
+	title: 'Heading Example',
+};
+
+const renderPageContent = (props = contents[0], pageContents = contents) =>
 	render(
-		<StoreContextProvider initialState={[{}, {}]}>
-			<PageContent
-				actions={{
-					editURL: 'editURL',
-					permissionsURL: 'permissionsURL',
-					viewUsagesURL: 'viewUsagesURL',
-				}}
-				editableId="11111-element-text"
-				subtype="Web Content Article"
-				title="Test Web Content"
-				{...props}
-			></PageContent>
+		<StoreContextProvider initialState={{pageContents}}>
+			<PageContent {...props} />
 		</StoreContextProvider>
 	);
 
@@ -75,59 +101,64 @@ describe('PageContent', () => {
 	it('shows properly the content subtype', () => {
 		const {getByText} = renderPageContent();
 
-		expect(getByText('Web Content Article')).toBeInTheDocument();
+		expect(getByText('Test Web Content')).toBeInTheDocument();
 	});
 
-	it('shows Edit action in dropdown menu if receives an Edit URL', () => {
-		const {getByText} = renderPageContent();
+	it('shows all expected editing actions in dropdown menu', () => {
+		const shownActions = [
+			'edit',
+			'permissions',
+			'add-items',
+			'view-items',
+			'view-usages',
+		];
+		const {queryByText} = renderPageContent(contents[1]);
 
-		fireEvent.click(getByText('open-actions-menu'));
+		fireEvent.click(queryByText('open-actions-menu'));
 
-		expect(getByText('edit')).toBeInTheDocument();
+		shownActions.forEach((action) => {
+			expect(queryByText(action)).toBeInTheDocument();
+		});
+		expect(queryByText('other-action')).not.toBeInTheDocument();
 	});
 
-	it('shows Permissions action in dropdown menu if receives a Permissions URL', () => {
-		const {getByText} = renderPageContent();
+	it('shows all items to be added when the Add Item action is clicked', () => {
+		const {queryByText} = renderPageContent(contents[1]);
 
-		fireEvent.click(getByText('open-actions-menu'));
+		fireEvent.click(queryByText('open-actions-menu'));
+		fireEvent.click(queryByText('add-items'));
 
-		expect(getByText('permissions')).toBeInTheDocument();
+		expect(
+			queryByText('Basic Web Content to be added')
+		).toBeInTheDocument();
 	});
 
-	it('shows View Usages action in dropdown menu if receives a View Usages URL', () => {
-		const {getByText} = renderPageContent();
-
-		fireEvent.click(getByText('open-actions-menu'));
-
-		expect(getByText('view-usages')).toBeInTheDocument();
-	});
-
-	it('shows Edit action if the content is inline text', () => {
-		const {getByText} = renderPageContent({actions: {}});
+	it('shows the edit button if the content is inline text', () => {
+		const {getByText} = renderPageContent(inlineText);
 
 		expect(getByText('edit-inline-text')).toBeInTheDocument();
 	});
 
-	it('selects the corresponding element on the page when Edit button is clicked', async () => {
+	it('selects the corresponding element on the page when edit button is clicked', async () => {
 		const selectItem = useSelectItem();
-		const {getByText} = renderPageContent({actions: {}});
+		const {getByText} = renderPageContent(inlineText);
 
 		fireEvent.click(getByText('edit-inline-text'));
 
 		await wait(() => {
-			expect(selectItem).toHaveBeenCalledWith('11111-element-text', {
+			expect(selectItem).toHaveBeenCalledWith('11113-element-text', {
 				itemType: 'editable',
 				origin: 'sidebar',
 			});
 		});
 	});
 
-	it('disables Edit button when an inline text is being edited', () => {
+	it('disables edit button when an inline text is being edited', () => {
 		useEditableProcessorUniqueId.mockImplementation(
-			() => '11111-element-text'
+			() => '11113-element-text'
 		);
 
-		const {getByText} = renderPageContent({actions: {}});
+		const {getByText} = renderPageContent(inlineText);
 
 		expect(getByText('edit-inline-text').parentElement).toBeDisabled();
 	});

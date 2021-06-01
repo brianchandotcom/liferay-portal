@@ -820,7 +820,7 @@ definition {
 
 		DataEngine.editFieldTip(
 			fieldFieldLabel = "Rich Text",
-			fieldHelp = "Rich Text Field",
+			fieldHelp = "Rich Text Field Help",
 			fieldsetModal = "true");
 
 		PortletEntry.changeLocale(
@@ -865,7 +865,7 @@ definition {
 
 		NavItem.click(navItem = "Web Content");
 
-		WebContentNavigator.gotoAddWithStructureCP(structureName = "New Fieldset");
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
 		WebContent.addCP(webContentTitle = "Web Content Title");
 

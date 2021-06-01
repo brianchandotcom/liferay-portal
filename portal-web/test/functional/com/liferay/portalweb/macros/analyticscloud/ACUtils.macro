@@ -132,4 +132,10 @@ definition {
 		ACSettings.deleteDataSource(dataSourceName = "Liferay DXP");
 	}
 
+	macro tearDownDXP {
+		ACUtils.launchDXP();
+
+		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+	}
+
 }

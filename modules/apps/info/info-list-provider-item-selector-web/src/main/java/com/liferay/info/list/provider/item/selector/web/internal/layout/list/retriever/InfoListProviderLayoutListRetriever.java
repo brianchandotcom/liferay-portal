@@ -14,7 +14,12 @@
 
 package com.liferay.info.list.provider.item.selector.web.internal.layout.list.retriever;
 
+import com.liferay.info.filter.InfoFilter;
+import com.liferay.info.filter.InfoRequestItemProvider;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.filter.PropertyInfoItemServiceFilter;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
+import com.liferay.info.list.provider.FilteredInfoListProvider;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProviderTracker;
@@ -35,6 +40,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,6 +86,19 @@ public class InfoListProviderLayoutListRetriever
 		Pagination pagination = paginationOptional.orElse(
 			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
+		if (infoListProvider instanceof FilteredInfoListProvider) {
+			FilteredInfoListProvider<Object, InfoFilter>
+				filteredInfoListProvider =
+					(FilteredInfoListProvider<Object, InfoFilter>)
+						infoListProvider;
+
+			return filteredInfoListProvider.getInfoList(
+				infoListProviderContext,
+				_getInfoFilter(
+					filteredInfoListProvider, layoutListRetrieverContext),
+				pagination, null);
+		}
+
 		return infoListProvider.getInfoList(
 			infoListProviderContext, pagination, null);
 	}
@@ -108,11 +128,52 @@ public class InfoListProviderLayoutListRetriever
 		InfoListProviderContext infoListProviderContext =
 			new DefaultInfoListProviderContext(group, user);
 
+		if (infoListProvider instanceof FilteredInfoListProvider) {
+			FilteredInfoListProvider<Object, InfoFilter>
+				filteredInfoListProvider =
+					(FilteredInfoListProvider<Object, InfoFilter>)
+						infoListProvider;
+
+			return filteredInfoListProvider.getInfoListCount(
+				infoListProviderContext,
+				_getInfoFilter(
+					filteredInfoListProvider, layoutListRetrieverContext));
+		}
+
 		return infoListProvider.getInfoListCount(infoListProviderContext);
+	}
+
+	private InfoFilter _getInfoFilter(
+		FilteredInfoListProvider<Object, InfoFilter> filteredInfoListProvider,
+		LayoutListRetrieverContext layoutListRetrieverContext) {
+
+		Optional<HttpServletRequest> httpServletRequestOptional =
+			layoutListRetrieverContext.getHttpServletRequestOptional();
+
+		HttpServletRequest httpServletRequest =
+			httpServletRequestOptional.orElse(null);
+
+		if (!httpServletRequestOptional.isPresent()) {
+			return null;
+		}
+
+		Class<?> infoFilterClass =
+			filteredInfoListProvider.getInfoFilterClass();
+
+		InfoRequestItemProvider<InfoFilter> infoRequestItemProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoRequestItemProvider.class, InfoFilter.class.getName(),
+				new PropertyInfoItemServiceFilter(
+					"infoFilterKey", infoFilterClass.getName()));
+
+		return infoRequestItemProvider.create(httpServletRequest);
 	}
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private InfoListProviderTracker _infoListProviderTracker;

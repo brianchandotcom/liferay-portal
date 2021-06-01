@@ -17,13 +17,17 @@ package com.liferay.info.list.provider.item.selector.web.internal.layout.list.re
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.info.filter.InfoFilter;
+import com.liferay.info.filter.InfoRequestItemProvider;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.filter.PropertyInfoItemServiceFilter;
 import com.liferay.info.list.provider.DefaultInfoListProviderContext;
+import com.liferay.info.list.provider.FilteredInfoItemRelatedListProvider;
 import com.liferay.info.list.provider.InfoItemRelatedListProvider;
 import com.liferay.info.list.provider.InfoListProviderContext;
 import com.liferay.info.list.provider.item.selector.criterion.InfoItemRelatedListProviderItemSelectorReturnType;
@@ -47,6 +51,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -123,6 +129,33 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 		return Optional.ofNullable(assetEntry);
 	}
 
+	private InfoFilter _getInfoFilter(
+		FilteredInfoItemRelatedListProvider<Object, Object, InfoFilter>
+			filteredInfoItemRelatedListProvider,
+		LayoutListRetrieverContext layoutListRetrieverContext) {
+
+		Optional<HttpServletRequest> httpServletRequestOptional =
+			layoutListRetrieverContext.getHttpServletRequestOptional();
+
+		HttpServletRequest httpServletRequest =
+			httpServletRequestOptional.orElse(null);
+
+		if (!httpServletRequestOptional.isPresent()) {
+			return null;
+		}
+
+		Class<?> infoFilterClass =
+			filteredInfoItemRelatedListProvider.getInfoFilterClass();
+
+		InfoRequestItemProvider<InfoFilter> infoRequestItemProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoRequestItemProvider.class, InfoFilter.class.getName(),
+				new PropertyInfoItemServiceFilter(
+					"infoFilterKey", infoFilterClass.getName()));
+
+		return infoRequestItemProvider.create(httpServletRequest);
+	}
+
 	private InfoListProviderContext _getInfoListProviderContext() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -172,6 +205,44 @@ public class InfoItemRelatedListProviderLayoutListRetriever
 
 		Pagination pagination = paginationOptional.orElse(
 			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+
+		if (infoItemRelatedListProvider instanceof
+				FilteredInfoItemRelatedListProvider) {
+
+			FilteredInfoItemRelatedListProvider
+				filteredInfoItemRelatedListProvider =
+					(FilteredInfoItemRelatedListProvider)
+						infoItemRelatedListProvider;
+
+			if (Objects.equals(
+					filteredInfoItemRelatedListProvider.getSourceItemClass(),
+					AssetEntry.class)) {
+
+				Optional<AssetEntry> assetEntryOptional =
+					_getAssetEntryOptional(contextObjectOptional.get());
+
+				return (InfoPage<Object>)assetEntryOptional.map(
+					assetEntry ->
+						filteredInfoItemRelatedListProvider.
+							getRelatedItemsInfoPage(
+								assetEntry, _getInfoListProviderContext(),
+								_getInfoFilter(
+									filteredInfoItemRelatedListProvider,
+									layoutListRetrieverContext),
+								pagination, null)
+				).orElse(
+					InfoPage.of(Collections.emptyList())
+				);
+			}
+
+			return (InfoPage<Object>)
+				filteredInfoItemRelatedListProvider.getRelatedItemsInfoPage(
+					contextObjectOptional.get(), _getInfoListProviderContext(),
+					_getInfoFilter(
+						filteredInfoItemRelatedListProvider,
+						layoutListRetrieverContext),
+					pagination, null);
+		}
 
 		if (Objects.equals(
 				infoItemRelatedListProvider.getSourceItemClass(),

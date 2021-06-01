@@ -17,8 +17,13 @@ package com.liferay.asset.list.item.selector.web.internal.layout.list.retriever;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
+import com.liferay.asset.list.info.filter.AssetEntryListInfoFilter;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.info.filter.InfoFilter;
+import com.liferay.info.filter.InfoRequestItemProvider;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.filter.PropertyInfoItemServiceFilter;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
@@ -32,6 +37,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,21 +70,19 @@ public class AssetEntryListLayoutListRetriever
 		long[] segmentsEntryIds = segmentsEntryIdsOptional.orElse(
 			new long[] {0});
 
-		Optional<long[][]> assetCategoryIdsOptional =
-			layoutListRetrieverContext.getAssetCategoryIdsOptional();
-
-		long[][] assetCategoryIds = assetCategoryIdsOptional.orElse(
-			new long[0][]);
-
 		Optional<Pagination> paginationOptional =
 			layoutListRetrieverContext.getPaginationOptional();
+
+		AssetEntryListInfoFilter assetEntryListInfoFilter =
+			_getAssetEntryListInfoFilter(layoutListRetrieverContext);
 
 		Pagination pagination = paginationOptional.orElse(
 			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, segmentsEntryIds, assetCategoryIds,
+				assetListEntry, segmentsEntryIds,
+				assetEntryListInfoFilter.getAssetCategoryIds(),
 				StringPool.BLANK, pagination.getStart(), pagination.getEnd());
 
 		if (Objects.equals(
@@ -109,15 +114,41 @@ public class AssetEntryListLayoutListRetriever
 		long[] segmentsEntryIds = segmentsEntryIdsOptional.orElse(
 			new long[] {0});
 
-		Optional<long[][]> assetCategoryIdsOptional =
-			layoutListRetrieverContext.getAssetCategoryIdsOptional();
-
-		long[][] assetCategoryIds = assetCategoryIdsOptional.orElse(
-			new long[0][]);
+		AssetEntryListInfoFilter assetEntryListInfoFilter =
+			_getAssetEntryListInfoFilter(layoutListRetrieverContext);
 
 		return _assetListAssetEntryProvider.getAssetEntriesCount(
-			assetListEntry, segmentsEntryIds, assetCategoryIds,
-			StringPool.BLANK);
+			assetListEntry, segmentsEntryIds,
+			assetEntryListInfoFilter.getAssetCategoryIds(), StringPool.BLANK);
+	}
+
+	private AssetEntryListInfoFilter _getAssetEntryListInfoFilter(
+		LayoutListRetrieverContext layoutListRetrieverContext) {
+
+		Optional<HttpServletRequest> httpServletRequestOptional =
+			layoutListRetrieverContext.getHttpServletRequestOptional();
+
+		HttpServletRequest httpServletRequest =
+			httpServletRequestOptional.orElse(null);
+
+		if (!httpServletRequestOptional.isPresent()) {
+			return new AssetEntryListInfoFilter();
+		}
+
+		InfoRequestItemProvider<InfoFilter> infoRequestItemProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoRequestItemProvider.class, InfoFilter.class.getName(),
+				new PropertyInfoItemServiceFilter(
+					"infoFilterKey", AssetEntryListInfoFilter.KEY));
+
+		InfoFilter infoFilter = infoRequestItemProvider.create(
+			httpServletRequest);
+
+		if (!(infoFilter instanceof AssetEntryListInfoFilter)) {
+			throw new UnsupportedOperationException();
+		}
+
+		return (AssetEntryListInfoFilter)infoFilter;
 	}
 
 	private List<Object> _toAssetObjects(List<AssetEntry> assetEntries) {
@@ -137,5 +168,8 @@ public class AssetEntryListLayoutListRetriever
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

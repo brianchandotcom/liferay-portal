@@ -222,14 +222,40 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be changed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133241 LabelCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Separator");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Separator",
+			fieldName = "Separator");
+
+		Form.editFieldLabelMetal(fieldValue = "Test Separator");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Test Separator",
+			fieldName = "Separator");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Separator");
 	}
 
 	@description = "Veriy that the Field Label can be hidden"

@@ -344,6 +344,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FIELD_3</td>
+	<td>//input[@type='text' and contains(@value,'${key_fieldValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_LABEL_2</td>
 	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][2]//label[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>

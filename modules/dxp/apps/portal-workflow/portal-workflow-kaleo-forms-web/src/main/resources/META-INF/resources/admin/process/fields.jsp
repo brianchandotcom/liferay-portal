@@ -200,11 +200,11 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			var WIN = A.config.win;
 
-			Liferay.Util.openWindow({
+			Liferay.Util.openModal({
 				id: A.guid(),
 				refreshWindow: WIN,
 				title: title,
-				uri: uri,
+				url: uri,
 			});
 		},
 		['liferay-util']

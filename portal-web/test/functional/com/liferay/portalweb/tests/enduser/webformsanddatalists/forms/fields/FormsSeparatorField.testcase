@@ -61,14 +61,40 @@ definition {
 	}
 
 	@description = "Verify that a Separator Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133236 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Separator");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Help Text Test");
+
+		Form.editFieldLabelMetal(fieldValue = "Test Separator");
+
+		FormFields.duplicateField();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Separator");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Copy of Test Separator");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Test Separator",
+			fieldValue = "Help Text Test");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Copy of Test Separator",
+			fieldValue = "Help Text Test");
 	}
 
 	@description = "Verify that a Separator Field can be edited"

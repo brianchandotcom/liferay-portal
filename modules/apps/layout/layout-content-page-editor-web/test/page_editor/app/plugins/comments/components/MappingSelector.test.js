@@ -70,6 +70,7 @@ const infoItem = {
 const emptyCollectionConfig = {
 	collection: {
 		classNameId: 'collectionClassNameId',
+		classPK: 'collectionClassPK',
 		itemSubtype: 'collectionItemSubtype',
 		itemType: 'collectionItemType',
 	},
@@ -348,7 +349,7 @@ describe('MappingSelector', () => {
 		await act(async () => {
 			renderMappingSelector({
 				mappingFields: {
-					collectionClassNameId: [
+					'collectionClassNameId-collectionClassPK': [
 						{
 							fields: collectionFields,
 						},

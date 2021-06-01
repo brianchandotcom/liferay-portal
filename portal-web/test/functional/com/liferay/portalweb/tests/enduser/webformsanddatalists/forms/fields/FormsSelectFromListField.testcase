@@ -43,14 +43,46 @@ definition {
 	}
 
 	@description = "Verify that a Select From List Field can be deleted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131359 CanBeDeleted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormViewBuilder.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		FormViewBuilder.closeSidebar();
+
+		FormsAdminNavigator.gotoDeleteField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewDeletedFieldLabel(fieldName = "Select from List");
+		
 	}
 
 	@description = "Verify that a Select From List Field can be duplicated"

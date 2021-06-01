@@ -1,0 +1,9 @@
+definition {
+
+	macro rotateImage {
+		Click(
+			locator1 = "Icon#ANY",
+			key_text = "reload");
+	}
+
+}

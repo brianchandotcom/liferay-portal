@@ -182,6 +182,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		urlTitle = normalizeUrlTitle(urlTitle);
 		double priority = getPriority(groupId, parentResourcePrimKey);
 
+		long kbArticleId = counterLocalService.increment();
+
+		if (externalReferenceCode == null) {
+			externalReferenceCode = String.valueOf(kbArticleId);
+		}
+
+		_validateExternalReferenceCode(externalReferenceCode, groupId);
+
 		validate(title, content, sourceURL);
 		validateParent(parentResourceClassNameId, parentResourcePrimKey);
 
@@ -192,18 +200,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		validateUrlTitle(groupId, kbFolderId, urlTitle);
 
-		long kbArticleId = counterLocalService.increment();
-
 		long resourcePrimKey = counterLocalService.increment();
 
 		long rootResourcePrimKey = getRootResourcePrimKey(
 			resourcePrimKey, parentResourceClassNameId, parentResourcePrimKey);
-
-		if (externalReferenceCode == null) {
-			externalReferenceCode = String.valueOf(kbArticleId);
-		}
-
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
 
 		KBArticle kbArticle = kbArticlePersistence.create(kbArticleId);
 
@@ -553,15 +553,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			resourcePrimKey, groupId, true, null);
 	}
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article, or <code>null</code> if no
-	 *         matching kb article could be found
-	 */
 	@Override
 	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
 		long groupId, String externalReferenceCode) {
@@ -856,15 +847,6 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			resourcePrimKey, status, new KBArticleVersionComparator());
 	}
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Override
 	public KBArticle getLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
@@ -2095,7 +2077,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		if (kbArticle != null) {
 			throw new DuplicateKBArticleExternalReferenceCodeException(
 				StringBundler.concat(
-					"Duplicate KBArticle external reference code ",
+					"Duplicate knowledge base article external reference code ",
 					externalReferenceCode, "in group ", groupId));
 		}
 	}

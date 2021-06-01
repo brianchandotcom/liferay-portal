@@ -250,16 +250,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		return null;
 	}
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article, or <code>null</code> if no
-	 *         matching kb article could be found
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Override
 	public KBArticle fetchLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)
@@ -636,15 +626,6 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 			resourcePrimKey, status);
 	}
 
-	/**
-	 * Returns the latest kb article matching the group and the external
-	 * reference code
-	 *
-	 * @param groupId the primary key of the group
-	 * @param externalReferenceCode the kb article external reference code
-	 * @return the latest matching kb article
-	 * @throws PortalException if a portal exception occurred
-	 */
 	@Override
 	public KBArticle getLatestKBArticleByExternalReferenceCode(
 			long groupId, String externalReferenceCode)

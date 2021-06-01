@@ -104,7 +104,6 @@ public class KBArticleStagedModelDataHandlerTest
 		Assert.assertEquals(
 			kbArticle.getExternalReferenceCode(),
 			importedKBArticle.getExternalReferenceCode());
-
 		Assert.assertEquals(
 			ClassNameLocalServiceUtil.getClassNameId(
 				KBFolderConstants.getClassName()),

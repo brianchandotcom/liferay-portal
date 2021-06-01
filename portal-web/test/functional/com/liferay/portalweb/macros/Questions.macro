@@ -767,6 +767,14 @@ definition {
 			value1 = "No results found");
 	}
 
+	macro viewNoAnswerField {
+		AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertElementNotPresent(
+			key_text = "Post Answer",
+			locator1 = "Button#ANY_DISABLED");
+	}
+
 	macro viewNoPermissionsAddQuestion {
 		AssertElementNotPresent(locator1 = "Questions#ASK_QUESTION_BUTTON");
 	}
@@ -843,6 +851,21 @@ definition {
 			AssertElementPresent(
 				key_itemName = "${itemNameList}",
 				locator1 = "Questions#QUESTIONS_STATISTICS_ITEM");
+		}
+	}
+
+	macro viewStatus {
+		if ("${status}" == "pending") {
+			AssertVisible(
+				key_status = "pending",
+				locator1 = "Questions#WORKFLOW_STATUS");
+
+			Questions.viewNoAnswerField();
+		}
+		else {
+			AssertElementNotPresent(
+				key_status = "pending",
+				locator1 = "Questions#WORKFLOW_STATUS");
 		}
 	}
 

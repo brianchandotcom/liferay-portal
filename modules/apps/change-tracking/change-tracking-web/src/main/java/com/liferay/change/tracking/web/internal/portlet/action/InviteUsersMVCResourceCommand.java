@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
@@ -53,6 +54,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
@@ -151,22 +154,44 @@ public class InviteUsersMVCResourceCommand
 
 		long[] userIds = ParamUtil.getLongValues(resourceRequest, "userIds");
 
-		_userGroupRoleLocalService.deleteUserGroupRoles(
-			userIds, group.getGroupId());
-
 		for (int i = 0; i < userIds.length; i++) {
+			List<UserGroupRole> userGroupRoles =
+				_userGroupRoleLocalService.getUserGroupRoles(
+					userIds[0], group.getGroupId());
+
 			if (roleValues[i] < 0) {
+				for (UserGroupRole userGroupRole : userGroupRoles) {
+					_userGroupRoleLocalService.deleteUserGroupRole(
+						userGroupRole);
+				}
+
 				continue;
 			}
 
 			Role role = _getRole(roleValues[i], themeDisplay);
 
-			_userGroupRoleLocalService.addUserGroupRole(
-				userIds[i], group.getGroupId(), role.getRoleId());
+			boolean addUserGroupRole = true;
 
-			_sendNotificationEvent(
-				ctCollection.getCtCollectionId(), userIds[i], roleValues[i],
-				themeDisplay);
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				if (userGroupRole.getRoleId() == role.getRoleId()) {
+					addUserGroupRole = false;
+				}
+				else {
+					_userGroupRoleLocalService.deleteUserGroupRole(
+						userGroupRole);
+				}
+			}
+
+			if (addUserGroupRole) {
+				_userGroupRoleLocalService.addUserGroupRole(
+					userIds[i], group.getGroupId(), role.getRoleId());
+			}
+
+			if (userGroupRoles.isEmpty()) {
+				_sendNotificationEvent(
+					ctCollection.getCtCollectionId(), userIds[i], roleValues[i],
+					themeDisplay);
+			}
 		}
 
 		JSONPortletResponseUtil.writeJSON(

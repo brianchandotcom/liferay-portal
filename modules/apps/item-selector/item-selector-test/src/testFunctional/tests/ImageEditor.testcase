@@ -59,4 +59,36 @@ definition {
 			metadataLabel = "Image Width");
 	}
 
+	@description = "This makes sure that a rotated image can be saved."
+	@priority = "5"
+	test CanSaveRotatedImage {
+		property test.name.skip.portal.instance = "ImageEditor#CanSaveRotatedImage";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoEditImage(dmDocumentTitle = "Document_2.jpg");
+
+		ImageEditor.rotateImage();
+
+		Button.clickSave();
+
+		Refresh();
+
+		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "313",
+			metadataLabel = "Image Length");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "195",
+			metadataLabel = "Image Width");
+	}
 }

@@ -82,7 +82,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormFields.viewDeletedFieldLabel(fieldName = "Select from List");
-		
 	}
 
 	@description = "Verify that a Select From List Field can be duplicated"

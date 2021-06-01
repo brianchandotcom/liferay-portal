@@ -21,7 +21,7 @@
   </tr>
   <tr>
     <td>TIME_FILTER_DROPDOWN_OPTION</td>
-    <td>//div[contains(@class,'dropdown-range-key-menu-root') and contains(@class,'show')]//button[text()='${key_dropdownOption}']</td>
+    <td>//div[contains(@class,'dropdown-range-key-menu-root') and contains(@class,'show')]//button[contains(.,'${key_dropdownOption}')]</td>
     <td></td>
   </tr>
   <tr>
@@ -56,7 +56,7 @@
   </tr>
   <tr>
     <td>DATE_PICKER_DAY</td>
-    <td>//table[@class='calendar-root']//button[contains(@class,'day-root') and text()='${key_day}' and not(@disabled)]"</td>
+    <td>//table[@class='calendar-root']//button[contains(@class,'day-root') and text()='${key_day}' and not(@disabled)]</td>
     <td></td>
   </tr>
   </tbody>

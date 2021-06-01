@@ -173,7 +173,6 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Forms");
 
-
 		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName(formName = "Form 1");

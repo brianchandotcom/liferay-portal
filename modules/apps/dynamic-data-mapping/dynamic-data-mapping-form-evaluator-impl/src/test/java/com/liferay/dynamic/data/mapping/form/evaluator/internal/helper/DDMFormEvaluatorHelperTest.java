@@ -115,24 +115,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 )
 public class DDMFormEvaluatorHelperTest extends PowerMockito {
 
-	public static DDMFormFieldValue
-		createDDMFormFieldValueWithConfirmationValue(
-			String instanceId, String fieldName, String fieldValue,
-			String confirmationValue) {
-
-		Value localizedValue = new LocalizedValue(LocaleUtil.US);
-
-		localizedValue.addString(LocaleUtil.US, fieldValue);
-
-		DDMFormFieldValue ddmFormFieldValue =
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				instanceId, fieldName, localizedValue);
-
-		ddmFormFieldValue.setConfirmationValue(confirmationValue);
-
-		return ddmFormFieldValue;
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
@@ -350,6 +332,49 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 				new DDMFormEvaluatorFieldContextKey(
 					"field0", "field0_instanceId"));
 
+		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges.get("valid"));
+	}
+
+	@Test
+	public void testInvalidNumericValueWithInputMask() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField = createDDMFormField(
+			"field0", "numeric", "integer");
+
+		ddmFormField.setProperty("inputMask", true);
+		ddmFormField.setProperty(
+			"inputMaskFormat",
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"(099) 09999-9999", LocaleUtil.US));
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0",
+				DDMFormValuesTestUtil.createLocalizedValue(
+					"123456789", LocaleUtil.US)));
+
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			evaluate(ddmForm, ddmFormValues);
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges =
+				ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges();
+
+		Map<String, Object> ddmFormFieldPropertyChanges =
+			ddmFormFieldsPropertyChanges.get(
+				new DDMFormEvaluatorFieldContextKey(
+					"field0", "field0_instanceId"));
+
+		Assert.assertEquals(
+			"Input format not satisfied.",
+			ddmFormFieldPropertyChanges.get("errorMessage"));
 		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges.get("valid"));
 	}
 
@@ -1522,6 +1547,21 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		).build();
 	}
 
+	protected DDMFormFieldValue createDDMFormFieldValueWithConfirmationValue(
+		String instanceId, String fieldName, String fieldValue,
+		String confirmationValue) {
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				instanceId, fieldName,
+				DDMFormValuesTestUtil.createLocalizedValue(
+					fieldValue, LocaleUtil.US));
+
+		ddmFormFieldValue.setConfirmationValue(confirmationValue);
+
+		return ddmFormFieldValue;
+	}
+
 	protected DDMFormField createDDMFormFieldWithConfirmationField(
 		String name, String type, String dataType) {
 
@@ -1675,6 +1715,14 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		_language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			_language.get(
+				Matchers.any(ResourceBundle.class),
+				Matchers.eq("input-format-not-satisfied"))
+		).thenReturn(
+			"Input format not satisfied."
+		);
 
 		Mockito.when(
 			_language.get(

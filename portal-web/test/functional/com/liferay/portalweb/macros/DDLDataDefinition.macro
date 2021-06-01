@@ -10,7 +10,9 @@ definition {
 				locator1 = "Portlet#MODAL_TITLE",
 				value1 = "Data Definitions");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame(
+				key_title = "Data Definitions",
+				locator1 = "IFrame#MODAL_ANY");
 		}
 
 		LexiconEntry.gotoAdd();
@@ -27,7 +29,9 @@ definition {
 	}
 
 	macro _select {
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		SelectFrame(
+			key_title = "Data Definitions",
+			locator1 = "IFrame#MODAL_ANY");
 
 		var key_ddlDataDefinitionName = "${ddlDataDefinitionName}";
 

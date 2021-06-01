@@ -4729,7 +4729,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.3'."
+        'com.liferay.headless.delivery.client', and version '4.0.4'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -10015,6 +10015,7 @@ paths:
             # @review
             description:
                 Deletes the site's document by external reference code returns a 204 if the operation succeeds.
+            operationId: deleteSiteDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -10039,6 +10040,7 @@ paths:
             # @review
             description:
                 Retrieves the site's document by external reference code.
+            operationId: getSiteDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId
@@ -10070,6 +10072,7 @@ paths:
                 replaces it if it not exists. Any missing fields are deleted, unless they are required. The request body
                 must be `multipart/form-data` with two parts, the file'sbytes (`file`), and an optional JSON string
                 (`document`) with the metadata.
+            operationId: putSiteDocumentByExternalReferenceCode
             parameters:
                 - in: path
                   name: siteId

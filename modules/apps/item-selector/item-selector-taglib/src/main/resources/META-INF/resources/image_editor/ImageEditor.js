@@ -229,7 +229,7 @@ export default ({
 							<ClayButtonWithIcon
 								displayType={null}
 								onClick={handleRotate}
-								symbol="reload"
+								symbol="rotate"
 							/>
 						</ClayToolbar.Section>
 					</ClayToolbar.Item>

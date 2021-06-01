@@ -8,7 +8,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		User.firstLoginUI();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -462,6 +462,38 @@ definition {
 		WebContent.deleteCP(
 			siteURLKey = "test-site-name",
 			webContentTitle = "WC Title");
+	}
+
+	@description = "Validate if the user can edit a web content through the Edit option"
+	@priority = "5"
+	@uitest
+	test ClickTitleApprovedNoDPT {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedNoDPT";
+
+		task ("Add web content Approved") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Test Site Name",
+				title = "WC Title");
+		}
+
+		task ("Go to Content Dashboard and click on the title") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "title",
+				tableEntry = "");
+		}
+
+		task ("Assert the web content is opened in the web content editor") {
+			AssertElementPresent(
+				locator1 = "Button#PUBLISH",
+				value1 = "Publish");
+		}
 	}
 
 	@description = "Validate if the user can edit a web content through the Edit option"

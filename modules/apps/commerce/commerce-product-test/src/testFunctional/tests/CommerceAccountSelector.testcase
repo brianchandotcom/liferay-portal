@@ -189,13 +189,40 @@ definition {
 	}
 
 	@description = "COMMERCE-5936. As a buyer, I want to be able to create a new order from the account selector dropdown's order list view, The created order should then be the selected order"
-	@ignore = "true"
 	@priority = "3"
 	test CreateNewOrderFromAccountSelectorDropdown {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceAccountSelector#CreateNewOrderFromAccountSelectorDropdown";
 
-		// TODO COMMERCE-5936 CreateNewOrderFromAccountSelectorDropdown pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account 1",
+			adminEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Click(locator1 = "Button#ANGLE_DOWN");
+
+		WaitForElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
+
+		var getOrderId = selenium.getText(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
+
+		Button.click(button = "Create New Order");
+
+		AssertElementNotPresent(
+			key_FilterOption = "${getOrderId}",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 	}
 
 	@description = "COMMERCE-5956. As a buyer, I want to search for an account in the accounts list, and select it as active account"

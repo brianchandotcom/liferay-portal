@@ -23,7 +23,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
@@ -48,6 +48,9 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.InputStream;
+
+import java.util.HashMap;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -225,12 +228,24 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			long groupId, boolean importPageDefinition, String title)
 		throws Exception {
 
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		unicodeProperties.put("published", Boolean.TRUE.toString());
+
 		Layout layout = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), groupId, false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, title,
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(groupId));
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			HashMapBuilder.put(
+				locale, title
+			).build(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			LayoutConstants.TYPE_CONTENT, unicodeProperties.toString(), false,
+			new HashMap<>(), ServiceContextTestUtil.getServiceContext(groupId));
 
 		if (importPageDefinition) {
 			String name = PrincipalThreadLocal.getName();

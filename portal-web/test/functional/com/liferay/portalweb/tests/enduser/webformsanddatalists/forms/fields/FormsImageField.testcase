@@ -153,14 +153,47 @@ definition {
 	}
 
 	@description = "Verify that an image added to the Image Field can be removed by clicking the Clear button"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SelectedImagesCanBeCleared {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133046 SelectedImagesCanBeCleared pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Image",
+			formPageNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Click(locator1 = "FormFields#UPLOAD_ON_WIDGET");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.jpg");
+
+		AssertElementPresent(
+			key_fieldValue = "Document_1.jpg",
+			locator1 = "FormFields#TEXT_FIELD_3");
+
+		WaitForElementPresent(locator1 = "FormFields#UPLOAD_FIELD_CLEAR_BUTTON");
+
+		Click(locator1 = "FormFields#UPLOAD_FIELD_CLEAR_BUTTON");
+
+		AssertElementNotPresent(
+			key_fieldValue = "Document_1.jpg",
+			locator1 = "FormFields#TEXT_FIELD_3");
 	}
 
 	@description = " Verify that the Field Type can be changed"

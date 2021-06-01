@@ -155,7 +155,7 @@ public class EditAssetCategoryCPDisplayLayoutMVCActionCommand
 
 		if (cpDisplayLayoutId > 0) {
 			_cpDisplayLayoutService.updateCPDisplayLayout(
-				cpDisplayLayoutId, layoutUuid);
+				cpDisplayLayoutId, classPK, layoutUuid);
 		}
 		else {
 			if (classPKs.isEmpty()) {

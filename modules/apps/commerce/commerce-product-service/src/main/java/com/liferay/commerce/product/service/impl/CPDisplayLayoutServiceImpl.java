@@ -104,7 +104,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	@Override
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, String layoutUuid)
+			long cpDisplayLayoutId, long classPK, String layoutUuid)
 		throws PortalException {
 
 		CPDisplayLayout cpDisplayLayout =
@@ -115,11 +115,10 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		_checkCPDisplayLayout(
-			cpDisplayLayout.getClassName(), cpDisplayLayout.getClassPK(),
-			ActionKeys.VIEW);
+			cpDisplayLayout.getClassName(), classPK, ActionKeys.VIEW);
 
 		return cpDisplayLayoutLocalService.updateCPDisplayLayout(
-			cpDisplayLayout.getCPDisplayLayoutId(), layoutUuid);
+			cpDisplayLayout.getCPDisplayLayoutId(), classPK, layoutUuid);
 	}
 
 	private void _checkCPDisplayLayout(

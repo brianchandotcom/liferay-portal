@@ -175,7 +175,7 @@ public class CPDisplayLayoutLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, String layoutUuid)
+			long cpDisplayLayoutId, long classPK, String layoutUuid)
 		throws PortalException {
 
 		CPDisplayLayout cpDisplayLayout =
@@ -183,6 +183,7 @@ public class CPDisplayLayoutLocalServiceImpl
 
 		validate(cpDisplayLayout.getClassPK(), layoutUuid);
 
+		cpDisplayLayout.setClassPK(classPK);
 		cpDisplayLayout.setLayoutUuid(layoutUuid);
 
 		return cpDisplayLayoutPersistence.update(cpDisplayLayout);

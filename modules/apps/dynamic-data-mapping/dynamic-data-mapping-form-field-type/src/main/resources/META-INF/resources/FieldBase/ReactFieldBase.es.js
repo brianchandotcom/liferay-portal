@@ -16,6 +16,7 @@ import './FieldBase.scss';
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayPopover from '@clayui/popover';
 import classNames from 'classnames';
 import {
@@ -93,27 +94,29 @@ const getFieldDetails = (props) => {
 	return fieldDetails;
 };
 
-const FieldProperties = ({required, showPopover, tooltip}) => {
+const HideFieldProperty = () => {
 	return (
-		<>
-			{required && (
-				<span className="ddm-label-required reference-mark">
-					<ClayIcon symbol="asterisk" />
-				</span>
-			)}
+		<ClayLabel className="ml-1" displayType="secondary">
+			{Liferay.Language.get('hidden')}
+		</ClayLabel>
+	);
+};
 
-			{tooltip && (
-				<>
-					{showPopover ? (
-						<Popover tooltip={tooltip} />
-					) : (
-						<span className="ddm-tooltip" title={tooltip}>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
-					)}
-				</>
-			)}
-		</>
+const RequiredProperty = () => {
+	return (
+		<span className="ddm-label-required reference-mark">
+			<ClayIcon symbol="asterisk" />
+		</span>
+	);
+};
+
+const TooltipProperty = ({showPopover, tooltip}) => {
+	return showPopover ? (
+		<Popover tooltip={tooltip} />
+	) : (
+		<span className="ddm-tooltip" title={tooltip}>
+			<ClayIcon symbol="question-circle-full" />
+		</span>
 	);
 };
 

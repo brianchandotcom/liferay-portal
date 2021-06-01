@@ -169,6 +169,8 @@ public class RenderLayoutStructureDisplayContext {
 
 		defaultLayoutListRetrieverContext.setContextObject(
 			_httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
+		defaultLayoutListRetrieverContext.setHttpServletRequest(
+			_httpServletRequest);
 		defaultLayoutListRetrieverContext.setSegmentsEntryIds(
 			_getSegmentsEntryIds());
 		defaultLayoutListRetrieverContext.setPagination(

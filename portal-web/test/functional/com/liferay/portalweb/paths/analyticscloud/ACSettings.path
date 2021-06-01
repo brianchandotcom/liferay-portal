@@ -74,13 +74,13 @@
 </tr>
 <!-- PROPERTIES -->
 <tr>
-    <td>PROPERTIES_SEARCH_BAR</td>
+    <td>SEARCH_BAR</td>
     <td>//div[@class='input-group-item']/input</td>
     <td></td>
 </tr>
 <tr>
-    <td>PROPERTIES_ITEM_ON_LIST</td>
-    <td>//span[contains(@class,'text-truncate') and contains(text(),'${propertyName}')]</td>
+    <td>ITEM_ON_LIST</td>
+    <td>//*[contains(@class,'text-truncate') and contains(text(),'${itemName}')]</td>
     <td></td>
 </tr>
 <tr>
@@ -99,8 +99,13 @@
     <td></td>
 </tr>
 <tr>
-    <td>GENERIC_CONFIRMATION_BUTTON</td>
-    <td>//input[@data-testid='delete-confirmation-input']</td>
+    <td>DELETE_CONFIRMATION_BUTTON</td>
+    <td>//button[contains(@class,'btn-warning')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>EXIT_SETTINGS_BUTTON</td>
+    <td>//a[@class='back-arrow']</td>
     <td></td>
 </tr>
 </tbody>

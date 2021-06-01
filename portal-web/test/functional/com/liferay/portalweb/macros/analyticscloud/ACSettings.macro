@@ -83,21 +83,25 @@ definition {
 	@summary = "Deletes a specific property \
 	@param propertyName the name of the property you want to delete"
 	macro deleteProperty {
-		ACNavigation.goToSettings();
+		var itemName = "${propertyName}";
+
+		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+			ACNavigation.goToSettings();
+		}
 
 		ACSettings.goToProperties();
 
-		Click(locator1 = "ACSettings#PROPERTIES_SEARCH_BAR");
+		Click(locator1 = "ACSettings#SEARCH_BAR");
 
 		Type(
-			locator1 = "ACSettings#PROPERTIES_SEARCH_BAR",
+			locator1 = "ACSettings#SEARCH_BAR",
 			value1 = "${propertyName}");
 
 		KeyPress(
-			locator1 = "ACSettings#PROPERTIES_SEARCH_BAR",
+			locator1 = "ACSettings#SEARCH_BAR",
 			value1 = "\ENTER");
 
-		Click(locator1 = "ACSettings#PROPERTIES_ITEM_ON_LIST");
+		Click(locator1 = "ACSettings#ITEM_ON_LIST");
 
 		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
 
@@ -107,7 +111,7 @@ definition {
 
 		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
 
-		Click(locator1 = "ACSettings#GENERIC_CONFIRMATION_BUTTON");
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
 	}
 
 	macro goToApis {

@@ -108,6 +108,16 @@ public class AudioProcessorUtil {
 		return audioProcessor.isAudioSupported(mimeType);
 	}
 
+	public static boolean isEnabled() {
+		AudioProcessor audioProcessor = getAudioProcessor();
+
+		if (audioProcessor == null) {
+			return false;
+		}
+
+		return audioProcessor.isEnabled();
+	}
+
 	public static boolean isSupported(String mimeType) {
 		AudioProcessor audioProcessor = getAudioProcessor();
 

@@ -58,6 +58,10 @@ public interface AudioProcessor {
 
 	public boolean isAudioSupported(String mimeType);
 
+	public default boolean isEnabled() {
+		return false;
+	}
+
 	public boolean isSupported(String mimeType);
 
 	public void trigger(

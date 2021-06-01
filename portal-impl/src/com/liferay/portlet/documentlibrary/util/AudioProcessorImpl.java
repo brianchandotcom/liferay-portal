@@ -146,6 +146,11 @@ public class AudioProcessorImpl
 	}
 
 	@Override
+	public boolean isEnabled() {
+		return _audioConverter.isEnabled();
+	}
+
+	@Override
 	public boolean isSupported(String mimeType) {
 		if (_audioMimeTypes.contains(mimeType) && _audioConverter.isEnabled()) {
 			return true;

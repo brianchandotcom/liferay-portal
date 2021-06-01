@@ -76,15 +76,8 @@ public class CTCollectionModelResourcePermission
 			return true;
 		}
 
-		if (permissionChecker.hasPermission(
-				ctCollection.getGroup(), CTCollection.class.getName(),
-				ctCollection.getCtCollectionId(), actionId)) {
-
-			return true;
-		}
-
 		return permissionChecker.hasPermission(
-			null, CTCollection.class.getName(),
+			ctCollection.getGroup(), CTCollection.class.getName(),
 			ctCollection.getCtCollectionId(), actionId);
 	}
 

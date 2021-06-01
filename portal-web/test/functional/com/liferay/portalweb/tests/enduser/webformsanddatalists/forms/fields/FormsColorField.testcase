@@ -164,14 +164,37 @@ definition {
 	}
 
 	@description = "Verify that the Field Reference can be changed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ReferenceCanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133139 ReferenceCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Color");
+
+		Form.gotoAdvancedTab();
+
+		Form.editFieldReferenceMetal(fieldValue = "Color1234");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Form.viewFieldReference(
+			fieldName = "Color",
+			key_fieldReference = "Color1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

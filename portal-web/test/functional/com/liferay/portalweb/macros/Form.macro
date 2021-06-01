@@ -681,17 +681,16 @@ definition {
 		AssertElementPresent(locator1 = "Form#ALT_PAGINATION_SUCCESS_PAGE");
 	}
 
-	macro viewFieldReferenceFromTextField {
+	macro viewFieldReference {
 		Click(
-			key_fieldName = "Text",
-			key_fieldPositionNumber = "1",
-			locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION");
+			key_fieldName = "${fieldName}",
+			locator1 = "Form#FIELD_BODY");
 
 		Form.gotoAdvancedTab();
 
 		AssertTextEquals(
 			locator1 = "Form#FIELD_REFERENCE",
-			value1 = "${key_fieldReferenceText}");
+			value1 = "${key_fieldReference}");
 	}
 
 	macro viewFormDescription {

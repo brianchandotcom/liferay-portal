@@ -26,6 +26,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.sql.dsl.query.WhereStep;
+import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.sql.dsl.spi.expression.Scalar;
@@ -35,19 +36,17 @@ import com.liferay.petra.sql.dsl.spi.query.JoinType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
-import java.util.LinkedHashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -157,88 +156,237 @@ public class TableJoinHolderFactory {
 		Predicate missingRequirementWherePredicate = null;
 
 		if (parent) {
-			Table<?> parentTable = fromPKColumn.getTable();
+			missingRequirementWherePredicate = fromPKColumn.isNull();
 
-			FromStep fromStep = DSLQueryFactoryUtil.select(
-				primaryKeyColumn, new Scalar<>(parentTable.getTableName()));
+			List<BridgePredicate> bridgePredicates = _getBridgePredicates(
+				joinStep);
+			Set<Column<?, ?>> childColumns = _getChildColumns(
+				primaryKeyColumn.getTable(), joinStep);
 
-			Set<Column<?, ?>> childPredicateColumns = new LinkedHashSet<>();
+			Iterator<BridgePredicate> iterator = bridgePredicates.iterator();
 
-			Deque<Map.Entry<Table<?>, PredicateASTNodeListener>> joinEntries =
-				new LinkedList<>();
+			while (iterator.hasNext()) {
+				BridgePredicate bridgePredicate = iterator.next();
 
-			ASTNode astNode = joinFunction.apply(fromStep);
+				if (bridgePredicate.hasOnlyTable(primaryKeyColumn.getTable())) {
+					missingRequirementWherePredicate =
+						missingRequirementWherePredicate.and(
+							bridgePredicate._predicate);
 
-			while (astNode instanceof Join) {
-				Join join = (Join)astNode;
-
-				PredicateASTNodeListener predicateASTNodeListener =
-					new PredicateASTNodeListener(
-						primaryKeyColumn.getTable(), childPredicateColumns);
-
-				Predicate predicate = join.getOnPredicate();
-
-				predicate.toSQL(_emptyStringConsumer, predicateASTNodeListener);
-
-				Table<?> table = join.getTable();
-
-				if (table == primaryKeyColumn.getTable()) {
-					table = parentTable;
-				}
-
-				joinEntries.push(
-					new AbstractMap.SimpleImmutableEntry<>(
-						table, predicateASTNodeListener));
-
-				astNode = join.getChild();
-			}
-
-			Predicate wherePredicate = fromPKColumn.isNull();
-
-			joinStep = fromStep.from(primaryKeyColumn.getTable());
-
-			for (Map.Entry<Table<?>, PredicateASTNodeListener> entry :
-					joinEntries) {
-
-				Table<?> table = entry.getKey();
-				PredicateASTNodeListener predicateASTNodeListener =
-					entry.getValue();
-
-				joinStep = joinStep.leftJoinOn(
-					table, predicateASTNodeListener._joinPredicate);
-
-				if (predicateASTNodeListener._wherePredicate != null) {
-					wherePredicate = wherePredicate.and(
-						predicateASTNodeListener._wherePredicate);
+					iterator.remove();
 				}
 			}
 
-			missingRequirementWhereStep = joinStep;
+			missingRequirementWhereStep = _getMissingRequirementWhereStep(
+				primaryKeyColumn, fromPKColumn, bridgePredicates);
 
-			for (Column<?, ?> column : childPredicateColumns) {
-				wherePredicate = wherePredicate.and(column.isNotNull());
+			for (Column<?, ?> column : childColumns) {
+				missingRequirementWherePredicate =
+					missingRequirementWherePredicate.and(column.isNotNull());
 
 				Class<?> clazz = column.getJavaType();
 
 				if (clazz == String.class) {
 					Column<?, String> stringColumn = (Column<?, String>)column;
 
-					wherePredicate = wherePredicate.and(
-						stringColumn.neq(StringPool.BLANK));
+					missingRequirementWherePredicate =
+						missingRequirementWherePredicate.and(
+							stringColumn.neq(StringPool.BLANK));
 				}
 				else if (clazz == Long.class) {
 					Column<?, Long> longColumn = (Column<?, Long>)column;
 
-					wherePredicate = wherePredicate.and(longColumn.neq(0L));
+					missingRequirementWherePredicate =
+						missingRequirementWherePredicate.and(
+							longColumn.neq(0L));
 				}
 			}
-
-			missingRequirementWherePredicate = wherePredicate;
 		}
 
 		return new TableJoinHolder(
 			primaryKeyColumn, joinFunction, missingRequirementWherePredicate,
 			missingRequirementWhereStep, fromPKColumn);
+	}
+
+	private static List<BridgePredicate> _getBridgePredicates(
+		JoinStep joinStep) {
+
+		Queue<DefaultPredicate> defaultPredicateQueue = new LinkedList<>();
+		Queue<Expression<?>> expressionQueue = new LinkedList<>();
+		List<BridgePredicate> bridgePredicates = new LinkedList<>();
+
+		ASTNode astNode = joinStep;
+
+		while (astNode instanceof Join) {
+			Join join = (Join)astNode;
+
+			defaultPredicateQueue.add((DefaultPredicate)join.getOnPredicate());
+
+			DefaultPredicate defaultPredicate = null;
+
+			while ((defaultPredicate = defaultPredicateQueue.poll()) != null) {
+				Expression<?> leftExpression =
+					defaultPredicate.getLeftExpression();
+				Expression<?> rightExpression =
+					defaultPredicate.getRightExpression();
+
+				if (defaultPredicate.getOperand() == Operand.AND) {
+					defaultPredicateQueue.add((DefaultPredicate)leftExpression);
+					defaultPredicateQueue.add(
+						(DefaultPredicate)rightExpression);
+				}
+				else {
+					Set<Table<?>> tables = Collections.newSetFromMap(
+						new IdentityHashMap<>());
+
+					expressionQueue.add(leftExpression);
+					expressionQueue.add(rightExpression);
+
+					Expression<?> expression = null;
+
+					while ((expression = expressionQueue.poll()) != null) {
+						if (expression instanceof Column) {
+							Column<?, ?> column = (Column<?, ?>)expression;
+
+							tables.add(column.getTable());
+						}
+						else if (expression instanceof DSLFunction) {
+							DSLFunction<?> dslFunction =
+								(DSLFunction<?>)expression;
+
+							Collections.addAll(
+								expressionQueue, dslFunction.getExpressions());
+						}
+					}
+
+					bridgePredicates.add(
+						new BridgePredicate(tables, defaultPredicate));
+				}
+			}
+
+			astNode = join.getChild();
+		}
+
+		return bridgePredicates;
+	}
+
+	private static Set<Column<?, ?>> _getChildColumns(
+		Table<?> table, JoinStep joinStep) {
+
+		Set<Column<?, ?>> childColumns = new HashSet<>();
+
+		joinStep.toSQL(
+			_emptyStringConsumer,
+			astNode -> {
+				if (astNode instanceof Column) {
+					Column<?, ?> column = (Column<?, ?>)astNode;
+
+					if (table == column.getTable()) {
+						childColumns.add(column);
+					}
+				}
+			});
+
+		return childColumns;
+	}
+
+	private static WhereStep _getMissingRequirementWhereStep(
+		Column<?, Long> primaryKeyColumn, Column<?, Long> fromPKColumn,
+		List<BridgePredicate> bridgePredicates) {
+
+		Table<?> parentTable = fromPKColumn.getTable();
+
+		JoinStep joinStep = DSLQueryFactoryUtil.select(
+			primaryKeyColumn, new Scalar<>(parentTable.getTableName())
+		).from(
+			primaryKeyColumn.getTable()
+		);
+
+		Set<Table<?>> tables = Collections.newSetFromMap(
+			new IdentityHashMap<>());
+
+		tables.add(primaryKeyColumn.getTable());
+
+		Set<BridgePredicate> resolvedBridgePredicates = new HashSet<>();
+
+		int previousSize = -1;
+
+		while (resolvedBridgePredicates.size() != previousSize) {
+			previousSize = resolvedBridgePredicates.size();
+
+			for (BridgePredicate bridgePredicate : bridgePredicates) {
+				if (resolvedBridgePredicates.contains(bridgePredicate)) {
+					continue;
+				}
+
+				Table<?> table = null;
+
+				for (Table<?> predicateTable : bridgePredicate._tables) {
+					if (!tables.contains(predicateTable)) {
+						if (table != null) {
+							table = null;
+
+							break;
+						}
+
+						table = predicateTable;
+					}
+				}
+
+				if (table == null) {
+					continue;
+				}
+
+				tables.add(table);
+
+				Predicate predicate = null;
+
+				for (BridgePredicate currentBridgePredicate :
+						bridgePredicates) {
+
+					if (resolvedBridgePredicates.contains(
+							currentBridgePredicate)) {
+
+						continue;
+					}
+
+					if (tables.containsAll(currentBridgePredicate._tables)) {
+						resolvedBridgePredicates.add(currentBridgePredicate);
+
+						if (predicate == null) {
+							predicate = currentBridgePredicate._predicate;
+						}
+						else {
+							predicate = predicate.and(
+								currentBridgePredicate._predicate);
+						}
+					}
+				}
+
+				joinStep = joinStep.leftJoinOn(table, predicate);
+			}
+		}
+
+		if (!resolvedBridgePredicates.containsAll(bridgePredicates)) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("Unable to apply predicates [");
+
+			for (BridgePredicate bridgePredicate : bridgePredicates) {
+				if (!resolvedBridgePredicates.contains(bridgePredicate)) {
+					sb.append(bridgePredicate._predicate);
+					sb.append(", ");
+				}
+			}
+
+			sb.setStringAt("] to ", sb.index() - 1);
+
+			sb.append(joinStep);
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		return joinStep;
 	}
 
 	private static final Consumer<String> _emptyStringConsumer = string -> {
@@ -247,6 +395,28 @@ public class TableJoinHolderFactory {
 		new ValidationFromStep();
 	private static final Set<Operand> _validOperands = new HashSet<>(
 		Arrays.asList(Operand.AND, Operand.EQUAL, Operand.LIKE));
+
+	private static class BridgePredicate {
+
+		public boolean hasOnlyTable(Table<?> childTable) {
+			for (Table<?> table : _tables) {
+				if (table != childTable) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		private BridgePredicate(Set<Table<?>> tables, Predicate predicate) {
+			_tables = tables;
+			_predicate = predicate;
+		}
+
+		private final Predicate _predicate;
+		private final Set<Table<?>> _tables;
+
+	}
 
 	private static class JoinStepASTNodeListener<T extends Table<T>>
 		implements ASTNodeListener {
@@ -313,7 +483,7 @@ public class TableJoinHolderFactory {
 			_table = table;
 		}
 
-		private Set<Table<?>> _columnTables = Collections.newSetFromMap(
+		private final Set<Table<?>> _columnTables = Collections.newSetFromMap(
 			new IdentityHashMap<>());
 		private Table<?> _fromTable;
 		private boolean _hasRequiredTable;
@@ -322,68 +492,8 @@ public class TableJoinHolderFactory {
 		private JoinType _invalidJoinType;
 		private Operand _invalidOperand;
 		private final T _table;
-		private Set<Table<?>> _tables = Collections.newSetFromMap(
+		private final Set<Table<?>> _tables = Collections.newSetFromMap(
 			new IdentityHashMap<>());
-
-	}
-
-	private static class PredicateASTNodeListener implements ASTNodeListener {
-
-		@Override
-		public void process(ASTNode astNode) {
-			if (!(astNode instanceof DefaultPredicate)) {
-				return;
-			}
-
-			DefaultPredicate defaultPredicate = (DefaultPredicate)astNode;
-
-			if (defaultPredicate.getOperand() == Operand.AND) {
-				return;
-			}
-
-			Expression<?> leftExpression = defaultPredicate.getLeftExpression();
-			Expression<?> rightExpression =
-				defaultPredicate.getRightExpression();
-
-			if ((leftExpression instanceof Column<?, ?>) &&
-				(rightExpression instanceof Column<?, ?>)) {
-
-				Column<?, ?> leftColumn = (Column<?, ?>)leftExpression;
-				Column<?, ?> rightColumn = (Column<?, ?>)rightExpression;
-
-				if (leftColumn.getTable() == _childTable) {
-					_childPredicateColumns.add(leftColumn);
-				}
-				else if (rightColumn.getTable() == _childTable) {
-					_childPredicateColumns.add(rightColumn);
-				}
-
-				if (_joinPredicate == null) {
-					_joinPredicate = defaultPredicate;
-				}
-				else {
-					_joinPredicate = _joinPredicate.and(defaultPredicate);
-				}
-			}
-			else if (_wherePredicate == null) {
-				_wherePredicate = defaultPredicate;
-			}
-			else {
-				_wherePredicate = _wherePredicate.and(defaultPredicate);
-			}
-		}
-
-		private PredicateASTNodeListener(
-			Table<?> childTable, Set<Column<?, ?>> childPredicateColumns) {
-
-			_childTable = childTable;
-			_childPredicateColumns = childPredicateColumns;
-		}
-
-		private final Set<Column<?, ?>> _childPredicateColumns;
-		private final Table<?> _childTable;
-		private Predicate _joinPredicate;
-		private Predicate _wherePredicate;
 
 	}
 

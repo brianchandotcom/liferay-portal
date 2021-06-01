@@ -193,6 +193,8 @@ public class TableReferenceInfoFactoryTest {
 			parentTableJoinHoldersMap.toString(), 3,
 			parentTableJoinHoldersMap.size());
 
+		Scalar<String> key = new Scalar<>("key");
+
 		_assertMissingRequirementsSQL(
 			parentTableJoinHoldersMap.get(MainExampleTable.INSTANCE),
 			DSLQueryFactoryUtil.select(
@@ -201,28 +203,27 @@ public class TableReferenceInfoFactoryTest {
 			).from(
 				ReferenceExampleTable.INSTANCE
 			).leftJoinOn(
-				MainExampleTable.INSTANCE,
-				ReferenceExampleTable.INSTANCE.referenceExampleId.eq(
-					MainExampleTable.INSTANCE.classPK)
-			).leftJoinOn(
 				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.value.eq(
+					TableReferenceInfoFactoryTest.class.getName())
+			).leftJoinOn(
+				MainExampleTable.INSTANCE,
 				ClassNameTable.INSTANCE.classNameId.eq(
-					MainExampleTable.INSTANCE.classNameId)
+					MainExampleTable.INSTANCE.classNameId
+				).and(
+					MainExampleTable.INSTANCE.flag.eq(0)
+				).and(
+					ReferenceExampleTable.INSTANCE.referenceExampleId.eq(
+						MainExampleTable.INSTANCE.classPK)
+				).and(
+					key.eq(MainExampleTable.INSTANCE.name)
+				)
 			).where(
 				() -> {
 					Predicate predicate =
 						MainExampleTable.INSTANCE.mainExampleId.isNull();
 
-					Scalar<String> key = new Scalar<>("key");
-
 					return predicate.and(
-						key.eq(MainExampleTable.INSTANCE.name)
-					).and(
-						MainExampleTable.INSTANCE.flag.eq(0)
-					).and(
-						ClassNameTable.INSTANCE.value.eq(
-							TableReferenceInfoFactoryTest.class.getName())
-					).and(
 						ReferenceExampleTable.INSTANCE.referenceExampleId.
 							isNotNull()
 					).and(

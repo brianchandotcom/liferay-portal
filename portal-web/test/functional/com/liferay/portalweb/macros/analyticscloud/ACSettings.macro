@@ -46,6 +46,40 @@ definition {
 		}
 	}
 
+	@summary = "Deletes a specific data source \
+	@param dataSourceName the name of the data source you want to delete"
+	macro deleteDataSource {
+		var itemName = "${dataSourceName}";
+
+		if (IsElementNotPresent(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON")) {
+			ACNavigation.goToSettings();
+		}
+
+		ACSettings.goToDataSources();
+
+		Click(locator1 = "ACSettings#SEARCH_BAR");
+
+		Type(
+			locator1 = "ACSettings#SEARCH_BAR",
+			value1 = "${dataSourceName}");
+
+		KeyPress(
+			locator1 = "ACSettings#SEARCH_BAR",
+			value1 = "\ENTER");
+
+		Click(locator1 = "ACSettings#ITEM_ON_LIST");
+
+		Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
+
+		Copy(locator1 = "ACSettings#DELETE_CONFIRMATION_MESSAGE");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Paste(locator1 = "ACSettings#DELETE_CONFIRMATION_INPUT");
+
+		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+	}
+
 	@summary = "Deletes a specific property \
 	@param propertyName the name of the property you want to delete"
 	macro deleteProperty {

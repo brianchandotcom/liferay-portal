@@ -37,11 +37,13 @@ import com.liferay.petra.string.StringPool;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -160,7 +162,7 @@ public class TableJoinHolderFactory {
 			FromStep fromStep = DSLQueryFactoryUtil.select(
 				primaryKeyColumn, new Scalar<>(parentTable.getTableName()));
 
-			List<Column<?, ?>> childPredicateColumns = new ArrayList<>();
+			Set<Column<?, ?>> childPredicateColumns = new LinkedHashSet<>();
 
 			Deque<Map.Entry<Table<?>, PredicateASTNodeListener>> joinEntries =
 				new LinkedList<>();
@@ -243,13 +245,8 @@ public class TableJoinHolderFactory {
 	};
 	private static final FromStep _validationFromStep =
 		new ValidationFromStep();
-	private static final Set<Operand> _validOperands = new HashSet<Operand>() {
-		{
-			add(Operand.AND);
-			add(Operand.EQUAL);
-			add(Operand.LIKE);
-		}
-	};
+	private static final Set<Operand> _validOperands = new HashSet<>(
+		Arrays.asList(Operand.AND, Operand.EQUAL, Operand.LIKE));
 
 	private static class JoinStepASTNodeListener<T extends Table<T>>
 		implements ASTNodeListener {
@@ -377,13 +374,13 @@ public class TableJoinHolderFactory {
 		}
 
 		private PredicateASTNodeListener(
-			Table<?> childTable, List<Column<?, ?>> childPredicateColumns) {
+			Table<?> childTable, Set<Column<?, ?>> childPredicateColumns) {
 
 			_childTable = childTable;
 			_childPredicateColumns = childPredicateColumns;
 		}
 
-		private final List<Column<?, ?>> _childPredicateColumns;
+		private final Set<Column<?, ?>> _childPredicateColumns;
 		private final Table<?> _childTable;
 		private Predicate _joinPredicate;
 		private Predicate _wherePredicate;

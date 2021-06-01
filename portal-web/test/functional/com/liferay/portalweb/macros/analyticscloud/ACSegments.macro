@@ -68,6 +68,16 @@ definition {
 		Click(locator1 = "ACSegments#CALENDAR_INPUT");
 	}
 
+	macro editFormControlCriterion {
+		var key_Criterion = "${criterionName}";
+
+		var key_option = "${option}";
+
+		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION");
+
+		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION_OPTION");
+	}
+
 	macro editSegment {
 		if (!IsTextEqual.isPartialText(locator1 = "ACSegments#SEGMENT_LABEL", value1 = "SEGMENT")) {
 			ACSegments.searchSegment(findSegment = "${searchTerm}");
@@ -174,16 +184,6 @@ definition {
 		Type(
 			locator1 = "ACSegments#OCCURENCE_INPUT",
 			value1 = "${occurenceNumber}");
-	}
-
-	macro editFormControlCriterion {
-		var key_Criterion = "${criterionName}";
-
-		var key_option = "${option}";
-
-		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION");
-
-		Click(locator1 = "ACSegments#FORM_CONTROL_CRITERION_OPTION");
 	}
 
 	macro viewActivePageCreationModel {

@@ -124,6 +124,8 @@ public class JournalCacheExportImportLifecycleListener
 	public void onPortletExportFailed(
 			PortletDataContext portletDataContext, Throwable throwable)
 		throws Exception {
+
+		_journalArticleExportImportCache.clear();
 	}
 
 	@Override
@@ -134,6 +136,8 @@ public class JournalCacheExportImportLifecycleListener
 	@Override
 	public void onPortletExportSucceeded(PortletDataContext portletDataContext)
 		throws Exception {
+
+		_journalArticleExportImportCache.clear();
 	}
 
 	@Override

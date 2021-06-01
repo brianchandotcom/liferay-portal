@@ -89,6 +89,36 @@ const mockLayoutReportsIssuesOver100SEO = [
 	},
 ];
 
+const mockLayoutReportsIssuesSEODetails = [
+	{
+		details: [],
+		key: 'accessibility',
+		title: 'Accessibility',
+		total: '0',
+	},
+	{
+		details: [
+			{
+				description: '<p>Meta description</p>',
+				key: 'missing-meta-description',
+				tips: '<p>Meta description can be added</p>',
+				title: 'Missing Meta Description',
+				total: '1',
+			},
+			{
+				description: '<p>Check with no failing elements</p>',
+				key: 'check-with-no-failing-elements',
+				tips: '<p>No failing elements</p>',
+				title: 'No failing elements',
+				total: '0',
+			},
+		],
+		key: 'seo',
+		title: 'SEO',
+		total: '1',
+	},
+];
+
 const mockPageURLs = [
 	{languageId: 'en-US', title: 'English', url: 'English URL'},
 ];
@@ -204,5 +234,27 @@ describe('IssuesList', () => {
 		);
 
 		expect(getByText('+100')).toBeInTheDocument();
+	});
+
+	it('renders SEO section open and show checks with failing elements', () => {
+		const {getAllByText, getByText, queryByText} = render(
+			<StoreContextProvider
+				value={{
+					data: {
+						defaultLanguageId,
+						imagesPath: 'imagesPath',
+						layoutReportsIssues: mockLayoutReportsIssuesSEODetails,
+						pageURLs: mockPageURLs,
+					},
+				}}
+			>
+				<IssuesList />
+			</StoreContextProvider>
+		);
+
+		expect(getByText('Missing Meta Description')).toBeInTheDocument();
+		expect(getAllByText('1').length).toBe(2);
+
+		expect(queryByText('No failing elements')).not.toBeInTheDocument();
 	});
 });

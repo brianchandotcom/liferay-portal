@@ -325,7 +325,7 @@ definition {
 			baseURL = "http://localhost:9080",
 			siteURLKey = "remote-site");
 
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title Edit");
 
 		DMDocument.viewCP(
 			dmDocumentDescription = "DM Document Description Edit",

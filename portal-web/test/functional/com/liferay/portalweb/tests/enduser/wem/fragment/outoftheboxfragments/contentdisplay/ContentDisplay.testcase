@@ -382,20 +382,20 @@ definition {
 	@description = "This is a test for LPS-131040. The category name should be shown when select a category in Content Display with Default Template."
 	@priority = "4"
 	test ViewSelectedCategoryInDisplayPageTemplate {
-		task ("Add a Vocabulary via JSON") {
+		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
 				title = "Vocabulary Name");
 		}
 
-		task ("Add a Category via JSON") {
+		task ("Add a category") {
 			JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
 
-		task ("Add a Display Page Template for Category via JSON") {
+		task ("Add a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Category",
 				displayPageTemplateEntryName = "Display Page Name",
@@ -431,7 +431,7 @@ definition {
 			Click(locator1 = "PageEditor#PREVIEW");
 		}
 
-		task ("View category name shown in modal Content Display") {
+		task ("View category name shown in modal") {
 			AssertTextEquals(
 				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT",
 				value1 = "Category Name");

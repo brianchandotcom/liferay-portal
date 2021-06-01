@@ -1,0 +1,62 @@
+@component-name = "portal-collaboration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Item Selector";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			BlogsEntry.tearDownCP();
+
+			DMFolder.tearDownCP();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "This makes sure that canceling the image edition will preserve the original image."
+	@priority = "5"
+	test CanDiscardChange {
+		property test.name.skip.portal.instance = "ImageEditor#CanDiscardChange";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoEditImage(dmDocumentTitle = "Document_2.jpg");
+
+		ImageEditor.rotateImage();
+
+		Button.clickCancel();
+
+		Refresh();
+
+		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "313",
+			metadataLabel = "Image Length");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "500",
+			metadataLabel = "Image Width");
+	}
+
+}

@@ -127,7 +127,7 @@ definition {
 	}
 
 	macro includeAnonymous {
-		Click(locator1 = "ACSegments#ANONYMOUS_SWITCH");
+		Check.checkToggleSwitch(locator1 = "ACSegments#ANONYMOUS_SWITCH");
 	}
 
 	macro nameSegment {
@@ -232,9 +232,8 @@ definition {
 	}
 
 	macro viewIncludeAnonymousLabel {
-		AssertTextPresent(
-			locator1 = "ACSegments#ANONYMOUS_LABEL",
-			value1 = "Include Anonymous");
+		AssertElementPresent(
+			locator1 = "ACSegments#ANONYMOUS_LABEL");
 	}
 
 	macro viewSegmentComposition {

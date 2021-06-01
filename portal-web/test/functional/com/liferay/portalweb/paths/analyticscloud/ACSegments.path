@@ -16,7 +16,7 @@
 </tr>
 <tr>
     <td>ANONYMOUS_LABEL</td>
-    <td>//div[@class='card-header']/div/span[@class='label-item']</td>
+    <td>//div[@class='card-header']/div/span[@class='label-item' and text()='Include Anonymous']</td>
     <td></td>
 </tr>
 <tr>
@@ -238,6 +238,11 @@
 <tr>
     <td>FORM_CONTROL_CRITERION_OPTION</td>
     <td>//div[contains(@class,'form-group-item')and text()='${key_Criterion}']/..//select[contains(@class,'form-control')]//option[text()='${key_option}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_MEMBERSHIP_LEGEND</td>
+    <td>//span[contains(@class,'recharts-legend-item-text')]//span[text()='${key_memberType}']//b</td>
     <td></td>
 </tr>
 <!-- Static Segments  -->

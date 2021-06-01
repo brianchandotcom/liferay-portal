@@ -18,10 +18,10 @@ import ClayList from '@clayui/list';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import {getDataRendererById} from 'frontend-taglib-clay/data_set_display/data_renderers/index';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 
+import {resolveRendererByType} from '../../utilities/dataRenderers';
 import {getValueFromItem} from '../../utilities/index';
 import Expose from './Expose';
 
@@ -30,7 +30,9 @@ function Item(props) {
 		<ClayTable.Row>
 			{props.fields.map((field, i) => {
 				const value = getValueFromItem(props.itemData, field.fieldName);
-				const DataRenderer = getDataRendererById(field.contentRenderer);
+				const DataRenderer = resolveRendererByType(
+					field.contentRenderer
+				);
 
 				return (
 					<ClayTable.Cell

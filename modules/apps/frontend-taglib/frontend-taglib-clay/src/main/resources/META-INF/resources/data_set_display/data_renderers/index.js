@@ -49,4 +49,7 @@ export const inputRenderers = {
 	text: InputTextRenderer,
 };
 
-export default dataRenderers;
+export default {
+	...dataRenderers,
+	...inputRenderers,
+};

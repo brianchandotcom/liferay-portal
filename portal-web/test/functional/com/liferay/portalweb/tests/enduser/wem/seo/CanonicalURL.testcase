@@ -280,4 +280,31 @@ definition {
 			portalURL = "${portalURL}");
 	}
 
+	@description = "This test covers LPS-127840. It ensures that the Canonical URL has page name."
+	@priority = "3"
+	test ViewPageNameInCanonicalURL {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "CanonicalURL#ViewPageNameInCanonicalURL";
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(pageName = "Page1");
+
+		SitePages.addPublicPage(pageName = "Page2");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.addVirtualHostsURLCP(
+			publicPageVirtualHostURL = "www.able.com",
+			publicVirtualHosts = "true");
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080/page2");
+
+		Page.assertCanonicalURL(customCanonicalURL = "http://www.able.com:8080/page2");
+	}
+
 }

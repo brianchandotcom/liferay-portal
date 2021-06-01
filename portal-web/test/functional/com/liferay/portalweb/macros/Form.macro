@@ -92,6 +92,12 @@ definition {
 		Button.clickDone();
 	}
 
+	macro configureRequireAuthentication {
+		FormFields.enableSwitcher(fieldName = "requireAuthentication");
+
+		Button.clickDone();
+	}
+
 	macro configureRequireCaptcha {
 		FormFields.enableSwitcher(fieldName = "requireCaptcha");
 

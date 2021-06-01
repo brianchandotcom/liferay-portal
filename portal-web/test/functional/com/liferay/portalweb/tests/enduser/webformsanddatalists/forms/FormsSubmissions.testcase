@@ -160,14 +160,63 @@ definition {
 	}
 
 	@description = "Verify that a Form can require user authentication before being accessed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRequireUserAuthentication {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131024 CanRequireUserAuthentication pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormsAdminNavigator.gotoSettings();
+
+		Form.configureRequireAuthentication();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		SignOut.signOut();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		User.viewLoginPG();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}?SM_USER=test@liferay.com");
+
+		AssertElementPresent(
+			key_formName = "Form 1",
+			locator1 = "Form#PUBLISH_FORM_NAME_FIELD");
+
+		FormFields.viewTextLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		Form.viewSubmitButtonText(key_buttonText = "Submit");
+
+		FormViewBuilder.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that a Form's Success Page can be restored"

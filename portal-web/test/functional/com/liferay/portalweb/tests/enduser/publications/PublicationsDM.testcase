@@ -188,7 +188,6 @@ definition {
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Documents Folder",
-			changeOrder = "5",
 			changeSite = "Guest",
 			changeTitle = "DM Folder 1 Name",
 			changeType = "Modified",
@@ -204,7 +203,6 @@ definition {
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Documents Folder",
-			changeOrder = "5",
 			changeSite = "Guest",
 			changeTitle = "DM Folder 1 Name",
 			changeType = "Modified",
@@ -222,7 +220,6 @@ definition {
 
 		PublicationsChanges.viewChangesViaChangesStyle(
 			changeCategory = "Documents Folder",
-			changeOrder = "5",
 			changeSite = "Guest",
 			changeTitle = "DM Folder 1 Name",
 			changeType = "Deleted",

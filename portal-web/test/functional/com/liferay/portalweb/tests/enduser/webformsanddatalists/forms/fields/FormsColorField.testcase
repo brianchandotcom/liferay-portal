@@ -100,14 +100,52 @@ definition {
 	}
 
 	@description = "Verify that a Color Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133135 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Color");
+
+		FormFields.editHelpTextField(fieldHelpText = "Help Text Test");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldPredefinedDate(fieldValue = "FF0D0D");
+
+		FormViewBuilder.clickActionMenuFieldset();
+
+		FormViewBuilder.duplicateField(selectAction = "Duplicate");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Color");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Copy of Color");
+
+		FormFields.viewColorValue(
+			fieldName = "Color",
+			fieldValue = "FF0D0D");
+
+		FormFields.viewColorValue(
+			fieldName = "Field",
+			fieldValue = "FF0D0D");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "Color");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "Field");
 	}
 
 	@description = "Verify that a Color Field can be edited"

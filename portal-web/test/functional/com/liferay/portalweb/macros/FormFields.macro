@@ -228,6 +228,12 @@ definition {
 			value1 = "${fieldHelpText}");
 	}
 
+	macro editHelpTextField {
+		Type(
+			locator1 = "FormViewBuilder#SIDEBAR_BASIC_HELP_TEXT",
+			value1 = "${fieldHelpText}");
+	}
+
 	macro editOptionsRow {
 		var key_rowNumber = "${rowNumber}";
 

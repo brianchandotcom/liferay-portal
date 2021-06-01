@@ -1,0 +1,106 @@
+@component-name = "portal-questions"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Questions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Questions Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "2",
+			groupName = "Guest",
+			layoutName = "Questions Page",
+			widgetName = "Questions");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Message Boards");
+
+			if (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
+				Questions.tearDown();
+			}
+		}
+	}
+
+	@description = "Validate if a user can answer a question that was posted before the workflow was enabled."
+	@priority = "4"
+	test CanAddAnswerViaJSONAfterEnablingWorkflow {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestion",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Message Boards Moderation");
+
+		JSONQuestions.addAnswer(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyBody = "This is my answer",
+			threadSubject = "Title AddQuestion",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.getAnswerTitle(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			replyTitle = "Title AddQuestion",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.getApprovedStatus(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+	}
+
+	@description = "Validate if the pending status can be returned through JSON once MB moderation Workflow is enabled."
+	@priority = "4"
+	test PendingStatusCanBeReturnedThroughJSON {
+		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "true",
+			settingFieldName = "Enable Message Boards Moderation");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		JSONQuestions.addQuestion(
+			bodyField = "Body AddQuestion",
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+
+		JSONQuestions.getPendingStatus(
+			categoryName = "Questions Test Category",
+			groupName = "Guest",
+			titleField = "Title AddQuestion");
+	}
+
+}

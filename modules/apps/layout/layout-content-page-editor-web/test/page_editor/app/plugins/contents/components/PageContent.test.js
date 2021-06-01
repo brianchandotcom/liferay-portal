@@ -20,23 +20,26 @@ import '@testing-library/jest-dom/extend-expect';
 import {StoreContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import PageContent from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/contents/components/PageContent';
 
-const renderPageContent = (props) =>
+const contents = [
+	{
+		actions: {
+			editURL: 'editURL',
+			permissionsURL: 'permissionsURL',
+			viewUsagesURL: 'viewUsagesURL',
+		},
+		status: {
+			hasApprovedVersion: true,
+		},
+		title: 'Test Web Content',
+		type: 'Web Content Article',
+		usagesCount: 1,
+	},
+];
+
+const renderPageContent = (props = contents[0], pageContents = contents) =>
 	render(
-		<StoreContextProvider initialState={[{}, {}]}>
-			<PageContent
-				actions={{
-					editURL: 'editURL',
-					permissionsURL: 'permissionsURL',
-					viewUsagesURL: 'viewUsagesURL',
-				}}
-				name="Web Content Article"
-				status={{
-					hasApprovedVersion: true,
-				}}
-				title="Test Web Content"
-				usagesCount={1}
-				{...props}
-			></PageContent>
+		<StoreContextProvider initialState={{pageContents}}>
+			<PageContent {...props}></PageContent>
 		</StoreContextProvider>
 	);
 
@@ -79,6 +82,7 @@ describe('PageContent', () => {
 
 	it('shows View Usages action in dropdown menu if receives a View Usages URL', () => {
 		const {getByText} = renderPageContent({
+			...contents[0],
 			status: {
 				hasApprovedVersion: false,
 			},

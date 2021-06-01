@@ -35,23 +35,15 @@ type TNavigationState = {
 	violationsIndex: number;
 };
 
-enum PagesEnum {
-	Occurrence = 2,
-	Violation = 1,
-	Violations = 0,
-}
-
 function SidebarPanelsNavigator({children}: SidebarPanelNavigatorProps) {
-	const [activePageIndex, setActivePageIndex] = useState(
-		PagesEnum.Violations
-	);
+	const [activePageIndex, setActivePageIndex] = useState(0);
 
 	const [navigationState, setNavigationState] = useState<TNavigationState>({
 		violationsIndex: 0,
 	});
 
 	return (
-		<div className="page-accessibility-tool__sidebar sidebar sidebar-light">
+		<div className="a11y-panel__sidebar sidebar sidebar-light">
 			{React.Children.map(children, (child, index) => {
 				const childrenCount = React.Children.count(children);
 
@@ -126,12 +118,7 @@ export function A11yPanel({violations}: A11yPanelProps) {
 	const sortedByImpactViolations = sortByImpact(violations);
 
 	return (
-		<FilteredViolationsContextProvider
-			value={{
-				filteredViolations: sortedByImpactViolations,
-				violations: sortedByImpactViolations,
-			}}
-		>
+		<FilteredViolationsContextProvider value={sortedByImpactViolations}>
 			{({filteredViolations, selectedCategories, selectedImpact}) => (
 				<SidebarPanelsNavigator>
 					<Violations

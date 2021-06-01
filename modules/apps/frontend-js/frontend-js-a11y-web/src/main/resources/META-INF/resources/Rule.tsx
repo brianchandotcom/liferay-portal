@@ -12,16 +12,20 @@
  * details.
  */
 
+import './Rule.scss';
+
 import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import React from 'react';
 
+import type {ImpactValue} from 'axe-core';
+
 interface IRule extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	quantity?: number;
-	ruleSubtext?: string | React.ReactChildren;
-	ruleText?: string | React.ReactChildren;
-	ruleTitle?: string | React.ReactChildren;
+	ruleSubtext?: ImpactValue;
+	ruleText?: React.ReactNode;
+	ruleTitle?: React.ReactNode;
 }
 
 function Rule({
@@ -38,7 +42,7 @@ function Rule({
 			{...otherProps}
 		>
 			<ClayList.ItemField
-				className="page-accessibility-tool__sidebar--rule-list-item"
+				className="a11y-panel__sidebar--rule-list-item"
 				expand
 			>
 				{ruleTitle && (

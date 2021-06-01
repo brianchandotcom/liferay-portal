@@ -26,15 +26,6 @@ import {TYPES, useFilteredViolationsDispatch} from './useFilteredViolations';
 
 import type {ImpactValue, Result} from 'axe-core';
 
-declare var Liferay: {
-	Language: {
-		get(value: string): string;
-	};
-	Util: {
-		sub(...value: string[]): string;
-	};
-};
-
 const IMPACT_FILTER_OPTIONS = [
 	{label: Liferay.Language.get('critical'), value: 'critical'},
 	{label: Liferay.Language.get('serious'), value: 'serious'},
@@ -99,22 +90,13 @@ function ViolationsFilter({
 										data-testid={item.value}
 										label={item.label}
 										onChange={() => {
-											if (existsImpact) {
-												dispatch({
-													payload: {
-														value: item.value,
-													},
-													type: TYPES.IMPACT_REMOVE,
-												});
-
-												return;
-											}
-
 											dispatch({
 												payload: {
 													value: item.value,
 												},
-												type: TYPES.IMPACT_ADD,
+												type: existsImpact
+													? TYPES.IMPACT_REMOVE
+													: TYPES.IMPACT_ADD,
 											});
 										}}
 									></ClayCheckbox>
@@ -138,21 +120,13 @@ function ViolationsFilter({
 										data-testid={item.value}
 										label={item.label}
 										onChange={() => {
-											if (existsCategory) {
-												dispatch({
-													payload: {
-														value: item.value,
-													},
-													type: TYPES.CATEGORY_REMOVE,
-												});
-
-												return;
-											}
 											dispatch({
 												payload: {
 													value: item.value,
 												},
-												type: TYPES.CATEGORY_ADD,
+												type: existsCategory
+													? TYPES.CATEGORY_REMOVE
+													: TYPES.CATEGORY_ADD,
 											});
 										}}
 									></ClayCheckbox>
@@ -188,7 +162,7 @@ export default function Violations({
 	return (
 		<>
 			<div className="sidebar-section">
-				<div className="page-accessibility-tool__sidebar--violations-panel-header-title">
+				<div className="a11y-panel__sidebar--violations-panel-header-title">
 					<div className="inline-item inline-item-before">
 						<ClayIcon
 							className="text-danger"
@@ -208,7 +182,7 @@ export default function Violations({
 					</div>
 				</div>
 			</div>
-			<div className="page-accessibility-tool__sidebar--violations-panel-header-description">
+			<div className="a11y-panel__sidebar--violations-panel-header-description">
 				{!hasViolations
 					? Liferay.Language.get(
 							'there-are-no-accessibility-violations-in-this-page'
@@ -241,9 +215,7 @@ export default function Violations({
 									}
 								}}
 								quantity={nodes.length}
-								ruleSubtext={
-									impact as string | React.ReactChildren
-								}
+								ruleSubtext={impact}
 								ruleTitle={id}
 							/>
 						);

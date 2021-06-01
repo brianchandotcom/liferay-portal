@@ -12,12 +12,14 @@
  * details.
  */
 
+import './Rule.scss';
 import React from 'react';
+import type {ImpactValue} from 'axe-core';
 interface IRule extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	quantity?: number;
-	ruleSubtext?: string | React.ReactChildren;
-	ruleText?: string | React.ReactChildren;
-	ruleTitle?: string | React.ReactChildren;
+	ruleSubtext?: ImpactValue;
+	ruleText?: React.ReactNode;
+	ruleTitle?: React.ReactNode;
 }
 declare function Rule({
 	quantity,

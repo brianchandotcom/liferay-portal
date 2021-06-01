@@ -23,12 +23,6 @@ import Rule from './Rule';
 
 import type {Result} from 'axe-core';
 
-declare var Liferay: {
-	Language: {
-		get(value: string): string;
-	};
-};
-
 type PanelSectionProps = {
 	children: React.ReactNode;
 	title: React.ReactNode;
@@ -88,7 +82,7 @@ function Violation({
 				}}
 				title={id}
 			/>
-			<div className="page-accessibility-tool__sidebar--violation-panel-wrapper">
+			<div className="a11y-panel__sidebar--violation-panel-wrapper">
 				<ClayPanel.Group flush>
 					<PanelSection title={Liferay.Language.get('details')}>
 						{description}

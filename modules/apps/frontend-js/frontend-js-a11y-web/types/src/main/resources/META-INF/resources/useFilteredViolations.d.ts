@@ -28,22 +28,18 @@ declare type TAction = {
 };
 declare type TState = {
 	filteredViolations: Array<Result>;
-	selectedCategories: Array<String> | [];
-	selectedImpact: Array<ImpactValue> | [];
-	violations: Array<Result>;
+	selectedCategories: Array<string> | [];
+	selectedImpact: Array<ImpactValue>;
 };
 export declare const useFilteredViolationsDispatch: () => React.Dispatch<
 	TAction
 >;
 declare type FilteredViolationsContextProviderProps = {
 	children: (props: TState) => React.ReactNode;
-	value: {
-		filteredViolations: Array<Result>;
-		violations: Array<Result>;
-	};
+	value: Array<Result>;
 };
 export declare function FilteredViolationsContextProvider({
 	children,
-	value,
+	value: violations,
 }: FilteredViolationsContextProviderProps): JSX.Element;
 export {};

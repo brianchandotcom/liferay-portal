@@ -1,6 +1,4 @@
-@import 'atlas-variables';
-
-.page-accessibility-tool__sidebar {
+.a11y-panel__sidebar {
 	width: 320px;
 
 	&--violations-panel-header-title {
@@ -14,10 +12,6 @@
 
 	&--violations-panel-header-description {
 		padding: 1rem;
-	}
-
-	&--rule-list-item {
-		padding-left: inherit !important;
 	}
 
 	.list-group-item {

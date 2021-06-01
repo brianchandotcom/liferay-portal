@@ -12,7 +12,13 @@
  * details.
  */
 
-import React, {Dispatch, createContext, useContext, useReducer} from 'react';
+import React, {
+	Dispatch,
+	createContext,
+	useContext,
+	useMemo,
+	useReducer,
+} from 'react';
 
 import type {ImpactValue, Result} from 'axe-core';
 
@@ -30,118 +36,47 @@ type TAction = {
 
 type TState = {
 	filteredViolations: Array<Result>;
-	selectedCategories: Array<String> | [];
-	selectedImpact: Array<ImpactValue> | [];
-	violations: Array<Result>;
+	selectedCategories: Array<string> | [];
+	selectedImpact: Array<ImpactValue>;
 };
 
-const INITIAL_STATE: TState = {
-	filteredViolations: [],
+const INITIAL_STATE: Omit<TState, 'filteredViolations'> = {
 	selectedCategories: [],
 	selectedImpact: [],
-	violations: [],
 };
 
-function filterByCategories(
-	receivedTags: Array<String>,
-	selectedCategories: Array<String>
-) {
-	return selectedCategories.some((category) =>
-		receivedTags.includes(category)
-	);
-}
-
-function filterByImpact(
-	receivedImpact: ImpactValue,
-	selectedImpact: Array<ImpactValue>
-) {
-	return selectedImpact.includes(receivedImpact);
-}
-
-function addItem(list: Array<any>, value: any) {
-	return [...list, value];
-}
-
-function removeItem(list: Array<any>, value: any) {
-	return list.filter((currentItem) => currentItem !== value);
-}
-
 function violationsReducer(state = INITIAL_STATE, action: TAction) {
-	const {selectedCategories, selectedImpact, violations} = state;
+	const {selectedCategories, selectedImpact} = state;
 
 	const {value} = action.payload;
 
 	switch (action.type) {
 		case TYPES.CATEGORY_ADD: {
-			const newSelectedCategories = addItem(selectedCategories, value);
-
 			return {
 				...state,
-				filteredViolations: newSelectedCategories.length
-					? violations.filter(({tags}) => {
-							if (tags) {
-								return filterByCategories(
-									tags,
-									newSelectedCategories
-								);
-							}
-					  })
-					: violations,
-				selectedCategories: newSelectedCategories,
+				selectedCategories: [...selectedCategories, value],
 			};
 		}
 		case TYPES.CATEGORY_REMOVE: {
-			const newSelectedCategories = removeItem(selectedCategories, value);
-
 			return {
 				...state,
-				filteredViolations: newSelectedCategories.length
-					? violations.filter(({tags}) => {
-							if (tags) {
-								return filterByCategories(
-									tags,
-									newSelectedCategories
-								);
-							}
-					  })
-					: violations,
-				selectedCategories: newSelectedCategories,
+				selectedCategories: selectedCategories.filter(
+					(currentItem) => currentItem !== value
+				),
 			};
 		}
 		case TYPES.IMPACT_ADD: {
-			const newImpactSelected = addItem(selectedImpact, value);
-
 			return {
 				...state,
-				filteredViolations: newImpactSelected.length
-					? violations.filter(({impact}) => {
-							if (impact) {
-								return filterByImpact(
-									impact,
-									newImpactSelected
-								);
-							}
-					  })
-					: violations,
-				selectedImpact: newImpactSelected,
+				selectedImpact: [...selectedImpact, value] as ImpactValue[],
 			};
 		}
 		case TYPES.IMPACT_REMOVE: {
-			const newImpactSelected = removeItem(selectedImpact, value);
-
 			return {
 				...state,
-				filteredViolations: newImpactSelected.length
-					? violations.filter(({impact}) => {
-							if (impact) {
-								return filterByImpact(
-									impact,
-									newImpactSelected
-								);
-							}
-					  })
-					: violations,
-				selectedImpact: newImpactSelected,
+				selectedImpact: selectedImpact.filter(
+					(currentItem) => currentItem !== value
+				) as ImpactValue[],
 			};
 		}
 		default:
@@ -158,24 +93,41 @@ export const useFilteredViolationsDispatch = () =>
 
 type FilteredViolationsContextProviderProps = {
 	children: (props: TState) => React.ReactNode;
-	value: {
-		filteredViolations: Array<Result>;
-		violations: Array<Result>;
-	};
+	value: Array<Result>;
 };
 
 export function FilteredViolationsContextProvider({
 	children,
-	value,
+	value: violations,
 }: FilteredViolationsContextProviderProps) {
 	const [state, dispatch] = useReducer(violationsReducer, {
 		...INITIAL_STATE,
-		...value,
+		...violations,
 	});
+
+	const {selectedCategories, selectedImpact} = state;
+
+	const filteredViolations = useMemo(() => {
+		if (!selectedCategories.length && !selectedImpact.length) {
+			return violations;
+		}
+
+		return violations.filter(({impact, tags}) => {
+			const hasCategory = selectedCategories.some((category) =>
+				tags.includes(category)
+			);
+
+			if (impact) {
+				return hasCategory || selectedImpact.includes(impact);
+			}
+
+			return hasCategory;
+		});
+	}, [violations, selectedCategories, selectedImpact]);
 
 	return (
 		<FilteredViolationsDispatchContext.Provider value={dispatch}>
-			{children(state)}
+			{children({...state, filteredViolations})}
 		</FilteredViolationsDispatchContext.Provider>
 	);
 }

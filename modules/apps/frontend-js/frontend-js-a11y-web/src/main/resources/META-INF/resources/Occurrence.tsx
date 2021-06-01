@@ -24,20 +24,14 @@ interface ICodeBlock extends React.HTMLAttributes<HTMLDivElement> {
 	children: React.ReactNode;
 }
 
-declare var Liferay: {
-	Language: {
-		get(value: string): string;
-	};
-};
-
 function CodeBlock({children, ...otherProps}: ICodeBlock) {
 	return (
 		<div
-			className="page-accessibility-tool__sidebar--occurrence-panel-code-block"
+			className="a11y-panel__sidebar--occurrence-panel-code-block"
 			role="textbox"
 			{...otherProps}
 		>
-			<div className="p-2 page-accessibility-tool__sidebar--occurrence-panel-code-text">
+			<div className="a11y-panel__sidebar--occurrence-panel-code-text p-2">
 				{children}
 			</div>
 		</div>
@@ -79,7 +73,7 @@ function Occurrence({navigationState, previous, violations}: OccurrenceProps) {
 				}}
 				title={occurrenceName}
 			/>
-			<div className="page-accessibility-tool__sidebar--occurrence-description-wrapper">
+			<div className="a11y-panel__sidebar--occurrence-description-wrapper">
 				<p className="text-secondary">
 					{Liferay.Language.get(
 						'please-open-the-devtools-in-the-browser-to-see-selected-occurrence'

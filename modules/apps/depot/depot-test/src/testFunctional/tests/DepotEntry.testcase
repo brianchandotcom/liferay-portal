@@ -150,28 +150,6 @@ definition {
 
 		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
 
-		Depot.viewLanguageItems(depotLanguage = "Spanish (Spain)");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Depot.moveLanguage(
-			depotLanguage = "Spanish (Spain)",
-			moveDown = "true");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
-		Depot.viewLanguageItems(
-			depotLanguage = "Spanish (Spain)",
-			lastLanguageItem = "true");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDefineCustomLanguages(depotName = "Test Depot Name");
-
 		Depot.configureDefaultLanguage(
 			defaultDepotLanguage = "Spanish (Spain)",
 			locale = "es_ES");

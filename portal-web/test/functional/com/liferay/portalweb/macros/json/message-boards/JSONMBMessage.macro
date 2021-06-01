@@ -153,6 +153,13 @@ definition {
 			var messageId = JSONMBMessage.getmessageId();
 		}
 
+		if (isSet(anonymous)) {
+			var anonymous = "true";
+		}
+		else {
+			var anonymous = "false";
+		}
+
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -163,7 +170,7 @@ definition {
 				-d body=${replyBody} \
 				-d format=bbcode \
 				-d inputStreamOVPs=[] \
-				-d anonymous=false \
+				-d anonymous=${anonymous} \
 				-d priority=0 \
 				-d allowPingbacks=true \
 		''';

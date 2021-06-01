@@ -540,6 +540,45 @@ definition {
 		}
 	}
 
+	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Scheduled, associated DPT or not, the user is led to web content editor"
+	@priority = "3"
+	@uitest
+	test ClickTitleScheduledNoDPT {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleScheduledNoDPT";
+
+		task ("Add web content Scheduled") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC Content",
+				webContentTitle = "WC Title");
+
+			WebContent.editDisplayDate(displayDate = "01/01/2100");
+
+			PortletEntry.publish();
+		}
+
+		task ("Go to Content Dashboard and click on the title") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			LexiconTable.clickTableEntryColumnLink(
+				columnName = "title",
+				tableEntry = "");
+		}
+
+		task ("Assert the web content is opened in the web content editor") {
+			AssertElementPresent(
+				locator1 = "Button#PUBLISH",
+				value1 = "Publish");
+		}
+	}
+
 	@description = "Validate if the user can edit a web content through the Edit option"
 	@priority = "5"
 	test EditWebContent {

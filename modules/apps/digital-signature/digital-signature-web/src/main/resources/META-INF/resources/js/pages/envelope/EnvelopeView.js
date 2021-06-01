@@ -16,11 +16,11 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import DocumentPreviewer from 'document-library-preview-document/preview/js/DocumentPreviewer.es';
 import {createResourceURL, fetch, openToast} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext';
+import DocumentPreviewer from '../../components/document-previewer/DocumentPreviewer';
 import EmptyState from '../../components/table/EmptyState';
 import {DOCUSIGN_STATUS} from '../../utils/contants';
 import {concatValues} from '../../utils/utils';

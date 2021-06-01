@@ -5,6 +5,10 @@
 
 .dropdown-menu {
 	border: 1px solid $dropdown-border-color;
+
+	.dropdown-item.active {
+		pointer-events: initial;
+	}
 }
 
 .dropdown-toggle:after {

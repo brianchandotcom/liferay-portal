@@ -18,6 +18,8 @@ import com.liferay.info.pagination.Pagination;
 
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Eudaldo Alonso
  */
@@ -36,6 +38,11 @@ public class DefaultLayoutListRetrieverContext
 	@Override
 	public Optional<Object> getContextObjectOptional() {
 		return Optional.ofNullable(_contextObject);
+	}
+
+	@Override
+	public Optional<HttpServletRequest> getHttpServletRequestOptional() {
+		return Optional.ofNullable(_httpServletRequest);
 	}
 
 	@Override
@@ -69,6 +76,10 @@ public class DefaultLayoutListRetrieverContext
 		_contextObject = contextObject;
 	}
 
+	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+		_httpServletRequest = httpServletRequest;
+	}
+
 	public void setPagination(Pagination pagination) {
 		_pagination = pagination;
 	}
@@ -96,6 +107,7 @@ public class DefaultLayoutListRetrieverContext
 
 	private long[][] _assetCategoryIds;
 	private Object _contextObject;
+	private HttpServletRequest _httpServletRequest;
 	private Pagination _pagination;
 	private long[] _segmentsEntryIds;
 	private long[] _segmentsExperienceIds;

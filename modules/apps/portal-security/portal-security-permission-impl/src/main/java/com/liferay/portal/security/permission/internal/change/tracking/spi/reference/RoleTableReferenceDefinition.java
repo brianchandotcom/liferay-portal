@@ -38,8 +38,11 @@ public class RoleTableReferenceDefinition
 		ChildTableReferenceInfoBuilder<RoleTable>
 			childTableReferenceInfoBuilder) {
 
-		childTableReferenceInfoBuilder.systemEventReference(
-			RoleTable.INSTANCE.roleId, Role.class);
+		childTableReferenceInfoBuilder.resourcePermissionReference(
+			RoleTable.INSTANCE.roleId, Role.class
+		).systemEventReference(
+			RoleTable.INSTANCE.roleId, Role.class
+		);
 	}
 
 	@Override

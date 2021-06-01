@@ -36,6 +36,16 @@ definition {
 		}
 	}
 
+	macro deleteAllProperties {
+		if (!(isSet(propertyList))) {
+			var propertyList = "Liferay DXP,Liferay DXP Combined Property";
+		}
+
+		for(var itemName : list "${propertyList}"){
+			ACSettings.deleteProperty(propertyName = "${itemName}");
+		}
+	}
+
 	@summary = "Deletes a specific property \
 	@param propertyName the name of the property you want to delete"
 	macro deleteProperty {

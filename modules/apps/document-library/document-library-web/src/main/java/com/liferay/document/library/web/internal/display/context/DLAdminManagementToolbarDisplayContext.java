@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContr
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -232,9 +233,11 @@ public class DLAdminManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		String portletName = _liferayPortletRequest.getPortletName();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
+		String rootPortletId = portletDisplay.getRootPortletId();
+
+		if (rootPortletId.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			return null;
 		}
 

@@ -20,9 +20,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.launchDXP();
-
-		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		ACUtils.tearDownDXP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();

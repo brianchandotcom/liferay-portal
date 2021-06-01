@@ -24,9 +24,7 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		ACUtils.launchDXP();
-
-		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		ACUtils.tearDownDXP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
@@ -34,6 +32,8 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
+
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Form known individuals shows which individuals interact with the form"

@@ -54,14 +54,41 @@ definition {
 	}
 
 	@description = "Verify that a file added to the Upload field can be removed by clicking the Clear button"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCleared {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133258 CanBeCleared pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Upload",
+			formPageNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.docx");
+
+		FormFields.viewTextValue(
+			fieldName = "",
+			fieldValue = "Document_1.docx");
+
+		FormFields.clearUploadField();
 	}
 
 	@description = "Verify that an Upload Field can be created"

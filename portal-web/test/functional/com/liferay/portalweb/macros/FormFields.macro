@@ -53,6 +53,15 @@ definition {
 		MenuItem.click(menuItem = "${selectOption}");
 	}
 
+	macro clearUploadField {
+		Click(locator1 = "FormFields#UPLOAD_FIELD_CLEAR_BUTTON");
+
+		AssertElementPresent(
+			key_fieldName = "Upload",
+			key_value = "",
+			locator1 = "FormFields#UPLOAD_FIELD_BY_VALUE");
+	}
+
 	macro deleteGridOptionsRow {
 		Click.javaScriptClick(
 			key_gridField = "${gridField}",

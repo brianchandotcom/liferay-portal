@@ -694,6 +694,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UPLOAD_FIELD_BY_VALUE</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@id,'inputFile')][@value='${key_value}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPLOAD_FIELD_GUEST</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@type='file']</td>
 	<td></td>

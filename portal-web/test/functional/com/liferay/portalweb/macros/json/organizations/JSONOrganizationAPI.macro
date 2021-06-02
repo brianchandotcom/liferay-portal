@@ -54,6 +54,21 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	macro _assignPasswordPolicyToOrganization {
+		Variables.assertDefined(parameterList = "${organizationId},${passwordPolicyId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/organization/add-password-policy-organizations \
+				-u test@liferay.com:test \
+				-d organizationIds=${organizationId} \
+				-d passwordPolicyId=${passwordPolicyId}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro _assignUserToOrganization {
 		Variables.assertDefined(parameterList = "${organizationId},${userId}");
 

@@ -46,6 +46,18 @@ definition {
 			organizationId = "${organizationId}");
 	}
 
+	macro assignPasswordPolicyToOrganization {
+		Variables.assertDefined(parameterList = "${organizationName},${passwordPolicyName}");
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = "${organizationName}");
+
+		var passwordPolicyId = JSONPasswordPolicy.getPasswordPolicyIdByName(passwordPolicyName = "${passwordPolicyName}");
+
+		JSONOrganizationAPI._assignPasswordPolicyToOrganization(
+			organizationId = "${organizationId}",
+			passwordPolicyId = "${passwordPolicyId}");
+	}
+
 	macro assignUserToOrganization {
 		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
 

@@ -277,6 +277,19 @@ public class ItemSelectorRepositoryEntryManagementToolbarDisplayContext {
 		return false;
 	}
 
+	public boolean isShowCreationMenu() {
+		Set<String> allowedCreationMenuUIItemKeys =
+			_getAllowedCreationMenuUIItemKeys();
+
+		if ((allowedCreationMenuUIItemKeys == null) ||
+			!allowedCreationMenuUIItemKeys.isEmpty()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private Set<String> _getAllowedCreationMenuUIItemKeys() {
 		Set<String> allowedCreationMenuUIItemKeys =
 			(Set)_httpServletRequest.getAttribute(

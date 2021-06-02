@@ -68,7 +68,7 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 	searchFormMethod="POST"
 	searchFormName="searchFm"
 	selectable="<%= false %>"
-	showCreationMenu="<%= true %>"
+	showCreationMenu="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.isShowCreationMenu() %>"
 	showInfoButton="<%= false %>"
 	showSearch="<%= showSearch %>"
 	sortingOrder="<%= itemSelectorRepositoryEntryManagementToolbarDisplayContext.getOrderByType() %>"

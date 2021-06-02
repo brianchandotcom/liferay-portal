@@ -361,6 +361,9 @@ $productMenuWidth: 320px;
 	}
 
 	.lfr-header-row {
+		border: 1px solid transparent;
+		min-height: 31px;
+
 		.lfr-asset-summary {
 			margin-left: 5px;
 
@@ -385,11 +388,15 @@ $productMenuWidth: 320px;
 				font-weight: bold;
 			}
 		}
+
+		.lfr-search-combobox {
+			float: right;
+			margin: -2px 0 0 2px;
+		}
 	}
 
 	.lfr-header-row-content {
-		padding-left: 0;
-		padding-top: 0;
+		padding: 0 4px 0 0;
 
 		.edit-toolbar {
 			margin: 0;
@@ -397,6 +404,16 @@ $productMenuWidth: 320px;
 
 		.nav-item-icon {
 			width: 15px;
+		}
+	}
+
+	.lfr-header-row,
+	.lfr-header-row-content {
+		&:after {
+			clear: both;
+			content: '';
+			display: block;
+			height: 0;
 		}
 	}
 

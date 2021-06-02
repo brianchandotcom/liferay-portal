@@ -309,8 +309,6 @@ definition {
 		FormFields.viewOptionsRowFieldValue(
 			fieldValue = "Option 2",
 			rowNumber = "1");
-			
-
 	}
 
 	@description = "Verify that an option can be selected as a Predefined Value"

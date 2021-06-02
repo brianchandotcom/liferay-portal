@@ -150,7 +150,7 @@ function EnvelopeView({
 				<EmptyState
 					className="mb-2 mt-4"
 					description={Liferay.Language.get(
-						'the-document-doenst-have-a-preview'
+						'the-document-doesnt-have-a-preview'
 					)}
 					title={Liferay.Language.get('no-preview-available')}
 				/>

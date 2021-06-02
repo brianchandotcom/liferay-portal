@@ -1432,6 +1432,11 @@ definition {
 				checkboxName = "Require Password Reset",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
+		else {
+			Uncheck(
+				checkboxName = "Require Password Reset",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
 
 		PortletEntry.save();
 	}

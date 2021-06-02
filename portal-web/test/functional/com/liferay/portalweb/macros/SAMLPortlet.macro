@@ -30,7 +30,15 @@ definition {
 				value1 = "Email Address");
 		}
 
-		if (isSet(idpAttributes)) {
+		if ("${userResolution}" == "none") {
+			Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_NONE");
+		}
+		else if ("${userResolution}" == "dynamic") {
+			Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_DYNAMIC");
+		}
+		else if ("${userResolution}" == "attribute") {
+			Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE");
+
 			Click(
 				key_index = "${index}",
 				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
@@ -49,7 +57,7 @@ definition {
 		if (isSet(idpKeepAliveURL)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
-				value1 = "StringUtil.lowerCase("${idpKeepAliveURL}");
+				value1 = "${idpKeepAliveURL}");
 		}
 
 		PortletEntry.save();

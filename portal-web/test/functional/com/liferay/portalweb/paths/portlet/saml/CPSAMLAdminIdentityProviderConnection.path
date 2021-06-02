@@ -30,8 +30,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION</td>
-	<td>//input[contains(@id,'userIdentifierExpression')]</td>
+	<td>IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_NONE</td>
+	<td>//input[contains(@name,'userIdentifierExpression') and contains(@value,'none')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_DYNAMIC</td>
+	<td>//input[contains(@name,'userIdentifierExpression') and contains(@value,'dynamic')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE</td>
+	<td>//input[contains(@name,'userIdentifierExpression') and contains(@value,'attribute')]</td>
 	<td></td>
 </tr>
 <tr>

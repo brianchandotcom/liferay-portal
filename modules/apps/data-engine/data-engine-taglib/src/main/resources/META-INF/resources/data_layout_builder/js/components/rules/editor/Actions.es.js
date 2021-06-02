@@ -285,7 +285,7 @@ function Target({
 			case 'show':
 			case 'require':
 			case 'enable':
-				return fields;
+				return fields.filter(({hideField}) => !hideField);
 			case 'jump-to-page': {
 				const startIndex = conditions.reduce(
 					(prev, {operands: [left]}) => {

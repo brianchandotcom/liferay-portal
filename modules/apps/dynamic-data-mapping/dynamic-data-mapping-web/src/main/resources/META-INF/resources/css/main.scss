@@ -222,3 +222,145 @@ textarea.script {
 .has-control-menu > .basecelleditor {
 	z-index: 9999 !important;
 }
+
+.lfr-ddm-container {
+	.form-group label {
+		margin-left: 0;
+	}
+
+	.lfr-ddm-repeatable-helper {
+		display: none;
+	}
+
+	.lfr-ddm-repeatable-placeholder {
+		border: 1px dotted;
+		margin-top: 15px;
+		padding: 20px 0;
+	}
+
+	.field-wrapper {
+		position: relative;
+
+		&.form-builder-field label {
+			float: none;
+		}
+
+		.aui-field-wrapper {
+			margin-left: 20px;
+		}
+
+		.datepicker-display {
+			float: none;
+
+			.datepicker-button-wrapper,
+			.datepicker-select-wrapper {
+				display: inline;
+				float: none;
+			}
+		}
+
+		.file-entry-upload-progress {
+			height: 6px;
+			margin-top: -7px;
+		}
+
+		.icon-asterisk {
+			margin-left: 4px;
+		}
+
+		.lfr-ddm-repeatable-add-button,
+		.lfr-ddm-repeatable-delete-button {
+			display: block;
+			height: 16px;
+			position: absolute;
+			top: 4px;
+			width: 16px;
+
+			&.lfr-ddm-repeatable-add-button {
+				right: 4px;
+			}
+
+			&.lfr-ddm-repeatable-delete-button {
+				right: 24px;
+			}
+		}
+
+		.lfr-ddm-repeatable-drag-icon {
+			align-items: center;
+			cursor: move;
+			display: inline-flex;
+			position: relative;
+			top: 1px;
+		}
+	}
+
+	.field-wrapper-content {
+		margin-bottom: 6px;
+
+		label {
+			margin-left: 0;
+		}
+
+		&,
+		.field-wrapper-content {
+			margin-left: 15px;
+		}
+	}
+
+	.taglib-icon-help {
+		margin-left: 5px;
+	}
+}
+
+.lfr-ddm-legend {
+	color: #272833;
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-bottom: 0.25rem;
+}
+
+.lfr-ddm-link-to-page-modal {
+	.lfr-ddm-breadcrumb {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	.lfr-ddm-pages-container {
+		height: 283px;
+		margin-right: -23px;
+		overflow: auto;
+		padding-left: 5px;
+		padding-top: 50px;
+
+		&.top-ended {
+			padding-top: 0;
+		}
+
+		.loading-icon {
+			display: block;
+			font-size: 48px;
+			margin: 0 auto;
+		}
+
+		&.nav {
+			> li {
+				> a {
+					margin-left: 20px;
+					padding-left: 0;
+				}
+
+				.loading-icon {
+					font-size: 18px;
+					position: absolute;
+					right: 36px;
+					top: 12px;
+				}
+			}
+
+			.lfr-ddm-page-radio {
+				position: absolute;
+				top: 10px;
+			}
+		}
+	}
+}

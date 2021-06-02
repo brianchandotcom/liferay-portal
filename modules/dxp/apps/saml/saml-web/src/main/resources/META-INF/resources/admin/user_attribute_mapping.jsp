@@ -93,19 +93,19 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		<aui:script use="aui-base">
 			A.one('#<portlet:namespace /><%= userAttributeMappingsContentBox %>').delegate(
 				'change',
-				function(event) {
+				(event) => {
 					A.one(
 						'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
 					).attr('value', event.currentTarget.attr('data-prefix'));
-					A.all('input[name="<portlet:namespace />userIdentifierExpression"]').attr(
-						'checked',
-						false
-					);
+					A.all(
+						'input[name="<portlet:namespace />userIdentifierExpression"]'
+					).attr('checked', false);
 					A.all(
 						'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
 					).attr('checked', true);
 				},
-				'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]');
+				'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
+			);
 		</aui:script>
 
 	<%

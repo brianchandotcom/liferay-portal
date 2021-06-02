@@ -90,6 +90,24 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			</aui:script>
 		</aui:field-wrapper>
 
+		<aui:script use="aui-base">
+			A.one('#<portlet:namespace /><%= userAttributeMappingsContentBox %>').delegate(
+				'change',
+				function(event) {
+					A.one(
+						'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
+					).attr('value', event.currentTarget.attr('data-prefix'));
+					A.all('input[name="<portlet:namespace />userIdentifierExpression"]').attr(
+						'checked',
+						false
+					);
+					A.all(
+						'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
+					).attr('checked', true);
+				},
+				'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]');
+		</aui:script>
+
 	<%
 	}
 	%>
@@ -111,19 +129,4 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			}
 		}
 	);
-
-	A.all(
-		'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
-	).on('change', (event) => {
-		A.one(
-			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
-		).attr('value', event.currentTarget.attr('data-prefix'));
-		A.all('input[name="<portlet:namespace />userIdentifierExpression"]').attr(
-			'checked',
-			false
-		);
-		A.all(
-			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
-		).attr('checked', true);
-	});
 </aui:script>

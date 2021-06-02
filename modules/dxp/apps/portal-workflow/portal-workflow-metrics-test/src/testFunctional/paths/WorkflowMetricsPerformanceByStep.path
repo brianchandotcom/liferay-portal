@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>DATE_RANGE_DROPDOWN</td>
-	<td>//button[contains(@class, 'dropdown-toggle')]//span[contains(@class, 'navbar-text-truncate')]</td>
+	<td>//button[contains(@class, 'filter-dropdown-button')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATE_RANGE_DROPDOWN_OPTION</td>
-	<td>//div[@class='dropdown-menu show dropdown-menu-right']//span[@class='custom-control-label-text'][contains(text(),'${key_dateRange}')]</td>
+	<td>//div[contains(@class, 'dropdown-menu show')]//span[contains(@class, 'dropdown-item')]//div[contains(text(),'${key_dateRange}')]</td>
 	<td></td>
 </tr>
 <tr>

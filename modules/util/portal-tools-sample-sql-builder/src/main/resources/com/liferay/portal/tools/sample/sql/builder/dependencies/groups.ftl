@@ -2,8 +2,11 @@
 	globalGroupModel = dataFactory.newGlobalGroupModel()
 	guestGroupModel = dataFactory.newGuestGroupModel()
 
+	commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
 	countryModel = dataFactory.newCountryModel()
 />
+
+${dataFactory.toInsertSQL(commerceCurrencyModel)}
 
 ${dataFactory.toInsertSQL(countryModel)}
 

@@ -2,8 +2,6 @@
 	<#assign
 		commerceAccountEntryModels = dataFactory.newCommerceAccountEntryModels()
 
-		commerceCurrencyModel = dataFactory.newCommerceCurrencyModel()
-
 		commerceGroupModels = dataFactory.newCommerceGroupModels()
 
 		commerceChannelModels = dataFactory.newCommerceChannelModels(commerceGroupModels, commerceCurrencyModel)
@@ -156,8 +154,6 @@
 			${dataFactory.toInsertSQL(dataFactory.newFriendlyURLEntryMapping(friendlyURLEntryModel))}
 		</#list>
 	</#list>
-
-	${dataFactory.toInsertSQL(commerceCurrencyModel)}
 
 	<#list dataFactory.newCommerceOrderModels(commerceChannelGroupModels[0].groupId, commerceAccountEntryModels[0].accountEntryId, commerceCurrencyModel.commerceCurrencyId, 0, 0, 0, "", 2) as openCommerceOrderModel>
 		${dataFactory.toInsertSQL(openCommerceOrderModel)}

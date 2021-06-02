@@ -199,8 +199,6 @@ definition {
 		FormFields.viewOptionsRowFieldValue(
 			fieldValue = "Option 2",
 			rowNumber = "2");
-			
-
 	}
 
 	@description = "Verify that option can be deleted"

@@ -203,7 +203,7 @@ export default ({
 				/>
 			</div>
 
-			<ClayToolbar className="rounded">
+			<ClayToolbar>
 				<ClayToolbar.Nav>
 					<ClayToolbar.Item>
 						<ClayToolbar.Section>

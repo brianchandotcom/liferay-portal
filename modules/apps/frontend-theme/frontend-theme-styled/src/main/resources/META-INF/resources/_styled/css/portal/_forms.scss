@@ -21,3 +21,45 @@
 .form-inline label {
 	display: inline-block;
 }
+
+.form-search .input-group {
+	position: relative;
+
+	&.advanced-search {
+		.search-query {
+			padding-left: 40px;
+			z-index: 0;
+		}
+
+		.toggle-advanced {
+			cursor: pointer;
+			left: 0;
+			line-height: 1;
+			padding: 8px 10px;
+			position: absolute;
+			top: 0;
+
+			.caret {
+				margin-top: 7px;
+			}
+
+			.icon-search {
+				font-size: 14px;
+			}
+		}
+	}
+
+	@include media-breakpoint-down(md) {
+		width: 100%;
+
+		.btn {
+			clip: rect(0, 0, 0, 0);
+			left: -9999px;
+			position: absolute;
+		}
+
+		input.search-query {
+			width: 100%;
+		}
+	}
+}

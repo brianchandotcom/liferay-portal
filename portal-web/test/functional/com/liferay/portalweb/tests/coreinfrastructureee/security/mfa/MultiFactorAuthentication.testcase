@@ -81,6 +81,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -118,6 +119,7 @@ definition {
 			value1 = "Multi-factor authentication has been enabled by the system administrator. If you do not want this you can disable it in Instance Settings.");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -219,6 +221,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -233,6 +236,7 @@ definition {
 		PortletEntry.update();
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Time-Based One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -290,6 +294,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -297,6 +302,7 @@ definition {
 		MultiFactorAuthentication.configureOTP(enableOTP = "true");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "API Authentication",
 			configurationName = "Auto Login Basic Authentication Header",
 			configurationScope = "Virtual Instance Scope");
@@ -306,6 +312,7 @@ definition {
 		PortletEntry.save();
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "API Authentication",
 			configurationName = "Basic Authentication Protocol Support",
 			configurationScope = "Virtual Instance Scope");
@@ -353,6 +360,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -473,6 +481,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -504,6 +513,7 @@ definition {
 			userPassword = "test");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -802,6 +812,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -819,6 +830,7 @@ definition {
 			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "IP Address Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -833,6 +845,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "IP Address Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -1020,6 +1033,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -1031,6 +1045,7 @@ definition {
 		MultiFactorAuthentication.configureOTP(enableOTP = "true");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Time-Based One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -1232,6 +1247,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -1324,6 +1340,7 @@ definition {
 			userEmailAddress = "test@www.able.com");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication and Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -1335,6 +1352,7 @@ definition {
 		MultiFactorAuthentication.configureOTP(enableOTP = "true");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Time-Based One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");

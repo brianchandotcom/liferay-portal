@@ -402,20 +402,20 @@ public class CryptoHashTest {
 		return null;
 	}
 
-	private boolean _isIncluded(
+	private boolean _contains(
 		Dictionary<String, ?> properties1, Dictionary<String, ?> properties2) {
 
-		if (properties1.size() > properties2.size()) {
+		if (properties2.size() > properties1.size()) {
 			return false;
 		}
 
-		Enumeration<String> enumeration = properties1.keys();
+		Enumeration<String> enumeration = properties2.keys();
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
 			if (!Objects.deepEquals(
-					properties1.get(key), properties2.get(key))) {
+					properties2.get(key), properties1.get(key))) {
 
 				return false;
 			}
@@ -452,7 +452,7 @@ public class CryptoHashTest {
 							return;
 						}
 
-						if (_isIncluded(properties, updatedProperties)) {
+						if (_contains(updatedProperties, properties)) {
 							countDownLatch.countDown();
 						}
 					}

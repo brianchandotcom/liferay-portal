@@ -27,6 +27,18 @@ definition {
 
 		Button.clickPublish();
 	}
+	
+	macro filterByAuthorAll {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+	}
 
 	macro filterByAuthorCard {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
@@ -102,6 +114,18 @@ definition {
 			value1 = "Select");
 
 		SelectFrame(value1 = "relative=top");
+	}
+
+	macro filterByAuthorMe {
+		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
+			AssertClickNoError(
+				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+				value1 = "Filter and Order");
+		}
+
+		var key_filterOption = "${filterOption}";
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
 	macro filterByAuthorTable {

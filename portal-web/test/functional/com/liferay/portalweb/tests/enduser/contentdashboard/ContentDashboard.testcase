@@ -1564,4 +1564,126 @@ definition {
 			title = "WC Title");
 	}
 
+	@description = "LPS-133181 When Filter by Author 'All', displays content from all users featured in the user's content dashboard view."
+	@priority = "5"
+	test ShowAllContentCreatorUsers {
+		task ("Create and configure second user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create First WC via JSON") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content 1",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
+
+		task ("Change to second user and create second WC") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			JSONWebcontent.addWebContent(
+				content = "WC Content 2",
+				groupName = "Test Site Name",
+				title = "WC Title 2");
+		}
+
+		task ("Go to Content Dashboard and aplly All filter") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+			
+			ContentDashboard.filterByAuthorAll(filterOption = "All");
+		}
+
+		task ("Check if all contents are being displayed") {
+			ContentDashboard.searchValue(webContentTitle = "WC Title 1");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 1");
+
+			ContentDashboard.searchValue(webContentTitle = "WC Title 2");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 2");
+		}
+	}
+
+	@description = "LPS-133181 When Filter by Author 'Me', displays content where the current user is the last editor of the approved version."
+	@priority = "5"
+	test ShowOnlyContentCreatedByUser {
+		task ("Create and configure second user") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Create First WC via JSON") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content 1",
+				groupName = "Test Site Name",
+				title = "WC Title 1");
+		}
+
+		task ("Change to second user and create second WC") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC Content 2",
+				webContentTitle = "WC Title 2");
+
+			PortletEntry.publish();
+		}
+
+		task ("Go to Content Dashboard and aplly All filter") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+			
+			ContentDashboard.filterByAuthorMe(filterOption = "Me");
+		}
+
+		task ("Check if all contents created by user are being displayed") {
+			ContentDashboard.orderByTitle(filterOption = "Title");
+
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+				value1 = "WC Title 2");
+		}
+	}
 }

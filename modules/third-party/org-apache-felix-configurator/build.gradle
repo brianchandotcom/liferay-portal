@@ -1,0 +1,23 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.configurator", transitive: false, version: "1.0.14"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/static")
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/apache/felix/configurator/impl/WorkerQueue.java"
+
+	originalLibModuleName = "org.apache.felix.configurator"
+}

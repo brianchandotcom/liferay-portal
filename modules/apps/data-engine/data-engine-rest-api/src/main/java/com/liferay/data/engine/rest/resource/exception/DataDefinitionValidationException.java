@@ -61,6 +61,29 @@ public class DataDefinitionValidationException extends RuntimeException {
 
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public static class MustNotRemoveNativeField
+		extends DataDefinitionValidationException {
+
+		public MustNotRemoveNativeField(Set<String> removedFieldNames) {
+			super(
+				String.format(
+					"Native fields %s were removed", removedFieldNames));
+
+			_removedFieldNames = removedFieldNames;
+		}
+
+		public Set<String> getRemovedFieldNames() {
+			return _removedFieldNames;
+		}
+
+		private final Set<String> _removedFieldNames;
+
+	}
+
 	public static class MustSetAvailableLocales
 		extends DataDefinitionValidationException {
 

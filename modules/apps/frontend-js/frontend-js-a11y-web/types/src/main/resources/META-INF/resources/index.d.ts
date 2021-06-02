@@ -22,5 +22,8 @@ declare global {
 		};
 	};
 }
-export {A11y} from './A11y';
-export {A11yPanel} from './A11yPanel';
+import type {A11yCheckerOptions} from './A11yChecker';
+declare const _default: (
+	props?: Omit<A11yCheckerOptions, 'callback' | 'targets'>
+) => void;
+export default _default;

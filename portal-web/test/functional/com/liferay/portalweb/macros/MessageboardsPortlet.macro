@@ -1,17 +1,9 @@
 definition {
 
 	macro configureAnonymousPostingCP {
-		Navigator.openURL();
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
-
-		Click(locator1 = "Portlet#OPTIONS_ICON");
-
-		MenuItem.click(menuItem = "Configuration");
-
-		Pause(locator1 = "10000");
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -26,17 +18,9 @@ definition {
 	}
 
 	macro configureGeneralCP {
-		Navigator.openURL();
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
-
-		Click(locator1 = "Portlet#OPTIONS_ICON");
-
-		MenuItem.click(menuItem = "Configuration");
-
-		Pause(locator1 = "10000");
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -206,6 +190,10 @@ definition {
 	}
 
 	macro viewAnonymousPostingConfigurationCP {
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "${siteURLKey}");
+
+		Portlet.gotoPortletOptions(portletOption = "Configuration");
+
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if ("${anonymousPostingEnabled}" == "true") {

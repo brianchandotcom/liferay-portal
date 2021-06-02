@@ -962,9 +962,14 @@ definition {
 	}
 
 	macro viewAnonymousPostingCheckboxCP {
-		LexiconEntry.gotoAdd();
+		if (isSet(siteURLKey)) {
+			MessageboardsThread.openToAddThread(siteURLKey = "${siteURLKey}");
+		}
+		else {
+			LexiconEntry.gotoAdd();
 
-		MenuItem.click(menuItem = "Thread");
+			MenuItem.click(menuItem = "Thread");
+		}
 
 		AssertElementPresent(locator1 = "Checkbox#ANONYMOUS");
 	}
@@ -1217,9 +1222,14 @@ definition {
 	}
 
 	macro viewNoAnonymousPostingCheckboxCP {
-		LexiconEntry.gotoAdd();
+		if (isSet(siteURLKey)) {
+			MessageboardsThread.openToAddThread(siteURLKey = "${siteURLKey}");
+		}
+		else {
+			LexiconEntry.gotoAdd();
 
-		MenuItem.click(menuItem = "Thread");
+			MenuItem.click(menuItem = "Thread");
+		}
 
 		AssertElementNotPresent(locator1 = "Checkbox#ANONYMOUS");
 	}

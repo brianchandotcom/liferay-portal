@@ -12,7 +12,7 @@ String elasticsearchDownloadURL = "https://artifacts.elastic.co/downloads/elasti
 
 File elasticsearchDistributionFile = file("${buildDir}/${elasticsearchDownloadURL.drop(elasticsearchDownloadURL.lastIndexOf('/') + 1)}")
 
-File sidecarDeployDir = file("${project.'liferay.home'}/elasticsearch" + sidecarElasticsearchVersion.substring(0, 1))
+File sidecarDeployDir = file("${project.'liferay.home'}/elasticsearch-sidecar/" + sidecarElasticsearchVersion)
 
 List<String> sidecarPluginURLs = [
 	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${sidecarElasticsearchVersion}.zip",

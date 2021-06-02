@@ -1134,6 +1134,12 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		).thenReturn(
 			LocaleUtil.US
 		);
+
+		when(
+			LocaleUtil.toLanguageIds(Matchers.anyCollection())
+		).thenReturn(
+			new String[] {"en_US", "pt_BR"}
+		);
 	}
 
 	private final DDMFormValuesFactory _ddmFormValuesFactory =

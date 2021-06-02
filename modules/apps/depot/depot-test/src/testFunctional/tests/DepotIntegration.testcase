@@ -187,6 +187,7 @@ definition {
 	@description = "This ensures that the disconnected site can not access the the depot."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test DisconnectFromSite {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

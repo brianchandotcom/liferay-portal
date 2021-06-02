@@ -222,13 +222,7 @@ definition {
 			siteName = "Site Name",
 			tableEntryText = "No");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoEdit(depotName = "Test Remove Customized WC Depot Name");
-
-		DepotNavigator.gotoSites(depotName = "Test Remove Customized WC Depot Name");
-
-		Depot.disconnectSite(siteList = "Site Name");
+		JSONDepot.disconnectSite(groupName = "Site Name");
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",

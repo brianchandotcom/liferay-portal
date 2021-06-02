@@ -186,9 +186,7 @@ definition {
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 
-		DepotNavigator.openDepotSiteSettings(depotName = "Test Depot Name");
-
-		Depot.disconnectSite(siteList = "Site Name");
+		JSONDepot.disconnectSite(groupName = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Page Name",
@@ -263,9 +261,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		DepotNavigator.openDepotSiteSettings(depotName = "Test Depot Name");
-
-		Depot.disconnectSite(siteList = "Site Name");
+		JSONDepot.disconnectSite(groupName = "Site Name");
 
 		BlogsNavigator.openToAddEntry(siteURLKey = "site-name");
 

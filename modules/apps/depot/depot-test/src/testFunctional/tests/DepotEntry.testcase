@@ -30,44 +30,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a depot can be accessed in the list view."
-	@priority = "5"
-	@refactorneeded
-	test AccessInListView {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			listView = "true");
-
-		DepotNavigator.gotoPortlet(portlet = "Web Content");
-	}
-
-	@description = "This ensures that a depot can be accessed in the table view."
-	@priority = "5"
-	@refactorneeded
-	test AccessInTableView {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			tableView = "true");
-
-		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
-	}
-
 	@description = "This ensures that a depot can be accessed when the Applications Menu is disabled at the system level."
 	@priority = "5"
 	@refactorneeded
@@ -430,6 +392,12 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			listView = "true");
+
+		DepotNavigator.openDepotAdmin();
+
 		Depot.editDepot(
 			depotDescriptionEdit = "This is an edited description of a depot",
 			depotName = "Test Depot Name",
@@ -456,6 +424,12 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		DepotNavigator.gotoDepot(
+			depotName = "Test Depot Name",
+			tableView = "true");
+
+		DepotNavigator.openDepotAdmin();
 
 		Depot.editDepot(
 			depotDescriptionEdit = "This is an edited description of a depot",

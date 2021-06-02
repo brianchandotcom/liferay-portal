@@ -234,11 +234,6 @@ definition {
 	}
 
 	macro setUpRegRoleLoginUserCP {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
-
 		PortalSettings.editConfigurationUsersDefaultUserAssociationsRolesCP(roleTitle = "");
 
 		JSONUser.addUser(

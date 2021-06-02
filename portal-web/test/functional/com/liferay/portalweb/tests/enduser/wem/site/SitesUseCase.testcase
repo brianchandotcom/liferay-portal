@@ -565,7 +565,11 @@ definition {
 			configurationName = "Email Verification Notification",
 			configurationScope = "Virtual Instance Scope");
 
-		PortalSettings.editConfigurationUsersEmailVerificationNotificationsCP(emailVerificationURL = "true");
+		Type.typeCKEditor(
+			locator1 = "CKEditor#BODY_FIELD",
+			value1 = "[$EMAIL_VERIFICATION_URL$]");
+
+		PortletEntry.save();
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080/");
 

@@ -192,8 +192,7 @@ public class AssetListAssetEntryProviderImpl
 					new long[] {
 						_getFirstSegmentsEntryId(
 							assetListEntry, segmentsEntryIds)
-					},
-					assetCategoryIds);
+					});
 		}
 
 		return _assetEntryLocalService.getEntriesCount(
@@ -728,8 +727,8 @@ public class AssetListAssetEntryProviderImpl
 				_assetListEntryAssetEntryRelLocalService.
 					getAssetListEntryAssetEntryRels(
 						assetListEntry.getAssetListEntryId(),
-						_getCombinedSegmentsEntryIds(segmentsEntryId),
-						assetCategoryIds, start, end);
+						_getCombinedSegmentsEntryIds(segmentsEntryId), start,
+						end);
 		}
 		else {
 			assetListEntryAssetEntryRels =
@@ -740,7 +739,7 @@ public class AssetListAssetEntryProviderImpl
 							_getFirstSegmentsEntryId(
 								assetListEntry, segmentsEntryId)
 						},
-						assetCategoryIds, start, end);
+						start, end);
 		}
 
 		return ListUtil.toList(

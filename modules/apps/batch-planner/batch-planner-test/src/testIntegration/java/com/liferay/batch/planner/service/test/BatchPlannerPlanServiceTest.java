@@ -84,13 +84,13 @@ public class BatchPlannerPlanServiceTest extends BaseBatchPlannerTestCase {
 			"Add batch planner plan with too long name",
 			BatchPlannerPlanNameException.class, exceptionClass);
 
-		BatchPlannerPlan batchPlannerPlan = addBatchPlannerPlan(300);
+		BatchPlannerPlan batchPlannerPlan1 = addBatchPlannerPlan(300);
 
 		Assert.assertEquals(
-			TestPropsValues.getCompanyId(), batchPlannerPlan.getCompanyId());
+			TestPropsValues.getCompanyId(), batchPlannerPlan1.getCompanyId());
 
 		try {
-			addBatchPlannerPlan(batchPlannerPlan.getName());
+			addBatchPlannerPlan(batchPlannerPlan1.getName());
 		}
 		catch (Exception exception) {
 			exceptionClass = exception.getClass();
@@ -113,13 +113,13 @@ public class BatchPlannerPlanServiceTest extends BaseBatchPlannerTestCase {
 		UserTestUtil.setUser(user2);
 
 		BatchPlannerPlan batchPlannerPlan2 = addBatchPlannerPlan(
-			batchPlannerPlan.getName());
+			batchPlannerPlan1.getName());
 
 		Assert.assertEquals(
 			user2.getCompanyId(), batchPlannerPlan2.getCompanyId());
 
 		Assert.assertEquals(
-			batchPlannerPlan.getName(), batchPlannerPlan2.getName());
+			batchPlannerPlan1.getName(), batchPlannerPlan2.getName());
 	}
 
 	private ResourcePermission _addResourcePermission(long companyId) {

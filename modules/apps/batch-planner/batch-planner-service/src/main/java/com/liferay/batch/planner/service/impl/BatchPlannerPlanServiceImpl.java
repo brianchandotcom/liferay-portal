@@ -14,14 +14,21 @@
 
 package com.liferay.batch.planner.service.impl;
 
+import com.liferay.batch.planner.constants.BatchPlannerActionKeys;
+import com.liferay.batch.planner.constants.BatchPlannerConstants;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.base.BatchPlannerPlanServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Beslic
@@ -43,6 +50,10 @@ public class BatchPlannerPlanServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
+		_portletResourcePermission.check(
+			getPermissionChecker(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			BatchPlannerActionKeys.ADD_BATCH_PLANNER_PLAN);
+
 		return batchPlannerPlanLocalService.addBatchPlannerPlan(
 			permissionChecker.getUserId(), externalType, name);
 	}
@@ -51,11 +62,8 @@ public class BatchPlannerPlanServiceImpl
 	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
-
-		if (!permissionChecker.isSignedIn()) {
-			throw new PrincipalException();
-		}
+		_batchPlannerPlanModelResourcePermission.check(
+			getPermissionChecker(), batchPlannerPlanId, ActionKeys.DELETE);
 
 		return batchPlannerPlanLocalService.deleteBatchPlannerPlan(
 			batchPlannerPlanId);
@@ -66,10 +74,23 @@ public class BatchPlannerPlanServiceImpl
 			long batchPlannerPlanId, String name)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		_batchPlannerPlanModelResourcePermission.check(
+			getPermissionChecker(), batchPlannerPlanId, ActionKeys.UPDATE);
 
 		return batchPlannerPlanLocalService.updateBatchPlannerPlan(
-			permissionChecker.getUserId(), batchPlannerPlanId, name);
+			getUserId(), batchPlannerPlanId, name);
 	}
+
+	private static volatile ModelResourcePermission<BatchPlannerPlan>
+		_batchPlannerPlanModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				BatchPlannerPlanServiceImpl.class,
+				"_batchPlannerPlanModelResourcePermission",
+				BatchPlannerPlan.class);
+
+	@Reference(
+		target = "(resource.name=" + BatchPlannerConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

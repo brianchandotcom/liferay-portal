@@ -25,7 +25,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,16 +64,25 @@ public class BatchPlannerPlanLocalServiceImpl
 		batchPlannerPlan.setExternalType(externalType);
 		batchPlannerPlan.setName(name);
 
-		return batchPlannerPlanPersistence.update(batchPlannerPlan);
+		batchPlannerPlan = batchPlannerPlanPersistence.update(batchPlannerPlan);
+
+		resourceLocalService.addResources(
+			user.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			user.getUserId(), BatchPlannerPlan.class.getName(),
+			batchPlannerPlan.getBatchPlannerPlanId(), false, true, false);
+
+		return batchPlannerPlan;
 	}
 
 	@Override
 	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)
 		throws PortalException {
 
-		BatchPlannerPlan batchPlannerPlan =
-			batchPlannerPlanLocalService.deleteBatchPlannerPlan(
-				batchPlannerPlanId);
+		BatchPlannerPlan batchPlannerPlan = batchPlannerPlanPersistence.remove(
+			batchPlannerPlanId);
+
+		resourceLocalService.deleteResource(
+			batchPlannerPlan, ResourceConstants.SCOPE_COMPANY);
 
 		batchPlannerLogPersistence.removeByBatchPlannerPlanId(
 			batchPlannerPlanId);

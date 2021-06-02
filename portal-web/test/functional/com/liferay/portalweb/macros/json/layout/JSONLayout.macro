@@ -162,6 +162,7 @@ definition {
 
 		JSONLayoutAPI._getPlidByName(
 			groupId = "${groupId}",
+			layoutName = "${layoutName}",
 			privateLayout = "${privateLayout}");
 	}
 

@@ -191,7 +191,15 @@ export class Scheduler<T> {
 				break;
 			}
 
-			await this.currentTask.callback(this.currentTask.target);
+			// Catch the exception of some error in the callback to avoid
+			// breaking the loop flow.
+
+			try {
+				await this.currentTask.callback(this.currentTask.target);
+			}
+			catch (error) {
+				console.error(error);
+			}
 
 			this.queue.dequeue();
 

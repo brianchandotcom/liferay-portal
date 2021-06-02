@@ -362,14 +362,58 @@ definition {
 	}
 
 	@description = "Verify that guest users cannot see files submitted by other users"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SubmittedFilesCannotBeSeenByGuestUsers {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133251 SubmittedFilesCannotBeSeenByGuestUsers pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Upload");
+
+		FormFields.enableSwitcher(fieldName = "Allow Guest Users to Send Files");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		ItemSelector.gotoItemSelectorViaSelectButton();
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "Document_1.docx");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		Navigator.openURL();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		ItemSelector.gotoItemSelectorViaSelectButtonByGuest(fieldName = "Upload");
+
+		AssertElementNotPresent(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
 	@description = "Verify that the Field Type can be changed"

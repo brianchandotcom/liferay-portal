@@ -522,7 +522,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		searchContext.setAttribute(Field.TITLE, getKeywords());
 		searchContext.setAttribute("ddmStructureKey", getDDMStructureKey());
 		searchContext.setAttribute("params", params);
-		searchContext.setAttribute("params", params);
 		searchContext.setAttribute("showNonindexable", Boolean.TRUE);
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);

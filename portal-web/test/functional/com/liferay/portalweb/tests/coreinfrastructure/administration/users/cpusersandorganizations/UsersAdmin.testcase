@@ -1997,13 +1997,6 @@ definition {
 			emailSenderName = "Joe Bloggs");
 
 		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Search");
-
-		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
-
-		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");

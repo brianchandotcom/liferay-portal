@@ -8,7 +8,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginUI();
+		User.firstLoginPG();
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
@@ -228,9 +228,12 @@ definition {
 		}
 	}
 
+	@description = "LPS-121658 When a user with no edit permissions clicks on the title of a content in status Approved with associated DPT, the user is led to the page view"
+	@priority = "4"
+	@uitest
 	test ClickTitleApprovedDPTWithNoPermissions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithNoPermissions";
+		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedDPTWithNoPermissions";
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
@@ -339,9 +342,12 @@ definition {
 			webContentTitle = "WC Title");
 	}
 
+	@description = "LPS-121658 When a user with edit permissions clicks on the title of a content in status Approved with associated DPT, the user is led to the page view"
+	@priority = "4"
+	@uitest
 	test ClickTitleApprovedDPTWithPermissions {
 		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "ContentDashboard#ContentDashboardClickTitleApprovedDPTWithPermissions";
+		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedDPTWithPermissions";
 
 		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 			contentType = "Web Content Article",
@@ -463,6 +469,9 @@ definition {
 			webContentTitle = "WC Title");
 	}
 
+	@description = "LPS-121658 When a user with edit permissions (owner) clicks on the title of a content in status Approved with no associated DPT, the user is led to the web content editor"
+	@priority = "3"
+	@uitest
 	test ClickTitleApprovedNoDPT {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleApprovedNoDPT";
@@ -492,6 +501,9 @@ definition {
 		}
 	}
 
+	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Draft, associated DPT or not, the user is led to web content editor"
+	@priority = "3"
+	@uitest
 	test ClickTitleDraftNoDPT {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleDraftNoDPT";
@@ -528,6 +540,9 @@ definition {
 		}
 	}
 
+	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Pending, associated DPT or not, the user is led to web content editor"
+	@priority = "3"
+	@uitest
 	test ClickTitlePendingNoDPT {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitlePendingNoDPT";
@@ -579,6 +594,9 @@ definition {
 		}
 	}
 
+	@description = "LPS-121658 When a user with edit permissions(owner) clicks on the title of a content in status Scheduled, associated DPT or not, the user is led to web content editor"
+	@priority = "3"
+	@uitest
 	test ClickTitleScheduledNoDPT {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentDashboard#ClickTitleScheduledNoDPT";

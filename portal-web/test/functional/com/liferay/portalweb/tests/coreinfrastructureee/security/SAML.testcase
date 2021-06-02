@@ -1659,7 +1659,9 @@ definition {
 
 		User.viewLoggedOutPG();
 
-		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
+		SAML.configureLiferaySAMLAsIdP(
+			idpURL = "http://localhost:8080",
+			samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsIdP(
 			idpURL = "http://www.able.com:8080",

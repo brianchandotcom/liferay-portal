@@ -83,6 +83,25 @@ public class BatchPlannerPlanServiceSoap {
 	}
 
 	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
+			deleteBatchPlannerPlan(long batchPlannerPlanId)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerPlan returnValue =
+				BatchPlannerPlanServiceUtil.deleteBatchPlannerPlan(
+					batchPlannerPlanId);
+
+			return com.liferay.batch.planner.model.BatchPlannerPlanSoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPlanSoap
 			updateBatchPlannerPlan(long batchPlannerPlanId, String name)
 		throws RemoteException {
 

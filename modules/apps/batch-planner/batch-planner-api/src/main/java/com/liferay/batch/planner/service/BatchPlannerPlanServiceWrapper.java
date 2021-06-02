@@ -41,6 +41,15 @@ public class BatchPlannerPlanServiceWrapper
 		return _batchPlannerPlanService.addBatchPlannerPlan(externalType, name);
 	}
 
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPlan
+			deleteBatchPlannerPlan(long batchPlannerPlanId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPlanService.deleteBatchPlannerPlan(
+			batchPlannerPlanId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

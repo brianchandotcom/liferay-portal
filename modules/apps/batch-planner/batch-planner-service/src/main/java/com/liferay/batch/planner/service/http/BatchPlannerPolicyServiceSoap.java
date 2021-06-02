@@ -14,9 +14,15 @@
 
 package com.liferay.batch.planner.service.http;
 
+import com.liferay.batch.planner.service.BatchPlannerPolicyServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * <code>com.liferay.batch.planner.service.BatchPlannerPolicyServiceUtil</code> service
+ * <code>BatchPlannerPolicyServiceUtil</code> service
  * utility. The static methods of this class call the same methods of the
  * service utility. However, the signatures are different because it is
  * difficult for SOAP to support certain types.
@@ -56,4 +62,124 @@ package com.liferay.batch.planner.service.http;
  */
 @Deprecated
 public class BatchPlannerPolicyServiceSoap {
+
+	public static com.liferay.batch.planner.model.BatchPlannerPolicySoap
+			addBatchPlannerPolicy(
+				long batchPlannerPlanId, String name, String value)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerPolicy returnValue =
+				BatchPlannerPolicyServiceUtil.addBatchPlannerPolicy(
+					batchPlannerPlanId, name, value);
+
+			return com.liferay.batch.planner.model.BatchPlannerPolicySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPolicySoap
+			deleteBatchPlannerPolicy(long batchPlannerPlanId, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerPolicy returnValue =
+				BatchPlannerPolicyServiceUtil.deleteBatchPlannerPolicy(
+					batchPlannerPlanId, name);
+
+			return com.liferay.batch.planner.model.BatchPlannerPolicySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPolicySoap[]
+			getBatchPlannerPolicies(long batchPlannerPlanId)
+		throws RemoteException {
+
+		try {
+			java.util.List<com.liferay.batch.planner.model.BatchPlannerPolicy>
+				returnValue =
+					BatchPlannerPolicyServiceUtil.getBatchPlannerPolicies(
+						batchPlannerPlanId);
+
+			return com.liferay.batch.planner.model.BatchPlannerPolicySoap.
+				toSoapModels(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPolicySoap
+			getBatchPlannerPolicy(long batchPlannerPlanId, String name)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerPolicy returnValue =
+				BatchPlannerPolicyServiceUtil.getBatchPlannerPolicy(
+					batchPlannerPlanId, name);
+
+			return com.liferay.batch.planner.model.BatchPlannerPolicySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static boolean hasBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws RemoteException {
+
+		try {
+			boolean returnValue =
+				BatchPlannerPolicyServiceUtil.hasBatchPlannerPolicy(
+					batchPlannerPlanId, name);
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	public static com.liferay.batch.planner.model.BatchPlannerPolicySoap
+			updateBatchPlannerPolicy(
+				long batchPlannerPlanId, String name, String value)
+		throws RemoteException {
+
+		try {
+			com.liferay.batch.planner.model.BatchPlannerPolicy returnValue =
+				BatchPlannerPolicyServiceUtil.updateBatchPlannerPolicy(
+					batchPlannerPlanId, name, value);
+
+			return com.liferay.batch.planner.model.BatchPlannerPolicySoap.
+				toSoapModel(returnValue);
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BatchPlannerPolicyServiceSoap.class);
+
 }

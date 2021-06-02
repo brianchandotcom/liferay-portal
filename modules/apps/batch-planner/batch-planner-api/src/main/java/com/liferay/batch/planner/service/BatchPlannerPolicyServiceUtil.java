@@ -14,6 +14,11 @@
 
 package com.liferay.batch.planner.service;
 
+import com.liferay.batch.planner.model.BatchPlannerPolicy;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
+
 /**
  * Provides the remote service utility for BatchPlannerPolicy. This utility wraps
  * <code>com.liferay.batch.planner.service.impl.BatchPlannerPolicyServiceImpl</code> and is an
@@ -33,14 +38,57 @@ public class BatchPlannerPolicyServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerPolicyServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static BatchPlannerPolicy addBatchPlannerPolicy(
+			long batchPlannerPlanId, String name, String value)
+		throws PortalException {
+
+		return getService().addBatchPlannerPolicy(
+			batchPlannerPlanId, name, value);
+	}
+
+	public static BatchPlannerPolicy deleteBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		return getService().deleteBatchPlannerPolicy(batchPlannerPlanId, name);
+	}
+
+	public static List<BatchPlannerPolicy> getBatchPlannerPolicies(
+			long batchPlannerPlanId)
+		throws PortalException {
+
+		return getService().getBatchPlannerPolicies(batchPlannerPlanId);
+	}
+
+	public static BatchPlannerPolicy getBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		return getService().getBatchPlannerPolicy(batchPlannerPlanId, name);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static boolean hasBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		return getService().hasBatchPlannerPolicy(batchPlannerPlanId, name);
+	}
+
+	public static BatchPlannerPolicy updateBatchPlannerPolicy(
+			long batchPlannerPlanId, String name, String value)
+		throws PortalException {
+
+		return getService().updateBatchPlannerPolicy(
+			batchPlannerPlanId, name, value);
 	}
 
 	public static BatchPlannerPolicyService getService() {

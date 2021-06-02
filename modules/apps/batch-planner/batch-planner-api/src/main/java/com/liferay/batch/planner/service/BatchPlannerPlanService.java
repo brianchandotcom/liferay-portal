@@ -52,6 +52,9 @@ public interface BatchPlannerPlanService extends BaseService {
 			String externalType, String name)
 		throws PortalException;
 
+	public BatchPlannerPlan deleteBatchPlannerPlan(long batchPlannerPlanId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -43,6 +43,13 @@ public class BatchPlannerPlanServiceUtil {
 		return getService().addBatchPlannerPlan(externalType, name);
 	}
 
+	public static BatchPlannerPlan deleteBatchPlannerPlan(
+			long batchPlannerPlanId)
+		throws PortalException {
+
+		return getService().deleteBatchPlannerPlan(batchPlannerPlanId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

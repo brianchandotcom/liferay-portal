@@ -76,6 +76,10 @@ public interface BatchPlannerPolicyLocalService
 	public BatchPlannerPolicy addBatchPlannerPolicy(
 		BatchPlannerPolicy batchPlannerPolicy);
 
+	public BatchPlannerPolicy addBatchPlannerPolicy(
+			long userId, long batchPlannerPlanId, String name, String value)
+		throws PortalException;
+
 	/**
 	 * Creates a new batch planner policy with the primary key. Does not add the batch planner policy to the database.
 	 *
@@ -120,6 +124,10 @@ public interface BatchPlannerPolicyLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public BatchPlannerPolicy deleteBatchPlannerPolicy(
 			long batchPlannerPolicyId)
+		throws PortalException;
+
+	public BatchPlannerPolicy deleteBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
 		throws PortalException;
 
 	/**
@@ -222,6 +230,10 @@ public interface BatchPlannerPolicyLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerPolicy> getBatchPlannerPolicies(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerPolicy> getBatchPlannerPolicies(
+		long batchPlannerPlanId);
+
 	/**
 	 * Returns the number of batch planner policies.
 	 *
@@ -242,6 +254,11 @@ public interface BatchPlannerPolicyLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BatchPlannerPolicy getBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
@@ -259,6 +276,9 @@ public interface BatchPlannerPolicyLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasBatchPlannerPolicy(long batchPlannerPlanId, String name);
+
 	/**
 	 * Updates the batch planner policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -272,5 +292,9 @@ public interface BatchPlannerPolicyLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public BatchPlannerPolicy updateBatchPlannerPolicy(
 		BatchPlannerPolicy batchPlannerPolicy);
+
+	public BatchPlannerPolicy updateBatchPlannerPolicy(
+			long batchPlannerPlanId, String name, String value)
+		throws PortalException;
 
 }

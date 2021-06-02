@@ -53,6 +53,16 @@ public class BatchPlannerPolicyLocalServiceWrapper
 			batchPlannerPolicy);
 	}
 
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			addBatchPlannerPolicy(
+				long userId, long batchPlannerPlanId, String name, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			userId, batchPlannerPlanId, name, value);
+	}
+
 	/**
 	 * Creates a new batch planner policy with the primary key. Does not add the batch planner policy to the database.
 	 *
@@ -117,6 +127,15 @@ public class BatchPlannerPolicyLocalServiceWrapper
 
 		return _batchPlannerPolicyLocalService.deleteBatchPlannerPolicy(
 			batchPlannerPolicyId);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			deleteBatchPlannerPolicy(long batchPlannerPlanId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyLocalService.deleteBatchPlannerPolicy(
+			batchPlannerPlanId, name);
 	}
 
 	/**
@@ -268,6 +287,14 @@ public class BatchPlannerPolicyLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerPolicy>
+		getBatchPlannerPolicies(long batchPlannerPlanId) {
+
+		return _batchPlannerPolicyLocalService.getBatchPlannerPolicies(
+			batchPlannerPlanId);
+	}
+
 	/**
 	 * Returns the number of batch planner policies.
 	 *
@@ -292,6 +319,15 @@ public class BatchPlannerPolicyLocalServiceWrapper
 
 		return _batchPlannerPolicyLocalService.getBatchPlannerPolicy(
 			batchPlannerPolicyId);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			getBatchPlannerPolicy(long batchPlannerPlanId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyLocalService.getBatchPlannerPolicy(
+			batchPlannerPlanId, name);
 	}
 
 	@Override
@@ -323,6 +359,12 @@ public class BatchPlannerPolicyLocalServiceWrapper
 		return _batchPlannerPolicyLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public boolean hasBatchPlannerPolicy(long batchPlannerPlanId, String name) {
+		return _batchPlannerPolicyLocalService.hasBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+	}
+
 	/**
 	 * Updates the batch planner policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -341,6 +383,16 @@ public class BatchPlannerPolicyLocalServiceWrapper
 
 		return _batchPlannerPolicyLocalService.updateBatchPlannerPolicy(
 			batchPlannerPolicy);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			updateBatchPlannerPolicy(
+				long batchPlannerPlanId, String name, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyLocalService.updateBatchPlannerPolicy(
+			batchPlannerPlanId, name, value);
 	}
 
 	@Override

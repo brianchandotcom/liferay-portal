@@ -61,6 +61,14 @@ public class BatchPlannerPolicyLocalServiceUtil {
 		return getService().addBatchPlannerPolicy(batchPlannerPolicy);
 	}
 
+	public static BatchPlannerPolicy addBatchPlannerPolicy(
+			long userId, long batchPlannerPlanId, String name, String value)
+		throws PortalException {
+
+		return getService().addBatchPlannerPolicy(
+			userId, batchPlannerPlanId, name, value);
+	}
+
 	/**
 	 * Creates a new batch planner policy with the primary key. Does not add the batch planner policy to the database.
 	 *
@@ -115,6 +123,13 @@ public class BatchPlannerPolicyLocalServiceUtil {
 		throws PortalException {
 
 		return getService().deleteBatchPlannerPolicy(batchPlannerPolicyId);
+	}
+
+	public static BatchPlannerPolicy deleteBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		return getService().deleteBatchPlannerPolicy(batchPlannerPlanId, name);
 	}
 
 	/**
@@ -241,6 +256,12 @@ public class BatchPlannerPolicyLocalServiceUtil {
 		return getService().getBatchPlannerPolicies(start, end);
 	}
 
+	public static List<BatchPlannerPolicy> getBatchPlannerPolicies(
+		long batchPlannerPlanId) {
+
+		return getService().getBatchPlannerPolicies(batchPlannerPlanId);
+	}
+
 	/**
 	 * Returns the number of batch planner policies.
 	 *
@@ -262,6 +283,13 @@ public class BatchPlannerPolicyLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getBatchPlannerPolicy(batchPlannerPolicyId);
+	}
+
+	public static BatchPlannerPolicy getBatchPlannerPolicy(
+			long batchPlannerPlanId, String name)
+		throws PortalException {
+
+		return getService().getBatchPlannerPolicy(batchPlannerPlanId, name);
 	}
 
 	public static
@@ -289,6 +317,12 @@ public class BatchPlannerPolicyLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean hasBatchPlannerPolicy(
+		long batchPlannerPlanId, String name) {
+
+		return getService().hasBatchPlannerPolicy(batchPlannerPlanId, name);
+	}
+
 	/**
 	 * Updates the batch planner policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -303,6 +337,14 @@ public class BatchPlannerPolicyLocalServiceUtil {
 		BatchPlannerPolicy batchPlannerPolicy) {
 
 		return getService().updateBatchPlannerPolicy(batchPlannerPolicy);
+	}
+
+	public static BatchPlannerPolicy updateBatchPlannerPolicy(
+			long batchPlannerPlanId, String name, String value)
+		throws PortalException {
+
+		return getService().updateBatchPlannerPolicy(
+			batchPlannerPlanId, name, value);
 	}
 
 	public static BatchPlannerPolicyLocalService getService() {

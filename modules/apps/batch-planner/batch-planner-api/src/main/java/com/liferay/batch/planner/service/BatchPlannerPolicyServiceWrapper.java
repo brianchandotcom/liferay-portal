@@ -33,6 +33,43 @@ public class BatchPlannerPolicyServiceWrapper
 		_batchPlannerPolicyService = batchPlannerPolicyService;
 	}
 
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			addBatchPlannerPolicy(
+				long batchPlannerPlanId, String name, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyService.addBatchPlannerPolicy(
+			batchPlannerPlanId, name, value);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			deleteBatchPlannerPolicy(long batchPlannerPlanId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyService.deleteBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerPolicy>
+			getBatchPlannerPolicies(long batchPlannerPlanId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyService.getBatchPlannerPolicies(
+			batchPlannerPlanId);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			getBatchPlannerPolicy(long batchPlannerPlanId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyService.getBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -41,6 +78,24 @@ public class BatchPlannerPolicyServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _batchPlannerPolicyService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public boolean hasBatchPlannerPolicy(long batchPlannerPlanId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyService.hasBatchPlannerPolicy(
+			batchPlannerPlanId, name);
+	}
+
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPolicy
+			updateBatchPlannerPolicy(
+				long batchPlannerPlanId, String name, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPolicyService.updateBatchPlannerPolicy(
+			batchPlannerPlanId, name, value);
 	}
 
 	@Override

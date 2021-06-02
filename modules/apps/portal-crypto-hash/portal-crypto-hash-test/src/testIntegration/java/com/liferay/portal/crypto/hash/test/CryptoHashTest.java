@@ -307,6 +307,8 @@ public class CryptoHashTest {
 		Configuration configuration = _registerFactoryConfiguration(
 			factoryPid, properties);
 
+		String configurationPid = configuration.getPid();
+
 		_autoCloseables.add(
 			() -> {
 				CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -318,9 +320,7 @@ public class CryptoHashTest {
 
 							@Override
 							public void deleted(String pid) {
-								if (Objects.equals(
-										pid, configuration.getPid())) {
-
+								if (configurationPid.equals(pid)) {
 									countDownLatch.countDown();
 								}
 							}

@@ -52,28 +52,22 @@ public class GetDSDocumentsAsBytesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)resourceRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)resourceRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			String envelopeId = ParamUtil.getString(
-				resourceRequest, "envelopeId");
+		String dsEnvelopeId = ParamUtil.getString(
+			resourceRequest, "dsEnvelopeId");
 
-			byte[] dsDocumentsAsBytes =
-				_dsDocumentManager.getDSDocumentsAsBytes(
-					themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
-					envelopeId);
+		byte[] dsDocumentsAsBytes =
+			_dsDocumentManager.getDSDocumentsAsBytes(
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+				dsEnvelopeId);
 
-			PortletResponseUtil.sendFile(
-				resourceRequest, resourceResponse, envelopeId + ".zip",
-				dsDocumentsAsBytes, ContentTypes.APPLICATION_ZIP);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+		PortletResponseUtil.sendFile(
+			resourceRequest, resourceResponse, dsEnvelopeId + ".zip",
+			dsDocumentsAsBytes, ContentTypes.APPLICATION_ZIP);
+	
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

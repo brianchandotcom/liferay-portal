@@ -63,7 +63,7 @@ const EnvelopeList = ({history}) => {
 						action: async ({envelopeId}) => {
 							window.open(
 								createResourceURL(baseResourceURL, {
-									envelopeId,
+									dsEnvelopeId: envelopeId,
 									p_p_resource_id:
 										'/digital_signature/get_ds_documents_as_bytes',
 								}),

@@ -71,7 +71,7 @@ const EnvelopeHeader = ({docusignStatus, emailSubject, envelopeId}) => {
 				onClick={() =>
 					window.open(
 						createResourceURL(baseResourceURL, {
-							envelopeId,
+							dsEnvelopeId: envelopeId,
 							p_p_resource_id:
 								'/digital_signature/get_ds_documents_as_bytes',
 						}),
@@ -109,7 +109,7 @@ function EnvelopeView({
 		try {
 			const response = await fetch(
 				createResourceURL(baseResourceURL, {
-					envelopeId,
+					dsEnvelopeId: envelopeId,
 					p_p_resource_id: '/digital_signature/get_ds_envelope',
 				})
 			);
@@ -150,7 +150,7 @@ function EnvelopeView({
 				<EmptyState
 					className="mb-2 mt-4"
 					description={Liferay.Language.get(
-						'hmm-looks-like-this-item-doesnt-have-a-preview-we-can-show-you'
+						'the-document-doenst-have-a-preview'
 					)}
 					title={Liferay.Language.get('no-preview-available')}
 				/>

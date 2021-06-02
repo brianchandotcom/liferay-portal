@@ -426,6 +426,10 @@ public class Sidecar {
 			return new Elasticsearch790Distribution();
 		}
 
+		if (versionNumber.equals("7.14.0")) {
+			return new Elasticsearch7140Distribution();
+		}
+
 		throw new IllegalArgumentException(
 			"Unsupported Elasticsearch version: " + versionNumber);
 	}

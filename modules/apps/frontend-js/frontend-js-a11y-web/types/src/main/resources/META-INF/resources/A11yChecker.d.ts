@@ -93,20 +93,12 @@ export declare class Scheduler<T> {
 	private workLoop;
 	scheduleCallback(callback: Function, target: T): void;
 }
-declare type Mutation = {
 
-	/**
-	 * Attributes are the attributes of a node. The array is considered a
-	 * conditional `or`, the same for the values of an attribute.
-	 */
-	attributes: Record<string, Array<string>>;
-
-	/**
-	 * NodeNames is an array of node names. This array is considered as a
-	 * conditional `or`.
-	 */
-	nodeNames: Array<string>;
-};
+/**
+ * Attributes are the attributes of a node. The array is considered a
+ * conditional `or`, the same for the values of an attribute.
+ */
+declare type Attributes = Record<string, Array<string>>;
 export interface A11yCheckerOptions {
 
 	/**
@@ -129,7 +121,7 @@ export interface A11yCheckerOptions {
 	 * Mutation is an optional list of criteria on which a new analysis will be
 	 * ignored.
 	 */
-	mutations?: Record<MutationRecordType, Mutation>;
+	mutations?: Record<string, Attributes>;
 
 	/**
 	 * Targets is a list or element that represents the subtree(s) to be

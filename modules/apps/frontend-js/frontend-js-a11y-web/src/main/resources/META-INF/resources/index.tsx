@@ -34,10 +34,8 @@ const getDefaultContainer = () => {
 
 const defaultProps = {
 	mutations: {
-		attributes: {
-			attributes: {value: ['*']},
-			nodeNames: ['INPUT'],
-		},
+		div: {'data-restore-title': ['*'], draggable: ['*']},
+		input: {value: ['*']},
 	},
 	targets: ['.flipped'],
 };

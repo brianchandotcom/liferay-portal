@@ -230,20 +230,11 @@ export class Scheduler<T> {
 	}
 }
 
-type Mutation = {
-
-	/**
-	 * Attributes are the attributes of a node. The array is considered a
-	 * conditional `or`, the same for the values of an attribute.
-	 */
-	attributes: Record<string, Array<string>>;
-
-	/**
-	 * NodeNames is an array of node names. This array is considered as a
-	 * conditional `or`.
-	 */
-	nodeNames: Array<string>;
-};
+/**
+ * Attributes are the attributes of a node. The array is considered a
+ * conditional `or`, the same for the values of an attribute.
+ */
+type Attributes = Record<string, Array<string>>;
 
 export interface A11yCheckerOptions {
 
@@ -267,7 +258,7 @@ export interface A11yCheckerOptions {
 	 * Mutation is an optional list of criteria on which a new analysis will be
 	 * ignored.
 	 */
-	mutations?: Record<MutationRecordType, Mutation>;
+	mutations?: Record<string, Attributes>;
 
 	/**
 	 * Targets is a list or element that represents the subtree(s) to be
@@ -283,7 +274,7 @@ export class A11yChecker {
 		target: string;
 		mutation: MutationObserver;
 	}>;
-	private mutations?: Record<MutationRecordType, Mutation>;
+	private mutations?: Record<string, Attributes>;
 	readonly axeOptions: RunOptions;
 	readonly denylist?: Array<Array<string>>;
 
@@ -378,9 +369,23 @@ export class A11yChecker {
 			}
 
 			if (this.mutations) {
-				const condition = this.mutations[record.type];
+				const {addedNodes, removedNodes} = record;
 
-				if (condition && hasValidMutation(record, condition)) {
+				const target =
+					record.type === 'attributes'
+						? record.target
+						: removedNodes.length > 0
+						? removedNodes[0]
+						: addedNodes[0];
+
+				const attributes = this.mutations[
+					target.nodeName.toLowerCase()
+				];
+
+				if (
+					attributes &&
+					compareAttributes(target as Element, attributes)
+				) {
 					return;
 				}
 			}
@@ -414,25 +419,6 @@ export class A11yChecker {
 	}
 }
 
-function hasValidMutation(record: MutationRecord, mutation: Mutation) {
-	const {addedNodes, removedNodes, target} = record;
-	const {attributes, nodeNames} = mutation;
-
-	// Is a removal or added mutation with type childList
-
-	if (removedNodes.length > 0 || addedNodes.length > 0) {
-		const [node] = removedNodes.length > 0 ? removedNodes : addedNodes;
-
-		return (
-			nodeNames.includes(node.nodeName) &&
-			compareAttributes(node as Element, attributes)
-		);
-	}
-	else {
-		return compareAttributes(target as Element, attributes);
-	}
-}
-
 function compareAttributes(
 	node: Element,
 	attributes: Record<string, Array<string>>
@@ -442,6 +428,8 @@ function compareAttributes(
 	return attributesNames.some((name) => {
 		const key = node.getAttribute(name);
 
-		return attributes[name].some((value) => key?.includes(value));
+		return attributes[name].some((value) =>
+			value === '*' ? true : key?.includes(value)
+		);
 	});
 }

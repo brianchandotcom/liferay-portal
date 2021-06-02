@@ -43,9 +43,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -172,8 +174,15 @@ public class AssetCategoryFriendlyURLResolver implements FriendlyURLResolver {
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)requestContext.get("request");
 
-		String languageId = LanguageUtil.getLanguageId(
-			_portal.getLocale(httpServletRequest));
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		Locale locale = (Locale)httpSession.getAttribute(WebKeys.LOCALE);
+
+		if (locale == null) {
+			locale = _portal.getLocale(httpServletRequest);
+		}
+
+		String languageId = LanguageUtil.getLanguageId(locale);
 
 		return new LayoutFriendlyURLComposite(
 			layout,

@@ -252,14 +252,61 @@ definition {
 	}
 
 	@description = "Verify that the correct number of Entries are displayed"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test DisplayCorrectNumberOfEntries {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131083 DisplayCorrectNumberOfEntries pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		Form.publishForm();
+		
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		FormsAdminNavigator.closePublishedFormWindow();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text2");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		FormsAdminNavigator.closePublishedFormWindow();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormViewBuilder.viewEntriesTitle(key_entriesTitle = "2 Entries");
 	}
 
 	@description = "Verify that Entries for the Color, Date and Text Fields display a Field List in the Summary Tab"

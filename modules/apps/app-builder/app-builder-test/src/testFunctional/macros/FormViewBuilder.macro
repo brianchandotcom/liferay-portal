@@ -1089,6 +1089,12 @@ definition {
 			locator1 = "FormViewBuilder#CHECKBOX_AT_FORM_BODY");
 	}
 
+	macro viewEntriesTitle {
+		AssertElementPresent(
+			key_text = "${key_entriesTitle}",
+			locator1 = "FormViewBuilder#ENTRIES_TITLE_CONTENT");
+	}
+
 	macro viewMultipleSelectionInline {
 		for (var selectOption : list "${selectOptionsList}") {
 			AssertElementPresent(

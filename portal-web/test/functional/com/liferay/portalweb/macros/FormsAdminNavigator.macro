@@ -3,6 +3,14 @@ definition {
 	var formName = "Created Form Name";
 	var rowIndexNumber = "1";
 
+	macro closePublishedFormWindow {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Forms");
+	}
+
 	macro enableLocalNetworkDataProvider {
 		Navigator.openURL();
 

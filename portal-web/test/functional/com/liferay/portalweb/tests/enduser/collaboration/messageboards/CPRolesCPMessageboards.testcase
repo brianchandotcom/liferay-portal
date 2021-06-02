@@ -27,17 +27,13 @@ definition {
 
 			Role.tearDownCP();
 
-			Organization.tearDownCP();
-
 			Site.tearDownCP();
-
-			Page.tearDownCP();
 		}
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewMessageBoardsPortletRegRole {
+	@refactordone
+	test CanViewMessageBoardsPortletRegRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpRegRoleLoginUserCP(
@@ -66,18 +62,14 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		MessageboardsPortlet.viewNoPermissionCP();
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewMessageBoardsPortletSiteRole {
+	@refactordone
+	test CanViewMessageBoardsPortletSiteRole {
 		Permissions.setUpSiteRoleLoginUserCP(
 			pageName = "Blogs Page",
 			portletName = "Message Boards",
@@ -90,10 +82,6 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln",
 			userScreenName = "usersn");
-
-		Navigator.gotoSitePage(
-			pageName = "Blogs Page",
-			siteName = "Site Name");
 
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW",
@@ -113,11 +101,7 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Message Boards");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsPortlet.viewNoPermissionCP();
 	}

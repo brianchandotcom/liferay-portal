@@ -27,8 +27,9 @@ definition {
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test AddMBCategory {
+	@refactordone
+	@uitest
+	test CanAddMBCategory {
 		property portal.acceptance = "true";
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
@@ -42,26 +43,39 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test AddMBCategorySubcategory {
+	@refactordone
+	test CanAddMBCategorySubcategory {
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
 			categoryName = "MB Category Name",
 			userEmailAddress = "test@liferay.com");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "MB Category Name",
+			groupName = "Guest");
 
-		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
-
-		MessageboardsCategory.addCP(
+		JSONMBMessage.addCategory(
 			categoryDescription = "MB Subcategory Description",
-			categoryDescriptionEnabled = "true",
-			categoryName = "MB Subcategory Name");
+			categoryName = "MB Subcategory Name",
+			groupName = "Guest",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		MessageboardsCategory.openToCategory(
+			categoryName = "MB Category Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		MessageboardsCategory.viewCP(
+			categoryCount = "0 Categories",
+			categoryName = "MB Subcategory Name",
+			threadCount = "0");
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test AddMBThread {
+	@refactordone
+	@uitest
+	test CanAddMBThread {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -82,8 +96,8 @@ definition {
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test DeleteMBCategories {
+	@refactordone
+	test CanDeleteMBCategories {
 		for (var num : list "1,2,3") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "MB Category Description",
@@ -95,57 +109,56 @@ definition {
 
 		MessageboardsCategory.deleteCP();
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		AssertTextEquals.assertText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no threads or categories.");
+		MessageboardsCategory.viewDefault();
 	}
 
 	@priority = "3"
-	@refactorneeded
-	test DeleteMBThreadWithAttachment {
+	@refactordone
+	test CanDeleteMBThreadWithAttachment {
 		property custom.properties = "trash.entry.check.interval=1${line.separator}trash.entries.max.age=1";
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
+		JSONMBMessage.addMessage(
+			groupName = "Site Name",
+			threadBody = "Message Boards Thread Body",
+			threadSubject = "MB Thread Message Subject");
 
-		MessageboardsThread.addCP(
-			mbAttachmentFile = "Document_1.doc",
-			threadBody = "MB Body",
-			threadSubject = "MB Subject");
+		JSONMBMessage.addAttachmentToMessage(
+			fileName = "Document_1.jpg",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			threadSubject = "MB Thread Message Subject");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
-
-		MessageboardsThread.moveToRecycleBinCP(threadSubject = "MB Subject");
-
-		Pause(locator1 = "120000");
+		JSONMBMessage.moveThreadToTrash(
+			groupName = "Site Name",
+			threadSubject = "MB Thread Message Subject");
 
 		AssertConsoleTextNotPresent(value1 = "MessageListenerException");
 
 		AssertConsoleTextNotPresent(value1 = "com.liferay.portlet.documentlibrary.NoSuchFileEntryException");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "The Recycle Bin is empty.");
+		RecycleBin.deleteCP(
+			assetName = "MB Thread Message Subject",
+			assetType = "Message Boards Thread");
+
+		RecycleBin.viewDefaultCP(assetName = "MB Thread Message Subject");
 	}
 
 	@priority = "5"
-	@refactorneeded
-	test EditMBThreadSubjectAndBody {
+	@refactordone
+	test CanEditMBThreadSubjectAndBody {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.editCP(
-			threadBody = "MB Thread Message Body",
+		JSONMBMessage.updateMessage(
+			groupName = "Guest",
 			threadBodyEdit = "MB Thread Message Body Edit",
+			threadSubject = "MB Thread Message Subject",
 			threadSubjectEdit = "MB Thread Message Subject Edit");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
@@ -157,56 +170,46 @@ definition {
 	}
 
 	@priority = "3"
-	@refactorneeded
-	test ViewAnonymousPostingAllowedCheckboxConfiguration {
+	@refactordone
+	test CanViewAnonymousPostingAllowedCheckboxConfiguration {
 		property test.name.skip.portal.instance = "CPMessageboards#ViewAnonymousPostingAllowedCheckboxConfiguration";
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageboardsThread.viewAnonymousPostingCheckboxCP(siteURLKey = "guest");
 
-		MessageboardsThread.viewAnonymousPostingCheckboxCP();
+		MessageboardsPortlet.configureAnonymousPostingCP(
+			anonymousPostingEnabled = "false",
+			siteURLKey = "guest");
 
-		MessageboardsPortlet.configureAnonymousPostingCP(anonymousPostingEnabled = "false");
+		MessageboardsPortlet.viewAnonymousPostingConfigurationCP(
+			anonymousPostingEnabled = "false",
+			siteURLKey = "guest");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		MessageboardsPortlet.viewAnonymousPostingConfigurationCP(anonymousPostingEnabled = "false");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewNoAnonymousPostingCheckboxCP();
+		MessageboardsThread.viewNoAnonymousPostingCheckboxCP(siteURLKey = "guest");
 	}
 
 	@priority = "4"
-	@refactorneeded
-	test ViewBBCodeNoXSS {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsPortlet.configureGeneralCP(
-			messageFormat = "BBCode",
-			messageFormatBBCodeEnabled = "true");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+	@refactordone
+	test CanViewBBCodeNoXSS {
+		MessageboardsPortlet.configureGeneralCP(siteURLKey = "guest");
 
 		MessageboardsThread.addCP(
+			siteURLKey = "guest",
 			source = "true",
 			threadBody = "[img]Not An Image[font= onerror=alert(/XSS/.source)//]FF[/font][/img]",
 			threadSubject = "New Thread Subject");
 
-		MessageboardsThread.assertAlertNotPresent();
-
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.assertAlertNotPresent();
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
 			threadBody = "",
 			threadSubject = "New Thread Subject");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
 		MessageboardsThread.addCP(
 			fontSize = "24",
+			siteURLKey = "guest",
 			source = "true",
 			threadBody = "[size=5]Thread Body[/size]",
 			threadSubject = "New Thread Subject 2");

@@ -459,7 +459,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.viewDefaultPG();
+		MessageboardsCategory.viewDefault();
 	}
 
 	@priority = "5"
@@ -608,7 +608,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsCategory.viewDefaultPG();
+		MessageboardsCategory.viewDefault();
 	}
 
 	@priority = "4"

@@ -1180,7 +1180,9 @@ definition {
 
 		MessageboardsThread.viewMarkAsQuestionNotCheckedCP(threadSubject = "Thread Subject");
 
-		MessageboardsPortlet.configureGeneralCP(threadAsQuestionByDefaultEnabled = "true");
+		MessageboardsPortlet.configureGeneralCP(
+			siteURLKey = "guest",
+			threadAsQuestionByDefaultEnabled = "true");
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 

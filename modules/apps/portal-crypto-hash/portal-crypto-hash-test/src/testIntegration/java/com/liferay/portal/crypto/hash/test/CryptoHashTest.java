@@ -311,11 +311,6 @@ public class CryptoHashTest {
 			() -> {
 				CountDownLatch countDownLatch = new CountDownLatch(1);
 
-				Dictionary<String, String> registrationProperties =
-					HashMapDictionaryBuilder.put(
-						Constants.SERVICE_PID, factoryPid
-					).build();
-
 				ServiceRegistration<ManagedServiceFactory> serviceRegistration =
 					_bundleContext.registerService(
 						ManagedServiceFactory.class,
@@ -343,7 +338,9 @@ public class CryptoHashTest {
 							}
 
 						},
-						registrationProperties);
+						HashMapDictionaryBuilder.put(
+							Constants.SERVICE_PID, factoryPid
+						).build());
 
 				try {
 					configuration.delete();
@@ -432,11 +429,6 @@ public class CryptoHashTest {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		Dictionary<String, String> registrationProperties =
-			HashMapDictionaryBuilder.put(
-				Constants.SERVICE_PID, factoryPid
-			).build();
-
 		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
 			_bundleContext.registerService(
 				ManagedServiceFactory.class,
@@ -466,7 +458,9 @@ public class CryptoHashTest {
 					}
 
 				},
-				registrationProperties);
+				HashMapDictionaryBuilder.put(
+					Constants.SERVICE_PID, factoryPid
+				).build());
 
 		try {
 			ServiceReference<ConfigurationAdmin> serviceReference =

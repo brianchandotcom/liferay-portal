@@ -89,7 +89,10 @@ export default function ItemSelector({
 						type: 'divider',
 					},
 					{
-						label: `${Liferay.Language.get('select-content')}...`,
+						label: `${Liferay.Util.sub(
+							Liferay.Language.get('select-x'),
+							label
+						)}...`,
 						onClick: () => openModal(),
 					}
 				);
@@ -109,7 +112,8 @@ export default function ItemSelector({
 
 			if (config.contentBrowsingEnabled && selectedItem.classPK) {
 				const contentMenuItems = selectPageContentDropdownItems(
-					selectedItem.classPK
+					selectedItem.classPK,
+					label
 				)(state);
 
 				if (contentMenuItems?.length) {

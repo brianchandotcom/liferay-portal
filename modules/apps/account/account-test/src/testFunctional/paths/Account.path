@@ -100,6 +100,11 @@
 	<td>//button[contains(@class,'btn')][normalize-space(text())='Save']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACCOUNT_MANAGEMENT</td>
+	<td>//div[contains(@class, 'dnd-tbody')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

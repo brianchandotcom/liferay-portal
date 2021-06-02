@@ -32,13 +32,41 @@ definition {
 	}
 
 	@description = "Verify that a Select From List Field can be created"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131357 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select from List");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Option 1",
+			rowNumber = "1");
+
+			
 
 	}
 

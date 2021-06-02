@@ -689,6 +689,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_UPLOAD_FIELD_DISABLE</td>
+	<td>//button[contains(@class,'btn-secondary')][@disabled='']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPLOAD_FIELD</td>
 	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[contains(@id,'inputFile')]</td>
 	<td></td>

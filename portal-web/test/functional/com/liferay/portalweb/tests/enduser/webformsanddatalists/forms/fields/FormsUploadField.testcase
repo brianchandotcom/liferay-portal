@@ -43,14 +43,40 @@ definition {
 	}
 
 	@description = "Verify that, by default, guest users cannot upload files"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ByDefaultCannotBeUsedByGuestUser {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133252 ByDefaultCannotBeUsedByGuestUser pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Upload");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishedFormPublicURL = Form.getPublishedFormPublicURL(
+			publishedFormPublicURL = "${publishedFormPublicURL}"
+		);
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
+
+		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "You need to be signed in to edit this field.");
+
+		AssertElementPresent(locator1 = "FormFields#SELECT_UPLOAD_FIELD_DISABLE");
 	}
 
 	@description = "Verify that a file added to the Upload field can be removed by clicking the Clear button"

@@ -71,13 +71,16 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 
 			runSQL(
 				StringBundler.concat(
-					"update SamlIdpSpSession sidp set samlPeerBindingId = (",
-					"select samlPeerBindingId from SamlPeerBinding spb where ",
-					"sidp.companyId = spb.companyId and sidp.userId = ",
-					"spb.userId and sidp.samlSpEntityId = ",
-					"spb.samlPeerEntityId and sidp.nameIdFormat = ",
-					"spb.samlNameIdFormat and sidp.nameIdValue = ",
-					"spb.samlNameIdValue)"));
+					"update SamlIdpSpSession set samlPeerBindingId = (",
+					"select samlPeerBindingId from SamlPeerBinding where ",
+					"SamlIdpSpSession.companyId = SamlPeerBinding.companyId ",
+					"and SamlIdpSpSession.userId = SamlPeerBinding.userId and ",
+					"SamlIdpSpSession.samlSpEntityId = ",
+					"SamlPeerBinding.samlPeerEntityId and ",
+					"SamlIdpSpSession.nameIdFormat = ",
+					"SamlPeerBinding.samlNameIdFormat and ",
+					"SamlIdpSpSession.nameIdValue = ",
+					"SamlPeerBinding.samlNameIdValue"));
 
 			CounterLocalServiceUtil.reset(
 				"com.liferay.saml.persistence.model.SamlPeerBinding",

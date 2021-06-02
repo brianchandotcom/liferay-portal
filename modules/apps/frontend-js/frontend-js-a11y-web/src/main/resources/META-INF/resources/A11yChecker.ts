@@ -158,6 +158,7 @@ export class Scheduler<T> {
 				// If there's more work, schedule the next callback at the
 				// end of the preceding one.
 
+				this.isCallbackScheduled = true;
 				this.requestHostCallback();
 			}
 		});

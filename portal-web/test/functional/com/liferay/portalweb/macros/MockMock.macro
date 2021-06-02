@@ -137,7 +137,7 @@ definition {
 
 		var bodyContent = selenium.getText("MockMock#MOCKMOCK_MESSAGE_BODY");
 		var bodyContent = StringUtil.extractLast("${bodyContent}", " at ");
-		var bodyURL = StringUtil.extractFirst("${bodyContent}", ".");
+		var bodyURL = StringUtil.extractFirst("${bodyContent}", ".<br />");
 
 		Navigator.openSpecificURL(url = "${bodyURL}");
 	}

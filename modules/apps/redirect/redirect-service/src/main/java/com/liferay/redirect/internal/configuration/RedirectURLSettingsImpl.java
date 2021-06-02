@@ -14,14 +14,7 @@
 
 package com.liferay.redirect.internal.configuration;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
-
-import java.util.Collections;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,7 +28,8 @@ public class RedirectURLSettingsImpl implements RedirectURLSettings {
 	@Override
 	public String[] getAllowedDomains(long companyId) {
 		RedirectURLConfiguration redirectURLConfiguration =
-			_getRedirectURLConfiguration(companyId);
+			_redirectURLConfigurationTrackerImpl.
+				getCompanyRedirectURLConfiguration(companyId);
 
 		return redirectURLConfiguration.allowedDomains();
 	}
@@ -43,7 +37,8 @@ public class RedirectURLSettingsImpl implements RedirectURLSettings {
 	@Override
 	public String[] getAllowedIPs(long companyId) {
 		RedirectURLConfiguration redirectURLConfiguration =
-			_getRedirectURLConfiguration(companyId);
+			_redirectURLConfigurationTrackerImpl.
+				getCompanyRedirectURLConfiguration(companyId);
 
 		return redirectURLConfiguration.allowedIPs();
 	}
@@ -51,32 +46,14 @@ public class RedirectURLSettingsImpl implements RedirectURLSettings {
 	@Override
 	public String getSecurityMode(long companyId) {
 		RedirectURLConfiguration redirectURLConfiguration =
-			_getRedirectURLConfiguration(companyId);
+			_redirectURLConfigurationTrackerImpl.
+				getCompanyRedirectURLConfiguration(companyId);
 
 		return redirectURLConfiguration.securityMode();
 	}
 
-	private RedirectURLConfiguration _getRedirectURLConfiguration(
-		long companyId) {
-
-		try {
-			return _configurationProvider.getCompanyConfiguration(
-				RedirectURLConfiguration.class, companyId);
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(configurationException, configurationException);
-			}
-
-			return ConfigurableUtil.createConfigurable(
-				RedirectURLConfiguration.class, Collections.emptyMap());
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		RedirectURLSettingsImpl.class);
-
 	@Reference
-	private ConfigurationProvider _configurationProvider;
+	private RedirectURLConfigurationTrackerImpl
+		_redirectURLConfigurationTrackerImpl;
 
 }

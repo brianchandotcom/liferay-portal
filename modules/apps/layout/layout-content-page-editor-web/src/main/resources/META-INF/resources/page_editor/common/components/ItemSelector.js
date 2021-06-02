@@ -102,19 +102,13 @@ export default function ItemSelector({
 			a.every((item, index) => item.itemId === b[index].itemId)
 	);
 
-	const selectContentIcon = selectedItem?.title ? 'change' : 'plus';
+	const selectContentButtonIcon = selectedItem?.title ? 'change' : 'plus';
 
-	const getContentButtonName = (label) =>
-		Liferay.Util.sub(
-			selectedItem?.title
-				? Liferay.Language.get('change-x')
-				: Liferay.Language.get('select-x'),
-			label
-		);
-
-	const contentButtonTitle = getContentButtonName(label);
-	const contentButtonAriaLabel = getContentButtonName(
-		Liferay.Language.get('content-button')
+	const selectContentButtonLabel = Liferay.Util.sub(
+		selectedItem?.title
+			? Liferay.Language.get('change-x')
+			: Liferay.Language.get('select-x'),
+		label
 	);
 
 	return (
@@ -148,24 +142,24 @@ export default function ItemSelector({
 							items={mappedItemsMenu}
 							trigger={
 								<ClayButtonWithIcon
-									aria-label={contentButtonAriaLabel}
+									aria-label={selectContentButtonLabel}
 									className="page-editor__item-selector__content-button"
 									displayType="secondary"
 									small
-									symbol={selectContentIcon}
-									title={contentButtonTitle}
+									symbol={selectContentButtonIcon}
+									title={selectContentButtonLabel}
 								/>
 							}
 						/>
 					) : (
 						<ClayButtonWithIcon
-							aria-label={contentButtonAriaLabel}
+							aria-label={selectContentButtonLabel}
 							className="page-editor__item-selector__content-button"
 							displayType="secondary"
 							onClick={openModal}
 							small
-							symbol={selectContentIcon}
-							title={contentButtonTitle}
+							symbol={selectContentButtonIcon}
+							title={selectContentButtonLabel}
 						/>
 					))}
 

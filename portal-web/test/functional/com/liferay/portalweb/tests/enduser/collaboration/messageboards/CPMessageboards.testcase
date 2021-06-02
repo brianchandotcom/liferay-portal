@@ -81,35 +81,6 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 	}
 
-	@priority = "5"
-	@refactorneeded
-	test CKEditorSmoke {
-		property custom.properties = "editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.bb_code.jsp=ckeditor${line.separator}editor.wysiwyg.portal-web.docroot.html.portlet.message_boards.edit_message.html.jsp=ckeditor";
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.gotoAdd();
-
-		MenuItem.click(menuItem = "Thread");
-
-		Type(
-			locator1 = "TextInput#SUBJECT",
-			value1 = "CKEditor Entry Subject");
-
-		CKEditor.assertEditorPresent();
-
-		CKEditor.addContent(content = "CKEditor Entry Body");
-
-		PortletEntry.publish();
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewCP(
-			replyCount = "0",
-			threadBody = "CKEditor Entry Body",
-			threadSubject = "CKEditor Entry Subject");
-	}
-
 	@priority = "4"
 	@refactorneeded
 	test DeleteMBCategories {
@@ -183,23 +154,6 @@ definition {
 			replyCount = "0",
 			threadBody = "MB Thread Message Body Edit",
 			threadSubject = "MB Thread Message Subject Edit");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test MoveToRecycleBinMBThread {
-		JSONMBMessage.addMessage(
-			groupName = "Guest",
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.moveToRecycleBinCP(threadSubject = "MB Thread Message Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 	}
 
 	@priority = "3"

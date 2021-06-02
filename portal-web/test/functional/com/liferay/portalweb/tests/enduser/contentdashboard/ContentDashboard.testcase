@@ -1607,7 +1607,7 @@ definition {
 				category = "Content",
 				panel = "Applications",
 				portlet = "Content Dashboard");
-			
+
 			ContentDashboard.filterByAuthorAll(filterOption = "All");
 		}
 
@@ -1674,7 +1674,7 @@ definition {
 				category = "Content",
 				panel = "Applications",
 				portlet = "Content Dashboard");
-			
+
 			ContentDashboard.filterByAuthorMe(filterOption = "Me");
 		}
 
@@ -1686,4 +1686,5 @@ definition {
 				value1 = "WC Title 2");
 		}
 	}
+
 }

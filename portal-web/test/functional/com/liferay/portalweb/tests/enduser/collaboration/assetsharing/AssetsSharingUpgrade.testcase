@@ -12,7 +12,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest/home");
+		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

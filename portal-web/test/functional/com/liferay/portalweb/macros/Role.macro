@@ -68,46 +68,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assignRegRoleCP {
-		Search.searchCP(searchTerm = "${roleTitle}");
-
-		var key_itemName = "${roleTitle}";
-
-		AssertClick(
-			locator1 = "ListGroupItem#ITEM_NAME_LINK",
-			value1 = "${roleTitle}");
-
-		Navigator.gotoNavItem(navItem = "Assignees");
-
-		LexiconEntry.gotoAdd();
-
-		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
-
-		Pause(locator1 = "3000");
-
-		var key_userScreenName = "${userScreenName}";
-
-		Search.searchCP(searchTerm = "${userScreenName}");
-
-		AssertTextPresent(value1 = "Results for ${userScreenName}");
-
-		AssertTextEquals(
-			locator1 = "RolesAssignMembers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}");
-
-		Check(locator1 = "RolesAssignMembers#USER_TABLE_CHECKBOX");
-
-		SelectFrameTop(value1 = "relative=top");
-
-		Button.clickAdd();
-
-		Alert.viewSuccessMessage();
-
-		AssertTextEquals(
-			locator1 = "RolesAssignMembers#USER_TABLE_SCREEN_NAME",
-			value1 = "${userScreenName}");
-	}
-
 	macro definePermissionCmdCP {
 		Role.editPermissionCmdCP(
 			assetLibrariesScope = "${assetLibrariesScope}",

@@ -129,21 +129,9 @@ definition {
 	}
 
 	macro _disablePasswordChangeRequired {
-		var companyId = JSONCompany.getCompanyId();
-
 		var portalURL = JSONCompany.getPortalURL();
 
-		var curl = '''
-			${portalURL}/api/jsonws/passwordpolicy/search \
-				-u test@liferay.com:test
-				-d companyId=${companyId} \
-				-d "name=Default%20Password%20Policy" \
-				-d "start=-1" \
-				-d "end=-1" \
-				-d -orderByComparator=
-		''';
-
-		var passwordPolicyId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == 'Default Password Policy')]['passwordPolicyId']");
+		var passwordPolicyId = JSONPasswordPolicy.getPasswordPolicyIdByName(passwordPolicyName = "Default Password Policy");
 
 		var curl = '''
 			${portalURL}/api/jsonws/passwordpolicy/update-password-policy \

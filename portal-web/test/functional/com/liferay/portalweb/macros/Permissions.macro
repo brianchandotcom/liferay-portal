@@ -149,6 +149,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
 			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
@@ -191,6 +192,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
 			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
@@ -298,6 +300,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
 			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
@@ -364,6 +367,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
 			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
@@ -473,6 +477,7 @@ definition {
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
+			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
 			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",

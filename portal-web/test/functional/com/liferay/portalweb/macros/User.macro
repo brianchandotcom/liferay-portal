@@ -1441,27 +1441,10 @@ definition {
 
 		UserNavigator.gotoUser(userScreenName = "${userScreenName}");
 
-		if (!(isSet(newPassword))) {
-			var newPassword = "password";
-		}
-
-		UserNavigator.gotoPassword();
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD",
-			value1 = "${newPassword}");
-
-		Type(
-			locator1 = "UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD",
-			value1 = "${newPassword}");
-
-		if ("${requirePasswordReset}" == "true") {
-			Check(
-				checkboxName = "Require Password Reset",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		PortletEntry.save();
+		User.editPassword(
+			currentPassword = "${currentPassword}",
+			newPassword = "${newPassword}",
+			requirePasswordReset = "${requirePasswordReset}");
 
 		User.logoutPG();
 

@@ -601,6 +601,7 @@ public class DataGuardTestRule
 				}
 			}
 			catch (Throwable throwable2) {
+				ReflectionUtil.throwException(throwable2);
 			}
 		}
 	}

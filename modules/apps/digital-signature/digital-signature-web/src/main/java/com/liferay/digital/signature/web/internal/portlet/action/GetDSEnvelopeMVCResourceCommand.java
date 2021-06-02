@@ -68,25 +68,17 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 			DSEnvelope dsEnvelope = _dsEnvelopeManager.getDSEnvelope(
 				themeDisplay.getCompanyId(), themeDisplay.getCompanyGroupId(),
-				ParamUtil.getString(resourceRequest, "envelopeId"));
-
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-			for (DSDocument dsDocument : dsEnvelope.getDSDocuments()) {
-				JSONObject fileEntryDetailsJSONObject =
-					_getFileEntryDetailsJSONObject(themeDisplay, dsDocument);
-
-				if (fileEntryDetailsJSONObject != null) {
-					jsonArray.put(fileEntryDetailsJSONObject);
-				}
-			}
+				ParamUtil.getString(resourceRequest, "dsEnvelopeId"));
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
 					"envelope", dsEnvelope.toJSONObject()
 				).put(
-					"fileEntries", jsonArray
+					"fileEntries", JSONUtil.toJSONArray(
+						dsEnvelope.getDSDocuments(), dsDocument ->
+							_getFileEntryDetailsJSONObject(themeDisplay, dsDocument)
+					)
 				));
 		}
 		catch (Exception exception) {
@@ -101,33 +93,35 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 		String dsDocumentId = dsDocument.getDSDocumentId();
 
-		if (!dsDocumentId.equals("certificate")) {
-			try {
-				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-					GetterUtil.getLong(dsDocumentId));
-
-				FileVersion fileVersion = fileEntry.getFileVersion();
-
-				return JSONUtil.put(
-					"initialPage", 1
-				).put(
-					"previewFileCount",
-					PDFProcessorUtil.getPreviewFileCount(fileVersion)
-				).put(
-					"previewFileURL",
-					DLURLHelperUtil.getPreviewURL(
-						fileEntry, fileVersion, themeDisplay,
-						"&previewFileIndex=")
-				);
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException, portalException);
-				}
-			}
+		if (dsDocumentId.equals("certificate")) {
+			return null;
 		}
 
-		return null;
+		try {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				GetterUtil.getLong(dsDocumentId));
+
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			return JSONUtil.put(
+				"initialPage", 1
+			).put(
+				"previewFileCount",
+				PDFProcessorUtil.getPreviewFileCount(fileVersion)
+			).put(
+				"previewFileURL",
+				DLURLHelperUtil.getPreviewURL(
+					fileEntry, fileVersion, themeDisplay,
+					"&previewFileIndex=")
+			);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
+			return null;
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -98,14 +98,46 @@ definition {
 	}
 
 	@description = "Verify that a Separator Field can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133234 CanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Separator");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Click(
+			key_name = "Separator",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.editFieldLabelMetal(fieldValue = "Test Separator");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		AssertElementPresent(
+			key_name = "Test Separator",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Separator");
 	}
 
 	@description = "Verify that a Separator Field can be set to repeatable"

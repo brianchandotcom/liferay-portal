@@ -419,7 +419,7 @@ definition {
 	@description = "COMMERCE-6355. As a buyer, I want to be able to remove a product from wish list from Product Details"
 	@priority = "3"
 	test RemoveProductFromWishListFromProductDetails {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
 		property test.name.skip.portal.instance = "CommerceProductDetails#RemoveProductFromWishListFromProductDetails";
 
 		// TODO Review

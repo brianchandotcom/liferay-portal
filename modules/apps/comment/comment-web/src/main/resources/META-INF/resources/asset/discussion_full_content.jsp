@@ -37,14 +37,14 @@ if (comment instanceof WorkflowableComment) {
 		</td>
 	</tr>
 	<tr>
-		<td class="lfr-center lfr-top">
+		<td class="align-top text-center">
 			<liferay-ui:user-display
 				displayStyle="2"
 				userId="<%= comment.getUserId() %>"
 				userName="<%= HtmlUtil.escape(comment.getUserName()) %>"
 			/>
 		</td>
-		<td class="lfr-top stretch">
+		<td class="align-top stretch">
 			<c:if test="<%= (workflowableComment != null) && (workflowableComment.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
 				<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
 

@@ -61,7 +61,7 @@ List<DiffResult> targetResults = diffResults[1];
 								for (String changedLine : sourceResult.getChangedLines()) {
 								%>
 
-									<tr class="lfr-top">
+									<tr class="align-top">
 										<%= _processColumn(changedLine) %>
 									</tr>
 
@@ -71,14 +71,14 @@ List<DiffResult> targetResults = diffResults[1];
 
 							</table>
 						</td>
-						<td class="lfr-top" width="50%">
+						<td class="align-top" width="50%">
 							<table class="taglib-diff-table">
 
 								<%
 								for (String changedLine : targetResult.getChangedLines()) {
 								%>
 
-									<tr class="lfr-top">
+									<tr class="align-top">
 										<%= _processColumn(changedLine) %>
 									</tr>
 

@@ -1,9 +1,21 @@
 definition {
 
+	macro resizeImage {
+		Select(
+			locator1 = "Select#IMAGE_RATIO",
+			value1 = "${dimension}");
+	}
+
 	macro rotateImage {
 		Click(
-			locator1 = "Icon#ANY",
-			key_text = "reload");
+			key_text = "reload",
+			locator1 = "Icon#ANY");
+	}
+
+	macro saveChanges {
+		Button.clickSave();
+
+		SelectFrameTop();
 	}
 
 }

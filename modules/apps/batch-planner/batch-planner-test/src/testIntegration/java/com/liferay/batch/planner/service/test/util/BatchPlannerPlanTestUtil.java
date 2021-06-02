@@ -14,7 +14,7 @@
 
 package com.liferay.batch.planner.service.test.util;
 
-import com.liferay.batch.planner.constants.BatchPlannerConstants;
+import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanPersistence;
 import com.liferay.batch.planner.service.persistence.BatchPlannerPlanUtil;
@@ -66,7 +66,7 @@ public class BatchPlannerPlanTestUtil {
 	}
 
 	private static String _randomExternalType() {
-		String[] externalTypes = BatchPlannerConstants.EXTERNAL_TYPES;
+		String[] externalTypes = BatchPlannerPlanConstants.EXTERNAL_TYPES;
 
 		return externalTypes
 			[RandomTestUtil.randomInt(0, externalTypes.length - 1)];

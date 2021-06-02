@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Igor Beslic
  */
@@ -48,8 +51,26 @@ public abstract class BaseBatchPlannerTestCase {
 			batchPlannerPlan.getName(), batchPlannerPlan.getExternalType());
 	}
 
-	protected BatchPlannerPolicy addBatchPlannerPolicy(User user, String... keyValues) {
-		_batchPlannerPolicyService.getOSGiServiceIdentifier();
+	protected List<BatchPlannerPolicy> addBatchPlannerPolicy(
+			User user, String... nameValues)
+		throws PortalException {
+
+		if ((nameValues == null) || ((nameValues.length % 2) != 0)) {
+			throw new IllegalArgumentException();
+		}
+
+		BatchPlannerPlan batchPlannerPlan = addBatchPlannerPlan(user, 300);
+
+		List<BatchPlannerPolicy> batchPlannerPolicies = new ArrayList<>();
+
+		for (int i = 0; (i + 1) <= nameValues.length;) {
+			batchPlannerPolicies.add(
+				_batchPlannerPolicyService.addBatchPlannerPolicy(
+					batchPlannerPlan.getBatchPlannerPlanId(), nameValues[i],
+					nameValues[i + 1]));
+		}
+
+		return batchPlannerPolicies;
 	}
 
 	@Inject

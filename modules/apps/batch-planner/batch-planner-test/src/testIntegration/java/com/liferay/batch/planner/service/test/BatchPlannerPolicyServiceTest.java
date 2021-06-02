@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -53,8 +54,6 @@ public class BatchPlannerPolicyServiceTest extends BaseBatchPlannerTestCase {
 		User user1 = UserTestUtil.addUser(CompanyTestUtil.addCompany());
 
 		UserTestUtil.setUser(user1);
-
-
 	}
 
 	@Test

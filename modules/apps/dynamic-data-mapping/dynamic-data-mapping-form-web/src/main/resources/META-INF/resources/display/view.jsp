@@ -128,7 +128,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 						<liferay-ui:error-principal />
 
-						<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
+						<c:if test="<%= ddmFormDisplayContext.isFormShared() || ddmFormDisplayContext.isPreview() %>">
 							<clay:container-fluid>
 								<div class="locale-actions">
 									<liferay-ui:language

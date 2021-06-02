@@ -617,14 +617,41 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be set"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131341 PredefinedValueCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		FormFields.editPredefinedValue(key_predefinedValue = "Test Text");
+
+		AssertElementPresent(
+			key_fieldName = "Predefined Value",
+			key_fieldValue = "Test Text",
+			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertTextEquals(
+			key_fieldName = "Text",
+			locator1 = "FormViewBuilder#TEXT_FIELD",
+			value1 = "Test Text");
+
+
+			
 	}
 
 	@description = "Verify that the Field Reference can be Edited"

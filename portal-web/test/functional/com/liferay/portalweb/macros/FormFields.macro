@@ -231,6 +231,14 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro editPredefinedValue {
+		Form.gotoAdvancedTab();
+
+		Type(
+			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "${key_predefinedValue}");
+	}
+
 	macro editRepeatableSingleSelection {
 		var key_rowNumber = "${rowNumber}";
 		var key_optionValue = "${optionValue}";

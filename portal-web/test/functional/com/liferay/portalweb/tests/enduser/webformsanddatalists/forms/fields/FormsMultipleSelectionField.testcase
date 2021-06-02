@@ -216,8 +216,6 @@ definition {
 		FormFields.viewDeletedSelectOptionsRowFieldValue(
 			fieldValue = "Option 2",
 			rowNumber = "2");
-			
-
 	}
 
 	@description = "Verify that options can be displayed both inline and as a list"

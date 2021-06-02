@@ -105,7 +105,7 @@ public class CryptoHashTest {
 
 	@Test
 	public void testCryptoHashGeneratorWithConfiguration() throws Exception {
-		_addCryptoFactoryConfiguration(
+		_addFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -137,7 +137,7 @@ public class CryptoHashTest {
 	public void testCryptoHashGeneratorWithMultipleConfigurations()
 		throws Exception {
 
-		_addCryptoFactoryConfiguration(
+		_addFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -148,7 +148,7 @@ public class CryptoHashTest {
 			).put(
 				"message.digest.salt.size", "32"
 			).build());
-		_addCryptoFactoryConfiguration(
+		_addFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.bcrypt.internal." +
 				"configuration.BCryptCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -201,7 +201,7 @@ public class CryptoHashTest {
 
 	@Test
 	public void testCryptoHashVerifierWithNoConfigurations() throws Exception {
-		_addCryptoFactoryConfiguration(
+		_addFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.message.digest.internal." +
 				"configuration.MessageDigestCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -216,7 +216,7 @@ public class CryptoHashTest {
 		AutoCloseable autoCloseable1 = _autoCloseables.remove(
 			_autoCloseables.size() - 1);
 
-		_addCryptoFactoryConfiguration(
+		_addFactoryConfiguration(
 			"com.liferay.portal.crypto.hash.provider.bcrypt.internal." +
 				"configuration.BCryptCryptoHashProviderConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -301,7 +301,7 @@ public class CryptoHashTest {
 					"BCrypt", Collections.emptyMap(), _SALT_BCRYPT)));
 	}
 
-	private Configuration _addCryptoFactoryConfiguration(
+	private Configuration _addFactoryConfiguration(
 		String factoryPid, Dictionary<String, ?> properties) {
 
 		Configuration configuration = _registerFactoryConfiguration(

@@ -229,6 +229,30 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustHaveSessionCSRFToken extends PrincipalException {
+
+		public MustHaveSessionCSRFToken(long userId, String origin) {
+			this(userId, origin, null);
+		}
+
+		public MustHaveSessionCSRFToken(
+			long userId, String origin, Throwable throwable) {
+
+			super(
+				String.format(
+					"User %s session does not have a CSRF token for %s", userId,
+					origin),
+				throwable);
+
+			this.userId = userId;
+			this.origin = origin;
+		}
+
+		public final String origin;
+		public final long userId;
+
+	}
+
 	public static class MustHaveValidCSRFToken extends PrincipalException {
 
 		public MustHaveValidCSRFToken(long userId, String origin) {
@@ -261,7 +285,8 @@ public class PrincipalException extends PortalException {
 		PrincipalException.MustBeOmniadmin.class,
 		PrincipalException.MustBePortletStrutsPath.class,
 		PrincipalException.MustHavePermission.class,
-		PrincipalException.MustHaveValidCSRFToken.class
+		PrincipalException.MustHaveValidCSRFToken.class,
+		PrincipalException.MustHaveSessionCSRFToken.class
 	};
 
 }

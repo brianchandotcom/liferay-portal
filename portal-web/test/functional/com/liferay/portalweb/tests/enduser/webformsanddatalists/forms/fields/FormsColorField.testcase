@@ -127,7 +127,6 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
 			successPageTitle = "Thank you.");

@@ -29,6 +29,9 @@ module.exports = {
 		bundler: {
 			config: {
 				imports: {
+					'@liferay/document-library-preview-css': {
+						'/': '*',
+					},
 					'@liferay/frontend-js-a11y-web': {
 						'/': '*',
 					},

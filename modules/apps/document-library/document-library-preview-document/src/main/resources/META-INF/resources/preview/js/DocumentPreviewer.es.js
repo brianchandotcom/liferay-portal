@@ -21,6 +21,8 @@ import imagePromise from 'image-promise';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
+import '@liferay/document-library-preview-css';
+
 const KEY_CODE_ENTER = 13;
 
 const KEY_CODE_ESC = 27;

@@ -8,32 +8,32 @@
 	.cropper-line {
 		background-color: $primary;
 		opacity: 1;
-	}
 
-	.cropper-line.line-e,
-	.cropper-line.line-w {
-		width: 2px;
-	}
+		&.line-e,
+		&.line-w {
+			width: 2px;
+		}
 
-	.cropper-line.line-n,
-	.cropper-line.line-s {
-		height: 2px;
-	}
+		&.line-n,
+		&.line-s {
+			height: 2px;
+		}
 
-	.cropper-line.line-e {
-		right: 0;
-	}
+		&.line-e {
+			right: 0;
+		}
 
-	.cropper-line.line-n {
-		top: 0;
-	}
+		&.line-n {
+			top: 0;
+		}
 
-	.cropper-line.line-s {
-		bottom: 0;
-	}
+		&.line-s {
+			bottom: 0;
+		}
 
-	.cropper-line.line-w {
-		left: 0;
+		&.line-w {
+			left: 0;
+		}
 	}
 
 	.cropper-point {
@@ -42,46 +42,46 @@
 		border-radius: 5px;
 		height: 10px !important;
 		width: 10px !important;
-	}
 
-	.cropper-point.point-e {
-		margin-top: -5px;
-		right: -5px;
-	}
+		&.point-e {
+			margin-top: -5px;
+			right: -5px;
+		}
 
-	.cropper-point.point-n {
-		margin-left: -5px;
-		top: -5px;
-	}
+		&.point-n {
+			margin-left: -5px;
+			top: -5px;
+		}
 
-	.cropper-point.point-ne {
-		right: -5px;
-		top: -5px;
-	}
+		&.point-ne {
+			right: -5px;
+			top: -5px;
+		}
 
-	.cropper-point.point-nw {
-		left: -5px;
-		top: -5px;
-	}
+		&.point-nw {
+			left: -5px;
+			top: -5px;
+		}
 
-	.cropper-point.point-s {
-		bottom: -5px;
-		margin-left: -5px;
-	}
+		&.point-s {
+			bottom: -5px;
+			margin-left: -5px;
+		}
 
-	.cropper-point.point-se {
-		bottom: -5px;
-		right: -5px;
-	}
+		&.point-se {
+			bottom: -5px;
+			right: -5px;
+		}
 
-	.cropper-point.point-sw {
-		bottom: -5px;
-		left: -5px;
-	}
+		&.point-sw {
+			bottom: -5px;
+			left: -5px;
+		}
 
-	.cropper-point.point-w {
-		left: -5px;
-		margin-top: -5px;
+		&.point-w {
+			left: -5px;
+			margin-top: -5px;
+		}
 	}
 
 	.cropper-view-box {

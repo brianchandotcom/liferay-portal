@@ -14,12 +14,12 @@
 
 package com.liferay.layout.reports.web.internal.model;
 
-import com.liferay.layout.reports.web.internal.util.MarkdownUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;
@@ -337,7 +337,7 @@ public class LayoutReportsIssue {
 					ResourceBundle resourceBundle) {
 
 					return new String[] {
-						MarkdownUtil.markdownToInlineHtml("`<input>`"),
+						getHtmlCode("<input>"),
 						getLearnMoreLink(
 							resourceBundle, "https://web.dev/input-image-alt")
 					};
@@ -375,9 +375,7 @@ public class LayoutReportsIssue {
 				protected String[] getTipsArguments(
 					ResourceBundle resourceBundle) {
 
-					return new String[] {
-						MarkdownUtil.markdownToInlineHtml("`<title>`")
-					};
+					return new String[] {getHtmlCode("<title>")};
 				}
 
 				@Override
@@ -408,10 +406,8 @@ public class LayoutReportsIssue {
 					ResourceBundle resourceBundle) {
 
 					return new String[] {
-						MarkdownUtil.markdownToInlineHtml("`<a>`"),
-						MarkdownUtil.markdownToInlineHtml("`href`"),
-						MarkdownUtil.markdownToInlineHtml(
-							"`<a href=\"https://example.com\">`")
+						getHtmlCode("<a>"), getHtmlCode("href"),
+						getHtmlCode("<a href=\"https://example.com\">")
 					};
 				}
 
@@ -420,7 +416,7 @@ public class LayoutReportsIssue {
 					ResourceBundle resourceBundle) {
 
 					return new String[] {
-						MarkdownUtil.markdownToInlineHtml("`href`"),
+						getHtmlCode("href"),
 						getLearnMoreLink(
 							resourceBundle,
 							"https://support.google.com/webmasters/answer" +
@@ -440,9 +436,7 @@ public class LayoutReportsIssue {
 				protected String[] getTipsArguments(
 					ResourceBundle resourceBundle) {
 
-					return new String[] {
-						MarkdownUtil.markdownToInlineHtml("`noindex`")
-					};
+					return new String[] {getHtmlCode("noindex")};
 				}
 
 				@Override
@@ -499,15 +493,17 @@ public class LayoutReportsIssue {
 				return new String[0];
 			}
 
+			protected String getHtmlCode(String html) {
+				return "<code>" + HtmlUtil.escape(html) + "</code>";
+			}
+
 			protected String getLearnMoreLink(
 				ResourceBundle resourceBundle, String url) {
 
-				return MarkdownUtil.markdownToInlineHtml(
-					StringBundler.concat(
-						"[",
-						ResourceBundleUtil.getString(
-							resourceBundle, "learn-more"),
-						"](", url, ")"));
+				return StringBundler.concat(
+					"<a href=\"", url, "\" target=\"_blank\">",
+					ResourceBundleUtil.getString(resourceBundle, "learn-more"),
+					"</a>");
 			}
 
 			protected String[] getTipsArguments(ResourceBundle resourceBundle) {

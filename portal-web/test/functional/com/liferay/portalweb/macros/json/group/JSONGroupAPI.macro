@@ -106,6 +106,33 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Get the depotEntryGroupRelId from any existing depot that connects to a site by using groupName"
+	macro _getDepotEntryGroupRelIdByGroupName {
+		Variables.assertDefined(parameterList = "${groupName}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/depot.depotentrygrouprel/get-depot-entry-group-rels \
+				-u test@liferay.com:test \
+				-d groupId=${groupId} \
+				-d "start=-1" \
+				-d "end=-1"
+		''';
+
+		var depotEntryGroupRelId = JSONCurlUtil.post("${curl}", "$.[?(@['groupId'] == '${groupId}')]['depotEntryGroupRelId']");
+
+		if ("${depotEntryGroupRelId}" == "[]") {
+			fail("FAIL. Cannot find group.");
+		}
+
+		return "${depotEntryGroupRelId}";
+	}
+
 	@summary = "Get the depotId from any existing depot by using depotName"
 	macro _getDepotIdByName {
 		Variables.assertDefined(parameterList = "${depotName}");

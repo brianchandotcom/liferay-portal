@@ -382,6 +382,18 @@ definition {
 		FormFields.viewCheckboxChecked(fieldName = "${fieldName}");
 	}
 
+	macro enableMultipleSelectionCheckbox {
+		var key_rowNumber = "${rowNumber}";
+		var key_optionValue = "${optionValue}";
+		var key_fieldName = "${fieldName}";
+
+		Check.checkToggleSwitch(
+			key_fieldName = "${fieldName}",
+			key_optionValue = "${optionValue}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#SELECT_SINGLE_SELECTION_ROW_OPTION_INPUT");
+	}
+
 	macro enableSwitcher {
 		Pause(locator1 = "2000");
 
@@ -857,6 +869,16 @@ definition {
 			key_repeatableFieldNumber = "${repeatableFieldNumber}",
 			locator1 = "FormFields#REPEATABLE_HELP_TEXT",
 			value1 = "${fieldHelpText}");
+	}
+
+	macro viewRepeatableSingleSelectionRow {
+		var key_rowNumber = "${rowNumber}";
+		var key_fieldName = "${fieldName}";
+
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#SELECT_SINGLE_SELECTION_ROW");
 	}
 
 	macro viewRepeatableTextFieldLabel {

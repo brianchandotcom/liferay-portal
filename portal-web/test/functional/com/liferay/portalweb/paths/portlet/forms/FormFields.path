@@ -507,6 +507,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_SINGLE_SELECTION_ROW_OPTION_INPUT</td>
+	<td>//div[@class='ddm-field' and contains(@data-field-name,'${key_fieldName}')][${key_rowNumber}]//span[text()='${key_optionValue}']/../..//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTOR</td>
 	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]</td>
 	<td></td>

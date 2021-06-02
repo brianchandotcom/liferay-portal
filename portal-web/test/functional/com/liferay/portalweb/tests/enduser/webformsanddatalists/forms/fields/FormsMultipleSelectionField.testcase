@@ -244,14 +244,61 @@ definition {
 	}
 
 	@description = "Verify that a Multiple Selection Field can be set to repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132265 CanBeSetToRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option A",
+			optionValue = "1");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option B",
+			optionValue = "2");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.setFieldRepeatable();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			fieldName = "Multiple",
+			repeatableFieldNumber = "1");
+
+		FormFields.viewRepeatableSingleSelectionRow(
+			fieldName = "Multiple",
+			rowNumber = "2");
+
+		FormFields.enableCheckbox(fieldName = "Option A");
+
+		FormFields.enableMultipleSelectionCheckbox(
+			fieldName = "Multiple",
+			optionValue = "Option B",
+			rowNumber = "2");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that a Form can be submitted with the Multiple Selection Field"

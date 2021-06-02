@@ -22,8 +22,6 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -75,10 +73,12 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 				JSONUtil.put(
 					"envelope", dsEnvelope.toJSONObject()
 				).put(
-					"fileEntries", JSONUtil.toJSONArray(
-						dsEnvelope.getDSDocuments(), dsDocument ->
-							_getFileEntryDetailsJSONObject(themeDisplay, dsDocument)
-					)
+					"fileEntries",
+					JSONUtil.toJSONArray(
+						dsEnvelope.getDSDocuments(),
+						dsDocument -> _getFileEntryDetailsJSONObject(
+							themeDisplay, dsDocument),
+						_log)
 				));
 		}
 		catch (Exception exception) {
@@ -89,7 +89,8 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONObject _getFileEntryDetailsJSONObject(
-		ThemeDisplay themeDisplay, DSDocument dsDocument) {
+			ThemeDisplay themeDisplay, DSDocument dsDocument)
+		throws PortalException {
 
 		String dsDocumentId = dsDocument.getDSDocumentId();
 
@@ -97,31 +98,21 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 			return null;
 		}
 
-		try {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-				GetterUtil.getLong(dsDocumentId));
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+			GetterUtil.getLong(dsDocumentId));
 
-			FileVersion fileVersion = fileEntry.getFileVersion();
+		FileVersion fileVersion = fileEntry.getFileVersion();
 
-			return JSONUtil.put(
-				"initialPage", 1
-			).put(
-				"previewFileCount",
-				PDFProcessorUtil.getPreviewFileCount(fileVersion)
-			).put(
-				"previewFileURL",
-				DLURLHelperUtil.getPreviewURL(
-					fileEntry, fileVersion, themeDisplay,
-					"&previewFileIndex=")
-			);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
-
-			return null;
-		}
+		return JSONUtil.put(
+			"initialPage", 1
+		).put(
+			"previewFileCount",
+			PDFProcessorUtil.getPreviewFileCount(fileVersion)
+		).put(
+			"previewFileURL",
+			DLURLHelperUtil.getPreviewURL(
+				fileEntry, fileVersion, themeDisplay, "&previewFileIndex=")
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

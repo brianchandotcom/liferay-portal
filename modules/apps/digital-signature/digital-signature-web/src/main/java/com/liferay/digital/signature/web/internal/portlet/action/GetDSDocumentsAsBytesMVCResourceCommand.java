@@ -16,8 +16,6 @@ package com.liferay.digital.signature.web.internal.portlet.action;
 
 import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.digital.signature.manager.DSDocumentManager;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -52,26 +50,20 @@ public class GetDSDocumentsAsBytesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)resourceRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String dsEnvelopeId = ParamUtil.getString(
 			resourceRequest, "dsEnvelopeId");
 
-		byte[] dsDocumentsAsBytes =
-			_dsDocumentManager.getDSDocumentsAsBytes(
-				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
-				dsEnvelopeId);
+		byte[] dsDocumentsAsBytes = _dsDocumentManager.getDSDocumentsAsBytes(
+			themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+			dsEnvelopeId);
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, dsEnvelopeId + ".zip",
 			dsDocumentsAsBytes, ContentTypes.APPLICATION_ZIP);
-	
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		GetDSDocumentsAsBytesMVCResourceCommand.class);
 
 	@Reference
 	private DSDocumentManager _dsDocumentManager;

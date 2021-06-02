@@ -158,7 +158,9 @@ const Translate = ({
 					dispatch({
 						payload: Object.entries(fields).reduce(
 							(acc, [id, content]) => {
-								acc[id] = {content};
+								acc[id] = {
+									content: Liferay.Util.unescapeHTML(content),
+								};
 
 								return acc;
 							},
@@ -215,7 +217,9 @@ const Translate = ({
 					dispatch({
 						payload: {
 							field: {
-								content: fields[fieldId],
+								content: Liferay.Util.unescapeHTML(
+									fields[fieldId]
+								),
 								message: Liferay.Language.get(
 									'field-translated'
 								),

@@ -360,7 +360,23 @@ export class A11yChecker {
 	}
 
 	private mutationCallback(records: Array<MutationRecord>) {
+		const denylistTargets = this.denylist?.map((selector) =>
+			document.querySelector(selector.join(' '))
+		);
+
 		records.forEach((record) => {
+
+			// Ignores the mutation if the target was through some element
+			// within the denylist.
+
+			const hasTargetInDenylist = denylistTargets?.some((target) =>
+				target?.contains(record.target)
+			);
+
+			if (hasTargetInDenylist) {
+				return;
+			}
+
 			if (this.mutations) {
 				const condition = this.mutations[record.type];
 

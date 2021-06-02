@@ -59,6 +59,96 @@ definition {
 			metadataLabel = "Image Width");
 	}
 
+	@description = "This makes sure that a resized image can be saved."
+	@priority = "5"
+	test CanSaveResizedImage {
+		property test.name.skip.portal.instance = "ImageEditor#CanSaveResizedImage";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMNavigator.gotoEditImage(dmDocumentTitle = "Document_2.jpg");
+
+		ImageEditor.resizeImage(dimension = "16:10");
+
+		ImageEditor.saveChanges();
+
+		Refresh();
+
+		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "312",
+			metadataLabel = "Image Length");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "500",
+			metadataLabel = "Image Width");
+	}
+
+	@description = "This makes sure that a resized image preview can be saved and that a copy is made."
+	@priority = "5"
+	test CanSaveResizedImagePreview {
+		property test.name.skip.portal.instance = "ImageEditor#CanSaveResizedImagePreview";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "guest");
+
+		BlogsEntry.addTitle(entryTitle = "Blogs Entry Title");
+
+		BlogsEntry.addEntryContent(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.gotoPreviewViaSelectFile(navTab = "Documents and Media");
+
+		Click(locator1 = "Icon#EDIT_PENCIL");
+
+		ImageEditor.resizeImage(dimension = "16:10");
+
+		ImageEditor.saveChanges();
+
+		Button.clickPublish();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconCard.checkCardCheckbox(card = "Document_2.jpg");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "313",
+			metadataLabel = "Image Length");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "500",
+			metadataLabel = "Image Width");
+
+		Refresh();
+
+		LexiconCard.checkCardCheckbox(card = "Document_2 (1).jpg");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "312",
+			metadataLabel = "Image Length");
+
+		DMDocument.viewDocumentMetadataCP(
+			metadataData = "500",
+			metadataLabel = "Image Width");
+	}
+
 	@description = "This makes sure that a rotated image can be saved."
 	@priority = "5"
 	test CanSaveRotatedImage {
@@ -77,7 +167,7 @@ definition {
 
 		ImageEditor.rotateImage();
 
-		Button.clickSave();
+		ImageEditor.saveChanges();
 
 		Refresh();
 
@@ -91,4 +181,5 @@ definition {
 			metadataData = "195",
 			metadataLabel = "Image Width");
 	}
+
 }

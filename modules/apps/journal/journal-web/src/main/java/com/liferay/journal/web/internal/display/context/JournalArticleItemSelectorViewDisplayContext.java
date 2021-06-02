@@ -70,8 +70,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -514,29 +512,18 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				"keywords", getKeywords()
 			).build();
 
+		searchContext.setAttribute(Field.ARTICLE_ID, getKeywords());
+		searchContext.setAttribute(
+			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
+		searchContext.setAttribute(Field.CONTENT, getKeywords());
+		searchContext.setAttribute(Field.DESCRIPTION, getKeywords());
+		searchContext.setAttribute(
+			Field.STATUS, _infoItemItemSelectorCriterion.getStatus());
+		searchContext.setAttribute(Field.TITLE, getKeywords());
+		searchContext.setAttribute("ddmStructureKey", getDDMStructureKey());
 		searchContext.setAttribute("params", params);
-
+		searchContext.setAttribute("params", params);
 		searchContext.setAttribute("showNonindexable", Boolean.TRUE);
-		searchContext.setAttributes(
-			HashMapBuilder.<String, Serializable>put(
-				Field.ARTICLE_ID, getKeywords()
-			).put(
-				Field.CLASS_NAME_ID,
-				JournalArticleConstants.CLASS_NAME_ID_DEFAULT
-			).put(
-				Field.CONTENT, getKeywords()
-			).put(
-				Field.DESCRIPTION, getKeywords()
-			).put(
-				Field.STATUS, _infoItemItemSelectorCriterion.getStatus()
-			).put(
-				Field.TITLE, getKeywords()
-			).put(
-				"ddmStructureKey", getDDMStructureKey()
-			).put(
-				"params", params
-			).build());
-
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setFolderIds(folderIds);

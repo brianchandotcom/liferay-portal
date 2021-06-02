@@ -180,8 +180,7 @@ public class LayoutReportsIssue {
 			).put(
 				"key", _key.toString()
 			).put(
-				"tips",
-				MarkdownUtil.markdownToHtml(_key.getTips(resourceBundle))
+				"tips", _key.getTips(resourceBundle)
 			).put(
 				"title", _key.getTitle(resourceBundle)
 			).put(
@@ -366,18 +365,19 @@ public class LayoutReportsIssue {
 			MISSING_TITLE_ELEMENT {
 
 				@Override
-				public String getTitle(ResourceBundle resourceBundle) {
-					return ResourceBundleUtil.getString(
-						resourceBundle, "detail-missing-x-element", "<title>");
+				protected String[] getTitleArguments(
+					ResourceBundle resourceBundle) {
+
+					return new String[] {"<title>"};
 				}
 
 				@Override
-				public String getTips(
-					ResourceBundle resourceBundle, Object... args) {
+				protected String[] getTipsArguments(
+					ResourceBundle resourceBundle) {
 
-					return ResourceBundleUtil.getString(
-						resourceBundle, "detail-missing-x-element-tip",
-						"`<title>`");
+					return new String[] {
+						MarkdownUtil.markdownToInlineHtml("`<title>`")
+					};
 				}
 
 				@Override
@@ -404,12 +404,15 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				public String getTips(
-					ResourceBundle resourceBundle, Object... args) {
+				protected String[] getTipsArguments(
+					ResourceBundle resourceBundle) {
 
-					return super.getTips(
-						resourceBundle, "`<a>`", "`href`",
-						"`<a href=\"https://example.com\">`");
+					return new String[] {
+						MarkdownUtil.markdownToInlineHtml("`<a>`"),
+						MarkdownUtil.markdownToInlineHtml("`href`"),
+						MarkdownUtil.markdownToInlineHtml(
+							"`<a href=\"https://example.com\">`")
+					};
 				}
 
 				@Override
@@ -434,10 +437,12 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				public String getTips(
-					ResourceBundle resourceBundle, Object... args) {
+				protected String[] getTipsArguments(
+					ResourceBundle resourceBundle) {
 
-					return super.getTips(resourceBundle, "`noindex`");
+					return new String[] {
+						MarkdownUtil.markdownToInlineHtml("`noindex`")
+					};
 				}
 
 				@Override
@@ -476,16 +481,16 @@ public class LayoutReportsIssue {
 					getDescriptionArguments(resourceBundle), false);
 			}
 
-			public String getTips(
-				ResourceBundle resourceBundle, Object... args) {
-
+			public String getTips(ResourceBundle resourceBundle) {
 				return ResourceBundleUtil.getString(
-					resourceBundle, _getDetailLanguageKey() + "-tip", args);
+					resourceBundle, _getDetailLanguageKey() + "-tip",
+					getTipsArguments(resourceBundle));
 			}
 
 			public String getTitle(ResourceBundle resourceBundle) {
-				return ResourceBundleUtil.getString(
-					resourceBundle, _getDetailLanguageKey());
+				return LanguageUtil.format(
+					resourceBundle, _getDetailLanguageKey(),
+					getTitleArguments(resourceBundle), false);
 			}
 
 			protected String[] getDescriptionArguments(
@@ -503,6 +508,16 @@ public class LayoutReportsIssue {
 						ResourceBundleUtil.getString(
 							resourceBundle, "learn-more"),
 						"](", url, ")"));
+			}
+
+			protected String[] getTipsArguments(ResourceBundle resourceBundle) {
+				return new String[0];
+			}
+
+			protected String[] getTitleArguments(
+				ResourceBundle resourceBundle) {
+
+				return new String[0];
 			}
 
 			private String _getDetailLanguageKey() {

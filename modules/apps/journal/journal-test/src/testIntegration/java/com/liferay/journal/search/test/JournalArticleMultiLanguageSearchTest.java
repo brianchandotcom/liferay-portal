@@ -17,7 +17,6 @@ package com.liferay.journal.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.constants.SearchContextAttributes;
@@ -170,52 +170,34 @@ public class JournalArticleMultiLanguageSearchTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
+		JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class),
 			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
+				LocaleUtil.NETHERLANDS, NL_TITLE
+			).put(
+				LocaleUtil.SPAIN, ES_TITLE
+			).put(
+				LocaleUtil.US, US_TITLE
 			).build(),
 			null,
 			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
+				LocaleUtil.US, US_CONTENT
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, serviceContext);
 
-		JournalArticleBlueprint journalArticleBlueprint =
-			new JournalArticleBlueprint() {
-				{
-					setJournalArticleTitle(
-						new JournalArticleTitle() {
-							{
-								put(LocaleUtil.NETHERLANDS, NL_TITLE);
-								put(LocaleUtil.SPAIN, ES_TITLE);
-								put(
-									LocaleUtil.US,
-									journalArticle.getTitle(LocaleUtil.US));
-							}
-						});
-				}
-			};
-
-		journalArticle.setTitleMap(journalArticleBlueprint.getTitleMap());
-
-		JournalTestUtil.updateArticle(
-			journalArticle, journalArticle.getTitleMap(),
-			journalArticle.getContent(), false, true, serviceContext);
-
-		int count = JournalArticleLocalServiceUtil.searchCount(
+		int count = journalArticleLocalService.searchCount(
 			_group.getCompanyId(), _group.getGroupId(), Collections.emptyList(),
-			PortalUtil.getClassNameId(JournalArticle.class), null, null, null,
-			null, null, "BASIC-WEB-CONTENT", null, null, null, null,
+			portal.getClassNameId(JournalArticle.class), null, null, null, null,
+			null, "BASIC-WEB-CONTENT", null, null, null, null,
 			WorkflowConstants.STATUS_APPROVED, true);
 
 		List<JournalArticle> journalArticles =
-			JournalArticleLocalServiceUtil.search(
+			journalArticleLocalService.search(
 				_group.getCompanyId(), _group.getGroupId(),
 				Collections.emptyList(),
-				PortalUtil.getClassNameId(JournalArticle.class), null, null,
-				null, null, null, "BASIC-WEB-CONTENT", null, null, null, null,
+				portal.getClassNameId(JournalArticle.class), null, null, null,
+				null, null, "BASIC-WEB-CONTENT", null, null, null, null,
 				WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
 
@@ -379,7 +361,7 @@ public class JournalArticleMultiLanguageSearchTest {
 		}
 	}
 
-	protected static final String ES_TITLE = "inglesa";
+	protected static final String ES_TITLE = "ingles";
 
 	protected static final String NL_CONTENT = "inhoud";
 
@@ -398,6 +380,9 @@ public class JournalArticleMultiLanguageSearchTest {
 
 	@Inject
 	protected JournalArticleLocalService journalArticleLocalService;
+
+	@Inject
+	protected Portal portal;
 
 	private Group _group;
 

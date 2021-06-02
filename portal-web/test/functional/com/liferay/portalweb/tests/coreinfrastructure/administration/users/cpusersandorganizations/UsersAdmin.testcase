@@ -2161,12 +2161,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			newPassword = "tryingHARD",
-			resetPassword = "tryingHARDER",
-			syntaxCheckingEnabled = "true",
-			userEmailAddress = "test1@liferay.com",
-			userScreenName = "test1");
+		UserNavigator.gotoUser(userScreenName = "test1");
+
+		User.editPassword(newPassword = "tryingHARD");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
@@ -2182,24 +2179,18 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			newPassword = "abcABC",
-			resetPassword = "abcdABCD",
-			syntaxCheckingEnabled = "true",
-			userEmailAddress = "test1@liferay.com",
-			userScreenName = "test1");
+		UserNavigator.gotoUser(userScreenName = "test1");
+
+		User.editPassword(newPassword = "abcABC");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			newPassword = "123ABC",
-			resetPassword = "1234ABCD",
-			syntaxCheckingEnabled = "true",
-			userEmailAddress = "test1@liferay.com",
-			userScreenName = "test1");
+		UserNavigator.gotoUser(userScreenName = "test1");
+
+		User.editPassword(newPassword = "123ABC");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2248,12 +2239,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.editPasswordCP(
-			newPassword = "12ABcd",
-			resetPassword = "123ABcd",
-			syntaxCheckingEnabled = "true",
-			userEmailAddress = "test1@liferay.com",
-			userScreenName = "test1");
+		UserNavigator.gotoUser(userScreenName = "test1");
+
+		User.editPassword(newPassword = "12ABcd");
 	}
 
 	@description = "This is a use case for LPS-111656"

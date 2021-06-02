@@ -20,10 +20,11 @@
 	function loadTidioScript() {
 		function setTidioUserInfo() {
 			if ('<%= themeDisplay.isSignedIn() %>' === 'true') {
-				zE('webWidget', 'identify', {
+				document.tidioIdentify = {
+					distinct_id: '<%= user.getUserId() %>',
 					email: '<%= user.getEmailAddress() %>',
-					name: '<%= user.getScreenName() %>',
-				});
+					name: '<%= user.getFirstName() %>',
+				};
 			}
 		}
 

@@ -632,9 +632,7 @@ definition {
 
 		Publications.selectPublication(publicationName = "Publication Name");
 
-		Publications.gotoPublish(
-			gotoReviewChanges = "true",
-			publicationName = "Publication Name");
+		Publications.gotoPublish(publicationName = "Publication Name");
 
 		Publications.publishPublication(publicationName = "Publication Name");
 
@@ -816,9 +814,7 @@ definition {
 
 		PortletEntry.publish();
 
-		Publications.schedulePublication(
-			gotoReviewChanges = "true",
-			publicationName = "Publication Name 3");
+		Publications.schedulePublication(publicationName = "Publication Name 3");
 
 		Pause(locator1 = "240000");
 

@@ -191,15 +191,10 @@ definition {
 
 			MenuItem.click(menuItem = "Publish");
 		}
-		else if ("${gotoReviewChanges}" == "true") {
+		else {
 			Publications.gotoReviewChanges();
 
 			Click(locator1 = "Publications#PUBLISH_NAV_BAR");
-		}
-		else {
-			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
-
-			MenuItem.click(menuItem = "Publish");
 		}
 	}
 
@@ -349,11 +344,6 @@ definition {
 
 			MenuItem.click(menuItem = "Schedule");
 		}
-		else if ("${gotoReviewChanges}" == "true") {
-			Publications.gotoReviewChanges();
-
-			Click(locator1 = "Publications#SCHEDULE_NAV_BAR");
-		}
 		else if ("${reschedule}" == "true") {
 			Publications.gotoScheduledPublications();
 
@@ -372,9 +362,9 @@ definition {
 			Click.mouseOverClick(locator1 = "Publications#DELETE_THE_ENTERED_TIME_BUTTON");
 		}
 		else {
-			Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
+			Publications.gotoReviewChanges();
 
-			MenuItem.click(menuItem = "Schedule");
+			Click(locator1 = "Publications#SCHEDULE_NAV_BAR");
 		}
 
 		var publishDateDay = Time.getUTCDay();

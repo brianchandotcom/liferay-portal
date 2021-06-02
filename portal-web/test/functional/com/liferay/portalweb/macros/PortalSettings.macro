@@ -406,15 +406,6 @@ definition {
 			value1 = "${roleTitle}");
 
 		PortletEntry.save();
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Users",
-			configurationName = "Default User Associations",
-			configurationScope = "Virtual Instance Scope");
-
-		Type.clickAtType(
-			locator1 = "PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD",
-			value1 = "${roleTitle}");
 	}
 
 	macro editConfigurationUsersDefaultUserAssociationsSitesCP {

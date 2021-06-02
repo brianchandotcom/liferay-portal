@@ -21,6 +21,7 @@ import React, {useCallback} from 'react';
 
 import {config} from '../../app/config/index';
 import {useSelectorCallback} from '../../app/contexts/StoreContext';
+import {selectPageContentDropdownItems} from '../../app/selectors/selectPageContentDropdownItems';
 import {useId} from '../../app/utils/useId';
 import {openItemSelector} from '../../core/openItemSelector';
 
@@ -102,6 +103,33 @@ export default function ItemSelector({
 			a.every((item, index) => item.itemId === b[index].itemId)
 	);
 
+	const optionsMenu = useSelectorCallback(
+		(state) => {
+			const menuItems = [];
+
+			if (config.contentBrowsingEnabled && selectedItem.classPK) {
+				const contentMenuItems = selectPageContentDropdownItems(
+					selectedItem.classPK
+				)(state);
+
+				if (contentMenuItems?.length) {
+					menuItems.push(...contentMenuItems, {type: 'divider'});
+				}
+			}
+
+			menuItems.push({
+				label: Liferay.Util.sub(
+					Liferay.Language.get('remove-x'),
+					label
+				),
+				onClick: () => onItemSelect({}),
+			});
+
+			return menuItems;
+		},
+		[label, onItemSelect, selectedItem]
+	);
+
 	const selectContentButtonIcon = selectedItem?.title ? 'change' : 'plus';
 
 	const selectContentButtonLabel = Liferay.Util.sub(
@@ -165,15 +193,7 @@ export default function ItemSelector({
 
 				{selectedItem?.title && (
 					<ClayDropDownWithItems
-						items={[
-							{
-								label: Liferay.Util.sub(
-									Liferay.Language.get('remove-x'),
-									label
-								),
-								onClick: () => onItemSelect({}),
-							},
-						]}
+						items={optionsMenu}
 						trigger={
 							<ClayButtonWithIcon
 								aria-label={Liferay.Util.sub(

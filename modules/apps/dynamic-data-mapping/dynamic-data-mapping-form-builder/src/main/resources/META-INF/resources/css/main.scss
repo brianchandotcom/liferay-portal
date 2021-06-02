@@ -16,6 +16,10 @@
 	position: fixed;
 }
 
+.dropdown-menu.date-picker-dropdown-menu.show {
+	position: fixed;
+}
+
 .dropdown-menu.dropdown-opened {
 	display: block;
 	min-width: 100%;

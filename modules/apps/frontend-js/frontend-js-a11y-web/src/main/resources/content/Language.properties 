@@ -1,0 +1,6 @@
+a11y-configuration-description=A11y is a tool that runs at runtime capable of analyzing a page's accessibility issues in real-time.
+a11y-configuration-name=Frontend A11y
+denylist-description=Denylist is an optional list with CSS selectors that will be excluded from the analysis.
+denylist-name=Denylist
+enable-description=The flag activates the A11y tool but will only have an effect on a development environment.
+enable-name=Enable A11y

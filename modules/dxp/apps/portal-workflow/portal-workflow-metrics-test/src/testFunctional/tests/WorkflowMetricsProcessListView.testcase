@@ -1,0 +1,167 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header On Time"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderByOnTimeItems {
+
+		// TODO LPS-67511 CanOrderByOnTimeItems pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Overdue"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderByOverdueItems {
+
+		// TODO LPS-67510 CanOrderByOverdueItems pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Process Name"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderByProcessName {
+
+		// TODO LPS-67509 CanOrderByProcessName pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that is possible to order the table items by clicking on the table header Total Pending"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanOrderByTotalPendingItems {
+
+		// TODO LPS-67512 CanOrderByTotalPendingItems pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that the search can be done by similar words, not having 100% match needs of the string"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchBySimilarWords {
+
+		// TODO LRQA-67505 CanSearchBySimilarWords pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that the Clear All option cleans the search results"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ClearAllSearchResults {
+
+		// TODO LRQA-67508 ClearAllSearchResults pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that the specific empty state is displayed when there are no metrics available"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test DisplayEmptyStateWhenNoProcessAvailable {
+
+		// TODO LPS-67516 DisplayEmptyStateWhenNoProcessAvailable pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that the table displays the specific empty state when there are no results for search terms"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test DisplayEmptyStateWhenNoResult {
+
+		// TODO LRQA-67506 DisplayEmptyStateWhenNoResult pending implementation
+
+	}
+
+	@description = "LPS-86638 - Verify that the pagination button indicates the selected page, even when there is only 1 page"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PaginationButtonIndicatesSelectedPage {
+
+		// TODO LPS-67517 PaginationButtonIndicatesSelectedPage pending implementation
+
+	}
+
+	@description = "LPS-86638 - Verify that pagination follows in asc/desc sequence"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PaginationFollowsAscDescSequence {
+
+		// TODO LPS-67519 PaginationFollowsAscDescSequence pending implementation
+
+	}
+
+	@description = "LPS-86638 - Verify that the pagination component is displayed when the table has 5 items or more"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PaginationIsDisplayedWhenTableHas5Items {
+
+		// TODO LPS-67518 PaginationIsDisplayedWhenTableHas5Items pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that the Results Bar show the searched terms"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ResultBarShowsSearchedItems {
+
+		// TODO LRQA-67507 ResultBarShowsSearchedItems pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that once an order option is made by the user, this definition should be saved by the system during the user stay in the Metrics context, even when the user makes a search query, reloads the page"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SavedOrderOptionStaysInMetricsContext {
+
+		// TODO LPS-67513 SavedOrderOptionStaysInMetricsContext pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that when an instance from Asset is added to the list of process, the count number should be reflected on the Process List"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TableDisplaysCorrectNumbersWhenAssetAdded {
+
+		// TODO LPS-67514 TableDisplaysCorrectNumbersWhenAssetAdded pending implementation
+
+	}
+
+	@description = "LPS-88573 - Verify that the table entries are ordered by Overdue, from biggest to the smaller value, by default"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TableIsOrderedByOverdueDesc {
+
+		// TODO LPS-67515 TableIsOrderedByOverdueDesc pending implementation
+
+	}
+
+}

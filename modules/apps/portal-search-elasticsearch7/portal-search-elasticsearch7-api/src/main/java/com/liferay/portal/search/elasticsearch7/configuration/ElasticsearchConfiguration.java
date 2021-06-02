@@ -273,7 +273,7 @@ public interface ElasticsearchConfiguration {
 	public long sidecarHeartbeatInterval();
 
 	@Meta.AD(
-		deflt = "elasticsearch7", description = "sidecar-home-help",
+		deflt = "elasticsearch-sidecar", description = "sidecar-home-help",
 		name = "sidecar-home", required = false
 	)
 	public String sidecarHome();

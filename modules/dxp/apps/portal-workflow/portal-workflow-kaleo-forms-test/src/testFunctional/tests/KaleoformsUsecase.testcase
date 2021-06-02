@@ -580,9 +580,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "KaleoRegRole Name",
-			userScreenName = "usersn");
+		Role.addAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "KaleoRegRole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -699,9 +700,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Portal Content Reviewer",
-			userScreenName = "usersn");
+		Role.addAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "Portal Content Reviewer");
 
 		Navigator.openURL();
 
@@ -862,9 +864,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Portal Content Reviewer",
-			userScreenName = "usersn");
+		Role.addAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "Portal Content Reviewer");
 
 		Navigator.openURL();
 
@@ -1030,9 +1033,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Portal Content Reviewer",
-			userScreenName = "usersn");
+		Role.addAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "Portal Content Reviewer");
 
 		Navigator.openURL();
 
@@ -1242,9 +1246,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "KaleoRegRole Name",
-			userScreenName = "usersn");
+		Role.addAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "KaleoRegRole Name");
 
 		Navigator.openURL();
 
@@ -1389,9 +1394,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "KaleoRegRole Name",
-			userScreenName = "usersn");
+		Role.addAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "KaleoRegRole Name");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -4273,9 +4279,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "usersn");
+		Role.addAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "Administrator");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

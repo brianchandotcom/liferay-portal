@@ -4541,9 +4541,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Portal Content Reviewer",
-			userScreenName = "test");
+		Role.addAssignee(
+			assigneeName = "test",
+			assigneeType = "Users",
+			roleTitle = "Portal Content Reviewer");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "App Builder",

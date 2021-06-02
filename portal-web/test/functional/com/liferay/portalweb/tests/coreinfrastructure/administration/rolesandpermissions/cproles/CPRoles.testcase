@@ -82,11 +82,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
-
-		Role.addAssignees(assigneeName = "RoleSegment Test");
+		Role.addAssignee(
+			assigneeName = "RoleSegment Test",
+			assigneeType = "Segments",
+			roleTitle = "Roles Regrole Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -110,9 +109,11 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
+		LexiconEntry.gotoEntry(rowEntry = "Roles Regrole Name");
 
-		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
+		Navigator.gotoNavItem(navItem = "Assignees");
+
+		Navigator.gotoNavItem(navItem = "Segments");
 
 		LexiconEntry.gotoAdd();
 
@@ -135,11 +136,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		RoleNavigator.gotoAssignees(roleTitle = "Roles Regrole Name");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
-
-		Role.addAssignees(assigneeName = "New RoleSegment Test");
+		Role.addAssignee(
+			assigneeName = "New RoleSegment Test",
+			assigneeType = "Segments",
+			roleTitle = "Roles Regrole Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -339,11 +339,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		RoleNavigator.gotoAssignees(roleTitle = "Remove Regrole Assignee");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "Segments");
-
-		Role.addAssignees(assigneeName = "Role Assignee Test");
+		Role.addAssignee(
+			assigneeName = "Role Assignee Test",
+			assigneeType = "Segments",
+			roleTitle = "Remove Regrole Assignee");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

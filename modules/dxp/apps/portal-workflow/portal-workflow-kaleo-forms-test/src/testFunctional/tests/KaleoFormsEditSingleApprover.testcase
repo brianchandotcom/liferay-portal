@@ -143,9 +143,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "creator");
+		Role.addAssignee(
+			assigneeName = "creator",
+			assigneeType = "Users",
+			roleTitle = "Administrator");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -172,18 +173,20 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "reviewer");
+		Role.addAssignee(
+			assigneeName = "reviewer",
+			assigneeType = "Users",
+			roleTitle = "Administrator");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Reviewer Name",
-			userScreenName = "reviewer");
+		Role.addAssignee(
+			assigneeName = "reviewer",
+			assigneeType = "Users",
+			roleTitle = "Reviewer Name");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -210,18 +213,20 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Administrator",
-			userScreenName = "updater");
+		Role.addAssignee(
+			assigneeName = "updater",
+			assigneeType = "Users",
+			roleTitle = "Administrator");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Updater Name",
-			userScreenName = "updater");
+		Role.addAssignee(
+			assigneeName = "updater",
+			assigneeType = "Users",
+			roleTitle = "Updater Name");
 
 		Navigator.openURL();
 

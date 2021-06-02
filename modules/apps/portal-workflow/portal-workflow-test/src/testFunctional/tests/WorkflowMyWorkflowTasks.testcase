@@ -382,9 +382,10 @@ definition {
 			panel = "Control Panel",
 			portlet = "Roles");
 
-		Role.assignRegRoleCP(
-			roleTitle = "Portal Content Reviewer",
-			userScreenName = "usersn2");
+		Role.addAssignee(
+			assigneeName = "usersn2",
+			assigneeType = "Users",
+			roleTitle = "Portal Content Reviewer");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea1@liferay.com",

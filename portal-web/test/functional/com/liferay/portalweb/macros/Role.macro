@@ -40,7 +40,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addAssignees {
+	macro addAssignee {
 		Role._goToRoleAssigneeType(
 			assigneeType = "${assigneeType}",
 			roleTitle = "${roleTitle}");
@@ -706,7 +706,7 @@ definition {
 		if (isSet(assigneeName)) {
 			Navigator.gotoNavItem(navItem = "Assignees");
 
-			RoleNavigator.gotoAssigneeType(assigneeType = "${assigneeType}");
+			Navigator.gotoNavItem(navItem = "${assigneeType}");
 
 			LexiconEntry.viewEntryName(rowEntry = "${assigneeName}");
 		}

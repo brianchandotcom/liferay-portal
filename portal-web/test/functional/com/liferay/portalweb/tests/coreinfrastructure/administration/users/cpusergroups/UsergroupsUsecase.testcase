@@ -79,11 +79,10 @@ definition {
 
 		Role.openRolesAdmin();
 
-		RoleNavigator.gotoAssignees(roleTitle = "UG Reg Role");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "User Groups");
-
-		Role.addAssignees(assigneeName = "UG UserGroup Name");
+		Role.addAssignee(
+			assigneeName = "UG UserGroup Name",
+			assigneeType = "User Groups",
+			roleTitle = "UG Reg Role");
 
 		User.logoutPG();
 
@@ -206,11 +205,10 @@ definition {
 
 		Role.openRolesAdmin();
 
-		RoleNavigator.gotoAssignees(roleTitle = "Test UserGroup Role");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "User Groups");
-
-		Role.addAssignees(assigneeName = "UG UserGroup Name");
+		Role.addAssignee(
+			assigneeName = "UG UserGroup Name",
+			assigneeType = "User Groups",
+			roleTitle = "Test UserGroup Role");
 
 		User.logoutPG();
 
@@ -427,11 +425,10 @@ definition {
 
 		Role.openRolesAdmin();
 
-		RoleNavigator.gotoAssignees(roleTitle = "Test UserGroup Role");
-
-		RoleNavigator.gotoAssigneeType(assigneeType = "User Groups");
-
-		Role.addAssignees(assigneeName = "UG UserGroup Name");
+		Role.addAssignee(
+			assigneeName = "UG UserGroup Name",
+			assigneeType = "User Groups",
+			roleTitle = "Test UserGroup Role");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

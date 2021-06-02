@@ -1,8 +1,3 @@
-.form-group-inline {
-	display: inline-block;
-	vertical-align: bottom;
-}
-
 .form-search .input-group {
 	position: relative;
 
@@ -42,50 +37,5 @@
 		input.search-query {
 			width: 100%;
 		}
-	}
-}
-
-.input-flex-add-on {
-	position: relative;
-	width: 100%;
-
-	&:after {
-		clear: left;
-		content: '';
-		display: block;
-		height: 0;
-		visibility: hidden;
-	}
-
-	input {
-		float: left;
-		margin-top: -1px;
-	}
-
-	.input-group-addon {
-		float: left;
-		margin-top: -1px;
-		padding: 9px;
-		white-space: normal;
-		width: auto;
-
-		@include overflow-wrap(break-all);
-
-		@include media-breakpoint-down(md) {
-			font-size: 18px;
-			padding: 8px;
-		}
-	}
-
-	.input-localized-content {
-		clear: both;
-		left: 0;
-		padding-top: 10px;
-		position: absolute;
-		top: 100%;
-	}
-
-	.input-localized-input {
-		float: left;
 	}
 }

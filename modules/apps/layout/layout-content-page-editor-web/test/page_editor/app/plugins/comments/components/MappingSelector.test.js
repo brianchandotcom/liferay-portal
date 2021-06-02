@@ -207,7 +207,7 @@ describe('MappingSelector', () => {
 			renderMappingSelector({});
 		});
 
-		expect(getByText(document.body, 'content')).toBeInTheDocument();
+		expect(getByText(document.body, 'item')).toBeInTheDocument();
 		expect(getByText(document.body, 'field')).toBeInTheDocument();
 
 		expect(queryByText(document.body, 'source')).not.toBeInTheDocument();
@@ -242,7 +242,7 @@ describe('MappingSelector', () => {
 		expect(getByText('field')).toBeInTheDocument();
 		expect(getByText('source')).toBeInTheDocument();
 
-		expect(queryByText('content')).not.toBeInTheDocument();
+		expect(queryByText('item')).not.toBeInTheDocument();
 	});
 
 	it('calls onMappingSelect with correct params when mapping to content', async () => {
@@ -363,7 +363,7 @@ describe('MappingSelector', () => {
 		CollectionService.getCollectionMappingFields.mockReset();
 
 		expect(queryByText(document.body, 'source')).not.toBeInTheDocument();
-		expect(queryByText(document.body, 'content')).not.toBeInTheDocument();
+		expect(queryByText(document.body, 'item')).not.toBeInTheDocument();
 
 		expect(getByText(document.body, 'field')).toBeInTheDocument();
 

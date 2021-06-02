@@ -12,6 +12,10 @@
 	font-size: 10px;
 }
 
+.dropdown-menu.clay-color-dropdown-menu.show {
+	position: fixed;
+}
+
 .dropdown-menu.dropdown-opened {
 	display: block;
 	min-width: 100%;
@@ -19,10 +23,6 @@
 
 .dropdown-menu.show {
 	z-index: 1200;
-}
-
-.dropdown-menu.clay-color-dropdown-menu.show {
-	position: fixed;
 }
 
 .ddm-field-container {

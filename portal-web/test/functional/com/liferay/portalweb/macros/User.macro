@@ -1406,6 +1406,36 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editPassword {
+		UserNavigator.gotoPassword();
+
+		if (isSet(currentPassword)) {
+			Type(
+				locator1 = "TextInput#CURRENT_PASSWORD",
+				value1 = "${currentPassword}");
+		}
+
+		if (!(isSet(newPassword))) {
+			var newPassword = "password";
+		}
+
+		Type(
+			locator1 = "TextInput#NEW_PASSWORD",
+			value1 = "${newPassword}");
+
+		Type(
+			locator1 = "TextInput#ENTER_AGAIN",
+			value1 = "${newPassword}");
+
+		if ("${requirePasswordReset}" == "true") {
+			Check(
+				checkboxName = "Require Password Reset",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		PortletEntry.save();
+	}
+
 	macro editPasswordCP {
 		JSONUserAPI._disablePasswordChangeRequired();
 

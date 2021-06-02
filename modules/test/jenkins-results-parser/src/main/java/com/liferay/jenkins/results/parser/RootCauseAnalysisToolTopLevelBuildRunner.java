@@ -262,6 +262,10 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 
 		List<String> list = new ArrayList<>();
 
+		if (portalBatchTestSelector.isEmpty()) {
+			return list;
+		}
+
 		for (String portalBatchTest : portalBatchTestSelector.split(",")) {
 			list.add(portalBatchTest.trim());
 		}
@@ -346,6 +350,18 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 	}
 
 	private void _validateBuildParameterPortalBatchTestSelector() {
+		String portalBatchName = getBuildParameter(
+			_NAME_BUILD_PARAMETER_PORTAL_BATCH);
+
+		if (!portalBatchName.startsWith("integration") &&
+			!portalBatchName.startsWith("functional") &&
+			!portalBatchName.startsWith("modules-integration") &&
+			!portalBatchName.startsWith("modules-unit") &&
+			!portalBatchName.startsWith("unit")) {
+
+			return;
+		}
+
 		String portalBatchTestSelector = getBuildParameter(
 			_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR);
 
@@ -353,7 +369,9 @@ public class RootCauseAnalysisToolTopLevelBuildRunner
 			portalBatchTestSelector.isEmpty()) {
 
 			failBuildRunner(
-				_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR + " is null");
+				JenkinsResultsParserUtil.combine(
+					_NAME_BUILD_PARAMETER_PORTAL_BATCH_TEST_SELECTOR,
+					" is required for ", portalBatchName));
 		}
 	}
 

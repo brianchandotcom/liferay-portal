@@ -92,6 +92,7 @@ definition {
 			idpEntityID = "samlidp",
 			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpURL = "http://localhost:8080",
+			index = "${index}",
 			nameIdentifierAttributeName = "${nameIdentifierAttributeName}",
 			nameIdentifierFormat = "${nameIdentifierFormat}",
 			spAttributes = "${spAttributes}",
@@ -127,6 +128,7 @@ definition {
 			idpKeepAliveURL = "${idpKeepAliveURL}",
 			idpMetadataURL = "${idpURL}/c/portal/saml/metadata",
 			idpNameID = "${idpEntityID}",
+			index = "${index}",
 			nameIdentifierFormat = "${nameIdentifierFormat}");
 
 		SAMLNavigation.gotoGeneral();

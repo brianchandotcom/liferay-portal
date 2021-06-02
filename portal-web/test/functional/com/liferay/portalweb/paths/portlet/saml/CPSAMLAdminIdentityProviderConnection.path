@@ -15,11 +15,6 @@
 </tr>
 <!--IDENTITY_PROVIDER_CONNECTION-->
 <tr>
-	<td>IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA</td>
-	<td>//textarea[contains(@id,'SamlAdminPortlet_userAttributeMappings')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_enabled')]</td>
 	<td></td>
@@ -32,6 +27,26 @@
 <tr>
 	<td>IDENTITY_PROVIDER_CONNECTION_FORCE_AUTHN_CHECKBOX</td>
 	<td>//input[contains(@id,'SamlAdminPortlet_forceAuthn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION</td>
+	<td>//input[contains(@id,'userIdentifierExpression')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO</td>
+	<td>//input[contains(@id,'userIdentifierExpression-${key_index}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_USER_FIELD_EXPRESSION_DROPDOWN</td>
+	<td>//select[contains(@id,'userAttributeMappingFieldExpression-${key_index}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_CONNECTION_SAML_ATTRIBUTE_TEXT</td>
+	<td>//input[contains(@id,'userAttributeMappingSamlAttribute-${key_index}')]</td>
 	<td></td>
 </tr>
 </tbody>

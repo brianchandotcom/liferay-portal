@@ -31,15 +31,25 @@ definition {
 		}
 
 		if (isSet(idpAttributes)) {
+			Click(
+				key_index = "${index}",
+				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USE_TO_MATCH_USERS_RADIO");
+
+			Select(
+				key_index = "${index}",
+				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_FIELD_EXPRESSION_DROPDOWN",
+				value1 = "${idpAttributes}");
+
 			Type(
-				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ATTRIBUTE_TEXTAREA",
+				key_index = "${index}",
+				locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_SAML_ATTRIBUTE_TEXT",
 				value1 = "${idpAttributes}");
 		}
 
 		if (isSet(idpKeepAliveURL)) {
 			Type(
 				locator1 = "CPSAMLAdmin#SAML_KEEP_ALIVE_URL",
-				value1 = "${idpKeepAliveURL}");
+				value1 = "StringUtil.lowerCase("${idpKeepAliveURL}");
 		}
 
 		PortletEntry.save();

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -86,6 +87,18 @@ public class PortalInstanceLifecycleListenerManagerImpl
 
 		if (_companies.isEmpty()) {
 			return;
+		}
+
+		Iterator<Company> iterator = _companies.iterator();
+
+		while (iterator.hasNext()) {
+			Company company = iterator.next();
+
+			if (_companyLocalService.fetchCompanyById(company.getCompanyId()) ==
+					null) {
+
+				unregisterCompany(company);
+			}
 		}
 
 		_companyLocalService.forEachCompany(

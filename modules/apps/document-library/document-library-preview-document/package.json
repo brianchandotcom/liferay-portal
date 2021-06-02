@@ -3,6 +3,7 @@
 		"@clayui/button": "3.32.0",
 		"@clayui/icon": "3.32.0",
 		"@clayui/loading-indicator": "3.32.0",
+		"@liferay/document-library-preview-css": "*",
 		"frontend-js-web": "*",
 		"image-promise": "^5.0.1",
 		"prop-types": "15.7.2",

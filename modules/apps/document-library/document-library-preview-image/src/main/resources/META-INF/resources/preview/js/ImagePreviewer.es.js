@@ -19,6 +19,8 @@ import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
+import '@liferay/document-library-preview-css';
+
 /**
  * Zoom ratio limit that fire the autocenter
  * @type {number}

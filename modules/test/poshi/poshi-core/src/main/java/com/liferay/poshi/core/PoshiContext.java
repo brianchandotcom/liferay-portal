@@ -311,6 +311,8 @@ public class PoshiContext {
 		poshiPropertyNames.add("ignored");
 		poshiPropertyNames.add("known-issues");
 		poshiPropertyNames.add("priority");
+		poshiPropertyNames.add("test.class.method.name");
+		poshiPropertyNames.add("test.class.name");
 		poshiPropertyNames.add("test.run.environment");
 
 		return poshiPropertyNames;
@@ -372,6 +374,9 @@ public class PoshiContext {
 					}
 				}
 			}
+
+			properties.remove("test.class.method.name");
+			properties.remove("test.class.name");
 
 			multimap.put(properties, classCommandName);
 		}
@@ -955,6 +960,11 @@ public class PoshiContext {
 					Properties overriddenProperties = new Properties(
 						baseProperties);
 
+					overriddenProperties.setProperty(
+						"test.class.method.name", classCommandName);
+					overriddenProperties.setProperty(
+						"test.class.name", className);
+
 					overriddenProperties.putAll(overrideProperties);
 
 					_namespacedClassCommandNamePropertiesMap.put(
@@ -1291,6 +1301,10 @@ public class PoshiContext {
 				if (classType.equals("test-case")) {
 					Properties properties = _getClassCommandNameProperties(
 						rootElement, commandElement);
+
+					properties.setProperty(
+						"test.class.method.name", classCommandName);
+					properties.setProperty("test.class.name", className);
 
 					_namespacedClassCommandNamePropertiesMap.put(
 						namespace + "." + classCommandName, properties);

@@ -1,28 +1,149 @@
+* [class*='ae-toolbar-'][role='toolbar'] {
+	z-index: 980;
+
+	@include media-breakpoint-down(sm) {
+		z-index: 1000;
+	}
+}
+
+.ae-ui .ae-toolbars .ae-toolbar-add {
+	border-width: 1px;
+	margin-left: 4px;
+	z-index: 989;
+
+	.ae-button {
+		height: 28px;
+		width: 28px;
+
+		@include media-breakpoint-up(xl) {
+			height: 32px;
+			width: 32px;
+		}
+	}
+}
+
 .alloy-editor-container {
+	position: relative;
+
+	.alloy-editor-icon {
+		bottom: 8px;
+		color: #869cad;
+		display: none;
+		position: absolute;
+		right: 8px;
+	}
+
 	.alloy-editor {
+		cursor: text;
+		outline: 0;
+		overflow: hidden;
+		text-align: start;
+
+		&[dir='rtl'] + .alloy-editor-icon {
+			left: 8px;
+		}
+
 		&.alloy-editor-placeholder {
 			color: #2b4259;
 
-			&.ae-placeholder:not(:focus) {
-				border-left-color: #dbdde1;
-				color: #b0b4bb;
+			&:before {
+				pointer-events: none;
 			}
 
 			&.readonly {
 				color: #ccc;
 			}
+
+			&.ae-placeholder:empty {
+				min-height: 1.5em;
+			}
+
+			&.ae-placeholder:not(:focus) {
+				border-left-color: #dbdde1;
+				color: #b0b4bb;
+
+				&:not(.form-control) {
+					border-left: 2px solid;
+					padding-left: 10px;
+				}
+
+				.has-error & {
+					border-left-color: #c67;
+				}
+			}
+
+			&.ae-placeholder[data-required='true']:not(:focus):before {
+				content: attr(data-placeholder) ' *';
+			}
 		}
 
-		outline: 0;
+		a {
+			cursor: auto;
+		}
+
+		blockquote {
+			margin: 1em 40px;
+		}
+
+		p:only-child {
+			margin-bottom: 0;
+		}
+
+		&.form-control {
+			height: auto;
+
+			~ .alloy-editor-icon {
+				display: block;
+				max-width: 24px;
+			}
+		}
+
+		.cke_widget_wrapper {
+			max-width: 100%;
+		}
 	}
 
-	.alloy-editor-icon {
-		color: #869cad;
-	}
-}
+	.alloy-editor-switch {
+		position: absolute;
+		text-align: right;
+		top: 0;
+		width: 100%;
 
-.has-error .alloy-editor-container .alloy-editor.alloy-editor-placeholder {
-	&.ae-placeholder:not(:focus) {
-		border-left-color: #c67;
+		.btn {
+			margin-top: 0;
+		}
+	}
+
+	.alloy-editor-wrapper {
+		padding-top: 44px;
+
+		.lfr-source-editor {
+			display: none;
+		}
+
+		&.show-source {
+			.alloy-editor-placeholder {
+				display: none;
+			}
+
+			.lfr-source-editor {
+				display: block;
+			}
+		}
+	}
+
+	.form-feedback-item {
+		.has-error & {
+			font-size: 16px;
+			font-weight: normal;
+			line-height: 1.4em;
+			text-align: left;
+		}
+	}
+
+	.cke_widget_inline {
+		.ie11 & {
+			display: inline-block;
+		}
 	}
 }

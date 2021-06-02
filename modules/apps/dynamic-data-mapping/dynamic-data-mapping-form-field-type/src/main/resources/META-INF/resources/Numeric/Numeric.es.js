@@ -243,7 +243,6 @@ const Main = ({
 				}}
 				onFocus={onFocus}
 				placeholder={placeholder}
-				predefinedValue={predefinedValue}
 				symbols={symbols}
 				value={edited || value ? value : predefinedValue}
 			/>

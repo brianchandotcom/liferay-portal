@@ -17,11 +17,14 @@ package com.liferay.journal.search.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.test.util.search.JournalArticleBlueprint;
 import com.liferay.journal.test.util.search.JournalArticleContent;
 import com.liferay.journal.test.util.search.JournalArticleDescription;
 import com.liferay.journal.test.util.search.JournalArticleSearchFixture;
 import com.liferay.journal.test.util.search.JournalArticleTitle;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -32,12 +35,18 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
@@ -45,6 +54,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -152,6 +162,64 @@ public class JournalArticleMultiLanguageSearchTest {
 			SearchContextAttributes.ATTRIBUTE_KEY_EMPTY_SEARCH, Boolean.TRUE);
 
 		assertSearchMatchesAllArticles(searchContext);
+	}
+
+	@Test
+	public void testSearchAndSearchCount() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, serviceContext);
+
+		JournalArticleBlueprint journalArticleBlueprint =
+			new JournalArticleBlueprint() {
+				{
+					setJournalArticleTitle(
+						new JournalArticleTitle() {
+							{
+								put(LocaleUtil.NETHERLANDS, NL_TITLE);
+								put(LocaleUtil.SPAIN, ES_TITLE);
+								put(
+									LocaleUtil.US,
+									journalArticle.getTitle(LocaleUtil.US));
+							}
+						});
+				}
+			};
+
+		journalArticle.setTitleMap(journalArticleBlueprint.getTitleMap());
+
+		JournalTestUtil.updateArticle(
+			journalArticle, journalArticle.getTitleMap(),
+			journalArticle.getContent(), false, true, serviceContext);
+
+		int count = JournalArticleLocalServiceUtil.searchCount(
+			_group.getCompanyId(), _group.getGroupId(), Collections.emptyList(),
+			PortalUtil.getClassNameId(JournalArticle.class), null, null, null,
+			null, null, "BASIC-WEB-CONTENT", null, null, null, null,
+			WorkflowConstants.STATUS_APPROVED, true);
+
+		List<JournalArticle> journalArticles =
+			JournalArticleLocalServiceUtil.search(
+				_group.getCompanyId(), _group.getGroupId(),
+				Collections.emptyList(),
+				PortalUtil.getClassNameId(JournalArticle.class), null, null,
+				null, null, null, "BASIC-WEB-CONTENT", null, null, null, null,
+				WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		AssertUtils.assertEquals(count, journalArticles.size());
 	}
 
 	@Test
@@ -310,6 +378,8 @@ public class JournalArticleMultiLanguageSearchTest {
 			throw new RuntimeException(searchException);
 		}
 	}
+
+	protected static final String ES_TITLE = "inglesa";
 
 	protected static final String NL_CONTENT = "inhoud";
 

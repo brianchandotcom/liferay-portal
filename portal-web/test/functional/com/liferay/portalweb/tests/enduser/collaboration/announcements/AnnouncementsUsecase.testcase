@@ -182,7 +182,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Pagination#NEXT_LINK",
-			value1 = "Next");
+			value1 = "Next Page");
 
 		for (var viewEntryCount : list "1,2,3") {
 			AnnouncementsEntry.viewViaEntriesPG(
@@ -200,7 +200,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Pagination#PREVIOUS_LINK",
-			value1 = "Previous");
+			value1 = "Previous Page");
 
 		for (var viewEntryCount : list "4,5,6,7") {
 			AnnouncementsEntry.viewViaEntriesPG(

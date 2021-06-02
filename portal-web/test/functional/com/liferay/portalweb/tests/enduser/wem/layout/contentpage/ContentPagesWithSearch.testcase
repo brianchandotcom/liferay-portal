@@ -334,6 +334,14 @@ definition {
 	test ViewContentPageNotShownInSearchResultsAfterDeleteCategory {
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageNotShownInSearchResultsAfterDeleteCategory";
 
+		task ("Publish the content page") {
+			var plid = JSONLayout.getPlid(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name");
+
+			JSONLayout.publishLayout(plid = "${plid}");
+		}
+
 		task ("Add a a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

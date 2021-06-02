@@ -110,7 +110,7 @@ export default function ItemSelector({
 		(state) => {
 			const menuItems = [];
 
-			if (config.contentBrowsingEnabled && selectedItem.classPK) {
+			if (config.contentBrowsingEnabled && selectedItem?.classPK) {
 				const contentMenuItems = selectPageContentDropdownItems(
 					selectedItem.classPK,
 					label

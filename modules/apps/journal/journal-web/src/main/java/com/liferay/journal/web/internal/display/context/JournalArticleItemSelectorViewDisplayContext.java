@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -505,13 +504,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		searchContext.setAttribute("head", Boolean.TRUE);
 		searchContext.setAttribute("latest", Boolean.TRUE);
 
-		LinkedHashMap<String, Object> params =
-			LinkedHashMapBuilder.<String, Object>put(
-				"expandoAttributes", getKeywords()
-			).put(
-				"keywords", getKeywords()
-			).build();
-
 		searchContext.setAttribute(Field.ARTICLE_ID, getKeywords());
 		searchContext.setAttribute(
 			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
@@ -521,7 +513,13 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			Field.STATUS, _infoItemItemSelectorCriterion.getStatus());
 		searchContext.setAttribute(Field.TITLE, getKeywords());
 		searchContext.setAttribute("ddmStructureKey", getDDMStructureKey());
-		searchContext.setAttribute("params", params);
+		searchContext.setAttribute(
+			"params",
+			LinkedHashMapBuilder.<String, Object>put(
+				"expandoAttributes", getKeywords()
+			).put(
+				"keywords", getKeywords()
+			).build());
 		searchContext.setAttribute("showNonindexable", Boolean.TRUE);
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);

@@ -65,9 +65,6 @@ definition {
 		FormFields.viewOptionsRowFieldValue(
 			fieldValue = "Option 1",
 			rowNumber = "1");
-
-			
-
 	}
 
 	@description = "Verify that a Select From List Field can be deleted"

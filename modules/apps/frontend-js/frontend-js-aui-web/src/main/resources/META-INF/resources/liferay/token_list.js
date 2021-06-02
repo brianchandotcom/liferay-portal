@@ -25,9 +25,9 @@ AUI().add(
 		var TPL_TOKEN = A.Template(
 			'<tpl for=".">',
 			'<span class="lfr-token" data-fieldValues="{fieldValues}" data-clearFields="{clearFields}">',
-			'<span class="lfr-token-text">{text:this.getTokenText}</span>',
+			'<span class="align-middle d-inline-block">{text:this.getTokenText}</span>',
 
-			'<a class="icon icon-remove lfr-token-close" href="javascript:;"></a>',
+			'<a class="align-middle c-ml-1 d-inline-block icon icon-remove lfr-token-close" href="javascript:;"></a>',
 			'</span>',
 			'</tpl>',
 			{

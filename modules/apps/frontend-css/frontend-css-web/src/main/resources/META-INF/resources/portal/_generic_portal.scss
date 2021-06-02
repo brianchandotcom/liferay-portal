@@ -132,16 +132,6 @@ img.icon {
 	}
 }
 
-.lfr-token-close,
-.lfr-token-text {
-	display: inline-block;
-	vertical-align: middle;
-}
-
-.lfr-token-close {
-	margin-left: 0.3em;
-}
-
 @include media-breakpoint-down(sm) {
 	.definition-of-terms {
 		dd {

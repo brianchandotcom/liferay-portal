@@ -295,10 +295,10 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			idpAttributes = "firstName",
 			samlEntityID = "samlsp",
 			spAttributes = "firstName",
-			spURL = "http://www.able.com:9080");
+			spURL = "http://www.able.com:9080",
+			userResolution = "dynamic");
 
 		User.logoutPG();
 
@@ -1010,10 +1010,10 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		SAML.configureLiferaySAMLAsSP(
-			idpAttributes = "firstName",
 			samlEntityID = "samlsp",
 			spAttributes = "firstName",
-			spURL = "http://www.able.com:9080");
+			spURL = "http://www.able.com:9080",
+			userResolution = "dynamic");
 
 		User.logoutPG();
 

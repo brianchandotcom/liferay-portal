@@ -649,9 +649,6 @@ definition {
 			key_fieldName = "Text",
 			locator1 = "FormViewBuilder#TEXT_FIELD",
 			value1 = "Test Text");
-
-
-			
 	}
 
 	@description = "Verify that the Field Reference can be Edited"

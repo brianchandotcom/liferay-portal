@@ -119,12 +119,8 @@ public class SamlIdpSpSessionLocalServiceImpl
 			long samlIdpSsoSessionId, String samlSpEntityId)
 		throws PortalException {
 
-		SamlIdpSpSession samlIdpSpSession = _fetchSamlIdpSpSession(
+		SamlIdpSpSession samlIdpSpSession = getSamlIdpSpSession(
 			samlIdpSsoSessionId, samlSpEntityId);
-
-		if (samlIdpSpSession == null) {
-			return null;
-		}
 
 		samlIdpSpSession.setModifiedDate(new Date());
 

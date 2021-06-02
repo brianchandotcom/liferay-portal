@@ -501,9 +501,6 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(false);
-		searchContext.setAttribute("head", Boolean.TRUE);
-		searchContext.setAttribute("latest", Boolean.TRUE);
-
 		searchContext.setAttribute(Field.ARTICLE_ID, getKeywords());
 		searchContext.setAttribute(
 			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
@@ -513,6 +510,8 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			Field.STATUS, _infoItemItemSelectorCriterion.getStatus());
 		searchContext.setAttribute(Field.TITLE, getKeywords());
 		searchContext.setAttribute("ddmStructureKey", getDDMStructureKey());
+		searchContext.setAttribute("head", Boolean.TRUE);
+		searchContext.setAttribute("latest", Boolean.TRUE);
 		searchContext.setAttribute(
 			"params",
 			LinkedHashMapBuilder.<String, Object>put(

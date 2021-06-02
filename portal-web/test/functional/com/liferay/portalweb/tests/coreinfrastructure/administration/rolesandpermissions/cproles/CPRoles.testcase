@@ -26,7 +26,7 @@ definition {
 
 	@description = "This is a use case for LPS-105001 and LPS-104999."
 	@priority = "3"
-	test AssertRoleTitleNotRequired {
+	test UserCanAddARoleWithoutATitle {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AssignExistingSegmentToRegularRole {
+	test ExistingSegmentCanBeAssignedToARegularRole {
 		ProductMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AssignNewSegmentToRegularRole {
+	test NewSegmentCanBeAssignedToARegularRole {
 		JSONRole.addRegularRole(
 			roleKey = "Roles Regrole Name",
 			roleTitle = "Roles Regrole Name");
@@ -154,7 +154,7 @@ definition {
 
 	@description = "This is a use case for LPS-109572."
 	@priority = "5"
-	test AssignUserToRegularRole {
+	test UserCanBeAssignedToARegularRole {
 		property portal.acceptance = "true";
 
 		JSONRole.addRegularRole(
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@priority = "5"
-	test DeleteOrganizationRole {
+	test OrganizationRoleCanBeDeleted {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -230,7 +230,7 @@ definition {
 	}
 
 	@priority = "5"
-	test DeleteRegularRole {
+	test RegularRoleCanBeDeleted {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
@@ -268,7 +268,7 @@ definition {
 	}
 
 	@priority = "5"
-	test DeleteSiteRole {
+	test SiteRoleCanBeDeleted {
 		property portal.acceptance = "true";
 
 		ApplicationsMenu.gotoPortlet(
@@ -309,7 +309,7 @@ definition {
 	}
 
 	@priority = "4"
-	test RemoveSegmentFromRegularRole {
+	test SegmentCanBeRemovedFromRegularRole {
 		ProductMenu.gotoSite(site = "Global");
 
 		ProductMenu.gotoPortlet(

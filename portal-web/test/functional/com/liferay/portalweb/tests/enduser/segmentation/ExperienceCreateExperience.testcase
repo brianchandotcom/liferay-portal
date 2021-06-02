@@ -3075,11 +3075,106 @@ definition {
 		User.firstLoginPG();
 	}
 
+	@description = "LPS-125710 When a user, that belongs to two or more different segments with experiences for them and these experiences are below of any other Anyone-targeted experience, lands on the page, the Anyone-targeted experience labeled as active will be shown"
+	@priority = "3"
+	@uitest
+	test AddTwoExperiencesBelowDefault {
+		property portal.acceptance = "true";
+
+		task ("Add segment for the user created") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Segment Screen Name",
+				text = "usersn1");
+		}
+
+		task ("Add another segment for the user created") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = "Test Site Name",
+				operator = "equals",
+				segmentName = "Segment Email Address",
+				text = "userea1@liferay.com");
+		}
+
+		task ("Go to the Content Page and add a new experience for the first segment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addExperience(
+				experienceName = "Screen Name Experience",
+				segmentName = "Segment Screen Name");
+
+			Button.clickPublish();
+		}
+
+		task ("Edit the experience created and leave it below the Default experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.changeExperience(newExperience = "Screen Name Experience");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "This is a new Screen Name experience for you");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Go to the Content Page and add a new experience for the second segment") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.addExperience(
+				experienceName = "Email Address Experience",
+				segmentName = "Segment Email Address");
+
+			Button.clickPublish();
+		}
+
+		task ("Edit the experience created and leave it below the Default experience") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Experience Content Page",
+				siteName = "Test Site Name");
+
+			PageEditor.changeExperience(newExperience = "Email Address Experience");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Heading",
+				id = "element-text",
+				text = "This is a new Email Address Experience for you");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Login with the user and check that the correct experience is shown") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+			AssertTextEquals(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Heading Example");
+		}
+	}
+
 	@description = "LPS-125710 When a user, that belongs to two or more different segments with experiences for them and these experiences are above the all other Anyone-targeted experiences, lands on the page, the experience with the higher position will be shown"
 	@priority = "3"
 	@uitest
 	test AddTwoExperiencesOverDefault {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Add segment for the user created") {
 			JSONSegmentsentry.addSegment(

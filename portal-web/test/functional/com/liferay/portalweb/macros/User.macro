@@ -1531,24 +1531,6 @@ definition {
 		}
 	}
 
-	macro editPasswordViaMyAccount {
-		UserNavigator.gotoPassword();
-
-		Type(
-			locator1 = "TextInput#CURRENT_PASSWORD",
-			value1 = "${currentPassword}");
-
-		Type(
-			locator1 = "TextInput#NEW_PASSWORD",
-			value1 = "${newPassword}");
-
-		Type(
-			locator1 = "TextInput#ENTER_AGAIN",
-			value1 = "${newPassword}");
-
-		PortletEntry.save();
-	}
-
 	macro editPrimary {
 		if ("${makePrimary}" == "true") {
 			Check(

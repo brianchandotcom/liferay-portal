@@ -140,6 +140,19 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return _segmentTestClassGroups;
 	}
 
+	public String getTestCasePropertiesContent() {
+		StringBuilder sb = new StringBuilder();
+
+		for (SegmentTestClassGroup segmentTestClassGroup :
+				getSegmentTestClassGroups()) {
+
+			sb.append(segmentTestClassGroup.getTestCasePropertiesContent());
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
 	public static class BatchTestClass extends BaseTestClass {
 
 		protected static BatchTestClass getInstance(

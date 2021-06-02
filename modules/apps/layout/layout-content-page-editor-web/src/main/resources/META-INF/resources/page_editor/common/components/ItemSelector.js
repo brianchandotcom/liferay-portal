@@ -170,16 +170,32 @@ export default function ItemSelector({
 					))}
 
 				{selectedItem?.title && (
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get(
-							'clear-content-button'
-						)}
-						className="ml-2 page-editor__item-selector__content-button"
-						displayType="secondary"
-						onClick={() => onItemSelect({})}
-						small
-						symbol="times-circle"
-						title={Liferay.Language.get('clear-selection')}
+					<ClayDropDownWithItems
+						items={[
+							{
+								label: Liferay.Util.sub(
+									Liferay.Language.get('remove-x'),
+									label
+								),
+								onClick: () => onItemSelect({}),
+							},
+						]}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={Liferay.Util.sub(
+									Liferay.Language.get('view-x-options'),
+									label
+								)}
+								className="ml-2 page-editor__item-selector__content-button"
+								displayType="secondary"
+								small
+								symbol="ellipsis-v"
+								title={Liferay.Util.sub(
+									Liferay.Language.get('view-x-options'),
+									label
+								)}
+							/>
+						}
 					/>
 				)}
 			</div>

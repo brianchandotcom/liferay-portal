@@ -34,7 +34,7 @@ definition {
 	@priority = "3"
 	test CanOrderByOnTimeItems {
 
-		// TODO LPS-67511 CanOrderByOnTimeItems pending implementation
+		// TODO LRQA-67511 CanOrderByOnTimeItems pending implementation
 
 	}
 
@@ -43,7 +43,7 @@ definition {
 	@priority = "3"
 	test CanOrderByOverdueItems {
 
-		// TODO LPS-67510 CanOrderByOverdueItems pending implementation
+		// TODO LRQA-67510 CanOrderByOverdueItems pending implementation
 
 	}
 
@@ -52,7 +52,7 @@ definition {
 	@priority = "3"
 	test CanOrderByProcessName {
 
-		// TODO LPS-67509 CanOrderByProcessName pending implementation
+		// TODO LRQA-67509 CanOrderByProcessName pending implementation
 
 	}
 
@@ -61,7 +61,7 @@ definition {
 	@priority = "3"
 	test CanOrderByTotalPendingItems {
 
-		// TODO LPS-67512 CanOrderByTotalPendingItems pending implementation
+		// TODO LRQA-67512 CanOrderByTotalPendingItems pending implementation
 
 	}
 
@@ -88,7 +88,7 @@ definition {
 	@priority = "2"
 	test DisplayEmptyStateWhenNoProcessAvailable {
 
-		// TODO LPS-67516 DisplayEmptyStateWhenNoProcessAvailable pending implementation
+		// TODO LRQA-67516 DisplayEmptyStateWhenNoProcessAvailable pending implementation
 
 	}
 
@@ -106,7 +106,7 @@ definition {
 	@priority = "3"
 	test PaginationButtonIndicatesSelectedPage {
 
-		// TODO LPS-67517 PaginationButtonIndicatesSelectedPage pending implementation
+		// TODO LRQA-67517 PaginationButtonIndicatesSelectedPage pending implementation
 
 	}
 
@@ -115,7 +115,7 @@ definition {
 	@priority = "3"
 	test PaginationFollowsAscDescSequence {
 
-		// TODO LPS-67519 PaginationFollowsAscDescSequence pending implementation
+		// TODO LRQA-67519 PaginationFollowsAscDescSequence pending implementation
 
 	}
 
@@ -124,7 +124,7 @@ definition {
 	@priority = "3"
 	test PaginationIsDisplayedWhenTableHas5Items {
 
-		// TODO LPS-67518 PaginationIsDisplayedWhenTableHas5Items pending implementation
+		// TODO LRQA-67518 PaginationIsDisplayedWhenTableHas5Items pending implementation
 
 	}
 
@@ -142,7 +142,7 @@ definition {
 	@priority = "3"
 	test SavedOrderOptionStaysInMetricsContext {
 
-		// TODO LPS-67513 SavedOrderOptionStaysInMetricsContext pending implementation
+		// TODO LRQA-67513 SavedOrderOptionStaysInMetricsContext pending implementation
 
 	}
 
@@ -151,7 +151,7 @@ definition {
 	@priority = "5"
 	test TableDisplaysCorrectNumbersWhenAssetAdded {
 
-		// TODO LPS-67514 TableDisplaysCorrectNumbersWhenAssetAdded pending implementation
+		// TODO LRQA-67514 TableDisplaysCorrectNumbersWhenAssetAdded pending implementation
 
 	}
 
@@ -160,7 +160,7 @@ definition {
 	@priority = "3"
 	test TableIsOrderedByOverdueDesc {
 
-		// TODO LPS-67515 TableIsOrderedByOverdueDesc pending implementation
+		// TODO LRQA-67515 TableIsOrderedByOverdueDesc pending implementation
 
 	}
 

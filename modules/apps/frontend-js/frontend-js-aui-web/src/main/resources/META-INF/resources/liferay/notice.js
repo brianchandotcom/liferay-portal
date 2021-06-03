@@ -138,7 +138,7 @@ AUI.add(
 
 				if (instance._useCloseButton) {
 					var html =
-						'<button class="btn btn-secondary submit popup-alert-close">' +
+						'<button class="btn btn-secondary c-ml-1 submit">' +
 						instance._closeText +
 						'</button>';
 

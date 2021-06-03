@@ -1,5 +1,19 @@
 definition {
 
+	macro changeCurrentTheme {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		LexiconCard.viewCardTitle(card = "${themeName}");
+
+		LexiconCard.clickCardTitle(card = "${themeName}");
+
+		SelectFrameTop(value1 = "relative=top");
+	}
+
 	macro configureLookAndFeelCustomCSS {
 		Type(
 			key_text = "regularCss",

@@ -170,6 +170,10 @@ public class CommerceAccountGroupRelLocalServiceImpl
 		_getAccountGroupRelOrderByComparator(
 			OrderByComparator<CommerceAccountGroupRel> orderByComparator) {
 
+		if (orderByComparator == null) {
+			return null;
+		}
+
 		return new OrderByComparator<AccountGroupRel>() {
 
 			@Override

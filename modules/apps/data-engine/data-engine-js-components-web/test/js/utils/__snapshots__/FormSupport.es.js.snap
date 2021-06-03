@@ -92,6 +92,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
@@ -287,6 +288,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
@@ -470,6 +472,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
@@ -606,6 +609,7 @@ Object {
       "fields": Array [
         Object {
           "fieldName": "text1",
+          "hideField": true,
           "instanceId": "1fnjndk1",
           "label": "Text Field 1",
           "required": true,
@@ -807,6 +811,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
@@ -965,6 +970,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
@@ -1252,6 +1258,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,

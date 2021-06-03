@@ -87,6 +87,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
@@ -270,6 +271,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "New label 0",
                 "required": true,
@@ -453,6 +455,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "hideField": true,
                 "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,

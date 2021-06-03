@@ -102,6 +102,7 @@ export default [
 						fields: [
 							{
 								fieldName: 'text1',
+								hideField: true,
 								instanceId: '1fnjndk1',
 								label: 'Text Field 1',
 								required: true,

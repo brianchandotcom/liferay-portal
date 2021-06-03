@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -72,6 +73,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -144,7 +146,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
-			new Class<?>[] {ResourceRequest.class}, mockLiferayResourceRequest);
+			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+			mockLiferayResourceRequest, new MockLiferayResourceResponse());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -197,7 +200,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
-			new Class<?>[] {ResourceRequest.class}, mockLiferayResourceRequest);
+			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+			mockLiferayResourceRequest, new MockLiferayResourceResponse());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -242,7 +246,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
-			new Class<?>[] {ResourceRequest.class}, mockLiferayResourceRequest);
+			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+			mockLiferayResourceRequest, new MockLiferayResourceResponse());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -292,7 +297,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
-			new Class<?>[] {ResourceRequest.class}, mockLiferayResourceRequest);
+			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+			mockLiferayResourceRequest, new MockLiferayResourceResponse());
 
 		Assert.assertEquals(1, jsonArray.length());
 
@@ -344,7 +350,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
-			new Class<?>[] {ResourceRequest.class}, mockLiferayResourceRequest);
+			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
+			mockLiferayResourceRequest, new MockLiferayResourceResponse());
 
 		Assert.assertEquals(1, jsonArray.length());
 	}

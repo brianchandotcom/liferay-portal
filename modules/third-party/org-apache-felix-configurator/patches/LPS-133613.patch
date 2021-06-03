@@ -1,0 +1,96 @@
+diff --git a/org/apache/felix/configurator/impl/WorkerQueue.java b/org/apache/felix/configurator/impl/WorkerQueue.java
+index fb1117bdb5f21..386cbc36348cd 100644
+--- a/org/apache/felix/configurator/impl/WorkerQueue.java
++++ b/org/apache/felix/configurator/impl/WorkerQueue.java
+@@ -18,44 +18,39 @@
+  */
+ package org.apache.felix.configurator.impl;
+ 
+-import java.util.ArrayList;
+-import java.util.List;
++import java.util.concurrent.BlockingQueue;
+ import java.util.concurrent.Executors;
++import java.util.concurrent.LinkedBlockingQueue;
+ import java.util.concurrent.ThreadFactory;
+ 
+ import org.apache.felix.configurator.impl.logger.SystemLogger;
+ 
+ public class WorkerQueue implements Runnable {
+ 
+-    private final ThreadFactory threadFactory;
++    private final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
+ 
+-    private final List<Runnable> tasks = new ArrayList<>();
+-
+-    private volatile Thread backgroundThread;
++    private final Thread backgroundThread;
+ 
+     private volatile boolean stopped = false;
+ 
+     public WorkerQueue() {
+-        this.threadFactory = Executors.defaultThreadFactory();
++        ThreadFactory threadFactory = Executors.defaultThreadFactory();
++
++        this.backgroundThread = threadFactory.newThread(this);
++        this.backgroundThread.setDaemon(true);
++        this.backgroundThread.setName("Apache Felix Configurator Worker Thread");
++        this.backgroundThread.start();
+     }
+ 
+     public void stop() {
+-        synchronized ( this.tasks ) {
+-            this.stopped = true;
+-        }
++        this.stopped = true;
++
++        this.backgroundThread.interrupt();
+     }
+ 
+     public void enqueue(final Runnable r) {
+-        synchronized ( this.tasks ) {
+-            if ( !this.stopped ) {
+-                this.tasks.add(r);
+-                if ( this.backgroundThread == null ) {
+-                    this.backgroundThread = this.threadFactory.newThread(this);
+-                    this.backgroundThread.setDaemon(true);
+-                    this.backgroundThread.setName("Apache Felix Configurator Worker Thread");
+-                    this.backgroundThread.start();
+-                }
+-            }
++        if ( !this.stopped ) {
++            this.tasks.add(r);
+         }
+     }
+ 
+@@ -64,13 +59,16 @@ public class WorkerQueue implements Runnable {
+         Runnable r;
+         do {
+             r = null;
+-            synchronized ( this.tasks ) {
+-                if ( !this.stopped && !this.tasks.isEmpty() ) {
+-                    r = this.tasks.remove(0);
+-                } else {
+-                    this.backgroundThread = null;
++
++            if ( !this.stopped ) {
++                try {
++                    r = this.tasks.take();
++                }
++                catch (InterruptedException interruptedException) {
++                    return;
+                 }
+             }
++
+             if ( r != null ) {
+                 try {
+                     r.run();
+@@ -79,6 +77,7 @@ public class WorkerQueue implements Runnable {
+                     SystemLogger.error("Error processing task" + t.getMessage(), t);
+                 }
+             }
+-        } while ( r != null );
++        } while ( true );
+     }
+ }
++/* @generated */
+\ No newline at end of file

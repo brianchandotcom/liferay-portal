@@ -418,7 +418,7 @@ definition {
 
 	@priority = "5"
 	test ContentCannotBeCreatedOnLive {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
@@ -480,7 +480,6 @@ definition {
 
 	@priority = "4"
 	test EditPublishTemplate {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "StagingUsecase#EditPublishTemplate";
 
 		SitePages.openPagesAdmin(siteURLKey = "site-name-staging");
@@ -598,8 +597,7 @@ definition {
 
 	@priority = "5"
 	test ImportLARsOnStagedSite {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Site Pages Administration,Training,Web Content Administration";
 
 		LAR.importSiteCP(
@@ -1844,7 +1842,6 @@ definition {
 	@description = "This is a use case for LPS-96721."
 	@priority = "4"
 	test ViewPublishedContentWithSpecialCharsInDocumentTitle {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Staging#ViewPublishedContentWithSpecialCharsInDocumentTitle";
 
 		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");

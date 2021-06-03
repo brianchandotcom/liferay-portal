@@ -1450,8 +1450,6 @@ definition {
 	@description = "This is a use case for LPS-86608."
 	@priority = "3"
 	test ExportImportWebcontentWithRepeatField {
-		property portal.upstream = "quarantine";
-
 		JSONGroup.addGroup(groupName = "Exported Site");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "exported-site");

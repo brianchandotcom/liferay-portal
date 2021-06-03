@@ -203,14 +203,44 @@ definition {
 	}
 
 	@description = "Verify that a Multiple Selection Field can be required"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeRequired {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132263 CanBeRequired pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.enableSwitcher(fieldName = "required");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validateFieldLabelRequired(fieldLabel = "Multiple Selection");
+
+		FormPortlet.submit();
+
+		FormViewBuilder.validateObjectLabelOptionTextIsShown(text = "This field is required.");
+
+		FormFields.enableCheckbox(fieldName = "Option");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that a Multiple Selection Field can be set to repeatable"

@@ -819,9 +819,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	)
 	private RepositoryFactory _repositoryFactory;
 
-	@Reference(
-		target = "(release.bundle.symbolic.name=com.liferay.document.library.repository.portlet.repository.impl)"
-	)
+	@Reference
 	private RepositoryLocalService _repositoryLocalService;
 
 	@Reference

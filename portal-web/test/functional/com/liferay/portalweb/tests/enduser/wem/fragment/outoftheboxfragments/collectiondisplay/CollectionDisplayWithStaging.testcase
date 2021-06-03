@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Content Pages,Fragments";
+	property testray.main.component.name = "Fragments";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -303,7 +303,7 @@ definition {
 	@description = "This is a use case for LPS-86193. Can export display page template and import to Staging site via UI."
 	@priority = "3"
 	test ExportImportDisplayPageTemplateWithCollectionDisplay {
-		property testray.main.component.name = "Display Pages,Fragments";
+		property testray.main.component.name = "Display Pages";
 
 		task ("Add a display page template with Web Content Article type and Basic Web Content subtype") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

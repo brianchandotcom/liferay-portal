@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Content Pages,Fragments";
+	property testray.main.component.name = "Fragments";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -513,7 +513,7 @@ definition {
 	@description = "This case ensures that a user can select content via content display in content page template editor."
 	@priority = "4"
 	test ViewSelectedWebContentInContentPageTemplate {
-		property testray.main.component.name = "Fragments,Layout Page Templates";
+		property testray.main.component.name = "Layout Page Templates";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -565,7 +565,7 @@ definition {
 	@description = "This case ensures that a user can select content via content display in display page template editor."
 	@priority = "4"
 	test ViewSelectedWebContentInDisplayPageTemplate {
-		property testray.main.component.name = "Display Pages,Fragments";
+		property testray.main.component.name = "Display Pages";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

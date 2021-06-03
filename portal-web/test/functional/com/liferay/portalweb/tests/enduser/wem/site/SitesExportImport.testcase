@@ -127,7 +127,7 @@ definition {
 	@description = "This is a test for LPS-98501. Export and import the whole site where a content page with a global fragment."
 	@priority = "4"
 	test ExportImportSiteWithGlobalFragmentInContentPage {
-		property testray.main.component.name = "Fragments,Site Administration";
+		property testray.main.component.name = "Content Pages";
 
 		task ("Add a fragment collection in Global site") {
 			JSONFragment.addFragmentCollection(

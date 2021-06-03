@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Content Pages,Fragments";
+	property testray.main.component.name = "Fragments";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -3440,7 +3440,7 @@ definition {
 	@priority = "5"
 	test ViewRelatedAssets {
 		property portal.acceptance = "true";
-		property testray.main.component.name = "Display Pages,Fragments";
+		property testray.main.component.name = "Display Pages";
 
 		task ("Add a display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -3572,7 +3572,7 @@ definition {
 	test ViewRelatedAssetsInCollectionDisplayWithNewRelatedAssets {
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-		property testray.main.component.name = "Display Pages,Fragments";
+		property testray.main.component.name = "Display Pages";
 
 		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(

@@ -116,7 +116,7 @@ definition {
 			var site = "true";
 		}
 
-		var repositoryId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+		var repositoryId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "${groupName}");
 
 		if (isSet(parentFolderName)) {
 			var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(

@@ -136,7 +136,6 @@ export const Column = ({
 						resizing,
 				})}
 				column={column}
-				editable={editable}
 				index={columnIndex}
 				pageIndex={pageIndex}
 				ref={columnRef}

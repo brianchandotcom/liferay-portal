@@ -16,9 +16,35 @@ import ClayButton from '@clayui/button';
 import classnames from 'classnames';
 import React from 'react';
 
+import * as DefaultVariant from '../../../core/components/PageRenderer/DefaultVariant.es';
 import {useConfig} from '../../../core/hooks/useConfig.es';
 import {MultiStep} from '../components/MultiStep.es';
 import {PaginationControls} from '../components/PaginationControls.es';
+
+export const Column = ({
+	children,
+	column,
+	columnRef,
+	editable,
+	...otherProps
+}) => {
+	const firstField = column.fields[0];
+
+	return (
+		<DefaultVariant.Column
+			{...otherProps}
+			column={column}
+			columnClassName={classnames({
+				hide: firstField?.hideField && !editable,
+			})}
+			ref={columnRef}
+		>
+			{children}
+		</DefaultVariant.Column>
+	);
+};
+
+Column.displayName = 'WizardVariant.Column';
 
 export const Container = ({
 	activePage,

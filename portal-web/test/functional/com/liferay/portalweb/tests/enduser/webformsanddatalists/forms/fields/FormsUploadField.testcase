@@ -142,14 +142,63 @@ definition {
 	}
 
 	@description = "Verify that guest users can only access upload fields that have guest user uploads enabled"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test GuestUserCanOnlyAccessEnabledFields {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133257 GuestUserCanOnlyAccessEnabledFields pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Upload");
+
+		var uploadFieldName = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Guest Upload");
+
+		FormFields.enableSwitcher(fieldName = "allowGuestUsers");
+
+		FormViewBuilder.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Upload");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishCopyURLLink();
+
+		var publishFormURL = Form.getPublishedFormPublicURL();
+
+		User.logoutPG();
+
+		Navigator.openSpecificURL(url = "${publishFormURL}");
+
+		FormFields.viewFieldValidationErrorMessage(
+			fieldName = "Upload",
+			fieldValidationErrorMessage = "You need to be signed in to edit this field.");
+
+		AppBuilderWorkflow.assertButtonDisabled(buttonName = "");
+
+		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+			key_fieldName = "${uploadFieldName}",
+			locator1 = "FormFields#UPLOAD_FIELD",
+			value1 = "Document_1.jpg");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
 	}
 
 	@description = "Verify that a help text can be added to an Upload Field"

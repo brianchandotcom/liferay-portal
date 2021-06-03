@@ -73,7 +73,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 			multiple: true,
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
-					const assetTags = selectedItem['items'].split(',');
+					const assetTags = selectedItem.map((tag) => tag.value);
 
 					let redirectURL = itemData?.redirectURL;
 

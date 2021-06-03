@@ -954,6 +954,14 @@ definition {
 		}
 	}
 
+	macro viewSelectMultipleOptionsPredefined {
+		for (var selectOption : list "${selectOptionsList}") {
+			AssertElementPresent(
+				checkboxName = "${selectOption}",
+				locator1 = "FormFields#ANY_CHECKBOX_CHECKED");
+		}
+	}
+
 	macro viewSelectOption {
 		AssertTextEquals.assertPartialText(
 			key_fieldName = "${fieldName}",

@@ -230,7 +230,9 @@ definition {
 		}
 
 		task ("Clear the selection") {
-			PageEditor.clearSelection(fieldLabel = "Page");
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Page",
+				menuItem = "Remove Page");
 		}
 
 		task ("View the default link is shown in Button fragment") {

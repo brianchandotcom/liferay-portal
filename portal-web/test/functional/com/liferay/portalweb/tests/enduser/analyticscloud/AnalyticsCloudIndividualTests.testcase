@@ -8,12 +8,7 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-		Navigator.openURL(baseURL = "${analyticsCloudURL}");
-
-		ACLogin.loginAs();
-
-		ACWorkspace.openWorkspace();
+		ACUtils.launchAC();
 
 		ACSettings.takeTokenFromAnalyticsCloud();
 
@@ -22,7 +17,6 @@ definition {
 		Navigator.openURL();
 
 		User.firstLoginUI();
-
 	}
 
 	tearDown {

@@ -760,7 +760,7 @@ definition {
 		var webContentHTML = "Este es un título HTML";
 
 		Translations.viewTargetFields(
-			webContentDecimal = "22,0",
+			webContentDecimal = "2,2",
 			webContentDescription = "WC WebContent Descripción",
 			webContentHTML = "${webContentHTML}",
 			webContentNumber = "200",
@@ -790,7 +790,7 @@ definition {
 
 		WebContent.viewWithStructureCP(
 			predefinedValue = "true",
-			webContentNumeric = "22,0",
+			webContentNumeric = "2,2",
 			webContentNumericFieldLabel = "Decimal");
 
 		WebContent.viewWithStructureCP(

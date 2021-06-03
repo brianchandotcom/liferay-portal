@@ -149,7 +149,11 @@ exports[`Field Color Picker renders field with label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      label
+      <span
+        class=""
+      >
+        label
+      </span>
     </label>
     <input
       name="colorPicker"

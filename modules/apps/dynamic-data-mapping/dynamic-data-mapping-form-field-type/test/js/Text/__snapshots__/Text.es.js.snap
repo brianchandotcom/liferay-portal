@@ -49,7 +49,11 @@ exports[`Field Text has a label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      label
+      <span
+        class=""
+      >
+        label
+      </span>
     </label>
     <input
       aria-labelledby="textField_fieldDetails"
@@ -238,7 +242,11 @@ exports[`Field Text renders Label if showLabel is true 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      text
+      <span
+        class=""
+      >
+        text
+      </span>
     </label>
     <input
       aria-labelledby="textField_fieldDetails"

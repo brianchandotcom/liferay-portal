@@ -93,7 +93,11 @@ exports[`Field DocumentLibrary has a label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      label
+      <span
+        class=""
+      >
+        label
+      </span>
     </label>
     <div
       class="liferay-ddm-form-field-document-library"
@@ -601,7 +605,11 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      text
+      <span
+        class=""
+      >
+        text
+      </span>
     </label>
     <div
       class="liferay-ddm-form-field-document-library"

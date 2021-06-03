@@ -2683,7 +2683,11 @@ exports[`Field LocalizableText has a label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      label
+      <span
+        class=""
+      >
+        label
+      </span>
     </label>
     <div
       class="input-group"

@@ -30,7 +30,7 @@ if (comment instanceof WorkflowableComment) {
 }
 %>
 
-<table class="lfr-grid lfr-table">
+<table class="lfr-table">
 	<tr>
 		<td colspan="2" id="<%= randomNamespace %>messageScroll<%= comment.getCommentId() %>">
 			<a name="<%= randomNamespace %>message_<%= comment.getCommentId() %>"></a>

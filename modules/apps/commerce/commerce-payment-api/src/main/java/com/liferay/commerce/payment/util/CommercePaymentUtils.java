@@ -47,4 +47,6 @@ public interface CommercePaymentUtils {
 	public CommercePaymentRequestProvider getCommercePaymentRequestProvider(
 		CommercePaymentMethod commercePaymentMethod);
 
+	public boolean isDeliveryOnlySubscription(CommerceOrder commerceOrder);
+
 }

@@ -1648,11 +1648,20 @@ public class DLAppHelperLocalServiceImpl
 				!moveToTrash);
 		}
 
-		dlFolders = dlFolderPersistence.findByG_M_T_H(
-			dlFolder.getGroupId(), false,
-			CustomSQLUtil.keywords(
-				dlFolder.getTreePath(), WildcardMode.TRAILING)[0],
-			false);
+		if (moveToTrash) {
+			dlFolders = dlFolderPersistence.findByG_M_T_H_NotS(
+				dlFolder.getGroupId(), false,
+				CustomSQLUtil.keywords(
+					dlFolder.getTreePath(), WildcardMode.TRAILING)[0],
+				false, WorkflowConstants.STATUS_IN_TRASH);
+		}
+		else {
+			dlFolders = dlFolderPersistence.findByG_M_T_H(
+				dlFolder.getGroupId(), false,
+				CustomSQLUtil.keywords(
+					dlFolder.getTreePath(), WildcardMode.TRAILING)[0],
+				false);
+		}
 
 		for (DLFolder childDLFolder : dlFolders) {
 			trashOrRestoreFolder(

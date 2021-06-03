@@ -82,7 +82,7 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 					"SamlIdpSpSession.nameIdFormat = ",
 					"SamlPeerBinding.samlNameIdFormat and ",
 					"SamlIdpSpSession.nameIdValue = ",
-					"SamlPeerBinding.samlNameIdValue"));
+					"SamlPeerBinding.samlNameIdValue)"));
 
 			CounterLocalServiceUtil.reset(
 				"com.liferay.saml.persistence.model.SamlPeerBinding",

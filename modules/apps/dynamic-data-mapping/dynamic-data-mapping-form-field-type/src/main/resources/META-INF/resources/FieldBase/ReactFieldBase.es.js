@@ -293,7 +293,7 @@ function FieldBase({
 								className="lfr-ddm-legend"
 								tabIndex="0"
 							>
-								{label && showLabel && label}
+								{showLabel && label}
 
 								{required && <RequiredProperty />}
 
@@ -316,16 +316,14 @@ function FieldBase({
 								})}
 								tabIndex="0"
 							>
-								{label && showLabel && (
-									<>
-										{hideField ? (
-											<span className="text-secondary">
-												{label}
-											</span>
-										) : (
-											label
-										)}
-									</>
+								{showLabel && (
+									<span
+										className={classNames({
+											'text-secondary': hideField,
+										})}
+									>
+										{label}
+									</span>
 								)}
 
 								{required && <RequiredProperty />}

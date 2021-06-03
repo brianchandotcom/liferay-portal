@@ -651,7 +651,9 @@ definition {
 
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
-		Form.viewFieldReferenceFromTextField(key_fieldReferenceText = "Text1234");
+		FormFields.viewFieldReference(
+			fieldName = "Text", 
+			fieldReferenceValue = "Text1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

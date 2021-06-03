@@ -147,6 +147,14 @@ definition {
 		Form.gotoBasicTab();
 	}
 
+	macro editFieldReference {
+		Form.gotoAdvancedTab();
+
+		Type(
+			locator1 = "Form#FIELD_REFERENCE",
+			value1 = "${key_fieldReference}");
+	}
+
 	macro editGridOptions {
 		var key_gridField = "${gridField}";
 		var key_rowNumber = "${rowNumber}";
@@ -719,6 +727,18 @@ definition {
 		else {
 			Form.gotoBasicTab();
 		}
+	}
+
+	macro viewFieldReference {
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "Form#FIELD_BODY");
+
+		Form.gotoAdvancedTab();
+
+		AssertTextEquals(
+			locator1 = "Form#FIELD_REFERENCE",
+			value1 = "${fieldReferenceValue}");
 	}
 
 	macro viewFieldValidationErrorMessage {

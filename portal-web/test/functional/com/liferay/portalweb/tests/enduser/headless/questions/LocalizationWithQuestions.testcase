@@ -247,18 +247,13 @@ definition {
 			groupName = "Guest",
 			titleField = "あなたの好きな日本料理は何ですか");
 
-		JSONQuestions.addAnswer(
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
-			threadSubject = "あなたの好きな日本料理は何ですか",
-			titleField = "あなたの好きな日本料理は何ですか");
-
 		Questions.openToQuestionDetails(
 			layoutName = "questions-page",
 			localization = "true",
 			siteURLKey = "guest",
 			topicName = "質問トピック");
+
+		Questions.answerQuestion(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
 
 		Questions.editAnswer(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
 

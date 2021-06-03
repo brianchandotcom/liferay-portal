@@ -229,14 +229,43 @@ definition {
 	}
 
 	@description = "Verify that a Numeric Field can accept decimals when the numeric type set to Decimal"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToAcceptDecimals {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132861 CanBeSetToAcceptDecimals pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		FormFields.selectRadioOption(
+			fieldName = "",
+			radioOption = "Decimal");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "123.123");
+
+		FormFields.viewTextValue(
+			fieldName = "Numeric",
+			fieldValue = "123.123");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that a Numeric Field can be set to repeatable"
@@ -389,9 +418,8 @@ definition {
 			fieldValue = "123");
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
-		
-		FormPortlet.submitAndViewSuccessPage();
 
+		FormPortlet.submitAndViewSuccessPage();
 	}
 
 	@description = "Verify that the "Is Greater Than" option can be used to validate a Numeric Field"

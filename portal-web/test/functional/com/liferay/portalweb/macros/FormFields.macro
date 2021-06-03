@@ -151,19 +151,19 @@ definition {
 		Form.gotoBasicTab();
 	}
 
-	macro editFieldReference {
-		Form.gotoAdvancedTab();
-
-		Type(
-			locator1 = "Form#FIELD_REFERENCE",
-			value1 = "${key_fieldReference}");
-	}
-
 	macro editFieldPredefined {
 		Form.gotoAdvancedTab();
 
 		Type(
 			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
+			value1 = "${key_fieldReference}");
+	}
+
+	macro editFieldReference {
+		Form.gotoAdvancedTab();
+
+		Type(
+			locator1 = "Form#FIELD_REFERENCE",
 			value1 = "${key_fieldReference}");
 	}
 

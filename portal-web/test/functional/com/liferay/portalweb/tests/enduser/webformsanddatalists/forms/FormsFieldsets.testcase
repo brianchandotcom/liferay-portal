@@ -241,14 +241,42 @@ definition {
 	}
 
 	@description = "Verify that a Fieldset can be deleted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133461 CanBeDeleted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		AssertElementPresent(
+			key_formName = "Element Set 1",
+			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
+
+		FormsAdmin.teardownElementSets();
+
+		AssertElementNotPresent(
+			key_formName = "Element Set 1",
+			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
 	}
 
 	@description = "Verify that a user with delete permissions can delete another user's Fieldset"

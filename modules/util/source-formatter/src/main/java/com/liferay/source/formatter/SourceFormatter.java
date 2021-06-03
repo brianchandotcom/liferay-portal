@@ -170,7 +170,17 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
 
-			if (formatCurrentBranch) {
+			int commitCount = ArgumentsUtil.getInteger(
+				arguments, "commit.count", SourceFormatterArgs.COMMIT_COUNT);
+
+			sourceFormatterArgs.setCommitCount(commitCount);
+
+			if (commitCount > 0) {
+				sourceFormatterArgs.addRecentChangesFileNames(
+					GitUtil.getModifiedFileNames(baseDirName, commitCount),
+					baseDirName);
+			}
+			else if (formatCurrentBranch) {
 				sourceFormatterArgs.addRecentChangesFileNames(
 					GitUtil.getCurrentBranchFileNames(
 						baseDirName, gitWorkingBranchName, false),

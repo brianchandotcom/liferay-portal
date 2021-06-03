@@ -12,19 +12,22 @@
  * details.
  */
 
-package com.liferay.digital.signature.configuration;
+package com.liferay.digital.signature.web.internal.configuration;
 
 import com.liferay.configuration.admin.category.ConfigurationCategory;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author José Abelenda
  */
+@Component(service = ConfigurationCategory.class)
 public class DigitalSignatureConfigurationCategory
 	implements ConfigurationCategory {
 
 	@Override
 	public String getCategoryIcon() {
-		return "message-boards";
+		return "signature";
 	}
 
 	@Override

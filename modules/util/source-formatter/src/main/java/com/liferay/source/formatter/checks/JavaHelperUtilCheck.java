@@ -131,7 +131,9 @@ public class JavaHelperUtilCheck extends BaseJavaTermCheck {
 			return false;
 		}
 
-		if (javaTerm.hasAnnotation("Activate", "Deactivate", "Reference")) {
+		if (javaTerm.hasAnnotation(
+				"Activate", "Deactivate", "Modified", "Reference")) {
+
 			return true;
 		}
 

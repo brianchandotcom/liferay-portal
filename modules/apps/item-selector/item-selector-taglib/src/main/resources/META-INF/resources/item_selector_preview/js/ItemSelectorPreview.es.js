@@ -22,6 +22,8 @@ import Carousel from './Carousel.es';
 import Footer from './Footer.es';
 import Header from './Header.es';
 
+import '../../css/item_selector_preview.scss';
+
 const KEY_CODE = {
 	ESC: 27,
 	LEFT: 37,

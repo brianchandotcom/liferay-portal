@@ -1,12 +1,8 @@
 @import 'atlas-variables';
 
-$footerBackgroundColor: $secondary-d2;
-$fullscreenBackgroundColor: $dark;
-$infoPanelSidebarDDColor: $secondary-l1;
-
 .item-selector-preview {
 	&.fullscreen {
-		background-color: $fullscreenBackgroundColor;
+		background-color: $dark;
 		height: 100%;
 		left: 0;
 		position: fixed;
@@ -83,7 +79,7 @@ $infoPanelSidebarDDColor: $secondary-l1;
 			}
 
 			.sidebar-dd {
-				color: $infoPanelSidebarDDColor;
+				color: $secondary-l1;
 			}
 		}
 
@@ -99,7 +95,7 @@ $infoPanelSidebarDDColor: $secondary-l1;
 	}
 
 	.footer {
-		background-color: $footerBackgroundColor;
+		background-color: $secondary-d2;
 		bottom: 0;
 		color: $white;
 		padding: 0.75rem 1.5rem;

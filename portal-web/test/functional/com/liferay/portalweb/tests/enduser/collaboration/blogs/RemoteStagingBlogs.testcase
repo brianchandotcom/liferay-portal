@@ -56,10 +56,9 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "site-name");
+		Navigator.gotoSitePage(
+			pageName = "Staging Blogs Page",
+			siteName = "Site Name");
 
 		Staging.gotoPublishToLive();
 
@@ -69,10 +68,21 @@ definition {
 
 		AssertConsoleTextNotPresent(value1 = "RuntimeException");
 
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Staging Blogs Page",
-			siteURLKey = "remote-site");
+		User.logoutPG();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:9080",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoSitePage(
+			baseURL = "http://localhost:9080",
+			pageName = "Staging Blogs Page",
+			siteName = "Remote Site");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
 
 		BlogsEntry.viewEntryPG(
 			entryContent = "Blogs Entry Content",

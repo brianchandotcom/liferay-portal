@@ -13,7 +13,7 @@
 	will-change: padding-left, padding-right;
 
 	&__resizer {
-		background-color: $light-l2;
+		background-color: var(--body-bg);
 	}
 
 	&--size {

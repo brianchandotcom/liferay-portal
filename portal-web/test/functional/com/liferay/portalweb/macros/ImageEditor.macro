@@ -8,7 +8,7 @@ definition {
 
 	macro rotateImage {
 		Click(
-			key_text = "reload",
+			key_text = "rotate",
 			locator1 = "Icon#ANY");
 	}
 

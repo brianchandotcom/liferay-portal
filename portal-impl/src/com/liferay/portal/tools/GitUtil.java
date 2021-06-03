@@ -64,6 +64,10 @@ public class GitUtil {
 		return commitMessages;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String getCurrentBranchFileContent(
 			String gitWorkingBranchName, String fileName)
 		throws Exception {
@@ -100,6 +104,32 @@ public class GitUtil {
 		return fileNames;
 	}
 
+	public static String getFileContent(String fileName) throws Exception {
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+				"git show HEAD:" + fileName)) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				sb.append(line);
+
+				sb.append("\n");
+			}
+		}
+
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String getLatestAuthorFileContent(String fileName)
 		throws Exception {
 
@@ -127,6 +157,10 @@ public class GitUtil {
 		return fileNames;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public static String getLocalChangesFileContent(String fileName)
 		throws Exception {
 
@@ -305,31 +339,15 @@ public class GitUtil {
 		return dirNames;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #getFileContent(String)}
+	 */
+	@Deprecated
 	protected static String getFileContent(String commitId, String fileName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
-
-		String gitCommand = StringBundler.concat(
-			"git show ", commitId, ":", fileName);
-
-		try (UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
-				gitCommand)) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				sb.append(line);
-
-				sb.append("\n");
-			}
-		}
-
-		if (sb.length() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
+		return getFileContent(fileName);
 	}
 
 	protected static String getFileName(String fileName, int gitLevel) {

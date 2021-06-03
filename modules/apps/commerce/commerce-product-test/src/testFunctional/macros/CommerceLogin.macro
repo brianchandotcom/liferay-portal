@@ -56,7 +56,7 @@ definition {
 
 	macro loginPG {
 		if ("${samlEnabled}" != "true") {
-			User.loginLocalizationPG(localization = "${localization}");
+			User._clickSignInLink(localization = "${localization}");
 		}
 
 		if ((isSet(authenticationMethod)) && ("${authenticationMethod}" == "By Screen Name")) {
@@ -78,14 +78,7 @@ definition {
 			Check(locator1 = "Checkbox#REMEMBER_ME");
 		}
 
-		if (isSet(localization)) {
-			var localizedSignIn = User._signInLocalization(localization = "${localization}");
-
-			Button.click(button = "${localizedSignIn}");
-		}
-		else {
-			Button.click(button = "Sign In");
-		}
+		User._clickSignInButton(localization = "${localization}");
 
 		if (IsElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED")) {
 			echo("Sign in failed due to empty required field. Retrying...");

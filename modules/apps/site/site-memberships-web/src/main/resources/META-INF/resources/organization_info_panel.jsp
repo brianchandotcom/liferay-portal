@@ -33,18 +33,17 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="num-of-organizations" /></h5>
 
-			<%
-			int organizationsCount = OrganizationLocalServiceUtil.searchCount(
-				company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, StringPool.BLANK, StringPool.BLANK, null, null,
-				LinkedHashMapBuilder.<String, Object>put(
-					"groupOrganization", Long.valueOf(siteMembershipsDisplayContext.getGroupId())
-				).put(
-					"organizationsGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId())
-				).build());
-			%>
-
 			<p>
-				<%= organizationsCount %>
+				<%=
+				OrganizationLocalServiceUtil.searchCount(
+					company.getCompanyId(), OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, StringPool.BLANK, StringPool.BLANK, null, null,
+					LinkedHashMapBuilder.<String, Object>put(
+						"groupOrganization", Long.valueOf(siteMembershipsDisplayContext.getGroupId())
+					).put(
+						"organizationsGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId())
+					).build())
+				%>
+
 			</p>
 		</div>
 	</c:when>

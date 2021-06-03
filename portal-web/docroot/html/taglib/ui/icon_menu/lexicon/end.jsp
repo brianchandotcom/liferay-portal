@@ -16,10 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%
-String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id"));
-%>
-
 		</ul>
 	<c:if test='<%= GetterUtil.getBoolean(request.getAttribute("liferay-ui:icon-menu:scroll")) %>'>
 		</div>
@@ -27,5 +23,5 @@ String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-m
 </div>
 
 <aui:script use="liferay-menu">
-	Liferay.Menu.handleFocus('#<%= id %>menu');
+	Liferay.Menu.handleFocus('#<%= GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id")) %>menu');
 </aui:script>

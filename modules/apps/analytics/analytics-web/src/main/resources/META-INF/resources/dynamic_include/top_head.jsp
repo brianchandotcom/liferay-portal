@@ -16,12 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String analyticsClientChannelId = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CHANNEL_ID);
-String analyticsClientConfig = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG);
-String analyticsClientGroupIds = (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS);
-%>
-
 <meta content="<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_READABLE_CONTENT) %>" name="data-analytics-readable-content" />
 
 <script data-senna-track="temporary" type="text/javascript">
@@ -29,8 +23,9 @@ String analyticsClientGroupIds = (String)request.getAttribute(AnalyticsWebKeys.A
 		<liferay-util:dynamic-include key="/dynamic_include/top_head.jsp#analytics" />
 	};
 
-	var analyticsClientChannelId = '<%= analyticsClientChannelId %>';
-	var analyticsClientGroupIds = <%= analyticsClientGroupIds %>;
+	var analyticsClientChannelId =
+		'<%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CHANNEL_ID) %>';
+	var analyticsClientGroupIds = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_GROUP_IDS) %>;
 </script>
 
 <script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
@@ -44,7 +39,7 @@ String analyticsClientGroupIds = (String)request.getAttribute(AnalyticsWebKeys.A
 		a.onload = c;
 		m.parentNode.insertBefore(a, m);
 	})('https://analytics-js-cdn.liferay.com', () => {
-		var config = <%= analyticsClientConfig %>;
+		var config = <%= (String)request.getAttribute(AnalyticsWebKeys.ANALYTICS_CLIENT_CONFIG) %>;
 
 		var dxpMiddleware = function (request) {
 			request.context.canonicalUrl = themeDisplay.getCanonicalURL();

@@ -86,9 +86,6 @@
 				int addressesIndex = addressesIndexes[i];
 
 				Address address = addresses.get(i);
-
-				long countryId = ParamUtil.getLong(request, "addressCountryId" + addressesIndex, address.getCountryId());
-				long regionId = ParamUtil.getLong(request, "addressRegionId" + addressesIndex, address.getRegionId());
 			%>
 
 				<aui:model-context bean="<%= address %>" model="<%= Address.class %>" />
@@ -107,14 +104,16 @@
 							selectDesc: 'nameCurrentValue',
 							selectId: 'countryId',
 							selectSort: '<%= true %>',
-							selectVal: '<%= countryId %>',
+							selectVal:
+								'<%= ParamUtil.getLong(request, "addressCountryId" + addressesIndex, address.getCountryId()) %>',
 						},
 						{
 							select: '<portlet:namespace />addressRegionId<%= addressesIndex %>',
 							selectData: Liferay.Address.getRegions,
 							selectDesc: 'name',
 							selectId: 'regionId',
-							selectVal: '<%= regionId %>',
+							selectVal:
+								'<%= ParamUtil.getLong(request, "addressRegionId" + addressesIndex, address.getRegionId()) %>',
 						},
 					]);
 				</script>

@@ -20,9 +20,6 @@
 CommerceVirtualOrderItemContentDisplayContext commerceVirtualOrderItemContentDisplayContext = (CommerceVirtualOrderItemContentDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 JournalArticleDisplay articleDisplay = commerceVirtualOrderItemContentDisplayContext.getArticleDisplay();
-
-long commerceVirtualOrderItemId = ParamUtil.getLong(request, "commerceVirtualOrderItemId");
-String termsOfUseContent = ParamUtil.getString(request, "termsOfUseContent");
 %>
 
 <div class="journal-article-preview p-3">
@@ -31,7 +28,7 @@ String termsOfUseContent = ParamUtil.getString(request, "termsOfUseContent");
 			<%= articleDisplay.getContent() %>
 		</c:when>
 		<c:otherwise>
-			<%= termsOfUseContent %>
+			<%= ParamUtil.getString(request, "termsOfUseContent") %>
 		</c:otherwise>
 	</c:choose>
 
@@ -46,7 +43,7 @@ String termsOfUseContent = ParamUtil.getString(request, "termsOfUseContent");
 	function <portlet:namespace />agreeTermsOfUse() {
 		Liferay.Util.getOpener().<portlet:namespace />downloadCommerceVirtualOrderItem(
 			'<portlet:namespace />viewTermsOfUseDialog',
-			'<%= commerceVirtualOrderItemId %>'
+			'<%= ParamUtil.getLong(request, "commerceVirtualOrderItemId") %>'
 		);
 	}
 

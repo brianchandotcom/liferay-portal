@@ -233,12 +233,10 @@ if (addresses.isEmpty()) {
 			<%
 			for (Address address : addresses) {
 				ListType listType = address.getType();
-
-				String mailingName = LanguageUtil.get(request, listType.getName());
 			%>
 
 				<li class="<%= address.isPrimary() ? "primary" : "" %>">
-					<span class="property-type"><%= mailingName %></span><br />
+					<span class="property-type"><%= LanguageUtil.get(request, listType.getName()) %></span><br />
 
 					<liferay-text-localizer:address-display
 						address="<%= address %>"

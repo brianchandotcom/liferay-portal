@@ -24,9 +24,7 @@ String message = (String)PortalMessages.get(request, PortalMessages.KEY_MESSAGE)
 <c:if test="<%= Validator.isNotNull(jspPath) || Validator.isNotNull(message) %>">
 
 	<%
-	String cssClass = GetterUtil.getString(PortalMessages.get(request, PortalMessages.KEY_CSS_CLASS), "alert-info");
 	String portletId = (String)PortalMessages.get(request, PortalMessages.KEY_PORTLET_ID);
-	int timeout = GetterUtil.getInteger(PortalMessages.get(request, PortalMessages.KEY_TIMEOUT), 10000);
 	%>
 
 	<liferay-util:buffer
@@ -49,8 +47,8 @@ String message = (String)PortalMessages.get(request, PortalMessages.KEY_MESSAGE)
 				portletId: <%= portletId %>
 			},
 			toastProps: {
-				autoClose: <%= timeout %>,
-				className: '<%= cssClass %>',
+				autoClose: <%= GetterUtil.getInteger(PortalMessages.get(request, PortalMessages.KEY_TIMEOUT), 10000) %>,
+				className: '<%= GetterUtil.getString(PortalMessages.get(request, PortalMessages.KEY_CSS_CLASS), "alert-info") %>',
 				style: {top: 0},
 			}
 		});

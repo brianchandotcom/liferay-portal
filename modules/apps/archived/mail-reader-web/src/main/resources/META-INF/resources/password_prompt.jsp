@@ -18,7 +18,6 @@
 
 <%
 long accountId = ParamUtil.getLong(request, "accountId");
-long inboxFolderId = ParamUtil.getLong(request, "inboxFolderId");
 %>
 
 <div class="mail-status"></div>
@@ -67,7 +66,7 @@ long inboxFolderId = ParamUtil.getLong(request, "inboxFolderId");
 					if (responseData.status == 'success') {
 						Liferay.Mail.loadAccount(
 							<%= accountId %>,
-							<%= inboxFolderId %>
+							<%= ParamUtil.getLong(request, "inboxFolderId") %>
 						);
 					}
 				},

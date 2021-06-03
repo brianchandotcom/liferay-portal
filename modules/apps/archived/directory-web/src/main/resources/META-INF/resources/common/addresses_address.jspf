@@ -16,11 +16,9 @@
 
 <%
 ListType addressListType = address.getType();
-
-String mailingName = LanguageUtil.get(request, addressListType.getName());
 %>
 
-<em class="mailing-name"><%= mailingName %></em><br />
+<em class="mailing-name"><%= LanguageUtil.get(request, addressListType.getName()) %></em><br />
 
 <liferay-text-localizer:address-display
 	address="<%= address %>"

@@ -19,7 +19,6 @@
 <%
 User selectedUser = PortalUtil.getSelectedUser(request);
 
-String mfaUserAccountLabel = GetterUtil.getString(request.getAttribute(MFAWebKeys.MFA_USER_ACCOUNT_LABEL));
 SetupMFAChecker setupMFAChecker = (SetupMFAChecker)request.getAttribute(SetupMFAChecker.class.getName());
 %>
 
@@ -34,7 +33,7 @@ SetupMFAChecker setupMFAChecker = (SetupMFAChecker)request.getAttribute(SetupMFA
 
 	<div class="sheet sheet-lg">
 		<div class="sheet-header">
-			<h1 class="sheet-title"><%= mfaUserAccountLabel %></h1>
+			<h1 class="sheet-title"><%= GetterUtil.getString(request.getAttribute(MFAWebKeys.MFA_USER_ACCOUNT_LABEL)) %></h1>
 		</div>
 
 		<liferay-ui:error key="setupUserAccountFailed" message="user-account-setup-failed" />

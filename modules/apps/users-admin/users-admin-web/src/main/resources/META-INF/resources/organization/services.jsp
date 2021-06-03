@@ -138,13 +138,12 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 				<%
 				for (int j = 0; j < days.length; j++) {
 					int close = closeArray[j];
-					String day = days[j];
 					int open = openArray[j];
 					String paramPrefix = paramPrefixes[j];
 				%>
 
 					<div class="org-labor-entry">
-						<h5 class="org-labor-entry-title"><%= day %></h5>
+						<h5 class="org-labor-entry-title"><%= days[j] %></h5>
 
 						<aui:select label="Open" name='<%= paramPrefix + "Open" + orgLaborsIndex %>'>
 							<aui:option value="-1" />

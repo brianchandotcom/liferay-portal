@@ -52,15 +52,13 @@ String range = MapUtil.getString(parameterMap, "range");
 			DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfigurationId);
 
 			String startDateString = displayFormatDate.format(dateRange.getStartDate());
-
-			String endDateString = displayFormatDate.format(dateRange.getEndDate());
 			%>
 
 			<div><%= LanguageUtil.get(request, "modified-or-created-between") %>:</div>
 
 			<div>
 				<%= startDateString + StringPool.SPACE + LanguageUtil.get(request, "and") %><br />
-				<%= endDateString %>
+				<%= displayFormatDate.format(dateRange.getEndDate()) %>
 			</div>
 		</c:when>
 	</c:choose>

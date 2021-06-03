@@ -333,28 +333,26 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 								url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "printPage_" + id + "();" %>'
 							/>
 
-							<%
-							PortletURL printAssetURL = PortletURLBuilder.createRenderURL(
-								renderResponse
-							).setMVCPath(
-								"/view_content.jsp"
-							).setParameter(
-								"assetEntryId", assetEntry.getEntryId()
-							).setParameter(
-								"languageId", LanguageUtil.getLanguageId(request)
-							).setParameter(
-								"type", assetRendererFactory.getType()
-							).setParameter(
-								"viewMode", Constants.PRINT
-							).setWindowState(
-								LiferayWindowState.POP_UP
-							).build();
-							%>
-
 							<aui:script>
 								function <portlet:namespace />printPage_<%= id %>() {
 									window.open(
-										'<%= printAssetURL %>',
+										'<%=
+											PortletURLBuilder.createRenderURL(
+												renderResponse
+											).setMVCPath(
+												"/view_content.jsp"
+											).setParameter(
+												"assetEntryId", assetEntry.getEntryId()
+											).setParameter(
+												"languageId", LanguageUtil.getLanguageId(request)
+											).setParameter(
+												"type", assetRendererFactory.getType()
+											).setParameter(
+												"viewMode", Constants.PRINT
+											).setWindowState(
+												LiferayWindowState.POP_UP
+											).build()
+										%>',
 										'',
 										'directories=0,height=480,left=80,location=1,menubar=1,resizable=1,scrollbars=yes,status=0,toolbar=0,top=180,width=640'
 									);

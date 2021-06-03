@@ -17,13 +17,12 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-resource:cssClass"));
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-resource:id"));
 String title = (String)request.getAttribute("liferay-ui:input-resource:title");
 String url = (String)request.getAttribute("liferay-ui:input-resource:url");
 %>
 
-<input class="form-control form-text lfr-input-resource <%= cssClass %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> onClick="this.select();" readonly="true" <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> type="text" value="<%= HtmlUtil.escapeAttribute(url) %>" />
+<input class="form-control form-text lfr-input-resource <%= GetterUtil.getString((String)request.getAttribute("liferay-ui:input-resource:cssClass")) %>" <%= Validator.isNotNull(id) ? "id=\"" + namespace + id + "\"" : StringPool.BLANK %> onClick="this.select();" readonly="true" <%= Validator.isNotNull(title) ? "title=\"" + LanguageUtil.get(resourceBundle, title) + "\"" : StringPool.BLANK %> type="text" value="<%= HtmlUtil.escapeAttribute(url) %>" />
 
 <aui:script>
 	var inputField = document.getElementById('<portlet:namespace /><%= id %>');

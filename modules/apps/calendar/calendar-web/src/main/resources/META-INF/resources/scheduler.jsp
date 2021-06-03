@@ -26,9 +26,7 @@ boolean hideDayView = ParamUtil.getBoolean(request, "hideDayView");
 boolean hideMonthView = ParamUtil.getBoolean(request, "hideMonthView");
 boolean hideWeekView = ParamUtil.getBoolean(request, "hideWeekView");
 String permissionsCalendarBookingURL = ParamUtil.getString(request, "permissionsCalendarBookingURL");
-boolean preventPersistence = ParamUtil.getBoolean(request, "preventPersistence");
 boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
-boolean showAddEventBtn = ParamUtil.getBoolean(request, "showAddEventBtn");
 boolean showSchedulerHeader = ParamUtil.getBoolean(request, "showSchedulerHeader", true);
 String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookingURL");
 %>
@@ -168,20 +166,14 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 
 		<%
 		java.util.Calendar nowJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
-
-		int nowYear = nowJCalendar.get(java.util.Calendar.YEAR);
-		int nowMonth = nowJCalendar.get(java.util.Calendar.MONTH);
-		int nowDay = nowJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
-		int nowHour = nowJCalendar.get(java.util.Calendar.HOUR_OF_DAY);
-		int nowMinute = nowJCalendar.get(java.util.Calendar.MINUTE);
 		%>
 
 		currentTime: new Date(
-			<%= nowYear %>,
-			<%= nowMonth %>,
-			<%= nowDay %>,
-			<%= nowHour %>,
-			<%= nowMinute %>
+			<%= nowJCalendar.get(java.util.Calendar.YEAR) %>,
+			<%= nowJCalendar.get(java.util.Calendar.MONTH) %>,
+			<%= nowJCalendar.get(java.util.Calendar.DAY_OF_MONTH) %>,
+			<%= nowJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>,
+			<%= nowJCalendar.get(java.util.Calendar.MINUTE) %>
 		),
 		currentTimeFn: A.bind(remoteServices.getCurrentTime, remoteServices),
 
@@ -189,13 +181,13 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		java.util.Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
 
 		dateJCalendar.setTimeInMillis(date);
-
-		int dateYear = dateJCalendar.get(java.util.Calendar.YEAR);
-		int dateMonth = dateJCalendar.get(java.util.Calendar.MONTH);
-		int dateDay = dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
 		%>
 
-		date: new Date(<%= dateYear %>, <%= dateMonth %>, <%= dateDay %>),
+		date: new Date(
+			<%= dateJCalendar.get(java.util.Calendar.YEAR) %>,
+			<%= dateJCalendar.get(java.util.Calendar.MONTH) %>,
+			<%= dateJCalendar.get(java.util.Calendar.DAY_OF_MONTH) %>
+		),
 
 		<c:if test="<%= !themeDisplay.isSignedIn() || ((defaultCalendar != null) && !CalendarPermission.contains(themeDisplay.getPermissionChecker(), defaultCalendar, CalendarActionKeys.MANAGE_BOOKINGS)) %>">
 			disabled: true,
@@ -209,10 +201,10 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		items: A.Object.values(calendarContainer.get('availableCalendars')),
 		maxDaysDisplayed: <%= maxDaysDisplayed %>,
 		portletNamespace: '<portlet:namespace />',
-		preventPersistence: <%= preventPersistence %>,
+		preventPersistence: <%= ParamUtil.getBoolean(request, "preventPersistence") %>,
 		remoteServices: remoteServices,
 		render: true,
-		showAddEventBtn: <%= showAddEventBtn %>,
+		showAddEventBtn: <%= ParamUtil.getBoolean(request, "showAddEventBtn") %>,
 		showHeader: <%= showSchedulerHeader %>,
 		strings: {
 			agenda: '<liferay-ui:message key="agenda" />',
@@ -225,13 +217,13 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 
 		<%
 		java.util.Calendar todayJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
-
-		int todayYear = todayJCalendar.get(java.util.Calendar.YEAR);
-		int todayMonth = todayJCalendar.get(java.util.Calendar.MONTH);
-		int todayDay = todayJCalendar.get(java.util.Calendar.DAY_OF_MONTH);
 		%>
 
-		todayDate: new Date(<%= todayYear %>, <%= todayMonth %>, <%= todayDay %>),
+		todayDate: new Date(
+			<%= todayJCalendar.get(java.util.Calendar.YEAR) %>,
+			<%= todayJCalendar.get(java.util.Calendar.MONTH) %>,
+			<%= todayJCalendar.get(java.util.Calendar.DAY_OF_MONTH) %>
+		),
 		views: views,
 	});
 

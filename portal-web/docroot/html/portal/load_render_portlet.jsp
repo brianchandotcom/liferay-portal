@@ -25,8 +25,6 @@ portletDisplay.setNamespace(PortalUtil.getPortletNamespace(portlet.getPortletId(
 String url = PortletURLUtil.getRefreshURL(request, themeDisplay, false);
 
 Map<String, String[]> parameters = PortletURLUtil.getRefreshURLParameters(request);
-
-String data = JSONFactoryUtil.looseSerializeDeep(parameters);
 %>
 
 <div class="loading-animation" id="p_p_id<%= portletDisplay.getNamespace() %>">
@@ -38,7 +36,7 @@ String data = JSONFactoryUtil.looseSerializeDeep(parameters);
 
 	Liferay.Portlet.addHTML(
 		{
-			data: <%= data %>,
+			data: <%= JSONFactoryUtil.looseSerializeDeep(parameters) %>,
 			onComplete: function(portlet, portletId) {
 				portlet.refreshURL = '<%= HtmlUtil.escapeJS(url) %>';
 			},

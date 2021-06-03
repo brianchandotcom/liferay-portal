@@ -19,7 +19,6 @@
 <%
 JSONObject samlSloRequestInfoJSONObject = (JSONObject)request.getAttribute("SAML_SLO_REQUEST_INFO");
 
-String entityId = samlSloRequestInfoJSONObject.getString("entityId");
 int status = samlSloRequestInfoJSONObject.getInt("status");
 %>
 
@@ -38,7 +37,7 @@ int status = samlSloRequestInfoJSONObject.getInt("status");
 			<div class="portlet-msg-error">
 				<liferay-ui:message key="single-sign-out-request-failed" />
 
-				<a href="?cmd=logout&entityId=<%= entityId %>">
+				<a href="?cmd=logout&entityId=<%= samlSloRequestInfoJSONObject.getString("entityId") %>">
 					<liferay-ui:message key="retry" />
 				</a>
 			</div>

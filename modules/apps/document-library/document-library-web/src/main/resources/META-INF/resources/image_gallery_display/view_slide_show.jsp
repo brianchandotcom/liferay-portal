@@ -86,11 +86,10 @@ int defaultSpeed = 3000;
 	<%
 	for (int i = 0; i < fileEntries.size(); i++) {
 		FileEntry fileEntry = fileEntries.get(i);
-
-		String largeSrc = DLURLHelperUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK);
 	%>
 
-		<portlet:namespace />imgArray[<%= i %>] = '<%= largeSrc %>';
+		<portlet:namespace />imgArray[<%= i %>] =
+			'<%= DLURLHelperUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK) %>';
 
 	<%
 	}

@@ -20,9 +20,6 @@
 CommerceTaxFixedRateAddressRelsDisplayContext commerceTaxFixedRateAddressRelsDisplayContext = (CommerceTaxFixedRateAddressRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel = commerceTaxFixedRateAddressRelsDisplayContext.getCommerceTaxFixedRateAddressRel();
-
-long countryId = commerceTaxFixedRateAddressRelsDisplayContext.getCountryId();
-long regionId = commerceTaxFixedRateAddressRelsDisplayContext.getRegionId();
 %>
 
 <portlet:actionURL name="/commerce_tax_methods/edit_commerce_tax_fixed_rate_address_rel" var="editCommerceTaxFixedRateAddressRelActionURL" />
@@ -71,7 +68,8 @@ long regionId = commerceTaxFixedRateAddressRelsDisplayContext.getRegionId();
 			selectDesc: 'nameCurrentValue',
 			selectId: 'countryId',
 			selectSort: '<%= true %>',
-			selectVal: '<%= countryId %>',
+			selectVal:
+				'<%= commerceTaxFixedRateAddressRelsDisplayContext.getCountryId() %>',
 		},
 		{
 			select: '<portlet:namespace />regionId',
@@ -87,7 +85,8 @@ long regionId = commerceTaxFixedRateAddressRelsDisplayContext.getRegionId();
 			},
 			selectDesc: 'name',
 			selectId: 'regionId',
-			selectVal: '<%= regionId %>',
+			selectVal:
+				'<%= commerceTaxFixedRateAddressRelsDisplayContext.getRegionId() %>',
 		},
 	]);
 </aui:script>

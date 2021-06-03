@@ -21,7 +21,6 @@ String alertMessage = (String)request.getAttribute("liferay-ui:error:alertMessag
 String alertIcon = (String)request.getAttribute("liferay-ui:error:alertIcon");
 String alertStyle = (String)request.getAttribute("liferay-ui:error:alertStyle");
 String alertTitle = (String)request.getAttribute("liferay-ui:error:alertTitle");
-String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 %>
 
 <c:choose>
@@ -42,7 +41,7 @@ String rowBreak = (String)request.getAttribute("liferay-ui:error:rowBreak");
 			<strong class="lead"><%= alertTitle %></strong><%= alertMessage %>
 		</div>
 
-		<%= rowBreak %>
+		<%= (String)request.getAttribute("liferay-ui:error:rowBreak") %>
 	</c:when>
 	<c:otherwise>
 		<aui:script>

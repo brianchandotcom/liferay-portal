@@ -50,7 +50,6 @@
 	};
 
 	<%
-	String dialogMessage = (String)request.getAttribute("dialogMessage");
 	String oneDriveBackgroundTaskStatusURL = (String)request.getAttribute("oneDriveBackgroundTaskStatusURL");
 	%>
 
@@ -58,7 +57,8 @@
 		Liferay.componentReady('<portlet:namespace />DocumentLibraryOpener').then(
 			(openerOnedrive) => {
 				openerOnedrive.open({
-					dialogMessage: '<%= dialogMessage %>',
+					dialogMessage:
+						'<%= (String)request.getAttribute("dialogMessage") %>',
 					statusURL: '<%= oneDriveBackgroundTaskStatusURL %>',
 				});
 			}

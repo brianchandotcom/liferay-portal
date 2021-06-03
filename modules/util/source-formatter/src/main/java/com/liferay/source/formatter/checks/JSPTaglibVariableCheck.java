@@ -89,7 +89,7 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 
 				String variableName = variableTypeAndName.substring(y + 1);
 
-				if (!nextTags.contains("=\"<%= " + variableName + " %>\"")) {
+				if (!nextTags.contains("<%= " + variableName + " %>")) {
 					continue;
 				}
 
@@ -99,7 +99,7 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 
 				if (hasVariableReference(
 						s, taglibValue,
-						s.lastIndexOf("=\"<%= " + variableName + " %>\""))) {
+						s.lastIndexOf("<%= " + variableName + " %>"))) {
 
 					continue;
 				}
@@ -111,7 +111,7 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 
 					if (!variableName.startsWith("taglib") &&
 						(_getVariableCount(content, variableName) == 2) &&
-						nextTags.contains("=\"<%= " + variableName + " %>\"")) {
+						nextTags.contains("<%= " + variableName + " %>")) {
 
 						addMessage(
 							fileName,
@@ -136,15 +136,15 @@ public class JSPTaglibVariableCheck extends BaseJSPTermsCheck {
 					}
 
 					newContent = StringUtil.replaceFirst(
-						content, "<%= " + variableName + " %>\"",
+						content, "<%= " + variableName + " %>",
 						StringBundler.concat(
-							"<%= new ", typeName, " ", taglibValue, " %>\""),
+							"<%= new ", typeName, " ", taglibValue, " %>"),
 						matcher.end());
 				}
 				else {
 					newContent = StringUtil.replaceFirst(
-						content, "<%= " + variableName + " %>\"",
-						"<%= " + taglibValue + " %>\"", matcher.end());
+						content, "<%= " + variableName + " %>",
+						"<%= " + taglibValue + " %>", matcher.end());
 				}
 
 				y = newContent.indexOf(variableDefinition, matcher.start());

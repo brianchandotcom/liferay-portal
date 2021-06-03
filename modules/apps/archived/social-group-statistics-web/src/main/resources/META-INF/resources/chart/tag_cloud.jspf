@@ -38,10 +38,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 	<%
 	for (AssetTag assetTag : assetTags) {
-		int popularity = (int)(1 + ((maxValue - (maxValue - (assetTag.getAssetCount() - minValue))) * multiplier));
 	%>
 
-		<li class="tag-popularity-<%= popularity %>">
+		<li class="tag-popularity-<%= (int)(1 + ((maxValue - (maxValue - (assetTag.getAssetCount() - minValue))) * multiplier)) %>">
 			<span>
 				<c:choose>
 					<c:when test="<%= assetTagName.equals(assetTag.getName()) %>">

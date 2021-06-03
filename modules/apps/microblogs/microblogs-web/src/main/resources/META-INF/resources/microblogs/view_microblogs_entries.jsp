@@ -79,14 +79,9 @@ PortletURL microblogsEntriesURL = (PortletURL)request.getAttribute(WebKeys.MICRO
 				</div>
 
 				<div class="content">
-
-					<%
-					String content = HtmlUtil.replaceNewLine(MicroblogsWebUtil.getProcessedContent(microblogsEntry, ServiceContextFactory.getInstance(request)));
-					%>
-
 					<span>
 						<p>
-							<%= content %>
+							<%= HtmlUtil.replaceNewLine(MicroblogsWebUtil.getProcessedContent(microblogsEntry, ServiceContextFactory.getInstance(request))) %>
 						</p>
 					</span>
 				</div>

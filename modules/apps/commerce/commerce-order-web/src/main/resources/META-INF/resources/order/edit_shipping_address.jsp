@@ -28,9 +28,6 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 if ((commerceOrder != null) && Validator.isNull(cmd)) {
 	shippingAddress = commerceOrder.getShippingAddress();
 }
-
-long countryId = BeanParamUtil.getLong(shippingAddress, request, "countryId");
-long regionId = BeanParamUtil.getLong(shippingAddress, request, "regionId");
 %>
 
 <portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderShippingAddressActionURL" />
@@ -100,7 +97,8 @@ long regionId = BeanParamUtil.getLong(shippingAddress, request, "regionId");
 			selectId: 'countryId',
 			selectNullable: <%= false %>,
 			selectSort: '<%= true %>',
-			selectVal: '<%= countryId %>',
+			selectVal:
+				'<%= BeanParamUtil.getLong(shippingAddress, request, "countryId") %>',
 		},
 		{
 			select: '<portlet:namespace />regionId',
@@ -134,7 +132,8 @@ long regionId = BeanParamUtil.getLong(shippingAddress, request, "regionId");
 			selectDesc: 'name',
 			selectId: 'regionId',
 			selectNullable: <%= false %>,
-			selectVal: '<%= regionId %>',
+			selectVal:
+				'<%= BeanParamUtil.getLong(shippingAddress, request, "regionId") %>',
 		},
 	]);
 </aui:script>

@@ -317,14 +317,94 @@ definition {
 	}
 
 	@description = "Verify that a Grid field's Label, Help Text and Options can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test GridFieldCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133504 GridFieldCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option One",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option Two",
+			rowNumber = "1");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Cuadrícula");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Texto de Ayuda");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Opción Uno",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Opción Dos",
+			rowNumber = "1");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Grid");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Grid",
+			fieldValue = "Test Help Text");
+
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			optionName = "Option One",
+			rowNumber = "1");
+
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Grid",
+			optionName = "Option Two",
+			rowNumber = "1");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Cuadrícula");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Cuadrícula",
+			fieldValue = "Texto de Ayuda");
+
+		FormFields.viewOptionRowName(
+			fieldTitle = "Cuadrícula",
+			optionName = "Opción Uno",
+			rowNumber = "1");
+
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Cuadrícula",
+			optionName = "Opción Dos",
+			rowNumber = "1");
 	}
 
 	@description = "Verify that an Image field's Label and Help Text can be translated"

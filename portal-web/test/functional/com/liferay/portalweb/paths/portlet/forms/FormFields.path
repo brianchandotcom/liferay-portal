@@ -287,6 +287,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GRID_OPTIONS_OPTION_ROW_NAME</td>
+	<td>//legend[text()='${key_fieldName}']/following-sibling::div[1]//..//tr[${key_rowNumber}]/td[contains(.,'${key_optionName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GRID_OPTIONS_OPTION_COL_NAME</td>
+	<td>//legend[text()='${key_fieldName}']/following-sibling::div[1]//..//tr[${key_rowNumber}]/th[contains(.,'${key_optionName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

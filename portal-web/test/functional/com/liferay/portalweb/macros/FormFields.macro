@@ -840,6 +840,22 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewOptionColumnsName {
+		AssertElementPresent(
+			key_fieldName = "${fieldTitle}",
+			key_optionName = "${optionName}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#GRID_OPTIONS_OPTION_COL_NAME");
+	}
+
+	macro viewOptionRowName {
+		AssertElementPresent(
+			key_fieldName = "${fieldTitle}",
+			key_optionName = "${optionName}",
+			key_rowNumber = "${rowNumber}",
+			locator1 = "FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
+	}
+
 	macro viewOptionsRowFieldName {
 		AssertTextEquals(
 			key_rowNumber = "${rowNumber}",

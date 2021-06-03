@@ -94,6 +94,8 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 				module="admin/js/App.es"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
+						"availableLanguageIds", ddmFormAdminDisplayContext.getAvailableLanguageIdsJSONArray()
+					).put(
 						"context", formBuilderContextJSONObject
 					).put(
 						"dataProviderInstanceParameterSettingsURL", dataProviderInstanceParameterSettingsURL

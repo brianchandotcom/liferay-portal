@@ -105,7 +105,6 @@ const normalizePages = (pages) => {
 export const initState = (
 	{
 		initialSuccessPageSettings,
-		localizedName,
 		pages: initialPages,
 		paginationMode: initialPaginationMode,
 		rules: initialRules,
@@ -149,8 +148,6 @@ export const initState = (
 	};
 
 	return {
-		availableLanguageIds: Object.keys(localizedName),
-		localizedName,
 		pages: [
 
 			// Adds new properties to pages for rendering and provides

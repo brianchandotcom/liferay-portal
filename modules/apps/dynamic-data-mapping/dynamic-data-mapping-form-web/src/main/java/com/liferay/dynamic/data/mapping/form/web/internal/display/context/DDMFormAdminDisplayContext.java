@@ -232,6 +232,17 @@ public class DDMFormAdminDisplayContext {
 			getDDMFormInstanceRecordWriterExtensions();
 	}
 
+	public JSONArray getAvailableLanguageIdsJSONArray() {
+		JSONArray availableLanguageIdsJSONArray = jsonFactory.createJSONArray();
+
+		for (Locale availableLocale : getAvailableLocales()) {
+			availableLanguageIdsJSONArray.put(
+				LocaleUtil.toLanguageId(availableLocale));
+		}
+
+		return availableLanguageIdsJSONArray;
+	}
+
 	public Locale[] getAvailableLocales() {
 		Locale[] availableLocales = getFormBuilderContextAvailableLocales();
 

@@ -411,6 +411,21 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_M_T_H_NotS() throws Exception {
+		_persistence.countByG_M_T_H_NotS(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "",
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt());
+
+		_persistence.countByG_M_T_H_NotS(
+			0L, RandomTestUtil.randomBoolean(), "null",
+			RandomTestUtil.randomBoolean(), 0);
+
+		_persistence.countByG_M_T_H_NotS(
+			0L, RandomTestUtil.randomBoolean(), (String)null,
+			RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFolder newDLFolder = addDLFolder();
 

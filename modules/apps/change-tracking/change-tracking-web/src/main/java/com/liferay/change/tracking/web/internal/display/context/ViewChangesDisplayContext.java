@@ -747,6 +747,7 @@ public class ViewChangesDisplayContext {
 		throws PortalException {
 
 		Map<Serializable, T> baseModelMap = null;
+		Map<Serializable, T> ctModelMap = null;
 
 		Map<Serializable, CTEntry> ctEntryMap = new HashMap<>();
 
@@ -833,8 +834,24 @@ public class ViewChangesDisplayContext {
 					_ctDisplayRendererRegistry.getCTSQLMode(
 						ctCollectionId, ctEntry);
 
-				T model = _ctDisplayRendererRegistry.fetchCTModel(
-					ctCollectionId, ctSQLMode, modelClassNameId, classPK);
+				T model = null;
+
+				if ((ctCollectionId == _ctCollection.getCtCollectionId()) &&
+					(ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
+
+					if (ctModelMap == null) {
+						ctModelMap = _ctDisplayRendererRegistry.fetchCTModelMap(
+							_ctCollection.getCtCollectionId(),
+							CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+							modelClassNameId, classPKs);
+					}
+
+					model = ctModelMap.get(classPK);
+				}
+				else {
+					model = _ctDisplayRendererRegistry.fetchCTModel(
+						ctCollectionId, ctSQLMode, modelClassNameId, classPK);
+				}
 
 				if (model == null) {
 					if ((ctEntry.getChangeType() !=

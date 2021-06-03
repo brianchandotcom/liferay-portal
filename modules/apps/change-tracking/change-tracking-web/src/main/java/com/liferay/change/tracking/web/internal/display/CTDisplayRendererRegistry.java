@@ -41,8 +41,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -87,6 +91,29 @@ public class CTDisplayRendererRegistry {
 			CTConstants.CT_COLLECTION_ID_PRODUCTION,
 			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, modelClassNameId,
 			modelClassPK);
+	}
+
+	public <T extends BaseModel<T>> Map<Serializable, T> fetchCTModelMap(
+		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
+		long modelClassNameId, Set<Long> primaryKeys) {
+
+		CTService<?> ctService = _ctServiceServiceTrackerMap.getService(
+			modelClassNameId);
+
+		if (ctService == null) {
+			return null;
+		}
+
+		try (SafeCloseable safeCloseable1 =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId);
+			SafeCloseable safeCloseable2 =
+				CTSQLModeThreadLocal.setCTSQLModeWithSafeCloseable(ctSQLMode)) {
+
+			return (Map<Serializable, T>)ctService.updateWithUnsafeFunction(
+				ctPersistence -> ctPersistence.fetchByPrimaryKeys(
+					(Set)primaryKeys));
+		}
 	}
 
 	public long getCtCollectionId(CTCollection ctCollection, CTEntry ctEntry)

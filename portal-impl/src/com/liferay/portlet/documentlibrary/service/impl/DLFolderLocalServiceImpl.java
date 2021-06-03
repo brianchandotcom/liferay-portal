@@ -729,10 +729,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					long previousId, long companyId, long parentPrimaryKey,
 					int size) {
 
-					return dlFolderPersistence.findByF_C_P_NotS(
+					return dlFolderPersistence.findByF_C_P(
 						previousId, companyId, parentPrimaryKey,
-						WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
-						size, new FolderIdComparator(true));
+						QueryUtil.ALL_POS, size, new FolderIdComparator(true));
 				}
 
 				@Override

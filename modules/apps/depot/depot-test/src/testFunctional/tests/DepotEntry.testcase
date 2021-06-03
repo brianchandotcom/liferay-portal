@@ -32,7 +32,7 @@ definition {
 
 	@description = "This ensures that a depot can be accessed when the Applications Menu is disabled at the system level."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanAccessWithDisabledAppsMenuAtSystemScope {
 		property test.name.skip.portal.instance = "DepotEntry#AccessWithDisabledAppsMenuAtSystemScope";
 
@@ -57,7 +57,7 @@ definition {
 
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotAddDuplicateWithEscapeCharacters {
 		DepotNavigator.openDepotAdmin();
 
@@ -80,7 +80,7 @@ definition {
 
 	@description = "This ensures that users cannot create the same name as another site name."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotAddNameThatDuplicatesSite {
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -97,7 +97,7 @@ definition {
 
 	@description = "This ensures that users cannot create the same name as another translated repository name."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test CanNotAddNameThatDuplicatesTranslation {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -127,7 +127,7 @@ definition {
 
 	@description = "This ensures that users cannot create a site with the same name as an existing depot."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotAddSiteThatDuplicatesName {
 		JSONDepot.addDepot(
 			depotDescription = "This depot will duplicate a site name",
@@ -153,7 +153,7 @@ definition {
 
 	@description = "This ensures that users cannot edit repository name same as another repository name."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test CanNotRenameToDuplicate {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -177,7 +177,7 @@ definition {
 
 	@description = "This ensures that a depot with a folder can be deleted."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test DeleteDepotWithFolder {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -197,7 +197,7 @@ definition {
 
 	@description = "This ensures that a depot with multiple files can be deleted."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test DeleteDepotWithMultipleFiles {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -216,7 +216,8 @@ definition {
 
 	@description = "This ensures that a depot can be deleted in the list view."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
+	@uitest
 	test DeleteInListView {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -233,7 +234,8 @@ definition {
 
 	@description = "This ensures that a depot can be deleted in the table view."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
+	@uitest
 	test DeleteInTableView {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -250,7 +252,7 @@ definition {
 
 	@description = "This ensures that a depot can be deleted when the Applications Menu is disabled at the instance level."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test DeleteWithDisabledAppsMenuAtInstanceScope {
 		PortalSettings.disableApplicationsMenu();
 
@@ -277,7 +279,7 @@ definition {
 
 	@description = "This ensures that a user can deselect depots and delete the reselected ones in cards view."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test DeselectAndDeleteInCardsView {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
 			JSONDepot.addDepot(
@@ -316,7 +318,7 @@ definition {
 
 	@description = "This ensures that a user can deselect depots and delete the reselected ones in list view."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test DeselectAndDeleteInListView {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
 			JSONDepot.addDepot(
@@ -359,7 +361,7 @@ definition {
 
 	@description = "This ensures that a user can deselect depots and delete the reselected ones in table view."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test DeselectAndDeleteInTableView {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
 			JSONDepot.addDepot(
@@ -402,7 +404,8 @@ definition {
 
 	@description = "This ensures that a depot can be edited in the list view."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
+	@uitest
 	test EditInListView {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -435,7 +438,8 @@ definition {
 
 	@description = "This ensures that a depot can be edited in the table view."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
+	@uitest
 	test EditInTableView {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
@@ -468,7 +472,7 @@ definition {
 
 	@description = "This ensures that a depot's description can be searched."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test SearchForDepotDescription {
 		JSONDepot.addDepot(
 			depotDescription = "Description 1",
@@ -501,7 +505,7 @@ definition {
 
 	@description = "This ensures that a depot's title can be searched."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test SearchForDepotTitle {
 		for (var depotName : list "Depot 1,Depot 2,Depot 3") {
 			JSONDepot.addDepot(
@@ -530,7 +534,7 @@ definition {
 
 	@description = "This ensures that all depots can be deleted when the user selects all."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test SelectAllAndDelete {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
 			JSONDepot.addDepot(
@@ -549,7 +553,7 @@ definition {
 
 	@description = "This ensures that all depots can be deleted in the list view when the user selects all."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test SelectAllAndDeleteInListView {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
 			JSONDepot.addDepot(
@@ -570,7 +574,7 @@ definition {
 
 	@description = "This ensures that all depots can be deleted in the table view when the user selects all."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test SelectAllAndDeleteInTableView {
 		for (var depotName : list "Test Depot Name 1,Test Depot Name 2,Test Depot Name 3") {
 			JSONDepot.addDepot(
@@ -591,7 +595,7 @@ definition {
 
 	@description = "This ensures that a depot can be added, edited and deleted in the default view."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	@uitest
 	test Smoke {
 		property environment.acceptance = "true";
@@ -630,7 +634,7 @@ definition {
 
 	@description = "This ensures that the number of connected sites can be viewed in the card view."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test ViewConnectionsInCardView {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
 			JSONGroup.addGroup(groupName = "${siteName}");
@@ -683,7 +687,7 @@ definition {
 
 	@description = "This ensures that the number of connected sites can be viewed in the table view."
 	@priority = "5"
-	@refactorneeded
+	@refactordone
 	test ViewConnectionsInTableView {
 		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
 			JSONGroup.addGroup(groupName = "${siteName}");

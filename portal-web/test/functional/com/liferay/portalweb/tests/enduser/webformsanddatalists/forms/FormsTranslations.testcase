@@ -338,14 +338,62 @@ definition {
 	}
 
 	@description = "Verify that a Numeric field's Label, Placeholder Text and Help Text can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test NumericFieldCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133506 NumericFieldCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Test Placeholder Text");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Numérica");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Texto del Marcador");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Texto de Ayuda");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
+
+		Form.viewFormPlaceholderText(fieldPlaceholderText = "Test Placeholder Text");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Numeric",
+			fieldValue = "Test Help Text");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Numérica");
+
+		Form.viewFormPlaceholderText(fieldPlaceholderText = "Texto del Marcador");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Numérica",
+			fieldValue = "Texto de Ayuda");
 	}
 
 	@description = "Verify that a Paragraph field's Label and Body Text can be translated"

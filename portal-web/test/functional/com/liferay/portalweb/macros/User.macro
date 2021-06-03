@@ -3,13 +3,39 @@ definition {
 	var password = "test";
 	var userEmailAddress = "test@liferay.com";
 
-	macro _login {
-		SignIn._signIn(
-			userEmailAddress = "${userEmailAddress}",
-			userPassword = "${userPassword}");
+	macro _clickSignInButton {
+		var localizedSignIn = User._getSignInText(localization = "${localization}");
+
+		Button.click(button = "${localizedSignIn}");
 	}
 
-	macro _signInLocalization {
+	macro _clickSignInLink {
+		var localizedSignIn = User._getSignInText(localization = "${localization}");
+
+		if (IsElementNotPresent(locator1 = "TextInput#EMAIL_ADDRESS")) {
+			if (isSet(localizedSignIn)) {
+				AssertClick(
+					locator1 = "UserBar#USER_SIGN_IN",
+					value1 = "${localizedSignIn}");
+			}
+			else if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
+				AssertClick(
+					locator1 = "UserBar#USER_SIGN_IN",
+					value1 = "Sign In");
+
+				if ("${samlMultiIdPs}" == "true") {
+					Select(
+						key_fieldLabel = "Identity Provider",
+						locator1 = "Select#GENERIC_SELECT_FIELD",
+						value1 = "${idpName}");
+
+					Button.click(button = "Sign In");
+				}
+			}
+		}
+	}
+
+	macro _getSignInText {
 		if ("${localization}" == "JA") {
 			var localizedSignIn = "ログイン";
 		}
@@ -27,6 +53,12 @@ definition {
 		}
 
 		return "${localizedSignIn}";
+	}
+
+	macro _login {
+		SignIn._signIn(
+			userEmailAddress = "${userEmailAddress}",
+			userPassword = "${userPassword}");
 	}
 
 	macro acceptEndUserLicenseAgreement {
@@ -1916,25 +1948,7 @@ definition {
 			Navigator.openURL();
 		}
 
-		if (IsElementNotPresent(locator1 = "TextInput#EMAIL_ADDRESS")) {
-			if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
-				AssertClick(
-					locator1 = "UserBar#USER_SIGN_IN",
-					value1 = "Sign In");
-
-				if ("${samlMultiIdPs}" == "true") {
-					Select(
-						key_fieldLabel = "Identity Provider",
-						locator1 = "Select#GENERIC_SELECT_FIELD",
-						value1 = "${idpName}");
-
-					Button.click(button = "Sign In");
-				}
-			}
-			else if (IsElementPresent(key_text = "Sign In", locator1 = "Button#ANY")) {
-				Button.click(button = "Sign In");
-			}
-		}
+		User._clickSignInLink(localization = "${localization}");
 
 		if ("${authenticationMethod}" == "By Screen Name") {
 			Type(
@@ -1955,7 +1969,7 @@ definition {
 			Check(locator1 = "Checkbox#REMEMBER_ME");
 		}
 
-		Click(locator1 = "Button#SIGN_IN");
+		User._clickSignInButton(localization = "${localization}");
 
 		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
 			SignIn.agreeToTermsOfUse();
@@ -2048,33 +2062,6 @@ definition {
 		User.answerPasswordReminder();
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-	}
-
-	macro loginLocalizationPG {
-		if (isSet(specificURL)) {
-			Navigator.openSpecificURL(url = "${specificURL}");
-		}
-		else {
-			Navigator.openURL();
-		}
-
-		var localizedSignIn = User._signInLocalization(localization = "${localization}");
-
-		AssertClick(
-			locator1 = "UserBar#USER_SIGN_IN",
-			value1 = "${localizedSignIn}");
-
-		Type.typePause(
-			locator1 = "TextInput#EMAIL_ADDRESS",
-			value1 = "${userEmailAddress}");
-
-		Type.typePause(
-			locator1 = "TextInput#PASSWORD",
-			value1 = "${password}");
-
-		Button.click(button = "${localizedSignIn}");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}

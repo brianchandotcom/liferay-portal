@@ -98,6 +98,29 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 </aui:fieldset>
 
 <aui:script use="aui-base">
+	<portlet:namespace />handleUseToMatchUsersSelection = function (radioControl) {
+		if (!radioControl) {
+			return;
+		}
+
+		A.one(
+			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
+		).attr('value', radioControl.attr('data-prefix'));
+		A.all('input[name="<portlet:namespace />userIdentifierExpression"]').attr(
+			'checked',
+			false
+		);
+		A.all(
+			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
+		).attr('checked', true);
+	};
+
+	<portlet:namespace />handleUseToMatchUsersSelection(
+		A.one(
+			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"][checked]'
+		)
+	);
+
 	A.all('input[name="<portlet:namespace />userIdentifierExpression"]').on(
 		'change',
 		(event) => {
@@ -113,17 +136,10 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 	);
 	A.one('#<portlet:namespace />userAttributeMappings').delegate(
 		'change',
-		(event) => {
-			A.one(
-				'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
-			).attr('value', event.currentTarget.attr('data-prefix'));
-			A.all(
-				'input[name="<portlet:namespace />userIdentifierExpression"]'
-			).attr('checked', false);
-			A.all(
-				'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
-			).attr('checked', true);
-		},
+		(event) =>
+			<portlet:namespace />handleUseToMatchUsersSelection(
+				event.currentTarget
+			),
 		'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
 	);
 </aui:script>

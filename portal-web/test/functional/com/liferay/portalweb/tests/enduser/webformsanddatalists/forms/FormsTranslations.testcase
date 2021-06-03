@@ -274,14 +274,88 @@ definition {
 	}
 
 	@description = "Verify that a Single Selection field's Label, Help Text and Options can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SingleSelectionFieldCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133502 SingleSelectionFieldCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Single Selection");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option One");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option Two",
+			rowNumber = "2");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Selección Única");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Texto de Ayuda");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Opción Uno");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Opción Dos",
+			rowNumber = "2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Single Selection");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Single Selection",
+			fieldValue = "Test Help Text");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option One",
+			fieldName = "Single Selection");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option Two",
+			fieldName = "Single Selection");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Selección Única");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Selección Única",
+			fieldValue = "Texto de Ayuda");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Opción Uno",
+			fieldName = "Selección Única");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Opción Dos",
+			fieldName = "Selección Única");
 	}
 
 	@description = "Verify that a Text field's Autocomplete Options can be translated"

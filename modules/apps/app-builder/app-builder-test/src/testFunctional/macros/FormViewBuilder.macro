@@ -1175,4 +1175,10 @@ definition {
 			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
 	}
 
+	macro viewTranslationLanguage {
+		AssertElementPresent(
+			changeAppLanguageTo = "${symbolName}",
+			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
+	}
+
 }

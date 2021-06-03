@@ -1,0 +1,95 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-93410 - Verify that the card displays the unexpected error state"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CardsDisplayErrorState {
+
+		// TODO LRQA-67551 CardsDisplayErrorState pending implementation
+
+	}
+
+	@description = "LPS-93410 - Verify that info icon hover state and tooltip message"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test InfoIconDisplaysMessageOnHover {
+
+		// TODO LRQA-67546 InfoIconDisplaysMessageOnHover pending implementation
+
+	}
+
+	@description = "LPS-93410 - Verify that when there is no SLA defined for the process, all items will be displayed as Untracked"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ItemsWithNoSlaAreDisplayedUntracked {
+
+		// TODO LRQA-67547 ItemsWithNoSlaAreDisplayedUntracked pending implementation
+
+	}
+
+	@description = "LPS-93410 - Verify that the items are classified by Overdue, On Time and Untracked"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PendingItemsCardsAreOverdueOnTimeUntracked {
+
+		// TODO LRQA-67550 PendingItemsCardsAreOverdueOnTimeUntracked pending implementation
+
+	}
+
+	@description = "LPS-93410 - Verify that the percentage is displayed in Overdue, On Time and Untracked cards"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PercentageIsDisplayedInCards {
+
+		// TODO LRQA-67552 PercentageIsDisplayedInCards pending implementation
+
+	}
+
+	@description = "LPS-93410 - Verify that the sum for items Overdue + On Time + Untracked is equal to the Total Pending"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SumOfOverdueOnTimeUntrackedIsEqualToTotalPending {
+
+		// TODO LRQA-67548 SumOfOverdueOnTimeUntrackedIsEqualToTotalPending pending implementation
+
+	}
+
+	@description = "LPS-93410 - Verify that, for numbers greater than 3 digits, use abbreviation standards considering localization specifications"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test UseAbreviationForGreaterThan3DigitsNumber {
+
+		// TODO LRQA-67549 UseAbreviationForGreaterThan3DigitsNumber pending implementation
+
+	}
+
+}

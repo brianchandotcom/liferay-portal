@@ -210,7 +210,7 @@ definition {
 		task ("Assert segment edited") {
 			Segmentation.editSegment(entry = "EditSegmentUserEmailAddressContainsToEquals Test");
 
-			Segmentation.viewSegment(criterionInputOption = "Equals");
+			Segmentation.viewSegment(criterionInputOption = "eq");
 		}
 	}
 

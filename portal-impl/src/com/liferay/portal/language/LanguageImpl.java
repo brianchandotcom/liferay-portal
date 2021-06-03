@@ -31,9 +31,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -2096,6 +2098,15 @@ public class LanguageImpl implements Language, Serializable {
 			Locale defaultLocale = LocaleUtil.getDefault();
 
 			String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+			if (!ArrayUtil.contains(languageIds, defaultLanguageId)) {
+				User defaultUser = UserLocalServiceUtil.fetchDefaultUser(
+					companyId);
+
+				defaultLocale = defaultUser.getLocale();
+
+				defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+			}
 
 			_languageCodeLocalesMap.put(
 				defaultLocale.getLanguage(), defaultLocale);

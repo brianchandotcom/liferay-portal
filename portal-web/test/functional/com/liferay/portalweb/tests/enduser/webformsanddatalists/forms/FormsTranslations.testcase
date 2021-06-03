@@ -131,14 +131,54 @@ definition {
 	}
 
 	@description = "Verify that a Date field's Label and Help Text can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test DateFieldCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133505 DateFieldCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Fecha");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Texto de Ayuda");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Date");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Date",
+			fieldValue = "Test Help Text");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Fecha");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Fecha",
+			fieldValue = "Texto de Ayuda");
 	}
 
 	@description = "Verify that Forms submitted in different languages show the appropriate country flags in View Entries"

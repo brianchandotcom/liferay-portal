@@ -327,6 +327,15 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByF_C_P() throws Exception {
+		_persistence.countByF_C_P(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByF_C_P(0L, 0L, 0L);
+	}
+
+	@Test
 	public void testCountByG_M_P() throws Exception {
 		_persistence.countByG_M_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),

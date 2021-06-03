@@ -2026,6 +2026,193 @@ public class DLFolderUtil {
 	}
 
 	/**
+	 * Returns all the document library folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @return the matching document library folders
+	 */
+	public static List<DLFolder> findByF_C_P(
+		long folderId, long companyId, long parentFolderId) {
+
+		return getPersistence().findByF_C_P(
+			folderId, companyId, parentFolderId);
+	}
+
+	/**
+	 * Returns a range of all the document library folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @return the range of matching document library folders
+	 */
+	public static List<DLFolder> findByF_C_P(
+		long folderId, long companyId, long parentFolderId, int start,
+		int end) {
+
+		return getPersistence().findByF_C_P(
+			folderId, companyId, parentFolderId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching document library folders
+	 */
+	public static List<DLFolder> findByF_C_P(
+		long folderId, long companyId, long parentFolderId, int start, int end,
+		OrderByComparator<DLFolder> orderByComparator) {
+
+		return getPersistence().findByF_C_P(
+			folderId, companyId, parentFolderId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the document library folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DLFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @param start the lower bound of the range of document library folders
+	 * @param end the upper bound of the range of document library folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching document library folders
+	 */
+	public static List<DLFolder> findByF_C_P(
+		long folderId, long companyId, long parentFolderId, int start, int end,
+		OrderByComparator<DLFolder> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByF_C_P(
+			folderId, companyId, parentFolderId, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first document library folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library folder
+	 * @throws NoSuchFolderException if a matching document library folder could not be found
+	 */
+	public static DLFolder findByF_C_P_First(
+			long folderId, long companyId, long parentFolderId,
+			OrderByComparator<DLFolder> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFolderException {
+
+		return getPersistence().findByF_C_P_First(
+			folderId, companyId, parentFolderId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first document library folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	 */
+	public static DLFolder fetchByF_C_P_First(
+		long folderId, long companyId, long parentFolderId,
+		OrderByComparator<DLFolder> orderByComparator) {
+
+		return getPersistence().fetchByF_C_P_First(
+			folderId, companyId, parentFolderId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last document library folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library folder
+	 * @throws NoSuchFolderException if a matching document library folder could not be found
+	 */
+	public static DLFolder findByF_C_P_Last(
+			long folderId, long companyId, long parentFolderId,
+			OrderByComparator<DLFolder> orderByComparator)
+		throws com.liferay.document.library.kernel.exception.
+			NoSuchFolderException {
+
+		return getPersistence().findByF_C_P_Last(
+			folderId, companyId, parentFolderId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last document library folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching document library folder, or <code>null</code> if a matching document library folder could not be found
+	 */
+	public static DLFolder fetchByF_C_P_Last(
+		long folderId, long companyId, long parentFolderId,
+		OrderByComparator<DLFolder> orderByComparator) {
+
+		return getPersistence().fetchByF_C_P_Last(
+			folderId, companyId, parentFolderId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the document library folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; from the database.
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 */
+	public static void removeByF_C_P(
+		long folderId, long companyId, long parentFolderId) {
+
+		getPersistence().removeByF_C_P(folderId, companyId, parentFolderId);
+	}
+
+	/**
+	 * Returns the number of document library folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63;.
+	 *
+	 * @param folderId the folder ID
+	 * @param companyId the company ID
+	 * @param parentFolderId the parent folder ID
+	 * @return the number of matching document library folders
+	 */
+	public static int countByF_C_P(
+		long folderId, long companyId, long parentFolderId) {
+
+		return getPersistence().countByF_C_P(
+			folderId, companyId, parentFolderId);
+	}
+
+	/**
 	 * Returns all the document library folders where groupId = &#63; and mountPoint = &#63; and parentFolderId = &#63;.
 	 *
 	 * @param groupId the group ID

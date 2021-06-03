@@ -432,6 +432,9 @@ public class LayoutStagedModelDataHandler
 
 			exportLayoutPortlets(portletDataContext, layout, layoutElement);
 		}
+		else if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
+			exportLinkedURL(portletDataContext, layout, layoutElement);
+		}
 
 		fixExportTypeSettings(layout);
 
@@ -880,6 +883,12 @@ public class LayoutStagedModelDataHandler
 
 			updateTypeSettings(importedLayout, layout);
 		}
+		else if (Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {
+			importLinkedURL(
+				portletDataContext, layout, importedLayout, layoutElement);
+
+			updateTypeSettings(importedLayout, layout);
+		}
 		else {
 			updateTypeSettings(importedLayout, layout);
 		}
@@ -1142,6 +1151,26 @@ public class LayoutStagedModelDataHandler
 					_log.debug(noSuchLayoutException, noSuchLayoutException);
 				}
 			}
+		}
+	}
+
+	protected void exportLinkedURL(
+			PortletDataContext portletDataContext, Layout layout,
+			Element layoutElement)
+		throws Exception {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String url = GetterUtil.getString(
+			typeSettingsUnicodeProperties.getProperty("url", StringPool.BLANK));
+
+		if (Validator.isNotNull(url)) {
+			layoutElement.addAttribute(
+				"linked-to-url",
+				_defaultTextExportImportContentProcessor.
+					replaceExportContentReferences(
+						portletDataContext, layout, url, true, false));
 		}
 	}
 
@@ -1874,6 +1903,29 @@ public class LayoutStagedModelDataHandler
 				linkedToLayoutUuid));
 	}
 
+	protected void importLinkedURL(
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout, Element layoutElement)
+		throws Exception {
+
+		String linkedToURL = layoutElement.attributeValue("linked-to-url");
+
+		if (Validator.isNull(linkedToURL)) {
+			return;
+		}
+
+		long scopeGroupId = portletDataContext.getScopeGroupId();
+		boolean privateLayout = portletDataContext.isPrivateLayout();
+
+		_exportImportProcessCallbackRegistry.registerCallback(
+			portletDataContext.getExportImportProcessId(),
+			new ImportLinkedURLCallable(
+				scopeGroupId, privateLayout, importedLayout.getUuid(),
+				_defaultTextExportImportContentProcessor.
+					replaceImportContentReferences(
+						portletDataContext, layout, linkedToURL)));
+	}
+
 	protected void importTheme(
 			PortletDataContext portletDataContext, Layout layout,
 			Layout importedLayout)
@@ -2577,6 +2629,10 @@ public class LayoutStagedModelDataHandler
 	private ConfigurationProvider _configurationProvider;
 	private CounterLocalService _counterLocalService;
 
+	@Reference(target = "(model.class.name=java.lang.String)")
+	private ExportImportContentProcessor<String>
+		_defaultTextExportImportContentProcessor;
+
 	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
@@ -2721,6 +2777,46 @@ public class LayoutStagedModelDataHandler
 		private final long _groupId;
 		private final String _layoutUuid;
 		private final String _linkedToLayoutUuid;
+		private final boolean _privateLayout;
+
+	}
+
+	private class ImportLinkedURLCallable implements Callable<Void> {
+
+		public ImportLinkedURLCallable(
+			long groupId, boolean privateLayout, String layoutUuid,
+			String linkedToURL) {
+
+			_groupId = groupId;
+			_privateLayout = privateLayout;
+			_layoutUuid = layoutUuid;
+			_linkedToURL = linkedToURL;
+		}
+
+		@Override
+		public Void call() throws Exception {
+			Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+				_layoutUuid, _groupId, _privateLayout);
+
+			if (layout == null) {
+				return null;
+			}
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				layout.getTypeSettingsProperties();
+
+			typeSettingsUnicodeProperties.setProperty("url", _linkedToURL);
+
+			layout.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+			_layoutLocalService.updateLayout(layout);
+
+			return null;
+		}
+
+		private final long _groupId;
+		private final String _layoutUuid;
+		private final String _linkedToURL;
 		private final boolean _privateLayout;
 
 	}

@@ -34,6 +34,86 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Create a segment with behavior of downloading a document"
+	@priority = "5"
+	test CanCreateWebBehaviorSegmentDownloadingDocument {
+		ACUtils.createDMAndAddToPage();
+
+		Navigator.openURL();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.addSegmentField(segmentField = "Downloaded Document & Media");
+
+		ACSegments.selectDocument(
+			indexField = "1",
+			titleName = "Document_1.jpg");
+
+		ACSegments.setOccurence(occurenceNumber = "4");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#NO_MEMBER_TITLE",
+			value1 = "There are no items found.");
+
+		ACUtils.launchDXP();
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
+		}
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentSubmittingForm {
@@ -183,86 +263,6 @@ definition {
 				siteName = "Site Name");
 
 			Pause(locator1 = "100");
-		}
-
-		Pause(locator1 = "10000");
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
-		ACUtils.launchAC();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		AssertElementPresent(
-			key_userName = "Test Test",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
-	}
-
-	@description = "Create a segment with behavior of downloading a document"
-	@priority = "5"
-	test CanCreateWebBehaviorSegmentDownloadingDocument {
-		ACUtils.createDMAndAddToPage();
-
-		Navigator.openURL();
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
-
-		Pause(locator1 = "10000");
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
-
-		ACNavigation.goToSegments();
-
-		ACSegments.createDynamicSegment();
-
-		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
-
-		ACSegments.addSegmentField(segmentField = "Downloaded Document & Media");
-
-		ACSegments.selectDocument(
-			indexField = "1",
-			titleName = "Document_1.jpg");
-
-		ACSegments.setOccurence(occurenceNumber = "4");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
-
-		ACUtils.launchDXP();
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
 		}
 
 		Pause(locator1 = "10000");

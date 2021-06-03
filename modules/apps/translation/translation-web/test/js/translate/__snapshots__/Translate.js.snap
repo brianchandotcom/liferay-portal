@@ -381,7 +381,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
                 dir="ltr"
               >
                 <p>
-                  mock conent
+                  mock content
                 </p>
               </div>
             </div>
@@ -408,7 +408,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
               <input
                 name="_mock_TranslationPortlet_infoField--content--"
                 type="hidden"
-                value="<p>mock conent</p"
+                value="<p>mock content</p"
               />
             </div>
           </div>
@@ -881,7 +881,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                     dir="ltr"
                   >
                     <p>
-                      mock conent
+                      mock content
                     </p>
                   </div>
                 </div>
@@ -908,7 +908,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
                   <input
                     name="_mock_TranslationPortlet_infoField--content--"
                     type="hidden"
-                    value="<p>mock conent</p"
+                    value="<p>mock content</p"
                   />
                 </div>
               </div>

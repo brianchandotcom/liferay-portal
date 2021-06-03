@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.NoSuchAccountException;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Account;
@@ -100,6 +101,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -790,6 +792,37 @@ public class CompanyLocalServiceTest {
 			CompanyLocalServiceUtil.getCompanyByVirtualHost("0:0:0:0:0:0:0:1"));
 
 		CompanyLocalServiceUtil.deleteCompany(company);
+	}
+
+	@Test
+	public void testUpdateCompanyLocales() throws Exception {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			Company company = addCompany();
+
+			CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
+			String languageId = "ca_ES";
+			TimeZone timeZone = company.getTimeZone();
+
+			CompanyLocalServiceUtil.updateDisplay(
+				company.getCompanyId(), languageId, timeZone.getID());
+
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+			unicodeProperties.put(PropsKeys.LOCALES, languageId);
+
+			CompanyLocalServiceUtil.updatePreferences(
+				company.getCompanyId(), unicodeProperties);
+
+			Assert.assertEquals(
+				Collections.singleton(LocaleUtil.fromLanguageId(languageId)),
+				LanguageUtil.getAvailableLocales());
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyId);
+		}
 	}
 
 	@Test

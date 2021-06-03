@@ -287,6 +287,8 @@ public class DDMFormTemplateContextProcessorTest extends PowerMockito {
 				).put(
 					"required", false
 				).put(
+					"requiredErrorMessage", "Custom required error message."
+				).put(
 					"tooltip", "Tooltip"
 				).put(
 					"type", "text"
@@ -349,6 +351,10 @@ public class DDMFormTemplateContextProcessorTest extends PowerMockito {
 		Assert.assertEquals(
 			_getLocalizedValue("Tooltip"), ddmFormField.getProperty("tooltip"));
 		Assert.assertEquals(false, ddmFormField.getProperty("valid"));
+		Assert.assertEquals(
+			_getLocalizedValue("Custom required error message."),
+			ddmFormField.getRequiredErrorMessage());
+
 		Assert.assertEquals("text", ddmFormField.getType());
 		Assert.assertEquals("", ddmFormField.getVisibilityExpression());
 		Assert.assertEquals(true, ddmFormField.isLocalizable());

@@ -222,6 +222,9 @@ public class DDMFormFieldTemplateContextFactoryTest {
 				"This is a tip.", _LOCALE));
 
 		ddmFormField.setProperty("displayStyle", "singleline");
+		ddmFormField.setRequiredErrorMessage(
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"Custom required error message.", _LOCALE));
 
 		ddmForm.addDDMFormField(ddmFormField);
 
@@ -280,6 +283,9 @@ public class DDMFormFieldTemplateContextFactoryTest {
 			false, MapUtil.getBoolean(fieldTemplateContext, "repeatable"));
 		Assert.assertEquals(
 			true, MapUtil.getBoolean(fieldTemplateContext, "required"));
+		Assert.assertEquals(
+			"Custom required error message.",
+			MapUtil.getString(fieldTemplateContext, "requiredErrorMessage"));
 		Assert.assertEquals(
 			"This is a tip.", MapUtil.getString(fieldTemplateContext, "tip"));
 		Assert.assertEquals(

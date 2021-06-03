@@ -910,14 +910,92 @@ definition {
 	}
 
 	@description = "Verify that a Select From List field's Label, Help Text and Options can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SelectFromListFieldCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133501 SelectFromListFieldCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option One");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option Two",
+			rowNumber = "2");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Seleccionar de la Lista");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Texto de Ayuda");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Opción Uno");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Opción Dos",
+			rowNumber = "2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Select from List");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Select from List",
+			fieldValue = "Test Help Text");
+
+		FormFields.viewSelectOptionsList(
+			fieldName = "Select from List",
+			selectOption = "Option One");
+
+		Refresh();
+
+		FormFields.viewSelectOptionsList(
+			fieldName = "Select from List",
+			selectOption = "Option Two");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Seleccionar de la Lista");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Seleccionar de la Lista",
+			fieldValue = "Texto de Ayuda");
+
+		FormFields.viewSelectOptionsList(
+			fieldName = "Seleccionar de la Lista",
+			selectOption = "Opción Uno");
+
+		Refresh();
+
+		FormFields.viewSelectOptionsList(
+			fieldName = "Seleccionar de la Lista",
+			selectOption = "Opción Dos");
 	}
 
 	@description = "Verify that a Separator field's Label and Help Text can be translated"

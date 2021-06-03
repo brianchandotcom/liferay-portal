@@ -53,24 +53,6 @@
 	}
 }
 
-img.icon {
-	vertical-align: middle;
-}
-
-#layout-grid.dragging .lfr-portlet-column.empty {
-	padding: 20px;
-}
-
-.lfr-js-required {
-	clip: rect(0 0 0 0);
-	position: absolute;
-}
-
-.js .lfr-js-required {
-	clip: rect(auto auto auto auto);
-	position: static;
-}
-
 .alert {
 	&.popup-alert-notice,
 	&.popup-alert-warning,
@@ -99,11 +81,6 @@ img.icon {
 		margin: 0;
 		position: relative;
 	}
-}
-
-.lfr-token-list {
-	clear: both;
-	margin: 1em 0;
 }
 
 .lfr-token {

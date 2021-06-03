@@ -501,6 +501,18 @@ definition {
 			value1 = "${selectOption}");
 	}
 
+	macro removeTranslation {
+		ClickNoError(
+			key_name = "${key_language}",
+			locator1 = "Form#UNSTYLED_BUTTON");
+
+		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
+
+		AssertElementNotPresent(
+			changeAppLanguageTo = "${key_language}",
+			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
+	}
+
 	macro selectAutoCompleteOption {
 		var key_autocompleteOption = "${autocompleteOption}";
 
@@ -609,6 +621,12 @@ definition {
 		FormFields.selectRadioOption(
 			fieldName = "displayStyle",
 			radioOption = "${textFieldLineOption}");
+	}
+
+	macro viewAddedLanguage {
+		AssertElementPresent(
+			changeAppLanguageTo = "${key_language}",
+			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
 	}
 
 	macro viewCaptchaField {

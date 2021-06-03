@@ -109,6 +109,11 @@
     <td></td>
 </tr>
 <tr>
+    <td>UNSTYLED_BUTTON</td>
+    <td>//span[contains(text(),'${key_name}')]/..//button[contains(@class,'btn-unstyled')]</td>
+    <td></td>
+</tr>
+<tr>
     <td>FORM_PAGE</td>
     <td>//ol[contains(@class,'multi-step-nav')]//li/div[contains(.,'${key_formPageName}')]</td>
     <td></td>

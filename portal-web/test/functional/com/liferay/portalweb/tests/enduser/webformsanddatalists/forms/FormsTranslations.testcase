@@ -65,14 +65,38 @@ definition {
 	}
 
 	@description = "Verify that a translation can be deactivated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDeleted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133519 CanBeDeleted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Text ES");
+
+		Form.save();
+
+		FormFields.removeTranslation(key_language = "Spanish (Spain)");
+
+		FormFields.viewAddedLanguage(key_language = "English (United States)");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Text ES");
 	}
 
 	@description = "Verify that a translation can be edited"

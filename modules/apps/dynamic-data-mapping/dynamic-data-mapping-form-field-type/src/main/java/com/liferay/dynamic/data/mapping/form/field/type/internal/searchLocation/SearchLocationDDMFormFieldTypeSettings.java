@@ -32,7 +32,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		@DDMFormRule(
 			actions = {
 				"setVisible('dataType', false)",
-				"setVisible('layout', contains(getValue('visibleFields'), \"city\") OR contains(getValue('visibleFields'), \"state\") OR contains(getValue('visibleFields'), \"postal-code\") OR contains(getValue('visibleFields'), \"country\"))",
+				"setVisible('layout', contains(getValue('visibleFields'), \"city\") OR contains(getValue('visibleFields'), \"country\") OR contains(getValue('visibleFields'), \"postal-code\") OR contains(getValue('visibleFields'), \"state\"))",
 				"setVisible('requiredErrorMessage', false)"
 			},
 			condition = "TRUE"

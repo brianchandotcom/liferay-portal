@@ -106,9 +106,9 @@ public class SearchLocationDDMFormFieldTypeSettingsTest
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("setVisible('layout', contains(getValue('visibleFields'), ");
-		sb.append("\"city\") OR contains(getValue('visibleFields'), \"state\"");
-		sb.append(") OR contains(getValue('visibleFields'), \"postal-code\"");
-		sb.append(") OR contains(getValue('visibleFields'), \"country\"))");
+		sb.append("\"city\") OR contains(getValue('visibleFields'), \"country");
+		sb.append("\") OR contains(getValue('visibleFields'), \"postal-code\"");
+		sb.append(") OR contains(getValue('visibleFields'), \"state\"))");
 
 		Assert.assertEquals(sb.toString(), actions.get(1));
 

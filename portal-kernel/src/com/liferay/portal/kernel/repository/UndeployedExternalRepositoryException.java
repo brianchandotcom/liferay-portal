@@ -27,6 +27,14 @@ public class UndeployedExternalRepositoryException extends RepositoryException {
 		this.className = className;
 	}
 
+	public UndeployedExternalRepositoryException(
+		String className, String message) {
+
+		super(message);
+
+		this.className = className;
+	}
+
 	public final String className;
 
 }

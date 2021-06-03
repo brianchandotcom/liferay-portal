@@ -70,6 +70,7 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 		if (_portalCapabilityLocator == null) {
 			ReflectionUtil.throwException(
 				new UndeployedExternalRepositoryException(
+					TemporaryFileEntryRepositoryDefiner.class.getName(),
 					StringBundler.concat(
 						"Repository definer ",
 						TemporaryFileEntryRepositoryDefiner.class.getName(),

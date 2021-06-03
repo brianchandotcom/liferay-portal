@@ -120,6 +120,9 @@ describe('Translate', () => {
 		[langKey, ...args].join('-')
 	);
 
+	Liferay.Util.unescapeHTML =
+		Liferay.Util.unescapeHTML || jest.fn((content) => content);
+
 	afterEach(cleanup);
 
 	it('renders with auto-translate enabled', () => {

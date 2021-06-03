@@ -76,14 +76,52 @@ definition {
 	}
 
 	@description = "Verify that a translation can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133518 CanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Text ES");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "Spanish (Spain)");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text ES");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text ES",
+			label = "Text ES Edit");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form1");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "Spanish (Spain)");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text ES Edit");
 	}
 
 	@description = "Verify that a translation can be previewed"

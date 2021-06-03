@@ -24,33 +24,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-105001 and LPS-104999."
-	@priority = "3"
-	test UserCanAddARoleWithoutATitle {
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.viewCP(
-			roleKey = "Administrator",
-			toolTip = "A title is a localizable human-readable name for a role. If not provided, the key will be displayed by default.");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.add(roleKey = "Role Key Value");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.viewCP(roleKey = "Role Key Value");
-	}
-
 	@priority = "4"
 	test ExistingSegmentCanBeAssignedToARegularRole {
 		ProductMenu.gotoSite(site = "Global");
@@ -152,41 +125,6 @@ definition {
 			roleTitle = "Roles Regrole Name");
 	}
 
-	@description = "This is a use case for LPS-109572."
-	@priority = "5"
-	test UserCanBeAssignedToARegularRole {
-		property portal.acceptance = "true";
-
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.viewAssignee(
-			assigneeName = "userfn userln",
-			assigneeType = "Users",
-			roleTitle = "Regular Role");
-	}
-
 	@priority = "5"
 	test OrganizationRoleCanBeDeleted {
 		property portal.acceptance = "true";
@@ -267,47 +205,6 @@ definition {
 		Role.viewDefaultCP(roleTitle = "Roles Regrole Name");
 	}
 
-	@priority = "5"
-	test SiteRoleCanBeDeleted {
-		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		RoleNavigator.gotoRoleType(roleType = "Site");
-
-		Role.add(roleTitle = "Roles Siterole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		Role.viewCP(
-			roleTitle = "Roles Siterole Name",
-			roleType = "Site");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		RoleNavigator.gotoRoleType(roleType = "Site");
-
-		Role.deleteCP(roleTitle = "Roles Siterole Name");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
-
-		RoleNavigator.gotoRoleType(roleType = "Site");
-
-		Role.viewDefaultCP(roleTitle = "Roles Siterole Name");
-	}
-
 	@priority = "4"
 	test SegmentCanBeRemovedFromRegularRole {
 		ProductMenu.gotoSite(site = "Global");
@@ -353,6 +250,109 @@ definition {
 			assigneeName = "Role Assignee Test",
 			assigneeType = "Segments",
 			roleTitle = "Remove Regrole Assignee");
+	}
+
+	@priority = "5"
+	test SiteRoleCanBeDeleted {
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.add(roleTitle = "Roles Siterole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(
+			roleTitle = "Roles Siterole Name",
+			roleType = "Site");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.deleteCP(roleTitle = "Roles Siterole Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		RoleNavigator.gotoRoleType(roleType = "Site");
+
+		Role.viewDefaultCP(roleTitle = "Roles Siterole Name");
+	}
+
+	@description = "This is a use case for LPS-105001 and LPS-104999."
+	@priority = "3"
+	test UserCanAddARoleWithoutATitle {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(
+			roleKey = "Administrator",
+			toolTip = "A title is a localizable human-readable name for a role. If not provided, the key will be displayed by default.");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.add(roleKey = "Role Key Value");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewCP(roleKey = "Role Key Value");
+	}
+
+	@description = "This is a use case for LPS-109572."
+	@priority = "5"
+	test UserCanBeAssignedToARegularRole {
+		property portal.acceptance = "true";
+
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.viewAssignee(
+			assigneeName = "userfn userln",
+			assigneeType = "Users",
+			roleTitle = "Regular Role");
 	}
 
 }

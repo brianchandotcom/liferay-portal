@@ -428,6 +428,26 @@ public class AssetListAssetEntryProviderImpl
 		return assetCategoryIds;
 	}
 
+	private List<AssetListEntryAssetEntryRel> _getAssetListEntryAssetEntryRels(
+		AssetListEntry assetListEntry, long[] segmentsEntryIds, int start,
+		int end) {
+
+		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
+			return _assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntry.getAssetListEntryId(),
+					_getCombinedSegmentsEntryIds(segmentsEntryIds), start, end);
+		}
+
+		return _assetListEntryAssetEntryRelLocalService.
+			getAssetListEntryAssetEntryRels(
+				assetListEntry.getAssetListEntryId(),
+				new long[] {
+					_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds)
+				},
+				start, end);
+	}
+
 	private String[] _getAssetTagNames(UnicodeProperties unicodeProperties) {
 		List<String> allAssetTagNames = new ArrayList<>();
 
@@ -722,27 +742,9 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long[] segmentsEntryIds, int start,
 		int end) {
 
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels;
-
-		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
-			assetListEntryAssetEntryRels =
-				_assetListEntryAssetEntryRelLocalService.
-					getAssetListEntryAssetEntryRels(
-						assetListEntry.getAssetListEntryId(),
-						_getCombinedSegmentsEntryIds(segmentsEntryIds), start,
-						end);
-		}
-		else {
-			assetListEntryAssetEntryRels =
-				_assetListEntryAssetEntryRelLocalService.
-					getAssetListEntryAssetEntryRels(
-						assetListEntry.getAssetListEntryId(),
-						new long[] {
-							_getFirstSegmentsEntryId(
-								assetListEntry, segmentsEntryIds)
-						},
-						start, end);
-		}
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_getAssetListEntryAssetEntryRels(
+				assetListEntry, segmentsEntryIds, start, end);
 
 		return ListUtil.toList(
 			assetListEntryAssetEntryRels,
@@ -759,29 +761,12 @@ public class AssetListAssetEntryProviderImpl
 				assetListEntry, segmentsEntryIds, start, end);
 		}
 
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels;
-
-		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
-			assetListEntryAssetEntryRels =
-				_assetListEntryAssetEntryRelLocalService.
-					getAssetListEntryAssetEntryRels(
-						assetListEntry.getAssetListEntryId(),
-						_getCombinedSegmentsEntryIds(segmentsEntryIds),
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
-		else {
-			assetListEntryAssetEntryRels =
-				_assetListEntryAssetEntryRelLocalService.
-					getAssetListEntryAssetEntryRels(
-						assetListEntry.getAssetListEntryId(),
-						new long[] {
-							_getFirstSegmentsEntryId(
-								assetListEntry, segmentsEntryIds)
-						},
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		}
-
 		SearchContext searchContext = new SearchContext();
+
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
+			_getAssetListEntryAssetEntryRels(
+				assetListEntry, segmentsEntryIds, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		List<Long> assetEntryIds = ListUtil.toList(
 			assetListEntryAssetEntryRels,

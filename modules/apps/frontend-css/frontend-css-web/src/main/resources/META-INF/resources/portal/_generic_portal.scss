@@ -123,15 +123,6 @@ img.icon {
 	padding: 0.3em 0.5em;
 }
 
-.lfr-token-primary {
-	border-width: 0;
-
-	&,
-	&:hover {
-		cursor: auto;
-	}
-}
-
 @include media-breakpoint-down(sm) {
 	.definition-of-terms {
 		dd {

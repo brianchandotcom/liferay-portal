@@ -230,14 +230,42 @@ definition {
 	}
 
 	@description = "Verify that a Fieldset can be created"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133459 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Element Set 1");
+
+		AssertElementPresent(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		AssertElementPresent(
+			key_name = "Numeric",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
 	}
 
 	@description = "Verify that a Fieldset can be deleted"

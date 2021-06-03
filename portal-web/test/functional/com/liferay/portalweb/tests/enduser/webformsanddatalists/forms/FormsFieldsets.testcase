@@ -263,14 +263,54 @@ definition {
 	}
 
 	@description = "Verify that a Fieldset can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133460 CanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Element Set 1");
+
+		Click(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Test");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text Test");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Click(
+			key_formName = "Element Set 1",
+			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text Test");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
 	}
 
 	@description = "Verify that a user with update permission can edit another user's Fieldset"

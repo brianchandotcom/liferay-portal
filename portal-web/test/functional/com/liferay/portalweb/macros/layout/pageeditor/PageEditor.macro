@@ -2773,6 +2773,14 @@ definition {
 		}
 	}
 
+	macro gotoEllipsisMenuItemInItemSelector {
+		Click(
+			key_fieldLabel = "${fieldLabel}",
+			locator1 = "PageEditor#ITEM_SELECTOR_DROPDOWN_TOGGLE");
+
+		MenuItem.click(menuItem = "${menuItem}");
+	}
+
 	macro gotoSaveAsFragment {
 		key_fragmentName = "${fragmentName}";
 

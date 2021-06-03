@@ -22,7 +22,7 @@ AttributeMappingDisplayContext attributeMappingDisplayContext = (AttributeMappin
 String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifierExpression();
 %>
 
-<aui:fieldset helpMessage="attribute-mapping-help" label="attribute-mapping">
+<aui:fieldset helpMessage="attribute-mapping-help" id='<%= renderResponse.getNamespace() + "userAttributeMappings" %>' label="attribute-mapping">
 	<aui:input name="attribute:userIdentifierExpressionPrefix" type="hidden" value="" />
 
 	<%
@@ -90,24 +90,6 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			</aui:script>
 		</aui:field-wrapper>
 
-		<aui:script use="aui-base">
-			A.one('#<portlet:namespace /><%= userAttributeMappingsContentBox %>').delegate(
-				'change',
-				(event) => {
-					A.one(
-						'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
-					).attr('value', event.currentTarget.attr('data-prefix'));
-					A.all(
-						'input[name="<portlet:namespace />userIdentifierExpression"]'
-					).attr('checked', false);
-					A.all(
-						'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
-					).attr('checked', true);
-				},
-				'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
-			);
-		</aui:script>
-
 	<%
 	}
 	%>
@@ -128,5 +110,20 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 				).attr('checked', false);
 			}
 		}
+	);
+	A.one('#<portlet:namespace />userAttributeMappings').delegate(
+		'change',
+		(event) => {
+			A.one(
+				'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
+			).attr('value', event.currentTarget.attr('data-prefix'));
+			A.all(
+				'input[name="<portlet:namespace />userIdentifierExpression"]'
+			).attr('checked', false);
+			A.all(
+				'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
+			).attr('checked', true);
+		},
+		'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
 	);
 </aui:script>

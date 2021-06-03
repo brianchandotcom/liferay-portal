@@ -31,6 +31,8 @@ public class SourceFormatterArgs {
 
 	public static final String BASE_DIR_NAME = "./";
 
+	public static final int COMMIT_COUNT = 0;
+
 	public static final boolean FAIL_ON_AUTO_FIX = false;
 
 	public static final boolean FAIL_ON_HAS_WARNING = true;
@@ -91,6 +93,10 @@ public class SourceFormatterArgs {
 
 	public List<String> getCheckNames() {
 		return _checkNames;
+	}
+
+	public int getCommitCount() {
+		return _commitCount;
 	}
 
 	public List<String> getFileExtensions() {
@@ -205,6 +211,10 @@ public class SourceFormatterArgs {
 		_checkNames = checkNames;
 	}
 
+	public void setCommitCount(int commitCount) {
+		_commitCount = commitCount;
+	}
+
 	public void setFailOnAutoFix(boolean failOnAutoFix) {
 		_failOnAutoFix = failOnAutoFix;
 	}
@@ -298,6 +308,7 @@ public class SourceFormatterArgs {
 	private String _baseDirName = BASE_DIR_NAME;
 	private List<String> _checkCategoryNames = new ArrayList<>();
 	private List<String> _checkNames = new ArrayList<>();
+	private int _commitCount = COMMIT_COUNT;
 	private boolean _failOnAutoFix = FAIL_ON_AUTO_FIX;
 	private boolean _failOnHasWarning = FAIL_ON_HAS_WARNING;
 	private List<String> _fileExtensions = new ArrayList<>();

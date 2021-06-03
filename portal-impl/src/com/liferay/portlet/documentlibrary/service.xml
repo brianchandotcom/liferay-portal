@@ -555,6 +555,13 @@
 			<finder-column name="hidden" />
 			<finder-column name="status" />
 		</finder>
+		<finder db-index="false" name="G_M_T_H_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="mountPoint" />
+			<finder-column comparator="LIKE" name="treePath" />
+			<finder-column name="hidden" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
 
 		<!-- References -->
 

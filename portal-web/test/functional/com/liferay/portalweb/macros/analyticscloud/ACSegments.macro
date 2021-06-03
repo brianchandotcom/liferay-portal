@@ -19,8 +19,6 @@ definition {
 
 		Click(locator1 = "ACSegments#ADD_MEMBERS_BUTTON");
 
-		ACSegments.searchSegment(findSegment = "${searchTerm}");
-
 		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 
 		Click(locator1 = "ACSegments#ADD_BUTTON");

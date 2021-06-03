@@ -20,7 +20,7 @@
 KBTemplate kbTemplate = (KBTemplate)request.getAttribute(KBWebKeys.KNOWLEDGE_BASE_KB_TEMPLATE);
 %>
 
-<div class="float-container kb-entity-header">
+<div class="kb-entity-header">
 	<div class="kb-title">
 		<%= HtmlUtil.escape(kbTemplate.getTitle()) %>
 	</div>

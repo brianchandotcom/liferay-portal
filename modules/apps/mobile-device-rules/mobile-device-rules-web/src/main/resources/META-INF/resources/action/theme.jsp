@@ -47,7 +47,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 %>
 
 <div class="lfr-theme-list">
-	<div class="float-container lfr-current-theme">
+	<div class="lfr-current-theme">
 		<h3><liferay-ui:message key="current-theme" /></h3>
 
 		<div class="lfr-current-theme-body">
@@ -133,7 +133,7 @@ ColorScheme selColorScheme = ThemeLocalServiceUtil.getColorScheme(company.getCom
 		</c:if>
 	</div>
 
-	<div class="float-container lfr-available-themes">
+	<div class="lfr-available-themes">
 		<h3>
 			<span class="header-title">
 

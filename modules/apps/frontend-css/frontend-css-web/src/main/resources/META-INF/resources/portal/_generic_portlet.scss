@@ -37,14 +37,6 @@
 	width: 100%;
 }
 
-.float-container:after {
-	clear: both;
-	content: '';
-	display: block;
-	height: 0;
-	visibility: hidden;
-}
-
 .lfr-table {
 	border-collapse: collapse;
 	clear: both;

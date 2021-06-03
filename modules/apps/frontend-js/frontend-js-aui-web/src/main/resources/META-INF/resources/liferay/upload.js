@@ -154,7 +154,7 @@ AUI.add(
 			'<strong class="lead">{[ this.strings.warningTitle ]}</strong>{[ this.strings.pendingFileText ]}',
 			'</div>',
 
-			'<div class="float-container hide manage-upload-target" id="{$ns}manageUploadTarget">',
+			'<div class="hide manage-upload-target" id="{$ns}manageUploadTarget">',
 			'<tpl if="multipleFiles">',
 			'<span class="field field-choice select-files">',
 			'<span class="field-content">',

@@ -548,14 +548,54 @@ definition {
 	}
 
 	@description = "Verify that a Separator field's Label and Help Text can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SeparatorFieldCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133513 SeparatorFieldCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Separator");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Test Help Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Separador");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Texto de Ayuda");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Separator");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Separator",
+			fieldValue = "Test Help Text");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Separador");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Separador",
+			fieldValue = "Texto de Ayuda");
 	}
 
 	@description = "Verify that a Single Selection field's Label, Help Text and Options can be translated"

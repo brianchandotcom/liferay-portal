@@ -208,7 +208,7 @@ a.control-menu-icon,
 	display: inline-flex;
 }
 
-.control-menu-nav-item-content {
+.control-menu-nav-item-content:last-child {
 	display: flex;
 	flex-basis: 0;
 	flex-grow: 1;

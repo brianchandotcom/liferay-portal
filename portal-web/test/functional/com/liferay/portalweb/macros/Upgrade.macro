@@ -2755,18 +2755,6 @@ definition {
 			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
 			value1 = "Out of Date");
 
-		Click(
-			key_publicationName = "Publication 2 Name",
-			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
-
-		AssertVisible(
-			key_menuItem = "Publish",
-			locator1 = "MenuItem#DISABLED_MENU_ITEM");
-
-		AssertVisible(
-			key_menuItem = "Schedule",
-			locator1 = "MenuItem#DISABLED_MENU_ITEM");
-
 		Publications.gotoReviewChanges(
 			gotoManagePublications = "true",
 			key_publicationName = "Publication 2 Name");

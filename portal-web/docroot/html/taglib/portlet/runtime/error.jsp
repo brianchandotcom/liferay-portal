@@ -16,6 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<div class="alert alert-warning lfr-configurator-visibility lfr-meta-actions">
+<div class="alert alert-warning c-mt-3 lfr-configurator-visibility">
 	<%= (String)request.getAttribute("liferay-portlet:runtime:errorMessage") %>
 </div>

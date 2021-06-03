@@ -109,7 +109,7 @@ List<CPCatalogEntry> catalogEntries = cpPublisherConfigurationDisplayContext.get
 </liferay-ui:search-container>
 
 <div class="select-asset-selector">
-	<div class="edit-controls lfr-meta-actions">
+	<div class="c-mt-3 edit-controls">
 
 	</div>
 </div>

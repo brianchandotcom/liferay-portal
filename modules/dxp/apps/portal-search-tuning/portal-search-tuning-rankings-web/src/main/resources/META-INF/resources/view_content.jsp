@@ -70,7 +70,7 @@ RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingR
 						cssClass="visible-interaction"
 					>
 						<c:if test="<%= rankingResultContentDisplayContext.hasEditPermission() %>">
-							<div class="asset-actions lfr-meta-actions">
+							<div class="asset-actions c-mt-3">
 								<liferay-ui:icon
 									cssClass="visible-interaction"
 									icon="pencil"

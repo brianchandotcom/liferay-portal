@@ -14,7 +14,7 @@
  */
 --%>
 
-<div class="btn-group icons-container lfr-meta-actions">
+<div class="btn-group c-mt-3 icons-container">
 	<c:if test="<%= ddlDisplayContext.isShowIconsActions() %>">
 		<c:if test="<%= ddlDisplayContext.isShowConfigurationIcon() %>">
 			<div class="btn-group-item">

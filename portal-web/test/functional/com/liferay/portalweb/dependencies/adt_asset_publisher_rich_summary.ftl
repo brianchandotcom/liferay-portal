@@ -24,7 +24,7 @@
 	</#if>
 
 	<div class="asset-abstract">
-		<div class="asset-actions lfr-meta-actions">
+		<div class="asset-actions c-mt-3">
 			<@getPrintIcon />
 
 			<@getFlagsIcon />

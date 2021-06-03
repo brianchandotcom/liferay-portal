@@ -364,7 +364,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 </c:choose>
 
 <c:if test="<%= ddmFormDisplayContext.isShowConfigurationIcon() %>">
-	<div class="icons-container lfr-meta-actions">
+	<div class="c-mt-3 icons-container">
 		<div class="btn-group lfr-icon-actions">
 			<liferay-ui:icon
 				icon="cog"

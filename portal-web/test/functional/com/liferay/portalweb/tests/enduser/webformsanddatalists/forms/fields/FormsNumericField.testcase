@@ -113,9 +113,6 @@ definition {
 			fieldValue = "123");
 
 		FormPortlet.submitSuccessfully();
-
-		
-
 	}
 
 	@description = "Verify that a Numeric Field can accept decimals when the numeric type set to Decimal"

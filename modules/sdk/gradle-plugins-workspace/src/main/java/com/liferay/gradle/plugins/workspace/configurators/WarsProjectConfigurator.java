@@ -143,10 +143,10 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 
 				taskContainer.named(
 					LiferayBasePlugin.DEPLOY_TASK_NAME, Copy.class,
-					deployCopy -> {
-						deployCopy.from(war);
+					copy -> {
+						copy.from(war);
 
-						deployCopy.into(
+						copy.into(
 							new Callable<File>() {
 
 								@Override
@@ -158,9 +158,9 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 
 							});
 
-						deployCopy.setDescription(
+						copy.setDescription(
 							"Assembles the project and deploys it to Liferay.");
-						deployCopy.setGroup(BasePlugin.BUILD_GROUP);
+						copy.setGroup(BasePlugin.BUILD_GROUP);
 					});
 			});
 	}

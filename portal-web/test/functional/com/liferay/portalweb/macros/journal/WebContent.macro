@@ -2158,6 +2158,29 @@ definition {
 			value1 = "${friendlyUrl}");
 	}
 
+	macro viewImageFieldCP {
+		if (!(isSet(webContentImageFieldLabel))) {
+			var webContentImageFieldLabel = "Image";
+		}
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "${webContentImageFieldLabel}",
+			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "${webContentImage}");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "${webContentImageFieldLabel}",
+			key_image = "/documents/",
+			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
+
+		if (isSet(webContentImageDescription)) {
+			AssertTextEquals(
+				key_fieldFieldLabel = "${webContentImageFieldLabel}",
+				locator1 = "WCEditWebContent#IMAGE_DESCRIPTION",
+				value1 = "${webContentImageDescription}");
+		}
+	}
+
 	macro viewLinkedAssetPGViaAP {
 		AssertClick.assertPartialTextClickAt(
 			key_assetTitle = "${webContentTitle}",
@@ -2173,6 +2196,21 @@ definition {
 			key_assetContent = "${webContentContent}",
 			locator1 = "APAsset#ASSET_CONTENT",
 			value1 = "${webContentContent}");
+	}
+
+	macro viewLinkToPageFieldCP {
+		if (!(isSet(webContentLinkToPageFieldLabel))) {
+			var webContentLinkToPageFieldLabel = "Link to Page";
+		}
+
+		var selectedPage = selenium.getElementValue("//label[normalize-space(text())='${webContentLinkToPageFieldLabel}']/following-sibling::div//div[contains(@class,'input-group')]//input[contains(@type,'text')]");
+
+		if (contains("${selectedPage}", "${webContentLinkToPage}")) {
+			echo("The ${selectedPage} is shown in field.");
+		}
+		else {
+			TestUtils.fail(message = "The ${selectedPage} is not shown in field.");
+		}
 	}
 
 	macro viewNoContentAsGuestPGViaWCD {

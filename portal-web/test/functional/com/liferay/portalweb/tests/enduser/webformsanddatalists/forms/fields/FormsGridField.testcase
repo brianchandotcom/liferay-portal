@@ -250,14 +250,78 @@ definition {
 	}
 
 	@description = "Verify that a Form can be submitted with the Grid Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSubmitted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132463 CanBeSubmitted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid",
+			formPageNumber = "0");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option 3",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option 4",
+			rowNumber = "2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewTextLabel(fieldLabel = "Grid");
+
+		FormFields.selectGridRadioOptionWithoutCategory(
+			fieldName = "",
+			optionNumber1 = "1",
+			optionNumber2 = "3");
+
+		FormPortlet.submitSuccessfully();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdminNavigator.gotoView();
+
+		FormFields.viewTextLabel(fieldLabel = "Grid");
+
+		FormFields.assertGridOptionChecked(
+			columnValue = "Option 3",
+			rowValue = "Option 1");
 	}
 
 	@description = "Verify that edits to the Field can be canceled"

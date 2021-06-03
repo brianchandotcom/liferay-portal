@@ -34,7 +34,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 			String casLoginURLResult = _testURL(casLoginURL);
 			%>
 
-			<span class="<%= _getCssClass(casLoginURLResult) %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLoginURL) %></span>
+			<span class="<%= _getCssClass(casLoginURLResult) %>"><liferay-ui:message key="<%= casLoginURLResult %>" /></span> <div><%= HtmlUtil.escape(casLoginURL) %></div>
 		</td>
 	</tr>
 	<tr>
@@ -47,7 +47,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 			String casLogoutURLResult = _testURL(casLogoutURL);
 			%>
 
-			<span class="<%= _getCssClass(casLogoutURLResult) %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casLogoutURL) %></span>
+			<span class="<%= _getCssClass(casLogoutURLResult) %>"><liferay-ui:message key="<%= casLogoutURLResult %>" /></span> <div><%= HtmlUtil.escape(casLogoutURL) %></div>
 		</td>
 	</tr>
 
@@ -62,7 +62,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 				String casServerURLResult = _testURL(casServerURL);
 				%>
 
-				<span class="<%= _getCssClass(casServerURLResult) %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServerURL) %></span>
+				<span class="<%= _getCssClass(casServerURLResult) %>"><liferay-ui:message key="<%= casServerURLResult %>" /></span> <div><%= HtmlUtil.escape(casServerURL) %></div>
 			</td>
 		</tr>
 	</c:if>
@@ -78,7 +78,7 @@ String casServiceURL = ParamUtil.getString(request, "casServiceURL");
 				String casServiceURLResult = _testURL(casServiceURL);
 				%>
 
-				<span class="<%= _getCssClass(casServiceURLResult) %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <span class="field-hint"><%= HtmlUtil.escape(casServiceURL) %></span>
+				<span class="<%= _getCssClass(casServiceURLResult) %>"><liferay-ui:message key="<%= casServiceURLResult %>" /></span> <div><%= HtmlUtil.escape(casServiceURL) %></div>
 			</td>
 		</tr>
 	</c:if>

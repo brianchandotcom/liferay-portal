@@ -88,6 +88,8 @@ public class AssetEntryDocumentContributor
 			return;
 		}
 
+		document.addNumber(Field.ASSET_ENTRY_ID, assetEntry.getEntryId());
+
 		if (!document.hasField(Field.CREATE_DATE)) {
 			document.addDate(Field.CREATE_DATE, assetEntry.getCreateDate());
 		}

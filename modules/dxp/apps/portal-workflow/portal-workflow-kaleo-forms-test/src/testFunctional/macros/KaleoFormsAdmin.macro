@@ -432,7 +432,6 @@ definition {
 
 	macro gotoProgressStep {
 		var key_kfProgressName = "${kfProgressName}";
-		var key_kfProgressName = StringUtil.lowerCase("${kfProgressName}");
 
 		Click(locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_NAME");
 	}

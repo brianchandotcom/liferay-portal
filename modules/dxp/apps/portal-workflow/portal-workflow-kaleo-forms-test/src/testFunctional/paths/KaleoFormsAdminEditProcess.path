@@ -21,7 +21,7 @@
 <!--FORM_NAVIGATOR-->
 <tr>
 	<td>FORM_NAVIGATOR_PROGRESS_BAR_NAME</td>
-	<td>//ul[contains(@class,'nav-list')]/li[contains(@id,'${key_kfProgressName}Tab')]//div[@class='progress-bar-title']</td>
+	<td>//div[@class='progress-bar-title' and text()='${key_kfProgressName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -58,8 +58,8 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	public SearchRequestImpl(SearchRequestImpl searchRequestImpl) {
 		_aggregationsMap.putAll(searchRequestImpl._aggregationsMap);
 		_basicFacetSelection = searchRequestImpl._basicFacetSelection;
-		_connectionId = searchRequestImpl._connectionId;
 		_complexQueryParts.addAll(searchRequestImpl._complexQueryParts);
+		_connectionId = searchRequestImpl._connectionId;
 		_emptySearchEnabled = searchRequestImpl._emptySearchEnabled;
 		_excludeContributors.addAll(searchRequestImpl._excludeContributors);
 		_explain = searchRequestImpl._explain;
@@ -75,9 +75,9 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 			searchRequestImpl._modelIndexerClassNames);
 		_pipelineAggregationsMap.putAll(
 			searchRequestImpl._pipelineAggregationsMap);
-		_postFilterQuery = searchRequestImpl._postFilterQuery;
 		_postFilterComplexQueryParts.addAll(
 			searchRequestImpl._postFilterComplexQueryParts);
+		_postFilterQuery = searchRequestImpl._postFilterQuery;
 		_query = searchRequestImpl._query;
 		_rescoreQuery = searchRequestImpl._rescoreQuery;
 		_rescores.addAll(searchRequestImpl._rescores);

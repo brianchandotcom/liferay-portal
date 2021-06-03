@@ -333,7 +333,7 @@ definition {
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
-		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
+		DepotNavigator.openDepotLanguages(depotName = "Test Depot Name");
 
 		DepotNavigator.openDepotAdmin();
 

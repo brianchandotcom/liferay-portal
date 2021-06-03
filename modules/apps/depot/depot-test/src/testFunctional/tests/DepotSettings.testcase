@@ -172,7 +172,7 @@ definition {
 
 		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
 
-		DepotNavigator.gotoLanguages(depotName = "Test Depot Name");
+		DepotNavigator.openDepotLanguages(depotName = "Test Depot Name");
 
 		Click.clickNoMouseOverNoWaitForVisible(
 			key_languagesOption = "Define a custom default language and additional active languages for this asset library.",
@@ -196,7 +196,7 @@ definition {
 			key_unnamedTitle = "Repositorio sin nombre",
 			locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE");
 
-		DepotNavigator.gotoLanguages();
+		DepotNavigator.openDepotLanguages(depotName = "Test Depot Name");
 
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "Spanish (Spain)");
 	}

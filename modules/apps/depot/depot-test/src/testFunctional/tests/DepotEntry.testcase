@@ -34,18 +34,13 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test AccessWithDisabledAppsMenuAtSystemScope {
-		property test.name.skip.portal.instance = "Depot#AccessWithDisabledAppsMenuAtSystemScope";
+		property test.name.skip.portal.instance = "DepotEntry#AccessWithDisabledAppsMenuAtSystemScope";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Navigation",
-			configurationName = "Applications Menu",
-			configurationScope = "Virtual Instance Scope");
+		SystemSettings.openToConfigInSystemSettings(portlet = "Applications Menu");
 
 		FormFields.disableCheckbox(fieldName = "Enable Applications Menu");
 

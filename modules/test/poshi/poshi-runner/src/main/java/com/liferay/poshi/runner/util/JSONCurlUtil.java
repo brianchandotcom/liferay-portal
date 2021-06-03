@@ -184,32 +184,20 @@ public class JSONCurlUtil {
 		}
 
 		private String _getRequestURL(List<String> tokens) {
-			int requestURLIndex = -1;
+			String token = tokens.get(0);
 
-			for (int i = 0; i < tokens.size(); i++) {
-				String token = tokens.get(i);
-
-				if (token.startsWith("http")) {
-					if (requestURLIndex != -1) {
-						StringBuilder sb = new StringBuilder();
-
-						sb.append("Found 2 URLs when only 1 is allowed:\n");
-						sb.append(tokens.get(requestURLIndex));
-						sb.append("\n");
-						sb.append(token);
-
-						throw new IllegalArgumentException(sb.toString());
-					}
-
-					requestURLIndex = i;
-				}
+			if (token.startsWith("http")) {
+				return token;
 			}
 
-			if (requestURLIndex == -1) {
-				throw new IllegalArgumentException("No URL found in statement");
-			}
+			StringBuilder sb = new StringBuilder();
 
-			return tokens.get(requestURLIndex);
+			sb.append("The curl URL must be the first argument of the request");
+			sb.append(" string.\n'");
+			sb.append(token);
+			sb.append("' is an invalid URL.");
+
+			throw new IllegalArgumentException(sb.toString());
 		}
 
 		private void _setRequestOptions(List<String> tokens) {

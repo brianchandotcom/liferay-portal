@@ -97,10 +97,10 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 					classContent, javaVariable.getContent(), fieldType);
 			}
 		}
-		else if (!_containsNonaccessModifier(javaVariable, "volatile") &&
-				 isAttributeValue(_CHECK_VOLATILE_FIELDS_KEY, absolutePath)) {
+		else if (!_containsNonaccessModifier(javaVariable, "volatile")) {
+			if (isAttributeValue(_CHECK_VOLATILE_FIELDS_KEY, absolutePath) &&
+				_isVolatileField(javaClass, javaVariable)) {
 
-			if (_isVolatileField(javaClass, javaVariable)) {
 				String javaVariableContent = javaVariable.getContent();
 
 				String newJavaVariableContent = StringUtil.replaceFirst(

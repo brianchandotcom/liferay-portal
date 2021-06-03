@@ -1780,15 +1780,9 @@ definition {
 			specificURL = "http://localhost:9080",
 			userEmailAddress = "test@liferay.com");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "System Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "FFMPEG Video Converter",
-			configurationScope = "System Scope");
+		DMNavigator.openToConfigInSystemSettings(
+			baseURL = "http://localhost:9080",
+			portlet = "FFMPEG Video Converter");
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 

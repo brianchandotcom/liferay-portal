@@ -66,7 +66,7 @@ const RichText = ({
 				editorConfig={editorConfig}
 				name={name}
 				onChange={(data) => {
-					if (currentValue !== data) {
+					if (currentValue?.trim() !== data?.trim()) {
 						setCurrentValue(data);
 						setDirty(true);
 

@@ -17,6 +17,14 @@
 <%@ include file="/html/portal/init.jsp" %>
 
 <%
+if (_log.isWarnEnabled()) {
+	String requestedSessionId = request.getRequestedSessionId();
+
+	if (Validator.isNotNull(requestedSessionId) && !StringUtil.equals(requestedSessionId, session.getId())) {
+		_log.warn("Unable to extend session, in case this warning is displayed too frequently, review the session.timeout configuration properties");
+	}
+}
+
 for (String servletContextName : ServletContextPool.keySet()) {
 	ServletContext servletContext = ServletContextPool.get(servletContextName);
 

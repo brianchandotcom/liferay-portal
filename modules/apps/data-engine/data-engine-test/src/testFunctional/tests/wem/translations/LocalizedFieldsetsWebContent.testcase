@@ -569,15 +569,11 @@ definition {
 
 		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
 
-		DataEngine.addFieldsetToBuilder(fieldsetName = "New Fieldset");
-
 		DataEngine.addTranslationToFieldset(
 			fieldHelp = "true",
 			fieldNameList = "Text",
 			fieldsetName = "New Fieldset",
 			localeList = "pt-BR");
-
-		Refresh();
 
 		WebContentStructures.saveCP(structureName = "Structure Name");
 

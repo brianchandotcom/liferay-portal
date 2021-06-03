@@ -208,7 +208,7 @@ definition {
 				value1 = "Mapping");
 
 			AssertVisible(
-				key_fieldLabel = "Content",
+				key_fieldLabel = "Item",
 				key_text = "change",
 				locator1 = "Icon#ANY_ITEM_SELECTOR");
 

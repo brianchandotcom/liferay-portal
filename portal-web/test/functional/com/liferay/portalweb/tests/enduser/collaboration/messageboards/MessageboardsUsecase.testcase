@@ -1054,18 +1054,17 @@ definition {
 			locator1 = "MessageBoards#THREAD_LIST_THREAD",
 			value1 = "MB Thread Message 1 Subject");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
-
-		MessageboardsCategory.gotoPG(categoryName = "MB Category1 Name");
-
-		var parentCategoryId = JSONMBMessage.getCategoryId();
-
 		for (var categoryName : list "MB Sub Category1 Name,MB Sub Category2 Name,MB Sub Category3 Name,MB Sub Category4 Name,MB Sub Category5 Name,MB Sub Category6 Name") {
-			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+				categoryName = "MB Category1 Name",
+				groupName = "Guest");
 
-			MessageboardsCategory.gotoCP(categoryName = "MB Category1 Name");
-
-			MessageboardsCategory.addCP(categoryName = "${categoryName}");
+			JSONMBMessage.addCategory(
+				categoryDescription = "MB Subcategory Description",
+				categoryName = "${categoryName}",
+				groupName = "Guest",
+				parentCategoryId = "${parentCategoryId}",
+				userEmailAddress = "test@liferay.com");
 		}
 
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");

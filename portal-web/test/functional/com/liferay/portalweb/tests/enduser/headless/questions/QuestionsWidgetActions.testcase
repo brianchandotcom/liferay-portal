@@ -85,17 +85,14 @@ definition {
 			key_categoryItem = "Questions Test Category",
 			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
-
-		var messageBoardsCategoryURL = selenium.getLocation();
-
-		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "Questions Test Category",
+			groupName = "Guest");
 
 		JSONMBMessage.addCategory(
-			categoryDescription = "Subcategory Description",
+			categoryDescription = "MB Subcategory Description",
 			categoryName = "Questions Test Subcategory",
+			groupName = "Guest",
 			parentCategoryId = "${parentCategoryId}",
 			userEmailAddress = "test@liferay.com");
 
@@ -1566,33 +1563,25 @@ definition {
 			categoryName = "Questions Test Category1",
 			userEmailAddress = "test@liferay.com");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category1");
-
-		var messageBoardsCategoryURL = selenium.getLocation();
-
-		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "Questions Test Category1",
+			groupName = "Guest");
 
 		JSONMBMessage.addCategory(
-			categoryDescription = "Subcategory Description",
+			categoryDescription = "MB Subcategory Description",
 			categoryName = "Questions Test Category2",
+			groupName = "Guest",
 			parentCategoryId = "${parentCategoryId}",
 			userEmailAddress = "test@liferay.com");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category1");
-
-		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category2");
-
-		var messageBoardsCategoryURL = selenium.getLocation();
-
-		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+		var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+			categoryName = "Questions Test Category2",
+			groupName = "Guest");
 
 		JSONMBMessage.addCategory(
-			categoryDescription = "Subcategory Description",
+			categoryDescription = "MB Subcategory Description",
 			categoryName = "Questions Test Category3",
+			groupName = "Guest",
 			parentCategoryId = "${parentCategoryId}",
 			userEmailAddress = "test@liferay.com");
 
@@ -1756,17 +1745,15 @@ definition {
 			key_topicName = "Questions Test Category",
 			locator1 = "Questions#QUESTIONS_BREADCRUMB_TOPIC_DROPDOWN_TOGGLE");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
-
-		var messageBoardsCategoryURL = selenium.getLocation();
-		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
-
 		for (var num : list "1,2") {
+			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
+				categoryName = "Questions Test Category",
+				groupName = "Guest");
+
 			JSONMBMessage.addCategory(
-				categoryDescription = "Subcategory Description",
+				categoryDescription = "MB Subcategory Description",
 				categoryName = "Questions Subcategory${num}",
+				groupName = "Guest",
 				parentCategoryId = "${parentCategoryId}",
 				userEmailAddress = "test@liferay.com");
 		}

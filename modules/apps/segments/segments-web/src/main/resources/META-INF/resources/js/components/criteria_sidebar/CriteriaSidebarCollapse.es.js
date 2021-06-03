@@ -135,41 +135,50 @@ const CriteriaSidebarCollapse = ({
 						</a>
 
 						{active && (
-							<ul className="properties-list">
-								{filteredProperties.length === 0 && (
-									<li className="empty-message">
-										{Liferay.Language.get(
-											'no-results-were-found'
-										)}
-									</li>
-								)}
-
-								{filteredProperties.length > 0 &&
-									filteredProperties.map(
-										({label, name, options, type}) => {
-											const defaultValue = getDefaultValue(
-												{
-													label,
-													name,
-													options,
-													type,
-												}
-											);
-
-											return (
-												<CriteriaSidebarItem
-													className={`color--${key}`}
-													defaultValue={defaultValue}
-													key={name}
-													label={label}
-													name={name}
-													propertyKey={key}
-													type={type}
-												/>
-											);
-										}
+							<div>
+								<p className="pl-4 pr-4 pt-2 text-secondary">
+									{Liferay.Language.get(
+										'inherited-attributes-are-not-taken-into-account-to-include-members-in-segments'
 									)}
-							</ul>
+								</p>
+								<ul className="properties-list">
+									{filteredProperties.length === 0 && (
+										<li className="empty-message">
+											{Liferay.Language.get(
+												'no-results-were-found'
+											)}
+										</li>
+									)}
+
+									{filteredProperties.length > 0 &&
+										filteredProperties.map(
+											({label, name, options, type}) => {
+												const defaultValue = getDefaultValue(
+													{
+														label,
+														name,
+														options,
+														type,
+													}
+												);
+
+												return (
+													<CriteriaSidebarItem
+														className={`color--${key}`}
+														defaultValue={
+															defaultValue
+														}
+														key={name}
+														label={label}
+														name={name}
+														propertyKey={key}
+														type={type}
+													/>
+												);
+											}
+										)}
+								</ul>
+							</div>
 						)}
 					</li>
 				);

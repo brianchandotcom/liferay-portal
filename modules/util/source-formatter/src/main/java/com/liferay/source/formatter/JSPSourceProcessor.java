@@ -199,9 +199,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			getSourceFormatterExcludes(), true);
 
 		for (String filteredFileName : filteredFileNames) {
-			String content = GitUtil.getCurrentBranchFileContent(
-				sourceFormatterArgs.getGitWorkingBranchName(),
-				filteredFileName);
+			String content = GitUtil.getFileContent(filteredFileName);
 			String fileName = StringUtil.replace(
 				sourceFormatterArgs.getBaseDirName() + filteredFileName,
 				CharPool.BACK_SLASH, CharPool.SLASH);

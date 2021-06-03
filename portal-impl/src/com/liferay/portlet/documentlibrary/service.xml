@@ -509,6 +509,11 @@
 			<finder-column name="parentFolderId" />
 			<finder-column name="name" />
 		</finder>
+		<finder db-index="false" name="F_C_P" return-type="Collection">
+			<finder-column comparator="&gt;" name="folderId" />
+			<finder-column name="companyId" />
+			<finder-column name="parentFolderId" />
+		</finder>
 		<finder name="G_M_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="mountPoint" />

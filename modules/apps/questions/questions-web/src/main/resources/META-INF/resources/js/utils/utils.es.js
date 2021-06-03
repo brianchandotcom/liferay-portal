@@ -59,6 +59,17 @@ export function deleteCache() {
 	client.cache.clear();
 }
 
+export function deleteCacheKey(query, variables) {
+	const keyObj = {
+		operation: {
+			query,
+			variables,
+		},
+	};
+	keyObj.fetchOptions = {};
+	client.cache.delete(keyObj);
+}
+
 export function timeDifference(previous, current = new Date()) {
 	const msPerMinute = 60 * 1000;
 	const msPerHour = msPerMinute * 60;

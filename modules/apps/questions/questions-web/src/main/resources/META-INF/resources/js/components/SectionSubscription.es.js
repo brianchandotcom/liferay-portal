@@ -36,9 +36,7 @@ export default ({
 
 	const onCompleted = () => {
 		setSubscription(!subscription);
-		if (onSubscription) {
-			onSubscription(!subscription);
-		}
+		onSubscription?.();
 	};
 
 	const [subscribeSection] = useMutation(subscribeSectionQuery);

@@ -19,7 +19,10 @@ import React, {useEffect, useState} from 'react';
 
 import {subscribeQuery, unsubscribeQuery} from '../utils/client.es';
 
-export default ({question: {id: messageBoardThreadId, subscribed}}) => {
+export default ({
+	onSubscription,
+	question: {id: messageBoardThreadId, subscribed},
+}) => {
 	const [subscription, setSubscription] = useState(false);
 
 	useEffect(() => {
@@ -31,9 +34,10 @@ export default ({question: {id: messageBoardThreadId, subscribed}}) => {
 
 	const changeSubscription = () => {
 		const fn = subscription ? unsubscribe : subscribe;
-		fn({variables: {messageBoardThreadId}}).then((_) =>
-			setSubscription(!subscription)
-		);
+		fn({variables: {messageBoardThreadId}}).then((_) => {
+			setSubscription(!subscription);
+			onSubscription?.();
+		});
 	};
 
 	return (

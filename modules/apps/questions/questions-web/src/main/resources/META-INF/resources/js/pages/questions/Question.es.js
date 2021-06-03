@@ -43,12 +43,14 @@ import useQueryParams from '../../hooks/useQueryParams.es';
 import {
 	createAnswerQuery,
 	getMessages,
+	getSubscriptionsQuery,
 	getThread,
 	markAsAnswerMessageBoardMessageQuery,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
 	dateToBriefInternationalHuman,
+	deleteCacheKey,
 	getContextLink,
 	getFullPath,
 	stripHTML,
@@ -317,6 +319,15 @@ export default withRouter(
 											>
 												{question.actions.subscribe && (
 													<Subscription
+														onSubscription={() =>
+															deleteCacheKey(
+																getSubscriptionsQuery,
+																{
+																	contentType:
+																		'MessageBoardThread',
+																}
+															)
+														}
 														question={question}
 														siteKey={
 															context.siteKey

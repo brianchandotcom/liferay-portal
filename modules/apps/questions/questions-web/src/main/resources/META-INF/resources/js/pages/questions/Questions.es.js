@@ -35,9 +35,11 @@ import {
 	getSectionBySectionTitleQuery,
 	getSectionThreadsQuery,
 	getSectionsQuery,
+	getSubscriptionsQuery,
 	getThreadsQuery,
 } from '../../utils/client.es';
 import {
+	deleteCacheKey,
 	getBasePath,
 	getFullPath,
 	historyPushWithSlug,
@@ -107,6 +109,8 @@ export default withRouter(
 		const [questions, setQuestions] = useState([]);
 		const [search, setSearch] = useState(null);
 		const [section, setSection] = useState({});
+		const [sectionQuery, setSectionQuery] = useState('');
+		const [sectionQueryVariables, setSectionQueryVariables] = useState({});
 		const [totalCount, setTotalCount] = useState(0);
 
 		const queryParams = useQueryParams(location);
@@ -405,19 +409,25 @@ export default withRouter(
 
 		useEffect(() => {
 			if (sectionTitle && sectionTitle !== '0') {
+				const variables = {
+					filter: `title eq '${slugToText(
+						sectionTitle
+					)}' or id eq '${slugToText(sectionTitle)}'`,
+					siteKey: context.siteKey,
+				};
 				getSectionBySectionTitle({
-					variables: {
-						filter: `title eq '${slugToText(
-							sectionTitle
-						)}' or id eq '${slugToText(sectionTitle)}'`,
-						siteKey: context.siteKey,
-					},
-				}).then(({data}) =>
-					setSection(data.messageBoardSections.items[0])
-				);
+					variables,
+				}).then(({data}) => {
+					setSection(data.messageBoardSections.items[0]);
+					setSectionQuery(getSectionBySectionTitleQuery);
+					setSectionQueryVariables(variables);
+				});
 			}
 			else if (sectionTitle === '0') {
-				getSections({variables: {siteKey: context.siteKey}})
+				const variables = {siteKey: context.siteKey};
+				getSections({
+					variables,
+				})
 					.then(({data: {messageBoardSections}}) => ({
 						actions: messageBoardSections.actions,
 						id: 0,
@@ -427,7 +437,11 @@ export default withRouter(
 							messageBoardSections.items &&
 							messageBoardSections.items.length,
 					}))
-					.then(setSection);
+					.then((section) => {
+						setSection(section);
+						setSectionQuery(getSectionsQuery);
+						setSectionQueryVariables(variables);
+					});
 			}
 		}, [
 			sectionTitle,
@@ -547,7 +561,22 @@ export default withRouter(
 							section.actions &&
 							section.actions.subscribe && (
 								<div className="c-ml-3">
-									<SectionSubscription section={section} />
+									<SectionSubscription
+										onSubscription={() => {
+											deleteCacheKey(
+												sectionQuery,
+												sectionQueryVariables
+											);
+											deleteCacheKey(
+												getSubscriptionsQuery,
+												{
+													contentType:
+														'MessageBoardSection',
+												}
+											);
+										}}
+										section={section}
+									/>
 								</div>
 							)}
 					</div>

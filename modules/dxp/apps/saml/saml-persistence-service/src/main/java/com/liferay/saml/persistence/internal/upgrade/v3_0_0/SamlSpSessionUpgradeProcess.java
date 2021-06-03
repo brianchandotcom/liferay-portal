@@ -59,15 +59,17 @@ public class SamlSpSessionUpgradeProcess extends UpgradeProcess {
 					"insert into SamlPeerBinding (samlPeerBindingId, ",
 					"companyId, createDate, userId, userName, deleted, ",
 					"samlNameIdFormat, samlNameIdNameQualifier, ",
-					"samlNameIdSpProvidedId, samlNameIdValue, ",
-					"samlPeerEntityId) select min(samlSpSessionId) + ",
+					"samlNameIdSpNameQualifier, samlNameIdSpProvidedId, ",
+					"samlNameIdValue, samlPeerEntityId) select ",
+					"min(samlSpSessionId) + ",
 					-samlSpSessionIdOffset + latestSamlPeerBindingId,
 					", companyId, min(createDate), userId, userName, '0' as ",
 					"deleted, nameIdFormat, nameIdNameQualifier, null as ",
-					"nameIdSpProvidedId, nameIdValue, samlIdpEntityId from ",
-					"SamlSpSession group by companyId, userId, userName, ",
-					"nameIdFormat, nameIdNameQualifier, ",
-					"nameIdSPNameQualifier, nameIdValue, samlIdpEntityId"));
+					"samlNameIdSpNameQualifier, null as nameIdSpProvidedId, ",
+					"nameIdValue, samlIdpEntityId from SamlSpSession group by ",
+					"companyId, userId, userName, nameIdFormat, ",
+					"nameIdNameQualifier, nameIdSPNameQualifier, nameIdValue, ",
+					"samlIdpEntityId"));
 
 			runSQL(
 				StringBundler.concat(

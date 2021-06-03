@@ -60,12 +60,14 @@ public class SamlIdpSpSessionUpgradeProcess extends UpgradeProcess {
 					"insert into SamlPeerBinding (samlPeerBindingId, ",
 					"companyId, createDate, userId, userName, deleted, ",
 					"samlNameIdFormat, samlNameIdNameQualifier, ",
-					"samlNameIdSpProvidedId, samlNameIdValue, ",
-					"samlPeerEntityId) select min(samlIdpSpSessionId) + ",
+					"samlNameIdSpNameQualifier, samlNameIdSpProvidedId, ",
+					"samlNameIdValue, samlPeerEntityId) select ",
+					"min(samlIdpSpSessionId) + ",
 					-samlIdpSpSessionIdOffset + latestSamlPeerBindingId,
 					", companyId, min(createDate), userId, userName, '0' as ",
 					"deleted, nameIdFormat, null as nameIdNameQualifier, null ",
-					"as nameIdSpProvidedId, nameIdValue, samlSpEntityId from ",
+					"as samlNameIdSpNameQualifier, null as ",
+					"nameIdSpProvidedId, nameIdValue, samlSpEntityId from ",
 					"SamlIdpSpSession group by companyId, userId, userName, ",
 					"samlSpEntityId, nameIdFormat, nameIdValue"));
 

@@ -370,7 +370,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			"lfr-theme:regular:show-maximize-minimize-application-links",
 			Boolean.FALSE.toString(),
 			"lfr-theme:regular:wrap-widget-page-content",
-			Boolean.TRUE.toString());
+			Boolean.TRUE.toString(), "javascript", null);
 
 		// Last merge time
 

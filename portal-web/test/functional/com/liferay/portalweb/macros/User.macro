@@ -2060,6 +2060,11 @@ definition {
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
+		else if (isSet(nodePort)) {
+			var baseURL = "http://localhost:${nodePort}";
+
+			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
+		}
 		else {
 			var baseURL = PropsUtil.get("portal.url");
 

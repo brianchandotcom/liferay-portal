@@ -77,12 +77,6 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 		_initialized = true;
 	}
 
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
-			AkismetServiceConfiguration.class, properties);
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		if (_initialized) {
@@ -114,6 +108,12 @@ public class DeleteAkismetMessageListener extends BaseMessageListener {
 
 		_akismetEntryLocalService.deleteAkismetEntry(
 			new Date(System.currentTimeMillis() - (reportableTime * Time.DAY)));
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		_akismetServiceConfiguration = ConfigurableUtil.createConfigurable(
+			AkismetServiceConfiguration.class, properties);
 	}
 
 	private static final String _DEFAULT_CRON_EXPRESSION = "0 0 0 * * ?";

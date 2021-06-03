@@ -30,6 +30,7 @@ import java.io.InputStreamReader;
 import java.nio.file.Path;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +185,48 @@ public class GitUtil {
 		}
 
 		return fileNames;
+	}
+
+	public static List<String> getModifiedFileNames(
+			String baseDirName, int commitCount)
+		throws Exception {
+
+		return getModifiedFileNames(baseDirName, commitCount, false);
+	}
+
+	public static List<String> getModifiedFileNames(
+			String baseDirName, int commitCount,
+			boolean includeDeletedFileNames)
+		throws Exception {
+
+		if (commitCount <= 0) {
+			return Collections.emptyList();
+		}
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git log --pretty=format:%h");
+
+		String line = null;
+
+		int count = 0;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			count++;
+
+			if (count != commitCount) {
+				continue;
+			}
+
+			List<String> fileNames = getFileNames(baseDirName, line);
+
+			if (includeDeletedFileNames) {
+				fileNames.addAll(getDeletedFileNames(baseDirName, line));
+			}
+
+			return fileNames;
+		}
+
+		return null;
 	}
 
 	public static List<String> getModifiedLastDayFileNames(String baseDirName)

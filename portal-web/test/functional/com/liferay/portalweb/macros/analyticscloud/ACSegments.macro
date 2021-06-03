@@ -114,7 +114,7 @@ definition {
 			value1 = "${atLeastMost}");
 	}
 
-	macro goToSidebarAttrributes {
+	macro goToSidebarAttributes {
 		var key_Criterion = "${criterion}";
 
 		Click(locator1 = "ACSegments#CRITERION_TYPE_DROPDOWN");

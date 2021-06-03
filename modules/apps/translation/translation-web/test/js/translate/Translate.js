@@ -121,7 +121,13 @@ describe('Translate', () => {
 	);
 
 	Liferay.Util.unescapeHTML =
-		Liferay.Util.unescapeHTML || jest.fn((content) => content);
+		Liferay.Util.unescapeHTML ||
+		jest.fn((string) =>
+			string.replace(/&([^;]+);/g, (match) => {
+				return new DOMParser().parseFromString(match, 'text/html')
+					.documentElement.textContent;
+			})
+		);
 
 	afterEach(cleanup);
 
@@ -162,7 +168,7 @@ describe('Translate', () => {
 					fields: {
 						'infoField--content--': '<p>simulacro de contenido</p>',
 						'infoField--description--': '<p>resumen simulado</p>',
-						'infoField--title--': 'título simulado',
+						'infoField--title--': 'título simulado&#39;',
 					},
 					sourceLanguageId: 'en_US',
 					targetLanguageId: 'es_ES',
@@ -208,11 +214,13 @@ describe('Translate', () => {
 				);
 			});
 
-			it('updates the input with the translated message', () => {
+			// LPS-133164
+
+			it('updates the input with the translated message with HTML unescaped character', () => {
 				const {getByDisplayValue} = result;
 
 				expect(
-					getByDisplayValue('título simulado')
+					getByDisplayValue("título simulado'")
 				).toBeInTheDocument();
 			});
 
@@ -237,11 +245,11 @@ describe('Translate', () => {
 				});
 			});
 
-			it('updates the input with the translated message', () => {
+			it('updates the input with the translated message with HTML unescaped character', () => {
 				const {getByDisplayValue} = result;
 
 				expect(
-					getByDisplayValue('título simulado')
+					getByDisplayValue("título simulado'")
 				).toBeInTheDocument();
 			});
 

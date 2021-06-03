@@ -117,7 +117,7 @@ public class QuestionsConfigurationModelListener
 		}
 	}
 
-	private BundleContext _bundleContext;
+	private volatile BundleContext _bundleContext;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

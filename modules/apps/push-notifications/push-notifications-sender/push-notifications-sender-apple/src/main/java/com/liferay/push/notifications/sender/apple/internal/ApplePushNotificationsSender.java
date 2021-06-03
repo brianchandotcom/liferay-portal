@@ -353,6 +353,6 @@ public class ApplePushNotificationsSender implements PushNotificationsSender {
 	@Reference
 	private MessageBus _messageBus;
 
-	private String _topic;
+	private volatile String _topic;
 
 }

@@ -41,12 +41,12 @@
 </tr>
 <tr>
     <td>INDIVIDUALS_TAB</td>
-    <td>//ul[@class='nav-root page-subnav nav nav-underline']//li[contains(@class,'nav-item') and contains(.,'${key_tabName}')]</td>
+    <td>//ul[@class='nav-root']//li[contains(@class,'nav-item') and contains(.,'${key_tabName}')]</td>
     <td></td>
 </tr>
 <tr>
     <td>KNOWN_INDIVIDUALS_LIST_ITEMS</td>
-    <td>//div[contains(@class,'table-title text-truncate') and contains(.,'${key_individualName}')]</td>
+    <td>//div[contains(@class,'table-title') and contains(.,'${key_individualName}')]</td>
     <td></td>
 </tr>
 <tr>

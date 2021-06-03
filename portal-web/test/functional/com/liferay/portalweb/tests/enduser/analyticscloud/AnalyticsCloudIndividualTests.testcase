@@ -22,6 +22,7 @@ definition {
 		Navigator.openURL();
 
 		User.firstLoginUI();
+
 	}
 
 	tearDown {
@@ -36,7 +37,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can connect AC to DXP"
+	@description = "Set custom range filter for known individuals"
 	@priority = "5"
 	test CanSetCustomRangeKnownIndividuals {
 		Navigator.openURL();
@@ -60,13 +61,12 @@ definition {
 
 		ACUtils.launchAC();
 
-		ACProperties.clickPropertyMenuButton();
-
-		ACProperties.clickPropertyMenuItem(propertyName = "Liferay DXP");
+		ACProperties.switchProperty(propertyName = "Liferay DXP");
 
 		ACNavigation.goToIndividuals();
 		ACIndividualsDashboard.goToKnownIndividualsTab();
 		ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Test Test");
+		ACIndividualsDashboard.assertCustomRangeNotApplied(timeRange = "July 1, 2020 - July 13, 2020");
 		ACTimeFilter.setCustomRange(
 			endDay = "13",
 			endMonth = "July",

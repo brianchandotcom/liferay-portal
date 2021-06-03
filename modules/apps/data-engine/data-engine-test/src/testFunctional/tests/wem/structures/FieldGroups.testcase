@@ -659,7 +659,7 @@ definition {
 	@priority = "3"
 	test EditFieldOnDuplicatedFieldGroup {
 		property portal.acceptance = "quarantine";
-		
+
 		DataEngine.addField(
 			fieldFieldLabel = "Text",
 			fieldName = "Text");

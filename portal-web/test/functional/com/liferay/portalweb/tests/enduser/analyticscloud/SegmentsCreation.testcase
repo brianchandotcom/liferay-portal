@@ -172,4 +172,52 @@ definition {
 		ACSegments.viewIncludeAnonymousLabel();
 	}
 
+	@description = "Create a static segment with individual"
+	@priority = "5"
+	test CanCreateStaticSegmentWithIndividuals {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createStaticSegment();
+
+		ACSegments.nameSegment(segmentName = "Static Segment Test");
+
+		ACSegments.addStaticMember(tableMember = "userfn userln");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Static Segment Test");
+
+		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#SEGMENT_LABEL",
+			value1 = "STATIC SEGMENT");
+
+		AssertElementPresent(
+			key_userName = "userfn userln",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
 }

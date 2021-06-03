@@ -150,17 +150,12 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add user with tag") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Users and Organizations");
-
-			User.addCP(
-				userEmailAddress = "Tag@liferay.com",
-				userFirstName = "UserTag",
-				userLastName = "UserTag",
-				userScreenName = "UserTag",
-				userTag = "tagtest");
+			JSONUser.addUser(
+				assetTagNames = "tagname",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
 		}
 
 		task ("Go to segments portlet") {
@@ -170,21 +165,25 @@ definition {
 		task ("Edit the segment") {
 			Segmentation.editSegment(entry = "EditSegment Test");
 
-			Segmentation.fillTitle(titleField = "EditSegmentUserByUserTag Test");
-
 			Segmentation.deleteProperties();
 
 			Segmentation.addProperties(propertyOption = "Tag");
 
-			Segmentation.selectTag(tagOption = "tagtest");
+			Segmentation.fillProperty(selectLink = "tagname");
+
+			Segmentation.fillTitle(titleField = "EditSegmentUserByUserTag Test");
 
 			Button.clickSave();
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert segment edited") {
 			Segmentation.editSegment(entry = "EditSegmentUserByUserTag Test");
 
-			Segmentation.viewSegment(propertyField = "tagtest");
+			Segmentation.viewSegment(
+				criterion = "select-input",
+				value = "tagname");
 		}
 	}
 

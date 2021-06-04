@@ -69,11 +69,9 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchBySimilarWords {
-
 		WorkflowMetricsProcessListView.metricsWorkflowSearch(
-			workflowSearchName = "Single Ap",
-			workflowProcessName = "Single Approver");
-
+			workflowProcessName = "Single Approver",
+			workflowSearchName = "Single Ap");
 	}
 
 	@description = "LPS-88573 - Verify that the Clear All option cleans the search results"

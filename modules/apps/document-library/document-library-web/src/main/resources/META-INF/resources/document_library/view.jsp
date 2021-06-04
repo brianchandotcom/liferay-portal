@@ -169,7 +169,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 									</c:otherwise>
 								</c:choose>
 
-								<div class="lfr-template" id="<portlet:namespace />appViewEntryTemplates">
+								<div class="d-none" id="<portlet:namespace />appViewEntryTemplates">
 
 									<%
 									String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/default.png";

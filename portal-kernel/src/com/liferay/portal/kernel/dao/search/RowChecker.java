@@ -212,7 +212,7 @@ public class RowChecker {
 		sb.append("onClick=\"Liferay.Util.checkAll(AUI().one(this).ancestor(");
 		sb.append("'.table'), ");
 		sb.append(checkBoxRowIds);
-		sb.append(", this, 'tr:not(.lfr-template)');\"></label>");
+		sb.append(", this, 'tr:not(.d-none)');\"></label>");
 
 		return sb.toString();
 	}
@@ -258,7 +258,7 @@ public class RowChecker {
 
 		sb.append("onClick=\"Liferay.Util.rowCheckerCheckAllBox(AUI().");
 		sb.append("one(this).ancestor('.table'), AUI().one(this).");
-		sb.append("ancestor('tr:not(.lfr-template)'), ");
+		sb.append("ancestor('tr:not(.d-none)'), ");
 		sb.append(checkBoxRowIds);
 		sb.append(", ");
 		sb.append(checkBoxAllRowIds);

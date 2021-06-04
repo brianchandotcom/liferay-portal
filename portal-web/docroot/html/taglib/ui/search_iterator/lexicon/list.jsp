@@ -363,7 +363,7 @@ if (fixedHeader) {
 			%>
 
 			<c:if test="<%= headerNames != null %>">
-				<tr class="lfr-template <%= searchContainerRowCssClass %>" data-qa-id="row">
+				<tr class="d-none <%= searchContainerRowCssClass %>" data-qa-id="row">
 
 					<%
 					for (int i = 0; i < headerNames.size(); i++) {

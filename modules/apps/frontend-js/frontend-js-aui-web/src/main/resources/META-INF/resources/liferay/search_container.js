@@ -17,7 +17,7 @@ AUI.add(
 	(A) => {
 		var Lang = A.Lang;
 
-		var CSS_TEMPLATE = 'lfr-template';
+		var CSS_TEMPLATE = 'd-none';
 
 		var STR_BLANK = '';
 

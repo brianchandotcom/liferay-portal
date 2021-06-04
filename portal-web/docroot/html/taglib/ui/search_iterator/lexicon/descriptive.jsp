@@ -144,7 +144,7 @@
 			}
 			%>
 
-			<li class="lfr-template list-group-item"></li>
+			<li class="d-none list-group-item"></li>
 		</ul>
 
 	<%

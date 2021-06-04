@@ -1,22 +1,23 @@
 definition {
 
-    macro viewSiteOverviewDashboardCards {
-        WaitForElementPresent(locator1 = "ACSites#ACTIVITIES_CARD");
+	macro viewSiteOverviewDashboardCards {
+		WaitForElementPresent(locator1 = "ACSites#ACTIVITIES_CARD");
 
-        AssertElementPresent(locator1 = "ACSites#TOP_PAGES_CARD");
+		AssertElementPresent(locator1 = "ACSites#TOP_PAGES_CARD");
 
-        AssertElementPresent(locator1 = "ACSites#ACQUISITIONS_CARD");
+		AssertElementPresent(locator1 = "ACSites#ACQUISITIONS_CARD");
 
-        AssertElementPresent(locator1 = "ACSites#VISITORS_BY_DAY_AND_TIME_CARD");
+		AssertElementPresent(locator1 = "ACSites#VISITORS_BY_DAY_AND_TIME_CARD");
 
-        AssertElementPresent(locator1 = "ACSites#SEARCH_TERMS_CARD");
+		AssertElementPresent(locator1 = "ACSites#SEARCH_TERMS_CARD");
 
-        AssertElementPresent(locator1 = "ACSites#INTERESTS_CARD");
+		AssertElementPresent(locator1 = "ACSites#INTERESTS_CARD");
 
-        AssertElementPresent(locator1 = "ACSites#SESSIONS_BY_LOCATION_CARD");
+		AssertElementPresent(locator1 = "ACSites#SESSIONS_BY_LOCATION_CARD");
 
-        AssertElementPresent(locator1 = "ACSites#SESSION_TECHNOLOGY_CARD");
+		AssertElementPresent(locator1 = "ACSites#SESSION_TECHNOLOGY_CARD");
 
-        AssertElementPresent(locator1 = "ACSites#COHORT_ANALYSIS_CARD");
-    }
+		AssertElementPresent(locator1 = "ACSites#COHORT_ANALYSIS_CARD");
+	}
+
 }

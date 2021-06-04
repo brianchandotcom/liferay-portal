@@ -29,17 +29,18 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-    @description = "Sites Overview Cards appear on load"
+	@description = "Sites Overview Cards appear on load"
 	@priority = "3"
 	test CanViewSitesOverviewDashboardCards {
-        ACDXPSettings.connectDXPtoAnalyticsCloud();
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
 
-        ACUtils.launchAC();
+		ACUtils.launchAC();
 
 		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
 
-        ACNavigation.goToSites();
+		ACNavigation.goToSites();
 
-        ACSites.viewSiteOverviewDashboardCards();
-    }
+		ACSites.viewSiteOverviewDashboardCards();
+	}
+
 }

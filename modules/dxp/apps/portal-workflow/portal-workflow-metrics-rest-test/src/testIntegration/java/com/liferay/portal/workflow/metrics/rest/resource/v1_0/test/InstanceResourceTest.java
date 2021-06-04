@@ -91,21 +91,23 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 	public void testGetProcessInstance() throws Exception {
 		Instance instance = randomInstance();
 
-		List<SLAResult> slaResults = Arrays.asList(
-			_toSLAResult(true, SLAResult.Status.NEW),
-			_toSLAResult(true, SLAResult.Status.NEW),
-			_toSLAResult(true, SLAResult.Status.PAUSED),
-			_toSLAResult(true, SLAResult.Status.PAUSED),
-			_toSLAResult(true, SLAResult.Status.RUNNING),
-			_toSLAResult(true, SLAResult.Status.RUNNING),
-			_toSLAResult(true, SLAResult.Status.RUNNING),
-			_toSLAResult(true, SLAResult.Status.STOPPED),
-			_toSLAResult(true, SLAResult.Status.STOPPED),
-			_toSLAResult(true, SLAResult.Status.STOPPED));
-
-		slaResults.sort(Comparator.comparing(SLAResult::getRemainingTime));
-
-		instance.setSlaResults((SLAResult[])slaResults.toArray());
+		instance.setSlaResults(
+			Stream.of(
+				_toSLAResult(true, SLAResult.Status.NEW),
+				_toSLAResult(true, SLAResult.Status.NEW),
+				_toSLAResult(true, SLAResult.Status.PAUSED),
+				_toSLAResult(true, SLAResult.Status.PAUSED),
+				_toSLAResult(true, SLAResult.Status.RUNNING),
+				_toSLAResult(true, SLAResult.Status.RUNNING),
+				_toSLAResult(true, SLAResult.Status.RUNNING),
+				_toSLAResult(true, SLAResult.Status.STOPPED),
+				_toSLAResult(true, SLAResult.Status.STOPPED),
+				_toSLAResult(true, SLAResult.Status.STOPPED)
+			).sorted(
+				Comparator.comparing(SLAResult::getRemainingTime)
+			).toArray(
+				SLAResult[]::new
+			));
 
 		testGetProcessInstancesPage_addInstance(_process.getId(), instance);
 

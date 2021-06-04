@@ -21,7 +21,7 @@
 	</fileSets>
 	<requiredProperties>
 		<requiredProperty key="liferayVersion">
-			<validationRegex>^[0-7]\.[0-9]\.[1-9][0-9]*$</validationRegex>
+			<validationRegex>^[0-7]\.\d+\.\d+.*</validationRegex>
 		</requiredProperty>
 		<requiredProperty key="product">
 			<defaultValue>portal</defaultValue>

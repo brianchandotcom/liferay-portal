@@ -36,7 +36,7 @@
 		<requiredProperty key="className">
 		</requiredProperty>
 		<requiredProperty key="liferayVersion">
-			<validationRegex>^[0-7]\.[0-9]\.[1-9][0-9]*$</validationRegex>
+			<validationRegex>^[0-7]\.\d+\.\d+.*</validationRegex>
 		</requiredProperty>
 		<requiredProperty key="packageJsonVersion">
 			<defaultValue>1.0.0</defaultValue>

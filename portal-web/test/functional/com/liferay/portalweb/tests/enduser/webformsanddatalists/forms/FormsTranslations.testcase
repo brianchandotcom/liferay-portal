@@ -569,14 +569,43 @@ definition {
 	}
 
 	@description = "Verify that the properties of a field remain the same when adding a translation"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test MaintainPropertiesFromDefaultLanguage {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133526 MaintainPropertiesFromDefaultLanguage pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		FormViewBuilder.setPlaceholder(fieldValue = "Test Placeholder Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		FormViewBuilder.assertPlaceholderTextAtSidebar(placeHolder = "Test Placeholder Text");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		AssertElementPresent(
+			key_fieldName = "Text",
+			locator1 = "FormFields#TEXT_FIELD",
+			value1 = "Test Placeholder Text");
 	}
 
 	@description = "Verify that a Multiple Selection field's Label, Help Text and Options can be translated"

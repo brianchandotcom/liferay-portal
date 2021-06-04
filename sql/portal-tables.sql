@@ -1,23 +1,3 @@
-create table Account_ (
-	mvccVersion LONG default 0 not null,
-	accountId LONG not null primary key,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	parentAccountId LONG,
-	name VARCHAR(75) null,
-	legalName VARCHAR(75) null,
-	legalId VARCHAR(75) null,
-	legalType VARCHAR(75) null,
-	sicCode VARCHAR(75) null,
-	tickerSymbol VARCHAR(75) null,
-	industry VARCHAR(75) null,
-	type_ VARCHAR(75) null,
-	size_ VARCHAR(75) null
-);
-
 create table Address (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

@@ -58,9 +58,7 @@ definition {
 		ACProperties.switchProperty(propertyName = "Liferay DXP");
 
 		ACNavigation.goToIndividuals();
-		ACIndividualsDashboard.goToKnownIndividualsTab();
-		ACIndividualsDashboard.goToKnownIndividualDetails(individualName = "Test Test");
-		ACIndividualsDashboard.assertCustomRangeNotApplied(timeRange = "July 1, 2020 - July 13, 2020");
+
 		ACTimeFilter.setCustomRange(
 			endDay = "13",
 			endMonth = "July",
@@ -68,7 +66,10 @@ definition {
 			startDay = "1",
 			startMonth = "July",
 			startYear = "2020");
-		ACIndividualsDashboard.assertIndividualsActivitiesTimeRange(timeRange = "July 1, 2020 - July 13, 2020");
+
+		ACTimeFilter.assertCurrentTimeFilterRange(timeFilterRange = "Jul 1, 2020 - Jul 13, 2020");
+
+		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 	}
 
 }

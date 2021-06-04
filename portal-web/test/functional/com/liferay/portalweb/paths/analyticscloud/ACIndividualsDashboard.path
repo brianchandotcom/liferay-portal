@@ -54,6 +54,11 @@
     <td>//div[contains(@class,'activities-date') and contains(.,'${key_timeRange}')]</td>
     <td></td>
 </tr>
+<tr>
+    <td>ACTIVE_INDIVIDUAL_CHART</td>
+    <td>//*[contains(@class,'recharts-layer recharts-bar-rectangle')]/*[contains(@fill-opacity,'1')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

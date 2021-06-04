@@ -323,6 +323,8 @@ definition {
 	@description = "This test ensures translations persists for N languages and N field groups levels."
 	@priority = "5"
 	test TranslateWebContentFromStructureWithNLevelNestedFieldsAndToNLanguages {
+		property portal.upstream = "quarantine";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");

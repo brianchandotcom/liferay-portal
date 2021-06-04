@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserSmsException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.User;
@@ -136,12 +135,6 @@ public class UpdateUserContactInformationFormMVCActionCommand
 			contact.setUserName(StringPool.BLANK);
 			contact.setClassName(User.class.getName());
 			contact.setClassPK(user.getUserId());
-
-			Company company = _companyLocalService.getCompany(
-				user.getCompanyId());
-
-			contact.setAccountId(company.getAccountId());
-
 			contact.setParentContactId(
 				ContactConstants.DEFAULT_PARENT_CONTACT_ID);
 		}

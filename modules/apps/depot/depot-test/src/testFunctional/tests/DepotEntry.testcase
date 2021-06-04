@@ -547,7 +547,9 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		Pause(locator1 = "3000");
+		AssertElementPresent(
+			key_card = "Depot 1",
+			locator1 = "Card#CARD_TITLE");
 
 		Search.searchCP(searchTerm = "Depot");
 

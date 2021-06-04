@@ -349,11 +349,34 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeEdited {
+
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132266 LabelCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormViewBuilder.editText(
+			fieldName = "Label",
+			fieldValue = "Test Multiple Selection");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Multiple Selection");
+		
 	}
 
 	@description = "Verify that options can be added"

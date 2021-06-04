@@ -15,6 +15,8 @@
 package com.liferay.document.library.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -210,6 +212,8 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			FileEntry fileEntry, Map<String, String> map)
 		throws Exception {
 
+		map.put(
+			Field.ASSET_ENTRY_ID, String.valueOf(_getAssetEntryId(fileEntry)));
 		map.put(Field.CLASS_NAME_ID, "0");
 		map.put(Field.CLASS_PK, "0");
 		map.put(Field.COMPANY_ID, String.valueOf(fileEntry.getCompanyId()));
@@ -227,6 +231,9 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(Field.USER_ID, String.valueOf(fileEntry.getUserId()));
 		map.put(
 			Field.USER_NAME, StringUtil.toLowerCase(fileEntry.getUserName()));
+		map.put(
+			"assetEntryId_sortable",
+			String.valueOf(_getAssetEntryId(fileEntry)));
 		map.put("classTypeId", "0");
 		map.put("content_ja_JP", getContents(fileEntry));
 		map.put(
@@ -379,8 +386,22 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 	protected FileEntrySearchFixture fileEntrySearchFixture;
 
+	private long _getAssetEntryId(FileEntry fileEntry) {
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
+		if (assetEntry == null) {
+			return 0;
+		}
+
+		return assetEntry.getEntryId();
+	}
+
 	@Inject
 	private static DDMIndexer _ddmIndexer;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;

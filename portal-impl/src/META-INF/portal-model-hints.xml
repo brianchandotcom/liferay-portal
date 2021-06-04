@@ -483,30 +483,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.portal.kernel.model.Account">
-		<default-hints>
-			<hint name="display-width">210</hint>
-		</default-hints>
-		<field name="mvccVersion" type="long" />
-		<field name="accountId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="parentAccountId" type="long" />
-		<field name="name" type="String">
-			<validator name="required" />
-		</field>
-		<field name="legalName" type="String" />
-		<field name="legalId" type="String" />
-		<field name="legalType" type="String" />
-		<field name="sicCode" type="String" />
-		<field name="tickerSymbol" type="String" />
-		<field name="industry" type="String" />
-		<field name="type" type="String" />
-		<field name="size" type="String" />
-	</model>
 	<model name="com.liferay.portal.kernel.model.Address">
 		<default-hints>
 			<hint name="display-width">210</hint>

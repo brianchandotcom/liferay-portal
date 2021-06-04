@@ -57,9 +57,6 @@ public interface Company extends CompanyModel, PersistedModel {
 
 	public int compareTo(Company company);
 
-	public Account getAccount()
-		throws com.liferay.portal.kernel.exception.PortalException;
-
 	public String getAdminName();
 
 	public String getAuthType();

@@ -104,10 +104,6 @@
 	<bean class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationFinderImpl" id="com.liferay.exportimport.kernel.service.persistence.ExportImportConfigurationFinder" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" id="com.liferay.exportimport.kernel.service.StagingLocalService" />
 	<bean class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" id="com.liferay.exportimport.kernel.service.StagingService" />
-	<bean class="com.liferay.portal.service.impl.AccountLocalServiceImpl" id="com.liferay.portal.kernel.service.AccountLocalService" />
-	<bean class="com.liferay.portal.service.impl.AccountServiceImpl" id="com.liferay.portal.kernel.service.AccountService" />
-	<bean class="com.liferay.portal.service.persistence.impl.AccountModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.AccountModelArgumentsResolver" />
-	<bean class="com.liferay.portal.service.persistence.impl.AccountPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.AccountPersistence" />
 	<bean class="com.liferay.portal.service.impl.AddressLocalServiceImpl" id="com.liferay.portal.kernel.service.AddressLocalService" />
 	<bean class="com.liferay.portal.service.impl.AddressServiceImpl" id="com.liferay.portal.kernel.service.AddressService" />
 	<bean class="com.liferay.portal.service.persistence.impl.AddressModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.AddressModelArgumentsResolver" />

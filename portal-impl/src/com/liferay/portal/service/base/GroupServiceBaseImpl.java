@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.service.persistence.AccountPersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
 import com.liferay.portal.kernel.service.persistence.GroupFinder;
@@ -195,69 +194,6 @@ public abstract class GroupServiceBaseImpl
 			counterLocalService) {
 
 		this.counterLocalService = counterLocalService;
-	}
-
-	/**
-	 * Returns the account local service.
-	 *
-	 * @return the account local service
-	 */
-	public com.liferay.portal.kernel.service.AccountLocalService
-		getAccountLocalService() {
-
-		return accountLocalService;
-	}
-
-	/**
-	 * Sets the account local service.
-	 *
-	 * @param accountLocalService the account local service
-	 */
-	public void setAccountLocalService(
-		com.liferay.portal.kernel.service.AccountLocalService
-			accountLocalService) {
-
-		this.accountLocalService = accountLocalService;
-	}
-
-	/**
-	 * Returns the account remote service.
-	 *
-	 * @return the account remote service
-	 */
-	public com.liferay.portal.kernel.service.AccountService
-		getAccountService() {
-
-		return accountService;
-	}
-
-	/**
-	 * Sets the account remote service.
-	 *
-	 * @param accountService the account remote service
-	 */
-	public void setAccountService(
-		com.liferay.portal.kernel.service.AccountService accountService) {
-
-		this.accountService = accountService;
-	}
-
-	/**
-	 * Returns the account persistence.
-	 *
-	 * @return the account persistence
-	 */
-	public AccountPersistence getAccountPersistence() {
-		return accountPersistence;
-	}
-
-	/**
-	 * Sets the account persistence.
-	 *
-	 * @param accountPersistence the account persistence
-	 */
-	public void setAccountPersistence(AccountPersistence accountPersistence) {
-		this.accountPersistence = accountPersistence;
 	}
 
 	/**
@@ -2547,20 +2483,6 @@ public abstract class GroupServiceBaseImpl
 	)
 	protected com.liferay.counter.kernel.service.CounterLocalService
 		counterLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.AccountLocalService.class
-	)
-	protected com.liferay.portal.kernel.service.AccountLocalService
-		accountLocalService;
-
-	@BeanReference(
-		type = com.liferay.portal.kernel.service.AccountService.class
-	)
-	protected com.liferay.portal.kernel.service.AccountService accountService;
-
-	@BeanReference(type = AccountPersistence.class)
-	protected AccountPersistence accountPersistence;
 
 	@BeanReference(
 		type = com.liferay.portal.kernel.service.ClassNameLocalService.class

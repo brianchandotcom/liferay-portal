@@ -199,9 +199,9 @@ public class AssetListEntryUsagesUtil {
 
 			addItemsJSONArray.put(
 				JSONUtil.put(
-					"title", assetPublisherAddItemHolder.getModelResource()
+					"href", assetPublisherAddItemHolder.getPortletURL()
 				).put(
-					"url", assetPublisherAddItemHolder.getPortletURL()
+					"label", assetPublisherAddItemHolder.getModelResource()
 				));
 		}
 

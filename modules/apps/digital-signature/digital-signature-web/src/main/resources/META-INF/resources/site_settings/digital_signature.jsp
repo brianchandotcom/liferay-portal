@@ -20,6 +20,22 @@
 DigitalSignatureConfiguration digitalSignatureConfiguration = (DigitalSignatureConfiguration)request.getAttribute(DigitalSignatureConfiguration.class.getName());
 %>
 
+<div class="form-group row">
+	<div class="col-md-12">
+		<label class="control-label">
+			<liferay-ui:message key="site-settings-strategy" />
+
+			<liferay-ui:icon-help message="site-settings-strategy-description" />
+		</label>
+	</div>
+
+	<c:if test="<%= Validator.isNotNull(digitalSignatureConfiguration.siteSettingsStrategy()) %>">
+		<div class="col-md-12">
+			<liferay-ui:message key='<%= "site-settings-strategy-" + digitalSignatureConfiguration.siteSettingsStrategy() %>' />
+		</div>
+	</c:if>
+</div>
+
 <div class="row">
 	<div class="col-md-12">
 

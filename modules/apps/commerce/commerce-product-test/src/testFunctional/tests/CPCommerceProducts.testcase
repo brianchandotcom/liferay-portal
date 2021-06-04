@@ -282,6 +282,26 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a test for COMMERCE-6747. ConfigureGroupedProduct"
+	@ignore = "true"
+	@priority = "3"
+	test ConfigureGroupedProduct {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6747 ConfigureGroupedProduct
+
+	}
+
+	@description = "This is a test for COMMERCE-6751. ConfigureVirtualProduct"
+	@ignore = "true"
+	@priority = "3"
+	test ConfigureVirtualProduct {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-6751 ConfigureVirtualProduct
+
+	}
+
 	test CreateProductBundleWithPriceTypeDynamic {
 		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";

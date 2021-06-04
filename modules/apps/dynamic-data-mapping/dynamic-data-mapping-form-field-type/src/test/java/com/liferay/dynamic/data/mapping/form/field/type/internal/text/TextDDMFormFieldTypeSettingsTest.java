@@ -283,8 +283,7 @@ public class TextDDMFormFieldTypeSettingsTest
 				"\"manual\") and getValue('autocomplete'))",
 			actions.get(10));
 		Assert.assertEquals(
-			"setVisible('requiredErrorMessage', getValue('required'))",
-			actions.get(11));
+			"setVisible('requiredErrorMessage', false)", actions.get(11));
 
 		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
 

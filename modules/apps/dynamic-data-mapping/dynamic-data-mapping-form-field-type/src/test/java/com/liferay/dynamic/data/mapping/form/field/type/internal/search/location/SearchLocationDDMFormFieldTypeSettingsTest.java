@@ -113,8 +113,7 @@ public class SearchLocationDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(sb.toString(), actions.get(1));
 
 		Assert.assertEquals(
-			"setVisible('requiredErrorMessage', getValue('required'))",
-			actions.get(2));
+			"setVisible('requiredErrorMessage', false)", actions.get(2));
 	}
 
 	@Override

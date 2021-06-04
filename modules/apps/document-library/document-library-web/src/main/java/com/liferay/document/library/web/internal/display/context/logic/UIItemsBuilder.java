@@ -292,6 +292,17 @@ public class UIItemsBuilder {
 			).buildString());
 	}
 
+	public void addCollectDigitalSignatureToolbarItem(
+			List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		_addJavaScriptUIItem(
+			new JavaScriptToolbarItem(), toolbarItems,
+			DLUIItemKeys.COLLECT_DIGITAL_SIGNATURE,
+			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
+			null);
+	}
+
 	public void addCompareToMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 

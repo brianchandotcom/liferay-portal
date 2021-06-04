@@ -100,6 +100,8 @@ public class DLViewEntriesDisplayContext {
 		if (DLFileEntryPermission.contains(
 				permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 
+			availableActions.add("collectDigitalSignature");
+
 			availableActions.add("move");
 
 			if (fileEntry.isCheckedOut()) {

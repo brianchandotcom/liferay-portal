@@ -17,6 +17,8 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfiguration;
+import com.liferay.digital.signature.configuration.DigitalSignatureConfigurationUtil;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -119,7 +121,21 @@ public class DLAdminManagementToolbarDisplayContext
 		boolean stagedActions = _isStagedActions();
 		User user = _themeDisplay.getUser();
 
+		DigitalSignatureConfiguration digitalSignatureConfiguration =
+			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
+				_themeDisplay.getCompanyId(), _themeDisplay.getSiteGroupId());
+
 		return DropdownItemListBuilder.add(
+			() -> stagedActions && digitalSignatureConfiguration.enabled(),
+			dropdownItem -> {
+				dropdownItem.putData("action", "collectDigitalSignature");
+				dropdownItem.setIcon("signature");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "collect-digital-signature"));
+				dropdownItem.setQuickAction(true);
+			}
+		).add(
 			() -> stagedActions,
 			dropdownItem -> {
 				dropdownItem.putData("action", "download");

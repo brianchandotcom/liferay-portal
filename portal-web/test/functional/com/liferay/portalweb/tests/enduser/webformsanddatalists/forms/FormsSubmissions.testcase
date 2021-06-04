@@ -183,8 +183,6 @@ definition {
 			fieldLabel = "Text",
 			fieldName = "${textFieldName}",
 			fieldValue = "Test Text");
-
-			
 	}
 
 	@description = "Verify that a Form that is partially filled out can be submitted"

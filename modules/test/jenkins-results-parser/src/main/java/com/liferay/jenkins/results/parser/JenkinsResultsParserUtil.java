@@ -808,6 +808,28 @@ public class JenkinsResultsParserUtil {
 		return null;
 	}
 
+	public static Long getAverage(List<Long> numbers) {
+		if ((numbers == null) || numbers.isEmpty()) {
+			return 0L;
+		}
+
+		List<Long> numbersToAverage = new ArrayList<>(numbers);
+
+		numbersToAverage.removeAll(Collections.singleton(null));
+
+		if (numbersToAverage.isEmpty()) {
+			return 0L;
+		}
+
+		long total = 0L;
+
+		for (Long number : numbersToAverage) {
+			total += number;
+		}
+
+		return total / numbersToAverage.size();
+	}
+
 	public static String getAxisVariable(JSONObject jsonObject) {
 		JSONArray actionsJSONArray = (JSONArray)jsonObject.get("actions");
 

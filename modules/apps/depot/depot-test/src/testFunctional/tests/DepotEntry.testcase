@@ -55,6 +55,43 @@ definition {
 		}
 	}
 
+	@description = "This tests the basic flow the user will take to add a depot through the UI."
+	@priority = "5"
+	@refactordone
+	@uitest
+	test CanAddDepot {
+		property environment.acceptance = "true";
+		property portal.acceptance = "true";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Asset Libraries");
+
+		Depot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
+	}
+
+	@description = "This ensures that an empty depot can be deleted."
+	@priority = "5"
+	@refactordone
+	test CanDeleteEmptyDepot {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.deleteCP(depotName = "Test Depot Name");
+
+		Depot.viewDefaultCP();
+	}
+
 	@description = "This ensures that a depot containing a folder and some files can be deleted."
 	@priority = "4"
 	@refactordone
@@ -86,6 +123,28 @@ definition {
 		Depot.deleteCP(depotName = "Test Depot Name");
 
 		Depot.viewDefaultCP();
+	}
+
+	@description = "This ensures that the depot name and description can be edited."
+	@priority = "5"
+	@refactordone
+	test CanEditDepotNameAndDescription {
+		property portal.acceptance = "true";
+
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.editDepot(
+			depotDescriptionEdit = "This is an edited description of a depot",
+			depotName = "Test Depot Name",
+			depotNameEdit = "Edited Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 	}
 
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
@@ -583,45 +642,6 @@ definition {
 		PortletEntry.selectAll();
 
 		Depot.deleteCP(deletions = "true");
-
-		Depot.viewDefaultCP();
-	}
-
-	@description = "This ensures that a depot can be added, edited and deleted in the default view."
-	@priority = "5"
-	@refactordone
-	@uitest
-	test Smoke {
-		property environment.acceptance = "true";
-		property portal.acceptance = "true";
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Asset Libraries");
-
-		Depot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.editDepot(
-			depotDescriptionEdit = "This is an edited description of a depot",
-			depotName = "Test Depot Name",
-			depotNameEdit = "Edited Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.deleteCP(depotName = "Test Depot Name");
 
 		Depot.viewDefaultCP();
 	}

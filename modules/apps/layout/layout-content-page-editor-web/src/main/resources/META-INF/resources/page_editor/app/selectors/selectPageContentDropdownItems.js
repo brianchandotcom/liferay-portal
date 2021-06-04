@@ -50,9 +50,9 @@ export const selectPageContentDropdownItems = (classPK) => (state) => {
 
 	if (addItems) {
 		dropdownItems.push({
-			child: 'addItemsMenu',
+			items: addItems,
 			label: Liferay.Language.get('add-items'),
-			menuItems: addItems,
+			type: 'contextual',
 		});
 	}
 

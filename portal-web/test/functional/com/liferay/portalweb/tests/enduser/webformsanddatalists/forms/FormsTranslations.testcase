@@ -208,14 +208,93 @@ definition {
 	}
 
 	@description = "Verify that a Multiple Selection field's Label, Help Text and Options can be translated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test MultipleSelectionFieldCanBeTranslated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133503 MultipleSelectionFieldCanBeTranslated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection",
+			formPageNumber = "0");
+
+		FormViewBuilder.editText(
+			fieldName = "Help Text",
+			fieldValue = "Help Text Test");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option One",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option Two",
+			rowNumber = "2");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.editFieldLabelMetal(fieldValue = "Selección Múltiple");
+
+		FormViewBuilder.setFieldHelpText(fieldLabel = "Texto de Ayuda");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Opción Uno",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Opción Dos",
+			rowNumber = "2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Multiple Selection");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Multiple Selection",
+			fieldValue = "Help Text Test");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option One",
+			fieldName = "Multiple Selection");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option Two",
+			fieldName = "Multiple Selection");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Selección Múltiple");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Selección Múltiple",
+			fieldValue = "Texto de Ayuda");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Opción Uno",
+			fieldName = "Selección Múltiple");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Opción Dos",
+			fieldName = "Selección Múltiple");
 	}
 
 	@description = "Verify that a Numeric field's Label, Placeholder Text and Help Text can be translated"

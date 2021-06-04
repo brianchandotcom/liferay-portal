@@ -606,7 +606,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
-		<field name="accountId" type="long" />
 		<field name="parentContactId" type="long" />
 		<field name="emailAddress" type="String">
 			<hint-collection name="EMAIL-ADDRESS" />

@@ -32,8 +32,6 @@ if (digitalSignatureTitle != null) {
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
-			).put(
-				"fileEntryId", (Long)request.getAttribute(DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRY_ID)
 			).build()
 		%>'
 	/>

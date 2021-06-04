@@ -35,7 +35,7 @@ const defaultRecipient = {
 };
 
 const DigitalSignatureForm = ({
-	fileEntryId,
+	fileEntryIds,
 	history,
 	showDocumentLibraryInput,
 }) => {
@@ -56,7 +56,7 @@ const DigitalSignatureForm = ({
 			[`${portletNamespace}emailMessage`]: values.emailMessage,
 			[`${portletNamespace}emailSubject`]: values.emailSubject,
 			[`${portletNamespace}envelopeName`]: values.envelopeName,
-			[`${portletNamespace}fileEntryId`]: values.fileEntryId,
+			[`${portletNamespace}fileEntryIds`]: values.fileEntryIds,
 			[`${portletNamespace}recipients`]: JSON.stringify(
 				values.recipients
 			),
@@ -105,7 +105,7 @@ const DigitalSignatureForm = ({
 					emailMessage: [(v) => maxLength(v, 10000)],
 					emailSubject: [(v) => maxLength(v, 100), required],
 					envelopeName: [(v) => maxLength(v, 100), required],
-					fileEntryId: [required],
+					fileEntryIds: [required],
 				},
 				values
 			),
@@ -145,7 +145,7 @@ const DigitalSignatureForm = ({
 			emailMessage: '',
 			emailSubject: '',
 			envelopeName: '',
-			fileEntryId,
+			fileEntryIds,
 			recipients: [defaultRecipient],
 		},
 		onSubmit,

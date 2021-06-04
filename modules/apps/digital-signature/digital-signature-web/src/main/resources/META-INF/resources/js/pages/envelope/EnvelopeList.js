@@ -72,9 +72,6 @@ const EnvelopeList = ({history}) => {
 						},
 						name: Liferay.Language.get('download-files'),
 					},
-					{
-						name: Liferay.Language.get('move'),
-					},
 				]}
 				addButton={() => (
 					<ClayButtonWithIcon

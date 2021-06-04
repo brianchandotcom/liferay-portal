@@ -67,7 +67,7 @@ const DigitalSignatureFormBase = ({
 					error={errors.fileEntryId}
 					onChange={(_, value) => {
 						const fileEntryId = JSON.parse(value).fileEntryId;
-						setFieldValue('fileEntryId', fileEntryId);
+						setFieldValue('fileEntryIds', [fileEntryId]);
 					}}
 				/>
 			)}

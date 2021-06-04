@@ -30,11 +30,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ResourceRequest;
@@ -91,18 +92,28 @@ public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 	private List<DSDocument> _getDSDocuments(ResourceRequest resourceRequest)
 		throws Exception {
 
-		FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-			ParamUtil.getLong(resourceRequest, "fileEntryId"));
+		List<FileEntry> fileEntrys = JSONUtil.toList(
+			JSONFactoryUtil.createJSONArray(
+				ParamUtil.getString(resourceRequest, "fileEntryIds")),
+			jsonObject -> _dlAppLocalService.getFileEntry(
+				GetterUtil.getLong(String.valueOf(jsonObject))));
 
-		return Collections.singletonList(
-			new DSDocument() {
-				{
-					data = Base64.encode(
-						FileUtil.getBytes(fileEntry.getContentStream()));
-					dsDocumentId = String.valueOf(fileEntry.getFileEntryId());
-					name = fileEntry.getFileName();
-				}
-			});
+		List<DSDocument> dsDocuments = new ArrayList<>();
+
+		for (FileEntry fileEntry : fileEntrys) {
+			dsDocuments.add(
+				new DSDocument() {
+					{
+						data = Base64.encode(
+							FileUtil.getBytes(fileEntry.getContentStream()));
+						dsDocumentId = String.valueOf(
+							fileEntry.getFileEntryId());
+						name = fileEntry.getFileName();
+					}
+				});
+		}
+
+		return dsDocuments;
 	}
 
 	private List<DSRecipient> _getDSRecipients(ResourceRequest resourceRequest)

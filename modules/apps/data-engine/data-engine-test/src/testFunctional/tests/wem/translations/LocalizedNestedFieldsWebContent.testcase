@@ -604,6 +604,8 @@ definition {
 	@description = "This test ensures Web Content translations do not modify previously translated content."
 	@priority = "5"
 	test TranslationDoesNotChangeAnother {
+		property portal.upstream = "quarantine";
+
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");

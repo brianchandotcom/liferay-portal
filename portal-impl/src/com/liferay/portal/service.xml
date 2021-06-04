@@ -3634,6 +3634,7 @@
 		<exception>AvailableLocale</exception>
 		<exception>CompanyMaxUsers</exception>
 		<exception>CompanyMx</exception>
+		<exception>CompanyName</exception>
 		<exception>CompanyVirtualHost</exception>
 		<exception>CompanyWebId</exception>
 		<exception>ContactBirthday</exception>

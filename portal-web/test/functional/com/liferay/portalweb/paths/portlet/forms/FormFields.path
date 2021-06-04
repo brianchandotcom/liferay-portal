@@ -720,6 +720,13 @@
 	<td>//td[contains(@class,'lfr-image-column')]</td>
 	<td></td>
 </tr>
+<!--TRANSLATION-->
+<tr>
+	<td>TRANSLATION_LIST</td>
+	<td>xpath=//ul[@class='nav nav-underline lfr-translationmanager']//li[@class='nav-item'][${key_position}]/..//span[contains(text(),'${key_language}')]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

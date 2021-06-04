@@ -349,7 +349,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeEdited {
-
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
@@ -376,7 +375,6 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Multiple Selection");
-		
 	}
 
 	@description = "Verify that options can be added"

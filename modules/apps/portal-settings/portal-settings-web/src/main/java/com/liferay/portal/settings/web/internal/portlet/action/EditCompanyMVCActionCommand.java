@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -211,7 +210,7 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		if (addresses.isEmpty()) {
 			addresses = _addressLocalService.getAddresses(
-				companyId, Account.class.getName(), company.getAccountId());
+				companyId, Company.class.getName(), company.getCompanyId());
 		}
 
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
@@ -219,21 +218,21 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		if (emailAddresses.isEmpty()) {
 			emailAddresses = _emailAddressLocalService.getEmailAddresses(
-				companyId, Account.class.getName(), company.getAccountId());
+				companyId, Company.class.getName(), company.getCompanyId());
 		}
 
 		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
 
 		if (phones.isEmpty()) {
 			phones = _phoneLocalService.getPhones(
-				companyId, Account.class.getName(), company.getAccountId());
+				companyId, Company.class.getName(), company.getCompanyId());
 		}
 
 		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
 
 		if (websites.isEmpty()) {
 			websites = _websiteLocalService.getWebsites(
-				companyId, Account.class.getName(), company.getAccountId());
+				companyId, Company.class.getName(), company.getCompanyId());
 		}
 
 		UnicodeProperties unicodeProperties = PropertiesParamUtil.getProperties(
@@ -273,8 +272,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 			throw new SystemException(readOnlyException);
 		}
 
-		Account account = company.getAccount();
-
 		String name = ParamUtil.getString(
 			actionRequest, "name", company.getName());
 		String virtualHostname = ParamUtil.getString(
@@ -286,21 +283,21 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
 		String legalName = ParamUtil.getString(
-			actionRequest, "legalName", account.getLegalName());
+			actionRequest, "legalName", company.getLegalName());
 		String legalId = ParamUtil.getString(
-			actionRequest, "legalId", account.getLegalId());
+			actionRequest, "legalId", company.getLegalId());
 		String legalType = ParamUtil.getString(
-			actionRequest, "legalType", account.getLegalType());
+			actionRequest, "legalType", company.getLegalType());
 		String sicCode = ParamUtil.getString(
-			actionRequest, "sicCode", account.getSicCode());
+			actionRequest, "sicCode", company.getSicCode());
 		String tickerSymbol = ParamUtil.getString(
-			actionRequest, "tickerSymbol", account.getTickerSymbol());
+			actionRequest, "tickerSymbol", company.getTickerSymbol());
 		String industry = ParamUtil.getString(
-			actionRequest, "industry", account.getIndustry());
+			actionRequest, "industry", company.getIndustry());
 		String type = ParamUtil.getString(
-			actionRequest, "type", account.getType());
+			actionRequest, "type", company.getType());
 		String size = ParamUtil.getString(
-			actionRequest, "size", account.getSize());
+			actionRequest, "size", company.getSize());
 
 		String languageId = ParamUtil.getString(
 			actionRequest, "languageId", defaultUser.getLanguageId());

@@ -392,14 +392,38 @@ definition {
 	}
 
 	@description = "Verify that if a field is deleted on the default language, it is also deleted on the translation"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133525 FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.closeSidebar();
+
+		FormsAdminNavigator.gotoDeleteField(fieldName = "Text");
+
+		Form.save();
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "English (United States)");
+
+		FormViewBuilder.validateFieldLabelIsNotShown(fieldLabel = "Text");
 	}
 
 	@description = "Verify that a Grid field's Label, Help Text and Options can be translated"

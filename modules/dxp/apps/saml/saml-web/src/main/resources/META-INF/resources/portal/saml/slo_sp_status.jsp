@@ -57,6 +57,8 @@ int status = samlSloRequestInfoJSONObject.getInt("status");
 
 <aui:script>
 	if (window.parent.Liferay.SAML.SLO) {
-		window.parent.Liferay.SAML.SLO.updateStatus(<%= samlSloRequestInfoJSONObject %>);
+		window.parent.Liferay.SAML.SLO.updateStatus(
+			<%= samlSloRequestInfoJSONObject %>
+		);
 	}
 </aui:script>

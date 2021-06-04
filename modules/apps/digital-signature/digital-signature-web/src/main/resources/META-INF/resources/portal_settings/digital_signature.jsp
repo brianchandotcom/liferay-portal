@@ -50,6 +50,13 @@ DigitalSignatureConfiguration digitalSignatureConfiguration = (DigitalSignatureC
 </div>
 
 <div id="<%= liferayPortletResponse.getNamespace() + "digitalSignatureProviderCredentials" %>">
+	<div class="mb-4">
+		<liferay-learn:message
+			key="docusign-keys-help"
+			resource="digital-signature-web"
+		/>
+	</div>
+
 	<div class="form-group row">
 		<div class="col-md-6">
 			<aui:input label="api-username" name="apiUsername" type="text" value="<%= digitalSignatureConfiguration.apiUsername() %>" />

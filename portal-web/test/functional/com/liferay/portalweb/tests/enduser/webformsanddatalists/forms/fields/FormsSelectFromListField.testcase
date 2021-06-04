@@ -506,9 +506,6 @@ definition {
 
 			iterator = MathUtil.sum("${iterator}", "1");
 		}
-
-
-		
 	}
 
 	@description = "Verify that an option can be selected as a Predefined Value"

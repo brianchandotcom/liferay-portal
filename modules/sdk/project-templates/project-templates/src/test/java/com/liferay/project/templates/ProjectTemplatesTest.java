@@ -101,15 +101,6 @@ public class ProjectTemplatesTest implements BaseProjectTemplatesTestCase {
 			"mvc-portlet", "test", "--liferay-version", "8.0.0");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testBuildTemplateLiferayVersionInvalid80Maven()
-		throws Exception {
-
-		_buildTemplateWithMaven(
-			"mvc-portlet", "test", "-DliferayVersion=8.0.0", "-DclassName=Foo",
-			"-Dpackage=foo.portlet");
-	}
-
 	@Test
 	public void testBuildTemplateLiferayVersionValid70() throws Exception {
 		_buildTemplateWithGradle(

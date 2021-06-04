@@ -355,4 +355,28 @@ definition {
 			roleTitle = "Regular Role");
 	}
 
+	@description = "This test asserts that Organization Role table is empty and select button does not display if user is not a member of an organization."
+	@priority = "3"
+	test UserCanNotSelectOrgRoleIfUserIsNotAnOrgMember {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoRoles();
+
+		User.viewUnableToAssignRoleToUserCP(roleType = "Organization");
+		
+		AssertElementNotPresent(
+			key_RoleType = StringUtil.replace("Organization Role", " ", ""),
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
+			value1 = "Select");	
+	}
 }

@@ -15,20 +15,17 @@
 package com.liferay.frontend.js.a11y.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.a11y.web.internal.configuration.A11yConfiguration;
+import com.liferay.frontend.js.a11y.web.internal.servlet.taglib.helper.FlagA11yHelper;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.io.IOException;
 
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,12 +70,7 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 	public void register(
 		DynamicInclude.DynamicIncludeRegistry dynamicIncludeRegistry) {
 
-		String nodejsNodeEnv = GetterUtil.getString(
-			_props.get(PropsKeys.NODEJS_NODE_ENV));
-
-		if (Objects.equals(nodejsNodeEnv, "development") &&
-			_a11yConfiguration.enable()) {
-
+		if (_flagA11yHelper.getEnable()) {
 			dynamicIncludeRegistry.register(
 				"/html/common/themes/top_head.jsp#post");
 		}
@@ -94,9 +86,9 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 	private volatile A11yConfiguration _a11yConfiguration;
 
 	@Reference
-	private NPMResolver _npmResolver;
+	private volatile FlagA11yHelper _flagA11yHelper;
 
 	@Reference
-	private Props _props;
+	private NPMResolver _npmResolver;
 
 }

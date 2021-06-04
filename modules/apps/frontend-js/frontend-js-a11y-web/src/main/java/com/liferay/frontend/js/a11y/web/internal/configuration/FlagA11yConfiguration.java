@@ -21,18 +21,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Matuzalem Teles
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	description = "a11y-configuration-description",
-	id = "com.liferay.frontend.js.a11y.web.internal.configuration.A11yConfiguration",
-	localization = "content/Language", name = "a11y-configuration-name"
+	id = "com.liferay.frontend.js.a11y.web.internal.configuration.FlagA11yConfiguration"
 )
-public @interface A11yConfiguration {
+public @interface FlagA11yConfiguration {
 
-	@Meta.AD(
-		description = "denylist-description", name = "denylist-name",
-		required = false
-	)
-	public String[] denylist();
+	@Meta.AD(deflt = "true", required = false)
+	public boolean enable();
 
 }

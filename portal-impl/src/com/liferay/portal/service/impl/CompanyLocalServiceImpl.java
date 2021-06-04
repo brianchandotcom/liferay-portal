@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.AccountNameException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
+import com.liferay.portal.kernel.exception.CompanyNameException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -1569,7 +1569,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		Group group = groupLocalService.fetchGroup(companyId, name);
 
 		if ((group != null) || Validator.isNull(name)) {
-			throw new AccountNameException();
+			throw new CompanyNameException();
 		}
 	}
 

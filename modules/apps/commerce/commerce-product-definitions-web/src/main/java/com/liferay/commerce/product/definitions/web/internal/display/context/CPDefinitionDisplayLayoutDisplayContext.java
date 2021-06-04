@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.commerce.product.model.CPDisplayLayout;
@@ -212,7 +213,14 @@ public class CPDefinitionDisplayLayoutDisplayContext
 				requestBackedPortletURLFactory, "productDefinitionsSelectItem",
 				cpDefinitionItemSelectorCriterion)
 		).setParameter(
-			"singleSelection", true
+			CPField.CHANNEL_GROUP_ID,
+			() -> {
+				CommerceChannel commerceChannel = getCommerceChannel();
+
+				return commerceChannel.getGroupId();
+			}
+		).setParameter(
+			"singleSelection", Boolean.TRUE
 		).buildString();
 	}
 

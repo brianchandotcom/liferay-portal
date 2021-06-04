@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.item.selector.web.internal.display.context;
 
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.item.selector.web.internal.CPDefinitionItemSelectorView;
 import com.liferay.commerce.product.item.selector.web.internal.search.CPDefinitionItemSelectorChecker;
 import com.liferay.commerce.product.item.selector.web.internal.util.CPItemSelectorViewUtil;
@@ -121,11 +122,25 @@ public class CPDefinitionItemSelectorViewDisplayContext
 		Sort sort = CPItemSelectorViewUtil.getCPDefinitionSort(
 			getOrderByCol(), getOrderByType());
 
-		BaseModelSearchResult<CPDefinition> cpDefinitionBaseModelSearchResult =
-			_cpDefinitionService.searchCPDefinitions(
-				cpRequestHelper.getCompanyId(), getKeywords(),
-				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
-				searchContainer.getEnd(), sort);
+		BaseModelSearchResult<CPDefinition> cpDefinitionBaseModelSearchResult;
+
+		long channelGroupId = ParamUtil.getLong(
+			httpServletRequest, CPField.CHANNEL_GROUP_ID);
+
+		if (channelGroupId != 0) {
+			cpDefinitionBaseModelSearchResult =
+				_cpDefinitionService.searchCPDefinitionsByChannelGroupId(
+					cpRequestHelper.getCompanyId(), channelGroupId,
+					getKeywords(), WorkflowConstants.STATUS_APPROVED,
+					searchContainer.getStart(), searchContainer.getEnd(), sort);
+		}
+		else {
+			cpDefinitionBaseModelSearchResult =
+				_cpDefinitionService.searchCPDefinitions(
+					cpRequestHelper.getCompanyId(), getKeywords(),
+					WorkflowConstants.STATUS_APPROVED,
+					searchContainer.getStart(), searchContainer.getEnd(), sort);
+		}
 
 		searchContainer.setTotal(cpDefinitionBaseModelSearchResult.getLength());
 		searchContainer.setResults(

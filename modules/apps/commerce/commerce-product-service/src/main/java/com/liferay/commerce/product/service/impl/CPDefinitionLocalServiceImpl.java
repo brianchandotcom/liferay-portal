@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
@@ -1502,6 +1503,22 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<CPDefinition>
+			searchCPDefinitionsByChannelGroupId(
+				long companyId, long[] groupIds, long channelGroupId,
+				String keywords, int status, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupIds, keywords, status, start, end, sort);
+
+		searchContext.setAttribute(CPField.CHANNEL_GROUP_ID, channelGroupId);
+		searchContext.setAttribute("secure", Boolean.TRUE);
+
+		return searchCPDefinitions(searchContext);
+	}
+
+	@Override
 	public void updateAsset(
 			long userId, CPDefinition cpDefinition, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
@@ -2027,7 +2044,10 @@ public class CPDefinitionLocalServiceImpl
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(groupIds);
+
+		if (groupIds.length > 0) {
+			searchContext.setGroupIds(groupIds);
+		}
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);

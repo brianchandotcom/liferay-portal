@@ -49,6 +49,8 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<clay:management-toolbar
 			additionalProps='<%=
 				HashMapBuilder.<String, Object>put(
+					"digitalSignatureCheckPermissionEntryURL", dlViewDisplayContext.getDigitalSignatureCheckPermissionEntryURL()
+				).put(
 					"downloadEntryURL", dlViewDisplayContext.getDownloadEntryURL()
 				).put(
 					"editEntryURL", dlViewDisplayContext.getEditEntryURL()

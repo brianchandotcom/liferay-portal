@@ -17,6 +17,7 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -30,6 +31,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
@@ -112,6 +115,16 @@ public class DLViewDisplayContext {
 		).collect(
 			Collectors.joining("','")
 		);
+	}
+
+	public String getDigitalSignatureCheckPermissionEntryURL() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
+
+		return PortletURLBuilder.create(
+			requestBackedPortletURLFactory.createActionURL(
+				DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE)
+		).buildString();
 	}
 
 	public String getDownloadEntryURL() {

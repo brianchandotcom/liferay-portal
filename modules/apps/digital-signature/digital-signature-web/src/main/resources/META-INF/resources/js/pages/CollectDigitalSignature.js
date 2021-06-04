@@ -12,6 +12,8 @@
  * details.
  */
 
+import React from 'react';
+
 import {AppContextProvider} from '../AppContext';
 import DigitalSignatureForm from '../components/digital-signature-form/DigitalSignatureForm';
 

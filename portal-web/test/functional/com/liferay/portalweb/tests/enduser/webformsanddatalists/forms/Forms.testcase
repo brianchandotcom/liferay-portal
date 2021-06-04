@@ -712,9 +712,6 @@ definition {
 			value1 = "Page 1 Descripton");
 
 		FormFields.viewTextLabel(fieldLabel = "Text");
-
-
-
 	}
 
 	@description = "Verify that a Form can be published from an autosaved draft"

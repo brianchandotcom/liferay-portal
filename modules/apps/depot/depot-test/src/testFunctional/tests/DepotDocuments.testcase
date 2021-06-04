@@ -148,6 +148,7 @@ definition {
 	@description = "This test edits the title and description of a document in a depot."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test EditDocument {
 		property portal.acceptance = "true";
 

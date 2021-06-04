@@ -60,6 +60,7 @@ definition {
 	@description = "This test ensures that a blog entry can be published successfully."
 	@priority = "5"
 	@refactorneeded
+	@uitest
 	test PublishBlogWithEmbeddedVideo {
 		property test.name.skip.portal.instance = "DLVideoRemoteStaging#PublishBlogWithEmbeddedVideo";
 

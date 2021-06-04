@@ -80,12 +80,11 @@ definition {
 			assetType = "Document",
 			confidenceThreshold = "0.05");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			dmDocumentTitle = "DM Document PDF");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document PDF",
+			groupName = "Test Depot Name",
+			mimeType = "application/pdf",
+			sourceFileName = "Alice's Adventures in Wonderland.pdf");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -266,12 +265,11 @@ definition {
 
 		Depot.configureAutoTagging(autoTagging = "Disabled");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.pdf",
-			dmDocumentTitle = "DM Document PDF");
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document PDF",
+			groupName = "Test Depot Name",
+			mimeType = "application/pdf",
+			sourceFileName = "Alice's Adventures in Wonderland.pdf");
 
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
@@ -327,14 +325,13 @@ definition {
 			depotDescription = "This is the description of a depot",
 			depotName = "Test Depot Name");
 
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "application/pdf",
+			sourceFileName = "Alice's Adventures in Wonderland.pdf");
+
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		Pause(locator1 = "3000");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Alice's Adventures in Wonderland.docx",
-			dmDocumentTitle = "DM Document Title");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
 

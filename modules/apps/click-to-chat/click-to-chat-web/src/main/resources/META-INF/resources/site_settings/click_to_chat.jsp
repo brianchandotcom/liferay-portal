@@ -143,4 +143,9 @@ ClickToChatConfiguration clickToChatConfiguration = (ClickToChatConfiguration)re
 			clickToChatChatProviderLearnMessageElement.classList.add('hide');
 		}
 	}
+
+	<portlet:namespace />toggleClickToChatChatProviderLearnMessage(
+		'<%= clickToChatConfiguration.chatProviderId() %>',
+		true
+	);
 </script>

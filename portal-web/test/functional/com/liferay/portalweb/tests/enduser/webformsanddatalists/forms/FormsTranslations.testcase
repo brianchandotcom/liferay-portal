@@ -69,14 +69,66 @@ definition {
 	}
 
 	@description = "Verify that multiple translations can be added"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreatedInMultipleLanguages {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133517 CanBeCreatedInMultipleLanguages pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "Español");
+
+		Form.addTranslation(localizedLanguage = "Japanese (Japan)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "日本語");
+
+		Form.addTranslation(localizedLanguage = "Arabic (Saudi Arabia)");
+
+		FormViewBuilder.editFieldLabel(
+			fieldLabel = "Text",
+			label = "عربى");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.viewTranslationLanguage(symbolName = "en-US");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Español");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "es-ES");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "日本語-日本");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "日本語");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "ja-JP");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "العربية-السعودية");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "عربى");
 	}
 
 	@description = "Verify that only one translation is supported for each language"

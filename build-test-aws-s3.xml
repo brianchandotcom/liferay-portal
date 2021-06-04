@@ -4,14 +4,16 @@
 	<import file="build-test.xml" />
 
 	<target name="assert-document-in-bucket">
-		<exec executable="aws" outputproperty="bucketContents">
+		<local name="bucket.objects" />
+
+		<exec executable="aws" outputproperty="bucket.objects">
 			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${bucket.id} --prefix ${companyId}/${groupId}" />
 		</exec>
 
-		<echo>${bucketContents}</echo>
+		<echo>${bucket.objects}</echo>
 
 		<if>
-			<contains string="${bucketContents}" substring="1.0" />
+			<contains string="${bucket.objects}" substring="1.0" />
 			<then>
 				<echo message="Document is in bucket." />
 			</then>
@@ -22,14 +24,16 @@
 	</target>
 
 	<target name="assert-no-document-in-bucket">
-		<exec executable="aws" outputproperty="bucketContents">
+		<local name="bucket.objects" />
+
+		<exec executable="aws" outputproperty="bucket.objects">
 			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${bucket.id} --prefix ${companyId}/${groupId}" />
 		</exec>
 
-		<echo>${bucketContents}</echo>
+		<echo>${bucket.objects}</echo>
 
 		<if>
-			<equals arg1="${bucketContents}" arg2="" />
+			<equals arg1="${bucket.objects}" arg2="" />
 			<then>
 				<echo message="The bucket is empty." />
 			</then>
@@ -52,23 +56,27 @@
 			<arg line="configure set default.region us-west-1" />
 		</exec>
 
-		<exec executable="aws" outputproperty="configureOutput">
+		<local name="bucket.configuration" />
+
+		<exec executable="aws" outputproperty="bucket.configuration">
 			<arg line="configure list" />
 		</exec>
 
-		<echo>${configureOutput}</echo>
+		<echo>${bucket.configuration}</echo>
 	</target>
 
 	<target name="create-s3-bucket">
-		<exec executable="aws" outputproperty="bucketContents">
+		<local name="bucket.create.output" />
+
+		<exec executable="aws" outputproperty="bucket.create.output">
 			<arg line="s3api create-bucket --bucket lfr-qa-poshi-test-${bucket.id} --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
 		</exec>
 
-		<echo>${bucketContents}</echo>
+		<echo>${bucket.create.output}</echo>
 
 		<if>
 			<not>
-				<contains string="${bucketContents}" substring="lfr-qa-poshi-test-${bucket.id}" />
+				<contains string="${bucket.create.output}" substring="lfr-qa-poshi-test-${bucket.id}" />
 			</not>
 			<then>
 				<fail>Bucket is not created.</fail>

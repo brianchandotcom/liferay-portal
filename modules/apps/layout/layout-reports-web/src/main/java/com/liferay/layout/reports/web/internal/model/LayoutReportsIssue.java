@@ -14,6 +14,8 @@
 
 package com.liferay.layout.reports.web.internal.model;
 
+import com.google.api.services.pagespeedonline.v5.model.LighthouseAuditResultV5;
+
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
@@ -139,12 +142,16 @@ public class LayoutReportsIssue {
 
 	public static class Detail {
 
-		public Detail(Detail.Key key, long total) {
+		public Detail(
+			Key key, LighthouseAuditResultV5 lighthouseAuditResultV5,
+			long total) {
+
 			if (key == null) {
 				throw new IllegalArgumentException("Key is null");
 			}
 
 			_key = key;
+			_lighthouseAuditResultV5 = lighthouseAuditResultV5;
 			_total = total;
 		}
 
@@ -179,6 +186,8 @@ public class LayoutReportsIssue {
 				"description", _key.getDescription(resourceBundle)
 			).put(
 				"key", _key.toString()
+			).put(
+				"lighthouseItems", _getLighthouseItems()
 			).put(
 				"tips", _key.getTips(resourceBundle)
 			).put(
@@ -524,7 +533,18 @@ public class LayoutReportsIssue {
 
 		}
 
+		private Object _getLighthouseItems() {
+			Map<String, Object> details = _lighthouseAuditResultV5.getDetails();
+
+			if (details != null) {
+				return details.get("items");
+			}
+
+			return null;
+		}
+
 		private final Detail.Key _key;
+		private final LighthouseAuditResultV5 _lighthouseAuditResultV5;
 		private final long _total;
 
 	}

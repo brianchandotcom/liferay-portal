@@ -111,7 +111,7 @@ public class LayoutReportsDataProvider {
 		LighthouseAuditResultV5 lighthouseAuditResultV5) {
 
 		return new LayoutReportsIssue.Detail(
-			key, _getCount(lighthouseAuditResultV5));
+			key, lighthouseAuditResultV5, _getCount(lighthouseAuditResultV5));
 	}
 
 	private List<LayoutReportsIssue> _getLayoutReportsIssues(

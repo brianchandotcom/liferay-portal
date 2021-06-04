@@ -14,6 +14,8 @@
 
 package com.liferay.layout.reports.web.internal.model;
 
+import com.google.api.services.pagespeedonline.v5.model.LighthouseAuditResultV5;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -54,12 +56,14 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue1 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.SEO);
 		LayoutReportsIssue layoutReportsIssue2 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertTrue(layoutReportsIssue1.equals(layoutReportsIssue2));
@@ -70,7 +74,8 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		List<LayoutReportsIssue.Detail> details =
@@ -95,7 +100,8 @@ public class LayoutReportsIssueTest {
 		new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			null);
 	}
 
@@ -104,14 +110,17 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue1 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.SEO);
 		LayoutReportsIssue layoutReportsIssue2 = new LayoutReportsIssue(
 			Arrays.asList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 50),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 50),
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 50)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 50)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertFalse(layoutReportsIssue1.equals(layoutReportsIssue2));
@@ -122,12 +131,14 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue1 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.SEO);
 		LayoutReportsIssue layoutReportsIssue2 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.ACCESSIBILITY);
 
 		Assert.assertFalse(layoutReportsIssue1.equals(layoutReportsIssue2));
@@ -138,12 +149,14 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue1 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.SEO);
 		LayoutReportsIssue layoutReportsIssue2 = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 200)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 200)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertFalse(layoutReportsIssue1.equals(layoutReportsIssue2));
@@ -154,7 +167,8 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue = new LayoutReportsIssue(
 			Collections.singletonList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		JSONObject jsonObject = layoutReportsIssue.toJSONObject(
@@ -185,15 +199,26 @@ public class LayoutReportsIssueTest {
 		LayoutReportsIssue layoutReportsIssue = new LayoutReportsIssue(
 			Arrays.asList(
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.INVALID_CANONICAL_URL, 99),
+					LayoutReportsIssue.Detail.Key.INVALID_CANONICAL_URL,
+					_getLighthouseAuditResultV5(), 99),
 				new LayoutReportsIssue.Detail(
-					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT, 100)),
+					LayoutReportsIssue.Detail.Key.MISSING_TITLE_ELEMENT,
+					_getLighthouseAuditResultV5(), 100)),
 			LayoutReportsIssue.Key.SEO);
 
 		Assert.assertEquals(
 			"{details={invalid-canonical-url=99, missing-title-element=100}, " +
 				"key=seo, total=199}",
 			layoutReportsIssue.toString());
+	}
+
+	private LighthouseAuditResultV5 _getLighthouseAuditResultV5() {
+		LighthouseAuditResultV5 lighthouseAuditResultV5 =
+			new LighthouseAuditResultV5();
+
+		lighthouseAuditResultV5.setDetails(Collections.emptyMap());
+
+		return lighthouseAuditResultV5;
 	}
 
 }

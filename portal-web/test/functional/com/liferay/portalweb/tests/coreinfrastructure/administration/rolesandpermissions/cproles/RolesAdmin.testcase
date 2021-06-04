@@ -373,10 +373,36 @@ definition {
 		UserNavigator.gotoRoles();
 
 		User.viewUnableToAssignRoleToUserCP(roleType = "Organization");
-		
+
 		AssertElementNotPresent(
 			key_RoleType = StringUtil.replace("Organization Role", " ", ""),
 			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
-			value1 = "Select");	
+			value1 = "Select");
 	}
+
+	@description = "This test asserts that Site Role table is empty and select button does not display if user is not a member of a site."
+	@priority = "3"
+	test UserCanNotSelectSiteRoleIfUserIsNotASiteMember {
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		User.openUsersAdmin();
+
+		UserNavigator.gotoUser(userScreenName = "usersn");
+
+		UserNavigator.gotoRoles();
+
+		User.viewUnableToAssignRoleToUserCP(roleType = "Site");
+
+		AssertElementNotPresent(
+			key_RoleType = StringUtil.replace("Site Role", " ", ""),
+			locator1 = "UsersAndOrganizationsEditUser#ROLES_SELECT_LINK",
+			value1 = "Select");
+	}
+
 }

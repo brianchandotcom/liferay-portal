@@ -3083,12 +3083,12 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 				(DDMFormInstanceRecordVersionModelImpl)
 					ddmFormInstanceRecordVersion;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (ddmFormInstanceRecordVersion.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				ddmFormInstanceRecordVersion.setCreateDate(date);
 			}

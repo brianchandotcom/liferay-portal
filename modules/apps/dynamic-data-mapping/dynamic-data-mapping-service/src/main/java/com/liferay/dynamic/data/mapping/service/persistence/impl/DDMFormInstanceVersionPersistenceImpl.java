@@ -1727,12 +1727,12 @@ public class DDMFormInstanceVersionPersistenceImpl
 		DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl =
 			(DDMFormInstanceVersionModelImpl)ddmFormInstanceVersion;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (ddmFormInstanceVersion.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				ddmFormInstanceVersion.setCreateDate(date);
 			}

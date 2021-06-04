@@ -1813,12 +1813,12 @@ public class UserTrackerPersistenceImpl
 		UserTrackerModelImpl userTrackerModelImpl =
 			(UserTrackerModelImpl)userTracker;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (!userTrackerModelImpl.hasSetModifiedDate()) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				userTracker.setModifiedDate(date);
 			}

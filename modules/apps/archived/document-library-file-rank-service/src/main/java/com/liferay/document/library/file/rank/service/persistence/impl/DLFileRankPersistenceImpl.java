@@ -2680,12 +2680,12 @@ public class DLFileRankPersistenceImpl
 		DLFileRankModelImpl dlFileRankModelImpl =
 			(DLFileRankModelImpl)dlFileRank;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (dlFileRank.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				dlFileRank.setCreateDate(date);
 			}

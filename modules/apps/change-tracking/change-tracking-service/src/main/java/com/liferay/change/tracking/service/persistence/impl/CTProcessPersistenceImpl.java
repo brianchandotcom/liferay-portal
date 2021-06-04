@@ -1287,12 +1287,12 @@ public class CTProcessPersistenceImpl
 
 		CTProcessModelImpl ctProcessModelImpl = (CTProcessModelImpl)ctProcess;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (ctProcess.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				ctProcess.setCreateDate(date);
 			}

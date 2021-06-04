@@ -792,12 +792,12 @@ public class AuditEventPersistenceImpl
 		AuditEventModelImpl auditEventModelImpl =
 			(AuditEventModelImpl)auditEvent;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (auditEvent.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				auditEvent.setCreateDate(date);
 			}

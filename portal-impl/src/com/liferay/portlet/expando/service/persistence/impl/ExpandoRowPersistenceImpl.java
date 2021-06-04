@@ -1572,12 +1572,12 @@ public class ExpandoRowPersistenceImpl
 		ExpandoRowModelImpl expandoRowModelImpl =
 			(ExpandoRowModelImpl)expandoRow;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (!expandoRowModelImpl.hasSetModifiedDate()) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				expandoRow.setModifiedDate(date);
 			}

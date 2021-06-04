@@ -3117,12 +3117,12 @@ public class OAuth2AuthorizationPersistenceImpl
 		OAuth2AuthorizationModelImpl oAuth2AuthorizationModelImpl =
 			(OAuth2AuthorizationModelImpl)oAuth2Authorization;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (oAuth2Authorization.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				oAuth2Authorization.setCreateDate(date);
 			}

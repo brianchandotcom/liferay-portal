@@ -1231,12 +1231,12 @@ public class SamlPeerBindingPersistenceImpl
 		SamlPeerBindingModelImpl samlPeerBindingModelImpl =
 			(SamlPeerBindingModelImpl)samlPeerBinding;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (samlPeerBinding.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				samlPeerBinding.setCreateDate(date);
 			}

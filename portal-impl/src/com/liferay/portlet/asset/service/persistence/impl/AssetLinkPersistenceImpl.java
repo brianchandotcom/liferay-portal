@@ -3245,12 +3245,12 @@ public class AssetLinkPersistenceImpl
 
 		AssetLinkModelImpl assetLinkModelImpl = (AssetLinkModelImpl)assetLink;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (assetLink.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				assetLink.setCreateDate(date);
 			}

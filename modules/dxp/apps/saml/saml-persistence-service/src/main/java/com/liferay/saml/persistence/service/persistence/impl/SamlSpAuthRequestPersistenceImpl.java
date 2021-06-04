@@ -1178,12 +1178,12 @@ public class SamlSpAuthRequestPersistenceImpl
 		SamlSpAuthRequestModelImpl samlSpAuthRequestModelImpl =
 			(SamlSpAuthRequestModelImpl)samlSpAuthRequest;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (samlSpAuthRequest.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				samlSpAuthRequest.setCreateDate(date);
 			}

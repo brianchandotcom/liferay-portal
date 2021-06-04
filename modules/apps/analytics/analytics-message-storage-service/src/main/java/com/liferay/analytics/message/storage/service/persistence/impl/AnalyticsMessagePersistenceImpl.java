@@ -805,12 +805,12 @@ public class AnalyticsMessagePersistenceImpl
 		AnalyticsMessageModelImpl analyticsMessageModelImpl =
 			(AnalyticsMessageModelImpl)analyticsMessage;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (analyticsMessage.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				analyticsMessage.setCreateDate(date);
 			}

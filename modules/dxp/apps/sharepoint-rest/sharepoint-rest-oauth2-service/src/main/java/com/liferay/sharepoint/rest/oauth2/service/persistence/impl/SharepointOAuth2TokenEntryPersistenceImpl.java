@@ -1123,12 +1123,12 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			sharepointOAuth2TokenEntryModelImpl =
 				(SharepointOAuth2TokenEntryModelImpl)sharepointOAuth2TokenEntry;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (sharepointOAuth2TokenEntry.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				sharepointOAuth2TokenEntry.setCreateDate(date);
 			}

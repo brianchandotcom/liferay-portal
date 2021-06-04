@@ -1731,12 +1731,12 @@ public class TicketPersistenceImpl
 
 		TicketModelImpl ticketModelImpl = (TicketModelImpl)ticket;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (ticket.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				ticket.setCreateDate(date);
 			}

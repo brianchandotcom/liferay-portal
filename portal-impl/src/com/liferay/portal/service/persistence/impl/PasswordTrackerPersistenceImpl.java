@@ -796,12 +796,12 @@ public class PasswordTrackerPersistenceImpl
 		PasswordTrackerModelImpl passwordTrackerModelImpl =
 			(PasswordTrackerModelImpl)passwordTracker;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (passwordTracker.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				passwordTracker.setCreateDate(date);
 			}

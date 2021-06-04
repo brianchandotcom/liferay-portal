@@ -1745,12 +1745,12 @@ public class CTAutoResolutionInfoPersistenceImpl
 		CTAutoResolutionInfoModelImpl ctAutoResolutionInfoModelImpl =
 			(CTAutoResolutionInfoModelImpl)ctAutoResolutionInfo;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (ctAutoResolutionInfo.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				ctAutoResolutionInfo.setCreateDate(date);
 			}

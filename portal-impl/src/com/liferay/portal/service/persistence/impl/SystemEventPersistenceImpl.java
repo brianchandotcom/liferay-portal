@@ -2599,12 +2599,12 @@ public class SystemEventPersistenceImpl
 		SystemEventModelImpl systemEventModelImpl =
 			(SystemEventModelImpl)systemEvent;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (systemEvent.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				systemEvent.setCreateDate(date);
 			}

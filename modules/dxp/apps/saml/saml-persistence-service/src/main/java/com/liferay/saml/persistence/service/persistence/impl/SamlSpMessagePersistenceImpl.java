@@ -1168,12 +1168,12 @@ public class SamlSpMessagePersistenceImpl
 		SamlSpMessageModelImpl samlSpMessageModelImpl =
 			(SamlSpMessageModelImpl)samlSpMessage;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (samlSpMessage.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				samlSpMessage.setCreateDate(date);
 			}

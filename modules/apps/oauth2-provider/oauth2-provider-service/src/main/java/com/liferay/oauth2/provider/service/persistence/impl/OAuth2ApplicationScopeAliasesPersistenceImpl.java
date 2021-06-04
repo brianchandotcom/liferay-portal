@@ -1389,12 +1389,12 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 				(OAuth2ApplicationScopeAliasesModelImpl)
 					oAuth2ApplicationScopeAliases;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (oAuth2ApplicationScopeAliases.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				oAuth2ApplicationScopeAliases.setCreateDate(date);
 			}

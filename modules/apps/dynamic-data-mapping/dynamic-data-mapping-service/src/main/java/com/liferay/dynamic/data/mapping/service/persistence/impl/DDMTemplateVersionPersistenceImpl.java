@@ -1691,12 +1691,12 @@ public class DDMTemplateVersionPersistenceImpl
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl =
 			(DDMTemplateVersionModelImpl)ddmTemplateVersion;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		Date date = new Date();
-
 		if (isNew && (ddmTemplateVersion.getCreateDate() == null)) {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			Date date = new Date();
+
 			if (serviceContext == null) {
 				ddmTemplateVersion.setCreateDate(date);
 			}

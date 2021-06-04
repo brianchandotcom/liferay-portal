@@ -206,13 +206,13 @@ definition {
 			AssertElementPresent(
 				locator1 = "ContentDashboard#SITE_ASSET_LIBRARY_COLUMN",
 				siteAssetValue = "Test Site Name");
-			
+
 			AssertElementPresent(
 				locator1 = "ContentDashboard#SITE_ASSET_LIBRARY_COLUMN",
 				siteAssetValue = "Second Test Site Name");
 		}
 
-		task ("Drop second group"){
+		task ("Drop second group") {
 			JSONGroup.deleteGroupByName(groupName = "Second Test Site Name");
 		}
 	}

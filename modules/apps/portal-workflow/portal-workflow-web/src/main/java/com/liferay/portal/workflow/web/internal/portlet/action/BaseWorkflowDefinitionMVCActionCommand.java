@@ -74,7 +74,7 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 			Throwable rootThrowable = getRootThrowable(workflowException);
 
 			if (_log.isWarnEnabled()) {
-				_log.warn(rootThrowable, rootThrowable);
+				_log.warn(workflowException, workflowException);
 			}
 
 			hideDefaultErrorMessage(actionRequest);

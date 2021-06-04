@@ -432,6 +432,7 @@
 		<check name="JavaExceptionCheck">
 			<category name="Naming Conventions" />
 			<description name="Checks that variable names of exceptions in `catch` statements follow naming conventions." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaForLoopCheck">
 			<category name="Styling" />

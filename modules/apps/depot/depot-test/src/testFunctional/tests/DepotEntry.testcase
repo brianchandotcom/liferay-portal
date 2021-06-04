@@ -160,8 +160,8 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
-			depot = "Duplicate",
-			depotName = "&amp;");
+			depotName = "&amp;",
+			duplicate = "true");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -179,8 +179,8 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
-			depot = "Duplicate",
-			depotName = "Site Name");
+			depotName = "Site Name",
+			duplicate = "true");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -213,8 +213,8 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.addDepot(
-			depot = "Duplicate",
-			depotName = "título");
+			depotName = "título",
+			duplicate = "true");
 	}
 
 	@description = "This ensures that users cannot create a site with the same name as an existing depot."
@@ -258,9 +258,9 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.editDepot(
-			depot = "Duplicate",
 			depotName = "Test Depot Name 2",
-			depotNameEdit = "Test Depot Name");
+			depotNameEdit = "Test Depot Name",
+			duplicate = "true");
 
 		DepotNavigator.openDepotAdmin();
 

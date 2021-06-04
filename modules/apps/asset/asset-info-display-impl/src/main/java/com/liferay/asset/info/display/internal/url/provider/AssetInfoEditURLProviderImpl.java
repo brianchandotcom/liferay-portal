@@ -94,10 +94,6 @@ public class AssetInfoEditURLProviderImpl implements AssetInfoEditURLProvider {
 				}
 			}
 
-			redirect = _http.addParameter(
-				redirect, "portletResource",
-				assetRendererFactory.getPortletId());
-
 			PortletURL editAssetEntryURL = assetRenderer.getURLEdit(
 				httpServletRequest, LiferayWindowState.NORMAL, redirect);
 

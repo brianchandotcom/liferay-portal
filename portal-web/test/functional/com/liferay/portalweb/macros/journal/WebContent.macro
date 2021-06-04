@@ -1175,47 +1175,58 @@ definition {
 	macro editDisplayPage {
 		Panel.expandPanel(panel = "Display Page");
 
+		if (!(isSet(displayPageTemplateType))) {
+			var displayPageTemplateType = "Specific";
+		}
+
 		Select(
 			locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
-			value1 = "Specific");
+			value1 = "${displayPageTemplateType}");
 
-		Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
+		if ("${displayPageTemplateType}" == "Specific") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
-		Pause(locator1 = "5000");
+			Click.javaScriptClick(locator1 = "WCEditWebContent#DISPLAY_PAGE_CHOOSE_BUTTON");
 
-		SelectFrameTop();
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		SelectFrame(locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT_PAGE_IFRAME");
+			if ("${pageType}" == "Public Pages") {
+				Navigator.gotoNavItem(navItem = "Public Pages");
 
-		if ("${pageType}" == "Public Pages") {
-			Navigator.gotoNavItem(navItem = "Public Pages");
+				Portlet.expandTree();
 
-			Portlet.expandTree();
-
-			AssertClick.assertPartialTextClickAt(
-				key_nodeName = "${pageName}",
-				locator1 = "Treeview#NODE_UNSELECTED",
-				value1 = "${pageName}");
-		}
-		else {
-			if (IsElementNotPresent(key_navItem = "${pageType}", locator1 = "NavBar#NAV_ITEM_LINK")) {
-				LexiconCard.clickCard(card = "${pageName}");
+				AssertClick.assertPartialTextClickAt(
+					key_nodeName = "${pageName}",
+					locator1 = "Treeview#NODE_UNSELECTED",
+					value1 = "${pageName}");
 			}
 			else {
-				Navigator.gotoNavItem(navItem = "${pageType}");
+				if (IsElementNotPresent(key_navItem = "${pageType}", locator1 = "NavBar#NAV_ITEM_LINK")) {
+					LexiconCard.clickCard(card = "${pageName}");
+				}
+				else {
+					Navigator.gotoNavItem(navItem = "${pageType}");
 
-				LexiconCard.clickCard(card = "${pageName}");
+					LexiconCard.clickCard(card = "${pageName}");
+				}
+			}
+
+			if ("${pageType}" == "Public Pages") {
+				AssertTextEquals(
+					locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+					value1 = "Public Pages > ${pageName}");
+			}
+
+			else {
+				AssertTextEquals(
+					locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+					value1 = "${pageName}");
 			}
 		}
 
-		if ("${pageType}" == "Public Pages") {
+		if ("${displayPageTemplateType}" == "Default") {
 			AssertTextEquals(
-				locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
-				value1 = "Public Pages > ${pageName}");
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "WCEditWebContent#DISPLAY_PAGE_SPECIFIC_SELECTION",
+				locator1 = "WCEditWebContent#DISPLAY_PAGE_DEFAULT_SELECTION",
 				value1 = "${pageName}");
 		}
 	}

@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>ACSites</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ACSites</td></tr>
+</thead>
+<tbody>
+<!-- AC Sites  -->
+<tr>
+	<td>ACTIVITIES_CARD</td>
+	<td>//h5[contains(text(),'Activities')]/parent::div/following-sibling::div//span[contains(text(),'Unique Visitors')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOP_PAGES_CARD</td>
+	<td>//div[contains(@class,'table-tabs')]//h5[text()='Top Pages']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACQUISITIONS_CARD</td>
+	<td>//div[contains(@class,'acquisitions')]//h5[text()='Acquisitions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VISITORS_BY_DAY_AND_TIME_CARD</td>
+	<td>//div[contains(@class,'visitors-by-time')]//h5[text()='Visitors by Day and Time']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_TERMS_CARD</td>
+	<td>//div[contains(@class,'search-terms')]//h5[text()='Search Terms']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INTERESTS_CARD</td>
+	<td>//div[contains(@class,'interests')]//h5[text()='Interests']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSIONS_BY_LOCATION_CARD</td>
+	<td>//div[contains(@class,'locations')]//h5[text()='Sessions by Location']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SESSION_TECHNOLOGY_CARD</td>
+	<td>//div[contains(@class,'devices')]//h5[text()='Session Technology']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COHORT_ANALYSIS_CARD</td>
+	<td>//div[contains(@class,'cohort-analysis')]//h5[text()='Cohort Analysis']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

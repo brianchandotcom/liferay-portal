@@ -32,14 +32,40 @@ definition {
 	}
 
 	@description = "Verify that a translation can be added"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133516 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Click(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.editFieldLabelMetal(fieldValue = "Text ES");
+
+		Form.save();
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "English (United States)");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "Spanish (Spain)");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text ES");
 	}
 
 	@description = "Verify that multiple translations can be added"

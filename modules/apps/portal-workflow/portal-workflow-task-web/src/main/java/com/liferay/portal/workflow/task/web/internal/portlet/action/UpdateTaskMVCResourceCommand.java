@@ -14,13 +14,17 @@
 
 package com.liferay.portal.workflow.task.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
@@ -71,28 +75,41 @@ public class UpdateTaskMVCResourceCommand extends BaseMVCResourceCommand {
 			dueDateHour += 12;
 		}
 
-		Date dueDate = _portal.getDate(
-			dueDateMonth, dueDateDay, dueDateYear, dueDateHour, dueDateMinute,
-			themeDisplay.getTimeZone(), WorkflowTaskDueDateException.class);
+		try {
+			Date dueDate = _portal.getDate(
+				dueDateMonth, dueDateDay, dueDateYear, dueDateHour,
+				dueDateMinute, themeDisplay.getTimeZone(),
+				WorkflowTaskDueDateException.class);
 
-		WorkflowTask workflowTask = workflowTaskManager.getWorkflowTask(
-			themeDisplay.getCompanyId(), workflowTaskId);
+			WorkflowTask workflowTask = workflowTaskManager.getWorkflowTask(
+				themeDisplay.getCompanyId(), workflowTaskId);
 
-		Date createDate = workflowTask.getCreateDate();
+			Date createDate = workflowTask.getCreateDate();
 
-		if (createDate.after(dueDate)) {
-			throw new WorkflowTaskDueDateException();
+			if (createDate.after(dueDate)) {
+				throw new WorkflowTaskDueDateException();
+			}
+
+			String comment = ParamUtil.getString(resourceRequest, "comment");
+
+			workflowTaskManager.updateDueDate(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				workflowTaskId, comment, dueDate);
 		}
+		catch (WorkflowException workflowException) {
+			_log.error(workflowException, workflowException);
 
-		String comment = ParamUtil.getString(resourceRequest, "comment");
-
-		workflowTaskManager.updateDueDate(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			workflowTaskId, comment, dueDate);
+			SessionErrors.add(
+				resourceRequest, workflowException.getClass(),
+				workflowException);
+		}
 	}
 
 	@Reference
 	protected WorkflowTaskManager workflowTaskManager;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpdateTaskMVCResourceCommand.class);
 
 	@Reference
 	private Portal _portal;

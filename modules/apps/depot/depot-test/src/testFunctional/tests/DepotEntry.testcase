@@ -30,11 +30,11 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a depot can be accessed when the Applications Menu is disabled at the system level."
+	@description = "This ensures that a depot can be accessed through the Product Menu when the Applications Menu is disabled."
 	@priority = "5"
 	@refactordone
-	test CanAccessWithDisabledAppsMenuAtSystemScope {
-		property test.name.skip.portal.instance = "DepotEntry#AccessWithDisabledAppsMenuAtSystemScope";
+	test CanAccessAppsViaProductMenu {
+		property test.name.skip.portal.instance = "DepotEntry#CanAccessAppsViaProductMenu";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

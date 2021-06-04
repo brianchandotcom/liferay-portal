@@ -204,6 +204,8 @@ public class JournalArticleAssetRendererFactory
 				JournalPortletKeys.JOURNAL, 0, 0, PortletRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/edit_article.jsp"
+		).setParameter(
+			"showSelectFolder", Boolean.TRUE.toString()
 		).build();
 
 		if (classTypeId > 0) {

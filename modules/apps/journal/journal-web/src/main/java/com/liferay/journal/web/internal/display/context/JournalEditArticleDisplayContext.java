@@ -437,6 +437,16 @@ public class JournalEditArticleDisplayContext {
 		return _folderId;
 	}
 
+	public String getFolderName() {
+		if (_folderName != null) {
+			return _folderName;
+		}
+
+		_folderName = _getFolderName();
+
+		return _folderName;
+	}
+
 	public String getFriendlyURLBase() {
 		StringBundler sb = new StringBundler(4);
 
@@ -749,6 +759,18 @@ public class JournalEditArticleDisplayContext {
 		return false;
 	}
 
+	public boolean isShowSelectFolder() {
+		if (_showSelectFolder != null) {
+			return _showSelectFolder;
+		}
+
+		_showSelectFolder =
+			(_article == null) &&
+			ParamUtil.getBoolean(_httpServletRequest, "showSelectFolder");
+
+		return _showSelectFolder;
+	}
+
 	private String[] _getAvailableLanguageIds() {
 		if (_article == null) {
 			return new String[] {getDefaultArticleLanguageId()};
@@ -760,6 +782,19 @@ public class JournalEditArticleDisplayContext {
 	private DDMFormValuesFactory _getDDMFormValuesFactory() {
 		return (DDMFormValuesFactory)_httpServletRequest.getAttribute(
 			DDMFormValuesFactory.class.getName());
+	}
+
+	private String _getFolderName() {
+		if (JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID != getFolderId()) {
+			JournalFolder folder =
+				JournalFolderLocalServiceUtil.fetchJournalFolder(getFolderId());
+
+			if (folder != null) {
+				return folder.getName();
+			}
+		}
+
+		return LanguageUtil.get(_httpServletRequest, "home");
 	}
 
 	private long _getInheritedWorkflowDDMStructuresFolderId()
@@ -917,6 +952,7 @@ public class JournalEditArticleDisplayContext {
 	private String _defaultArticleLanguageId;
 	private String _defaultLanguageId;
 	private Long _folderId;
+	private String _folderName;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _inheritedWorkflowDDMStructuresFolderId;
@@ -928,6 +964,7 @@ public class JournalEditArticleDisplayContext {
 	private Long _refererPlid;
 	private String _referringPortletResource;
 	private Boolean _showHeader;
+	private Boolean _showSelectFolder;
 	private String _smallImageSource;
 	private final ThemeDisplay _themeDisplay;
 	private Double _version;

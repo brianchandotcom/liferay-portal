@@ -16,47 +16,12 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
-		task ("Import test fragments from dependencies folder") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
-		}
-
-		task ("Add a display page with fragments mapped to Basic Web Content") {
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title");
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Rich Text",
-				targetFragmentName = "Title");
-
-			PageEditorMapping.mapEditableTextToField(
-				contributed = "false",
-				field = "Title",
-				fragmentName = "Title",
-				id = "title",
-				source = "Basic Web Content (Default)");
-
-			PageEditorMapping.mapEditableTextToField(
-				contributed = "false",
-				field = "Content",
-				fragmentName = "Rich Text",
-				id = "rich-text",
-				source = "Basic Web Content (Default)");
-
-			Button.clickPublish();
 		}
 	}
 
@@ -71,25 +36,38 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-86191. A user can configure the page settings for each individual display page. This test will test 'Show Header' and 'Show Footer'. This test has been extended to also cover LPS-96438."
-	@priority = "4"
-	test ConfigureDisplayPageShowHeaderAndFooter {
-		task ("Add a couple pages to the site so the navigation menu will appear in the display page template header") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page 1");
+	@description = "This is a test for LPS-90999. A user can access to edit the display page template at view mode."
+	@priority = "5"
+	test AccessToEditDisplayPageTemplateAtViewMode {
+		property portal.acceptance = "true";
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page 2");
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
-		task ("Add a web content that uses the display page") {
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content article") {
 			JSONWebcontent.addWebContent(
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
 				title = "Webcontent Title");
+		}
 
+		task ("Select the display page template in web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
@@ -101,122 +79,253 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("View the web content through the display page") {
+		task ("Navigate to the display page template at view mode") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
 		}
 
-		task ("Assert the page header which contains the site logo, search bar, and navigation menu appears") {
-			AssertVisible(locator1 = "Home#DEFAULT_LOGO");
-
-			AssertVisible(
-				key_infoMessage = "This search bar is not visible to users yet.",
-				locator1 = "Message#INFO_SPECIFIC");
-
-			AssertVisible(
-				key_pageName = "Test Page 1",
-				locator1 = "Home#PAGE");
-
-			AssertVisible(
-				key_pageName = "Test Page 2",
-				locator1 = "Home#PAGE");
+		task ("Access to display page template editor") {
+			DisplayPageTemplate.clickPencilItem(item = "Edit Display Page Template");
 		}
 
-		task ("Assert the web content article content appears") {
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
+		task ("Add a Button fragment below the Heading") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
 
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+			PageEditor.clickPublish();
 		}
 
-		task ("Assert the page footer appears") {
-			AssertVisible(locator1 = "Home#FOOTER");
-		}
+		task ("View displayed content at view mode") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Webcontent Title");
 
-		task ("Configure the display page settings so the header and footer do not appear") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.gotoTab(tabName = "Page Design Options");
-
-			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Click(locator1 = "Radio#SPECIFIC_LOOK");
-
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Show Footer",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Show Header",
-				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
-
-			Button.clickSave();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			Button.clickPublish();
-		}
-
-		task ("View the web content through the display page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
-
-		task ("Assert the page header which contains the site logo, search bar, and navigation menu does not appear") {
-			AssertElementNotPresent(locator1 = "Home#DEFAULT_LOGO");
-
-			AssertElementNotPresent(
-				key_infoMessage = "This search bar is not visible to users yet.",
-				locator1 = "Message#INFO_SPECIFIC");
-
-			AssertElementNotPresent(
-				key_pageName = "Test Page 1",
-				locator1 = "Home#PAGE");
-
-			AssertElementNotPresent(
-				key_pageName = "Test Page 2",
-				locator1 = "Home#PAGE");
-		}
-
-		task ("Assert the web content article content still appears") {
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-
-		task ("Assert the page footer does not appear") {
-			AssertElementNotPresent(locator1 = "Home#FOOTER");
+			AssertTextEquals(
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Go Somewhere");
 		}
 	}
 
-	@description = "This is a test for LPS-86191. A user can configure the page settings for each individual display page. This test changes the theme."
-	@priority = "4"
-	test ConfigureDisplayPageTheme {
-		property test.name.skip.portal.instance = "DisplayPagesWithWebContent#ConfigureDisplayPageTheme";
+	@description = "This is a test for LPS-90999. A user can access to edit the web content article at view mode."
+	@priority = "5"
+	test AccessToEditWebContentAtViewMode {
+		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "App Manager");
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		AppManager.uploadApp(
-			appName = "test-theme",
-			warFileName = "test-theme.war");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-		task ("Add a web content that uses the display page") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to the display page template at view mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("Access to web content editor") {
+			DisplayPageTemplate.clickPencilItem(item = "Edit Webcontent Title");
+		}
+
+		task ("Edit the web content article") {
+			WebContent.addCP(
+				webContentContent = "Webcontent Content Edit",
+				webContentTitle = "Webcontent Title Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("View edited web content at view mode") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Webcontent Title Edit");
+		}
+	}
+
+	@description = "Display page template can be viewed through the Asset Publisher widget."
+	@priority = "5"
+	test NavigateToDisplayPageTemplateViaAssetPublisher {
+		property portal.acceptance = "true";
+
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name");
+		}
+
+		task ("Add an Asset Publisher widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Navigate to display page template via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Webcontent Title");
+
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Webcontent Title");
+		}
+	}
+
+	@description = "This is a test for LPS-121195. Display page template can be viewed through friendly URL."
+	@priority = "5"
+	test NavigateToDisplayPageTemplateViaFriendlyURL {
+		property portal.acceptance = "true";
+
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to display page template via friendly URL") {
+			for (var type : list "w,-") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/${type}/webcontent-title");
+
+				AssertTextEquals(
+					key_fragmentName = "heading",
+					locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+					value1 = "Webcontent Title");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-86221. A user can preview a draft web content within its display page."
+	@priority = "5"
+	test PreviewDraftWebContent {
+		property portal.acceptance = "true";
+
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a draft web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
@@ -229,227 +338,56 @@ definition {
 				pageName = "Display Page Name",
 				pageType = "Display Page Templates");
 
-			PortletEntry.publish();
-		}
-
-		task ("View the web content through the display page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
-
-		task ("Assert the display page is using the Classic Theme") {
-			AssertElementPresent(locator1 = "//link[contains(@href,'classic-theme')]");
-
-			AssertElementNotPresent(locator1 = "//link[contains(@href,'fjord-theme')]");
-		}
-
-		task ("Change the display page theme from Classic to Fjord") {
-			DisplayPageTemplate.clickPencilItem(item = "Edit Display Page Template");
-
-			PageEditor.gotoTab(tabName = "Page Design Options");
-
-			Click(locator1 = "PageEditor#MORE_LINK");
-
-			Click(locator1 = "Radio#SPECIFIC_LOOK");
-
-			Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			LexiconCard.clickCard(card = "test-theme-7-4");
-
-			SelectFrameTop(value1 = "relative=top");
-
-			Button.clickSave();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Assert the display page is using the Fjord Theme") {
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			AssertElementPresent(locator1 = "//link[contains(@href,'test-theme')]");
-
-			AssertElementNotPresent(locator1 = "//link[contains(@href,'classic-theme')]");
-		}
-	}
-
-	@description = "This is a test for LPS-90999. A user has access to edit a display page while viewing the article through its display page."
-	@priority = "5"
-	test EditDisplayPageWhenViewingInDisplayPage {
-		property portal.acceptance = "true";
-
-		task ("Mark the display page as default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-		}
-
-		task ("Add a web content article") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Webcontent Title");
-		}
-
-		task ("View the web content article through its friendly URL") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
-
-		task ("Click the pencil icon > Edit Display Page Template") {
-			DisplayPageTemplate.clickPencilItem(item = "Edit Display Page Template");
-		}
-
-		task ("Edit the display page by adding a Static Text fragment to the display page") {
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Static Text",
-				targetFragmentName = "Rich Text");
-
-			Button.clickPublish();
-		}
-
-		task ("View the web content article through its friendly URL") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
-
-		task ("Assert the web content article displays with the additional Content fragment in the staging site") {
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "This is static text.",
-				key_fragmentClass = "static-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-	}
-
-	@description = "This is a test for LPS-90999. A user has access to edit the web content article while viewing the article through its display page."
-	@priority = "5"
-	test EditWebContentWhenViewingInDisplayPage {
-		property portal.acceptance = "true";
-
-		task ("Mark the display page as default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-		}
-
-		task ("Add a web content article") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
-
-			PortletEntry.publish();
-		}
-
-		task ("View the web content article through its friendly URL") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
-
-		task ("Click the pencil icon > Edit Webcontent Title") {
-			DisplayPageTemplate.clickPencilItem(item = "Edit Webcontent Title");
-		}
-
-		task ("Edit the web content article") {
-			WebContent.addCP(
-				webContentContent = "Webcontent Content Edit",
-				webContentTitle = "Webcontent Title Edit");
-
-			Button.clickPublish();
-		}
-
-		task ("Assert the new version of the web content article displays through the display page") {
-			AssertVisible(
-				key_content = "Webcontent Title Edit",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content Edit",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-	}
-
-	@description = "This is a test for LPS-86221. A user can preview a draft status web content article within its display page."
-	@priority = "5"
-	test PreviewDraftWebContent {
-		property portal.acceptance = "true";
-
-		task ("Mark the display page as default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-		}
-
-		task ("Add a draft status web content article") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
-
 			PortletEntry.saveAsDraft();
 		}
 
-		task ("Preview the draft status web content article") {
+		task ("Preview the draft web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Webcontent Title",
 				menuItem = "Preview Draft");
 		}
 
-		task ("Assert the draft status web content article's preview displays using the display page") {
+		task ("View the draft web content shown in modal") {
+			SelectFrame(
+				key_title = "Webcontent Title",
+				locator1 = "IFrame#MODAL_ANY");
+
 			AssertTextEquals(
-				locator1 = "WCPreview#PREVIEW_TITLE",
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "Webcontent Title");
-
-			IFrame.selectModalFrame();
-
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-
-			IFrame.selectTopFrame();
 		}
 	}
 
-	@description = "This is a test for LPS-86221. A user can preview a pending status web content article within its display page."
+	@description = "This is a test for LPS-86221. A user can preview a pending web content within its display page."
 	@priority = "5"
 	test PreviewPendingWebContent {
 		property portal.acceptance = "true";
 
-		task ("Mark the display page as default") {
+		task ("Add a Heading fragment to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
-		task ("Configure Web Content Article workflow to Single Approver") {
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Enable Single Approver for Web Content Article") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				portlet = "Workflow");
@@ -459,7 +397,7 @@ definition {
 				workflowResourceValue = "Web Content Article");
 		}
 
-		task ("Submit a web content article for publication") {
+		task ("Add a web content and submit for publication") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
@@ -468,45 +406,55 @@ definition {
 				webContentContent = "Webcontent Content",
 				webContentTitle = "Webcontent Title");
 
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
 			PortletEntry.submitForPublication();
 		}
 
-		task ("Preview the pending status web content article") {
+		task ("Preview the pending web content") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Webcontent Title",
 				menuItem = "Preview");
 		}
 
-		task ("Assert the draft status web content article's preview displays using the display page") {
+		task ("View the pending web content shown in modal") {
+			SelectFrame(
+				key_title = "Webcontent Title",
+				locator1 = "IFrame#MODAL_ANY");
+
 			AssertTextEquals(
-				locator1 = "WCPreview#PREVIEW_TITLE",
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "Webcontent Title");
-
-			IFrame.selectModalFrame();
-
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-
-			IFrame.selectTopFrame();
 		}
 	}
 
-	@description = "This is a test for LPS-86221. A user can preview a published web content article within its display page."
+	@description = "This is a test for LPS-86221. A user can preview a published web content within its display page."
 	@priority = "5"
 	test PreviewPublishedWebContent {
 		property portal.acceptance = "true";
 
-		task ("Mark the display page as default") {
+		task ("Add a Heading fragment to display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
 		}
 
 		task ("Add a web content article") {
@@ -516,68 +464,74 @@ definition {
 				title = "Webcontent Title");
 		}
 
-		task ("Preview the web content article") {
+		task ("Select the display page template in web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Preview the web content article") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Webcontent Title",
 				menuItem = "Preview");
 		}
 
-		task ("Assert the web content article's preview displays using the display page") {
+		task ("View the published web content shown in modal") {
+			SelectFrame(
+				key_title = "Webcontent Title",
+				locator1 = "IFrame#MODAL_ANY");
+
 			AssertTextEquals(
-				locator1 = "WCPreview#PREVIEW_TITLE",
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "Webcontent Title");
-
-			IFrame.selectModalFrame();
-
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-
-			IFrame.selectTopFrame();
 		}
 	}
 
-	@description = "This is a test for LPS-96438. Guests should be able to view web content articles through display page templates."
+	@description = "This is a test for LPS-96438. Guests should be able to view display page template."
 	@priority = "5"
-	test ViewDisplayPageAsGuest {
+	test ViewDisplayPageTemplateAsGuest {
 		property portal.acceptance = "true";
 
-		task ("Add a couple pages to the site so the navigation menu will appear in the display page template header") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page 1");
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page 2");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
-		task ("Add a destination page for the Search Bar widget so it will appear to a guest user") {
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add two widget pages") {
+			for (var n : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page ${n}");
+			}
+		}
+
+		task ("Add a search page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Search");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Search",
-				widgetName = "Search Results");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Search",
-				widgetName = "Type Facet");
-		}
-
-		task ("Mark the display page as default") {
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {
@@ -587,111 +541,97 @@ definition {
 				title = "Webcontent Title");
 		}
 
-		task ("Logout of portal") {
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Sign out") {
 			User.logoutPG();
 		}
 
-		task ("View the web content article through its friendly URL") {
+		task ("Navigate to the display page template at view mode") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
 		}
 
-		task ("Assert the page header which contains the site logo, search bar, and navigation menu appears") {
+		task ("View the site logo, search bar, and navigation menu shown in header") {
 			AssertVisible(locator1 = "Home#DEFAULT_LOGO");
 
 			AssertVisible(locator1 = "TextInput#SEARCH");
 
-			AssertVisible(
-				key_pageName = "Test Page 1",
-				locator1 = "Home#PAGE");
-
-			AssertVisible(
-				key_pageName = "Test Page 2",
-				locator1 = "Home#PAGE");
+			for (var n : list "1,2") {
+				AssertVisible(
+					key_pageName = "Test Page ${n}",
+					locator1 = "Home#PAGE");
+			}
 
 			AssertVisible(
 				key_pageName = "Search",
 				locator1 = "Home#PAGE");
 		}
 
-		task ("Assert the web content article content appears") {
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
+		task ("View the title of web content shown") {
+			AssertTextEquals(
+				key_fragmentName = "heading",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+				value1 = "Webcontent Title");
 		}
 
-		task ("Assert the page footer appears") {
+		task ("View the footer is shown") {
 			AssertVisible(locator1 = "Home#FOOTER");
-		}
-	}
-
-	@description = "When a display page is marked as default, associated assets will be displayed through the display page by default without need for additional configuration."
-	@priority = "5"
-	test ViewDisplayPageMarkedAsDefault {
-		property portal.acceptance = "true";
-
-		task ("Mark the display page as default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
-		}
-
-		task ("Add a web content article") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Webcontent Title");
-		}
-
-		task ("View the web content article through its friendly URL") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
-
-		task ("Assert the web content article displays through the display page") {
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
 		}
 	}
 
 	@description = "This is a test for LPS-86190. Asset metadata should appear in page source."
 	@priority = "4"
-	test ViewDisplayPageMetadata {
+	test ViewMetadataInDisplayPageTemplateSource {
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
 		task ("Add a vocabulary and category") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
 				title = "Vocabulary Name");
 
-			JSONCategory.addCategory(
+			var categoryId = JSONCategory.addCategory(
 				groupName = "Test Site Name",
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
 
 		task ("Add a web content article with a category and tag") {
-			var categoryId = JSONCategory.getCategoryId(
-				categoryName = "Category Name",
-				groupName = "Test Site Name",
-				vocabularyName = "Vocabulary Name");
-
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = "${categoryId}",
 				assetTagNames = "test tag",
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
 				title = "Webcontent Title");
+		}
 
+		task ("Select the display page template in web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
@@ -714,115 +654,27 @@ definition {
 		}
 	}
 
-	@description = "Display pages can be viewed through the asset publisher widget."
-	@priority = "5"
-	test ViewDisplayPageViaAssetPublisher {
-		property portal.acceptance = "true";
+	@description = "When no display page template is selected, assets should not be displayed through the default display page."
+	@priority = "4"
+	test ViewNoDisplayPageTemplate {
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		task ("Add a web content article that uses the display page") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Webcontent Title");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
 		}
 
-		task ("Add a widget page to the site") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Site Page Name");
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
 		}
-
-		task ("Add an Asset Publisher Widget to the widget page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Site Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("View the web content article through the Asset Publisher widget") {
-			Navigator.gotoSitePage(
-				pageName = "Site Page Name",
-				siteName = "Test Site Name");
-
-			AssertTextEquals(
-				key_assetTitle = "Webcontent Title",
-				locator1 = "AP#ASSET_ABSTRACT_TITLE",
-				value1 = "Webcontent Title");
-
-			AssertTextEquals.assertPartialText(
-				key_assetTitle = "Webcontent Title",
-				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
-				value1 = "Webcontent Content");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Webcontent Title");
-		}
-
-		task ("Assert the Asset Publisher widget brings the user to view the web content article through the display page") {
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-		}
-	}
-
-	@description = "This is a test for LPS-121195. Display pages can be viewed through friendly URL."
-	@priority = "5"
-	test ViewDisplayPageViaFriendlyURL {
-		property portal.acceptance = "true";
-
-		task ("Add a web content article") {
-			JSONWebcontent.addWebContent(
-				content = "Webcontent Content",
-				groupName = "Test Site Name",
-				title = "Webcontent Title");
-
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Display Page Name",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
-		}
-
-		task ("Navigate to the web content article's friendly URL") {
-			for (var type : list "w,-") {
-				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/${type}/webcontent-title");
-
-				AssertVisible(
-					key_content = "Webcontent Title",
-					key_fragmentClass = "header",
-					locator1 = "Fragment#FRAGMENT");
-
-				AssertVisible(
-					key_content = "Webcontent Content",
-					key_fragmentClass = "rich-text",
-					locator1 = "Fragment#FRAGMENT");
-			}
-		}
-	}
-
-	@description = "A selected display page should override the default display page."
-	@priority = "5"
-	test ViewNonDefaultDisplayPage {
-		property portal.acceptance = "true";
 
 		task ("Mark the display page as default") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
@@ -830,49 +682,128 @@ definition {
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
-		task ("Add a second display page that is mapped to Basic Web Content") {
+		task ("Add a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Select the second display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				displayPageTemplateType = "None",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to the display page template via friendly URL") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("View requested resource could not be found") {
+			AssertTextPresent(value1 = "The requested resource could not be found.");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name");
+		}
+
+		task ("Add an Asset Publisher widget to the page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Click the web content title in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Site Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Webcontent Title");
+		}
+
+		task ("View the details of web content shown in Asset Publisher") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
+				value1 = "Webcontent Content");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Site Page Name");
+		}
+	}
+
+	@description = "The selected display page template should override the default display page template."
+	@priority = "5"
+	test ViewNonDefaultDisplayPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a Heading fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+		}
+
+		task ("Map the Title field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add the second display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Non-Default Display Page",
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
+		}
 
+		task ("Add a Button fragment to the second display page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Non-Default Display Page");
 
 			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
-
-			PageEditor.addFragment(
-				collectionName = "Collection Name",
-				fragmentName = "Title",
-				targetFragmentName = "Rich Text");
-
-			PageEditorMapping.mapEditableTextToField(
-				contributed = "false",
-				field = "Content",
-				fragmentName = "Rich Text",
-				id = "rich-text",
-				source = "Basic Web Content (Default)");
-
-			PageEditorMapping.mapEditableTextToField(
-				contributed = "false",
-				field = "Title",
-				fragmentName = "Title",
-				id = "title",
-				source = "Basic Web Content (Default)");
-
-			Button.clickPublish();
+				collectionName = "Basic Components",
+				fragmentName = "Button");
 		}
 
-		task ("Add a web content article that uses the second display page") {
+		task ("Map the Content field to editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Content",
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content article") {
 			JSONWebcontent.addWebContent(
 				content = "Webcontent Content",
 				groupName = "Test Site Name",
 				title = "Webcontent Title");
+		}
 
+		task ("Select the second display page template in web content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
@@ -884,103 +815,19 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Navigate to the web content article's friendly URL") {
+		task ("Navigate to the display page template at view mode") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
 		}
 
-		task ("Assert the web content article displays through the second display page and not the first display page") {
-			AssertVisible(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertVisible(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-		}
-	}
-
-	@description = "When no display page is selected, assets should not be displayed through the default display page."
-	@priority = "4"
-	test ViewNoSelectedDisplayPage {
-		task ("Mark the display page as default") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		task ("View the second display page template is shown") {
+			ControlMenu.viewHeaderTitle(headerTitle = "Non-Default Display Page");
 		}
 
-		task ("Add a web content article that has no display page selected") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
-
-			Panel.expandPanel(panel = "Display Page");
-
-			Select(
-				locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT",
-				value1 = "None");
-
-			PortletEntry.publish();
-		}
-
-		task ("Navigate to what the web content article's friendly URL would have been if it had a display page selected") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
-		}
-
-		task ("Assert the web content article does not display because there is no display page") {
-			AssertTextPresent(value1 = "The requested resource could not be found.");
-		}
-
-		task ("Add a widget page to the site") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Site Page Name");
-		}
-
-		task ("Add an Asset Publisher Widget to the page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Site Page Name",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("View the web content article through the Asset Publisher widget") {
-			Navigator.gotoSitePage(
-				pageName = "Site Page Name",
-				siteName = "Test Site Name");
-
+		task ("View the content of web content shown in Button") {
 			AssertTextEquals(
-				key_assetTitle = "Webcontent Title",
-				locator1 = "AP#ASSET_ABSTRACT_TITLE",
-				value1 = "Webcontent Title");
-
-			AssertTextEquals.assertPartialText(
-				key_assetTitle = "Webcontent Title",
-				locator1 = "AP#ASSET_ABSTRACT_DESCRIPTION",
+				key_fragmentName = "button",
+				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "Webcontent Content");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Webcontent Title");
-		}
-
-		task ("Assert a default generic template instead of the default display page is used to display the web content article") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "AP#ASSET_ABSTRACT_DETAIL_CONTENT",
-				value1 = "Webcontent Content");
-
-			AssertElementNotPresent(
-				key_content = "Webcontent Title",
-				key_fragmentClass = "header",
-				locator1 = "Fragment#FRAGMENT");
-
-			AssertElementNotPresent(
-				key_content = "Webcontent Content",
-				key_fragmentClass = "rich-text",
-				locator1 = "Fragment#FRAGMENT");
 		}
 	}
 

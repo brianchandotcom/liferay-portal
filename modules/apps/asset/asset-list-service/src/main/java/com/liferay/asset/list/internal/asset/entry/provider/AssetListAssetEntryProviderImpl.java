@@ -47,9 +47,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -214,7 +220,7 @@ public class AssetListAssetEntryProviderImpl
 		AssetListEntry assetListEntry, long segmentsEntryId) {
 
 		return getAssetEntryQuery(
-			assetListEntry, segmentsEntryId, new long[0][], StringPool.BLANK);
+			assetListEntry, segmentsEntryId, StringPool.BLANK);
 	}
 
 	@Override
@@ -231,8 +237,7 @@ public class AssetListAssetEntryProviderImpl
 
 		return getAssetEntryQuery(
 			assetListEntry,
-			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
-			new long[0][], userId);
+			_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds), userId);
 	}
 
 	@Activate
@@ -245,8 +250,7 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	protected AssetEntryQuery getAssetEntryQuery(
-		AssetListEntry assetListEntry, long segmentsEntryId,
-		long[][] assetCategoryIds, String userId) {
+		AssetListEntry assetListEntry, long segmentsEntryId, String userId) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
@@ -257,8 +261,7 @@ public class AssetListAssetEntryProviderImpl
 
 		_setCategoriesAndTagsAndKeywords(
 			assetListEntry, assetEntryQuery, unicodeProperties,
-			_getOverrideAllAssetCategoryIds(
-				assetCategoryIds, unicodeProperties),
+			_getAssetCategoryIds(unicodeProperties),
 			_getAssetTagNames(unicodeProperties),
 			_getKeywords(unicodeProperties));
 
@@ -426,6 +429,32 @@ public class AssetListAssetEntryProviderImpl
 		}
 
 		return assetCategoryIds;
+	}
+
+	private BooleanClause[] _getAssetCategoryIdsBooleanClauses(
+		long[][] assetCategoryIds) {
+
+		BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
+
+		BooleanFilter assetCategoryIdsBooleanFilter = new BooleanFilter();
+
+		for (long[] assetCategoryArrayIds : assetCategoryIds) {
+			TermsFilter assetCategoryIdTermsFilter = new TermsFilter(
+				Field.ASSET_CATEGORY_IDS);
+
+			assetCategoryIdTermsFilter.addValues(
+				ArrayUtil.toStringArray(assetCategoryArrayIds));
+
+			assetCategoryIdsBooleanFilter.add(
+				assetCategoryIdTermsFilter, BooleanClauseOccur.MUST);
+		}
+
+		booleanQueryImpl.setPreBooleanFilter(assetCategoryIdsBooleanFilter);
+
+		return new BooleanClause[] {
+			BooleanClauseFactoryUtil.create(
+				booleanQueryImpl, BooleanClauseOccur.MUST.getName())
+		};
 	}
 
 	private List<AssetListEntryAssetEntryRel> _getAssetListEntryAssetEntryRels(
@@ -601,11 +630,11 @@ public class AssetListAssetEntryProviderImpl
 						_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
 
 					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-						assetListEntry, segmentsEntryId, assetCategoryIds,
-						userId);
+						assetListEntry, segmentsEntryId, userId);
 
 					List<AssetEntry> assetEntries = _search(
-						assetListEntry.getCompanyId(), assetEntryQuery);
+						assetListEntry.getCompanyId(), assetCategoryIds,
+						assetEntryQuery);
 
 					dynamicAssetEntries.addAll(assetEntries);
 				}
@@ -619,8 +648,7 @@ public class AssetListAssetEntryProviderImpl
 						_getCombinedSegmentsEntryIds(segmentsEntryIds)) {
 
 					AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
-						assetListEntry, segmentsEntryId, assetCategoryIds,
-						userId);
+						assetListEntry, segmentsEntryId, userId);
 
 					count = (int)_searchCount(
 						assetListEntry.getCompanyId(), assetEntryQuery);
@@ -632,7 +660,8 @@ public class AssetListAssetEntryProviderImpl
 					}
 
 					List<AssetEntry> assetEntries = _search(
-						assetListEntry.getCompanyId(), assetEntryQuery);
+						assetListEntry.getCompanyId(), assetCategoryIds,
+						assetEntryQuery);
 
 					count = assetEntries.size();
 
@@ -656,13 +685,14 @@ public class AssetListAssetEntryProviderImpl
 			AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 				assetListEntry,
 				_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds),
-				assetCategoryIds, userId);
+				userId);
 
 			assetEntryQuery.setEnd(end);
 			assetEntryQuery.setStart(start);
 
 			dynamicAssetEntries = _search(
-				assetListEntry.getCompanyId(), assetEntryQuery);
+				assetListEntry.getCompanyId(), assetCategoryIds,
+				assetEntryQuery);
 		}
 
 		return dynamicAssetEntries;
@@ -775,10 +805,12 @@ public class AssetListAssetEntryProviderImpl
 		searchContext.setAttribute(
 			Field.ASSET_ENTRY_IDS, ArrayUtil.toLongArray(assetEntryIds));
 
+		searchContext.setBooleanClauses(
+			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
 		searchContext.setCompanyId(assetListEntry.getCompanyId());
 
 		AssetEntryQuery assetEntryQuery = _getManualAssetEntryQuery(
-			assetListEntry, assetCategoryIds);
+			assetListEntry);
 
 		try {
 			Hits hits = _assetHelper.search(
@@ -795,20 +827,9 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private AssetEntryQuery _getManualAssetEntryQuery(
-		AssetListEntry assetListEntry, long[][] assetCategoryIds) {
+		AssetListEntry assetListEntry) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		List<Long> allAssetCategoryIds = new ArrayList<>();
-
-		for (long[] assetCategoryArrayIds : assetCategoryIds) {
-			Collections.addAll(
-				allAssetCategoryIds,
-				ArrayUtil.toLongArray(assetCategoryArrayIds));
-		}
-
-		assetEntryQuery.setAllCategoryIds(
-			ArrayUtil.toLongArray(allAssetCategoryIds));
 
 		if (!Objects.equals(
 				assetListEntry.getAssetEntryType(),
@@ -832,24 +853,6 @@ public class AssetListAssetEntryProviderImpl
 		return assetEntryQuery;
 	}
 
-	private long[] _getOverrideAllAssetCategoryIds(
-		long[][] assetCategoryIds, UnicodeProperties unicodeProperties) {
-
-		long[] overrideAllAssetCategoryIds = _getAssetCategoryIds(
-			unicodeProperties);
-
-		if (ArrayUtil.isEmpty(assetCategoryIds)) {
-			return overrideAllAssetCategoryIds;
-		}
-
-		for (long[] assetCategoryArrayIds : assetCategoryIds) {
-			overrideAllAssetCategoryIds = ArrayUtil.append(
-				overrideAllAssetCategoryIds, assetCategoryArrayIds);
-		}
-
-		return overrideAllAssetCategoryIds;
-	}
-
 	private void _processAssetEntryQuery(
 		long companyId, String userId, UnicodeProperties unicodeProperties,
 		AssetEntryQuery assetEntryQuery) {
@@ -864,7 +867,8 @@ public class AssetListAssetEntryProviderImpl
 	}
 
 	private List<AssetEntry> _search(
-		long companyId, AssetEntryQuery assetEntryQuery) {
+		long companyId, long[][] assetCategoryIds,
+		AssetEntryQuery assetEntryQuery) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -882,6 +886,8 @@ public class AssetListAssetEntryProviderImpl
 				"ddmStructureFieldValue", ddmStructureFieldValue);
 		}
 
+		searchContext.setBooleanClauses(
+			_getAssetCategoryIdsBooleanClauses(assetCategoryIds));
 		searchContext.setClassTypeIds(assetEntryQuery.getClassTypeIds());
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(assetEntryQuery.getEnd());

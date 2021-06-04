@@ -50,8 +50,6 @@ public class ContactTable extends BaseTable<ContactTable> {
 		"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ContactTable, Long> accountId = createColumn(
-		"accountId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactTable, Long> parentContactId = createColumn(
 		"parentContactId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ContactTable, String> emailAddress = createColumn(

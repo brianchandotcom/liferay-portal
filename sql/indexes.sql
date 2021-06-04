@@ -89,7 +89,6 @@ create unique index IX_EC00543C on Company (webId[$COLUMN_LENGTH:75$]);
 
 create unique index IX_85C63FD7 on CompanyInfo (companyId);
 
-create index IX_B8C28C53 on Contact_ (accountId);
 create index IX_791914FA on Contact_ (classNameId, classPK);
 create index IX_66D496A3 on Contact_ (companyId);
 

@@ -79,17 +79,16 @@ public class ContactModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"accountId", Types.BIGINT},
-		{"parentContactId", Types.BIGINT}, {"emailAddress", Types.VARCHAR},
-		{"firstName", Types.VARCHAR}, {"middleName", Types.VARCHAR},
-		{"lastName", Types.VARCHAR}, {"prefixId", Types.BIGINT},
-		{"suffixId", Types.BIGINT}, {"male", Types.BOOLEAN},
-		{"birthday", Types.TIMESTAMP}, {"smsSn", Types.VARCHAR},
-		{"facebookSn", Types.VARCHAR}, {"jabberSn", Types.VARCHAR},
-		{"skypeSn", Types.VARCHAR}, {"twitterSn", Types.VARCHAR},
-		{"employeeStatusId", Types.VARCHAR}, {"employeeNumber", Types.VARCHAR},
-		{"jobTitle", Types.VARCHAR}, {"jobClass", Types.VARCHAR},
-		{"hoursOfOperation", Types.VARCHAR}
+		{"classPK", Types.BIGINT}, {"parentContactId", Types.BIGINT},
+		{"emailAddress", Types.VARCHAR}, {"firstName", Types.VARCHAR},
+		{"middleName", Types.VARCHAR}, {"lastName", Types.VARCHAR},
+		{"prefixId", Types.BIGINT}, {"suffixId", Types.BIGINT},
+		{"male", Types.BOOLEAN}, {"birthday", Types.TIMESTAMP},
+		{"smsSn", Types.VARCHAR}, {"facebookSn", Types.VARCHAR},
+		{"jabberSn", Types.VARCHAR}, {"skypeSn", Types.VARCHAR},
+		{"twitterSn", Types.VARCHAR}, {"employeeStatusId", Types.VARCHAR},
+		{"employeeNumber", Types.VARCHAR}, {"jobTitle", Types.VARCHAR},
+		{"jobClass", Types.VARCHAR}, {"hoursOfOperation", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -105,7 +104,6 @@ public class ContactModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("accountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentContactId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("emailAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("firstName", Types.VARCHAR);
@@ -128,7 +126,7 @@ public class ContactModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Contact_ (mvccVersion LONG default 0 not null,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,accountId LONG,parentContactId LONG,emailAddress VARCHAR(254) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,facebookSn VARCHAR(75) null,jabberSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
+		"create table Contact_ (mvccVersion LONG default 0 not null,contactId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,parentContactId LONG,emailAddress VARCHAR(254) null,firstName VARCHAR(75) null,middleName VARCHAR(75) null,lastName VARCHAR(75) null,prefixId LONG,suffixId LONG,male BOOLEAN,birthday DATE null,smsSn VARCHAR(75) null,facebookSn VARCHAR(75) null,jabberSn VARCHAR(75) null,skypeSn VARCHAR(75) null,twitterSn VARCHAR(75) null,employeeStatusId VARCHAR(75) null,employeeNumber VARCHAR(75) null,jobTitle VARCHAR(100) null,jobClass VARCHAR(75) null,hoursOfOperation VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Contact_";
 
@@ -166,32 +164,26 @@ public class ContactModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ACCOUNTID_COLUMN_BITMASK = 1L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLASSPK_COLUMN_BITMASK = 4L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CONTACTID_COLUMN_BITMASK = 16L;
+	public static final long CONTACTID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -217,7 +209,6 @@ public class ContactModelImpl
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
-		model.setAccountId(soapModel.getAccountId());
 		model.setParentContactId(soapModel.getParentContactId());
 		model.setEmailAddress(soapModel.getEmailAddress());
 		model.setFirstName(soapModel.getFirstName());
@@ -417,9 +408,6 @@ public class ContactModelImpl
 		attributeGetterFunctions.put("classPK", Contact::getClassPK);
 		attributeSetterBiConsumers.put(
 			"classPK", (BiConsumer<Contact, Long>)Contact::setClassPK);
-		attributeGetterFunctions.put("accountId", Contact::getAccountId);
-		attributeSetterBiConsumers.put(
-			"accountId", (BiConsumer<Contact, Long>)Contact::setAccountId);
 		attributeGetterFunctions.put(
 			"parentContactId", Contact::getParentContactId);
 		attributeSetterBiConsumers.put(
@@ -702,31 +690,6 @@ public class ContactModelImpl
 	@Deprecated
 	public long getOriginalClassPK() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
-	}
-
-	@JSON
-	@Override
-	public long getAccountId() {
-		return _accountId;
-	}
-
-	@Override
-	public void setAccountId(long accountId) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_accountId = accountId;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public long getOriginalAccountId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("accountId"));
 	}
 
 	@JSON
@@ -1155,7 +1118,6 @@ public class ContactModelImpl
 		contactImpl.setModifiedDate(getModifiedDate());
 		contactImpl.setClassNameId(getClassNameId());
 		contactImpl.setClassPK(getClassPK());
-		contactImpl.setAccountId(getAccountId());
 		contactImpl.setParentContactId(getParentContactId());
 		contactImpl.setEmailAddress(getEmailAddress());
 		contactImpl.setFirstName(getFirstName());
@@ -1297,8 +1259,6 @@ public class ContactModelImpl
 		contactCacheModel.classNameId = getClassNameId();
 
 		contactCacheModel.classPK = getClassPK();
-
-		contactCacheModel.accountId = getAccountId();
 
 		contactCacheModel.parentContactId = getParentContactId();
 
@@ -1512,7 +1472,6 @@ public class ContactModelImpl
 	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _accountId;
 	private long _parentContactId;
 	private String _emailAddress;
 	private String _firstName;
@@ -1569,7 +1528,6 @@ public class ContactModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
-		_columnOriginalValues.put("accountId", _accountId);
 		_columnOriginalValues.put("parentContactId", _parentContactId);
 		_columnOriginalValues.put("emailAddress", _emailAddress);
 		_columnOriginalValues.put("firstName", _firstName);
@@ -1620,45 +1578,43 @@ public class ContactModelImpl
 
 		columnBitmasks.put("classPK", 256L);
 
-		columnBitmasks.put("accountId", 512L);
+		columnBitmasks.put("parentContactId", 512L);
 
-		columnBitmasks.put("parentContactId", 1024L);
+		columnBitmasks.put("emailAddress", 1024L);
 
-		columnBitmasks.put("emailAddress", 2048L);
+		columnBitmasks.put("firstName", 2048L);
 
-		columnBitmasks.put("firstName", 4096L);
+		columnBitmasks.put("middleName", 4096L);
 
-		columnBitmasks.put("middleName", 8192L);
+		columnBitmasks.put("lastName", 8192L);
 
-		columnBitmasks.put("lastName", 16384L);
+		columnBitmasks.put("prefixId", 16384L);
 
-		columnBitmasks.put("prefixId", 32768L);
+		columnBitmasks.put("suffixId", 32768L);
 
-		columnBitmasks.put("suffixId", 65536L);
+		columnBitmasks.put("male", 65536L);
 
-		columnBitmasks.put("male", 131072L);
+		columnBitmasks.put("birthday", 131072L);
 
-		columnBitmasks.put("birthday", 262144L);
+		columnBitmasks.put("smsSn", 262144L);
 
-		columnBitmasks.put("smsSn", 524288L);
+		columnBitmasks.put("facebookSn", 524288L);
 
-		columnBitmasks.put("facebookSn", 1048576L);
+		columnBitmasks.put("jabberSn", 1048576L);
 
-		columnBitmasks.put("jabberSn", 2097152L);
+		columnBitmasks.put("skypeSn", 2097152L);
 
-		columnBitmasks.put("skypeSn", 4194304L);
+		columnBitmasks.put("twitterSn", 4194304L);
 
-		columnBitmasks.put("twitterSn", 8388608L);
+		columnBitmasks.put("employeeStatusId", 8388608L);
 
-		columnBitmasks.put("employeeStatusId", 16777216L);
+		columnBitmasks.put("employeeNumber", 16777216L);
 
-		columnBitmasks.put("employeeNumber", 33554432L);
+		columnBitmasks.put("jobTitle", 33554432L);
 
-		columnBitmasks.put("jobTitle", 67108864L);
+		columnBitmasks.put("jobClass", 67108864L);
 
-		columnBitmasks.put("jobClass", 134217728L);
-
-		columnBitmasks.put("hoursOfOperation", 268435456L);
+		columnBitmasks.put("hoursOfOperation", 134217728L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

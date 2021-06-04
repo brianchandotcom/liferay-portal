@@ -137,8 +137,6 @@ public class ContactPersistenceTest {
 
 		newContact.setClassPK(RandomTestUtil.nextLong());
 
-		newContact.setAccountId(RandomTestUtil.nextLong());
-
 		newContact.setParentContactId(RandomTestUtil.nextLong());
 
 		newContact.setEmailAddress(RandomTestUtil.randomString());
@@ -203,8 +201,6 @@ public class ContactPersistenceTest {
 		Assert.assertEquals(
 			existingContact.getClassPK(), newContact.getClassPK());
 		Assert.assertEquals(
-			existingContact.getAccountId(), newContact.getAccountId());
-		Assert.assertEquals(
 			existingContact.getParentContactId(),
 			newContact.getParentContactId());
 		Assert.assertEquals(
@@ -255,13 +251,6 @@ public class ContactPersistenceTest {
 	}
 
 	@Test
-	public void testCountByAccountId() throws Exception {
-		_persistence.countByAccountId(RandomTestUtil.nextLong());
-
-		_persistence.countByAccountId(0L);
-	}
-
-	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
@@ -297,12 +286,12 @@ public class ContactPersistenceTest {
 			"Contact_", "mvccVersion", true, "contactId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"accountId", true, "parentContactId", true, "emailAddress", true,
-			"firstName", true, "middleName", true, "lastName", true, "prefixId",
-			true, "suffixId", true, "male", true, "birthday", true, "smsSn",
-			true, "facebookSn", true, "jabberSn", true, "skypeSn", true,
-			"twitterSn", true, "employeeStatusId", true, "employeeNumber", true,
-			"jobTitle", true, "jobClass", true, "hoursOfOperation", true);
+			"parentContactId", true, "emailAddress", true, "firstName", true,
+			"middleName", true, "lastName", true, "prefixId", true, "suffixId",
+			true, "male", true, "birthday", true, "smsSn", true, "facebookSn",
+			true, "jabberSn", true, "skypeSn", true, "twitterSn", true,
+			"employeeStatusId", true, "employeeNumber", true, "jobTitle", true,
+			"jobClass", true, "hoursOfOperation", true);
 	}
 
 	@Test
@@ -528,8 +517,6 @@ public class ContactPersistenceTest {
 		contact.setClassNameId(RandomTestUtil.nextLong());
 
 		contact.setClassPK(RandomTestUtil.nextLong());
-
-		contact.setAccountId(RandomTestUtil.nextLong());
 
 		contact.setParentContactId(RandomTestUtil.nextLong());
 

@@ -76,7 +76,7 @@ public class ContactCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,8 +96,6 @@ public class ContactCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", accountId=");
-		sb.append(accountId);
 		sb.append(", parentContactId=");
 		sb.append(parentContactId);
 		sb.append(", emailAddress=");
@@ -173,7 +171,6 @@ public class ContactCacheModel
 
 		contactImpl.setClassNameId(classNameId);
 		contactImpl.setClassPK(classPK);
-		contactImpl.setAccountId(accountId);
 		contactImpl.setParentContactId(parentContactId);
 
 		if (emailAddress == null) {
@@ -307,8 +304,6 @@ public class ContactCacheModel
 
 		classPK = objectInput.readLong();
 
-		accountId = objectInput.readLong();
-
 		parentContactId = objectInput.readLong();
 		emailAddress = objectInput.readUTF();
 		firstName = objectInput.readUTF();
@@ -356,8 +351,6 @@ public class ContactCacheModel
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
-
-		objectOutput.writeLong(accountId);
 
 		objectOutput.writeLong(parentContactId);
 
@@ -476,7 +469,6 @@ public class ContactCacheModel
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
-	public long accountId;
 	public long parentContactId;
 	public String emailAddress;
 	public String firstName;

@@ -42,7 +42,6 @@ public class ContactSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setAccountId(model.getAccountId());
 		soapModel.setParentContactId(model.getParentContactId());
 		soapModel.setEmailAddress(model.getEmailAddress());
 		soapModel.setFirstName(model.getFirstName());
@@ -185,14 +184,6 @@ public class ContactSoap implements Serializable {
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
-	}
-
-	public long getAccountId() {
-		return _accountId;
-	}
-
-	public void setAccountId(long accountId) {
-		_accountId = accountId;
 	}
 
 	public long getParentContactId() {
@@ -360,7 +351,6 @@ public class ContactSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _classNameId;
 	private long _classPK;
-	private long _accountId;
 	private long _parentContactId;
 	private String _emailAddress;
 	private String _firstName;

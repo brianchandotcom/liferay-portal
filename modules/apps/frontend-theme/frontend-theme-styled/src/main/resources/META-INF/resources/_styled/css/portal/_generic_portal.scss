@@ -1,23 +1,102 @@
-.definition-of-terms dt {
-	color: #333;
-	font-weight: normal;
-	width: 100%;
-	word-break: break-word;
+.alert {
+	&.popup-alert-notice,
+	&.popup-alert-warning,
+	&.taglib-portal-message {
+		left: 0;
+		line-height: 30px;
+		padding: 9px 14px;
+		position: fixed;
+		right: 0;
+		top: 0;
+		z-index: 10000;
 
-	@include media-breakpoint-up(sm) {
-		width: auto;
+		@include media-breakpoint-down(md) {
+			line-height: 20px;
+			margin-bottom: 0;
+			padding: 14px 28px;
+			position: static;
+
+			@include media-breakpoint-down(sm) {
+				margin: 0 -20px;
+			}
+		}
+	}
+
+	&.lfr-shutdown-message.popup-alert-warning {
+		margin: 0;
+		position: relative;
+	}
+}
+
+.definition-of-terms {
+	dd:after {
+		clear: both;
+		content: '';
+		display: block;
+		height: 0;
+		visibility: hidden;
+	}
+
+	dl {
+		margin-left: 0;
+
+		@include media-breakpoint-down(sm) {
+			margin-left: 10px;
+		}
+	}
+
+	dt {
+		color: #333;
+		font-weight: normal;
+		margin-bottom: 2em;
+		width: 100%;
+		width: 25em;
+		word-break: break-word;
+
+		@include media-breakpoint-up(sm) {
+			float: left;
+			width: auto;
+		}
 	}
 }
 
 .lfr-code {
 	background: #fff;
+	border: 1px solid transparent;
 	border-color: #777;
 	font-family: monospace;
+	overflow: hidden;
+	overflow-wrap: normal;
+	overflow-x: auto;
+	white-space: pre;
+	word-break: normal;
+	word-wrap: normal;
 
-	tr td.line-numbers {
-		background: #fafafa;
-		color: #aaa;
-		text-shadow: 1px 1px #fff;
+	table {
+		table-layout: auto;
+		width: 100%;
+
+		tr td {
+			&.lines,
+			&.line-numbers {
+				border-width: 0;
+			}
+
+			&.line-numbers {
+				background: #fafafa;
+				border-right-width: 1px;
+				color: #aaa;
+				cursor: default;
+				padding: 0 8px;
+				text-align: right;
+				text-shadow: 1px 1px #fff;
+
+				@include user-select(none);
+
+				vertical-align: top;
+				width: 1%;
+			}
+		}
 	}
 }
 
@@ -28,24 +107,17 @@
 
 .lfr-token {
 	background-color: #b3daef;
+	border: 1px solid transparent;
 	border-color: #5fa8ff;
 	color: #444;
+	cursor: pointer;
+	display: inline-block;
+	line-height: 1;
+	margin: 0.1em 0.2em;
+	padding: 0.3em 0.5em;
 	text-decoration: none;
 
 	&:hover {
 		background-color: #d1e5ef;
 	}
-}
-
-.lfr-token-primary {
-	font-weight: bold;
-
-	&,
-	&:hover {
-		background-color: #b3daef;
-	}
-}
-
-.lfr-token-close:hover {
-	text-decoration: none;
 }

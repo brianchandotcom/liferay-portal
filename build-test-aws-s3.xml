@@ -3,6 +3,55 @@
 <project basedir="." name="portal-test-aws-s3" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="delete-expired-buckets">
+		<sequential>
+			<local name="bucket.list" />
+
+			<exec executable="aws" outputproperty="bucket.list">
+				<arg line="s3api list-buckets" />
+			</exec>
+
+			<script language="javascript"><![CDATA[
+				var bucketList = project.getProperty("bucket.list");
+
+				var expiredBuckets = [];
+
+				var json = JSON.parse(bucketList);
+
+				for (var i = 0; i < json.Buckets.length; i++) {
+					var bucket = json.Buckets[i];
+
+					var name = JSON.stringify(bucket.Name);
+
+					if (name.indexOf('lfr-qa-poshi-test') > -1) {
+						var createDate = bucket.CreationDate;
+
+						var currentDate = new Date();
+						var bucketDate = new Date(createDate);
+
+						var diffHours = (currentDate - bucketDate) / (1000 * 60 * 60);
+
+						if (diffHours > 12) {
+							expiredBuckets.push(name);
+						}
+					}
+				}
+
+				project.setProperty("expired.buckets", expiredBuckets.toString());]]>
+			</script>
+
+			<for list="${expired.buckets}" param="delete.name">
+				<sequential>
+					<echo>Expired Bucket: @{delete.name}</echo>
+
+					<exec executable="aws">
+						<arg line="s3 rb s3://@{delete.name} --force" />
+					</exec>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+
 	<target name="assert-document-in-bucket">
 		<local name="bucket.objects" />
 
@@ -85,27 +134,10 @@
 	</target>
 
 	<target name="delete-s3-bucket">
-		<sequential>
-			<exec executable="aws">
-				<arg line="s3 rm s3://lfr-qa-poshi-test-${bucket.id} --recursive" />
-			</exec>
+		<exec executable="aws">
+			<arg line="s3 rb s3://lfr-qa-poshi-test-${bucket.id}  --force" />
+		</exec>
 
-			<exec executable="aws">
-				<arg line="s3api delete-bucket --bucket lfr-qa-poshi-test-${bucket.id}" />
-			</exec>
-
-			<exec executable="aws" outputproperty="bucketContents">
-				<arg line="s3api list-buckets" />
-			</exec>
-
-			<echo>${bucketContents}</echo>
-
-			<if>
-				<contains string="${bucketContents}" substring="lfr-qa-poshi-test-${bucket.id}" />
-				<then>
-					<fail>Bucket is not deleted.</fail>
-				</then>
-			</if>
-		</sequential>
+		<delete-expired-buckets />
 	</target>
 </project>

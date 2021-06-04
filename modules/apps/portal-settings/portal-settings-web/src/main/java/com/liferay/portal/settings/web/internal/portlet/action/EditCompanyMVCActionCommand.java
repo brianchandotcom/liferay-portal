@@ -20,11 +20,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.exception.AccountNameException;
 import com.liferay.portal.kernel.exception.AddressCityException;
 import com.liferay.portal.kernel.exception.AddressStreetException;
 import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
+import com.liferay.portal.kernel.exception.CompanyNameException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
@@ -128,11 +128,11 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 				return;
 			}
-			else if (exception instanceof AccountNameException ||
-					 exception instanceof AddressCityException ||
+			else if (exception instanceof AddressCityException ||
 					 exception instanceof AddressStreetException ||
 					 exception instanceof AddressZipException ||
 					 exception instanceof CompanyMxException ||
+					 exception instanceof CompanyNameException ||
 					 exception instanceof CompanyVirtualHostException ||
 					 exception instanceof CompanyWebIdException ||
 					 exception instanceof EmailAddressException ||

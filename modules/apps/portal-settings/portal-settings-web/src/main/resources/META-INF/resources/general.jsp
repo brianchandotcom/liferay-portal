@@ -36,7 +36,7 @@ catch (Exception e) {
 	<clay:col
 		md="6"
 	>
-		<liferay-ui:error exception="<%= AccountNameException.class %>" message="please-enter-a-valid-name" />
+		<liferay-ui:error exception="<%= CompanyNameException.class %>" message="please-enter-a-valid-name" />
 
 		<aui:input name="name" />
 

@@ -1,0 +1,77 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-86642 - Verify that, when the workflow has pending items, the columns are populated with numbers"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ColumnsWithNumbersWhenWorkflowHasPendingItems {
+
+		// TODO LRQA-67555 ColumnsWithNumbersWhenWorkflowHasPendingItems pending implementation
+
+	}
+
+	@description = "LPS-86642 - Verify that, when the workflow has no pending items, the columns are populated with 0"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ColumnsWithZeroWhenWorkflowHasNoPendingItems {
+
+		// TODO LRQA-67556 ColumnsWithZeroWhenWorkflowHasNoPendingItems pending implementation
+
+	}
+
+	@description = "LPS-86642 - Verify that the empty state appears when there is no data to populate the chart"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test EmptyStateIsDisplayedWhenThereIsNoData {
+
+		// TODO LRQA-67559 EmptyStateIsDisplayedWhenThereIsNoData pending implementation
+
+	}
+
+	@description = "LPS-86642 - Verify that the Overdue is the total number of pending instances that breached one or more SLAs target times"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PendingItemsThatDoBreachSlaIsOverdue {
+
+		// TODO LRQA-67558 PendingItemsThatDoBreachSlaIsOverdue pending implementation
+
+	}
+
+	@description = "LPS-86642 - Verify that the On Time is the total number of pending instances that didn't breach any SLAs target times"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PendingItemsThatDoNotBreachSlaIsOnTime {
+
+		// TODO LRQA-67557 PendingItemsThatDoNotBreachSlaIsOnTime pending implementation
+
+	}
+
+}

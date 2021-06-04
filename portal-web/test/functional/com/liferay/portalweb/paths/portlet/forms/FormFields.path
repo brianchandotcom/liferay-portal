@@ -483,7 +483,7 @@
 </tr>
 <tr>
 	<td>SELECT_OPTIONS_FIELD_BY_ROW_PREVIEW</td>
-	<td>//button[contains(text(),'${key_fieldName}') and contains(@data-testid, '${key_rowPosition}')]</td>
+	<td>//button[contains(text(),'${key_optionValue}') and contains(@data-testid, '${key_rowPosition}')]</td>
 	<td></td>
 </tr>
 <tr>

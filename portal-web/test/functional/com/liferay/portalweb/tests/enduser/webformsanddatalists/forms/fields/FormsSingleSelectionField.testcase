@@ -814,7 +814,7 @@ definition {
 
 		FormViewBuilder.selectSelectOptionPredefined(selectOption = "Option 1");
 
-		FormViewBuilder.validatePredefinedSelectList(
+		FormViewBuilder.validatePredefinedSelectFromList(
 			fieldName = "Predefined Value",
 			fieldValue = "Option 1");
 

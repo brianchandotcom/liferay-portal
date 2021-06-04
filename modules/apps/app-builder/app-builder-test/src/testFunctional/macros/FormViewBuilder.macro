@@ -968,7 +968,7 @@ definition {
 		}
 	}
 
-	macro validatePredefinedSelectList {
+	macro validatePredefinedSelectFromList {
 		var key_fieldName = "${fieldName}";
 		var key_fieldValue = "${fieldValue}";
 

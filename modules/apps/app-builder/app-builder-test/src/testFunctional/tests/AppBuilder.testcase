@@ -2026,7 +2026,7 @@ definition {
 			fieldName = "Date",
 			fieldValue = "03/02/2019");
 
-		FormViewBuilder.validatePredefinedSelectList(
+		FormViewBuilder.validatePredefinedSelectFromList(
 			fieldName = "Select from List",
 			fieldValue = "Select 2");
 

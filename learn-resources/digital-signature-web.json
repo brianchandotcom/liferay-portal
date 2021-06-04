@@ -1,2 +1,8 @@
 {
+    "docusign-keys-help": {
+          "en_US": {
+              "message": "Get my keys for DocuSign.",
+              "url": "https://learn.liferay.com"
+          }
+      }
 }

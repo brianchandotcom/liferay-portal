@@ -47,7 +47,6 @@ public class DefineObjectsTag extends TagSupport {
 			return SKIP_BODY;
 		}
 
-		pageContext.setAttribute("account", themeDisplay.getAccount());
 		pageContext.setAttribute("colorScheme", themeDisplay.getColorScheme());
 		pageContext.setAttribute("company", themeDisplay.getCompany());
 		pageContext.setAttribute("contact", themeDisplay.getContact());

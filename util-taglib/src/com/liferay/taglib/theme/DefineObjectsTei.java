@@ -14,7 +14,6 @@
 
 package com.liferay.taglib.theme;
 
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
@@ -52,8 +51,6 @@ public class DefineObjectsTei extends TagExtraInfo {
 				VariableInfo.AT_END),
 			new VariableInfo(
 				"company", Company.class.getName(), true, VariableInfo.AT_END),
-			new VariableInfo(
-				"account", Account.class.getName(), true, VariableInfo.AT_END),
 			new VariableInfo(
 				"user", User.class.getName(), true, VariableInfo.AT_END),
 			new VariableInfo(

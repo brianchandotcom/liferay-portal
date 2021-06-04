@@ -6859,18 +6859,6 @@
 				<comments>Removed org.apache.*, org.cyberneko.*, and org.w3c.* because it conflicts with nekohtml.jar and xercesImpl.jar.</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/displaytag.jar</file-name>
-				<version>1.2</version>
-				<project-name>Display Tag Library</project-name>
-				<project-url>http://displaytag.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>Artistic License</license-name>
-						<license-url>http://opensource.org/licenses/artistic-license-1.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/dom4j.jar</file-name>
 				<version>2.1.3</version>
 				<project-name>dom4j</project-name>

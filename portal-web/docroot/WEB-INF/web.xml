@@ -994,10 +994,6 @@
 	</error-page>
 	<jsp-config>
 		<taglib>
-			<taglib-uri>http://displaytag.sf.net</taglib-uri>
-			<taglib-location>/WEB-INF/tld/displaytag.tld</taglib-location>
-		</taglib>
-		<taglib>
 			<taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
 			<taglib-location>/WEB-INF/tld/c.tld</taglib-location>
 		</taglib>

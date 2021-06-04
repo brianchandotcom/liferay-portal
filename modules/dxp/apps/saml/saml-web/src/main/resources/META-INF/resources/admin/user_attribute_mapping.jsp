@@ -22,7 +22,7 @@ AttributeMappingDisplayContext attributeMappingDisplayContext = (AttributeMappin
 String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifierExpression();
 %>
 
-<aui:fieldset helpMessage="attribute-mapping-help" id='<%= renderResponse.getNamespace() + "userAttributeMappings" %>' label="attribute-mapping">
+<aui:fieldset helpMessage="attribute-mapping-help" id='<%= liferayPortletResponse.getNamespace() + "userAttributeMappings" %>' label="attribute-mapping">
 	<aui:input name="attribute:userIdentifierExpressionPrefix" type="hidden" value="" />
 
 	<%
@@ -97,49 +97,69 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 	<aui:input name="attribute:userAttributeMappingsPrefixes" type="hidden" value="<%= StringUtil.merge(attributeMappingDisplayContext.getPrefixes()) %>" />
 </aui:fieldset>
 
-<aui:script use="aui-base">
-	<portlet:namespace />handleUseToMatchUsersSelection = function (radioControl) {
+<script>
+	<portlet:namespace />handleAttributeMappingMatchingDeselection = function () {
+		document.querySelector(
+			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
+		).value = '';
+		document
+			.querySelectorAll(
+				'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
+			)
+			.forEach((radioControl) => (radioControl.checked = false));
+	};
+
+	<portlet:namespace />handleAttributeMappingMatchingSelection = function (
+		radioControl
+	) {
 		if (!radioControl) {
 			return;
 		}
 
-		A.one(
+		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
-		).attr('value', radioControl.attr('data-prefix'));
-		A.all('input[name="<portlet:namespace />userIdentifierExpression"]').attr(
-			'checked',
-			false
-		);
-		A.all(
+		).value = radioControl.dataset.prefix;
+
+		document
+			.querySelectorAll(
+				'input[name="<portlet:namespace />userIdentifierExpression"]'
+			)
+			.forEach(
+				(userIdentifierExpressionRadioControl) =>
+					(userIdentifierExpressionRadioControl.checked = false)
+			);
+
+		document.querySelector(
 			'input[name="<portlet:namespace />userIdentifierExpression"][value="attribute"]'
-		).attr('checked', true);
+		).checked = true;
 	};
 
-	<portlet:namespace />handleUseToMatchUsersSelection(
-		A.one(
+	<portlet:namespace />handleAttributeMappingMatchingSelection(
+		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"][checked]'
 		)
 	);
 
-	A.all('input[name="<portlet:namespace />userIdentifierExpression"]').on(
-		'change',
-		(event) => {
-			if (event.currentTarget.val() != 'attribute') {
-				A.one(
-					'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
-				).attr('value', '');
-				A.all(
-					'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
-				).attr('checked', false);
+	document
+		.getElementById('<portlet:namespace />userAttributeMappings')
+		.addEventListener('change', (event) => {
+			if (
+				event.target.name ==
+				'<portlet:namespace />attribute:userIdentifierExpressionIndex'
+			) {
+				<portlet:namespace />handleAttributeMappingMatchingSelection(
+					event.target
+				);
 			}
-		}
-	);
-	A.one('#<portlet:namespace />userAttributeMappings').delegate(
-		'change',
-		(event) =>
-			<portlet:namespace />handleUseToMatchUsersSelection(
-				event.currentTarget
-			),
-		'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
-	);
-</aui:script>
+		});
+
+	document
+		.querySelectorAll(
+			'input[name="<portlet:namespace />userIdentifierExpression"]:not([value="attribute"])'
+		)
+		.forEach((radioControl) =>
+			radioControl.addEventListener('change', (event) => {
+				<portlet:namespace />handleAttributeMappingMatchingDeselection();
+			})
+		);
+</script>

@@ -1,0 +1,19 @@
+definition {
+
+    macro metricsWorkflowSearch {
+		var key_workflowProcessName = "${workflowProcessName}";
+		var key_workflowSearchName = "${workflowSearchName}";
+
+		Type(
+			locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR",
+			value1 = "${workflowSearchName}",
+			key_fieldLabel = "Search for");
+
+		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
+			
+		AssertElementPresent(
+			key_workflowProcessName = "${workflowProcessName}",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
+	}
+
+}

@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>WorkflowMetricsProcessListView</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowMetricsProcessListView</td></tr>
+</thead>
+<tbody>
+<tr>
+    <td>METRICS_WORKFLOW_SEARCH_BAR</td>
+    <td>//input[@placeholder='${key_fieldLabel}']</td>
+    <td></td>
+</tr>
+<tr>
+	<td>METRICS_WORKFLOW_SEARCH_BAR_BUTTON</td>
+	<td>//span[contains(@class,'input-group-inset-item')]//button[contains(@class,'btn')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

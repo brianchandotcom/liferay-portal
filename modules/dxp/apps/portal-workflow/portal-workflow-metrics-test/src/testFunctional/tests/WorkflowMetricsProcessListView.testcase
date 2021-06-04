@@ -70,7 +70,9 @@ definition {
 	@priority = "4"
 	test CanSearchBySimilarWords {
 
-		// TODO LRQA-67505 CanSearchBySimilarWords pending implementation
+		WorkflowMetricsProcessListView.metricsWorkflowSearch(
+			workflowSearchName = "Single Ap",
+			workflowProcessName = "Single Approver");
 
 	}
 

@@ -150,6 +150,7 @@ definition {
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
 	@priority = "5"
 	@refactordone
+	// May need to update test after LPS-133688 is fixed
 	test CanNotAddDuplicateWithEscapeCharacters {
 		DepotNavigator.openDepotAdmin();
 
@@ -165,9 +166,10 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		Depot.deleteCP(depotName = "&amp;");
-
-		Depot.viewDefaultCP();
+		AssertElementNotPresent(
+			key_card = "&amp;",
+			key_index = "2",
+			locator1 = "Card#CARD_PAGE_ITEM");
 	}
 
 	@description = "This ensures that users cannot create the same name as another site name."

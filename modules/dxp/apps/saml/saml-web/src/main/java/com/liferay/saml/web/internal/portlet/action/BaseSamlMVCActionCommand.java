@@ -18,12 +18,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
-import com.liferay.saml.runtime.exception.StatusException;
 import com.liferay.saml.util.JspUtil;
+import com.liferay.saml.web.internal.portlet.action.util.SamlMVCCommandUtil;
 
 import java.io.IOException;
 
@@ -64,38 +63,18 @@ public abstract class BaseSamlMVCActionCommand extends BaseMVCActionCommand {
 			return false;
 		}
 
-		Thread currentThread = Thread.currentThread();
+		Class<? extends BaseSamlMVCActionCommand> clazz = getClass();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader currentClassLoader =
+			SamlMVCCommandUtil.switchContextClassLoader(clazz.getClassLoader());
 
 		try {
-			Class<? extends BaseSamlMVCActionCommand> clazz = getClass();
-
-			currentThread.setContextClassLoader(clazz.getClassLoader());
-
 			doProcessAction(actionRequest, actionResponse);
 
 			return true;
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-			else {
-				_log.error(exception.getMessage());
-			}
-
-			Class<?> clazz = exception.getClass();
-
-			SessionErrors.add(actionRequest, clazz.getName());
-
-			if (exception instanceof StatusException) {
-				StatusException statusException = (StatusException)exception;
-
-				SessionErrors.add(
-					actionRequest, "statusCodeURI",
-					statusException.getMessage());
-			}
+			SamlMVCCommandUtil.handleException(exception, actionRequest, _log);
 
 			actionResponse.setRenderParameter(
 				"mvcPath", JspUtil.PATH_PORTAL_SAML_ERROR);
@@ -103,7 +82,7 @@ public abstract class BaseSamlMVCActionCommand extends BaseMVCActionCommand {
 			return false;
 		}
 		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
+			SamlMVCCommandUtil.switchContextClassLoader(currentClassLoader);
 		}
 	}
 

@@ -354,3 +354,23 @@ Liferay Classic Theme in Commerce, paving the way for future DXP WEM
 integration.
 
 ---------------------------------------
+
+### Standardize Method Names to Use AddOrUpdate vs. Upsert in *ServiceImpl Classes
+- **Date:** 2021-Jun-4
+- **JIRA Ticket:** [COMMERCE-6095](https://issues.liferay.com/browse/COMMERCE-6095)
+
+#### What changed?
+
+Any methods in commerce `*ServiceImpl` classes with name `upsert*` are now
+renamed to `addOrUpdate*`.
+
+#### Who is affected?
+
+Developers who are using any `*ServiceImpl` `upsert*` methods will now need to
+use the new corresponding methods `addOrUpdate*`.
+
+#### Why was this change made?
+
+This change was introduced to follow Liferay source formatting.
+
+---------------------------------------

@@ -223,6 +223,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ASSET_LIBRARY_COLUMN</td>
+	<td>//*[contains(@class,'lfr-site-or-asset-library-column') and contains(text(), '${siteAssetValue}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKBOX_TAGS</td>
 	<td>//*[contains(@title,'Select') and contains(@value,'${tagName}')]</td>
 	<td></td>

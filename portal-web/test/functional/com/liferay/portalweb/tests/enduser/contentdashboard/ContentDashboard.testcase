@@ -156,6 +156,67 @@ definition {
 		}
 	}
 
+	@description = "LPS-133716 When in Content Dashboard, a column with the Site / assetLibraty header is shown."
+	@priority = "2"
+	test CheckSiteAssertLibraryColumn {
+		task ("Create a Web Content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Check in Content Dashboard if the column is being displayed") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			AssertElementPresent(
+				locator1 = "ContentDashboard#SITE_ASSET_LIBRARY_COLUMN",
+				siteAssetValue = "xxx or Asset Library");
+		}
+	}
+
+	@description = "LPS-133716 When in Content Dashboard, the name of the Site/Asset Library where the contents are stored is shown, regardless where it was created"
+	@priority = "5"
+	test CheckSiteAssertLibraryOfContent {
+		task ("Create new Group") {
+			JSONGroup.addGroup(groupName = "Second Test Site Name");
+		}
+
+		task ("Create a Web Content for each group") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Second Test Site Name",
+				title = "WC WebContent Title");
+		}
+
+		task ("Check in Content Dashboard if the right information is being displayed") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+
+			AssertElementPresent(
+				locator1 = "ContentDashboard#SITE_ASSET_LIBRARY_COLUMN",
+				siteAssetValue = "Test Site Name");
+			
+			AssertElementPresent(
+				locator1 = "ContentDashboard#SITE_ASSET_LIBRARY_COLUMN",
+				siteAssetValue = "Second Test Site Name");
+		}
+
+		task ("Drop second group"){
+			JSONGroup.deleteGroupByName(groupName = "Second Test Site Name");
+		}
+	}
+
 	@description = "When click on the 'Other options' icon of Approved WC and has NOT a display page associated, View option NOT displayed"
 	@priority = "4"
 	test CheckViewOptionNotDisplayedApprovedWCNotAssiciatedDPT {

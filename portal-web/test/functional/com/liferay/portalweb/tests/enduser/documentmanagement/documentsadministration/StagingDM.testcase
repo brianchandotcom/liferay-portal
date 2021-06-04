@@ -305,15 +305,14 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name-staging");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Documents and Media");
-
-		Refresh();
-
-		DMFolder.addCP(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
 
 		DMFolder.configureWorkflowCP(
 			dmDocumentTypeName = "DM Document Type Name",
@@ -669,9 +668,10 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishFolderWithWorkflow {
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 1");
+			dmFolderName = "DM Folder 1",
+			groupName = "Site Name-staging");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder 1",
@@ -724,9 +724,14 @@ definition {
 	test PublishSubfolderWithDocumentsViaSAP {
 		property test.name.skip.portal.instance = "StagingDM#PublishSubfolderWithDocumentsViaSAP";
 
-		DMFolder.addCP(
+		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 1");
+			dmFolderName = "DM Folder 1",
+			groupName = "Site Name-staging");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Documents and Media");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
@@ -735,6 +740,12 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "DM Document in Folder 1");
 
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder 2",
+			groupName = "Site Name-staging",
+			parentFolderName = "DM Folder 1");
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			portlet = "Documents and Media");
@@ -742,8 +753,6 @@ definition {
 		DMFolder.viewCP(
 			dmFolderName = "DM Folder 1",
 			specificNameFolder = "true");
-
-		DMFolder.addCP(dmFolderName = "DM Folder 2");
 
 		DMFolder.viewCP(
 			dmFolderName = "DM Folder 2",

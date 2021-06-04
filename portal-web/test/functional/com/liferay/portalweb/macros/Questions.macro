@@ -544,6 +544,10 @@ definition {
 			var portletId = "com.liferay.message.boards.moderation.internal.configuration.MBModerationGroupConfiguration";
 		}
 
+		if ("${portlet}" == "Questions") {
+			var portletId = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration";
+		}
+
 		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
@@ -554,6 +558,9 @@ definition {
 	macro openToQuestionDetails {
 		if (isSet(localization)) {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/-");
+		}
+		else if (isSet(historyRouter)) {
+			Navigator.openWithAppendToBaseURL(urlAppend = "${friendlyURL}/questions/${topicName}/${questionsTitle}");
 		}
 		else {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}");
@@ -680,6 +687,13 @@ definition {
 			key_emptyInfo = "This page has no topics.",
 			locator1 = "Questions#EMPTY_STATE_MESSAGE",
 			value1 = "This page has no topics.");
+	}
+
+	macro viewDetailsTitle {
+		AssertTextEquals(
+			key_questionTitle = "${questionTitle}",
+			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+			value1 = "${questionTitle}");
 	}
 
 	macro viewFilterResults {

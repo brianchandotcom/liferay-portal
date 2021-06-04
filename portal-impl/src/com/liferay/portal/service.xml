@@ -163,9 +163,15 @@
 
 		<column name="companyId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
 		<!-- Other fields -->
 
-		<column name="accountId" type="long" />
 		<column name="webId" type="String" />
 		<column name="mx" type="String" />
 		<column name="homeURL" type="String" />
@@ -173,6 +179,15 @@
 		<column name="system" type="boolean" />
 		<column name="maxUsers" type="int" />
 		<column name="active" type="boolean" />
+		<column name="name" type="String" />
+		<column name="legalName" type="String" />
+		<column name="legalId" type="String" />
+		<column name="legalType" type="String" />
+		<column name="sicCode" type="String" />
+		<column name="tickerSymbol" type="String" />
+		<column name="industry" type="String" />
+		<column name="type" type="String" />
+		<column name="size" type="String" />
 
 		<!-- Finder methods -->
 

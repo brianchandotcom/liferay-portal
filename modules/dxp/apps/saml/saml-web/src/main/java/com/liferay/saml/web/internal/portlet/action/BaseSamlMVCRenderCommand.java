@@ -18,12 +18,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
-import com.liferay.saml.runtime.exception.StatusException;
 import com.liferay.saml.util.JspUtil;
+import com.liferay.saml.web.internal.portlet.action.util.SamlMVCCommandUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -53,41 +52,21 @@ public abstract class BaseSamlMVCRenderCommand implements MVCRenderCommand {
 			return "/common/referer_js.jsp";
 		}
 
-		Thread currentThread = Thread.currentThread();
+		Class<? extends BaseSamlMVCRenderCommand> clazz = getClass();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader currentClassLoader =
+			SamlMVCCommandUtil.switchContextClassLoader(clazz.getClassLoader());
 
 		try {
-			Class<? extends BaseSamlMVCRenderCommand> clazz = getClass();
-
-			currentThread.setContextClassLoader(clazz.getClassLoader());
-
 			return doRender(renderRequest, renderResponse);
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-			else {
-				_log.error(exception.getMessage());
-			}
-
-			Class<?> clazz = exception.getClass();
-
-			SessionErrors.add(renderRequest, clazz.getName());
-
-			if (exception instanceof StatusException) {
-				StatusException statusException = (StatusException)exception;
-
-				SessionErrors.add(
-					renderRequest, "statusCodeURI",
-					statusException.getMessage());
-			}
+			SamlMVCCommandUtil.handleException(exception, renderRequest, _log);
 
 			return JspUtil.PATH_PORTAL_SAML_ERROR;
 		}
 		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
+			SamlMVCCommandUtil.switchContextClassLoader(currentClassLoader);
 		}
 	}
 

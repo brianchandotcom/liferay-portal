@@ -59,8 +59,8 @@ const contents = [
 		actions: {
 			addItems: [
 				{
-					title: 'Basic Web Content to be added',
-					url: 'URL',
+					href: 'URL',
+					label: 'Basic Web Content to be added',
 				},
 			],
 			editURL: 'editURL',

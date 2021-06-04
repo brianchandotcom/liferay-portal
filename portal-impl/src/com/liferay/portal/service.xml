@@ -264,7 +264,6 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
-		<column name="accountId" type="long" />
 		<column name="parentContactId" type="long" />
 		<column name="emailAddress" type="String" />
 		<column name="firstName" type="String" />
@@ -295,9 +294,6 @@
 
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
-		</finder>
-		<finder name="AccountId" return-type="Collection">
-			<finder-column name="accountId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />

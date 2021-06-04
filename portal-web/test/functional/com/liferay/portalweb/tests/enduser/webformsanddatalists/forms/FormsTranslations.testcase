@@ -235,14 +235,64 @@ definition {
 	}
 
 	@description = "Verify that a translated Form can be submitted"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSubmitted {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133522 CanBeSubmitted pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Click(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.editFieldLabelMetal(fieldValue = "Text ES");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text ES");
+
+		Pause(locator1 = "6000");
+
+		Refresh();
+
+		FormViewBuilder.editText(
+			fieldName = "Text ES",
+			fieldValue = "Text ES");
+
+		FormPortlet.submitLocalizedSuccessfully(buttonName = "Enviar");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text ES",
+			fieldValue = "Text ES");
 	}
 
 	@description = "Verify that a Color field's Label and Help Text can be translated"

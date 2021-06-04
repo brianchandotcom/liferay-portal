@@ -297,7 +297,6 @@ definition {
 		AssertElementNotPresent(
 			key_imageId = "0",
 			locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_AVATAR_BY_ID");
-
 	}
 
 	@description = "COMMERCE-6372. In Addresses tab, I want to be able to edit an address added to the account"

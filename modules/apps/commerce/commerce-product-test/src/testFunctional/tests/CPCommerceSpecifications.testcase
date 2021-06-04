@@ -115,7 +115,6 @@ definition {
 	test RemoveSpecificationGroup {
 		property portal.acceptance = "false";
 		property test.name.skip.portal.instance = "CPCommerceSpecifications#RemoveSpecificationGroup";
-		
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -131,7 +130,7 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");		
+		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 
 		Alert.viewSuccessMessage();
 

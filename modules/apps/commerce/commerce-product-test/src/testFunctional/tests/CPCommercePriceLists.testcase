@@ -1803,7 +1803,6 @@ definition {
 			key_productName = "U-Joint",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
 			value1 = "$ 24.00");
-			
 	}
 
 	@description = "This is a test for COMMERCE-6224. Price Modifier expiration management"

@@ -14,16 +14,16 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-			if ("${testPortalInstance}" == "true") {
-				PortalInstances.tearDownCP();
-			}
-			else {
-				Navigator.openURL();
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
 
-				CommerceConfiguration.commerceAdminTearDown();
+			CommerceConfiguration.commerceAdminTearDown();
 
-				CommerceConfiguration.commerceInitializersTearDown();
-			}
+			CommerceConfiguration.commerceInitializersTearDown();
+		}
 	}
 
 	@description = "COMMERCE-6374. As a buyer, I want to be able to create a new order by clicking on 'Add Order' button"
@@ -119,9 +119,9 @@ definition {
 			adminEmailAddress = "test@liferay.com");
 
 		ApplicationsMenu.gotoPortlet(
-				category = "Users",
-				panel = "Control Panel",
-				portlet = "Accounts");
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Accounts");
 
 		CommerceNavigator.gotoEntry(entryName = "Test Test");
 
@@ -132,33 +132,33 @@ definition {
 		PortletEntry.inputName(name = "Test");
 
 		SelectField.select(
-				selectFieldLabel = "Type",
-				selectFieldValue = "Billing and Shipping");
+			selectFieldLabel = "Type",
+			selectFieldValue = "Billing and Shipping");
 
 		Type(
 			locator1 = "TextInput#STREET_1",
 			value1 = "Test Street");
-		
+
 		Select(
 			locator1 = "Select#COUNTRY",
 			value1 = "Italy");
-		
+
 		Type(
 			locator1 = "TextInput#CITY",
 			value1 = "Roma");
-		
+
 		Select(
-				locator1 = "Select#REGION",
-				value1 = "Roma");
-		
+			locator1 = "Select#REGION",
+			value1 = "Roma");
+
 		Type(
 			locator1 = "TextInput#POSTAL_CODE",
 			value1 = "00100");
-		
+
 		Type(
-				locator1 = "TextInput#NUMBER",
-				value1 = "1234");
-		
+			locator1 = "TextInput#NUMBER",
+			value1 = "1234");
+
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
@@ -166,14 +166,14 @@ definition {
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		FrontStore.addInitializerProductToCart(
-				productName = "U-Joint",
-				productQuantity = "1");
-		
+			productName = "U-Joint",
+			productQuantity = "1");
+
 		ApplicationsMenu.gotoPortlet(
-				category = "Order Management",
-				panel = "Commerce",
-				portlet = "Orders");
-		
+			category = "Order Management",
+			panel = "Commerce",
+			portlet = "Orders");
+
 		Click(
 			key_orderStatus = "Open",
 			locator1 = "CommerceOrders#ORDER_ELLIPSIS_BY_STATUS");
@@ -181,52 +181,46 @@ definition {
 		CommerceEntry.clickNoError(menuItem = "View");
 
 		Click(
-			key_titleName = "Billing Address",
 			key_buttonName = "Add",
-			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON"
-		);
+			key_titleName = "Billing Address",
+			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
 		Click.clickNoWaitForVisible(
 			key_radioOption = "",
-			locator1="CommerceEntry#RADIO_BUTTON"
-		);
+			locator1 = "CommerceEntry#RADIO_BUTTON");
 
 		Button.click(button = "Submit");
 
 		SelectFrameTop();
 
 		Click(
-			key_titleName = "Shipping Address",
 			key_buttonName = "Add",
-			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON"
-		);
+			key_titleName = "Shipping Address",
+			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
 		Click.clickNoWaitForVisible(
 			key_radioOption = "",
-			locator1="CommerceEntry#RADIO_BUTTON"
-		);
+			locator1 = "CommerceEntry#RADIO_BUTTON");
 
 		Button.click(button = "Submit");
-		
+
 		SelectFrameTop();
 
 		Refresh();
 
 		AssertTextEquals.assertPartialText(
-			value1 = "Test Street, Roma",
 			key_titleName = "Billing Address",
-			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION"
-		);
+			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
+			value1 = "Test Street, Roma");
 
 		AssertTextEquals.assertPartialText(
-			value1 = "Test Street, Roma",
 			key_titleName = "Shipping Address",
-			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION"
-		);
+			locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_DESCRIPTION",
+			value1 = "Test Street, Roma");
 	}
 
 	@description = "COMMERCE-6383. As a buyer, I want to be able to Reorder the Placed Order by clicking on 'Reorder' button"
@@ -262,7 +256,7 @@ definition {
 			locator1 = "Button#ANY");
 
 		SelectFrameTop();
-		
+
 		var firstOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
@@ -270,9 +264,9 @@ definition {
 		Click.mouseDownMouseUp(
 			key_text = "Add Order",
 			locator1 = "Button#ANY");
-		
+
 		SelectFrameTop();
-		
+
 		var secondOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Pending Orders");
@@ -282,7 +276,7 @@ definition {
 		AssertElementPresent(
 			key_errorMessage = "${firstOrderId}",
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");
-		
+
 		AssertElementNotPresent(
 			key_errorMessage = "${secondOrderId}",
 			locator1 = "WorkflowMetricsSLA#SLA_ERROR_MESSAGE");

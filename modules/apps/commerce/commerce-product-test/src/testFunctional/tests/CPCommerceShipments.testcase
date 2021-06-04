@@ -306,7 +306,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "CommerceOrders#ASSERT_FIRST_SHIPMENT_STATUS",
 			value1 = "Ready to Ship");
-
 	}
 
 	@description = "This is a test for COMMERCE-6250. Delete shipment"

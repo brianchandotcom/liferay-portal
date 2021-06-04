@@ -89,7 +89,6 @@ definition {
 		AssertElementPresent(
 			key_formViewName = "U-Joint",
 			locator1 = "FormViewBuilder#ASSERT_FORM");
-			
 	}
 
 	@description = "COMMERCE-6359. As a buyer, I want to be able to select only the allowed quantities of a product in Product Details, if set"

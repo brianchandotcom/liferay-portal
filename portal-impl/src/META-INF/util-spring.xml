@@ -188,10 +188,6 @@
 	<bean class="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" id="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" />
 	<bean class="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" id="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" />
 	<bean class="com.liferay.portal.kernel.sanitizer.SanitizerUtil" id="com.liferay.portal.kernel.sanitizer.SanitizerUtil" />
-	<bean class="com.liferay.portal.service.permission.AccountPermissionImpl" id="com.liferay.portal.kernel.service.permission.AccountPermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.AccountPermissionUtil" id="com.liferay.portal.kernel.service.permission.AccountPermissionUtil">
-		<property name="accountPermission" ref="com.liferay.portal.kernel.service.permission.AccountPermission" />
-	</bean>
 	<bean class="com.liferay.portal.service.permission.CommonPermissionImpl" id="com.liferay.portal.kernel.service.permission.CommonPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.CommonPermissionUtil" id="com.liferay.portal.kernel.service.permission.CommonPermissionUtil">
 		<property name="commonPermission" ref="com.liferay.portal.kernel.service.permission.CommonPermission" />

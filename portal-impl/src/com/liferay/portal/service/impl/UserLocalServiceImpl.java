@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
@@ -313,10 +312,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			Company company = companyPersistence.findByPrimaryKey(
 				user.getCompanyId());
 
-			Account account = company.getAccount();
-
 			if (StringUtil.equalsIgnoreCase(
-					defaultGroupName, account.getName())) {
+					defaultGroupName, company.getName())) {
 
 				defaultGroupName = GroupConstants.GUEST;
 			}

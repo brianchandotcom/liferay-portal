@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.AccountPermissionUtil;
 import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -712,15 +711,6 @@ public class TemplateContextHelper {
 			"windowStateFactory", WindowStateFactory_IW.getInstance());
 
 		// Permissions
-
-		try {
-			variables.put(
-				"accountPermission",
-				AccountPermissionUtil.getAccountPermission());
-		}
-		catch (SecurityException securityException) {
-			_log.error(securityException, securityException);
-		}
 
 		try {
 			variables.put(

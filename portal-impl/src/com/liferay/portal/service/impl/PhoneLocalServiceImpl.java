@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
-import com.liferay.portal.kernel.model.Account;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
@@ -177,7 +177,7 @@ public class PhoneLocalServiceImpl extends PhoneLocalServiceBaseImpl {
 		}
 
 		if ((classNameId == classNameLocalService.getClassNameId(
-				Account.class)) ||
+				Company.class)) ||
 			(classNameId == classNameLocalService.getClassNameId(
 				Contact.class)) ||
 			(classNameId == classNameLocalService.getClassNameId(

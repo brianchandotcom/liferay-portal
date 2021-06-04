@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -330,16 +329,16 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 			companyId, oldCompanyPortletPreferences, unicodeProperties);
 
 		UsersAdminUtil.updateAddresses(
-			Account.class.getName(), company.getAccountId(), addresses);
+			Company.class.getName(), company.getCompanyId(), addresses);
 
 		UsersAdminUtil.updateEmailAddresses(
-			Account.class.getName(), company.getAccountId(), emailAddresses);
+			Company.class.getName(), company.getCompanyId(), emailAddresses);
 
 		UsersAdminUtil.updatePhones(
-			Account.class.getName(), company.getAccountId(), phones);
+			Company.class.getName(), company.getCompanyId(), phones);
 
 		UsersAdminUtil.updateWebsites(
-			Account.class.getName(), company.getAccountId(), websites);
+			Company.class.getName(), company.getCompanyId(), websites);
 
 		return company;
 	}

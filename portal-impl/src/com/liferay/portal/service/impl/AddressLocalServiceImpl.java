@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.AddressCityException;
 import com.liferay.portal.kernel.exception.AddressStreetException;
 import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.ListType;
@@ -498,7 +498,7 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 		}
 
 		if ((classNameId == classNameLocalService.getClassNameId(
-				Account.class)) ||
+				Company.class)) ||
 			(classNameId == classNameLocalService.getClassNameId(
 				Contact.class)) ||
 			(classNameId == classNameLocalService.getClassNameId(

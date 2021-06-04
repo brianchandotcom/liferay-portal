@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -4447,17 +4446,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return CustomSQLUtil.keywords(name);
 		}
 
-		Account account = accountPersistence.fetchByPrimaryKey(
-			company.getAccountId());
-
-		if (account == null) {
-			return CustomSQLUtil.keywords(name);
-		}
-
-		String companyName = account.getName();
-
 		if (StringUtil.wildcardMatches(
-				companyName, name, CharPool.UNDERLINE, CharPool.PERCENT,
+				company.getName(), name, CharPool.UNDERLINE, CharPool.PERCENT,
 				CharPool.BACK_SLASH, false)) {
 
 			String[] searchNames = CustomSQLUtil.keywords(name);

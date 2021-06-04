@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.CompanyInfo;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.cache.CacheField;
-import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyInfoLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -79,16 +77,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 		}
 
 		return webId1.compareTo(webId2);
-	}
-
-	@Override
-	public Account getAccount() throws PortalException {
-		if (_account == null) {
-			_account = AccountLocalServiceUtil.getAccount(
-				getCompanyId(), getAccountId());
-		}
-
-		return _account;
 	}
 
 	@Override
@@ -207,8 +195,8 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@AutoEscape
 	@Override
-	public String getName() throws PortalException {
-		return getAccount().getName();
+	public String getName() {
+		return super.getName();
 	}
 
 	@Override
@@ -498,7 +486,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(CompanyImpl.class);
 
-	private Account _account;
 	private CompanyInfo _companyInfo;
 
 	@CacheField

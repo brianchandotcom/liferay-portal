@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.FullNameGenerator;
 import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
-import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -98,13 +96,11 @@ public class SetupWizardSampleDataUtil {
 			adminUserEmailAddress, adminUserFirstName, adminUserLastName,
 			resetPassword);
 
-		Account account = company.getAccount();
-
 		Organization organization =
 			OrganizationLocalServiceUtil.addOrganization(
 				defaultUser.getUserId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-				account.getLegalName(), true);
+				company.getLegalName(), true);
 
 		GroupLocalServiceUtil.updateFriendlyURL(
 			organization.getGroupId(), "/main");
@@ -112,7 +108,7 @@ public class SetupWizardSampleDataUtil {
 		Layout extranetLayout = LayoutLocalServiceUtil.addLayout(
 			defaultUser.getUserId(), organization.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			account.getLegalName() + " Extranet", null, null,
+			company.getLegalName() + " Extranet", null, null,
 			LayoutConstants.TYPE_PORTLET, false, "/extranet",
 			new ServiceContext());
 
@@ -123,7 +119,7 @@ public class SetupWizardSampleDataUtil {
 		Layout intranetLayout = LayoutLocalServiceUtil.addLayout(
 			defaultUser.getUserId(), organization.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			account.getLegalName() + " Intranet", null, null,
+			company.getLegalName() + " Intranet", null, null,
 			LayoutConstants.TYPE_PORTLET, false, "/intranet",
 			new ServiceContext());
 
@@ -232,12 +228,10 @@ public class SetupWizardSampleDataUtil {
 			String timeZoneId)
 		throws Exception {
 
-		Account account = company.getAccount();
+		company.setName(companyName);
+		company.setLegalName(companyName + ", Inc.");
 
-		account.setName(companyName);
-		account.setLegalName(companyName + ", Inc.");
-
-		AccountLocalServiceUtil.updateAccount(account);
+		company = CompanyLocalServiceUtil.updateCompany(company);
 
 		CompanyLocalServiceUtil.updateDisplay(
 			company.getCompanyId(), languageId, timeZoneId);

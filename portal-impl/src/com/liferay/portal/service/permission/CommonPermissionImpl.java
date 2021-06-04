@@ -17,14 +17,13 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Account;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.CommonPermission;
@@ -54,13 +53,11 @@ public class CommonPermissionImpl implements CommonPermission {
 			String actionId)
 		throws PortalException {
 
-		if (className.equals(Account.class.getName())) {
+		if (className.equals(Company.class.getName())) {
 			long companyId = permissionChecker.getCompanyId();
 
 			if (classPK > 0) {
-				Account account = AccountLocalServiceUtil.getAccount(classPK);
-
-				companyId = account.getCompanyId();
+				companyId = classPK;
 			}
 
 			if (!RoleLocalServiceUtil.hasUserRole(

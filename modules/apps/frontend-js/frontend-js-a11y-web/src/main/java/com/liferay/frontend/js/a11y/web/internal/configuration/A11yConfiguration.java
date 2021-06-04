@@ -30,9 +30,32 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public @interface A11yConfiguration {
 
 	@Meta.AD(
+		deflt = "body", description = "target-description",
+		name = "target-name", required = false
+	)
+	public String target();
+
+	@Meta.AD(deflt = "true", name = "control-menu-name", required = false)
+	public boolean controlMenu();
+
+	@Meta.AD(deflt = "true", name = "global-menu-name", required = false)
+	public boolean globalMenu();
+
+	@Meta.AD(deflt = "true", name = "product-menu-name", required = false)
+	public boolean productMenu();
+
+	@Meta.AD(
+		deflt = ".a11y-overlay|#yui3-css-stamp|.dropdown-menu|.tooltip",
 		description = "denylist-description", name = "denylist-name",
 		required = false
 	)
 	public String[] denylist();
+
+	@Meta.AD(
+		deflt = ".alloy-editor-container|.cke|.cke_editable",
+		description = "editors-description", name = "editors-name",
+		required = false
+	)
+	public String[] editors();
 
 }

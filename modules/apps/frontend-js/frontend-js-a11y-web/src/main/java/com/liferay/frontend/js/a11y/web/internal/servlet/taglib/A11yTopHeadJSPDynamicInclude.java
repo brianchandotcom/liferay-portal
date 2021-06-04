@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,8 +53,39 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		List<String> denylist = new ArrayList();
+
+		String[] denylistConfig = _a11yConfiguration.denylist();
+
+		if (denylistConfig != null) {
+			Collections.addAll(denylist, denylistConfig);
+		}
+
+		String[] editorsConfig = _a11yConfiguration.editors();
+
+		if (editorsConfig != null) {
+			Collections.addAll(denylist, editorsConfig);
+		}
+
+		if (_a11yConfiguration.controlMenu()) {
+			denylist.add(".control-menu");
+		}
+
+		if (_a11yConfiguration.globalMenu()) {
+			denylist.add(".applications-menu-modal");
+		}
+
+		if (_a11yConfiguration.productMenu()) {
+			denylist.add(".lfr-product-menu-panel");
+		}
+
+		String[] targetsArray = {_a11yConfiguration.target()};
+
 		JSONObject propsJSONObject = JSONUtil.put(
-			"denylist", _a11yConfiguration.denylist());
+			"denylist", denylist
+		).put(
+			"targets", targetsArray
+		);
 
 		ScriptData scriptData = new ScriptData();
 

@@ -48,7 +48,7 @@ definition {
 
 		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
 
-		ACSegments.goToSidebarAttrributes(criterion = "Individual Attributes");
+		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
 		ACSegments.addSegmentField(segmentField = "email");
 
@@ -90,7 +90,7 @@ definition {
 
 		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
 
-		ACSegments.goToSidebarAttrributes(criterion = "Individual Attributes");
+		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
 		ACSegments.addSegmentField(segmentField = "fullName");
 
@@ -150,7 +150,7 @@ definition {
 
 		ACSegments.includeAnonymous();
 
-		ACSegments.goToSidebarAttrributes(criterion = "Individual Attributes");
+		ACSegments.goToSidebarAttributes(criterion = "Individual Attributes");
 
 		ACSegments.addSegmentField(segmentField = "fullName");
 
@@ -209,7 +209,7 @@ definition {
 
 		ACSegments.accessSegment(segmentName = "Static Segment Test");
 
-		ACSegments.selectSegmentProfile(segmentProfile = "Membership");
+		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertTextEquals(
 			locator1 = "ACSegments#SEGMENT_LABEL",

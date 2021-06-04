@@ -35,7 +35,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +42,6 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -2148,384 +2146,6 @@ public abstract class BaseBuild implements Build {
 
 	}
 
-	public static class StopWatchRecord implements Comparable<StopWatchRecord> {
-
-		public StopWatchRecord(
-			String name, long startTimestamp, BaseBuild baseBuild) {
-
-			_name = name;
-			_startTimestamp = startTimestamp;
-			_baseBuild = baseBuild;
-		}
-
-		public void addChildStopWatchRecord(
-			StopWatchRecord newChildStopWatchRecord) {
-
-			if (_childStopWatchRecords == null) {
-				_childStopWatchRecords = new TreeSet<>();
-			}
-
-			for (StopWatchRecord childStopWatchRecord :
-					_childStopWatchRecords) {
-
-				if (childStopWatchRecord.isParentOf(newChildStopWatchRecord)) {
-					childStopWatchRecord.addChildStopWatchRecord(
-						newChildStopWatchRecord);
-
-					return;
-				}
-			}
-
-			newChildStopWatchRecord.setParentStopWatchRecord(this);
-
-			_childStopWatchRecords.add(newChildStopWatchRecord);
-		}
-
-		@Override
-		public int compareTo(StopWatchRecord stopWatchRecord) {
-			int compareToValue = _startTimestamp.compareTo(
-				stopWatchRecord.getStartTimestamp());
-
-			if (compareToValue != 0) {
-				return compareToValue;
-			}
-
-			Long duration = getDuration();
-			Long stopWatchRecordDuration = stopWatchRecord.getDuration();
-
-			if ((duration == null) && (stopWatchRecordDuration != null)) {
-				return -1;
-			}
-
-			if ((duration != null) && (stopWatchRecordDuration == null)) {
-				return 1;
-			}
-
-			if ((duration != null) && (stopWatchRecordDuration != null)) {
-				compareToValue =
-					-1 * duration.compareTo(stopWatchRecordDuration);
-			}
-
-			if (compareToValue != 0) {
-				return compareToValue;
-			}
-
-			return _name.compareTo(stopWatchRecord.getName());
-		}
-
-		public int getDepth() {
-			if (_parentStopWatchRecord == null) {
-				if (_baseBuild == null) {
-					return 0;
-				}
-
-				return _baseBuild.getDepth() + 1;
-			}
-
-			return _parentStopWatchRecord.getDepth() + 1;
-		}
-
-		public Long getDuration() {
-			return _duration;
-		}
-
-		public JSONObject getJSONObject() {
-			JSONArray childStopWatchRecordJSONArray = new JSONArray();
-
-			if (_childStopWatchRecords != null) {
-				for (StopWatchRecord childStopWatchRecord :
-						_childStopWatchRecords) {
-
-					childStopWatchRecordJSONArray.put(
-						childStopWatchRecord.getJSONObject());
-				}
-			}
-
-			JSONObject jsonObject = new JSONObject();
-
-			if (childStopWatchRecordJSONArray.length() > 0) {
-				jsonObject.put(
-					"childStopWatchRecords", childStopWatchRecordJSONArray);
-			}
-
-			jsonObject.put("duration", getDuration());
-			jsonObject.put("name", getName());
-
-			return jsonObject;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public StopWatchRecord getParentStopWatchRecord() {
-			return _parentStopWatchRecord;
-		}
-
-		public String getShortName() {
-			String shortName = getName();
-
-			StopWatchRecord parentStopWatchRecord = getParentStopWatchRecord();
-
-			if (parentStopWatchRecord == null) {
-				return shortName;
-			}
-
-			return shortName.replace(parentStopWatchRecord.getName(), "");
-		}
-
-		public Long getStartTimestamp() {
-			return _startTimestamp;
-		}
-
-		public boolean isParentOf(StopWatchRecord stopWatchRecord) {
-			if (this == stopWatchRecord) {
-				return false;
-			}
-
-			Long duration = getDuration();
-			Long stopWatchRecordDuration = stopWatchRecord.getDuration();
-
-			if ((duration != null) && (stopWatchRecordDuration == null)) {
-				return false;
-			}
-
-			Long startTimestamp = getStartTimestamp();
-			Long stopWatchRecordStartTimestamp =
-				stopWatchRecord.getStartTimestamp();
-
-			if (startTimestamp <= stopWatchRecordStartTimestamp) {
-				if (duration == null) {
-					return true;
-				}
-
-				Long endTimestamp = startTimestamp + duration;
-				Long stopWatchRecordEndTimestamp =
-					stopWatchRecordStartTimestamp + stopWatchRecordDuration;
-
-				if (endTimestamp >= stopWatchRecordEndTimestamp) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
-		public void setDuration(long duration) {
-			_duration = duration;
-		}
-
-		@Override
-		public String toString() {
-			return JenkinsResultsParserUtil.combine(
-				getName(), " started at ",
-				JenkinsResultsParserUtil.toDateString(
-					new Date(getStartTimestamp())),
-				" and ran for ",
-				JenkinsResultsParserUtil.toDurationString(getDuration()), ".");
-		}
-
-		protected Element getExpanderAnchorElement(String namespace) {
-			if (_childStopWatchRecords == null) {
-				return null;
-			}
-
-			Element expanderAnchorElement = Dom4JUtil.getNewAnchorElement(
-				"", "+ ");
-
-			expanderAnchorElement.addAttribute(
-				"id",
-				JenkinsResultsParserUtil.combine(
-					namespace, "-expander-anchor-", getName()));
-			expanderAnchorElement.addAttribute(
-				"onClick",
-				JenkinsResultsParserUtil.combine(
-					"return toggleStopWatchRecordExpander(\'", namespace,
-					"\', \'", getName(), "\')"));
-			expanderAnchorElement.addAttribute(
-				"style",
-				"font-family: monospace, monospace; text-decoration: none");
-
-			return expanderAnchorElement;
-		}
-
-		protected List<Element> getJenkinsReportTableRowElements() {
-			Element buildInfoElement = Dom4JUtil.getNewElement("tr", null);
-
-			String baseBuildHashCode = "";
-
-			if (_baseBuild != null) {
-				baseBuildHashCode = String.valueOf(_baseBuild.hashCode());
-			}
-
-			buildInfoElement.addAttribute(
-				"id", baseBuildHashCode + "-" + getName());
-			buildInfoElement.addAttribute("style", "display: none");
-
-			Element expanderAnchorElement = getExpanderAnchorElement(
-				baseBuildHashCode);
-
-			Element nameElement = Dom4JUtil.getNewElement(
-				"td", buildInfoElement, expanderAnchorElement, getShortName());
-
-			int indent = getDepth() * _PIXELS_WIDTH_INDENT;
-
-			if (expanderAnchorElement != null) {
-				indent -= _PIXELS_WIDTH_EXPANDER;
-			}
-
-			nameElement.addAttribute(
-				"style",
-				JenkinsResultsParserUtil.combine(
-					"text-indent: ", String.valueOf(indent), "px"));
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-
-			Dom4JUtil.getNewElement(
-				"td", buildInfoElement,
-				_baseBuild.toJenkinsReportDateString(
-					new Date(getStartTimestamp()),
-					_baseBuild.getJenkinsReportTimeZoneName()));
-
-			if (getDuration() == null) {
-				Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-			}
-			else {
-				Dom4JUtil.getNewElement(
-					"td", buildInfoElement,
-					JenkinsResultsParserUtil.toDurationString(getDuration()));
-			}
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-
-			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
-
-			List<Element> jenkinsReportTableRowElements = new ArrayList<>();
-
-			jenkinsReportTableRowElements.add(buildInfoElement);
-
-			if (_childStopWatchRecords != null) {
-				List<String> childStopWatchRecordNames = new ArrayList<>(
-					_childStopWatchRecords.size());
-
-				for (StopWatchRecord childStopWatchRecord :
-						_childStopWatchRecords) {
-
-					childStopWatchRecordNames.add(
-						childStopWatchRecord.getName());
-
-					List<Element> childJenkinsReportTableRowElements =
-						childStopWatchRecord.getJenkinsReportTableRowElements();
-
-					for (Element childJenkinsReportTableRowElement :
-							childJenkinsReportTableRowElements) {
-
-						childJenkinsReportTableRowElement.addAttribute(
-							"style", "display: none");
-					}
-
-					jenkinsReportTableRowElements.addAll(
-						childJenkinsReportTableRowElements);
-				}
-
-				buildInfoElement.addAttribute(
-					"child-stopwatch-rows",
-					JenkinsResultsParserUtil.join(
-						",", childStopWatchRecordNames));
-			}
-
-			return jenkinsReportTableRowElements;
-		}
-
-		protected void setParentStopWatchRecord(
-			StopWatchRecord stopWatchRecord) {
-
-			_parentStopWatchRecord = stopWatchRecord;
-		}
-
-		private final BaseBuild _baseBuild;
-		private Set<StopWatchRecord> _childStopWatchRecords;
-		private Long _duration;
-		private final String _name;
-		private StopWatchRecord _parentStopWatchRecord;
-		private final Long _startTimestamp;
-
-	}
-
-	public static class StopWatchRecordsGroup
-		implements Iterable<StopWatchRecord> {
-
-		public void add(StopWatchRecord newStopWatchRecord) {
-			_stopWatchRecordsMap.put(
-				newStopWatchRecord.getName(), newStopWatchRecord);
-		}
-
-		public StopWatchRecord get(String name) {
-			return _stopWatchRecordsMap.get(name);
-		}
-
-		public JSONArray getJSONArray() {
-			JSONArray jsonArray = new JSONArray();
-
-			for (StopWatchRecord stopWatchRecord : getStopWatchRecords()) {
-				jsonArray.put(stopWatchRecord.getJSONObject());
-			}
-
-			return jsonArray;
-		}
-
-		public List<StopWatchRecord> getStopWatchRecords() {
-			List<StopWatchRecord> allStopWatchRecords = new ArrayList<>(
-				_stopWatchRecordsMap.values());
-
-			Collections.sort(allStopWatchRecords);
-
-			List<StopWatchRecord> parentStopWatchRecords = new ArrayList<>();
-
-			for (StopWatchRecord stopWatchRecord : allStopWatchRecords) {
-				for (StopWatchRecord parentStopWatchRecord :
-						parentStopWatchRecords) {
-
-					if (parentStopWatchRecord.isParentOf(stopWatchRecord)) {
-						parentStopWatchRecord.addChildStopWatchRecord(
-							stopWatchRecord);
-
-						break;
-					}
-				}
-
-				if (stopWatchRecord.getParentStopWatchRecord() == null) {
-					parentStopWatchRecords.add(stopWatchRecord);
-				}
-			}
-
-			return parentStopWatchRecords;
-		}
-
-		public boolean isEmpty() {
-			return _stopWatchRecordsMap.isEmpty();
-		}
-
-		@Override
-		public Iterator<StopWatchRecord> iterator() {
-			List<StopWatchRecord> list = getStopWatchRecords();
-
-			return list.iterator();
-		}
-
-		public int size() {
-			List<StopWatchRecord> list = getStopWatchRecords();
-
-			return list.size();
-		}
-
-		private final Map<String, StopWatchRecord> _stopWatchRecordsMap =
-			new HashMap<>();
-
-	}
-
 	protected static boolean isHighPriorityBuildFailureElement(
 		Element gitHubMessage) {
 
@@ -2960,7 +2580,7 @@ public abstract class BaseBuild implements Build {
 
 		for (StopWatchRecord stopWatchRecord : getStopWatchRecordsGroup()) {
 			jenkinsReportStopWatchRecordTableRowElements.addAll(
-				stopWatchRecord.getJenkinsReportTableRowElements());
+				_getStopWatchRecordTableRowElements(stopWatchRecord));
 		}
 
 		return jenkinsReportStopWatchRecordTableRowElements;
@@ -3250,6 +2870,34 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
+	protected Element getStopWatchRecordExpanderAnchorElement(
+		StopWatchRecord stopWatchRecord, String namespace) {
+
+		Set<StopWatchRecord> childStopWatchRecords =
+			stopWatchRecord.getChildStopWatchRecords();
+
+		if (childStopWatchRecords == null) {
+			return null;
+		}
+
+		Element expanderAnchorElement = Dom4JUtil.getNewAnchorElement("", "+ ");
+
+		expanderAnchorElement.addAttribute(
+			"id",
+			JenkinsResultsParserUtil.combine(
+				namespace, "-expander-anchor-", stopWatchRecord.getName()));
+		expanderAnchorElement.addAttribute(
+			"onClick",
+			JenkinsResultsParserUtil.combine(
+				"return toggleStopWatchRecordExpander(\'", namespace, "\', \'",
+				stopWatchRecord.getName(), "\')"));
+		expanderAnchorElement.addAttribute(
+			"style",
+			"font-family: monospace, monospace; text-decoration: none");
+
+		return expanderAnchorElement;
+	}
+
 	protected Element getStopWatchRecordsExpanderAnchorElement() {
 		StopWatchRecordsGroup stopWatchRecordsGroup =
 			getStopWatchRecordsGroup();
@@ -3337,8 +2985,7 @@ public abstract class BaseBuild implements Build {
 				String stopWatchName = matcher.group("name");
 
 				stopWatchRecordsGroup.add(
-					new StopWatchRecord(
-						stopWatchName, timestamp.getTime(), this));
+					new StopWatchRecord(stopWatchName, timestamp.getTime()));
 
 				continue;
 			}
@@ -3987,6 +3634,98 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return jobParameters;
+	}
+
+	private List<Element> _getStopWatchRecordTableRowElements(
+		StopWatchRecord stopWatchRecord) {
+
+		Element buildInfoElement = Dom4JUtil.getNewElement("tr", null);
+
+		String buildHashCode = String.valueOf(hashCode());
+
+		buildInfoElement.addAttribute(
+			"id", buildHashCode + "-" + stopWatchRecord.getName());
+
+		buildInfoElement.addAttribute("style", "display: none");
+
+		Element expanderAnchorElement = getStopWatchRecordExpanderAnchorElement(
+			stopWatchRecord, buildHashCode);
+
+		Element nameElement = Dom4JUtil.getNewElement(
+			"td", buildInfoElement, expanderAnchorElement,
+			stopWatchRecord.getShortName());
+
+		int indent =
+			(getDepth() + stopWatchRecord.getDepth() + 1) *
+				_PIXELS_WIDTH_INDENT;
+
+		if (expanderAnchorElement != null) {
+			indent -= _PIXELS_WIDTH_EXPANDER;
+		}
+
+		nameElement.addAttribute(
+			"style",
+			JenkinsResultsParserUtil.combine(
+				"text-indent: ", String.valueOf(indent), "px"));
+
+		Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+		Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+		Dom4JUtil.getNewElement(
+			"td", buildInfoElement,
+			toJenkinsReportDateString(
+				new Date(stopWatchRecord.getStartTimestamp()),
+				getJenkinsReportTimeZoneName()));
+
+		if (stopWatchRecord.getDuration() == null) {
+			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+		}
+		else {
+			Dom4JUtil.getNewElement(
+				"td", buildInfoElement,
+				JenkinsResultsParserUtil.toDurationString(
+					stopWatchRecord.getDuration()));
+		}
+
+		Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+		Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
+
+		List<Element> jenkinsReportTableRowElements = new ArrayList<>();
+
+		jenkinsReportTableRowElements.add(buildInfoElement);
+
+		Set<StopWatchRecord> childStopWatchRecords =
+			stopWatchRecord.getChildStopWatchRecords();
+
+		if (childStopWatchRecords != null) {
+			List<String> childStopWatchRecordNames = new ArrayList<>(
+				childStopWatchRecords.size());
+
+			for (StopWatchRecord childStopWatchRecord : childStopWatchRecords) {
+				childStopWatchRecordNames.add(childStopWatchRecord.getName());
+
+				List<Element> childJenkinsReportTableRowElements =
+					_getStopWatchRecordTableRowElements(childStopWatchRecord);
+
+				for (Element childJenkinsReportTableRowElement :
+						childJenkinsReportTableRowElements) {
+
+					childJenkinsReportTableRowElement.addAttribute(
+						"style", "display: none");
+				}
+
+				jenkinsReportTableRowElements.addAll(
+					childJenkinsReportTableRowElements);
+			}
+
+			buildInfoElement.addAttribute(
+				"child-stopwatch-rows",
+				JenkinsResultsParserUtil.join(",", childStopWatchRecordNames));
+		}
+
+		return jenkinsReportTableRowElements;
 	}
 
 	private synchronized void _initTestClassResults() {

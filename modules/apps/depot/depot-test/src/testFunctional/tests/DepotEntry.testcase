@@ -55,6 +55,39 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a depot containing a folder and some files can be deleted."
+	@priority = "4"
+	@refactordone
+	test CanDeleteDepotWithContent {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "This is a document",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "This is an image",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpg");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.deleteCP(depotName = "Test Depot Name");
+
+		Depot.viewDefaultCP();
+	}
+
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
 	@priority = "5"
 	@refactordone
@@ -173,45 +206,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name 2");
-	}
-
-	@description = "This ensures that a depot with a folder can be deleted."
-	@priority = "4"
-	@refactordone
-	test DeleteDepotWithFolder {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		JSONDocument.addFolder(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name",
-			groupName = "Test Depot Name");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.deleteCP(depotName = "Test Depot Name");
-
-		Depot.viewDefaultCP();
-	}
-
-	@description = "This ensures that a depot with multiple files can be deleted."
-	@priority = "4"
-	@refactordone
-	test DeleteDepotWithMultipleFiles {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.deleteCP(depotName = "Test Depot Name");
-
-		Depot.viewDefaultCP();
 	}
 
 	@description = "This ensures that a depot can be deleted in the list view."

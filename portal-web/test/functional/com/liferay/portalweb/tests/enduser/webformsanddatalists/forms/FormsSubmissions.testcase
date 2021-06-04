@@ -112,14 +112,79 @@ definition {
 	}
 
 	@description = "Verify that a Form can be submitted from the Forms Widget"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSubmittedFromWidget {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131019 CanBeSubmittedFromWidget pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		var textFieldName = FormFields.getFieldName();
+
+		Form.save();
+
+		Form.publishForm();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		SitePages.addPublicPage(
+			pageName = "Form Page",
+			sitePageType = "Widget Page");
+
+		Navigator.gotoPage(pageName = "Form Page");
+
+		Portlet.addPG(
+			pageName = "Form Page",
+			portletName = "Form");
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm(formName = "Form 1");
+
+		PortletEntry.save();
+
+		FormPortletNavigator.exitWidgetModal();
+
+		FormFields.editText(
+			fieldName = "${textFieldName}",
+			fieldValue = "Test Text");
+
+		FormPortlet.clickSubmit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoViewEntries();
+
+		FormsAdmin.viewFormTableEntry(
+			fieldLabel = "Text",
+			fieldValue = "Test Text");
+
+		FormsAdminNavigator.gotoView();
+
+		FormsAdmin.viewTextEntry(
+			fieldLabel = "Text",
+			fieldName = "${textFieldName}",
+			fieldValue = "Test Text");
+
+			
 	}
 
 	@description = "Verify that a Form that is partially filled out can be submitted"

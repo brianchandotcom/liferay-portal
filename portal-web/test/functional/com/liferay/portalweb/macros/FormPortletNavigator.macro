@@ -1,5 +1,11 @@
 definition {
 
+	macro exitWidgetModal {
+		SelectFrameTop();
+
+		Click(locator1 = "FormPortlet#WIDGET_MODAL_CLOSE_BUTTON");
+	}
+
 	macro gotoSelectForm {
 		AssertClick(
 			locator1 = "FormPortlet#SELECT_FORM",

@@ -12,12 +12,19 @@
  * details.
  */
 
-package com.liferay.digital.signature.web.internal.constants;
+package com.liferay.digital.signature.constants;
 
 /**
- * @author José Abelenda
+ * @author Keven Leone
  */
 public class DigitalSignatureConstants {
+
+	public static final String[] ALLOWED_FILE_EXTENSIONS = {
+		"bmp", "csv", "doc", "docm", "docx", "dot", "dotm", "dotx", "gif",
+		"htm", "html", "jpeg", "jpg", "msg", "pdf", "pdf", "png", "pot", "potx",
+		"pps", "ppt", "pptm", "pptx", "rtf", "rtf", "tif", "tiff", "txt", "wpd",
+		"xls", "xlsm", "xlsx", "xps"
+	};
 
 	public static final String[] SITE_SETTINGS_STRATEGIES = {
 		"always-inherit", "always-override", "inherit-or-override"

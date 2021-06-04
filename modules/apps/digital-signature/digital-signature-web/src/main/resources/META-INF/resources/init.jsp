@@ -27,7 +27,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.digital.signature.configuration.DigitalSignatureConfiguration" %><%@
-page import="com.liferay.digital.signature.web.internal.constants.DigitalSignatureConstants" %><%@
+page import="com.liferay.digital.signature.constants.DigitalSignatureConstants" %><%@
 page import="com.liferay.digital.signature.web.internal.constants.DigitalSignatureWebKeys" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@

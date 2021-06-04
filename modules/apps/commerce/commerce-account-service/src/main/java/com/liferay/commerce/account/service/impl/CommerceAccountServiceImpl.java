@@ -16,9 +16,9 @@ package com.liferay.commerce.account.service.impl;
 
 import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.account.exception.NoSuchAccountException;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.base.CommerceAccountServiceBaseImpl;
-import com.liferay.portal.kernel.exception.NoSuchAccountException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.SortFactoryUtil;

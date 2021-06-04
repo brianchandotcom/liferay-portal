@@ -305,33 +305,6 @@ definition {
 		Depot.viewDefaultCP();
 	}
 
-	@description = "This ensures that a depot can be deleted when the Applications Menu is disabled at the instance level."
-	@priority = "5"
-	@refactordone
-	test DeleteWithDisabledAppsMenuAtInstanceScope {
-		PortalSettings.disableApplicationsMenu();
-
-		ProductMenuHelper.openProductMenu();
-
-		ProductMenu.gotoPortletWhenDisableApplicationsMenu(
-			category = "Content",
-			panel = "Applications Menu-Applications",
-			portlet = "Asset Libraries");
-
-		Depot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		ProductMenu.gotoPortletWhenDisableApplicationsMenu(
-			category = "Content",
-			panel = "Applications Menu-Applications",
-			portlet = "Asset Libraries");
-
-		Depot.deleteCP(depotName = "Test Depot Name");
-
-		Depot.viewDefaultCP();
-	}
-
 	@description = "This ensures that a user can deselect depots and delete the reselected ones in cards view."
 	@priority = "5"
 	@refactordone

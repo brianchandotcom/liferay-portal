@@ -366,8 +366,6 @@ definition {
 			fieldReference = "Option1234",
 			fieldValue = "Option 1",
 			rowNumber = "1");
-			
-
 	}
 
 	@description = "Verify that a help text can be added"

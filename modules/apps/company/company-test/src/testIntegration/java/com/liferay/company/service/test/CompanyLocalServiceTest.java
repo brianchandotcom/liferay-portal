@@ -24,18 +24,16 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.AccountNameException;
 import com.liferay.portal.kernel.exception.CompanyMxException;
+import com.liferay.portal.kernel.exception.CompanyNameException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.exception.NoSuchAccountException;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -51,7 +49,6 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
@@ -520,15 +517,6 @@ public class CompanyLocalServiceTest {
 		Assert.assertNull(UserLocalServiceUtil.fetchUser(user.getUserId()));
 	}
 
-	@Test(expected = NoSuchAccountException.class)
-	public void testDeleteCompanyDeletesAccount() throws Exception {
-		Company company = addCompany();
-
-		CompanyLocalServiceUtil.deleteCompany(company);
-
-		AccountLocalServiceUtil.getAccount(company.getAccountId());
-	}
-
 	@Test(expected = NoSuchPasswordPolicyException.class)
 	public void testDeleteCompanyDeletesDefaultPasswordPolicy()
 		throws Exception {
@@ -895,7 +883,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateInvalidAccountNames() throws Exception {
+	public void testUpdateInvalidCompanyNames() throws Exception {
 		Company company = addCompany();
 
 		Group group = GroupTestUtil.addGroup();
@@ -904,7 +892,7 @@ public class CompanyLocalServiceTest {
 
 		GroupLocalServiceUtil.updateGroup(group);
 
-		testUpdateAccountNames(
+		testUpdateCompanyNames(
 			company,
 			new String[] {StringPool.BLANK, group.getDescriptiveName()}, true);
 
@@ -934,10 +922,10 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateValidAccountNames() throws Exception {
+	public void testUpdateValidCompanyNames() throws Exception {
 		Company company = addCompany();
 
-		testUpdateAccountNames(
+		testUpdateCompanyNames(
 			company, new String[] {RandomTestUtil.randomString()}, false);
 
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
@@ -1000,28 +988,25 @@ public class CompanyLocalServiceTest {
 		return serviceContext;
 	}
 
-	protected void testUpdateAccountNames(
-			Company company, String[] accountNames, boolean expectFailure)
+	protected void testUpdateCompanyNames(
+			Company company, String[] companyNames, boolean expectFailure)
 		throws Exception {
 
-		Account account = AccountLocalServiceUtil.getAccount(
-			company.getAccountId());
-
-		for (String accountName : accountNames) {
+		for (String companyName : companyNames) {
 			try {
 				company = CompanyLocalServiceUtil.updateCompany(
 					company.getCompanyId(), company.getVirtualHostname(),
 					company.getMx(), company.getHomeURL(), true, null,
-					accountName, account.getLegalName(), account.getLegalId(),
-					account.getLegalType(), account.getSicCode(),
-					account.getTickerSymbol(), account.getIndustry(),
-					account.getType(), account.getSize());
+					companyName, company.getLegalName(), company.getLegalId(),
+					company.getLegalType(), company.getSicCode(),
+					company.getTickerSymbol(), company.getIndustry(),
+					company.getType(), company.getSize());
 
 				Assert.assertFalse(expectFailure);
 			}
-			catch (AccountNameException accountNameException) {
+			catch (CompanyNameException companyNameException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(accountNameException, accountNameException);
+					_log.debug(companyNameException, companyNameException);
 				}
 
 				Assert.assertTrue(expectFailure);

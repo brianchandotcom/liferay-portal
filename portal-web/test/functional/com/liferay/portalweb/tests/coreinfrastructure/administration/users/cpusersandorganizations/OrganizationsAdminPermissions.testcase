@@ -1,0 +1,123 @@
+@component-name = "portal-user-management-and-portal-configuration"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Users and Organizations";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Organization.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+
+			Role.tearDownCP();
+
+			PortalSettings.tearDownCP();
+		}
+	}
+
+	@priority = "4"
+	test AddOrganizationRegRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		Permissions.setUpRegRoleLoginUserCP(
+			roleTitle = "Regrole Name",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW_CONTROL_PANEL",
+			resourceName = "90",
+			roleTitle = "Regrole Name");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_users_admin_web_portlet_UsersAdminPortlet",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "VIEW",
+			resourceName = "com.liferay.portal.kernel.model.UserGroup",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations.");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_ORGANIZATION",
+			resourceName = "90",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Organization.addCP(
+			orgName = "Organization Name",
+			orgType = "Organization");
+
+		Permissions.removePermissionViaAPI(
+			resourceAction = "ADD_ORGANIZATION",
+			resourceName = "90",
+			roleTitle = "Regrole Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		UsersAndOrganizationsNavigator.gotoOrganizations();
+
+		AssertElementNotPresent(locator1 = "UsersAndOrganizations#ADD");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO",
+			value1 = "Info:You do not belong to an organization and are not allowed to view other organizations.");
+	}
+
+}

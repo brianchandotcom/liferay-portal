@@ -113,20 +113,18 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 			themeDisplay.getLocale(), getClass());
 	}
 
-	protected Throwable getRootThrowable(Throwable throwable) {
-		if ((throwable.getCause() == null) ||
-			(!(throwable.getCause() instanceof IllegalArgumentException) &&
-			 !(throwable.getCause() instanceof NoSuchRoleException) &&
-			 !(throwable.getCause() instanceof
-				 PrincipalException.MustBeCompanyAdmin) &&
-			 !(throwable.getCause() instanceof
-				 PrincipalException.MustBeOmniadmin) &&
-			 !(throwable.getCause() instanceof WorkflowException))) {
+	protected Throwable getRootThrowable(WorkflowException workflowException) {
+		if (workflowException.getCause() instanceof IllegalArgumentException ||
+			workflowException.getCause() instanceof NoSuchRoleException ||
+			workflowException.getCause() instanceof
+				PrincipalException.MustBeCompanyAdmin ||
+			workflowException.getCause() instanceof
+				PrincipalException.MustBeOmniadmin) {
 
-			return throwable;
+			return workflowException.getCause();
 		}
 
-		return getRootThrowable(throwable.getCause());
+		return workflowException;
 	}
 
 	protected String getSuccessMessage(ActionRequest actionRequest) {

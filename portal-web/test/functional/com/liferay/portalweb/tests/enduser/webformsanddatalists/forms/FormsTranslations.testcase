@@ -186,14 +186,52 @@ definition {
 	}
 
 	@description = "Verify that a translation can be published"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBePublished {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133521 CanBePublished pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Click(
+			key_name = "Text",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.editFieldLabelMetal(fieldValue = "Text ES");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		AssertElementPresent(
+			changeAppLanguageTo = "en-US",
+			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "en-US");
+
+		AssertElementPresent(
+			changeAppLanguageTo = "español-España",
+			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
+
+		FormViewBuilder.changeAppLanguageTo(changeAppLanguageTo = "español-España");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text ES");
 	}
 
 	@description = "Verify that a translated Form can be submitted"

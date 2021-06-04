@@ -1,11 +1,34 @@
 .lfr-button {
 	background: no-repeat 0 50%;
+	padding: 2px 0 2px 20px;
 }
 
 .lfr-table {
+	border-collapse: collapse;
+	clear: both;
+
 	> tbody,
 	> thead,
 	> tfoot {
+		> tr {
+			> td,
+			> th {
+				padding: 0 5px;
+
+				@include overflow-wrap(break-all);
+
+				&:first-child,
+				&.first-child {
+					padding-left: 0;
+				}
+
+				&:last-child,
+				&.last-child {
+					padding-right: 0;
+				}
+			}
+		}
+
 		> tr > th {
 			font-weight: bold;
 		}
@@ -14,4 +37,27 @@
 
 .lfr-checkbox-preselected {
 	opacity: 0.5;
+}
+
+.controls-hidden {
+	.lfr-configurator-visibility {
+		display: none;
+	}
+
+	.portlet-topper-toolbar {
+		display: none !important;
+	}
+}
+
+.js {
+	.controls-hidden {
+		.lfr-meta-actions,
+		.lfr-configurator-visibility {
+			display: none;
+		}
+	}
+
+	.page-maximized .portlet-topper-toolbar {
+		display: block;
+	}
 }

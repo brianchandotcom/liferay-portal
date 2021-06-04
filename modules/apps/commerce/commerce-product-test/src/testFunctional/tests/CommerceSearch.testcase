@@ -300,13 +300,72 @@ definition {
 	}
 
 	@description = "COMMERCE-6319. As a buyer, I want to be able to search a Catalog entry using Global Search(Product Name, Product Name with single quotes, Product Name with double quotes) and I want to be able to click on a suggested entry and get redirected to that product Details page"
-	@ignore = "true"
 	@priority = "3"
 	test GlobalSearchSuggestedCatalogEntries {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#GlobalSearchSuggestedCatalogEntries";
 
-		// TODO COMMERCE-6319 GlobalSearchSuggestedCatalogEntries pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
+
+		Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "ABS Sensor");
+
+		AssertElementPresent(
+			key_entryName = "ABS Sensor",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+
+		AssertElementPresent(
+			key_entryName = "Wear Sensors",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+
+		Click(locator1 = "Button#SEARCH_CLOSE");
+
+		Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "'ABS Sensor'");
+
+		AssertElementPresent(
+			key_entryName = "ABS Sensor",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+
+		AssertElementPresent(
+			key_entryName = "Wear Sensors",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+
+		Click(locator1 = "Button#SEARCH_CLOSE");
+
+		var product = '''"ABS Sensor"''';
+
+		Type(
+			locator1 = "Search#GLOBAL_SEARCH_BAR",
+			value1 = "${product}");
+
+		AssertElementPresent(
+			key_entryName = "ABS Sensor",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+
+		AssertElementNotPresent(
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
+			value1 = "Shock Absorber");
+
+		AssertElementNotPresent(
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION",
+			value1 = "Wear Sensors");
+
+		Click(
+			key_entryName = "ABS Sensor",
+			locator1 = "Search#ACCOUNT_SEARCH_SUGGESTION");
+
+		AssertTextEquals(
+			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
+			value1 = "ABS Sensor");
 	}
 
 	@description = "COMMERCE-6321. As a buyer, I want to be able to search an Orders entry using Global Search and I want to be able to click on a suggested entry and get redirected to that order details page"

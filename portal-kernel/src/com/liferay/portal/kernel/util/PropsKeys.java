@@ -1273,6 +1273,8 @@ public interface PropsKeys {
 
 	public static final String FULL_PAGE_DISPLAYABLE = "full.page.displayable";
 
+	public static final String GENERATE_REPORT = "generate.report";
+
 	public static final String GLOBAL_SHUTDOWN_EVENTS =
 		"global.shutdown.events";
 

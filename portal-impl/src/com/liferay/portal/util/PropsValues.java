@@ -1143,6 +1143,9 @@ public class PropsValues {
 					PropsKeys.
 						FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_ORGANIZATION_STATUS));
 
+	public static final boolean GENERATE_REPORT = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.GENERATE_REPORT));
+
 	public static final String[] GLOBAL_SHUTDOWN_EVENTS = PropsUtil.getArray(
 		PropsKeys.GLOBAL_SHUTDOWN_EVENTS);
 

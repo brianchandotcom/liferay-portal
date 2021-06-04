@@ -15,6 +15,8 @@
 package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.StopWatchRecord;
+import com.liferay.jenkins.results.parser.StopWatchRecordsGroup;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,12 +50,62 @@ public class TestrayBuild {
 		return _jsonObject.getString("description");
 	}
 
+	public List<Long> getDownstreamBuildDurations() {
+		JSONObject buildResultJSONObject = _getBuildResultJSONObject();
+
+		if ((buildResultJSONObject == null) ||
+			!buildResultJSONObject.has("batchResults")) {
+
+			return new ArrayList<>();
+		}
+
+		JSONArray batchResultsJSONArray = buildResultJSONObject.getJSONArray(
+			"batchResults");
+
+		List<Long> downstreamBuildDurations = new ArrayList<>();
+
+		for (int i = 0; i < batchResultsJSONArray.length(); i++) {
+			JSONObject batchResultJSONObject =
+				batchResultsJSONArray.getJSONObject(i);
+
+			JSONArray buildResultsJSONArray =
+				batchResultJSONObject.getJSONArray("buildResults");
+
+			for (int j = 0; j < buildResultsJSONArray.length(); j++) {
+				JSONObject buildResultsJSONObject =
+					buildResultsJSONArray.getJSONObject(j);
+
+				if (!buildResultsJSONObject.has("duration")) {
+					continue;
+				}
+
+				downstreamBuildDurations.add(
+					buildResultsJSONObject.getLong("duration"));
+			}
+		}
+
+		return downstreamBuildDurations;
+	}
+
 	public int getID() {
 		return _jsonObject.getInt("testrayBuildId");
 	}
 
 	public String getName() {
 		return _jsonObject.getString("name");
+	}
+
+	public Long getNonDownstreamBuildDuration() {
+		Long topLevelBuildDuration = getTopLevelBuildDuration();
+		Long downstreamBuildDuration = _getWaitForDownstreamBuildDuration();
+
+		if ((topLevelBuildDuration == null) ||
+			(downstreamBuildDuration == null)) {
+
+			return null;
+		}
+
+		return topLevelBuildDuration - downstreamBuildDuration;
 	}
 
 	public String getResult() {
@@ -131,12 +183,57 @@ public class TestrayBuild {
 		return _testrayServer;
 	}
 
+	public Long getTopLevelBuildDuration() {
+		JSONObject buildResultJSONObject = _getBuildResultJSONObject();
+
+		if ((buildResultJSONObject == null) ||
+			!buildResultJSONObject.has("duration")) {
+
+			return null;
+		}
+
+		return buildResultJSONObject.getLong("duration");
+	}
+
 	public URL getURL() {
 		try {
 			return new URL(_jsonObject.getString("htmlURL"));
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);
+		}
+	}
+
+	private void _addChildStopWatchRecords(
+		StopWatchRecordsGroup stopWatchRecordsGroup,
+		StopWatchRecord stopWatchRecord, JSONObject stopWatchRecordJSONObject) {
+
+		if (!stopWatchRecordJSONObject.has("childStopWatchRecords")) {
+			return;
+		}
+
+		JSONArray childStopWatchRecordsJSONArray =
+			stopWatchRecordJSONObject.getJSONArray("childStopWatchRecords");
+
+		for (int i = 0; i < childStopWatchRecordsJSONArray.length(); i++) {
+			JSONObject childStopWatchRecordJSONObject =
+				childStopWatchRecordsJSONArray.getJSONObject(i);
+
+			childStopWatchRecordJSONObject.put(
+				"startTimestamp", _startTimestamp);
+
+			_startTimestamp++;
+
+			StopWatchRecord childStopWatchRecord = new StopWatchRecord(
+				childStopWatchRecordJSONObject);
+
+			stopWatchRecordsGroup.add(childStopWatchRecord);
+
+			stopWatchRecord.addChildStopWatchRecord(childStopWatchRecord);
+
+			_addChildStopWatchRecords(
+				stopWatchRecordsGroup, childStopWatchRecord,
+				childStopWatchRecordJSONObject);
 		}
 	}
 
@@ -202,6 +299,110 @@ public class TestrayBuild {
 		return _buildResultURL;
 	}
 
+	private StopWatchRecordsGroup _getStopWatchRecordsGroup() {
+		if (_stopWatchRecordsGroup != null) {
+			return _stopWatchRecordsGroup;
+		}
+
+		Long topLevelBuildDuration = getTopLevelBuildDuration();
+
+		if (topLevelBuildDuration == null) {
+			return null;
+		}
+
+		_stopWatchRecordsGroup = new StopWatchRecordsGroup();
+
+		StopWatchRecord stopWatchRecord = new StopWatchRecord(
+			"top.level.build", _startTimestamp);
+
+		_startTimestamp++;
+
+		stopWatchRecord.setDuration(topLevelBuildDuration);
+
+		_stopWatchRecordsGroup.add(stopWatchRecord);
+
+		JSONObject buildResultJSONObject = _getBuildResultJSONObject();
+
+		if ((buildResultJSONObject == null) ||
+			!buildResultJSONObject.has("stopWatchRecords")) {
+
+			return _stopWatchRecordsGroup;
+		}
+
+		JSONArray stopWatchRecordsJSONArray =
+			buildResultJSONObject.getJSONArray("stopWatchRecords");
+
+		for (int i = 0; i < stopWatchRecordsJSONArray.length(); i++) {
+			JSONObject childStopWatchRecordJSONObject =
+				stopWatchRecordsJSONArray.getJSONObject(i);
+
+			childStopWatchRecordJSONObject.put(
+				"startTimestamp", _startTimestamp);
+
+			if (!childStopWatchRecordJSONObject.has("duration") ||
+				!childStopWatchRecordJSONObject.has("name")) {
+
+				continue;
+			}
+
+			_startTimestamp++;
+
+			StopWatchRecord childStopWatchRecord = new StopWatchRecord(
+				childStopWatchRecordJSONObject);
+
+			stopWatchRecord.addChildStopWatchRecord(childStopWatchRecord);
+
+			_stopWatchRecordsGroup.add(childStopWatchRecord);
+
+			_addChildStopWatchRecords(
+				_stopWatchRecordsGroup, childStopWatchRecord,
+				childStopWatchRecordJSONObject);
+		}
+
+		return _stopWatchRecordsGroup;
+	}
+
+	private Long _getWaitForDownstreamBuildDuration() {
+		StopWatchRecordsGroup stopWatchRecordsGroup =
+			_getStopWatchRecordsGroup();
+
+		if (stopWatchRecordsGroup == null) {
+			return null;
+		}
+
+		StopWatchRecord waitForInvokedJobsStopWatchRecord =
+			stopWatchRecordsGroup.get("wait.for.invoked.jobs");
+		StopWatchRecord waitForInvokedSmokeJobsStopWatchRecord =
+			stopWatchRecordsGroup.get("wait.for.invoked.smoke.jobs");
+
+		if ((waitForInvokedJobsStopWatchRecord != null) ||
+			(waitForInvokedSmokeJobsStopWatchRecord != null)) {
+
+			long downstreamBuildDuration = 0L;
+
+			if (waitForInvokedJobsStopWatchRecord != null) {
+				downstreamBuildDuration +=
+					waitForInvokedJobsStopWatchRecord.getDuration();
+			}
+
+			if (waitForInvokedSmokeJobsStopWatchRecord != null) {
+				downstreamBuildDuration +=
+					waitForInvokedSmokeJobsStopWatchRecord.getDuration();
+			}
+
+			return downstreamBuildDuration;
+		}
+
+		StopWatchRecord invokeDownstreamBuildsStopWatchRecord =
+			stopWatchRecordsGroup.get("invoke.downstream.builds");
+
+		if (invokeDownstreamBuildsStopWatchRecord != null) {
+			return invokeDownstreamBuildsStopWatchRecord.getDuration();
+		}
+
+		return null;
+	}
+
 	private void _initTestrayCaseResults() {
 		_testrayCaseResults = new ArrayList<>();
 
@@ -234,6 +435,8 @@ public class TestrayBuild {
 	private URL _buildResultURL;
 	private final JSONObject _jsonObject;
 	private String _result;
+	private int _startTimestamp;
+	private StopWatchRecordsGroup _stopWatchRecordsGroup;
 	private List<TestrayCaseResult> _testrayCaseResults;
 	private final TestrayProductVersion _testrayProductVersion;
 	private final TestrayProject _testrayProject;

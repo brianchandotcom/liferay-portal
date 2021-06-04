@@ -523,9 +523,6 @@ definition {
 		FormViewBuilder.validatePredefinedSelectFromList(
 			fieldName = "Select from List",
 			fieldValue = "Choose an Option");
-
-
-
 	}
 
 	@description = "Verify that the Field Reference can be Edited"

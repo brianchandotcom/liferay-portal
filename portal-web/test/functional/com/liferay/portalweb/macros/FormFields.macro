@@ -830,7 +830,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Form#FIELD_REFERENCE",
-			value1 = "${fieldReferenceValue}");
+			value1 = "${key_fieldReferenceValue}");
 	}
 
 	macro viewFieldRepeatableButton {

@@ -1586,6 +1586,9 @@ public class PropsValues {
 	public static String[] LOCALES_ENABLED = PropsUtil.getArray(
 		PropsKeys.LOCALES_ENABLED);
 
+	public static final boolean LOG_INTERCEPTOR_ENABLED = GetterUtil.getBoolean(
+		PropsUtil.get(PropsKeys.LOG_INTERCEPTOR_ENABLED));
+
 	public static boolean LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD =
 		GetterUtil.getBoolean(
 			PropsUtil.get(

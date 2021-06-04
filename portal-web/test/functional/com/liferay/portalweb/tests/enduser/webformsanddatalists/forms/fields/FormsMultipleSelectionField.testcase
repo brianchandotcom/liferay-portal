@@ -324,13 +324,49 @@ definition {
 	}
 
 	@description = "Verify that an option's Field References can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test FieldReferencesOfOptionsCanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132276 FieldReferencesOfOptionsCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Multiple Selection");
+
+		FormFields.editOptionsRowValueOrFieldReference(
+			fieldReference = "Option1234",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRowValueOrFieldReference(
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Multiple Selection");
+
+		FormFields.viewOptionsRowFieldValueOrFieldReference(
+			fieldReference = "Option1234",
+			fieldValue = "Option 1",
+			rowNumber = "1");
+			
 
 	}
 

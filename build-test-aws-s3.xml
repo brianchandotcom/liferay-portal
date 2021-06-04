@@ -56,7 +56,7 @@
 		<local name="bucket.objects" />
 
 		<exec executable="aws" outputproperty="bucket.objects">
-			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${bucket.id} --prefix ${companyId}/${groupId}" />
+			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
 		</exec>
 
 		<echo>${bucket.objects}</echo>
@@ -76,7 +76,7 @@
 		<local name="bucket.objects" />
 
 		<exec executable="aws" outputproperty="bucket.objects">
-			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${bucket.id} --prefix ${companyId}/${groupId}" />
+			<arg line="s3api list-objects --bucket lfr-qa-poshi-test-${aws.bucket.id} --prefix ${companyId}/${groupId}" />
 		</exec>
 
 		<echo>${bucket.objects}</echo>
@@ -118,14 +118,14 @@
 		<local name="bucket.create.output" />
 
 		<exec executable="aws" outputproperty="bucket.create.output">
-			<arg line="s3api create-bucket --bucket lfr-qa-poshi-test-${bucket.id} --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
+			<arg line="s3api create-bucket --bucket lfr-qa-poshi-test-${aws.bucket.id} --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1" />
 		</exec>
 
 		<echo>${bucket.create.output}</echo>
 
 		<if>
 			<not>
-				<contains string="${bucket.create.output}" substring="lfr-qa-poshi-test-${bucket.id}" />
+				<contains string="${bucket.create.output}" substring="lfr-qa-poshi-test-${aws.bucket.id}" />
 			</not>
 			<then>
 				<fail>Bucket is not created.</fail>
@@ -135,7 +135,7 @@
 
 	<target name="delete-s3-bucket">
 		<exec executable="aws">
-			<arg line="s3 rb s3://lfr-qa-poshi-test-${bucket.id}  --force" />
+			<arg line="s3 rb s3://lfr-qa-poshi-test-${aws.bucket.id}  --force" />
 		</exec>
 
 		<delete-expired-buckets />

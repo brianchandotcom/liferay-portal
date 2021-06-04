@@ -71,12 +71,13 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
+		var bucketID = PropsUtil.get("aws.bucket.id");
 		var companyId = JSONCompany.getCompanyId();
 		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "Test Site Name", site = "true");
 
 		AntCommand(
 			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId}");
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -87,7 +88,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId}");
+			value1 = "assert-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
@@ -103,7 +104,7 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test-aws-s3.xml",
-			value1 = "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId}");
+			value1 = "assert-no-document-in-bucket -Daws.bucket.id=${bucketID} -DcompanyId=${companyId} -DgroupId=${groupId}");
 	}
 
 	@priority = "5"

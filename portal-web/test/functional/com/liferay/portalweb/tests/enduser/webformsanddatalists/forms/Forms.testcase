@@ -667,13 +667,53 @@ definition {
 	}
 
 	@description = "Verify that a Form can be created"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeCreated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-130500 CanBeCreated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editDescription(formDescription = "Form 1 Description");
+
+		Form.editPageTitle(
+			formPageName = "Page 1",
+			formTitleNumber = "1");
+
+		Form.editPageDescription(formPageDescriptionName = "Page 1 Descripton");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Text");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Form.viewFormName(formName = "Form 1");
+
+		Form.viewFormDescription(formDescription = "Form 1 Description");
+
+		AssertTextEquals(
+			key_titleNumber = "1",
+			locator1 = "Form#PAGE_TITLE_FIELD",
+			value1 = "Page 1");
+
+		AssertTextEquals(
+			locator1 = "Form#PAGE_DESCRIPTION_FIELD",
+			value1 = "Page 1 Descripton");
+
+		FormFields.viewTextLabel(fieldLabel = "Text");
+
+
 
 	}
 

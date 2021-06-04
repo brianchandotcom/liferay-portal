@@ -69,6 +69,16 @@
     <td></td>
 </tr>
 <tr>
+	<td>PAGE_DESCRIPTION_FIELD</td>
+	<td>//div/input[contains(concat(' ',normalize-space(@class),' '),'form-builder-page-header-description')][@placeholder="Add a short description for this page."]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_FIELD_LABEL</td>
+	<td>//div[contains(concat(' ',normalize-space(@class),' '),' form-group')]/label[contains(text(),'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
     <td>PAGE_TITLE_FIELD</td>
     <td>xpath=(//input[contains(@class,'form-builder-page-header-title')])[${key_titleNumber}]</td>
     <td></td>

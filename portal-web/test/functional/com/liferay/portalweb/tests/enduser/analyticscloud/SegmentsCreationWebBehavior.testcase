@@ -68,8 +68,8 @@ definition {
 		ACSegments.addSegmentField(segmentField = "Downloaded Document & Media");
 
 		ACSegments.selectDocument(
-			indexField = "1",
-			documentTitle = "Document_1.jpg");
+			documentTitle = "Document_1.jpg",
+			indexField = "1");
 
 		ACSegments.setOccurence(occurenceNumber = "4");
 
@@ -160,8 +160,8 @@ definition {
 		ACSegments.addSegmentField(segmentField = "Submitted Form");
 
 		ACSegments.selectDocument(
-			indexField = "1",
-			documentTitle = "Created Form Name");
+			documentTitle = "Created Form Name",
+			indexField = "1");
 
 		ACSegments.setOccurence(occurenceNumber = "2");
 
@@ -243,8 +243,8 @@ definition {
 
 		ACSegments.editWebBehaviorCriterion(
 			indexField = "1",
-			searchTerm = "Created Form Name",
 			occurenceNumber = "4",
+			searchTerm = "Created Form Name",
 			timeOption = "ever");
 
 		ACSegments.saveSegment();
@@ -316,8 +316,8 @@ definition {
 		ACSegments.addSegmentField(segmentField = "Viewed Form");
 
 		ACSegments.selectDocument(
-			indexField = "1",
-			documentTitle = "Created Form Name");
+			documentTitle = "Created Form Name",
+			indexField = "1");
 
 		ACSegments.setOccurence(occurenceNumber = "4");
 

@@ -122,19 +122,21 @@ definition {
 
 	macro editWebBehaviorCriterion {
 		if (isSet(activitiesOption)) {
-			Select(locator1 = "ACSegments#ACTIVITIES_CRITERION",
-				value1 = "${activitiesOption}",
-				key_indexField = "${indexField}");
+			Select(
+				key_indexField = "${indexField}",
+				locator1 = "ACSegments#ACTIVITIES_CRITERION",
+				value1 = "${activitiesOption}");
 		}
 
 		ACSegments.selectDocument(
-			indexField = "${indexField}",
-			documentTitle = "${searchTerm}");
+			documentTitle = "${searchTerm}",
+			indexField = "${indexField}");
 
 		if (isSet(atLeastMost)) {
-			Select(locator1 = "ACSegments#OCCURENCE_SELECT",
-				value1 = "${atLeastMost}",
-				key_indexField = "${indexField}");
+			Select(
+				key_indexField = "${indexField}",
+				locator1 = "ACSegments#OCCURENCE_SELECT",
+				value1 = "${atLeastMost}");
 		}
 
 		if (isSet(occurenceNumber)) {
@@ -143,50 +145,52 @@ definition {
 
 		if (isSet(timeOption) || isSet(timePeriod)) {
 			ACSegments.editWebBehaviorTimeCriterion(
+				day = "${day}",
+				day2 = "${day2}",
 				indexField = "${indexField}",
+				month = "${month}",
+				month2 = "${month2}",
 				timeOption = "${timeOption}",
 				timePeriod = "${timePeriod}",
 				year = "${year}",
-				month = "${month}",
-				day = "${day}",
-				year2 = "${year2}",
-				month2 = "${month2}",
-				day2 = "${day2}");
+				year2 = "${year2}");
 		}
 	}
 
 	macro editWebBehaviorTimeCriterion {
 		if (isSet(timeOption)) {
-			Select(locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
-				value1 = "${timeOption}",
-				key_indexField = "${indexField}");
+			Select(
+				key_indexField = "${indexField}",
+				locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
+				value1 = "${timeOption}");
 		}
 
 		if (isSet(timePeriod)) {
-			if("${timeOption}" == "since" || !(isSet(timeOption))){
-				Select(locator1 = "ACSegments#TIME_INPUT_CRITERION",
-					value1 = "${timePeriod}",
-					key_indexField = "${indexField}");
+			if ("${timeOption}" == "since" || !(isSet(timeOption))) {
+				Select(
+					key_indexField = "${indexField}",
+					locator1 = "ACSegments#TIME_INPUT_CRITERION",
+					value1 = "${timePeriod}");
 			}
 		}
 
-		if("${timeOption}" == "after" || "${timeOption}" == "before" || "${timeOption}" == "on"){
+		if ("${timeOption}" == "after" || "${timeOption}" == "before" || "${timeOption}" == "on") {
 			ACSegments.editDateCriterion(
-				repetitionList = "1",
-				year = "${year}",
+				day = "${day}",
 				month = "${month}",
-				day = "${day}");
+				repetitionList = "1",
+				year = "${year}");
 		}
 
-		if("${timeOption}" == "between"){
+		if ("${timeOption}" == "between") {
 			ACSegments.editDateCriterion(
+				day = "${day}",
+				day2 = "${day2}",
+				month = "${month}",
+				month2 = "${month2}",
 				repetitionList = "1,2",
 				year = "${year}",
-				month = "${month}",
-				day = "${day}",
-				year2 = "${year2}",
-				month2 = "${month2}",
-				day2 = "${day2}");
+				year2 = "${year2}");
 		}
 	}
 

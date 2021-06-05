@@ -182,7 +182,27 @@
 </tr>
 <tr>
     <td>CALENDAR_INPUT</td>
-    <td>//div[@class='input-group-item']/input[@placeholder='YYYY-MM-DD']</td>
+    <td>//div[@class='input-group-item']/input[contains(@placeholder,'YYYY-MM-DD')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>MONTH_AND_YEAR_CALENDAR</td>
+    <td>//select[contains(@class,'date-picker-select-root')][${key_indexCalendar}]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>MONTH_CALENDAR_OPTION</td>
+    <td>//option[text()='${key_month}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>YEAR_CALENDAR_OPTION</td>
+    <td>//option[text()='${key_year}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>DAY_CALENDAR_OPTION</td>
+    <td>//button[text()='${key_day}']</td>
     <td></td>
 </tr>
 <tr>

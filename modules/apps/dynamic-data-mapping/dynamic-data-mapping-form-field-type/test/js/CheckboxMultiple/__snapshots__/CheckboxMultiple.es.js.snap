@@ -168,11 +168,7 @@ exports[`Field Checkbox Multiple has a label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        label
-      </span>
+      label
     </label>
     <div
       class="lfr-ddm-checkbox-multiple"
@@ -824,11 +820,7 @@ exports[`Field Checkbox Multiple renders Label if showLabel is true 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        text
-      </span>
+      text
     </label>
     <div
       class="lfr-ddm-checkbox-multiple"

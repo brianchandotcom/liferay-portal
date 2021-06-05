@@ -102,6 +102,10 @@ const HideFieldProperty = () => {
 	);
 };
 
+const LabelProperty = ({hideField, label}) => {
+	return hideField ? <span className="text-secondary">{label}</span> : label;
+};
+
 const RequiredProperty = () => {
 	return (
 		<span className="ddm-label-required reference-mark">
@@ -316,14 +320,11 @@ function FieldBase({
 								})}
 								tabIndex="0"
 							>
-								{showLabel && (
-									<span
-										className={classNames({
-											'text-secondary': hideField,
-										})}
-									>
-										{label}
-									</span>
+								{showLabel && label && (
+									<LabelProperty
+										hideField={hideField}
+										label={label}
+									/>
 								)}
 
 								{required && <RequiredProperty />}

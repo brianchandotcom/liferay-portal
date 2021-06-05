@@ -37,11 +37,7 @@ exports[`Field Paragraph has a label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        label
-      </span>
+      label
     </label>
     <div
       class="form-group liferay-ddm-form-field-paragraph"
@@ -202,11 +198,7 @@ exports[`Field Paragraph renders Label if showLabel is true 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        text
-      </span>
+      text
     </label>
     <div
       class="form-group liferay-ddm-form-field-paragraph"

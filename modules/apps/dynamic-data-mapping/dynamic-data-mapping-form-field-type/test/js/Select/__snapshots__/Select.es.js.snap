@@ -746,11 +746,7 @@ exports[`Select has a label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        label
-      </span>
+      label
     </label>
     <select
       aria-hidden="true"
@@ -1372,11 +1368,7 @@ exports[`Select puts an asterisk when field is required 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        This is the label
-      </span>
+      This is the label
       <span
         class="ddm-label-required reference-mark"
       >
@@ -1475,11 +1467,7 @@ exports[`Select renders Label if showLabel is true 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        text
-      </span>
+      text
     </label>
     <select
       aria-hidden="true"

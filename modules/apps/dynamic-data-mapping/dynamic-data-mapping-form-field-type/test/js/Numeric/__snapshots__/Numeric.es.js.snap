@@ -71,11 +71,7 @@ exports[`Field Numeric has a label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        label
-      </span>
+      label
     </label>
     <input
       class="form-control"
@@ -226,11 +222,7 @@ exports[`Field Numeric renders Label if showLabel is true 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        Numeric Field
-      </span>
+      Numeric Field
     </label>
     <input
       class="form-control"

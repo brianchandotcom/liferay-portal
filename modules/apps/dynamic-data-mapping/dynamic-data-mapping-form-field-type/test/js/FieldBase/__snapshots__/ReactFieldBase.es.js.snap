@@ -133,11 +133,7 @@ exports[`ReactFieldBase renders the FieldBase with label 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      >
-        Text
-      </span>
+      Text
     </label>
     <input
       name="undefined_edited"
@@ -159,9 +155,6 @@ exports[`ReactFieldBase renders the FieldBase with required 1`] = `
       class="ddm-label"
       tabindex="0"
     >
-      <span
-        class=""
-      />
       <span
         class="ddm-label-required reference-mark"
       >

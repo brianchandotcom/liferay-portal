@@ -205,8 +205,6 @@ definition {
 	}
 
 	macro setOccurence {
-		Click(locator1 = "ACSegments#OCCURENCE_INPUT");
-
 		Type(
 			locator1 = "ACSegments#OCCURENCE_INPUT",
 			value1 = "${occurenceNumber}");

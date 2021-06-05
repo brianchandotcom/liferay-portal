@@ -60,7 +60,7 @@ public class CISystemStatusReportUtil {
 		jenkinsCohort.writeDataJavaScriptFile(filePath);
 	}
 
-	public static void writeSpiraDataJavaScriptFile(
+	public static void writeTestrayDataJavaScriptFile(
 			String filePath, TestrayRoutine testrayRoutine, String nameFilter)
 		throws IOException {
 
@@ -120,7 +120,7 @@ public class CISystemStatusReportUtil {
 
 		sb.append(downstreamBuildDurationJSONObject.toString());
 
-		sb.append("\nvar spiraDataGeneratedDate = new Date(");
+		sb.append("\nvar testrayDataGeneratedDate = new Date(");
 		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
 		sb.append(");\nvar successRateData = ");
 

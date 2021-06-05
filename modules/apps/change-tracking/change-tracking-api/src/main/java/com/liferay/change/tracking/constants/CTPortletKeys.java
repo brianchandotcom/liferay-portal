@@ -15,17 +15,15 @@
 package com.liferay.change.tracking.constants;
 
 /**
- * @author Máté Thurzó
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ * @author Preston Crary
  */
-@Deprecated
 public class CTPortletKeys {
 
-	public static final String CHANGE_LISTS =
-		"com_liferay_change_tracking_web_portlet_ChangeListsPortlet";
+	public static final String PUBLICATIONS =
+		"com_liferay_change_tracking_web_portlet_PublicationsPortlet";
 
-	public static final String CHANGE_LISTS_CONFIGURATION =
+	public static final String PUBLICATIONS_CONFIGURATION =
 		"com_liferay_change_tracking_web_portlet_" +
-			"ChangeListsConfigurationPortlet";
+			"PublicationsConfigurationPortlet";
 
 }

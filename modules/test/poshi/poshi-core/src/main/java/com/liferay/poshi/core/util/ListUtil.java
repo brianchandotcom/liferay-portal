@@ -20,11 +20,18 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
 public class ListUtil {
+
+	public static void add(List<String> list, String item) {
+		list.add(item);
+	}
 
 	public static <E> List<E> copy(List<? extends E> master) {
 		if (master == null) {
@@ -40,6 +47,49 @@ public class ListUtil {
 		}
 
 		return false;
+	}
+
+	public static List<String> newList() {
+		return new ArrayList<>();
+	}
+
+	public static List<String> newListFromString(String s) {
+		return newListFromString(s, StringPool.COMMA);
+	}
+
+	public static List<String> newListFromString(String s, String delimiter) {
+		s = s.trim();
+
+		if (s.contains(delimiter) && s.endsWith("]") && s.startsWith("[")) {
+			try {
+				JSONArray jsonArray = new JSONArray(s);
+
+				List<String> list = new ArrayList<>();
+
+				if (jsonArray != null) {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						list.add(jsonArray.getString(i));
+					}
+				}
+
+				return list;
+			}
+			catch (JSONException jsonException) {
+				throw new RuntimeException("Unable to create list from: " + s);
+			}
+		}
+
+		List<String> list = new ArrayList<>();
+
+		for (String item : s.split(delimiter)) {
+			list.add(item.trim());
+		}
+
+		return list;
+	}
+
+	public static void remove(List<String> list, String item) {
+		list.remove(item);
 	}
 
 	public static <E> List<E> sort(List<E> list) {

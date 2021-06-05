@@ -122,8 +122,14 @@ public class UpgradeClient {
 				shell = true;
 			}
 
+			boolean intercept = false;
+
+			if (commandLine.hasOption("intercept")) {
+				intercept = true;
+			}
+
 			UpgradeClient upgradeClient = new UpgradeClient(
-				jvmOpts, logFile, shell);
+				intercept, jvmOpts, logFile, shell);
 
 			upgradeClient.upgrade();
 		}
@@ -139,12 +145,15 @@ public class UpgradeClient {
 		}
 	}
 
-	public UpgradeClient(String jvmOpts, File logFile, boolean shell)
+	public UpgradeClient(
+			boolean intercept, String jvmOpts, File logFile, boolean shell)
 		throws IOException {
 
 		_jvmOpts = jvmOpts;
 		_logFile = logFile;
 		_shell = shell;
+
+		_interceptLogging = intercept;
 
 		_appServerPropertiesFile = new File(_jarDir, "app-server.properties");
 
@@ -188,6 +197,12 @@ public class UpgradeClient {
 			" -Dexternal-properties=portal-upgrade.properties " +
 				"-Dserver.detector.server.id=" +
 					_appServer.getServerDetectorServerId());
+
+		if (_interceptLogging) {
+			jvmOptsCommands +=
+				" -Dlog.interceptor.enabled=true " +
+					"-Dsystem.properties.set.override=false";
+		}
 
 		System.out.println("JVM arguments: " + jvmOptsCommands);
 
@@ -287,6 +302,10 @@ public class UpgradeClient {
 			new Option("d", "debug", false, "Debug the upgrade jvm."));
 		options.addOption(
 			new Option("h", "help", false, "Print this message."));
+		options.addOption(
+			new Option(
+				"i", "intercept", false,
+				"Intercept logging for additional information."));
 		options.addOption(
 			new Option(
 				"j", "jvm-opts", true,
@@ -762,6 +781,7 @@ public class UpgradeClient {
 	private final File _appServerPropertiesFile;
 	private final ConsoleReader _consoleReader = new ConsoleReader();
 	private final FileOutputStream _fileOutputStream;
+	private final boolean _interceptLogging;
 	private final String _jvmOpts;
 	private final File _logFile;
 	private final Properties _portalUpgradeDatabaseProperties;

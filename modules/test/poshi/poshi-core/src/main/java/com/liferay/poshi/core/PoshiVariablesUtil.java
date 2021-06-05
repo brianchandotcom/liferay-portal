@@ -14,9 +14,11 @@
 
 package com.liferay.poshi.core;
 
+import com.liferay.poshi.core.util.ListUtil;
 import com.liferay.poshi.core.util.StringUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Matcher;
@@ -53,6 +55,10 @@ public class PoshiVariablesUtil {
 		}
 
 		Object tokenObject = replaceCommandVars(token);
+
+		if (tokenObject instanceof List) {
+			return ListUtil.toString((List)tokenObject);
+		}
 
 		return tokenObject.toString();
 	}

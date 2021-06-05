@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.web.internal.portlet.configuration.icon;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.web.internal.constants.CTPortletKeys;
+import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;

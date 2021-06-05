@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.log;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -41,7 +43,10 @@ public class LogFactoryUtil {
 		if (logWrapper == null) {
 			Log log = _logFactory.getLog(name);
 
-			if (SanitizerLogWrapper.isEnabled()) {
+			if (ReportGeneratorLogWrapper.isEnabled()) {
+				logWrapper = new ReportGeneratorLogWrapper(log, name);
+			}
+			else if (SanitizerLogWrapper.isEnabled()) {
 				logWrapper = new SanitizerLogWrapper(log);
 			}
 			else if (log instanceof LogWrapper) {

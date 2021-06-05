@@ -122,8 +122,14 @@ public class UpgradeClient {
 				shell = true;
 			}
 
+			boolean report = false;
+
+			if (commandLine.hasOption("report")) {
+				report = true;
+			}
+
 			UpgradeClient upgradeClient = new UpgradeClient(
-				jvmOpts, logFile, shell);
+				jvmOpts, logFile, report, shell);
 
 			upgradeClient.upgrade();
 		}
@@ -139,11 +145,13 @@ public class UpgradeClient {
 		}
 	}
 
-	public UpgradeClient(String jvmOpts, File logFile, boolean shell)
+	public UpgradeClient(
+			String jvmOpts, File logFile, boolean report, boolean shell)
 		throws IOException {
 
 		_jvmOpts = jvmOpts;
 		_logFile = logFile;
+		_report = report;
 		_shell = shell;
 
 		_appServerPropertiesFile = new File(_jarDir, "app-server.properties");
@@ -188,6 +196,12 @@ public class UpgradeClient {
 			" -Dexternal-properties=portal-upgrade.properties " +
 				"-Dserver.detector.server.id=" +
 					_appServer.getServerDetectorServerId());
+
+		if (_report) {
+			jvmOptsCommands +=
+				" -Dgenerate.report=true " +
+					"-Dsystem.properties.set.override=false";
+		}
 
 		System.out.println("JVM arguments: " + jvmOptsCommands);
 
@@ -293,6 +307,9 @@ public class UpgradeClient {
 				"Set the JVM_OPTS used for the upgrade."));
 		options.addOption(
 			new Option("l", "log-file", true, "Set the name of log file."));
+		options.addOption(
+			new Option(
+				"r", "report", false, "Generate a report after upgrading"));
 		options.addOption(
 			new Option(
 				"s", "shell", false, "Automatically connect to GoGo shell."));
@@ -768,6 +785,7 @@ public class UpgradeClient {
 	private final File _portalUpgradeDatabasePropertiesFile;
 	private final Properties _portalUpgradeExtProperties;
 	private final File _portalUpgradeExtPropertiesFile;
+	private final boolean _report;
 	private final boolean _shell;
 
 }

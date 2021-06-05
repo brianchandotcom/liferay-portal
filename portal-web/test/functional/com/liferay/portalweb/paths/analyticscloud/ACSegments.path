@@ -80,8 +80,8 @@
     <td></td>
 </tr>
 <tr>
-    <td>OPTION_SELECT</td>
-    <td>//option[text()='${key_atLeastMostOption}']</td>
+    <td>OCCURENCE_SELECT</td>
+    <td>xpath=(//div[(@class='criterion')])[${key_indexField}]//select[@class='form-control operator-input']</td>
     <td></td>
 </tr>
 <tr>
@@ -253,6 +253,21 @@
 <tr>
     <td>FORM_CONTROL_CRITERION_OPTION</td>
     <td>//div[contains(@class,'form-group-item')and text()='${key_Criterion}']/..//select[contains(@class,'form-control')]//option[text()='${key_option}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ACTIVITIES_CRITERION</td>
+    <td>xpath=(//select[contains(@class,'criterion-input')])[${key_indexField}]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>TIME_INPUT_CRITERION_CONJUNCTION</td>
+    <td>xpath=(//select[@data-testid='conjunction-input'])[${key_indexField}]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>TIME_INPUT_CRITERION</td>
+    <td>xpath=(//select[@data-testid='clay-select'])[${key_indexField}]</td>
     <td></td>
 </tr>
 <tr>

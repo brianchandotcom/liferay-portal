@@ -121,19 +121,73 @@ definition {
 	}
 
 	macro editWebBehaviorCriterion {
-		var key_AtLeastMostOption = "${atLeastMost}";
+		if (isSet(activitiesOption)) {
+			Select(locator1 = "ACSegments#ACTIVITIES_CRITERION",
+				value1 = "${activitiesOption}",
+				key_indexField = "${indexField}");
+		}
 
-		Click(locator1 = "ACSegments#SELECT_BUTTON");
+		ACSegments.selectDocument(
+			indexField = "${indexField}",
+			documentTitle = "${searchTerm}");
 
-		ACSegments.searchSegment(findSegment = "${searchTerm}");
+		if (isSet(atLeastMost)) {
+			Select(locator1 = "ACSegments#OCCURENCE_SELECT",
+				value1 = "${atLeastMost}",
+				key_indexField = "${indexField}");
+		}
 
-		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
+		if (isSet(occurenceNumber)) {
+			ACSegments.setOccurence(occurenceNumber = "${occurenceNumber}");
+		}
 
-		Click(locator1 = "ACSegments#ADD_BUTTON");
+		if (isSet(timeOption) || isSet(timePeriod)) {
+			ACSegments.editWebBehaviorTimeCriterion(
+				indexField = "${indexField}",
+				timeOption = "${timeOption}",
+				timePeriod = "${timePeriod}",
+				year = "${year}",
+				month = "${month}",
+				day = "${day}",
+				year2 = "${year2}",
+				month2 = "${month2}",
+				day2 = "${day2}");
+		}
+	}
 
-		Select(
-			locator1 = "ACSegments#OPTION_SELECT",
-			value1 = "${atLeastMost}");
+	macro editWebBehaviorTimeCriterion {
+		if (isSet(timeOption)) {
+			Select(locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
+				value1 = "${timeOption}",
+				key_indexField = "${indexField}");
+		}
+
+		if (isSet(timePeriod)) {
+			if("${timeOption}" == "since" || !(isSet(timeOption))){
+				Select(locator1 = "ACSegments#TIME_INPUT_CRITERION",
+					value1 = "${timePeriod}",
+					key_indexField = "${indexField}");
+			}
+		}
+
+		if("${timeOption}" == "after" || "${timeOption}" == "before" || "${timeOption}" == "on"){
+			ACSegments.editDateCriterion(
+				repetitionList = "1",
+				year = "${year}",
+				month = "${month}",
+				day = "${day}");
+		}
+
+		if("${timeOption}" == "between"){
+			ACSegments.editDateCriterion(
+				repetitionList = "1,2",
+				year = "${year}",
+				month = "${month}",
+				day = "${day}",
+				year2 = "${year2}",
+				month2 = "${month2}",
+				day2 = "${day2}");
+		}
 	}
 
 	macro goToSidebarAttrributes {

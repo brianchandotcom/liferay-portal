@@ -173,21 +173,27 @@ definition {
 	}
 
 	macro searchSegment {
-		var key_SearchTerm = "${searchTerm}";
+		var searchTerm = "${findSegment}";
 
 		Type(
 			locator1 = "ACSegments#SEARCH_SEGMENT",
 			value1 = "${searchTerm}");
+
+		KeyPress(
+			locator1 = "ACSettings#SEARCH_BAR",
+			value1 = "\ENTER");
 	}
 
 	macro selectDocument {
 		var key_indexField = "${indexField}";
 
-		var key_titleName = "${titleName}";
+		var key_TableMember = "${documentTitle}";
 
 		Click(locator1 = "ACSegments#SELECT_BUTTON");
 
-		Click(locator1 = "ACSegments#SELECT_DOCUMENT");
+		ACSegments.searchSegment(findSegment = "${documentTitle}");
+
+		Click(locator1 = "ACSegments#TABLE_CHECKBOX");
 
 		Click(locator1 = "ACSegments#ADD_BUTTON");
 	}

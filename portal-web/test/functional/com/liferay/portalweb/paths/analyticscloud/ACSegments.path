@@ -236,11 +236,6 @@
     <td></td>
 </tr>
 <tr>
-    <td>SELECT_DOCUMENT</td>
-    <td>//div[contains(@class,'table-title')and text()='${key_titleName}']</td>
-    <td></td>
-</tr>
-<tr>
     <td>OCCURENCE_INPUT</td>
     <td>//input[@data-testid='occurence-count-input']</td>
     <td></td>

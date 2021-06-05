@@ -69,7 +69,7 @@ definition {
 
 		ACSegments.selectDocument(
 			indexField = "1",
-			titleName = "Document_1.jpg");
+			documentTitle = "Document_1.jpg");
 
 		ACSegments.setOccurence(occurenceNumber = "4");
 
@@ -161,7 +161,7 @@ definition {
 
 		ACSegments.selectDocument(
 			indexField = "1",
-			titleName = "Created Form Name");
+			documentTitle = "Created Form Name");
 
 		ACSegments.setOccurence(occurenceNumber = "2");
 
@@ -190,6 +190,80 @@ definition {
 			fieldValue = "Test Segments");
 
 		FormPortlet.submitLocalizedSuccessfully(buttonName = "Submit");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
+	@description = "Add segment using a web behavior 'ever' done"
+	@priority = "5"
+	test CanCreateWebBehaviorSegmentUsingEver {
+		ACUtils.createFormAndAddToPage();
+
+		Navigator.openURL();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.addSegmentField(segmentField = "Viewed Form");
+
+		ACSegments.editWebBehaviorCriterion(
+			indexField = "1",
+			searchTerm = "Created Form Name",
+			occurenceNumber = "4",
+			timeOption = "ever");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#NO_MEMBER_TITLE",
+			value1 = "There are no items found.");
+
+		ACUtils.launchDXP();
+
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			Pause(locator1 = "100");
+		}
 
 		Pause(locator1 = "10000");
 
@@ -243,7 +317,7 @@ definition {
 
 		ACSegments.selectDocument(
 			indexField = "1",
-			titleName = "Created Form Name");
+			documentTitle = "Created Form Name");
 
 		ACSegments.setOccurence(occurenceNumber = "4");
 

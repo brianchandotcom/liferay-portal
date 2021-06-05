@@ -12,27 +12,16 @@
  * details.
  */
 
-package com.liferay.change.tracking.constants;
+package com.liferay.change.tracking.exception;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Daniel Kocsis
+ * @author Samuel Trong Tran
  */
-public interface CTConstants {
+public class StagingEnabledConflictException extends PortalException {
 
-	public static final int CT_CHANGE_TYPE_ADDITION = 0;
-
-	public static final int CT_CHANGE_TYPE_DELETION = 1;
-
-	public static final int CT_CHANGE_TYPE_MODIFICATION = 2;
-
-	public static final long CT_COLLECTION_ID_PRODUCTION = 0;
-
-	public static final String PUBLICATIONS_USER = "Publications User";
-
-	public static final String RESOURCE_NAME = "com.liferay.change.tracking";
-
-	public static final String TYPE_AFTER = "after";
-
-	public static final String TYPE_BEFORE = "before";
+	public StagingEnabledConflictException() {
+	}
 
 }

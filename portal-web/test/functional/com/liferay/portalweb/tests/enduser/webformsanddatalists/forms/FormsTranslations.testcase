@@ -521,7 +521,7 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Numeric");
 	}
 
-	@description = "Verify that if a field is deleted on the default language, it is also deleted on the translation"
+	@description = "Verify that if a field is deleted on the translation, it is also deleted on the default language"
 	@priority = "5"
 	test FieldsDeletedInATranslationAreDeletedInTheDefaultLanguage {
 		property forms.functional = "true";

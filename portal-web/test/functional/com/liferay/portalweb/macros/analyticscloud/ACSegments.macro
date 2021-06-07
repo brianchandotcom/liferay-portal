@@ -128,9 +128,11 @@ definition {
 				value1 = "${activitiesOption}");
 		}
 
-		ACSegments.selectDocument(
-			documentTitle = "${searchTerm}",
-			indexField = "${indexField}");
+		if (isSet(searchTerm)) {
+			ACSegments.selectDocument(
+				documentTitle = "${searchTerm}",
+				indexField = "${indexField}");
+		}
 
 		if (isSet(atLeastMost)) {
 			Select(

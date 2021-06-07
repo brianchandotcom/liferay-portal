@@ -6,17 +6,23 @@ definition {
 	property testray.main.component.name = "Display Pages";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Test Site Name");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 
-		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-			contentType = "Web Content Article",
-			displayPageTemplateEntryName = "Display Page Name",
-			groupName = "Test Site Name",
-			subType = "Basic Web Content");
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
 	}
 
 	tearDown {
@@ -180,34 +186,38 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98031."
+	@description = "This is a test for LPS-98031. Map manual URL to link fragment."
 	@priority = "5"
 	test MapManualURLToLinkFragment {
 		property portal.acceptance = "true";
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a Banner Center to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-		PageEditor.addFragment(
-			collectionName = "Featured Content",
-			fragmentName = "Banner Center");
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
 
-		PageEditorEditableLink.gotoEditableFieldLink(
-			fragmentName = "Banner Center",
-			id = "link");
+		task ("Map the manual URL to link editable field") {
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Banner Center",
+				id = "link");
 
-		PageEditorEditableLink.updateURL(url = "https://liferay.com");
+			PageEditorEditableLink.updateURL(url = "https://liferay.com");
 
-		PageEditor.clickPublish();
+			PageEditor.clickPublish();
+		}
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		task ("View the mapped URL in link editable field") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-			displayPageName = "Display Page Name",
-			item = "Edit");
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Edit");
 
-		task ("Assert editable has the specified URL mapped correctly") {
 			AssertVisible(locator1 = "//a[contains(@class,'btn')][contains(@href,'https://liferay.com')]");
 		}
 	}

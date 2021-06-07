@@ -24,6 +24,460 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-121199. The user could assign multiple usages to default."
+	@priority = "4"
+	test AssignMultipleUsagesToDefault {
+		task ("Add a display page template for Document and Basic Document") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Document");
+		}
+
+		task ("Publish the display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add three documents and select the display page template") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			for (var i : list "1,2,3") {
+				JSONDocument.addFileWithUploadedFile(
+					dmDocumentTitle = "Document_${i}.txt",
+					groupName = "Test Site Name",
+					mimeType = "text/plain",
+					sourceFileName = "Document_${i}.txt");
+
+				LexiconEntry.gotoEntryMenuItem(
+					menuItem = "Edit",
+					rowEntry = "Document_${i}.txt");
+
+				WebContent.editDisplayPage(
+					pageName = "Display Page Name",
+					pageType = "Display Page Templates");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("Assign two usages to default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "View Usages");
+
+			for (var i : list "1,3") {
+				Check(
+					key_tableEntry = "Document_${i}.txt",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
+
+			Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+			MenuItem.clickNoError(menuItem = "Assign to Default");
+
+			AssertConfirm(value1 = "Are you sure you want to use the default display page template for this?");
+
+			Alert.viewSuccessMessageText(successMessage = "Successfully assigned to default display page template.");
+		}
+
+		task ("View the usage of display page template") {
+			LexiconTable.viewTableEntryTitle(tableEntry = "Document_2.txt");
+
+			for (var i : list "1,3") {
+				LexiconTable.viewTableEntryNotPresent(tableEntry = "Document_${i}.txt");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-121199. The user could assign usage to the default when the default display page template exists."
+	@priority = "4"
+	test AssignUsageToDefaultWhenDefaultPageTemplateExist {
+		task ("Add the first display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name 1",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Publish the first display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 1");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the first display page template as default") {
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name 1");
+		}
+
+		task ("Add the second display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name 2",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Publish the second display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name 2",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assign the usage to default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name 2",
+				item = "View Usages");
+
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+			Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+			MenuItem.clickNoError(menuItem = "Assign to Default (Display Page Name 1)");
+
+			AssertConfirm(value1 = "Are you sure you want to use the default display page template for this?");
+
+			Alert.viewSuccessMessageText(successMessage = "Successfully assigned to default display page template: Display Page Name 1.");
+		}
+
+		task ("View the first display page template is selected in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.viewSelectedDisplayPageTemplateCP(
+				displayPageTemplateName = "Display Page Name 1",
+				displayPageTemplateType = "Default");
+		}
+	}
+
+	@description = "This is a test for LPS-121199. The user could assign usage to the default even if the default display page template doesn't exist."
+	@priority = "3"
+	test AssignUsageToDefaultWhenDefaultPageTemplateNotExist {
+		task ("Add a display page template for Blogs Entry") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Publish the display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Select the display page template in blogs entry") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to View Usages of display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "View Usages");
+		}
+
+		task ("Assign the usage to default") {
+			Check(
+				key_tableEntry = "Blogs Entry Title",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+			Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+			MenuItem.clickNoError(menuItem = "Assign to Default");
+
+			AssertConfirm(value1 = "Are you sure you want to use the default display page template for this?");
+
+			Alert.viewSuccessMessageText(successMessage = "Successfully assigned to default display page template.");
+		}
+
+		task ("View the No Default Display Page Template is selected in blogs entry") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+			WebContent.viewSelectedDisplayPageTemplateCP(
+				displayPageTemplateName = "No Default Display Page Template",
+				displayPageTemplateType = "Default");
+		}
+	}
+
+	@description = "This is a test for LPS-121199. The user could delete display page template after assign the usages to default."
+	@priority = "5"
+	test DeleteDisplayPageTemplateAfterAssignToDefault {
+		property portal.acceptance = "true";
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Publish the display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Assign the usage to default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "View Usages");
+
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+			Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+			MenuItem.clickNoError(menuItem = "Assign to Default");
+
+			AssertConfirm(value1 = "Are you sure you want to use the default display page template for this?");
+
+			Alert.viewSuccessMessageText(successMessage = "Successfully assigned to default display page template.");
+		}
+
+		task ("Delete the display page template") {
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
+
+			Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
+		}
+
+		task ("View the display page template is deleted") {
+			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
+		}
+	}
+
+	@description = "This is a test for LPS-121199. The user could delete display page template after unassign the usages."
+	@priority = "5"
+	test DeleteDisplayPageTemplateAfterUnassign {
+		property portal.acceptance = "true";
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Publish the display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Unassign the usages") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "View Usages");
+
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+			Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+			MenuItem.clickNoError(menuItem = "Unassign");
+
+			AssertConfirm(value1 = "Are you sure you do not want to set a display page template for this?");
+
+			Alert.viewSuccessMessageText(successMessage = "Successfully unassigned display page template.");
+		}
+
+		task ("Delete the display page template") {
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+			DisplayPageTemplatesAdmin.deleteDisplayPage(displayPageName = "Display Page Name");
+
+			Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
+		}
+
+		task ("View the display page template not shown") {
+			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
+		}
+	}
+
+	@description = "This is a test for LPS-121199. The user could unassign the usages of display page template."
+	@priority = "5"
+	test UnassignUsages {
+		property portal.acceptance = "true";
+
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Publish the display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add three web contents and select the display page template") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "Webcontent Content ${i}",
+					groupName = "Test Site Name",
+					title = "Webcontent Title ${i}");
+
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${i}");
+
+				WebContent.editDisplayPage(
+					pageName = "Display Page Name",
+					pageType = "Display Page Templates");
+
+				PortletEntry.publish();
+			}
+		}
+
+		task ("Unassign usage") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "View Usages");
+
+			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
+
+			Click(locator1 = "ManagementBar#ELLIPSIS_ICON");
+
+			MenuItem.clickNoError(menuItem = "Unassign");
+
+			AssertConfirm(value1 = "Are you sure you do not want to set a display page template for this?");
+
+			Alert.viewSuccessMessageText(successMessage = "Successfully unassigned display page template.");
+		}
+
+		task ("View the empty info") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no display page template usages.");
+		}
+
+		task ("View the View Usages action is not shown") {
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+
+			LexiconCard.viewMenuItemNotPresent(
+				card = "Display Page Name",
+				item = "View Usages");
+		}
+
+		task ("View the None is selected in web content") {
+			for (var i : list "1,2,3") {
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+				WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title ${i}");
+
+				WebContent.viewSelectedDisplayPageTemplateCP(displayPageTemplateType = "None");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-123480. The assets are ordered by modified date in view usages of display page template."
 	@priority = "5"
 	test ViewAssetsOrderInViewUsagesOfDisplayPageTemplate {

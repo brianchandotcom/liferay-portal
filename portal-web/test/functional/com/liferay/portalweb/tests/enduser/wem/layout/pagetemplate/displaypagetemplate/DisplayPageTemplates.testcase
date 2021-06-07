@@ -37,10 +37,10 @@ definition {
 		}
 	}
 
-	@description = "User cannot delete a display page template used by an asset."
+	@description = "User cannot delete a display page template with usage."
 	@priority = "4"
 	@uitest
-	test CannotDeleteDisplayPageTemplateUsedByItems {
+	test CannotDeleteDisplayPageTemplateWithUsage {
 		task ("Publish the display page template") {
 			PageEditor.clickPublish();
 		}
@@ -206,7 +206,57 @@ definition {
 		}
 	}
 
-	@description = "User can delete display pages."
+	@description = "User can delete default display page template."
+	@priority = "5"
+	@uitest
+	test DeleteDefaultDisplayPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Publish the display page template") {
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the display page template as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("View the default page template is selected in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.viewSelectedDisplayPageTemplateCP(
+				displayPageTemplateName = "Display Page Name",
+				displayPageTemplateType = "Default");
+		}
+
+		task ("Delete the default display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete the default display page template? All related display pages will be deleted.");
+
+			Alert.viewSuccessMessageText(successMessage = "You successfully deleted 1 display page template(s).");
+		}
+
+		task ("View the default display page template not shown") {
+			DisplayPageTemplatesAdmin.viewDisplayPageNotPresent(displayPageName = "DisplayPage Name");
+		}
+	}
+
+	@description = "User can delete display page template."
 	@priority = "5"
 	@uitest
 	test DeleteDisplayPageTemplate {

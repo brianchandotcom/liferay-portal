@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.util;
+package com.liferay.layout.content.page.editor.web.internal.info.list.provider;
 
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;

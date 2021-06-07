@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.util;
+package com.liferay.layout.content.page.editor.web.internal.info.item;
 
 import com.liferay.info.item.InfoItemServiceTracker;
 

@@ -335,14 +335,55 @@ definition {
 	}
 
 	@description = "Verify that the "Is Less Than" option can be used to validate a Numeric Field"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeValidatedUsingIsLessThan {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132854 CanBeValidatedUsingIsLessThan pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableCheckbox(fieldName = "Validation");
+
+		FormFields.editValidationTargetArgument(
+			validationArgument = "Is less than",
+			validationErrorMessage = "Test Error",
+			validationInput = "123");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "123");
+
+		FormFields.viewFieldValidationErrorMessage(
+			fieldName = "Numeric",
+			fieldValidationErrorMessage = "Test Error");
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "Test Error");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "122");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
+
+		FormPortlet.submitAndViewSuccessPage();
 	}
 
 	@description = "Verify that the "Is Less Than Or Equal To" option can be used to validate a Numeric Field"

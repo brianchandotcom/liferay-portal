@@ -1,5 +1,15 @@
 # Poshi Runner Change Log
 
+## 1.0.306
+
+### PQL
+
+* [LRCI-2310](https://issues.liferay.com/browse/LRCI-2310) - Add ability to create PQL to match by class name & case name
+
+### Utils
+
+* [POSHI-169](https://issues.liferay.com/browse/POSHI-169) - As a test engineer, it should be possible to process/parse a Har file returned from BrowerMob
+
 ## 1.0.304
 
 ### Core

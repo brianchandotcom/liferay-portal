@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.InputStream;
 
@@ -53,6 +55,10 @@ public class AMImageEntryProcessorTest {
 
 	@Before
 	public void setUp() {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
+		_amImageEntryProcessor = new AMImageEntryProcessor();
+
 		Mockito.doReturn(
 			_amAsyncProcessor
 		).when(
@@ -666,8 +672,7 @@ public class AMImageEntryProcessorTest {
 		Mockito.mock(AMAsyncProcessor.class);
 	private final AMAsyncProcessorLocator _amAsyncProcessorLocator =
 		Mockito.mock(AMAsyncProcessorLocator.class);
-	private final AMImageEntryProcessor _amImageEntryProcessor =
-		new AMImageEntryProcessor();
+	private AMImageEntryProcessor _amImageEntryProcessor;
 	private final AMImageFinder _amImageFinder = Mockito.mock(
 		AMImageFinder.class);
 	private final AMImageMimeTypeProvider _amImageMimeTypeProvider =

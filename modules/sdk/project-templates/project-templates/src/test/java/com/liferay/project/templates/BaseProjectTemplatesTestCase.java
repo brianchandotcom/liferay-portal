@@ -1264,7 +1264,7 @@ public interface BaseProjectTemplatesTestCase {
 			mavenExecutor, "-DclassName=" + className,
 			"-Dpackage=" + packageName, "-DliferayVersion=" + liferayVersion);
 
-		if (!liferayVersion.equals("7.0.6") && !template.contains("war")) {
+		if (!liferayVersion.startsWith("7.0") && !template.contains("war")) {
 			testContains(
 				mavenProjectDir, "bnd.bnd",
 				"-contract: JavaPortlet,JavaServlet");

@@ -139,7 +139,7 @@ public class ProjectTemplatesServiceWrapperTest
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
 			File mavenOutputDir = new File(mavenProjectDir, "target");
 
-			if (_liferayVersion.equals("7.3.5")) {
+			if (_liferayVersion.startsWith("7.3")) {
 				File buildGradleFile = testExists(
 					gradleProjectDir, "build.gradle");
 				File pomXmlFile = testExists(mavenProjectDir, "pom.xml");

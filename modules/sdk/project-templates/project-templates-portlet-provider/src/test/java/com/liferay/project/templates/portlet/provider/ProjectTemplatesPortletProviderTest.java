@@ -146,7 +146,7 @@ public class ProjectTemplatesPortletProviderTest
 			mavenExecutor, "-DclassName=ProviderTest",
 			"-Dpackage=provider.test", "-DliferayVersion=" + _liferayVersion);
 
-		if (!_liferayVersion.equals("7.0.6")) {
+		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
 				mavenProjectDir, "bnd.bnd",
 				"-contract: JavaPortlet,JavaServlet");

@@ -130,7 +130,7 @@ public class ProjectTemplatesControlMenuEntryTest
 			mavenExecutor, "-DclassName=FooBar", "-Dpackage=foo.bar",
 			"-DliferayVersion=" + _liferayVersion);
 
-		if (!_liferayVersion.equals("7.0.6")) {
+		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
 				mavenProjectDir, "bnd.bnd",
 				"-contract: JavaPortlet,JavaServlet");

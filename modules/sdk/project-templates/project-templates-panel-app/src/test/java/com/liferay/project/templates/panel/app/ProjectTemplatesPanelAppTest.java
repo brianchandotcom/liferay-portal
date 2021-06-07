@@ -150,7 +150,7 @@ public class ProjectTemplatesPanelAppTest
 			mavenExecutor, "-DclassName=Foo", "-Dpackage=gradle.test",
 			"-DliferayVersion=" + _liferayVersion);
 
-		if (!_liferayVersion.equals("7.0.6")) {
+		if (!_liferayVersion.startsWith("7.0")) {
 			testContains(
 				mavenProjectDir, "bnd.bnd",
 				"-contract: JavaPortlet,JavaServlet");

@@ -101,7 +101,7 @@ public class ProjectTemplatesRestTest implements BaseProjectTemplatesTestCase {
 					"\"org.osgi.service.jaxrs");
 		}
 
-		if (_liferayVersion.equals("7.0.6")) {
+		if (_liferayVersion.startsWith("7.0")) {
 			testContains(
 				gradleProjectDir,
 				"src/main/resources/configuration" +

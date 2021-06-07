@@ -80,7 +80,7 @@ definition {
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name 2");
+		FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 
 		FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone1"></lfr-drop-zone>
 	<lfr-drop-zone id="drop-zone2"></lfr-drop-zone>''');
@@ -100,7 +100,7 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
-			fragmentName = "Fragment Name 2");
+			fragmentName = "Fragment Name");
 
 		AssertVisible(
 			key_content = "Place fragments here.",
@@ -261,9 +261,11 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98241. Basic Component Card can be configured."
-	@priority = "3"
+	@description = "This is a test for LPS-98241 and LPS-99749. Basic Component Card can be configured."
+	@priority = "5"
 	test ConfigureBasicComponentCard {
+		property portal.acceptance = "true";
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -704,6 +706,181 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-100963. When a fragment that uses JavaScript has a configuration, there is a JavaScript configuration object available which contains the current values of the fragment configuration."
+	@priority = "4"
+	test ConfigureFragmentWithJavaScript {
+		task ("Add a new fragment with the following codes") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "type",
+					"name": "buttonType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "link"
+							},
+							{
+								"value": "outline-primary"
+							},
+							{
+								"value": "outline-secondary"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "nm",
+					"label": "size",
+					"name": "buttonSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": "sm"
+							},
+							{
+								"label": "normal",
+								"value": "nm"
+							},
+							{
+								"label": "large",
+								"value": "lg"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}
+				''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			Pause(locator1 = "3000");
+
+			FragmentsEditor.gotoCodeTab();
+
+			var htmlSnippet = '''
+<div class="component-fragment-name text-break">
+	<a
+		class="btn"
+		data-lfr-editable-id="link"
+		data-lfr-editable-type="link"
+		href=""
+		id="fragment-${fragmentEntryLinkNamespace}-link"
+	>
+		Go Somewhere
+	</a>
+</div>
+			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			var jsSnippet = '''
+
+const size = configuration.buttonSize;
+const type = configuration.buttonType;
+
+function main() {
+		const editableField = fragmentElement.querySelector('.btn');
+
+	editableField.classList.add(`btn-${size}`);
+	editableField.classList.add(`btn-${type}`);
+}
+
+main();
+
+			''';
+
+			FragmentsEditor.typeJsEditor(content = "${jsSnippet}");
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+		}
+
+		task ("Add the new fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("View the fragment styles") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "nm",
+				type = "primary");
+		}
+
+		task ("Configure the fragment") {
+			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
+
+			PageEditor.configureFragment(type = "Link");
+
+			PageEditor.gotoStyle(fragmentName = "Fragment Name");
+
+			PageEditor.configureFragment(size = "Large");
+		}
+
+		task ("View the fragment styles") {
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "lg",
+				type = "link");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment styles in view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewFragmentStyle(
+				fragmentName = "Fragment-Name",
+				size = "lg",
+				type = "link");
+		}
+	}
+
 	@description = "This is a test for LPS-90064 and is a supplementary frontend test to the integration tests in LPS-90307. Fragments can be copied."
 	@priority = "5"
 	test CopyFragment {
@@ -982,7 +1159,7 @@ definition {
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name 2");
+		FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 
 		FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
 
@@ -1005,7 +1182,7 @@ definition {
 
 		PageEditor.addElementToContainer(
 			collectionName = "Collection Name",
-			fragmentName = "Fragment Name 2",
+			fragmentName = "Fragment Name",
 			navTab = "Fragments");
 
 		PageEditor.gotoSaveAsFragment(fragmentName = "Container");
@@ -1039,7 +1216,7 @@ definition {
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name 2");
+		FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 
 		FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
 
@@ -1048,7 +1225,7 @@ definition {
 		FragmentsEditor.publish();
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = "Fragment Name 2",
+			entry = "Fragment Name",
 			item = "Edit");
 
 		FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">New Fragment Name</div>''');
@@ -1058,7 +1235,7 @@ definition {
 		Navigator.gotoBack();
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = "Fragment Name 2",
+			entry = "Fragment Name",
 			item = "Edit");
 
 		AssertTextEquals.assertPartialText(
@@ -1075,7 +1252,7 @@ definition {
 
 		FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
 
-		FragmentsAdmin.addFragment(fragmentName = "Fragment Name 2");
+		FragmentsAdminNavigator.gotoEntry(entry = "Fragment Name");
 
 		FragmentsEditor.typeHtmlEditor(content = '''<div class="fragment_1">Fragment Name</div>''');
 
@@ -1084,7 +1261,7 @@ definition {
 		Navigator.gotoBack();
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
-			entry = "Fragment Name 2",
+			entry = "Fragment Name",
 			item = "Edit");
 
 		AssertTextEquals.assertPartialText(

@@ -365,7 +365,11 @@ public class FragmentCollectionContributorTrackerImpl
 			ServiceReference<FragmentCollectionContributor> serviceReference,
 			FragmentCollectionContributor fragmentCollectionContributor) {
 
-			_fragmentEntries = null;
+			for (FragmentEntry fragmentEntry :
+					fragmentCollectionContributor.getFragmentEntries()) {
+
+				_fragmentEntries.remove(fragmentEntry.getFragmentEntryKey());
+			}
 
 			_bundleContext.ungetService(serviceReference);
 		}

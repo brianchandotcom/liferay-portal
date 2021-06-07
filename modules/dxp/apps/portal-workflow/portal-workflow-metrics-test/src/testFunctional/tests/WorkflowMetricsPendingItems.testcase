@@ -75,7 +75,6 @@ definition {
 			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
-		
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
@@ -89,13 +88,9 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-			
-		
 		AssertElementPresent(
 			key_workflowInstanceName = "Blogs Entry Title",
 			locator1 = "WorkflowAllItems#WORKFLOW_INSTANCE_NAME");
-		
-
 	}
 
 	@description = "LPS-93410 - Verify that the items are classified by Overdue, On Time and Untracked"

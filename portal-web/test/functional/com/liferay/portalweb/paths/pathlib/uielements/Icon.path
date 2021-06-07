@@ -219,6 +219,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FLAG_1</td>
+	<td>//*[*[name()='svg'][contains(@class,'exicon-icon-es-es')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO</td>
 	<td>//*[@data-qa-id='infoButton'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')] | //button[*[name()='svg'][contains(@class,'lexicon-icon-info')]]</td>
 	<td></td>

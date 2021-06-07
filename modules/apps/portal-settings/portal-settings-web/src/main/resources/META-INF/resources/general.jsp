@@ -30,7 +30,7 @@ catch (Exception e) {
 
 <h4><liferay-ui:message key="main-configuration" /></h4>
 
-<aui:model-context bean="<%= account %>" model="<%= Account.class %>" />
+<aui:model-context bean="<%= company %>" model="<%= Company.class %>" />
 
 <clay:row>
 	<clay:col
@@ -42,7 +42,7 @@ catch (Exception e) {
 
 		<liferay-ui:error exception="<%= CompanyMxException.class %>" message="please-enter-a-valid-mail-domain" />
 
-		<aui:input bean="<%= company %>" disabled="<%= !PropsValues.MAIL_MX_UPDATE %>" label="mail-domain" model="<%= Company.class %>" name="mx" />
+		<aui:input disabled="<%= !PropsValues.MAIL_MX_UPDATE %>" label="mail-domain" name="mx" />
 
 		<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
 

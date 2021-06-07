@@ -37,6 +37,7 @@
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetEntry"
 			escapedModel="<%= true %>"
+			keyProperty="entryId"
 			modelVar="assetEntry"
 		>
 

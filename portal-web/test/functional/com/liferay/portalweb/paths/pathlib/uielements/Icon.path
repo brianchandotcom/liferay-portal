@@ -309,6 +309,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TIMES_2</td>
+	<td>xpath=(//button[*[name()='svg'][contains(@class,'icon-times')]])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLTIP</td>
 	<td>//span[*[name()='svg'][contains(@class,'icon-question')]]</td>
 	<td></td>

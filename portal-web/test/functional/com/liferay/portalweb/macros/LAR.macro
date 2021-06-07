@@ -474,7 +474,7 @@ definition {
 			portletName = "${portletName}");
 
 		if (isSet(wikiPortlet)) {
-			Click(locator1 = "Icon#TIMES");
+			Click(locator1 = "Icon#TIMES_2");
 		}
 		else {
 			IFrame.closeFrame();
@@ -565,7 +565,7 @@ definition {
 			uploadFrom = "${uploadFrom}");
 
 		if (isSet(wikiPortlet)) {
-			Click(locator1 = "Icon#TIMES");
+			Click(locator1 = "Icon#TIMES_2");
 		}
 		else {
 			IFrame.closeFrame();

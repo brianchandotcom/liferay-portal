@@ -291,13 +291,277 @@ public class AssetListAssetEntryProviderTest {
 		}
 	}
 
-	private void _addJournalArticle(long[] assetCategories) throws Exception {
+	@Test
+	public void testGetManualAssetEntriesMatchingAllAssetCategories()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article1 = _addJournalArticle(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article1.getResourcePrimKey());
+
+		JournalArticle article2 = _addJournalArticle(
+			new long[] {
+				assetCategory1.getCategoryId(), assetCategory2.getCategoryId()
+			});
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article2.getResourcePrimKey());
+
+		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article3 = _addJournalArticle(
+			new long[] {assetCategory3.getCategoryId()});
+
+		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article3.getResourcePrimKey());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		long[] assetEntryIds = {
+			assetEntry1.getEntryId(), assetEntry2.getEntryId(),
+			assetEntry3.getEntryId()
+		};
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(), assetEntryIds,
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[][] {
+					{assetCategory1.getCategoryId()},
+					{assetCategory2.getCategoryId()}
+				},
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
+
+		for (int i = 0; i < assetEntries.size(); i++) {
+			AssetEntry assetEntry = assetEntries.get(i);
+
+			Assert.assertEquals(assetEntry.getEntryId(), assetEntryIds[i]);
+		}
+	}
+
+	@Test
+	public void testGetManualAssetEntriesMatchingAnyAssetCategories()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article1 = _addJournalArticle(
+			new long[] {assetCategory1.getCategoryId()});
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article1.getResourcePrimKey());
+
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article2 = _addJournalArticle(
+			new long[] {assetCategory2.getCategoryId()});
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article2.getResourcePrimKey());
+
+		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article3 = _addJournalArticle(
+			new long[] {assetCategory3.getCategoryId()});
+
+		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article3.getResourcePrimKey());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		long[] assetEntryIds = {
+			assetEntry1.getEntryId(), assetEntry2.getEntryId(),
+			assetEntry3.getEntryId()
+		};
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(), assetEntryIds,
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[][] {
+					{
+						assetCategory1.getCategoryId(),
+						assetCategory2.getCategoryId()
+					}
+				},
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
+
+		for (int i = 0; i < assetEntries.size(); i++) {
+			AssetEntry assetEntry = assetEntries.get(i);
+
+			Assert.assertEquals(assetEntry.getEntryId(), assetEntryIds[i]);
+		}
+	}
+
+	@Test
+	public void testGetManualAssetEntriesMatchingOneAssetCategory()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article1 = _addJournalArticle(
+			new long[] {assetCategory1.getCategoryId()});
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article1.getResourcePrimKey());
+
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article2 = _addJournalArticle(
+			new long[] {assetCategory2.getCategoryId()});
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article2.getResourcePrimKey());
+
+		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article3 = _addJournalArticle(
+			new long[] {assetCategory3.getCategoryId()});
+
+		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article3.getResourcePrimKey());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		long[] assetEntryIds = {
+			assetEntry1.getEntryId(), assetEntry2.getEntryId(),
+			assetEntry3.getEntryId()
+		};
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(), assetEntryIds,
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[][] {{assetCategory1.getCategoryId()}},
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(assetEntries.toString(), 1, assetEntries.size());
+	}
+
+	@Test
+	public void testGetManualAssetEntriesNonmatchingAssetCategory()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article1 = _addJournalArticle(
+			new long[] {assetCategory1.getCategoryId()});
+
+		AssetEntry assetEntry1 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article1.getResourcePrimKey());
+
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article2 = _addJournalArticle(
+			new long[] {assetCategory2.getCategoryId()});
+
+		AssetEntry assetEntry2 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article2.getResourcePrimKey());
+
+		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		JournalArticle article3 = _addJournalArticle(
+			new long[] {assetCategory3.getCategoryId()});
+
+		AssetEntry assetEntry3 = _assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), article3.getResourcePrimKey());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		long[] assetEntryIds = {
+			assetEntry1.getEntryId(), assetEntry2.getEntryId(),
+			assetEntry3.getEntryId()
+		};
+
+		_assetListEntryLocalService.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(), assetEntryIds,
+			SegmentsEntryConstants.ID_DEFAULT, _serviceContext);
+
+		AssetCategory assetCategory4 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[][] {{assetCategory4.getCategoryId()}},
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(assetEntries.toString(), 0, assetEntries.size());
+	}
+
+	private JournalArticle _addJournalArticle(long[] assetCategories)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId(),
 				assetCategories);
 
-		JournalTestUtil.addArticle(
+		return JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 	}

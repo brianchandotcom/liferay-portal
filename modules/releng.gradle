@@ -78,7 +78,6 @@ task cherryPickArtifacts
 task cleanReleng
 task cleanVersionOverride
 task deployReleng
-task lockBOMDependencyVersion
 task lockDependencyVersion
 task lockPrivateDependencyVersions
 task portalArtifactsJar(type: ShadowJar)
@@ -232,11 +231,11 @@ deployReleng {
 
 				File deployDir = file("${project.'liferay.home'}/osgi/modules/")
 
-				if (_exists(file("${project.'liferay.home'}/osgi/core/"), jarFileName)) {
-					deployDir = file("${project.'liferay.home'}/osgi/core/")
-				}
-				else if (jarFileName.endsWith(".test.util.jar")) {
+				if (jarFileName.endsWith(".test.util.jar")) {
 					deployDir = file("${project.'liferay.home'}/osgi/test/")
+				}
+				else if (_exists(file("${project.'liferay.home'}/osgi/core/"), jarFileName)) {
+					deployDir = file("${project.'liferay.home'}/osgi/core/")
 				}
 				else if (_exists(file("${project.'liferay.home'}/osgi/portal/"), jarFileName)) {
 					deployDir = file("${project.'liferay.home'}/osgi/portal/")
@@ -249,117 +248,6 @@ deployReleng {
 				}
 
 				FileUtil.get(project, artifactURL, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], new File(deployDir, jarFileName), false, true)
-			}
-		}
-	}
-
-	group = "releng"
-}
-
-lockBOMDependencyVersion {
-	description = "Replaces 'default' or project dependencies in all 'apps', 'dxp', and 'core' modules with the published artifact version."
-
-	doLast {
-		Map<String, String> dependenciesMap = [:]
-
-		fileTree(dir: file(".releng"), excludes: ["/sdk/**", "**/test/**", "/third-party/**", "/util/**"], include: "**/*.properties").each {
-			File relengFile ->
-
-			String relativePath = FileUtil.relativize(relengFile.parentFile, file(".releng"))
-
-			if (Validator.isNotNull(relativePath)) {
-				File relengIgnoreMarkerDir = GradleUtil.getRootDir(file(relativePath), ".lfrbuild-releng-ignore")
-
-				if (relengIgnoreMarkerDir) {
-					return
-				}
-
-				if (!_exists(file(relativePath), ".lfrbuild-portal")) {
-					return
-				}
-			}
-			else if (relengFile.name == "artifact.properties") {
-				return
-			}
-
-			Properties relengProperties = GUtil.loadProperties(relengFile)
-
-			String artifactURL = relengProperties.getProperty("artifact.url")
-
-			if (!artifactURL || !artifactURL.endsWith(".jar")) {
-				return
-			}
-
-			int x = artifactURL.lastIndexOf("/")
-
-			int y = artifactURL.lastIndexOf("/", x - 1)
-
-			int z = artifactURL.lastIndexOf("/", y - 1)
-
-			String dependencyName = artifactURL.substring(z + 1, y)
-			String dependencyVersion = artifactURL.substring(y + 1, x)
-
-			if (relengFile.name == "artifact.properties") {
-				if (dependencyName.startsWith("com.liferay.commerce.") || dependencyName.startsWith("com.liferay.headless.commerce.")) {
-					dependenciesMap.put(dependencyName, "com.liferay.commerce:" + dependencyName + ":" + dependencyVersion)
-				}
-				else {
-					dependenciesMap.put(dependencyName, "com.liferay:" + dependencyName + ":" + dependencyVersion)
-				}
-			}
-		}
-
-		FileTree buildGradleFileTree = fileTree(dir: projectDir, excludes: ["**/build/", "**/classes/", "**/node_modules/", "**/node_modules_cache/"], includes: ["apps/**/build.gradle", "core/**/build.gradle", "dxp/**/build.gradle"])
-
-		buildGradleFileTree.each {
-			File buildGradleFile ->
-
-			File moduleDir = buildGradleFile.parentFile
-
-			if (moduleDir.name.endsWith("-test") || _isGitRepoReadOnly(moduleDir)) {
-				return
-			}
-
-			logger.lifecycle "Locking dependencies: {}", moduleDir
-
-			dependenciesMap.each {
-				String dependencyName, String dependency ->
-
-				String[] dependencyArray = dependency.split(":")
-
-				String dependencyGroup = dependencyArray[0]
-				String dependencyVersion = dependencyArray[2]
-
-				Pattern dependencyPattern = null
-
-				if (dependencyGroup != "com.liferay.portal") {
-					String dependencyProjectName = dependencyName.substring(12)
-
-					dependencyProjectName = dependencyProjectName.replace('.' as char, '-' as char)
-
-					dependencyProjectName = dependencyProjectName.replace("exportimport", "export-import")
-
-					dependencyPattern = ~/(compileOnly|provided) project\(".+:${dependencyProjectName}"\)/
-				}
-				else {
-					dependencyPattern = ~/(compileOnly|provided)\s+group:\s*"${dependencyGroup}",\s*name:\s*"${dependencyName}",\s*version:\s*"default"/
-				}
-
-				String dependencyReplacement = "\$1 group: \"${dependencyGroup}\", name: \"${dependencyName}\", version: \"${dependencyVersion}\""
-
-				List<String> buildGradleExcludes = ["**/build/", "**/classes/", "**/node_modules/"]
-
-				if ((dependencyName in ["com.liferay.portal.impl", "com.liferay.portal.kernel"]) && moduleDir.name.equals("portal-bootstrap")) {
-					return
-				}
-
-				String buildGradle = buildGradleFile.text
-
-				String newBuildGradle = buildGradle.replaceFirst(dependencyPattern, dependencyReplacement)
-
-				if (buildGradle != newBuildGradle) {
-					buildGradleFile.text = newBuildGradle
-				}
 			}
 		}
 	}

@@ -4042,7 +4042,7 @@ public class DataFactory {
 
 		return newGroupModel(
 			_guestGroupId, getClassNameId(Group.class), _guestGroupId,
-			GroupConstants.GUEST, 0, true, typeSettings);
+			GroupConstants.GUEST, 0, typeSettings, true);
 	}
 
 	public UserModel newGuestUserModel() {
@@ -6194,7 +6194,7 @@ public class DataFactory {
 		boolean site) {
 
 		return newGroupModel(
-			groupId, classNameId, classPK, name, 0, site, StringPool.BLANK);
+			groupId, classNameId, classPK, name, 0, StringPool.BLANK, site);
 	}
 
 	protected GroupModel newGroupModel(
@@ -6202,12 +6202,12 @@ public class DataFactory {
 		boolean site) {
 
 		return newGroupModel(
-			groupId, classNameId, classPK, name, type, site, StringPool.BLANK);
+			groupId, classNameId, classPK, name, type, StringPool.BLANK, site);
 	}
 
 	protected GroupModel newGroupModel(
 		long groupId, long classNameId, long classPK, String name, int type,
-		boolean site, String typeSettings) {
+		String typeSettings, boolean site) {
 
 		GroupModel groupModel = new GroupModelImpl();
 

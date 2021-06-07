@@ -78,6 +78,11 @@
     <td>//dt[contains(text(),'Order ID')]/..//dd</td>
     <td></td>
 </tr>
+<tr>  
+    <td>ORDER_PRICES_SEPARETED</td>
+    <td>//dt[contains(text(), '${key_priceName}')]//../following-sibling::dd[1]</td>
+    <td></td>
+</tr>
 <tr>
     <td>ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON</td>
     <td>//h5[contains(text(), "${key_titleName}")]//following-sibling::a[contains(text(), "${key_buttonName}")]</td>

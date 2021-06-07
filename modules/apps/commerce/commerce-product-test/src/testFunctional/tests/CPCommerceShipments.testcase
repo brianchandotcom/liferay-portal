@@ -461,13 +461,101 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6245. Check that shipping amount is correctly calculated in the order"
-	@ignore = "true"
 	@priority = "3"
 	test ViewOrderShipmentAmountIsCorrect {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceShipments#ViewOrderShipmentAmountIsCorrect";
 
-		// TODO COMMERCE-6245 ViewOrderShipmentAmountIsCorrect Pending Implementation
+		// TODO Review
 
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
+
+		MenuItem.click(menuItem = "Account Users");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "buyer");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Refresh();
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		CommerceCheckout.initializersCheckout(
+			newAddressAddress = "Test Address",
+			newAddressCity = "Test City",
+			newAddressCountry = "United States",
+			newAddressName = "Address Name",
+			newAddressZipCode = "Test Zip Code",
+			productName = "U-Joint",
+			productQuantity = "1",
+			productUnitPrice = "24",
+			shippingMethod = "Standard");
+
+		Click(
+			key_FilterOption = "Go to Order Details",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Subtotal",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "24.00");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Delivery",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "15.00");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Total",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "39.00");
 	}
 
 	@description = "This is a test for COMMERCE-6246. Check that shipping discount amount is correctly calculated in the order"

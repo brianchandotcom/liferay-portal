@@ -2,8 +2,6 @@
 
 ${dataFactory.toInsertSQL(companyModel)}
 
-${dataFactory.toInsertSQL(dataFactory.newAccountModel())}
-
 ${dataFactory.toInsertSQL(dataFactory.newVirtualHostModel())}
 
 <#list dataFactory.newPortalPreferencesModels() as portalPreferencesModel>

@@ -213,7 +213,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
-import com.liferay.portal.kernel.model.AccountModel;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.AddressModel;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -276,7 +275,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.impl.AccountModelImpl;
 import com.liferay.portal.model.impl.AddressModelImpl;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
 import com.liferay.portal.model.impl.CompanyModelImpl;
@@ -422,7 +420,6 @@ public class DataFactory {
 			getClassNameId(JournalArticle.class), getClassNameId(WikiPage.class)
 		};
 
-		_accountId = _counter.get();
 		_companyId = _counter.get();
 
 		_dlDDMStructureContent = _readFile("ddm_structure_basic_document.json");
@@ -842,27 +839,6 @@ public class DataFactory {
 		accountEntryUserRelModel.setAccountUserId(user.getUserId());
 
 		return accountEntryUserRelModel;
-	}
-
-	public AccountModel newAccountModel() {
-		AccountModel accountModel = new AccountModelImpl();
-
-		// PK fields
-
-		accountModel.setAccountId(_accountId);
-
-		// Audit fields
-
-		accountModel.setCompanyId(_companyId);
-		accountModel.setCreateDate(new Date());
-		accountModel.setModifiedDate(new Date());
-
-		// Other fields
-
-		accountModel.setName("Liferay");
-		accountModel.setLegalName("Liferay, Inc.");
-
-		return accountModel;
 	}
 
 	public AddressModel newAddressModel(long accountEntryId, long countryId) {
@@ -2179,12 +2155,18 @@ public class DataFactory {
 
 		companyModel.setCompanyId(_companyId);
 
+		// Audit fields
+
+		companyModel.setCreateDate(new Date());
+		companyModel.setModifiedDate(new Date());
+
 		// Other fields
 
-		companyModel.setAccountId(_accountId);
 		companyModel.setWebId("liferay.com");
 		companyModel.setMx("liferay.com");
 		companyModel.setActive(true);
+		companyModel.setName("Liferay");
+		companyModel.setLegalName("Liferay, Inc.");
 
 		return companyModel;
 	}
@@ -2216,7 +2198,6 @@ public class DataFactory {
 
 		contactModel.setClassNameId(getClassNameId(User.class));
 		contactModel.setClassPK(userModel.getUserId());
-		contactModel.setAccountId(_accountId);
 		contactModel.setParentContactId(
 			ContactConstants.DEFAULT_PARENT_CONTACT_ID);
 		contactModel.setEmailAddress(userModel.getEmailAddress());
@@ -6988,7 +6969,6 @@ public class DataFactory {
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 
-	private final long _accountId;
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;
 	private final Map<Long, List<AssetCategoryModel>>[]

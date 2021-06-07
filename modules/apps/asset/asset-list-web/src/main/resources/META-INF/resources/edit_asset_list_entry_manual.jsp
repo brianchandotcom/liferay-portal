@@ -239,7 +239,7 @@ AssetListEntry assetListEntry = assetListDisplayContext.getAssetListEntry();
 						Array.prototype.forEach.call(
 							selectedItems,
 							(assetEntry) => {
-								assetEntryIds.push(assetEntry.entityid);
+								assetEntryIds.push(assetEntry.value);
 							}
 						);
 

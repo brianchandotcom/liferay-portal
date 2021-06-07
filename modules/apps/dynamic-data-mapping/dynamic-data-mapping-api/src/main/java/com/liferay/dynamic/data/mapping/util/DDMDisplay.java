@@ -126,6 +126,10 @@ public interface DDMDisplay {
 
 	public boolean isShowConfirmSelectTemplate();
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x)
+	 */
+	@Deprecated
 	public boolean isShowStructureSelector();
 
 	public boolean isVersioningEnabled();

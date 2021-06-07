@@ -502,7 +502,9 @@ public class LayoutReportsIssue {
 
 				return StringBundler.concat(
 					"<a href=\"", url, "\" target=\"_blank\">",
-					ResourceBundleUtil.getString(resourceBundle, "learn-more"),
+					LanguageUtil.format(
+						resourceBundle, "learn-more-about-x",
+						HtmlUtil.escape(getTitle(resourceBundle)), false),
 					"</a>");
 			}
 

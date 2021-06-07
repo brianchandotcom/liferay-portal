@@ -567,7 +567,6 @@ definition {
 		var key_fieldName = "${fieldName}";
 
 		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
-		
 	}
 
 	macro selectImageUpload {

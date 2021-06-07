@@ -136,7 +136,7 @@ const CriteriaSidebarCollapse = ({
 
 						{active && (
 							<div>
-								<p className="pl-4 pr-4 pt-2 text-secondary">
+								<p className="pt-3 px-4 text-secondary">
 									{Liferay.Language.get(
 										'inherited-attributes-are-not-taken-into-account-to-include-members-in-segments'
 									)}

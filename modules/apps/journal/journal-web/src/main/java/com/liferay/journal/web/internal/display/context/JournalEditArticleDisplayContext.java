@@ -29,6 +29,7 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
@@ -223,6 +224,18 @@ public class JournalEditArticleDisplayContext {
 		}
 
 		String content = _article.getContent();
+
+		if (Validator.isNull(content) && _article.isNew() &&
+			(getClassNameId() ==
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
+
+			JournalArticle articleDefaultValues =
+				JournalArticleServiceUtil.getArticle(
+					ddmStructure.getGroupId(), DDMStructure.class.getName(),
+					ddmStructure.getStructureId());
+
+			content = articleDefaultValues.getContent();
+		}
 
 		if (Validator.isNull(content)) {
 			return _ddmFormValues;

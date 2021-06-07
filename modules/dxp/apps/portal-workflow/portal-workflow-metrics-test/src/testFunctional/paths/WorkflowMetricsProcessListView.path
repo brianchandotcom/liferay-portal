@@ -72,6 +72,14 @@
 	<td>SEARCH_BUTTON</td>
 	<td>//*[contains(@class,'lexicon-icon-search')]</td>
 	<td></td>
+    <td>ASSERT_PERCENTAGE_CARDS</td>
+    <td>//span[contains(.,'${key_cardName}')]/../..//span[contains(@class,'xsmall') and contains(text(),'%')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ENTER_PROCESS_METRICS</td>
+    <td>//td[contains(@class,'table-title')]//a[contains(text(),'${key_processName}')]</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

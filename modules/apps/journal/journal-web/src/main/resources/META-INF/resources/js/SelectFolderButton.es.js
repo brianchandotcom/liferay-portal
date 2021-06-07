@@ -66,18 +66,13 @@ class SelectFolderButton extends PortletBase {
 	 * @review
 	 */
 	_handleSelectFolderButtonClick() {
-		let hiddenFolderIdInput = 'folderId';
-		const newFolderIdInput = document.getElementById(
-			this.ns('newFolderId')
-		);
-		if (newFolderIdInput) {
-			hiddenFolderIdInput = 'newFolderId';
-		}
 		openSelectionModal({
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					var folderData = {
-						idString: hiddenFolderIdInput,
+						idString: document.getElementById('newFolderId')
+							? 'newFolderId'
+							: 'folderId',
 						idValue: selectedItem.folderId,
 						nameString: 'folderName',
 						nameValue: selectedItem.folderName,

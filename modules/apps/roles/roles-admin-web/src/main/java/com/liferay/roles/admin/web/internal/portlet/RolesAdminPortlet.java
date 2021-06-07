@@ -777,8 +777,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 				role, scopeGroupId, DepotEntry.class.getName(),
 				ActionKeys.VIEW_SITE_ADMINISTRATION, true, scope,
 				ArrayUtil.filter(
-					groupIds,
-					groupId -> _isDepotGroup(role.getCompanyId(), groupId)));
+					groupIds, groupId -> _isDepotGroup(Long.valueOf(groupId))));
 
 			selResource = Group.class.getName();
 			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
@@ -828,9 +827,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 		return panelCategoryKeys.toArray(new String[0]);
 	}
 
-	private boolean _isDepotGroup(long companyId, String groupKey) {
+	private boolean _isDepotGroup(long groupId) {
 		try {
-			Group group = _groupService.getGroup(companyId, groupKey);
+			Group group = _groupService.getGroup(groupId);
 
 			if (group.isDepot()) {
 				return true;

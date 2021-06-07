@@ -174,7 +174,7 @@ definition {
 		}
 
 		task ("View the Classic theme is shown") {
-			AssertVisible(locator1 = "//link[contains(@href,'classic-theme')]");
+			AssertElementPresent(locator1 = "//link[contains(@href,'classic-theme')]");
 
 			AssertElementNotPresent(locator1 = "//link[contains(@href,'test-theme')]");
 		}
@@ -200,7 +200,7 @@ definition {
 		}
 
 		task ("View the Fjord theme is shown") {
-			AssertVisible(locator1 = "//link[contains(@href,'test-theme')]");
+			AssertElementPresent(locator1 = "//link[contains(@href,'test-theme')]");
 
 			AssertElementNotPresent(locator1 = "//link[contains(@href,'classic-theme')]");
 		}

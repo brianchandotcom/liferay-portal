@@ -15,6 +15,7 @@
 package com.liferay.questions.web.internal.configuration.persistence.listener;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
@@ -23,11 +24,15 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.questions.web.internal.asset.model.MBCategoryAssetRendererFactory;
 import com.liferay.questions.web.internal.asset.model.MBMessageAssetRendererFactory;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
+import com.liferay.questions.web.internal.seo.canonical.url.QuestionsLayoutSEOCanonicalURLProvider;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
@@ -38,8 +43,11 @@ import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -61,22 +69,35 @@ public class QuestionsConfigurationModelListener
 
 		Stream<String> stream = keys.stream();
 
-		_enableAssetRenderer(
-			stream.collect(
-				Collectors.toMap(Function.identity(), properties::get)));
+		try {
+			_enableAssetRenderer(
+				stream.collect(
+					Collectors.toMap(Function.identity(), properties::get)));
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	@Activate
 	@Modified
 	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws Exception {
 
 		_bundleContext = bundleContext;
 
 		_enableAssetRenderer(properties);
 	}
 
-	private void _enableAssetRenderer(Map<String, Object> properties) {
+	@Deactivate
+	protected void deactivate() throws Exception {
+		_unregister();
+	}
+
+	private void _enableAssetRenderer(Map<String, Object> properties)
+		throws Exception {
+
 		if (GetterUtil.getBoolean(
 				properties.get("enableCustomAssetRenderer"))) {
 
@@ -89,31 +110,66 @@ public class QuestionsConfigurationModelListener
 					"service.ranking:Integer", 100
 				).build();
 
-			_mbCategoryServiceRegistration =
-				(ServiceRegistration)_bundleContext.registerService(
+			_serviceRegistrations = Arrays.asList(
+				_bundleContext.registerService(
 					AssetRendererFactory.class,
 					new MBCategoryAssetRendererFactory(
 						_companyLocalService, historyRouterBasePath,
 						_mbCategoryLocalService,
 						_mbCategoryModelResourcePermission),
-					assetRendererFactoryProperties);
-			_mbMessageServiceRegistration =
-				(ServiceRegistration)_bundleContext.registerService(
+					assetRendererFactoryProperties),
+				_bundleContext.registerService(
 					AssetRendererFactory.class,
 					new MBMessageAssetRendererFactory(
 						_companyLocalService, historyRouterBasePath,
 						_mbMessageLocalService,
 						_mbMessageModelResourcePermission),
-					assetRendererFactoryProperties);
-		}
-		else {
-			if (_mbMessageServiceRegistration != null) {
-				_mbMessageServiceRegistration.unregister();
+					assetRendererFactoryProperties));
+
+			Configuration configuration = _getConfiguration();
+
+			Dictionary<String, Object> configurationProperties =
+				configuration.getProperties();
+
+			if (configurationProperties == null) {
+				configurationProperties = new HashMapDictionary<>();
 			}
 
-			if (_mbCategoryServiceRegistration != null) {
-				_mbCategoryServiceRegistration.unregister();
+			configurationProperties.put(
+				"_layoutSEOCanonicalURLProvider.target",
+				"(component.name=" +
+					QuestionsLayoutSEOCanonicalURLProvider.class.getName() +
+						")");
+
+			configuration.update(configurationProperties);
+		}
+		else {
+			_unregister();
+		}
+	}
+
+	private Configuration _getConfiguration() throws Exception {
+		return _configurationAdmin.getConfiguration(
+			"com.liferay.layout.seo.internal.LayoutSEOLinkManagerImpl", "?");
+	}
+
+	private void _unregister() throws Exception {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			if (serviceRegistration != null) {
+				serviceRegistration.unregister();
 			}
+		}
+
+		Configuration configuration = _getConfiguration();
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		if (properties != null) {
+			properties.remove("_layoutSEOCanonicalURLProvider.target");
+
+			configuration.update(properties);
 		}
 	}
 
@@ -121,6 +177,14 @@ public class QuestionsConfigurationModelListener
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference(
+		target = "(component.name=com.liferay.layout.seo.internal.canonical.url.LayoutSEOCanonicalURLProviderImpl)"
+	)
+	private LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;
@@ -131,9 +195,6 @@ public class QuestionsConfigurationModelListener
 	private ModelResourcePermission<MBCategory>
 		_mbCategoryModelResourcePermission;
 
-	private ServiceRegistration<AssetRendererFactory<MBCategory>>
-		_mbCategoryServiceRegistration;
-
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
 
@@ -143,7 +204,7 @@ public class QuestionsConfigurationModelListener
 	private ModelResourcePermission<MBMessage>
 		_mbMessageModelResourcePermission;
 
-	private ServiceRegistration<AssetRendererFactory<MBMessage>>
-		_mbMessageServiceRegistration;
+	private List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

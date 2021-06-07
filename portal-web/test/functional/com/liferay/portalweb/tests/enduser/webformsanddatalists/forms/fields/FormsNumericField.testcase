@@ -489,8 +489,6 @@ definition {
 		FormFields.viewLabel(
 			fieldLabel = "Test Numeric",
 			fieldName = "Test Numeric");
-			
-
 	}
 
 	@description = "Verify that the Field Label can be hidden"

@@ -509,13 +509,49 @@ definition {
 	}
 
 	@description = "Verify that an option can be selected as a Predefined Value"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131370 PredefinedValueCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		Form.gotoAdvancedTab();
+
+		FormViewBuilder.selectSelectOptionPredefined(selectOption = "Option 1");
+
+		FormViewBuilder.validatePredefinedSelectFromList(
+			fieldName = "Predefined Value",
+			fieldValue = "Option 1");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Select from List");
+
+		FormViewBuilder.validatePredefinedSelectFromList(
+			fieldName = "Select from List",
+			fieldValue = "Option 1");
+
+			
 
 	}
 

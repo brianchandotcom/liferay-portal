@@ -1,5 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Field Numeric Input Mask toggle has an inputMaskFormat 1`] = `
+<div>
+  <div
+    aria-labelledby="numericField_fieldDetails"
+    class="form-group hide"
+    data-field-name="numericField"
+    tabindex="0"
+  >
+    <input
+      class="form-control"
+      dir="rtl"
+      lang="en_US"
+      name="numericField_masked"
+      placeholder="+__ (__) ____-____"
+      type="text"
+      value="+12 (34) 5678-9012"
+    />
+    <input
+      name="numericField"
+      type="hidden"
+      value="123456789012"
+    />
+    <input
+      name="numericField_edited"
+      type="hidden"
+      value="false"
+    />
+    
+  </div>
+</div>
+`;
+
 exports[`Field Numeric has a helptext 1`] = `
 <div>
   <div

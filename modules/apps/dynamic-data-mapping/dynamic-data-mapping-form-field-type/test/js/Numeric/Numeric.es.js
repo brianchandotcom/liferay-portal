@@ -199,4 +199,99 @@ describe('Field Numeric', () => {
 			expect(confirmationField.value).toBe('23');
 		});
 	});
+
+	describe('Input Mask toggle', () => {
+		it('has an inputMaskFormat', () => {
+			const {container} = render(
+				<Numeric
+					inputMask={true}
+					inputMaskFormat="+99 (99) 9999-9999"
+					name="numericField"
+					value="123456789012"
+				/>
+			);
+
+			expect(container).toMatchSnapshot();
+		});
+
+		it('applies mask to value', () => {
+			const {container} = render(
+				<Numeric
+					inputMask={true}
+					inputMaskFormat="+99 (99) 9999-9999"
+					value="123456789012"
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			expect(input.value).toBe('+12 (34) 5678-9012');
+		});
+
+		it('applies mask to predefined value', () => {
+			const {container} = render(
+				<Numeric
+					inputMask={true}
+					inputMaskFormat="+99 (99) 9999-9999"
+					predefinedValue="123456789012"
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			expect(input.value).toBe('+12 (34) 5678-9012');
+		});
+
+		it('truncates values over mask digit limit', () => {
+			const {container} = render(
+				<Numeric
+					inputMask={true}
+					inputMaskFormat="+99 (099) 9999-9999"
+					value="12345678901234"
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			expect(input.value).toBe('+12 (345) 6789-0123');
+		});
+
+		/**
+		 * Ignoring test due to String.prototype.replaceAll is not implemented
+		 * in Node.js older than 15.0.0
+		 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll#browser_compatibility
+		 */
+		xit('ignores optional digits whenever input is less than mandatory', () => {
+			const {container} = render(
+				<Numeric
+					inputMask={true}
+					inputMaskFormat="+99 (099) 9999-9999"
+					value="12345"
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			expect(input.value).toBe('+12 (34) 5');
+		});
+
+		it('sends unmasked value though onChange event', () => {
+			let output = null;
+			const {container} = render(
+				<Numeric
+					inputMask={true}
+					inputMaskFormat="+99 (99) 9999-9999"
+					onChange={({target: {value}}) => {
+						output = value;
+					}}
+				/>
+			);
+
+			const input = container.querySelector('input');
+
+			userEvent.type(input, '+55 (81) 2121-6000');
+
+			expect(output).toBe('558121216000');
+		});
+	});
 });

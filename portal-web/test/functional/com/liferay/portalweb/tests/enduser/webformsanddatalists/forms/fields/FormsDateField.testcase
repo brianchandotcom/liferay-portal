@@ -100,14 +100,54 @@ definition {
 	}
 
 	@description = "Verify that a Date Field can be duplicated"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeDuplicated {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132816 CanBeDuplicated pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Date");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.editDatePredefinedValue(fieldValue = "01/01/2020");
+
+		Form.gotoBasicTab();
+
+		FormFields.editHelpText(
+			fieldHelpText = "Help Text Test",
+			fieldName = "tip");
+
+		FormFields.duplicateField();
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Date");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Copy of Date");
+
+		FormViewBuilder.assertPredefinedDateValuePresent(
+			fieldLabel = "Date",
+			fieldValue = "2020-01-01");
+
+		FormViewBuilder.assertPredefinedDateValuePresent(
+			fieldLabel = "Copy of Date",
+			fieldValue = "2020-01-01");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Date",
+			fieldValue = "Help Text Test");
+
+		FormViewBuilder.assertHelpTextPresent(
+			fieldName = "Copy of Date",
+			fieldValue = "Help Text Test");
 	}
 
 	@description = "Verify that a Date Field can be edited"
@@ -455,8 +495,7 @@ definition {
 
 		Form.viewFieldReference(
 			fieldName = "Date",
-			fieldValue = "Date1234"
-		);
+			fieldValue = "Date1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

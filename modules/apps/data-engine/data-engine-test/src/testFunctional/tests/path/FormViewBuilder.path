@@ -264,6 +264,12 @@
 </tr>
 
 <tr>
+    <td>PREDEFINED_VALUE_DATE_AT_SIDEBAR</td>
+    <td>//div[(@data-field-name='predefinedValue')]//input[(@type='text')]</td>
+    <td></td>
+</tr>
+
+<tr>
 	<td>PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION</td>
 	<td>//legend[contains(text(),'${key_fieldName}')]/..//span[contains(.,'${key_fieldValue}')]/../input[contains(@type,'radio')]</td>
 	<td></td>

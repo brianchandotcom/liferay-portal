@@ -157,6 +157,12 @@ definition {
 			value1 = "${key_value}");
 	}
 
+	macro editDatePredefinedValue {
+		Type(
+			locator1 = "FormViewBuilder#PREDEFINED_VALUE_DATE_AT_SIDEBAR",
+			value1 = "${fieldValue}");
+	}
+
 	macro editFieldName {
 		Form.gotoAdvancedTab();
 

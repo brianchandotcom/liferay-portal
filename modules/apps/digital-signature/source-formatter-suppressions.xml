@@ -4,6 +4,5 @@
 	<checkstyle>
 		<suppress checks="CamelCaseNameCheck" files="digital-signature-api/src/main/java/com/liferay/digital/signature/configuration/DigitalSignatureConfiguration\.java" />
 		<suppress checks="CamelCaseNameCheck" files="digital-signature-impl/src/main/java/com/liferay/digital/signature/internal/web/cache/DSAccessTokenWebCacheItem\.java" />
-		<suppress checks="CamelCaseNameCheck" files="digital-signature-web/src/main/java/com/liferay/digital/signature/web/internal/configuration/DigitalSignatureConfigurationForm\.java" />
 	</checkstyle>
 </suppressions>

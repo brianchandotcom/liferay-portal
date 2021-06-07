@@ -190,9 +190,6 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Rich Text");
-
-
-
 	}
 
 	@description = "Verify that a Select From List Field can be added to a Form via Fieldset"

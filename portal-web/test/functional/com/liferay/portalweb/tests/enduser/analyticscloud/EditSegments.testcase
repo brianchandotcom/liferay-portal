@@ -1,0 +1,154 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+
+		ACUtils.addSiteAndPage();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Edit a dynamic segment and check the edits are saved"
+	@priority = "5"
+	test CanEditDynamicSegmentCheckEditSaved {
+		ACUtils.createBlogsAndAddToPage();
+
+		Navigator.openURL();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+		ACSegments.editWebBehaviorCriterion(
+			indexField = "1",
+			occurenceNumber = "4",
+			searchTerm = "Blogs AC Title");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#NO_MEMBER_TITLE",
+			value1 = "There are no items found.");
+
+		ACUtils.launchDXP();
+
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
+
+		ACSegments.editWebBehaviorCriterion(
+            activitiesOption = "has not",
+			indexField = "1",
+            atLeastMost = "at most",
+			occurenceNumber = "5",
+			timeOption = "ever");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#NO_MEMBER_TITLE",
+			value1 = "There are no items found.");
+
+        ACNavigation.goToSegments();
+
+		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
+
+        AssertTextPresent(
+			key_indexField = "1",
+			locator1 = "ACSegments#ACTIVITIES_CRITERION",
+			value1 = "has not");
+
+        AssertTextEquals(
+			locator1 = "ACSegments#OCCURENCE_INPUT",
+			value1 = "5");
+
+        AssertTextPresent(
+			key_indexField = "1",
+			locator1 = "ACSegments#OCCURENCE_SELECT",
+			value1 = "at most");
+
+        AssertTextPresent(
+			key_indexField = "1",
+			locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
+			value1 = "ever");
+	}
+
+}

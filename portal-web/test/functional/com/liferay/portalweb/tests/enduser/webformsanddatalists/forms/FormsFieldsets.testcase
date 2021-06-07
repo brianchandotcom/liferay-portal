@@ -230,9 +230,8 @@ definition {
 		Form.gotoAddField(
 			fieldPositionNumber = "1",
 			fieldType = "Numeric");
-		
+
 		Form.saveElementSet();
-		
 
 		FormsAdminNavigator.gotoBack();
 

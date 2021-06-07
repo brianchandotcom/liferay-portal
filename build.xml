@@ -171,13 +171,15 @@ message.
 	</target>
 
 	<target name="bom-all">
+		<echo>
+Manually run "ant all" or "ant snapshot-bundle" to initialize the bundle.
+</echo>
+
 		<setup-sdk />
 
-		<gradle-execute setupbinariescache="false" task="lockBOMDependencyVersion">
+		<gradle-execute setupbinariescache="false" task="deployReleng">
 			<arg value="--build-file=${project.dir}/modules/releng.gradle" />
 		</gradle-execute>
-
-		<antcall target="all" />
 	</target>
 
 	<target name="clean">

@@ -587,10 +587,27 @@ definition {
 			navTab = "${navTab}",
 			uploadFileName = "${fileName}");
 	macro selectGridRadioOptionWithoutCategory {
-		var optionNumber1 = "${optionNumber1}";
-		var optionNumber2 = "${optionNumber2}";
-		var key_optionNumber = "Row: Option ${optionNumber1}, Column: Option ${optionNumber2}";
+		var optionRowNumber = "${optionRowNumber}";
+		var optionColumnNumber = "${optionColumnNumber}";
+		var key_optionNumber = "Row: Option ${optionRowNumber}, Column: Option ${optionColumnNumber}";
 		var key_fieldName = "${fieldName}";
+
+		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
+	}
+
+	macro selectImageUpload {
+		WaitForElementPresent(locator1 = "FormFields#UPLOAD_ON_WIDGET");
+
+		if (isSet(rowNumber)) {
+			Click(
+				key_rowNumber = "${rowNumber}",
+				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
+		}
+		else {
+			Click(
+				key_rowNumber = "1",
+				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
+		}
 
 		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}

@@ -3678,7 +3678,9 @@ public abstract class BaseBuild implements Build {
 				new Date(stopWatchRecord.getStartTimestamp()),
 				getJenkinsReportTimeZoneName()));
 
-		if (stopWatchRecord.getDuration() == null) {
+		Long duration = stopWatchRecord.getDuration();
+
+		if (duration == null) {
 			Dom4JUtil.getNewElement("td", buildInfoElement, "&nbsp;");
 		}
 		else {

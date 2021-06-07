@@ -106,6 +106,10 @@ public class StopWatchRecord implements Comparable<StopWatchRecord> {
 	}
 
 	public Long getDuration() {
+		if (!_jsonObject.has("duration")) {
+			return null;
+		}
+
 		return _jsonObject.getLong("duration");
 	}
 

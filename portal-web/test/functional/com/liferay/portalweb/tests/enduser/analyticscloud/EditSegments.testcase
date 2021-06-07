@@ -113,9 +113,9 @@ definition {
 		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
 
 		ACSegments.editWebBehaviorCriterion(
-            activitiesOption = "has not",
+			activitiesOption = "has not",
+			atLeastMost = "at most",
 			indexField = "1",
-            atLeastMost = "at most",
 			occurenceNumber = "5",
 			timeOption = "ever");
 
@@ -127,25 +127,25 @@ definition {
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
 
-        ACNavigation.goToSegments();
+		ACNavigation.goToSegments();
 
 		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
 
-        AssertTextPresent(
+		AssertTextPresent(
 			key_indexField = "1",
 			locator1 = "ACSegments#ACTIVITIES_CRITERION",
 			value1 = "has not");
 
-        AssertTextEquals(
+		AssertTextEquals(
 			locator1 = "ACSegments#OCCURENCE_INPUT",
 			value1 = "5");
 
-        AssertTextPresent(
+		AssertTextPresent(
 			key_indexField = "1",
 			locator1 = "ACSegments#OCCURENCE_SELECT",
 			value1 = "at most");
 
-        AssertTextPresent(
+		AssertTextPresent(
 			key_indexField = "1",
 			locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
 			value1 = "ever");

@@ -114,82 +114,6 @@ definition {
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
-	@description = "Create a Web Behavior using 'has not' segment"
-	@priority = "5"
-	test CanCreateWebBehaviorSegmentUsingHasNot {
-		ACUtils.createBlogsAndAddToPage();
-
-		Navigator.openURL();
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-		Pause(locator1 = "10000");
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
-
-		ACNavigation.goToSegments();
-
-		ACSegments.createDynamicSegment();
-
-		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
-
-		ACSegments.addSegmentField(segmentField = "Viewed Blog");
-
-		ACSegments.editWebBehaviorCriterion(
-			activitiesOption = "has not",
-			indexField = "1",
-			occurenceNumber = "5",
-			searchTerm = "Blogs AC Title");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		AssertElementPresent(
-			key_userName = "Test Test",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
-
-		ACUtils.launchDXP();
-
-		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-		}
-
-		Pause(locator1 = "10000");
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
-		ACUtils.launchAC();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		AssertElementPresent(
-			key_userName = "Test Test",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
-	}
-
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentSubmittingForm {
@@ -339,6 +263,82 @@ definition {
 				siteName = "Site Name");
 
 			Pause(locator1 = "100");
+		}
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+	}
+
+	@description = "Create a Web Behavior using 'has not' segment"
+	@priority = "5"
+	test CanCreateWebBehaviorSegmentUsingHasNot {
+		ACUtils.createBlogsAndAddToPage();
+
+		Navigator.openURL();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+		ACSegments.editWebBehaviorCriterion(
+			activitiesOption = "has not",
+			indexField = "1",
+			occurenceNumber = "5",
+			searchTerm = "Blogs AC Title");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
+
+		ACUtils.launchDXP();
+
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
 		Pause(locator1 = "10000");

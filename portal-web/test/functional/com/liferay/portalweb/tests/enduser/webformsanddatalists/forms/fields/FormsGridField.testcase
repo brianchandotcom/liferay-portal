@@ -192,14 +192,63 @@ definition {
 	}
 
 	@description = "Verify that a help text can be added"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132461 HelpTextCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Grid");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Option 2",
+			rowNumber = "1");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Grid Help Text",
+			fieldName = "tip",
+			key_fieldLabel = "");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Grid Help Text",
+			fieldName = "Grid");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Grid Help Text",
+			fieldName = "Grid");
+
+		FormFields.selectGridRadioOptionWithoutCategory(
+			fieldName = "",
+			optionColumnNumber = "2",
+			optionRowNumber = "1");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+			
 	}
 
 	@description = "Veriy that the Field Label can be edited"

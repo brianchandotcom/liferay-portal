@@ -107,10 +107,49 @@ public class AssetListAssetEntryProviderTest {
 			_assetListAssetEntryProvider.getAssetEntries(
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
+					{assetCategory1.getCategoryId()},
+					{assetCategory2.getCategoryId()}
+				},
+				String.valueOf(TestPropsValues.getUserId()), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
+	}
+
+	@Test
+	public void testGetDynamicAssetEntriesMatchingAnyAssetCategories()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			_group.getGroupId());
+
+		AssetCategory assetCategory1 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		_addJournalArticle(new long[] {assetCategory1.getCategoryId()});
+
+		AssetCategory assetCategory2 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		_addJournalArticle(new long[] {assetCategory2.getCategoryId()});
+
+		AssetCategory assetCategory3 = AssetTestUtil.addCategory(
+			_group.getGroupId(), assetVocabulary.getVocabularyId());
+
+		_addJournalArticle(new long[] {assetCategory3.getCategoryId()});
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
+
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
+				new long[][] {
 					{
-						assetCategory1.getCategoryId()
-					},
-					{
+						assetCategory1.getCategoryId(),
 						assetCategory2.getCategoryId()
 					}
 				},

@@ -442,7 +442,20 @@ public class JournalEditArticleDisplayContext {
 			return _folderName;
 		}
 
-		_folderName = _getFolderName();
+		if (JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID != getFolderId()) {
+			JournalFolder folder =
+				JournalFolderLocalServiceUtil.fetchJournalFolder(getFolderId());
+
+			if (folder != null) {
+				_folderName = folder.getName();
+			}
+			else {
+				_folderName = LanguageUtil.get(_httpServletRequest, "home");
+			}
+		}
+		else {
+			_folderName = LanguageUtil.get(_httpServletRequest, "home");
+		}
 
 		return _folderName;
 	}
@@ -764,9 +777,14 @@ public class JournalEditArticleDisplayContext {
 			return _showSelectFolder;
 		}
 
-		_showSelectFolder =
-			(_article == null) &&
-			ParamUtil.getBoolean(_httpServletRequest, "showSelectFolder");
+		if ((_article == null) &&
+			ParamUtil.getBoolean(_httpServletRequest, "showSelectFolder")) {
+
+			_showSelectFolder = Boolean.TRUE;
+		}
+		else {
+			_showSelectFolder = Boolean.FALSE;
+		}
 
 		return _showSelectFolder;
 	}
@@ -782,19 +800,6 @@ public class JournalEditArticleDisplayContext {
 	private DDMFormValuesFactory _getDDMFormValuesFactory() {
 		return (DDMFormValuesFactory)_httpServletRequest.getAttribute(
 			DDMFormValuesFactory.class.getName());
-	}
-
-	private String _getFolderName() {
-		if (JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID != getFolderId()) {
-			JournalFolder folder =
-				JournalFolderLocalServiceUtil.fetchJournalFolder(getFolderId());
-
-			if (folder != null) {
-				return folder.getName();
-			}
-		}
-
-		return LanguageUtil.get(_httpServletRequest, "home");
 	}
 
 	private long _getInheritedWorkflowDDMStructuresFolderId()

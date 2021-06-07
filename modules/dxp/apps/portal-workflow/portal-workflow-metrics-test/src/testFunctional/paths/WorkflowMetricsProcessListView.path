@@ -9,9 +9,9 @@
 </thead>
 <tbody>
 <tr>
-    <td>METRICS_WORKFLOW_SEARCH_BAR</td>
-    <td>//input[@placeholder='Search for']</td>
-    <td></td>
+	<td>METRICS_WORKFLOW_SEARCH_BAR</td>
+	<td>//input[@placeholder='${key_fieldLabel}']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>METRICS_WORKFLOW_SEARCH_BAR_BUTTON</td>

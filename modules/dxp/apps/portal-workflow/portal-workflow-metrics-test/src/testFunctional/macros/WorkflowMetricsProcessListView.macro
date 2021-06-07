@@ -24,6 +24,10 @@ definition {
 			value1 = "${workflowSearchName}");
 
 		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
+
+		AssertElementPresent(
+			key_workflowProcessName = "${key_workflowSearchName}",
+			locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
 	}
 
 }

@@ -326,7 +326,6 @@ public class ActionUtil {
 					ddmStructure.getGroupId(), DDMStructure.class.getName(),
 					ddmStructure.getStructureId());
 
-				article.getContent();
 				article.getDescriptionMap();
 				article.getTitleMap();
 

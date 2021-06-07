@@ -346,7 +346,6 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeEdited {
 		property forms.functional = "true";
@@ -375,6 +374,8 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Multiple Selection");
+
+		
 	}
 
 	@description = "Verify that options can be added"

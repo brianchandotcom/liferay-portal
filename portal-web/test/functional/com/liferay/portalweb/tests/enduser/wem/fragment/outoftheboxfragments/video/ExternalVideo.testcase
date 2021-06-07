@@ -89,6 +89,12 @@ definition {
 			IFrame.closeFrame();
 
 			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+		}
+
+		task ("View the selected video name is shown in item selector input") {
+			AssertVisible(
+				key_contentName = "Liferay Digital Experience Platform",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
 			PageEditor.clickPublish();
 		}
@@ -148,6 +154,12 @@ definition {
 			IFrame.closeFrame();
 
 			WaitForElementPresent(locator1 = "YoutubePortlet#VIDEO_IFRAME");
+		}
+
+		task ("View the selected video name is shown in item selector input") {
+			AssertVisible(
+				key_contentName = "Liferay Digital Experience Platform",
+				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT");
 
 			PageEditor.clickPublish();
 		}

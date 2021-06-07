@@ -1,0 +1,72 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.enabled = "true";
+	property minimum.slave.ram = "32";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		ACUtils.launchAC();
+
+		ACSettings.takeTokenFromAnalyticsCloud();
+
+		TestCase.setUpPortalInstance();
+
+		ACUtils.launchDXP();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		ACUtils.tearDownDXP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Total Individuals increase by one when a new individual is added via event"
+	@priority = "5"
+	test CanViewTotalIndividualsIncreaseByOne {
+		ACDXPSettings.connectDXPtoAnalyticsCloud();
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToIndividuals();
+
+		ACIndividualsDashboard.viewTotalIndividualsCount(individualCount = "0");
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		JSONUser.addUser(
+			userEmailAddress = "ac@liferay.com",
+			userFirstName = "ac",
+			userLastName = "ac",
+			userScreenName = "ac");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "ac@liferay.com",
+			userLoginFullName = "ac ac");
+
+		Navigator.openURL();
+
+		Pause(locator1 = "5000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToIndividuals();
+
+		ACIndividualsDashboard.viewTotalIndividualsCount(individualCount = "1");
+	}
+
+}

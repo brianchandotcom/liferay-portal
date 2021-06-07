@@ -743,9 +743,7 @@ definition {
 			groupName = "Site Name-staging",
 			parentFolderName = "DM Folder 1");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		DMFolder.viewCP(
 			dmFolderName = "DM Folder 1",
@@ -760,9 +758,7 @@ definition {
 			dmDocumentFile = "Document_2.txt",
 			dmDocumentTitle = "DM Document in Folder 2");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder 1");
 
@@ -781,9 +777,7 @@ definition {
 			dmDocumentFile = "Document_3.txt",
 			dmDocumentTitle = "DM Document in Folder 3");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Documents and Media");
+		DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		Staging.publishViaSAP(
 			confirmMessage = "Are you sure you want to publish the selected folder?",

@@ -71,6 +71,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -814,10 +815,20 @@ public class AssetListAssetEntryProviderImpl
 
 		try {
 			Hits hits = _assetHelper.search(
-				searchContext, assetEntryQuery, assetEntryQuery.getStart(),
-				assetEntryQuery.getEnd());
+				searchContext, assetEntryQuery, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
-			return _assetHelper.getAssetEntries(hits);
+			List<AssetEntry> assetEntries = _assetHelper.getAssetEntries(hits);
+
+			ListUtil.sort(
+				assetEntries,
+				Comparator.comparing(
+					assetEntry -> assetEntryIds.indexOf(
+						assetEntry.getEntryId())));
+
+			return ListUtil.subList(
+				assetEntries, assetEntryQuery.getStart(),
+				assetEntryQuery.getEnd());
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get asset entries", exception);

@@ -1427,15 +1427,17 @@ definition {
 			locator1 = "TextInput#ENTER_AGAIN",
 			value1 = "${newPassword}");
 
-		if ("${requirePasswordReset}" == "true") {
-			Check(
-				checkboxName = "Require Password Reset",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-		else {
-			Uncheck(
-				checkboxName = "Require Password Reset",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+		if (IsElementPresent(checkboxName = "Require Password Reset", locator1 = "Checkbox#ANY_CHECKBOX")) {
+			if ("${requirePasswordReset}" == "true") {
+				Check(
+					checkboxName = "Require Password Reset",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+			else {
+				Uncheck(
+					checkboxName = "Require Password Reset",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
 		}
 
 		PortletEntry.save();

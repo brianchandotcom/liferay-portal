@@ -66,7 +66,14 @@ export class DataLayoutPageSchema extends Schema {
 }
 
 export class DataLayoutSchema extends Schema {
-	static props = ['dataLayout', 'id', 'name', 'pages', 'rules'];
+	static props = [
+		'dataLayout',
+		'id',
+		'name',
+		'pages',
+		'paginationMode',
+		'rules',
+	];
 
 	constructor(raw) {
 		super('data_engine', 'dataLayout', raw);
@@ -102,6 +109,10 @@ export class DataLayoutSchema extends Schema {
 		return id;
 	}
 
+	get paginationMode() {
+		return this[SYMBOL_RAW].paginationMode;
+	}
+
 	serialize() {
 		return {
 			dataLayoutFields: this.dataLayoutFields,
@@ -111,6 +122,7 @@ export class DataLayoutSchema extends Schema {
 			dataRules: this.dataRules,
 			id: this.id,
 			name: this.name,
+			paginationMode: this.paginationMode,
 		};
 	}
 }

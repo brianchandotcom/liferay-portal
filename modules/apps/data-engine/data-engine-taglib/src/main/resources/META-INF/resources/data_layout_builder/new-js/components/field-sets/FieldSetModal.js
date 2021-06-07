@@ -82,7 +82,7 @@ const ModalContent = ({
 			dataDefinitionFields,
 		} = dataDefinition.serialize();
 
-		const {dataLayoutPages} = dataLayout.serialize();
+		const {dataLayoutPages, paginationMode} = dataLayout.serialize();
 
 		try {
 			if (!name[defaultLanguageId]) {
@@ -114,6 +114,7 @@ const ModalContent = ({
 				defaultDataLayout: {
 					dataLayoutPages,
 					name,
+					paginationMode,
 				},
 				name,
 			};

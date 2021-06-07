@@ -217,7 +217,6 @@ export const Page = ({
 	return (
 		<DefaultVariant.Page
 			activePage={activePage}
-			editable={editable}
 			forceAriaUpdate={forceAriaUpdate}
 			header={header}
 			invalidFormMessage={invalidFormMessage}

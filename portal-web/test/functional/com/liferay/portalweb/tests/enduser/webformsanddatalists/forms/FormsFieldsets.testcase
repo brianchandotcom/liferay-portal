@@ -32,14 +32,54 @@ definition {
 	}
 
 	@description = "Verify that a Form can be published after adding a Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test AddedToAFormCanBePublished {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133476 AddedToAFormCanBePublished pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.gotoAddField(fieldType = "Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+
+		FormFields.viewFieldLabel(
+			fieldName = "Text",
+			fieldValue = "");
+
+		FormFields.viewFieldLabel(
+			fieldName = "Numeric",
+			fieldValue = "");
+
+		Form.save();
+
+		Form.publishForm();
 	}
 
 	@description = "Verify that a Form can be saved after adding a Fieldset"

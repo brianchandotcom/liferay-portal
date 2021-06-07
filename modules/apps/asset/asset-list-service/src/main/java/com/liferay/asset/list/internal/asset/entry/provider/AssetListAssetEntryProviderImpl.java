@@ -842,7 +842,8 @@ public class AssetListAssetEntryProviderImpl
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
-		if (!Objects.equals(
+		if (Validator.isNotNull(assetListEntry.getAssetEntryType()) &&
+			!Objects.equals(
 				assetListEntry.getAssetEntryType(),
 				AssetEntry.class.getName())) {
 

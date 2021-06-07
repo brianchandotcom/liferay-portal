@@ -70,7 +70,9 @@ class SelectFolderButton extends PortletBase {
 			onSelect: (selectedItem) => {
 				if (selectedItem) {
 					var folderData = {
-						idString: document.getElementById('newFolderId')
+						idString: document.getElementById(
+							this.ns('newFolderId')
+						)
 							? 'newFolderId'
 							: 'folderId',
 						idValue: selectedItem.folderId,

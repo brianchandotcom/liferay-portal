@@ -77,6 +77,7 @@ task buildFixPackChangeLog(type: BuildChangeLogTask)
 task cherryPickArtifacts
 task cleanReleng
 task cleanVersionOverride
+task deployReleng
 task lockBOMDependencyVersion
 task lockDependencyVersion
 task lockPrivateDependencyVersions
@@ -175,6 +176,80 @@ cleanVersionOverride {
 
 		delete bndBndFileTree.collect {
 			new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
+		}
+	}
+
+	group = "releng"
+}
+
+deployReleng {
+	doLast {
+		fileTree(dir: file(".releng"), excludes: ["/sdk/**", "**/test/**", "/third-party/**", "/util/**"], include: "**/*.properties").each {
+			File relengFile ->
+
+			String relativePath = FileUtil.relativize(relengFile.parentFile, file(".releng"))
+
+			if (Validator.isNotNull(relativePath)) {
+				File relengIgnoreMarkerDir = GradleUtil.getRootDir(file(relativePath), ".lfrbuild-releng-ignore")
+
+				if (relengIgnoreMarkerDir) {
+					return
+				}
+
+				if (!_exists(file(relativePath), ".lfrbuild-portal")) {
+					return
+				}
+			}
+			else if (relengFile.name == "artifact.properties") {
+				return
+			}
+
+			Properties relengProperties = GUtil.loadProperties(relengFile)
+
+			String artifactURL = relengProperties.getProperty("artifact.url")
+
+			if (!artifactURL || !artifactURL.endsWith(".jar")) {
+				return
+			}
+
+			if (relengFile.name != "artifact.properties") {
+				String jarFileName = relengFile.name[0 .. -12] + ".jar"
+
+				if (jarFileName == "portal-test.jar") {
+					return
+				}
+
+				File deployDir = file(project.properties["app.server." + "${project.'app.server.type'}" + ".portal.dir"] + "/WEB-INF/lib/")
+
+				if (_exists(file(project.properties["app.server." + "${project.'app.server.type'}" + ".lib.global.dir"]), jarFileName)) {
+					deployDir = file(project.properties["app.server." + "${project.'app.server.type'}" + ".lib.global.dir"])
+				}
+
+				FileUtil.get(project, artifactURL, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], new File(deployDir, jarFileName), false, true)
+			}
+			else {
+				String jarFileName = artifactURL.substring(artifactURL.lastIndexOf("/") + 1).replaceFirst(/-\d+(\.\d+)*\.jar$/, ".jar")
+
+				File deployDir = file("${project.'liferay.home'}/osgi/modules/")
+
+				if (_exists(file("${project.'liferay.home'}/osgi/core/"), jarFileName)) {
+					deployDir = file("${project.'liferay.home'}/osgi/core/")
+				}
+				else if (jarFileName.endsWith(".test.util.jar")) {
+					deployDir = file("${project.'liferay.home'}/osgi/test/")
+				}
+				else if (_exists(file("${project.'liferay.home'}/osgi/portal/"), jarFileName)) {
+					deployDir = file("${project.'liferay.home'}/osgi/portal/")
+				}
+				else if (_exists(file("${project.'liferay.home'}/osgi/static/"), jarFileName)) {
+					deployDir = file("${project.'liferay.home'}/osgi/static/")
+				}
+				else if (_exists(file(project.properties["app.server." + "${project.'app.server.type'}" + ".portal.dir"] + "/WEB-INF/lib/"), jarFileName)) {
+					deployDir = file(project.properties["app.server." + "${project.'app.server.type'}" + ".portal.dir"] + "/WEB-INF/lib/")
+				}
+
+				FileUtil.get(project, artifactURL, project.properties['systemProp.repository.private.username'], project.properties['systemProp.repository.private.password'], new File(deployDir, jarFileName), false, true)
+			}
 		}
 	}
 

@@ -83,9 +83,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
 
 		FormFields.viewDeletedFieldLabel(fieldName = "Rich Text");
-
-
-		
 	}
 
 	@description = "Verify that a Rich Text Field can be duplicated"

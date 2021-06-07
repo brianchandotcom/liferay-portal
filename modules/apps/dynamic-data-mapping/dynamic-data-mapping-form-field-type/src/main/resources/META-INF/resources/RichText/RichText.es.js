@@ -73,7 +73,7 @@ const RichText = ({
 						onChange({}, data);
 					}
 					else if (!dirty) {
-						CKEDITOR.instances[name].resetUndo();
+						CKEDITOR.instances[name]?.resetUndo();
 					}
 				}}
 				onMode={({editor}) => {

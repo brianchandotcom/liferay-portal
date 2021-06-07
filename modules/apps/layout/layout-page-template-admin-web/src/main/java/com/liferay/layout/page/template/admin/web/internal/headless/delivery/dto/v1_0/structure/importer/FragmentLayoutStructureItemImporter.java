@@ -47,9 +47,11 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -684,6 +686,14 @@ public class FragmentLayoutStructureItemImporter
 				widgetInstanceId =
 					fragmentEntryLink.getNamespace() + widgetInstanceId;
 			}
+			else {
+				Portlet portlet = _portletLocalService.getPortletById(
+					widgetName);
+
+				if ((portlet != null) && portlet.isInstanceable()) {
+					widgetInstanceId = fragmentEntryLink.getNamespace();
+				}
+			}
 
 			Map<String, Object> widgetConfigDefinitionMap =
 				(Map<String, Object>)widgetInstanceMap.get("widgetConfig");
@@ -993,6 +1003,9 @@ public class FragmentLayoutStructureItemImporter
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 	@Reference
 	private PortletPermissionsImporterHelper _portletPermissionsImporterHelper;

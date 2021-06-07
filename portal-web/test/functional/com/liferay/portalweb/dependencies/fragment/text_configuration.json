@@ -1,13 +1,15 @@
 {
   "fieldSets": [
-     {
-     "label": "Button",
-     "fields": [
+    {
+      "fields": [
        {
          "name": "buttonText",
          "label": "Button Text",
          "description": "button-text",
          "type": "text",
+         "typeOptions": {
+          "placeholder": "Placeholder"
+         },
          "dataType": "string",
          "defaultValue": "Go Somewhere"
        }

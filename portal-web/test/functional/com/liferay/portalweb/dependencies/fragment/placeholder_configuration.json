@@ -1,7 +1,6 @@
 {
   "fieldSets": [
      {
-     "label": "Button",
      "fields": [
        {
          "name": "buttonText",
@@ -9,7 +8,7 @@
          "description": "button-text",
          "type": "text",
 	       "typeOptions": {
-          "placeholder": "Set Button Name"
+          "placeholder": "Placeholder"
          },
          "dataType": "string",
          "defaultValue": ""

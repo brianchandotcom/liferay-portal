@@ -832,6 +832,13 @@ definition {
 			value1 = "${fieldValue}");
 	}
 
+	macro viewLabel {
+		AssertTextEquals.assertText(
+			key_fieldName = "${fieldName}",
+			locator1 = "Form#FIELD_LABEL",
+			value1 = "${fieldLabel}");
+	}
+
 	macro viewMultilineTextValue {
 		AssertTextEquals.assertValue(
 			key_fieldName = "${fieldName}",

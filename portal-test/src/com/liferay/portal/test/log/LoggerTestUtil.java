@@ -87,9 +87,13 @@ public class LoggerTestUtil {
 	public static LogCapture configureLog4JLogger(
 		String name, String priority) {
 
-		LogWrapper logWrapper = (LogWrapper)LogFactoryUtil.getLog(name);
+		Log log = LogFactoryUtil.getLog(name);
 
-		Log log = logWrapper.getWrappedLog();
+		while (log instanceof LogWrapper) {
+			LogWrapper logWrapper = (LogWrapper)log;
+
+			log = logWrapper.getWrappedLog();
+		}
 
 		org.apache.logging.log4j.core.Logger logger = null;
 

@@ -115,11 +115,6 @@ export default withRouter(
 
 		const siteKey = context.siteKey;
 
-		const historyPushParser = useCallback(
-			(url) => historyPushWithSlug(history.push)(url),
-			[history.push]
-		);
-
 		const [getSections] = useManualQuery(getSectionsQuery, {
 			variables: {siteKey: context.siteKey},
 		});
@@ -373,8 +368,10 @@ export default withRouter(
 			getThreadsCallback,
 		]);
 
+		const historyPushParser = historyPushWithSlug(history.push);
+
 		function buildURL(search, page, pageSize) {
-			let url = (context.historyRouterBasePath || '#') + '/questions';
+			let url = '/questions';
 
 			if (sectionTitle || sectionTitle === '0') {
 				url += `/${sectionTitle}`;
@@ -398,10 +395,14 @@ export default withRouter(
 			return url;
 		}
 
-		const [debounceCallback] = useDebounceCallback((search) => {
-			setLoading(true);
-			historyPushParser(buildURL(search, 1, 20));
-		}, 500);
+		function changePage(search, page, pageSize) {
+			historyPushParser(buildURL(search, page, pageSize));
+		}
+
+		const [debounceCallback] = useDebounceCallback(
+			(search) => changePage(search, 1, 20),
+			500
+		);
 
 		useEffect(() => {
 			if (sectionTitle && sectionTitle !== '0') {
@@ -455,8 +456,6 @@ export default withRouter(
 			return false;
 		};
 
-		const hrefConstructor = (page) => buildURL(search, page, pageSize);
-
 		return (
 			<section className="questions-section questions-section-list">
 				<Breadcrumb
@@ -480,7 +479,12 @@ export default withRouter(
 						<PaginatedList
 							activeDelta={pageSize}
 							activePage={page}
-							changeDelta={setPageSize}
+							changeDelta={(pageSize) =>
+								changePage(search, page, pageSize)
+							}
+							changePage={(page) =>
+								changePage(search, page, pageSize)
+							}
 							data={questions}
 							emptyState={
 								sectionTitle && !search && !filter ? (
@@ -517,7 +521,6 @@ export default withRouter(
 									/>
 								)
 							}
-							hrefConstructor={hrefConstructor}
 							loading={loading}
 							totalCount={totalCount}
 						>

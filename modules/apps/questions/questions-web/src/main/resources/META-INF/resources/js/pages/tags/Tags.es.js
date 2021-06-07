@@ -120,7 +120,7 @@ export default withRouter(({history, location}) => {
 	const historyPushParser = historyPushWithSlug(history.push);
 
 	function buildURL(search, page, pageSize) {
-		let url = (context.historyRouterBasePath || '#') + '/tags?';
+		let url = '/tags?';
 
 		if (search) {
 			url += `search=${search}&`;
@@ -131,14 +131,16 @@ export default withRouter(({history, location}) => {
 		return url;
 	}
 
+	function changePage(search, page, pageSize) {
+		historyPushParser(buildURL(search, page, pageSize));
+	}
+
 	const orderByOptions = getOrderByOptions();
 
-	const [debounceCallback] = useDebounceCallback((needHashtag, search) => {
-		setLoading(true);
-		historyPushParser(buildURL(search, 1, pageSize));
-	}, 500);
-
-	const hrefConstructor = (page) => buildURL(search, page, pageSize);
+	const [debounceCallback] = useDebounceCallback(
+		(search) => changePage(search, 1, 20),
+		500
+	);
 
 	return (
 		<>
@@ -191,10 +193,7 @@ export default withRouter(({history, location}) => {
 									}
 									onChange={(event) => {
 										setSearchBoxValue(event.target.value);
-										debounceCallback(
-											false,
-											event.target.value
-										);
+										debounceCallback(event.target.value);
 									}}
 									placeholder={Liferay.Language.get('search')}
 									type="text"
@@ -212,7 +211,7 @@ export default withRouter(({history, location}) => {
 											<ClayButtonWithIcon
 												displayType="unstyled"
 												onClick={() => {
-													debounceCallback(false, '');
+													debounceCallback('');
 												}}
 												symbol="times-circle"
 												type="submit"
@@ -234,7 +233,12 @@ export default withRouter(({history, location}) => {
 					<PaginatedList
 						activeDelta={pageSize}
 						activePage={page}
-						changeDelta={setPageSize}
+						changeDelta={(pageSize) =>
+							changePage(search, page, pageSize)
+						}
+						changePage={(page) =>
+							changePage(search, page, pageSize)
+						}
 						data={tags}
 						emptyState={
 							<ClayEmptyState
@@ -244,7 +248,6 @@ export default withRouter(({history, location}) => {
 								)}
 							/>
 						}
-						hrefConstructor={hrefConstructor}
 						loading={loading}
 					>
 						{(tag) => (

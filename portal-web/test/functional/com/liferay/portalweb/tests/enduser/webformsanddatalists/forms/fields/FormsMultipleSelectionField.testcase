@@ -374,8 +374,6 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Test Multiple Selection");
-
-		
 	}
 
 	@description = "Verify that options can be added"

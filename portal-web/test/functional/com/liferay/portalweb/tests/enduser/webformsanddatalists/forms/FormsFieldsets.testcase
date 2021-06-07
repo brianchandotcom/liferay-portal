@@ -208,14 +208,63 @@ definition {
 	}
 
 	@description = "Verify that a Fieldset can be added to a Fieldset"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanBeAddedToAFieldset {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133462 CanBeAddedToAFieldset pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Form.gotoElementSetsTab();
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+		
+		Form.saveElementSet();
+		
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 2");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Rich Text");
+
+		Form.closeSidebar();
+
+		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+
+		for (var label : list "Rich Text,Text,Numeric") {
+			FormViewBuilder.validateFieldLabel(fieldLabel = "${label}");
+		}
+
+		Form.saveElementSet();
+
+		Alert.viewSuccessMessage();
+
+		FormsAdminNavigator.gotoBack();
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "Element Set 2");
+
+		for (var label : list "Rich Text,Text,Numeric") {
+			FormViewBuilder.validateFieldLabel(fieldLabel = "${label}");
+		}
 	}
 
 	@description = "Verify that a Fieldset can be added multiple times to Form"

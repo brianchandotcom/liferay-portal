@@ -39,6 +39,10 @@ export default (props) => {
 		path = props.i18nPath + path;
 	}
 
+	if (path && location.pathname.endsWith(path)) {
+		path = location.pathname;
+	}
+
 	return (
 		<AppContextProvider {...props}>
 			<ClientContext.Provider value={client}>

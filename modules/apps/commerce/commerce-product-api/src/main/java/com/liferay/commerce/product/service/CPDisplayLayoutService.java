@@ -85,7 +85,7 @@ public interface CPDisplayLayoutService extends BaseService {
 		throws PortalException;
 
 	public CPDisplayLayout updateCPDisplayLayout(
-			long cpDisplayLayoutId, String layoutUuid)
+			long cpDisplayLayoutId, long classPK, String layoutUuid)
 		throws PortalException;
 
 }

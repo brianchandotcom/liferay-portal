@@ -117,13 +117,14 @@ public class CPDisplayLayoutServiceSoap {
 	}
 
 	public static com.liferay.commerce.product.model.CPDisplayLayoutSoap
-			updateCPDisplayLayout(long cpDisplayLayoutId, String layoutUuid)
+			updateCPDisplayLayout(
+				long cpDisplayLayoutId, long classPK, String layoutUuid)
 		throws RemoteException {
 
 		try {
 			com.liferay.commerce.product.model.CPDisplayLayout returnValue =
 				CPDisplayLayoutServiceUtil.updateCPDisplayLayout(
-					cpDisplayLayoutId, layoutUuid);
+					cpDisplayLayoutId, classPK, layoutUuid);
 
 			return com.liferay.commerce.product.model.CPDisplayLayoutSoap.
 				toSoapModel(returnValue);

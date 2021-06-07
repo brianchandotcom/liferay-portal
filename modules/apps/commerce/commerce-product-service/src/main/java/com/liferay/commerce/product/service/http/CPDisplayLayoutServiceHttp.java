@@ -221,7 +221,7 @@ public class CPDisplayLayoutServiceHttp {
 	public static com.liferay.commerce.product.model.CPDisplayLayout
 			updateCPDisplayLayout(
 				HttpPrincipal httpPrincipal, long cpDisplayLayoutId,
-				String layoutUuid)
+				long classPK, String layoutUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -230,7 +230,7 @@ public class CPDisplayLayoutServiceHttp {
 				_updateCPDisplayLayoutParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cpDisplayLayoutId, layoutUuid);
+				methodKey, cpDisplayLayoutId, classPK, layoutUuid);
 
 			Object returnObj = null;
 
@@ -278,6 +278,6 @@ public class CPDisplayLayoutServiceHttp {
 			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[] _updateCPDisplayLayoutParameterTypes4 =
-		new Class[] {long.class, String.class};
+		new Class[] {long.class, long.class, String.class};
 
 }

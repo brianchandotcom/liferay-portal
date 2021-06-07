@@ -550,9 +550,6 @@ definition {
 		FormViewBuilder.validatePredefinedSelectFromList(
 			fieldName = "Select from List",
 			fieldValue = "Option 1");
-
-			
-
 	}
 
 	@description = "Verify that after deleting an option that had been selected as the Predefined Value, the Predefined Value is reset to "Choose Options""

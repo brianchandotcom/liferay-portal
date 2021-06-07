@@ -117,8 +117,6 @@ definition {
 			mimeType = "application/msword",
 			sourceFileName = "Document_1.doc");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
-
 		DepotNavigator.openDepotAssetListsAdminStaging(depotName = "Test Depot Name");
 
 		AssetListsAdmin.addManualSelection(assetListTitle = "Depot Manual Asset List");

@@ -86,9 +86,12 @@ function DataEngineLanguageSelector({
 	const [selectedLanguageId, setSelectedLanguageId] = useState(
 		initialSelectedLanguageId
 	);
-	const [translatedLanguageIds, setTranslatedLanguageIds] = useState(
-		initialTranslatedLanguageIds
-	);
+	const [translatedLanguageIds, setTranslatedLanguageIds] = useState([
+		...new Set([
+			...initialTranslatedLanguageIds,
+			initialSelectedLanguageId,
+		]),
+	]);
 
 	const handleLocaleChange = (localeId) => {
 		setSelectedLanguageId(localeId);

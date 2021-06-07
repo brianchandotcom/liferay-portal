@@ -14,26 +14,22 @@ definition {
 
 		TestCase.setUpPortalInstance();
 
-		Navigator.openURL();
-
-		User.firstLoginUI();
+		ACUtils.launchDXP();
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Navigator.openURL();
-
-		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
+		ACUtils.teardownDXP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
 	}
 
-	@description = "Set custom range filter for known individuals"
+	@description = "Set custom range filter with empty data for individual activity"
 	@priority = "5"
-	test CanSetCustomRangeKnownIndividuals {
+	test CanSetEmptyDataCustomRangeOnIndividualActivitiesCard {
 		Navigator.openURL();
 		ACUtils.addSiteAndPage();
 		ACUtils.createDMAndAddToPage();

@@ -72,7 +72,7 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
-	public void testGetAssetEntriesMatchingAllAssetCategories()
+	public void testGetDynamicAssetEntriesMatchingAllAssetCategories()
 		throws Exception {
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
@@ -119,7 +119,9 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
-	public void testGetAssetEntriesMatchingOneAssetCategory() throws Exception {
+	public void testGetDynamicAssetEntriesMatchingOneAssetCategory()
+		throws Exception {
+
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
 
@@ -155,7 +157,9 @@ public class AssetListAssetEntryProviderTest {
 	}
 
 	@Test
-	public void testGetAssetEntriesNonmatchingAssetCategory() throws Exception {
+	public void testGetDynamicAssetEntriesNonmatchingAssetCategory()
+		throws Exception {
+
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
 

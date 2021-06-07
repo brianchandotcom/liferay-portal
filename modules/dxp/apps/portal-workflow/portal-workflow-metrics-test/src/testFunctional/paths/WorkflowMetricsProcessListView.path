@@ -10,7 +10,7 @@
 <tbody>
 <tr>
     <td>METRICS_WORKFLOW_SEARCH_BAR</td>
-    <td>//input[@placeholder='${key_fieldLabel}']</td>
+    <td>//input[@placeholder='Search for']</td>
     <td></td>
 </tr>
 <tr>

@@ -195,18 +195,6 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanImportBlogWhenDuplicateTitleExists {
-		JSONGroup.addGroup(groupName = "Target Site Name");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Target Site Name");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title",
-			groupName = "Target Site Name");
-
 		JSONGroup.addGroup(groupName = "Source Site Name");
 
 		JSONBlog.addEntry(
@@ -216,17 +204,15 @@ definition {
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "source-site-name");
 
-		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
+		LAR.importPortlet(
+			larFileName = "Blogs.portlet.lar",
+			uploadFrom = "dependencies");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
-
-		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "target-site-name");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "source-site-name");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		for (var i : list "1,2,3") {
+		for (var i : list "1,2") {
 			AssertTextEquals(
 				key_rowNumber = "${i}",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_2",
@@ -238,46 +224,26 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test CanImportEntryWithComment {
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+
+		LAR.importPortlet(
+			larFileName = "BlogWithComment.lar",
+			uploadFrom = "dependencies");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
 
 		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
-
-		Comments.addPG(entryComment = "Blogs Entry Comment");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		LAR.exportPortlet(larFileName = "Blogs.portlet.lar");
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		BlogsEntry.tearDownCP();
-
-		Navigator.gotoPage(pageName = "Blogs Page");
-
-		LAR.importPortlet(larFileName = "Blogs.portlet.lar");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
+			entryTitle = "Blog Entry Title",
 			layoutName = "Blogs Page",
 			siteURLKey = "guest");
 
 		BlogsEntry.viewPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		BlogsNavigator.openToBlogEntry(
-			entryTitle = "Blogs Entry Title",
-			layoutName = "Blogs Page",
-			siteURLKey = "guest");
+			entryContent = "Blog Entry Content",
+			entryTitle = "Blog Entry Title");
 
 		Comments.viewPG(
 			commentCount = "1",
-			entryComment = "Blogs Entry Comment",
+			entryComment = "Blog Entry Comment",
 			userFullName = "Test Test");
 	}
 

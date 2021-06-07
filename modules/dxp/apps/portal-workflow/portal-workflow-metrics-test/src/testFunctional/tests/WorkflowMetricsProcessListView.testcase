@@ -66,7 +66,6 @@ definition {
 	}
 
 	@description = "LPS-88573 - Verify that the search can be done by similar words, not having 100% match needs of the string"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchBySimilarWords {
 		WorkflowMetricsProcessListView.metricsWorkflowSearch(workflowSearchName = "Single Ap");

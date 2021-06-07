@@ -12,27 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.log;
+package com.liferay.portal.kernel.log;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactory;
-
-import org.apache.logging.log4j.LogManager;
+import java.util.Map;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Tina Tian
  */
-public class Log4jLogFactoryImpl implements LogFactory {
+public interface LogContext {
 
-	@Override
-	public Log getLog(Class<?> c) {
-		return getLog(c.getName());
-	}
+	public Map<String, String> getContext();
 
-	@Override
-	public Log getLog(String name) {
-		return new LogContextLogWrapper(
-			new Log4jLogImpl(LogManager.getLogger(name)));
-	}
+	public String getName();
 
 }

@@ -64,6 +64,9 @@ public class AssetListAssetEntryProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
 	}
 
 	@Test
@@ -96,9 +99,7 @@ public class AssetListAssetEntryProviderTest {
 			_assetListEntryLocalService.addAssetListEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
+				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
@@ -139,9 +140,7 @@ public class AssetListAssetEntryProviderTest {
 			_assetListEntryLocalService.addAssetListEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
+				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
 		List<AssetEntry> assetEntries =
 			_assetListAssetEntryProvider.getAssetEntries(
@@ -177,9 +176,7 @@ public class AssetListAssetEntryProviderTest {
 			_assetListEntryLocalService.addAssetListEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
+				AssetListEntryTypeConstants.TYPE_DYNAMIC, _serviceContext);
 
 		AssetCategory assetCategory4 = AssetTestUtil.addCategory(
 			_group.getGroupId(), assetVocabulary.getVocabularyId());
@@ -213,5 +210,7 @@ public class AssetListAssetEntryProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private ServiceContext _serviceContext;
 
 }

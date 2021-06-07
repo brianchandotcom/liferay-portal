@@ -809,7 +809,8 @@ public class DDMFormEvaluatorHelper {
 		).forEach(
 			ddmFormEvaluatorFieldContextKey -> setFieldAsInvalid(
 				ddmFormEvaluatorFieldContextKey,
-				LanguageUtil.get(_resourceBundle, "input-format-is-not-satisfied"))
+				LanguageUtil.get(
+					_resourceBundle, "input-format-is-not-satisfied"))
 		);
 	}
 

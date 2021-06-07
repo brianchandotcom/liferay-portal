@@ -373,7 +373,7 @@ public class DDMFormEvaluatorHelperTest extends PowerMockito {
 					"field0", "field0_instanceId"));
 
 		Assert.assertEquals(
-			"Input format not satisfied.",
+			"Input format is not satisfied.",
 			ddmFormFieldPropertyChanges.get("errorMessage"));
 		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges.get("valid"));
 	}

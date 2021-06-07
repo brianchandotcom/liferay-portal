@@ -774,6 +774,18 @@ public class CPDefinitionLocalServiceUtil {
 			end, sort);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CPDefinition> searchCPDefinitionsByChannelGroupId(
+				long companyId, long[] groupIds, long channelGroupId,
+				String keywords, int status, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchCPDefinitionsByChannelGroupId(
+			companyId, groupIds, channelGroupId, keywords, status, start, end,
+			sort);
+	}
+
 	public static void updateAsset(
 			long userId, CPDefinition cpDefinition, long[] assetCategoryIds,
 			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)

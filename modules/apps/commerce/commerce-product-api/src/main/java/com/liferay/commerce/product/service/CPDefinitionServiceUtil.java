@@ -340,6 +340,17 @@ public class CPDefinitionServiceUtil {
 			companyId, keywords, filterFields, filterValues, start, end, sort);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CPDefinition> searchCPDefinitionsByChannelGroupId(
+				long companyId, long channelGroupId, String keywords,
+				int status, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchCPDefinitionsByChannelGroupId(
+			companyId, channelGroupId, keywords, status, start, end, sort);
+	}
+
 	public static CPDefinition updateCPDefinition(
 			long cpDefinitionId, Map<java.util.Locale, String> nameMap,
 			Map<java.util.Locale, String> shortDescriptionMap,

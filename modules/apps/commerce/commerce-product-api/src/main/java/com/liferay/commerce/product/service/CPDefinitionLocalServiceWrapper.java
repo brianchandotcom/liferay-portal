@@ -895,6 +895,20 @@ public class CPDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPDefinition>
+				searchCPDefinitionsByChannelGroupId(
+					long companyId, long[] groupIds, long channelGroupId,
+					String keywords, int status, int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionLocalService.searchCPDefinitionsByChannelGroupId(
+			companyId, groupIds, channelGroupId, keywords, status, start, end,
+			sort);
+	}
+
+	@Override
 	public void updateAsset(
 			long userId,
 			com.liferay.commerce.product.model.CPDefinition cpDefinition,

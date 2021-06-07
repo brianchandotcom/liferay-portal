@@ -360,6 +360,19 @@ public class CPDefinitionServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.product.model.CPDefinition>
+				searchCPDefinitionsByChannelGroupId(
+					long companyId, long channelGroupId, String keywords,
+					int status, int start, int end,
+					com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpDefinitionService.searchCPDefinitionsByChannelGroupId(
+			companyId, channelGroupId, keywords, status, start, end, sort);
+	}
+
+	@Override
 	public com.liferay.commerce.product.model.CPDefinition updateCPDefinition(
 			long cpDefinitionId,
 			java.util.Map<java.util.Locale, String> nameMap,

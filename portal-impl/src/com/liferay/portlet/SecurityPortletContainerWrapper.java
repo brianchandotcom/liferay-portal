@@ -405,15 +405,10 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			_log.debug(principalException, principalException);
 		}
 
-		if (principalException instanceof
-				PrincipalException.MustHaveSessionCSRFToken) {
+		if (_log.isWarnEnabled() &&
+			!(principalException instanceof
+				PrincipalException.MustHaveSessionCSRFToken)) {
 
-			httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-
-			return ActionResult.EMPTY_ACTION_RESULT;
-		}
-
-		if (_log.isWarnEnabled()) {
 			String url = getOriginalURL(httpServletRequest);
 
 			_log.warn(

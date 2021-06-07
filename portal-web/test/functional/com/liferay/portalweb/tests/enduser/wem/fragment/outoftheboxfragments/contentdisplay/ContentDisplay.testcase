@@ -785,7 +785,7 @@ definition {
 			locator1 = "PageEditor#CONTENT_PAGE_IMAGE_CONTENT");
 	}
 
-	@description = "This case ensures that a user can map the content field from web content to a fragment via the content display."
+	@description = "This is a test for LPS-100545. The user can map the content field from web content to a fragment via the content display."
 	@priority = "5"
 	test ViewSelectedWebContentInContentPage {
 		property portal.acceptance = "true";
@@ -820,7 +820,7 @@ definition {
 			value1 = "This content maps from web content");
 	}
 
-	@description = "This case ensures that a user can select content via content display in content page template editor."
+	@description = "This is a test for LPS-100545. The user can map the content field from web content to a fragment via the content display."
 	@priority = "4"
 	test ViewSelectedWebContentInContentPageTemplate {
 		property testray.main.component.name = "Layout Page Templates";
@@ -872,7 +872,7 @@ definition {
 		}
 	}
 
-	@description = "This case ensures that a user can select content via content display in display page template editor."
+	@description = "This is a test for LPS-100545. The user can map the content field from web content to a fragment via the content display."
 	@priority = "4"
 	test ViewSelectedWebContentInDisplayPageTemplate {
 		property testray.main.component.name = "Display Pages";
@@ -914,4 +914,5 @@ definition {
 				value1 = "WC WebContent Content");
 		}
 	}
+
 }

@@ -130,6 +130,139 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration in content page template."
+	@priority = "5"
+	test ConfigureCheckboxConfigurationInContentPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment with checkbox configuration") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Checkbox Fragment Example");
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
+
+		task ("Add a new fragment to content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Checkbox Fragment Example");
+		}
+
+		task ("Configure the new fragment") {
+			PageEditorConfiguration.checkConfigCheckbox(
+				checkboxName = "Hide Body",
+				fragmentName = "Checkbox Fragment Example");
+
+			PageEditorConfiguration.checkConfigCheckbox(
+				checkboxName = "Make Bold",
+				fragmentName = "Checkbox Fragment Example");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment configuration") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Body Present!!')]");
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//b[contains(.,'Bold Words')]");
+		}
+	}
+
+	@description = "This is a test for LPS-99377. User can change checkbox fragment configuration in display page template."
+	@priority = "5"
+	test ConfigureCheckboxConfigurationInDisplayPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment with checkbox configuration") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "checkbox_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Checkbox Fragment Example");
+		}
+
+		task ("Add a display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a new fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Checkbox Fragment Example");
+		}
+
+		task ("Configure the new fragment") {
+			PageEditorConfiguration.checkConfigCheckbox(
+				checkboxName = "Hide Body",
+				fragmentName = "Checkbox Fragment Example");
+
+			PageEditorConfiguration.checkConfigCheckbox(
+				checkboxName = "Make Bold",
+				fragmentName = "Checkbox Fragment Example");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment configuration") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//h3[contains(.,'Body Present!!')]");
+
+			AssertElementPresent(locator1 = "//div[contains(@class,'fragment-configuration')]//b[contains(.,'Bold Words')]");
+		}
+	}
+
 	@description = "This is a test for LPS-97179. User can change colorPalette fragment configuration."
 	@priority = "5"
 	test ConfigureColorPaletteInContentPage {
@@ -236,6 +369,127 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-96685. User can change select fragment configuration in content page template."
+	@priority = "5"
+	test ConfigureSelectConfigurationInContentPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment with select configuration") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Select Fragment Example");
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
+
+		task ("Add a new fragment to content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Select Fragment Example");
+		}
+
+		task ("Configure the new fragment") {
+			PageEditorConfiguration.changeConfigSelection(
+				fragmentName = "Select Fragment Example",
+				optionValue = "dark");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment configuration") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertVisible(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
+		}
+	}
+
+	@description = "This is a test for LPS-96685. User can change select fragment configuration in display page template."
+	@priority = "5"
+	test ConfigureSelectConfigurationInDisplayPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment with select configuration") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "select_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Select Fragment Example");
+		}
+
+		task ("Add a display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a new fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Select Fragment Example");
+		}
+
+		task ("Configure the new fragment") {
+			PageEditorConfiguration.changeConfigSelection(
+				fragmentName = "Select Fragment Example",
+				optionValue = "dark");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment configuration") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertVisible(locator1 = "//div[contains(@class,'fragment-configuration')]/div[contains(@class,'dark')]");
+		}
+	}
+
 	@description = "This is a test for LPS-99543. User can change text fragment configuration."
 	@priority = "5"
 	test ConfigureTextConfigurationInContentPage {
@@ -294,6 +548,155 @@ definition {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
+
+			AssertVisible(
+				key_content = "Updated fragment text",
+				key_fragmentClass = "configuration",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-99543. User can change text fragment configuration in content page template."
+	@priority = "5"
+	test ConfigureTextConfigurationInContentPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment with text configuration") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Text Fragment Example");
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+		}
+
+		task ("Add a new fragment to content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Text Fragment Example");
+		}
+
+		task ("View the placeholder is shown in configuration field") {
+			PageEditor.gotoConfiguration(fragmentName = "Text Fragment Example");
+
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_fieldLabel = "Button Text",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Placeholder");
+		}
+
+		task ("Configure the new fragment") {
+			PageEditorConfiguration.changeConfigText(
+				editableText = "Updated fragment text",
+				fragmentName = "Text Fragment Example",
+				textConfigName = "buttonText");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment configuration") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			AssertVisible(
+				key_content = "Updated fragment text",
+				key_fragmentClass = "configuration",
+				locator1 = "Fragment#FRAGMENT");
+		}
+	}
+
+	@description = "This is a test for LPS-99543. User can change text fragment configuration in display page template."
+	@priority = "5"
+	test ConfigureTextConfigurationInDisplayPageTemplate {
+		property portal.acceptance = "true";
+
+		task ("Add a fragment with text configuration") {
+			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.html");
+			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "text_configuration.json");
+
+			JSONFragment.addSection(
+				collectionName = "Collection Name",
+				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
+				groupName = "Test Site Name",
+				html = "${htmlSnippet}",
+				name = "Text Fragment Example");
+		}
+
+		task ("Add a display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a new fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Text Fragment Example");
+		}
+
+		task ("View the placeholder is shown in configuration field") {
+			PageEditor.gotoConfiguration(fragmentName = "Text Fragment Example");
+
+			AssertAttributeValue(
+				attribute1 = "placeholder",
+				key_fieldLabel = "Button Text",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Placeholder");
+		}
+
+		task ("Configure the new fragment") {
+			PageEditorConfiguration.changeConfigText(
+				editableText = "Updated fragment text",
+				fragmentName = "Text Fragment Example",
+				textConfigName = "buttonText");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the fragment configuration") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			AssertVisible(
 				key_content = "Updated fragment text",
@@ -679,4 +1082,5 @@ definition {
 			AssertElementNotPresent(locator1 = "Message#WARNING_FEEDBACK");
 		}
 	}
+
 }

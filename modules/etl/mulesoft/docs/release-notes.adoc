@@ -5,6 +5,8 @@ the Mulesoft ecosystem.
 
 == Version 1.1.0
 
+*June 7, 2021*
+
 === Compatibility
 
 [%header%autowidth.spread]
@@ -22,8 +24,11 @@ batch operations)
 * Updated demo project with Batch components usage examples
 
 === Fixed Issues
+* Upgraded the vulnerable version of _jackson-databind_
 
 == Version 1.0.0
+
+*March 23, 2020*
 
 === Compatibility
 
@@ -46,6 +51,7 @@ Records* operations
 Liferay Connector operations
 
 === Fixed Issues
+<none>
 
 == See Also
 * https://app.swaggerhub.com/organizations/liferayinc[Liferay Headless API Documentation]

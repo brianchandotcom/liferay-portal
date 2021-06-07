@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.questions.web.internal.asset.model.MBCategoryAssetRendererFactory;
 import com.liferay.questions.web.internal.asset.model.MBMessageAssetRendererFactory;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
-import com.liferay.questions.web.internal.seo.canonical.url.QuestionsLayoutSEOCanonicalURLProvider;
+import com.liferay.questions.web.internal.seo.canonical.url.QuestionsLayoutSEOLinkManagerImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -136,10 +136,9 @@ public class QuestionsConfigurationModelListener
 			}
 
 			configurationProperties.put(
-				"_layoutSEOCanonicalURLProvider.target",
+				"_layoutSEOLinkManager.target",
 				"(component.name=" +
-					QuestionsLayoutSEOCanonicalURLProvider.class.getName() +
-						")");
+					QuestionsLayoutSEOLinkManagerImpl.class.getName() + ")");
 
 			configuration.update(configurationProperties);
 		}
@@ -150,7 +149,9 @@ public class QuestionsConfigurationModelListener
 
 	private Configuration _getConfiguration() throws Exception {
 		return _configurationAdmin.getConfiguration(
-			"com.liferay.layout.seo.internal.LayoutSEOLinkManagerImpl", "?");
+			"com.liferay.layout.seo.web.internal.servlet.taglib." +
+				"OpenGraphTopHeadDynamicInclude",
+			"?");
 	}
 
 	private void _unregister() throws Exception {
@@ -167,7 +168,7 @@ public class QuestionsConfigurationModelListener
 		Dictionary<String, Object> properties = configuration.getProperties();
 
 		if (properties != null) {
-			properties.remove("_layoutSEOCanonicalURLProvider.target");
+			properties.remove("_layoutSEOLinkManager.target");
 
 			configuration.update(properties);
 		}

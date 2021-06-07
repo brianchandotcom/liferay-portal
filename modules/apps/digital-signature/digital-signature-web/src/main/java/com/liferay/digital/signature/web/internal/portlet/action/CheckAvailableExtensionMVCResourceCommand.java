@@ -58,36 +58,35 @@ public class CheckAvailableExtensionMVCResourceCommand
 		long[] fileEntryIds = ParamUtil.getLongValues(
 			resourceRequest, "fileEntryIds");
 
+		JSONPortletResponseUtil.writeJSON(
+			resourceRequest, resourceResponse,
+			JSONUtil.put("invalidFileExtensions", _jsonArray(fileEntryIds)));
+	}
+
+	private JSONArray _jsonArray(long[] fileEntryIds) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (long fileEntryId : fileEntryIds) {
-			_addInvalidFileExtensions(fileEntryId, jsonArray);
-		}
+			try {
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					fileEntryId);
 
-		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			JSONUtil.put("invalidFileExtensions", jsonArray));
-	}
+				if (!ArrayUtil.contains(
+						DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS,
+						fileEntry.getExtension())) {
 
-	private void _addInvalidFileExtensions(
-		long fileEntryId, JSONArray jsonArray) {
-
-		try {
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
-
-			if (!ArrayUtil.contains(
-					DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS,
-					fileEntry.getExtension())) {
-
-				jsonArray.put(
-					JSONUtil.put("fileName", fileEntry.getFileName()));
+					jsonArray.put(
+						JSONUtil.put("fileName", fileEntry.getFileName()));
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception, exception);
+				}
 			}
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
+
+		return jsonArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

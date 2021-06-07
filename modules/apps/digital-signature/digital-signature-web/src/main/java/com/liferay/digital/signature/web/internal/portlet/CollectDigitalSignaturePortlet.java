@@ -18,6 +18,7 @@ import com.liferay.digital.signature.constants.DigitalSignaturePortletKeys;
 import com.liferay.digital.signature.web.internal.constants.DigitalSignatureWebKeys;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -77,19 +79,18 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 		portletDisplay.setURLBack(
 			ParamUtil.getString(renderRequest, "backURL"));
 
-		try {
-			long fileEntryId = ParamUtil.getLong(renderRequest, "fileEntryId");
+		long[] fileEntryIds = ParamUtil.getLongValues(
+			renderRequest, "fileEntryId");
 
-			renderRequest.setAttribute(
-				DigitalSignatureWebKeys.DIGITAL_SIGNATURE_FILE_ENTRY_ID,
-				fileEntryId);
+		try {
+			long fileEntryId = fileEntryIds[0];
 
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 			if (fileEntry != null) {
 				renderRequest.setAttribute(
 					DigitalSignatureWebKeys.DIGITAL_SIGNATURE_TITLE,
-					fileEntry.getTitle());
+					_getTitle(fileEntry.getTitle(), fileEntryIds.length - 1));
 			}
 		}
 		catch (PortalException portalException) {
@@ -99,6 +100,17 @@ public class CollectDigitalSignaturePortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	private String _getTitle(String fileEntryTitle, int fileCount) {
+		if (fileCount == 0) {
+			return fileEntryTitle;
+		}
+
+		return LanguageUtil.format(
+			ResourceBundleUtil.getBundle("content.Language", getClass()),
+			(fileCount == 1) ? "x-and-other-x-file" : "x-and-other-x-files",
+			new String[] {fileEntryTitle, String.valueOf(fileCount)}, false);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

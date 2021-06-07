@@ -191,9 +191,6 @@ definition {
 			fieldLabel = "Color");
 
 		FormPortlet.submitSuccessfully();
-
-		
-
 	}
 
 	@description = "Verify that a Color Field can be set to repeatable"

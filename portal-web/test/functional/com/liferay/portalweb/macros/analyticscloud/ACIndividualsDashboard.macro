@@ -63,4 +63,12 @@ definition {
 		Click(locator1 = "ACIndividualsDashboard#SAVE_BREAKDOWN_BUTTON");
 	}
 
+	macro viewTotalIndividualsCount {
+		var key_individualCount = "${individualCount}";
+
+		AssertTextEquals(
+			locator1 = "ACIndividualsDashboard#TOTAL_INDIVIDUALS",
+			value1 = "${individualCount}");
+	}
+
 }

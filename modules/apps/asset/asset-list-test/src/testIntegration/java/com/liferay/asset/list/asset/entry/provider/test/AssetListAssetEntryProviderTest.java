@@ -108,7 +108,9 @@ public class AssetListAssetEntryProviderTest {
 				assetListEntry, new long[] {SegmentsEntryConstants.ID_DEFAULT},
 				new long[][] {
 					{
-						assetCategory1.getCategoryId(),
+						assetCategory1.getCategoryId()
+					},
+					{
 						assetCategory2.getCategoryId()
 					}
 				},

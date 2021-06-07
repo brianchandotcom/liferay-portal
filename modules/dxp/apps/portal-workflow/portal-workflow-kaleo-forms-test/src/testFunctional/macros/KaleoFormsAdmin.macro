@@ -642,7 +642,6 @@ definition {
 
 	macro viewNewProcessProgressBar {
 		var key_kfProgressName = "${kfProgressName}";
-		var key_kfProgressName = StringUtil.lowerCase("${kfProgressName}");
 
 		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_STEP",

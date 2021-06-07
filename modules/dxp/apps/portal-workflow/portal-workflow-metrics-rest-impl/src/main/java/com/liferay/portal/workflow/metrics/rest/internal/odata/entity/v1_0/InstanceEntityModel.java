@@ -40,7 +40,9 @@ public class InstanceEntityModel implements EntityModel {
 			new DateTimeEntityField(
 				"dateCreated", locale -> "createDate", locale -> "createDate"),
 			new DateTimeEntityField(
-				"dateOverdue", locale -> "overdueDate", locale -> "overdueDate")
+				"dateOverdue", locale -> "overdueDate",
+				locale -> "overdueDate"),
+			new StringEntityField("userName", locale -> "userName")
 		).collect(
 			Collectors.toMap(EntityField::getName, Function.identity())
 		);

@@ -8,7 +8,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.mule</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>1.1.0</version>
 	<packaging>mule-extension</packaging>
 	<name>Liferay Connector - Mule 4</name>
 
@@ -230,9 +230,9 @@
 		</repository>
 	</repositories>
 	<scm>
-		<connection>scm:git:git://github.com/liferay/liferay-etl-mulesoft</connection>
-		<developerConnection>scm:svn:https://github.com/liferay/liferay-etl-mulesoft/tree/master</developerConnection>
+		<connection>scm:git:git://github.com/matijapetanjek/liferay-etl-mulesoft</connection>
+		<developerConnection>scm:svn:https://github.com/matijapetanjek/liferay-etl-mulesoft/tree/master</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://github.com/liferay/liferay-etl-mulesoft/tree/master</url>
+		<url>https://github.com/matijapetanjek/liferay-etl-mulesoft/tree/master</url>
 	</scm>
 </project>

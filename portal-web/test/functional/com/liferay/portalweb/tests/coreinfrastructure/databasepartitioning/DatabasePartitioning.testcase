@@ -35,10 +35,10 @@ definition {
 			virtualHost = "www.baker.com",
 			webId = "www.baker.com");
 
-		User.firstLoginPG(
+		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -56,10 +56,10 @@ definition {
 
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
 
-		User.firstLoginPG(
+		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@www.baker.com",
-			virtualHostsURL = "http://www.baker.com:8080");
+			specificURL = "http://www.baker.com:8080",
+			userEmailAddress = "test@www.baker.com");
 
 		Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 

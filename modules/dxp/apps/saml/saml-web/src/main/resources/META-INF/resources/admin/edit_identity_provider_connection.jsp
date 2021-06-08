@@ -24,10 +24,13 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 SamlSpIdpConnection samlSpIdpConnection = (SamlSpIdpConnection)request.getAttribute(SamlWebKeys.SAML_SP_IDP_CONNECTION);
 UserFieldExpressionResolverRegistry userFieldExpressionResolverRegistry = (UserFieldExpressionResolverRegistry)request.getAttribute(UserFieldExpressionResolverRegistry.class.getName());
 
-String userIdentifierExpression = StringPool.BLANK;
+String userIdentifierExpression;
 
 if (samlSpIdpConnection != null) {
 	userIdentifierExpression = samlSpIdpConnection.getUserIdentifierExpression();
+}
+else {
+	userIdentifierExpression = userFieldExpressionResolverRegistry.getDefaultUserFieldExpressionResolverKey();
 }
 %>
 

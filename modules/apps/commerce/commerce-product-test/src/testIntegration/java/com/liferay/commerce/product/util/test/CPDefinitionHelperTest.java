@@ -99,7 +99,50 @@ public class CPDefinitionHelperTest {
 	}
 
 	@Test
-	public void testSearchCategory() throws PortalException {
+	public void testSearchAllCPDefinitions() throws PortalException {
+		frutillaRule.scenario(
+			"Search for CPDefinitions without filters"
+		).given(
+			"A collection of CPDefinitions"
+		).when(
+			"I search for CPDefinitions without filters"
+		).then(
+			"The results will contain all the products available"
+		);
+
+		CPInstance[] cpInstances = _addCPInstances(
+			_commerceCatalog.getGroupId(), _CP_INSTANCES_COUNT);
+
+		SearchContext searchContext = CPTestUtil.getSearchContext(
+			null, WorkflowConstants.STATUS_APPROVED,
+			_commerceCatalog.getGroup());
+
+		CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(
+			_commerceCatalog.getGroupId(), searchContext, new CPQuery(),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		List<CPCatalogEntry> cpCatalogEntries =
+			cpDataSourceResult.getCPCatalogEntries();
+
+		List<Long> cpDefinitionIds = new ArrayList<>();
+
+		for (CPInstance cpInstance : cpInstances) {
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+			cpDefinitionIds.add(cpDefinition.getCPDefinitionId());
+		}
+
+		List<Long> actualCPDefinitionIds = new ArrayList<>();
+
+		for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
+			actualCPDefinitionIds.add(cpCatalogEntry.getCPDefinitionId());
+		}
+
+		Assert.assertTrue(actualCPDefinitionIds.containsAll(cpDefinitionIds));
+	}
+
+	@Test
+	public void testSearchCPDefinitionsByCategory() throws PortalException {
 		frutillaRule.scenario(
 			"Search for CPDefinition by Category"
 		).given(
@@ -175,7 +218,7 @@ public class CPDefinitionHelperTest {
 	}
 
 	@Test
-	public void testSearchName() throws PortalException {
+	public void testSearchCPDefinitionsByName() throws PortalException {
 		frutillaRule.scenario(
 			"Search for CPDefinitions by name"
 		).given(
@@ -215,49 +258,6 @@ public class CPDefinitionHelperTest {
 		Assert.assertEquals(
 			cpDefinition.getCPDefinitionId(),
 			cpCatalogEntry.getCPDefinitionId());
-	}
-
-	@Test
-	public void testSearchStar() throws PortalException {
-		frutillaRule.scenario(
-			"Search for CPDefinitions without filters"
-		).given(
-			"A collection of CPDefinitions"
-		).when(
-			"I search for CPDefinitions without filters"
-		).then(
-			"The results will contain all the products available"
-		);
-
-		CPInstance[] cpInstances = _addCPInstances(
-			_commerceCatalog.getGroupId(), _CP_INSTANCES_COUNT);
-
-		SearchContext searchContext = CPTestUtil.getSearchContext(
-			null, WorkflowConstants.STATUS_APPROVED,
-			_commerceCatalog.getGroup());
-
-		CPDataSourceResult cpDataSourceResult = _cpDefinitionHelper.search(
-			_commerceCatalog.getGroupId(), searchContext, new CPQuery(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		List<CPCatalogEntry> cpCatalogEntries =
-			cpDataSourceResult.getCPCatalogEntries();
-
-		List<Long> cpDefinitionIds = new ArrayList<>();
-
-		for (CPInstance cpInstance : cpInstances) {
-			CPDefinition cpDefinition = cpInstance.getCPDefinition();
-
-			cpDefinitionIds.add(cpDefinition.getCPDefinitionId());
-		}
-
-		List<Long> actualCPDefinitionIds = new ArrayList<>();
-
-		for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
-			actualCPDefinitionIds.add(cpCatalogEntry.getCPDefinitionId());
-		}
-
-		Assert.assertTrue(actualCPDefinitionIds.containsAll(cpDefinitionIds));
 	}
 
 	@Rule

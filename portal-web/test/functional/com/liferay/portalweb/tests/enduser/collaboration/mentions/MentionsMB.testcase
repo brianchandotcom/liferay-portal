@@ -2,8 +2,6 @@
 definition {
 
 	property custom.properties = "jsonws.web.service.paths.excludes=";
-	property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.token.configuration.TokenConfiguration.config";
-	property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenLocation=&quot;REQUEST&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Mentions";
@@ -25,12 +23,10 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
-			freeLogin = "true",
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
 		User.logoutAndLoginPG(
-			freeLogin = "true",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
 	}
@@ -42,17 +38,13 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			MessageboardsCategory.tearDownCP();
-
-			MessageboardsThread.tearDownCP(assetType = "Message Boards Thread");
-
-			Page.tearDownCP();
+			MessageboardsThread.tearDownCP(assetType = "Thread Subject");
 		}
 	}
 
 	@description = "This test covers LPS-117986. It ensures that multiple mentions can be added to thread."
 	@priority = "4"
-	@refactorneeded
+	@refactordone
 	test MultipleMentionsCanBeAddedToThread {
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",
@@ -66,29 +58,22 @@ definition {
 			userEmailAddress = "userea2@liferay.com");
 
 		User.logoutAndLoginPG(
-			freeLogin = "true",
 			userLoginEmailAddress = "userea2@liferay.com",
 			userLoginFullName = "userfn2 userln2");
 
 		User.logoutAndLoginPG(
-			freeLogin = "true",
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 
 		Mentions.addMentionViaMessageBoardThread(
 			mentionsUserScreenNameList = "usersn,usersn2",
 			multipleMentions = "true",
+			siteURLKey = "guest",
 			threadSubject = "Thread Subject");
 
 		Mentions.viewMentionTagLink(
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "usersn");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
 
 		Mentions.viewMentionTagLink(
 			mentionsUserFullName = "userfn2 userln2",

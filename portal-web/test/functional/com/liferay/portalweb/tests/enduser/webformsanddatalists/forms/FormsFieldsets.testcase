@@ -87,13 +87,51 @@ definition {
 	}
 
 	@description = "Verify that a Grid Field can be added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddAGridFieldToAForm {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133489 CanAddAGridFieldToAForm pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormViewBuilder.editText(
+			fieldName = "Help Text",
+			fieldValue = "Multiple Selection Help Text");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.enableCheckbox(fieldName = "Option 1");
+
+		FormFields.viewFieldHelpText(
+			fieldName = "Help Text", 
+			fieldHelpText = "Multiple Selection Help Text");
+
+		FormPortlet.submitSuccessfully();
+
 
 	}
 

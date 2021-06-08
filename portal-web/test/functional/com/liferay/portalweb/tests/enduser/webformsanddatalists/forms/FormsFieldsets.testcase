@@ -127,12 +127,10 @@ definition {
 		FormFields.enableCheckbox(fieldName = "Option 1");
 
 		FormFields.viewFieldHelpText(
-			fieldName = "Help Text", 
-			fieldHelpText = "Multiple Selection Help Text");
+			fieldHelpText = "Multiple Selection Help Text",
+			fieldName = "Help Text");
 
 		FormPortlet.submitSuccessfully();
-
-
 	}
 
 	@description = "Verify that an Image Field can be added to a Form via Fieldset"

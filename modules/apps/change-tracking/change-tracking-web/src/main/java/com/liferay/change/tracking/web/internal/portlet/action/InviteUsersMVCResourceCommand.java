@@ -14,6 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -147,6 +149,29 @@ public class InviteUsersMVCResourceCommand
 				null, GroupConstants.TYPE_SITE_PRIVATE, false,
 				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
 				true, null);
+		}
+
+		long[] publicationsUserRoleUserIds = ParamUtil.getLongValues(
+			resourceRequest, "publicationsUserRoleUserIds");
+
+		if (publicationsUserRoleUserIds.length > 0) {
+			Role publicationsUserRole = _roleLocalService.fetchRole(
+				themeDisplay.getCompanyId(), CTConstants.PUBLICATIONS_USER);
+
+			if (publicationsUserRole == null) {
+				JSONPortletResponseUtil.writeJSON(
+					resourceRequest, resourceResponse,
+					JSONUtil.put(
+						"errorMessage",
+						_language.get(
+							_portal.getHttpServletRequest(resourceRequest),
+							"an-unexpected-error-occurred")));
+
+				return;
+			}
+
+			_userLocalService.addRoleUsers(
+				publicationsUserRole.getRoleId(), publicationsUserRoleUserIds);
 		}
 
 		int[] roleValues = ParamUtil.getIntegerValues(
@@ -286,6 +311,9 @@ public class InviteUsersMVCResourceCommand
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserNotificationEventLocalService

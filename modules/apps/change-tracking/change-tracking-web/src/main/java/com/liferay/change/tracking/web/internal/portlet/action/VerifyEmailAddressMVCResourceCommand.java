@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ResourceRequest;
@@ -147,6 +148,17 @@ public class VerifyEmailAddressMVCResourceCommand
 					"emailAddress", user.getEmailAddress()
 				).put(
 					"fullName", user.getFullName()
+				).put(
+					"hasPublicationsAccess",
+					_portletPermission.contains(
+						permissionChecker, PortletKeys.PORTAL,
+						ActionKeys.VIEW_CONTROL_PANEL) &&
+					_portletPermission.contains(
+						permissionChecker, CTPortletKeys.PUBLICATIONS,
+						ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
+					_portletPermission.contains(
+						permissionChecker, CTPortletKeys.PUBLICATIONS,
+						ActionKeys.VIEW)
 				).put(
 					"userId", user.getUserId()
 				)));

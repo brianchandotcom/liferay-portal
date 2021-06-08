@@ -28,9 +28,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Stian Sigvartsen
@@ -67,21 +64,13 @@ public class SamlSpIdpConnectionFieldExpressionHandlerRegistryImpl
 	protected void activate(BundleContext bundleContext) {
 		_orderedServiceTrackerMap = _orderedServiceTrackerMapFactory.create(
 			bundleContext, SamlSpIdpConnectionFieldExpressionHandler.class,
-			"prefix", () -> _defaultSamlSpIdpConnectionFieldExpressionHandler);
+			"prefix");
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_orderedServiceTrackerMap.close();
 	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
-	)
-	private volatile SamlSpIdpConnectionFieldExpressionHandler
-		_defaultSamlSpIdpConnectionFieldExpressionHandler;
 
 	private OrderedServiceTrackerMap<SamlSpIdpConnectionFieldExpressionHandler>
 		_orderedServiceTrackerMap;

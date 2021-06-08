@@ -24,6 +24,8 @@ import java.util.Map;
  */
 public interface UserFieldExpressionResolverRegistry {
 
+	public String getDefaultUserFieldExpressionResolverKey();
+
 	public List<Map.Entry<String, UserFieldExpressionResolver>>
 		getOrderedUserFieldExpressionResolvers();
 

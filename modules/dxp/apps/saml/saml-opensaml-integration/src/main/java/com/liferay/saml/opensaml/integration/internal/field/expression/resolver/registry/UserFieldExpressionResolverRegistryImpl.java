@@ -27,9 +27,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Stian Sigvartsen
@@ -37,6 +34,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(service = UserFieldExpressionResolverRegistry.class)
 public class UserFieldExpressionResolverRegistryImpl
 	implements UserFieldExpressionResolverRegistry {
+
+	@Override
+	public String getDefaultUserFieldExpressionResolverKey() {
+		return _orderedServiceTrackerMap.getDefaultServiceKey();
+	}
 
 	@Override
 	public List<Map.Entry<String, UserFieldExpressionResolver>>
@@ -55,22 +57,13 @@ public class UserFieldExpressionResolverRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_orderedServiceTrackerMap = _orderedServiceTrackerMapFactory.create(
-			bundleContext, UserFieldExpressionResolver.class, "key",
-			() -> _defaultUserFieldExpressionResolver);
+			bundleContext, UserFieldExpressionResolver.class, "key");
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_orderedServiceTrackerMap.close();
 	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
-	)
-	private volatile UserFieldExpressionResolver
-		_defaultUserFieldExpressionResolver;
 
 	private OrderedServiceTrackerMap<UserFieldExpressionResolver>
 		_orderedServiceTrackerMap;

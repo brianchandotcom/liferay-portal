@@ -227,13 +227,191 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6262. Test address restriction on tax calculation"
-	@ignore = "true"
 	@priority = "3"
 	test AssertAddressRestrictiedTaxIsCorrectlyCalculated {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceTaxEngine#AssertAddressRestrictiedTaxIsCorrectlyCalculated";
 
-		// TODO COMMERCE-6262 AssertAddressRestrictiedTaxIsCorrectlyCalculated Pending Implementation
+		// TODO Review
 
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "User Authentication",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.uncheckStrangersVerifyEmailCheckbox();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		ScrollWebElementIntoView(
+			key_nameTableChannels = "Tax Calculations",
+			locator1 = "CommerceEntry#SEARCH_TABLES_CHANNELS");
+
+		Click(
+			key_entryName = "By Address",
+			key_table = "Tax Calculations",
+			locator1 = "CommerceEntry#TABLE_ENTRY_EDIT_BUTTON");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Check.checkToggleSwitch(
+			key_toggleSwitchLabel = "Active",
+			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+		Button.clickSave();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tax Rate Settings");
+
+		WaitForElementPresent(locator1 = "Button#PLUS");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Select(
+			key_fieldLabel = "Tax Category",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Normal Product");
+
+		Type(
+			key_fieldLabel = "Amount",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "7");
+
+		Select(
+			key_fieldLabel = "Country",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Italy");
+
+		Select(
+			key_fieldLabel = "Region",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Roma");
+
+		Type(
+			key_fieldLabel = "Zip",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "0100");
+
+		Button.click(button = "Submit");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test Account",
+			adminEmailAddress = "test@liferay.com");
+
+		Click(
+			key_navUnderline = "Members",
+			locator1 = "NavUnderline#NAV_UNDERLINE_LINK");
+
+		CommerceAcceleratorsInitializer.inviteNewMemberWithRoleToAccount(
+			emailAddress = "buyer@liferay.com",
+			role = "Buyer");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		CommerceLogin.editPasswordCP(
+			newPassword = "ttest",
+			requirePasswordReset = "true",
+			userScreenName = "buyer");
+
+		User.logoutPG();
+
+		CommerceLogin.miniumLogin(
+			password = "ttest",
+			resetPassword = "test",
+			urlAppend = "web/minium",
+			userEmailAddress = "buyer@liferay.com");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		Refresh();
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "View Details");
+
+		Button.click(button = "Checkout");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Name");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Address");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "Italy");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "0100");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Roma");
+
+		Select(
+			key_fieldName = "Region",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "Roma");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "Standard",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_FilterOption = "Go to Order Details",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Tax",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "7.00");
+
+		AssertTextEquals.assertPartialText(
+			key_priceName = "Total",
+			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
+			value1 = "46.00");
 	}
 
 	@description = "This is a test for COMMERCE-6260. Test tax calculation"

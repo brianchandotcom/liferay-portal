@@ -1,0 +1,390 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property custom.properties = "minifier.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Forms";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Navigator.gotoNavItem(navItem = "Element Sets");
+
+			FormsAdmin.teardownElementSets();
+
+			Page.tearDownCP();
+		}
+	}
+
+	@description = "Verify that a rule with an (Autofill) action can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test AutofillRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133811 AutofillRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with a (Calculate) action can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CalculateRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133812 CalculateRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a user can navigate to different pages of a preview"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanNavigateToDifferentPages {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133796 CanNavigateToDifferentPages pending implementation
+
+	}
+
+	@description = "Verify that it is not possible to submit a preview of a Form"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotBeSubmitted {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133720 CannotBeSubmitted pending implemantation
+
+	}
+
+	@description = "Verify that a user cannot navigate to a new page without completing a required field"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CannotNavigateToANewPageWithoutCompletingARequiredField {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133814 CannotNavigateToANewPageWithoutCompletingARequiredField pending implementation
+
+	}
+
+	@description = "Verify that a Color Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ColorFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133792 ColorFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with a (Contains) condition can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ContainsRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133803 ContainsRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Date Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DateFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133787 DateFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with a (Does not contain) condition can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DoesNotContainRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133804 DoesNotContainRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with an (Enable) action can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test EnableRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133809 EnableRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Fieldsets can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test FieldsetsCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133799 FieldsetsCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Fields Groups can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test FieldsGroupsCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133800 FieldsGroupsCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Grid Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test GridFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133786 GridFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that an Image Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ImageFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133789 ImageFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that is is not possible to preview an invalid Form (ie. no Fields or a Paragraph field with no body text)"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test InvalidFormCannotBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133730 InvalidFormCannotBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with an (Is empty) condition can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test IsEmptyRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133805 IsEmptyRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with an (Is equal to) condition can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test IsEqualToRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133801 IsEqualToRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with an (Is not empty) condition can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test IsNotEmptyRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133806 IsNotEmptyRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with an (Is not equal to) condition can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test IsNotEqualToRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133802 IsNotEqualToRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with a (Jump to Page) action can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test JumpToPageRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133813 JumpToPageRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Multiple Selection Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test MultipleSelectionFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133785 MultipleSelectionFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Numeric Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test NumericFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133788 NumericFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Paragraph Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ParagraphFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133782 ParagraphFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with a (Require) action can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test RequireRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133810 RequireRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Rich Text Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test RichTextFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133790 RichTextFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Select From List Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SelectFromListFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133784 SelectFromListFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Separator Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SeparatorFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133793 SeparatorFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a rule with a (Show) action can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ShowRuleCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133808 ShowRuleCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Single Selection Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test SingleSelectionFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133794 SingleSelectionFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that a Text Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TextFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133783 TextFieldCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that translations can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test TranslationsCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133781 TranslationsCanBePreviewed pending implementation
+
+	}
+
+	@description = "Verify that an Upload Field can be previewed"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test UploadFieldCanBePreviewed {
+		property forms.functional = "true";
+		property portal.acceptance = "false";
+
+		// TODO LPS-133791 UploadFieldCanBePreviewed pending implementation
+
+	}
+
+}

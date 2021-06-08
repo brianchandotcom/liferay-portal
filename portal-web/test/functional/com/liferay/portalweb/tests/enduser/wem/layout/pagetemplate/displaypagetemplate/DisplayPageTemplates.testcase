@@ -493,7 +493,7 @@ definition {
 	@priority = "4"
 	@uitest
 	test ViewAssetTypeOnlySelectableOnce {
-		task ("View the plus button of Content field no longer shown in Mapping tab") {
+		task ("View the plus button of Item field no longer shown in Mapping tab") {
 			PageEditorMapping.assertAssetTypeUnselectable();
 		}
 	}

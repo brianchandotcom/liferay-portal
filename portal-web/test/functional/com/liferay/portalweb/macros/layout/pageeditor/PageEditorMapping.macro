@@ -4,7 +4,7 @@ definition {
 		PageEditor.gotoTab(tabName = "Mapping");
 
 		AssertElementNotPresent(
-			key_fieldLabel = "Content",
+			key_fieldLabel = "Item",
 			key_text = "plus",
 			locator1 = "Icon#ANY_ITEM_SELECTOR");
 	}

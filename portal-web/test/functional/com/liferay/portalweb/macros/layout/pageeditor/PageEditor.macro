@@ -1719,23 +1719,23 @@ definition {
 				value1 = "${templateOption}");
 		}
 		else {
-			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Content']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+			var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Item']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
 
 			if ("${itemSelectorContentInputValue}" == "") {
 				Click(
-					key_fieldLabel = "Content",
+					key_fieldLabel = "Item",
 					key_text = "plus",
 					locator1 = "Icon#ANY_ITEM_SELECTOR");
 			}
 			else {
 				Click(
-					key_fieldLabel = "Content",
+					key_fieldLabel = "Item",
 					key_text = "change",
 					locator1 = "Icon#ANY_ITEM_SELECTOR");
 			}
 
-			if (IsElementPresent(key_menuItem = "Select Content...",locator1 = "MenuItem#ANY_MENU_ITEM")) {
-				MenuItem.click(menuItem = "Select Content...");
+			if (IsElementPresent(key_menuItem = "Select Item...",locator1 = "MenuItem#ANY_MENU_ITEM")) {
+				MenuItem.click(menuItem = "Select Item...");
 			}
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -2809,17 +2809,17 @@ definition {
 			locator1 = "PageEditor#NAV_ITEM_BUTTON",
 			value1 = "General");
 
-		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Content']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
+		var itemSelectorContentInputValue = selenium.getElementValue("//label[normalize-space(text())='Item']/following-sibling::div//input[contains(@class,'item-selector__content-input')]");
 
 		if ("${itemSelectorContentInputValue}" == "") {
 			Click(
-				key_fieldLabel = "Content",
+				key_fieldLabel = "Item",
 				key_text = "plus",
 				locator1 = "Icon#ANY_ITEM_SELECTOR");
 		}
 		else {
 			Click(
-				key_fieldLabel = "Content",
+				key_fieldLabel = "Item",
 				key_text = "change",
 				locator1 = "Icon#ANY_ITEM_SELECTOR");
 		}

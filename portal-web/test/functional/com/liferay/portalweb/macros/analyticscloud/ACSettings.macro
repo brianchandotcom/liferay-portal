@@ -10,12 +10,28 @@ definition {
 		Click(locator1 = "ACSettings#KEYWORD_SEND_BUTTON");
 	}
 
+	@summary = "Asserts the individuals usage value \
+	@param individualUsageValue"
+	macro assertIndividualsUsage() {
+		AssertTextEquals(
+			locator1 = "ACSettings#INDIVIDUALS_USAGE_METRIC",
+			value1 = "${individualUsageValue}");
+	}
+
 	macro assertKeywords {
 		var key_KeywordName = "${keyword}";
 
 		AssertTextEquals(
 			locator1 = "ACSettings#KEYWORD_NAME",
 			value1 = "${keyword}");
+	}
+
+	@summary = "Asserts the page views usage value \
+	@param pageViewsUsageValue"
+	macro assertPageViewsUsage() {
+		AssertTextEquals(
+			locator1 = "ACSettings#PAGE_VIEWS_USAGE_METRIC",
+			value1 = "${pageViewsUsageValue}");
 	}
 
 	macro deleteAllProperties {
@@ -80,8 +96,6 @@ definition {
 		}
 	}
 
-	@summary = "Deletes a specific property \
-	@param propertyName the name of the property you want to delete"
 	macro deleteProperty {
 		var itemName = "${propertyName}";
 
@@ -160,18 +174,6 @@ definition {
 		Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
 
 		Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
-	}
-
-	macro assertIndividualsUsage(){
-		AssertTextEquals(
-			locator1 = "ACSettings#INDIVIDUALS_USAGE_METRIC",
-			value1 = "${individualUsageValue}");
-	}
-
-	macro assertPageViewsUsage(){
-		AssertTextEquals(
-			locator1 = "ACSettings#PAGE_VIEWS_USAGE_METRIC",
-			value1 = "${pageViewsUsageValue}");
 	}
 
 }

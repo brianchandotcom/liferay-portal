@@ -1,11 +1,4 @@
 dependencies {
-	compileInclude group: "io.netty", name: "netty-buffer", version: "4.1.65.Final"
-	compileInclude group: "io.netty", name: "netty-codec", version: "4.1.65.Final"
-	compileInclude group: "io.netty", name: "netty-codec-http", version: "4.1.65.Final"
-	compileInclude group: "io.netty", name: "netty-common", version: "4.1.65.Final"
-	compileInclude group: "io.netty", name: "netty-handler", version: "4.1.65.Final"
-	compileInclude group: "io.netty", name: "netty-resolver", version: "4.1.65.Final"
-	compileInclude group: "io.netty", name: "netty-transport", version: "4.1.65.Final"
 	compileInclude group: "org.apache.olingo", name: "odata-commons-api", version: "4.7.1"
 	compileInclude group: "org.apache.olingo", name: "odata-commons-core", version: "4.7.1"
 	compileInclude group: "org.apache.olingo", name: "odata-server-api", version: "4.7.1"
@@ -14,6 +7,7 @@ dependencies {
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.10.5.1"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "io.netty", name: "netty-all", version: "4.1.65.Final"
 	compileOnly group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"

@@ -457,14 +457,86 @@ definition {
 	}
 
 	@description = "Verify that a Multiple Selection Field can be added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddAMultipleSelectionFieldToAForm {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133488 CanAddAMultipleSelectionFieldToAForm pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Multiple Selection");
+
+		FormFields.editOptionsRow(
+			optionName = "Option 1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option 2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Multiple Selection");
+
+		Click(
+			key_name = "Multiple Selection",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.viewOptionsRowFieldValue(
+			fieldValue = "Option 2",
+			rowNumber = "2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewRadioLabel(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option 1",
+			fieldName = "Multiple Selection");
+
+		FormViewBuilder.validateFormMultipleSelectionField(
+			fieldLabel = "Option 2",
+			fieldName = "Multiple Selection");
 	}
 
 	@description = "Verify that a Numeric Field can be added to a Form via Fieldset"

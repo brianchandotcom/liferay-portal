@@ -112,84 +112,6 @@ definition {
 			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
-	@description = "Add segment using a web behavior 'since' some time"
-	@priority = "5"
-	test CanCreateWebBehaviorSegmentUsingSince {
-		ACUtils.createBlogsAndAddToPage();
-
-		Navigator.openURL();
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		Navigator.gotoSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
-
-		ACNavigation.goToSegments();
-
-		ACSegments.createDynamicSegment();
-
-		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
-
-		ACSegments.addSegmentField(segmentField = "Viewed Blog");
-
-		ACSegments.editWebBehaviorCriterion(
-			indexField = "1",
-			occurenceNumber = "4",
-			searchTerm = "Blogs AC Title",
-			timeOption = "since",
-			timePeriod = "Yesterday");
-
-		ACSegments.saveSegment();
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		AssertTextEquals(
-			locator1 = "ACSegments#NO_MEMBER_TITLE",
-			value1 = "There are no items found.");
-
-		ACUtils.launchDXP();
-
-		for (var n : list "1,2,3") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-		}
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
-		ACUtils.launchAC();
-
-		ACNavigation.goToSegments();
-
-		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
-
-		ACSegments.viewSegmentCriteriaWebBehavior(
-			occurenceNumber = "4",
-			searchTerm = "'Blogs AC Title'",
-			timeOption = "since",
-			timePeriod = "Yesterday");
-
-		ACNavigation.switchTab(tabName = "Membership");
-
-		AssertElementPresent(
-			key_userName = "Test Test",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");	
-	}
-
 	@description = "Create a Web Behavior Segment Submitting a Form"
 	@priority = "5"
 	test CanCreateWebBehaviorSegmentSubmittingForm {
@@ -426,6 +348,84 @@ definition {
 		AssertTextEquals(
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
+	}
+
+	@description = "Add segment using a web behavior 'since' some time"
+	@priority = "5"
+	test CanCreateWebBehaviorSegmentUsingSince {
+		ACUtils.createBlogsAndAddToPage();
+
+		Navigator.openURL();
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		Navigator.gotoSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToSegments();
+
+		ACSegments.createDynamicSegment();
+
+		ACSegments.nameSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.addSegmentField(segmentField = "Viewed Blog");
+
+		ACSegments.editWebBehaviorCriterion(
+			indexField = "1",
+			occurenceNumber = "4",
+			searchTerm = "Blogs AC Title",
+			timeOption = "since",
+			timePeriod = "Yesterday");
+
+		ACSegments.saveSegment();
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertTextEquals(
+			locator1 = "ACSegments#NO_MEMBER_TITLE",
+			value1 = "There are no items found.");
+
+		ACUtils.launchDXP();
+
+		for (var n : list "1,2,3") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+		}
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			occurenceNumber = "4",
+			searchTerm = "'Blogs AC Title'",
+			timeOption = "since",
+			timePeriod = "Yesterday");
+
+		ACNavigation.switchTab(tabName = "Membership");
+
+		AssertElementPresent(
+			key_userName = "Test Test",
+			locator1 = "ACSegments#SEGMENT_MEMBERS");
 	}
 
 	@description = "Create a segment with behavior of viewing a form"

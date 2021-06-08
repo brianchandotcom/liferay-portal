@@ -119,11 +119,51 @@ definition {
 	}
 
 	@description = "LPS-86638 - Verify that the pagination component is displayed when the table has 5 items or more"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PaginationIsDisplayedWhenTableHas5Items {
 
-		// TODO LRQA-67518 PaginationIsDisplayedWhenTableHas5Items pending implementation
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 1");
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 2");
+
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 3");
+
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 4");
+
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow 5");
+
+		PortletEntry.publish();
+
+		Navigator.gotoBack();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetricsProcessListView.assertPaginationBar();
+		
+
 
 	}
 

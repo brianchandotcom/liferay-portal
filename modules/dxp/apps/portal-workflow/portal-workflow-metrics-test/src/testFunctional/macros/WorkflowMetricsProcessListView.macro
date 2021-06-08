@@ -1,5 +1,9 @@
 definition {
 
+	macro assertPaginationBar {
+		AssertElementPresent(locator1 = "WorkflowMetricsProcessListView#PAGINATION_BAR");
+	}
+
 	macro metricsWorkflowSearch {
 		var key_workflowSearchName = "${workflowSearchName}";
 
@@ -9,5 +13,6 @@ definition {
 
 		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
 	}
+
 
 }

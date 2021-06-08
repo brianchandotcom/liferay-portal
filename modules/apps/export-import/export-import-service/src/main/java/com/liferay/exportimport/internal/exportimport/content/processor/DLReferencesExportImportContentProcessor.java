@@ -256,8 +256,23 @@ public class DLReferencesExportImportContentProcessor
 					String title = MapUtil.getString(map, "title");
 
 					if (Validator.isNotNull(title)) {
-						fileEntry = _dlAppLocalService.getFileEntry(
-							groupId, folderId, title);
+						try {
+							fileEntry =
+								_dlAppLocalService.getFileEntryByFileName(
+									groupId, folderId, title);
+						}
+						catch (NoSuchFileEntryException
+									noSuchFileEntryException) {
+
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									noSuchFileEntryException,
+									noSuchFileEntryException);
+							}
+
+							fileEntry = _dlAppLocalService.getFileEntry(
+								groupId, folderId, title);
+						}
 					}
 					else {
 						DLFileEntry dlFileEntry =

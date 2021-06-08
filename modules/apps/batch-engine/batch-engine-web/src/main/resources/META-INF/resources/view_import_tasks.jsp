@@ -21,13 +21,13 @@ BatchEngineImportTaskDisplayContext batchEngineImportTaskDisplayContext = (Batch
 %>
 
 <clay:navigation-bar
-	navigationItems="<%= batchEngineImportTaskDisplayContext .getNavigationItems() %>"
+	navigationItems="<%= batchEngineImportTaskDisplayContext.getNavigationItems() %>"
 />
 
 <div class="closed container" id="<portlet:namespace />batchEngineImportTasksPanelId">
 	<liferay-ui:search-container
 		id="batchEngineImportTasks"
-		searchContainer="<%= batchEngineImportTaskDisplayContext .getSearchContainer() %>"
+		searchContainer="<%= batchEngineImportTaskDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.batch.engine.model.BatchEngineImportTask"

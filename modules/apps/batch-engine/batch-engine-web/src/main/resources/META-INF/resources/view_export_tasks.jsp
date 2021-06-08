@@ -21,7 +21,7 @@ BatchEngineExportTaskDisplayContext batchEngineExportTaskDisplayContext = (Batch
 %>
 
 <clay:navigation-bar
-	navigationItems="<%= batchEngineExportTaskDisplayContext .getNavigationItems() %>"
+	navigationItems="<%= batchEngineExportTaskDisplayContext.getNavigationItems() %>"
 />
 
 <div class="closed container" id="<portlet:namespace />batchEngineExportTasksPanelId">

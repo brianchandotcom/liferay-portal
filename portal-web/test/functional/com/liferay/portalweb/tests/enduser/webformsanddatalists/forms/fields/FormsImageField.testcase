@@ -237,9 +237,6 @@ definition {
 		FormFields.validateImagePredefinedValue(fileName = "Document_1.jpg");
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
-
-
-
 	}
 
 	@description = "Verify that the Field Reference can be edited"

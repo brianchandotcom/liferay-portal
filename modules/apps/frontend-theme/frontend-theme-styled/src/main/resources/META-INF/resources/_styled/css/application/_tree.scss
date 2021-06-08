@@ -41,3 +41,7 @@
 .tree-node-selected .tree-label {
 	background-color: transparent;
 }
+
+.tree-view li.tree-node .tree-node-content svg.lexicon-icon {
+	pointer-events: none;
+}

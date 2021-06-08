@@ -1,7 +1,28 @@
-.lfr-tree a {
-	text-decoration: none;
-}
+.lfr-tree {
+	a {
+		text-decoration: none;
+	}
 
-.tree-drag-helper {
-	z-index: 1035;
+	li {
+		margin-bottom: 2px;
+		padding-left: 0;
+
+		ul li,
+		&.tree-item {
+			padding-left: 0;
+		}
+
+		&.tree-item {
+			padding-left: 5px;
+
+			li {
+				padding-left: 20px;
+			}
+
+			ul {
+				margin-left: 0;
+				margin-top: 5px;
+			}
+		}
+	}
 }

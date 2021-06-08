@@ -152,9 +152,6 @@ definition {
 		FormFields.viewTextLabel(fieldLabel = "Test Rich Text");
 
 		Form.validateNoFieldLabel(fieldLabel = "Rich Text");
-
-
-
 	}
 
 	@description = "Verify that a Rich Text Field can be required"

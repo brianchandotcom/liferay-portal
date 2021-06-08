@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_4_PNG</td>
-	<td>portal/screenshots/fragments/Document_4.png</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FRAGMENT</td>
 	<td>//div[contains(@class,'layout-content')]//*[contains(@class,'fragment-${key_fragmentClass}') and contains(.,'${key_content}')]</td>
 	<td></td>
@@ -91,11 +86,6 @@
 <tr>
 	<td>FRAGMENT_SITE_USAGE_NAV_ITEM</td>
 	<td>//li[contains(@class,'navbar-breakpoint')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MARKETPLACE_ICON_PNG</td>
-	<td>portal/screenshots/fragments/marketplace_icon.png</td>
 	<td></td>
 </tr>
 <tr>

@@ -129,6 +129,7 @@ public class DSEnvelopeManagerImpl implements DSEnvelopeManager {
 			jsonObject -> new DSDocument() {
 				{
 					dsDocumentId = jsonObject.getString("documentId");
+					fileExtension = jsonObject.getString("fileExtension");
 					name = jsonObject.getString("name");
 					uri = jsonObject.getString("uri");
 				}

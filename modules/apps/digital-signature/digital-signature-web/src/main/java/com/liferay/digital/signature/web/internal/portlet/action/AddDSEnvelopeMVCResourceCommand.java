@@ -105,6 +105,7 @@ public class AddDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 						data = Base64.encode(
 							FileUtil.getBytes(fileEntry.getContentStream()));
 						dsDocumentId = String.valueOf(fileEntryId);
+						fileExtension = fileEntry.getExtension();
 						name = fileEntry.getFileName();
 					}
 				});

@@ -27,6 +27,10 @@ public class DSDocument {
 		return dsDocumentId;
 	}
 
+	public String getFileExtension() {
+		return fileExtension;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -43,6 +47,10 @@ public class DSDocument {
 		this.dsDocumentId = dsDocumentId;
 	}
 
+	public void setFileExtension(String fileExtension) {
+		this.fileExtension = fileExtension;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -53,6 +61,7 @@ public class DSDocument {
 
 	protected String data;
 	protected String dsDocumentId;
+	protected String fileExtension;
 	protected String name;
 	protected String uri;
 

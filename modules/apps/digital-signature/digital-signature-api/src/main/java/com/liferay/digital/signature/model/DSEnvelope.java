@@ -113,6 +113,8 @@ public class DSEnvelope {
 				).put(
 					"documentId", dsDocument.getDSDocumentId()
 				).put(
+					"fileExtension", dsDocument.getFileExtension()
+				).put(
 					"name", dsDocument.getName()
 				),
 				_log)

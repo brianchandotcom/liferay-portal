@@ -14,5 +14,4 @@ definition {
 		Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
 	}
 
-
 }

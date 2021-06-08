@@ -210,7 +210,6 @@ export default function ShortcutManager() {
 				canUpdatePageStructure &&
 				!!layoutData.items[activeItemId] &&
 				canBeRemoved(layoutData.items[activeItemId], layoutData) &&
-				!isEditableField(event.target) &&
 				!isInteractiveElement(event.target),
 			isKeyCombination: (event) => event.keyCode === BACKSPACE_KEYCODE,
 		},

@@ -448,14 +448,12 @@ public class JournalEditArticleDisplayContext {
 
 			if (folder != null) {
 				_folderName = folder.getName();
-			}
-			else {
-				_folderName = LanguageUtil.get(_httpServletRequest, "home");
+
+				return _folderName;
 			}
 		}
-		else {
-			_folderName = LanguageUtil.get(_httpServletRequest, "home");
-		}
+
+		_folderName = LanguageUtil.get(_httpServletRequest, "home");
 
 		return _folderName;
 	}
@@ -777,13 +775,13 @@ public class JournalEditArticleDisplayContext {
 			return _showSelectFolder;
 		}
 
-		if ((_article == null) &&
-			ParamUtil.getBoolean(_httpServletRequest, "showSelectFolder")) {
+		_showSelectFolder = false;
 
-			_showSelectFolder = Boolean.TRUE;
-		}
-		else {
-			_showSelectFolder = Boolean.FALSE;
+		boolean showSelectFolder = ParamUtil.getBoolean(
+			_httpServletRequest, "showSelectFolder");
+
+		if ((_article == null) && showSelectFolder) {
+			_showSelectFolder = true;
 		}
 
 		return _showSelectFolder;

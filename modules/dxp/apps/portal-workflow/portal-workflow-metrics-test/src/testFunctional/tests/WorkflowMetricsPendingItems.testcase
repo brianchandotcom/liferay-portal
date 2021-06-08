@@ -50,8 +50,6 @@ definition {
 	@description = "LPS-93410 - Verify that when there is no SLA defined for the process, all items will be displayed as Untracked"
 	@priority = "4"
 	test ItemsWithNoSlaAreDisplayedUntracked {
-		property portal.acceptance = "true";
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -63,16 +61,8 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
 
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
-
-		Blogs.addWithWorkflow(
+		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entrySubtitle = "Subtitle",
 			entryTitle = "Blogs Entry Title");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");

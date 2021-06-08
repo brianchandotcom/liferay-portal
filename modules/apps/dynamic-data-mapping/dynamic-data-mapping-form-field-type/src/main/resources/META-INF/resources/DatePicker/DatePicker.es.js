@@ -272,7 +272,13 @@ const DatePicker = ({
 						return onChange('');
 					}
 
-					if (moment(value, getLocaleDateFormat(locale), true).isValid()) {
+					if (
+						moment(
+							value,
+							getLocaleDateFormat(locale),
+							true
+						).isValid()
+					) {
 						onChange(
 							moment(value, getLocaleDateFormat(locale)).format(
 								'L'

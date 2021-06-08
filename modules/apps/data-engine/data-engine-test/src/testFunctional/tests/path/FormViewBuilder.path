@@ -748,7 +748,6 @@
 	<td>//*[contains(@class,'card-text')][contains(.,'${key_entryNumber}')]</td>
 	<td></td>
 </tr>
-
 </tbody>
 </table>
 </body>

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_ANY_LABEL</td>
+	<td>//p[contains(@title,'${key_type}')]//span[contains(text(),'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_ADD</td>
 	<td>//div[contains(@class,'form-field-repeatable-toolbar')]//a[contains(@class,'add-button')]</td>
 	<td></td>
@@ -362,6 +367,11 @@
 <tr>
 	<td>TEXT_FIELD_DESCRIPTION</td>
 	<td>//input[@type='text' and contains(@name,'${key_fieldName}') and contains(@name,'description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_FIELD_LABEL_REPORT_CARD</td>
+	<td>//div[@class='report-cards-shortcut']//div[@class='field-label'][contains(text(),'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>

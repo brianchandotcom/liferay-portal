@@ -128,14 +128,76 @@ definition {
 	}
 
 	@description = "Verify that a user can navigate to the correct metric by using the list on the right"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeNavigatedUsingNavigationList {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131084 CanBeNavigatedUsingNavigationList pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Select from List");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "2",
+			fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.editText(
+			fieldName = "Text",
+			fieldValue = "Test Text");
+
+		FormFields.selectSelectOption(
+			fieldName = "Select from List",
+			selectOption = "Option 1");
+
+		FormFields.editText(
+			fieldName = "Numeric",
+			fieldValue = "5");
+
+		FormPortlet.submitSuccessfully();
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEntries();
+
+		FormsAdminNavigator.gotoEntriesLabel(
+			key_type = "Numeric",
+			key_value = "Numeric");
+
+		FormsAdminNavigator.gotoEntriesLabel(
+			key_type = "Text",
+			key_value = "Text");
+
+			
 	}
 
 	@description = "Verify that Entries can be viewed"

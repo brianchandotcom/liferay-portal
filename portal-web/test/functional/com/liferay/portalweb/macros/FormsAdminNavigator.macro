@@ -122,6 +122,17 @@ definition {
 			value1 = "Entries");
 	}
 
+	macro gotoEntriesLabel {
+		Click(
+			key_fieldName = "${key_value}",
+			locator1 = "FormFields#TEXT_FIELD_LABEL_REPORT_CARD");
+
+		AssertVisible(
+			key_type = "${key_key_type}",
+			key_value = "${key_value}",
+			locator1 = "FormFields#ENTRY_ANY_LABEL");
+	}
+
 	macro gotoFormBuilder {
 		var key_navigationBarItem = "Form";
 

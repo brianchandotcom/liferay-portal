@@ -16,10 +16,10 @@ export const INITIAL_PAGES = [
 	{
 		description: '',
 		localizedDescription: {
-			[themeDisplay.getLanguageId()]: '',
+			[themeDisplay.getDefaultLanguageId()]: '',
 		},
 		localizedTitle: {
-			[themeDisplay.getLanguageId()]: '',
+			[themeDisplay.getDefaultLanguageId()]: '',
 		},
 		rows: [],
 		title: '',
@@ -28,7 +28,7 @@ export const INITIAL_PAGES = [
 
 export const INITIAL_STATE = {
 	activePage: 0,
-	defaultLanguageId: themeDisplay.getLanguageId(),
+	defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 	editingLanguageId: themeDisplay.getDefaultLanguageId(),
 	focusedField: {},
 	pages: INITIAL_PAGES,

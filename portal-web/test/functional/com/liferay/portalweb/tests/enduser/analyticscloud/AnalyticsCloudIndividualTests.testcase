@@ -27,6 +27,53 @@ definition {
 		}
 	}
 
+    @description = "Set custom range filter with data for individual activity"
+	@priority = "5"
+	test CanSetDataWithCustomRangeOnIndividualActivitiesCard {
+		Navigator.openURL();
+		ACUtils.addSiteAndPage();
+		ACUtils.createDMAndAddToPage();
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		for (var n : list "1,2,3,4") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
+		}
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP");
+
+		ACNavigation.goToIndividuals();
+
+        var displayDateDay = DateUtil.getCurrentDate();
+        var displayMonth = DateUtil.getCurrentMonth();
+		var displayDateMonth = DateUtil.getCurrentMonthName();
+		var displayDateYear = DateUtil.getCurrentYear();
+        var previousDay = DateUtil.getFormattedDate("-1", "d");
+        var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
+        var previousYear = DateUtil.getFormattedDate("-1", "yyyy");
+        
+        ACTimeFilter.setCustomRange(
+            endDay = "${displayDateDay}",
+            endMonth = "${displayDateMonth}",
+            endYear = "${displayDateYear}",
+            startDay = "${previousDay}",
+            startMonth = "${previousMonth}",
+            startYear = "${previousYear}");
+
+		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
+	}
+
 	@description = "Set custom range filter with empty data for individual activity"
 	@priority = "5"
 	test CanSetEmptyDataCustomRangeOnIndividualActivitiesCard {

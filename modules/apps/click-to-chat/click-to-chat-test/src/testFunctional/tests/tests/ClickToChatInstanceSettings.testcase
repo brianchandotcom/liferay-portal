@@ -851,7 +851,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Tolvnow provider can be enabled and disabled."
-	@ignore = "true"	
+	@ignore = "true"
 	@priority = "5"
 	test TolvnowCanBeEnabledAndDisabled {
 		Select(

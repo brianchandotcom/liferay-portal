@@ -505,13 +505,146 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6240. Remove shipment items from a shipment"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveItemFromShipment {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CPCommerceShipments#RemoveItemFromShipment";
 
-		// TODO COMMERCE-6240 RemoveItemFromShipment Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+
+		Refresh();
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Commerce Account",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "1");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Transmission Cooler Line Assembly",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Submit");
+
+		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
+
+		Type(
+			key_fieldName = "Name",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Address Name");
+
+		Type(
+			key_fieldName = "Address",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Address");
+
+		Select(
+			key_fieldName = "Country",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_SELECT",
+			value1 = "United States");
+
+		Type(
+			key_fieldName = "Zip",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test Zip Code");
+
+		Type(
+			key_fieldName = "City",
+			locator1 = "CommerceAccelerators#CHECKOUT_GENERIC_TEXT_INPUT",
+			value1 = "Test City");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(
+			key_radioOption = "Standard",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		Click(locator1 = "Button#CONTINUE");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Orders");
+
+		CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+		Click(
+			key_index = "Accept Order",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Click(
+			key_index = "Create Shipment",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		for (var productSKU : list "MIN55860,MIN55861") {
+			Check.checkToggleSwitch(
+				key_productSKU = "${productSKU}",
+				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+		}
+
+		Button.clickSubmitButton();
+
+		for (var productSKU : list "MIN55860,MIN55861") {
+			CommerceNavigator.gotoEntry(entryName = "${productSKU}");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = "1");
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			Refresh();
+		}
+
+		Click(
+			key_index = "Finish Processing",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		Click(
+			key_index = "Delete",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_FilterOption = "Submit",
+			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+
+		Refresh();
+
+		AssertElementNotPresent(
+			key_index = "MIN55861",
+			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
 	}
 
 	@description = "This is a test for COMMERCE-6256. Search shipment from shipment UI"

@@ -700,6 +700,20 @@ definition {
 	}
 
 	macro viewFieldReference {
+		key_fieldName = "${fieldName}";
+
+		Click(
+			key_name = "${fieldName}",
+			locator1 = "FormFields#FIELD_TARGET_LABEL");
+
+		Form.gotoAdvancedTab();
+
+		AssertTextEquals(
+			locator1 = "Form#FIELD_REFERENCE",
+			value1 = "${fieldValue}");
+	}
+
+	macro viewFieldReferenceFromTextField {
 		Click(
 			key_fieldName = "${fieldName}",
 			locator1 = "Form#FIELD_BODY");

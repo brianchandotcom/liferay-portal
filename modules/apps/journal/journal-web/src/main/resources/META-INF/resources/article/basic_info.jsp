@@ -57,6 +57,8 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
+				"inputName", "folderId"
+			).put(
 				"selectFolderURL", selectFolderURL
 			).build()
 		%>'

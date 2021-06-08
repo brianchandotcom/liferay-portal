@@ -14,20 +14,23 @@
 
 package com.liferay.mule.internal.connection;
 
-import com.liferay.mule.internal.operation.BaseLiferayOperationTestCase;
-
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import org.mule.functional.junit4.MuleArtifactFunctionalTestCase;
+import org.mule.runtime.api.event.Event;
 import org.mule.runtime.api.exception.MuleException;
+import org.mule.runtime.api.message.Message;
+import org.mule.runtime.api.metadata.TypedValue;
 
 /**
  * @author Matija Petanjek
  */
 public class OAuth2CachedConnectionProviderTest
-	extends BaseLiferayOperationTestCase {
+	extends MuleArtifactFunctionalTestCase {
 
 	@Test
 	public void testInvalidOAuth2CachedConnectionProvider() throws Exception {
@@ -56,6 +59,20 @@ public class OAuth2CachedConnectionProviderTest
 	@Override
 	protected String getConfigFile() {
 		return "test-oauth2-authentication.xml";
+	}
+
+	protected static final Pattern productPattern = Pattern.compile(
+		"[\\s\\S]+\"active\"[\\s\\S]+\"catalogId\"[\\s\\S]+" +
+			"\"name\"[\\s\\S]+\"productType\"[\\s\\S]+");
+
+	private String getPayload(String flowName) throws Exception {
+		Event event = runFlow(flowName);
+
+		Message message = event.getMessage();
+
+		TypedValue<String> payloadTypedValue = message.getPayload();
+
+		return payloadTypedValue.getValue();
 	}
 
 }

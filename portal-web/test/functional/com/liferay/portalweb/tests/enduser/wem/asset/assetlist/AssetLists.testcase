@@ -26,6 +26,7 @@ definition {
 
 	@description = "Assert that the UI works correctly for adding Asset Lists."
 	@priority = "5"
+	@uitest
 	test AddAssetList {
 		property portal.acceptance = "true";
 
@@ -140,6 +141,7 @@ definition {
 
 	@description = "Assert that Asset Lists correctly display their selected content."
 	@priority = "4"
+	@uitest
 	test ViewAssetListContent {
 		task ("Create a web content article") {
 			JSONWebcontent.addWebContent(

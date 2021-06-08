@@ -32,7 +32,7 @@ definition {
 		}
 	}
 
-	@description = "Assert the Collections administration is writen accessible on the staging site while read-only accessible on live site."
+	@description = "Assert the Collections administration is written accessible on the staging site while read-only accessible on live site."
 	@priority = "5"
 	test AssertCollectionsAdminInStagingAndLiveSite {
 		property portal.acceptance = "true";
@@ -43,7 +43,7 @@ definition {
 				portlet = "Collections");
 		}
 
-		task ("Assert Collections admin is writen accessible") {
+		task ("Assert Collections admin is written accessible") {
 			AssertVisible(locator1 = "Dropdown#EMPTY_MESSAGE_DROPDOWN");
 
 			AssertVisible(locator1 = "Button#PLUS");

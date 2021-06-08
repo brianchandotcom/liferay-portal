@@ -13,7 +13,7 @@ definition {
 		var localizedSignIn = User._getSignInText(localization = "${localization}");
 
 		if (IsElementNotPresent(locator1 = "TextInput#EMAIL_ADDRESS")) {
-			if (isSet(localizedSignIn)) {
+			if (isSet(localization)) {
 				AssertClick(
 					locator1 = "UserBar#USER_SIGN_IN",
 					value1 = "${localizedSignIn}");
@@ -31,6 +31,9 @@ definition {
 
 					Button.click(button = "Sign In");
 				}
+			}
+			else if (IsElementPresent(key_text = "Sign In", locator1 = "Button#ANY")) {
+				Button.click(button = "Sign In");
 			}
 		}
 	}

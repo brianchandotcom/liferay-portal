@@ -18,6 +18,9 @@ import com.liferay.osgi.service.tracker.collections.ServiceReferenceServiceTuple
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,13 +29,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Stian Sigvartsen
@@ -43,11 +46,10 @@ public class OrderedServiceTrackerMapFactoryImpl
 
 	@Override
 	public <T> OrderedServiceTrackerMap<T> create(
-		BundleContext bundleContext, Class<T> clazz, String propertyKey,
-		Supplier<T> defaultServiceSupplier) {
+		BundleContext bundleContext, Class<T> clazz, String propertyKey) {
 
 		return new OrderedServiceTrackerMapImpl<>(
-			bundleContext, clazz, propertyKey, defaultServiceSupplier);
+			bundleContext, clazz, "(default=true)", propertyKey);
 	}
 
 	private static class OrderedServiceTrackerMapImpl<T>
@@ -56,6 +58,19 @@ public class OrderedServiceTrackerMapFactoryImpl
 		@Override
 		public void close() {
 			_serviceTrackerMap.close();
+		}
+
+		@Override
+		public String getDefaultServiceKey() {
+			ServiceReference<T> serviceReference =
+				_defaultServiceTracker.getServiceReference();
+
+			if (serviceReference == null) {
+				return StringPool.BLANK;
+			}
+
+			return GetterUtil.getString(
+				serviceReference.getProperty(_propertyKey));
 		}
 
 		@Override
@@ -122,11 +137,7 @@ public class OrderedServiceTrackerMapFactoryImpl
 				return service.getService();
 			}
 
-			if (_defaultServiceSupplier != null) {
-				return _defaultServiceSupplier.get();
-			}
-
-			return null;
+			return _defaultServiceTracker.getService();
 		}
 
 		@Override
@@ -135,19 +146,23 @@ public class OrderedServiceTrackerMapFactoryImpl
 		}
 
 		private OrderedServiceTrackerMapImpl(
-			BundleContext bundleContext, Class<T> clazz, String propertyKey,
-			Supplier<T> defaultServiceSupplier) {
+			BundleContext bundleContext, Class<T> clazz,
+			String defaultServiceFilter, String propertyKey) {
 
+			_propertyKey = propertyKey;
+
+			_defaultServiceTracker = ServiceTrackerFactory.open(
+				bundleContext,
+				StringBundler.concat(
+					"(&(objectClass=", clazz.getName(), ")",
+					defaultServiceFilter, ")"));
 			_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, clazz, propertyKey,
 				ServiceTrackerCustomizerFactory.serviceReferenceServiceTuple(
 					bundleContext));
-
-			_propertyKey = propertyKey;
-			_defaultServiceSupplier = defaultServiceSupplier;
 		}
 
-		private final Supplier<T> _defaultServiceSupplier;
+		private final ServiceTracker<T, T> _defaultServiceTracker;
 		private final String _propertyKey;
 		private final ServiceTrackerMap
 			<String, ServiceReferenceServiceTuple<T, T>> _serviceTrackerMap;

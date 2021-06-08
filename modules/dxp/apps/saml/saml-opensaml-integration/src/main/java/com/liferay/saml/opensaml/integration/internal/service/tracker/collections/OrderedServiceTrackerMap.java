@@ -25,6 +25,8 @@ public interface OrderedServiceTrackerMap<T> {
 
 	public void close();
 
+	public String getDefaultServiceKey();
+
 	public List<Map.Entry<String, T>> getOrderedServices();
 
 	public List<String> getOrderedServicesKeys();

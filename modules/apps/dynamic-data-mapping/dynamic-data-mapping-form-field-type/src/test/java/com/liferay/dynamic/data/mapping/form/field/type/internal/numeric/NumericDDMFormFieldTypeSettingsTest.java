@@ -114,6 +114,13 @@ public class NumericDDMFormFieldTypeSettingsTest
 			directionPredefinedValue.getString(
 				directionPredefinedValue.getDefaultLocale()));
 
+		DDMFormField hideFieldDDMFormField = ddmFormFieldsMap.get("hideField");
+
+		Assert.assertNotNull(hideFieldDDMFormField);
+		Assert.assertNotNull(hideFieldDDMFormField.getLabel());
+		Assert.assertEquals(
+			"true", hideFieldDDMFormField.getProperty("showAsSwitcher"));
+
 		DDMFormField inputMaskDDMFormField = ddmFormFieldsMap.get("inputMask");
 
 		Assert.assertEquals(
@@ -176,7 +183,7 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(ddmFormRules.toString(), 2, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 4, ddmFormRules.size());
 
 		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
@@ -192,9 +199,39 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		DDMFormRule ddmFormRule1 = ddmFormRules.get(1);
 
-		Assert.assertEquals("TRUE", ddmFormRule1.getCondition());
+		Assert.assertEquals(
+			"equals(getValue('hideField'), FALSE)",
+			ddmFormRule1.getCondition());
 
 		actions = ddmFormRule1.getActions();
+
+		Assert.assertEquals(actions.toString(), 3, actions.size());
+		Assert.assertEquals(
+			"setEnabled('requireConfirmation', TRUE)", actions.get(0));
+		Assert.assertEquals("setEnabled('required', TRUE)", actions.get(1));
+		Assert.assertEquals("setEnabled('validation', TRUE)", actions.get(2));
+
+		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
+
+		Assert.assertEquals(
+			"equals(getValue('hideField'), TRUE)", ddmFormRule2.getCondition());
+
+		actions = ddmFormRule2.getActions();
+
+		Assert.assertEquals(actions.toString(), 5, actions.size());
+		Assert.assertEquals(
+			"setEnabled('requireConfirmation', FALSE)", actions.get(0));
+		Assert.assertEquals("setEnabled('required', FALSE)", actions.get(1));
+		Assert.assertEquals("setEnabled('validation', FALSE)", actions.get(2));
+		Assert.assertEquals(
+			"setValue('requireConfirmation', FALSE)", actions.get(3));
+		Assert.assertEquals("setValue('required', FALSE)", actions.get(4));
+
+		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
+
+		Assert.assertEquals("TRUE", ddmFormRule3.getCondition());
+
+		actions = ddmFormRule3.getActions();
 
 		Assert.assertEquals(actions.toString(), 10, actions.size());
 

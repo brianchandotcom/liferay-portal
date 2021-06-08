@@ -140,6 +140,13 @@ public class TextDDMFormFieldTypeSettingsTest
 		Assert.assertTrue(
 			displayStyleDDMFormFieldOptionsValue.contains("singleline"));
 
+		DDMFormField hideFieldDDMFormField = ddmFormFieldsMap.get("hideField");
+
+		Assert.assertNotNull(hideFieldDDMFormField);
+		Assert.assertNotNull(hideFieldDDMFormField.getLabel());
+		Assert.assertEquals(
+			"true", hideFieldDDMFormField.getProperty("showAsSwitcher"));
+
 		DDMFormField indexTypeDDMFormField = ddmFormFieldsMap.get("indexType");
 
 		DDMFormFieldOptions indexTypeDDMFormFieldOptions =
@@ -197,7 +204,7 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
 
-		Assert.assertEquals(ddmFormRules.toString(), 4, ddmFormRules.size());
+		Assert.assertEquals(ddmFormRules.toString(), 6, ddmFormRules.size());
 
 		DDMFormRule ddmFormRule0 = ddmFormRules.get(0);
 
@@ -236,9 +243,39 @@ public class TextDDMFormFieldTypeSettingsTest
 
 		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
 
-		Assert.assertEquals("TRUE", ddmFormRule2.getCondition());
+		Assert.assertEquals(
+			"equals(getValue('hideField'), FALSE)",
+			ddmFormRule2.getCondition());
 
 		actions = ddmFormRule2.getActions();
+
+		Assert.assertEquals(actions.toString(), 3, actions.size());
+		Assert.assertEquals(
+			"setEnabled('requireConfirmation', TRUE)", actions.get(0));
+		Assert.assertEquals("setEnabled('required', TRUE)", actions.get(1));
+		Assert.assertEquals("setEnabled('validation', TRUE)", actions.get(2));
+
+		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
+
+		Assert.assertEquals(
+			"equals(getValue('hideField'), TRUE)", ddmFormRule3.getCondition());
+
+		actions = ddmFormRule3.getActions();
+
+		Assert.assertEquals(actions.toString(), 5, actions.size());
+		Assert.assertEquals(
+			"setEnabled('requireConfirmation', FALSE)", actions.get(0));
+		Assert.assertEquals("setEnabled('required', FALSE)", actions.get(1));
+		Assert.assertEquals("setEnabled('validation', FALSE)", actions.get(2));
+		Assert.assertEquals(
+			"setValue('requireConfirmation', FALSE)", actions.get(3));
+		Assert.assertEquals("setValue('required', FALSE)", actions.get(4));
+
+		DDMFormRule ddmFormRule4 = ddmFormRules.get(4);
+
+		Assert.assertEquals("TRUE", ddmFormRule4.getCondition());
+
+		actions = ddmFormRule4.getActions();
 
 		Assert.assertEquals(actions.toString(), 12, actions.size());
 		Assert.assertEquals(
@@ -285,14 +322,14 @@ public class TextDDMFormFieldTypeSettingsTest
 		Assert.assertEquals(
 			"setVisible('requiredErrorMessage', false)", actions.get(11));
 
-		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
+		DDMFormRule ddmFormRule5 = ddmFormRules.get(5);
 
 		Assert.assertEquals(
 			"not(equals(getValue('dataSourceType'), \"data-provider\")) or " +
 				"not(getValue('autocomplete'))",
-			ddmFormRule3.getCondition());
+			ddmFormRule5.getCondition());
 
-		actions = ddmFormRule3.getActions();
+		actions = ddmFormRule5.getActions();
 
 		Assert.assertEquals(actions.toString(), 2, actions.size());
 		Assert.assertEquals(

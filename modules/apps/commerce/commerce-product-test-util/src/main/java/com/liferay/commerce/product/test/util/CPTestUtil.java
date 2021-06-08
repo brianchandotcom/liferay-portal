@@ -72,6 +72,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -647,31 +648,26 @@ public class CPTestUtil {
 
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setAttributes(
+		HashMap<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
 				Field.STATUS, status
-			).put(
+			).build();
+
+		if (Validator.isNotNull(keywords)) {
+			attributes.put(
 				"params",
 				LinkedHashMapBuilder.<String, Object>put(
-					"keywords",
-					() -> {
-						if (Validator.isNotNull(keywords)) {
-							return keywords;
-						}
+					"keywords", keywords
+				).build());
+		}
 
-						return StringPool.STAR;
-					}
-				).build()
-			).build());
+		searchContext.setAttributes(attributes);
 
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setGroupIds(new long[] {group.getGroupId()});
 
 		if (Validator.isNotNull(keywords)) {
 			searchContext.setKeywords(keywords);
-		}
-		else {
-			searchContext.setKeywords(StringPool.STAR);
 		}
 
 		return searchContext;

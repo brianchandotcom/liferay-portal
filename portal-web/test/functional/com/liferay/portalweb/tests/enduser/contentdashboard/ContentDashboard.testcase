@@ -174,7 +174,7 @@ definition {
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#SITE_ASSET_LIBRARY_COLUMN",
-				siteAssetValue = "xxx or Asset Library");
+				siteAssetValue = "Site or Asset Library");
 		}
 	}
 

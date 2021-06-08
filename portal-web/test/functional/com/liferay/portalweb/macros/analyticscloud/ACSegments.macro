@@ -333,6 +333,57 @@ definition {
 			value1 = "${criteriaValue}");
 	}
 
+	macro viewSegmentCriteriaWebBehavior {
+		if (isSet(activitiesOption)) {
+			AssertTextEquals(
+				key_index = "1",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
+				value1 = "${activitiesOption}");
+		}
+
+		if (isSet(searchTerm)) {
+			AssertTextEquals(
+				key_index = "1",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
+				value1 = "${searchTerm}");
+		}
+
+		if (isSet(atLeastMost)) {
+			AssertTextEquals(
+				key_index = "3",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
+				value1 = "${atLeastMost}");
+		}
+
+		if (isSet(occurenceNumber)) {
+			AssertTextEquals(
+				key_index = "2",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
+				value1 = "${occurenceNumber}");
+		}
+
+		if (isSet(timeOption)) {
+			AssertTextEquals(
+				key_index = "5",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN",
+				value1 = "${timeOption}");
+		}
+
+		if (isSet(timePeriod)) {
+			AssertTextEquals(
+				key_index = "3",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
+				value1 = "${timePeriod}");
+		}
+
+		if (isSet(date)) {
+			AssertTextEquals(
+				key_index = "3",
+				locator1 = "ACSegments#SEGMENT_CRITERIA_WEB_BEHAVIOR_B",
+				value1 = "${date}");
+		}
+	}
+
 	macro viewSegmentMembershipLegendNumbers {
 		AssertTextEquals(
 			key_memberType = "Known Members:",

@@ -125,6 +125,16 @@
     <td></td>
 </tr>
 <tr>
+    <td>SEGMENT_CRITERIA_WEB_BEHAVIOR_SPAN</td>
+    <td>//div[@class='criteria-row']//span[${key_index}]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEGMENT_CRITERIA_WEB_BEHAVIOR_B</td>
+    <td>//div[@class='criteria-row']//b[${key_index}]</td>
+    <td></td>
+</tr>
+<tr>
     <td>SEGMENT_MEMBERSHIP_CARD</td>
     <td>//div[@class='criteria-row']</td>
     <td></td>

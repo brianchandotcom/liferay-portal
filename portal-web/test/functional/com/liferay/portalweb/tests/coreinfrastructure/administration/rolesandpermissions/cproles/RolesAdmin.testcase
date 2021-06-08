@@ -24,6 +24,47 @@ definition {
 		}
 	}
 
+	test CanAddRoleWithSameNameDifferentKey {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.add(roleTitle = "Role Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputTitle(title = "Role Name");
+
+		Type(
+			locator1 = "TextInput#KEY",
+			value1 = "Role Name-2");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Search.searchCP(searchTerm = "Name-2");
+
+		LexiconEntry.gotoEntry(rowEntry = "Role Name");
+
+		AssertTextEquals(
+			locator1 = "TextInput#KEY",
+			value1 = "Role Name-2");
+	}
+
 	@priority = "4"
 	test CannotAddRoleIfSimilarKeyExists {
 		ApplicationsMenu.gotoPortlet(

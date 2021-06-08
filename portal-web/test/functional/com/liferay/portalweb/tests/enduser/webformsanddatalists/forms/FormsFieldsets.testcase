@@ -76,14 +76,56 @@ definition {
 	}
 
 	@description = "Verify that a Date Field can be added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddADateFieldToAForm {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133490 CanAddADateFieldToAForm pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Date");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Text");
+
+		FormViewBuilder.validateFieldLabel(fieldLabel = "Date");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewRadioLabel(
+			fieldLabel = "Date",
+			fieldName = "Date");
 	}
 
 	@description = "Verify that a Grid Field can be added to a Form via Fieldset"

@@ -162,14 +162,50 @@ definition {
 	}
 
 	@description = "Verify that a Select From List Field can be required"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeRequired {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131360 CanBeRequired pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1");
+
+		FormFields.enableSwitcher(fieldName = "Required Field");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.submitWithValidationError(validationErrorMessage = "This field is required.");
+
+		FormFields.selectSelectOption(
+			fieldName = "Select from List",
+			selectOption = "Option 1");
+
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "This field is required.");
+
+		FormPortlet.submit();
+
+		FormPortlet.viewSuccessPage(
+			successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+			successPageTitle = "Thank you.");
+
+			
 	}
 
 	@description = "Verify that a Select From List Field can be set to repeatable"

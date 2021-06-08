@@ -25,6 +25,48 @@ definition {
 	}
 
 	@priority = "4"
+	test CannotAddRoleIfSimilarKeyExists {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.add(roleTitle = "Role Name");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		LexiconEntry.gotoAdd();
+
+		PortletEntry.inputTitle(title = "Role Name2");
+
+		Type(
+			locator1 = "TextInput#KEY",
+			value1 = "Role Name");
+
+		AssertClick(
+			locator1 = "Button#SUBMIT",
+			value1 = "Save");
+
+		Alert.viewRequestFailedToComplete();
+
+		Alert.viewDuplicateErrorMessage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Search.searchCP(searchTerm = "Name2");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No roles were found.");
+	}
+
+	@priority = "4"
 	test ExistingSegmentCanBeAssignedToARegularRole {
 		ProductMenu.gotoSite(site = "Global");
 

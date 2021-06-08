@@ -32,7 +32,108 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			JSONUser.tearDownNonAdminUsers();
+
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-86550. Users should be able to map author name and author profile image to editable fields in a display page template."
+	@priority = "5"
+	test MapAuthorInfoToEditableField {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Add a Banner Center to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the Author Name to title editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Author Name",
+				fragmentName = "Banner Center",
+				id = "01-title");
+		}
+
+		task ("Map the Author Profile Image to background image editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Author Profile Image",
+				fragmentName = "Banner Center",
+				id = "banner-center");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a new user with Administrator role") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea1@liferay.com");
+		}
+
+		task ("Sign in as the new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("Change the profile image for new user") {
+			MyAccount.openMyAccountAdmin();
+
+			User.changeProfileImage(imageName = "marketplace_icon.png");
+
+			PortletEntry.save();
+
+			var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
+			var userPortrait = StringUtil.extractLast("${userPortrait}", "image/");
+		}
+
+		task ("Add a web content and select the display page template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to the display page template at view mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("View mapped content in display page template") {
+			AssertVisible(
+				id = "01-title",
+				key_position = "1",
+				key_text = "userfn1 userln1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_imageName = "${userPortrait}",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
 	}
 
@@ -104,6 +205,139 @@ definition {
 				key_fragmentName = "heading",
 				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
 				value1 = "This is a short description");
+		}
+	}
+
+	@description = "This is a test for LPS-86550. Users should be able to map last editor name and author profile image to editable fields in a display page template."
+	@priority = "5"
+	test MapLastEditorInfoToEditableField {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Add a Banner Center to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the Last Editor Name to title editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Last Editor Name",
+				fragmentName = "Banner Center",
+				id = "01-title");
+		}
+
+		task ("Map the Last Editor Profile Image to background image editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Last Editor Profile Image",
+				fragmentName = "Banner Center",
+				id = "banner-center");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Get user portrait info") {
+			MyAccount.openMyAccountAdmin();
+
+			AssertVisible(
+				key_imageName = "image",
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_PROFILE_IMAGE");
+
+			var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
+			var userPortrait = StringUtil.extractLast("${userPortrait}", "image/");
+		}
+
+		task ("Navigate to the display page template at view mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("View mapped content in display page template") {
+			AssertVisible(
+				id = "01-title",
+				key_position = "1",
+				key_text = "Test Test",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_imageName = "${userPortrait}",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
+		}
+
+		task ("Add a new user with Administrator role") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "userea1@liferay.com");
+		}
+
+		task ("Sign in as the new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("Change the profile image for new user") {
+			MyAccount.openMyAccountAdmin();
+
+			User.changeProfileImage(imageName = "marketplace_icon.png");
+
+			PortletEntry.save();
+
+			var userPortrait = selenium.getAttribute("//img[contains(@id,'avatar') and contains(@src,'image')]@src");
+			var userPortrait = StringUtil.extractLast("${userPortrait}", "image/");
+		}
+
+		task ("Edit the web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editCP(
+				webContentContentEdit = "Webcontent Content Edit",
+				webContentTitleEdit = "Webcontent Title Edit");
+		}
+
+		task ("Navigate to the display page template at view mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("View mapped content in display page template") {
+			AssertVisible(
+				id = "01-title",
+				key_position = "1",
+				key_text = "userfn1 userln1",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				key_imageName = "${userPortrait}",
+				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
 	}
 
@@ -293,6 +527,162 @@ definition {
 				locator1 = "Fragment#FRAGMENT_LINK");
 
 			AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
+		}
+	}
+
+	@description = "Map multiple custom ddm fields to text editable fields."
+	@priority = "4"
+	test MapMultipleCustomDDMFieldsToTextFragment {
+		task ("Add a web content structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Name");
+
+			DataEngine.addFields(fieldNameList = "Text,Rich Text");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("Add a display page template for Web Content Article and new structure") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "DPT for New Structure",
+				subType = "WC Structure Name");
+		}
+
+		task ("Add a Banner Center fragment to display page template") {
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the Text to title editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Text",
+				fragmentName = "Banner Center",
+				id = "01-title");
+		}
+
+		task ("Map the Rich Text to subtitle editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Rich Text",
+				fragmentName = "Banner Center",
+				id = "02-subtitle");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content based on new structure") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				webContentRichText = "Webcontent Rich Text",
+				webContentText = "Webcontent Text",
+				webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "DPT for New Structure",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Navigate to the display page template at view mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("View mapped content in display page template") {
+			AssertVisible(
+				id = "01-title",
+				key_position = "1",
+				key_text = "Webcontent Text",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				id = "02-subtitle",
+				key_position = "1",
+				key_text = "Webcontent Rich Text",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+	}
+
+	@description = "Map multiple fields to text editable fields."
+	@priority = "4"
+	test MapMultipleFieldsToTextFragment {
+		task ("Import fragment collection") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
+		}
+
+		task ("Add a Multiple Editables fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Multiple Editables");
+		}
+
+		task ("Map multiple fields to editable fields") {
+			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
+				field = "Title",
+				fragmentName = "Multiple Editables",
+				id = "test1");
+
+			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
+				field = "Content",
+				fragmentName = "Multiple Editables",
+				id = "test2");
+
+			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
+				field = "Tags",
+				fragmentName = "Multiple Editables",
+				id = "test3");
+
+			PageEditorMapping.mapEditableTextToField(
+				contributed = "false",
+				field = "Publish Date",
+				fragmentName = "Multiple Editables",
+				id = "test4");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Add a web content article with three tags") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "tag1,tag2,tag3",
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Navigate to the display page template at view mode") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/w/webcontent-title");
+		}
+
+		task ("View mapped content in display page template") {
+			for (var content : list "Webcontent Title,Webcontent Content,tag1,tag2,tag3") {
+				AssertVisible(
+					key_text = "${content}",
+					locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
+			}
 		}
 	}
 

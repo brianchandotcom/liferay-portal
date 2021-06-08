@@ -827,6 +827,12 @@ definition {
 			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
 	}
 
+	macro viewAnyField {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			locator1 = "FormFields#ANY_FIELD");
+	}
+
 	macro viewAutoCompleteOption {
 		var key_autocompleteOption = "${autocompleteOption}";
 
@@ -1015,6 +1021,13 @@ definition {
 		else {
 			Form.gotoBasicTab();
 		}
+	}
+
+	macro viewFieldPlaceholderText {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_placeHolder = "${placeHolder}",
+			locator1 = "FormFields#TEXT_FIELD_PLACEHOLDER");
 	}
 
 	macro viewFieldReference {

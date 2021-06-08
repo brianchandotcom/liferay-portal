@@ -416,6 +416,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FIELD_PREDEFINED_VALUE</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//input[@value='${key_predefinedValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_FIELD_ALT</td>
 	<td>//input[@type='text' and contains(@id,'${key_fieldName}') and contains(@id,'Alt')]</td>
 	<td></td>

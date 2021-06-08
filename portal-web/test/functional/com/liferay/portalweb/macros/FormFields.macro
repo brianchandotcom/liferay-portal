@@ -1030,6 +1030,13 @@ definition {
 			locator1 = "FormFields#TEXT_FIELD_PLACEHOLDER");
 	}
 
+	macro viewFieldPredefinedValue {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_predefinedValue = "${predefinedValue}",
+			locator1 = "FormFields#TEXT_FIELD_PREDEFINED_VALUE");
+	}
+
 	macro viewFieldReference {
 		Click(
 			key_fieldName = "${fieldName}",

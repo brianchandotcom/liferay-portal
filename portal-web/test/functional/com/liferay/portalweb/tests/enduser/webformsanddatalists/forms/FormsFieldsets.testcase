@@ -1537,14 +1537,66 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value persists after being added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PreserveThePredefinedValue {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133468 PreserveThePredefinedValue pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.gotoAddField(fieldType = "Numeric");
+
+		Form.closeSidebar();
+
+		Form.addTextField(fieldPositionNumber = "1");
+
+		FormFields.viewFieldPredefinedValue(
+			fieldName = "Text",
+			predefinedValue = "");
+
+		FormFields.editPredefinedValue(key_predefinedValue = "Predefined Value Test");
+
+		FormFields.viewFieldPredefinedValue(
+			fieldName = "Text",
+			predefinedValue = "Predefined Value Test");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+
+		FormFields.viewAnyField(fieldName = "Numeric");
+
+		FormFields.viewAnyField(fieldName = "Text");
+
+		FormFields.viewFieldPredefinedValue(
+			fieldName = "Text",
+			predefinedValue = "Predefined Value Test");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldPredefinedValue(
+			fieldName = "Text",
+			predefinedValue = "Predefined Value Test");
 	}
 
 	@description = "Verify that a Repeatable Property persists after being added to a Form via Fieldset"

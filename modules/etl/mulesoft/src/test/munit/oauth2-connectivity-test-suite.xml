@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+	  xmlns:mtf="http://www.mulesoft.org/schema/mule/mtf"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	  xmlns:liferay="http://www.mulesoft.org/schema/mule/liferay"
+
+	  xsi:schemaLocation="
+	     http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+	     http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+	     http://www.mulesoft.org/schema/mule/mtf http://www.mulesoft.org/schema/mule/mtf/current/mule-mtf.xsd
+	     http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/liferay/current/mule-liferay.xsd ">
+
+	<munit:config name="oauth2-connectivity-test-suite.xml"/>
+
+	<configuration-properties file="automation-credentials.properties"/>
+
+	<liferay:config name="Valid_Liferay_Config">
+		<liferay:oauth2-connection openApiSpecPath="${liferay.openApiSpecPath}" consumerKey="${liferay.consumerKey}" consumerSecret="${liferay.consumerSecret}"/>
+	</liferay:config>
+
+	<liferay:config name="Invalid_Liferay_Config">
+		<liferay:oauth2-connection openApiSpecPath="${liferay.openApiSpecPath}" consumerKey="${liferay.consumerKey}" consumerSecret="invalid-secret"/>
+	</liferay:config>
+
+	<munit:test name="valid-oauth2-connection-test" description="Test Valid OAuth2 connectivity">
+		<munit:execution>
+			<mtf:test-connectivity config-ref="Valid_Liferay_Config"/>
+		</munit:execution>
+	</munit:test>
+
+	<munit:test name="invalid-oauth2-connection-test" description="Test Invalid OAuth2 connectivity" expectedErrorDescription="Unable to fetch access token from authorization server. Request failed with status 401 (Unauthorized) and message {&quot;error&quot;:&quot;invalid_client&quot;}" expectedException="org.mule.runtime.extension.api.exception.ModuleException">
+		<munit:execution>
+			<mtf:test-connectivity config-ref="Invalid_Liferay_Config"/>
+		</munit:execution>
+	</munit:test>
+</mule>

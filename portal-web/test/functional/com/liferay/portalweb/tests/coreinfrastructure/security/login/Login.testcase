@@ -28,6 +28,7 @@ definition {
 		}
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "SSO",
 			configurationName = "CAS Server",
 			configurationScope = "Virtual Instance Scope");
@@ -35,6 +36,7 @@ definition {
 		PortalSettings.editConfigurationAuthenticationCAS();
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "User Authentication",
 			configurationName = "General",
 			configurationScope = "Virtual Instance Scope");
@@ -55,6 +57,7 @@ definition {
 		User.firstLoginPG();
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "Instance Configuration",
 			configurationName = "General",
 			configurationScope = "Virtual Instance Scope");
@@ -197,6 +200,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "SSO",
 			configurationName = "Facebook Connect",
 			configurationScope = "Virtual Instance Scope");
@@ -231,6 +235,7 @@ definition {
 		User.firstLoginPG();
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "SSO",
 			configurationName = "Google Authorization",
 			configurationScope = "Virtual Instance Scope");
@@ -262,6 +267,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "Localization",
 			configurationName = "Language",
 			configurationScope = "Virtual Instance Scope");
@@ -500,6 +506,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "SSO",
 			configurationName = "OpenID Connect",
 			configurationScope = "Virtual Instance Scope");
@@ -572,6 +579,7 @@ definition {
 		Pause(locator1 = "30000");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "SSO",
 			configurationName = "OpenSSO",
 			configurationScope = "Virtual Instance Scope");
@@ -582,6 +590,7 @@ definition {
 			OpenSSOServiceURL = "http://test.able.com:8080/openam");
 
 		PortalSettings.gotoConfiguration(
+			baseURL = "http://localhost:8080",
 			configurationCategory = "SSO",
 			configurationName = "OpenSSO",
 			configurationScope = "Virtual Instance Scope");

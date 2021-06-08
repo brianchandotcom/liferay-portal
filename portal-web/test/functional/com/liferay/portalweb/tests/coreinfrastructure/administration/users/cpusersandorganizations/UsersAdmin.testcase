@@ -100,20 +100,18 @@ definition {
 	@description = "This is a use case for LPS-102425."
 	@priority = "4"
 	test AddUserEmailAddressApostrophe {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "user1",
 			userLastName = "user1",
 			userScreenName = "user1");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "user1@liferay.com",
-			userScreenName = "user1");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user1@liferay.com");
 
 		JSONRole.assignRoleToUser(
 			roleTitle = "Administrator",
@@ -142,19 +140,17 @@ definition {
 		Navigator.openURL();
 
 		JSONUser.addUser(
+			creatorEmailAddress = "user1@liferay.com",
+			creatorPassword = "test",
 			userEmailAddress = "user%27ea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			userEmailAddress = "user'ea@liferay.com",
-			userScreenName = "usersn");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "user%27ea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "user'ea@liferay.com",

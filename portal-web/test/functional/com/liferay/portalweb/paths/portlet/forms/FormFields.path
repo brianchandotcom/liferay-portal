@@ -205,6 +205,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTION_FROM_SELECTED_LIST</td>
+	<td>//li[contains(@aria-selected,'false')]//button[contains(@label,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_PREDEFINED_SELECTOR</td>
 	<td>//label[contains(text(),'Predefined')]/..//div[contains(@class,'input-group-container') and //div[contains(text(),'${key_definedEntry}')]]</td>
 	<td></td>

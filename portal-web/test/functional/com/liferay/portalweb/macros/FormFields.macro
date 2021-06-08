@@ -792,6 +792,12 @@ definition {
 			locator1 = "FormFields#FIELD_TARGET_LABEL");
 	}
 
+	macro viewDeletedSelectFromListOption {
+		AssertElementNotPresent(
+			key_value = "${optionValue}",
+			locator1 = "FormFields#OPTION_FROM_SELECTED_LIST");
+	}
+
 	macro viewDeletedSelectOptionsRowFieldValue {
 		var key_rowNumber = "${rowNumber}";
 
@@ -1118,6 +1124,12 @@ definition {
 			value1 = "${fieldValue}");
 
 		SelectFrame(value1 = "relative=top");
+	}
+
+	macro viewSelectFromListOption {
+		AssertElementPresent(
+			key_value = "${optionValue}",
+			locator1 = "FormFields#OPTION_FROM_SELECTED_LIST");
 	}
 
 	macro viewSelectLabel {

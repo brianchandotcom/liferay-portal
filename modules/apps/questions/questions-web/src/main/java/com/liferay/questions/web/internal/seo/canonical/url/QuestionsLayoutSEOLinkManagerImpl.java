@@ -16,15 +16,20 @@ package com.liferay.questions.web.internal.seo.canonical.url;
 
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ListMergeable;
+import com.liferay.questions.web.internal.configuration.QuestionsConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -32,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier Gamarra
  */
 @Component(
+	configurationPid = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
 	property = "service.ranking:Integer=100",
 	service = LayoutSEOLinkManager.class
 )
@@ -66,7 +72,19 @@ public class QuestionsLayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 			Map<Locale, String> alternateURLs)
 		throws PortalException {
 
-		return new ArrayList<>();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		String currentURL = serviceContext.getCurrentURL();
+
+		if (currentURL.contains(
+				_questionsConfiguration.historyRouterBasePath())) {
+
+			return new ArrayList<>();
+		}
+
+		return _layoutSEOLinkManager.getLocalizedLayoutSEOLinks(
+			layout, locale, canonicalURL, alternateURLs);
 	}
 
 	@Override
@@ -98,9 +116,17 @@ public class QuestionsLayoutSEOLinkManagerImpl implements LayoutSEOLinkManager {
 		return _layoutSEOLinkManager.isOpenGraphEnabled(layout);
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_questionsConfiguration = ConfigurableUtil.createConfigurable(
+			QuestionsConfiguration.class, properties);
+	}
+
 	@Reference(
 		target = "(component.name=com.liferay.layout.seo.internal.LayoutSEOLinkManagerImpl)"
 	)
 	private LayoutSEOLinkManager _layoutSEOLinkManager;
+
+	private QuestionsConfiguration _questionsConfiguration;
 
 }

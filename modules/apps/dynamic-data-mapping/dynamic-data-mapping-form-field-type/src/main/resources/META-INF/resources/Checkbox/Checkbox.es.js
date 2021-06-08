@@ -14,7 +14,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {FieldBase} from '../FieldBase/ReactFieldBase.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
@@ -32,7 +32,12 @@ const Switcher = ({
 	systemSettingsURL,
 	visible,
 }) => {
-	const [checked, setChecked] = useSyncValue(initialChecked, true, visible);
+	const [checked, setChecked] = useSyncValue(initialChecked, true);
+
+	useEffect(() => {
+		setChecked(initialChecked);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [disabled, visible]);
 
 	return (
 		<>

@@ -38,6 +38,23 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
+				"setEnabled('requireConfirmation', TRUE)",
+				"setEnabled('required', TRUE)", "setEnabled('validation', TRUE)"
+			},
+			condition = "equals(getValue('hideField'), FALSE)"
+		),
+		@DDMFormRule(
+			actions = {
+				"setEnabled('requireConfirmation', FALSE)",
+				"setEnabled('required', FALSE)",
+				"setEnabled('validation', FALSE)",
+				"setValue('requireConfirmation', FALSE)",
+				"setValue('required', FALSE)"
+			},
+			condition = "equals(getValue('hideField'), TRUE)"
+		),
+		@DDMFormRule(
+			actions = {
 				"setDataType('predefinedValue', getValue('dataType'))",
 				"setValidationDataType('validation', getValue('dataType'))",
 				"setValidationFieldName('validation', getValue('name'))",
@@ -137,8 +154,7 @@ public interface NumericDDMFormFieldTypeSettings
 		properties = {
 			"showAsSwitcher=true",
 			"tooltip=%the-user-filling-the-form-will-not-be-able-to-see-this-field"
-		},
-		visibilityExpression = "FALSE"
+		}
 	)
 	public boolean hideField();
 

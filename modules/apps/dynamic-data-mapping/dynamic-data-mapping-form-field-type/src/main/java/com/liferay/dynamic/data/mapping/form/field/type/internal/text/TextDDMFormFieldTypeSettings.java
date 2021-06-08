@@ -46,6 +46,23 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
+				"setEnabled('requireConfirmation', TRUE)",
+				"setEnabled('required', TRUE)", "setEnabled('validation', TRUE)"
+			},
+			condition = "equals(getValue('hideField'), FALSE)"
+		),
+		@DDMFormRule(
+			actions = {
+				"setEnabled('requireConfirmation', FALSE)",
+				"setEnabled('required', FALSE)",
+				"setEnabled('validation', FALSE)",
+				"setValue('requireConfirmation', FALSE)",
+				"setValue('required', FALSE)"
+			},
+			condition = "equals(getValue('hideField'), TRUE)"
+		),
+		@DDMFormRule(
+			actions = {
 				"setRequired('ddmDataProviderInstanceId', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setValidationDataType('validation', getValue('dataType'))",
@@ -197,8 +214,7 @@ public interface TextDDMFormFieldTypeSettings
 		properties = {
 			"showAsSwitcher=true",
 			"tooltip=%the-user-filling-the-form-will-not-be-able-to-see-this-field"
-		},
-		visibilityExpression = "FALSE"
+		}
 	)
 	public boolean hideField();
 

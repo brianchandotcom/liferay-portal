@@ -125,19 +125,19 @@ const Validation = ({
 	return (
 		<ClayForm.Group className="lfr-ddm-form-field-validation">
 			<Checkbox
-				disabled={readOnly}
 				label={label}
 				name="enableValidation"
 				onChange={(event, value) =>
 					handleChange('enableValidation', value)
 				}
+				readOnly={readOnly}
 				showAsSwitcher
 				spritemap={spritemap}
-				value={enableValidation}
+				value={enableValidation && !readOnly}
 				visible={visible}
 			/>
 
-			{enableValidation && (
+			{enableValidation && !readOnly && (
 				<>
 					<Select
 						disableEmptyOption

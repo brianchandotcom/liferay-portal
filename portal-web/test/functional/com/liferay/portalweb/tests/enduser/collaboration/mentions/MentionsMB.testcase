@@ -42,6 +42,69 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	@refactordone
+	test CanViewMentionViaMBThread {
+		Mentions.addMentionViaMessageBoardThread(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn",
+			siteURLKey = "guest",
+			threadSubject = "Thread Subject");
+
+		Mentions.viewMentionTagLink(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn");
+	}
+
+	@priority = "5"
+	@refactordone
+	test CanViewMentionViaMBThreadReply {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Thread Body",
+			threadSubject = "Thread Subject");
+
+		Mentions.addMentionViaMessageBoardsReply(
+			groupName = "Guest",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn",
+			siteURLKey = "guest",
+			threadBody = "Thread Reply Body",
+			threadSubject = "Thread Subject");
+
+		Mentions.viewMentionTagLink(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn");
+	}
+
+	@priority = "5"
+	@refactorneeded
+	test CanViewMentionViaUpdatedMBThread {
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Thread Body",
+			threadSubject = "Thread Subject");
+
+		Mentions.addMentionViaMessageBoardThreadEdit(
+			groupName = "Guest",
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn",
+			siteURLKey = "guest",
+			threadBody = "Thread Body Edit",
+			threadSubject = "Thread Subject");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsThread.viewCP(
+			replyCount = "0",
+			threadBody = "Thread Body Edit",
+			threadSubject = "Thread Subject");
+
+		Mentions.viewMentionTagLink(
+			mentionsUserFullName = "userfn userln",
+			mentionsUserScreenName = "usersn");
+	}
+
 	@description = "This test covers LPS-117986. It ensures that multiple mentions can be added to thread."
 	@priority = "4"
 	@refactordone
@@ -75,91 +138,14 @@ definition {
 			mentionsUserFullName = "userfn userln",
 			mentionsUserScreenName = "usersn");
 
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			threadSubject = "Thread Subject");
+
 		Mentions.viewMentionTagLink(
 			mentionsUserFullName = "userfn2 userln2",
 			mentionsUserScreenName = "usersn2");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test ViewMentionViaMessageBoardsThread {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		Mentions.addMentionViaMessageBoardThread(
-			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "usersn",
-			threadSubject = "Thread Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
-
-		Mentions.viewMentionTagLink(
-			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "usersn");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test ViewMentionViaMessageBoardsThreadReply {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.addCP(
-			threadBody = "Thread Body",
-			threadSubject = "Thread Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		Mentions.addMentionViaMessageBoardsReply(
-			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "usersn",
-			threadBody = "Thread Reply Body",
-			threadSubject = "Thread Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
-
-		MessageboardsThread.viewReplyCP(
-			replyCount = "2",
-			threadBody = "Thread Body",
-			threadBody2 = "Thread Reply Body",
-			threadSubject = "Thread Subject",
-			userName = "Test Test",
-			userName2 = "Test Test");
-
-		Mentions.viewMentionTagLink(
-			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "usersn");
-	}
-
-	@priority = "5"
-	@refactorneeded
-	test ViewMentionViaUpdatedMessageBoardsThread {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.addCP(
-			threadBody = "Thread Body",
-			threadSubject = "Thread Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		Mentions.addMentionViaMessageBoardThreadEdit(
-			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "usersn",
-			threadBody = "Thread Body Edit",
-			threadSubject = "Thread Subject");
-
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.viewCP(
-			replyCount = "0",
-			threadBody = "Thread Body Edit",
-			threadSubject = "Thread Subject");
-
-		Mentions.viewMentionTagLink(
-			mentionsUserFullName = "userfn userln",
-			mentionsUserScreenName = "usersn");
 	}
 
 }

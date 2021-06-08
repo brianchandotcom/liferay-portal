@@ -833,6 +833,16 @@ definition {
 			value1 = "${fieldReferenceValue}");
 	}
 
+	macro viewFieldRepeatableButton {
+		key_fieldName = "${fieldName}";
+
+		for (var number : list "${key_repeatableFieldsNumber}") {
+			AssertElementPresent(
+				key_duplicatedIndex = "${number}",
+				locator1 = "FormFields#FIELD_REPEATABLE_BUTTON_BY_INDEX");
+		}
+	}
+
 	macro viewFieldValidationErrorMessage {
 		var key_fieldName = "${fieldName}";
 

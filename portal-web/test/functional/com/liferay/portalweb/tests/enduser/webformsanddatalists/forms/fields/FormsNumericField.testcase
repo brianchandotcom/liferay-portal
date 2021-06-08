@@ -240,14 +240,57 @@ definition {
 	}
 
 	@description = "Verify that a Numeric Field can be set to repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132836 CanBeSetToRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Numeric",
+			formPageNumber = "0");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Repeatable");
+
+		FormFields.viewFieldRepeatableButton(
+			fieldName = "Numeric",
+			key_repeatableFieldsNumber = "1");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.addRepeatableField(
+			key_fieldName = "Numeric",
+			key_repeatableFieldNumber = "1");
+
+		FormFields.viewFieldRepeatableButton(
+			fieldName = "Numeric",
+			key_repeatableFieldsNumber = "1,2");
+
+		for (var number : list "1,2") {
+			FormFields.editRepeatingText(
+				fieldName = "Numeric",
+				fieldValue = "123",
+				fieldValueRepeat = "123");
+		}
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+
+
+		
 	}
 
 	@description = "Verify that a Form can be submitted with the Numeric Field"

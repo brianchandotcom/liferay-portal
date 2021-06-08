@@ -157,7 +157,7 @@ public class InviteUsersMVCResourceCommand
 		for (int i = 0; i < userIds.length; i++) {
 			List<UserGroupRole> userGroupRoles =
 				_userGroupRoleLocalService.getUserGroupRoles(
-					userIds[0], group.getGroupId());
+					userIds[i], group.getGroupId());
 
 			if (roleValues[i] < 0) {
 				for (UserGroupRole userGroupRole : userGroupRoles) {

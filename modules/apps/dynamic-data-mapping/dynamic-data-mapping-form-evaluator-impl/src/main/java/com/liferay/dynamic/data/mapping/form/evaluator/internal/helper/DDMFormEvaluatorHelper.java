@@ -550,6 +550,13 @@ public class DDMFormEvaluatorHelper {
 			ddmFormEvaluatorFieldContextKey, "visible", true);
 	}
 
+	protected boolean isHideField(
+		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey) {
+
+		return getBooleanPropertyValue(
+			ddmFormEvaluatorFieldContextKey, "hideField", false);
+	}
+
 	protected void setFieldAsInvalid(
 		DDMFormEvaluatorFieldContextKey ddmFormEvaluatorFieldContextKey,
 		String errorMessage) {
@@ -699,6 +706,10 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		if (!isFieldVisible(ddmFormEvaluatorFieldContextKey)) {
+			return;
+		}
+
+		if (isHideField(ddmFormEvaluatorFieldContextKey)) {
 			return;
 		}
 

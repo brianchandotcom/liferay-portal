@@ -45,7 +45,9 @@ function destroyEditor(element) {
  * @param {object} config config Editable value's config object
  */
 function render(element, value) {
-	element.innerHTML = value;
+	if (value) {
+		element.innerHTML = value;
+	}
 }
 
 export default {

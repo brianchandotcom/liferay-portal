@@ -98,7 +98,9 @@ function destroyEditor() {}
  * @param {string} value Element content
  */
 function render(element, value) {
-	element.innerHTML = value;
+	if (value) {
+		element.innerHTML = value;
+	}
 }
 
 export default {

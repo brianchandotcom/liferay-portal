@@ -31,7 +31,9 @@ const defaultGetEditorWrapper = (element) => {
 };
 
 const defaultRender = (element, value) => {
-	element.innerHTML = value;
+	if (value) {
+		element.innerHTML = value;
+	}
 };
 
 const keyupHandler = (event) => {

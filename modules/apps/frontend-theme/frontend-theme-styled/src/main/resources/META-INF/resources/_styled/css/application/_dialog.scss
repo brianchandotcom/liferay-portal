@@ -168,11 +168,17 @@
 		}
 	}
 
-	.lfr-dynamic-uploader.hide-dialog-footer {
-		bottom: 0;
+	.lfr-dynamic-uploader {
+		display: table;
+		table-layout: fixed;
+		width: 100%;
 
-		+ .dialog-footer {
-			display: none;
+		&.hide-dialog-footer {
+			bottom: 0;
+
+			+ .dialog-footer {
+				display: none;
+			}
 		}
 	}
 

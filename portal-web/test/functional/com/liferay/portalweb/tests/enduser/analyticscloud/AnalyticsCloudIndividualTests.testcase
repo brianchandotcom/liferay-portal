@@ -27,7 +27,7 @@ definition {
 		}
 	}
 
-    @description = "Set custom range filter with data for individual activity"
+	@description = "Set custom range filter with data for individual activity"
 	@priority = "5"
 	test CanSetDataWithCustomRangeOnIndividualActivitiesCard {
 		Navigator.openURL();
@@ -55,21 +55,21 @@ definition {
 
 		ACNavigation.goToIndividuals();
 
-        var displayDateDay = DateUtil.getCurrentDate();
-        var displayMonth = DateUtil.getCurrentMonth();
+		var displayDateDay = DateUtil.getCurrentDate();
+		var displayMonth = DateUtil.getCurrentMonth();
 		var displayDateMonth = DateUtil.getCurrentMonthName();
 		var displayDateYear = DateUtil.getCurrentYear();
-        var previousDay = DateUtil.getFormattedDate("-1", "d");
-        var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
-        var previousYear = DateUtil.getFormattedDate("-1", "yyyy");
-        
-        ACTimeFilter.setCustomRange(
-            endDay = "${displayDateDay}",
-            endMonth = "${displayDateMonth}",
-            endYear = "${displayDateYear}",
-            startDay = "${previousDay}",
-            startMonth = "${previousMonth}",
-            startYear = "${previousYear}");
+		var previousDay = DateUtil.getFormattedDate("-1", "d");
+		var previousMonth = DateUtil.getFormattedDate("-1", "MMMM");
+		var previousYear = DateUtil.getFormattedDate("-1", "yyyy");
+
+		ACTimeFilter.setCustomRange(
+			endDay = "${displayDateDay}",
+			endMonth = "${displayDateMonth}",
+			endYear = "${displayDateYear}",
+			startDay = "${previousDay}",
+			startMonth = "${previousMonth}",
+			startYear = "${previousYear}");
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART");
 	}

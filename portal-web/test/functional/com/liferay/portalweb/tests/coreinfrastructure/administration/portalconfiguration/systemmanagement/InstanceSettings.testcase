@@ -87,7 +87,7 @@ definition {
 
 		SignOut.signOut();
 
-		SignIn.signIn(userEmailAddress = "userea2@liferay.com");
+		Navigator.openSpecificURL(url = "${portalURL}/web/guest?SM_USER=userea2@liferay.com");
 
 		User.verifyEmail(
 			portalURL = "${portalURL}",

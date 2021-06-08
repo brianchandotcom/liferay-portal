@@ -28,6 +28,7 @@ String fullName = namespace.concat(HtmlUtil.escapeAttribute(name));
 		<div class="panel-group panel-group-flush">
 			<c:if test="<%= Validator.isNotNull(onSubmit) %>">
 				<fieldset class="input-container" disabled="disabled">
+					<legend class="sr-only"><%= portletDisplay.getTitle() %></legend>
 			</c:if>
 
 			<aui:input name="formDate" type="hidden" value="<%= System.currentTimeMillis() %>" />

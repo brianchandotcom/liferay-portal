@@ -77,7 +77,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 				displayStyleGroupId="<%= searchBarPortletDisplayContext.getDisplayStyleGroupId() %>"
 				entries="<%= new ArrayList<>() %>"
 			>
-				<aui:fieldset cssClass="search-bar">
+				<div class="search-bar">
 					<aui:input cssClass="search-bar-empty-search-input" name="emptySearchEnabled" type="hidden" value="<%= searchBarPortletDisplayContext.isEmptySearchEnabled() %>" />
 
 					<div class="input-group <%= searchBarPortletDisplayContext.isLetTheUserChooseTheSearchScope() ? "search-bar-scope" : "search-bar-simple" %>">
@@ -120,7 +120,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 							</c:otherwise>
 						</c:choose>
 					</div>
-				</aui:fieldset>
+				</div>
 			</liferay-ddm:template-renderer>
 		</aui:form>
 

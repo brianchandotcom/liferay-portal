@@ -104,12 +104,12 @@ public class FieldsetTag extends BaseFieldsetTag {
 
 		jspWriter.write(StringPool.GREATER_THAN);
 
+		jspWriter.write(
+			"<legend class=\"fieldset-legend\"><span class=\"legend\">");
+
 		String label = getLabel();
 
 		if (label != null) {
-			jspWriter.write(
-				"<legend class=\"fieldset-legend\"><span class=\"legend\">");
-
 			MessageTag messageTag = new MessageTag();
 
 			messageTag.setKey(label);
@@ -126,9 +126,9 @@ public class FieldsetTag extends BaseFieldsetTag {
 
 				iconHelpTag.doTag(pageContext);
 			}
-
-			jspWriter.write("</span></legend>");
 		}
+
+		jspWriter.write("</span></legend>");
 
 		if (getColumn()) {
 			jspWriter.write("<div class=\"row\">");

@@ -37,10 +37,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 
@@ -153,6 +155,11 @@ public class DefaultUserFieldExpressionHandler
 	@Override
 	public List<String> getValidFieldExpressions() {
 		return _validFieldExpressions;
+	}
+
+	@Override
+	public boolean isSupportedForUserMatching(String userFieldExpression) {
+		return _authFieldExpressions.contains(userFieldExpression);
 	}
 
 	@Activate
@@ -276,6 +283,8 @@ public class DefaultUserFieldExpressionHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultUserFieldExpressionHandler.class);
 
+	private final Set<String> _authFieldExpressions = new HashSet<>(
+		Arrays.asList("emailAddress", "screenName", "uuid"));
 	private int _processingIndex;
 
 	@Reference

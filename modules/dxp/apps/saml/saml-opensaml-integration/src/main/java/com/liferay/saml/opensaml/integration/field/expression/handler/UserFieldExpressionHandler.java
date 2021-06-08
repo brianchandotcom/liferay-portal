@@ -41,4 +41,6 @@ public interface UserFieldExpressionHandler
 
 	public List<String> getValidFieldExpressions();
 
+	public boolean isSupportedForUserMatching(String userIdentifier);
+
 }

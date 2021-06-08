@@ -288,9 +288,6 @@ definition {
 		}
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
-
-
-		
 	}
 
 	@description = "Verify that a Form can be submitted with the Numeric Field"

@@ -102,13 +102,13 @@ definition {
 
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
-        ACSegments.viewSegmentCriteriaWebBehavior(
-            activitiesOption = "has",
-            searchTerm = "'Blogs AC Title'",
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has",
 			atLeastMost = "at least",
 			occurenceNumber = "4",
+			searchTerm = "'Blogs AC Title'",
 			timeOption = "since",
-            timePeriod = "Last 24 hours");
+			timePeriod = "Last 24 hours");
 
 		ACNavigation.switchTab(tabName = "Membership");
 
@@ -133,14 +133,14 @@ definition {
 
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
-        ACSegments.viewSegmentCriteriaWebBehavior(
-            activitiesOption = "has not",
-            searchTerm = "'Blogs AC Title'",
+		ACSegments.viewSegmentCriteriaWebBehavior(
+			activitiesOption = "has not",
 			atLeastMost = "at most",
 			occurenceNumber = "5",
+			searchTerm = "'Blogs AC Title'",
 			timeOption = "ever");
 
-        ACNavigation.switchTab(tabName = "Membership");
+		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertTextEquals(
 			locator1 = "ACSegments#NO_MEMBER_TITLE",

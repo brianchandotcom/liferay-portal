@@ -49,17 +49,19 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		<aui:button name="selectFolderButton" value="select" />
 	</div>
 
-	<portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/select_folder.jsp" />
-		<portlet:param name="folderId" value="<%= String.valueOf(journalEditArticleDisplayContext.getFolderId()) %>" />
-	</portlet:renderURL>
-
 	<liferay-frontend:component
 		context='<%=
 			HashMapBuilder.<String, Object>put(
 				"inputName", "folderId"
 			).put(
-				"selectFolderURL", selectFolderURL
+				"selectFolderURL",
+				PortletURLBuilder.createRenderURL(
+					liferayPortletResponse
+				).setMVCPath(
+					"/select_folder.jsp"
+				).setParameter(
+					"folderId", String.valueOf(journalEditArticleDisplayContext.getFolderId())
+				).buildString()
 			).build()
 		%>'
 		module="js/SelectFolderButton.es"

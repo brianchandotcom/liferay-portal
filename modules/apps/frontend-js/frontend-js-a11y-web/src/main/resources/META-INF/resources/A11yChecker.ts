@@ -258,7 +258,7 @@ export interface A11yCheckerOptions {
 	 * Mutation is an optional list of criteria on which a new analysis will be
 	 * ignored.
 	 */
-	mutations?: Record<string, Attributes>;
+	mutations: Record<string, Attributes>;
 
 	/**
 	 * Targets is a list or element that represents the subtree(s) to be
@@ -274,7 +274,7 @@ export class A11yChecker {
 		target: string;
 		mutation: MutationObserver;
 	}>;
-	private mutations?: Record<string, Attributes>;
+	private mutations: Record<string, Attributes>;
 	readonly axeOptions: RunOptions;
 	readonly denylist?: Array<Array<string>>;
 
@@ -290,7 +290,7 @@ export class A11yChecker {
 			reporter: 'v2',
 		} as const;
 
-		this.axeOptions = axeOptions ? axeOptions : defaultOptions;
+		this.axeOptions = {...defaultOptions, ...axeOptions};
 
 		this.callback = callback;
 		this.denylist = denylist
@@ -351,46 +351,54 @@ export class A11yChecker {
 	}
 
 	private mutationCallback(records: Array<MutationRecord>) {
-		const denylistTargets = this.denylist?.map((selector) =>
-			document.querySelector(selector.join(' '))
-		);
+		const denylistTargets = this.denylist?.map((selector) => [
+			...document.querySelectorAll(selector.join(' ')),
+		]);
 
 		records.forEach((record) => {
+			const {
+				addedNodes,
+				attributeName,
+				removedNodes,
+				target,
+				type,
+			} = record;
+
+			const node =
+				type === 'attributes' || removedNodes.length > 0
+					? target
+					: addedNodes[0];
+
+			if (type === 'attributes') {
+				const attributes =
+					this.mutations[node.nodeName.toLowerCase()] ??
+					this.mutations?.any;
+
+				const attributeValue = (node as Element).getAttribute(
+					attributeName as string
+				);
+
+				if (
+					attributes[attributeName as string]?.some((value) =>
+						value === '*' ? true : attributeValue?.includes(value)
+					)
+				) {
+					return;
+				}
+			}
 
 			// Ignores the mutation if the target was through some element
 			// within the denylist.
 
-			const hasTargetInDenylist = denylistTargets?.some((target) =>
-				target?.contains(record.target)
+			const hasTargetInDenylist = denylistTargets?.some((targets) =>
+				targets?.some((target) => target.contains(node))
 			);
 
 			if (hasTargetInDenylist) {
 				return;
 			}
 
-			if (this.mutations) {
-				const {addedNodes, removedNodes} = record;
-
-				const target =
-					record.type === 'attributes'
-						? record.target
-						: removedNodes.length > 0
-						? removedNodes[0]
-						: addedNodes[0];
-
-				const attributes = this.mutations[
-					target.nodeName.toLowerCase()
-				];
-
-				if (
-					attributes &&
-					compareAttributes(target as Element, attributes)
-				) {
-					return;
-				}
-			}
-
-			this.recordCallback(record.target);
+			this.recordCallback(node);
 		});
 	}
 
@@ -417,19 +425,4 @@ export class A11yChecker {
 		this.scheduler.cancelHostCallback();
 		this.observers.forEach(({mutation}) => mutation.disconnect());
 	}
-}
-
-function compareAttributes(
-	node: Element,
-	attributes: Record<string, Array<string>>
-) {
-	const attributesNames = Object.keys(attributes);
-
-	return attributesNames.some((name) => {
-		const key = node.getAttribute(name);
-
-		return attributes[name].some((value) =>
-			value === '*' ? true : key?.includes(value)
-		);
-	});
 }

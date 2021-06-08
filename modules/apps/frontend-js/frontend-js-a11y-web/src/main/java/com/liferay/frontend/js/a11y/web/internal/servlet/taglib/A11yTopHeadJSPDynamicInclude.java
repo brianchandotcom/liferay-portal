@@ -81,6 +81,8 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 
 		String[] targetsArray = {_a11yConfiguration.target()};
 
+		String[] anyArray = {"*"};
+
 		JSONObject propsJSONObject = JSONUtil.put(
 			"axeOptions",
 			JSONUtil.put(
@@ -96,6 +98,27 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 			)
 		).put(
 			"denylist", denylist
+		).put(
+			"mutations",
+			JSONUtil.put(
+				"any",
+				JSONUtil.put(
+					"data-restore-title", anyArray
+				).put(
+					"draggable", anyArray
+				).put(
+					"id", anyArray
+				)
+			).put(
+				"body", JSONUtil.put("class", anyArray)
+			).put(
+				"input",
+				JSONUtil.put(
+					"id", anyArray
+				).put(
+					"value", anyArray
+				)
+			)
 		).put(
 			"targets", targetsArray
 		);

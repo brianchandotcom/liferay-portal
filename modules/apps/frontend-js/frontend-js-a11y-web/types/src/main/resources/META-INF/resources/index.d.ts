@@ -24,6 +24,6 @@ declare global {
 }
 import type {A11yCheckerOptions} from './A11yChecker';
 declare const _default: (
-	props?: Omit<A11yCheckerOptions, 'callback' | 'targets'>
+	props: Omit<A11yCheckerOptions, 'callback' | 'targets'>
 ) => void;
 export default _default;

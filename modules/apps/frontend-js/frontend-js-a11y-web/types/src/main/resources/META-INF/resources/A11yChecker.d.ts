@@ -121,7 +121,7 @@ export interface A11yCheckerOptions {
 	 * Mutation is an optional list of criteria on which a new analysis will be
 	 * ignored.
 	 */
-	mutations?: Record<string, Attributes>;
+	mutations: Record<string, Attributes>;
 
 	/**
 	 * Targets is a list or element that represents the subtree(s) to be
@@ -133,7 +133,7 @@ export declare class A11yChecker {
 	private callback;
 	private scheduler;
 	private observers;
-	private mutations?;
+	private mutations;
 	readonly axeOptions: RunOptions;
 	readonly denylist?: Array<Array<string>>;
 	constructor({

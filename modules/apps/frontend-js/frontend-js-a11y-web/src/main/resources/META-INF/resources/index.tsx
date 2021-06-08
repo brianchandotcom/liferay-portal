@@ -32,13 +32,5 @@ const getDefaultContainer = () => {
 	return container;
 };
 
-const defaultProps = {
-	mutations: {
-		div: {'data-restore-title': ['*'], draggable: ['*']},
-		input: {value: ['*']},
-	},
-	targets: ['.flipped'],
-};
-
-export default (props: Omit<A11yCheckerOptions, 'callback' | 'targets'> = {}) =>
-	render(A11y, {...defaultProps, ...props}, getDefaultContainer());
+export default (props: Omit<A11yCheckerOptions, 'callback' | 'targets'>) =>
+	render(A11y, props, getDefaultContainer());

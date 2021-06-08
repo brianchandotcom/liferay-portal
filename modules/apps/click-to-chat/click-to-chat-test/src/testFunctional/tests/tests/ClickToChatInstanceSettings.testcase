@@ -119,6 +119,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Hubspot provider errors message"
+	@ignore = "true"
 	@priority = "4"
 	test CheckHubspotErrorMessage {
 		Select(
@@ -451,6 +452,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if LiveChat Provider Keeps Enabled After Logout"
+	@ignore = "true"
 	@priority = "5"
 	test LiveChatProviderKeepsEnabledAfterLogout {
 		Select(
@@ -479,6 +481,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify LiveChat provider persistence after logout and login"
+	@ignore = "true"
 	@priority = "5"
 	test LiveChatProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(
@@ -848,6 +851,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-129049. Verify Tolvnow provider can be enabled and disabled."
+	@ignore = "true"	
 	@priority = "5"
 	test TolvnowCanBeEnabledAndDisabled {
 		Select(
@@ -876,6 +880,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify if Tolvnow Provider Keeps Enabled After Logout"
+	@ignore = "true"
 	@priority = "5"
 	test TolvnowProviderKeepsEnabledAfterLogout {
 		Select(
@@ -904,6 +909,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-133453. Verify Tolvnow provider persistence after logout and login"
+	@ignore = "true"
 	@priority = "5"
 	test TolvnowProviderKeepsEnabledAfterLogoutAndLogin {
 		Select(

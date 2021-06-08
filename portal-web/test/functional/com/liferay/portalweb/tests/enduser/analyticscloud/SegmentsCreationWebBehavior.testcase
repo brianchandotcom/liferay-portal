@@ -49,8 +49,6 @@ definition {
 
 		DMDocument.downloadPG(dmDocumentTitle = "DM AC Title");
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");
@@ -223,8 +221,6 @@ definition {
 			pageName = "AC Page",
 			siteName = "Site Name");
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");
@@ -265,8 +261,6 @@ definition {
 			Pause(locator1 = "100");
 		}
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");
@@ -299,8 +293,6 @@ definition {
 
 		BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");
@@ -320,7 +312,7 @@ definition {
 		ACSegments.editWebBehaviorCriterion(
 			activitiesOption = "has not",
 			indexField = "1",
-			occurenceNumber = "5",
+			occurenceNumber = "4",
 			searchTerm = "Blogs AC Title");
 
 		ACSegments.saveSegment();
@@ -341,8 +333,6 @@ definition {
 			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
 		}
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");
@@ -355,9 +345,9 @@ definition {
 
 		ACNavigation.switchTab(tabName = "Membership");
 
-		AssertElementPresent(
-			key_userName = "Test Test",
-			locator1 = "ACSegments#SEGMENT_MEMBERS");
+		AssertTextEquals(
+			locator1 = "ACSegments#NO_MEMBER_TITLE",
+			value1 = "There are no items found.");
 	}
 
 	@description = "Create a segment with behavior of viewing a form"
@@ -372,8 +362,6 @@ definition {
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");
-
-		Pause(locator1 = "10000");
 
 		ACUtils.closeAllSessions();
 
@@ -414,8 +402,6 @@ definition {
 
 			Pause(locator1 = "100");
 		}
-
-		Pause(locator1 = "10000");
 
 		ACUtils.closeAllSessions();
 

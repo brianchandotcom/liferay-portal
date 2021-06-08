@@ -105,8 +105,6 @@ definition {
 			Pause(locator1 = "100");
 		}
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");

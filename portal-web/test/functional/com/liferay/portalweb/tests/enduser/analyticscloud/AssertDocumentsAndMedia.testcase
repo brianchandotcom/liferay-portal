@@ -49,8 +49,6 @@ definition {
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM AC Title");
 		}
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");

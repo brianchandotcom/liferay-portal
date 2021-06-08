@@ -47,8 +47,6 @@ definition {
 				siteName = "Site Name");
 		}
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");

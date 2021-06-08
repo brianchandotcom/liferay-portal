@@ -56,6 +56,24 @@ definition {
 
 	}
 
+	@description = "LPS-86642 - Verify that info icon hover state and tooltip message"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test InfoIconDisplaysMessageOnHover {
+
+		// TODO LRQA-67562 InfoIconDisplaysMessageOnHover pending implementation
+
+	}
+
+	@description = "LPS-86642 - Verify that when there is no SLA defined for the process, the card should display only the Total Pending column populated"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OnlyTotalPendingColumnIsPopulatedWhenNoSLA {
+
+		// TODO LRQA-67563 OnlyTotalPendingColumnIsPopulatedWhenNoSLA pending implementation
+
+	}
+
 	@description = "LPS-86642 - Verify that the Overdue is the total number of pending instances that breached one or more SLAs target times"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -71,6 +89,24 @@ definition {
 	test PendingItemsThatDoNotBreachSlaIsOnTime {
 
 		// TODO LRQA-67557 PendingItemsThatDoNotBreachSlaIsOnTime pending implementation
+
+	}
+
+	@description = "LPS-86642 - Verify that when are parallel branches on the workflow, the sum of all pending items of the steps will be greater than the total pending items"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches {
+
+		// TODO LRQA-67561 SumOfPendingItemsGreaterThanTotalPendingWhenArePareallelBranches pending implementation
+
+	}
+
+	@description = "LPS-86642 - Verify that the unexpected error state appear when unexpected error happen"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test UnexpectedErrorState {
+
+		// TODO LRQA-67560 UnexpectedErrorState pending implementation
 
 	}
 

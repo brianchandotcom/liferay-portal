@@ -1,0 +1,167 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-94146 - Verify that users cannot select more than an option per time"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanNotSelectMoreThanOneFilter {
+
+		// TODO LRQA-67643 CanNotSelectMoreThanOneFilter pending implementation
+
+	}
+
+	@description = "LPS-87571 - Verify that the users are able to click on the metric cards from the Completed Items card and be directed to the All Items page"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test ClickOnMetricCardsAndBeDirectedToAllItemsPage {
+
+		// TODO LRQA-67893 ClickOnMetricCardsAndBeDirectedToAllItemsPage pending implementation
+
+	}
+
+	@description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DefaultDateFormatIsMMDDYYYY {
+
+		// TODO LRQA-67641 DefaultDateFormatIsMMDDYYYY pending implementation
+
+	}
+
+	@description = "LPS-98233 - Verify that the fields From and To are required"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FromAndToAreRequiredFields {
+
+		// TODO LRQA-67644 FromAndToAreRequiredFields pending implementation
+
+	}
+
+	@description = "LPS-98233 - Verify that the user can not insert a future date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FutureDatesAreNotAllowed {
+
+		// TODO LRQA-67646 FutureDatesAreNotAllowed pending implementation
+
+	}
+
+	@description = "LPS-86650 - Verify that info icon hover state and tooltip message"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test InfoIconDisplaysMessageOnHover {
+
+		// TODO LRQA-67636 InfoIconDisplaysMessageOnHover pending implementation
+
+	}
+
+	@description = "LPS-86650 - Verify that when there is no SLA defined for the process, all items will be displayed as Untracked"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ItemsWithNoSlaAreDisplayedUntracked {
+
+		// TODO LRQA-67642 ItemsWithNoSlaAreDisplayedUntracked pending implementation
+
+	}
+
+	@description = "LPS-97665 - Verify the label from Yesterday dropdown timeframe option is read as <dd MM>, 12 AM - <dd MM>, 11:59 PM"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test LabelFromYesterdayFilter {
+
+		// TODO LRQA-67640 LabelFromYesterdayFilter pending implementation
+
+	}
+
+	@description = "LPS-98233 - Verify that at the custom range modal, the oldest date accepted is 1970"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test OldestDataAcceptedIs1970 {
+
+		// TODO LRQA-67639 OldestDataAcceptedIs1970 pending implementation
+
+	}
+
+	@description = "LPS-94146 - Verify that the page provides loading feedback when the table is being updated according to filter options"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PageProvidesLoadingFeedbackWhenUpdatingTable {
+
+		// TODO LRQA-67637 PageProvidesLoadingFeedbackWhenUpdatingTable pending implementation
+
+	}
+
+	@description = "LPS-94146 - Verify that the percentage is displayed in Overdue, On Time and Untracked cards"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PercentageIsDisplayedInCards {
+
+		// TODO LRQA-67638 PercentageIsDisplayedInCards pending implementation
+
+	}
+
+	@description = "LPS-94146 - Verify that when there are no results for a filter selection, the table should display the respective empty state"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TableDisplaysEmptyStateWhenThereIsNoResult {
+
+		// TODO LRQA-67647 TableDisplaysEmptyStateWhenThereIsNoResult pending implementation
+
+	}
+
+	@description = "LPS-98233 - Verify that the To date is greater than the From date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ToDateMustBeGreaterThanFromDate {
+
+		// TODO LRQA-67649 ToDateMustBeGreaterThanFromDate pending implementation
+
+	}
+
+	@description = "LPS-86650 - Verify that the unexpected error state appear when unexpected error happen"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test UnexpectedErrorState {
+
+		// TODO LRQA-67648 UnexpectedErrorState pending implementation
+
+	}
+
+	@description = "LPS-86650 - Verify that, for numbers greater than 3 digits, use abbreviation standards considering localization specifications (example for English: replace 1,220 for 1.2K)"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test UseAbreviationForGreaterThan3DigitsNumber {
+
+		// TODO LRQA-67645 UseAbreviationForGreaterThan3DigitsNumber pending implementation
+
+	}
+
+}

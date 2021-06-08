@@ -245,9 +245,6 @@ definition {
 		FormsAdminNavigator.gotoPublishedForm();
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = "Upload");
-		
-
-
 	}
 
 	@description = "Verify that a Fieldset can be added to a Fieldset"

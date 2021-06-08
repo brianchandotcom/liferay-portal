@@ -17,7 +17,6 @@ package com.liferay.change.tracking.internal.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.AccountTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.ContactTable;
 import com.liferay.portal.kernel.model.UserTable;
@@ -49,8 +48,6 @@ public class ContactTableReferenceDefinition
 			ContactTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
 		).singleColumnReference(
 			ContactTable.INSTANCE.userId, UserTable.INSTANCE.userId
-		).singleColumnReference(
-			ContactTable.INSTANCE.accountId, AccountTable.INSTANCE.accountId
 		).parentColumnReference(
 			ContactTable.INSTANCE.contactId,
 			ContactTable.INSTANCE.parentContactId

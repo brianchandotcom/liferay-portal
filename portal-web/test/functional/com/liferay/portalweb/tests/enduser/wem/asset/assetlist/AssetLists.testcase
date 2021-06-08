@@ -58,9 +58,9 @@ definition {
 	@priority = "3"
 	test AddDuplicateAssetList {
 		task ("Create a manual asset list") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Asset List Test");
+			JSONAssetlist.addManualAssetListEntry(
+					groupName = "Test Site Name",
+					title = "Manual Asset List Test");
 		}
 
 		task ("Create an asset list that has the same name as the first asset list") {

@@ -3209,12 +3209,12 @@ public interface PropsKeys {
 			"sql.data.com.liferay.portal.kernel.model.Country.country.id";
 
 	public static final String
-		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ACCOUNT_ADDRESS =
-			"sql.data.com.liferay.portal.kernel.model.ListType.account.address";
+		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_COMPANY_ADDRESS =
+			"sql.data.com.liferay.portal.kernel.model.ListType.company.address";
 
 	public static final String
-		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ACCOUNT_EMAIL_ADDRESS =
-			"sql.data.com.liferay.portal.kernel.model.ListType.account.email.address";
+		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_COMPANY_EMAIL_ADDRESS =
+			"sql.data.com.liferay.portal.kernel.model.ListType.company.email.address";
 
 	public static final String
 		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_CONTACT_EMAIL_ADDRESS =

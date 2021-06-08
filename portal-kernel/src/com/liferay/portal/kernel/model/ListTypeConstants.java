@@ -33,29 +33,29 @@ public class ListTypeConstants {
 
 	public static final String WEBSITE = ".website";
 
-	// Account
+	// Company
 
-	public static final String ACCOUNT_ADDRESS =
-		Account.class.getName() + ADDRESS;
+	public static final String COMPANY_ADDRESS =
+		Company.class.getName() + ADDRESS;
 
-	public static final int ACCOUNT_ADDRESS_DEFAULT = GetterUtil.getInteger(
+	public static final int COMPANY_ADDRESS_DEFAULT = GetterUtil.getInteger(
 		PropsUtil.get(
 			PropsKeys.
-				SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ACCOUNT_ADDRESS));
+				SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_COMPANY_ADDRESS));
 
-	public static final String ACCOUNT_EMAIL_ADDRESS =
-		Account.class.getName() + EMAIL_ADDRESS;
+	public static final String COMPANY_EMAIL_ADDRESS =
+		Company.class.getName() + EMAIL_ADDRESS;
 
-	public static final int ACCOUNT_EMAIL_ADDRESS_DEFAULT =
+	public static final int COMPANY_EMAIL_ADDRESS_DEFAULT =
 		GetterUtil.getInteger(
 			PropsUtil.get(
 				PropsKeys.
-					SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ACCOUNT_EMAIL_ADDRESS));
+					SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_COMPANY_EMAIL_ADDRESS));
 
-	public static final String ACCOUNT_PHONE = Account.class.getName() + PHONE;
+	public static final String COMPANY_PHONE = Company.class.getName() + PHONE;
 
-	public static final String ACCOUNT_WEBSITE =
-		Account.class.getName() + WEBSITE;
+	public static final String COMPANY_WEBSITE =
+		Company.class.getName() + WEBSITE;
 
 	// Address
 

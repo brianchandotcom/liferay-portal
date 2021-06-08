@@ -623,7 +623,7 @@ definition {
 
 		FormFields.enableCheckbox(fieldName = "Enabled");
 
-		PortletEntry.save();
+		PortletEntry.update();
 
 		AntCommand(
 			locator1 = "build-test-authentication.xml",

@@ -569,15 +569,6 @@ definition {
 		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}
 
-	macro selectGridRadioOptionWithoutCategory {
-		var optionRowNumber = "${optionRowNumber}";
-		var optionColumnNumber = "${optionColumnNumber}";
-		var key_optionNumber = "Row: Option ${optionRowNumber}, Column: Option ${optionColumnNumber}";
-		var key_fieldName = "${fieldName}";
-
-		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
-	}
-
 	macro selectImageUpload {
 		WaitForElementPresent(locator1 = "FormFields#UPLOAD_ON_WIDGET");
 
@@ -1305,4 +1296,5 @@ definition {
 			locator1 = "Form#FIELD_LABEL",
 			value1 = "${fieldLabel}");
 	}
+
 }

@@ -67,11 +67,6 @@ definition {
 			emailAddress = "test@liferay.com",
 			emailSenderName = "Joe Bloggs");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
 		for (var userNum : list "1,2") {
 			JSONUser.addUser(
 				userEmailAddress = "userea${userNum}@liferay.com",

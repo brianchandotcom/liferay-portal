@@ -241,6 +241,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMAGE_PREDEFINED_VALUE</td>
+	<td>//div[contains(@data-field-name,'Image')]//div[contains(@class,'input-group')]//input[@type='text' and (@value='${key_imageName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -367,6 +367,11 @@
     <td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_ADVANCED_PREDEFINED_VALUE</td>
+	<td>//div[contains(@class,'image-picker-preview')]/img[contains(@src,'${key_imageName}')]</td>
+	<td></td>
+</tr>
+<tr>
     <td>SIDEBAR_ADVANCED_TAB</td>
     <td>//*[contains(@class,'nav-link') and normalize-space()='Advanced'][not(contains(@id,'ProductMenu'))]</td>
     <td></td>

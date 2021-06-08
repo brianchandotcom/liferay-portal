@@ -651,6 +651,32 @@ definition {
 			radioOption = "${textFieldLineOption}");
 	}
 
+	macro setImagePredefinedValue {
+		Form.gotoAdvancedTab();
+
+		Click(locator1 = "FormFields#UPLOAD_PREDEFINED_VALUE");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "${uploadFileName}");
+
+		AssertElementPresent(
+			key_imageName = "${uploadFileName}",
+			locator1 = "Form#SIDEBAR_ADVANCED_PREDEFINED_VALUE");
+	}
+
+	macro validateImagePredefinedValue {
+		AssertElementPresent(
+			key_imageName = "${fileName}",
+			locator1 = "FormFields#IMAGE_PREDEFINED_VALUE");
+
+		if (isSet(fieldDescription)) {
+			AssertElementPresent(
+				key_description = "${fieldDescription}",
+				locator1 = "FormFields#IMAGE_FIELD_DESCRIPTION");
+		}
+	}
+
 	macro viewAddedLanguage {
 		AssertElementPresent(
 			changeAppLanguageTo = "${key_language}",

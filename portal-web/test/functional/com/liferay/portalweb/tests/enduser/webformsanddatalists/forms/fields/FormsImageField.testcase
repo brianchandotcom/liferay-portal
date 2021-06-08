@@ -200,13 +200,45 @@ definition {
 	}
 
 	@description = "Verify that a Predefined Value can be set"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PredefinedValueCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133049 PredefinedValueCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Image",
+			formPageNumber = "0");
+
+		FormFields.setImagePredefinedValue(uploadFileName = "Document_1.jpg");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Image");
+
+		AssertElementPresent(
+			key_imageName = "Document_1.jpg",
+			locator1 = "Form#SIDEBAR_ADVANCED_PREDEFINED_VALUE");
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.validateImagePredefinedValue(fileName = "Document_1.jpg");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+
+
 
 	}
 

@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.service.AssetTagService;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
+import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CommerceCatalog;
@@ -520,6 +521,15 @@ public class ProductResourceImpl
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
+		Attachment attachment) {
+
+		return CustomFieldsUtil.toMap(
+			CPAttachmentFileEntry.class.getName(),
+			contextCompany.getCompanyId(), attachment.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(
 		Product product) {
 
 		return CustomFieldsUtil.toMap(
@@ -637,6 +647,14 @@ public class ProductResourceImpl
 
 		if (images != null) {
 			for (Attachment attachment : images) {
+				Map<String, Serializable> expandoBridgeAttributes =
+						_getExpandoBridgeAttributes(attachment);
+
+				if (expandoBridgeAttributes != null) {
+					serviceContext.setExpandoBridgeAttributes(
+							expandoBridgeAttributes);
+				}
+
 				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_uniqueFileNameProvider, attachment,
@@ -653,6 +671,14 @@ public class ProductResourceImpl
 
 		if (attachments != null) {
 			for (Attachment attachment : attachments) {
+				Map<String, Serializable> expandoBridgeAttributes =
+						_getExpandoBridgeAttributes(attachment);
+
+				if (expandoBridgeAttributes != null) {
+					serviceContext.setExpandoBridgeAttributes(
+							expandoBridgeAttributes);
+				}
+
 				AttachmentUtil.addOrUpdateCPAttachmentFileEntry(
 					cpDefinition.getGroupId(), _cpAttachmentFileEntryService,
 					_uniqueFileNameProvider, attachment,
@@ -662,6 +688,8 @@ public class ProductResourceImpl
 					CPAttachmentFileEntryConstants.TYPE_OTHER, serviceContext);
 			}
 		}
+
+		serviceContext.setExpandoBridgeAttributes(null);
 
 		// Product specifications
 

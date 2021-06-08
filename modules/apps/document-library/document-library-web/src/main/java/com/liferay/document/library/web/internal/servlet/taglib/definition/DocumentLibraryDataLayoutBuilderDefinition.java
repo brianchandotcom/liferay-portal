@@ -46,8 +46,9 @@ public class DocumentLibraryDataLayoutBuilderDefinition
 	@Override
 	public String[] getUnimplementedProperties() {
 		return new String[] {
-			"allowGuestUsers", "fieldNamespace", "inputMask", "readOnly",
-			"requireConfirmation", "validation", "visibilityExpression"
+			"allowGuestUsers", "fieldNamespace", "hideField", "inputMask",
+			"readOnly", "requireConfirmation", "validation",
+			"visibilityExpression"
 		};
 	}
 

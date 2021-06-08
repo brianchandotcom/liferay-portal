@@ -16,6 +16,7 @@ package com.liferay.layout.reports.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -23,16 +24,22 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "pages")
 @Meta.OCD(
+	description = "layout-reports-google-pagespeed-configuration-description",
 	id = "com.liferay.layout.reports.web.internal.configuration.LayoutReportsGooglePageSpeedConfiguration",
 	localization = "content/Language",
 	name = "layout-reports-google-pagespeed-configuration-name"
 )
 public interface LayoutReportsGooglePageSpeedConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enable-google-pagespeed", required = false)
 	public boolean enabled();
 
-	@Meta.AD(required = false)
+	@ExtendedAttributeDefinition(
+		descriptionArguments = "https://developers.google.com/speed/docs/insights/v5/get-started"
+	)
+	@Meta.AD(
+		description = "api-key-description", name = "api-key", required = false
+	)
 	public String apiKey();
 
 }

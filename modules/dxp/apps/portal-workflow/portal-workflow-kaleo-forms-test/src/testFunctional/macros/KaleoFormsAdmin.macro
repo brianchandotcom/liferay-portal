@@ -644,12 +644,14 @@ definition {
 		var key_kfProgressName = "${kfProgressName}";
 
 		AssertTextEquals(
-			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_STEP",
-			value1 = "${kfProgressStep}");
-
-		AssertTextEquals(
 			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_NAME",
 			value1 = "${kfProgressName}");
+
+		var key_kfProgressName = StringUtil.lowerCase("${kfProgressName}");
+
+		AssertTextEquals(
+			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_STEP",
+			value1 = "${kfProgressStep}");
 	}
 
 	macro viewNextFieldSetPage {

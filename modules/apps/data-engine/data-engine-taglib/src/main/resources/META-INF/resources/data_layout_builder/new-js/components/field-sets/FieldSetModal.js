@@ -115,6 +115,7 @@ const ModalContent = ({
 					dataLayoutPages,
 					name,
 				},
+				defaultLanguageId,
 				name,
 			};
 

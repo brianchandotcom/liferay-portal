@@ -569,23 +569,6 @@ definition {
 		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
 	}
 
-	macro selectImageUpload {
-		WaitForElementPresent(locator1 = "FormFields#UPLOAD_ON_WIDGET");
-
-		if (isSet(rowNumber)) {
-			Click(
-				key_rowNumber = "${rowNumber}",
-				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
-		}
-		else {
-			Click(
-				key_rowNumber = "1",
-				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
-		}
-
-		ItemSelector.uploadFile(
-			navTab = "${navTab}",
-			uploadFileName = "${fileName}");
 	macro selectGridRadioOptionWithoutCategory {
 		var optionRowNumber = "${optionRowNumber}";
 		var optionColumnNumber = "${optionColumnNumber}";
@@ -609,7 +592,9 @@ definition {
 				locator1 = "FormFields#UPLOAD_ON_WIDGET_ON_ANY_ROW");
 		}
 
-		Click.clickNoWaitForVisible(locator1 = "FormFields#GRID_RADIO_OPTIONS");
+		ItemSelector.uploadFile(
+			navTab = "${navTab}",
+			uploadFileName = "${fileName}");
 	}
 
 	macro selectRadioOption {
@@ -1320,5 +1305,4 @@ definition {
 			locator1 = "Form#FIELD_LABEL",
 			value1 = "${fieldLabel}");
 	}
-
 }

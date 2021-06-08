@@ -143,22 +143,22 @@ definition {
 		AssertElementPresent(
 			key_bodyText = "Option 1",
 			key_fieldName = "Grid",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION_1");
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
 
 		AssertElementPresent(
 			key_bodyText = "Option 2",
 			key_fieldName = "Grid",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION_1");
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
 
 		AssertElementPresent(
 			key_bodyText = "Option 1",
 			key_fieldName = "Copy of Grid",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION_1");
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
 
 		AssertElementPresent(
 			key_bodyText = "Option 2",
 			key_fieldName = "Copy of Grid",
-			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION_1");
+			locator1 = "FormFields#FIELD_TARGET_LABEL_AND_BODY_OPTION");
 
 		FormViewBuilder.assertHelpTextPresent(
 			fieldName = "Grid",

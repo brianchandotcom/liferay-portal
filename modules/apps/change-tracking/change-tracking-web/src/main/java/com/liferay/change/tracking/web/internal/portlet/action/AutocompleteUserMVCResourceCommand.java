@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
@@ -140,6 +141,9 @@ public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 					"fullName", user.getFullName()
 				).put(
 					"hasPublicationsAccess",
+					_portletPermission.contains(
+						permissionChecker, PortletKeys.PORTAL,
+						ActionKeys.VIEW_CONTROL_PANEL) &&
 					_portletPermission.contains(
 						permissionChecker, CTPortletKeys.PUBLICATIONS,
 						ActionKeys.ACCESS_IN_CONTROL_PANEL) &&

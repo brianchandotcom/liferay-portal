@@ -209,26 +209,19 @@ const SharingAutocomplete = ({onItemClick = () => {}, sourceItems}) => {
 					return 1;
 				})
 				.map((item) => {
-					let title = '';
-
-					if (!item.hasPublicationsAccess) {
-						title = Liferay.Language.get(
-							'user-does-not-have-permissions-to-access-publications'
-						);
-					}
-					else if (item.isOwner) {
-						title = Liferay.Language.get(
-							'cannot-update-permissions-for-an-owner'
-						);
-					}
-
 					return (
 						<ClayDropDown.Item
 							data-tooltip-align="top"
-							disabled={title}
+							disabled={item.isOwner}
 							key={item.userId}
 							onClick={() => onItemClick(item)}
-							title={title}
+							title={
+								item.isOwner
+									? Liferay.Language.get(
+											'cannot-update-permissions-for-an-owner'
+									  )
+									: ''
+							}
 						>
 							<div className="autofit-row autofit-row-center">
 								<div className="autofit-col mr-3">
@@ -362,6 +355,8 @@ const ManageCollaborators = ({
 									item: {
 										emailAddress: user.emailAddress,
 										fullName: user.fullName,
+										hasPublicationsAccess:
+											user.hasPublicationsAccess,
 										label: item.label,
 										userId: user.userId,
 										value: item.value,
@@ -511,14 +506,46 @@ const ManageCollaborators = ({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
+		const publicationsUserRoleUserIds = [];
+		const publicationsUserRoleEmailAddresses = [];
 		const roleValues = [];
 		const userIds = [];
 
 		const selectedItemsKeys = Object.keys(selectedItems);
 
 		for (let i = 0; i < selectedItemsKeys.length; i++) {
+			const user = selectedUserData[selectedItemsKeys[i]];
+
+			if (!user.hasPublicationsAccess) {
+				publicationsUserRoleEmailAddresses.push(user.emailAddress);
+				publicationsUserRoleUserIds.push(user.userId);
+			}
+
 			roleValues.push(selectedItems[selectedItemsKeys[i]].value);
 			userIds.push(selectedItemsKeys[i]);
+		}
+
+		if (publicationsUserRoleUserIds.length > 0) {
+			let key = Liferay.Language.get(
+				'you-are-inviting-user-x-who-does-not-have-access-to-publications'
+			);
+
+			if (publicationsUserRoleUserIds.length > 1) {
+				key = Liferay.Language.get(
+					'you-are-inviting-users-x-who-do-not-have-access-to-publications'
+				);
+			}
+
+			if (
+				!confirm(
+					Liferay.Util.sub(
+						key,
+						publicationsUserRoleEmailAddresses.join(', ')
+					)
+				)
+			) {
+				return;
+			}
 		}
 
 		const updatedRolesKeys = Object.keys(updatedRoles);
@@ -529,6 +556,9 @@ const ManageCollaborators = ({
 		}
 
 		const formData = objectToFormData({
+			[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
+				','
+			),
 			[`${namespace}roleValues`]: roleValues.join(','),
 			[`${namespace}userIds`]: userIds.join(','),
 		});

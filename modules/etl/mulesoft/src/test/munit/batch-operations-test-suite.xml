@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	  xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	  xmlns:liferay="http://www.mulesoft.org/schema/mule/liferay"
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	  xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	  xmlns="http://www.mulesoft.org/schema/mule/core"
+
+	  xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+		http://www.mulesoft.org/schema/mule/liferay http://www.mulesoft.org/schema/mule/liferay/current/mule-liferay.xsd
+		http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+		http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+	<munit:config name="batch-operations-test-suite.xml" />
+
+	<configuration-properties file="automation-credentials.properties" />
+
+	<liferay:config name="Liferay_Config">
+		<liferay:basic-connection openApiSpecPath="${liferay.openApiSpecPath}" username="${liferay.username}" password="${liferay.password}" />
+	</liferay:config>
+
+	<file:config name="File_Config" >
+		<file:connection workingDir="${app.home}" />
+	</file:config>
+
+	<munit:before-test name="before-batch-export-test" >
+		<file:read path="products.json" config-ref="File_Config"/>
+		<liferay:execute-import-create-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config"/>
+	</munit:before-test>
+
+	<munit:test name="batch-import-export-test" description="Export Products">
+		<munit:execution >
+			<liferay:execute-export-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config" fieldNames="active,catalogId,name,productType" siteId="84114"/>
+		</munit:execution>
+		<munit:validation>
+			<munit-tools:assert  >
+				<munit-tools:that >
+					<![CDATA[#[
+						import * from dw::test::Asserts
+ 						---
+						payload must [notBeNull(),beArray(), haveSize(80)]
+					]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+			<foreach  collection="#[payload]">
+				<munit-tools:assert >
+					<munit-tools:that >
+						<![CDATA[#[
+							import * from dw::test::Asserts
+ 							---
+							payload must [haveKey("active"), haveKey("catalogId"), haveKey("name"), haveKey("productType")]
+						]]]>
+					</munit-tools:that>
+				</munit-tools:assert>
+			</foreach>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="batch-delete-test" description="Delete Products">
+		<munit:execution>
+			<liferay:execute-export-task  config-ref="Liferay_Config" className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" fieldNames="active,catalogId,name,productId,productType" siteId="84114"/>
+			<liferay:execute-import-delete-task  config-ref="Liferay_Config" className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product"/>
+			<liferay:get endpoint="/v1.0/products"  config-ref="Liferay_Config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert  >
+				<munit-tools:that >
+					<![CDATA[#[
+						import * from dw::test::Asserts
+ 						---
+						payload.totalCount must equalTo(0)]
+					]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="batch-update-test"  description="Update Products">
+		<munit:execution >
+			<liferay:execute-export-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config" siteId="84114" fieldNames="active,catalogId,id,name,productId,productType"/>
+			<ee:transform  >
+				<ee:message >
+					<ee:set-payload >
+						<![CDATA[
+							%dw 2.0
+							output application/json
+							---
+							payload map ( payload01 , indexOfPayload01 ) -> {
+								active: payload01.active,
+								catalogId: payload01.catalogId,
+								description: {
+									"en_US": "This is my updated description!"
+								},
+								id: payload01.id,
+								productId: payload01.productId,
+								productType: payload01.productType
+						}]]>
+					</ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<liferay:execute-import-update-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config"/>
+			<liferay:execute-export-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config" siteId="84114" fieldNames="active,catalogId,description,name,productId,productType"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert >
+				<munit-tools:that >
+					<![CDATA[#[
+						import * from dw::test::Asserts
+ 						---
+						payload must [notBeNull(),beArray(), haveSize(80)]
+					]]]>
+				</munit-tools:that>
+			</munit-tools:assert>
+			<foreach  >
+				<munit-tools:assert  >
+					<munit-tools:that >
+						<![CDATA[#[
+							import * from dw::test::Asserts
+ 							---
+							payload.description.en_US must equalTo("This is my updated description!")]
+						]]>
+					</munit-tools:that>
+				</munit-tools:assert>
+			</foreach>
+		</munit:validation>
+	</munit:test>
+
+	<munit:after-test name="after-batch-test" >
+		<liferay:execute-export-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config" siteId="84114" fieldNames="active,catalogId,name,productId,productType"/>
+		<liferay:execute-import-delete-task className="com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product" config-ref="Liferay_Config"/>
+	</munit:after-test>
+
+</mule>

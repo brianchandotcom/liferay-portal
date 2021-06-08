@@ -26,7 +26,6 @@ import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPK
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
@@ -36,8 +35,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.io.Serializable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -210,14 +207,6 @@ public class CommerceAccountUserRelLocalServiceImpl
 	}
 
 	@Override
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		return createCommerceAccountUserRel(
-			(CommerceAccountUserRelPK)primaryKeyObj);
-	}
-
-	@Override
 	public CommerceAccountUserRel deleteCommerceAccountUserRel(
 		CommerceAccountUserRel commerceAccountUserRel) {
 
@@ -275,17 +264,6 @@ public class CommerceAccountUserRelLocalServiceImpl
 
 		accountEntryUserRelLocalService.
 			deleteAccountEntryUserRelsByAccountUserId(userId);
-	}
-
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException {
-
-		CommerceAccountUserRel commerceAccountUserRel =
-			(CommerceAccountUserRel)persistedModel;
-
-		return deleteCommerceAccountUserRel(
-			commerceAccountUserRel.getPrimaryKey());
 	}
 
 	@Override
@@ -360,19 +338,6 @@ public class CommerceAccountUserRelLocalServiceImpl
 		return (int)
 			accountEntryUserRelLocalService.
 				getAccountEntryUserRelsCountByAccountEntryId(commerceAccountId);
-	}
-
-	@Override
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		CommerceAccountUserRelPK commerceAccountUserRelPK =
-			(CommerceAccountUserRelPK)primaryKeyObj;
-
-		return CommerceAccountUserRelImpl.fromAccountEntryUserRel(
-			accountEntryUserRelLocalService.getAccountEntryUserRel(
-				commerceAccountUserRelPK.getCommerceAccountId(),
-				commerceAccountUserRelPK.getCommerceAccountUserId()));
 	}
 
 	@Override

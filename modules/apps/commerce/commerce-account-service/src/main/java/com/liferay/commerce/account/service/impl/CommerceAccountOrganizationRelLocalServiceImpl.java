@@ -20,11 +20,8 @@ import com.liferay.commerce.account.model.impl.CommerceAccountOrganizationRelImp
 import com.liferay.commerce.account.service.base.CommerceAccountOrganizationRelLocalServiceBaseImpl;
 import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPK;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.vulcan.util.TransformUtil;
-
-import java.io.Serializable;
 
 import java.util.List;
 
@@ -83,14 +80,6 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 
 		return CommerceAccountOrganizationRelImpl.
 			fromAccountEntryOrganizationRel(accountEntryOrganizationRel);
-	}
-
-	@Override
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		return createCommerceAccountOrganizationRel(
-			(CommerceAccountOrganizationRelPK)primaryKeyObj);
 	}
 
 	@Override
@@ -153,17 +142,6 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 
 		accountEntryOrganizationRelLocalService.
 			deleteAccountEntryOrganizationRelsByOrganizationId(organizationId);
-	}
-
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException {
-
-		CommerceAccountOrganizationRel commerceAccountOrganizationRel =
-			(CommerceAccountOrganizationRel)persistedModel;
-
-		return deleteCommerceAccountOrganizationRel(
-			commerceAccountOrganizationRel.getPrimaryKey());
 	}
 
 	@Override
@@ -260,21 +238,6 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 	public int getCommerceAccountOrganizationRelsCount(long commerceAccountId) {
 		return accountEntryOrganizationRelLocalService.
 			getAccountEntryOrganizationRelsCount(commerceAccountId);
-	}
-
-	@Override
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		CommerceAccountOrganizationRelPK commerceAccountOrganizationRelPK =
-			(CommerceAccountOrganizationRelPK)primaryKeyObj;
-
-		return CommerceAccountOrganizationRelImpl.
-			fromAccountEntryOrganizationRel(
-				accountEntryOrganizationRelLocalService.
-					getAccountEntryOrganizationRel(
-						commerceAccountOrganizationRelPK.getCommerceAccountId(),
-						commerceAccountOrganizationRelPK.getOrganizationId()));
 	}
 
 	@Override

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -225,15 +224,6 @@ public class CommerceAccountLocalServiceImpl
 			accountEntryLocalService.createAccountEntry(commerceAccountId));
 	}
 
-	@Override
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		return CommerceAccountImpl.fromAccountEntry(
-			(AccountEntry)accountEntryLocalService.createPersistedModel(
-				primaryKeyObj));
-	}
-
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -305,17 +295,6 @@ public class CommerceAccountLocalServiceImpl
 			commerceAccountId);
 
 		_portal.updateImageId(accountEntry, false, null, "logoId", 0, 0, 0);
-	}
-
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException {
-
-		CommerceAccount commerceAccount = (CommerceAccount)persistedModel;
-
-		return accountEntryLocalService.deletePersistedModel(
-			accountEntryLocalService.getPersistedModel(
-				commerceAccount.getPrimaryKeyObj()));
 	}
 
 	@Override
@@ -402,15 +381,6 @@ public class CommerceAccountLocalServiceImpl
 
 		return CommerceAccountImpl.fromAccountEntry(
 			accountEntryLocalService.getGuestAccountEntry(companyId));
-	}
-
-	@Override
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		return CommerceAccountImpl.fromAccountEntry(
-			(AccountEntry)accountEntryLocalService.getPersistedModel(
-				primaryKeyObj));
 	}
 
 	@Override

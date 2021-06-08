@@ -586,7 +586,7 @@ message.
 			newenvironment="true"
 		>
 			<arg value="configuration.java.files=${configuration.java.files}" />
-			<arg value="output.file=${project.dir}/modules/configuration-env.txt" />
+			<arg value="output.file=${project.dir}/portal-impl/src/portal.properties" />
 		</java>
 	</target>
 

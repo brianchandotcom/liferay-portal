@@ -6,7 +6,7 @@
 	<import file="../build-common-java.xml" />
 
 	<property name="copy.jar" value="false" />
-	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
+	<property name="deploy.dir" value="${app.server.shielded-container-lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Portal Impl" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.portal.impl;singleton:=true" />

@@ -39,8 +39,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
-import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
-import com.liferay.portal.kernel.servlet.SerializableSessionAttributeListener;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
@@ -53,8 +51,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
-import com.liferay.portal.servlet.AxisServlet;
-import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcessor;
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
@@ -91,9 +87,10 @@ import java.util.concurrent.FutureTask;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletRegistration;
 
 import javax.sql.DataSource;
+
+import org.apache.tika.config.ServiceLoader;
 
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -300,6 +297,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			MessageBus.class, PortalExecutorManager.class,
 			SchedulerEngineHelper.class);
 
+		ServiceLoader.setContextClassLoader(portalClassLoader);
+
 		FutureTask<Void> springInitTask = null;
 
 		if (PropsValues.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED) {
@@ -313,6 +312,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			Thread springInitThread = new Thread(
 				springInitTask, "Portal Spring Init Thread");
 
+			springInitThread.setContextClassLoader(portalClassLoader);
 			springInitThread.setDaemon(true);
 
 			springInitThread.start();
@@ -384,10 +384,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		CustomJspBagRegistryUtil.getCustomJspBags();
-
-		initServlets(servletContext);
-
-		initListeners(servletContext);
 	}
 
 	protected void clearFilteredPropertyDescriptorsCache(
@@ -445,28 +441,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		configurableWebApplicationContext.addBeanFactoryPostProcessor(
 			new CompatBeanDefinitionRegistryPostProcessor());
-	}
-
-	protected void initListeners(ServletContext servletContext) {
-		if (PropsValues.SESSION_VERIFY_SERIALIZABLE_ATTRIBUTE) {
-			servletContext.addListener(
-				SerializableSessionAttributeListener.class);
-		}
-
-		servletContext.addListener(PortalSessionListener.class);
-		servletContext.addListener(PortletSessionListenerManager.class);
-	}
-
-	protected void initServlets(ServletContext servletContext) {
-		if (PropsValues.AXIS_SERVLET_ENABLED) {
-			ServletRegistration.Dynamic dynamic = servletContext.addServlet(
-				"Axis Servlet", new AxisServlet());
-
-			dynamic.addMapping(PropsValues.AXIS_SERVLET_MAPPING);
-
-			dynamic.setAsyncSupported(true);
-			dynamic.setLoadOnStartup(1);
-		}
 	}
 
 	private void _cleanUpJDBCDrivers() {

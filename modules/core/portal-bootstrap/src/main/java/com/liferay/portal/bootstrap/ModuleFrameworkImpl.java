@@ -1816,11 +1816,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (PropsValues.MODULE_FRAMEWORK_CONCURRENT_STARTUP_ENABLED) {
 			Runtime runtime = Runtime.getRuntime();
 
+			Thread currentThread = Thread.currentThread();
+
 			ExecutorService executorService = Executors.newFixedThreadPool(
 				runtime.availableProcessors(),
 				new NamedThreadFactory(
 					"ModuleFramework-Static-Bundles", Thread.NORM_PRIORITY,
-					ModuleFrameworkImpl.class.getClassLoader()));
+					currentThread.getContextClassLoader()));
 
 			List<Future<Void>> futures = new ArrayList<>(bundles.size());
 

@@ -3,7 +3,7 @@
 <project basedir="." default="compile" name="util-java">
 	<import file="../build-common-java.xml" />
 
-	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
+	<property name="deploy.dir" value="${app.server.shielded-container-lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util Java" />
 	<property name="manifest.bundle.symbolic.name" value="com.liferay.util.java" />

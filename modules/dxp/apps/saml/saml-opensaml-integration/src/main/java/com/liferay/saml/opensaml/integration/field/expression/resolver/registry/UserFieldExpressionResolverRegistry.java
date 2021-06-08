@@ -15,6 +15,7 @@
 package com.liferay.saml.opensaml.integration.field.expression.resolver.registry;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.saml.opensaml.integration.field.expression.resolver.UserFieldExpressionResolver;
 
 import java.util.List;

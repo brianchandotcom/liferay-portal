@@ -15,6 +15,7 @@
 package com.liferay.saml.opensaml.integration.field.expression.handler.registry;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.saml.opensaml.integration.field.expression.handler.SamlSpIdpConnectionFieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.processor.context.SamlSpIdpConnectionProcessorContext;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;

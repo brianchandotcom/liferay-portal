@@ -276,6 +276,14 @@ definition {
 		AssertElementPresent(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
 
+	macro viewDeletedSegmentName {
+		var key_segmentName = "${searchTerm}";
+
+		ACSegments.searchSegment(findSegment = "${searchTerm}");
+
+		AssertElementNotPresent(locator1 = "ACSegments#SELECT_SEGMENT");
+	}
+
 	macro viewActivePageCreationModel {
 		AssertTextEquals(
 			locator1 = "ACSegments#ACTIVE_PAGE",

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<BlogsAdminPortletDataHandler self-path="/group/40259/portlet/com_liferay_blogs_web_portlet_BlogsAdminPortlet/40259/portlet-data.xml" group-id="40259">
+	<BlogsEntry>
+		<staged-model group-id="40259" uuid="7290c5e5-a584-dc10-bc43-4e66237038fa" path="/group/40259/com.liferay.blogs.model.BlogsEntry/40261.xml" user-uuid="64705ef2-53fa-cf14-92bb-f6f7fd899e05" asset-entry-priority="0.0"/>
+	</BlogsEntry>
+	<FriendlyURLEntry>
+		<staged-model uuid="631b4283-010c-5d22-a0f8-51962decb1c6" resource-class-name="com.liferay.blogs.model.BlogsEntry" mainEntry="true" path="/company/20102/com.liferay.friendly.url.model.FriendlyURLEntry/40263.xml" attached-class-name="com.liferay.blogs.model.BlogsEntry" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.blogs.model.BlogsEntry" class-pk="40261" group-id="40259" group-key="Source Site Name" live-group-id="40259" type="dependency" uuid="7290c5e5-a584-dc10-bc43-4e66237038fa" company-id="20102" missing="false"/>
+			</references>
+		</staged-model>
+	</FriendlyURLEntry>
+</BlogsAdminPortletDataHandler>

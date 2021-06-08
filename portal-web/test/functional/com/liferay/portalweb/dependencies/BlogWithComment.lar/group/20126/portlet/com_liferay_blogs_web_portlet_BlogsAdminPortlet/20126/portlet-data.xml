@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<BlogsAdminPortletDataHandler self-path="/group/20126/portlet/com_liferay_blogs_web_portlet_BlogsAdminPortlet/20126/portlet-data.xml" group-id="20126">
+	<BlogsEntry>
+		<staged-model group-id="20126" uuid="d5fac9c3-a3d4-5f41-99c3-bef45f71a20a" path="/group/20126/com.liferay.blogs.model.BlogsEntry/40466.xml" user-uuid="64705ef2-53fa-cf14-92bb-f6f7fd899e05" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.message.boards.model.MBMessage" class-pk="40486" attached-class-name="com.liferay.blogs.model.BlogsEntry" group-id="20126" group-key="Guest" live-group-id="20126" type="weak" uuid="7fc9429d-1dd4-4b2a-492d-bb9d423ea0a8" company-id="20102" missing="false"/>
+				<reference class-name="com.liferay.message.boards.model.MBMessage" class-pk="40491" attached-class-name="com.liferay.blogs.model.BlogsEntry" group-id="20126" group-key="Guest" live-group-id="20126" type="weak" uuid="5af6258c-ac06-ca53-a43a-54a7a2f25c33" company-id="20102" missing="false"/>
+			</references>
+		</staged-model>
+	</BlogsEntry>
+	<FriendlyURLEntry>
+		<staged-model uuid="7e43b9d7-6bb1-64e8-d881-cc8ef8f08df9" resource-class-name="com.liferay.blogs.model.BlogsEntry" mainEntry="true" path="/company/20102/com.liferay.friendly.url.model.FriendlyURLEntry/40468.xml" attached-class-name="com.liferay.blogs.model.BlogsEntry" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.blogs.model.BlogsEntry" class-pk="40466" group-id="20126" group-key="Guest" live-group-id="20126" type="dependency" uuid="d5fac9c3-a3d4-5f41-99c3-bef45f71a20a" company-id="20102" missing="false"/>
+			</references>
+		</staged-model>
+	</FriendlyURLEntry>
+	<MBMessage>
+		<staged-model group-id="20126" uuid="7fc9429d-1dd4-4b2a-492d-bb9d423ea0a8" question="false" threadUuid="bda0d043-fd54-bfc2-4a75-50a54b303370" hasAttachmentsFileEntries="false" path="/group/20126/com.liferay.message.boards.model.MBMessage/40486.xml" attached-class-name="com.liferay.blogs.model.BlogsEntry" user-uuid="64705ef2-53fa-cf14-92bb-f6f7fd899e05" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.message.boards.model.MBDiscussion" class-pk="40489" attached-class-name="com.liferay.blogs.model.BlogsEntry" group-id="20126" group-key="Guest" live-group-id="20126" type="parent" uuid="529eca55-4696-7cbd-11ea-472d906ff57c" company-id="0" missing="false"/>
+			</references>
+		</staged-model>
+		<staged-model group-id="20126" uuid="5af6258c-ac06-ca53-a43a-54a7a2f25c33" question="false" threadUuid="bda0d043-fd54-bfc2-4a75-50a54b303370" hasAttachmentsFileEntries="false" path="/group/20126/com.liferay.message.boards.model.MBMessage/40491.xml" attached-class-name="com.liferay.blogs.model.BlogsEntry" user-uuid="64705ef2-53fa-cf14-92bb-f6f7fd899e05" asset-entry-priority="0.0">
+			<references>
+				<reference class-name="com.liferay.message.boards.model.MBDiscussion" class-pk="40489" attached-class-name="com.liferay.blogs.model.BlogsEntry" group-id="20126" group-key="Guest" live-group-id="20126" type="parent" uuid="529eca55-4696-7cbd-11ea-472d906ff57c" company-id="0" missing="false"/>
+				<reference class-name="com.liferay.message.boards.model.MBMessage" class-pk="40486" attached-class-name="com.liferay.blogs.model.BlogsEntry" group-id="20126" group-key="Guest" live-group-id="20126" type="parent" uuid="7fc9429d-1dd4-4b2a-492d-bb9d423ea0a8" company-id="20102" missing="false"/>
+			</references>
+		</staged-model>
+	</MBMessage>
+	<MBDiscussion>
+		<staged-model group-id="20126" uuid="529eca55-4696-7cbd-11ea-472d906ff57c" path="/group/20126/com.liferay.message.boards.model.MBDiscussion/40489.xml" attached-class-name="com.liferay.blogs.model.BlogsEntry" user-uuid="64705ef2-53fa-cf14-92bb-f6f7fd899e05" asset-entry-priority="0.0"/>
+	</MBDiscussion>
+</BlogsAdminPortletDataHandler>

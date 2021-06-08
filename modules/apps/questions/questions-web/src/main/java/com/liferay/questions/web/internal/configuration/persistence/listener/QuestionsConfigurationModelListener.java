@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -65,14 +66,36 @@ public class QuestionsConfigurationModelListener
 
 	@Override
 	public void onAfterSave(String pid, Dictionary<String, Object> properties) {
-		List<String> keys = Collections.list(properties.keys());
-
-		Stream<String> stream = keys.stream();
-
 		try {
+			List<String> keys = Collections.list(properties.keys());
+
+			Stream<String> stream = keys.stream();
+
 			_enableAssetRenderer(
 				stream.collect(
 					Collectors.toMap(Function.identity(), properties::get)));
+
+			Configuration configuration = _getConfiguration();
+
+			Dictionary<String, Object> configurationProperties =
+				configuration.getProperties();
+
+			if (!Objects.equals("", properties.get("historyRouterBasePath"))) {
+				if (configurationProperties == null) {
+					configurationProperties = new HashMapDictionary<>();
+				}
+
+				configurationProperties.put(
+					"_layoutSEOLinkManager.target",
+					"(component.name=" +
+						QuestionsLayoutSEOLinkManagerImpl.class.getName() +
+							")");
+			}
+			else if (configurationProperties != null) {
+				configurationProperties.remove("_layoutSEOLinkManager.target");
+			}
+
+			configuration.update(configurationProperties);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -82,8 +105,7 @@ public class QuestionsConfigurationModelListener
 	@Activate
 	@Modified
 	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws Exception {
+		BundleContext bundleContext, Map<String, Object> properties) {
 
 		_bundleContext = bundleContext;
 
@@ -91,13 +113,11 @@ public class QuestionsConfigurationModelListener
 	}
 
 	@Deactivate
-	protected void deactivate() throws Exception {
+	protected void deactivate() {
 		_unregister();
 	}
 
-	private void _enableAssetRenderer(Map<String, Object> properties)
-		throws Exception {
-
+	private void _enableAssetRenderer(Map<String, Object> properties) {
 		if (GetterUtil.getBoolean(
 				properties.get("enableCustomAssetRenderer"))) {
 
@@ -125,22 +145,6 @@ public class QuestionsConfigurationModelListener
 						_mbMessageLocalService,
 						_mbMessageModelResourcePermission),
 					assetRendererFactoryProperties));
-
-			Configuration configuration = _getConfiguration();
-
-			Dictionary<String, Object> configurationProperties =
-				configuration.getProperties();
-
-			if (configurationProperties == null) {
-				configurationProperties = new HashMapDictionary<>();
-			}
-
-			configurationProperties.put(
-				"_layoutSEOLinkManager.target",
-				"(component.name=" +
-					QuestionsLayoutSEOLinkManagerImpl.class.getName() + ")");
-
-			configuration.update(configurationProperties);
 		}
 		else {
 			_unregister();
@@ -154,23 +158,13 @@ public class QuestionsConfigurationModelListener
 			"?");
 	}
 
-	private void _unregister() throws Exception {
+	private void _unregister() {
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
 
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();
 			}
-		}
-
-		Configuration configuration = _getConfiguration();
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		if (properties != null) {
-			properties.remove("_layoutSEOLinkManager.target");
-
-			configuration.update(properties);
 		}
 	}
 

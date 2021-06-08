@@ -29,7 +29,8 @@ public class PortalPreferencesTable {
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"portalPreferencesId", Types.BIGINT},
-		{"ownerId", Types.BIGINT}, {"ownerType", Types.INTEGER}
+		{"companyId", Types.BIGINT}, {"ownerId", Types.BIGINT},
+		{"ownerType", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -40,13 +41,15 @@ TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("portalPreferencesId", Types.BIGINT);
 
+TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+
 TABLE_COLUMNS_MAP.put("ownerId", Types.BIGINT);
 
 TABLE_COLUMNS_MAP.put("ownerType", Types.INTEGER);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table PortalPreferences (mvccVersion LONG default 0 not null,portalPreferencesId LONG not null primary key,ownerId LONG,ownerType INTEGER)";
+"create table PortalPreferences (mvccVersion LONG default 0 not null,portalPreferencesId LONG not null primary key,companyId LONG,ownerId LONG,ownerType INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table PortalPreferences";
 

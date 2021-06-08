@@ -96,7 +96,9 @@ public class LayoutReportsDataMVCResourceCommand
 		LayoutReportsDataProvider layoutReportsDataProvider =
 			new LayoutReportsDataProvider(
 				_layoutReportsGooglePageSpeedConfigurationProvider.getApiKey(
-					themeDisplay.getScopeGroup()));
+					themeDisplay.getScopeGroup()),
+				_layoutReportsGooglePageSpeedConfigurationProvider.
+					getStrategy());
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,

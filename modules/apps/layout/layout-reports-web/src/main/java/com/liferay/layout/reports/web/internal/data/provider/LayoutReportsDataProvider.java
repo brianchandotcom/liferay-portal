@@ -38,8 +38,9 @@ import java.util.Objects;
  */
 public class LayoutReportsDataProvider {
 
-	public LayoutReportsDataProvider(String apiKey) {
+	public LayoutReportsDataProvider(String apiKey, String strategy) {
 		_apiKey = apiKey;
+		_strategy = strategy;
 	}
 
 	public List<LayoutReportsIssue> getLayoutReportsIssues(
@@ -140,6 +141,7 @@ public class LayoutReportsDataProvider {
 			Arrays.asList("accessibility", "best-practices", "seo"));
 		runpagespeed.setKey(_apiKey);
 		runpagespeed.setLocale(LanguageUtil.getLanguageId(locale));
+		runpagespeed.setStrategy(_strategy);
 
 		PagespeedApiPagespeedResponseV5 pagespeedApiPagespeedResponseV5 =
 			runpagespeed.execute();
@@ -208,5 +210,6 @@ public class LayoutReportsDataProvider {
 	private static final int _READ_TIMEOUT = 120000;
 
 	private final String _apiKey;
+	private final String _strategy;
 
 }

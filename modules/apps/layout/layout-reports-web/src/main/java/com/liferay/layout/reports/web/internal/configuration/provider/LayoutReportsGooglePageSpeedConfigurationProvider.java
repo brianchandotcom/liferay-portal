@@ -54,6 +54,10 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 		return _getApiKey(group.getCompanyId());
 	}
 
+	public String getStrategy() {
+		return _layoutReportsGooglePageSpeedConfiguration.strategy();
+	}
+
 	public boolean isEnabled(Company company) throws ConfigurationException {
 		return _isEnabled(company.getCompanyId());
 	}

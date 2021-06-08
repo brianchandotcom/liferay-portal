@@ -116,7 +116,9 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 			LayoutReportsDataProvider layoutReportsDataProvider =
 				new LayoutReportsDataProvider(
 					_layoutReportsGooglePageSpeedConfigurationProvider.
-						getApiKey(group));
+						getApiKey(group),
+					_layoutReportsGooglePageSpeedConfigurationProvider.
+						getStrategy());
 
 			String url = ParamUtil.getString(resourceRequest, "url");
 

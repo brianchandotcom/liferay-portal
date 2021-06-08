@@ -34,7 +34,7 @@ public class LayoutReportsDataProviderTest {
 	@Test
 	public void testIsValidConnection() {
 		LayoutReportsDataProvider layoutReportsDataProvider =
-			new LayoutReportsDataProvider("apiKey");
+			new LayoutReportsDataProvider("apiKey", "strategy");
 
 		Assert.assertTrue(layoutReportsDataProvider.isValidConnection());
 	}
@@ -42,7 +42,7 @@ public class LayoutReportsDataProviderTest {
 	@Test
 	public void testIsValidConnectionWithoutApiKey() {
 		LayoutReportsDataProvider layoutReportsDataProvider =
-			new LayoutReportsDataProvider(null);
+			new LayoutReportsDataProvider(null, "strategy");
 
 		Assert.assertFalse(layoutReportsDataProvider.isValidConnection());
 	}

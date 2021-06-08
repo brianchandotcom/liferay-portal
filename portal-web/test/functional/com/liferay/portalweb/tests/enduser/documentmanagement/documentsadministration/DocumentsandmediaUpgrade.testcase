@@ -33,6 +33,51 @@ definition {
 	}
 
 	@priority = "5"
+	@refactordone
+	test ViewDMArchive71105 {
+		property data.archive.type = "data-archive-documents-and-media";
+		property portal.version = "7.1.10.5";
+
+		Upgrade.viewDocuments();
+
+		Upgrade.viewDocumentTypesAndMetadataSets();
+
+		Upgrade.addDMWithDocumentTypesAndMetadataSets();
+
+		Upgrade.editAnnDeleteDocuments();
+	}
+
+	@priority = "5"
+	@refactordone
+	test ViewDMArchive72104 {
+		property data.archive.type = "data-archive-documents-and-media";
+		property portal.version = "7.2.10.4";
+
+		Upgrade.viewDocuments();
+
+		Upgrade.viewDocumentTypesAndMetadataSets();
+
+		Upgrade.addDMWithDocumentTypesAndMetadataSets();
+
+		Upgrade.editAnnDeleteDocuments();
+	}
+
+	@priority = "5"
+	@refactordone
+	test ViewDMArchive73101 {
+		property data.archive.type = "data-archive-documents-and-media";
+		property portal.version = "7.3.10.1";
+
+		Upgrade.viewDocuments();
+
+		Upgrade.viewDocumentTypesAndMetadataSets();
+
+		Upgrade.addDMWithDocumentTypesAndMetadataSets();
+
+		Upgrade.editAnnDeleteDocuments();
+	}
+
+	@priority = "5"
 	@refactorneeded
 	test ViewDMArchive621015 {
 		property data.archive.type = "data-archive-documents-and-media";
@@ -48,6 +93,21 @@ definition {
 		property portal.version = "6.2.10.21";
 
 		Upgrade.viewDocument();
+	}
+
+	@priority = "5"
+	@refactordone
+	test ViewDMArchive701015 {
+		property data.archive.type = "data-archive-documents-and-media";
+		property portal.version = "7.0.10.15";
+
+		Upgrade.viewDocuments();
+
+		Upgrade.viewDocumentTypesAndMetadataSets();
+
+		Upgrade.addDMWithDocumentTypesAndMetadataSets();
+
+		Upgrade.editAnnDeleteDocuments();
 	}
 
 }

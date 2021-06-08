@@ -14,6 +14,7 @@
 
 package com.liferay.saml.opensaml.integration.field.expression.handler.registry;
 
+import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.saml.opensaml.integration.field.expression.handler.FieldExpressionHandler;
 import com.liferay.saml.opensaml.integration.processor.context.ProcessorContext;
@@ -25,6 +26,7 @@ import java.util.Set;
 /**
  * @author Stian Sigvartsen
  */
+@ProviderType
 public interface FieldExpressionHandlerRegistry
 	<M extends BaseModel<M>, PC extends ProcessorContext<M>,
 	 V extends FieldExpressionHandler<M, PC>> {

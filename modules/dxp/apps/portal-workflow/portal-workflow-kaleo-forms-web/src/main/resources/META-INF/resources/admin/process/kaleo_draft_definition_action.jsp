@@ -29,29 +29,31 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
-		<portlet:param name="tabs1" value="unpublished" />
-		<portlet:param name="closeRedirect" value='<%= (String)row.getParameter("backURL") %>' />
-		<portlet:param name="historyKey" value="workflow" />
-		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-		<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-	</liferay-portlet:renderURL>
+	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
+			<portlet:param name="tabs1" value="unpublished" />
+			<portlet:param name="closeRedirect" value='<%= (String)row.getParameter("backURL") %>' />
+			<portlet:param name="historyKey" value="workflow" />
+			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+		</liferay-portlet:renderURL>
 
-	<liferay-ui:icon
-		message="edit"
-		onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + editURL + "');" %>'
-		url="javascript:;"
-	/>
+		<liferay-ui:icon
+			message="edit"
+			onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + editURL + "');" %>'
+			url="javascript:;"
+		/>
 
-	<portlet:actionURL name="/kaleo_forms_admin/delete_kaleo_definition_versions" var="deleteURL">
-		<portlet:param name="tabs1" value="unpublished" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="historyKey" value="workflow" />
-		<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-	</portlet:actionURL>
+		<portlet:actionURL name="/kaleo_forms_admin/delete_kaleo_definition_versions" var="deleteURL">
+			<portlet:param name="tabs1" value="unpublished" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="historyKey" value="workflow" />
+			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
-	/>
+		<liferay-ui:icon-delete
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

@@ -162,4 +162,16 @@ definition {
 		Copy(locator1 = "ACSettings#TOKEN_INPUT_FIELD");
 	}
 
+	macro assertIndividualsUsage(){
+		AssertTextEquals(
+			locator1 = "ACSettings#INDIVIDUALS_USAGE_METRIC",
+			value1 = "${individualUsageValue}");
+	}
+
+	macro assertPageViewsUsage(){
+		AssertTextEquals(
+			locator1 = "ACSettings#PAGE_VIEWS_USAGE_METRIC",
+			value1 = "${pageViewsUsageValue}");
+	}
+
 }

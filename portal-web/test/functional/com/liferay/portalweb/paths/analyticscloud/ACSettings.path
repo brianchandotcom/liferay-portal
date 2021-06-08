@@ -108,6 +108,17 @@
     <td>//a[@class='back-arrow']</td>
     <td></td>
 </tr>
+<!-- USAGE -->
+<tr>
+    <td>INDIVIDUALS_USAGE_METRIC</td>
+    <td>//*[contains(@class,'metric-name') and contains(.,'Individuals')]/..//span[contains(@class,'metric-current')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PAGE_VIEWS_USAGE_METRIC</td>
+    <td>//*[contains(@class,'metric-name') and contains(.,'Page Views')]/..//span[contains(@class,'metric-current')]</td>
+    <td></td>
+</tr>
 </tbody>
 </table>
 </body>

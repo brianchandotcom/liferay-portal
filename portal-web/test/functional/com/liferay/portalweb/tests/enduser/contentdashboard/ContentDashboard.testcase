@@ -1534,36 +1534,6 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can open de Info side panel of a web content"
-	@priority = "5"
-	test ViewInfoPanel {
-		property portal.acceptance = "true";
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Test Site Name",
-			title = "WC Title");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-
-		Pause(locator1 = "3000");
-
-		ContentDashboard.openInfoPanelByDropdownMenu();
-
-		AssertTextPresent(
-			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
-			value1 = "Content Info");
-
-		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
-
-		JSONWebcontent.deleteWebContent(
-			groupName = "Test Site Name",
-			title = "WC Title");
-	}
-
 	@description = "LPS-133181 When Filter by Author 'All', displays content from all users featured in the user's content dashboard view."
 	@priority = "5"
 	test ShowAllContentCreatorUsers {
@@ -1685,6 +1655,36 @@ definition {
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "WC Title 2");
 		}
+	}
+
+	@description = "Validate if the user can open de Info side panel of a web content"
+	@priority = "5"
+	test ViewInfoPanel {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Test Site Name",
+			title = "WC Title");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Pause(locator1 = "3000");
+
+		ContentDashboard.openInfoPanelByDropdownMenu();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+			value1 = "Content Info");
+
+		Click(locator1 = "ContentDashboard#CLOSE_INFO_PANEL_BUTTON");
+
+		JSONWebcontent.deleteWebContent(
+			groupName = "Test Site Name",
+			title = "WC Title");
 	}
 
 }

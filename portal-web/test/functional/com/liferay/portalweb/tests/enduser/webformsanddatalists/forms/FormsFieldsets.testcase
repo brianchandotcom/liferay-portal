@@ -428,14 +428,38 @@ definition {
 	}
 
 	@description = "Verify that leaving a Fieldset without saving will prompt a notification warning the user that any unsaved changes wil be lost"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test WillWarnUsersWhenExitingWithoutSaving {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133500 WillWarnUsersWhenExitingWithoutSaving pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Numeric");
+
+		Navigator.gotoBack();
+
+		Click(locator1 = "Modal#BODY");
+
+		AssertElementPresent(locator1 = "Button#LEAVE");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Modal#BODY",
+			value1 = "Any unsaved changes will be lost, are you sure you want to leave?");
 	}
 
 }

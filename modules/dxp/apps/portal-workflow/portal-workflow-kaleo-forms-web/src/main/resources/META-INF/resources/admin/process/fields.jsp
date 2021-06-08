@@ -192,23 +192,43 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 		['aui-base']
 	);
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />editStructure',
-		(title, uri) => {
-			var A = AUI();
+	<portlet:namespace />editStructure = (title, uri) => {
+		let closeRedirectURL;
+		let redirectOnClose = false;
 
-			var WIN = A.config.win;
+		Liferay.Util.openModal({
+			onClose: () => {
+				if (redirectOnClose) {
+					Liferay.Util.navigate(closeRedirectURL);
+				}
+			},
+			onOpen: ({iframeWindow}) => {
+				const closeRedirectElement = iframeWindow.document.getElementById(
+					'_<%= DDMPortletKeys.DYNAMIC_DATA_MAPPING %>_closeRedirect'
+				);
 
-			Liferay.Util.openModal({
-				id: A.guid(),
-				refreshWindow: WIN,
-				title: title,
-				url: uri,
-			});
-		},
-		['liferay-util']
-	);
+				if (closeRedirectElement) {
+					closeRedirectURL = closeRedirectElement.value;
+				}
+
+				const saveButton = iframeWindow.document.querySelector(
+					'.btn-primary'
+				);
+
+				if (saveButton) {
+					const onClick = () => {
+						redirectOnClose = true;
+
+						saveButton.removeEventListener('click', onClick);
+					};
+
+					saveButton.addEventListener('click', onClick);
+				}
+			},
+			title: title,
+			url: uri,
+		});
+	};
 </aui:script>
 
 <aui:script use="liferay-kaleo-forms-components">

@@ -102,6 +102,14 @@ definition {
 
 		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
 
+        ACSegments.viewSegmentCriteriaWebBehavior(
+            activitiesOption = "has",
+            searchTerm = "'Blogs AC Title'",
+			atLeastMost = "at least",
+			occurenceNumber = "4",
+			timeOption = "since",
+            timePeriod = "Last 24 hours");
+
 		ACNavigation.switchTab(tabName = "Membership");
 
 		AssertElementPresent(
@@ -121,34 +129,22 @@ definition {
 
 		ACSegments.saveSegment();
 
-		ACNavigation.switchTab(tabName = "Membership");
+		ACNavigation.goToSegments();
+
+		ACSegments.accessSegment(segmentName = "Dynamic Segment Test");
+
+        ACSegments.viewSegmentCriteriaWebBehavior(
+            activitiesOption = "has not",
+            searchTerm = "'Blogs AC Title'",
+			atLeastMost = "at most",
+			occurenceNumber = "5",
+			timeOption = "ever");
+
+        ACNavigation.switchTab(tabName = "Membership");
 
 		AssertTextEquals(
 			locator1 = "ACSegments#NO_MEMBER_TITLE",
 			value1 = "There are no items found.");
-
-		ACNavigation.goToSegments();
-
-		ACSegments.editSegment(searchTerm = "Dynamic Segment Test");
-
-		AssertTextPresent(
-			key_indexField = "1",
-			locator1 = "ACSegments#ACTIVITIES_CRITERION",
-			value1 = "has not");
-
-		AssertTextEquals(
-			locator1 = "ACSegments#OCCURENCE_INPUT",
-			value1 = "5");
-
-		AssertTextPresent(
-			key_indexField = "1",
-			locator1 = "ACSegments#OCCURENCE_SELECT",
-			value1 = "at most");
-
-		AssertTextPresent(
-			key_indexField = "1",
-			locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
-			value1 = "ever");
 	}
 
 }

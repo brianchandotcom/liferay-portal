@@ -238,6 +238,28 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "SQLCODE=-727");
 	}
 
+	macro addDMWithDocumentTypesAndMetadataSets {
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Type Description",
+			dmDocumentFile = "Document_2.doc",
+			dmDocumentTitle = "DM Document Type Title After Upgrade",
+			dmDocumentTypeName = "DM Document Type Name",
+			documentsAndMediaField = "DM Document JPG",
+			fieldFieldLabel = "Documents and Media",
+			navTab = "Documents and Media",
+			numberField = "1234");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Type Title After Upgrade");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Title After Upgrade");
+	}
+
 	macro addForm {
 		Navigator.openURL();
 
@@ -888,6 +910,42 @@ definition {
 				fragmentName = "Paragraph",
 				targetFragmentName = "Rich Text");
 		}
+	}
+
+	macro editAnnDeleteDocuments {
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.editCmdPG(
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentFileNameEdit = "DM Document Video Edit.mp4",
+			dmDocumentTitle = "DM Document Video",
+			dmDocumentTitleEdit = "DM Document Video Edit");
+
+		PortletEntry.publish();
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description Edit",
+			dmDocumentFileName = "DM Document Video Edit.mp4",
+			dmDocumentTitle = "DM Document Video Edit",
+			dmDocumentVersionNumber = "1.1");
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.deletePG(dmDocumentTitle = "DM Document JPG");
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		PortletEntry.selectAll();
+
+		ClickNoError(locator1 = "Icon#DELETE");
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.viewDefaultCP();
 	}
 
 	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {
@@ -2350,6 +2408,114 @@ definition {
 		DMDocument.viewDocumentMetadataCP(
 			metadataData = "Liferay",
 			metadataLabel = "Creator");
+	}
+
+	macro viewDocuments {
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Type Description",
+			dmDocumentFileName = "DM Document Type Title.doc",
+			dmDocumentTitle = "DM Document Type Title",
+			dmDocumentType = "DM Document Type Name");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Type Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewEntryInEdit(
+			dmDocumentFileName = "DM Document Type Title.doc",
+			dmDocumentTitle = "DM Document Type Title");
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "DM Document Video.mp4",
+			dmDocumentTitle = "DM Document Video");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document Video",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewEntryInEdit(
+			dmDocumentFileName = "DM Document Video.mp4",
+			dmDocumentTitle = "DM Document Video");
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "DM Document JPG.jpg",
+			dmDocumentTitle = "DM Document JPG");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document JPG",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewEntryInEdit(
+			dmDocumentFileName = "DM Document JPG.jpg",
+			dmDocumentTitle = "DM Document JPG");
+
+		Navigator.gotoPage(pageName = "Documents");
+
+		DMDocument.viewPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFileName = "DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title.doc",
+			dmDocumentTitle = "DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title");
+
+		DMNavigator.openToEditEntryInSite(
+			dmDocumentTitle = "DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewEntryInEdit(
+			dmDocumentFileName = "DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title.doc",
+			dmDocumentTitle = "DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title");
+	}
+
+	macro viewDocumentTypesAndMetadataSets {
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");
+
+		LexiconEntry.openEntryMenu(rowEntry = "DM Document Type Name");
+
+		MenuItem.click(menuItem = "Edit");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Documents and Media",
+			fieldName = "Upload");
+
+		DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
+
+		AssertTextEquals(
+			key_metadataSetName = "Document Metadata Set Name",
+			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME",
+			value1 = "Document Metadata Set Name");
+
+		DMNavigator.openMetadataSetsAdmin(siteURLKey = "guest");
+
+		DMDocumentType.viewCP(dmDocumentTypeName = "Document Metadata Set Name");
+
+		LexiconEntry.openEntryMenu(rowEntry = "Document Metadata Set Name");
+
+		MenuItem.click(menuItem = "Edit");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Boolean",
+			fieldName = "Multiple Selection");
+
+		DataEngine.viewField(
+			fieldFieldLabel = "Number",
+			fieldName = "Numeric");
 	}
 
 	macro ViewDroolsAppManager {

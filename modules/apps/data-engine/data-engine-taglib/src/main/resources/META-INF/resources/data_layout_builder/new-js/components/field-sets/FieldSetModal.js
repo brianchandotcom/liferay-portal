@@ -66,7 +66,7 @@ const ModalContent = ({
 	const [name, setName] = useState(dataDefinition.name ?? {});
 	const changeEditingLanguageId = (editingLanguageId) => {
 		dispatch({
-			payload: {editingLanguageId},
+			payload: {defaultLanguageId, editingLanguageId},
 			type: CORE_EVENT_TYPES.LANGUAGE.CHANGE,
 		});
 

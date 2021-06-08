@@ -20,12 +20,10 @@ import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.data.source.CPDataSource;
 import com.liferay.commerce.product.data.source.CPDataSourceResult;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -56,8 +54,6 @@ public abstract class BaseCPDataSourceAssetEntryImpl implements CPDataSource {
 			return new CPDataSourceResult(new ArrayList<>(), 0);
 		}
 
-		long groupId = portal.getScopeGroupId(httpServletRequest);
-
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAttributes(
@@ -65,19 +61,12 @@ public abstract class BaseCPDataSourceAssetEntryImpl implements CPDataSource {
 				Field.STATUS, WorkflowConstants.STATUS_APPROVED
 			).put(
 				"excludedCPDefinitionId", cpCatalogEntry.getCPDefinitionId()
-			).put(
-				"params",
-				LinkedHashMapBuilder.<String, Object>put(
-					"keywords", StringPool.STAR
-				).build()
 			).build());
 
 		searchContext.setCompanyId(portal.getCompanyId(httpServletRequest));
 
-		searchContext.setKeywords(StringPool.STAR);
-
 		return cpDefinitionHelper.search(
-			groupId, searchContext,
+			portal.getScopeGroupId(httpServletRequest), searchContext,
 			getCPQuery(cpCatalogEntry.getCPDefinitionId()), start, end);
 	}
 

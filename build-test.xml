@@ -11501,69 +11501,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<ant antfile="build.xml" inheritAll="false" target="update-app-server-scripts" />
 
-				<mirrors-get
-					dest="liferay-portal-dependencies.zip"
-					src="${test.build.portal.dependencies.zip.url}"
-				/>
-
-				<unzip
-					dest="${app.server.lib.global.dir}"
-					src="liferay-portal-dependencies.zip"
-				>
-					<mapper
-						from="[^/]+/(.*)"
-						to="\1"
-						type="regexp"
-					/>
-				</unzip>
-
-				<if>
-					<equals arg1="${app.server.type}" arg2="websphere" />
-					<then>
-						<local name="app.server.websphere.java.ext.dir" />
-
-						<if>
-							<equals arg1="${app.server.websphere.version}" arg2="8.5.5.0" />
-							<then>
-								<property name="app.server.websphere.java.ext.dir" value="${app.server.websphere.dir}/java_1.8_64/jre/lib/ext" />
-							</then>
-							<else>
-								<property name="app.server.websphere.java.ext.dir" value="${app.server.websphere.dir}/javaext" />
-							</else>
-						</if>
-
-						<mkdir dir="${app.server.websphere.java.ext.dir}" />
-
-						<move
-							file="${app.server.lib.portal.dir}/portlet.jar"
-							todir="${app.server.websphere.java.ext.dir}"
-						/>
-
-						<if>
-							<available file="${app.server.portal.dir}/WEB-INF/ibm-web-ext.xml" />
-							<then>
-								<replace
-									file="${app.server.portal.dir}/WEB-INF/ibm-web-ext.xml"
-								>
-									<replacetoken><![CDATA[</web-ext>]]></replacetoken>
-									<replacevalue><![CDATA[  <jsp-attribute name="jdkSourceLevel" value="18" />
-</web-ext>]]></replacevalue>
-								</replace>
-
-								<replace
-									file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/applications/liferay-portal.ear/deployments/liferay-portal/liferay-portal.war/WEB-INF/ibm-web-ext.xml"
-								>
-									<replacetoken><![CDATA[</web-ext>]]></replacetoken>
-									<replacevalue><![CDATA[  <jsp-attribute name="jdkSourceLevel" value="18" />
-</web-ext>]]></replacevalue>
-								</replace>
-							</then>
-						</if>
-					</then>
-				</if>
-
-				<delete file="liferay-portal-dependencies.zip" />
-
 				<if>
 					<or>
 						<matches pattern="file://" string="${test.build.portal.elasticsearch.zip.url}" />

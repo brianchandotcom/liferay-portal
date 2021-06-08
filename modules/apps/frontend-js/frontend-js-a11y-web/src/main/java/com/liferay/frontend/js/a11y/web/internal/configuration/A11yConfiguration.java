@@ -58,4 +58,26 @@ public @interface A11yConfiguration {
 	)
 	public String[] editors();
 
+	@Meta.AD(name = "axe-core-run-only", required = false)
+	public String[] axeCoreRunOnly();
+
+	@Meta.AD(
+		deflt = "violations|inapplicable|passes|incomplete",
+		name = "axe-core-result-types", required = false
+	)
+	public String[] axeCoreResultTypes();
+
+	@Meta.AD(deflt = "false", name = "axe-core-iframes", required = false)
+	public boolean axeCoreIframes();
+
+	@Meta.AD(
+		deflt = "60000", name = "axe-core-frame-wait-time", required = false
+	)
+	public int axeCoreFrameWaitTime();
+
+	@Meta.AD(
+		deflt = "false", name = "axe-core-performance-timer", required = false
+	)
+	public boolean axeCorePerformanceTimer();
+
 }

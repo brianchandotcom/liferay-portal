@@ -53,7 +53,7 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		List<String> denylist = new ArrayList();
+		List<String> denylist = new ArrayList<>();
 
 		String[] denylistConfig = _a11yConfiguration.denylist();
 
@@ -82,6 +82,19 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 		String[] targetsArray = {_a11yConfiguration.target()};
 
 		JSONObject propsJSONObject = JSONUtil.put(
+			"axeOptions",
+			JSONUtil.put(
+				"frameWaitTime", _a11yConfiguration.axeCoreFrameWaitTime()
+			).put(
+				"iframes", _a11yConfiguration.axeCoreIframes()
+			).put(
+				"performanceTimer", _a11yConfiguration.axeCorePerformanceTimer()
+			).put(
+				"resultTypes", _a11yConfiguration.axeCoreResultTypes()
+			).put(
+				"runOnly", _a11yConfiguration.axeCoreRunOnly()
+			)
+		).put(
 			"denylist", denylist
 		).put(
 			"targets", targetsArray

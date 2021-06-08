@@ -196,8 +196,6 @@ definition {
 		FormsAdminNavigator.gotoEntriesLabel(
 			key_type = "Text",
 			key_value = "Text");
-
-			
 	}
 
 	@description = "Verify that Entries can be viewed"

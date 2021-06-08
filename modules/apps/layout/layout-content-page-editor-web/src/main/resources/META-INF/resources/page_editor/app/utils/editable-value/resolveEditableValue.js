@@ -31,6 +31,10 @@ export default function resolveEditableValue(
 function resolveRawEditableValue(editableValue, languageId = null) {
 	let content = editableValue;
 
+	if (!content) {
+		return Promise.resolve(null);
+	}
+
 	if (languageId) {
 		if (content[languageId] || content[languageId] === '') {
 			content = content[languageId];

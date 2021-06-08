@@ -37,7 +37,7 @@ definition {
 	@description = "Delete a dynamic segment"
 	@priority = "5"
 	test CanDeleteDynamicSegment {
-        ACUtils.createBlogsAndAddToPage();
+		ACUtils.createBlogsAndAddToPage();
 
 		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
@@ -69,13 +69,13 @@ definition {
 
 		ACSegments.saveSegment();
 
-        ACNavigation.goToSegments();
+		ACNavigation.goToSegments();
 
-        ACSegments.viewSegmentName(searchTerm = "Dynamic Segment Test");
+		ACSegments.viewSegmentName(searchTerm = "Dynamic Segment Test");
 
-        ACSegments.deleteSegment(searchTerm = "Dynamic Segment Test");
+		ACSegments.deleteSegment(searchTerm = "Dynamic Segment Test");
 
-        ACSegments.viewDeletedSegmentName(searchTerm = "Dynamic Segment Test");
+		ACSegments.viewDeletedSegmentName(searchTerm = "Dynamic Segment Test");
 	}
 
 }

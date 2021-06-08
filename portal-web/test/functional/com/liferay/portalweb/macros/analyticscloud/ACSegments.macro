@@ -268,22 +268,6 @@ definition {
 			value1 = "${occurenceNumber}");
 	}
 
-	macro viewSegmentName {
-		var key_segmentName = "${searchTerm}";
-
-		ACSegments.searchSegment(findSegment = "${searchTerm}");
-
-		AssertElementPresent(locator1 = "ACSegments#SELECT_SEGMENT");
-	}
-
-	macro viewDeletedSegmentName {
-		var key_segmentName = "${searchTerm}";
-
-		ACSegments.searchSegment(findSegment = "${searchTerm}");
-
-		AssertElementNotPresent(locator1 = "ACSegments#SELECT_SEGMENT");
-	}
-
 	macro viewActivePageCreationModel {
 		AssertTextEquals(
 			locator1 = "ACSegments#ACTIVE_PAGE",
@@ -294,6 +278,14 @@ definition {
 		AssertTextPresent(
 			locator1 = "ACSegments#DELETED_CRITERIA",
 			value1 = "Drag and drop criterion from the right to add rules.");
+	}
+
+	macro viewDeletedSegmentName {
+		var key_segmentName = "${searchTerm}";
+
+		ACSegments.searchSegment(findSegment = "${searchTerm}");
+
+		AssertElementNotPresent(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
 
 	macro viewDuplicatedCriteria {
@@ -362,6 +354,14 @@ definition {
 			key_memberType = "Total Members:",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",
 			value1 = "${totalNumber}");
+	}
+
+	macro viewSegmentName {
+		var key_segmentName = "${searchTerm}";
+
+		ACSegments.searchSegment(findSegment = "${searchTerm}");
+
+		AssertElementPresent(locator1 = "ACSegments#SELECT_SEGMENT");
 	}
 
 	macro viewSegmentProfileCards {

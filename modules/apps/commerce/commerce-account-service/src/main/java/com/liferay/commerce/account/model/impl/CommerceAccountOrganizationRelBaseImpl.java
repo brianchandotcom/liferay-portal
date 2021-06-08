@@ -15,7 +15,6 @@
 package com.liferay.commerce.account.model.impl;
 
 import com.liferay.commerce.account.model.CommerceAccountOrganizationRel;
-import com.liferay.commerce.account.service.CommerceAccountOrganizationRelLocalServiceUtil;
 
 /**
  * The extended model base implementation for the CommerceAccountOrganizationRel service. Represents a row in the &quot;CommerceAccountOrganizationRel&quot; database table, with each column mapped to a property of this class.
@@ -38,16 +37,5 @@ public abstract class CommerceAccountOrganizationRelBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce account organization rel model instance should use the <code>CommerceAccountOrganizationRel</code> interface instead.
 	 */
-	@Override
-	public void persist() {
-		if (this.isNew()) {
-			CommerceAccountOrganizationRelLocalServiceUtil.
-				addCommerceAccountOrganizationRel(this);
-		}
-		else {
-			CommerceAccountOrganizationRelLocalServiceUtil.
-				updateCommerceAccountOrganizationRel(this);
-		}
-	}
 
 }

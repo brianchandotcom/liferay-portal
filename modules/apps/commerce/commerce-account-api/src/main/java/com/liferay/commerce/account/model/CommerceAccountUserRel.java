@@ -15,7 +15,6 @@
 package com.liferay.commerce.account.model;
 
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -31,8 +30,7 @@ import org.osgi.annotation.versioning.ProviderType;
 	"com.liferay.commerce.account.model.impl.CommerceAccountUserRelImpl"
 )
 @ProviderType
-public interface CommerceAccountUserRel
-	extends CommerceAccountUserRelModel, PersistedModel {
+public interface CommerceAccountUserRel extends CommerceAccountUserRelModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

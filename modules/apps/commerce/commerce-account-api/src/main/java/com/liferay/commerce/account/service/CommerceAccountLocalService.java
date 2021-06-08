@@ -16,26 +16,19 @@ package com.liferay.commerce.account.service;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
@@ -59,8 +52,7 @@ import org.osgi.annotation.versioning.ProviderType;
 	isolation = Isolation.PORTAL,
 	rollbackFor = {PortalException.class, SystemException.class}
 )
-public interface CommerceAccountLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+public interface CommerceAccountLocalService extends BaseLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -74,17 +66,6 @@ public interface CommerceAccountLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * Adds the commerce account to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccount the commerce account
-	 * @return the commerce account that was added
-	 */
-	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAccount addCommerceAccount(CommerceAccount commerceAccount);
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -106,50 +87,14 @@ public interface CommerceAccountLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * Creates a new commerce account with the primary key. Does not add the commerce account to the database.
-	 *
-	 * @param commerceAccountId the primary key for the new commerce account
-	 * @return the new commerce account
-	 */
-	@Transactional(enabled = false)
 	public CommerceAccount createCommerceAccount(long commerceAccountId);
 
-	/**
-	 * @throws PortalException
-	 */
-	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
-
-	/**
-	 * Deletes the commerce account from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccount the commerce account
-	 * @return the commerce account that was removed
-	 * @throws PortalException
-	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceAccount deleteCommerceAccount(
 			CommerceAccount commerceAccount)
 		throws PortalException;
 
-	/**
-	 * Deletes the commerce account with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountId the primary key of the commerce account
-	 * @return the commerce account that was removed
-	 * @throws PortalException if a commerce account with the primary key could not be found
-	 */
-	@Indexable(type = IndexableType.DELETE)
 	public CommerceAccount deleteCommerceAccount(long commerceAccountId)
 		throws PortalException;
 
@@ -157,84 +102,8 @@ public interface CommerceAccountLocalService
 
 	public void deleteLogo(long commerceAccountId) throws PortalException;
 
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int dslQueryCount(DSLQuery dslQuery);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DynamicQuery dynamicQuery();
-
-	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
-
-	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end);
-
-	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator);
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(
-		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccount fetchByExternalReferenceCode(
@@ -243,35 +112,10 @@ public interface CommerceAccountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccount fetchCommerceAccount(long commerceAccountId);
 
-	/**
-	 * Returns the commerce account with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce account's external reference code
-	 * @return the matching commerce account, or <code>null</code> if a matching commerce account could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceAccount fetchCommerceAccountByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAccountByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccount fetchCommerceAccountByReferenceCode(
 		long companyId, String externalReferenceCode);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	/**
-	 * Returns the commerce account with the primary key.
-	 *
-	 * @param commerceAccountId the primary key of the commerce account
-	 * @return the commerce account
-	 * @throws PortalException if a commerce account with the primary key could not be found
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccount getCommerceAccount(long commerceAccountId)
 		throws PortalException;
@@ -281,42 +125,13 @@ public interface CommerceAccountLocalService
 			long userId, long commerceAccountId)
 		throws PortalException;
 
-	/**
-	 * Returns the commerce account with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce account's external reference code
-	 * @return the matching commerce account
-	 * @throws PortalException if a matching commerce account could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CommerceAccount getCommerceAccountByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Group getCommerceAccountGroup(long commerceAccountId)
 		throws PortalException;
 
-	/**
-	 * Returns a range of all the commerce accounts.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce accounts
-	 * @param end the upper bound of the range of commerce accounts (not inclusive)
-	 * @return the range of commerce accounts
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAccount> getCommerceAccounts(int start, int end);
 
-	/**
-	 * Returns the number of commerce accounts.
-	 *
-	 * @return the number of commerce accounts
-	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceAccountsCount();
 
@@ -324,23 +139,12 @@ public interface CommerceAccountLocalService
 	public CommerceAccount getGuestCommerceAccount(long companyId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
-
-	/**
-	 * @throws PortalException
-	 */
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAccount getPersonalCommerceAccount(long userId)
@@ -386,17 +190,6 @@ public interface CommerceAccountLocalService
 	public CommerceAccount setActive(long commerceAccountId, boolean active)
 		throws PortalException;
 
-	/**
-	 * Updates the commerce account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccount the commerce account
-	 * @return the commerce account that was updated
-	 */
-	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAccount updateCommerceAccount(
 		CommerceAccount commerceAccount);
 

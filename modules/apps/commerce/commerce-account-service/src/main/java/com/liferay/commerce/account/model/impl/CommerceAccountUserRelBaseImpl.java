@@ -15,7 +15,6 @@
 package com.liferay.commerce.account.model.impl;
 
 import com.liferay.commerce.account.model.CommerceAccountUserRel;
-import com.liferay.commerce.account.service.CommerceAccountUserRelLocalServiceUtil;
 
 /**
  * The extended model base implementation for the CommerceAccountUserRel service. Represents a row in the &quot;CommerceAccountUserRel&quot; database table, with each column mapped to a property of this class.
@@ -37,16 +36,5 @@ public abstract class CommerceAccountUserRelBaseImpl
 	 *
 	 * Never modify or reference this class directly. All methods that expect a commerce account user rel model instance should use the <code>CommerceAccountUserRel</code> interface instead.
 	 */
-	@Override
-	public void persist() {
-		if (this.isNew()) {
-			CommerceAccountUserRelLocalServiceUtil.addCommerceAccountUserRel(
-				this);
-		}
-		else {
-			CommerceAccountUserRelLocalServiceUtil.updateCommerceAccountUserRel(
-				this);
-		}
-	}
 
 }

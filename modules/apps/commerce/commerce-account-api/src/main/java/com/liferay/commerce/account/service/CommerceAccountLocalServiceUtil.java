@@ -16,10 +16,7 @@ package com.liferay.commerce.account.service;
 
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.PersistedModel;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.io.Serializable;
 
@@ -57,16 +54,6 @@ public class CommerceAccountLocalServiceUtil {
 			externalReferenceCode, userIds, emailAddresses, serviceContext);
 	}
 
-	/**
-	 * Adds the commerce account to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccount the commerce account
-	 * @return the commerce account that was added
-	 */
 	public static CommerceAccount addCommerceAccount(
 		CommerceAccount commerceAccount) {
 
@@ -106,39 +93,12 @@ public class CommerceAccountLocalServiceUtil {
 			userId, taxId, externalReferenceCode, serviceContext);
 	}
 
-	/**
-	 * Creates a new commerce account with the primary key. Does not add the commerce account to the database.
-	 *
-	 * @param commerceAccountId the primary key for the new commerce account
-	 * @return the new commerce account
-	 */
 	public static CommerceAccount createCommerceAccount(
 		long commerceAccountId) {
 
 		return getService().createCommerceAccount(commerceAccountId);
 	}
 
-	/**
-	 * @throws PortalException
-	 */
-	public static PersistedModel createPersistedModel(
-			Serializable primaryKeyObj)
-		throws PortalException {
-
-		return getService().createPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	 * Deletes the commerce account from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccount the commerce account
-	 * @return the commerce account that was removed
-	 * @throws PortalException
-	 */
 	public static CommerceAccount deleteCommerceAccount(
 			CommerceAccount commerceAccount)
 		throws PortalException {
@@ -146,17 +106,6 @@ public class CommerceAccountLocalServiceUtil {
 		return getService().deleteCommerceAccount(commerceAccount);
 	}
 
-	/**
-	 * Deletes the commerce account with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccountId the primary key of the commerce account
-	 * @return the commerce account that was removed
-	 * @throws PortalException if a commerce account with the primary key could not be found
-	 */
 	public static CommerceAccount deleteCommerceAccount(long commerceAccountId)
 		throws PortalException {
 
@@ -175,99 +124,8 @@ public class CommerceAccountLocalServiceUtil {
 		getService().deleteLogo(commerceAccountId);
 	}
 
-	/**
-	 * @throws PortalException
-	 */
-	public static PersistedModel deletePersistedModel(
-			PersistedModel persistedModel)
-		throws PortalException {
-
-		return getService().deletePersistedModel(persistedModel);
-	}
-
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
-	}
-
-	public static int dslQueryCount(DSLQuery dslQuery) {
-		return getService().dslQueryCount(dslQuery);
-	}
-
-	public static DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns the matching rows.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the matching rows
-	 */
-	public static <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return getService().dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @return the range of matching rows
-	 */
-	public static <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end) {
-
-		return getService().dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching rows
-	 */
-	public static <T> List<T> dynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator<T> orderByComparator) {
-
-		return getService().dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows matching the dynamic query
-	 */
-	public static long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	 * Returns the number of rows matching the dynamic query.
-	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
-	 * @return the number of rows matching the dynamic query
-	 */
-	public static long dynamicQueryCount(
-		DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-
-		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static CommerceAccount fetchByExternalReferenceCode(
@@ -281,24 +139,6 @@ public class CommerceAccountLocalServiceUtil {
 		return getService().fetchCommerceAccount(commerceAccountId);
 	}
 
-	/**
-	 * Returns the commerce account with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce account's external reference code
-	 * @return the matching commerce account, or <code>null</code> if a matching commerce account could not be found
-	 */
-	public static CommerceAccount fetchCommerceAccountByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return getService().fetchCommerceAccountByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceAccountByExternalReferenceCode(long, String)}
-	 */
-	@Deprecated
 	public static CommerceAccount fetchCommerceAccountByReferenceCode(
 		long companyId, String externalReferenceCode) {
 
@@ -306,19 +146,6 @@ public class CommerceAccountLocalServiceUtil {
 			companyId, externalReferenceCode);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
-		getActionableDynamicQuery() {
-
-		return getService().getActionableDynamicQuery();
-	}
-
-	/**
-	 * Returns the commerce account with the primary key.
-	 *
-	 * @param commerceAccountId the primary key of the commerce account
-	 * @return the commerce account
-	 * @throws PortalException if a commerce account with the primary key could not be found
-	 */
 	public static CommerceAccount getCommerceAccount(long commerceAccountId)
 		throws PortalException {
 
@@ -332,22 +159,6 @@ public class CommerceAccountLocalServiceUtil {
 		return getService().getCommerceAccount(userId, commerceAccountId);
 	}
 
-	/**
-	 * Returns the commerce account with the matching external reference code and company.
-	 *
-	 * @param companyId the primary key of the company
-	 * @param externalReferenceCode the commerce account's external reference code
-	 * @return the matching commerce account
-	 * @throws PortalException if a matching commerce account could not be found
-	 */
-	public static CommerceAccount getCommerceAccountByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		return getService().getCommerceAccountByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
 	public static com.liferay.portal.kernel.model.Group getCommerceAccountGroup(
 			long commerceAccountId)
 		throws PortalException {
@@ -355,28 +166,12 @@ public class CommerceAccountLocalServiceUtil {
 		return getService().getCommerceAccountGroup(commerceAccountId);
 	}
 
-	/**
-	 * Returns a range of all the commerce accounts.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.account.model.impl.CommerceAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of commerce accounts
-	 * @param end the upper bound of the range of commerce accounts (not inclusive)
-	 * @return the range of commerce accounts
-	 */
 	public static List<CommerceAccount> getCommerceAccounts(
 		int start, int end) {
 
 		return getService().getCommerceAccounts(start, end);
 	}
 
-	/**
-	 * Returns the number of commerce accounts.
-	 *
-	 * @return the number of commerce accounts
-	 */
 	public static int getCommerceAccountsCount() {
 		return getService().getCommerceAccountsCount();
 	}
@@ -387,13 +182,6 @@ public class CommerceAccountLocalServiceUtil {
 		return getService().getGuestCommerceAccount(companyId);
 	}
 
-	public static
-		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-			getIndexableActionableDynamicQuery() {
-
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -401,15 +189,6 @@ public class CommerceAccountLocalServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	/**
-	 * @throws PortalException
-	 */
-	public static PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException {
-
-		return getService().getPersistedModel(primaryKeyObj);
 	}
 
 	public static CommerceAccount getPersonalCommerceAccount(long userId)
@@ -484,16 +263,6 @@ public class CommerceAccountLocalServiceUtil {
 		return getService().setActive(commerceAccountId, active);
 	}
 
-	/**
-	 * Updates the commerce account in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect CommerceAccountLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param commerceAccount the commerce account
-	 * @return the commerce account that was updated
-	 */
 	public static CommerceAccount updateCommerceAccount(
 		CommerceAccount commerceAccount) {
 

@@ -219,11 +219,6 @@ public class CommerceAccountUserRelWrapper
 		return model.getUserUuid();
 	}
 
-	@Override
-	public void persist() {
-		model.persist();
-	}
-
 	/**
 	 * Sets the commerce account ID of this commerce account user rel.
 	 *

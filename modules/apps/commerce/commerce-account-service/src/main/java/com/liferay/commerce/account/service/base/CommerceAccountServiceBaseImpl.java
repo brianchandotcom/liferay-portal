@@ -19,16 +19,8 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountService;
 import com.liferay.commerce.account.service.CommerceAccountServiceUtil;
 import com.liferay.commerce.account.service.persistence.CommerceAccountGroupCommerceAccountRelPersistence;
-import com.liferay.commerce.account.service.persistence.CommerceAccountOrganizationRelPersistence;
-import com.liferay.commerce.account.service.persistence.CommerceAccountPersistence;
-import com.liferay.commerce.account.service.persistence.CommerceAccountUserRelPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
@@ -36,12 +28,9 @@ import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.RolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.lang.reflect.Field;
-
-import javax.sql.DataSource;
 
 /**
  * Provides the base implementation for the commerce account remote service.
@@ -105,26 +94,6 @@ public abstract class CommerceAccountServiceBaseImpl
 		CommerceAccountService commerceAccountService) {
 
 		this.commerceAccountService = commerceAccountService;
-	}
-
-	/**
-	 * Returns the commerce account persistence.
-	 *
-	 * @return the commerce account persistence
-	 */
-	public CommerceAccountPersistence getCommerceAccountPersistence() {
-		return commerceAccountPersistence;
-	}
-
-	/**
-	 * Sets the commerce account persistence.
-	 *
-	 * @param commerceAccountPersistence the commerce account persistence
-	 */
-	public void setCommerceAccountPersistence(
-		CommerceAccountPersistence commerceAccountPersistence) {
-
-		this.commerceAccountPersistence = commerceAccountPersistence;
 	}
 
 	/**
@@ -352,30 +321,6 @@ public abstract class CommerceAccountServiceBaseImpl
 	}
 
 	/**
-	 * Returns the commerce account organization rel persistence.
-	 *
-	 * @return the commerce account organization rel persistence
-	 */
-	public CommerceAccountOrganizationRelPersistence
-		getCommerceAccountOrganizationRelPersistence() {
-
-		return commerceAccountOrganizationRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce account organization rel persistence.
-	 *
-	 * @param commerceAccountOrganizationRelPersistence the commerce account organization rel persistence
-	 */
-	public void setCommerceAccountOrganizationRelPersistence(
-		CommerceAccountOrganizationRelPersistence
-			commerceAccountOrganizationRelPersistence) {
-
-		this.commerceAccountOrganizationRelPersistence =
-			commerceAccountOrganizationRelPersistence;
-	}
-
-	/**
 	 * Returns the commerce account user rel local service.
 	 *
 	 * @return the commerce account user rel local service
@@ -421,29 +366,6 @@ public abstract class CommerceAccountServiceBaseImpl
 			commerceAccountUserRelService) {
 
 		this.commerceAccountUserRelService = commerceAccountUserRelService;
-	}
-
-	/**
-	 * Returns the commerce account user rel persistence.
-	 *
-	 * @return the commerce account user rel persistence
-	 */
-	public CommerceAccountUserRelPersistence
-		getCommerceAccountUserRelPersistence() {
-
-		return commerceAccountUserRelPersistence;
-	}
-
-	/**
-	 * Sets the commerce account user rel persistence.
-	 *
-	 * @param commerceAccountUserRelPersistence the commerce account user rel persistence
-	 */
-	public void setCommerceAccountUserRelPersistence(
-		CommerceAccountUserRelPersistence commerceAccountUserRelPersistence) {
-
-		this.commerceAccountUserRelPersistence =
-			commerceAccountUserRelPersistence;
 	}
 
 	/**
@@ -943,30 +865,6 @@ public abstract class CommerceAccountServiceBaseImpl
 		return CommerceAccount.class.getName();
 	}
 
-	/**
-	 * Performs a SQL query.
-	 *
-	 * @param sql the sql query
-	 */
-	protected void runSQL(String sql) {
-		try {
-			DataSource dataSource = commerceAccountPersistence.getDataSource();
-
-			DB db = DBManagerUtil.getDB();
-
-			sql = db.buildSQL(sql);
-			sql = PortalUtil.transformSQL(sql);
-
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
-				dataSource, sql);
-
-			sqlUpdate.update();
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-	}
-
 	private void _setServiceUtilService(
 		CommerceAccountService commerceAccountService) {
 
@@ -991,9 +889,6 @@ public abstract class CommerceAccountServiceBaseImpl
 
 	@BeanReference(type = CommerceAccountService.class)
 	protected CommerceAccountService commerceAccountService;
-
-	@BeanReference(type = CommerceAccountPersistence.class)
-	protected CommerceAccountPersistence commerceAccountPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.account.service.CommerceAccountGroupLocalService.class
@@ -1057,10 +952,6 @@ public abstract class CommerceAccountServiceBaseImpl
 			CommerceAccountOrganizationRelService
 				commerceAccountOrganizationRelService;
 
-	@BeanReference(type = CommerceAccountOrganizationRelPersistence.class)
-	protected CommerceAccountOrganizationRelPersistence
-		commerceAccountOrganizationRelPersistence;
-
 	@BeanReference(
 		type = com.liferay.commerce.account.service.CommerceAccountUserRelLocalService.class
 	)
@@ -1073,10 +964,6 @@ public abstract class CommerceAccountServiceBaseImpl
 	)
 	protected com.liferay.commerce.account.service.CommerceAccountUserRelService
 		commerceAccountUserRelService;
-
-	@BeanReference(type = CommerceAccountUserRelPersistence.class)
-	protected CommerceAccountUserRelPersistence
-		commerceAccountUserRelPersistence;
 
 	@ServiceReference(
 		type = com.liferay.account.service.AccountEntryLocalService.class

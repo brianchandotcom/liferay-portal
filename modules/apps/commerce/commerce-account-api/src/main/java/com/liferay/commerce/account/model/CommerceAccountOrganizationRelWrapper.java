@@ -200,11 +200,6 @@ public class CommerceAccountOrganizationRelWrapper
 		return model.getUserUuid();
 	}
 
-	@Override
-	public void persist() {
-		model.persist();
-	}
-
 	/**
 	 * Sets the commerce account ID of this commerce account organization rel.
 	 *

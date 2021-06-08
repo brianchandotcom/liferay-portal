@@ -619,11 +619,6 @@ public class CommerceAccountWrapper
 		return model.isScheduled();
 	}
 
-	@Override
-	public void persist() {
-		model.persist();
-	}
-
 	/**
 	 * Sets whether this commerce account is active.
 	 *

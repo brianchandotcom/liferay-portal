@@ -2570,4 +2570,53 @@ definition {
 		User.viewContactInformation(skype = "skype12345");
 	}
 
+	@description = "This is a use case for LPS-111136"
+	@priority = "3"
+	test WelcomeEmailContainsVirtualHostSendToNewUser {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
+		property test.name.skip.portal.instance = "UsersAdmin#WelcomeEmailContainsVirtualHostSendToNewUser";
+		property test.smtp.server.enabled = "true";
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Email",
+			configurationName = "Email Sender",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		JSONGroup.addGroup(groupName = "My Site");
+
+		JSONLayout.addPublicLayout(
+			groupName = "My Site",
+			layoutName = "First Page");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "my-site");
+
+		Site.addVirtualHostsURLCP(
+			publicPageVirtualHostURL = "www.able.com",
+			publicVirtualHosts = "true");
+
+		Navigator.gotoBack();
+
+		Site.editFriendlyURLCP(siteFriendlyURLEdit = "/www.able");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		User.createAccount(
+			newPassword = "Password1",
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		MockMock.viewMail(
+			asset = "http://www.able.com:8080: Your New Account",
+			content = "Welcome! You recently created an account at http://www.able.com:8080.",
+			recipient = "userfn userln",
+			sender = "Joe Bloggs",
+			subject = "http://www.able.com:8080: Your New Account");
+	}
+
 }

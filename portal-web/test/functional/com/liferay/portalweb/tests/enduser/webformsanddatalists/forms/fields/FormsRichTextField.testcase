@@ -114,13 +114,46 @@ definition {
 	}
 
 	@description = "Verify that a Rich Text Field can be edited"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeEdited {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133110 CanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Rich Text");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Rich Text");
+
+		Form.editFieldLabelMetal(fieldValue = "Test Rich Text");
+
+		FormFields.viewTextLabel(fieldLabel = "Test Rich Text");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		FormFields.viewTextLabel(fieldLabel = "Test Rich Text");
+
+		Form.validateNoFieldLabel(fieldLabel = "Rich Text");
+
+
 
 	}
 

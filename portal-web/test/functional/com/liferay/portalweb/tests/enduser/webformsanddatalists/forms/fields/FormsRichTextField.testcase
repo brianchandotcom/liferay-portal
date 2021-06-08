@@ -245,7 +245,6 @@ definition {
 		Form.viewFieldReference(
 			fieldName = "Rich Text",
 			fieldValue = "RichText1234");
-			
 	}
 
 	@description = "Verify that the Field Type can be changed"

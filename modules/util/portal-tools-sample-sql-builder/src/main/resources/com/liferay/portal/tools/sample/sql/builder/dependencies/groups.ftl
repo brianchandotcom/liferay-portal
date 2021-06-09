@@ -48,11 +48,7 @@ ${dataFactory.toInsertSQL(countryModel)}
 		_parentDLFolderId=0
 	/>
 
-	<#assign
-		homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "welcome")
-
-		groupLayoutModels = dataFactory.newGroupLayoutModels(groupId)
-	/>
+	<#assign homePageContentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, "welcome") />
 
 	<@insertContentPageLayout
 		_fragmentEntryLinkModels=dataFactory.newFragmentEntryLinkModels(homePageContentLayoutModels)
@@ -60,7 +56,7 @@ ${dataFactory.toInsertSQL(countryModel)}
 		_templateFileName="default-homepage-layout-definition.json"
 	/>
 
-	<#list groupLayoutModels as groupLayoutModel>
+	<#list dataFactory.newGroupLayoutModels(groupId) as groupLayoutModel>
 		<@insertLayout _layoutModel=groupLayoutModel />
 	</#list>
 

@@ -1,0 +1,111 @@
+.diagram {
+	&-header {
+		height: 58px;
+		.auto-mapping {
+			height: 40px;
+		}
+	}
+	.diagram-pins-container {
+		position: relative;
+	}
+}
+
+.diagram-header-picker {
+	.clay-color-picker {
+		margin: 0 1rem;
+	}
+}
+
+#move-controller {
+	display: grid;
+	grid-auto-flow: row;
+	grid-gap: 0;
+	grid-template-columns: repeat(2, auto);
+	grid-template-rows: auto;
+	height: 100px;
+	position: absolute;
+	transform: rotate(45deg);
+	width: 100px;
+
+	.box {
+		background-color: #444;
+		color: #fff;
+		color: #000;
+		justify-content: space-between;
+
+		.icon {
+			fill: cyan;
+			height: 50px;
+			margin: 0 15px;
+			stroke: black;
+			text-align: center;
+			transform: rotate(-45deg);
+			vertical-align: middle;
+		}
+
+		&.right {
+			clip-path: circle(100% at 100% 100%);
+			transform: translate(10px, 10px);
+			transform: rotate(90deg);
+		}
+
+		&.top {
+			clip-path: circle(100% at 100% 0);
+			transform: translate(10px, 10px);
+			transform: rotate(90deg);
+		}
+
+		&.bottom {
+			clip-path: circle(100% at 0 0);
+		}
+
+		&.left {
+			clip-path: circle(100% at 0 0);
+			transform: rotate(90deg);
+		}
+	}
+}
+
+#zoom-controller {
+	display: grid;
+	grid-auto-flow: row;
+	grid-gap: 0;
+	grid-template-columns: repeat(1, auto);
+	grid-template-rows: auto;
+	height: 130px;
+	position: absolute;
+	width: 50px;
+
+	.box {
+		align-items: flex-end;
+		background-color: #444;
+		color: #fff;
+		color: #000;
+		display: flex;
+		justify-content: center;
+
+		.icon {
+			fill: cyan;
+			height: 50px;
+			stroke: black;
+			vertical-align: middle;
+		}
+
+		&.plus {
+			clip-path: ellipse(50% 75% at 50% 100%);
+		}
+
+		&.hr {
+			clip-path: ellipse(50% 75% at 50% 100%);
+			transform: rotate(180deg);
+		}
+	}
+}
+
+.admin-tooltip {
+	background-color: #fff;
+	height: 300px;
+	position: absolute;
+	width: 400px;
+	z-index: 1;
+}

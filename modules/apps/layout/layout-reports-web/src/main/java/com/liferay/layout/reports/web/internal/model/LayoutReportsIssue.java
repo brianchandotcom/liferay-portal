@@ -21,9 +21,15 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
+import java.io.Serializable;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -143,8 +149,7 @@ public class LayoutReportsIssue {
 	public static class Detail {
 
 		public Detail(
-			Key key, LighthouseAuditResultV5 lighthouseAuditResultV5,
-			long total) {
+			Key key, LighthouseAuditResultV5 lighthouseAuditResultV5) {
 
 			if (key == null) {
 				throw new IllegalArgumentException("Key is null");
@@ -152,7 +157,8 @@ public class LayoutReportsIssue {
 
 			_key = key;
 			_lighthouseAuditResultV5 = lighthouseAuditResultV5;
-			_total = total;
+
+			_total = _calculateTotal();
 		}
 
 		@Override
@@ -264,16 +270,17 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected Object getFailingElements(
+				protected List<Serializable> getFailingElements(
 					LighthouseAuditResultV5 lighthouseAuditResultV5,
 					ResourceBundle resourceBundle) {
 
-					return JSONUtil.putAll(
-						JSONUtil.put(
+					return Arrays.asList(
+						HashMapBuilder.put(
 							"content",
 							LanguageUtil.get(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")));
+								getDetailLanguageKey() + "-failing-element")
+						).build());
 				}
 
 			},
@@ -386,16 +393,17 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected Object getFailingElements(
+				protected List<Serializable> getFailingElements(
 					LighthouseAuditResultV5 lighthouseAuditResultV5,
 					ResourceBundle resourceBundle) {
 
-					return JSONUtil.putAll(
-						JSONUtil.put(
+					return Arrays.asList(
+						HashMapBuilder.put(
 							"content",
 							LanguageUtil.get(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")));
+								getDetailLanguageKey() + "-failing-element")
+						).build());
 				}
 
 			},
@@ -431,16 +439,17 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected Object getFailingElements(
+				protected List<Serializable> getFailingElements(
 					LighthouseAuditResultV5 lighthouseAuditResultV5,
 					ResourceBundle resourceBundle) {
 
-					return JSONUtil.putAll(
-						JSONUtil.put(
+					return Arrays.asList(
+						HashMapBuilder.put(
 							"content",
 							LanguageUtil.get(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")));
+								getDetailLanguageKey() + "-failing-element")
+						).build());
 				}
 
 			},
@@ -500,16 +509,17 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected Object getFailingElements(
+				protected List<Serializable> getFailingElements(
 					LighthouseAuditResultV5 lighthouseAuditResultV5,
 					ResourceBundle resourceBundle) {
 
-					return JSONUtil.putAll(
-						JSONUtil.put(
+					return Arrays.asList(
+						HashMapBuilder.put(
 							"content",
 							LanguageUtil.get(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")));
+								getDetailLanguageKey() + "-failing-element")
+						).build());
 				}
 
 			},
@@ -560,7 +570,7 @@ public class LayoutReportsIssue {
 				return "detail-" + toString();
 			}
 
-			protected Object getFailingElements(
+			protected List<Serializable> getFailingElements(
 				LighthouseAuditResultV5 lighthouseAuditResultV5,
 				ResourceBundle resourceBundle) {
 
@@ -568,7 +578,7 @@ public class LayoutReportsIssue {
 					lighthouseAuditResultV5.getDetails();
 
 				if (details != null) {
-					return details.get("items");
+					return (List)details.get("items");
 				}
 
 				return null;
@@ -599,6 +609,32 @@ public class LayoutReportsIssue {
 				return new String[0];
 			}
 
+		}
+
+		private int _calculateTotal() {
+			List<Serializable> failingElements = _key.getFailingElements(
+				_lighthouseAuditResultV5,
+				ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+
+			if (!ListUtil.isEmpty(failingElements)) {
+				return failingElements.size();
+			}
+
+			if (Objects.equals(
+					_lighthouseAuditResultV5.getScoreDisplayMode(),
+					"notApplicable")) {
+
+				return 0;
+			}
+
+			float score = GetterUtil.getFloat(
+				_lighthouseAuditResultV5.getScore());
+
+			if (score == 0) {
+				return 1;
+			}
+
+			return 0;
 		}
 
 		private final Detail.Key _key;

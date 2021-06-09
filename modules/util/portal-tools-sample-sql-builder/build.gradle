@@ -55,6 +55,7 @@ dependencies {
 	compileInclude project(":apps:dynamic-data-mapping:dynamic-data-mapping-service")
 	compileInclude project(":apps:dynamic-data-mapping:dynamic-data-mapping-web")
 	compileInclude project(":apps:fragment:fragment-api")
+	compileInclude project(":apps:fragment:fragment-collection-contributor:fragment-collection-contributor-basic-component")
 	compileInclude project(":apps:fragment:fragment-service")
 	compileInclude project(":apps:friendly-url:friendly-url-api")
 	compileInclude project(":apps:friendly-url:friendly-url-service")

@@ -31,16 +31,16 @@ String backURL = (String)row.getParameter("backURL");
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
-		<portlet:param name="tabs1" value="published" />
-		<portlet:param name="closeRedirect" value="<%= backURL %>" />
-		<portlet:param name="historyKey" value="workflow" />
-		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-		<portlet:param name="draftVersion" value="<%= String.valueOf(workflowDefinition.getVersion()) + StringPool.PERIOD + '0' %>" />
-	</liferay-portlet:renderURL>
-
 	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+		<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="mvcPath" value="/designer/edit_kaleo_definition_version.jsp" />
+			<portlet:param name="tabs1" value="published" />
+			<portlet:param name="closeRedirect" value="<%= backURL %>" />
+			<portlet:param name="historyKey" value="workflow" />
+			<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+			<portlet:param name="draftVersion" value="<%= String.valueOf(workflowDefinition.getVersion()) + StringPool.PERIOD + '0' %>" />
+		</liferay-portlet:renderURL>
+
 		<liferay-ui:icon
 			message="edit"
 			onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + editURL + "');" %>'
@@ -54,16 +54,18 @@ String backURL = (String)row.getParameter("backURL");
 		url="javascript:;"
 	/>
 
-	<portlet:actionURL name="/kaleo_forms_admin/deactivate_workflow_definition" var="deactivateWorkflowDefinition">
-		<portlet:param name="tabs1" value="published" />
-		<portlet:param name="redirect" value="<%= backURL %>" />
-		<portlet:param name="historyKey" value="workflow" />
-		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-	</portlet:actionURL>
+	<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
+		<portlet:actionURL name="/kaleo_forms_admin/deactivate_workflow_definition" var="deactivateWorkflowDefinition">
+			<portlet:param name="tabs1" value="published" />
+			<portlet:param name="redirect" value="<%= backURL %>" />
+			<portlet:param name="historyKey" value="workflow" />
+			<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon
-		message="unpublish"
-		url="<%= deactivateWorkflowDefinition %>"
-	/>
+		<liferay-ui:icon
+			message="unpublish"
+			url="<%= deactivateWorkflowDefinition %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

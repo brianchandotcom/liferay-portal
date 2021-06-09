@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_WORKFLOW_TOOLTIP_MESSAGE</td>
+	<td>//span[text()='${key_sectionName}']/following-sibling::span[contains(@title, '${key_tooltipMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGINATION_BAR</td>
 	<td>//div[contains(@class,'pagination-bar')]</td>
 	<td></td>

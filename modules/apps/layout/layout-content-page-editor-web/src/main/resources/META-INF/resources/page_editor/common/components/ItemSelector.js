@@ -67,7 +67,7 @@ export default function ItemSelector({
 			}
 
 			const transformMappedItem = (item) => ({
-				itemId: `${item.classNameId}-${item.classPK}`,
+				'data-item-id': `${item.classNameId}-${item.classPK}`,
 				label: item.title,
 				onClick: () => onItemSelect(item),
 			});
@@ -103,7 +103,10 @@ export default function ItemSelector({
 		[onItemSelect, openModal, quickMappedInfoItems, showMappedItems],
 		(a, b) =>
 			a.length === b.length &&
-			a.every((item, index) => item.itemId === b[index].itemId)
+			a.every(
+				(item, index) =>
+					item['data-item-id'] === b[index]['data-item-id']
+			)
 	);
 
 	const optionsMenu = useSelectorCallback(

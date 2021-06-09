@@ -6151,6 +6151,52 @@ public class DataFactory {
 		return dlFolderModel;
 	}
 
+	protected FragmentEntryLinkModel newFragmentEntryLinkModel(
+		LayoutModel layoutModel, String renderKey, String css, String html,
+		String configuration, String editValue, int position,
+		String nameSpace) {
+
+		FragmentEntryLinkModel fragmentEntryLinkModel =
+			new FragmentEntryLinkModelImpl();
+
+		// UUID
+
+		fragmentEntryLinkModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		fragmentEntryLinkModel.setFragmentEntryLinkId(_counter.get());
+
+		// Group instance
+
+		fragmentEntryLinkModel.setGroupId(layoutModel.getGroupId());
+
+		// Audit fields
+
+		fragmentEntryLinkModel.setCompanyId(_companyId);
+		fragmentEntryLinkModel.setUserId(_sampleUserId);
+		fragmentEntryLinkModel.setUserName(_SAMPLE_USER_NAME);
+		fragmentEntryLinkModel.setCreateDate(new Date());
+		fragmentEntryLinkModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		fragmentEntryLinkModel.setFragmentEntryId(0);
+		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
+		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
+		fragmentEntryLinkModel.setPlid(layoutModel.getPlid());
+		fragmentEntryLinkModel.setRendererKey(renderKey);
+		fragmentEntryLinkModel.setConfiguration(configuration);
+		fragmentEntryLinkModel.setCss(css);
+		fragmentEntryLinkModel.setHtml(html);
+		fragmentEntryLinkModel.setConfiguration(configuration);
+		fragmentEntryLinkModel.setEditableValues(editValue);
+		fragmentEntryLinkModel.setNamespace(nameSpace);
+		fragmentEntryLinkModel.setPosition(position);
+
+		return fragmentEntryLinkModel;
+	}
+
 	protected GroupModel newGroupModel(
 		long groupId, long classNameId, long classPK, String name,
 		boolean site) {

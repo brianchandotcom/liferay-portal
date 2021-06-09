@@ -322,7 +322,7 @@ export class A11yChecker {
 		const context = this.denylist
 			? {
 					exclude: this.denylist,
-					include: target,
+					include: [target],
 			  }
 			: target;
 

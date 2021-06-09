@@ -1404,13 +1404,116 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6236. Check info about where a product group is used"
-	@ignore = "true"
 	@priority = "3"
 	test CheckPLProductGroupUsageInfo {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommercePriceLists#CheckPLProductGroupUsageInfo";
 
-		// TODO COMMERCE-6236 CheckPLProductGroupUsageInfo Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Product Groups");
+
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Test Group");
+
+		Button.click(button = "Submit");
+
+		Navigator.gotoNavTab(navTab = "Products");
+
+		for ( var product : list "U-Joint,Mount") {
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "${product}",
+				title = "Add Products");
+		}
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Discounts");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewDiscountsEntry(
+			channelsEligibility = "Minium Portal",
+			discountAmount = "20",
+			discountName = "Test Discount",
+			discountTarget = "Product Groups",
+			discountType = "Percentage");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "Test Group",
+			title = "Select Product Group");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Price Lists");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewPriceListsEntry(
+			priceListCatalog = "Minium",
+			priceListCurrency = "USD",
+			priceListName = "Test Price List");
+
+		AssertClickNoError(
+			locator1 = "Button#SUBMIT",
+			value1 = "Submit");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommercePriceLists.addNewPriceModifier(
+			modifier = "Percentage",
+			name = "Test Modifier",
+			target = "Product Groups");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Modifier");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
+
+		CommerceEntry.gotoMenuTab(menuTab = "Product Groups");
+
+		CommerceRelations.assignSingleRelationToProductsEntry(
+			entryName = "Test Group",
+			title = "Select Product Group");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
+
+		CommerceNavigator.gotoPortlet(
+			category = "Pricing",
+			portlet = "Product Groups");
+
+		CommerceNavigator.gotoEntry(entryName = "Test Group");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Discounts");
+
+		AssertElementPresent(
+			key_entryName = "Test Discount",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+		AssertElementPresent(
+			key_entryName = "Test Price List",
+			locator1 = "CommerceNavigation#ENTRY_NAME");
 	}
 
 	test CreateNewPriceList {

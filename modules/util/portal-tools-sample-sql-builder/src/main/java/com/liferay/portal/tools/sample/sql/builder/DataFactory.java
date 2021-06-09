@@ -2205,14 +2205,9 @@ public class DataFactory {
 	public LayoutModel newContentLayoutModel(
 		long groupId, String name, String fragmentEntries) {
 
-		SimpleCounter simpleCounter = _layoutCounters.get(
-			_getCounterName(groupId, false));
-
-		if (simpleCounter == null) {
-			simpleCounter = new SimpleCounter();
-
-			_layoutCounters.put(_getCounterName(groupId, false), simpleCounter);
-		}
+		SimpleCounter simpleCounter = _layoutCounters.computeIfAbsent(
+			_getCounterName(groupId, false),
+			counterName -> new SimpleCounter());
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 
@@ -6285,15 +6280,9 @@ public class DataFactory {
 		long groupId, long parentLayoutId, String name, boolean privateLayout,
 		boolean hidden, String layoutTemplateId, String... columns) {
 
-		SimpleCounter simpleCounter = _layoutCounters.get(
-			_getCounterName(groupId, privateLayout));
-
-		if (simpleCounter == null) {
-			simpleCounter = new SimpleCounter();
-
-			_layoutCounters.put(
-				_getCounterName(groupId, privateLayout), simpleCounter);
-		}
+		SimpleCounter simpleCounter = _layoutCounters.computeIfAbsent(
+			_getCounterName(groupId, privateLayout),
+			counterName -> new SimpleCounter());
 
 		LayoutModel layoutModel = new LayoutModelImpl();
 

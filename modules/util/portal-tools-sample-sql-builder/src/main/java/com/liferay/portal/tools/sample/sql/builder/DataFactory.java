@@ -4494,6 +4494,61 @@ public class DataFactory {
 		return layoutPageTemplateStructureRelModel;
 	}
 
+	public LayoutPageTemplateStructureRelModel
+		newLayoutPageTemplateStructureRelModel(
+			LayoutModel layoutModel,
+			LayoutPageTemplateStructureModel layoutPageTemplateStructureModel,
+			List<FragmentEntryLinkModel> fragmentEntryLinkModels,
+			String templateFileName) {
+
+		List<FragmentEntryLinkModel> targetFragmentEntryLinkModels =
+			new ArrayList<>();
+
+		for (FragmentEntryLinkModel model : fragmentEntryLinkModels) {
+			if (model.getPlid() == layoutModel.getPlid()) {
+				targetFragmentEntryLinkModels.add(model);
+			}
+		}
+
+		LayoutPageTemplateStructureRelModel
+			layoutPageTemplateStructureRelModel =
+				new LayoutPageTemplateStructureRelModelImpl();
+
+		// UUID
+
+		layoutPageTemplateStructureRelModel.setUuid(SequentialUUID.generate());
+
+		// PK fields
+
+		layoutPageTemplateStructureRelModel.setLayoutPageTemplateStructureRelId(
+			_counter.get());
+
+		// Group instance
+
+		layoutPageTemplateStructureRelModel.setGroupId(
+			layoutPageTemplateStructureModel.getGroupId());
+
+		// Audit fields
+
+		layoutPageTemplateStructureRelModel.setCompanyId(_companyId);
+		layoutPageTemplateStructureRelModel.setUserId(_sampleUserId);
+		layoutPageTemplateStructureRelModel.setUserName(_SAMPLE_USER_NAME);
+		layoutPageTemplateStructureRelModel.setCreateDate(new Date());
+		layoutPageTemplateStructureRelModel.setModifiedDate(new Date());
+
+		// Other fields
+
+		layoutPageTemplateStructureRelModel.setLayoutPageTemplateStructureId(
+			layoutPageTemplateStructureModel.
+				getLayoutPageTemplateStructureId());
+		layoutPageTemplateStructureRelModel.setSegmentsExperienceId(0L);
+
+		layoutPageTemplateStructureRelModel.setData(
+			_generateJsonData(targetFragmentEntryLinkModels, templateFileName));
+
+		return layoutPageTemplateStructureRelModel;
+	}
+
 	public List<LayoutSetModel> newLayoutSetModels(long groupId) {
 		return newLayoutSetModels(groupId, "classic_WAR_classictheme");
 	}
@@ -7013,6 +7068,53 @@ public class DataFactory {
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			ReflectionUtil.throwException(reflectiveOperationException);
 		}
+	}
+
+	private String _generateJsonData(
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels,
+		String templateFileName) {
+
+		String data = null;
+
+		try {
+			data = _readFile(templateFileName);
+
+			for (FragmentEntryLinkModel fragmentEntryLinkModel :
+					fragmentEntryLinkModels) {
+
+				String rendererKey = fragmentEntryLinkModel.getRendererKey();
+
+				if (rendererKey.equals(_HEADING_RENDER_KEY)) {
+					data = StringUtil.replace(
+						data, "${headingFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
+				else if (rendererKey.equals(_PARAGRAPH_RENDER_KEY)) {
+					data = StringUtil.replace(
+						data, "${paragraphFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
+				else if (rendererKey.equals(_IMAGE_RENDER_KEY)) {
+					data = StringUtil.replace(
+						data, "${imageFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
+				else {
+					data = StringUtil.replace(
+						data, "${loginPortletFragmentEntryLinkId}",
+						String.valueOf(
+							fragmentEntryLinkModel.getFragmentEntryLinkId()));
+				}
+			}
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
+		return data;
 	}
 
 	private InputStream _getFragmentComponentInputStream(

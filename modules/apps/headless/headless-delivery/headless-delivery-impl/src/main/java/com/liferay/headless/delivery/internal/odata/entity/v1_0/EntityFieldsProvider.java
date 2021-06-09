@@ -14,8 +14,8 @@
 
 package com.liferay.headless.delivery.internal.odata.entity.v1_0;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
@@ -81,7 +81,9 @@ public class EntityFieldsProvider {
 			return null;
 		}
 
-		if (Objects.equals(ddmFormField.getType(), DDMFormFieldType.CHECKBOX)) {
+		if (Objects.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.CHECKBOX)) {
+
 			return new BooleanEntityField(
 				ddmFormField.getFieldReference(),
 				locale -> _toFilterableOrSortableFieldName(
@@ -124,9 +126,9 @@ public class EntityFieldsProvider {
 					ddmFormField.getFieldReference(), locale, "Number"));
 		}
 		else if (Objects.equals(
-					ddmFormField.getType(), DDMFormFieldType.RADIO) ||
+					ddmFormField.getType(), DDMFormFieldTypeConstants.RADIO) ||
 				 (Objects.equals(
-					 ddmFormField.getType(), DDMFormFieldType.TEXT) &&
+					 ddmFormField.getType(), DDMFormFieldTypeConstants.TEXT) &&
 				  Objects.equals(ddmFormField.getIndexType(), "keyword"))) {
 
 			return new StringEntityField(

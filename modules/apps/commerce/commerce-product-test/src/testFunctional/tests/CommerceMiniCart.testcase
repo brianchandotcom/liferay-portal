@@ -508,13 +508,62 @@ definition {
 	}
 
 	@description = "COMMERCE-6330. As a buyer, I want to be able to empty my open cart after clicking on 'Remove All Items'(Yes/No)"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveAllItemsFromMiniCart {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceMiniCart#RemoveAllItemsFromMiniCart";
 
-		// TODO COMMERCE-6330 RemoveAllItemsFromMiniCart pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "3");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Torque Converters",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Button.click(button = "Remove All Items");
+
+		Button.click(button = "No");
+
+		AssertElementPresent(
+			key_cartItemSKU = "MIN55861",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			value1 = "U-Joint");
+
+		AssertElementPresent(
+			key_cartItemSKU = "MIN55859",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			value1 = "Torque Converters");
+
+		Button.click(button = "Remove All Items");
+
+		Button.click(button = "Yes");
+
+		AssertElementNotPresent(
+			key_cartItemSKU = "MIN55861",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			value1 = "U-Joint");
+
+		AssertElementNotPresent(
+			key_cartItemSKU = "MIN55859",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			value1 = "Torque Converters");
 	}
 
 	@description = "COMMERCE-6331. As a buyer, I want to be able to remove an item from cart by clicking on the delete button('x')"

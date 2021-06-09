@@ -1,0 +1,28 @@
+{
+	"fieldSets": [
+		{
+			"configurationRole": "style",
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "w-100",
+					"label": "image-size",
+					"name": "imageSize",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "fit",
+								"value": "w-100"
+							},
+							{
+								"label": "original-size",
+								"value": "w-0"
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,429 @@
+{
+	"deletedItems": [
+	],
+	"items": {
+		"0cd91d5e-7249-0476-ff23-c171e068cb11": {
+			"children": [
+				"3bf89137-2bdc-f334-1090-10887e87b7ad"
+			],
+			"config": {
+			},
+			"itemId": "0cd91d5e-7249-0476-ff23-c171e068cb11",
+			"parentId": "",
+			"type": "root"
+		},
+		"10585e58-7fc7-618b-4e1e-71d603fd7d8e": {
+			"children": [
+				"5fb90589-6fde-887b-fda3-1c72ecf57fa4"
+			],
+			"config": {
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "10585e58-7fc7-618b-4e1e-71d603fd7d8e",
+			"parentId": "205c3614-4c56-7289-4a27-02ad044cdcdc",
+			"type": "column"
+		},
+		"205c3614-4c56-7289-4a27-02ad044cdcdc": {
+			"children": [
+				"d6e2cf3a-f92b-194a-0cca-7c7bdcdf8939",
+				"d4209a43-31c9-4f39-392c-540c24696bc7",
+				"10585e58-7fc7-618b-4e1e-71d603fd7d8e"
+			],
+			"config": {
+				"gutters": true,
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"modulesPerRow": 3,
+				"numberOfColumns": 3,
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"reverseOrder": false,
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "",
+					"borderWidth": 0,
+					"fontFamily": "",
+					"fontSize": "",
+					"fontWeight": "",
+					"height": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"marginRight": "",
+					"marginTop": "",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": 100,
+					"overflow": "",
+					"paddingBottom": "",
+					"paddingLeft": "",
+					"paddingRight": "",
+					"paddingTop": "",
+					"shadow": "",
+					"textAlign": "",
+					"width": ""
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"verticalAlignment": "top"
+			},
+			"itemId": "205c3614-4c56-7289-4a27-02ad044cdcdc",
+			"parentId": "d52cf6c1-8626-b903-b478-94dc470aec56",
+			"type": "row"
+		},
+		"3bf89137-2bdc-f334-1090-10887e87b7ad": {
+			"children": [
+				"d52cf6c1-8626-b903-b478-94dc470aec56"
+			],
+			"config": {
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"link": {
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "",
+					"borderWidth": 0,
+					"fontFamily": "",
+					"fontSize": "",
+					"fontWeight": "",
+					"height": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"marginRight": "",
+					"marginTop": "",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": 100,
+					"overflow": "",
+					"paddingBottom": "",
+					"paddingLeft": "",
+					"paddingRight": "",
+					"paddingTop": "",
+					"shadow": "",
+					"textAlign": "",
+					"width": ""
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fluid"
+			},
+			"itemId": "3bf89137-2bdc-f334-1090-10887e87b7ad",
+			"parentId": "0cd91d5e-7249-0476-ff23-c171e068cb11",
+			"type": "container"
+		},
+		"3e7aadea-8b20-6a98-3206-0649de4a551c": {
+			"children": [
+			],
+			"config": {
+				"fragmentEntryLinkId": "${imageFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "",
+					"borderWidth": 0,
+					"fontFamily": "",
+					"fontSize": "",
+					"fontWeight": "",
+					"height": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"marginRight": "",
+					"marginTop": "",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": 100,
+					"overflow": "",
+					"paddingBottom": "",
+					"paddingLeft": "",
+					"paddingRight": "",
+					"paddingTop": "",
+					"shadow": "",
+					"textAlign": "",
+					"width": ""
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "3e7aadea-8b20-6a98-3206-0649de4a551c",
+			"parentId": "d4209a43-31c9-4f39-392c-540c24696bc7",
+			"type": "fragment"
+		},
+		"42e5382b-32dc-3cde-201d-3490c7ec531e": {
+			"children": [
+			],
+			"config": {
+				"fragmentEntryLinkId": "${headingFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "",
+					"borderWidth": 0,
+					"fontFamily": "",
+					"fontSize": "",
+					"fontWeight": "",
+					"height": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"marginRight": "",
+					"marginTop": "",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": 100,
+					"overflow": "",
+					"paddingBottom": "",
+					"paddingLeft": "",
+					"paddingRight": "",
+					"paddingTop": "",
+					"shadow": "",
+					"textAlign": "",
+					"width": ""
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "42e5382b-32dc-3cde-201d-3490c7ec531e",
+			"parentId": "d6e2cf3a-f92b-194a-0cca-7c7bdcdf8939",
+			"type": "fragment"
+		},
+		"5fb90589-6fde-887b-fda3-1c72ecf57fa4": {
+			"children": [
+			],
+			"config": {
+				"fragmentEntryLinkId": "${loginPortletFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "",
+					"borderWidth": 0,
+					"fontFamily": "",
+					"fontSize": "",
+					"fontWeight": "",
+					"height": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"marginRight": "",
+					"marginTop": "",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": 100,
+					"overflow": "",
+					"paddingBottom": "",
+					"paddingLeft": "",
+					"paddingRight": "",
+					"paddingTop": "",
+					"shadow": "",
+					"textAlign": "",
+					"width": ""
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "5fb90589-6fde-887b-fda3-1c72ecf57fa4",
+			"parentId": "10585e58-7fc7-618b-4e1e-71d603fd7d8e",
+			"type": "fragment"
+		},
+		"b794ca72-8bbd-3324-e0c7-a8a79a340e0e": {
+			"children": [
+			],
+			"config": {
+				"fragmentEntryLinkId": "${paragraphFragmentEntryLinkId}",
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "",
+					"borderWidth": 0,
+					"fontFamily": "",
+					"fontSize": "",
+					"fontWeight": "",
+					"height": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"marginRight": "",
+					"marginTop": "",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": 100,
+					"overflow": "",
+					"paddingBottom": "",
+					"paddingLeft": "",
+					"paddingRight": "",
+					"paddingTop": "",
+					"shadow": "",
+					"textAlign": "",
+					"width": ""
+				},
+				"tablet": {
+					"styles": {
+					}
+				}
+			},
+			"itemId": "b794ca72-8bbd-3324-e0c7-a8a79a340e0e",
+			"parentId": "d6e2cf3a-f92b-194a-0cca-7c7bdcdf8939",
+			"type": "fragment"
+		},
+		"d4209a43-31c9-4f39-392c-540c24696bc7": {
+			"children": [
+				"3e7aadea-8b20-6a98-3206-0649de4a551c"
+			],
+			"config": {
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "d4209a43-31c9-4f39-392c-540c24696bc7",
+			"parentId": "205c3614-4c56-7289-4a27-02ad044cdcdc",
+			"type": "column"
+		},
+		"d52cf6c1-8626-b903-b478-94dc470aec56": {
+			"children": [
+				"205c3614-4c56-7289-4a27-02ad044cdcdc"
+			],
+			"config": {
+				"landscapeMobile": {
+					"styles": {
+					}
+				},
+				"link": {
+				},
+				"portraitMobile": {
+					"styles": {
+					}
+				},
+				"styles": {
+					"backgroundImage": {
+					},
+					"borderRadius": "",
+					"borderWidth": 0,
+					"fontFamily": "",
+					"fontSize": "",
+					"fontWeight": "",
+					"height": "",
+					"marginBottom": "",
+					"marginLeft": "",
+					"marginRight": "",
+					"marginTop": "",
+					"maxHeight": "",
+					"maxWidth": "",
+					"minHeight": "",
+					"minWidth": "",
+					"opacity": 100,
+					"overflow": "",
+					"paddingBottom": "",
+					"paddingLeft": "",
+					"paddingRight": "",
+					"paddingTop": "",
+					"shadow": "",
+					"textAlign": "",
+					"width": ""
+				},
+				"tablet": {
+					"styles": {
+					}
+				},
+				"widthType": "fluid"
+			},
+			"itemId": "d52cf6c1-8626-b903-b478-94dc470aec56",
+			"parentId": "3bf89137-2bdc-f334-1090-10887e87b7ad",
+			"type": "container"
+		},
+		"d6e2cf3a-f92b-194a-0cca-7c7bdcdf8939": {
+			"children": [
+				"42e5382b-32dc-3cde-201d-3490c7ec531e",
+				"b794ca72-8bbd-3324-e0c7-a8a79a340e0e"
+			],
+			"config": {
+				"landscapeMobile": {
+				},
+				"portraitMobile": {
+				},
+				"size": 4,
+				"tablet": {
+				}
+			},
+			"itemId": "d6e2cf3a-f92b-194a-0cca-7c7bdcdf8939",
+			"parentId": "205c3614-4c56-7289-4a27-02ad044cdcdc",
+			"type": "column"
+		}
+	},
+	"rootItems": {
+		"dropZone": "",
+		"main": "0cd91d5e-7249-0476-ff23-c171e068cb11"
+	},
+	"version": 1
+}

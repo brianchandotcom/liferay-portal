@@ -567,13 +567,43 @@ definition {
 	}
 
 	@description = "COMMERCE-6331. As a buyer, I want to be able to remove an item from cart by clicking on the delete button('x')"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveSingleCartItemFromMiniCart {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceMiniCart#RemoveSingleCartItemFromMiniCart";
 
-		// TODO COMMERCE-6331 RemoveSingleCartItemFromMiniCart pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+		CommerceAcceleratorsInitializer.createNewAccountViaFront(
+			accountName = "Test",
+			adminEmailAddress = "test@liferay.com");
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "U-Joint",
+			productQuantity = "3");
+
+		FrontStore.addInitializerProductToCart(
+			productName = "Torque Converters",
+			productQuantity = "1");
+
+		CommerceNavigator.gotoMiniCart();
+
+		Click(
+			key_cartItemSKU = "MIN55859",
+			locator1 = "CommerceAccelerators#MINI_CART_REMOVE_ITEM");
+
+		AssertElementNotPresent(
+			key_cartItemSKU = "MIN55859",
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME",
+			value1 = "Torque Converters");
 	}
 
 	@description = "COMMERCE-6348. As a buyer, I want the first selectable quantity of a cart item to be the minimum multiple quantity if Minimum Order Quantity is higher than Multiple Order Quantity"

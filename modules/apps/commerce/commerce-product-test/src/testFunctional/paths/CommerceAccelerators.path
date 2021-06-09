@@ -431,6 +431,11 @@
 	<td>//div[contains(@class,'summary-table')]//*[contains(.,'Total')]/following::h4</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MINI_CART_REMOVE_ITEM</td>
+	<td>//p[contains(text(),"${key_cartItemSKU}")]//..//..//..//div//*[name()='svg'][contains(@class,'lexicon-icon lexicon-icon-times-circle-full')]</td>
+	<td></td>
+</tr>
 <!--ORDERS-->
 <tr>
 	<td>ACCOUNT_SELECTOR_ORDER_ID</td>

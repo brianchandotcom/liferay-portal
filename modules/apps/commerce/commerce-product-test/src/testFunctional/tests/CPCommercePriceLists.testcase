@@ -1938,14 +1938,12 @@ definition {
 
 		// TODO Review
 
-
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
-
 
 		Click(
 			key_text = "Pricing",
@@ -1984,8 +1982,7 @@ definition {
 
 		CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-		for(var sku : list "MIN55861,MIN93015"){
-
+		for (var sku : list "MIN55861,MIN93015") {
 			Type(
 				key_title = "Add SKUs",
 				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
@@ -2066,8 +2063,8 @@ definition {
 
 		ApplicationsMenu.gotoSite(site = "Minium");
 
-		for(var productName : list "U-Joint,ABS Sensor"){
-			if("${productName}" == "ABS Sensor"){
+		for (var productName : list "U-Joint,ABS Sensor") {
+			if ("${productName}" == "ABS Sensor") {
 				CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 			}
 
@@ -2075,20 +2072,19 @@ definition {
 				key_productName = "${productName}",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
 				value1 = "$ 30.00");
-
 		}
 
- 		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Relevance");
+		CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Relevance");
 
 		Pause(locator1 = "180000");
 
 		Refresh();
 
-		for(var productNamePrice : list "U-Joint;24,ABS Sensor;50"){
+		for (var productNamePrice : list "U-Joint;24,ABS Sensor;50") {
 			var productName = StringUtil.extractFirst("${productNamePrice}",";");
 			var price = StringUtil.extractLast("${productNamePrice}",";");
 
-			if("${productName}" == "ABS Sensor"){
+			if ("${productName}" == "ABS Sensor") {
 				CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 			}
 
@@ -2097,8 +2093,6 @@ definition {
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_PRICE",
 				value1 = "$ ${price}.00");
 		}
-
-
 	}
 
 }

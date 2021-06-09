@@ -189,13 +189,76 @@ definition {
 	}
 
 	@description = "Verify that a Select From List Field can be added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddASelectFromListFieldToAForm {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133486 CanAddASelectFromListFieldToAForm pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Select from List");
+		
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+		
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+		
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormFields.viewLabel(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+		
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormViewBuilder.validatePredefinedSelectFromList(
+			fieldName = "Select from List",
+			fieldValue = "Choose an Option");
+
+		FormFields.viewSelectFromListOption(optionValue = "Option 1");
+
+		FormFields.viewSelectFromListOption(optionValue = "Option 2");
+
+
 
 	}
 

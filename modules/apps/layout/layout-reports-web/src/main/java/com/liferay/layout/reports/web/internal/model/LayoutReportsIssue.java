@@ -187,7 +187,9 @@ public class LayoutReportsIssue {
 			).put(
 				"key", _key.toString()
 			).put(
-				"lighthouseItems", _getLighthouseItems()
+				"lighthouseItems",
+				_key.getLighthouseItems(
+					_lighthouseAuditResultV5, resourceBundle)
 			).put(
 				"tips", _key.getTips(resourceBundle)
 			).put(
@@ -259,6 +261,19 @@ public class LayoutReportsIssue {
 						getLearnMoreLink(
 							resourceBundle, "https://web.dev/canonical")
 					};
+				}
+
+				@Override
+				protected Object getLighthouseItems(
+					LighthouseAuditResultV5 lighthouseAuditResultV5,
+					ResourceBundle resourceBundle) {
+
+					return JSONUtil.putAll(
+						JSONUtil.put(
+							"content",
+							LanguageUtil.get(
+								resourceBundle,
+								getDetailLanguageKey() + "-failing-element")));
 				}
 
 			},
@@ -370,6 +385,19 @@ public class LayoutReportsIssue {
 					};
 				}
 
+				@Override
+				protected Object getLighthouseItems(
+					LighthouseAuditResultV5 lighthouseAuditResultV5,
+					ResourceBundle resourceBundle) {
+
+					return JSONUtil.putAll(
+						JSONUtil.put(
+							"content",
+							LanguageUtil.get(
+								resourceBundle,
+								getDetailLanguageKey() + "-failing-element")));
+				}
+
 			},
 			MISSING_TITLE_ELEMENT {
 
@@ -400,6 +428,19 @@ public class LayoutReportsIssue {
 						getLearnMoreLink(
 							resourceBundle, "https://web.dev/document-title")
 					};
+				}
+
+				@Override
+				protected Object getLighthouseItems(
+					LighthouseAuditResultV5 lighthouseAuditResultV5,
+					ResourceBundle resourceBundle) {
+
+					return JSONUtil.putAll(
+						JSONUtil.put(
+							"content",
+							LanguageUtil.get(
+								resourceBundle,
+								getDetailLanguageKey() + "-failing-element")));
 				}
 
 			},
@@ -458,6 +499,19 @@ public class LayoutReportsIssue {
 					};
 				}
 
+				@Override
+				protected Object getLighthouseItems(
+					LighthouseAuditResultV5 lighthouseAuditResultV5,
+					ResourceBundle resourceBundle) {
+
+					return JSONUtil.putAll(
+						JSONUtil.put(
+							"content",
+							LanguageUtil.get(
+								resourceBundle,
+								getDetailLanguageKey() + "-failing-element")));
+				}
+
 			},
 			SMALL_TAP_TARGETS {
 
@@ -480,19 +534,19 @@ public class LayoutReportsIssue {
 
 			public String getDescription(ResourceBundle resourceBundle) {
 				return LanguageUtil.format(
-					resourceBundle, _getDetailLanguageKey() + "-description",
+					resourceBundle, getDetailLanguageKey() + "-description",
 					getDescriptionArguments(resourceBundle), false);
 			}
 
 			public String getTips(ResourceBundle resourceBundle) {
 				return ResourceBundleUtil.getString(
-					resourceBundle, _getDetailLanguageKey() + "-tip",
+					resourceBundle, getDetailLanguageKey() + "-tip",
 					getTipsArguments(resourceBundle));
 			}
 
 			public String getTitle(ResourceBundle resourceBundle) {
 				return LanguageUtil.format(
-					resourceBundle, _getDetailLanguageKey(),
+					resourceBundle, getDetailLanguageKey(),
 					getTitleArguments(resourceBundle), false);
 			}
 
@@ -500,6 +554,10 @@ public class LayoutReportsIssue {
 				ResourceBundle resourceBundle) {
 
 				return new String[0];
+			}
+
+			protected String getDetailLanguageKey() {
+				return "detail-" + toString();
 			}
 
 			protected String getHtmlCode(String html) {
@@ -517,6 +575,20 @@ public class LayoutReportsIssue {
 					"</a>");
 			}
 
+			protected Object getLighthouseItems(
+				LighthouseAuditResultV5 lighthouseAuditResultV5,
+				ResourceBundle resourceBundle) {
+
+				Map<String, Object> details =
+					lighthouseAuditResultV5.getDetails();
+
+				if (details != null) {
+					return details.get("items");
+				}
+
+				return null;
+			}
+
 			protected String[] getTipsArguments(ResourceBundle resourceBundle) {
 				return new String[0];
 			}
@@ -527,20 +599,6 @@ public class LayoutReportsIssue {
 				return new String[0];
 			}
 
-			private String _getDetailLanguageKey() {
-				return "detail-" + toString();
-			}
-
-		}
-
-		private Object _getLighthouseItems() {
-			Map<String, Object> details = _lighthouseAuditResultV5.getDetails();
-
-			if (details != null) {
-				return details.get("items");
-			}
-
-			return null;
 		}
 
 		private final Detail.Key _key;

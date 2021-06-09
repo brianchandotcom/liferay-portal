@@ -14,25 +14,18 @@
 
 package com.liferay.layout.reports.web.internal.model;
 
-import com.google.api.services.pagespeedonline.v5.model.LighthouseAuditResultV5;
-
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
-import java.io.Serializable;
-
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
@@ -148,15 +141,13 @@ public class LayoutReportsIssue {
 
 	public static class Detail {
 
-		public Detail(
-			Key key, LighthouseAuditResultV5 lighthouseAuditResultV5) {
-
+		public Detail(Key key, JSONObject lighthouseAuditJSONObject) {
 			if (key == null) {
 				throw new IllegalArgumentException("Key is null");
 			}
 
 			_key = key;
-			_lighthouseAuditResultV5 = lighthouseAuditResultV5;
+			_lighthouseAuditJSONObject = lighthouseAuditJSONObject;
 
 			_total = _calculateTotal();
 		}
@@ -192,8 +183,8 @@ public class LayoutReportsIssue {
 				"description", _key.getDescription(resourceBundle)
 			).put(
 				"failingElements",
-				_key.getFailingElements(
-					_lighthouseAuditResultV5, resourceBundle)
+				_key.getFailingElementsJSONArray(
+					_lighthouseAuditJSONObject, resourceBundle)
 			).put(
 				"key", _key.toString()
 			).put(
@@ -270,17 +261,16 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected List<Serializable> getFailingElements(
-					LighthouseAuditResultV5 lighthouseAuditResultV5,
+				protected JSONArray getFailingElementsJSONArray(
+					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
-					return Arrays.asList(
-						HashMapBuilder.put(
+					return JSONUtil.putAll(
+						JSONUtil.put(
 							"content",
 							LanguageUtil.get(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")
-						).build());
+								getDetailLanguageKey() + "-failing-element")));
 				}
 
 			},
@@ -393,17 +383,16 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected List<Serializable> getFailingElements(
-					LighthouseAuditResultV5 lighthouseAuditResultV5,
+				protected JSONArray getFailingElementsJSONArray(
+					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
-					return Arrays.asList(
-						HashMapBuilder.put(
+					return JSONUtil.putAll(
+						JSONUtil.put(
 							"content",
 							LanguageUtil.get(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")
-						).build());
+								getDetailLanguageKey() + "-failing-element")));
 				}
 
 			},
@@ -439,17 +428,16 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected List<Serializable> getFailingElements(
-					LighthouseAuditResultV5 lighthouseAuditResultV5,
+				protected JSONArray getFailingElementsJSONArray(
+					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
-					return Arrays.asList(
-						HashMapBuilder.put(
+					return JSONUtil.putAll(
+						JSONUtil.put(
 							"content",
 							LanguageUtil.get(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")
-						).build());
+								getDetailLanguageKey() + "-failing-element")));
 				}
 
 			},
@@ -509,17 +497,16 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected List<Serializable> getFailingElements(
-					LighthouseAuditResultV5 lighthouseAuditResultV5,
+				protected JSONArray getFailingElementsJSONArray(
+					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
-					return Arrays.asList(
-						HashMapBuilder.put(
+					return JSONUtil.putAll(
+						JSONUtil.put(
 							"content",
 							LanguageUtil.get(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")
-						).build());
+								getDetailLanguageKey() + "-failing-element")));
 				}
 
 			},
@@ -570,15 +557,15 @@ public class LayoutReportsIssue {
 				return "detail-" + toString();
 			}
 
-			protected List<Serializable> getFailingElements(
-				LighthouseAuditResultV5 lighthouseAuditResultV5,
+			protected JSONArray getFailingElementsJSONArray(
+				JSONObject lighthouseAuditJSONObject,
 				ResourceBundle resourceBundle) {
 
-				Map<String, Object> details =
-					lighthouseAuditResultV5.getDetails();
+				JSONObject detailsJSONObject =
+					lighthouseAuditJSONObject.getJSONObject("details");
 
-				if (details != null) {
-					return (List)details.get("items");
+				if (detailsJSONObject != null) {
+					return detailsJSONObject.getJSONArray("items");
 				}
 
 				return null;
@@ -612,23 +599,26 @@ public class LayoutReportsIssue {
 		}
 
 		private int _calculateTotal() {
-			List<Serializable> failingElements = _key.getFailingElements(
-				_lighthouseAuditResultV5,
-				ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+			JSONArray failingElementsJSONArray =
+				_key.getFailingElementsJSONArray(
+					_lighthouseAuditJSONObject,
+					ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
 
-			if (!ListUtil.isEmpty(failingElements)) {
-				return failingElements.size();
+			if ((failingElementsJSONArray != null) &&
+				(failingElementsJSONArray.length() > 0)) {
+
+				return failingElementsJSONArray.length();
 			}
 
 			if (Objects.equals(
-					_lighthouseAuditResultV5.getScoreDisplayMode(),
+					_lighthouseAuditJSONObject.getString("scoreDisplayMode"),
 					"notApplicable")) {
 
 				return 0;
 			}
 
 			float score = GetterUtil.getFloat(
-				_lighthouseAuditResultV5.getScore());
+				_lighthouseAuditJSONObject.get("score"));
 
 			if (score == 0) {
 				return 1;
@@ -638,7 +628,7 @@ public class LayoutReportsIssue {
 		}
 
 		private final Detail.Key _key;
-		private final LighthouseAuditResultV5 _lighthouseAuditResultV5;
+		private final JSONObject _lighthouseAuditJSONObject;
 		private final long _total;
 
 	}

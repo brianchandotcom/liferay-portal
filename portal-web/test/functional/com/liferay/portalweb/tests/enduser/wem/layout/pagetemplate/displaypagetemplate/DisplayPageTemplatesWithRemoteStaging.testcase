@@ -18,18 +18,9 @@ definition {
 		}
 
 		task ("Activate remote staging") {
-			Staging.remoteStagingSetUp(siteName = "Test Site Name");
-		}
-
-		task ("Add a display page") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.addDisplayPage(
-				contentType = "Web Content Article",
-				displayPageName = "Display Page Name",
-				subType = "Basic Web Content");
-
-			PageEditor.clickPublish();
+			Staging.remoteStagingSetUpViaJson(
+				groupName = "Test Site Name",
+				remotePort = "9080");
 		}
 	}
 
@@ -46,56 +37,73 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-91192."
+	@description = "This is a use case for LPS-91192. Publish associated display page template with Asset Publisher to live."
 	@priority = "4"
-	test PublishDisplayPageMapWebContentWithAssetPublisher {
-		property test.name.skip.portal.instance = "DisplayPagesWithRemoteStaging#PublishDisplayPageMapWebContentWithAssetPublisher";
+	test PublishDisplayPageTemplateWithAssetPublisherToLive {
+		property test.name.skip.portal.instance = "DisplayPageTemplatesWithRemoteStaging#PublishDisplayPageTemplateWithAssetPublisherToLive";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Add a web content and select the display page template") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoAddCP();
+			WebContentNavigator.gotoAddCP();
 
-		WebContent.addCP(
-			webContentContent = "Webcontent Content",
-			webContentTitle = "Webcontent Title");
+			WebContent.addCP(
+				webContentContent = "Webcontent Content",
+				webContentTitle = "Webcontent Title");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		task ("Publish to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.publishCustomPublication(remoteStaging = "true");
+			Staging.publishCustomPublication(remoteStaging = "true");
+		}
 
-		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add a display page template for Web Content Article and Basic Web Content") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
-			displayPageName = "Display Page Name",
-			item = "Edit");
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Web Content Article",
+				displayPageName = "Display Page Name",
+				subType = "Basic Web Content");
 
-		PageEditor.addWidget(portletName = "Asset Publisher");
+			PageEditor.addWidget(portletName = "Asset Publisher");
 
-		PageEditor.clickPublish();
+			PageEditor.clickPublish();
+		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		task ("Select the display page template in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
-		WebContent.editDisplayPage(
-			pageName = "Display Page Name",
-			pageType = "Display Page Templates");
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
 
-		PortletEntry.publish();
+			PortletEntry.publish();
+		}
 
-		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+		task ("Publish to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name");
 
-		Staging.publishCustomPublication(remoteStaging = "true");
+			Staging.publishCustomPublication(remoteStaging = "true");
+		}
 
-		AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
+		task ("View the following exception not shown in console") {
+			AssertConsoleTextNotPresent(value1 = "com.liferay.exportimport.kernel.lar.PortletDataException");
+		}
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/remote-site/w/webcontent-title");
+		task ("Navigate to the display page template at view mode in live site") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/remote-site/w/webcontent-title");
+		}
 
-		AssetPublisherPortlet.viewAssetPG(
-			assetContent = "Webcontent Content",
-			assetTitle = "Webcontent Title");
+		task ("View the web content shown in Asset Publisher") {
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Webcontent Content",
+				assetTitle = "Webcontent Title");
+		}
 	}
 
 }

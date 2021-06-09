@@ -109,7 +109,9 @@ definition {
 			locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 			value1 = "${selectedAsset}");
 
-		Pause(locator1 = "3000");
+		WaitForElementNotPresent(
+				key_text = "Save",
+				locator1 = "Dropdown#ANY_DISABLED");
 
 		PortletEntry.save();
 
@@ -177,17 +179,20 @@ definition {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 				value1 = "${itemType}");
-
-			Pause(locator1 = "3000");
 		}
 
 		if (isSet(itemSubtype)) {
+			WaitForElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT");
+
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 				value1 = "${itemSubtype}");
 
-			Pause(locator1 = "3000");
 		}
+
+		WaitForElementNotPresent(
+				key_text = "Save",
+				locator1 = "Dropdown#ANY_DISABLED");
 
 		PortletEntry.save();
 	}
@@ -198,16 +203,20 @@ definition {
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 				value1 = "${itemType}");
 
-			Pause(locator1 = "3000");
 		}
 
 		if (isSet(itemSubtype)) {
+			WaitForElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT");
+
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 				value1 = "${itemSubtype}");
 
-			Pause(locator1 = "3000");
 		}
+
+		WaitForElementNotPresent(
+				key_text = "Save",
+				locator1 = "Dropdown#ANY_DISABLED");
 
 		PortletEntry.save();
 	}
@@ -346,9 +355,8 @@ definition {
 			Click(
 				key_title = "${assetListName}",
 				locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
+			WaitForPageLoad();
 		}
-
-		Pause(locator1 = "3000");
 
 		if (IsElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT")) {
 			AssetListsAdmin.configureItemTypeInManualCollection(
@@ -360,9 +368,8 @@ definition {
 
 		Click(locator1 = "AssetLists#ASSET_TYPE_DROPDOWN_ITEM");
 
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = "3000");
 
 		if (isSet(depotName)) {
 			AssertClick(
@@ -382,7 +389,6 @@ definition {
 			for (var assetName : list "${entryList}") {
 				LexiconEntry.selectEntry(rowEntry = "${assetName}");
 
-				Pause(locator1 = "3000");
 			}
 		}
 		else {
@@ -426,7 +432,9 @@ definition {
 						value1 = "${itemSubtype}");
 				}
 
-				Pause(locator1 = "3000");
+				WaitForElementNotPresent(
+					key_text = "Save",
+					locator1 = "Dropdown#ANY_DISABLED");
 
 				PortletEntry.save();
 			}

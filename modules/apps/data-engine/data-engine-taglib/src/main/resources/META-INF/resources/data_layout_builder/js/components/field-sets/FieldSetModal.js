@@ -32,17 +32,17 @@ import {
 import {pageReducer} from 'data-engine-js-components-web/js/custom/form/reducers/index.es';
 import {default as React, useCallback, useState} from 'react';
 
-import getFieldsWithoutOptions from '../../../js/components/field-sets/actions/getFieldsWithoutOptions.es';
-import usePropagateFieldSet from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
-import TranslationManager from '../../../js/components/translation-manager/TranslationManager.es';
-import {addItem, updateItem} from '../../../js/utils/client.es';
-import {getFieldSetDDMForm} from '../../../js/utils/dataConverter.es';
-import {isDataLayoutEmpty} from '../../../js/utils/dataLayoutVisitor.es';
-import {errorToast, successToast} from '../../../js/utils/toast.es';
 import {FormBuilder} from '../../FormBuilder';
 import {INITIAL_STATE} from '../../config/initialState';
 import {EVENT_TYPES} from '../../eventTypes';
 import sidebarReducer from '../../reducers/sidebarReducer';
+import {addItem, updateItem} from '../../utils/client.es';
+import {getFieldSetDDMForm} from '../../utils/dataConverter.es';
+import {isDataLayoutEmpty} from '../../utils/dataLayoutVisitor.es';
+import {errorToast, successToast} from '../../utils/toast.es';
+import TranslationManager from '../translation-manager/TranslationManager.es';
+import getFieldsWithoutOptions from './actions/getFieldsWithoutOptions.es';
+import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
 
 import './FieldSetModal.scss';
 

@@ -12,8 +12,6 @@
  * details.
  */
 
-import {EVENT_TYPES} from '../new-js/eventTypes';
-import {FieldsSidebar} from '../new-js/plugins/fields-sidebar/components/FieldsSidebar';
 import EmptyState from './components/empty-state/EmptyState.es';
 import FieldType from './components/field-types/FieldType.es';
 import {Editor as RuleEditor} from './components/rules/editor/Editor.es';
@@ -27,7 +25,9 @@ import TranslationManager from './components/translation-manager/TranslationMana
 import DragLayer from './drag-and-drop/DragLayer.es';
 import * as DragTypes from './drag-and-drop/dragTypes.es';
 import withDragAndDropContext from './drag-and-drop/withDragAndDropContext.es';
+import {EVENT_TYPES} from './eventTypes';
 import {Component as PluginComponent} from './plugins/PluginContext.es';
+import {FieldsSidebar} from './plugins/fields-sidebar/components/FieldsSidebar';
 import * as DataConverter from './utils/dataConverter.es';
 import * as DataDefinitionUtils from './utils/dataDefinition.es';
 import * as DataLayoutVisitor from './utils/dataLayoutVisitor.es';

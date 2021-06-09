@@ -25,11 +25,11 @@ import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/
 import fieldDelete from 'data-engine-js-components-web/js/core/thunks/fieldDelete.es';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
-import MultiPanelSidebar from '../js/components/sidebar/MultiPanelSidebar.es';
-import initializeSidebarConfig from '../js/components/sidebar/initializeSidebarConfig.es';
-import DragLayer from '../js/drag-and-drop/DragLayer.es';
-import {getItem} from '../js/utils/client.es';
+import MultiPanelSidebar from './components/sidebar/MultiPanelSidebar.es';
+import initializeSidebarConfig from './components/sidebar/initializeSidebarConfig.es';
+import DragLayer from './drag-and-drop/DragLayer.es';
 import {EVENT_TYPES} from './eventTypes';
+import {getItem} from './utils/client.es';
 
 export const FormBuilder = () => {
 	const dispatch = useForm();

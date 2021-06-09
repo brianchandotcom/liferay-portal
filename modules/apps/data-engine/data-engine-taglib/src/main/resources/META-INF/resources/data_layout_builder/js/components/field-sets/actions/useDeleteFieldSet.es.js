@@ -14,7 +14,7 @@
 
 import {useForm, useFormState} from 'data-engine-js-components-web';
 
-import {EVENT_TYPES} from '../../../../new-js/eventTypes';
+import {EVENT_TYPES} from '../../../eventTypes';
 import {deleteItem} from '../../../utils/client.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 

@@ -19,13 +19,13 @@ import {
 	SettingsContext,
 } from 'dynamic-data-mapping-form-builder';
 
+import {EVENT_TYPES} from '../eventTypes';
 import {
 	getDDMFormField,
 	getDefaultDataLayout,
 	getFieldSetDDMForm,
-} from '../../js/utils/dataConverter.es';
-import {normalizeDataLayoutRows} from '../../js/utils/normalizers.es';
-import {EVENT_TYPES} from '../eventTypes';
+} from '../utils/dataConverter.es';
+import {normalizeDataLayoutRows} from '../utils/normalizers.es';
 
 export default (state, action, config) => {
 	switch (action.type) {

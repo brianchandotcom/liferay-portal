@@ -23,7 +23,7 @@ import {
 import {EVENT_TYPES as CORE_EVENT_TYPES} from 'data-engine-js-components-web/js/core/actions/eventTypes.es';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {getFilteredSettingsContext} from '../../../../js/utils/settingsForm.es';
+import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
 /**
  * This component will override the Column from Form Renderer and will

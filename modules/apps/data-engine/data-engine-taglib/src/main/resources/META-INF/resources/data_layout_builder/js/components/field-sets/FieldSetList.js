@@ -20,14 +20,14 @@ import {
 } from 'data-engine-js-components-web';
 import React, {useState} from 'react';
 
-import EmptyState from '../../../js/components/empty-state/EmptyState.es';
-import useDeleteFieldSet from '../../../js/components/field-sets/actions/useDeleteFieldSet.es';
-import usePropagateFieldSet from '../../../js/components/field-sets/actions/usePropagateFieldSet.es';
-import FieldType from '../../../js/components/field-types/FieldType.es';
-import {DRAG_FIELDSET_ADD} from '../../../js/drag-and-drop/dragTypes.es';
-import {getLocalizedValue, getPluralMessage} from '../../../js/utils/lang.es';
-import {getSearchRegex} from '../../../js/utils/search.es';
+import {DRAG_FIELDSET_ADD} from '../../drag-and-drop/dragTypes.es';
+import {getLocalizedValue, getPluralMessage} from '../../utils/lang.es';
+import {getSearchRegex} from '../../utils/search.es';
+import EmptyState from '../empty-state/EmptyState.es';
+import FieldType from '../field-types/FieldType.es';
 import FieldSetModal from './FieldSetModal';
+import useDeleteFieldSet from './actions/useDeleteFieldSet.es';
+import usePropagateFieldSet from './actions/usePropagateFieldSet.es';
 
 function getSortedFieldsets(fieldsets) {
 	return fieldsets.sort((a, b) => {

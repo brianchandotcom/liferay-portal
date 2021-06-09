@@ -19,9 +19,9 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
+import FieldSetList from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/components/field-sets/FieldSetList';
 import * as DataConverter from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/dataConverter.es';
 import * as toast from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/toast.es';
-import FieldSetList from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/new-js/components/field-sets/FieldSetList';
 import {
 	DATA_DEFINITION_FIELDSET,
 	DATA_DEFINITION_RESPONSES,

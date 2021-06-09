@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import {Component} from '../../../js/plugins/PluginContext.es';
+import {Component} from '../PluginContext.es';
 import {FieldsSidebar} from './components/FieldsSidebar';
 
 /**

@@ -18,9 +18,9 @@ import ClayLayout from '@clayui/layout';
 import {useForm, useFormState} from 'data-engine-js-components-web';
 import React, {useState} from 'react';
 
-import Sidebar from '../../../../js/components/sidebar/Sidebar.es';
 import RuleEditorModal from '../../../components/rules/RuleEditorModal';
 import RuleList from '../../../components/rules/RuleList';
+import Sidebar from '../../../components/sidebar/Sidebar.es';
 import {EVENT_TYPES} from '../../../eventTypes';
 
 const RulesSidebar = ({title}) => {

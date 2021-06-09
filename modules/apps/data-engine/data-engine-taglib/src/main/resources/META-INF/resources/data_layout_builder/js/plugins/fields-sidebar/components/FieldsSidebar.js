@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import {useFormState} from 'data-engine-js-components-web';
 import React, {useState} from 'react';
 
-import Sidebar from '../../../../js/components/sidebar/Sidebar.es';
+import Sidebar from '../../../components/sidebar/Sidebar.es';
 import FieldsSidebarBody from './FieldsSidebarBody';
 import FieldsSidebarSettingsBody from './FieldsSidebarSettingsBody';
 import FieldsSidebarSettingsHeader from './FieldsSidebarSettingsHeader';

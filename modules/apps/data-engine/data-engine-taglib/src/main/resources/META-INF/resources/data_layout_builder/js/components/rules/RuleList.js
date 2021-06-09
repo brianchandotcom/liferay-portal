@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import EmptyState from '../../../js/components/empty-state/EmptyState.es';
+import EmptyState from '../empty-state/EmptyState.es';
 import RuleItem from './RuleItem';
 
 export default function ({

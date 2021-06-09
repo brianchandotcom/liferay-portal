@@ -19,14 +19,14 @@ import classNames from 'classnames';
 import {useFormState} from 'data-engine-js-components-web';
 import React from 'react';
 
-import DropDown from '../../../js/components/drop-down/DropDown.es';
 import {
 	forEachDataDefinitionField,
 	getDataDefinitionField,
 	getFieldLabel,
 	getOptionLabel,
-} from '../../../js/utils/dataDefinition.es';
-import {getLocalizedValue} from '../../../js/utils/lang.es';
+} from '../../utils/dataDefinition.es';
+import {getLocalizedValue} from '../../utils/lang.es';
+import DropDown from '../drop-down/DropDown.es';
 
 const ACTION_LABELS = {
 	autofill: Liferay.Language.get('autofill'),

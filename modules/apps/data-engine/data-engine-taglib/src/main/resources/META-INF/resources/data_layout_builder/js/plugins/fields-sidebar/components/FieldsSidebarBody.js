@@ -15,9 +15,9 @@
 import {useConfig} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Sidebar from '../../../../js/components/sidebar/Sidebar.es';
 import FieldSetList from '../../../components/field-sets/FieldSetList';
 import FieldTypeList from '../../../components/field-types/FieldTypeList.es';
+import Sidebar from '../../../components/sidebar/Sidebar.es';
 
 export default function FieldsSidebarBody({keywords, setKeywords}) {
 	const {allowFieldSets, tabs = []} = useConfig();

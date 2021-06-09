@@ -21,11 +21,11 @@ import {
 } from 'data-engine-js-components-web';
 import React from 'react';
 
-import {dropLayoutBuilderField} from '../../../js/actions.es';
-import CollapsablePanel from '../../../js/components/collapsable-panel/CollapsablePanel.es';
-import EmptyState from '../../../js/components/empty-state/EmptyState.es';
-import FieldType from '../../../js/components/field-types/FieldType.es';
-import {getSearchRegex} from '../../../js/utils/search.es';
+import {dropLayoutBuilderField} from '../../actions.es';
+import {getSearchRegex} from '../../utils/search.es';
+import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
+import EmptyState from '../empty-state/EmptyState.es';
+import FieldType from './FieldType.es';
 
 const FieldTypeWrapper = ({
 	expanded,

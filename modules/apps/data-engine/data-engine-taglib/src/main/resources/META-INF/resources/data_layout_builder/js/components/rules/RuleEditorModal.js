@@ -24,7 +24,7 @@ import {
 import {fetch} from 'frontend-js-web';
 import React, {useMemo, useRef, useState} from 'react';
 
-import {Editor} from '../../../js/components/rules/editor/Editor.es';
+import {Editor} from './editor/Editor.es';
 
 function getTransformedPages(pages) {
 	return pages.map(({title}, index) => ({

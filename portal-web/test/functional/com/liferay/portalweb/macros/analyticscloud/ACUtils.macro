@@ -16,8 +16,10 @@ definition {
 	}
 
 	macro closeAllSessions {
+		var analyticsCloudAsahCuratorURL = PropsUtil.get("analytics.cloud.asah.curator.url");
+
 		var cleanCurl = '''
-			http://localhost:8082/admin/sessions/close \
+			${analyticsCloudAsahCuratorURL}/admin/sessions/close \
 			-H 'Content-Type: application/json' \
 			-d '{
 				"query": {

@@ -15,6 +15,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSETS_TABLE</td>
+	<td>//a[@class='text-truncate']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MATRIC_VALUE</td>
 	<td>//span[@class='title'and text()='${matricTitle}']/..//div[@class='metric-value']</td>
 	<td></td>

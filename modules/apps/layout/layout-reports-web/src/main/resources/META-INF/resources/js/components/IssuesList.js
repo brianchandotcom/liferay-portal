@@ -200,7 +200,7 @@ const Issue = ({issue}) => {
 		issueTotal > 0 && (
 			<ClayList.Item
 				action
-				className="border-0 lfr-layout-reports-panel__issue rounded-0"
+				className="border-0 issue rounded-0"
 				flex
 				onClick={() => dispatch({issue, type: SET_SELECTED_ISSUE})}
 			>

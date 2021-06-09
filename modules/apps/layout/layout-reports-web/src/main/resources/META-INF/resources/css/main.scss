@@ -6,8 +6,16 @@
 		width: 330px;
 	}
 
-	&__issue {
+	.dropdown-menu__languages {
+		max-height: 295px;
+	}
+
+	.issue {
 		cursor: pointer;
+	}
+
+	.list-group {
+		margin-bottom: 0.5rem;
 	}
 
 	.sidebar-header {
@@ -57,12 +65,4 @@
 	.text-truncate-reverse {
 		direction: rtl;
 	}
-
-	.list-group {
-		margin-bottom: 0.5rem;
-	}
-}
-
-.dropdown-menu__languages {
-	max-height: 295px;
 }

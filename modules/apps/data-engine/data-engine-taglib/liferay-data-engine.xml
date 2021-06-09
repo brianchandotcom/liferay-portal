@@ -78,6 +78,13 @@
 				<inputType>java.util.Set</inputType>
 				<required>false</required>
 			</attribute>
+			<attribute>
+				<name>searchableFieldsDisabled</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>false</defaultValue>
+				<required>false</required>
+			</attribute>
 		</attributes>
 	</component>
 	<component bodyContent="false" name="DataLayoutRenderer" writeJSP="true">

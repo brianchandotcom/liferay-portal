@@ -22,7 +22,10 @@ import {handleCollectDigitalSignatureVisibility} from './DigitalSignatureUtil';
  * CollectDigitalSignature activation
  */
 
-const DigitalSignature = ({allowedFileExtensions, portletNamespace}) => {
+const DigitalSignature = ({
+	digitalSignatureAllowedExtensions,
+	portletNamespace,
+}) => {
 	useEffect(() => {
 		let eventHandler;
 
@@ -31,7 +34,7 @@ const DigitalSignature = ({allowedFileExtensions, portletNamespace}) => {
 				eventHandler = searchContainer.on('rowToggled', (event) => {
 					handleCollectDigitalSignatureVisibility(
 						event.elements.allSelectedElements.get('value'),
-						allowedFileExtensions
+						digitalSignatureAllowedExtensions
 					);
 				});
 			}

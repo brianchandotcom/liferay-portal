@@ -24,6 +24,8 @@ DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = 
 DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisplayContext, request, renderRequest, renderResponse);
 
 String digitalSignatureAllowedExtensions = StringUtil.merge(DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS, StringPool.COMMA);
+
+Boolean isDigitalSignatureEnabled = dlAdminManagementToolbarDisplayContext.isDigitalSignatureEnabled();
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
@@ -53,9 +55,9 @@ String digitalSignatureAllowedExtensions = StringUtil.merge(DigitalSignatureCons
 		<clay:management-toolbar
 			additionalProps='<%=
 				HashMapBuilder.<String, Object>put(
-					"allowedFileExtensions", digitalSignatureAllowedExtensions
-				).put(
 					"collectDigitalSignaturePortlet", DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE
+				).put(
+					"digitalSignatureAllowedExtensions", digitalSignatureAllowedExtensions
 				).put(
 					"downloadEntryURL", dlViewDisplayContext.getDownloadEntryURL()
 				).put(
@@ -72,6 +74,8 @@ String digitalSignatureAllowedExtensions = StringUtil.merge(DigitalSignatureCons
 							"width", PrefsPropsUtil.getLong(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH)
 						).build()
 					).build()
+				).put(
+					"isDigitalSignatureEnabled", isDigitalSignatureEnabled
 				).put(
 					"openViewMoreFileEntryTypesURL", dlViewDisplayContext.getViewMoreFileEntryTypesURL()
 				).put(
@@ -395,13 +399,13 @@ String digitalSignatureAllowedExtensions = StringUtil.merge(DigitalSignatureCons
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= dlAdminManagementToolbarDisplayContext.isDigitalSignatureEnabled() %>">
+<c:if test="<%= isDigitalSignatureEnabled %>">
 	<div>
 		<react:component
 			module="document_library/js/digital-signature/DigitalSignature"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
-					"allowedFileExtensions", digitalSignatureAllowedExtensions
+					"digitalSignatureAllowedExtensions", digitalSignatureAllowedExtensions
 				).build()
 			%>'
 		/>

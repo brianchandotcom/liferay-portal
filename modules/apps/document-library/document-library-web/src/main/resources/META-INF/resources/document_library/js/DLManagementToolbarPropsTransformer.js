@@ -24,11 +24,12 @@ import {handleCollectDigitalSignatureVisibility} from './digital-signature/Digit
 
 export default function propsTransformer({
 	additionalProps: {
-		allowedFileExtensions,
 		collectDigitalSignaturePortlet,
+		digitalSignatureAllowedExtensions,
 		downloadEntryURL,
 		editEntryURL,
 		folderConfiguration,
+		isDigitalSignatureEnabled,
 		openViewMoreFileEntryTypesURL,
 		selectFileEntryTypeURL,
 		selectFolderURL,
@@ -281,12 +282,14 @@ export default function propsTransformer({
 			}
 		},
 		onCheckboxChange: () => {
-			setTimeout(() => {
-				handleCollectDigitalSignatureVisibility(
-					getAllSelectedElements().get('value'),
-					allowedFileExtensions
-				);
-			}, 50);
+			if (isDigitalSignatureEnabled) {
+				setTimeout(() => {
+					handleCollectDigitalSignatureVisibility(
+						getAllSelectedElements().get('value'),
+						digitalSignatureAllowedExtensions
+					);
+				}, 50);
+			}
 		},
 		onFilterDropdownItemClick(event, {item}) {
 			if (item?.data?.action === 'openDocumentTypesSelector') {

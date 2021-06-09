@@ -20,7 +20,7 @@
 
 function getFileEntriesExtensions() {
 	const fileEntriesExtensionsNodes = document.querySelectorAll(
-		'.fileEntriesExtensions'
+		'.digital-signature-file-extensions'
 	);
 
 	const fileEntriesExtensions = {};

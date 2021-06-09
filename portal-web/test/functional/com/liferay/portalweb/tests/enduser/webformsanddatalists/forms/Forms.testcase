@@ -2716,12 +2716,11 @@ definition {
 
 		Form.pageReset(pageIndex = "1");
 
-		Form.viewFormPlaceholderPage(pageIndex= "0");
+		Form.viewFormPlaceholderPage(pageIndex = "0");
 
-		Form.viewPageTitleDefault(pageIndex= "0");
+		Form.viewPageTitleDefault(pageIndex = "0");
 
-		Form.viewPageEmptyField(pageIndex= "0");	
-		
+		Form.viewPageEmptyField(pageIndex = "0");
 	}
 
 	@description = "This is a use case for LPS-61740"

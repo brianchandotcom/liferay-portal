@@ -788,17 +788,17 @@ definition {
 			fieldLabel = "${fieldLabel}",
 			fieldName = "${fieldName}");
 	}
-	
+
 	macro viewPageEmptyField {
 		AssertElementPresent(
 			key_pageNumber = "${pageIndex}",
-			locator1="Form#PAGE_EMPTY_FORM_FIELD_BY_NUMBER");
+			locator1 = "Form#PAGE_EMPTY_FORM_FIELD_BY_NUMBER");
 	}
 
-	macro viewPageTitleDefault {		
+	macro viewPageTitleDefault {
 		AssertElementPresent(
 			key_pageNumber = "${pageIndex}",
-			locator1="Form#PAGE_DEFAULT_TITLE_BY_NUMBER");			
+			locator1 = "Form#PAGE_DEFAULT_TITLE_BY_NUMBER");
 	}
 
 	macro viewPublishFormSuccessMessage {

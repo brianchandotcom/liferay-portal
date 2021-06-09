@@ -17,7 +17,7 @@ package com.liferay.batch.engine.web.internal.application.list;
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
-import com.liferay.batch.engine.web.internal.application.list.constants.ImportExportCenterPanelCategoryKeys;
+import com.liferay.batch.engine.web.internal.application.list.constants.BatchEnginePanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=1000",
-		"panel.category.key=" + ImportExportCenterPanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS_IMPORT_EXPORT_CENTER
+		"panel.category.key=" + BatchEnginePanelCategoryKeys.APPLICATIONS_MENU_APPLICATIONS_BATCH_ENGINE
 	},
 	service = PanelApp.class
 )

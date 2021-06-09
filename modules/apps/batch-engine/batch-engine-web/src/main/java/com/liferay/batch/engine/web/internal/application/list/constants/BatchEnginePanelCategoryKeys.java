@@ -17,10 +17,9 @@ package com.liferay.batch.engine.web.internal.application.list.constants;
 /**
  * @author Matija Petanjek
  */
-public class ImportExportCenterPanelCategoryKeys {
+public class BatchEnginePanelCategoryKeys {
 
-	public static final String
-		APPLICATIONS_MENU_APPLICATIONS_IMPORT_EXPORT_CENTER =
-			"applications_menu.applications.import_export_center";
+	public static final String APPLICATIONS_MENU_APPLICATIONS_BATCH_ENGINE =
+		"applications_menu.applications.batch_engine";
 
 }

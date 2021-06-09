@@ -302,7 +302,6 @@ definition {
 		FormFields.viewTextLabel(fieldLabel = "Test Color");
 
 		Form.save();
-		
 
 		Form.publishForm();
 

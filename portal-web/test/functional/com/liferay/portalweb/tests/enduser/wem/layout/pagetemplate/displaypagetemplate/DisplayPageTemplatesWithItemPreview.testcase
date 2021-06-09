@@ -555,6 +555,168 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-132081. View mapped content in Collection Display with Items with This Category when select preview category item in display page template for Category."
+	@priority = "4"
+	test ViewMappedContentOfPreviewCategoryItemInCollectionDisplayWithItemsWithThisCategory {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
+
+		task ("Add a vocabulary") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+		}
+
+		task ("Add a category") {
+			var categoryId = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name",
+				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add a web content with the category") {
+			JSONWebcontent.addWebContent(
+				assetCategoryIds = "${categoryId}",
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Add a blogs entry with the category") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a document entry with the category") {
+			JSONDocument.addFileWithUploadedFile(
+				assetCategoryIds = "${categoryId}",
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpg");
+		}
+
+		task ("Add a display page template for Category") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Category",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+
+		task ("Add a Collection Display fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Items with This Category collection provider in Collection Display and Select the Bulleted List as List Style ") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoItemRelatedListProviderName = "Items with This Category",
+				listStyle = "Bulleted List");
+		}
+
+		task ("View the Title is shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Select the category via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Category Name",
+				assetType = "Category");
+		}
+
+		task ("View the title of collection items are shown as Bulleted List") {
+			var n = "1";
+
+			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Select the None via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "-- None --",
+				item = "-- None --");
+		}
+
+		task ("View the Title is shown in Collection Display") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		task ("Open the Preview modal") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(locator1 = "PageEditor#PREVIEW");
+		}
+
+		task ("Select the category via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "Category Name",
+				assetType = "Category",
+				modal = "true");
+		}
+
+		task ("View the title of collection items are shown as Bulleted List") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			var n = "1";
+
+			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='${title}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+
+			SelectFrameTop();
+		}
+
+		task ("Select the None via preview item selector") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = "-- None --",
+				item = "-- None --",
+				modal = "true");
+		}
+
+		task ("View the Collection Display is not shown in modal") {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertElementNotPresent(
+				key_colPosition = "1",
+				key_entryTitle = "Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+	}
+
 	@description = "This is a test for LPS-128904. View mapped content in page editor when select preview items."
 	@priority = "5"
 	test ViewMappedContentOfPreviewItem {
@@ -858,168 +1020,6 @@ definition {
 				id = "image-square",
 				imageDescription = "",
 				imageFileName = "data:image/png");
-		}
-	}
-
-	@description = "This is a test for LPS-132081. View mapped content when select preview category item in display page template for Category."
-	@priority = "4"
-	test ViewMappedContentWhenSelectCategoryInDisplayPageTemplateAndPreviewItem {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
-
-		task ("Add a vocabulary") {
-			JSONCategory.addVocabulary(
-				groupName = "Test Site Name",
-				title = "Vocabulary Name");
-		}
-
-		task ("Add a category") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Category.addCP(
-				categoryName = "Category Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Get the categoryId") {
-			var categoryId = JSONCategory.getCategoryId(
-				categoryName = "Category Name",
-				groupName = "Test Site Name",
-				vocabularyName = "Vocabulary Name");
-		}
-
-		task ("Add a web content with the category") {
-			JSONWebcontent.addWebContent(
-				assetCategoryIds = "${categoryId}",
-				content = "Web Content Content",
-				groupName = "Test Site Name",
-				title = "Web Content Title");
-		}
-
-		task ("Add a blogs entry with the category") {
-			JSONBlog.addEntry(
-				assetCategoryIds = "${categoryId}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add a document entry with the category") {
-			JSONDocument.addFileWithUploadedFile(
-				assetCategoryIds = "${categoryId}",
-				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name",
-				mimeType = "image/jpeg",
-				sourceFileName = "Document_2.jpg");
-		}
-
-		task ("Add a display page template for Category") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Category",
-				displayPageTemplateEntryName = "Display Page Name",
-				groupName = "Test Site Name");
-		}
-
-		task ("Add a Content Display fragment below the Banner Center") {
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display",
-				targetFragmentName = "Banner Center");
-		}
-
-		task ("Select the Items with This Category collection provider in Collection Display and Select the Bulleted List as List Style ") {
-			PageEditor.editCollectionDisplay(
-				fragmentName = "Collection Display",
-				infoItemRelatedListProviderName = "Items with This Category",
-				listStyle = "Bulleted List");
-		}
-
-		task ("Select the category via preview item selector") {
-			DisplayPageTemplate.selectPreviewItem(
-				assetTitle = "Category Name",
-				assetType = "Category");
-		}
-
-		task ("Assert the Title of collection items are shown in Bulleted List") {
-			var n = "1";
-
-			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST");
-
-				var n = ${n} + 1;
-			}
-		}
-
-		task ("Select the None via preview item selector") {
-			DisplayPageTemplate.selectPreviewItem(
-				assetTitle = "-- None --",
-				item = "-- None --");
-		}
-
-		task ("View the Title is shown in Collection Display") {
-			AssertVisible(
-				key_colPosition = "1",
-				key_entryTitle = "Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
-		}
-
-		task ("Open the Preview modal") {
-			WaitForLiferayEvent.initializeLiferayEventLog();
-
-			Click(locator1 = "PageEditor#PREVIEW");
-		}
-
-		task ("Select the category via preview item selector") {
-			DisplayPageTemplate.selectPreviewItem(
-				assetTitle = "Category Name",
-				assetType = "Category",
-				modal = "true");
-		}
-
-		task ("View the mapped content in modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-		}
-
-		task ("Assert the Title of collection items are shown in modal") {
-			var n = "1";
-
-			for (var title : list "Web Content Title,Blogs Entry Title,Document Title") {
-				AssertVisible(
-					key_entryContent = "[normalize-space(text())='${title}']",
-					key_fragmentName = "Collection Display",
-					key_position = "${n}",
-					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE");
-
-				var n = ${n} + 1;
-			}
-
-			SelectFrameTop();
-		}
-
-		task ("Select the None via preview item selector") {
-			DisplayPageTemplate.selectPreviewItem(
-				assetTitle = "-- None --",
-				item = "-- None --",
-				modal = "true");
-		}
-
-		task ("View the Banner Center shown in modal") {
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-		}
-
-		task ("View the Collection Display is not shown in modal") {
-			AssertElementNotPresent(
-				key_colPosition = "1",
-				key_entryTitle = "Title",
-				key_fragmentName = "Collection Display",
-				key_rowPosition = "1",
-				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
 		}
 	}
 

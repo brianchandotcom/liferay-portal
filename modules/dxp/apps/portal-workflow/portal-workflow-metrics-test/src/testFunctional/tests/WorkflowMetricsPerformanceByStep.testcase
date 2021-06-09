@@ -1,0 +1,274 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-97667 - Verify that the column Avg. Completion Time is displaying the time taken for N tasks to complete from start to end divided by the number of completed tasks during the selected period"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CalculateAvgCompletionTimeColumnData {
+
+		// TODO LRQA-67682 CalculateAvgCompletionTimeColumnData pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the user can not insert a future date"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CannotInsertFutureDate {
+
+		// TODO LRQA-67720 CannotInsertFutureDate pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the card Performance by Step has no more than 10 entries displayed"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CardDoesNotDisplayMoreThan10Entries {
+
+		// TODO LRQA-67674 CardDoesNotDisplayMoreThan10Entries pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that an unexpected error state is displayed in Performance by Step card"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test CardsDisplayErrorState {
+
+		// TODO LRQA-67680 CardsDisplayErrorState pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the card will update the step name if it is changed in Process Builder"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CardUpdatesStepNameWhenStepNameIsChangedInProcessBuilder {
+
+		// TODO LRQA-67676 CardUpdatesStepNameWhenStepNameIsChangedInProcessBuilder pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the card Performance by Steps works as designed when the portal is set to a non-en-US locale"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CardWorksAsDesignedWhenPortalIsSetToNonEnUsLocale {
+
+		// TODO LRQA-67673 CardWorksAsDesignedWhenPortalIsSetToNonEnUsLocale pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DefaultDateFormatIsMMDDYYYY {
+
+		// TODO LRQA-67691 DefaultDateFormatIsMMDDYYYY pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the no completed item state is displaying in Performance by Step card empty card"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test EmptyStateIsDisplayedWhenThereIsNoCompletedItem {
+
+		// TODO LRQA-67688 EmptyStateIsDisplayedWhenThereIsNoCompletedItem pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that when the user selects Last 7 Days time period, the result and filter options displayed in accordance with reference"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FilterItemsFromLast7Days {
+
+		// TODO LRQA-67687 FilterItemsFromLast7Days pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that when the user selects Last 90 Days time period the result and filter options displayed in accordance with reference"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FilterItemsFromLast90Days {
+
+		// TODO LRQA-67685 FilterItemsFromLast90Days pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that when the user selects Last 180 Days time period the result and filter options are displayed in accordance with reference"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FilterItemsFromLast180Days {
+
+		// TODO LRQA-67684 FilterItemsFromLast180Days pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that when the user selects Last Year time period the result and filter options displayed in accordance with reference"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FilterItemsFromLastYear {
+
+		// TODO LRQA-67681 FilterItemsFromLastYear pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that when the user selects Today time period the result and filter options are displayed in accordance with reference"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test FilterItemsFromToday {
+
+		// TODO LRQA-67689 FilterItemsFromToday pending implementation
+
+	}
+
+	@description = "LPS-100679 - Verify that users are able to filter the Performance by Step page by period: Today, Yesterday, Last 7 Days, Last 30 Days, Last 90 Days, Last 180 Days, Last Year, Custom Range"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FilterPerformanceByStepPagePerTimeRange {
+
+		// TODO LRQA-67667 FilterPerformanceByStepPagePerTimeRange pending implementation
+
+	}
+
+	@description = "LPS-98233 - Verify that the fields From and To are required"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FromAndToAreRequiredFields {
+
+		// TODO LRQA-67686 FromAndToAreRequiredFields pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that hovering the info icon next to Performance by Step card will display a tooltip"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test InfoIconDisplaysMessageOnHover {
+
+		// TODO LRQA-67683 InfoIconDisplaysMessageOnHover pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that at the custom range modal, the oldest date accepted is 1970"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test OldestDataAcceptedIs1970 {
+
+		// TODO LRQA-67690 OldestDataAcceptedIs1970 pending implementation
+
+	}
+
+	@description = "LPS-100678 - Verify that the Performance by Step page displays the specific error state when there is an unexpected error"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PageDisplaysSpecificErrorStateOnUnexpectedError {
+
+		// TODO LRQA-67669 PageDisplaysSpecificErrorStateOnUnexpectedError pending implementation
+
+	}
+
+	@description = "LPS-100677 - Verify the page is providing loading feedback when the table is being updated according to the search queries"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PageProvidesLoadingFeedbackOnTableUpdate {
+
+		// TODO LRQA-67670 PageProvidesLoadingFeedbackOnTableUpdate pending implementation
+
+	}
+
+	@description = "LPS-100677 - Verify that the search is an approximate match aka LIKE search type or character by character comparison"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test SearchIsAnApproximateMatch {
+
+		// TODO LRQA-67672 SearchIsAnApproximateMatch pending implementation
+
+	}
+
+	@description = "LPS-97667 - Verify that when there are tasks with average time smaller than 1 minute the average completion time is displayed"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test TasksWithAverageTimeSmallerThan1MinAreDisplayed {
+
+		// TODO LRQA-67668 TasksWithAverageTimeSmallerThan1MinAreDisplayed pending implementation
+
+	}
+
+	@description = "LPS-97667 - Verify that, when displaying time, the time units are shortened by using the biggest measurement possible, and use up to 2 units per time, with minute as smallest value and days as biggest unit"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TimeUnitsAreShortenedByBiggestMeasurementPossible {
+
+		// TODO LRQA-67671 TimeUnitsAreShortenedByBiggestMeasurementPossible pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the To date is greater than the From date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ToDateMustBeGreaterThanFromDate {
+
+		// TODO LRQA-67723 ToDateMustBeGreaterThanFromDate pending implementation
+
+	}
+
+	@description = "LPS-100677 - Verify that searching steps containing non-ascii chars is possible"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test UserCanSearchNonAsciiChars {
+
+		// TODO LRQA-67675 UserCanSearchNonAsciiChars pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the card Performance by Step, when it has 6 or more entries, the table should provide a vertical scroll"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test WhenCard6OrMoreEntriesTableProvideVerticalScroll {
+
+		// TODO LRQA-67679 WhenCard6OrMoreEntriesTableProvideVerticalScroll pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that the card Performance by Step, when it has 5 or fewer entries, the table should not scroll"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test WhenCardHasUpTo5EntriesTableDoNotScroll {
+
+		// TODO LRQA-67677 WhenCardHasUpTo5EntriesTableDoNotScroll pending implementation
+
+	}
+
+	@description = "LPS-100674 - Verify that when an SLA is deleted, the data in Performance by Step is still part of the average calculation"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WhenSlaIsDeletedDataInCardIsStillPartOfTheCalculation {
+
+		// TODO LRQA-67678 WhenSlaIsDeletedDataInCardIsStillPartOfTheCalculation pending implementation
+
+	}
+
+}

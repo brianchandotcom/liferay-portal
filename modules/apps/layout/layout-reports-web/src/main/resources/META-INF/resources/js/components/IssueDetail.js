@@ -27,7 +27,7 @@ export default function IssueDetail() {
 	const {selectedIssue} = useContext(StoreStateContext);
 
 	return (
-		<div className="c-p-3">
+		<div className="p-3">
 			<ClayPanel.Group className="panel-group-flush panel-group-sm">
 				<HtmlPanel
 					content={selectedIssue.description}
@@ -49,7 +49,7 @@ export default function IssueDetail() {
 const HtmlPanel = ({content, title}) => (
 	<ClayPanel
 		collapsable
-		collapseClassNames="c-mb-4 c-mt-3"
+		collapseClassNames="mb-4 mt-3"
 		displayTitle={title}
 		displayType="unstyled"
 		showCollapseIcon={true}
@@ -91,7 +91,7 @@ const FailingElementsPanel = ({failingElements, issueType}) => {
 	return (
 		<ClayPanel
 			collapsable
-			collapseClassNames="c-mb-4 c-mt-3"
+			collapseClassNames="mb-4 mt-3"
 			defaultExpanded
 			displayTitle={
 				<span className="c-inner" tabIndex="-1">

@@ -52,7 +52,7 @@ export default function IssuesList() {
 	const successImage = `${imagesPath}/issues_success.gif`;
 
 	return (
-		<div className="c-p-3">
+		<div className="p-3">
 			<BasicInformation
 				defaultLanguageId={defaultLanguageId}
 				pageURLs={pageURLs}
@@ -74,7 +74,7 @@ export default function IssuesList() {
 }
 
 const LoadingProgressBar = ({percentage}) => (
-	<div className="c-my-4 text-secondary">
+	<div className="my-4 text-secondary">
 		{Liferay.Language.get('connecting-with-google-pagespeed')}
 		<ClayProgressBar value={percentage} />
 	</div>
@@ -90,14 +90,14 @@ const Issues = ({layoutReportsIssues, successImage}) => {
 	}, [layoutReportsIssues]);
 
 	return (
-		<div className="c-my-4">
+		<div className="my-4">
 			{!hasIssues && (
 				<div className="pb-5 text-center">
 					<img
 						alt={Liferay.Language.get(
 							'success-page-audit-image-alt-description'
 						)}
-						className="c-my-4"
+						className="my-4"
 						src={successImage}
 						width="120px"
 					/>
@@ -134,7 +134,7 @@ const Section = ({section}) => {
 	return (
 		<ClayPanel
 			collapsable
-			collapseClassNames="c-mb-4 c-mt-3"
+			collapseClassNames="mb-4 mt-3"
 			defaultExpanded={sectionTotal > 0}
 			displayTitle={
 				<span className="c-inner" tabIndex="-1">

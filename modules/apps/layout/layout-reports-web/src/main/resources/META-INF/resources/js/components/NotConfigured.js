@@ -25,17 +25,17 @@ export default function NotConfigured() {
 	const defaultIllustration = `${imagesPath}/issues_default.svg`;
 
 	return (
-		<div className="c-p-3 text-center">
+		<div className="p-3 text-center">
 			<img
 				alt={Liferay.Language.get(
 					'default-page-audit-image-alt-description'
 				)}
-				className="c-my-4"
+				className="my-4"
 				src={defaultIllustration}
 				width="120px"
 			/>
 
-			<div className="c-mb-2 font-weight-semi-bold">
+			<div className="font-weight-semi-bold mb-2">
 				<span>
 					{Liferay.Language.get(
 						"check-issues-that-impact-on-your-page's-accessibility-and-seo"
@@ -45,7 +45,7 @@ export default function NotConfigured() {
 
 			{configureGooglePageSpeedURL ? (
 				<>
-					<div className="c-mb-3 text-secondary">
+					<div className="mb-3 text-secondary">
 						{Liferay.Language.get(
 							'connect-to-google-pagespeed-to-run-a-page-audit'
 						)}

@@ -335,6 +335,23 @@ public class LayoutTestUtil {
 		return layout;
 	}
 
+	public static Layout addTypeLinkToURLLayout(long groupId, String url)
+		throws Exception {
+
+		Layout layout = addLayout(groupId, false);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty("url", url);
+
+		layout.setType(LayoutConstants.TYPE_URL);
+
+		LayoutLocalServiceUtil.updateLayout(layout);
+
+		return layout;
+	}
+
 	public static String getLayoutTemplateId(Layout layout) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

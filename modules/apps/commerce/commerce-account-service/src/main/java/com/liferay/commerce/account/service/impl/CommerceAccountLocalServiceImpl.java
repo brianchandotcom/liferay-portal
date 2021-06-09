@@ -311,7 +311,7 @@ public class CommerceAccountLocalServiceImpl
 		}
 
 		return CommerceAccountImpl.fromAccountEntry(
-			accountEntryLocalService.fetchAccountEntryByReferenceCode(
+			accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
 				companyId, externalReferenceCode));
 	}
 
@@ -326,7 +326,7 @@ public class CommerceAccountLocalServiceImpl
 		long companyId, String externalReferenceCode) {
 
 		return CommerceAccountImpl.fromAccountEntry(
-			accountEntryLocalService.fetchAccountEntryByReferenceCode(
+			accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
 				companyId, externalReferenceCode));
 	}
 

@@ -75,7 +75,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 					"fields",
 					JSONUtil.putAll(
 						JSONUtil.put(
-							"label", "content"
+							"label", "item"
 						).put(
 							"name", "itemSelector"
 						).put(

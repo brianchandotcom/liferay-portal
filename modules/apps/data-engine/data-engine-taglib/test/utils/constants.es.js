@@ -12,8 +12,6 @@
  * details.
  */
 
-import {DataLayoutBuilder} from '../../src/main/resources/META-INF/resources/data_layout_builder/js/data-layout-builder/DataLayoutBuilder.es';
-
 const createItems = (size) => {
 	const items = [];
 
@@ -537,8 +535,6 @@ export const dataLayoutBuilderConfig = {
 	portletNamespace: 'com_liferay_journal_web_portlet_JournalPortlet',
 };
 
-const dataLayoutBuilder = new DataLayoutBuilder(dataLayoutBuilderConfig);
-
 const pages = [
 	{
 		rows: [
@@ -571,7 +567,6 @@ export const FORM_VIEW = {
 	FORM_VIEW_CONTEXT,
 	getDataLayoutBuilderProps() {
 		return {
-			...dataLayoutBuilder,
 			formBuilderWithLayoutProvider: {
 				refs: {
 					layoutProvider: {

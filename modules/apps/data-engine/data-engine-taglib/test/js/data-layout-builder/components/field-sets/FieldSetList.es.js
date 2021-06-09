@@ -19,8 +19,6 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import AppContext from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/AppContext.es';
-import DataLayoutBuilderContextProvider from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/data-layout-builder/DataLayoutBuilderContextProvider.es';
 import * as DataConverter from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/dataConverter.es';
 import * as toast from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/js/utils/toast.es';
 import FieldSetList from '../../../../../src/main/resources/META-INF/resources/data_layout_builder/new-js/components/field-sets/FieldSetList';
@@ -49,22 +47,13 @@ const defaultState = {
 };
 
 let dataLayoutBuilder;
-let dispatch;
 let spySuccessToast;
 let spyErrorToast;
 let ddmFormSpy;
 
-export const FieldSetWrapper = ({children, state = defaultState}) => (
+export const FieldSetWrapper = ({children}) => (
 	<DndProvider backend={HTML5Backend}>
-		<ClayModalProvider>
-			<AppContext.Provider value={[state, dispatch]}>
-				<DataLayoutBuilderContextProvider
-					dataLayoutBuilder={dataLayoutBuilder}
-				>
-					{children}
-				</DataLayoutBuilderContextProvider>
-			</AppContext.Provider>
-		</ClayModalProvider>
+		<ClayModalProvider>{children}</ClayModalProvider>
 	</DndProvider>
 );
 
@@ -103,7 +92,6 @@ describe('FieldSets', () => {
 				return state;
 			});
 
-		dispatch = jest.fn();
 		jest.useFakeTimers();
 
 		spySuccessToast = jest

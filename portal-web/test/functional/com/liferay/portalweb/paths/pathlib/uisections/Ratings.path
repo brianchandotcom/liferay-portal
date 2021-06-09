@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STACKED_STAR_COUNT</td>
-	<td>//div[contains(@class,'stacked-stars')]//label[contains(@for,'zqmy_column1_0_star${key_ratingStarCount}')]</td>
+	<td>//div[contains(@class,'stacked-stars')]//label[contains(@for,'0_star${key_ratingStarCount}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>YOUR_RATING_STACKED_STAR_RESULT</td>
-	<td>//div[contains(@class,'stacked-stars')]//label[contains(@class,'ratings-stars-star-full') and contains(@for,'zqmy_column1_0_star${key_ratingStarCount}')]</td>
+	<td>//div[contains(@class,'stacked-stars')]//label[contains(@class,'ratings-stars-star-full') and contains(@for,'0_star${key_ratingStarCount}')]</td>
 	<td></td>
 </tr>
 <tr>

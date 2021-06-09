@@ -17,11 +17,8 @@ package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLinkTable;
-import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceTable;
-import com.liferay.dynamic.data.mapping.model.DDMStructureTable;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence;
-import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.dynamic.data.mapping.model.DDMContentTable;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMContentPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,44 +28,34 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class DDMDataProviderInstanceLinkTableReferenceDefinintion
-	implements TableReferenceDefinition<DDMDataProviderInstanceLinkTable> {
+public class DDMContentTableReferenceDefinition
+	implements TableReferenceDefinition<DDMContentTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<DDMDataProviderInstanceLinkTable>
+		ChildTableReferenceInfoBuilder<DDMContentTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<DDMDataProviderInstanceLinkTable>
+		ParentTableReferenceInfoBuilder<DDMContentTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.singleColumnReference(
-			DDMDataProviderInstanceLinkTable.INSTANCE.companyId,
-			CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			DDMDataProviderInstanceLinkTable.INSTANCE.dataProviderInstanceId,
-			DDMDataProviderInstanceTable.INSTANCE.dataProviderInstanceId
-		).singleColumnReference(
-			DDMDataProviderInstanceLinkTable.INSTANCE.structureId,
-			DDMStructureTable.INSTANCE.structureId
-		);
+		parentTableReferenceInfoBuilder.groupedModel(DDMContentTable.INSTANCE);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _ddmDataProviderInstanceLinkPersistence;
+		return _ddmContentPersistence;
 	}
 
 	@Override
-	public DDMDataProviderInstanceLinkTable getTable() {
-		return DDMDataProviderInstanceLinkTable.INSTANCE;
+	public DDMContentTable getTable() {
+		return DDMContentTable.INSTANCE;
 	}
 
 	@Reference
-	private DDMDataProviderInstanceLinkPersistence
-		_ddmDataProviderInstanceLinkPersistence;
+	private DDMContentPersistence _ddmContentPersistence;
 
 }

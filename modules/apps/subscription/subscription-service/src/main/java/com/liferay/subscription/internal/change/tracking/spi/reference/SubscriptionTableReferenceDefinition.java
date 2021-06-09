@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.reference;
+package com.liferay.subscription.internal.change.tracking.spi.reference;
 
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
-import com.liferay.dynamic.data.mapping.model.DDMContentTable;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMContentPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.subscription.model.SubscriptionTable;
+import com.liferay.subscription.service.persistence.SubscriptionPersistence;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,34 +28,35 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class DDMContentTableReferenceDefinintion
-	implements TableReferenceDefinition<DDMContentTable> {
+public class SubscriptionTableReferenceDefinition
+	implements TableReferenceDefinition<SubscriptionTable> {
 
 	@Override
 	public void defineChildTableReferences(
-		ChildTableReferenceInfoBuilder<DDMContentTable>
+		ChildTableReferenceInfoBuilder<SubscriptionTable>
 			childTableReferenceInfoBuilder) {
 	}
 
 	@Override
 	public void defineParentTableReferences(
-		ParentTableReferenceInfoBuilder<DDMContentTable>
+		ParentTableReferenceInfoBuilder<SubscriptionTable>
 			parentTableReferenceInfoBuilder) {
 
-		parentTableReferenceInfoBuilder.groupedModel(DDMContentTable.INSTANCE);
+		parentTableReferenceInfoBuilder.groupedModel(
+			SubscriptionTable.INSTANCE);
 	}
 
 	@Override
 	public BasePersistence<?> getBasePersistence() {
-		return _ddmContentPersistence;
+		return _subscriptionPersistence;
 	}
 
 	@Override
-	public DDMContentTable getTable() {
-		return DDMContentTable.INSTANCE;
+	public SubscriptionTable getTable() {
+		return SubscriptionTable.INSTANCE;
 	}
 
 	@Reference
-	private DDMContentPersistence _ddmContentPersistence;
+	private SubscriptionPersistence _subscriptionPersistence;
 
 }

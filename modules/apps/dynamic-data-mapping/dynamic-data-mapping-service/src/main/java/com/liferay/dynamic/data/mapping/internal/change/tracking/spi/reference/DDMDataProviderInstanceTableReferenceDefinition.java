@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(service = TableReferenceDefinition.class)
-public class DDMDataProviderInstanceTableReferenceDefinintion
+public class DDMDataProviderInstanceTableReferenceDefinition
 	implements TableReferenceDefinition<DDMDataProviderInstanceTable> {
 
 	@Override

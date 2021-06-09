@@ -20,7 +20,6 @@ import React, {useContext, useState} from 'react';
 
 import DropDown, {CheckboxGroup, ItemsGroup, RadioGroup} from './DropDown';
 import SearchContext from './SearchContext';
-import {FILTER_NAMES} from './constants';
 
 const getSortable = (columns, sort = '') => {
 	if (sort.length) {
@@ -50,56 +49,61 @@ export default ({columns = [], disabled, filters = []}) => {
 	const {asc, column} = getSortable(sortableColumns, sort);
 	const [sortColumn, setSortColumn] = useState(column);
 
-	const filterItems = filters.map(({items, key, multiple, name}) => {
-		const props = {
-			checked: localFilters[key],
-			items,
-			label: FILTER_NAMES[name][1],
-		};
+	const filterItems = filters.map(
+		({defaultText, items, key, multiple, name}) => {
+			const props = {
+				checked: localFilters[key],
+				items,
+				label: name,
+			};
 
-		if (multiple) {
-			return (
-				<CheckboxGroup
-					{...props}
-					onAdd={(value) => {
-						setLocalFilters((prevFilters) => {
-							const values = prevFilters[key] || [];
+			if (multiple) {
+				return (
+					<CheckboxGroup
+						{...props}
+						onAdd={(value) => {
+							setLocalFilters((prevFilters) => {
+								const values = prevFilters[key] || [];
 
-							return {
+								return {
+									...prevFilters,
+									[key]: values.concat(value),
+								};
+							});
+						}}
+						onRemove={(value) => {
+							setLocalFilters((prevFilters) => ({
 								...prevFilters,
-								[key]: values.concat(value),
-							};
-						});
-					}}
-					onRemove={(value) => {
-						setLocalFilters((prevFilters) => ({
-							...prevFilters,
-							[key]: prevFilters[key].filter(
-								(currentValue) => currentValue !== value
-							),
-						}));
-					}}
-				/>
-			);
+								[key]: prevFilters[key].filter(
+									(currentValue) => currentValue !== value
+								),
+							}));
+						}}
+					/>
+				);
+			}
+			else {
+				return (
+					<RadioGroup
+						{...props}
+						items={[
+							{
+								label:
+									defaultText || Liferay.Language.get('any'),
+							},
+							...props.items,
+						]}
+						onChange={(value) => {
+							setLocalFilters((prevFilters) => ({
+								...prevFilters,
+								[key]: value,
+							}));
+						}}
+					/>
+				);
+			}
 		}
-		else {
-			return (
-				<RadioGroup
-					{...props}
-					items={[
-						{label: Liferay.Language.get('any')},
-						...props.items,
-					]}
-					onChange={(value) => {
-						setLocalFilters((prevFilters) => ({
-							...prevFilters,
-							[key]: value,
-						}));
-					}}
-				/>
-			);
-		}
-	});
+	);
 
 	const enableDoneButton = filterItems.length > 0;
 

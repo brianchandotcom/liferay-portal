@@ -19,7 +19,6 @@ import React, {useContext} from 'react';
 
 import {concatValues} from '../../utils/utils';
 import SearchContext from './SearchContext';
-import {FILTER_NAMES} from './constants';
 
 const FilterItem = ({filterKey, name, value}) => {
 	const [, dispatch] = useContext(SearchContext);
@@ -34,7 +33,7 @@ const FilterItem = ({filterKey, name, value}) => {
 				displayType="unstyled"
 			>
 				<span className="label-section">
-					{`${FILTER_NAMES[name][0]}: `}
+					{`${name}: `}
 					<span className="font-weight-normal">{value}</span>
 				</span>
 			</ClayLabel>

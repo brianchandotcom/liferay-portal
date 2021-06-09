@@ -53,7 +53,7 @@ public class ViewBatchEngineExportTasksMVCRenderCommand
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			batchEngineExportTaskDisplayContext);
 
-		return "/view_export_tasks.jsp";
+		return "/view_batch_engine_export_tasks.jsp";
 	}
 
 	@Reference

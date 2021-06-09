@@ -46,7 +46,7 @@ public class BatchEngineExportTaskDisplayContext extends BaseDisplayContext {
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCRenderCommandName(
-			"/batch_engine/view_batch_engine_export_task"
+			"/batch_engine/view_batch_engine_export_tasks"
 		).setTabs1(
 			"export"
 		).build();

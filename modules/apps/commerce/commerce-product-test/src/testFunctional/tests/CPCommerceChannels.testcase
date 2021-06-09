@@ -1409,13 +1409,49 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6271. RemoveNotificationTemplate"
-	@ignore = "true"
 	@priority = "3"
 	test RemoveNotificationTemplate {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceChannels#RemoveNotificationTemplate";
 
-		// TODO COMMERCE-6271 RemoveNotificationTemplate
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Notification Templates");
+
+		Click(locator1 = "Button#PLUS");
+
+		CommerceEntry.addNewNotificationTemplate(
+			entryName = "Test Notification Template",
+			entryTo = "[%ACCOUNT_ROLE_ADMINISTRATOR%]",
+			fromAddress = "test@liferay.com",
+			fromName = "Test",
+			notificationType = "Order Placed");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click.clickNoWaitForVisible(locator1 = "Icon#CLOSE");
+
+		Refresh();
+
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+
+		AssertElementNotPresent(
+			key_value = "Test Notification Template",
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
 	@description = "This is a test for COMMERCE-6196. RemoveProductDisplayPage"

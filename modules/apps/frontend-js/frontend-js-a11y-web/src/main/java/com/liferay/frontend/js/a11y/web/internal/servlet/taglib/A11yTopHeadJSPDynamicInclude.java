@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,11 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		List<String> denylist = new ArrayList<>();
+		List<String> denylist = new ArrayList<>(
+			Arrays.asList(
+				".a11y-overlay", ".a11y-popover", "#yui3-css-stamp",
+				".dropdown-menu", ".tooltip", "#tooltipContainer",
+				"[id*=senna_surface1-screen]:not([class=flipped])"));
 
 		String[] denylistConfig = _a11yConfiguration.denylist();
 
@@ -61,21 +66,21 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 			Collections.addAll(denylist, denylistConfig);
 		}
 
-		String[] editorsConfig = _a11yConfiguration.editors();
-
-		if (editorsConfig != null) {
-			Collections.addAll(denylist, editorsConfig);
+		if (!_a11yConfiguration.enableEditors()) {
+			denylist.add(".alloy-editor-container");
+			denylist.add(".cke");
+			denylist.add(".cke_editable");
 		}
 
-		if (_a11yConfiguration.controlMenu()) {
+		if (!_a11yConfiguration.enableControlMenu()) {
 			denylist.add(".control-menu");
 		}
 
-		if (_a11yConfiguration.globalMenu()) {
+		if (!_a11yConfiguration.enableGlobalMenu()) {
 			denylist.add(".applications-menu-modal");
 		}
 
-		if (_a11yConfiguration.productMenu()) {
+		if (!_a11yConfiguration.enableProductMenu()) {
 			denylist.add(".lfr-product-menu-panel");
 		}
 

@@ -35,48 +35,49 @@ public @interface A11yConfiguration {
 	)
 	public String target();
 
-	@Meta.AD(deflt = "true", name = "control-menu-name", required = false)
-	public boolean controlMenu();
+	@Meta.AD(deflt = "false", name = "control-menu-name", required = false)
+	public boolean enableControlMenu();
 
-	@Meta.AD(deflt = "true", name = "global-menu-name", required = false)
-	public boolean globalMenu();
+	@Meta.AD(deflt = "false", name = "global-menu-name", required = false)
+	public boolean enableGlobalMenu();
 
-	@Meta.AD(deflt = "true", name = "product-menu-name", required = false)
-	public boolean productMenu();
+	@Meta.AD(deflt = "false", name = "product-menu-name", required = false)
+	public boolean enableProductMenu();
+
+	@Meta.AD(deflt = "false", name = "editors-name", required = false)
+	public boolean enableEditors();
 
 	@Meta.AD(
-		deflt = ".a11y-overlay|#yui3-css-stamp|.dropdown-menu|.tooltip",
 		description = "denylist-description", name = "denylist-name",
 		required = false
 	)
 	public String[] denylist();
 
 	@Meta.AD(
-		deflt = ".alloy-editor-container|.cke|.cke_editable",
-		description = "editors-description", name = "editors-name",
-		required = false
+		description = "axe-core-run-only-description",
+		name = "axe-core-run-only-name", required = false
 	)
-	public String[] editors();
-
-	@Meta.AD(name = "axe-core-run-only", required = false)
 	public String[] axeCoreRunOnly();
 
 	@Meta.AD(
 		deflt = "violations|inapplicable|passes|incomplete",
-		name = "axe-core-result-types", required = false
+		description = "axe-core-result-types-description",
+		name = "axe-core-result-types-name", required = false
 	)
 	public String[] axeCoreResultTypes();
 
-	@Meta.AD(deflt = "false", name = "axe-core-iframes", required = false)
+	@Meta.AD(deflt = "false", name = "axe-core-iframes-name", required = false)
 	public boolean axeCoreIframes();
 
 	@Meta.AD(
-		deflt = "60000", name = "axe-core-frame-wait-time", required = false
+		deflt = "60000", description = "axe-core-frame-wait-time-description",
+		name = "axe-core-frame-wait-time-name", required = false
 	)
 	public int axeCoreFrameWaitTime();
 
 	@Meta.AD(
-		deflt = "false", name = "axe-core-performance-timer", required = false
+		deflt = "false", name = "axe-core-performance-timer-name",
+		required = false
 	)
 	public boolean axeCorePerformanceTimer();
 

@@ -6,4 +6,12 @@ definition {
 		Click(locator1 = "ACAssets#ASSETS_TITLE_NAME");
 	}
 
+	macro viewAssets {
+		var key_assetName = "${assetName}";
+
+		AssertTextEquals(
+			locator1 = "ACAssets#ASSETS_TABLE",
+			value1 = "${assetName}");
+	}
+
 }

@@ -96,27 +96,61 @@ definition {
 			category = "Content &amp; Data",
 			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Grid");
+
+		FormFields.editGridOptions(
+			gridField = "Rows",
+			optionValue = "Row 1",
+			rowNumber = "1");
+
+		FormFields.editGridOptions(
+			gridField = "Columns",
+			optionValue = "Column 1",
+			rowNumber = "1");
+
+		Form.saveElementSet();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
 		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName(formName = "Form 1");
 
-		Form.gotoAddField(
-			fieldPositionNumber = "0",
-			fieldType = "Multiple Selection");
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "0");
+		
+		FormFields.viewLabel(
+			fieldName = "Text", 
+			fieldLabel = "Text");
 
-		FormFields.editOptionsRow(
-			optionName = "Option1",
-			optionValue = "Option 1",
-			rowNumber = "1");
+		FormFields.viewLabel(
+			fieldName = "Grid",
+			fieldLabel = "Grid");
 
-		FormFields.editOptionsRow(
-			optionName = "Option2",
-			optionValue = "Option 2",
-			rowNumber = "2");
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			rowNumber = "1",
+			optionName = "Row 1");
 
-		FormViewBuilder.editText(
-			fieldName = "Help Text",
-			fieldValue = "Multiple Selection Help Text");
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Grid",
+			rowNumber = "1",
+			optionName = "Column 1");
 
 		Form.save();
 
@@ -124,13 +158,22 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		FormFields.enableCheckbox(fieldName = "Option 1");
+		FormFields.viewLabel(
+			fieldName = "Grid",
+			fieldLabel = "Grid");
 
-		FormFields.viewFieldHelpText(
-			fieldHelpText = "Multiple Selection Help Text",
-			fieldName = "Help Text");
+		FormFields.viewOptionRowName(
+			fieldTitle = "Grid",
+			rowNumber = "1",
+			optionName = "Row 1");
 
-		FormPortlet.submitSuccessfully();
+		FormFields.viewOptionColumnsName(
+			fieldTitle = "Grid",
+			rowNumber = "1",
+			optionName = "Column 1");
+
+
+		
 	}
 
 	@description = "Verify that an Image Field can be added to a Form via Fieldset"

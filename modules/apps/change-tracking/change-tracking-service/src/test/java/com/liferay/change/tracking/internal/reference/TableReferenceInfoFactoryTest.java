@@ -21,6 +21,7 @@ import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.base.BaseTable;
@@ -190,7 +191,7 @@ public class TableReferenceInfoFactoryTest {
 			tableReferenceInfo.getParentTableJoinHoldersMap();
 
 		Assert.assertEquals(
-			parentTableJoinHoldersMap.toString(), 3,
+			parentTableJoinHoldersMap.toString(), 4,
 			parentTableJoinHoldersMap.size());
 
 		Scalar<String> key = new Scalar<>("key");
@@ -290,6 +291,42 @@ public class TableReferenceInfoFactoryTest {
 						ReferenceExampleTable.INSTANCE.integerKey.isNotNull()
 					);
 				}
+			));
+
+		_assertMissingRequirementsSQL(
+			parentTableJoinHoldersMap.get(BridgeJoinExampleTable.INSTANCE),
+			DSLQueryFactoryUtil.select(
+				ReferenceExampleTable.INSTANCE.mainExampleId,
+				new Scalar<>(BridgeJoinExampleTable.INSTANCE.getTableName())
+			).from(
+				ReferenceExampleTable.INSTANCE
+			).leftJoinOn(
+				BridgeJoinExampleTable.INSTANCE,
+				DSLFunctionFactoryUtil.castText(
+					ReferenceExampleTable.INSTANCE.referenceExampleId
+				).eq(
+					BridgeJoinExampleTable.INSTANCE.stringKey
+				)
+			).leftJoinOn(
+				MainExampleTable.INSTANCE,
+				MainExampleTable.INSTANCE.mainExampleId.eq(
+					ReferenceExampleTable.INSTANCE.mainExampleId)
+			).where(
+				BridgeJoinExampleTable.INSTANCE.bridgeJoinExampleId.isNull(
+				).and(
+					ReferenceExampleTable.INSTANCE.integerKey.eq(0)
+				).and(
+					ReferenceExampleTable.INSTANCE.mainExampleId.isNotNull()
+				).and(
+					ReferenceExampleTable.INSTANCE.mainExampleId.neq(0L)
+				).and(
+					ReferenceExampleTable.INSTANCE.referenceExampleId.
+						isNotNull()
+				).and(
+					ReferenceExampleTable.INSTANCE.referenceExampleId.neq(0L)
+				).and(
+					ReferenceExampleTable.INSTANCE.integerKey.isNotNull()
+				)
 			));
 	}
 
@@ -715,6 +752,44 @@ public class TableReferenceInfoFactoryTest {
 				public void defineParentTableReferences(
 					ParentTableReferenceInfoBuilder<MainExampleTable>
 						parentTableReferenceInfoBuilder) {
+
+					try {
+						parentTableReferenceInfoBuilder.referenceInnerJoin(
+							fromStep -> fromStep.from(
+								BridgeJoinExampleTable.INSTANCE
+							).innerJoinON(
+								MainExampleTable.INSTANCE,
+								MainExampleTable.INSTANCE.flag.eq(2)
+							).innerJoinON(
+								ReferenceExampleTable.INSTANCE,
+								ReferenceExampleTable.INSTANCE.mainExampleId.eq(
+									MainExampleTable.INSTANCE.mainExampleId)
+							).innerJoinON(
+								StringIntExampleTable.INSTANCE,
+								DSLFunctionFactoryUtil.concat(
+									BridgeJoinExampleTable.INSTANCE.stringKey,
+									new Scalar<>("_"),
+									StringIntExampleTable.INSTANCE.stringKey
+								).eq(
+									MainExampleTable.INSTANCE.name
+								)
+							));
+
+						Assert.fail();
+					}
+					catch (IllegalArgumentException illegalArgumentException) {
+						Assert.assertEquals(
+							StringBundler.concat(
+								"Unable to apply predicates [CONCAT(",
+								"BridgeJoinExample.stringKey, ?, ",
+								"StringIntExample.stringKey) = ",
+								"MainExample.name] to select ",
+								"MainExample.mainExampleId, ? from ",
+								"MainExample left join ReferenceExample on ",
+								"ReferenceExample.mainExampleId = ",
+								"MainExample.mainExampleId"),
+							illegalArgumentException.getMessage());
+					}
 				}
 
 			};
@@ -780,6 +855,29 @@ public class TableReferenceInfoFactoryTest {
 	}
 
 	private static List<TableReferenceAppender> _tableReferenceAppenders;
+
+	private static class BridgeJoinExampleTable
+		extends BaseTable<BridgeJoinExampleTable> {
+
+		public static final BridgeJoinExampleTable INSTANCE =
+			new BridgeJoinExampleTable();
+
+		public final Column<BridgeJoinExampleTable, Long> bridgeJoinExampleId =
+			createColumn(
+				"bridgeJoinExampleId", Long.class, Types.BIGINT,
+				Column.FLAG_PRIMARY);
+		public final Column<BridgeJoinExampleTable, Long> mvccVersion =
+			createColumn(
+				"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+		public final Column<BridgeJoinExampleTable, String> stringKey =
+			createColumn(
+				"stringKey", String.class, Types.BIGINT, Column.FLAG_DEFAULT);
+
+		private BridgeJoinExampleTable() {
+			super("BridgeJoinExample", BridgeJoinExampleTable::new);
+		}
+
+	}
 
 	private static class InvalidTable extends BaseTable<InvalidTable> {
 
@@ -876,6 +974,23 @@ public class TableReferenceInfoFactoryTest {
 						)
 					);
 				}
+			).referenceInnerJoin(
+				fromStep -> fromStep.from(
+					BridgeJoinExampleTable.INSTANCE
+				).innerJoinON(
+					ReferenceExampleTable.INSTANCE,
+					ReferenceExampleTable.INSTANCE.integerKey.eq(0)
+				).innerJoinON(
+					MainExampleTable.INSTANCE,
+					DSLFunctionFactoryUtil.castText(
+						ReferenceExampleTable.INSTANCE.referenceExampleId
+					).eq(
+						BridgeJoinExampleTable.INSTANCE.stringKey
+					).and(
+						MainExampleTable.INSTANCE.mainExampleId.eq(
+							ReferenceExampleTable.INSTANCE.mainExampleId)
+					)
+				)
 			);
 		}
 

@@ -60,7 +60,7 @@ public class ListUtil {
 	public static List<String> newListFromString(String s, String delimiter) {
 		s = s.trim();
 
-		if (s.contains(delimiter) && s.endsWith("]") && s.startsWith("[")) {
+		if (delimiter.equals(",") && s.endsWith("]") && s.startsWith("[")) {
 			try {
 				JSONArray jsonArray = new JSONArray(s);
 
@@ -75,7 +75,6 @@ public class ListUtil {
 				return list;
 			}
 			catch (JSONException jsonException) {
-				throw new RuntimeException("Unable to create list from: " + s);
 			}
 		}
 

@@ -1,0 +1,265 @@
+@component-name = "portal-workflow"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+        @description = "LPS-97669 - Verify that the filter options are (All Steps) is the first option in the dropdown and the following fields are sorted alphabetically"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test AllStepsIsTheFirstOptionInDropdown {
+
+                // TODO LRQA-67626 AllStepsIsTheFirstOptionInDropdown pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that there is an image besides the assignee name that is retrieved from the global user profile picture (add, delete, update)"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test AssigneeImagesRetrievedFromGlobalUserProfile {
+
+                // TODO LRQA-67618 AssigneeImagesRetrievedFromGlobalUserProfile pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify the user can search for a step using the search bar"
+        @priority = "3"
+        test CanSearchForStep {
+
+                // TODO LRQA-67575 CanSearchForStep pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify the user can search for a step with name containing non-ASCII chars (eg: japanese chars) using the search bar"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test CanSearchNonAsciiChars {
+
+                // TODO LRQA-67576 CanSearchNonAsciiChars pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify the card (Workload by Assignee) is sorted by number, in descending order"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test CardIsSortedByNumberInDescOrder {
+
+                // TODO LRQA-67627 CardIsSortedByNumberInDescOrder pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify that when editing a user name with pending instances, the Workload by Assignee card is updated accordingly"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test CardIsUpdatedWhenUserNameIsEdited {
+
+                // TODO LRQA-67629 CardIsUpdatedWhenUserNameIsEdited pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify that when deleting a user with pending instances, the Workload by Assignee card is updated accordingly"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test CardIsUpdatedWhenUserWithPendingInstanceIsDeleted {
+
+                // TODO LRQA-67624 CardIsUpdatedWhenUserWithPendingInstanceIsDeleted pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify the card is showing instances assigned to users only, and not roles"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test CardShowsItemsAssignedToUserNotRole {
+
+                // TODO LRQA-67619 CardShowsItemsAssignedToUserNotRole pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that the filters values inside (Workload by Assignee) are alphabetically sorted"
+        @ignore = "Test Stub"
+        @priority = "2"
+        test FiltersAreAlphabeticallySorted {
+
+                // TODO LRQA-67606 FiltersAreAlphabeticallySorted pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that the filters inside (Workload by Assignee) are applied only after the user moves the cursor out of the dropdown card"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test FiltersAreAppliedAfterUserMovesCursorOutOfDropdownCard {
+
+                // TODO LRQA-67607 FiltersAreAppliedAfterUserMovesCursorOutOfDropdownCard pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify that info icon hover state and tooltip message"
+        @ignore = "Test Stub"
+        @priority = "2"
+        test InfoIconDisplaysMessageOnHover {
+
+                // TODO LRQA-67573 InfoIconDisplaysMessageOnHover pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify that a long username is placed in more than one line, respecting the alignment of the field inside Workload by Assignee card"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test LongUsernameIsPlacedInMoreThanOneLine {
+
+                // TODO LRQA-67609 LongUsernameIsPlacedInMoreThanOneLine pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that the table inside (Workload by Assignee) page can be ordered by Assignee Name column"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test OrderTableByAssigneeNameColumn {
+
+                // TODO LRQA-67613 OrderTableByAssigneeNameColumn pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that the table inside (Workload by Assignee) page can be ordered by On Time column"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test OrderTableByOnTimeColumn {
+       
+                // TODO LRQA-67630 OrderTableByOnTimeColumn pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that the table inside (Workload by Assignee) page can be ordered by Overdue column"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test OrderTableByOverdueColumn {
+       
+                // TODO LRQA-67623 OrderTableByOverdueColumn pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that the table inside (Workload by Assignee) page can be ordered by Total Pending column"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test OrderTableByTotalPendingColumn {
+       
+                // TODO LRQA-67622 OrderTableByTotalPendingColumn pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that the (Workload by Assignee) page is providing the loading feedback when the table is being updated"
+        @ignore = "Test Stub"
+        @priority = "2"
+        test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
+       
+                // TODO LRQA-67611 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify that there is a percentage indication out of the total amount of assigned tasks when the tab On Time is selected"
+        @ignore = "Test Stub"
+        @priority = "5"
+        test PercentageIndicationOnOnTimeTab {
+       
+                // TODO LRQA-67625 PercentageIndicationOnOnTimeTab pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify that there is a percentage indication out of the total amount of assigned tasks when the tab Overdue is selected"
+        @ignore = "Test Stub"
+        @priority = "5"
+        test PercentageIndicationOnOverdueTab {
+       
+                // TODO LRQA-67621 PercentageIndicationOnOverdueTab pending implementation
+
+        }
+
+        @description = "LPS-103365 - Verify that when the filters inside (Workload by Assignee) page are higher than 496px, a search bar on it should be included"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test SearchBarIsIncludedWhenDropdownIsHigherThan496Px {
+       
+                // TODO LRQA-67617 SearchBarIsIncludedWhenDropdownIsHigherThan496Px pending implementation
+
+        }
+
+        @description = "LPS-103368 - Verify that the user can filter the results inside (Workload by Assignee) page by assignee names that contain non-ascii chars (such as ç,é,コン, etc) using the search field"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test SearchFieldAcceptsNonAsciiChars {
+       
+                // TODO LRQA-67610 SearchFieldAcceptsNonAsciiChars pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that, in (Workload by Assignee) page, the search field has a hint with the message: (Search for assignee name...)"
+        @ignore = "Test Stub"
+        @priority = "3"
+        test SearchFieldContainsHintMessage {
+       
+                // TODO LRQA-67608 SearchFieldContainsHintMessage pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify there is no percentage indication out of the total amount of assigned tasks when the tab Total is selected"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test ThereIsNoPercentageIndicationOnTotalTab {
+       
+                // TODO LRQA-67628 ThereIsNoPercentageIndicationOnTotalTab pending implementation
+
+        }
+
+        @description = "LPS-98518 - Verify that when there is an unexpected error in (Workload by Assignee) page, the table displays the specific error state"
+        @ignore = "Test Stub"
+        @priority = "2"
+        test UnexpectedErrorState {
+       
+                // TODO LRQA-67620 UnexpectedErrorState pending implementation
+
+        }
+
+        @description = "LPS-103365 - Verify that when the user clicks on the username or item number of the table inside (Workload by Assignee) page, the user is directed to the All Items page with the appropriate filters applied"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test UserIsDirectedToAllItemsPage {
+       
+                // TODO LRQA-67614 UserIsDirectedToAllItemsPage pending implementation
+
+        }
+
+        @description = "LPS-97669 - Verify that the card (Workload by Assignee) has no more than 10 users"
+        @ignore = "Test Stub"
+        @priority = "4"
+        test WorkloadByAssigneeCardDisplaysUpTo10Users {
+       
+                // TODO LRQA-67616 WorkloadByAssigneeCardDisplaysUpTo10Users pending implementation
+
+        }
+
+}

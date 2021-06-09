@@ -121,12 +121,8 @@ public class DLAdminManagementToolbarDisplayContext
 		boolean stagedActions = _isStagedActions();
 		User user = _themeDisplay.getUser();
 
-		DigitalSignatureConfiguration digitalSignatureConfiguration =
-			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
-				_themeDisplay.getCompanyId(), _themeDisplay.getSiteGroupId());
-
 		return DropdownItemListBuilder.add(
-			() -> stagedActions && digitalSignatureConfiguration.enabled(),
+			() -> isDigitalSignatureEnabled() && stagedActions,
 			dropdownItem -> {
 				dropdownItem.putData("action", "collectDigitalSignature");
 				dropdownItem.setIcon("signature");
@@ -533,6 +529,14 @@ public class DLAdminManagementToolbarDisplayContext
 				}
 			}
 		};
+	}
+
+	public boolean isDigitalSignatureEnabled() {
+		DigitalSignatureConfiguration digitalSignatureConfiguration =
+			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
+				_themeDisplay.getCompanyId(), _themeDisplay.getSiteGroupId());
+
+		return digitalSignatureConfiguration.enabled();
 	}
 
 	@Override

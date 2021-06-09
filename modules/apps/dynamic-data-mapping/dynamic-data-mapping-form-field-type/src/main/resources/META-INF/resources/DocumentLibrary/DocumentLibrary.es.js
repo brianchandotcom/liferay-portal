@@ -70,7 +70,8 @@ function transformFileEntryProperties({fileEntryTitle, fileEntryURL, value}) {
 			if (fileEntry.url) {
 				fileEntryURL = fileEntry.url;
 			}
-		} catch (e) {
+		}
+		catch (e) {
 			console.warn('Unable to parse JSON', value);
 		}
 	}
@@ -293,7 +294,8 @@ const Main = ({
 					'you-need-to-be-signed-in-to-edit-this-field'
 				)
 			);
-		} else if (maximumSubmissionLimitReached) {
+		}
+		else if (maximumSubmissionLimitReached) {
 			errorMessages.push(
 				Liferay.Language.get(
 					'the-maximum-number-of-submissions-allowed-for-this-form-has-been-reached'
@@ -426,7 +428,8 @@ const Main = ({
 
 				if (error) {
 					handleGuestUploadFileChanged(error.message, event, null);
-				} else {
+				}
+				else {
 					handleGuestUploadFileChanged(
 						'',
 						event,

@@ -2691,14 +2691,37 @@ definition {
 	}
 
 	@description = "Verify that Form Pages can be reset"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test PagesCanBeReset {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-131000 PagesCanBeReset pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editPageTitle(
+			formPageName = "Test title",
+			formTitleNumber = "1");
+
+		Form.editPageDescription(formPageDescriptionName = "Text");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.save();
+
+		Form.pageReset(pageIndex = "1");
+
+		Form.viewFormPlaceholderPage(pageIndex= "0");
+
+		Form.viewPageTitleDefault(pageIndex= "0");
+
+		Form.viewPageEmptyField(pageIndex= "0");	
+		
 	}
 
 	@description = "This is a use case for LPS-61740"

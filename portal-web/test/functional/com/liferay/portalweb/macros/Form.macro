@@ -531,6 +531,16 @@ definition {
 		}
 	}
 
+	macro pageReset {
+		Click(
+			key_formPageNumber = "${pageIndex}",
+			locator1 = "Form#PAGE_CONTROLS_ELLIPSIS_ICON");
+
+		Click(
+			key_saveButton = "Reset Page",
+			locator1 = "Form#SAVE_FORM_BUTTON_LOCALIZED");
+	}
+
 	macro previewForm {
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
 
@@ -753,6 +763,12 @@ definition {
 			value1 = "This form is not available or it was not published.");
 	}
 
+	macro viewFormPlaceholderPage {
+		AssertElementPresent(
+			key_pageNumber = "${pageIndex}",
+			locator1 = "Form#PAGE_DEFAULT_DESCRIPTION_BY_NUMBER");
+	}
+
 	macro viewFormPlaceholderText {
 		AssertElementPresent(
 			key_value = "${fieldPlaceholderText}",
@@ -771,6 +787,18 @@ definition {
 		FormFields.viewTextLabel(
 			fieldLabel = "${fieldLabel}",
 			fieldName = "${fieldName}");
+	}
+	
+	macro viewPageEmptyField {
+		AssertElementPresent(
+			key_pageNumber = "${pageIndex}",
+			locator1="Form#PAGE_EMPTY_FORM_FIELD_BY_NUMBER");
+	}
+
+	macro viewPageTitleDefault {		
+		AssertElementPresent(
+			key_pageNumber = "${pageIndex}",
+			locator1="Form#PAGE_DEFAULT_TITLE_BY_NUMBER");			
 	}
 
 	macro viewPublishFormSuccessMessage {

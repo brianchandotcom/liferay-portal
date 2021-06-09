@@ -189,6 +189,12 @@
 </tr>
 
 <tr>
+	<td>PAGE_EMPTY_FORM_FIELD_BY_NUMBER</td>
+	<td>//div[contains(@data-ddm-page,'${key_pageNumber}')]//p[contains(text(),'Drag fields from the sidebar to compose your form.')]</td>
+	<td></td>
+</tr>
+
+<tr>
     <td></td>
     <td></td>
     <td></td>

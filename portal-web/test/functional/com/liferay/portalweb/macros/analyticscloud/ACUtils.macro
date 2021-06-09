@@ -34,7 +34,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		if(!(isSet(entryTitle))) {
+		if (!(isSet(entryTitle))) {
 			Blogs.addEntry(
 				entryContent = "This is the blog test for AC",
 				entrySubtitle = "Blogs AC Subtitle",
@@ -113,18 +113,6 @@ definition {
 			siteName = "Site Name");
 	}
 
-	macro searchBar {
-		Click(locator1 = "ACSettings#SEARCH_BAR");
-
-		Type(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "${propertyName}");
-
-		KeyPress(
-			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "\ENTER");	
-	}
-
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
@@ -143,6 +131,18 @@ definition {
 		}
 	}
 
+	macro searchBar {
+		Click(locator1 = "ACSettings#SEARCH_BAR");
+
+		Type(
+			locator1 = "ACSettings#SEARCH_BAR",
+			value1 = "${propertyName}");
+
+		KeyPress(
+			locator1 = "ACSettings#SEARCH_BAR",
+			value1 = "\ENTER");
+	}
+
 	macro tearDownAC {
 		ACUtils.launchAC();
 
@@ -156,5 +156,4 @@ definition {
 
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 	}
-
 }

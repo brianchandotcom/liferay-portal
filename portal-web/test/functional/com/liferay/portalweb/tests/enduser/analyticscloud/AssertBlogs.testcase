@@ -36,6 +36,54 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "View all blogs in the property in assets"
+	@priority = "5"
+	test ViewAllBlogsShownInAssetList {
+		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
+
+		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+
+		for (var n : list "1,2") {
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
+
+			Navigator.gotoSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			BlogsNavigator.gotoPG(entryTitle = "Test 2");
+		}
+
+		Pause(locator1 = "10000");
+
+		ACUtils.closeAllSessions();
+
+		Pause(locator1 = "30000");
+
+		ACUtils.launchAC();
+
+		ACProperties.switchProperty(propertyName = "Liferay DXP Combined Property");
+
+		ACNavigation.goToAssets();
+
+		ACNavigation.switchTab(tabName = "Blogs");
+
+		ACTimeFilter.clickTimeFilterButton();
+
+		ACTimeFilter.setLast24Hours();
+
+		ACUtils.searchBar(searchItem = "Blogs AC Title");
+
+		ACAssets.viewAssets(assetName = "Blogs AC Title");
+
+		ACUtils.searchBar(searchItem = "Test 2");
+
+		ACAssets.viewAssets(assetName = "Test 2");
+	}
+
 	@description = "Blogs visitor behavior card shows expected amount of views"
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViewsInBlogs {
@@ -74,53 +122,4 @@ definition {
 			matricTitle = "Views",
 			value1 = "4");
 	}
-
-	@description = "View all blogs in the property in assets"
-	@priority = "5"
-	test ViewAllBlogsShownInAssetList {
-		ACUtils.createBlogsAndAddToPage(entryTitle = "Test 2");
-
-		ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		for (var n : list "1,2") {
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Blogs AC Title");
-
-			Navigator.gotoSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-
-			BlogsNavigator.gotoPG(entryTitle = "Test 2");
-		}
-
-		Pause(locator1 = "10000");
-
-		ACUtils.closeAllSessions();
-
-		Pause(locator1 = "30000");
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = "Liferay Combined Property");
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Blogs");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACUtils.searchBar(searchItem = "Blogs AC Title");
-
-		ACAssets.viewAssets(assetName = "Blogs AC Title");
-
-		ACUtils.searchBar(searchItem = "Test 2");
-
-		ACAssets.viewAssets(assetName = "Test 2");
-	}
-
 }

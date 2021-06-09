@@ -1,12 +1,54 @@
 .lfr-translation-manager {
+	display: inline-block;
+	margin-top: 0.5em;
+	min-height: 1.8em;
+
+	.lfr-translation-manager-content {
+		.lfr-translation-manager-default-locale {
+			display: inline-block;
+			width: auto;
+		}
+
+		.lfr-translation-manager-icon-menu {
+			float: none;
+			padding: 0.4em 0;
+
+			li {
+				&,
+				strong {
+					display: inline;
+				}
+			}
+		}
+
+		.lfr-translation-manager-translations-message {
+			margin: 10px 0;
+		}
+	}
+
 	.lfr-translation-manager-available-translations {
+		white-space: normal;
+
 		.lfr-translation-manager-available-translations-links {
 			line-height: 1;
 		}
 	}
 
 	.lfr-translation-manager-translation {
+		border: 1px solid transparent;
+		cursor: pointer;
+		display: inline-block;
+		margin: 0.2em;
+		padding: 0.4em 0.3em 0.4em 0.5em;
 		text-decoration: none;
+
+		* {
+			vertical-align: middle;
+		}
+
+		img {
+			margin-right: 0.3em;
+		}
 
 		&:hover {
 			background-color: #d1e5ef;
@@ -16,6 +58,19 @@
 			background-color: #598bec;
 			border-color: #224fa8;
 			color: #fff;
+		}
+	}
+
+	.lfr-translation-manager-change-default-locale {
+		margin: 0 0.4em;
+	}
+
+	.lfr-translation-manager-delete-translation {
+		display: inline-block;
+		padding: 0 2px;
+
+		svg {
+			pointer-events: none;
 		}
 	}
 }

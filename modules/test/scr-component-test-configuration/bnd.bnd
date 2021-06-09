@@ -1,0 +1,4 @@
+Bundle-Name: Liferay SCR Component Test Configuration
+Bundle-SymbolicName: com.liferay.scr.component.test.configuration
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.scr.component.test.configuration

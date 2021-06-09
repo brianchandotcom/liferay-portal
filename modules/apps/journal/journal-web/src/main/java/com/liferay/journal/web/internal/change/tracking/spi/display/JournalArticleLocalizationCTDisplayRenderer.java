@@ -21,16 +21,19 @@ import com.liferay.journal.model.JournalArticleLocalization;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 
@@ -109,11 +112,17 @@ public class JournalArticleLocalizationCTDisplayRenderer
 
 	@Override
 	public String getTitle(
-			Locale locale,
-			JournalArticleLocalization journalArticleLocalization)
-		throws PortalException {
+		Locale locale, JournalArticleLocalization journalArticleLocalization) {
 
 		return journalArticleLocalization.getTitle();
+	}
+
+	@Override
+	public String getTypeName(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, JournalArticleLocalizationCTDisplayRenderer.class);
+
+		return _language.get(resourceBundle, "web-content-translation");
 	}
 
 	@Override
@@ -183,6 +192,9 @@ public class JournalArticleLocalizationCTDisplayRenderer
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -34,11 +34,18 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
-		Blogs.addEntry(
-			entryContent = "This is the blog test for AC",
-			entrySubtitle = "Blogs AC Subtitle",
-			entryTitle = "Blogs AC Title");
-
+		if(!(isSet(entryTitle))) {
+			Blogs.addEntry(
+				entryContent = "This is the blog test for AC",
+				entrySubtitle = "Blogs AC Subtitle",
+				entryTitle = "Blogs AC Title");
+		}
+		else {
+			Blogs.addEntry(
+				entryContent = "This is the blog test for AC",
+				entrySubtitle = "Blogs AC Subtitle",
+				entryTitle = "${entryTitle}");
+		}
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");

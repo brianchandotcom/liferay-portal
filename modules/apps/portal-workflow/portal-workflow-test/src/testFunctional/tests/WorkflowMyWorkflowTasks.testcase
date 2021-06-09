@@ -325,6 +325,7 @@ definition {
 	@priority = "3"
 	test ReviewerApproveResubmitTaskByActionsUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.upstream = "quarantine";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",

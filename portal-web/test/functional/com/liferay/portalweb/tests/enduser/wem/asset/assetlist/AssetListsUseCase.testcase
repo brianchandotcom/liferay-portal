@@ -61,34 +61,24 @@ definition {
 		}
 
 		task ("Add a Dynamic Collection based on Web Content Article and new structure") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-
-			Panel.expandPanel(panel = "Source");
-
-			Select(
-				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
-				value1 = "Web Content Article");
-
-			Pause(locator1 = "3000");
-
-			Select(
-				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
-				value1 = "WC Structure Name");
-
-			Pause(locator1 = "3000");
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+					groupName = "Test Site Name",
+					itemSubtype = "WC Structure Name",
+					itemType = "Web Content Article",
+					title = "Dynamic Collection");
 		}
 
 		task ("Enable Filter by Field and Choose Select from List field") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
 			AssetListsAdmin.configureFilterByField(fieldName = "Select from List");
 
 			Select(
 				key_fieldFieldLabel = "Select from List",
 				locator1 = "APConfigurationFilterbyfield#SELECT_FROM_LIST",
 				value1 = "Option 2");
-
-			Pause(locator1 = "3000");
 
 			AssertSelectedLabel(
 				key_fieldFieldLabel = "Select from List",

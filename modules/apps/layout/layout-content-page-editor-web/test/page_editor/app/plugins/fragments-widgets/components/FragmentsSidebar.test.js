@@ -82,7 +82,16 @@ const STATE = {
 				{
 					instanceable: true,
 					portletId: 'portlet-1',
-					portletItems: [],
+					portletItems: [
+						{
+							instanceable: true,
+							portletId: 'template-portlet-1',
+							portletItemId: '40063',
+							preview: '',
+							title: 'Template Portlet 1',
+							used: false,
+						},
+					],
 					title: 'Portlet 1',
 					used: false,
 				},
@@ -91,6 +100,24 @@ const STATE = {
 		},
 	],
 };
+
+const NORMALIZED_PORTLET_ITEMS = [
+	{
+		data: {
+			instanceable: true,
+			portletId: 'template-portlet-1',
+			portletItemId: '40063',
+			used: false,
+		},
+		disabled: false,
+		icon: 'cards2',
+		itemId: 'template-portlet-1',
+		label: 'Template Portlet 1',
+		portletItems: null,
+		preview: '',
+		type: 'fragment',
+	},
+];
 
 const NORMALIZED_TABS = [
 	{
@@ -155,7 +182,7 @@ const NORMALIZED_TABS = [
 						icon: 'cards2',
 						itemId: 'portlet-1',
 						label: 'Portlet 1',
-						portletItems: null,
+						portletItems: NORMALIZED_PORTLET_ITEMS,
 						preview: '',
 						type: 'fragment',
 					},
@@ -240,6 +267,26 @@ describe('FragmentsSidebar', () => {
 		expect(queryByText('Fragment 3')).not.toBeInTheDocument();
 	});
 
+	it('filters widget template according to a input value', () => {
+		const {getByLabelText, queryByText} = renderComponent(STATE);
+		const input = getByLabelText('search-form');
+
+		act(() => {
+			fireEvent.change(input, {
+				target: {value: 'Template Portlet 1'},
+			});
+
+			jest.runAllTimers();
+		});
+
+		expect(queryByText('Widget Collection 1')).toBeInTheDocument();
+		expect(queryByText('Portlet 1')).toBeInTheDocument();
+		expect(queryByText('Template Portlet 1')).toBeInTheDocument();
+		expect(queryByText('Fragment 1')).not.toBeInTheDocument();
+		expect(queryByText('Fragment 2')).not.toBeInTheDocument();
+		expect(queryByText('Fragment 3')).not.toBeInTheDocument();
+	});
+
 	it('sets square-hole icon when the widget is not instanceable', () => {
 		const tabs = NORMALIZED_TABS;
 		const state = STATE;
@@ -256,7 +303,7 @@ describe('FragmentsSidebar', () => {
 			icon: 'square-hole',
 			itemId: 'portlet-1',
 			label: 'Portlet 1',
-			portletItems: null,
+			portletItems: NORMALIZED_PORTLET_ITEMS,
 			preview: '',
 			type: 'fragment',
 		};
@@ -285,7 +332,7 @@ describe('FragmentsSidebar', () => {
 			icon: 'square-hole',
 			itemId: 'portlet-1',
 			label: 'Portlet 1',
-			portletItems: null,
+			portletItems: NORMALIZED_PORTLET_ITEMS,
 			preview: '',
 			type: 'fragment',
 		};

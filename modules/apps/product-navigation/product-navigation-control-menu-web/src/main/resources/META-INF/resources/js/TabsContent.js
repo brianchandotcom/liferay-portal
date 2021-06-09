@@ -48,7 +48,11 @@ const collectionFilter = (collections, searchValue) => {
 			else {
 				const updateCollection = {
 					...collection,
-					children: collection.children.filter(itemFilter),
+					children: collection.children.filter(
+						(item) =>
+							itemFilter(item) ||
+							item.portletItems?.some(itemFilter)
+					),
 					...(collection.collections?.length && {
 						collections: collectionFilter(
 							collection.collections,

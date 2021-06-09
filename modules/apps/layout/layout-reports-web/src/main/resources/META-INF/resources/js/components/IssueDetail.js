@@ -38,7 +38,7 @@ export default function IssueDetail() {
 					title={Liferay.Language.get('tips')}
 				/>
 				<FailingElementsPanel
-					failingElements={selectedIssue.lighthouseItems}
+					failingElements={selectedIssue.failingElements}
 					issueType={selectedIssue.key}
 				/>
 			</ClayPanel.Group>

@@ -185,11 +185,11 @@ public class LayoutReportsIssue {
 			return JSONUtil.put(
 				"description", _key.getDescription(resourceBundle)
 			).put(
-				"key", _key.toString()
-			).put(
-				"lighthouseItems",
-				_key.getLighthouseItems(
+				"failingElements",
+				_key.getFailingElements(
 					_lighthouseAuditResultV5, resourceBundle)
+			).put(
+				"key", _key.toString()
 			).put(
 				"tips", _key.getTips(resourceBundle)
 			).put(
@@ -264,7 +264,7 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected Object getLighthouseItems(
+				protected Object getFailingElements(
 					LighthouseAuditResultV5 lighthouseAuditResultV5,
 					ResourceBundle resourceBundle) {
 
@@ -386,7 +386,7 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected Object getLighthouseItems(
+				protected Object getFailingElements(
 					LighthouseAuditResultV5 lighthouseAuditResultV5,
 					ResourceBundle resourceBundle) {
 
@@ -431,7 +431,7 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected Object getLighthouseItems(
+				protected Object getFailingElements(
 					LighthouseAuditResultV5 lighthouseAuditResultV5,
 					ResourceBundle resourceBundle) {
 
@@ -500,7 +500,7 @@ public class LayoutReportsIssue {
 				}
 
 				@Override
-				protected Object getLighthouseItems(
+				protected Object getFailingElements(
 					LighthouseAuditResultV5 lighthouseAuditResultV5,
 					ResourceBundle resourceBundle) {
 
@@ -560,6 +560,20 @@ public class LayoutReportsIssue {
 				return "detail-" + toString();
 			}
 
+			protected Object getFailingElements(
+				LighthouseAuditResultV5 lighthouseAuditResultV5,
+				ResourceBundle resourceBundle) {
+
+				Map<String, Object> details =
+					lighthouseAuditResultV5.getDetails();
+
+				if (details != null) {
+					return details.get("items");
+				}
+
+				return null;
+			}
+
 			protected String getHtmlCode(String html) {
 				return "<code>" + HtmlUtil.escape(html) + "</code>";
 			}
@@ -573,20 +587,6 @@ public class LayoutReportsIssue {
 						resourceBundle, "learn-more-about-x",
 						HtmlUtil.escape(getTitle(resourceBundle)), false),
 					"</a>");
-			}
-
-			protected Object getLighthouseItems(
-				LighthouseAuditResultV5 lighthouseAuditResultV5,
-				ResourceBundle resourceBundle) {
-
-				Map<String, Object> details =
-					lighthouseAuditResultV5.getDetails();
-
-				if (details != null) {
-					return details.get("items");
-				}
-
-				return null;
 			}
 
 			protected String[] getTipsArguments(ResourceBundle resourceBundle) {

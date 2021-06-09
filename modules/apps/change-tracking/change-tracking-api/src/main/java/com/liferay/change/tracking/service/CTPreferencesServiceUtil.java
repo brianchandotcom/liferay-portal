@@ -44,6 +44,13 @@ public class CTPreferencesServiceUtil {
 			companyId, userId, ctCollectionId);
 	}
 
+	public static CTPreferences enablePublications(
+			long companyId, boolean enable)
+		throws PortalException {
+
+		return getService().enablePublications(companyId, enable);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

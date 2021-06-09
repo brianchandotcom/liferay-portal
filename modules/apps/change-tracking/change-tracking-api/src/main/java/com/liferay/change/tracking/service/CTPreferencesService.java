@@ -52,6 +52,9 @@ public interface CTPreferencesService extends BaseService {
 			long companyId, long userId, long ctCollectionId)
 		throws PortalException;
 
+	public CTPreferences enablePublications(long companyId, boolean enable)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

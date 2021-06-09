@@ -41,6 +41,14 @@ public class CTPreferencesServiceWrapper
 			companyId, userId, ctCollectionId);
 	}
 
+	@Override
+	public com.liferay.change.tracking.model.CTPreferences enablePublications(
+			long companyId, boolean enable)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctPreferencesService.enablePublications(companyId, enable);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

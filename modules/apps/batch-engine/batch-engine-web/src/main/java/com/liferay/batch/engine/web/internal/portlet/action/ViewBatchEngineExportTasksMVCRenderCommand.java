@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + BatchEnginePortletKeys.BATCH,
-		"mvc.command.name=/batch_engine/view_batch_engine_export_task"
+		"mvc.command.name=/batch_engine/view_batch_engine_export_tasks"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewBatchEngineExportTaskMVCRenderCommand
+public class ViewBatchEngineExportTasksMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override

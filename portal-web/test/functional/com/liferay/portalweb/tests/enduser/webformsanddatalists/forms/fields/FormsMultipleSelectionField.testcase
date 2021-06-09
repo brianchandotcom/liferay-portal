@@ -379,9 +379,6 @@ definition {
 		FormFields.enableCheckbox(fieldName = "Option 1");
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
-
-
-		
 	}
 
 	@description = "Verify that the Field Label can be edited"

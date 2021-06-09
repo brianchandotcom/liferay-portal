@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	enabled = false, immediate = true,
 	property = {
 		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + MercanetCommercePaymentMethodConstants.SERVLET_PATH + "/*",
-		"osgi.http.whiteboard.filter.name=com.liferay.commerce.payment.method.paypal.internal.servlet.filter.CommercePaymentMethodPayPalAuthVerifierFilter",
+		"osgi.http.whiteboard.filter.name=com.liferay.commerce.payment.method.mercanet.internal.servlet.filter.CommercePaymentMethodMercanetAuthVerifierFilter",
 		"osgi.http.whiteboard.servlet.pattern=/" + MercanetCommercePaymentMethodConstants.SERVLET_PATH + "/*"
 	},
 	service = Filter.class

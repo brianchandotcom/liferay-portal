@@ -53,7 +53,7 @@ public class AuthorizeNetCommercePaymentMethodConfigurationScreenNavigationEntry
 	implements ScreenNavigationEntry<CommercePaymentMethodGroupRel> {
 
 	public static final String
-		ENTRY_KEY_PAYPAL_COMMERCE_PAYMENT_METHOD_CONFIGURATION =
+		ENTRY_KEY_AUTHORIZE_NET_COMMERCE_PAYMENT_METHOD_CONFIGURATION =
 			"authorize-net-configuration";
 
 	@Override
@@ -64,7 +64,7 @@ public class AuthorizeNetCommercePaymentMethodConfigurationScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return ENTRY_KEY_PAYPAL_COMMERCE_PAYMENT_METHOD_CONFIGURATION;
+		return ENTRY_KEY_AUTHORIZE_NET_COMMERCE_PAYMENT_METHOD_CONFIGURATION;
 	}
 
 	@Override

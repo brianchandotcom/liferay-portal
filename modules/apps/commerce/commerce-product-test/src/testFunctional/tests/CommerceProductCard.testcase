@@ -290,7 +290,7 @@ definition {
 	@description = "COMMERCE-6162. As a buyer, I want to be able to select the quantity of a product by multiple value, if set"
 	@priority = "3"
 	test AssertOnlyMultipleValuesAreSelectableQuantities {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
 		property test.name.skip.portal.instance = "CommerceProductCard#AssertOnlyMultipleValuesAreSelectableQuantities";
 
 		// TODO Review

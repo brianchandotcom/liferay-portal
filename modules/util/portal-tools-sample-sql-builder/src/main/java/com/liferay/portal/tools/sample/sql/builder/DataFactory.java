@@ -3999,7 +3999,7 @@ public class DataFactory {
 		if (BenchmarksPropsValues.SEARCH_BAR_ENABLED) {
 			layoutModels.add(
 				newLayoutModel(
-					groupId, "search", true, "1_2_columns_i",
+					groupId, "search", false, "1_2_columns_i",
 					new String[] {
 						StringBundler.concat(
 							SearchBarPortletKeys.SEARCH_BAR, StringPool.COMMA,

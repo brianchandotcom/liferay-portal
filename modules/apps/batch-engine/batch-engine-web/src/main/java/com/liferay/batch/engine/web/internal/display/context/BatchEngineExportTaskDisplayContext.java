@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -78,22 +76,17 @@ public class BatchEngineExportTaskDisplayContext extends BaseDisplayContext {
 			renderRequest, getPortletURL(), null, null);
 
 		_searchContainer.setEmptyResultsMessage("no-entries-were-found");
-
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByComparator(null);
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setRowChecker(null);
-
+		_searchContainer.setResults(
+			_batchEngineExportTaskService.getBatchEngineExportTasks(
+				companyId, _searchContainer.getStart(),
+				_searchContainer.getEnd()));
 		_searchContainer.setTotal(
 			_batchEngineExportTaskService.getBatchEngineExportTasksCount(
 				companyId));
-
-		List<BatchEngineExportTask> results =
-			_batchEngineExportTaskService.getBatchEngineExportTasks(
-				companyId, _searchContainer.getStart(),
-				_searchContainer.getEnd());
-
-		_searchContainer.setResults(results);
 
 		return _searchContainer;
 	}

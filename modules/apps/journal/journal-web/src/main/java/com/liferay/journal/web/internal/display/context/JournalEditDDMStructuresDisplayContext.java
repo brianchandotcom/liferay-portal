@@ -191,6 +191,10 @@ public class JournalEditDDMStructuresDisplayContext {
 		return storageType;
 	}
 
+	public boolean isStructureFieldIndexableEnable() {
+		return _journalWebConfiguration.structureFieldIndexableEnable();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalEditDDMStructuresDisplayContext.class);
 

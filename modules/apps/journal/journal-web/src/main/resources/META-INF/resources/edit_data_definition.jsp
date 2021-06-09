@@ -114,6 +114,7 @@ editDDMStructureURL.setParameter("ddmStructureId", String.valueOf(ddmStructureId
 						groupId="<%= groupId %>"
 						namespace="<%= liferayPortletResponse.getNamespace() %>"
 						scopes='<%= SetUtil.fromCollection(Arrays.asList("journal")) %>'
+						searchableFieldsDisabled="<%= !journalEditDDMStructuresDisplayContext.isStructureFieldIndexableEnable() %>"
 						singlePage="<%= true %>"
 					/>
 				</div>

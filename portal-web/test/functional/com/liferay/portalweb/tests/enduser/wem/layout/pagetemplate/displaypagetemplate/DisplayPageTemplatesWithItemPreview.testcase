@@ -291,7 +291,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-131040. View mapped content of selected category and subcategory preview items."
+	@description = "This is a test for LPS-131040 and LPS-132081. View mapped content of selected category and subcategory preview items."
 	@priority = "5"
 	test ViewMappedContentOfPreviewCategoryItem {
 		task ("Add a vocabulary") {
@@ -305,6 +305,14 @@ definition {
 				groupName = "Test Site Name",
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
+		}
+
+		task ("Add an image to category") {
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
+
+			Category.addImageToCategory(
+				categoryName = "Category Name",
+				imageName = "Document_1.jpg");
 		}
 
 		task ("Add a subCategory") {
@@ -322,21 +330,28 @@ definition {
 				groupName = "Test Site Name");
 		}
 
-		task ("Add a Heading fragment to display Page Template") {
+		task ("Add a Card fragment to display Page Template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Heading");
+				fragmentName = "Card");
 		}
 
-		task ("Mapping the Name field to Heading fragment") {
+		task ("Mapping the Name field to link editable field") {
 			PageEditorMapping.mapEditableTextToField(
 				field = "Name",
-				fragmentName = "Heading",
-				id = "element-text");
+				fragmentName = "Card",
+				id = "link");
+		}
+
+		task ("Mapping the Main Image field to image editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Main Image",
+				fragmentName = "Card",
+				id = "img");
 		}
 
 		task ("Select the category via preview item selector") {
@@ -345,11 +360,17 @@ definition {
 				assetType = "Category");
 		}
 
-		task ("View category name shown in Heading fragment") {
+		task ("View mapped content shown in Card fragment") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Category Name",
-				fragmentName = "Heading",
-				id = "element-text");
+				fragmentName = "Card",
+				id = "link");
+
+			AssertVisible(
+				id = "img",
+				key_image = "/images/",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
 		task ("Select the None via preview item selector") {
@@ -358,11 +379,19 @@ definition {
 				item = "-- None --");
 		}
 
-		task ("View Heading Example shown in Heading fragment") {
+		task ("View Go Somewhere shown in Card fragment") {
 			PageEditor.viewFragmentEditableText(
-				editableText = "Heading Example",
-				fragmentName = "Heading",
-				id = "element-text");
+				editableText = "Go Somewhere",
+				fragmentName = "Card",
+				id = "link");
+		}
+
+		task ("View image placeholder shown in Card fragment") {
+			AssertVisible(
+				id = "img",
+				key_image = "data:image/png",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
 		task ("Open the Preview modal") {
@@ -378,13 +407,20 @@ definition {
 				modal = "true");
 		}
 
-		task ("View category name shown in Heading fragment") {
+		task ("View mapped content shown in Card fragment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Category Name");
+			AssertVisible(
+				id = "link",
+				key_position = "1",
+				key_text = "Category Name",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				id = "img",
+				key_image = "/images/",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 
 			SelectFrameTop();
 		}
@@ -396,13 +432,22 @@ definition {
 				modal = "true");
 		}
 
-		task ("View Heading Example shown in Heading fragment") {
+		task ("View Go Somewhere shown in Card fragment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			AssertVisible(
+				id = "link",
+				key_position = "1",
+				key_text = "Go Somewhere",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+
+		task ("View image placeholder shown in Card fragment") {
+			AssertVisible(
+				id = "img",
+				key_image = "data:image/png",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
 		task ("Close the iframe") {
@@ -415,11 +460,19 @@ definition {
 				assetType = "Category");
 		}
 
-		task ("View the subcategory name shown in Heading fragment") {
+		task ("View the subcategory name shown in Card fragment") {
 			PageEditor.viewFragmentEditableText(
 				editableText = "Subcategory Name",
-				fragmentName = "Heading",
-				id = "element-text");
+				fragmentName = "Card",
+				id = "link");
+		}
+
+		task ("View image placeholder shown in Card fragment") {
+			AssertVisible(
+				id = "img",
+				key_image = "data:image/png",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
 		task ("Select the None via preview item selector") {
@@ -428,11 +481,19 @@ definition {
 				item = "-- None --");
 		}
 
-		task ("View Heading Example shown in Heading fragment") {
+		task ("View Go Somewhere shown in Card fragment") {
 			PageEditor.viewFragmentEditableText(
-				editableText = "Heading Example",
-				fragmentName = "Heading",
-				id = "element-text");
+				editableText = "Go Somewhere",
+				fragmentName = "Card",
+				id = "link");
+		}
+
+		task ("View image placeholder shown in Card fragment") {
+			AssertVisible(
+				id = "img",
+				key_image = "data:image/png",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 
 		task ("Open the Preview modal") {
@@ -448,13 +509,22 @@ definition {
 				modal = "true");
 		}
 
-		task ("View the subcategory name shown in Heading fragment") {
+		task ("View the subcategory name shown in Card fragment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Subcategory Name");
+			AssertVisible(
+				id = "link",
+				key_position = "1",
+				key_text = "Subcategory Name",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+
+		task ("View image placeholder shown in Card fragment") {
+			AssertVisible(
+				id = "img",
+				key_image = "data:image/png",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 
 			SelectFrameTop();
 		}
@@ -466,13 +536,22 @@ definition {
 				modal = "true");
 		}
 
-		task ("View Heading Example shown in Heading fragment") {
+		task ("View the subcategory name shown in Card fragment") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-			AssertTextEquals(
-				key_fragmentName = "heading",
-				locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-				value1 = "Heading Example");
+			AssertVisible(
+				id = "link",
+				key_position = "1",
+				key_text = "Go Somewhere",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+
+		task ("View image placeholder shown in Card fragment") {
+			AssertVisible(
+				id = "img",
+				key_image = "data:image/png",
+				key_imageDescription = "",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_IMAGE_PROPERTIES");
 		}
 	}
 
@@ -802,12 +881,6 @@ definition {
 				vocabularyName = "Vocabulary Name");
 		}
 
-		task ("Add an image to category") {
-			Category.addImageToCategory(
-				categoryName = "Category Name",
-				imageName = "Document_1.jpg");
-		}
-
 		task ("Get the categoryId") {
 			var categoryId = JSONCategory.getCategoryId(
 				categoryName = "Category Name",
@@ -847,30 +920,6 @@ definition {
 				groupName = "Test Site Name");
 		}
 
-		task ("Add a Banner Center fragment to display Page Template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
-
-			PageEditor.addFragment(
-				collectionName = "Featured Content",
-				fragmentName = "Banner Center");
-		}
-
-		task ("Mapping the Display Page URL field to link editable field") {
-			PageEditorMapping.mapEditableTextToField(
-				field = "Display Page URL",
-				fragmentName = "Banner Center",
-				id = "03-link");
-		}
-
-		task ("Mapping the Main Image field to background image editable field") {
-			PageEditorMapping.mapEditableTextToField(
-				field = "Main Image",
-				fragmentName = "Banner Center",
-				id = "banner-center");
-		}
-
 		task ("Add a Content Display fragment below the Banner Center") {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -891,17 +940,6 @@ definition {
 				assetType = "Category");
 		}
 
-		task ("View the mapped content in Banner Center") {
-			PageEditor.viewFragmentEditableText(
-				editableText = "",
-				fragmentName = "Banner Center",
-				id = "03-link");
-
-			AssertVisible(
-				key_imageName = "/images/",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
-		}
-
 		task ("Assert the Title of collection items are shown in Bulleted List") {
 			var n = "1";
 
@@ -920,24 +958,6 @@ definition {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "-- None --",
 				item = "-- None --");
-		}
-
-		task ("View the Banner Center shown in page editor") {
-			PageEditor.viewFragmentEditableText(
-				editableText = "Banner Title Example",
-				fragmentName = "Banner Center",
-				id = "01-title");
-
-			PageEditor.viewFragmentEditableText(
-				editableText = "Go Somewhere",
-				fragmentName = "Banner Center",
-				id = "03-link");
-		}
-
-		task ("View the image placeholder is shown") {
-			AssertElementNotPresent(
-				key_imageName = "/images/",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
 
 		task ("View the Title is shown in Collection Display") {
@@ -964,16 +984,6 @@ definition {
 
 		task ("View the mapped content in modal") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertVisible(
-				id = "03-link",
-				key_position = "1",
-				key_text = "",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
-
-			AssertVisible(
-				key_imageName = "/images/",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
 
 		task ("Assert the Title of collection items are shown in modal") {
@@ -1001,24 +1011,6 @@ definition {
 
 		task ("View the Banner Center shown in modal") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			AssertVisible(
-				id = "01-title",
-				key_position = "1",
-				key_text = "Banner Title Example",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
-
-			AssertVisible(
-				id = "03-link",
-				key_position = "1",
-				key_text = "Go Somewhere",
-				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
-		}
-
-		task ("View the image placeholder is shown in modal") {
-			AssertElementNotPresent(
-				key_imageName = "/images/",
-				locator1 = "Fragment#FRAGMENT_SECTION_BACKGROUND_IMAGE");
 		}
 
 		task ("View the Collection Display is not shown in modal") {

@@ -662,10 +662,9 @@ definition {
 	@priority = "5"
 	@refactorneeded
 	test PublishFolderWithWorkflow {
-		JSONDocument.addFolder(
+		DMFolder.addCP(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder 1",
-			groupName = "Site Name-staging");
+			dmFolderName = "DM Folder 1");
 
 		DMFolder.configureWorkflowCP(
 			dmFolderName = "DM Folder 1",
@@ -1001,12 +1000,10 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewWebContentWithDeletedImage {
-		JSONDocument.addFileWithUploadedFile(
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
@@ -1094,12 +1091,10 @@ definition {
 	@priority = "4"
 	@refactorneeded
 	test ViewWebContentWithRepublishedImage {
-		JSONDocument.addFileWithUploadedFile(
+		DMDocument.addCP(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpg",
-			groupName = "Site Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpg");
+			dmDocumentFile = "Document_2.jpg",
+			dmDocumentTitle = "Document_2.jpg");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 

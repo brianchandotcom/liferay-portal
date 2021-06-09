@@ -335,14 +335,53 @@ definition {
 	}
 
 	@description = "Verify that a help text can be added"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test HelpTextCanBeAdded {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-132269 HelpTextCanBeAdded pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Multiple Selection");
+
+		FormFields.editOptionsRow(
+			optionName = "Option1",
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionName = "Option2",
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormViewBuilder.editText(
+			fieldName = "Help Text",
+			fieldValue = "Multiple Selection Help Text");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Multiple Selection Help Text",
+			fieldName = "Help Text");
+
+		FormFields.enableCheckbox(fieldName = "Option 1");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+
+
+		
 	}
 
 	@description = "Verify that the Field Label can be edited"

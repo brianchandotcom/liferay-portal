@@ -289,14 +289,39 @@ definition {
 	}
 
 	@description = "Verify that the Field Label can be hidden"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test LabelCanBeHidden {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133141 LabelCanBeHidden pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Color");
+
+		FormFields.viewTextLabel(fieldLabel = "Color");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.disableSwitcher(fieldName = "Show Label");
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Color");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+		
+
+		FormFields.viewFieldLabelNotPresent(fieldLabel = "Color");
 	}
 
 	@description = "Verify that a Predefined Value can be set for the Color Field"

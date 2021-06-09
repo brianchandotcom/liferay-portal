@@ -7013,19 +7013,19 @@ public class DataFactory {
 	private List<CounterModel> _newLayoutCounterModels() {
 		List<CounterModel> layoutCounterModels = new ArrayList<>();
 
+		long totalLayoutId = 0;
+
 		for (Map.Entry<String, SimpleCounter> entry :
 				_layoutCounters.entrySet()) {
 
 			SimpleCounter simpleCounter = entry.getValue();
 
+			long currentLayoutId = simpleCounter.get();
+
 			layoutCounterModels.add(
-				_newCounterModel(entry.getKey(), simpleCounter.get()));
-		}
+				_newCounterModel(entry.getKey(), currentLayoutId));
 
-		long totalLayoutId = 0;
-
-		for (CounterModel counterModel : layoutCounterModels) {
-			totalLayoutId += counterModel.getCurrentId();
+			totalLayoutId += currentLayoutId;
 		}
 
 		layoutCounterModels.add(

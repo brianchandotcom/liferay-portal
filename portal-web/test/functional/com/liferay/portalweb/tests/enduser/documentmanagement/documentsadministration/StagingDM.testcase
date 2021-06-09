@@ -727,7 +727,7 @@ definition {
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentTitle = "DM Document in Folder 1",
 			folderName = "DM Folder 1",
-			groupName = "Test Depot Name",
+			groupName = "Site Name-staging",
 			mimeType = "text/plain",
 			sourceFileName = "Document_1.txt");
 

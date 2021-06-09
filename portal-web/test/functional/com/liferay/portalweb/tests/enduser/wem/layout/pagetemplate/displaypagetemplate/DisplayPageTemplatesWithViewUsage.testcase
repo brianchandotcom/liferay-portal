@@ -167,7 +167,7 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "Assign to Default (Display Page Name 1)");
 
-			AssertConfirm(value1 = "Are you sure you want to use the default display page template for this?");
+			AssertConfirm(value1 = "Are you sure you want to use the default display page template (Display Page Name 1) for this?");
 
 			Alert.viewSuccessMessageText(successMessage = "Successfully assigned to default display page template: Display Page Name 1.");
 		}

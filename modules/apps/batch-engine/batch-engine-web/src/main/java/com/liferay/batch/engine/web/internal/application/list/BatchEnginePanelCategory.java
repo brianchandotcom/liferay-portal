@@ -17,7 +17,7 @@ package com.liferay.batch.engine.web.internal.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.batch.engine.web.internal.application.list.constants.ImportExportCenterPanelCategoryKeys;
+import com.liferay.batch.engine.web.internal.application.list.constants.BatchEnginePanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -37,12 +37,12 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PanelCategory.class
 )
-public class ImportExportCenterPanelCategory extends BasePanelCategory {
+public class BatchEnginePanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return ImportExportCenterPanelCategoryKeys.
-			APPLICATIONS_MENU_APPLICATIONS_IMPORT_EXPORT_CENTER;
+		return BatchEnginePanelCategoryKeys.
+			APPLICATIONS_MENU_APPLICATIONS_BATCH_ENGINE;
 	}
 
 	@Override

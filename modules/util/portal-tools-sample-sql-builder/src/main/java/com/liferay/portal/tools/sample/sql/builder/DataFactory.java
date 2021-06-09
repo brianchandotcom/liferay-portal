@@ -7047,12 +7047,16 @@ public class DataFactory {
 		return counterModel;
 	}
 
-	private String _readFile(String resourceName) throws Exception {
+	private String _readFile(InputStream inputStream) throws Exception {
 		List<String> lines = new ArrayList<>();
 
-		StringUtil.readLines(getResourceInputStream(resourceName), lines);
+		StringUtil.readLines(inputStream, lines);
 
 		return StringUtil.merge(lines, StringPool.SPACE);
+	}
+
+	private String _readFile(String resourceName) throws Exception {
+		return _readFile(getResourceInputStream(resourceName));
 	}
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();

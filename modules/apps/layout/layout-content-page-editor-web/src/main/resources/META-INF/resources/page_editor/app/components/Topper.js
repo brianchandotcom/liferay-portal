@@ -208,11 +208,7 @@ function TopperContent({
 			ref={canBeDragged ? handlerRef : null}
 			style={style}
 		>
-			<TopperLabel
-				isActive={isActive}
-				isMapped={isMapped}
-				itemElement={itemElement}
-			>
+			<TopperLabel isActive={isActive} itemElement={itemElement}>
 				<ul className="tbar-nav">
 					{canBeDragged && (
 						<TopperListItem className="page-editor__topper__drag-handler">
@@ -314,7 +310,7 @@ class TopperErrorBoundary extends React.Component {
 	}
 }
 
-function TopperLabel({children, isActive, isMapped, itemElement}) {
+function TopperLabel({children, isActive, itemElement}) {
 	const [isInset, setIsInset] = useState(false);
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 
@@ -354,7 +350,6 @@ function TopperLabel({children, isActive, isMapped, itemElement}) {
 		<div
 			className={classNames('page-editor__topper__bar', 'tbar', {
 				'page-editor__topper__bar--inset': isInset,
-				'page-editor__topper__bar--mapped': isMapped,
 			})}
 		>
 			{children}
@@ -364,6 +359,5 @@ function TopperLabel({children, isActive, isMapped, itemElement}) {
 
 TopperLabel.propTypes = {
 	isActive: PropTypes.bool,
-	isMapped: PropTypes.bool,
 	itemElement: PropTypes.object,
 };

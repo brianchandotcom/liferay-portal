@@ -62,11 +62,6 @@ $dragOverWidth: 6px;
 			top: $borderWidth;
 			transform: translateY(0);
 		}
-
-		&--mapped {
-			background-color: $purple;
-			box-shadow: 0 0 0 $borderWidth $purple;
-		}
 	}
 
 	&__content .alert {

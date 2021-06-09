@@ -703,14 +703,14 @@ definition {
 		key_fieldName = "${fieldName}";
 
 		Click(
-			key_name = "${fieldName}",
-			locator1 = "FormFields#FIELD_TARGET_LABEL");
+			key_fieldName = "${fieldName}",
+			locator1 = "Form#FIELD_BODY");
 
 		Form.gotoAdvancedTab();
 
 		AssertTextEquals(
 			locator1 = "Form#FIELD_REFERENCE",
-			value1 = "${fieldValue}");
+			value1 = "${key_fieldReference}");
 	}
 
 	macro viewFieldReferenceFromTextField {

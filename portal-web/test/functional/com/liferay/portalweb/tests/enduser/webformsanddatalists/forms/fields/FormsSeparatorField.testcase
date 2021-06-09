@@ -250,8 +250,31 @@ definition {
 		property forms.functional = "false";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133240 ReferenceCanBeEdited pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Separator");
+
+		Form.gotoAdvancedTab();
+
+		Form.editFieldReferenceMetal(fieldValue = "Separator1234");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
+
+		Form.viewFieldReference(
+			fieldName = "Separator",
+			key_fieldReference = "Separator1234");
 	}
 
 	@description = "Verify that the Field Type can be changed"

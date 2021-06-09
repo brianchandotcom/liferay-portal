@@ -66,7 +66,7 @@ public class BaseDisplayContext {
 				navigationItem.setHref(
 					renderResponse.createRenderURL(), "tabs1", "export",
 					"mvcRenderCommandName",
-					"/batch_engine/view_batch_engine_export_task");
+					"/batch_engine/view_batch_engine_export_tasks");
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "export"));
 

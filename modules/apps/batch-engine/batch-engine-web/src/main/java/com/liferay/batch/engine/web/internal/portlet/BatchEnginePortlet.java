@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Batch Jobs",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.init-param.view-template=/view_import_tasks.jsp",
+		"javax.portlet.init-param.view-template=/view_batch_engine_import_tasks.jsp",
 		"javax.portlet.name=" + BatchEnginePortletKeys.BATCH,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,power-user,user"

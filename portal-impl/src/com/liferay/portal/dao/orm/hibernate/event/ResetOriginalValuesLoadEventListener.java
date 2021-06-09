@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import java.util.Objects;
 
 import org.hibernate.HibernateException;
-import org.hibernate.event.LoadEvent;
-import org.hibernate.event.def.DefaultLoadEventListener;
+import org.hibernate.event.internal.DefaultLoadEventListener;
+import org.hibernate.event.spi.LoadEvent;
 
 /**
  * @author Tina Tian

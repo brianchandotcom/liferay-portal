@@ -319,13 +319,6 @@ public class TableReferenceInfoFactoryTest {
 					ReferenceExampleTable.INSTANCE.mainExampleId.isNotNull()
 				).and(
 					ReferenceExampleTable.INSTANCE.mainExampleId.neq(0L)
-				).and(
-					ReferenceExampleTable.INSTANCE.referenceExampleId.
-						isNotNull()
-				).and(
-					ReferenceExampleTable.INSTANCE.referenceExampleId.neq(0L)
-				).and(
-					ReferenceExampleTable.INSTANCE.integerKey.isNotNull()
 				)
 			));
 	}

@@ -278,11 +278,35 @@ public class TableJoinHolderFactory {
 		joinStep.toSQL(
 			_emptyStringConsumer,
 			astNode -> {
-				if (astNode instanceof Column) {
-					Column<?, ?> column = (Column<?, ?>)astNode;
+				if (astNode instanceof DefaultPredicate) {
+					DefaultPredicate defaultPredicate =
+						(DefaultPredicate)astNode;
 
-					if (table == column.getTable()) {
-						childColumns.add(column);
+					if (defaultPredicate.getOperand() == Operand.EQUAL) {
+						Expression<?> leftExpression =
+							defaultPredicate.getLeftExpression();
+						Expression<?> rightExpression =
+							defaultPredicate.getRightExpression();
+
+						if ((leftExpression instanceof Column) &&
+							!(rightExpression instanceof Scalar)) {
+
+							Column<?, ?> column = (Column<?, ?>)leftExpression;
+
+							if (column.getTable() == table) {
+								childColumns.add(column);
+							}
+						}
+
+						if (!(leftExpression instanceof Scalar) &&
+							(rightExpression instanceof Column)) {
+
+							Column<?, ?> column = (Column<?, ?>)rightExpression;
+
+							if (column.getTable() == table) {
+								childColumns.add(column);
+							}
+						}
 					}
 				}
 			});

@@ -113,6 +113,18 @@ definition {
 			siteName = "Site Name");
 	}
 
+	macro searchBar {
+		Click(locator1 = "ACSettings#SEARCH_BAR");
+
+		Type(
+			locator1 = "ACSettings#SEARCH_BAR",
+			value1 = "${propertyName}");
+
+		KeyPress(
+			locator1 = "ACSettings#SEARCH_BAR",
+			value1 = "\ENTER");	
+	}
+
 	macro launchAC {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 

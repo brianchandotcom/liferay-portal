@@ -261,6 +261,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -3833,6 +3834,33 @@ public class DataFactory {
 
 		return fragmentEntryLinkModel;
 	}
+	
+	public List<FragmentEntryLinkModel> newFragmentEntryLinkModels(
+			List<LayoutModel> layoutModels)
+		throws Exception {
+
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
+			new ArrayList<>();
+
+		Map<String, String> nameSpaces = HashMapBuilder.put(
+			_HEADING_RENDER_KEY, StringUtil.randomId()
+		).build();
+
+		for (LayoutModel layoutModel : layoutModels) {
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, _HEADING_RENDER_KEY,
+					_readFile(
+						_getFragmentComponentInputStream("heading", "css")),
+					_readFile(
+						_getFragmentComponentInputStream("heading", "html")),
+					_readFile("heading_configuration.json"),
+					_readFile("heading_editValue.json"), 0,
+					nameSpaces.get(_HEADING_RENDER_KEY)));
+		}
+
+		return fragmentEntryLinkModels;
+	}
 
 	public FragmentEntryModel newFragmentEntryModel(
 			long groupId, FragmentCollectionModel fragmentCollectionModel)
@@ -7087,6 +7115,8 @@ public class DataFactory {
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
+
+	private static final String _HEADING_RENDER_KEY = "BASIC_COMPONENT-heading";
 
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
 

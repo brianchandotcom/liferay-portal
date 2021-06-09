@@ -74,16 +74,6 @@ public class JournalArticleLocalizationCTDisplayRenderer
 			_journalArticleLocalService.getJournalArticle(
 				journalArticleLocalization.getArticlePK());
 
-		TranslationEntry translationEntry =
-			_translationEntryLocalService.fetchTranslationEntry(
-				journalArticle.getModelClassName(),
-				journalArticle.getResourcePrimKey(),
-				journalArticleLocalization.getLanguageId());
-
-		if (translationEntry == null) {
-			return null;
-		}
-
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest,
@@ -97,9 +87,9 @@ public class JournalArticleLocalizationCTDisplayRenderer
 		).setParameter(
 			"classNameId",
 			_classNameLocalService.getClassNameId(
-				journalArticle.getModelClassName())
+				JournalArticle.class.getName())
 		).setParameter(
-			"classPK", translationEntry.getClassPK()
+			"classPK", journalArticle.getResourcePrimKey()
 		).setParameter(
 			"targetLanguageId", journalArticleLocalization.getLanguageId()
 		).buildString();
@@ -144,7 +134,7 @@ public class JournalArticleLocalizationCTDisplayRenderer
 
 		TranslationEntry translationEntry =
 			_translationEntryLocalService.fetchTranslationEntry(
-				journalArticle.getModelClassName(),
+				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey(),
 				journalArticleLocalization.getLanguageId());
 

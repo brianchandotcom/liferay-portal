@@ -17,6 +17,7 @@ package com.liferay.layout.reports.web.internal.model;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -221,6 +222,43 @@ public class LayoutReportsIssue {
 						getLearnMoreLink(
 							resourceBundle, "https://web.dev/font-size")
 					};
+				}
+
+				@Override
+				protected JSONArray getFailingElementsJSONArray(
+					JSONObject lighthouseAuditJSONObject,
+					ResourceBundle resourceBundle) {
+
+					JSONArray failingElementsJSONArray =
+						super.getFailingElementsJSONArray(
+							lighthouseAuditJSONObject, resourceBundle);
+
+					if (failingElementsJSONArray == null) {
+						return null;
+					}
+
+					JSONArray filteredFailingElementsJSONArray =
+						JSONFactoryUtil.createJSONArray();
+
+					for (int i = 0; i < failingElementsJSONArray.length();
+						 i++) {
+
+						JSONObject failingElementJSONObject =
+							failingElementsJSONArray.getJSONObject(i);
+
+						if (failingElementJSONObject != null) {
+							JSONObject selectorJSONObject =
+								failingElementJSONObject.getJSONObject(
+									"selector");
+
+							if (selectorJSONObject != null) {
+								filteredFailingElementsJSONArray.put(
+									failingElementJSONObject);
+							}
+						}
+					}
+
+					return filteredFailingElementsJSONArray;
 				}
 
 			},

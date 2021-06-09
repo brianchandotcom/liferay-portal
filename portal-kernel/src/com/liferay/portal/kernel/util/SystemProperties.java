@@ -140,6 +140,20 @@ public class SystemProperties {
 					System.setProperty(key, String.valueOf(entry.getValue()));
 				}
 			}
+
+			if (!systemPropertiesSetOverride) {
+				Properties systemProperties = System.getProperties();
+
+				for (Map.Entry<Object, Object> entry :
+						systemProperties.entrySet()) {
+
+					String key = String.valueOf(entry.getKey());
+
+					if (Validator.isNotNull(properties.get(key))) {
+						properties.put(key, entry.getValue());
+					}
+				}
+			}
 		}
 
 		// Use a fast concurrent hash map implementation instead of the slower

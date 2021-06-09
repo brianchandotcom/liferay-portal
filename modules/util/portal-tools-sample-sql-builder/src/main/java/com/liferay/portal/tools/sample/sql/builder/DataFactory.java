@@ -385,6 +385,7 @@ public class DataFactory {
 		_counter = new SimpleCounter(BenchmarksPropsValues.MAX_GROUP_COUNT + 1);
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
+		_layoutCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
@@ -2217,7 +2218,7 @@ public class DataFactory {
 
 		// PK fields
 
-		layoutModel.setPlid(_counter.get());
+		layoutModel.setPlid(_layoutCounter.get());
 
 		// Group instance
 
@@ -2292,23 +2293,17 @@ public class DataFactory {
 			_newCounterModel(
 				SocialActivity.class.getName(), _socialActivityCounter.get()));
 
-		long totalLayoutId = 0;
-
 		for (Map.Entry<String, SimpleCounter> entry :
 				_layoutCounters.entrySet()) {
 
 			SimpleCounter simpleCounter = entry.getValue();
 
-			long currentLayoutId = simpleCounter.get();
-
 			counterModels.add(
-				_newCounterModel(entry.getKey(), currentLayoutId));
-
-			totalLayoutId += currentLayoutId;
+				_newCounterModel(entry.getKey(), simpleCounter.get()));
 		}
 
 		counterModels.add(
-			_newCounterModel(Layout.class.getName(), totalLayoutId + 1));
+			_newCounterModel(Layout.class.getName(), _layoutCounter.get()));
 
 		return counterModels;
 	}
@@ -6292,7 +6287,7 @@ public class DataFactory {
 
 		// PK fields
 
-		layoutModel.setPlid(_counter.get());
+		layoutModel.setPlid(_layoutCounter.get());
 
 		// Group instance
 
@@ -7084,6 +7079,7 @@ public class DataFactory {
 	private final String _journalDDMStructureContent;
 	private final String _journalDDMStructureLayoutContent;
 	private List<String> _lastNames;
+	private final SimpleCounter _layoutCounter;
 	private final Map<String, SimpleCounter> _layoutCounters = new HashMap<>();
 	private final String _layoutPageTemplateStructureRelData;
 	private RoleModel _ownerRoleModel;

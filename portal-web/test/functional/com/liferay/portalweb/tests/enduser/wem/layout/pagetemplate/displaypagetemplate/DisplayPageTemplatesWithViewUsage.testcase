@@ -44,14 +44,14 @@ definition {
 		}
 
 		task ("Add three documents and select the display page template") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
 			for (var i : list "1,2,3") {
 				JSONDocument.addFileWithUploadedFile(
 					dmDocumentTitle = "Document_${i}.txt",
 					groupName = "Test Site Name",
 					mimeType = "text/plain",
 					sourceFileName = "Document_${i}.txt");
+
+				DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 				LexiconEntry.gotoEntryMenuItem(
 					menuItem = "Edit",

@@ -1,0 +1,40 @@
+{
+	"dependencies": {
+		"@clayui/autocomplete": "3.28.0",
+		"@clayui/button": "3.6.0",
+		"@clayui/color-picker": "3.28.0",
+		"@clayui/data-provider": "3.28.0",
+		"@clayui/drop-down": "3.28.0",
+		"@clayui/form": "3.28.0",
+		"@clayui/icon": "3.1.0",
+		"@clayui/modal": "3.28.0",
+		"@clayui/slider": "3.25.1",
+		"@liferay/frontend-js-react-web": "*",
+		"classnames": "2.2.6",
+		"d3": "5.9.3",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2"
+	},
+	"jest": {
+		"collectCoverageFrom": [
+			"!<rootDir>/node_modules/",
+			"<rootDir>/src/**/components/**/*.js",
+			"<rootDir>/src/**/utilities/**/*.js"
+		],
+		"testPathIgnorePatterns": [
+			"<rootDir>/test/dev/",
+			"<rootDir>/test/utils/"
+		]
+	},
+	"name": "@liferay/commerce-shop-by-diagram-web",
+	"private": true,
+	"scripts": {
+		"build": "liferay-npm-scripts build",
+		"checkFormat": "liferay-npm-scripts check",
+		"coverage": "liferay-npm-scripts test --coverage --silent --verbose",
+		"format": "liferay-npm-scripts fix",
+		"test": "liferay-npm-scripts test",
+		"watch": "liferay-npm-scripts webpack --watch"
+	},
+	"version": "1.0.0"
+}

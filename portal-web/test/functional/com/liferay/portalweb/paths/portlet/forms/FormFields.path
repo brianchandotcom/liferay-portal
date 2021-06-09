@@ -483,6 +483,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FIELD_PRICE_RANGE</td>
+	<td>//input[@type='number' and contains(@title,'${key_name}')] | //div[contains(@class,'form-group')]//p[text()='']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_FIELD_NULL</td>
 	<td>//input[@type='text' and (@value='') and contains (@class,'form-control bg-light field')]</td>
 	<td></td>

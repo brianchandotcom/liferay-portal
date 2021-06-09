@@ -80,13 +80,56 @@ definition {
 	}
 
 	@description = "COMMERCE-6170. As a buyer, I want to filter products using Price Range Facet widget and the results should be visible on the Search Results widget"
-	@ignore = "true"
 	@priority = "3"
 	test AssertProductsAreFilteredByPriceRangeFacet {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CommerceFacets#AssertProductsAreFilteredByPriceRangeFacet";
 
-		// TODO COMMERCE-6170 AssertProductsAreFilteredByPriceRangeFacet pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Check.checkToggleSwitch(
+			key_fieldName = "$ 500.00 - $ 999.99",
+			locator1 = "FormFields#CHECKBOX");
+
+		for (var i : list "Cams,Timing Belt") {
+			AssertElementPresent(
+				key_productName = "${i}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		AssertElementNotPresent(
+			key_value = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Type(
+			key_name = "Minimum",
+			locator1 = "FormFields#TEXT_FIELD_PRICE_RANGE",
+			value1 = "10.00");
+
+		Type(
+			key_name = "Maximum",
+			locator1 = "FormFields#TEXT_FIELD_PRICE_RANGE",
+			value1 = "15.00");
+
+		Click(
+			key_text = "Go",
+			locator1 = "Button#ANY");
+
+		for (var i : list "Piston,Transmission Cooler Line Assembly") {
+			AssertElementPresent(
+				key_productName = "${i}",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+		}
+
+		AssertElementNotPresent(
+			key_value = "U-Joint",
+			locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 	}
 
 	@description = "COMMERCE-6166. As a buyer, I want to filter products using Specification Facet widget and the results should be visible on the Search Results widget"

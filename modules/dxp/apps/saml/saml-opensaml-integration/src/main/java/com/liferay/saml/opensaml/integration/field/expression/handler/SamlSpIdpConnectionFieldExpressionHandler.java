@@ -14,12 +14,15 @@
 
 package com.liferay.saml.opensaml.integration.field.expression.handler;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.saml.opensaml.integration.processor.context.SamlSpIdpConnectionProcessorContext;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 
 /**
  * @author Stian Sigvartsen
  */
+@ProviderType
 public interface SamlSpIdpConnectionFieldExpressionHandler
 	extends FieldExpressionHandler
 		<SamlSpIdpConnection, SamlSpIdpConnectionProcessorContext> {

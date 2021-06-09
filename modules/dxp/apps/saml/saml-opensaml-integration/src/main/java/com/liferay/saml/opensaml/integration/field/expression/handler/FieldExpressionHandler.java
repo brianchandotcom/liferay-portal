@@ -14,12 +14,15 @@
 
 package com.liferay.saml.opensaml.integration.field.expression.handler;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.saml.opensaml.integration.processor.context.ProcessorContext;
 
 /**
  * @author Stian Sigvartsen
  */
+@ProviderType
 public interface FieldExpressionHandler
 	<M extends BaseModel<M>, PC extends ProcessorContext<M>> {
 

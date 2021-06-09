@@ -14,6 +14,8 @@
 
 package com.liferay.saml.opensaml.integration.field.expression.resolver;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.saml.opensaml.integration.resolver.UserResolver;
 
 import java.io.Serializable;
@@ -25,6 +27,7 @@ import java.util.Map;
 /**
  * @author Stian Sigvartsen
  */
+@ProviderType
 public interface UserFieldExpressionResolver {
 
 	public String getDescription(Locale locale);

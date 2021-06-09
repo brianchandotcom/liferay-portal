@@ -3845,6 +3845,8 @@ public class DataFactory {
 		Map<String, String> nameSpaces = HashMapBuilder.put(
 			_HEADING_RENDER_KEY, StringUtil.randomId()
 		).put(
+			_IMAGE_RENDER_KEY, StringUtil.randomId()
+		).put(
 			_PARAGRAPH_RENDER_KEY, StringUtil.randomId()
 		).build();
 
@@ -3870,6 +3872,15 @@ public class DataFactory {
 					_readFile("paragraph_configuration.json"),
 					_replaceReleaseInfo(_readFile("paragraph_editValue.json")),
 					0, nameSpaces.get(_PARAGRAPH_RENDER_KEY)));
+
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, _IMAGE_RENDER_KEY, "",
+					_readFile(
+						_getFragmentComponentInputStream("image", "html")),
+					_readFile("image_configuration.json"),
+					_readFile("image_editValue.json"), 0,
+					nameSpaces.get(_IMAGE_RENDER_KEY)));
 		}
 
 		return fragmentEntryLinkModels;
@@ -7140,6 +7151,8 @@ public class DataFactory {
 		System.currentTimeMillis() + Time.YEAR;
 
 	private static final String _HEADING_RENDER_KEY = "BASIC_COMPONENT-heading";
+	
+	private static final String _IMAGE_RENDER_KEY = "BASIC_COMPONENT-image";
 
 	private static final String _JOURNAL_STRUCTURE_KEY = "BASIC-WEB-CONTENT";
 

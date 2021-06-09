@@ -234,6 +234,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLModel;
 import com.liferay.portal.kernel.model.LayoutModel;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetModel;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -386,6 +387,7 @@ public class DataFactory {
 		_timeCounter = new SimpleCounter();
 		_futureDateCounter = new SimpleCounter();
 		_layoutCounter = new SimpleCounter();
+		_layoutSetCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
@@ -2304,6 +2306,10 @@ public class DataFactory {
 
 		counterModels.add(
 			_newCounterModel(Layout.class.getName(), _layoutCounter.get()));
+
+		counterModels.add(
+			_newCounterModel(
+				LayoutSet.class.getName(), _layoutSetCounter.get()));
 
 		return counterModels;
 	}
@@ -6362,7 +6368,7 @@ public class DataFactory {
 
 		// PK fields
 
-		layoutSetModel.setLayoutSetId(_counter.get());
+		layoutSetModel.setLayoutSetId(_layoutSetCounter.get());
 
 		// Group instance
 
@@ -7082,6 +7088,7 @@ public class DataFactory {
 	private final SimpleCounter _layoutCounter;
 	private final Map<String, SimpleCounter> _layoutCounters = new HashMap<>();
 	private final String _layoutPageTemplateStructureRelData;
+	private final SimpleCounter _layoutSetCounter;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionCounter;

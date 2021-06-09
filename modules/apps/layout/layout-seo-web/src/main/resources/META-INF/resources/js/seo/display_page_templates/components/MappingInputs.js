@@ -16,18 +16,28 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 
 import MappingInput from './MappingInput';
+import MappingRichInput from './MappingRichInput';
 
 function MappingInputs({fields, inputs, selectedSource}) {
 	return (
 		<>
-			{inputs.map((props) => (
-				<MappingInput
-					initialFields={fields}
-					key={props.name}
-					selectedSource={selectedSource}
-					{...props}
-				/>
-			))}
+			{inputs.map((props) =>
+				props.fieldType === 'text' ? (
+					<MappingRichInput
+						initialFields={fields}
+						key={props.name}
+						selectedSource={selectedSource}
+						{...props}
+					/>
+				) : (
+					<MappingInput
+						initialFields={fields}
+						key={props.name}
+						selectedSource={selectedSource}
+						{...props}
+					/>
+				)
+			)}
 		</>
 	);
 }

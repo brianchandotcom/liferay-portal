@@ -19,12 +19,14 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.asset.taglib.internal.util.AssetCategoryUtil;
 import com.liferay.asset.taglib.internal.util.AssetVocabularyUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -46,6 +49,7 @@ import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -207,10 +211,20 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				}
 			}
 
-			String[] categoryIdsTitle = AssetCategoryUtil.getCategoryIdsTitles(
-				categoryIds, StringPool.BLANK, 0, themeDisplay);
+			Map<Long, List<String>> vocabularyMap = _getVocabularyMap(
+				categoryIds);
 
-			categoryIdsTitles.add(categoryIdsTitle);
+			for (AssetVocabulary vocabulary : _getVocabularies()) {
+				List<String> categories = vocabularyMap.get(
+					vocabulary.getVocabularyId());
+
+				String[] categoryIdsTitle =
+					AssetCategoryUtil.getCategoryIdsTitles(
+						StringUtil.merge(categories, StringPool.COMMA),
+						StringPool.BLANK, 0, themeDisplay);
+
+				categoryIdsTitles.add(categoryIdsTitle);
+			}
 
 			return categoryIdsTitles;
 		}
@@ -351,10 +365,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 			}
 
 			int index = i;
-
-			if (Validator.isNull(_className)) {
-				index = 0;
-			}
 
 			String selectedCategoryIds = categoryIdsTitles.get(index)[0];
 
@@ -524,6 +534,31 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 				return true;
 			});
+	}
+
+	private Map<Long, List<String>> _getVocabularyMap(String categoryIds) {
+		Map<Long, List<String>> vocabularyMap = new HashMap<>();
+
+		List<String> categoryIdsList = StringUtil.split(
+			categoryIds, CharPool.COMMA);
+
+		for (String categoryId : categoryIdsList) {
+			AssetCategory category =
+				AssetCategoryLocalServiceUtil.fetchCategory(
+					GetterUtil.getLong(categoryId));
+
+			if (category == null) {
+				continue;
+			}
+
+			List<String> vocabularyCategories = vocabularyMap.computeIfAbsent(
+				category.getVocabularyId(),
+				categoriesList -> new ArrayList<>());
+
+			vocabularyCategories.add(categoryId);
+		}
+
+		return vocabularyMap;
 	}
 
 	private static final String _PAGE = "/asset_categories_selector/page.jsp";

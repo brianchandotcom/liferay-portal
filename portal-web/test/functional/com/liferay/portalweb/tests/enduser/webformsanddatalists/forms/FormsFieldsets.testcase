@@ -1314,14 +1314,84 @@ definition {
 	}
 
 	@description = "Verify that an Inline Property persists after being added to a Form via Fieldset"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test PreserveTheInlineProperty {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133474 PreserveTheInlineProperty pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		Navigator.gotoNavItem(navItem = "Element Sets");
+
+		FormsAdminNavigator.gotoAddElementSet();
+
+		Form.editName(formName = "Element Set 1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		Form.closeSidebar();
+
+		Form.gotoAddField(
+			fieldPositionNumber = "1",
+			fieldType = "Multiple Selection");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 1",
+			optionValue = "1");
+
+		FormFields.addSingleSelectionOption(
+			optionName = "Option 2",
+			optionValue = "2");
+
+		FormFields.viewOptionsPositionNotHorizontal(
+			key_text1 = "Option 1",
+			key_text2 = "Option 2");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Inline");
+
+		FormFields.viewOptionsPositionHorizontal(
+			key_text1 = "Option 1",
+			key_text2 = "Option 2");
+
+		Form.save();
+
+		FormsAdminNavigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form1");
+
+		Form.gotoElementSetsTab();
+
+		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+
+		FormFields.viewLabel(
+			fieldLabel = "Text",
+			fieldName = "Text");
+
+		FormFields.viewLabel(
+			fieldLabel = "Multiple Selection",
+			fieldName = "Multiple Selection");
+
+		FormFields.viewOptionsPositionHorizontal(
+			key_text1 = "Option 1",
+			key_text2 = "Option 2");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormFields.viewOptionsPositionHorizontal(
+			key_text1 = "Option 1",
+			key_text2 = "Option 2");
 	}
 
 	@description = "Verify that an Allow Multiple Selections Property persists after being added to a Form via Fieldset"

@@ -1109,6 +1109,24 @@ definition {
 			locator1 = "FormFields#GRID_OPTIONS_OPTION_ROW_NAME");
 	}
 
+	macro viewOptionsPositionHorizontal {
+		AssertElementPresent(
+			key_text = "${key_text1}",
+			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+		AssertElementPresent(
+			key_text = "${key_text2}",
+			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+	}
+
+	macro viewOptionsPositionNotHorizontal {
+		AssertElementNotPresent(
+			key_text = "${key_text1}",
+			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+		AssertElementNotPresent(
+			key_text = "${key_text2}",
+			locator1 = "FormFields#OPTIONS_HORIZONTALY_POSITIONED");
+	}
+
 	macro viewOptionsRowFieldName {
 		AssertTextEquals(
 			key_rowNumber = "${rowNumber}",

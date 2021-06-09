@@ -255,6 +255,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_HORIZONTALY_POSITIONED</td>
+	<td>//div[@class='custom-control custom-checkbox custom-control-inline']//span[contains(text(), '${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

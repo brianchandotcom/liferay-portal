@@ -1,0 +1,14 @@
+{
+	"com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor": {
+	},
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"element-text": {
+			"config": {
+			},
+			"defaultValue": "A paragraph is a self-contained unit of a discourse in writing dealing with particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.",
+			"en_US": "${paragraphValue}"
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+	}
+}

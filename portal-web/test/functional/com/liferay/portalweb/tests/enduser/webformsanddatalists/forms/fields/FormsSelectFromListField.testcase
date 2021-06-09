@@ -442,7 +442,7 @@ definition {
 			fieldName = "Select from List",
 			selectOption = "Antarctica");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that changes to a Field can be canceled"

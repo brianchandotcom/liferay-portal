@@ -419,7 +419,7 @@ definition {
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that the "Is Greater Than" option can be used to validate a Numeric Field"
@@ -471,7 +471,7 @@ definition {
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that the "Is Greater Than Or Equal To" option can be used to validate a Numeric Field"
@@ -523,7 +523,7 @@ definition {
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that the "Is Less Than" option can be used to validate a Numeric Field"
@@ -575,7 +575,7 @@ definition {
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that the "Is Less Than Or Equal To" option can be used to validate a Numeric Field"
@@ -627,7 +627,7 @@ definition {
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that the "Is Not Equal To" option can be used to validate a Numeric Field"
@@ -679,7 +679,7 @@ definition {
 
 		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Test Error");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that changes to a Field can be canceled"
@@ -950,7 +950,7 @@ definition {
 			fieldName = "Numeric",
 			fieldValue = "123");
 
-		FormPortlet.submitAndViewSuccessPage();
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 	}
 
 	@description = "Verify that Predefined Value has higher priority than Placeholder Text for the Numeric Field"

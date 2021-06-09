@@ -101,6 +101,15 @@ definition {
 
 	}
 
+	@description = "LPS-97666 - Verify that, when hovering the info icon next to the card title, there is a tooltip"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test InfoIconDisplaysMessageOnHover {
+
+		// TODO LRQA-67693 InfoIconDisplaysMessageOnHover pending implementation
+
+	}
+
 	@description = "LPS-99441 - Verify that the pagination of Performance by Assignee is working correctly"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -173,6 +182,15 @@ definition {
 
 	}
 
+	@description = "LPS-97666 - Verify that the card Performance by Assignee has no more than 10 entries ordered by biggest average completion time"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TableDisplaysUpTo10EntriesDescOrder {
+
+		// TODO LRQA-67701 TableDisplaysUpTo10EntriesDescOrder pending implementation
+
+	}
+
 	@description = "LPS-97666 - Verify that the card Performance by Assignee does not provide a scroll if there are 5 entries or less"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -224,24 +242,6 @@ definition {
 	test UserImagsAreRetrievedFromGlobalUser {
 
 		// TODO LRQA-67700 UserImagsAreRetrievedFromGlobalUser pending implementation
-
-	}
-
-	@description = "LPS-97666 - Verify that, when hovering the info icon next to the card title, there is a tooltip"
-	@ignore = "Test Stub"
-	@priority = "2"
-	test InfoIconDisplaysMessageOnHover {
-
-		// TODO LRQA-67693 InfoIconDisplaysMessageOnHover pending implementation
-
-	}
-
-	@description = "LPS-97666 - Verify that the card Performance by Assignee has no more than 10 entries ordered by biggest average completion time"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test TableDisplaysUpTo10EntriesDescOrder {
-
-		// TODO LRQA-67701 TableDisplaysUpTo10EntriesDescOrder pending implementation
 
 	}
 

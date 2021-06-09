@@ -158,8 +158,6 @@ public class SelectAssetDisplayPageDisplayContext {
 					_liferayPortletRequest),
 				_eventName,
 				itemSelectorCriteria.toArray(new ItemSelectorCriterion[0]))
-		).setParameter(
-			"layoutUuid", getLayoutUuid()
 		).buildString();
 	}
 

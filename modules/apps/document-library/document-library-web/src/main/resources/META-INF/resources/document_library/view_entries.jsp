@@ -53,10 +53,12 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 
 					DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
 
+					String fileEntryId = String.valueOf(fileEntry.getFileEntryId());
+
 					if (fileShortcut == null) {
 						dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 
-						row.setPrimaryKey(String.valueOf(fileEntry.getFileEntryId()));
+						row.setPrimaryKey(fileEntryId);
 					}
 					else {
 						dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
@@ -68,6 +70,8 @@ if (portletTitleBasedNavigation && !dlViewEntriesDisplayContext.isRootFolder() &
 
 					String thumbnailSrc = dlViewEntriesDisplayContext.getThumbnailSrc(latestFileVersion);
 					%>
+
+					<div class="d-none fileEntriesExtensions"><%= fileEntryId + "-" + fileEntry.getExtension() %></div>
 
 					<c:choose>
 						<c:when test="<%= dlViewEntriesDisplayContext.isDescriptiveDisplayStyle() %>">

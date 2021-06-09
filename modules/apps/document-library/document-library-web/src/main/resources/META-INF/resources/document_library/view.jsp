@@ -19,7 +19,11 @@
 <%
 DLAdminDisplayContext dlAdminDisplayContext = (DLAdminDisplayContext)request.getAttribute(DLAdminDisplayContext.class.getName());
 
+DLAdminManagementToolbarDisplayContext dlAdminManagementToolbarDisplayContext = (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName());
+
 DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisplayContext, request, renderRequest, renderResponse);
+
+String digitalSignatureAllowedExtensions = StringUtil.merge(DigitalSignatureConstants.ALLOWED_FILE_EXTENSIONS, StringPool.COMMA);
 %>
 
 <liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
@@ -49,7 +53,9 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<clay:management-toolbar
 			additionalProps='<%=
 				HashMapBuilder.<String, Object>put(
-					"digitalSignatureCheckPermissionEntryURL", dlViewDisplayContext.getDigitalSignatureCheckPermissionEntryURL()
+					"allowedFileExtensions", digitalSignatureAllowedExtensions
+				).put(
+					"collectDigitalSignaturePortlet", DigitalSignaturePortletKeys.COLLECT_DIGITAL_SIGNATURE
 				).put(
 					"downloadEntryURL", dlViewDisplayContext.getDownloadEntryURL()
 				).put(
@@ -80,7 +86,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 					"viewFileEntryURL", dlViewDisplayContext.getViewFileEntryURL()
 				).build()
 			%>'
-			managementToolbarDisplayContext="<%= (DLAdminManagementToolbarDisplayContext)request.getAttribute(DLAdminManagementToolbarDisplayContext.class.getName()) %>"
+			managementToolbarDisplayContext="<%= dlAdminManagementToolbarDisplayContext %>"
 			propsTransformer="document_library/js/DLManagementToolbarPropsTransformer"
 		/>
 
@@ -388,3 +394,16 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 		<liferay-util:dynamic-include key="com.liferay.document.library.web#/document_library/view.jsp#post" />
 	</c:otherwise>
 </c:choose>
+
+<c:if test="<%= dlAdminManagementToolbarDisplayContext.isDigitalSignatureEnabled() %>">
+	<div>
+		<react:component
+			module="document_library/js/digital-signature/DigitalSignature"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"allowedFileExtensions", digitalSignatureAllowedExtensions
+				).build()
+			%>'
+		/>
+	</div>
+</c:if>

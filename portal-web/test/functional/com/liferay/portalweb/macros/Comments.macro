@@ -203,15 +203,26 @@ definition {
 				value1 = "${commentCount} COMMENT");
 		}
 
-		var key_userFullName = "${userFullName}";
+		if (isSet(importedComment)) {
+			AssertTextEquals.assertPartialText(
+				key_userFullName = "${userFullName}",
+				locator1 = "Comments#USER_NAME_2",
+				value1 = "${userFullName}");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Comments#USER_NAME",
-			value1 = "${userFullName}");
+			AssertElementPresent(locator1 = "Comments#COMMENT_BODY");
+		}
 
-		AssertTextEquals(
-			locator1 = "Comments#COMMENT_BODY_SPECIFIC",
-			value1 = "${entryComment}");
+		else {
+			var key_userFullName = "${userFullName}";
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Comments#USER_NAME",
+				value1 = "${userFullName}");
+
+			AssertTextEquals(
+				locator1 = "Comments#COMMENT_BODY_SPECIFIC",
+				value1 = "${entryComment}");
+		}
 	}
 
 	macro viewSubscribedPG {

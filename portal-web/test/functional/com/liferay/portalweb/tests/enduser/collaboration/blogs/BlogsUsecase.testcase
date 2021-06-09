@@ -246,6 +246,7 @@ definition {
 		Comments.viewPG(
 			commentCount = "1",
 			entryComment = "Blog Entry Comment",
+			importedComment = "true",
 			userFullName = "Test Test");
 	}
 

@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_NAME_2</td>
+	<td>//div[contains(@class, 'text-truncate')]/a[contains(text(),'${key_userFullName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>

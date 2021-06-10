@@ -122,7 +122,7 @@ definition {
 			rowPosition = "1");
 
 		AssertTextEquals(
-			key_text = "Content",
+			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 3");
 
@@ -133,7 +133,7 @@ definition {
 			rowPosition = "1");
 
 		AssertTextEquals(
-			key_text = "Content",
+			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 3");
 
@@ -144,7 +144,7 @@ definition {
 			rowPosition = "1");
 
 		AssertTextEquals(
-			key_text = "Content",
+			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 3");
 	}
@@ -1630,7 +1630,7 @@ definition {
 			rowPosition = "1");
 
 		AssertTextEquals(
-			key_text = "Content",
+			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 3");
 
@@ -1639,7 +1639,7 @@ definition {
 			rowPosition = "2");
 
 		AssertTextEquals(
-			key_text = "Content",
+			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 2");
 
@@ -1648,7 +1648,7 @@ definition {
 			rowPosition = "3");
 
 		AssertTextEquals(
-			key_text = "Content",
+			key_text = "Item",
 			locator1 = "TextInput#ANY",
 			value1 = "WC WebContent Title 1");
 	}
@@ -3218,7 +3218,7 @@ definition {
 				rowPosition = "${n}");
 
 			AssertTextEquals(
-				key_text = "Content",
+				key_text = "Item",
 				locator1 = "TextInput#ANY",
 				value1 = "${title}");
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.List;
@@ -90,7 +91,9 @@ public class LayoutReportsIssue {
 		return HashUtil.hash(hashCode, _total);
 	}
 
-	public JSONObject toJSONObject(ResourceBundle resourceBundle) {
+	public JSONObject toJSONObject(
+		String configureLayoutSeoURL, ResourceBundle resourceBundle) {
+
 		Stream<Detail> stream = _details.stream();
 
 		return JSONUtil.put(
@@ -99,7 +102,8 @@ public class LayoutReportsIssue {
 				stream.filter(
 					detail -> detail.getTotal() > 0
 				).map(
-					detail -> detail.toJSONObject(resourceBundle)
+					detail -> detail.toJSONObject(
+						configureLayoutSeoURL, resourceBundle)
 				).toArray())
 		).put(
 			"key", _key.toString()
@@ -179,13 +183,16 @@ public class LayoutReportsIssue {
 			return HashUtil.hash(hashCode, _total);
 		}
 
-		public JSONObject toJSONObject(ResourceBundle resourceBundle) {
+		public JSONObject toJSONObject(
+			String configureLayoutSeoURL, ResourceBundle resourceBundle) {
+
 			return JSONUtil.put(
 				"description", _key.getDescription(resourceBundle)
 			).put(
 				"failingElements",
 				_key.getFailingElementsJSONArray(
-					_lighthouseAuditJSONObject, resourceBundle)
+					configureLayoutSeoURL, _lighthouseAuditJSONObject,
+					resourceBundle)
 			).put(
 				"key", _key.toString()
 			).put(
@@ -200,7 +207,7 @@ public class LayoutReportsIssue {
 		@Override
 		public String toString() {
 			JSONObject jsonObject = toJSONObject(
-				ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+				null, ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
 
 			return jsonObject.toString();
 		}
@@ -226,12 +233,14 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
+					String configureLayoutSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
 					JSONArray failingElementsJSONArray =
 						super.getFailingElementsJSONArray(
-							lighthouseAuditJSONObject, resourceBundle);
+							configureLayoutSeoURL, lighthouseAuditJSONObject,
+							resourceBundle);
 
 					if (failingElementsJSONArray == null) {
 						return null;
@@ -300,6 +309,7 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
+					String configureLayoutSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
@@ -422,15 +432,21 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
+					String configureLayoutSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
 					return JSONUtil.putAll(
 						JSONUtil.put(
 							"content",
-							LanguageUtil.get(
+							LanguageUtil.format(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")));
+								getDetailLanguageKey() + "-failing-element",
+								_getLinkOrLabel(
+									configureLayoutSeoURL,
+									LanguageUtil.get(
+										resourceBundle,
+										"add-a-description")))));
 				}
 
 			},
@@ -467,15 +483,20 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
+					String configureLayoutSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
 					return JSONUtil.putAll(
 						JSONUtil.put(
 							"content",
-							LanguageUtil.get(
+							LanguageUtil.format(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")));
+								getDetailLanguageKey() + "-failing-element",
+								_getLinkOrLabel(
+									configureLayoutSeoURL,
+									LanguageUtil.get(
+										resourceBundle, "add-a-title")))));
 				}
 
 			},
@@ -536,15 +557,21 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
+					String configureLayoutSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
 					return JSONUtil.putAll(
 						JSONUtil.put(
 							"content",
-							LanguageUtil.get(
+							LanguageUtil.format(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")));
+								getDetailLanguageKey() + "-failing-element",
+								_getLinkOrLabel(
+									configureLayoutSeoURL,
+									LanguageUtil.get(
+										resourceBundle,
+										"change-the-robots-txt-setting")))));
 				}
 
 			},
@@ -596,6 +623,7 @@ public class LayoutReportsIssue {
 			}
 
 			protected JSONArray getFailingElementsJSONArray(
+				String configureLayoutSeoURL,
 				JSONObject lighthouseAuditJSONObject,
 				ResourceBundle resourceBundle) {
 
@@ -616,12 +644,11 @@ public class LayoutReportsIssue {
 			protected String getLearnMoreLink(
 				ResourceBundle resourceBundle, String url) {
 
-				return StringBundler.concat(
-					"<a href=\"", url, "\" target=\"_blank\">",
+				return _getLink(
 					LanguageUtil.format(
 						resourceBundle, "learn-more-about-x",
 						HtmlUtil.escape(getTitle(resourceBundle)), false),
-					"</a>");
+					url);
 			}
 
 			protected String[] getTipsArguments(ResourceBundle resourceBundle) {
@@ -639,7 +666,7 @@ public class LayoutReportsIssue {
 		private int _calculateTotal() {
 			JSONArray failingElementsJSONArray =
 				_key.getFailingElementsJSONArray(
-					_lighthouseAuditJSONObject,
+					null, _lighthouseAuditJSONObject,
 					ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
 
 			if ((failingElementsJSONArray != null) &&
@@ -690,6 +717,21 @@ public class LayoutReportsIssue {
 
 		},
 
+	}
+
+	private static String _getLink(String content, String url) {
+		return StringBundler.concat(
+			"<a href=\"", url, "\" target=\"_blank\">", content, "</a>");
+	}
+
+	private static String _getLinkOrLabel(
+		String configureLayoutSeoURL, String label) {
+
+		if (Validator.isNotNull(configureLayoutSeoURL)) {
+			return _getLink(label, configureLayoutSeoURL);
+		}
+
+		return label;
 	}
 
 	private final List<Detail> _details;

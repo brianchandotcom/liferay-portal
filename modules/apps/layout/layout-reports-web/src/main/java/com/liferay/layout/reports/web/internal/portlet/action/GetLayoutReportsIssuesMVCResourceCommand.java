@@ -14,10 +14,13 @@
 
 package com.liferay.layout.reports.web.internal.portlet.action;
 
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.reports.web.internal.configuration.provider.LayoutReportsGooglePageSpeedConfigurationProvider;
 import com.liferay.layout.reports.web.internal.constants.LayoutReportsPortletKeys;
 import com.liferay.layout.reports.web.internal.data.provider.LayoutReportsDataProvider;
 import com.liferay.layout.reports.web.internal.model.LayoutReportsIssue;
+import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -32,6 +35,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -43,6 +47,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -133,7 +138,9 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 					JSONUtil.putAll(
 						stream.map(
 							layoutReportsIssue ->
-								layoutReportsIssue.toJSONObject(resourceBundle)
+								layoutReportsIssue.toJSONObject(
+									_getConfigureLayoutSeoURL(themeDisplay),
+									resourceBundle)
 						).toArray(
 							size -> new JSONObject[size]
 						))));
@@ -147,6 +154,64 @@ public class GetLayoutReportsIssuesMVCResourceCommand
 					"error",
 					_language.get(locale, "an-unexpected-error-occurred")));
 		}
+	}
+
+	private String _getCompleteURL(ThemeDisplay themeDisplay) {
+		try {
+			return _portal.getLayoutURL(themeDisplay);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return _portal.getCurrentCompleteURL(themeDisplay.getRequest());
+		}
+	}
+
+	private String _getConfigureLayoutSeoURL(ThemeDisplay themeDisplay) {
+		Layout layout = themeDisplay.getLayout();
+
+		try {
+			if (LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.UPDATE)) {
+
+				String completeURL = _getCompleteURL(themeDisplay);
+
+				return PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						themeDisplay.getRequest(),
+						LayoutAdminPortletKeys.GROUP_PAGES,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/layout_admin/edit_layout"
+				).setRedirect(
+					completeURL
+				).setBackURL(
+					completeURL
+				).setParameter(
+					"groupId", layout.getGroupId()
+				).setParameter(
+					"portletResource",
+					() -> {
+						PortletDisplay portletDisplay =
+							themeDisplay.getPortletDisplay();
+
+						return portletDisplay.getId();
+					}
+				).setParameter(
+					"privateLayout", layout.isPrivateLayout()
+				).setParameter(
+					"screenNavigationEntryKey", "seo"
+				).setParameter(
+					"selPlid", layout.getPlid()
+				).buildString();
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		return null;
 	}
 
 	private boolean _hasViewPermission(

@@ -1,0 +1,130 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Display Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a display page template for Blogs Entry") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-121571. A user can map Reading Time of blogs entry to editable field."
+	@priority = "4"
+	test MapReadingTimeToEditableField {
+		property test.name.skip.portal.instance = "DisplayPageTemplatesForBlogsEntry#MapReadingTimeToEditableField";
+
+		task ("Enable the Reading Time") {
+			BlogsConfiguration.enableReadingTime();
+		}
+
+		task ("Add a Banner Center fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Featured Content",
+				fragmentName = "Banner Center");
+		}
+
+		task ("Map the Reading Time (Simple) to title editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Reading Time (Simple)",
+				fragmentName = "Banner Center",
+				id = "01-title");
+		}
+
+		task ("Map the Reading Time (Descriptive) to subtitle editable field") {
+			PageEditorMapping.mapEditableTextToField(
+				field = "Reading Time (Descriptive)",
+				fragmentName = "Banner Center",
+				id = "02-subtitle");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a blogs entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Select the display page template in blogs entry") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Display Page Name",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher to widget page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Navigate to display page template via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Blogs Entry Title");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Display Page Name");
+		}
+
+		task ("View mapped content in display page template") {
+			AssertVisible(
+				id = "01-title",
+				key_position = "1",
+				key_text = "1 Minute",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+
+			AssertVisible(
+				id = "02-subtitle",
+				key_position = "1",
+				key_text = "Less Than a Minute Read",
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_EDITABLE_FIELD_AT_VIEW_MODE");
+		}
+	}
+
+}

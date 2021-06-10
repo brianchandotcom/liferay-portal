@@ -648,7 +648,7 @@ public class LayoutReportsIssue {
 					LanguageUtil.format(
 						resourceBundle, "learn-more-about-x",
 						HtmlUtil.escape(getTitle(resourceBundle)), false),
-					url);
+					true, url);
 			}
 
 			protected String[] getTipsArguments(ResourceBundle resourceBundle) {
@@ -719,16 +719,31 @@ public class LayoutReportsIssue {
 
 	}
 
-	private static String _getLink(String content, String url) {
-		return StringBundler.concat(
-			"<a href=\"", url, "\" target=\"_blank\">", content, "</a>");
+	private static String _getLink(
+		String content, boolean openInNewTab, String url) {
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("<a href=\"");
+		sb.append(url);
+		sb.append("\"");
+
+		if (openInNewTab) {
+			sb.append(" target=\"_blank\"");
+		}
+
+		sb.append(">");
+		sb.append(content);
+		sb.append("</a>");
+
+		return sb.toString();
 	}
 
 	private static String _getLinkOrLabel(
 		String configureLayoutSeoURL, String label) {
 
 		if (Validator.isNotNull(configureLayoutSeoURL)) {
-			return _getLink(label, configureLayoutSeoURL);
+			return _getLink(label, false, configureLayoutSeoURL);
 		}
 
 		return label;

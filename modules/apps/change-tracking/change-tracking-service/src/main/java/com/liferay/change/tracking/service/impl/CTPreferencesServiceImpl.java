@@ -16,7 +16,7 @@ package com.liferay.change.tracking.service.impl;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.exception.StagingEnabledConflictException;
+import com.liferay.change.tracking.exception.CTStagingEnabledException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.model.CTPreferencesTable;
@@ -135,7 +135,7 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 						))) {
 
 				if (group.isStaged() || group.isStagingGroup()) {
-					throw new StagingEnabledConflictException();
+					throw new CTStagingEnabledException();
 				}
 			}
 

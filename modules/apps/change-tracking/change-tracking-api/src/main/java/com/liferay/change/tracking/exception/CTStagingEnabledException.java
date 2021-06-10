@@ -17,11 +17,23 @@ package com.liferay.change.tracking.exception;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Samuel Trong Tran
+ * @author Brian Wing Shun Chan
  */
-public class StagingEnabledConflictException extends PortalException {
+public class CTStagingEnabledException extends PortalException {
 
-	public StagingEnabledConflictException() {
+	public CTStagingEnabledException() {
+	}
+
+	public CTStagingEnabledException(String msg) {
+		super(msg);
+	}
+
+	public CTStagingEnabledException(String msg, Throwable throwable) {
+		super(msg, throwable);
+	}
+
+	public CTStagingEnabledException(Throwable throwable) {
+		super(throwable);
 	}
 
 }

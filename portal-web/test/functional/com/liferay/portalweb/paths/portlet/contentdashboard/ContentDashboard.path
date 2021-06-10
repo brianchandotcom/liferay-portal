@@ -24,6 +24,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME</td>
+	<td>//div[contains(@class, 'form-group')]/label[contains(text(), '${columnName}')]/../select/option[contains(text(), '${vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON</td>
+	<td>//button[contains(@class, 'move-left')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON</td>
+	<td>//button[contains(@class, 'move-right')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUDIT_GRAPH_CONFIGURATION_UP_ARROW_BUTTON</td>
 	<td>//button[contains(@class, 'reorder-up')]</td>
 	<td></td>
@@ -80,6 +95,11 @@
 <tr>
 	<td>CATEGORY_NAME_ELEMENT</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(text(),'${categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECKBOX_TAGS</td>
+	<td>//*[contains(@title,'Select') and contains(@value,'${tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

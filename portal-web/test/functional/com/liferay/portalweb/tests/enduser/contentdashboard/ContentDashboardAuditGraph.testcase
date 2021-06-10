@@ -585,4 +585,78 @@ definition {
 			value1 = "There are no categories selected");
 	}
 
+	@description = "When the user selects the option Available, the modal lists all the existing Global Vocabularies"
+	@priority = "5"
+	test CheckAvailableVocabulariesDisplayed {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
+
+		ProductMenu.gotoPortlet(
+			category = "Categorization",
+			panel = "Site Administration",
+			portlet = "Categories");
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name 1");
+
+		Vocabulary.addCP(vocabularyName = "Vocabulary Name 2");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+			columnName = "Available",
+			vocabularyName = "Vocabulary Name 1"
+		);
+
+		AssertElementPresent(
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+			columnName = "Available",
+			vocabularyName = "Vocabulary Name 2"
+		);
+	}
+
+	@description = "When clicks on the left or right arrows within Configuration and selects one or more vocabularies, the vocabularies go from Available to In use and vice versa"
+	@priority = "3"
+	test MoveVocabulariesAcrossConfiguration {
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+			columnName = "In Use",
+			vocabularyName = "Audience");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_LEFT_ARROW_BUTTON");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+		
+		Click(
+			locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_VOCABULARY_NAME",
+			columnName = "Available",
+			vocabularyName = "Topic");
+
+		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_RIGHT_ARROW_BUTTON");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		Pause(locator1 = "3000");
+	}
 }

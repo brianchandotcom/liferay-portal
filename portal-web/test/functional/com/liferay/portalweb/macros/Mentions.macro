@@ -4,7 +4,14 @@ definition {
 		var key_entryContent = "${entryContent}";
 		var key_mentionsUserScreenName = "${mentionsUserScreenName}";
 
-		BlogsNavigator.gotoAddEntry();
+		if (isSet(siteURLKey)) {
+			BlogsNavigator.openToAddEntry(
+				layoutName = "${layoutName}",
+				siteURLKey = "${siteURLKey}");
+		}
+		else {
+			BlogsNavigator.gotoAddEntry();
+		}
 
 		BlogsEntry.addTitle(entryTitle = "${entryTitle}");
 

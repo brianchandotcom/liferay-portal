@@ -167,11 +167,7 @@ definition {
 			groupName = "Guest",
 			titleField = "Title AddQuestion");
 
-		Questions.openToQuestionDetails(
-			friendlyURL = "questions-page",
-			historyRouter = "true",
-			questionsTitle = "title-addquestion",
-			topicName = "questions-test-category");
+		Navigator.openSpecificURL(url = "http://localhost:8080/questions-page/questions/questions-test-category/title-addquestion");
 
 		Questions.viewStatus(status = "pending");
 	}

@@ -20,22 +20,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.type.StandardBasicTypes;
-import org.hibernate.type.Type;
-import org.hibernate.usertype.CompositeUserType;
+import org.hibernate.usertype.UserType;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FloatType implements CompositeUserType, Serializable {
+public class FloatType implements Serializable, UserType {
 
 	public static final Float DEFAULT_VALUE = Float.valueOf(0);
 
 	@Override
-	public Object assemble(
-		Serializable cached, SessionImplementor session, Object owner) {
-
+	public Object assemble(Serializable cached, Object owner) {
 		return cached;
 	}
 
@@ -45,7 +42,7 @@ public class FloatType implements CompositeUserType, Serializable {
 	}
 
 	@Override
-	public Serializable disassemble(Object value, SessionImplementor session) {
+	public Serializable disassemble(Object value) {
 		return (Serializable)value;
 	}
 
@@ -62,21 +59,6 @@ public class FloatType implements CompositeUserType, Serializable {
 	}
 
 	@Override
-	public String[] getPropertyNames() {
-		return new String[0];
-	}
-
-	@Override
-	public Type[] getPropertyTypes() {
-		return new Type[] {StandardBasicTypes.FLOAT};
-	}
-
-	@Override
-	public Object getPropertyValue(Object component, int property) {
-		return component;
-	}
-
-	@Override
 	public int hashCode(Object x) {
 		return x.hashCode();
 	}
@@ -88,12 +70,13 @@ public class FloatType implements CompositeUserType, Serializable {
 
 	@Override
 	public Object nullSafeGet(
-			ResultSet resultSet, String[] names, SessionImplementor session,
+			ResultSet resultSet, String[] names,
+			SharedSessionContractImplementor sharedSessionContractImplementor,
 			Object owner)
 		throws SQLException {
 
 		Float value = StandardBasicTypes.FLOAT.nullSafeGet(
-			resultSet, names[0], session);
+			resultSet, names[0], sharedSessionContractImplementor);
 
 		if (value == null) {
 			return DEFAULT_VALUE;
@@ -105,7 +88,7 @@ public class FloatType implements CompositeUserType, Serializable {
 	@Override
 	public void nullSafeSet(
 			PreparedStatement preparedStatement, Object target, int index,
-			SessionImplementor session)
+			SharedSessionContractImplementor sharedSessionContractImplementor)
 		throws SQLException {
 
 		if (target == null) {
@@ -116,10 +99,7 @@ public class FloatType implements CompositeUserType, Serializable {
 	}
 
 	@Override
-	public Object replace(
-		Object original, Object target, SessionImplementor session,
-		Object owner) {
-
+	public Object replace(Object original, Object target, Object owner) {
 		return original;
 	}
 
@@ -129,7 +109,8 @@ public class FloatType implements CompositeUserType, Serializable {
 	}
 
 	@Override
-	public void setPropertyValue(Object component, int property, Object value) {
+	public int[] sqlTypes() {
+		return new int[] {StandardBasicTypes.FLOAT.sqlType()};
 	}
 
 }

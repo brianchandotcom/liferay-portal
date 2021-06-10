@@ -24,7 +24,7 @@ function createEditor(element, changeCallback, destroyCallback) {
 function destroyEditor(_element) {}
 
 function render(element, value) {
-	if (typeof value === 'string' || value?.url) {
+	if (value && (typeof value === 'string' || value?.url)) {
 		element.style.backgroundImage = `url("${value?.url ?? value}")`;
 		element.style.backgroundSize = 'cover';
 	}

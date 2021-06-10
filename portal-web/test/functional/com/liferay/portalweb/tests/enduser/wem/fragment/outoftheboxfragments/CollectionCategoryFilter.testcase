@@ -1612,7 +1612,6 @@ definition {
 				categoryName = "Category Name",
 				categoryNameList = "Category Name",
 				fragmentName = "Collection Category Filter",
-				subcategoryName = "Subcategory Name",
 				subcategoryNameList = "Subcategory Name",
 				vocabularyName = "Topic");
 		}

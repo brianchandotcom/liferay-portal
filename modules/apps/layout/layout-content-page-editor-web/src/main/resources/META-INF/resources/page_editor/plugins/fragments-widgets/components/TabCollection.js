@@ -35,6 +35,7 @@ export default function TabCollection({
 				collection.collections.map((collection, index) => (
 					<TabCollection
 						collection={collection}
+						displayStyle={displayStyle}
 						isSearchResult={isSearchResult}
 						key={index}
 					/>
@@ -70,7 +71,7 @@ TabCollection.proptypes = {
 };
 
 const TabPortletItems = ({item}) => (
-	<ul className="d-flex list-unstyled">
+	<ul className="d-flex flex-wrap list-unstyled">
 		{item.portletItems.map((portlet, index) => (
 			<TabItem item={portlet} key={index} />
 		))}

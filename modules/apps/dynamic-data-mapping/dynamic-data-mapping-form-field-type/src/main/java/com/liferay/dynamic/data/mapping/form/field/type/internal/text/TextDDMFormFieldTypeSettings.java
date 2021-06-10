@@ -46,18 +46,26 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 		),
 		@DDMFormRule(
 			actions = {
-				"setEnabled('requireConfirmation', TRUE)",
-				"setEnabled('required', TRUE)", "setEnabled('validation', TRUE)"
+				"setVisible('autocomplete', TRUE)",
+				"setVisible('repeatable', TRUE)",
+				"setVisible('requireConfirmation', TRUE)",
+				"setVisible('required', TRUE)", "setVisible('showLabel', TRUE)",
+				"setVisible('validation', TRUE)"
 			},
 			condition = "equals(getValue('hideField'), FALSE)"
 		),
 		@DDMFormRule(
 			actions = {
-				"setEnabled('requireConfirmation', FALSE)",
-				"setEnabled('required', FALSE)",
-				"setEnabled('validation', FALSE)",
+				"setValue('autocomplete', FALSE)",
+				"setValue('repeatable', FALSE)",
 				"setValue('requireConfirmation', FALSE)",
-				"setValue('required', FALSE)"
+				"setValue('required', FALSE)", "setValue('showLabel', TRUE)",
+				"setVisible('autocomplete', FALSE)",
+				"setVisible('repeatable', FALSE)",
+				"setVisible('requireConfirmation', FALSE)",
+				"setVisible('required', FALSE)",
+				"setVisible('showLabel', FALSE)",
+				"setVisible('validation', FALSE)"
 			},
 			condition = "equals(getValue('hideField'), TRUE)"
 		),

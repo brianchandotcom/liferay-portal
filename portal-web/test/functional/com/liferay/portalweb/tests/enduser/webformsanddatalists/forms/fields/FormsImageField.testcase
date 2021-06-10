@@ -43,13 +43,56 @@ definition {
 	}
 
 	@description = "Verify that an Image Field can be set to repeatable"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanBeSetToRepeatable {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-LPS-133034 CanBeSetToRepeatable pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Image",
+			formPageNumber = "0");
+
+		Form.gotoAdvancedTab();
+
+		FormFields.enableSwitcher(fieldName = "Repeatable");
+
+		FormFields.viewFieldRepeatableButton(
+			fieldName = "Image",
+			key_repeatableFieldsNumber = "1");
+
+		Form.save();
+
+		Form.publishForm();
+
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
+
+		FormFields.addRepeatableField(
+			key_fieldName = "Image",
+			key_repeatableFieldNumber = "1");
+
+		FormFields.viewFieldRepeatableButton(
+			fieldName = "Image",
+			key_repeatableFieldsNumber = "1,2");
+
+		FormFields.editRepeatableImage(
+			fieldLabel = "Image",
+			uploadFileName = "Document_1.jpg",
+			uploadRepeatedFileName = "Document_1.jpg");
+
+		FormPortlet.submitSuccessfullyAndViewSuccessPage();
+
+		
 
 	}
 

@@ -259,6 +259,22 @@ definition {
 			value1 = "${key_predefinedValue}");
 	}
 
+	macro editRepeatableImage {
+		var key_fieldName = "${fieldLabel}";
+
+		Click(locator1 = "FormFields#UPLOAD_ON_WIDGET");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "${uploadFileName}");
+
+		Click(locator1 = "FormFields#UPLOAD_ON_DUPLICATE_FIELD");
+
+		ItemSelector.uploadFile(
+			navTab = "Documents and Media",
+			uploadFileName = "${uploadRepeatedFileName}");
+	}
+
 	macro editRepeatableSingleSelection {
 		var key_rowNumber = "${rowNumber}";
 		var key_optionValue = "${optionValue}";

@@ -391,7 +391,7 @@ public class DataFactory {
 		_layoutSetIdCounter = new SimpleCounter();
 		_portletPreferenceValueIdCounter = new SimpleCounter();
 		_resourcePermissionIdCounter = new SimpleCounter();
-		_socialActivityCounter = new SimpleCounter();
+		_socialActivityIdCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
 
 		List<String> models = ModelHintsUtil.getModels();
@@ -2296,7 +2296,7 @@ public class DataFactory {
 				_resourcePermissionIdCounter.get()));
 		counterModels.add(
 			_newCounterModel(
-				SocialActivity.class.getName(), _socialActivityCounter.get()));
+				SocialActivity.class.getName(), _socialActivityIdCounter.get()));
 
 		for (Map.Entry<String, SimpleCounter> entry :
 				_layoutIdCounters.entrySet()) {
@@ -6625,7 +6625,7 @@ public class DataFactory {
 
 		// PK fields
 
-		socialActivityModel.setActivityId(_socialActivityCounter.get());
+		socialActivityModel.setActivityId(_socialActivityIdCounter.get());
 
 		// Group instance
 
@@ -7089,7 +7089,7 @@ public class DataFactory {
 	private long _sampleUserId;
 	private final Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;
-	private final SimpleCounter _socialActivityCounter;
+	private final SimpleCounter _socialActivityIdCounter;
 	private final SimpleCounter _timeCounter;
 	private RoleModel _userRoleModel;
 	private final SimpleCounter _userScreenNameCounter;

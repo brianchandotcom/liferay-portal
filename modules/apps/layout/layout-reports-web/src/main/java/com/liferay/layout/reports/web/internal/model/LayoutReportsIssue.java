@@ -92,7 +92,8 @@ public class LayoutReportsIssue {
 	}
 
 	public JSONObject toJSONObject(
-		String configureLayoutSeoURL, ResourceBundle resourceBundle) {
+		String configureLayoutSeoURL, String configurePagesSeoURL,
+		ResourceBundle resourceBundle) {
 
 		Stream<Detail> stream = _details.stream();
 
@@ -103,7 +104,8 @@ public class LayoutReportsIssue {
 					detail -> detail.getTotal() > 0
 				).map(
 					detail -> detail.toJSONObject(
-						configureLayoutSeoURL, resourceBundle)
+						configureLayoutSeoURL, configurePagesSeoURL,
+						resourceBundle)
 				).toArray())
 		).put(
 			"key", _key.toString()
@@ -184,15 +186,16 @@ public class LayoutReportsIssue {
 		}
 
 		public JSONObject toJSONObject(
-			String configureLayoutSeoURL, ResourceBundle resourceBundle) {
+			String configureLayoutSeoURL, String configurePagesSeoURL,
+			ResourceBundle resourceBundle) {
 
 			return JSONUtil.put(
 				"description", _key.getDescription(resourceBundle)
 			).put(
 				"failingElements",
 				_key.getFailingElementsJSONArray(
-					configureLayoutSeoURL, _lighthouseAuditJSONObject,
-					resourceBundle)
+					configureLayoutSeoURL, configurePagesSeoURL,
+					_lighthouseAuditJSONObject, resourceBundle)
 			).put(
 				"key", _key.toString()
 			).put(
@@ -207,7 +210,7 @@ public class LayoutReportsIssue {
 		@Override
 		public String toString() {
 			JSONObject jsonObject = toJSONObject(
-				null, ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+				null, null, ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
 
 			return jsonObject.toString();
 		}
@@ -233,14 +236,14 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
-					String configureLayoutSeoURL,
+					String configureLayoutSeoURL, String configurePagesSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
 					JSONArray failingElementsJSONArray =
 						super.getFailingElementsJSONArray(
-							configureLayoutSeoURL, lighthouseAuditJSONObject,
-							resourceBundle);
+							configureLayoutSeoURL, configurePagesSeoURL,
+							lighthouseAuditJSONObject, resourceBundle);
 
 					if (failingElementsJSONArray == null) {
 						return null;
@@ -309,16 +312,21 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
-					String configureLayoutSeoURL,
+					String configureLayoutSeoURL, String configurePagesSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
 					return JSONUtil.putAll(
 						JSONUtil.put(
 							"content",
-							LanguageUtil.get(
+							LanguageUtil.format(
 								resourceBundle,
-								getDetailLanguageKey() + "-failing-element")));
+								getDetailLanguageKey() + "-failing-element",
+								_getLinkOrLabel(
+									configurePagesSeoURL,
+									LanguageUtil.get(
+										resourceBundle,
+										"instance-settings-pages-seo")))));
 				}
 
 			},
@@ -432,7 +440,7 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
-					String configureLayoutSeoURL,
+					String configureLayoutSeoURL, String configurePagesSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
@@ -483,7 +491,7 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
-					String configureLayoutSeoURL,
+					String configureLayoutSeoURL, String configurePagesSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
@@ -557,7 +565,7 @@ public class LayoutReportsIssue {
 
 				@Override
 				protected JSONArray getFailingElementsJSONArray(
-					String configureLayoutSeoURL,
+					String configureLayoutSeoURL, String configurePagesSeoURL,
 					JSONObject lighthouseAuditJSONObject,
 					ResourceBundle resourceBundle) {
 
@@ -623,7 +631,7 @@ public class LayoutReportsIssue {
 			}
 
 			protected JSONArray getFailingElementsJSONArray(
-				String configureLayoutSeoURL,
+				String configureLayoutSeoURL, String configurePagesSeoURL,
 				JSONObject lighthouseAuditJSONObject,
 				ResourceBundle resourceBundle) {
 
@@ -666,7 +674,7 @@ public class LayoutReportsIssue {
 		private int _calculateTotal() {
 			JSONArray failingElementsJSONArray =
 				_key.getFailingElementsJSONArray(
-					null, _lighthouseAuditJSONObject,
+					null, null, _lighthouseAuditJSONObject,
 					ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
 
 			if ((failingElementsJSONArray != null) &&

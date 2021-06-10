@@ -172,7 +172,7 @@ public class LayoutReportsIssueTest {
 			LayoutReportsIssue.Key.SEO);
 
 		JSONObject jsonObject = layoutReportsIssue.toJSONObject(
-			null, ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
+			null, null, ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE);
 
 		JSONArray detailsJSONArray = jsonObject.getJSONArray("details");
 

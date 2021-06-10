@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ORDER_ICON_SPECIFIC</td>
-	<td>//nav[contains(@class,'management-bar')]//a[@title='Reverse Sort Direction']</td>
+	<td>//nav[contains(@class,'management-bar')]//a[@title='Reverse Sort Direction']//*[contains(@class,'${key_order}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -48,15 +48,18 @@ definition {
 	}
 
 	macro toggleViewOrder {
-		if (IsElementNotPresent(locator1 = "ManagementBar#ORDER_ICON_SPECIFIC", key_order = "${order}")) {
-			Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		if (isSet(order)) {
+			Click.clickNoMouseOver(
+				key_order = "${order}",
+				locator1 = "ManagementBar#ORDER_ICON_SPECIFIC");
 
 			MouseOver(locator1 = "ManagementBar#FILTER_AND_ORDER");
 		}
+		else {
+			Click.clickNoMouseOver(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
 
-		AssertElementPresent(
-			key_order = "${order}",
-			locator1 = "ManagementBar#ORDER_ICON_SPECIFIC");
+			MouseOver(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		}
 	}
 
 	macro viewDisplayStyle {

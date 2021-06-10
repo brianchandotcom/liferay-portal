@@ -136,7 +136,9 @@ definition {
 				locator1 = "APConfiguration#SELECT_COLLECTION_PROVIDER_FIELD",
 				value1 = "Related Assets");
 
-			Pause(locator1 = "3000");
+			WaitForElementNotPresent(
+					key_text = "Save",
+					locator1 = "Dropdown#ANY_DISABLED");
 
 			PortletEntry.save();
 
@@ -220,7 +222,6 @@ definition {
 
 				var n = ${n} + 1;
 
-				Pause(locator1 = "3000");
 			}
 		}
 

@@ -14,9 +14,8 @@
 
 package com.liferay.dispatch.talend.web.internal.process;
 
-import com.liferay.dispatch.talend.web.internal.TalendArchiveUtil;
-import com.liferay.dispatch.talend.web.internal.archive.TalendArchive;
-import com.liferay.dispatch.talend.web.internal.archive.TalendArchiveParserUtil;
+import com.liferay.dispatch.talend.archive.TalendArchive;
+import com.liferay.dispatch.talend.archive.TalendArchiveParserUtil;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -30,6 +29,10 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalClassPathUtil;
+
+import java.io.InputStream;
+
+import java.net.URL;
 
 import java.text.SimpleDateFormat;
 
@@ -89,7 +92,7 @@ public class TalendProcessTest {
 		talendProcessBuilder.lastRunStartDate(null);
 
 		TalendArchive talendArchive = TalendArchiveParserUtil.parse(
-			TalendArchiveUtil.getInputStream());
+			_getInputStream());
 
 		talendProcessBuilder.talendArchive(talendArchive);
 
@@ -155,6 +158,19 @@ public class TalendProcessTest {
 			processConfigArguments.contains(
 				"--context_param lastRunStartDate=".concat(
 					simpleDateFormat.format(date))));
+	}
+
+	private InputStream _getInputStream() throws Exception {
+		URL url = TalendProcessTest.class.getResource("/jobInfo.properties");
+
+		String urlString = String.valueOf(url);
+
+		URL zipURL = new URL(
+			urlString.substring(
+				"jar:".length(),
+				urlString.length() - "!/jobInfo.properties".length()));
+
+		return zipURL.openStream();
 	}
 
 }

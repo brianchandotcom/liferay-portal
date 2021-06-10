@@ -1141,7 +1141,7 @@ definition {
 
 	@description = "This is a test for LPS-132081. View related categories when select preview item in display page template for non-category assets."
 	@priority = "4"
-	test ViewRelatedOfPreviewCategoriesInCollectionDisplayWithThisCategory {
+	test ViewRelatedCategoriesOfPreviewItemInCollectionDisplayWithCategoriesForThisItem {
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "relatedItemCollectionProvidersEnabled=&quot;true&quot;";
 

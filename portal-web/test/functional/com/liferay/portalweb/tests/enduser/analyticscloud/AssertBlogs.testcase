@@ -57,8 +57,6 @@ definition {
 			BlogsNavigator.gotoPG(entryTitle = "Test 2");
 		}
 
-		Pause(locator1 = "10000");
-
 		ACUtils.closeAllSessions();
 
 		Pause(locator1 = "30000");

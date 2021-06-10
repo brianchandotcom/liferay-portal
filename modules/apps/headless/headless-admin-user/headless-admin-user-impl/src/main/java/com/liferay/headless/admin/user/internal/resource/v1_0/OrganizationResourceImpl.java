@@ -29,6 +29,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderRegi
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderWebsiteUtil;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.OrganizationEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -50,6 +51,9 @@ import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -107,6 +111,20 @@ public class OrganizationResourceImpl
 
 		_organizationService.deleteUserOrganizationByEmailAddress(
 			emailAddress, _getServiceBuilderOrganizationId(organizationId));
+	}
+
+	@Override
+	public void deleteUserAccountsByEmailAddress(
+			String organizationId, String[] userEmailAddresses)
+		throws Exception {
+
+		_withTransaction(
+			() -> {
+				for (String emailAddress : userEmailAddresses) {
+					deleteUserAccountByEmailAddress(
+						organizationId, emailAddress);
+				}
+			});
 	}
 
 	@Override
@@ -194,6 +212,19 @@ public class OrganizationResourceImpl
 
 		_organizationService.addUserOrganizationByEmailAddress(
 			emailAddress, _getServiceBuilderOrganizationId(organizationId));
+	}
+
+	@Override
+	public void postUserAccountsByEmailAddress(
+			String organizationId, String[] userEmailAddresses)
+		throws Exception {
+
+		_withTransaction(
+			() -> {
+				for (String emailAddress : userEmailAddresses) {
+					postUserAccountByEmailAddress(organizationId, emailAddress);
+				}
+			});
 	}
 
 	@Override
@@ -603,11 +634,31 @@ public class OrganizationResourceImpl
 		return GetterUtil.getInteger(format.format(date));
 	}
 
+	private void _withTransaction(UnsafeRunnable<Exception> runnable)
+		throws Exception {
+
+		try {
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				() -> {
+					runnable.run();
+
+					return null;
+				});
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrganizationResourceImpl.class);
 
 	private static final EntityModel _entityModel =
 		new OrganizationEntityModel();
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.SUPPORTS, new Class<?>[] {Exception.class});
 
 	@Reference
 	private OrganizationResourceDTOConverter _organizationResourceDTOConverter;

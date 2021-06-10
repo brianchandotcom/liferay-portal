@@ -390,7 +390,7 @@ public class DataFactory {
 		_layoutPlidCounter = new SimpleCounter();
 		_layoutSetIdCounter = new SimpleCounter();
 		_portletPreferenceValueIdCounter = new SimpleCounter();
-		_resourcePermissionCounter = new SimpleCounter();
+		_resourcePermissionIdCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
 
@@ -2293,7 +2293,7 @@ public class DataFactory {
 		counterModels.add(
 			_newCounterModel(
 				ResourcePermission.class.getName(),
-				_resourcePermissionCounter.get()));
+				_resourcePermissionIdCounter.get()));
 		counterModels.add(
 			_newCounterModel(
 				SocialActivity.class.getName(), _socialActivityCounter.get()));
@@ -6549,7 +6549,7 @@ public class DataFactory {
 		// PK fields
 
 		resourcePermissionModel.setResourcePermissionId(
-			_resourcePermissionCounter.get());
+			_resourcePermissionIdCounter.get());
 
 		// Audit fields
 
@@ -7085,7 +7085,7 @@ public class DataFactory {
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
-	private final SimpleCounter _resourcePermissionCounter;
+	private final SimpleCounter _resourcePermissionIdCounter;
 	private long _sampleUserId;
 	private final Format _simpleDateFormat;
 	private RoleModel _siteMemberRoleModel;

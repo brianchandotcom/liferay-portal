@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {PropTypes} from 'prop-types';
 import React, {useRef, useState} from 'react';
 
@@ -22,6 +23,8 @@ const UNMAPPED_OPTION = {
 	key: 'unmapped',
 	label: `-- ${Liferay.Language.get('unmapped')} --`,
 };
+
+const FIELD_TEMPLATE = (key) => ` $\{${key}} `;
 
 function MappingInput({
 	fieldType,
@@ -41,6 +44,8 @@ function MappingInput({
 		fields.find(({key}) => key === selectedFieldKey) || UNMAPPED_OPTION
 	);
 	const [value, setValue] = useState('');
+	const inputEl = useRef(null);
+	const isMounted = useIsMounted();
 
 	const isActive = !!field && field.key !== UNMAPPED_OPTION.key;
 
@@ -59,7 +64,24 @@ function MappingInput({
 			return;
 		}
 
-		setValue((value) => `${value} $\{${key}}`);
+		const selectionStart = inputEl.current.selectionStart;
+		const selectionEnd = inputEl.current.selectionEnd;
+		const fieldVariable = FIELD_TEMPLATE(key);
+
+		setValue(
+			(value) =>
+				`${value.slice(0, selectionStart)}${fieldVariable}${value.slice(
+					selectionEnd
+				)}`
+		);
+
+		setTimeout(() => {
+			if (isMounted()) {
+				inputEl.current.selectionStart = inputEl.current.selectionEnd =
+					selectionStart + fieldVariable.length;
+				inputEl.current.focus();
+			}
+		}, 100);
 	};
 
 	return (
@@ -75,6 +97,7 @@ function MappingInput({
 						onChange={(event) => {
 							setValue(event.target.value);
 						}}
+						ref={inputEl}
 						value={value}
 					/>
 					<ClayInput name={name} type="hidden" value={field.key} />

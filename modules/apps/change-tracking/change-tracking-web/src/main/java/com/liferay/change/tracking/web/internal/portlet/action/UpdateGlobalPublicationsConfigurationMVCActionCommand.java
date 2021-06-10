@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.exception.StagingEnabledConflictException;
+import com.liferay.change.tracking.exception.CTStagingEnabledException;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesService;
@@ -95,9 +95,7 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 				}
 			}
 		}
-		catch (StagingEnabledConflictException
-					stagingEnabledConflictException) {
-
+		catch (CTStagingEnabledException ctStagingEnabledException) {
 			SessionErrors.add(actionRequest, "stagingEnabled");
 
 			return;

@@ -52,8 +52,8 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v3_2_4.DDMContentUpgrad
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_5_0.DDMFormInstanceReportUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_1.DDMStructureEmptyValidationUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0.DDMFieldUpgradeProcess;
-import com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_0.DLFileEntryTypeDDMFieldAttributeUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_0.DLFileEntryTypeDataDefinitionIdUpgradeProcess;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_4.DLFileEntryTypeDDMFieldAttributeUpgradeProcess;
 import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormLayoutSerializer;
@@ -415,7 +415,6 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"4.2.0", "4.3.0",
-			new DLFileEntryTypeDDMFieldAttributeUpgradeProcess(),
 			new DLFileEntryTypeDataDefinitionIdUpgradeProcess(
 				_dlFileEntryTypeLocalService));
 
@@ -438,8 +437,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"4.3.3", "4.3.4",
-			new com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_4.
-				DLFileEntryTypeDDMFieldAttributeUpgradeProcess());
+			new DLFileEntryTypeDDMFieldAttributeUpgradeProcess());
 	}
 
 	@Activate

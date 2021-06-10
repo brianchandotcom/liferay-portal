@@ -49,7 +49,7 @@ export const FormBuilder = () => {
 	} = useConfig();
 
 	const [{sidebarOpen, sidebarPanelId}, setSidebarState] = useState({
-		sidebarOpen: false,
+		sidebarOpen: true,
 		sidebarPanelId: 'fields',
 	});
 

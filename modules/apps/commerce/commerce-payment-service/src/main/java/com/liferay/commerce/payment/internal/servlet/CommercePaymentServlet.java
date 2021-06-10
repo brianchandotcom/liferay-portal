@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.payment.internal.servlet;
 
+import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 import com.liferay.commerce.constants.CommercePaymentConstants;
 import com.liferay.commerce.model.CommerceOrder;
@@ -35,8 +36,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
-
-import java.math.BigDecimal;
 
 import java.net.URL;
 
@@ -96,7 +95,10 @@ public class CommercePaymentServlet extends HttpServlet {
 
 			_commerceOrderId = commerceOrder.getCommerceOrderId();
 
-			if (BigDecimal.ZERO.compareTo(commerceOrder.getTotal()) == 0) {
+			if (!_commerceCheckoutStepHttpHelper.
+					isActivePaymentMethodCommerceCheckoutStep(
+						httpServletRequest, commerceOrder)) {
+
 				_commercePaymentEngine.completePayment(
 					_commerceOrderId, null, httpServletRequest);
 
@@ -241,6 +243,9 @@ public class CommercePaymentServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommercePaymentServlet.class);
+
+	@Reference
+	private CommerceCheckoutStepHttpHelper _commerceCheckoutStepHttpHelper;
 
 	private long _commerceOrderId;
 

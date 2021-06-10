@@ -1196,15 +1196,15 @@ definition {
 		task ("Add a display page template for Web Content Article") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
-				displayPageTemplateEntryName = "Display Page Name Web Content",
+				displayPageTemplateEntryName = "Web Content DPT",
 				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 		}
 
-		task ("Add a Collection Display fragment to display Page Template") {
+		task ("Add a Collection Display fragment to display Page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name Web Content");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Web Content DPT");
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -1217,13 +1217,13 @@ definition {
 				infoItemRelatedListProviderName = "Categories for This Item");
 		}
 
-		task ("Select the Web Content via preview item selector") {
+		task ("Select the web content via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Web Content Title",
 				assetType = "Web Content Article");
 		}
 
-		task ("Assert all three Categories name are shown in Collection Display") {
+		task ("View all three categories name are shown in Collection Display") {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1245,7 +1245,7 @@ definition {
 				fragmentName = "Content Display");
 		}
 
-		task ("Assert all three Categories name are shown in Content Display") {
+		task ("View all three categories name are shown in Content Display") {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1266,7 +1266,7 @@ definition {
 				item = "-- None --");
 		}
 
-		task ("Assert there is a info message in Content Display") {
+		task ("View the default info shown in Content Display") {
 			AssertVisible(
 				key_fragmentName = "Content Display",
 				key_messageIfo = "The selected content will be shown here.",
@@ -1279,14 +1279,14 @@ definition {
 			Click(locator1 = "PageEditor#PREVIEW");
 		}
 
-		task ("Select the Web Content via preview item selector") {
+		task ("Select the web content via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Web Content Title",
 				assetType = "Web Content Article",
 				modal = "true");
 		}
 
-		task ("Assert all three Categories name are shown in modal") {
+		task ("View all three categories name are shown in modal") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
@@ -1312,7 +1312,7 @@ definition {
 				modal = "true");
 		}
 
-		task ("Assert the Collection Display is not shown in Preview modal") {
+		task ("View the Collection Display is not shown in Preview modal") {
 			AssertElementNotPresent(
 				key_colPosition = "1",
 				key_entryContent = "Category Name 1",
@@ -1324,14 +1324,14 @@ definition {
 		task ("Add a display page template for Blogs Entry") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Blogs Entry",
-				displayPageTemplateEntryName = "Display Page Name Blogs Entry",
+				displayPageTemplateEntryName = "Blogs Entry DPT",
 				groupName = "Test Site Name");
 		}
 
-		task ("Add a Collection Display fragment to display Page Template") {
+		task ("Add a Collection Display fragment to display Page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name Blogs Entry");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Blogs Entry DPT");
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -1344,13 +1344,13 @@ definition {
 				infoItemRelatedListProviderName = "Categories for This Item");
 		}
 
-		task ("Select the Blogs Entry via preview item selector") {
+		task ("Select the blogs entry via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Blogs Entry Title",
 				assetType = "Blogs Entry");
 		}
 
-		task ("Assert all three Categories name are shown in Collection Display") {
+		task ("View all three categories name are shown in Collection Display") {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1372,7 +1372,7 @@ definition {
 				fragmentName = "Content Display");
 		}
 
-		task ("Assert all three Categories name are shown in Content Display") {
+		task ("View all three categories name are shown in Content Display") {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1393,7 +1393,7 @@ definition {
 				item = "-- None --");
 		}
 
-		task ("Assert there is a info message in Content Display") {
+		task ("View the default info shown in Content Display") {
 			AssertVisible(
 				key_fragmentName = "Content Display",
 				key_messageIfo = "The selected content will be shown here.",
@@ -1406,14 +1406,14 @@ definition {
 			Click(locator1 = "PageEditor#PREVIEW");
 		}
 
-		task ("Select the Blogs Entry via preview item selector") {
+		task ("Select the blogs entry via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Blogs Entry Title",
 				assetType = "Blogs Entry",
 				modal = "true");
 		}
 
-		task ("Assert all three Categories name are shown in modal") {
+		task ("View all three categories name are shown in modal") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
@@ -1439,7 +1439,7 @@ definition {
 				modal = "true");
 		}
 
-		task ("Assert the Collection Display is not shown in Preview modal") {
+		task ("View the Collection Display is not shown in Preview modal") {
 			AssertElementNotPresent(
 				key_colPosition = "1",
 				key_entryContent = "Category Name 1",
@@ -1451,15 +1451,15 @@ definition {
 		task ("Add a display page template for Document") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Document",
-				displayPageTemplateEntryName = "Display Page Name Document",
+				displayPageTemplateEntryName = "Document DPT",
 				groupName = "Test Site Name",
 				subType = "Basic Document");
 		}
 
-		task ("Add a Collection Display fragment to display Page Template") {
+		task ("Add a Collection Display fragment to display Page template") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name Document");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
@@ -1472,13 +1472,13 @@ definition {
 				infoItemRelatedListProviderName = "Categories for This Item");
 		}
 
-		task ("Select the Document via preview item selector") {
+		task ("Select the document via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Document Title",
 				assetType = "Document");
 		}
 
-		task ("Assert all three Categories name are shown in Collection Display") {
+		task ("View all three categories name are shown in Collection Display") {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1500,7 +1500,7 @@ definition {
 				fragmentName = "Content Display");
 		}
 
-		task ("Assert all three Categories name are shown in Content Display") {
+		task ("View all three categories name are shown in Content Display") {
 			var n = "1";
 
 			for (var categoryName : list "Category Name 1,Category Name 2,Category Name 3") {
@@ -1521,7 +1521,7 @@ definition {
 				item = "-- None --");
 		}
 
-		task ("Assert there is a info message in Content Display") {
+		task ("View the default info shown in Content Display") {
 			AssertVisible(
 				key_fragmentName = "Content Display",
 				key_messageIfo = "The selected content will be shown here.",
@@ -1534,14 +1534,14 @@ definition {
 			Click(locator1 = "PageEditor#PREVIEW");
 		}
 
-		task ("Select the Document via preview item selector") {
+		task ("Select the document via preview item selector") {
 			DisplayPageTemplate.selectPreviewItem(
 				assetTitle = "Document Title",
 				assetType = "Document",
 				modal = "true");
 		}
 
-		task ("Assert all three Categories name are shown in modal") {
+		task ("View all three categories name are shown in modal") {
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			var n = "1";
@@ -1567,7 +1567,7 @@ definition {
 				modal = "true");
 		}
 
-		task ("Assert the Collection Display is not shown in Preview modal") {
+		task ("View the Collection Display is not shown in Preview modal") {
 			AssertElementNotPresent(
 				key_colPosition = "1",
 				key_entryContent = "Category Name 1",

@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>PAGINATION_NEXT_LINK</td>
-	<td>//a[contains(@class, 'page-link')]//*[contains(@class,'lexicon-icon-angle-right')]</td>
+	<td>//a[*[name()='svg'][contains(@class,'lexicon-icon-angle-right')]]</td>
 	<td></td>
 </tr>
 <tr>

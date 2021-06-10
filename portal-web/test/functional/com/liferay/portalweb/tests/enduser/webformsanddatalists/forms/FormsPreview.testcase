@@ -311,14 +311,61 @@ definition {
 	}
 
 	@description = "Verify that a Select From List Field can be previewed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test SelectFromListFieldCanBePreviewed {
 		property forms.functional = "true";
 		property portal.acceptance = "false";
 
-		// TODO LPS-133784 SelectFromListFieldCanBePreviewed pending implementation
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Forms");
 
+		FormsAdminNavigator.gotoAddForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.gotoAddField(
+			fieldPositionNumber = "0",
+			fieldType = "Select from List");
+
+		FormFields.editHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "tip",
+			key_fieldLabel = "");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option 1",
+			rowNumber = "1");
+
+		FormFields.editOptionsRow(
+			optionValue = "Option 2",
+			rowNumber = "2");
+
+		FormsAdminNavigator.gotoPreviewForm();
+
+		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
+
+		FormFields.viewLabel(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		FormFields.viewSelectOptionsList(
+			fieldName = "Select from List",
+			selectOption = "Choose an Option");
+
+		FormFields.viewSelectFromListOption(optionValue = "Option 1");
+
+		FormFields.viewSelectFromListOption(optionValue = "Option 2");
+
+		FormFields.viewFieldHelpText(
+			fieldHelpText = "Test Help Text",
+			fieldName = "Select from List");
+
+		Refresh();
+
+		FormFields.selectSelectOption(
+			fieldName = "Select from List",
+			selectOption = "Option 1");
 	}
 
 	@description = "Verify that a Separator Field can be previewed"

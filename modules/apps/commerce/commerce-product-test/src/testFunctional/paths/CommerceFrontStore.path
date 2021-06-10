@@ -113,6 +113,11 @@
 	<td>//div[contains(@class,'mini-compare active')]//div[contains(@style,'${key_productName}')]/../../..//button[contains(@class,'mini-compare-delete')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRODUCT_CARD_IMAGE</td>
+	<td>//a[contains(@href,'${key_productName}')]//div[contains(@style,'image')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

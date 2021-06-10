@@ -1085,13 +1085,139 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6256. Search shipment from shipment UI"
-	@ignore = "true"
 	@priority = "3"
 	test SearchShipment {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CPCommerceShipments#SearchShipment";
 
-		// TODO COMMERCE-6256 SearchShipment Pending Implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		for (var i : list "1,2") {
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
+
+			CommerceAcceleratorsInitializer.createNewAccountViaFront(
+				accountName = "account${i}",
+				adminEmailAddress = "test@liferay.com");
+		}
+
+		var ship1Id = "";
+		var ship2Id = "";
+
+		for (var i : list "1,2") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
+
+			Click(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_BACK_BUTTON");
+
+			Click(
+				key_accountName = "account${i}",
+				locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ACCOUNT_LIST_ITEM");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = "1");
+
+			CommerceNavigator.gotoMiniCart();
+
+			Button.click(button = "Submit");
+
+			Pause(locator1 = "3000");
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productName = "U-Joint",
+				productQuantity = "1",
+				productUnitPrice = "24",
+				shippingMethod = "Standard");
+
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Orders");
+
+			Click(
+				key_value = "account${i}",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "View");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Click(
+				key_text = "Create Shipment",
+				locator1 = "Link#ANY");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Check.checkToggleSwitch(
+				key_productSKU = "MIN55861",
+				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+
+			Button.clickSubmitButton();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = "1");
+
+			Button.clickSave();
+
+			Refresh();
+
+			Click(
+				key_index = "Finish Processing",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			if ("${i}" == "1") {
+				var ship1Id = selenium.getText(locator1 = "CommerceEntry#HEADER_ID");
+			}
+			else {
+				var ship2Id = selenium.getText(locator1 = "CommerceEntry#HEADER_ID");
+			}
+		}
+
+		CommerceNavigator.gotoPortlet(
+			category = "Order Management",
+			portlet = "Shipments");
+
+		for (var search : list "${ship1Id},${ship2Id},account1,account2") {
+			CommerceNavigator.searchEntry(entryName = "${search}");
+
+			if ("${search}" == "account1" || "${search}" == "${ship1Id}") {
+				AssertElementPresent(
+					key_entryName = "${ship1Id}",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+
+				AssertElementNotPresent(
+					key_entryName = "${ship2Id}",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+			else {
+				AssertElementPresent(
+					key_entryName = "${ship2Id}",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+
+				AssertElementNotPresent(
+					key_entryName = "${ship1Id}",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
 	}
 
 	@description = "This is a test for COMMERCE-6242. Update address"

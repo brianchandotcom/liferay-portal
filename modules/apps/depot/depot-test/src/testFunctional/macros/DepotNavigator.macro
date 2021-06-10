@@ -278,6 +278,12 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}-staging/~/control_panel/manage/-/recycle_bin/entries");
 	}
 
+	macro openDepotSettingsGeneral {
+		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotSettingsPortlet");
+	}
+
 	macro openDepotSiteSettings {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = "${depotName}");
 

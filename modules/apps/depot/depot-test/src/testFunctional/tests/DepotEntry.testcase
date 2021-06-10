@@ -379,6 +379,7 @@ definition {
 	@description = "This ensures that a depot can be edited via settings."
 	@priority = "4"
 	@refactordone
+	@uitest
 	test CanEditNameViaSettings {
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

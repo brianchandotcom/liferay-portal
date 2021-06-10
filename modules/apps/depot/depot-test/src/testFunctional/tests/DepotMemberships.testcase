@@ -202,11 +202,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.editDepot(
 			checkTranslatedName = "true",

@@ -1018,11 +1018,7 @@ definition {
 
 		Depot.viewDMWorkflowPresent(dmFolderName = "DM Folder Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Web Content",

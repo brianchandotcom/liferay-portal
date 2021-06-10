@@ -37,11 +37,7 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Asset Lists";
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		for (var application : list "Collections,Documents and Media,Translation Processes,Web Content") {
 			AssertChecked(
@@ -60,11 +56,7 @@ definition {
 			depotName = "Test Depot Name",
 			noApplication = "true");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Collections,Documents and Media,Translation Processes,Web Content",
@@ -130,11 +122,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Test Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Documents and Media,Web Content",
@@ -177,11 +165,7 @@ definition {
 
 		AssetListsAdmin.addDynamicSelection(assetListTitle = "Depot Dynamic Asset List");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Collections",
@@ -246,11 +230,7 @@ definition {
 			assetName = "WC WebContent Title",
 			assetType = "Basic Web Content");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Web Content,Documents and Media",
@@ -310,11 +290,7 @@ definition {
 
 		Pause(locator1 = "10000");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Documents and Media",
@@ -364,11 +340,7 @@ definition {
 			depotName = "Test Depot Name",
 			webContentTitle = "WC Depot Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Web Content",
@@ -390,11 +362,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Documents and Media",
@@ -413,11 +381,7 @@ definition {
 			applicationList = "Collections,Web Content",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Documents and Media",
@@ -446,11 +410,7 @@ definition {
 			site = "false",
 			title = "WC WebContent Title");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Web Content",
@@ -469,11 +429,7 @@ definition {
 			applicationList = "Collections,Documents and Media",
 			depotName = "Test Depot Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Web Content",

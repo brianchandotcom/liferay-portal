@@ -411,11 +411,7 @@ definition {
 			site = "false",
 			title = "Depot Manual Asset List");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Documents and Media,Web Content",
@@ -451,11 +447,7 @@ definition {
 			depotName = "Test Depot Name",
 			groupName = "Site Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Collections",
@@ -539,11 +531,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Documents and Media",
@@ -588,11 +576,7 @@ definition {
 			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Depot.configureApplication(
 			applicationList = "Web Content",

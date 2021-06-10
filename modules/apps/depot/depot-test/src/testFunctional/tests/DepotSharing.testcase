@@ -162,11 +162,7 @@ definition {
 
 		Depot.configureSharing(sharing = "Disabled");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_toggleSwitchLabel = "Enable Sharing",

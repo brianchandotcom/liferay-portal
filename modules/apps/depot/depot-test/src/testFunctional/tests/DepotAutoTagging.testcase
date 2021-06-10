@@ -166,11 +166,7 @@ definition {
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Instance Settings");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		AssertElementNotPresent(
 			key_panel = "Asset Auto Tagging",
@@ -178,11 +174,7 @@ definition {
 
 		AutoTagging.enableAutoTagging(enableAutoTaggingFor = "Instance Settings");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Asset Auto Tagging");
 
@@ -197,11 +189,7 @@ definition {
 
 		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "System Settings");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		AssertElementNotPresent(
 			key_panel = "Asset Auto Tagging",
@@ -209,11 +197,7 @@ definition {
 
 		AutoTagging.enableAutoTagging(enableAutoTaggingFor = "System Settings");
 
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
+		DepotNavigator.openDepotSettingsGeneral(depotName = "Test Depot Name");
 
 		Panel.expandPanel(panel = "Asset Auto Tagging");
 

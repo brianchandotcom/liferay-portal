@@ -793,13 +793,34 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-6304. UseFriendlyURL"
-	@ignore = "true"
 	@priority = "3"
 	test UseFriendlyURL {
-		property portal.acceptance = "false";
+		property portal.acceptance = "Intern Test";
+		property test.name.skip.portal.instance = "CPCommerceProducts#UseFriendlyURL";
 
-		// TODO COMMERCE-6304 UseFriendlyURL
+		// TODO Review
 
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CPCommerceCatalog.newProductsEntry(
+			productCatalog = "Master",
+			productName = "Orange",
+			productType = "Simple");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080/web/guest/p/orange");
+
+		AssertTextEquals(
+			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
+			value1 = "Orange");
 	}
 
 	@description = "This is a test for COMMERCE-6303. UseSchedule"

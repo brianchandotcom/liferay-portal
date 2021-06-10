@@ -1297,7 +1297,7 @@ definition {
 					key_entryContent = "${categoryName}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY_AT_VIEW_MODE");
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 				var n = ${n} + 1;
 			}
@@ -1318,7 +1318,7 @@ definition {
 				key_entryContent = "Category Name 1",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY_AT_VIEW_MODE");
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 		}
 
 		task ("Add a display page template for Blogs Entry") {
@@ -1424,7 +1424,7 @@ definition {
 					key_entryContent = "${categoryName}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY_AT_VIEW_MODE");
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 				var n = ${n} + 1;
 			}
@@ -1445,7 +1445,7 @@ definition {
 				key_entryContent = "Category Name 1",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY_AT_VIEW_MODE");
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 		}
 
 		task ("Add a display page template for Document") {
@@ -1552,7 +1552,7 @@ definition {
 					key_entryContent = "${categoryName}",
 					key_fragmentName = "Collection Display",
 					key_rowPosition = "${n}",
-					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY_AT_VIEW_MODE");
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 
 				var n = ${n} + 1;
 			}
@@ -1573,7 +1573,7 @@ definition {
 				key_entryContent = "Category Name 1",
 				key_fragmentName = "Collection Display",
 				key_rowPosition = "1",
-				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY_AT_VIEW_MODE");
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_CONTENT");
 		}
 	}
 

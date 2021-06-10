@@ -454,8 +454,22 @@ public class SourceFormatter {
 			String outputFileName = _sourceFormatterArgs.getOutputFileName();
 
 			if (outputFileName != null) {
-				File file = new File(
-					_sourceFormatterArgs.getBaseDirName() + outputFileName);
+				File file = null;
+
+				int pos = outputFileName.lastIndexOf(File.separator);
+
+				if (pos != -1) {
+					File directory = new File(outputFileName.substring(0, pos));
+
+					if (directory.exists()) {
+						file = new File(outputFileName);
+					}
+				}
+
+				if (file == null) {
+					file = new File(
+						_sourceFormatterArgs.getBaseDirName() + outputFileName);
+				}
 
 				FileUtil.write(file, _getOutputFileContent());
 			}

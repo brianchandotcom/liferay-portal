@@ -126,7 +126,7 @@ definition {
 
 		var depotEntryGroupRelId = JSONCurlUtil.post("${curl}", "$.[?(@['groupId'] == '${groupId}')]['depotEntryGroupRelId']");
 
-		if ("${depotEntryGroupRelId}" == "[]") {
+		if ("${depotEntryGroupRelId}" == "") {
 			fail("FAIL. Cannot find group.");
 		}
 
@@ -148,7 +148,7 @@ definition {
 
 		var depotId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${depotName}')]['classPK']");
 
-		if ("${depotId}" == "[]") {
+		if ("${depotId}" == "") {
 			fail("FAIL. Cannot find group.");
 		}
 
@@ -177,7 +177,7 @@ definition {
 
 		var groupId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
 
-		if ("${groupId}" == "[]") {
+		if ("${groupId}" == "") {
 			fail("FAIL. Cannot find group.");
 		}
 
@@ -201,7 +201,7 @@ definition {
 
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['groupKey'] == '${groupKey}')]['groupId']");
 
-		if ("${groupId}" == "[]") {
+		if ("${groupId}" == "") {
 			fail("FAIL. Cannot find group.");
 		}
 
@@ -227,7 +227,7 @@ definition {
 
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
 
-		if ("${groupId}" == "[]") {
+		if ("${groupId}" == "") {
 			fail("FAIL. Cannot find group.");
 		}
 
@@ -271,7 +271,7 @@ definition {
 
 		var groupId = JSONCurlUtil.get("${curl}", "$.[?(@['nameCurrentValue'] == '${groupName}')]['groupId']");
 
-		if ("${groupId}" == "[]") {
+		if ("${groupId}" == "") {
 			fail("FAIL. Cannot find group.");
 		}
 
@@ -297,7 +297,7 @@ definition {
 
 		var groupId = JSONCurlUtil.post("${curl}", "$.[?(@['groupKey'] == '${groupName}')]['groupId']");
 
-		if ("${groupId}" == "[]") {
+		if ("${groupId}" == "") {
 			fail("FAIL. Cannot find group.");
 		}
 

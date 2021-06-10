@@ -251,7 +251,7 @@ definition {
 
 		var categoryId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${categoryName}')]['categoryId']");
 
-		if ("${categoryId}" == "[]") {
+		if ("${categoryId}" == "") {
 			fail("FAIL. Cannot find category.");
 		}
 
@@ -295,7 +295,7 @@ definition {
 
 		var messageId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${threadSubject}')]['rootMessageId']");
 
-		if ("${messageId}" == "[]") {
+		if ("${messageId}" == "") {
 			fail("FAIL. Cannot find category.");
 		}
 
@@ -330,7 +330,7 @@ definition {
 
 		var threadId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${threadSubject}')]['threadId']");
 
-		if ("${threadId}" == "[]") {
+		if ("${threadId}" == "") {
 			fail("FAIL. Cannot find category.");
 		}
 

@@ -22,7 +22,7 @@ definition {
 
 		var folderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${name}')]['folderId']");
 
-		if ("${folderId}" == "[]") {
+		if ("${folderId}" == "") {
 			fail("FAIL. Cannot find folder.");
 		}
 		else {
@@ -50,7 +50,7 @@ definition {
 
 		var typeId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${documentTypeName}')]['fileEntryTypeId']");
 
-		if ("${typeId}" == "[]") {
+		if ("${typeId}" == "") {
 			fail("FAIL. Cannot find type.");
 		}
 		else {

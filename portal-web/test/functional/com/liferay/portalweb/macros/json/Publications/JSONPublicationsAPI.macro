@@ -56,7 +56,7 @@ definition {
 
 		var ctCollectionId = JSONCurlUtil.post("${curl}","$.[?(@['name'] == '${publicationName}')]['ctCollectionId']");
 
-		if ("${ctCollectionId}" == "[]") {
+		if ("${ctCollectionId}" == "") {
 			fail("FAIL. Cannot find ctCollectionId.");
 		}
 

@@ -60,7 +60,7 @@ definition {
 		var defaultPlid = JSONCurlUtil.post("${curl}");
 		var defaultPlid = StringUtil.extractDigits("${defaultPlid}");
 
-		if ("${defaultPlid}" == "[]") {
+		if ("${defaultPlid}" == "") {
 			fail("FAIL. Cannot find defaultPlid.");
 		}
 
@@ -82,7 +82,7 @@ definition {
 
 		var layoutId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['layoutId']");
 
-		if ("${layoutId}" == "[]") {
+		if ("${layoutId}" == "") {
 			fail("FAIL. Cannot find layout.");
 		}
 
@@ -104,7 +104,7 @@ definition {
 
 		var plid = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['plid']");
 
-		if ("${plid}" == "[]") {
+		if ("${plid}" == "") {
 			fail("FAIL. Cannot find layout.");
 		}
 
@@ -126,7 +126,7 @@ definition {
 
 		var typeSettings = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${layoutName}')]['typeSettings']");
 
-		if ("${typeSettings}" == "[]") {
+		if ("${typeSettings}" == "") {
 			fail("FAIL. Cannot find layout.");
 		}
 

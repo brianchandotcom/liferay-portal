@@ -11,7 +11,7 @@ definition {
 
 		var recordId = JSONCurlUtil.post("${curl}","$.[?(@['recordSetId'] == '${recordSetId}')]['recordId']");
 
-		if ("${recordId}" == "[]") {
+		if ("${recordId}" == "") {
 			fail("FAIL. Cannot find recordId.");
 		}
 
@@ -33,7 +33,7 @@ definition {
 
 		var recordSetId = JSONCurlUtil.post("${curl}","$.[?(@['nameCurrentValue'] == '${ddlListName}')]['recordSetId']");
 
-		if ("${recordSetId}" == "[]") {
+		if ("${recordSetId}" == "") {
 			fail("FAIL. Cannot find recordSetId.");
 		}
 

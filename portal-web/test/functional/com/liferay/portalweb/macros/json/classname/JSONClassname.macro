@@ -13,7 +13,7 @@ definition {
 		''';
 		var classNameId = JSONCurlUtil.post("${curl}", "$.[?(@['value'] == '${value}')]['classNameId']");
 
-		if ("${classNameId}" == "[]") {
+		if ("${classNameId}" == "") {
 			echo("The ${value} doesn't exist.");
 		}
 

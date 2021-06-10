@@ -82,7 +82,7 @@ definition {
 
 		var collectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${collectionName}')]['fragmentCollectionId']");
 
-		if ("${collectionId}" == "[]") {
+		if ("${collectionId}" == "") {
 			fail("FAIL. Cannot find collection.");
 		}
 

@@ -35,7 +35,7 @@ definition {
 
 		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${kbChildArticleTitle}')]['resourcePrimKey']");
 
-		if ("${resourcePrimKey}" == "[]") {
+		if ("${resourcePrimKey}" == "") {
 			fail("FAIL. Cannot find resourcePrimKey.");
 		}
 		else {
@@ -75,7 +75,7 @@ definition {
 
 		var resourcePrimKey = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${kbArticleTitle}')]['resourcePrimKey']");
 
-		if ("${resourcePrimKey}" == "[]") {
+		if ("${resourcePrimKey}" == "") {
 			fail("FAIL. Cannot find resourcePrimKey.");
 		}
 		else {
@@ -306,7 +306,7 @@ definition {
 
 		var kbFolderId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${folderName}')]['kbFolderId']");
 
-		if ("${kbFolderId}" == "[]") {
+		if ("${kbFolderId}" == "") {
 			fail("FAIL. Cannot find folder.");
 		}
 		else {

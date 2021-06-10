@@ -184,7 +184,7 @@ definition {
 
 		var nodeId = JSONCurlUtil.get("${curl}", "$.[?(@['name'] == '${name}')]['nodeId']");
 
-		if ("${nodeId}" == "[]") {
+		if ("${nodeId}" == "") {
 			fail("FAIL. Cannot find node.");
 		}
 
@@ -210,7 +210,7 @@ definition {
 
 		var pageId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${title}')]['pageId']");
 
-		if ("${pageId}" == "[]") {
+		if ("${pageId}" == "") {
 			fail("FAIL. Cannot find wiki page.");
 		}
 

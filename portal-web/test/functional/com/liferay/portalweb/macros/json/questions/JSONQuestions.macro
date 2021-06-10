@@ -184,7 +184,7 @@ definition {
 
 		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['rootMessageId']");
 
-		if ("${questionId}" == "[]") {
+		if ("${questionId}" == "") {
 			fail("FAIL. Cannot find category.");
 		}
 
@@ -223,7 +223,7 @@ definition {
 
 		var questionId = JSONCurlUtil.post("${curl}", "$.[?(@['title'] == '${titleField}')]['threadId']");
 
-		if ("${questionId}" == "[]") {
+		if ("${questionId}" == "") {
 			fail("FAIL. Cannot find category.");
 		}
 

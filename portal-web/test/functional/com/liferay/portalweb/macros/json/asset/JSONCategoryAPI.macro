@@ -77,7 +77,7 @@ definition {
 
 		var categoryId = JSONCurlUtil.post("${curl}", "$.[?(@['titleCurrentValue'] == '${categoryName}')]['categoryId']");
 
-		if ("${categoryId}" == "[]") {
+		if ("${categoryId}" == "") {
 			fail("FAIL. Cannot find category.");
 		}
 
@@ -98,7 +98,7 @@ definition {
 
 		var vocabularyId = JSONCurlUtil.post("${curl}", "$.[?(@['titleCurrentValue'] == '${vocabularyName}')]['vocabularyId']");
 
-		if ("${vocabularyId}" == "[]") {
+		if ("${vocabularyId}" == "") {
 			fail("FAIL. Cannot find vocabulary.");
 		}
 

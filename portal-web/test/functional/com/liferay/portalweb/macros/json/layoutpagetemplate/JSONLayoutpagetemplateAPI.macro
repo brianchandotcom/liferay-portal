@@ -128,7 +128,7 @@ definition {
 
 		var layoutPageTemplateCollectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${layoutPageTemplateCollectionName}')]['layoutPageTemplateCollectionId']");
 
-		if ("${layoutPageTemplateCollectionId}" == "[]") {
+		if ("${layoutPageTemplateCollectionId}" == "") {
 			fail("FAIL. Cannot find layoutPageTemplateCollection.");
 		}
 
@@ -153,7 +153,7 @@ definition {
 
 		var layoutPageTemplateEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${layoutPageTemplateEntryName}')]['layoutPageTemplateEntryId']");
 
-		if ("${layoutPageTemplateEntryId}" == "[]") {
+		if ("${layoutPageTemplateEntryId}" == "") {
 			fail("FAIL. Cannot find layoutPageTemplateEntry.");
 		}
 
@@ -178,7 +178,7 @@ definition {
 
 		var masterLayoutPlid = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${masterLayoutEntryName}')]['plid']");
 
-		if ("${masterLayoutPlid}" == "[]") {
+		if ("${masterLayoutPlid}" == "") {
 			fail("FAIL. Cannot find masterLayoutEntry.");
 		}
 

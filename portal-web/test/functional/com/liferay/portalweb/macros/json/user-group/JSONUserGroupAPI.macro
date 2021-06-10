@@ -46,7 +46,7 @@ definition {
 
 		var userGroupId = JSONCurlUtil.post("${curl}", "$.userGroupId");
 
-		if ("${groupId}" == "[]") {
+		if ("${groupId}" == "") {
 			fail("FAIL. Cannot find user group.");
 		}
 

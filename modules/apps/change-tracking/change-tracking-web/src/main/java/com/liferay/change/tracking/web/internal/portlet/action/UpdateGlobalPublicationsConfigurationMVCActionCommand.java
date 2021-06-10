@@ -25,10 +25,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -81,24 +77,24 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 		try {
 			_ctPreferencesService.enablePublications(
 				themeDisplay.getCompanyId(), enablePublications);
-
-			if (!enablePublications && PropsValues.SCHEDULER_ENABLED) {
-				List<CTCollection> ctCollections =
-					_ctCollectionLocalService.getCTCollections(
-						themeDisplay.getCompanyId(),
-						WorkflowConstants.STATUS_SCHEDULED, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, null);
-
-				for (CTCollection ctCollection : ctCollections) {
-					_publishScheduler.unschedulePublish(
-						ctCollection.getCtCollectionId());
-				}
-			}
 		}
 		catch (CTStagingEnabledException ctStagingEnabledException) {
 			SessionErrors.add(actionRequest, "stagingEnabled");
 
 			return;
+		}
+
+		if (!enablePublications && PropsValues.SCHEDULER_ENABLED) {
+			List<CTCollection> ctCollections =
+				_ctCollectionLocalService.getCTCollections(
+					themeDisplay.getCompanyId(),
+					WorkflowConstants.STATUS_SCHEDULED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			for (CTCollection ctCollection : ctCollections) {
+				_publishScheduler.unschedulePublish(
+					ctCollection.getCtCollectionId());
+			}
 		}
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
@@ -136,16 +132,10 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 	private CTPreferencesService _ctPreferencesService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
@@ -153,11 +143,5 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile PublishScheduler _publishScheduler;
-
-	@Reference
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

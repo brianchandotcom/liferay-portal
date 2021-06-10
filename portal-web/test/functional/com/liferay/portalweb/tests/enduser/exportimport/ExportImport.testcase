@@ -671,6 +671,8 @@ definition {
 	@description = "This is a use case for LPS-88378."
 	@priority = "3"
 	test ExportImportLayoutCircularReference {
+		property testray.component.names = "Site Pages Administration,Web Content Administration";
+
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		JSONLayout.addPublicLayout(

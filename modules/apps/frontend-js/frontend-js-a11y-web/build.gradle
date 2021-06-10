@@ -9,5 +9,5 @@ dependencies {
 }
 
 jar {
-	enabled System.getenv('NODE_ENV') == "development"
+	enabled project.properties["nodejs.node.env"] == "development"
 }

@@ -1263,6 +1263,81 @@ paths:
                     description:
                         ""
             tags: ["UserAccount"]
+    "/organizations/{organizationId}/user-accounts/by-email-address":
+        delete:
+            # @review
+            description:
+                Removes users from an organization by their email addresses
+            operationId: deleteUserAccountsByEmailAddress
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                # @review
+                description:
+                    A list of user email addresses to remove from the organization
+                required: true
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Organization"]
+        post:
+            # @review
+            description:
+                Assigns users to an organization by their email addresses
+            operationId: postUserAccountsByEmailAddress
+            parameters:
+                - in: path
+                  name: organizationId
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                format: email
+                                type: string
+                            type: array
+                # @review
+                description:
+                    A list of user email addresses to assign to the organization
+                required: true
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        ""
+            tags: ["Organization"]
     "/organizations/{organizationId}/user-accounts/by-email-address/{emailAddress}":
         delete:
             # @review

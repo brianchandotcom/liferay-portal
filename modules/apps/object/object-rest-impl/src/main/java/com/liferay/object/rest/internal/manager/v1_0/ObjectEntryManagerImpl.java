@@ -16,6 +16,7 @@ package com.liferay.object.rest.internal.manager.v1_0;
 
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
@@ -41,8 +42,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(immediate = true, service = ObjectEntryManager.class)
-public class ObjectEntryManager {
+public class ObjectEntryManagerImpl implements ObjectEntryManager {
 
+	@Override
 	public ObjectEntry addObjectEntry(
 			DTOConverterContext dtoConverterContext, long userId,
 			long objectDefinitionId, ObjectEntry objectEntry)
@@ -55,10 +57,12 @@ public class ObjectEntryManager {
 				(Map)objectEntry.getProperties(), new ServiceContext()));
 	}
 
+	@Override
 	public void deleteObjectEntry(long objectEntryId) throws Exception {
 		_objectEntryLocalService.deleteObjectEntry(objectEntryId);
 	}
 
+	@Override
 	public Page<ObjectEntry> getObjectEntries(
 			long companyId, long objectDefinitionId, Aggregation aggregation,
 			DTOConverterContext dtoConverterContext, Filter filter,
@@ -93,6 +97,7 @@ public class ObjectEntryManager {
 				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
+	@Override
 	public ObjectEntry getObjectEntry(
 			DTOConverterContext dtoConverterContext, long objectEntryId)
 		throws Exception {
@@ -102,6 +107,7 @@ public class ObjectEntryManager {
 			_objectEntryLocalService.getObjectEntry(objectEntryId));
 	}
 
+	@Override
 	public ObjectEntry updateObjectEntry(
 			DTOConverterContext dtoConverterContext, long userId,
 			long objectEntryId, ObjectEntry objectEntry)

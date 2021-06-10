@@ -35,6 +35,7 @@
 		</requiredProperty>
 		<requiredProperty key="product">
 			<defaultValue>portal</defaultValue>
+			<validationRegex>(dxp)|(portal)</validationRegex>
 		</requiredProperty>
 	</requiredProperties>
 </archetype-descriptor>

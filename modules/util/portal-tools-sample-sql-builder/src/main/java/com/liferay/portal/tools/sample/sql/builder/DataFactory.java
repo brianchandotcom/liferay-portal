@@ -389,7 +389,7 @@ public class DataFactory {
 		_futureDateCounter = new SimpleCounter();
 		_layoutPlidCounter = new SimpleCounter();
 		_layoutSetIdCounter = new SimpleCounter();
-		_portletPreferenceValueCounter = new SimpleCounter();
+		_portletPreferenceValueIdCounter = new SimpleCounter();
 		_resourcePermissionCounter = new SimpleCounter();
 		_socialActivityCounter = new SimpleCounter();
 		_userScreenNameCounter = new SimpleCounter();
@@ -2289,7 +2289,7 @@ public class DataFactory {
 		counterModels.add(
 			_newCounterModel(
 				PortletPreferenceValue.class.getName(),
-				_portletPreferenceValueCounter.get()));
+				_portletPreferenceValueIdCounter.get()));
 		counterModels.add(
 			_newCounterModel(
 				ResourcePermission.class.getName(),
@@ -4814,7 +4814,7 @@ public class DataFactory {
 			new PortletPreferenceValueModelImpl();
 
 		portletPreferenceValueModel.setPortletPreferenceValueId(
-			_portletPreferenceValueCounter.get());
+			_portletPreferenceValueIdCounter.get());
 		portletPreferenceValueModel.setPortletPreferencesId(
 			portletPreferencesModel.getPortletPreferencesId());
 		portletPreferenceValueModel.setName(name);
@@ -7083,7 +7083,7 @@ public class DataFactory {
 	private final SimpleCounter _layoutPlidCounter;
 	private final SimpleCounter _layoutSetIdCounter;
 	private RoleModel _ownerRoleModel;
-	private final SimpleCounter _portletPreferenceValueCounter;
+	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
 	private final SimpleCounter _resourcePermissionCounter;
 	private long _sampleUserId;

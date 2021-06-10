@@ -712,7 +712,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-90066. A user can preview a scheduled Web Content article through the 'View Usages' screen."
+	@description = "This is a test for LPS-90066 and LPS-127728. A user can preview a scheduled web content via View Usage. The warning message should have link in Web Content Display."
 	@priority = "5"
 	test PreviewScheduledWebContentInWCD {
 		property portal.acceptance = "true";
@@ -726,7 +726,9 @@ definition {
 				webContentContent = "WC WebContent Content",
 				webContentTitle = "WC WebContent Title");
 
-			WebContent.editDisplayDate(displayDate = "01/01/2100");
+			WebContent.editDisplayDate(
+				displayDate = "01/01/2100",
+				displayTime = "01:01 AM");
 
 			PortletEntry.publish();
 		}
@@ -746,6 +748,22 @@ definition {
 				siteName = "Test Site Name");
 
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the warning message shown in Web Content Display") {
+			Alert.viewWarningSpecific(warningMessage = "WC WebContent Title is scheduled and will be displayed on 1/1/00 1:01 AM.");
+		}
+
+		task ("Access to web content editor via warning message link") {
+			Click(
+				key_warningMessage = "WC WebContent Title is scheduled and will be displayed on 1/1/00 1:01 AM.",
+				locator1 = "Message#WARNING_SPECIFIC");
+
+			WebContent.viewCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent Title");
 		}
 
 		task ("View the usages of the Web Content article") {

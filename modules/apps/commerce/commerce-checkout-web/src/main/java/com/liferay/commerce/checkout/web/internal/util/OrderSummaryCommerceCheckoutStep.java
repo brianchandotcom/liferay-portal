@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.discount.exception.CommerceDiscountLimitationTimesException;
@@ -151,7 +152,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 		if (!commerceOrder.isOpen()) {
 			httpServletRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_ORDER_DETAIL_URL,
-				_commerceCheckoutStepHelper.getOrderDetailURL(
+				_commerceCheckoutStepHttpHelper.getOrderDetailURL(
 					httpServletRequest, commerceOrder));
 
 			_jspRenderer.renderJSP(
@@ -246,15 +247,15 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			actionRequest);
 
 		if ((commerceOrder.getBillingAddressId() <= 0) &&
-			_commerceCheckoutStepHelper.
+			_commerceCheckoutStepHttpHelper.
 				isActiveBillingAddressCommerceCheckoutStep(
-					httpServletRequest)) {
+					httpServletRequest, commerceOrder)) {
 
 			throw new CommerceOrderBillingAddressException();
 		}
 
 		if ((commerceOrder.getCommerceShippingMethodId() <= 0) &&
-			_commerceCheckoutStepHelper.
+			_commerceCheckoutStepHttpHelper.
 				isActiveShippingMethodCommerceCheckoutStep(
 					httpServletRequest)) {
 
@@ -265,8 +266,9 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			commerceOrder.getCommercePaymentMethodKey();
 
 		if (commercePaymentMethodKey.isEmpty() &&
-			_commerceCheckoutStepHelper.
-				isActivePaymentMethodCommerceCheckoutStep(httpServletRequest)) {
+			_commerceCheckoutStepHttpHelper.
+				isActivePaymentMethodCommerceCheckoutStep(
+					httpServletRequest, commerceOrder)) {
 
 			throw new CommerceOrderPaymentMethodException();
 		}
@@ -304,7 +306,7 @@ public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
-	private CommerceCheckoutStepHelper _commerceCheckoutStepHelper;
+	private CommerceCheckoutStepHttpHelper _commerceCheckoutStepHttpHelper;
 
 	@Reference
 	private CommerceOptionValueHelper _commerceOptionValueHelper;

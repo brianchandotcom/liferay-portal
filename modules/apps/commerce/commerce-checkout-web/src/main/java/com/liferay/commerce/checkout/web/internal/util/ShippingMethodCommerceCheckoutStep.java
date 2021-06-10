@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.ShippingMethodCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -96,7 +97,7 @@ public class ShippingMethodCommerceCheckoutStep
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
-		if (_commerceCheckoutStepHelper.
+		if (_commerceCheckoutStepHttpHelper.
 				isActiveShippingMethodCommerceCheckoutStep(
 					httpServletRequest) &&
 			_commerceShippingHelper.isShippable(commerceOrder)) {
@@ -144,7 +145,7 @@ public class ShippingMethodCommerceCheckoutStep
 		if (!commerceOrder.isOpen()) {
 			httpServletRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_ORDER_DETAIL_URL,
-				_commerceCheckoutStepHelper.getOrderDetailURL(
+				_commerceCheckoutStepHttpHelper.getOrderDetailURL(
 					httpServletRequest, commerceOrder));
 
 			_jspRenderer.renderJSP(
@@ -278,7 +279,7 @@ public class ShippingMethodCommerceCheckoutStep
 	}
 
 	@Reference
-	private CommerceCheckoutStepHelper _commerceCheckoutStepHelper;
+	private CommerceCheckoutStepHttpHelper _commerceCheckoutStepHttpHelper;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.PaymentMethodCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
@@ -70,8 +71,13 @@ public class PaymentMethodCommerceCheckoutStep
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		if (!_commerceCheckoutStepHelper.
-				isActivePaymentMethodCommerceCheckoutStep(httpServletRequest)) {
+		CommerceOrder commerceOrder =
+			(CommerceOrder)httpServletRequest.getAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		if (!_commerceCheckoutStepHttpHelper.
+				isActivePaymentMethodCommerceCheckoutStep(
+					httpServletRequest, commerceOrder)) {
 
 			return false;
 		}
@@ -171,7 +177,7 @@ public class PaymentMethodCommerceCheckoutStep
 	}
 
 	@Reference
-	private CommerceCheckoutStepHelper _commerceCheckoutStepHelper;
+	private CommerceCheckoutStepHttpHelper _commerceCheckoutStepHttpHelper;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

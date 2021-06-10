@@ -1,0 +1,8 @@
+dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly project(":core:petra:petra-string")
+
+	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+
+	testRuntimeOnly ext: "zip", group: "com.liferay.etl", name: "etl-talend-context-printer-sample", version: "1.0"
+}

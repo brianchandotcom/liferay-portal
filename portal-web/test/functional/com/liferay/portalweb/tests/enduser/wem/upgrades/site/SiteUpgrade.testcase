@@ -9,6 +9,8 @@ definition {
 	setUp {
 		SignIn.signIn();
 
+		var siteName = selenium.getText("Home#SITE_NAME");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -24,7 +26,7 @@ definition {
 		property database.types = "mariadb,mysql,postgresql";
 		property portal.version = "7.3.5";
 
-		Upgrade.viewCustomSiteSetting(parentSiteName = "Liferay");
+		Upgrade.viewCustomSiteSetting(parentSiteName = "${siteName}");
 	}
 
 	@description = "This is a test for LPS-102711."
@@ -34,7 +36,7 @@ definition {
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.version = "7.3.10.1";
 
-		Upgrade.viewCustomSiteSetting(parentSiteName = "Liferay DXP");
+		Upgrade.viewCustomSiteSetting(parentSiteName = "${siteName}");
 	}
 
 }

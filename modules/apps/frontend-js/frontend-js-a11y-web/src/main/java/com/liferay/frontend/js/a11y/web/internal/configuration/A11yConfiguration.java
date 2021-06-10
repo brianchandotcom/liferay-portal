@@ -59,13 +59,6 @@ public @interface A11yConfiguration {
 	)
 	public String[] axeCoreRunOnly();
 
-	@Meta.AD(
-		deflt = "violations|inapplicable|passes|incomplete",
-		description = "axe-core-result-types-description",
-		name = "axe-core-result-types-name", required = false
-	)
-	public String[] axeCoreResultTypes();
-
 	@Meta.AD(deflt = "false", name = "axe-core-iframes-name", required = false)
 	public boolean axeCoreIframes();
 

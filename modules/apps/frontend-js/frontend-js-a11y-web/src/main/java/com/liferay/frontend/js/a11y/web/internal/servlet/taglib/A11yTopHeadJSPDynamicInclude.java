@@ -97,7 +97,7 @@ public class A11yTopHeadJSPDynamicInclude implements DynamicInclude {
 			).put(
 				"performanceTimer", _a11yConfiguration.axeCorePerformanceTimer()
 			).put(
-				"resultTypes", _a11yConfiguration.axeCoreResultTypes()
+				"resultTypes", new String[] {"violations"}
 			).put(
 				"runOnly", _a11yConfiguration.axeCoreRunOnly()
 			)

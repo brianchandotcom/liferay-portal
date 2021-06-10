@@ -98,6 +98,73 @@ definition {
 			value1 = "Translation Processes");
 	}
 
+	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."
+	@priority = "5"
+	@refactorneeded
+	test CanNotSelectDisabledAssetsFromItemSelector {
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page Name",
+			widgetName = "Web Content Display");
+
+		JSONWebcontent.addWebContent(
+			content = "WC Depot Content",
+			groupName = "Test Depot Name",
+			site = "false",
+			title = "WC Depot Title");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Test Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Documents and Media,Web Content",
+			status = "Disabled");
+
+		Navigator.gotoSitePage(
+			pageName = "Test Page Name",
+			siteName = "Test Site Name");
+
+		WebContentDisplayPortlet.searchWebContentNo(
+			depotName = "Test Depot Name",
+			webContentTitle = "WC Depot Title");
+
+		BlogsNavigator.openToAddEntry(siteURLKey = "test-site-name");
+
+		BlogsNavigator.gotoSelectFile();
+
+		ItemSelector.changeWorkspaces(
+			navTab = "Documents and Media",
+			workspacesType = "Asset Library");
+
+		LexiconCard.clickCard(card = "Test Depot Name");
+
+		LexiconCard.viewCardNotPresent(card = "Document_1.jpg");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#INFO",
+			value1 = "This application is not supported for Asset Libraries.");
+	}
+
 	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
 	@priority = "5"
 	@refactorneeded
@@ -252,46 +319,6 @@ definition {
 			siteName = "Test Site Name");
 
 		WebContent.viewPGViaWCD(webContentContent = "WC Depot Content");
-
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
-
-		Portlet.gotoPortletOptions(
-			portletName = "Web Content Display",
-			portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Pause(locator1 = "3000");
-
-		Click(locator1 = "Button#CHANGE");
-
-		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
-
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-		AssertClick(
-			key_breadcrumbName = "Sites and Libraries",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "Sites and Libraries");
-
-		AssertClick(
-			key_groupTab = "Asset Library",
-			locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-			value1 = "Asset Library");
-
-		Click(
-			key_card = "Test Depot Name",
-			locator1 = "Card#CARD_TITLE_LINK");
-
-		AssertElementNotPresent(
-			key_contentName = "WC Depot Title",
-			locator1 = "ItemSelector#SELECT_FILE_WEB_CONTENT");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#INFO",
-			value1 = "Info:Web Content is disabled for this scope.");
 	}
 
 	@description = "This ensures that a depot image persists in blog entry as previously and it's not appeared in the item selector on a connected site when DM application is disabled."
@@ -352,20 +379,6 @@ definition {
 			entrySubtitle = "Blogs Entry Subtitle",
 			entryTitle = "Blogs Entry Title",
 			uploadFileName = "Document_1");
-
-		BlogsNavigator.gotoBrowseImage();
-
-		ItemSelector.changeWorkspaces(
-			navTab = "Documents and Media",
-			workspacesType = "Asset Library");
-
-		LexiconCard.clickCard(card = "Test Depot Name");
-
-		LexiconCard.viewCardNotPresent(card = "Document_1.jpg");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#INFO",
-			value1 = "This application is not supported for Asset Libraries.");
 	}
 
 	@description = "This ensures that the DM application can be viewed after reactivating in a depot."

@@ -1686,7 +1686,7 @@ definition {
 
 		Role.viewPermissionSubdirectory(
 			navItem = "Applications Menu",
-			subItemList = "Content,Workflow,Communication,App Builder,Accounts");
+			subItemList = "Content,Workflow,Communication,Accounts");
 	}
 
 	@priority = "4"

@@ -56,19 +56,28 @@ definition {
 
 		ManagementBar.setFilterAndOrder(orderBy = "Title");
 
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "Independent",
+			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
+			value1 = "Independent");
 
-		LexiconEntry.viewEntryName(rowEntry = "Liferay Users Admin");
-
-		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+		ManagementBar.toggleViewOrder(order = "up");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Communication");
 
-		LexiconEntry.viewEntryName(rowEntry = "Liferay Blogs");
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "Wiki",
+			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
+			value1 = "Wiki");
+
+		ManagementBar.toggleViewOrder(order = "down");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Utility");
 
-		LexiconEntry.viewEntryName(rowEntry = "Liferay Account");
+		AssertTextEquals.assertPartialText(
+			key_rowEntry = "Account",
+			locator1 = "ContentRow#ENTRY_CONTENT_PARTIAL_TEXt",
+			value1 = "Account");
 	}
 
 	@priority = "3"

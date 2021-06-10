@@ -471,26 +471,28 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			PermissionThreadLocal.getPermissionChecker();
 
 		return predicate.and(
-			Predicate.withParentheses(
-				permissionWherePredicate.or(
-					CTCollectionTable.INSTANCE.ctCollectionId.in(
-						DSLQueryFactoryUtil.selectDistinct(
-							GroupTable.INSTANCE.classPK
-						).from(
-							GroupTable.INSTANCE
-						).innerJoinON(
-							UserGroupRoleTable.INSTANCE,
-							UserGroupRoleTable.INSTANCE.groupId.eq(
-								GroupTable.INSTANCE.groupId
-							).and(
-								UserGroupRoleTable.INSTANCE.userId.eq(
-									permissionChecker.getUserId())
-							)
-						).where(
+			permissionWherePredicate.or(
+				CTCollectionTable.INSTANCE.ctCollectionId.in(
+					DSLQueryFactoryUtil.selectDistinct(
+						GroupTable.INSTANCE.classPK
+					).from(
+						GroupTable.INSTANCE
+					).innerJoinON(
+						UserGroupRoleTable.INSTANCE,
+						UserGroupRoleTable.INSTANCE.groupId.eq(
+							GroupTable.INSTANCE.groupId)
+					).where(
+						GroupTable.INSTANCE.companyId.eq(
+							permissionChecker.getCompanyId()
+						).and(
 							GroupTable.INSTANCE.classNameId.eq(
 								_classNameLocalService.getClassNameId(
 									CTCollection.class.getName()))
-						)))));
+						).and(
+							UserGroupRoleTable.INSTANCE.userId.eq(
+								permissionChecker.getUserId())
+						)
+					))));
 	}
 
 	@Reference

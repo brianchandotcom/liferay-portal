@@ -25,6 +25,7 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.scr.component.test.configuration.TestComponent;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -63,17 +64,70 @@ public class OptionalConfigurationsComponentTest {
 		_serviceTracker.close();
 	}
 
+	@After
+	public void tearDown() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_FIRST_CONFIGURATION_PID);
+		ConfigurationTestUtil.deleteConfiguration(_SECOND_CONFIGURATION_PID);
+	}
+
 	@Test
-	public void testApplyExistingConfigurationOnComponentActivation()
+	public void testApplyAllOptionalConfigurationsOnComponentActivation()
+		throws Exception {
+
+		Assert.assertEquals("empty", _testComponent.getFirst());
+
+		Assert.assertEquals("empty", _testComponent.getSecond());
+
+		ConfigurationTestUtil.saveConfiguration(
+			_FIRST_CONFIGURATION_PID,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"first", "first-value"
+			).build());
+
+		ConfigurationTestUtil.saveConfiguration(
+			_SECOND_CONFIGURATION_PID,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"second", "second-value"
+			).build());
+
+		Assert.assertEquals("first-value", _testComponent.getFirst());
+
+		Assert.assertEquals("second-value", _testComponent.getSecond());
+
+		_refreshBundle("com.liferay.scr.component.test.configuration");
+
+		Assert.assertEquals("first-value", _getTestComponent().getFirst());
+
+		Assert.assertEquals("second-value", _getTestComponent().getSecond());
+	}
+
+	@Test
+	public void testApplyFirstOptionalConfigurationOnComponentActivation()
+		throws Exception {
+
+		Assert.assertEquals("empty", _testComponent.getFirst());
+
+		ConfigurationTestUtil.saveConfiguration(
+			_FIRST_CONFIGURATION_PID,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"first", "first-value"
+			).build());
+
+		Assert.assertEquals("first-value", _testComponent.getFirst());
+
+		_refreshBundle("com.liferay.scr.component.test.configuration");
+
+		Assert.assertEquals("first-value", _getTestComponent().getFirst());
+	}
+
+	@Test
+	public void testApplySecondOptionalConfigurationOnComponentActivation()
 		throws Exception {
 
 		Assert.assertEquals("empty", _testComponent.getSecond());
 
-		String pid =
-			"com.liferay.scr.component.test.configuration.SecondConfiguration";
-
 		ConfigurationTestUtil.saveConfiguration(
-			pid,
+			_SECOND_CONFIGURATION_PID,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"second", "second-value"
 			).build());
@@ -104,6 +158,12 @@ public class OptionalConfigurationsComponentTest {
 			}
 		}
 	}
+
+	private static final String _FIRST_CONFIGURATION_PID =
+		"com.liferay.scr.component.test.configuration.FirstConfiguration";
+
+	private static final String _SECOND_CONFIGURATION_PID =
+		"com.liferay.scr.component.test.configuration.SecondConfiguration";
 
 	@Inject
 	private static ServiceComponentRuntime _serviceComponentRuntime;

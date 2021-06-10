@@ -36,6 +36,10 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class TestComponent {
 
+	public String getFirst() {
+		return _firstConfiguration.first();
+	}
+
 	public String getSecond() {
 		return _secondConfiguration.second();
 	}

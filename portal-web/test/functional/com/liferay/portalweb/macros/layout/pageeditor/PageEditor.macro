@@ -1498,7 +1498,7 @@ definition {
 					locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
 			}
 
-			if (isSet(subcategoryName)) {
+			if (isSet(categoryName)) {
 				LexiconTable.clickTableEntryColumnLink(
 					columnName = "name",
 					tableEntry = "${categoryName}");

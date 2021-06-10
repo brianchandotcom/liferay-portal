@@ -205,11 +205,13 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule1.getActions();
 
-		Assert.assertEquals(actions.toString(), 3, actions.size());
+		Assert.assertEquals(actions.toString(), 5, actions.size());
+		Assert.assertEquals("setVisible('repeatable', TRUE)", actions.get(0));
 		Assert.assertEquals(
-			"setEnabled('requireConfirmation', TRUE)", actions.get(0));
-		Assert.assertEquals("setEnabled('required', TRUE)", actions.get(1));
-		Assert.assertEquals("setEnabled('validation', TRUE)", actions.get(2));
+			"setVisible('requireConfirmation', TRUE)", actions.get(1));
+		Assert.assertEquals("setVisible('required', TRUE)", actions.get(2));
+		Assert.assertEquals("setVisible('showLabel', TRUE)", actions.get(3));
+		Assert.assertEquals("setVisible('validation', TRUE)", actions.get(4));
 
 		DDMFormRule ddmFormRule2 = ddmFormRules.get(2);
 
@@ -218,14 +220,18 @@ public class NumericDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule2.getActions();
 
-		Assert.assertEquals(actions.toString(), 5, actions.size());
+		Assert.assertEquals(actions.toString(), 9, actions.size());
+		Assert.assertEquals("setValue('repeatable', FALSE)", actions.get(0));
 		Assert.assertEquals(
-			"setEnabled('requireConfirmation', FALSE)", actions.get(0));
-		Assert.assertEquals("setEnabled('required', FALSE)", actions.get(1));
-		Assert.assertEquals("setEnabled('validation', FALSE)", actions.get(2));
+			"setValue('requireConfirmation', FALSE)", actions.get(1));
+		Assert.assertEquals("setValue('required', FALSE)", actions.get(2));
+		Assert.assertEquals("setValue('showLabel', TRUE)", actions.get(3));
+		Assert.assertEquals("setVisible('repeatable', FALSE)", actions.get(4));
 		Assert.assertEquals(
-			"setValue('requireConfirmation', FALSE)", actions.get(3));
-		Assert.assertEquals("setValue('required', FALSE)", actions.get(4));
+			"setVisible('requireConfirmation', FALSE)", actions.get(5));
+		Assert.assertEquals("setVisible('required', FALSE)", actions.get(6));
+		Assert.assertEquals("setVisible('showLabel', FALSE)", actions.get(7));
+		Assert.assertEquals("setVisible('validation', FALSE)", actions.get(8));
 
 		DDMFormRule ddmFormRule3 = ddmFormRules.get(3);
 

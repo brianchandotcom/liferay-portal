@@ -210,49 +210,6 @@ definition {
 			type = "Dynamic");
 	}
 
-	@description = "This ensures that a user cannot see the sections of both the product menu and the dashboard that contain disabled applications."
-	@priority = "5"
-	@refactorneeded
-	test ViewDepotWithAllAppsDisabled {
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		Depot.configureApplication(
-			applicationList = "Collections,Documents and Media,Web Content,Translation",
-			status = "Disabled");
-
-		DepotNavigator.openDepotAdmin();
-
-		Click(
-			key_card = "Test Depot Name",
-			locator1 = "Card#CARD_TITLE_LINK");
-
-		AssertTextEquals(
-			locator1 = "ControlMenu#HEADING",
-			value1 = "Asset Libraries");
-
-		for (var portletName : list "Web Content,Documents and Media,Collections,Translation,Recycle Bin") {
-			AssertElementNotPresent(
-				key_card = "${portletName}",
-				locator1 = "Card#CARD");
-		}
-
-		DepotNavigator.gotoPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		AssertElementNotPresent(
-			key_category = "Content &amp; Data",
-			locator1 = "ProductMenu#CATEGORY_COLLAPSED");
-
-		AssertElementNotPresent(
-			key_category = "Recycle Bin",
-			locator1 = "ProductMenu#CATEGORY_COLLAPSED");
-	}
-
 	@description = "This ensures that a depot web content persists in WCD as previously and it's not appeared in the item selector on a connected site when WC application is disabled."
 	@priority = "5"
 	@refactorneeded

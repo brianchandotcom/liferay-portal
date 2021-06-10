@@ -152,7 +152,11 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user%27ea@liferay.com");
 
-		User.logoutAndLoginPG(
+		Navigator.openURL();
+
+		UserBar.signOut();
+
+		User.firstLoginUI(
 			userLoginEmailAddress = "user'ea@liferay.com",
 			userLoginFullName = "userfn userln");
 
@@ -178,7 +182,11 @@ definition {
 			roleTitle = "Administrator",
 			userEmailAddress = "user%27ea@liferay.com");
 
-		User.logoutAndLoginPG(
+		Navigator.openURL();
+
+		UserBar.signOut();
+
+		User.firstLoginUI(
 			userLoginEmailAddress = "user'ea@liferay.com",
 			userLoginFullName = "userfn userln");
 

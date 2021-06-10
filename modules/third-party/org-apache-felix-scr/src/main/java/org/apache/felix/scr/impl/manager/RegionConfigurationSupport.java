@@ -167,6 +167,9 @@ public abstract class RegionConfigurationSupport
             final List<String> confPids = holder.getComponentMetadata().getConfigurationPid();
 
             final ConfigurationAdmin ca = getConfigAdmin( bundleContext );
+
+            boolean missingConfiguration = false;
+
             try
             {
                 for ( final String confPid : confPids )
@@ -191,7 +194,7 @@ public abstract class RegionConfigurationSupport
                         }
                         if ( !created )
                         {
-                            return false;
+                            missingConfiguration = true;
                         }
                     }
                     else
@@ -212,16 +215,21 @@ public abstract class RegionConfigurationSupport
                             }
                             else
                             {
-                                return false;
+                                missingConfiguration = true;
                             }
                         }
                         else
                         {
-                            return false;
+                            missingConfiguration = true;
                         }
                     }
                 }
-                return !confPids.isEmpty();
+                if (missingConfiguration) {
+                    return false;
+                }
+                else {
+                    return !confPids.isEmpty();
+                }
             }
             finally
             {
@@ -804,3 +812,4 @@ public abstract class RegionConfigurationSupport
         }
     }
 }
+/* @generated */

@@ -1,0 +1,54 @@
+diff --git a/org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java b/org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java
+index 674fedebdac9..0c8e60a5b8a3 100755
+--- a/org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java
++++ b/org/apache/felix/scr/impl/manager/RegionConfigurationSupport.java
+@@ -167,6 +167,9 @@ public abstract class RegionConfigurationSupport
+             final List<String> confPids = holder.getComponentMetadata().getConfigurationPid();
+ 
+             final ConfigurationAdmin ca = getConfigAdmin( bundleContext );
++
++            boolean missingConfiguration = false;
++
+             try
+             {
+                 for ( final String confPid : confPids )
+@@ -191,7 +194,7 @@ public abstract class RegionConfigurationSupport
+                         }
+                         if ( !created )
+                         {
+-                            return false;
++                            missingConfiguration = true;
+                         }
+                     }
+                     else
+@@ -212,16 +215,21 @@ public abstract class RegionConfigurationSupport
+                             }
+                             else
+                             {
+-                                return false;
++                                missingConfiguration = true;
+                             }
+                         }
+                         else
+                         {
+-                            return false;
++                            missingConfiguration = true;
+                         }
+                     }
+                 }
+-                return !confPids.isEmpty();
++                if (missingConfiguration) {
++                    return false;
++                }
++                else {
++                    return !confPids.isEmpty();
++                }
+             }
+             finally
+             {
+@@ -804,3 +812,4 @@ public abstract class RegionConfigurationSupport
+         }
+     }
+ }
++/* @generated */
+\ No newline at end of file

@@ -40,6 +40,8 @@ definition {
 	@description = "This is a use case for LPS-91192. Publish associated display page template with Asset Publisher to live."
 	@priority = "4"
 	test PublishDisplayPageTemplateWithAssetPublisherToLive {
+		property app.server.bundles.size = "1";
+		property databases.size = "1";
 		property test.name.skip.portal.instance = "DisplayPageTemplatesWithRemoteStaging#PublishDisplayPageTemplateWithAssetPublisherToLive";
 
 		task ("Add a web content and select the display page template") {

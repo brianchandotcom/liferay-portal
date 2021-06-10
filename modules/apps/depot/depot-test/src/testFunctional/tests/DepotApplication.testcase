@@ -30,6 +30,74 @@ definition {
 		}
 	}
 
+	@description = "This ensures that the Applications can be set in a depot."
+	@priority = "5"
+	@refactorneeded
+	test CanDisableAndEnableApps {
+		property portal.acceptance = "true";
+		property testray.component.names = "Asset Lists";
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		for (var application : list "Collections,Documents and Media,Translation Processes,Web Content") {
+			AssertChecked(
+				checkboxName = "${application}",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		Depot.configureApplication(
+			applicationList = "Collections,Documents and Media,Translation Processes,Web Content",
+			status = "Disabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.viewApplication(
+			applicationList = "Collections,Documents and Media,Recycle Bin,Translation Processes,Web Content",
+			depotName = "Test Depot Name",
+			noApplication = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.configureApplication(
+			applicationList = "Collections,Documents and Media,Translation Processes,Web Content",
+			status = "Enabled");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Web Content");
+
+		DepotNavigator.gotoDepotPortletViaBreadcrumb(
+			otherDepotName = "Test Depot Name",
+			portlet = "Documents and Media");
+
+		DepotNavigator.gotoDepotPortletViaBreadcrumb(
+			otherDepotName = "Test Depot Name",
+			portlet = "Collections");
+
+		DepotNavigator.gotoDepotPortletViaBreadcrumb(
+			otherDepotName = "Test Depot Name",
+			portlet = "Recycle Bin");
+
+		// There is a bug for Translation Processes Breadcrumb: LPS-133904, will update the below steps after it fixed
+
+		DepotNavigator.openDepotDashboard(depotName = "Test Depot Name");
+
+		AssertTextEquals(
+			key_card = "Translation Processes",
+			locator1 = "Card#CARD_TITLE",
+			value1 = "Translation Processes");
+	}
+
 	@description = "This ensures that previous asset selections persist in collections after DM and WC applications are disabled."
 	@priority = "5"
 	@refactorneeded
@@ -91,61 +159,6 @@ definition {
 			assetListTitle = "Depot Manual Asset List",
 			assetTitle = "Document_2.jpeg",
 			assetType = "Document");
-	}
-
-	@description = "This ensures that the Applications can be set in a depot."
-	@priority = "5"
-	@refactorneeded
-	test Smoke {
-		property portal.acceptance = "true";
-		property testray.component.names = "Asset Lists";
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		for (var application : list "Collections,Documents and Media,Web Content") {
-			AssertChecked(
-				checkboxName = "${application}",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-
-		Depot.configureApplication(
-			applicationList = "Collections,Documents and Media,Web Content",
-			status = "Disabled");
-
-		DepotNavigator.openDepotAdmin();
-
-		Depot.viewApplication(
-			applicationList = "Collections,Documents and Media,Web Content",
-			depotName = "Test Depot Name",
-			noApplication = "true");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Settings");
-
-		Depot.configureApplication(
-			applicationList = "Collections,Documents and Media,Web Content",
-			status = "Enabled");
-
-		DepotNavigator.openDepotAdmin();
-
-		DepotNavigator.gotoDepotPortlet(
-			depotName = "Test Depot Name",
-			portlet = "Web Content");
-
-		DepotNavigator.gotoDepotPortletViaBreadcrumb(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
-
-		DepotNavigator.gotoDepotPortletViaBreadcrumb(
-			otherDepotName = "Test Depot Name",
-			portlet = "Collections");
 	}
 
 	@description = "This ensures that the Collections application can be viewed after reactivating in a depot."

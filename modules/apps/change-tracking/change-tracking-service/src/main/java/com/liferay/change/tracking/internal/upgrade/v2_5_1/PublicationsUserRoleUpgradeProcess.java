@@ -51,45 +51,40 @@ public class PublicationsUserRoleUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select distinct CTPreferences.companyId from ",
-					"CTPreferences left join Role_ on CTPreferences.companyId ",
-					"= Role_.companyId and Role_.name = '",
-					CTConstants.PUBLICATIONS_USER,
-					"' where  Role_.roleId is NULL"))) {
+					"select CTPreferences.companyId from CTPreferences left ",
+					"join Role_ on Role_.companyId = CTPreferences.companyId ",
+					"and Role_.name = '", CTConstants.PUBLICATIONS_USER,
+					"' where CTPreferences.userId = 0 and Role_.roleId is ",
+					"null"));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					long companyId = resultSet.getLong(1);
+			while (resultSet.next()) {
+				long companyId = resultSet.getLong(1);
 
-					long defaultUserId = _userLocalService.getDefaultUserId(
-						companyId);
+				long defaultUserId = _userLocalService.getDefaultUserId(
+					companyId);
 
-					Role role = _roleLocalService.addRole(
-						defaultUserId, null, 0, CTConstants.PUBLICATIONS_USER,
-						HashMapBuilder.put(
-							LocaleUtil.fromLanguageId(
-								UpgradeProcessUtil.getDefaultLanguageId(
-									companyId)),
-							CTConstants.PUBLICATIONS_USER
-						).build(),
-						null, RoleConstants.TYPE_REGULAR, null, null);
+				Role role = _roleLocalService.addRole(
+					defaultUserId, null, 0, CTConstants.PUBLICATIONS_USER,
+					HashMapBuilder.put(
+						LocaleUtil.fromLanguageId(
+							UpgradeProcessUtil.getDefaultLanguageId(companyId)),
+						CTConstants.PUBLICATIONS_USER
+					).build(),
+					null, RoleConstants.TYPE_REGULAR, null, null);
 
-					_resourcePermissionLocalService.addResourcePermission(
-						companyId, PortletKeys.PORTAL,
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(companyId), role.getRoleId(),
-						ActionKeys.VIEW_CONTROL_PANEL);
-					_resourcePermissionLocalService.addResourcePermission(
-						companyId, CTPortletKeys.PUBLICATIONS,
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(companyId), role.getRoleId(),
-						ActionKeys.ACCESS_IN_CONTROL_PANEL);
-					_resourcePermissionLocalService.addResourcePermission(
-						companyId, CTPortletKeys.PUBLICATIONS,
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(companyId), role.getRoleId(),
-						ActionKeys.VIEW);
-				}
+				_resourcePermissionLocalService.addResourcePermission(
+					companyId, PortletKeys.PORTAL,
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					role.getRoleId(), ActionKeys.VIEW_CONTROL_PANEL);
+				_resourcePermissionLocalService.addResourcePermission(
+					companyId, CTPortletKeys.PUBLICATIONS,
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					role.getRoleId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
+				_resourcePermissionLocalService.addResourcePermission(
+					companyId, CTPortletKeys.PUBLICATIONS,
+					ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+					role.getRoleId(), ActionKeys.VIEW);
 			}
 		}
 	}

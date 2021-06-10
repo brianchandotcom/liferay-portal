@@ -1466,6 +1466,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-129012. View web content in associated public content page."
+	@priority = "4"
+	test ViewWebContentInAssociatedPublicContentPage {
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page Name",
+				type = "content");
+		}
+
+		task ("Add an Asset Publisher widget to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+		}
+
+		task ("Set the Asset Publisher as default for page") {
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+		}
+
+		task ("Select the content page in web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Content Page Name",
+				pageType = "Public Pages");
+
+			PortletEntry.publish();
+		}
+
+		task ("View web content in associated public page") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEntryMenuItem(
+				entry = "Webcontent Title",
+				menuItem = "View Content");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Content Page Name");
+
+			AssertVisible(
+				key_assetTitle = "Webcontent Title",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+
+			AssertVisible(
+				key_assetContent = "Webcontent Content",
+				locator1 = "APAsset#ASSET_CONTENT");
+		}
+
+		task ("View the friendly URL shown in address") {
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/-/webcontent-title");
+		}
+
+		task ("Access to edit the web content via Asset Publisher") {
+			AssetPublisherPortlet.gotoEditAssetPG(assetTitle = "Webcontent Title");
+
+			WebContent.addCP(webContentContent = "Webcontent Content Edit");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the friendly URL shown in address") {
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/-/webcontent-title");
+		}
+	}
+
 	@description = "View web content in associated public page."
 	@priority = "4"
 	test ViewWebContentInAssociatedPublicPage {

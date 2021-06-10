@@ -856,13 +856,115 @@ definition {
 	}
 
 	@description = "COMMERCE-6663. I want to be able to use ADT to render Search Results widget and I want to be able to select a Display Template and see it applied to the widget"
-	@ignore = "true"
 	@priority = "3"
 	test UseADTInSearchResultsWidget {
 		property portal.acceptance = "false";
+		property test.name.skip.portal.instance = "CommerceSearch#UseADTInSearchResultsWidget";
 
-		// TODO COMMERCE-6663 UseADTInSearchResultsWidget pending implementation
+		// TODO Review
 
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Product Management",
+			portlet = "Products");
+
+		CommerceProducts.searchProduct(search = "U-Joint");
+
+		CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+		var productId = selenium.getText(locator1 = "CommerceEntry#HEADER_ID");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		MouseOver(locator1 = "CommerceEntry#PAGINATION_BAR");
+
+		Click.clickNoWaitForVisible(locator1 = "CommerceAccelerators#SEARCH_RESULT_OPTIONS");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Navigator.gotoNavTab(navTab = "Render Selection");
+
+		if (IsElementNotPresent(key_selectFieldLabel = "Product List Renderer", locator1 = "Select#ANY")) {
+			Click(
+				key_text = "Product List Renderer",
+				locator1 = "Link#ANY");
+		}
+
+		AssertTextEquals(
+			key_selectFieldLabel = "Product List Renderer",
+			locator1 = "Select#ANY",
+			value1 = "Default");
+
+		Click(
+			key_radioOption = "Use Application Display Template",
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		if (IsElementNotPresent(key_text = "Manage Templates", locator1 = "Link#ANY")) {
+			Click(
+				key_text = "Display Template",
+				locator1 = "Link#ANY");
+		}
+
+		Click(
+			key_text = "Manage Templates",
+			locator1 = "Link#ANY");
+
+		SelectFrameTop();
+
+		SelectFrame(
+			key_title = "Widget Templates",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Search Results Template");
+
+		Click(
+			key_fieldName = "Commerce Product Catalog Entries",
+			locator1 = "DDMEditTemplate#SCRIPT_FIELD");
+
+		Button.clickSave();
+
+		SelectFrameTop();
+
+		Click(
+			key_modalTitle = "Widget Templates",
+			locator1 = "Button#CLOSE_MODAL");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		Select(
+			key_selectFieldLabel = "Display Template",
+			locator1 = "Select#ANY",
+			value1 = "Search Results Template");
+
+		Navigator.gotoNavTab(navTab = "Pagination");
+
+		Type(
+			key_fieldLabel = "Number of Items to Display",
+			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
+			value1 = "1");
+
+		Button.clickSave();
+
+		IFrame.closeFrame();
+
+		SelectFrameTop();
+
+		AssertTextEquals(
+			locator1 = "CommerceAccelerators#SORT_BY_DROPDOWN",
+			value1 = "Sort By: Relevance");
+
+		AssertTextEquals.assertPartialText(
+			key_portletName = "Search Results",
+			locator1 = "Portlet#BODY",
+			value1 = "${productId}");
 	}
 
 }

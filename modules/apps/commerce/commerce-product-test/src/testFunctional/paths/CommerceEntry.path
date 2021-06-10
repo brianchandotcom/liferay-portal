@@ -483,6 +483,11 @@
 	<td>//h4[contains(.,'${key_table}')]//..//div/a[contains(.,'${key_entryName}')]//..//..//../div/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>HEADER_ID</td>
+	<td>//div[@class='header-info']//div//span[contains(.,'ID')]/following-sibling::strong</td>
+	<td></td>
+</tr>
 <!--CATALOGS-->
 <tr>
 	<td>CATALOGS_FORM</td>

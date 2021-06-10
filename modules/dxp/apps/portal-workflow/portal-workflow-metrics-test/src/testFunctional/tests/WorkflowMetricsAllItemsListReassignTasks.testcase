@@ -1,0 +1,176 @@
+@component-name = "portal-workflow-ee"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "Workflow Metrics";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-102664 - Verify that the user can reassign several tasks to a different users and All Items page is updated accordingly"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AllItemsPageIsUpdatedAfterReassignTasksToDifferentUser {
+
+		// TODO LRQA-67838 AllItemsPageIsUpdatedAfterReassignTasksToDifferentUser pending implementation
+
+	}
+
+	@description = "LPS-106219 - Verify that, in the modal Select Tasks to Reassign, the Assignee filter contains only the options that are displayed in the modal"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test AssigneeFilterContainsOnlyOptionDisplayedInModal {
+
+		// TODO LRQA-67857 AssigneeFilterContainsOnlyOptionDisplayedInModal pending implementation
+
+	}
+
+	@description = "LPS-106219 - Verify that when all items are selected to be reassigned in a filtered All Items page, the bulk modal is considering the filter results"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test BulkReassignConsiderFilteredResultsFromAllItemsPage {
+
+		// TODO LRQA-67830 BulkReassignConsiderFilteredResultsFromAllItemsPage pending implementation
+
+	}
+
+	@description = "LPS-106219 - Verify that the user is able to select multiple filter options and combine filter queries"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanSelectMultipleFilterOption {
+
+		// TODO LRQA-67833 CanSelectMultipleFilterOption pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that when the user clicks on Next in Select Tasks to Reassign, and the connection is lost, a corresponding error message is displayed"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ErrorMessageIsDisplayedWhenConnectionIsLost {
+
+		// TODO LRQA-67841 ErrorMessageIsDisplayedWhenConnectionIsLost pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that when the user clicks on Reassign in Select New Assignee, and the connection is lost, a corresponding error message is displayed"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test ErrorMessageIsDisplayedWhenConnectionIsLostOnReassign {
+
+		// TODO LRQA-67837 ErrorMessageIsDisplayedWhenConnectionIsLostOnReassign pending implementation
+
+	}
+
+	@description = "LPS-106219 - Verify that, in the modal Select Tasks to Reassign, the filters options are ordered alphabetically"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FilterOptionsAreAlphabeticallyOrdered {
+
+		// TODO LRQA-67880 FilterOptionsAreAlphabeticallyOrdered pending implementation
+
+	}
+
+	@description = "LPS-106219 - Verify that, in the modal Select Tasks to Reassign, the filter query should only be applied after the user moves the cursor out of the dropdown card"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FilterQueryIsAppliedAfterMouseMovesOutTheCard {
+
+		// TODO LRQA-67869 FilterQueryIsAppliedAfterMouseMovesOutTheCard pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that, in Select New Assignee table, there is a tooltip next to New Assignee title that says Possible assignees must have permissions to be assigned to the corresponding step"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test InfoIconDisplaysMessageOnHover {
+
+		// TODO LRQA-67843 InfoIconDisplaysMessageOnHover pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that tasks within a single instance with concurrent pending tasks can be reassigned using the bulk reassign task modal"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test InstanceWithPendingTasksCanBeReassignedUsingBulkReassignModal {
+
+		// TODO LRQA-67832 InstanceWithPendingTasksCanBeReassignedUsingBulkReassignModal pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that when the user clicks on Next in Select Tasks to Reassign, a loading state with Retrieving all possible assignees message is displayed"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test LoadingStateWithMessageIsDisplayed {
+
+		// TODO LRQA-67846 LoadingStateWithMessageIsDisplayed pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that in Select Tasks to Reassign, the tasks are displayed in the same order rule displayed in All Items page"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test TasksAreDisplayedInSameOrderRuleInAllItemsPage {
+
+		// TODO LRQA-67829 TasksAreDisplayedInSameOrderRuleInAllItemsPage pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that the user is able to filter the info inside Select Tasks to Reassign by Step and Assignee, search for any of the available field values and the table is updated accordingly"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UserCanFilterbyStepAndAssignee {
+
+		// TODO LRQA-67840 UserCanFilterbyStepAndAssignee pending implementation
+
+	}
+
+	@description = "LPS-106219 - Verify that the user can filter, by Process Step, instances with pending tasks in parallel"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test UserCanFilterInstanceWithPendingTasksInParallelByStep {
+
+		// TODO LRQA-67836 UserCanFilterInstanceWithPendingTasksInParallelByStep pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that the Bulk Reassign is letting the user reassign only pending tasks"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test UserCanReassignOnlyPendingTasks {
+
+		// TODO LRQA-67834 UserCanReassignOnlyPendingTasks pending implementation
+
+	}
+
+	@description = "LPS-102664 - Verify that the Bulk Reassign is letting the user reassign only pending tasks assigned to the user's role"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test UserCanReassignOnlyTasksAssignedToHisRole {
+
+		// TODO LRQA-67835 UserCanReassignOnlyTasksAssignedToHisRole pending implementation
+
+	}
+
+}

@@ -376,6 +376,31 @@ definition {
 		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 	}
 
+	@description = "This ensures that a depot can be edited via settings."
+	@priority = "4"
+	@refactordone
+	test CanEditNameViaSettings {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			depotName = "Test Depot Name",
+			portlet = "Settings");
+
+		Depot.editDepot(
+			depotDescriptionEdit = "This is an edited description of a depot",
+			depotName = "Test Depot Name",
+			depotNameEdit = "Edited Test Depot Name",
+			settings = "true");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
+	}
+
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
 	@priority = "5"
 	@refactordone

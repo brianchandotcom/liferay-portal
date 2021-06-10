@@ -1,4 +1,4 @@
-@component-name = "portal-workflow"
+@component-name = "portal-workflow-ee"
 definition {
 
 	property portal.release = "true";
@@ -19,7 +19,6 @@ definition {
 			category = "Workflow",
 			panel = "Applications",
 			portlet = "Metrics");
-
 	}
 
 	tearDown {
@@ -30,103 +29,103 @@ definition {
 		}
 	}
 
-    @description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
-    @ignore = "Test Stub"
-    @priority = "3"
-    test DefaultDateFormatIsMMDDYYYY {
+	@description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test DefaultDateFormatIsMMDDYYYY {
 
-        // TODO LRQA-67661 DefaultDateFormatIsMMDDYYYY pending implementation
+		// TODO LRQA-67661 DefaultDateFormatIsMMDDYYYY pending implementation
 
-    }
+	}
 
-    @description = "LPS-98001 - Verify that when there is an unexpected error eg: timeout, the card should display the specific error state as specified on Figma"
-    @ignore = "Test Stub"
-    @priority = "2"
-    test DisplaysErrorStateForUnexpectedError {
+	@description = "LPS-98001 - Verify that when there is an unexpected error, the card should display the specific error state"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test DisplaysErrorStateForUnexpectedError {
 
-        // TODO LRQA-67662 DisplaysErrorStateForUnexpectedError pending implementation
+		// TODO LRQA-67662 DisplaysErrorStateForUnexpectedError pending implementation
 
-    }
+	}
 
-    @description = "LPS-98233 - Verify that the fields From and To are required"
-    @ignore = "Test Stub"
-    @priority = "3"
-    test FromAndToAreRequiredFields {
+	@description = "LPS-98233 - Verify that the fields From and To are required"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FromAndToAreRequiredFields {
 
-        // TODO LRQA-67664 FromAndToAreRequiredFields pending implementation
+		// TODO LRQA-67664 FromAndToAreRequiredFields pending implementation
 
-    }
+	}
 
-    @description = "LPS-98233 - Verify that the user can not insert a future date"
-    @ignore = "Test Stub"
-    @priority = "3"
-    test FutureDatesAreNotAllowed {
+	@description = "LPS-98233 - Verify that the user can not insert a future date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test FutureDatesAreNotAllowed {
 
-        // TODO LRQA-67663 FutureDatesAreNotAllowed pending implementation
+		// TODO LRQA-67663 FutureDatesAreNotAllowed pending implementation
 
-    }
+	}
 
-    @description = "LPS-97665 - Verify that info icon hover state and tooltip message"
-    @ignore = "Test Stub"
-    @priority = "2"
-    test InfoIconDisplaysMessageOnHover {
+	@description = "LPS-97665 - Verify that info icon hover state and tooltip message"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test InfoIconDisplaysMessageOnHover {
 
-        // TODO LRQA-67658 InfoIconDisplaysMessageOnHover pending implementation
+		// TODO LRQA-67658 InfoIconDisplaysMessageOnHover pending implementation
 
-    }
+	}
 
-    @description = "LPS-97665 - Verify that an item out of the timeframe selected is not considered in the velocity result"
-    @ignore = "Test Stub"
-    @priority = "4"
-    test ItemOutOfTimeFrameIsNotConsideredInVelocityResult {
+	@description = "LPS-97665 - Verify that an item out of the timeframe selected is not considered in the velocity result"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ItemOutOfTimeFrameIsNotConsideredInVelocityResult {
 
-        // TODO LRQA-67659 ItemOutOfTimeFrameIsNotConsideredInVelocityResult pending implementation
+		// TODO LRQA-67659 ItemOutOfTimeFrameIsNotConsideredInVelocityResult pending implementation
 
-    }
+	}
 
-    @description = "LPS-97665 - Verify the label from Yesterday dropdown timeframe option is read as <dd MM>, 12 AM - <dd MM>, 11:59 PM"
-    @ignore = "Test Stub"
-    @priority = "3"
-    test LabelFromYesterdayFilter {
+	@description = "LPS-97665 - Verify the label from Yesterday dropdown timeframe option is read as <dd MM>, 12 AM - <dd MM>, 11:59 PM"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test LabelFromYesterdayFilter {
 
-        // TODO LRQA-67660 LabelFromYesterdayFilter pending implementation
+		// TODO LRQA-67660 LabelFromYesterdayFilter pending implementation
 
-    }
+	}
 
-    @description = "LPS-98233 - Verify that at the custom range modal, the oldest date accepted is 1970"
-    @ignore = "Test Stub"
-    @priority = "2"
-    test OldestDataAcceptedIs1970 {
+	@description = "LPS-98233 - Verify that at the custom range modal, the oldest date accepted is 1970"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test OldestDataAcceptedIs1970 {
 
-        // TODO LRQA-67655 OldestDataAcceptedIs1970 pending implementation
+		// TODO LRQA-67655 OldestDataAcceptedIs1970 pending implementation
 
-    }
+	}
 
-    @description = "LPS-98233 - Verify that when there are no results for a filter selection, the table should display the respective empty state"
-    @ignore = "Test Stub"
-    @priority = "3"
-    test PageProvidesEmptyStateWhenThereAreNoResultForFilterSelection {
+	@description = "LPS-98233 - Verify that when there are no results for a filter selection, the table should display the respective empty state"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test PageProvidesEmptyStateWhenThereAreNoResultForFilterSelection {
 
-        // TODO LRQA-67657 PageProvidesEmptyStateWhenThereAreNoResultForFilterSelection pending implementation
+		// TODO LRQA-67657 PageProvidesEmptyStateWhenThereAreNoResultForFilterSelection pending implementation
 
-    }
+	}
 
-    @description = "LPS-98233 - Verify that the page provides loading feedback when the table is being updated according to filter options"
-    @ignore = "Test Stub"
-    @priority = "2"
-    test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
+	@description = "LPS-98233 - Verify that the page provides loading feedback when the table is being updated according to filter options"
+	@ignore = "Test Stub"
+	@priority = "2"
+	test PageProvidesLoadingFeedbackWhenTableIsBeingUpdated {
 
-        // TODO LRQA-67656 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
+		// TODO LRQA-67656 PageProvidesLoadingFeedbackWhenTableIsBeingUpdated pending implementation
 
-    }
+	}
 
-    @description = "LPS-98233 - Verify that the To date is greater than the From date"
-    @ignore = "Test Stub"
-    @priority = "3"
-    test ToDateMustBeGreaterThanFromDate {
+	@description = "LPS-98233 - Verify that the To date is greater than the From date"
+	@ignore = "Test Stub"
+	@priority = "3"
+	test ToDateMustBeGreaterThanFromDate {
 
-        // TODO LRQA-67665 ToDateMustBeGreaterThanFromDate pending implementation
+		// TODO LRQA-67665 ToDateMustBeGreaterThanFromDate pending implementation
 
-    }
+	}
 
 }

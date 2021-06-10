@@ -91,9 +91,6 @@ definition {
 			uploadRepeatedFileName = "Document_1.jpg");
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
-
-		
-
 	}
 
 	@description = "Verify that an image can be uploaded"

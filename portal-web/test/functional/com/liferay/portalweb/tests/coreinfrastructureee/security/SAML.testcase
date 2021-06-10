@@ -219,8 +219,8 @@ definition {
 
 		User.firstLoginUI(
 			password = "test",
-			userEmailAddress = "test@www.baker.com",
-			virtualHostsURL = "http://www.baker.com:9080");
+			specificURL = "http://www.baker.com:9080",
+			userEmailAddress = "test@www.baker.com");
 
 		User.openUsersAdmin(baseURL = "http://www.baker.com:9080");
 

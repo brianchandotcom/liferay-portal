@@ -110,6 +110,16 @@ public class OrganizationResourceImpl
 	}
 
 	@Override
+	public void deleteUserAccountsByEmailAddress(
+			String organizationId, String[] userEmailAddresses)
+		throws Exception {
+
+		for (String emailAddress : userEmailAddresses) {
+			deleteUserAccountByEmailAddress(organizationId, emailAddress);
+		}
+	}
+
+	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _entityModel;
 	}
@@ -194,6 +204,16 @@ public class OrganizationResourceImpl
 
 		_organizationService.addUserOrganizationByEmailAddress(
 			emailAddress, _getServiceBuilderOrganizationId(organizationId));
+	}
+
+	@Override
+	public void postUserAccountsByEmailAddress(
+			String organizationId, String[] userEmailAddresses)
+		throws Exception {
+
+		for (String emailAddress : userEmailAddresses) {
+			postUserAccountByEmailAddress(organizationId, emailAddress);
+		}
 	}
 
 	@Override

@@ -35,17 +35,13 @@ definition {
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		if (!(isSet(entryTitle))) {
-			Blogs.addEntry(
-				entryContent = "This is the blog test for AC",
-				entrySubtitle = "Blogs AC Subtitle",
-				entryTitle = "Blogs AC Title");
+			entryTitle = "Blogs AC Title";
 		}
-		else {
-			Blogs.addEntry(
-				entryContent = "This is the blog test for AC",
-				entrySubtitle = "Blogs AC Subtitle",
-				entryTitle = "${entryTitle}");
-		}
+		Blogs.addEntry(
+			entryContent = "This is the blog test for AC",
+			entrySubtitle = "Blogs AC Subtitle",
+			entryTitle = "${entryTitle}");
+
 		Navigator.gotoSitePage(
 			pageName = "AC Page",
 			siteName = "Site Name");
@@ -136,7 +132,7 @@ definition {
 
 		Type(
 			locator1 = "ACSettings#SEARCH_BAR",
-			value1 = "${propertyName}");
+			value1 = "${searchItem}");
 
 		KeyPress(
 			locator1 = "ACSettings#SEARCH_BAR",

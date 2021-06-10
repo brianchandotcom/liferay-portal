@@ -64,6 +64,10 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 		return layoutReportsGooglePageSpeedCompanyConfiguration.strategy();
 	}
 
+	public boolean isEnabled() throws ConfigurationException {
+		return _layoutReportsGooglePageSpeedConfiguration.enabled();
+	}
+
 	public boolean isEnabled(Company company) throws ConfigurationException {
 		return _isEnabled(company.getCompanyId());
 	}

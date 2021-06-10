@@ -107,6 +107,22 @@ $management-bar-default-btn-secondary-active-color: $management-bar-default-btn-
 
 	.add-menu {
 		z-index: inherit;
+
+		.add-menu-advice {
+			margin-top: -6px;
+
+			& + .divider {
+				margin-top: 0;
+			}
+
+			a {
+				white-space: normal;
+			}
+		}
+
+		.dropdown-menu {
+			min-width: 290px;
+		}
 	}
 
 	.btn-action,

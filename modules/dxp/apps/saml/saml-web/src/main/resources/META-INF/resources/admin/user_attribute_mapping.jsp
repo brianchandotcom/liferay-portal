@@ -98,32 +98,32 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 </aui:fieldset>
 
 <script>
-	<portlet:namespace />evaluateAttributeMappingRow = function (
-		row, event
-	) {
+	<portlet:namespace />evaluateAttributeMappingRow = function (row, event) {
 		var radioTarget = row.querySelector(
-			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]');
+			'input[name="<portlet:namespace />attribute:userIdentifierExpressionIndex"]'
+		);
 		var selectTarget = row.querySelector('select');
 
-		if (event == null || (event.target == radioTarget)) {
+		if (event == null || event.target == radioTarget) {
 			if (radioTarget.checked) {
 				<portlet:namespace />handleAttributeMappingMatchingSelection(row);
 			}
 		}
 
-		if (event == null || (event.target == selectTarget)) {
-			if (selectTarget.options[selectTarget.selectedIndex].dataset.authsupported ==
-				'true') {
+		if (event == null || event.target == selectTarget) {
+			if (
+				selectTarget.options[selectTarget.selectedIndex].dataset
+					.authsupported == 'true'
+			) {
 				radioTarget.disabled = false;
-				radioTarget.closest('label').classList.toggle(
-					'disabled', false);
+				radioTarget.closest('label').classList.toggle('disabled', false);
 			}
 			else {
 				radioTarget.disabled = true;
 				radioTarget.closest('label').classList.toggle('disabled', true);
 			}
 		}
-	}
+	};
 
 	<portlet:namespace />handleAttributeMappingMatchingDeselection = function () {
 		document.querySelector(
@@ -136,9 +136,7 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 			.forEach((radioControl) => (radioControl.checked = false));
 	};
 
-	<portlet:namespace />handleAttributeMappingMatchingSelection = function (
-		row
-	) {
+	<portlet:namespace />handleAttributeMappingMatchingSelection = function (row) {
 		document.querySelector(
 			'input[name="<portlet:namespace />attribute:userIdentifierExpressionPrefix"]'
 		).value = row.dataset.prefix;
@@ -157,17 +155,23 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		).checked = true;
 	};
 
-	var userAttributeMappings = document.getElementById('<portlet:namespace />userAttributeMappings');
+	var userAttributeMappings = document.getElementById(
+		'<portlet:namespace />userAttributeMappings'
+	);
 
 	userAttributeMappings.addEventListener('change', (event) => {
 		<portlet:namespace />evaluateAttributeMappingRow(
-			event.target.closest('.user-attribute-mapping-row'), event);
+			event.target.closest('.user-attribute-mapping-row'),
+			event
+		);
 	});
 	userAttributeMappings.addEventListener('click', (event) => {
-		if (event.target.closest(".user-attribute-mapping-row button")) {
-			document.querySelectorAll('.user-attribute-mapping-row').forEach(row => {
-				<portlet:namespace />evaluateAttributeMappingRow(row)
-			});
+		if (event.target.closest('.user-attribute-mapping-row button')) {
+			document
+				.querySelectorAll('.user-attribute-mapping-row')
+				.forEach((row) => {
+					<portlet:namespace />evaluateAttributeMappingRow(row);
+				});
 		}
 	});
 
@@ -182,7 +186,5 @@ String userIdentifierExpression = attributeMappingDisplayContext.getUserIdentifi
 		);
 	document
 		.querySelectorAll('.user-attribute-mapping-row')
-		.forEach(row =>
-			<portlet:namespace />evaluateAttributeMappingRow(row)
-		);
+		.forEach((row) => <portlet:namespace />evaluateAttributeMappingRow(row));
 </script>

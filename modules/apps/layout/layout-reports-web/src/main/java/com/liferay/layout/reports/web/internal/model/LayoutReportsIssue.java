@@ -16,6 +16,7 @@ package com.liferay.layout.reports.web.internal.model;
 
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -322,11 +323,7 @@ public class LayoutReportsIssue {
 							LanguageUtil.format(
 								resourceBundle,
 								getDetailLanguageKey() + "-failing-element",
-								_getLinkOrLabel(
-									configurePagesSeoURL,
-									LanguageUtil.get(
-										resourceBundle,
-										"instance-settings-pages-seo")))));
+								_getLinkArguments(configurePagesSeoURL))));
 				}
 
 			},
@@ -450,11 +447,7 @@ public class LayoutReportsIssue {
 							LanguageUtil.format(
 								resourceBundle,
 								getDetailLanguageKey() + "-failing-element",
-								_getLinkOrLabel(
-									configureLayoutSeoURL,
-									LanguageUtil.get(
-										resourceBundle,
-										"add-a-description")))));
+								_getLinkArguments(configureLayoutSeoURL))));
 				}
 
 			},
@@ -501,10 +494,7 @@ public class LayoutReportsIssue {
 							LanguageUtil.format(
 								resourceBundle,
 								getDetailLanguageKey() + "-failing-element",
-								_getLinkOrLabel(
-									configureLayoutSeoURL,
-									LanguageUtil.get(
-										resourceBundle, "add-a-title")))));
+								_getLinkArguments(configureLayoutSeoURL))));
 				}
 
 			},
@@ -575,11 +565,7 @@ public class LayoutReportsIssue {
 							LanguageUtil.format(
 								resourceBundle,
 								getDetailLanguageKey() + "-failing-element",
-								_getLinkOrLabel(
-									configureLayoutSeoURL,
-									LanguageUtil.get(
-										resourceBundle,
-										"change-the-robots-txt-setting")))));
+								_getLinkArguments(configureLayoutSeoURL))));
 				}
 
 			},
@@ -652,11 +638,17 @@ public class LayoutReportsIssue {
 			protected String getLearnMoreLink(
 				ResourceBundle resourceBundle, String url) {
 
-				return _getLink(
+				return getLink(
 					LanguageUtil.format(
 						resourceBundle, "learn-more-about-x",
 						HtmlUtil.escape(getTitle(resourceBundle)), false),
-					true, url);
+					url);
+			}
+
+			protected String getLink(String content, String url) {
+				return StringBundler.concat(
+					"<a href=\"", url, "\" target=\"_blank\">", content,
+					"</a>");
 			}
 
 			protected String[] getTipsArguments(ResourceBundle resourceBundle) {
@@ -727,34 +719,12 @@ public class LayoutReportsIssue {
 
 	}
 
-	private static String _getLink(
-		String content, boolean openInNewTab, String url) {
-
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("<a href=\"");
-		sb.append(url);
-		sb.append("\"");
-
-		if (openInNewTab) {
-			sb.append(" target=\"_blank\"");
+	private static String[] _getLinkArguments(String url) {
+		if (Validator.isNotNull(url)) {
+			return new String[] {"<a href=\"" + url + "\">", "</a>"};
 		}
 
-		sb.append(">");
-		sb.append(content);
-		sb.append("</a>");
-
-		return sb.toString();
-	}
-
-	private static String _getLinkOrLabel(
-		String configureLayoutSeoURL, String label) {
-
-		if (Validator.isNotNull(configureLayoutSeoURL)) {
-			return _getLink(label, false, configureLayoutSeoURL);
-		}
-
-		return label;
+		return new String[] {StringPool.BLANK, StringPool.BLANK};
 	}
 
 	private final List<Detail> _details;

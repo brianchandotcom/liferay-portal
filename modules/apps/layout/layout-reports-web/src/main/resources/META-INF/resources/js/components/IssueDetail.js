@@ -127,11 +127,7 @@ const FailingElementsPanel = ({failingElements, issueType}) => {
 					{normalizedFailingElements
 						.slice(0, shownElements)
 						.map((element, index) => (
-							<FailingElement
-								element={element}
-								index={index}
-								key={index}
-							/>
+							<FailingElement element={element} key={index} />
 						))}
 				</ClayList>
 
@@ -150,17 +146,14 @@ FailingElementsPanel.propTypes = {
 	issueType: PropTypes.string.isRequired,
 };
 
-const FailingElement = ({element, index}) => {
+const FailingElement = ({element}) => {
 	return (
-		<ClayList.Item className="border-0 p-0" flex>
-			<ClayList.ItemField className="mb-4 p-0" expand>
-				{element.hasTitle && (
-					<ClayList.ItemTitle className="mb-2">
-						<span className="mr-1">{`${index + 1}.`}</span>
-						{element.title && (
-							<span className="">{element.title}</span>
-						)}
-					</ClayList.ItemTitle>
+		<ClayList.Item className="failing-element mb-2 p-0" flex>
+			<ClayList.ItemField className="mb-2 p-0" expand>
+				{element.title && (
+					<ClayList.ItemText className="mb-2 text-secondary">
+						{element.title}
+					</ClayList.ItemText>
 				)}
 				{element.content && (
 					<ClayList.ItemText className="text-secondary">
@@ -201,5 +194,4 @@ const FailingElement = ({element, index}) => {
 
 FailingElement.propTypes = {
 	element: PropTypes.object.isRequired,
-	index: PropTypes.number.isRequired,
 };

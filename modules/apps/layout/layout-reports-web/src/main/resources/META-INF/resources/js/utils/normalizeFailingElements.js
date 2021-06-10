@@ -44,7 +44,6 @@ function normalizeFailingElement(failingElement, issueType) {
 	switch (issueType) {
 		case ISSUE_TYPES.aspectRatio:
 			return {
-				hasTitle: true,
 				sections: [
 					{
 						label: Liferay.Language.get('source-file'),
@@ -63,14 +62,12 @@ function normalizeFailingElement(failingElement, issueType) {
 
 		case ISSUE_TYPES.canonicalUrl:
 			return {
-				hasTitle: false,
 				htmlContent: failingElement.content,
 			};
 
 		case ISSUE_TYPES.contrastRatio:
 			return {
 				content: failingElement.node.explanation,
-				hasTitle: true,
 				title: failingElement.node.nodeLabel,
 			};
 
@@ -78,14 +75,12 @@ function normalizeFailingElement(failingElement, issueType) {
 		case ISSUE_TYPES.imgAlt:
 		case ISSUE_TYPES.inputAlt:
 			return {
-				hasTitle: true,
 				snippet: failingElement.node.snippet,
 				title: failingElement.node.nodeLabel,
 			};
 
 		case ISSUE_TYPES.fontSize:
 			return {
-				hasTitle: true,
 				sections: [
 					{
 						label: Liferay.Language.get('font-size'),
@@ -97,14 +92,12 @@ function normalizeFailingElement(failingElement, issueType) {
 
 		case ISSUE_TYPES.hrefLang:
 			return {
-				hasTitle: true,
 				snippet: failingElement.source.snippet,
 				title: failingElement.source.nodeLabel,
 			};
 
 		case ISSUE_TYPES.linkText:
 			return {
-				hasTitle: true,
 				sections: [
 					{
 						label: Liferay.Language.get('link-text'),
@@ -119,19 +112,16 @@ function normalizeFailingElement(failingElement, issueType) {
 
 		case ISSUE_TYPES.metaDescription:
 			return {
-				hasTitle: false,
 				htmlContent: failingElement.content,
 			};
 
 		case ISSUE_TYPES.pageIndexing:
 			return {
-				hasTitle: false,
 				htmlContent: failingElement.content,
 			};
 
 		case ISSUE_TYPES.tapTarget:
 			return {
-				hasTitle: true,
 				sections: [
 					{
 						label: Liferay.Language.get('size'),
@@ -148,7 +138,6 @@ function normalizeFailingElement(failingElement, issueType) {
 
 		case ISSUE_TYPES.titleElement:
 			return {
-				hasTitle: false,
 				htmlContent: failingElement.content,
 			};
 

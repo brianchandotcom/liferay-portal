@@ -568,7 +568,7 @@ message.
 		</DTDDoc>
 	</target>
 
-	<target name="generate-configuration-env">
+	<target name="generate-configuration-override-properties">
 		<pathconvert pathsep="," property="configuration.java.files">
 			<fileset
 				dir="modules"

@@ -1491,10 +1491,10 @@ definition {
 				columnName = "name",
 				tableEntry = "${vocabularyName}");
 
-			for (var categoryName : list "${categoryNameList}") {
+			for (var category : list "${categoryNameList}") {
 				AssertVisible(
 					key_columnName = "name",
-					key_tableEntry = "${categoryName}",
+					key_tableEntry = "${category}",
 					locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
 			}
 
@@ -1503,10 +1503,10 @@ definition {
 					columnName = "name",
 					tableEntry = "${categoryName}");
 
-				for (var subcategoryName : list "${subcategoryNameList}") {
+				for (var subcategory : list "${subcategoryNameList}") {
 					AssertVisible(
 						key_columnName = "name",
-						key_tableEntry = "${subcategoryName}",
+						key_tableEntry = "${subcategory}",
 						locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
 				}
 

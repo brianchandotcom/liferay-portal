@@ -26,32 +26,6 @@ definition {
 		}
 	}
 
-	macro configureEmailCP {
-		Click(locator1 = "Portlet#OPTIONS_ICON");
-
-		MenuItem.click(menuItem = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		if (isSet(pageAddedEmail)) {
-			AssertClick(
-				locator1 = "Configuration#NAVIGATION_PAGE_ADDED_EMAIL",
-				value1 = "Page Added Email");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
-
-			Type(
-				locator1 = "CKEditor#BODY",
-				value1 = "${bodyContent}");
-
-			SelectFrame(value1 = "relative=top");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			PortletEntry.save();
-		}
-	}
-
 	macro deleteCP {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
@@ -134,14 +108,10 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = "${wikiNodeName}");
 	}
 
-	macro viewMainNode {
-		var key_wikiNodeName = "${wikiNodeName}";
-
-		AssertTextEquals(
-			locator1 = "Wiki#NODE_TABLE_WIKI_NAME",
-			value1 = "${wikiNodeName}");
-
-		AssertElementNotPresent(locator1 = "Wiki#NODE_TABLE_WIKI_GENERIC_2");
+	macro viewNoCP {
+		AssertElementNotPresent(
+			key_wikiNodeName = "${wikiNodeName}",
+			locator1 = "Wiki#NODE_TABLE_WIKI_NAME");
 	}
 
 }

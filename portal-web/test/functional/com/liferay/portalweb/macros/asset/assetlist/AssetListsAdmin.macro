@@ -110,8 +110,8 @@ definition {
 			value1 = "${selectedAsset}");
 
 		WaitForElementNotPresent(
-				key_text = "Save",
-				locator1 = "Dropdown#ANY_DISABLED");
+			key_text = "Save",
+			locator1 = "Dropdown#ANY_DISABLED");
 
 		PortletEntry.save();
 
@@ -187,12 +187,11 @@ definition {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 				value1 = "${itemSubtype}");
-
 		}
 
 		WaitForElementNotPresent(
-				key_text = "Save",
-				locator1 = "Dropdown#ANY_DISABLED");
+			key_text = "Save",
+			locator1 = "Dropdown#ANY_DISABLED");
 
 		PortletEntry.save();
 	}
@@ -202,7 +201,6 @@ definition {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT",
 				value1 = "${itemType}");
-
 		}
 
 		if (isSet(itemSubtype)) {
@@ -211,12 +209,11 @@ definition {
 			Select(
 				locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_SUBTYPE_SELECT",
 				value1 = "${itemSubtype}");
-
 		}
 
 		WaitForElementNotPresent(
-				key_text = "Save",
-				locator1 = "Dropdown#ANY_DISABLED");
+			key_text = "Save",
+			locator1 = "Dropdown#ANY_DISABLED");
 
 		PortletEntry.save();
 	}
@@ -388,7 +385,6 @@ definition {
 		if (isSet(entryList)) {
 			for (var assetName : list "${entryList}") {
 				LexiconEntry.selectEntry(rowEntry = "${assetName}");
-
 			}
 		}
 		else {

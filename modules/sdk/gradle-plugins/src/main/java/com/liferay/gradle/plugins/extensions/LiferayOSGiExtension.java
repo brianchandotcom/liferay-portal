@@ -130,7 +130,7 @@ public class LiferayOSGiExtension {
 			BUNDLE_DEFAULT_INSTRUCTION_LIFERAY_SERVICE_XML,
 			"service.xml,*/service.xml");
 		_bundleDefaultInstructions.put("-contract", "*");
-		_bundleDefaultInstructions.put("-jsp", "*.jsp,*.jspf");
+		_bundleDefaultInstructions.put("-jsp", "*.jsp,*.jspf,*.jspx");
 		_bundleDefaultInstructions.put("-sass", "*");
 	}
 

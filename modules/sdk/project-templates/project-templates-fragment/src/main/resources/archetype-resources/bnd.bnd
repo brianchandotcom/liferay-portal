@@ -3,7 +3,7 @@ Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 Fragment-Host: ${hostBundleSymbolicName};bundle-version="${hostBundleVersion}"
 #if (${buildType} != "gradle")
--jsp: *.jsp,*.jspf
+-jsp: *.jsp,*.jspf,*.jspx
 -metatype: *
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
 -plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin

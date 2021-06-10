@@ -5,7 +5,7 @@ Web-ContextPath: /simulation-panel-app-${artifactId}
 #if (${buildType} != "gradle")
 #if (!${liferayVersion.startsWith("7.0")})-contract: JavaPortlet,JavaServlet
 #end
--jsp: *.jsp,*.jspf
+-jsp: *.jsp,*.jspf,*.jspx
 -metatype: *
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
 -plugin.metatype: com.liferay.ant.bnd.metatype.MetatypePlugin
